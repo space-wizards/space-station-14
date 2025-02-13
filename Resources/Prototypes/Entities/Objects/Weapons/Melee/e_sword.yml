@@ -159,7 +159,7 @@
   suffix: NT
   parent: [BaseCentcommContraband, EnergySword]
   id: EnergySwordNT
-  description: A reverse-engineered energy sword carried by some of Nanotrasen's elite forces.
+  description: A reverse-engineered energy blade wielded by only Nanotrasen's most elite forces.
 
 - type: entity
   name: pen

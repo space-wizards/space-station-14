@@ -531,15 +531,17 @@
     - WeaponSubMachineGunDrozd
     - MedkitCombatFilled
     - CrowbarRed
-    - GrenadeFlashBang
-    - GrenadeFlashBang
-    - SmokeGrenade
-    - SmokeGrenade
-    - SmokeGrenade
-    - GrenadeShrapnelNT
-    - GrenadeShrapnelNT
-    - GrenadeShrapnelNT
     - CombatKnife
+    - GrenadeFlashBang
+    - GrenadeFlashBang
+    - SmokeGrenade
+    - SmokeGrenade
+    - GrenadeShrapnelNT
+    - GrenadeShrapnelNT
+    - GrenadeShrapnelNT
+    - ExGrenadeNT
+    - ExGrenadeNT
+    - ExGrenadeNT
     belt:
     - Stunbaton
     - HoloprojectorSecurity

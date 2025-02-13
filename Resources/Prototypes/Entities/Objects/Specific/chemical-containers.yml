@@ -110,9 +110,9 @@
       beaker:
         reagents:
         - ReagentId: Pyrazine
-          Quantity: 100
+          Quantity: 50
         - ReagentId: Dermaline
-          Quantity: 100
+          Quantity: 150
 
 - type: entity
   parent: Jug
