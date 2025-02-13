@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LittleNorthStar
-  changes:
-  - message: Noir trenchcoat to detective loadout
-    type: Add
-  id: 7448
-  time: '2024-09-27T10:03:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32380
 - author: deltanedas
   changes:
   - message: Removed the thief figurines objective.
@@ -3883,3 +3876,11 @@
   id: 7947
   time: '2025-02-13T08:00:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33807
+- author: themias
+  changes:
+  - message: The experimental welding tool now requires only minimal eye protection
+      (e.g. sunglasses)
+    type: Tweak
+  id: 7948
+  time: '2025-02-13T19:26:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34792
