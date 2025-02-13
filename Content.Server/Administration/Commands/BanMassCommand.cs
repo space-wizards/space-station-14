@@ -44,7 +44,7 @@ public sealed class BanMassCommand : LocalizedCommands
         }
 
         var player = shell.Player;
-        var allTargets = args.Where(arg => !string.IsNullOrWhiteSpace(arg)).ToArray();
+        var allTargets = args.Skip(2).Where(arg => !string.IsNullOrWhiteSpace(arg)).ToArray();
 
         foreach (var target in allTargets)
         {
