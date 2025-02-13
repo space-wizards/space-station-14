@@ -25,13 +25,13 @@ public sealed class ProximityDetectionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ProximityDetectorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ProximityDetectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ProximityDetectorComponent, ItemToggledEvent>(OnToggled);
 
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
-    private void OnInit(Entity<ProximityDetectorComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<ProximityDetectorComponent> ent, ref MapInitEvent args)
     {
         var (_, component) = ent;
 
