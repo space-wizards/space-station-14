@@ -14,6 +14,9 @@ mapping-pick-tooltip = Hold {$key}
 
 mapping-flip-tooltip = Flip sides
 
+mapping-hide-left-side-tooltip = Show/hide left list
+mapping-hide-right-side-tooltip = Show/hide right list
+
 mapping-collapse-all-tooltip = Collapse All
 mapping-clear-search-tooltip = Clear search
 

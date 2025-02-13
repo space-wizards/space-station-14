@@ -102,7 +102,12 @@ public sealed partial class MappingScreen : InGameScreen
 
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
+        HideLeftSide.Texture.TexturePath = "/Textures/Interface/VerbIcons/caret-left-solid.svg.192dpi.png";
+        HideRightSide.Texture.TexturePath = "/Textures/Interface/VerbIcons/caret-right-solid.svg.192dpi.png";
+
         Flip.OnPressed += _ => FlipSides();
+        HideLeftSide.OnPressed += OnToggleLeftContainer;
+        HideRightSide.OnPressed += OnToggleRightContainer;
 
         var eraseGroup = new ButtonGroup();
         EraseDecalButton.Group = eraseGroup;
@@ -118,10 +123,60 @@ public sealed partial class MappingScreen : InGameScreen
         if (SpawnContainer.GetPositionInParent() == 0)
         {
             Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
+
+            HideLeftSide.OnPressed -= OnToggleRightContainer;
+            HideLeftSide.OnPressed += OnToggleLeftContainer;
+
+            HideRightSide.OnPressed -= OnToggleLeftContainer;
+            HideRightSide.OnPressed += OnToggleRightContainer;
+
+            SetToggleButtonTexture(HideLeftSide, SpawnContainer);
+            SetToggleButtonTexture(HideRightSide, RightSpawnContainer);
         }
         else
         {
             Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
+
+            HideLeftSide.OnPressed -= OnToggleLeftContainer;
+            HideLeftSide.OnPressed += OnToggleRightContainer;
+
+            HideRightSide.OnPressed -= OnToggleRightContainer;
+            HideRightSide.OnPressed += OnToggleLeftContainer;
+
+            SetToggleButtonTexture(HideLeftSide, RightSpawnContainer);
+            SetToggleButtonTexture(HideRightSide, SpawnContainer);
+        }
+    }
+
+    private void OnToggleLeftContainer(ButtonEventArgs args)
+    {
+        SpawnContainer.Visible = !SpawnContainer.Visible;
+
+        if (args.Button is MappingActionsButton button)
+            SetToggleButtonTexture(button, SpawnContainer);
+    }
+
+    private void OnToggleRightContainer(ButtonEventArgs args)
+    {
+        RightSpawnContainer.Visible = !RightSpawnContainer.Visible;
+
+        if (args.Button is MappingActionsButton button)
+            SetToggleButtonTexture(button, RightSpawnContainer);
+    }
+
+    private static void SetToggleButtonTexture(MappingActionsButton button, BoxContainer container)
+    {
+        if (container.GetPositionInParent() == 0)
+        {
+            button.Texture.TexturePath = container.Visible
+                ? "/Textures/Interface/VerbIcons/caret-left-solid.svg.192dpi.png"
+                : "/Textures/Interface/VerbIcons/caret-right-solid.svg.192dpi.png";
+        }
+        else
+        {
+            button.Texture.TexturePath = container.Visible
+                ? "/Textures/Interface/VerbIcons/caret-right-solid.svg.192dpi.png"
+                : "/Textures/Interface/VerbIcons/caret-left-solid.svg.192dpi.png";
         }
     }
 
