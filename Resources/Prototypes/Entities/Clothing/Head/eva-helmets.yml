@@ -72,6 +72,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/paramedhelm.rsi
+  - type: HandheldLight
+    addPrefix: false
   - type: ToggleableLightVisuals
     spriteLayer: light
     clothingVisuals:
