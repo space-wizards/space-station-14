@@ -82,7 +82,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         var updatedEv = new ProximityTargetUpdatedEvent(-1, ent);
         RaiseLocalEvent(uid, ref updatedEv);
 
-        var newTargetEv = new NewProximityTargetEvent(ent);
+        var newTargetEv = new NewProximityTargetEvent(-1, ent);
         RaiseLocalEvent(uid, ref newTargetEv);
 
         Dirty(uid, comp);
@@ -138,7 +138,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
         if (newTarget)
         {
-            var newTargetEv = new NewProximityTargetEvent(detector, closestEnt);
+            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestEnt);
             RaiseLocalEvent(uid, ref newTargetEv);
 
             component.Target = closestEnt;

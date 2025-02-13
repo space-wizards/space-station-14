@@ -29,8 +29,9 @@ public readonly struct ProximityTargetUpdatedEvent(float distance, Entity<Proxim
 /// Raised when proximity sensor got new target.
 /// </summary>
 [ByRefEvent]
-public readonly struct NewProximityTargetEvent(Entity<ProximityDetectorComponent> detector, EntityUid? target = null)
+public readonly struct NewProximityTargetEvent(float distance, Entity<ProximityDetectorComponent> detector, EntityUid? target = null)
 {
+    public readonly float Distance = distance;
     public readonly Entity<ProximityDetectorComponent> Detector = detector;
     public readonly EntityUid? Target = target;
 }
