@@ -69,11 +69,12 @@ public sealed class SuperBonkSystem : EntitySystem
 
     public void StartSuperBonk(EntityUid target, bool stopWhenDead = false)
     {
-        if (HasComp<SuperBonkComponent>(target))
-            return;
-
         //The other check in the code to stop when the target dies does not work if the target is already dead.
         if (stopWhenDead && TryComp<MobStateComponent>(target, out var mobState) && mobState.CurrentState == MobState.Dead)
+            return;
+
+
+        if (EnsureComp<SuperBonkComponent>(target, out var component))
             return;
 
         var tables = EntityQueryEnumerator<BonkableComponent>();
@@ -84,16 +85,9 @@ public sealed class SuperBonkSystem : EntitySystem
             bonks.Add(uid);
         }
 
-        var hadClumsy = EnsureComp<ClumsyComponent>(target, out _);
-
-        var component = new SuperBonkComponent
-        {
-            Tables = bonks.GetEnumerator(),
-            RemoveClumsy = !hadClumsy,
-            StopWhenDead = stopWhenDead,
-        };
-
-        AddComp(target, component);
+        component.Tables = bonks.GetEnumerator();
+        component.RemoveClumsy = !EnsureComp<ClumsyComponent>(target, out _);
+        component.StopWhenDead = stopWhenDead;
     }
 
     private bool TryBonk(EntityUid uid, EntityUid tableUid)
