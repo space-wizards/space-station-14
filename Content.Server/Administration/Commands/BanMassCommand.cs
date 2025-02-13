@@ -67,14 +67,6 @@ public sealed class BanMassCommand : LocalizedCommands
             var targetUid = located.UserId;
             var targetHWid = located.LastHWId;
 
-            var dbData = await _dbManager.GetAdminDataForAsync(targetUid);
-            if (dbData != null && dbData.AdminRank != null)
-            {
-                var targetPermissionsFlag = AdminFlagsHelper.NamesToFlags(dbData.AdminRank.Flags.Select(p => p.Flag));
-                if ((targetPermissionsFlag & AdminFlags.Permissions) == AdminFlags.Permissions) // Admins with Permission rights cannot be banned
-                    continue;
-            }
-
             _bans.CreateServerBan(targetUid, trimmedTarget, player?.UserId, null, targetHWid, minutes, severity, reason);
         }
     }
