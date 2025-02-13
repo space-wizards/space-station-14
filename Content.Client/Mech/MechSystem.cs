@@ -44,6 +44,11 @@ public sealed class MechSystem : SharedMechSystem
         {
             lightLayer.Visible = light;
         }
+        
+        if (args.Sprite.TryGetLayer((int) MechVisualLayers.Siren, out var sirenLayer) && _appearance.TryGetData<bool>(uid, MechVisuals.Siren, out var siren, args.Component))
+        {
+            sirenLayer.Visible = siren;
+        }
 
         layer.SetState(state);
         args.Sprite.DrawDepth = (int) drawDepth;

@@ -96,8 +96,6 @@
     - NitrousOxide
     - Frezon
     #- Helium3 TODO: fusion
-  - type: AirIntake
-  # for intake and filter to work
   - type: AtmosDevice
     requireAnchored: false
     joinSystem: true
@@ -271,12 +269,75 @@
 - type: entity
   id: MechRipley2Battery
   parent: MechRipley2
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
+      
+# Paddy
+- type: entity
+  id: MechPaddy
+  parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
+  name: Paddy
+  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: paddy
+    - state: paddy_sirens
+      map: [ "enum.MechVisualLayers.Siren" ]
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: paddy
+    openState: paddy-open
+    brokenState: paddy-broken
+    mechToPilotDamageMultiplier: 0.60
+    airtight: true
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+    siren: true
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 30 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4
+
+- type: entity
+  id: MechPaddyBattery
+  parent: MechPaddy
+  suffix: Battery, Air
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
+      
+- type: entity
+  id: MechPaddyFilled
+  parent: MechPaddyBattery
+  suffix: Battery, Air, Filled
+  components:
+  - type: Mech
+    startingEquipment:
+      - WeaponMechCombatDisabler
+      - WeaponMechCombatFlashbangLauncher
 
 # Clarke
 - type: entity
@@ -319,12 +380,14 @@
 - type: entity
   id: MechClarkeBattery
   parent: MechClarke
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # H.O.N.K.
 - type: entity
@@ -417,12 +480,14 @@
 - type: entity
   parent: MechHamtr
   id: MechHamtrBattery
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Vim!!!!!!!
 
@@ -485,12 +550,14 @@
 - type: entity
   parent: MechVim
   id: MechVimBattery
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Combat-Station Mechs
 
@@ -534,12 +601,14 @@
 - type: entity
   id: MechGygaxBattery
   parent: MechGygax
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Durand
 - type: entity
@@ -589,12 +658,14 @@
 - type: entity
   id: MechDurandBattery
   parent: MechDurand
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Nanotrasen Combat Mechs
 
@@ -647,12 +718,14 @@
 - type: entity
   id: MechMarauderBattery
   parent: MechMarauder
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHyper
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechMarauderFilled
@@ -715,12 +788,14 @@
 - type: entity
   id: MechSeraphBattery
   parent: MechSeraph
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellAntiqueProto
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechSeraphFilled
@@ -786,12 +861,14 @@
 - type: entity
   id: MechGygaxSyndieBattery
   parent: MechGygaxSyndie
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHyper
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechGygaxSyndieFilled
@@ -854,12 +931,14 @@
 - type: entity
   id: MechMaulerSyndieBattery
   parent: MechMaulerSyndie
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHyper
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechMaulerSyndieFilled
