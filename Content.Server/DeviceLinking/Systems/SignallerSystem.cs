@@ -7,8 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
-using Robust.Shared.Map;
-using Microsoft.CodeAnalysis.Scripting.Hosting;
 using Robust.Shared.Toolshed.Commands.Math;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -19,7 +17,6 @@ public sealed class SignallerSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -42,6 +39,7 @@ public sealed class SignallerSystem : EntitySystem
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):actor} triggered signaler {ToPrettyString(uid):tool}");
+        component.LastUser = args.User;
         _link.InvokePort(uid, component.Port);
         args.Handled = true;
     }
@@ -58,15 +56,9 @@ public sealed class SignallerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnSignalFailed(Entity<SignallerComponent> ent, ref SignalFailedEvent args) // called by WirelessNetworkSystem
+    private void OnSignalFailed(EntityUid uid, SignallerComponent component, ref SignalFailedEvent args) // called by WirelessNetworkSystem
     {
-        if (args.failed) // makes a popup if the signaller is out of range
-        {
-            _popup.PopupEntity(Loc.GetString("signaller-interact-out-of-range-text"), ent.Owner, _transform.GetParentUid(ent.Owner), PopupType.SmallCaution);
-        }
-        else // diff popup if it's in-range
-        {
-            _popup.PopupEntity(Loc.GetString("signaller-interact-in-range-text"), ent.Owner, _transform.GetParentUid(ent.Owner));
-        }
+        // makes a popup if the signaller fails to trigger
+        _popup.PopupEntity(Loc.GetString("signaller-interact-failed-to-activate-text"), uid, component.LastUser, PopupType.SmallCaution);
     }
 }

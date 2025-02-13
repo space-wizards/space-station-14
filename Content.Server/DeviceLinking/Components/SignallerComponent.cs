@@ -14,5 +14,11 @@ namespace Content.Server.DeviceLinking.Components
         /// </summary>
         [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
         public string Port = "Pressed";
+
+        /// <summary>
+        ///     The last entity to trigger the signaller.
+        /// </summary>
+        [DataField]
+        public EntityUid LastUser;
     }
 }

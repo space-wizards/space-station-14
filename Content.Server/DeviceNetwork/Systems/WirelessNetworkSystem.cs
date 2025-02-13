@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
-using Content.Server.DeviceLinking.Events;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -30,14 +29,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (xform.MapID != args.SenderTransform.MapID
                 || (ownPosition - _transformSystem.GetWorldPosition(xform)).Length() > sendingComponent.Range)
             {
-                var eventArgs = new SignalFailedEvent(args.Sender, true); // event so signallers throw an error if they're out of range
-                RaiseLocalEvent(args.Sender, ref eventArgs, false);
                 args.Cancel();
-            }
-            else // so signallers throw a different message on success
-            {
-                var eventArgs = new SignalFailedEvent(args.Sender, false);
-                RaiseLocalEvent(args.Sender, ref eventArgs, false);
             }
         }
     }
