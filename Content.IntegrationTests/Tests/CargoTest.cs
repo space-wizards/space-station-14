@@ -106,9 +106,9 @@ public sealed class CargoTest
 
         var testMap = await pair.CreateTestMap();
 
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var entManager = server.EntMan;
+        var mapManager = server.MapMan;
+        var protoManager = server.ProtoMan;
 
         await server.WaitAssertion(() =>
         {
