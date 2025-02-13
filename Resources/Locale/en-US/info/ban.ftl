@@ -19,7 +19,7 @@ cmd-ban-hint-duration-6 = 1 month
 
 # banmass
 cmd-banmass-desc = Bans several players at once by nickname or ID.
-cmd-banmass-help = Usage: banmass <reason> <duration in minutes, 0 for permanent ban> <name1 name2 name3..>
+cmd-banmass-help = Usage: banmass <reason> <duration in minutes, 0 for permanent ban> <name1> [name2 [name3...]]
 
 # ban panel
 cmd-banpanel-desc = Opens the ban panel
