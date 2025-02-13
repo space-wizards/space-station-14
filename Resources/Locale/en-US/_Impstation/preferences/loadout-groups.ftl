@@ -20,3 +20,5 @@ loadout-group-courier-backpack = Courier backpack
 loadout-group-courier-neck = Courier neck
 loadout-group-courier-outerclothing = Courier outer clothing
 loadout-group-courier-shoes = Courier shoes
+
+loadout-group-chaplain-books = Chaplain Holy Book

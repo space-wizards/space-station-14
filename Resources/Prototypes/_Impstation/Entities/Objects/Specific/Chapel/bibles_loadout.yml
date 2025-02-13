@@ -9,4 +9,5 @@
     state: bibble
   - type: Item
     size: Small
+    heldPrefix: bibble
     sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
