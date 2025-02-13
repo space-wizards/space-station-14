@@ -333,8 +333,6 @@ namespace Content.Server.Atmos.EntitySystems
             if (flammable.ToggleAmbientSound && TryComp<AmbientSoundComponent>(uid, out var ambient))
                 _ambient.SetAmbience(uid, false, ambient);
 
-            var ev = new OnExtinguishEvent();
-            RaiseLocalEvent(uid, ev);
 
             UpdateAppearance(uid, flammable);
         }
@@ -364,9 +362,6 @@ namespace Content.Server.Atmos.EntitySystems
                 TryComp<AmbientSoundComponent>(uid, out var ambient) &&
                 !ambient.Enabled)
                 _ambient.SetAmbience(uid, true, ambient);
-
-            var ev = new OnIngnitionEvent();
-            RaiseLocalEvent(uid, ev);
 
             UpdateAppearance(uid, flammable);
         }
@@ -496,16 +491,6 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
     }
-
-    /// <summary>
-    /// Raised when something is ignited.
-    /// </summary>
-    public sealed class OnIngnitionEvent : EntityEventArgs { }
-
-    /// <summary>
-    /// Raised when something is extinguished.
-    /// </summary>
-    public sealed class OnExtinguishEvent : EntityEventArgs { }
 }
 
 

@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Examine;
@@ -51,6 +52,9 @@ public sealed class EntityHeaterSystem : EntitySystem
                 energy = power.PowerReceived * deltaTime;
             }
 
+            if (TryComp<FlammableComponent>(uid, out var flammable) && !flammable.OnFire)
+                continue;
+
             foreach (var ent in placer.PlacedEntities)
             {
                 _temperature.ChangeHeat(ent, energy);
@@ -60,8 +64,8 @@ public sealed class EntityHeaterSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, EntityHeaterComponent comp, ExaminedEvent args)
     {
-        // if (!comp.RequirePower) //Imp edit
-        //    return;
+        if (!comp.RequirePower) //Imp edit
+            return;
 
         if (!args.IsInDetailsRange)
             return;
@@ -72,6 +76,9 @@ public sealed class EntityHeaterSystem : EntitySystem
     private void OnGetVerbs(EntityUid uid, EntityHeaterComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!comp.RequirePower) //Imp edit
             return;
 
         var setting = (int)comp.Setting;
