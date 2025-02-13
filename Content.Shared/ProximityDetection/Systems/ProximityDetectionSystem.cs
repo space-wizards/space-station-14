@@ -36,6 +36,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         var (_, component) = ent;
 
         component.NextUpdate = _timing.CurTime + component.UpdateCooldown;
+        Dirty(ent);
     }
 
     private void OnToggled(Entity<ProximityDetectorComponent> ent, ref ItemToggledEvent args)
@@ -56,6 +57,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
                 continue;
 
             component.NextUpdate += component.UpdateCooldown;
+            Dirty(uid, component);
 
             if (!_toggle.IsActivated(uid))
                 continue;
