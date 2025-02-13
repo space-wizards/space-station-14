@@ -4,7 +4,7 @@
   parent: BaseVapeSwappable
   id: VapeSwappable
   name: vape box mod
-  description: Reconstructed smoking tech imported from a group of Terra enthusiast Grays in Andromeda.
+  description: Reconstructed smoking tech imported from a group of Terra enthusiasts in Andromeda.
   components:
   - type: Item
     size: Small
@@ -31,7 +31,7 @@
 - type: entity
   parent: BaseVapeDisposable
   id: VapeDisposableBar
-  name: disposable vape
+  name: disposable vape bar
   description: Kinda trash but gets the job done.
   components:
   - type: Item
@@ -95,8 +95,9 @@
 
 - type: entity
   parent: BaseStorageItem
-  id: VapeCartContainerBasic
-  name: vape cartridge basics pack
+  id: BaseVapeCartContainer
+  name: vape cart pack
+  abstract: true
   components:
   - type: Item
     size: Tiny
@@ -105,18 +106,10 @@
   - type: Storage
     grid:
     - 0,0,1,1
-  - type: StorageFill
-    contents:
-    - id: WaterVapeCart
-    - id: SugarVapeCart
-    - id: NicotineVapeCart
-    - id: THCVapeCart
-      prob: 0.5
   - type: Tag
     tags:
     - CigPack
     - Trash
-  - type: Appearance
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
     state: box
@@ -124,12 +117,30 @@
     materialComposition:
       Plastic: 50
 
+- type: entity
+  parent: BaseVapeCartContainer
+  id: VapeCartContainerBasic
+  name: vape cart variety pack
+  description: A pack of the best sellers.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WaterVapeCart
+    - id: SugarVapeCart
+    - id: NicotineVapeCart
+    - id: THCVapeCart
+      prob: 0.5
+  - type: Appearance
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
+    state: box
+
 
 ## Cartridge Prefill Packaging ##
 
 - type: entity
   parent: BaseItem
-  id: VapeCartPackaging
+  id: BaseVapeCartPackaging
   name: vape cartridge packaging
   description: The discarded wrapper of an individually packaged vape cartridge. How wasteful!
   components:
@@ -145,21 +156,17 @@
     - Trash
 
 - type: entity
-  parent: BaseItem
+  parent: BaseVapeCartPackaging
   id: CustomVapeCartPackage
   name: DIY cart
   description: A vape cartridge you can fill with anything!
   components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,0,1
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
     state: custom-package
   - type: SpawnItemsOnUse
     items:
-      - id: VapeCartPackaging
+      - id: BaseVapeCartPackaging
       - id: CustomVapeCart
     sound:
       path: /Audio/Effects/unwrap.ogg
