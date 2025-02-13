@@ -10,9 +10,10 @@
     CigPackSpirits: 2
     CigarCase: 1
     SmokingPipeFilledTobacco: 1
-    VapeDisposable: 5
-    VapeSwappable: 2
-    BaseVapeCartPack: 4
+    VapeDisposable: 5        #
+    VapeSwappable: 2         #  imp
+    BaseVapeCartPack: 4      # vapes
+    CustomVapeCartPackage: 1 #
     Matchbox: 5
     PackPaperRollingFilters: 3
     CheapLighter: 4
