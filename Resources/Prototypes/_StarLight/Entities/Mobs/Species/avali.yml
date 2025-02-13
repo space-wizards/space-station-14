@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McRaptor
+  name: Urist McAvali
   parent: BaseMobSpeciesOrganic
   id: BaseMobAvali
   abstract: true
@@ -59,15 +59,6 @@
   - type: Speech
     speechVerb: Parrot # RMC did it right.
     speechSounds: MaleAvali
-  - type: PassiveDamage 
-    allowedStates:
-    - Alive
-    damageCap: 180 #To clarify due to the lack of cap, if you're knocked into crit you still won't be able to get back up even with passive healing. Weaker than normal regen, too.
-    damage:
-      types:
-        Heat: -0.05
-      groups:
-        Brute: -0.05
   - type: MobThresholds
     thresholds:
       0: Alive

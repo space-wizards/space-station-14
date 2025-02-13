@@ -69,14 +69,6 @@
         damage:
           types:
             Poison: 0.1
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Avali
-          shouldHave: false
-        damage:
-          types:
-            Poison: 0.2
     Medicine:
       effects:
       - !type:ModifyBloodLevel
@@ -175,7 +167,7 @@
           shouldHave: true
         damage:
           types:
-            Poison: 0.2
+            Poison: 2
     Medicine:
       effects:
       - !type:ModifyBloodLevel
@@ -184,7 +176,7 @@
           type: Arachnid
           shouldHave: false
         amount: 0.4
-
+  
 - type: reagent
   id: Lithium
   name: reagent-name-lithium

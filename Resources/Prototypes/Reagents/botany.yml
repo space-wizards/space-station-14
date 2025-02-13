@@ -214,14 +214,14 @@
     Poison:
       effects:
       - !type:HealthChange
-        conditions: #Staarliight
+        conditions: #Starlight
         - !type:OrganType
           type: Avali
           shouldHave: false
         damage:
           types:
             Caustic: 1
-    Medicine: #Starliiiight
+    Medicine: #Starlight
       effects:
       - !type:HealthChange
         conditions:
