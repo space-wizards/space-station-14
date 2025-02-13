@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Clarified the description of the "SGD Required" trait.
-    type: Tweak
-  id: 622
-  time: '2024-12-02T12:47:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/864
 - author: Darkmajia
   changes:
   - message: 'The Animal Friends Kit has an additional line to make its function clearer:
@@ -4199,3 +4192,10 @@
   id: 1121
   time: '2025-02-13T22:06:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1680
+- author: bigsantino1
+  changes:
+  - message: Added a maints bar kit to the cargo request computer.
+    type: Add
+  id: 1122
+  time: '2025-02-13T22:38:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1607
