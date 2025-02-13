@@ -1,51 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Fixed collision properties of gas and volumetric pumps.
-    type: Fix
-  id: 7443
-  time: '2024-09-27T05:49:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32471
-- author: metalgearsloth
-  changes:
-  - message: Fix airlock autoclose mispredicting.
-    type: Fix
-  id: 7444
-  time: '2024-09-27T06:10:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32477
-- author: metalgearsloth
-  changes:
-  - message: Fix storage area pickup sound playing more than once.
-    type: Fix
-  id: 7445
-  time: '2024-09-27T07:09:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32397
-- author: metalgearsloth
-  changes:
-  - message: Fix verbs shuffling on mobs.
-    type: Fix
-  - message: Stripping is now predicted.
-    type: Fix
-  - message: Ensnare interactions are now predicted.
-    type: Fix
-  - message: Fix text saying you are freeing yourself from ensnare when freeing someone
-      else.
-    type: Fix
-  id: 7446
-  time: '2024-09-27T07:12:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32478
-- author: Fildrance, ScarKy0
-  changes:
-  - message: AI now can electrify doors and set them to emergency access. Setting
-      door to emergency access will now play sound effect for everyone around, while
-      electrifying door will play sound effect only for AI
-    type: Add
-  - message: AI will now be notified when trying to interact with door without power
-      or when respective wires were messed up with
-    type: Fix
-  id: 7447
-  time: '2024-09-27T07:22:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32012
 - author: LittleNorthStar
   changes:
   - message: Noir trenchcoat to detective loadout
@@ -3894,3 +3847,39 @@
   id: 7942
   time: '2025-02-12T00:43:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34910
+- author: MilonPL
+  changes:
+  - message: The announce command now takes optional color and sound parameters.
+    type: Tweak
+  id: 7943
+  time: '2025-02-12T08:58:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34889
+- author: Xillan
+  changes:
+  - message: Changed light brown gloves to have their own unique fiber for detectives,
+      where previously they were indistinguishable from normal / dark brown gloves.
+    type: Tweak
+  id: 7944
+  time: '2025-02-12T18:41:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35111
+- author: SaphireLattice, themias
+  changes:
+  - message: Chair buckle draw depth is slightly less broken
+    type: Fix
+  id: 7945
+  time: '2025-02-13T05:51:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33447
+- author: Minemoder
+  changes:
+  - message: Slime plushie now squishes.
+    type: Tweak
+  id: 7946
+  time: '2025-02-13T07:55:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33554
+- author: AgentSmithRadio
+  changes:
+  - message: Added grilled cheese sandwich and recipe.
+    type: Add
+  id: 7947
+  time: '2025-02-13T08:00:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33807
