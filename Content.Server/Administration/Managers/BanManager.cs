@@ -231,7 +231,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         player.Channel.Disconnect(message);
     }
 
-    public CompletionOption[] BanDurations { get; } =
+    public CompletionOption[] BanDurations => new CompletionOption[]
     {
         new("0", Loc.GetString("cmd-ban-hint-duration-1")),
         new("1440", Loc.GetString("cmd-ban-hint-duration-2")),
