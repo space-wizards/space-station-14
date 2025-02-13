@@ -10295,7 +10295,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -146995.22
+      secondsUntilStateChange: -147285.83
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10306,7 +10306,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -146997.1
+      secondsUntilStateChange: -147287.7
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11047,7 +11047,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -342566.2
+      secondsUntilStateChange: -342856.78
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11567,7 +11567,7 @@ entities:
       pos: 44.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -17762.818
+      secondsUntilStateChange: -18053.428
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -62939,6 +62939,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,41.5
       parent: 2
+  - uid: 5886
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,86.5
+      parent: 2
   - uid: 7352
     components:
     - type: Transform
@@ -65541,7 +65547,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -71314.914
+      secondsUntilStateChange: -71605.52
       state: Opening
   - uid: 18653
     components:
@@ -78122,7 +78128,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -373904.47
+      secondsUntilStateChange: -374195.06
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -112432,16 +112438,25 @@ entities:
     - type: Transform
       pos: 43.5,48.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 16618
     components:
     - type: Transform
       pos: 15.5,103.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 16710
     components:
     - type: Transform
       pos: 14.5,103.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: InflatableDoorStack
   entities:
   - uid: 18818
@@ -113491,6 +113506,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 45.11351,81.43642
+      parent: 2
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 25345
+    components:
+    - type: Transform
+      pos: 8.5,83.5
       parent: 2
 - proto: LockerAtmosphericsFilled
   entities:
@@ -116198,7 +116220,9 @@ entities:
     - type: Paper
       stampState: paper_stamp-centcom
       stampedBy:
-      - stampLargeIcon: null
+      - hasIcon: True
+        stampFont: null
+        stampLargeIcon: null
         stampedColor: '#006600FF'
         stampedName: stamp-component-stamped-name-centcom
       content: >-
@@ -116218,7 +116242,9 @@ entities:
     - type: Paper
       stampState: paper_stamp-centcom
       stampedBy:
-      - stampLargeIcon: null
+      - hasIcon: True
+        stampFont: null
+        stampLargeIcon: null
         stampedColor: '#006600FF'
         stampedName: stamp-component-stamped-name-centcom
       content: >-
@@ -116340,31 +116366,49 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,39.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 10840
     components:
     - type: Transform
       pos: 6.5,45.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 11095
     components:
     - type: Transform
       pos: 14.5,37.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 18552
     components:
     - type: Transform
       pos: 40.5,69.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 18553
     components:
     - type: Transform
       pos: 40.5,71.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 24017
     components:
     - type: Transform
       pos: 45.5,70.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: PaperOffice
   entities:
   - uid: 3381
@@ -117623,6 +117667,8 @@ entities:
     - type: Physics
       canCollide: False
     - type: GhostRole
+      mindRoles:
+      - MindRoleGhostRoleNeutral
       rules: >-
         All normal rules apply unless an administrator tells you otherwise.
 
@@ -134614,6 +134660,13 @@ entities:
     - type: Transform
       pos: 26.5,2.5
       parent: 2
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 25344
+    components:
+    - type: Transform
+      pos: 8.5,86.5
+      parent: 2
 - proto: SpawnPointAtmos
   entities:
   - uid: 20471
@@ -134829,6 +134882,23 @@ entities:
     components:
     - type: Transform
       pos: 16.5,37.5
+      parent: 2
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 5868
+    components:
+    - type: Transform
+      pos: 27.5,-45.5
+      parent: 2
+  - uid: 5883
+    components:
+    - type: Transform
+      pos: 28.5,-45.5
+      parent: 2
+  - uid: 5885
+    components:
+    - type: Transform
+      pos: 29.5,-45.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:
@@ -142446,6 +142516,8 @@ entities:
       pos: 4.5072002,43.6498
       parent: 2
     - type: GhostRole
+      mindRoles:
+      - MindRoleGhostRoleNeutral
       rules: >-
         All normal rules apply unless an administrator tells you otherwise.
 
@@ -143931,6 +144003,8 @@ entities:
     - type: GhostRole
       raffle:
         settings: default
+      mindRoles:
+      - MindRoleGhostRoleNeutral
       rules: >-
         All normal rules apply unless an administrator tells you otherwise.
 
@@ -163239,46 +163313,73 @@ entities:
     - type: Transform
       pos: 36.5,32.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 10599
     components:
     - type: Transform
       pos: 35.5,32.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 10606
     components:
     - type: Transform
       pos: 37.5,32.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 14047
     components:
     - type: Transform
       pos: 49.5,50.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 14048
     components:
     - type: Transform
       pos: 49.5,46.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 14097
     components:
     - type: Transform
       pos: 65.5,46.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 16671
     components:
     - type: Transform
       pos: 25.5,96.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 17420
     components:
     - type: Transform
       pos: 8.5,99.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 20305
     components:
     - type: Transform
       pos: 59.5,64.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: WoodenBench
   entities:
   - uid: 10680

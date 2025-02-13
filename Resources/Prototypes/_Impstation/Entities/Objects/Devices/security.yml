@@ -12,6 +12,9 @@
       - state: portable_criminal
       - state: screen-criminal
         shader: unshaded
+  - type: Tag
+    tags:
+    - HandheldCriminalRecords
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
   - type: UserInterface

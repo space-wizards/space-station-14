@@ -59,10 +59,9 @@ public sealed class ShortConstructionMenu : RadialMenu
             if (!_protoManager.TryIndex(protoId, out var proto))
                 continue;
 
-            var button = new RadialMenuTextureButton
+            var button = new RadialMenuTextureButtonWithSector
             {
                 ToolTip = Loc.GetString(proto.Name),
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(48f, 48f)
             };
 

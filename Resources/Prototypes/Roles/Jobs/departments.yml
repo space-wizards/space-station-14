@@ -8,6 +8,7 @@
   - Courier # Imp
   - Quartermaster
   - SalvageSpecialist
+  - SupplyAssistant # DeltaV
 
 - type: department
   id: Civilian
@@ -74,6 +75,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - AdministrativeAssistant # Delta V
   primary: false
   weight: 100
 

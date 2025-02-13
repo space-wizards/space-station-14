@@ -150,7 +150,7 @@
     accent: silicon
   - type: Lock
     locked: true
-    breakOnEmag: false
+    breakOnAccessBreaker: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel

@@ -14660,7 +14660,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -254482.8
+      secondsUntilStateChange: -254931.84
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14924,7 +14924,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -109136.54
+      secondsUntilStateChange: -109585.59
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -22179,6 +22179,13 @@ entities:
     components:
     - type: Transform
       pos: 41.5,-12.5
+      parent: 5350
+- proto: BedsheetNT
+  entities:
+  - uid: 28668
+    components:
+    - type: Transform
+      pos: -13.5,2.5
       parent: 5350
 - proto: BedsheetOrange
   entities:
@@ -64663,6 +64670,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 76.5,-25.5
       parent: 5350
+- proto: ChairFolding
+  entities:
+  - uid: 28664
+    components:
+    - type: Transform
+      pos: -0.5,-3.5
+      parent: 5350
 - proto: ChairFoldingSpawnFolded
   entities:
   - uid: 24159
@@ -65720,6 +65734,13 @@ entities:
     components:
     - type: Transform
       pos: 37.453804,-25.5992
+      parent: 5350
+- proto: CigPackNewport
+  entities:
+  - uid: 6116
+    components:
+    - type: Transform
+      pos: -13.087587,2.0916438
       parent: 5350
 - proto: CigPackRed
   entities:
@@ -71073,12 +71094,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -21.5,-52.5
       parent: 5350
-  - uid: 5446
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -11.5,2.5
-      parent: 5350
   - uid: 5867
     components:
     - type: Transform
@@ -72584,7 +72599,7 @@ entities:
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 23.5,17.5
+      pos: 22.5,17.5
       parent: 5350
   - uid: 14299
     components:
@@ -74328,6 +74343,12 @@ entities:
     - type: Transform
       pos: -22.5,-12.5
       parent: 5350
+  - uid: 5082
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 22.5,18.5
+      parent: 5350
   - uid: 5237
     components:
     - type: Transform
@@ -75621,12 +75642,7 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 22.5,17.5
-      parent: 5350
-  - uid: 12937
-    components:
-    - type: Transform
-      pos: 23.5,18.5
+      pos: 23.5,17.5
       parent: 5350
   - uid: 12938
     components:
@@ -79758,7 +79774,7 @@ entities:
   - uid: 12922
     components:
     - type: Transform
-      pos: 23.5,19.5
+      pos: 22.5,19.5
       parent: 5350
   - uid: 13321
     components:
@@ -80141,10 +80157,10 @@ entities:
     - type: Transform
       pos: 37.5,21.5
       parent: 5350
-  - uid: 13095
+  - uid: 12937
     components:
     - type: Transform
-      pos: 23.5,19.5
+      pos: 22.5,19.5
       parent: 5350
   - uid: 13650
     components:
@@ -80410,6 +80426,11 @@ entities:
     - type: Transform
       pos: -57.5,-26.5
       parent: 5350
+  - uid: 28667
+    components:
+    - type: Transform
+      pos: -13.5,2.5
+      parent: 5350
 - proto: DonkpocketBoxSpawner
   entities:
   - uid: 1216
@@ -80587,6 +80608,13 @@ entities:
           ents:
           - 6607
           - 12703
+- proto: DrinkBeerBottleFull
+  entities:
+  - uid: 28669
+    components:
+    - type: Transform
+      pos: -13.400087,2.076211
+      parent: 5350
 - proto: DrinkBeerglass
   entities:
   - uid: 28509
@@ -84095,7 +84123,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -31975.576
+      secondsUntilStateChange: -32424.63
       state: Closing
   - uid: 9615
     components:
@@ -130582,6 +130610,13 @@ entities:
         - Pressed: Toggle
         14436:
         - Pressed: Toggle
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 5446
+    components:
+    - type: Transform
+      pos: -11.5,2.5
+      parent: 5350
 - proto: LockerAtmosphericsFilled
   entities:
   - uid: 11751
@@ -131688,6 +131723,11 @@ entities:
     components:
     - type: Transform
       pos: -45.5,5.5
+      parent: 5350
+  - uid: 13493
+    components:
+    - type: Transform
+      pos: 19.5,15.5
       parent: 5350
   - uid: 13757
     components:
@@ -140455,12 +140495,6 @@ entities:
     - type: Transform
       pos: 71.5,-25.5
       parent: 5350
-  - uid: 13092
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 26.5,19.5
-      parent: 5350
   - uid: 13518
     components:
     - type: Transform
@@ -141827,11 +141861,6 @@ entities:
     components:
     - type: Transform
       pos: -46.5,0.5
-      parent: 5350
-  - uid: 5082
-    components:
-    - type: Transform
-      pos: 22.5,19.5
       parent: 5350
   - uid: 5088
     components:
@@ -147678,6 +147707,11 @@ entities:
     - type: Transform
       pos: -7.5,-6.5
       parent: 5350
+  - uid: 28666
+    components:
+    - type: Transform
+      pos: -10.5,2.5
+      parent: 5350
 - proto: SignCansScience
   entities:
   - uid: 19330
@@ -151225,6 +151259,13 @@ entities:
     - type: Transform
       pos: -16.5,-26.5
       parent: 5350
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 28665
+    components:
+    - type: Transform
+      pos: -0.5,-3.5
+      parent: 5350
 - proto: SpawnPointAtmos
   entities:
   - uid: 12050
@@ -151502,6 +151543,28 @@ entities:
     components:
     - type: Transform
       pos: -25.5,-16.5
+      parent: 5350
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 15194
+    components:
+    - type: Transform
+      pos: -40.5,18.5
+      parent: 5350
+  - uid: 23474
+    components:
+    - type: Transform
+      pos: -36.5,21.5
+      parent: 5350
+  - uid: 28660
+    components:
+    - type: Transform
+      pos: -34.5,14.5
+      parent: 5350
+  - uid: 28661
+    components:
+    - type: Transform
+      pos: -38.5,11.5
       parent: 5350
 - proto: SpawnPointMedicalDoctor
   entities:
@@ -160195,15 +160258,15 @@ entities:
     - type: Transform
       pos: 0.47192144,-32.586666
       parent: 5350
+  - uid: 13092
+    components:
+    - type: Transform
+      pos: 20.283205,16.6317
+      parent: 5350
   - uid: 13492
     components:
     - type: Transform
-      pos: 26.383194,19.631002
-      parent: 5350
-  - uid: 13493
-    components:
-    - type: Transform
-      pos: 26.555069,19.506002
+      pos: 20.470705,16.35045
       parent: 5350
   - uid: 24244
     components:
@@ -161053,6 +161116,13 @@ entities:
     - type: Transform
       pos: 25.5,-15.5
       parent: 5350
+- proto: VendingMachinePride
+  entities:
+  - uid: 28670
+    components:
+    - type: Transform
+      pos: 26.5,19.5
+      parent: 5350
 - proto: VendingMachineRestockMedical
   entities:
   - uid: 21048
@@ -161212,6 +161282,11 @@ entities:
     components:
     - type: Transform
       pos: 37.5,-13.5
+      parent: 5350
+  - uid: 13095
+    components:
+    - type: Transform
+      pos: 23.5,19.5
       parent: 5350
   - uid: 17300
     components:
@@ -181648,12 +181723,6 @@ entities:
     - type: Transform
       pos: -0.5,1.5
       parent: 5350
-  - uid: 15194
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -13.5,2.5
-      parent: 5350
   - uid: 15238
     components:
     - type: Transform
@@ -184754,7 +184823,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -37687.484
+      secondsUntilStateChange: -38136.543
       state: Opening
     - type: ContainerContainer
       containers:

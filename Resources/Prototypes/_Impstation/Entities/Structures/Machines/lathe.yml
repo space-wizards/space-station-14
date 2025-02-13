@@ -108,6 +108,7 @@
       - CleanerGrenade #imp recipe
       #service
       - PlantAnalyzer #NF recipe
+      - FishingRod #imp recipe
       #misc.
       - FauxTileAstroGrass
       - FauxTileMowedAstroGrass
