@@ -116,9 +116,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering0
-    - CableMVStackLingering0
-    - CableHVStackLingering0
+    - CableApcStackLingering30
+    - CableMVStackLingering30
+    - CableHVStackLingering30
     - trayScanner
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
@@ -401,12 +401,12 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
-    - Gauze10Lingering
-    - Brutepack10Lingering
-    - Ointment10Lingering
-    - Bloodpack10Lingering
-    - RegenerativeMesh0Lingering
-    - MedicatedSuture0Lingering
+    - GauzeLingering10
+    - BrutepackLingering10
+    - OintmentLingering10
+    - BloodpackLingering10
+    - RegenerativeMeshLingering0
+    - MedicatedSutureLingering0
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
@@ -507,7 +507,7 @@
     - AnomalyLocatorWideUnpowered
     - HandLabeler
     - SheetRGlassLingering0
-    - SheetPlasma0Lingering
+    - SheetPlasmaLingering0
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }
 

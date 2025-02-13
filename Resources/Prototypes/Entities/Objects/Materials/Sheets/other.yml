@@ -134,7 +134,7 @@
 
 - type: entity
   parent: SheetPlasma
-  id: SheetPlasma0Lingering
+  id: SheetPlasmaLingering0
   name: plasma
   suffix: 0, Lingering
   components:
