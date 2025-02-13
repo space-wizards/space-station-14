@@ -1,0 +1,12 @@
+- type: entity
+  name: bibble
+  description: Self published, like many ancient texts.
+  parent: Bible
+  id: Bibble
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: bibble
+  - type: Item
+    size: Small
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi

@@ -7,3 +7,15 @@
   id: ClothingUniformFuneralSuitSkirt
   equipment:
     jumpsuit: ClothingUniformFuneralSuitSkirt #imp
+
+- type: loadout
+  id: ChaplainBookBible
+  storage:
+    back:
+    - Bible
+
+- type: loadout
+  id: ChaplainBookBibble
+  storage:
+    back:
+    - Bibble

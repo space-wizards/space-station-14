@@ -379,3 +379,11 @@
   loadouts:
   - LeatherShoes
   - CourierWinterBoots
+
+- type: loadoutGroup
+  id: ChaplainBook
+  name: loadout-group-chaplain-books
+  minLimit: 1
+  loadouts:
+    - ChaplainBookBible
+    - ChaplainBookBibble
