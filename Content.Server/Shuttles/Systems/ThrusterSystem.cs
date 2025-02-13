@@ -42,6 +42,8 @@ public sealed class ThrusterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<ThrusterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ThrusterComponent, ActivateInWorldEvent>(OnActivateThruster);
         SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
         SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
@@ -230,10 +232,15 @@ public sealed class ThrusterSystem : EntitySystem
         }
     }
 
+    private void OnMapInit(Entity<ThrusterComponent> ent, ref MapInitEvent args)
+    {
+        var (_, component) = ent;
+
+        component.NextFire = _timing.CurTime + component.FireCooldown;
+    }
+
     private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
     {
-        component.NextFire = _timing.CurTime + component.FireCooldown;
-
         _ambient.SetAmbience(uid, false);
 
         if (!component.Enabled)
