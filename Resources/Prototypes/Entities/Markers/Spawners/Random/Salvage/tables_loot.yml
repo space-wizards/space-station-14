@@ -91,7 +91,7 @@
     - id: DrinkGoldenCup
     - id: TreasureSampleTube
     - !type:NestedSelector
-      tableId: TreasureCoinPile
+      tableId: CoinPile
       rolls: !type:RangeNumberSelector
         range: 1, 2
     - !type:NestedSelector
@@ -114,7 +114,7 @@
       - id: TreasureHardDiskDrive
       - id: TreasureFlopDiskDrive
     - !type:NestedSelector
-      tableId: TreasureCoinPile
+      tableId: CoinPile
       rolls: !type:RangeNumberSelector
         range: 4, 7
     - id: SpaceCash1000
@@ -134,7 +134,7 @@
       weight: 0.5
     - id: ArabianLamp
     - !type:NestedSelector
-      tableId: TreasureCoinPileRare
+      tableId: CoinPileRare
       rolls: !type:RangeNumberSelector
         range: 2, 5
     - !type:AllSelector
@@ -163,7 +163,7 @@
     - id: ClothingHeadHatFancyCrown
     - id: GoldenBikeHorn
     - id: ClothingHeadHatCatEars
-    - id: TreasureCoinDiamond
+    - id: CoinDiamond
       amount: !type:RangeNumberSelector
         range: 2, 5
     - !type:NestedSelector
