@@ -1,30 +1,4 @@
 ﻿Entries:
-- author: kipdotnet, TGRCdev
-  changes:
-  - message: Added the SGD required trait, which limits your speech to only when youre
-      wearing a speech generating device.
-    type: Add
-  id: 615
-  time: '2024-12-01T07:20:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/855
-- author: TGRCdev
-  changes:
-  - message: Vent crawling takes 5 seconds by default
-    type: Tweak
-  - message: Vent crawling now blinds you while you're inside of a vent
-    type: Tweak
-  - message: Contortionist's jumpsuit is now 9 TC, and cannot be discounted
-    type: Tweak
-  id: 616
-  time: '2024-12-01T08:13:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/852
-- author: mqole
-  changes:
-  - message: Security Cadet role lockout now applies after 30hrs (increased from 15).
-    type: Tweak
-  id: 617
-  time: '2024-12-01T11:37:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/857
 - author: AftrLite
   changes:
   - message: Ongoing respriting efforts to various assets.
@@ -4212,3 +4186,24 @@
   id: 1114
   time: '2025-02-13T14:44:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1663
+- author: Sha-Seng
+  changes:
+  - message: Body bags now have high-vis tape on them
+    type: Tweak
+  id: 1115
+  time: '2025-02-13T14:48:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1666
+- author: Sha-Seng
+  changes:
+  - message: The WinterDrobe has coat and boot colors now!
+    type: Add
+  id: 1116
+  time: '2025-02-13T14:47:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1667
+- author: crocodilecarousel
+  changes:
+  - message: Explorer gas mask got a minor visual refresh.
+    type: Tweak
+  id: 1117
+  time: '2025-02-13T14:46:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1664
