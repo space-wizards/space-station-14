@@ -2,6 +2,7 @@
   id: ListeningPost
   name: roles-antag-listening-post-name
   antagonist: true
+  playTimeTracker: AntagListeningPost
   objective: roles-antag-listening-post-objective
   # keep these in sync with the spawner
   requirements: # Worth considering these numbers for the goal of making sure someone willing to MRP takes this.

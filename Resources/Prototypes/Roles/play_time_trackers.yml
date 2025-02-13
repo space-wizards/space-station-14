@@ -160,7 +160,7 @@
 - type: playTimeTracker
   id: JobZookeeper
 
-# imp change - Antag trackers
+# imp change - upstream antag trackers
 
 - type: playTimeTracker
   id: AntagDragon
@@ -200,3 +200,23 @@
 
 - type: playTimeTracker
   id: AntagZombie
+
+# non-upstream antagonists:
+
+- type: playTimeTracker
+  id: AntagFugitive
+
+- type: playTimeTracker
+  id: AntagSyndicateRecruiter
+
+- type: playTimeTracker
+  id: AntagListeningPost
+
+- type: playTimeTracker
+  id: AntagSynthesisSpecialist
+
+- type: playTimeTracker
+  id: AntagChangeling
+
+- type: playTimeTracker
+  id: AntagHeretic

@@ -53,3 +53,12 @@ JobNinja = Space Ninja
 AntagNinja = Space Ninja
 AntagDragon = Space Dragon
 AntagSubvertedSilicon = Subverted Silicon
+
+# non-upstream role timers
+
+AntagFugitive = Fugitive
+AntagSyndicateRecruiter = Syndicate Recruiter
+AntagListeningPost = Listening Post Operator
+AntagSynthesisSpecialist = Syndicate Synthesis Specialist
+AntagChangeling = Changeling
+AntagHeretic = Heretic
