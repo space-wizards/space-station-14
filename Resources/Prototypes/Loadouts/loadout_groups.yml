@@ -78,6 +78,14 @@
   loadouts:
   - Glasses
   - GlassesCheapSunglasses
+  # imp edit start - its in the middle for alphabetizing reasons sorry
+  - GlassesColorfulPink
+  - GlassesColorfulRed
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPurple
+  - GlassesColorfulYellow
+  # imp edit end
   - GlassesJamjar
   - GlassesJensen
 
