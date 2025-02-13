@@ -47,7 +47,7 @@ public sealed partial class Emote : EntityEffect
                 chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
                 break;
             case EmoteVisiblity.Popup:
-                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.HideChat, forceEmote: Force);
                 break;
             case EmoteVisiblity.Invisible:
                 chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
