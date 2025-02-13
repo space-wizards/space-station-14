@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 
-namespace Content.Server.Nutrition.Components
+namespace Content.Server._Impstation.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(SmokingSystem))]
     public sealed partial class VapeCartComponent : Component

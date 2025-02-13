@@ -1,10 +1,7 @@
-vape-component-vape-success = Puff. {$flavors}
-vape-component-vape-success-forced = {CAPITALIZE(THE($user))} forced you to puff on the vape. {$flavors}
+vape-component-vape-success = You puffed on the vape.
+vape-component-vape-success-forced = {CAPITALIZE(THE($user))} forced you to puffon the vape.
 vape-component-vape-success-user-forced = You successfully forced to puff {THE($target)}.
 vape-component-try-use-vape-forced = {CAPITALIZE(THE($user))} is trying to make you puff on the vape.
 vape-component-try-use-vape-forced-user = You are forcing {THE($target)} to puff on the vape.
 vape-component-try-use-vape = You are trying to puff on the vape.
-vape-component-vape-cart-slot-empty = The vape has no cart!
-vape-component-vape-cart-solution-empty = The cart is empty!
-vape-component-vape-incompatible = The vape doesn't produce any vapor!
-vape-component-vape-cart-slot-name-default = Cart slot
+vape-component-vape-empty = The vape is empty!

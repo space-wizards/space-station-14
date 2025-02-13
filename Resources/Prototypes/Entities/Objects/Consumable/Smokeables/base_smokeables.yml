@@ -76,6 +76,24 @@
       smokable:
         maxVol: 30
 
+- type: entity
+  parent: BaseItem
+  id: BaseVape
+  abstract: true
+  components:
+  - type: Vape
+    damage:
+      groups:
+        Burn: 2
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: smokable
+  - type: ExaminableSolution
+    solution: smokable
+
 # imp vapes!
 - type: entity
   parent: BaseItem
@@ -107,7 +125,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmall
       cart_slot:
-        name: vape-component-vape-cart-slot-name-default
+        name: vapepen-component-vape-cart-slot-name-default
         whitelist:
           tags:
           - VapeCart
@@ -136,7 +154,7 @@
         startingItem: PowerCellSmall
         locked: true
       cart_slot:
-        name: vape-component-vape-cart-slot-name-default
+        name: vapepen-component-vape-cart-slot-name-default
         startingItem: WaterVapeCart
         locked: true
         whitelist:
