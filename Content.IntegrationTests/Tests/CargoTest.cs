@@ -128,23 +128,20 @@ public sealed class CargoTest
             {
                 var ent = entManager.SpawnEntity(proto, coord);
 
+                Assert.That(entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticPriceComp), Is.True,
+                    $"The prototype {proto} has a StaticPriceComponent but somehow does not when spawned?"); // Sanity check
+
                 if (entManager.TryGetComponent<StackPriceComponent>(ent, out var stackpricecomp)
                     && stackpricecomp.Price > 0)
                 {
-                    if (entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticpricecomp))
-                    {
-                        Assert.That(staticpricecomp.Price, Is.EqualTo(0),
-                            $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
-                    }
+                    Assert.That(staticPriceComp.Price, Is.EqualTo(0),
+                        $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
                 }
 
                 if (entManager.HasComponent<StackComponent>(ent))
                 {
-                    if (entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticpricecomp))
-                    {
-                        Assert.That(staticpricecomp.Price, Is.EqualTo(0),
-                            $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other.");
-                    }
+                    Assert.That(staticPriceComp.Price, Is.EqualTo(0),
+                        $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other.");
                 }
 
                 entManager.DeleteEntity(ent);
