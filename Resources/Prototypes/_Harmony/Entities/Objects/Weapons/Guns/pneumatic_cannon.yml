@@ -1,0 +1,36 @@
+- type: entity
+  name: brigmedic's syringe gun
+  parent: [BaseStorageItem, BaseRestrictedContraband]
+  id: LauncherSyringeHarmony
+  description: Load full of poisoned syringes for optimal fun.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/syringe_gun.rsi
+    layers:
+    - state: syringe_gun
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,0,0
+    whitelist:
+      tags:
+      - SyringeGunAmmo
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/syringe_gun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    clumsyProof: true
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: StorageFill
+    contents:
+    - id: MiniSyringe

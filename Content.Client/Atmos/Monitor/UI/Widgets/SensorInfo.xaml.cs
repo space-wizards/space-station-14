@@ -12,12 +12,14 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets;
 public sealed partial class SensorInfo : BoxContainer
 {
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
+    public event Action<AtmosSensorData>? SensorDataCopied;
     private string _address;
 
     private ThresholdControl _pressureThreshold;
     private ThresholdControl _temperatureThreshold;
     private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
+    private Button _copySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
     {
@@ -56,7 +58,7 @@ public sealed partial class SensorInfo : BoxContainer
             gasThresholdControl.Margin = new Thickness(20, 2, 2, 2);
             gasThresholdControl.ThresholdDataChanged += (type, alarmThreshold, arg3) =>
             {
-                OnThresholdUpdate!(_address, type, alarmThreshold, arg3);
+                OnThresholdUpdate?.Invoke(_address, type, alarmThreshold, arg3);
             };
 
             _gasThresholds.Add(gas, gasThresholdControl);
@@ -72,12 +74,17 @@ public sealed partial class SensorInfo : BoxContainer
 
         _pressureThreshold.ThresholdDataChanged += (type, threshold, arg3) =>
         {
-            OnThresholdUpdate!(_address, type, threshold, arg3);
+            OnThresholdUpdate?.Invoke(_address, type, threshold, arg3);
         };
 
         _temperatureThreshold.ThresholdDataChanged += (type, threshold, arg3) =>
         {
-            OnThresholdUpdate!(_address, type, threshold, arg3);
+            OnThresholdUpdate?.Invoke(_address, type, threshold, arg3);
+        };
+
+        _copySettings.OnPressed += _ =>
+        {
+            SensorDataCopied?.Invoke(data);
         };
     }
 

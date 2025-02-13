@@ -1,0 +1,19 @@
+### Visitors with Visitor ID
+
+# Security
+
+- type: startingGear
+  id: VisitorBrigmedicHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrigmedic
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesBrigmedicHarmony
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatBeretBrigmedic
+    id: VisitorPDA
+    belt: ClothingBeltBrigmedFilledHarmony
+    back: ClothingBackpackBrigmedic
+    ears: ClothingHeadsetBrigmedic
+    outerClothing: ClothingOuterCoatAMG
+    pocket1: WeaponDisabler
+    pocket2: ScalpelAdvanced

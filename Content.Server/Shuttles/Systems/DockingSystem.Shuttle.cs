@@ -287,7 +287,9 @@ public sealed partial class DockingSystem
         var targetGridAngle = _transform.GetWorldRotation(targetGrid).Reduced();
 
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
+        // Harmony - Make sure the dock is not already an FTL target
         validDockConfigs = validDockConfigs
+           .Where(x => x.Docks.All(y => !y.DockA.QueuedDocked && !y.DockB.QueuedDocked)) // Harmony
            .OrderByDescending(x => IsConfigPriority(x, priorityTag))
            .ThenByDescending(x => x.Docks.Count)
            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();

@@ -81,10 +81,8 @@
     - ActionViewLaws
   - type: EmagSiliconLaw
     stunTime: 5
-# - type: SiliconLawProvider
-#   laws: Crewsimov
   - type: SiliconLawProvider
-    laws: CrewsimovBorgLawset #Harmony Lawset to add law 0 to follow AI orders
+    laws: Crewsimov
   - type: IonStormTarget
   - type: Inventory
     templateId: borg
@@ -169,7 +167,6 @@
     - cell_slot
   - type: Lock
     locked: true
-    breakOnEmag: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
@@ -315,6 +312,7 @@
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: SiliconLawProvider
     laws: SyndicateStatic
+    subverted: true
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary

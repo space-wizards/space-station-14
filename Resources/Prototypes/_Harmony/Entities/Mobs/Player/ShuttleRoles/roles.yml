@@ -1,0 +1,14 @@
+# Security
+
+- type: entity
+  id: RandomHumanoidVisitorBrigmedicHarmony
+  name: visiting brigmedic role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: brigmedic
+    - type: RandomHumanoidSpawner
+      settings: VisitorBrigmedicHarmony
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant

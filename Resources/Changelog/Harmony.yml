@@ -1037,3 +1037,102 @@ Entries:
     changes:
     - type: Tweak
       message: Slightly tweaked the monkey sprite.
+  - id: 255
+    author: Ermucat
+    time: '2025-01-23T21:36:13.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/255
+    changes:
+    - type: Tweak
+      message: Bonfires now set you on fire, watch your step.
+  - id: 317
+    author: BoskiYourk
+    time: '2025-01-26T11:00:24.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/317
+    changes:
+    - type: Tweak
+      message: Updated the senior job berets to better match their jumpsuits.
+  - id: 296
+    author: NakataRin
+    time: '2025-01-26T11:56:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/296
+    changes:
+    - type: Add
+      message: 'Added law 0 for borgs: obey AI.'
+  - id: 324
+    author: BoskiYourk
+    time: '2025-01-29T00:06:22.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/324
+    changes:
+    - type: Tweak
+      message: Increases the .35 pistol magazine from 10 to 15
+  - id: 318
+    author: thecopbennet
+    time: '2025-01-29T21:17:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/318
+    changes:
+    - type: Add
+      message: Adds a four telecrystal purchase for four hyposhells, shells that can
+        hold 7u of any reagent and inject upon impact, available for barkeepers and
+        zookeepers
+  - id: 331
+    author: DieselMohawk
+    time: '2025-02-01T13:07:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/331
+    changes:
+    - type: Fix
+      message: Made Bolas immune to explosions.
+  - id: 338
+    author: NakataRin
+    time: '2025-02-01T23:24:10.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/338
+    changes:
+    - type: Add
+      message: Added mantis gloves. They look like normal latex gloves, but hide deadly
+        blades inside
+  - id: 306
+    author: DieselMohawk
+    time: '2025-02-05T16:44:07.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/306
+    changes:
+    - type: Tweak
+      message: Sawn-Off shotgun designated as major contraband
+  - id: 356
+    author: youtissoum
+    time: '2025-02-05T16:47:19.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/356
+    changes:
+    - type: Tweak
+      message: Removed the ghost role raffle from slimes.
+    - type: Tweak
+      message: Removed the ghost role raffle from spiders.
+    - type: Tweak
+      message: Removed the ghost role raffle from the dragon's carps.
+  - id: 220
+    author: DieselMohawk
+    time: '2025-02-05T16:46:53.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/220
+    changes:
+    - type: Tweak
+      message: Ninja Stun Reduced to fit Flash stun time.
+  - id: 357
+    author: OrnamentalFreak
+    time: '2025-02-06T04:49:55.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/357
+    changes:
+    - type: Add
+      message: Added Blatantly Nuclear by mrjajkes
+  - id: 341
+    author: Jajsha
+    time: '2025-02-08T07:09:14.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/341
+    changes:
+    - type: Add
+      message: Added the workaday suit and various other clothing items to the
+        medical doctor loadout.
+  - id: 339
+    author: whythelettuce
+    time: '2025-02-08T08:07:24.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/339
+    changes:
+    - type: Add
+      message: Added new clothing for the cargo technician.
