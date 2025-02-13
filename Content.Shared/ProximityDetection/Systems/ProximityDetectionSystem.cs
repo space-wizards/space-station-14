@@ -41,13 +41,9 @@ public sealed class ProximityDetectionSystem : EntitySystem
     private void OnToggled(Entity<ProximityDetectorComponent> ent, ref ItemToggledEvent args)
     {
         if (args.Activated)
-        {
             UpdateTarget(ent);
-            return;
-        }
-
-        var ev = new ProximityTargetUpdatedEvent(ent.Comp.Distance, ent);
-        RaiseLocalEvent(ent, ref ev);
+        else
+            ClearTarget(ent);
     }
 
     public override void Update(float frameTime)
