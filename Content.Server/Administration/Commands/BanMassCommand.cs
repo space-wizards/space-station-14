@@ -60,7 +60,7 @@ public sealed class BanMassCommand : LocalizedCommands
 
             if (located == null)
             {
-                shell.WriteError(Loc.GetString("cmd-ban-player", ("target", trimmedTarget)));
+                shell.WriteError(Loc.GetString("cmd-ban-player"));
                 continue;
             }
 
