@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: The appraisal tool verb is now predicted!
-    type: Fix
-  id: 7450
-  time: '2024-09-28T04:40:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32496
 - author: Pyvik
   changes:
   - message: Added 2 new hairstyles.
@@ -3884,3 +3877,11 @@
   id: 7949
   time: '2025-02-13T19:27:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35088
+- author: Booblesnoot42
+  changes:
+  - message: Removing the security plate from an intercom will no longer delete its
+      encryption keys.
+    type: Fix
+  id: 7950
+  time: '2025-02-13T19:31:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34911
