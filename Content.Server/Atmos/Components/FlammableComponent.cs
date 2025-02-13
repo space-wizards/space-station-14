@@ -82,5 +82,12 @@ namespace Content.Server.Atmos.Components
 
         [DataField]
         public ProtoId<AlertPrototype> FireAlert = "Fire";
+
+        // imp edit
+        /// <summary>
+        /// Should the entity enable an AmbientSound component when lit, and disable it when unlit?
+        /// </summary>
+        [DataField]
+        public bool ToggleAmbientSound;
     }
 }

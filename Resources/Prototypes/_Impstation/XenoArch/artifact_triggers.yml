@@ -1,4 +1,13 @@
 - type: artifactTrigger
+  id: TriggerExpression
+  targetDepth: 2
+  triggerProb: 0.5
+  triggerHint: artifact-trigger-hint-expression
+  components:
+  - type: ArtifactExpressionTrigger
+    range: 4
+
+- type: artifactTrigger
   id: TriggerResurrection
   targetDepth: 4
   triggerHint: artifact-trigger-hint-resurrection
@@ -21,6 +30,15 @@
   triggerHint: artifact-trigger-hint-funny
   components:
   - type: ArtifactStunTrigger
+
+- type: artifactTrigger
+  id: TriggerExpressionDeep
+  targetDepth: 4
+  triggerProb: 0.7
+  triggerHint: artifact-trigger-hint-expression
+  components:
+  - type: ArtifactExpressionTrigger
+    range: 3
 
 # Separate drinks into twenty chunks. one chunk has a total probability of 1/20, so all drinks together have same prob as normal trigger
 # Some Chunks have multiple drinks (such as the tricky drink chunk)
@@ -388,13 +406,6 @@
       - !type:ActivateArtifact
 
 # Below exist to pad out the depth 4 triggers. Can remove some of those when we get more triggers implemented
-- type: artifactTrigger
-  id: TriggerMusicDeep
-  targetDepth: 4
-  triggerHint: artifact-trigger-hint-music
-  components:
-  - type: ArtifactMusicTrigger
-
 - type: artifactTrigger
   id: TriggerExamineDeep
   targetDepth: 4

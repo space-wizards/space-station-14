@@ -95,3 +95,7 @@ trait-basicfrench-desc = You speak with the cadence of someone who has cast off 
 
 trait-basicrussian-name = Russian (Basic)
 trait-basicrussian-desc = You speak with a russian accent, with much less word replacements.
+
+trait-painnumbness-name = Numb
+trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
+

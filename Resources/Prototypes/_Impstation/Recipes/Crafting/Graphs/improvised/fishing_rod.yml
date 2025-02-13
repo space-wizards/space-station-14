@@ -1,0 +1,17 @@
+- type: constructionGraph
+  id: FishingRod
+  start: start
+  graph:
+  - node: start
+    edges:
+      - to: rod
+        steps:
+          - material: WoodPlank
+            amount: 5
+          - material: Cloth
+            amount: 2
+          - material: Steel
+            amount: 1
+            doAfter: 5
+  - node: rod
+    entity: FishingRodBase

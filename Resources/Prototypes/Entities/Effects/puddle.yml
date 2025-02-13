@@ -172,7 +172,7 @@
       layers:
         - sprite: Fluids/wet_floor_sparkles.rsi
           state: sparkles
-      drawdepth: FloorObjects
+      drawdepth: Puddles
       color: "#FFFFFF80"
 
 - type: entity
@@ -191,7 +191,7 @@
     layers:
     - sprite: Fluids/puddle.rsi
       state: splat0
-    drawdepth: FloorObjects
+    drawdepth: Puddles
     color: "#FFFFFF80"
   - type: Physics
     bodyType: Static

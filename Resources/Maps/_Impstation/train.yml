@@ -38531,6 +38531,24 @@ entities:
     - type: Transform
       pos: 12.225706,-136.18898
       parent: 2
+- proto: ClothingMaskBlushingClown
+  entities:
+  - uid: 5557
+    components:
+    - type: Transform
+      parent: 5555
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: ClothingMaskBlushingMime
+  entities:
+  - uid: 5570
+    components:
+    - type: Transform
+      parent: 5567
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingMaskBreath
   entities:
   - uid: 5554
@@ -38573,24 +38591,6 @@ entities:
 - proto: ClothingMaskScaredMime
   entities:
   - uid: 5569
-    components:
-    - type: Transform
-      parent: 5567
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ClothingMaskSexyClown
-  entities:
-  - uid: 5557
-    components:
-    - type: Transform
-      parent: 5555
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ClothingMaskSexyMime
-  entities:
-  - uid: 5570
     components:
     - type: Transform
       parent: 5567
@@ -83672,6 +83672,13 @@ entities:
         - Pressed: Toggle
         840:
         - Pressed: Toggle
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 18997
+    components:
+    - type: Transform
+      pos: 4.5,-11.5
+      parent: 2
 - proto: LockerAtmosphericsFilled
   entities:
   - uid: 10828
@@ -96720,6 +96727,13 @@ entities:
     - type: Transform
       pos: 6.5,-166.5
       parent: 2
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 18996
+    components:
+    - type: Transform
+      pos: 6.5,-5.5
+      parent: 2
 - proto: SpawnPointAtmos
   entities:
   - uid: 13754
@@ -97008,6 +97022,23 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-28.5
+      parent: 2
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 18993
+    components:
+    - type: Transform
+      pos: 4.5,-280.5
+      parent: 2
+  - uid: 18994
+    components:
+    - type: Transform
+      pos: 5.5,-272.5
+      parent: 2
+  - uid: 18995
+    components:
+    - type: Transform
+      pos: 0.5,-277.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:

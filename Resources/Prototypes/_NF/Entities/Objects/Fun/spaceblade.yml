@@ -142,6 +142,9 @@
     damage: 8
   - type: DisarmMalus
     malus: 0.225
+  - type: Tag # imp adding this so it fits in a sec belt
+    tags:
+    - SpaceBladeSec
   - type: ItemToggle # imp edit - it deserves to weewoo
     predictable: false
     onUse: false

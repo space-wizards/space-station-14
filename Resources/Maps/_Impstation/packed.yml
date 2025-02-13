@@ -8090,7 +8090,7 @@ entities:
       pos: 101.5,-19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5260.995
+      secondsUntilStateChange: -5787.5664
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -36737,8 +36737,19 @@ entities:
       rot: 3.141592653589793 rad
       pos: 78.5,3.5
       parent: 2
+  - uid: 15085
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 35.5,45.5
+      parent: 2
 - proto: ChairFolding
   entities:
+  - uid: 14770
+    components:
+    - type: Transform
+      pos: 24.5,41.5
+      parent: 2
   - uid: 15164
     components:
     - type: Transform
@@ -36844,12 +36855,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 21.5,29.5
-      parent: 2
-  - uid: 4999
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 34.5,45.5
       parent: 2
   - uid: 5000
     components:
@@ -37791,13 +37796,6 @@ entities:
     - type: Transform
       pos: 89.35728,1.548007
       parent: 2
-- proto: ClothingBeltStorageWaistbag
-  entities:
-  - uid: 7821
-    components:
-    - type: Transform
-      pos: 20.561836,5.5983276
-      parent: 2
 - proto: ClothingBeltUtility
   entities:
   - uid: 5735
@@ -37997,6 +37995,13 @@ entities:
     - type: Transform
       pos: 58.54981,-24.623142
       parent: 2
+- proto: ClothingHeadHatCircusClown
+  entities:
+  - uid: 7821
+    components:
+    - type: Transform
+      pos: 19.878435,5.6406755
+      parent: 2
 - proto: ClothingHeadHatFedoraGrey
   entities:
   - uid: 7557
@@ -38088,13 +38093,6 @@ entities:
     - type: Transform
       pos: 65.46723,-14.576903
       parent: 2
-- proto: ClothingHeadHatTrucker
-  entities:
-  - uid: 3448
-    components:
-    - type: Transform
-      pos: 17.59203,5.387045
-      parent: 2
 - proto: ClothingHeadHatUshanka
   entities:
   - uid: 12674
@@ -38166,6 +38164,13 @@ entities:
     - type: Transform
       pos: 102.40892,-16.268303
       parent: 2
+- proto: ClothingMaskBlushingMime
+  entities:
+  - uid: 8345
+    components:
+    - type: Transform
+      pos: 25.245346,6.3236885
+      parent: 2
 - proto: ClothingMaskBreathMedical
   entities:
   - uid: 12657
@@ -38212,13 +38217,6 @@ entities:
     - type: Transform
       pos: 81.53254,11.610725
       parent: 2
-- proto: ClothingMaskSexyMime
-  entities:
-  - uid: 8345
-    components:
-    - type: Transform
-      pos: 25.245346,6.3236885
-      parent: 2
 - proto: ClothingMaskSterile
   entities:
   - uid: 11969
@@ -38254,11 +38252,6 @@ entities:
     - type: Transform
       pos: 7.491953,-13.240216
       parent: 2
-  - uid: 7009
-    components:
-    - type: Transform
-      pos: 19.545155,5.62142
-      parent: 2
 - proto: ClothingNeckScarfStripedRed
   entities:
   - uid: 12226
@@ -38289,13 +38282,6 @@ entities:
     components:
     - type: Transform
       pos: 64.40056,4.5256968
-      parent: 2
-- proto: ClothingNeckTieRed
-  entities:
-  - uid: 8289
-    components:
-    - type: Transform
-      pos: 19.90453,5.512045
       parent: 2
 - proto: ClothingOuterApron
   entities:
@@ -38408,6 +38394,13 @@ entities:
     - type: Transform
       pos: 76.51827,-13.498972
       parent: 2
+- proto: ClothingOuterCoatJokester
+  entities:
+  - uid: 3448
+    components:
+    - type: Transform
+      pos: 19.440935,5.757721
+      parent: 2
 - proto: ClothingOuterCoatLab
   entities:
   - uid: 5257
@@ -38514,13 +38507,6 @@ entities:
     components:
     - type: Transform
       pos: 86.50441,12.690075
-      parent: 2
-- proto: ClothingShoesBootsJack
-  entities:
-  - uid: 3615
-    components:
-    - type: Transform
-      pos: 18.604328,5.443143
       parent: 2
 - proto: ClothingShoesBootsMag
   entities:
@@ -38654,13 +38640,6 @@ entities:
     - type: Transform
       pos: 27.529085,-29.483822
       parent: 2
-- proto: ClothingUniformJumpsuitFlannel
-  entities:
-  - uid: 8290
-    components:
-    - type: Transform
-      pos: 19.93578,5.65267
-      parent: 2
 - proto: ClothingUniformJumpsuitMonasticRobeLight
   entities:
   - uid: 12654
@@ -38678,13 +38657,6 @@ entities:
     - type: Transform
       pos: 30.690329,7.316777
       parent: 2
-- proto: ClothingUniformJumpsuitPsychologist
-  entities:
-  - uid: 8306
-    components:
-    - type: Transform
-      pos: 20.21703,5.52767
-      parent: 2
 - proto: ClothingUniformJumpsuitRecruitSyndie
   entities:
   - uid: 12496
@@ -38699,12 +38671,19 @@ entities:
     - type: Transform
       pos: 11.491153,-11.444116
       parent: 2
-- proto: ClothingUniformOveralls
+- proto: ClothingUniformMrSpaceWide
   entities:
-  - uid: 8241
+  - uid: 7009
     components:
     - type: Transform
-      pos: 17.468086,5.4733276
+      pos: 20.638851,5.6897755
+      parent: 2
+- proto: ClothingUniformNightclubSuit
+  entities:
+  - uid: 5965
+    components:
+    - type: Transform
+      pos: 20.253435,5.6897755
       parent: 2
 - proto: ClownRecorder
   entities:
@@ -39031,11 +39010,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 20.5,-17.5
-      parent: 2
-  - uid: 12170
-    components:
-    - type: Transform
-      pos: 34.5,46.5
       parent: 2
 - proto: ComputerPowerMonitoring
   entities:
@@ -46493,11 +46467,6 @@ entities:
       parent: 2
 - proto: FoodBoxDonut
   entities:
-  - uid: 4982
-    components:
-    - type: Transform
-      pos: 33.510082,46.65118
-      parent: 2
   - uid: 6761
     components:
     - type: Transform
@@ -46507,6 +46476,11 @@ entities:
     components:
     - type: Transform
       pos: 35.53611,17.66077
+      parent: 2
+  - uid: 14566
+    components:
+    - type: Transform
+      pos: 35.456734,46.859024
       parent: 2
 - proto: FoodBreadBananaSlice
   entities:
@@ -46550,6 +46524,13 @@ entities:
     components:
     - type: Transform
       pos: 36.093643,-12.174504
+      parent: 2
+- proto: FoodDonutPink
+  entities:
+  - uid: 15087
+    components:
+    - type: Transform
+      pos: 35.725197,46.55974
       parent: 2
 - proto: FoodFrozenPopsicleTrash
   entities:
@@ -66531,10 +66512,10 @@ entities:
       parent: 2
 - proto: HolopadCommandMeetingRoom
   entities:
-  - uid: 15230
+  - uid: 4999
     components:
     - type: Transform
-      pos: 24.5,41.5
+      pos: 23.5,42.5
       parent: 2
 - proto: HolopadCommandQm
   entities:
@@ -67441,6 +67422,13 @@ entities:
         - Pressed: Open
         600:
         - Pressed: Open
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 15086
+    components:
+    - type: Transform
+      pos: 34.5,46.5
+      parent: 2
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 1458
@@ -72192,12 +72180,6 @@ entities:
     components:
     - type: Transform
       pos: 72.5,-9.5
-      parent: 2
-  - uid: 5965
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 17.5,5.5
       parent: 2
   - uid: 7270
     components:
@@ -78614,6 +78596,13 @@ entities:
     - type: Transform
       pos: 50.5,-8.5
       parent: 2
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 14766
+    components:
+    - type: Transform
+      pos: 24.5,41.5
+      parent: 2
 - proto: SpawnPointAtmos
   entities:
   - uid: 4577
@@ -78675,11 +78664,6 @@ entities:
     components:
     - type: Transform
       pos: 13.5,22.5
-      parent: 2
-  - uid: 8259
-    components:
-    - type: Transform
-      pos: 12.5,22.5
       parent: 2
   - uid: 8260
     components:
@@ -78812,6 +78796,18 @@ entities:
     components:
     - type: Transform
       pos: 9.5,3.5
+      parent: 2
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 8259
+    components:
+    - type: Transform
+      pos: 12.5,22.5
+      parent: 2
+  - uid: 14753
+    components:
+    - type: Transform
+      pos: 10.5,22.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:
@@ -82857,11 +82853,10 @@ entities:
       parent: 2
 - proto: ToolboxEmergencyFilled
   entities:
-  - uid: 4997
+  - uid: 4998
     components:
     - type: Transform
-      rot: 3.573787398636341E-05 rad
-      pos: 35.50106,46.735016
+      pos: 33.51486,46.80585
       parent: 2
   - uid: 11411
     components:
@@ -82882,11 +82877,6 @@ entities:
     - type: Transform
       pos: 6.500301,40.636074
       parent: 2
-  - uid: 4998
-    components:
-    - type: Transform
-      pos: 35.491802,46.459015
-      parent: 2
   - uid: 7357
     components:
     - type: Transform
@@ -82896,6 +82886,11 @@ entities:
     components:
     - type: Transform
       pos: 31.521385,-17.500805
+      parent: 2
+  - uid: 12170
+    components:
+    - type: Transform
+      pos: 33.499233,46.55585
       parent: 2
   - uid: 12357
     components:
@@ -83448,6 +83443,13 @@ entities:
     - type: Transform
       pos: 44.5,-4.5
       parent: 2
+- proto: VendingMachinePride
+  entities:
+  - uid: 8241
+    components:
+    - type: Transform
+      pos: 18.5,5.5
+      parent: 2
 - proto: VendingMachineRoboDrobe
   entities:
   - uid: 5376
@@ -83553,6 +83555,11 @@ entities:
     components:
     - type: Transform
       pos: 25.5,8.5
+      parent: 2
+  - uid: 3615
+    components:
+    - type: Transform
+      pos: 17.5,5.5
       parent: 2
 - proto: VendingMachineVendomat
   entities:
@@ -95282,6 +95289,12 @@ entities:
       parent: 2
 - proto: WindoorSecureCommandLocked
   entities:
+  - uid: 4997
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 34.5,45.5
+      parent: 2
   - uid: 8247
     components:
     - type: Transform
@@ -95942,6 +95955,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-38.5
+      parent: 2
+  - uid: 4982
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 34.5,46.5
       parent: 2
   - uid: 5034
     components:

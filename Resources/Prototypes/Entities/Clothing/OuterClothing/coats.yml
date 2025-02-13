@@ -10,7 +10,7 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBasic]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBase]
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
   description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
@@ -30,7 +30,7 @@
   parent: [ClothingOuterCoatDetectiveLoadout]
   id: ClothingOuterCoatDetectiveLoadoutGrey
   name: noir trenchcoat
-  description: Ah, your trusty coat. There's a few tears here and there, giving it a more timely look. Or at least, that's what you told yourself when you found out gettin' it repaired would set you back 200 speos.
+  description: Ah, your trusty coat. There's a few tears here and there, giving it a more timely look. Or at least, that's what you told yourself when you found out gettin' it repaired would set you back 200 spesos.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
@@ -468,3 +468,25 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterCoatFieldBomber
+  name: field bomber
+  description: A red bomber jacket, worn open with the sleeves pushed up. The Nanotrasen logo on the front and the shield on the back are sewn with special high-vis thread.
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi
+  - type: Clothing
+    sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi #imp
+
+- type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatFieldJacket
+  name: field jacket
+  description: A soft black suit jacket with loose cuffs. The white logos mark the wearer as Nanotrasen security.
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/OuterClothing/Coats/field_jacket.rsi
+  - type: Clothing
+    sprite: _NF/Clothing/OuterClothing/Coats/field_jacket.rsi #imp

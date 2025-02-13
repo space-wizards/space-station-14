@@ -39,7 +39,7 @@ public sealed class StandingStateSystem : EntitySystem
         StandingStateComponent? standingState = null,
         AppearanceComponent? appearance = null,
         HandsComponent? hands = null,
-        bool intentional = true)
+        bool intentional = false)
     {
         // TODO: This should actually log missing comps...
         if (!Resolve(uid, ref standingState, false))

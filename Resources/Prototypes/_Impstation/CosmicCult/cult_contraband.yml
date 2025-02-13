@@ -5,4 +5,4 @@
   - type: Contraband
     severity: CosmicCultContrabandSeverity
     # no one should be carrying this around visibly!
-    allowedDepartments: null
+    allowedDepartments: []

@@ -1,12 +1,4 @@
 - type: trait
-  id: PainInsensitivity
-  name: trait-pain-insensitivity-name
-  description: trait-pain-insensitivity-desc
-  category: Disabilities
-  components:
-    - type: PainInsensitivity
-
-- type: trait
   id: RandomUnrevivable
   name: trait-random-unrevivable-name
   description: trait-random-unrevivable-desc

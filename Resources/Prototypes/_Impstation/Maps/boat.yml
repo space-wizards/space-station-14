@@ -24,6 +24,7 @@
             StationAi: [ 1, 1 ]
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant : [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
@@ -59,6 +60,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
+            SupplyAssistant: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 2, 2 ]

@@ -15,6 +15,8 @@ supermatter-console-window-status-danger = Danger
 supermatter-console-window-status-emergency = Emergency
 supermatter-console-window-status-delaminating = Delaminating
 
+supermatter-console-window-label-show-all-gas = Show All Gases
+
 supermatter-console-window-label-integrity = Integrity:
 supermatter-console-window-label-integrity-bar = {$integrity}%
 supermatter-console-window-label-integrity-healing = Low Temperature Healing (Δ):
