@@ -164,9 +164,6 @@
     containers:
       cell_slot: !type:ContainerSlot
       cart_slot: !type:ContainerSlot
-  - type: SolutionContainerVisuals
-    maxFillLevels: 2
-    fillBaseName: fill
   - type: PhysicalComposition
     materialComposition:
       Plastic: 75

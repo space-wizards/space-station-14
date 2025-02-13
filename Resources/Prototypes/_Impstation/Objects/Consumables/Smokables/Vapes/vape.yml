@@ -1,8 +1,10 @@
+## Vape Body Types ##
+
 - type: entity
   parent: BaseVapeSwappable
   id: VapeSwappable
-  name: vape
-  description: Reconstructed smoking tech imported from a group of Gray Terra fanatics in Andromeda.
+  name: vape box mod
+  description: Reconstructed smoking tech imported from a group of Terra enthusiast Grays in Andromeda.
   components:
   - type: Item
     size: Small
@@ -28,7 +30,7 @@
 
 - type: entity
   parent: BaseVapeDisposable
-  id: VapeDisposable
+  id: VapeDisposableBar
   name: disposable vape
   description: Kinda trash but gets the job done.
   components:
@@ -49,13 +51,52 @@
     fillBaseName: fill
     changeColor: false
 
+- type: entity
+  parent: BaseVapeDisposable
+  id: VapeDisposablePen
+  name: disposable vape pen
+  description: This is worse than what they got on Galpatrica 7.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-disposable.rsi
+    layers:
+    - state: pen
+      map: [ "color" ]
+  - type: RandomSprite
+    available:
+      - color:
+          pen: Rainbow
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: VapePen
+    damage:
+      types:
+        Burn: 2
+    chargeUse: 72
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        locked: true
+      cart_slot:
+        name: vapepen-component-vape-cart-slot-name-default
+        startingItem: GalpatricaVapeCart
+        locked: true
+        whitelist:
+          tags:
+          - VapeCart
 
-## Cartridge Prefill Packs ##
+
+## Cartridge Prefill Containers ##
 
 - type: entity
   parent: BaseStorageItem
-  id: BaseVapeCartPack
-  name: vape cartridge pack
+  id: VapeCartContainerBasic
+  name: vape cartridge basics pack
   components:
   - type: Item
     size: Tiny
@@ -173,6 +214,45 @@
     - type: VapeCart
       gasReductionFactor: 0.5
       ignoreDamage: true  # for mass vaping events
+
+- type: entity
+  parent: BaseVapeCart
+  id: GalpatricaVapeCart
+  name: Icky-Ew
+  description: This is just as bad as the shit they got on Galpatrica 7.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 10
+          - ReagentId: TheDrink
+            Quantity: 1
+          - ReagentId: Ammonia
+            Quantity: 4
+    - type: VapeCart
+      gasReductionFactor: 0.25
+
+- type: entity
+  parent: BaseVapeCart
+  id: HorsepussyVapeCart
+  name: The Holy Prefill
+  description: Legend has it that if you chainsmoke these rare carts, you'll get into heaven.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 10
+          - ReagentId: TheeHorsepussy
+            Quantity: 5
+    - type: VapeCart
+      gasReductionFactor: 0.5
+      flavorMultiplicationFactor: 2.25  # even with perfect inputs, it's REALLY hard to proc the main effect
 
 - type: entity
   parent: BaseVapeCart
