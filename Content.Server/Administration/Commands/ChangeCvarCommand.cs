@@ -17,12 +17,14 @@ namespace Content.Server.Administration.Commands;
 /// <remarks>
 /// Possible todo for future, store default values for cvars, and allow resetting to default.
 /// </remarks>
-public sealed class ChangeCvarCommand : LocalizedCommands
+[AnyCommand]
+public sealed class ChangeCvarCommand : IConsoleCommand
 {
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     private List<ChangableCVar> _changableCvars = new();
     private bool _initialized;
@@ -47,7 +49,7 @@ public sealed class ChangeCvarCommand : LocalizedCommands
                 }
 
                 var cvarDef = (CVarDef)field.GetValue(null)!;
-                _changableCvars.Add(new ChangableCVar(cvarDef.Name, allowed));
+                _changableCvars.Add(new ChangableCVar(cvarDef.Name, allowed, _localizationManager));
                 // Possible todo? check if the cvar is registered in the config manager? or already registered in our list?
                 // Think engine will blow up anyways if its double registered? Not sure.
                 // This command should be fine with multiple registrations.
@@ -55,10 +57,55 @@ public sealed class ChangeCvarCommand : LocalizedCommands
         }
     }
 
-    public override string Command => "changecvar";
-    public override string Description { get; } = Loc.GetString("cmd-changecvar-desc");
-    public override string Help { get; } = Loc.GetString("cmd-changecvar-help");
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    /// <summary>
+    /// Searches the list of cvars for a cvar that matches the search string.
+    /// </summary>
+    private void SearchCVars(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length < 2)
+        {
+            shell.WriteLine(Loc.GetString("cmd-changecvar-search-no-arguments"));
+            return;
+        }
+
+        var cvars = GetAllRunnableCvars(shell);
+
+        var matches = cvars
+            .Where(c =>
+                c.Name.Contains(args[1], StringComparison.OrdinalIgnoreCase)
+                || c.ShortHelp?.Contains(args[1], StringComparison.OrdinalIgnoreCase) == true
+                || c.LongHelp?.Contains(args[1], StringComparison.OrdinalIgnoreCase) == true
+                ) // Might be very slow and stupid, but eh.
+            .ToList();
+
+        if (matches.Count == 0)
+        {
+            shell.WriteLine(Loc.GetString("cmd-changecvar-search-no-matches"));
+            return;
+        }
+
+        shell.WriteLine(Loc.GetString("cmd-changecvar-search-matches", ("count", matches.Count)));
+        shell.WriteLine(string.Join("\n", matches.Select(FormatCVarFullHelp)));
+    }
+
+    /// <summary>
+    /// Formats a CVar into a string for display.
+    /// </summary>
+    private string FormatCVarFullHelp(ChangableCVar cvar)
+    {
+        if (cvar.LongHelp != null && cvar.ShortHelp != null)
+        {
+            return $"{cvar.Name} - {cvar.LongHelp}";
+        }
+
+        // There is no help, no one is coming. We are all doomed.
+        return cvar.Name;
+    }
+
+    public string Command => "changecvar";
+    public string Description { get; } = Loc.GetString("cmd-changecvar-desc");
+    public string Help { get; } = Loc.GetString("cmd-changecvar-help");
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
@@ -78,7 +125,13 @@ public sealed class ChangeCvarCommand : LocalizedCommands
             }
 
             shell.WriteLine(Loc.GetString("cmd-changecvar-available-cvars"));
-            shell.WriteLine(string.Join("\n", cvars.Select(c => c.Name)));
+            shell.WriteLine(string.Join("\n", cvars.Select(FormatCVarFullHelp)));
+            return;
+        }
+
+        if (cvar == "search")
+        {
+            SearchCVars(shell, argStr, args);
             return;
         }
 
@@ -176,7 +229,7 @@ public sealed class ChangeCvarCommand : LocalizedCommands
         }
     }
 
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         // This is kinda scrunkly.
         // Ideally I would run init the moment the dependencies are injected, but IPostInjectInit.PostInject()
@@ -188,9 +241,9 @@ public sealed class ChangeCvarCommand : LocalizedCommands
         if (args.Length == 1)
         {
             return CompletionResult.FromHintOptions(
-                cvars.Select(c => c.Name)
-                    .Select(c => new CompletionOption(c)),
-                Loc.GetString("cmd-cvar-arg-name"));
+                cvars
+                    .Select(c => new CompletionOption(c.Name, c.ShortHelp ?? c.Name)),
+                Loc.GetString("cmd-changecvar-arg-name"));
         }
 
         var cvar = args[0];
@@ -219,15 +272,36 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
     private sealed class ChangableCVar
     {
+        private const string LocPrefix = "changecvar";
+
         public string Name { get; }
 
         // Holding a reference to the attribute might be skrunkly? Not sure how much mem it eats up.
         public CVarControl Control { get; }
 
-        public ChangableCVar(string name, CVarControl control)
+        public string? ShortHelp;
+        public string? LongHelp;
+
+        public ChangableCVar(string name, CVarControl control, ILocalizationManager loc)
         {
             Name = name;
             Control = control;
+
+            if (loc.TryGetString($"{LocPrefix}-simple-{name.Replace('.', '_')}", out var simple))
+            {
+                ShortHelp = simple;
+            }
+
+            if (loc.TryGetString($"{LocPrefix}-full-{name.Replace('.', '_')}", out var longHelp))
+            {
+                LongHelp = longHelp;
+            }
+
+            // If one is set and the other is not, we throw
+            if (ShortHelp == null && LongHelp != null || ShortHelp != null && LongHelp == null)
+            {
+                throw new InvalidOperationException("Short and long help must both be set or both be null.");
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ public sealed class CVarControl : Attribute
     public object? Min { get; }
     public object? Max { get; }
 
-    public CVarControl(AdminFlags adminFlags, object? min = null, object? max = null)
+    public CVarControl(AdminFlags adminFlags, object? min = null, object? max = null, string? helpText = null)
     {
         AdminFlags = adminFlags;
         Min = min;
