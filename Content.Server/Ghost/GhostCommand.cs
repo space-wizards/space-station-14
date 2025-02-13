@@ -29,7 +29,7 @@ namespace Content.Server.Ghost
             if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
                 playerStatus is not PlayerGameStatus.JoinedGame)
             {
-                shell.WriteLine("ghost-command-error-lobby");
+                shell.WriteLine(Loc.GetString("ghost-command-error-lobby"));
                 return;
             }
 
