@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Writing instruments (pens, crayons, etc) can now be stored in folders
-    type: Tweak
-  id: 614
-  time: '2024-12-01T06:54:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/854
 - author: kipdotnet, TGRCdev
   changes:
   - message: Added the SGD required trait, which limits your speech to only when youre
@@ -4212,3 +4205,10 @@
   id: 1113
   time: '2025-02-13T14:38:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1673
+- author: DinnerCalzone
+  changes:
+  - message: Courier support has been added to Plasma.
+    type: Add
+  id: 1114
+  time: '2025-02-13T14:44:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1663
