@@ -235,7 +235,7 @@
 ### side knowledge
 - type: hereticRitual
   id: RitualOfKnowledge
-  locName: knowledge-path-side-knowledge-name
+  locName: knowledge-path-side-knowledge
   locDesc: knowledge-path-side-knowledge-desc
   icon: 
     sprite: _Goobstation/Heretic/book.rsi
