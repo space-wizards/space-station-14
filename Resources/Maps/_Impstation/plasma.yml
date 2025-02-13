@@ -8676,16 +8676,16 @@ entities:
           -26,0:
             1: 30711
           -28,0:
-            3: 21840
-            4: 8736
+            3: 13104
+            4: 17472
           -28,1:
             1: 208
             0: 32
-            3: 28672
+            4: 28672
           -29,1:
             1: 21973
           -28,2:
-            3: 119
+            4: 119
             1: 61440
           -29,2:
             1: 54613
@@ -8811,7 +8811,7 @@ entities:
             1: 61695
           -32,0:
             1: 4
-            3: 4112
+            4: 4112
             0: 17472
           -31,-3:
             1: 65535
@@ -8832,13 +8832,13 @@ entities:
           -29,0:
             1: 21845
           -33,0:
-            3: 49344
+            4: 49344
             1: 4369
           -32,1:
-            3: 4112
+            4: 4112
             0: 17476
           -33,1:
-            3: 49344
+            4: 49344
             1: 4369
           -32,2:
             5: 16
@@ -9055,7 +9055,7 @@ entities:
             1: 221
           -37,0:
             0: 34952
-            3: 13104
+            4: 13104
           -36,1:
             0: 8955
             1: 20480
@@ -9255,7 +9255,7 @@ entities:
             0: 65535
           -38,0:
             0: 13107
-            3: 34944
+            4: 34944
           -32,-14:
             1: 20206
           -32,-12:
@@ -9699,7 +9699,7 @@ entities:
           - 0
           - 0
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -9714,7 +9714,7 @@ entities:
           - 0
           - 0
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -23467,21 +23467,6 @@ entities:
     - type: Transform
       pos: -129.5,1.5
       parent: 2
-  - uid: 22437
-    components:
-    - type: Transform
-      pos: -111.5,3.5
-      parent: 2
-  - uid: 22438
-    components:
-    - type: Transform
-      pos: -111.5,2.5
-      parent: 2
-  - uid: 22439
-    components:
-    - type: Transform
-      pos: -111.5,1.5
-      parent: 2
   - uid: 22443
     components:
     - type: Transform
@@ -23999,6 +23984,21 @@ entities:
     components:
     - type: Transform
       pos: -110.5,1.5
+      parent: 2
+  - uid: 22437
+    components:
+    - type: Transform
+      pos: -111.5,3.5
+      parent: 2
+  - uid: 22438
+    components:
+    - type: Transform
+      pos: -111.5,2.5
+      parent: 2
+  - uid: 22439
+    components:
+    - type: Transform
+      pos: -111.5,1.5
       parent: 2
 - proto: AtmosMonitoringComputerCircuitboard
   entities:
