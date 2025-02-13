@@ -2,6 +2,7 @@
   id: Nukeops
   name: roles-antag-nuclear-operative-name
   antagonist: true
+  playTimeTracker: AntagNuclearOperative # imp
   setPreference: true
   objective: roles-antag-nuclear-operative-objective
   requirements:
@@ -13,6 +14,7 @@
   id: NukeopsMedic
   name: roles-antag-nuclear-operative-agent-name
   antagonist: true
+  playTimeTracker: AntagNuclearAgent # imp
   setPreference: true
   objective: roles-antag-nuclear-operative-agent-objective
   requirements:
@@ -27,6 +29,7 @@
   id: NukeopsCommander
   name: roles-antag-nuclear-operative-commander-name
   antagonist: true
+  playTimeTracker: AntagNuclearCommander # imp
   setPreference: true
   objective: roles-antag-nuclear-operative-commander-objective
   requirements:
