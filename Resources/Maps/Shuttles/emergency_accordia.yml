@@ -66,6 +66,11 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
     - type: OccluderTree
     - type: SpreaderGrid
     - type: Shuttle
@@ -5170,11 +5175,10 @@ entities:
       parent: 1
 - proto: PosterLegitVacation
   entities:
-  - uid: 912
+  - uid: 1017
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 4.5,-22.5
+      pos: 4.5,-25.5
       parent: 1
 - proto: PosterLegitWorkForAFuture
   entities:
@@ -5644,6 +5648,53 @@ entities:
     components:
     - type: Transform
       pos: -1.5,-17.5
+      parent: 1
+- proto: Screen
+  entities:
+  - uid: 912
+    components:
+    - type: Transform
+      pos: 4.5,-22.5
+      parent: 1
+  - uid: 1011
+    components:
+    - type: Transform
+      pos: -5.5,-0.5
+      parent: 1
+  - uid: 1012
+    components:
+    - type: Transform
+      pos: -5.5,-8.5
+      parent: 1
+  - uid: 1013
+    components:
+    - type: Transform
+      pos: 4.5,-10.5
+      parent: 1
+  - uid: 1014
+    components:
+    - type: Transform
+      pos: 4.5,1.5
+      parent: 1
+  - uid: 1015
+    components:
+    - type: Transform
+      pos: -4.5,-20.5
+      parent: 1
+  - uid: 1016
+    components:
+    - type: Transform
+      pos: 4.5,-14.5
+      parent: 1
+  - uid: 1018
+    components:
+    - type: Transform
+      pos: -3.5,8.5
+      parent: 1
+  - uid: 1019
+    components:
+    - type: Transform
+      pos: 5.5,13.5
       parent: 1
 - proto: ShotGunCabinetFilled
   entities:
