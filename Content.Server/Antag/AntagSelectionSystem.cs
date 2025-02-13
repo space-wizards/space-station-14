@@ -322,40 +322,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 guaranteed.Add(keyValuePair.Key);
             }
             probToGuarantee -= probReduction; // reduce the probability of the next entry getting a guaranteed slot by (maximum prob / (total queried players / 2))
-            if (probToGuarantee <= 0) // then stop the loop if the next probability is less than or equal to 0.
+            if (probToGuarantee <= 0 || guaranteed.Count == count) // stop the loop if the next probability is less than or equal to 0, or if the guaranteed list has hit the target antag count.
                 break;
-        } // end imp
+        }
 
         for (var i = 0; i < count; i++)
         {
             var session = (ICommonSession?)null;
-            if (picking)
+            // if the playtime bias system picked any guaranteed antags,
+            if (guaranteed.Count > 0)
             {
-                // imp begin. if the playtime bias system picked any guaranteed antags, 
-                if (guaranteed.Count > 0)
-                {
-                    foreach (var selectedSession in guaranteed) // do antag adding logic
-                    {
-                        if (!midround && ent.Comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn && selectedSession != null)
-                        {
-                            ent.Comp.SelectedSessions.Add(selectedSession);
-                            QueuedAntags[selectedSession.UserId] = (selectedSession, def, ent);
-                        }
-                        else
-                        {
-                            MakeAntag(ent, selectedSession, def);
-                        }
-
-                        i++; // and add 1 to i (so that each of these counts towards the comparison against `count`)
-                        if (i >= count)
-                            break;
-                    }
-                    if (i >= count)
-                        break;
-                    guaranteed.Clear(); // empty the list so this doesn't run again.
-                    continue;
-                } // end imp
-
+                session = guaranteed[0]; // set this session as the picked session and proceed through the rest of the process
+                guaranteed.RemoveAt(0);
+            }
+            if (picking && session == null)
+            {
                 if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
                 {
                     Log.Warning($"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
