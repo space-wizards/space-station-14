@@ -82,13 +82,13 @@ public sealed class BanMassCommand : LocalizedCommands
         }
 
         if (args.Length == 1)
-            return CompletionResult.FromHint(LocalizationManager.GetString("cmd-ban-hint-reason"));
+            return CompletionResult.FromHint(Loc.GetString("cmd-ban-hint-reason"));
 
         if (args.Length == 2)
         {
             var durations = _bans.BanDurations;
 
-            return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString("cmd-ban-hint-duration"));
+            return CompletionResult.FromHintOptions(durations, Loc.GetString("cmd-ban-hint-duration"));
         }
 
         return CompletionResult.Empty;
