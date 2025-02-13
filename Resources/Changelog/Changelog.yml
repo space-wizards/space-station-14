@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pyvik
-  changes:
-  - message: Added 2 new hairstyles.
-    type: Add
-  id: 7451
-  time: '2024-09-28T06:07:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31010
 - author: metalgearsloth
   changes:
   - message: Fix a lot of jankiness around airlocks.
@@ -3885,3 +3878,12 @@
   id: 7950
   time: '2025-02-13T19:31:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34911
+- author: Velken
+  changes:
+  - message: Paramedic Void Suit now has flashlight and an ambulance siren.
+    type: Add
+  - message: Paramedic Void Suit is now restricted to Medical.
+    type: Tweak
+  id: 7951
+  time: '2025-02-13T19:52:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34657
