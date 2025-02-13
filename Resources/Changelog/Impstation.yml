@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Ongoing resprites to a large amount of assets. Expect more palette parity
-      and 4:3 perspective matching.
-    type: Tweak
-  id: 612
-  time: '2024-11-30T22:53:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/823
 - author: widgetbeck
   changes:
   - message: Markings now support shaders. As an example, SlimeEyeGlow has been updated
@@ -4211,3 +4203,10 @@
   id: 1111
   time: '2025-02-11T22:36:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1642
+- author: rainyatrium
+  changes:
+  - message: Added 21 new Syndicate factions from character backstories
+    type: Add
+  id: 1112
+  time: '2025-02-13T10:39:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1675
