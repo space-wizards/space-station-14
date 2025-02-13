@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix storage area pickup sound playing more than once.
-    type: Fix
-  id: 7445
-  time: '2024-09-27T07:09:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32397
-- author: metalgearsloth
-  changes:
   - message: Fix verbs shuffling on mobs.
     type: Fix
   - message: Stripping is now predicted.
@@ -3895,3 +3888,10 @@
   id: 7944
   time: '2025-02-12T18:41:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35111
+- author: SaphireLattice, themias
+  changes:
+  - message: Chair buckle draw depth is slightly less broken
+    type: Fix
+  id: 7945
+  time: '2025-02-13T05:51:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33447
