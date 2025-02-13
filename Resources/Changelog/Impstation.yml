@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: widgetbeck
   changes:
-  - message: Decapoids are done. The only remaining issue is that their urist does
-      not spawn with their emote sounds for some reason.
-    type: Add
-  id: 621
-  time: '2024-12-02T12:46:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/859
-- author: widgetbeck
-  changes:
   - message: Clarified the description of the "SGD Required" trait.
     type: Tweak
   id: 622
@@ -4199,3 +4191,11 @@
   id: 1120
   time: '2025-02-13T17:20:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1653
+- author: MintyTheBinty
+  changes:
+  - message: Changed a few of the suitskirts to now include sheer leggings, plus changed
+      the hue of the nightclub suit's tie to not blend in so much with grey tiles.
+    type: Tweak
+  id: 1121
+  time: '2025-02-13T22:06:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1680
