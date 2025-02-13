@@ -70,6 +70,9 @@
     containers:
     - devoter-slot
     deconstructionTarget: undevoted
+  - type: ExitContainerOnMove #allow mobs placed in containers used as devoters to escape the altar
+    containerId: devoter-slot
+
 
 - type: entity
   id: AltarUndevoted
