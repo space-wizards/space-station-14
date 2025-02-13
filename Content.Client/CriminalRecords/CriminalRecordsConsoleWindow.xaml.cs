@@ -263,7 +263,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
         var na = Loc.GetString("generic-not-available-shorthand");
         PersonName.Text = stationRecord.Name;
-        PersonGender.Text = Loc.GetString("general-station-record-console-record-gender", ("gender", stationRecord.Gender));
+        PersonGender.Text = Loc.GetString("gender-display", ("gender", stationRecord.Gender));
         PersonJob.Text = stationRecord.JobTitle ?? na;
         PersonPrints.Text = Loc.GetString("general-station-record-console-record-fingerprint", ("fingerprint", stationRecord.Fingerprint ?? na));
         PersonDna.Text = Loc.GetString("general-station-record-console-record-dna", ("dna", stationRecord.DNA ?? na));
