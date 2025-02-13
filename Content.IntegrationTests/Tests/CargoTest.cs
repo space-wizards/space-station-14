@@ -115,7 +115,6 @@ public sealed class CargoTest
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => p.Components.ContainsKey("StaticPrice"))
-                .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
                 .ToList();
 
             foreach (var proto in protoIds)
