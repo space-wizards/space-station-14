@@ -18,7 +18,7 @@
     price: 75
   - type: CoinFlippable
     canLandOnItsSide: true
-    percentageSideLand: 0.1F # 0.1% or 1 in 1000
+    percentageSideLand: 0.1 # 0.1% or 1 in 1000
     currentValue: 1
 
 - type: entity
