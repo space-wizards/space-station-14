@@ -50,6 +50,8 @@ namespace Content.Server.Voting.Managers
             else
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a {voteType.ToString()} vote");
 
+            _gameTicker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+
             bool timeoutVote = true;
 
             switch (voteType)
@@ -70,7 +72,6 @@ namespace Content.Server.Voting.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
             }
-            _gameTicker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
             _gameTicker.UpdateInfoText();
             if (timeoutVote)
                 TimeoutStandardVote(voteType);
