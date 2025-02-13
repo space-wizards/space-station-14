@@ -25,9 +25,10 @@ uniform highp vec2 screenSize;
 
 highp float SMOOTH(highp float r, highp float R)
 {
-    return 1.0 - smoothstep( R - 1.0, R + 1.0, r);
+    return 1.0 - smoothstep(R - 1.0, R + 1.0, r);
 }
 
+// line from center of circle to radius (outer arg) on theta0 angle (radian,)
 highp float separator(highp vec2 d, highp float r, highp float outer, highp float theta0, highp float thickness)
 {
     //compute the distance to the line theta=theta0
@@ -43,6 +44,7 @@ highp float circle(highp float r, highp float radius, highp float width)
     return SMOOTH(r - width / 2.0, radius) - SMOOTH(r + width / 2.0, radius);
 }
 
+// get angle between current point and circle center
 highp float getAngle(highp vec2 d)
 {
     highp vec2 n = normalize(d);
@@ -55,11 +57,13 @@ highp float getAngle(highp vec2 d)
     return angle;
 }
 
-highp float pcurve(highp float x, highp float a, highp float b ){
-    highp float k = pow(a + b,a + b) / (pow(a, a)*pow(b, b));
-    return k * pow( x, a ) * pow( 1.0-x, b );
+highp float pcurve(highp float x, highp float a, highp float b )
+{
+    highp float k = pow(a + b,a + b) / (pow(a, a) * pow(b, b));
+    return k * pow(x, a) * pow(1.0 - x, b);
 }
 
+// gets alpha for radial gradients based on pcurve
 highp float fillGradient(highp float r, highp float inner, highp float outer)
 {
     highp float nInner = inner / outer;
@@ -69,19 +73,19 @@ highp float fillGradient(highp float r, highp float inner, highp float outer)
 
 void fragment()
 {
-    highp float r = length(FRAGCOORD.xy - centerPos);
-
     highp vec4 col = vec4(0.0);
 
     //angle of the line
     highp vec2 d = FRAGCOORD.xy - centerPos;
     highp float angle = getAngle(d);
 
-    highp float diff = separatorAngles[1] - separatorAngles[0];
+    // get step of radial menu buttons in radian
+    highp float halfSectorAngleSize = (separatorAngles[1] - separatorAngles[0]) / 2;
 
+    highp float r = length(FRAGCOORD.xy - centerPos);
+    // fill sectors
     if(r > innerRadius && r < outerRadius)
     {
-
         highp float g = fillGradient(r, innerRadius, outerRadius);
 
         // trying to mix in color per button
@@ -111,19 +115,24 @@ void fragment()
 
     }
 
+    // set up decorations
     for (int i = 0; i < childCount; i++)
     {
-        highp float iAngle = separatorAngles[i];
-
-        if(r > innerRadius){
+        highp float sectorMedian = sectorMedianAngles[i];
+        highp float sectorMedianToAngleDiff = abs(sectorMedian - angle);
+        if(r > innerRadius)
+        {
+            highp float iAngle = separatorAngles[i];
+            // button separators
             col += separator(d, r, outerRadius, iAngle, 1.0) * borderColor;
 
+            // inner button 'square' decoration
             if(r > innerRadius + 15)
             {
-                col += separator(d, r, outerRadius - 15, iAngle - (diff /2)* 0.2, 1.0) * 0.2 * borderColorLight;
-                col += separator(d, r, outerRadius - 15, iAngle + (diff /2)* 0.2, 1.0 ) * 0.2 * borderColorLight;
+                col += separator(d, r, outerRadius - 15, iAngle - halfSectorAngleSize * 0.2, 1.0) * 0.2 * borderColorLight;
+                col += separator(d, r, outerRadius - 15, iAngle + halfSectorAngleSize * 0.2, 1.0) * 0.2 * borderColorLight;
 
-                if(abs(sectorMedianAngles[i] - angle) < (diff /2)* 0.8)
+                if(sectorMedianToAngleDiff < halfSectorAngleSize * 0.8)
                 {
                     col += circle(r, innerRadius + 15, 2.0) * 0.2 * borderColorLight;
                     col += circle(r, outerRadius - 15, 2.0) * 0.2 * borderColorLight;
@@ -131,17 +140,19 @@ void fragment()
             }
         }
 
-        if(abs(sectorMedianAngles[i] - angle) < (diff/2)*0.2)
+        // outer button decorative elements
+        if(sectorMedianToAngleDiff < halfSectorAngleSize * 0.2)
         {
             col += circle(r, innerRadius - 5, 4.0) * 0.4 * borderColor;
         }
 
-        if(abs(sectorMedianAngles[i] - angle) < (diff/2)*0.6)
+        if(sectorMedianToAngleDiff < halfSectorAngleSize * 0.6)
         {
             col += circle(r, outerRadius + 10, 4.0) * 0.4 * borderColor;
         }
     }
 
+    // outer and inner circle of sectors
     col += circle(r, innerRadius, 2.0) * borderColor;
     col += circle(r, outerRadius, 2.0) * borderColor;
 
