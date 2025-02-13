@@ -231,6 +231,18 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         player.Channel.Disconnect(message);
     }
 
+    public NoteSeverity GetServerBanSeverity()
+    {
+        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
+        {
+            _logManager.GetSawmill("admin.server_ban")
+                .Warning("Server ban severity could not be parsed from config! Defaulting to high.");
+            severity = NoteSeverity.High;
+        }
+
+        return severity;
+    }
+
     public CompletionOption[] BanDurations => new CompletionOption[]
     {
         new("0", Loc.GetString("cmd-ban-hint-duration-1")),

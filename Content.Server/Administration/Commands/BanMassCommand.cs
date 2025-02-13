@@ -25,12 +25,7 @@ public sealed class BanMassCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
-        {
-            _logManager.GetSawmill("admin.server_ban")
-                .Warning("Server ban severity could not be parsed from config! Defaulting to high.");
-            severity = NoteSeverity.High;
-        }
+        var severity = _bans.GetServerBanSeverity();
 
         if (args.Length < 3)
         {

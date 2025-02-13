@@ -28,6 +28,7 @@ public interface IBanManager
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, uint? minutes, NoteSeverity severity, string reason);
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
+    public NoteSeverity GetServerBanSeverity();
     public CompletionOption[] BanDurations { get; }
 
     /// <summary>
