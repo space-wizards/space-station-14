@@ -305,9 +305,6 @@
         component: ForcedSleeping
         refresh: false
         type: Add
-      - !type:Emote
-        emote: Drool
-        probability: 0.1
 
 - type: reagent
   id: MuteToxin

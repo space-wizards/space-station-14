@@ -283,13 +283,6 @@
           shouldHave: false
         emote: Scream
         probability: 0.01
-      - !type:Emote
-        conditions:
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
-        emote: Drool
-        probability: 0.1
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold

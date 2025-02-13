@@ -7,6 +7,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.EntityEffects.Effects;
 
+public enum EmoteVisiblity : byte
+{
+    ChatAndPopup,
+    Popup,
+    Invisible
+}
+
 /// <summary>
 ///     Tries to force someone to emote (scream, laugh, etc). Still respects whitelists/blacklists and other limits of the specified emote unless forced.
 /// </summary>
@@ -16,18 +23,13 @@ public sealed partial class Emote : EntityEffect
     [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string? EmoteId;
     /// <summary>
-    ///     Shows above someone's head and in chat
+    ///     Determines if the emote text will show up in chat with a popup, be popup only, or be invisible
     /// </summary>
     [DataField]
-    public bool ShowInChat;
+    public EmoteVisiblity Visibility = EmoteVisiblity.Popup;
 
     [DataField]
     public bool Force = false;
-    /// <summary>
-    ///     Middle option between showing above someone's head, but not in chat
-    /// </summary>
-    [DataField]
-    public bool ShowAboveHead = true;
 
     // JUSTIFICATION: Emoting is flavor, so same reason popup messages are not in here.
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
@@ -39,12 +41,17 @@ public sealed partial class Emote : EntityEffect
             return;
 
         var chatSys = args.EntityManager.System<ChatSystem>();
-        if (ShowInChat)
-            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
-        else if (ShowAboveHead)
-            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.HideChat, forceEmote: Force);
-        else
-            chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
-
+        switch (Visibility)
+        {
+            case EmoteVisiblity.ChatAndPopup:
+                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+                break;
+            case EmoteVisiblity.Popup:
+                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+                break;
+            case EmoteVisiblity.Invisible:
+                chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
+                break;
+        }
     }
 }

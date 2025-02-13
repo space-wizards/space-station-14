@@ -1,7 +1,7 @@
 using Content.Server.Body.Systems;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Prototypes;
 using Content.Shared.Chat.Prototypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components;
 
@@ -76,8 +76,11 @@ public sealed partial class ThermalRegulatorComponent : Component
     [DataField]
     public ProtoId<EmotePrototype> ShiverEmote = "Shiver";
 
+    /// <summary>
+    ///     The maximum time between each sweat or shiver emote
+    /// </summary>
     [DataField]
-    public float EmoteCooldown = 30;
+    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(30);
 
     [DataField]
     public float SweatEmoteProgress;

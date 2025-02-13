@@ -485,14 +485,3 @@
   chatTriggers:
    - wheeze
    - wheezes
-
-- type: emote
-  id: Drool
-  name: chat-emote-name-drool
-  whitelist:
-    components:
-    - Respirator
-  chatMessages: ["chat-emote-msg-drool"]
-  chatTriggers:
-   - drool
-   - drools

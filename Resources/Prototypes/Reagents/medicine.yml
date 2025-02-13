@@ -1345,9 +1345,6 @@
       - !type:Emote
         emote: Yawn
         probability: 0.1
-      - !type:Emote
-        emote: Drool
-        probability: 0.05
       - !type:GenericStatusEffect
         key: Drowsiness
         component: Drowsiness

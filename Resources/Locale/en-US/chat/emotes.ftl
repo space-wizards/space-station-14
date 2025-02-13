@@ -35,7 +35,6 @@ chat-emote-name-snore = Snore
 chat-emote-name-wheeze = Wheeze
 chat-emote-name-shiver = Shiver
 chat-emote-name-sweat = Sweat
-chat-emote-name-drool = Drool
 
 # Message
 chat-emote-msg-scream = screams!
@@ -74,4 +73,3 @@ chat-emote-msg-snore = snores.
 chat-emote-msg-wheeze = wheezes.
 chat-emote-msg-shiver = shivers.
 chat-emote-msg-sweat = sweats.
-chat-emote-msg-drool = drools.
