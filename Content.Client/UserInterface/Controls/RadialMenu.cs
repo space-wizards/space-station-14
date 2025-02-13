@@ -390,13 +390,39 @@ public interface IRadialMenuItemWithSector
     public Vector2 ParentCenter { set; }
 
     /// <summary>
-    /// Position of control.
+    /// Marker, is menu item hovered currently.
     /// </summary>
-    public Vector2 Position { get; }
-
     public bool IsHovered { get; }
-    Color HoverBackgroundColor { get; set; }
-    Color BackgroundColor { get; set; }
+
+    /// <summary>
+    /// Color for menu item background when it is hovered over.
+    /// </summary>
+    Color HoverBackgroundColor { get; }
+
+    /// <summary>
+    /// Color for menu item default state.
+    /// </summary>
+    Color BackgroundColor { get; }
+
+    /// <summary>
+    /// Color for menu item border when item is hovered over.
+    /// </summary>
+    Color HoverBorderColor { get; }
+
+    /// <summary>
+    /// Color for menu item border default state.
+    /// </summary>
+    Color BorderColor { get; }
+
+    /// <summary>
+    /// Marker, if menu item background should be drawn.
+    /// </summary>
+    public bool DrawBackground { get; }
+
+    /// <summary>
+    /// Marker, if menu item borders should be drawn.
+    /// </summary>
+    public bool DrawBorder { get; }
 }
 
 [Virtual]
@@ -422,7 +448,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// Marker, that control should render border of segment. Is false by default.
     /// </summary>
     /// <remarks>
-    /// By default color of border is same as color of background. Use <see cref="BorderColor"/>
+    /// Default color of border is same as color of background. Use <see cref="BorderColor"/>
     /// and <see cref="HoverBorderColor"/> to change it.
     /// </remarks>
     public bool DrawBorder { get; set; } = false;
@@ -431,13 +457,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// Marker, that control should render background of all sector. Is true by default.
     /// </summary>
     public bool DrawBackground { get; set; } = true;
-
-    /// <summary>
-    /// Marker, that control should render separator lines.
-    /// Separator lines are used to visually separate sector of radial menu items.
-    /// Is true by default
-    /// </summary>
-    public bool DrawSeparators { get; set; } = true;
 
     /// <summary>
     /// Color of background in non-hovered state. Accepts RGB color, works with sRGB for DrawPrimitive internally.
@@ -474,12 +493,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         get => Color.FromSrgb(_hoverBorderColorSrgb);
         set => _hoverBorderColorSrgb = Color.ToSrgb(value);
     }
-
-    /// <summary>
-    /// Color of separator lines.
-    /// Separator lines are used to visually separate sector of radial menu items.
-    /// </summary>
-    public Color SeparatorColor { get; set; } = new Color(128, 128, 128, 128);
 
     /// <inheritdoc />
     float IRadialMenuItemWithSector.AngleSectorFrom

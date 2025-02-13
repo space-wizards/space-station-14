@@ -16,6 +16,7 @@ public class RadialContainer : LayoutContainer
     private readonly float[] _angles = new float[64];
     private readonly float[] _sectorMedians = new float[64];
     private readonly Color[] _sectorColors = new Color[64];
+    private readonly Color[] _borderColors = new Color[64];
 
     /// <summary>
     /// Increment of radius per child element to be rendered.
@@ -34,10 +35,7 @@ public class RadialContainer : LayoutContainer
     [ViewVariables(VVAccess.ReadWrite)]
     public Vector2 AngularRange
     {
-        get
-        {
-            return _angularRange;
-        }
+        get => _angularRange;
         set
         {
             var x = value.X;
@@ -178,43 +176,52 @@ public class RadialContainer : LayoutContainer
 
         var clone = _shader.Duplicate();
 
-        var children = Children.OfType<IRadialMenuItemWithSector>()
-                               .ToArray();
         float selectedFrom = 0;
         float selectedTo = 0;
-        for (int i = 0; i < children.Length; i++)
+
+        var i = 0;
+        foreach (var child in Children)
         {
-            var child = children[i];
-            _angles[i] = child.AngleSectorTo;
-            _sectorMedians[i] = (child.AngleSectorTo + child.AngleSectorFrom) / 2;
-            
-            if (child.IsHovered)
+            if (child is not IRadialMenuItemWithSector menuWithSector)
             {
-                _sectorColors[i] = child.HoverBackgroundColor;
-                selectedFrom = child.AngleSectorFrom;
-                selectedTo = child.AngleSectorTo;
+                continue;
+            }
+
+            _angles[i] = menuWithSector.AngleSectorTo;
+            _sectorMedians[i] = (menuWithSector.AngleSectorTo + menuWithSector.AngleSectorFrom) / 2;
+
+            if (menuWithSector.IsHovered)
+            {
+                // menuWithSector.DrawBackground;
+                // menuWithSector.DrawBorder;
+                _sectorColors[i] = menuWithSector.HoverBackgroundColor;
+                _borderColors[i] = menuWithSector.HoverBorderColor;
+                selectedFrom = menuWithSector.AngleSectorFrom;
+                selectedTo = menuWithSector.AngleSectorTo;
             }
             else
             {
-                _sectorColors[i] = child.BackgroundColor;
+                _sectorColors[i] = menuWithSector.BackgroundColor;
+                _borderColors[i] = menuWithSector.BorderColor;
             }
+
+            i++;
         }
+
+        var screenSize = _clyde.ScreenSize;
+
+        var menuCenter = new Vector2(
+            ScreenCoordinates.X + (Size.X / 2) * UIScale,
+            screenSize.Y - ScreenCoordinates.Y - (Size.Y / 2) * UIScale
+        );
 
         clone.SetParameter("separatorAngles", _angles);
         clone.SetParameter("sectorMedianAngles", _sectorMedians);
         clone.SetParameter("selectedFrom", selectedFrom);
         clone.SetParameter("selectedTo", selectedTo);
-        clone.SetParameter("childCount", children.Length);
+        clone.SetParameter("childCount", i);
         clone.SetParameter("sectorColors", _sectorColors);
-        
-        var screenSize = _clyde.ScreenSize;
-
-        var menuCenter = new Vector2(
-            ScreenCoordinates.X + Size.X / 2,
-            screenSize.Y - ScreenCoordinates.Y - Size.Y / 2
-        );
-
-        clone.SetParameter("centerPos", menuCenter * UIScale);
+        clone.SetParameter("centerPos", menuCenter);
         clone.SetParameter("screenSize", screenSize);
         clone.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier * UIScale);
         clone.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier * UIScale);

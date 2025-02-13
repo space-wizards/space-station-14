@@ -155,7 +155,7 @@ public partial class SimpleRadialMenu : RadialMenu
     {
         var button = new RadialMenuTextureButtonWithSector
         {
-            DrawSeparators = settings.DisplaySeparators,
+            DrawBorder = settings.DisplayBorders,
             DrawBackground = !settings.NoBackground
         };
         if (model.BackgroundColor.HasValue)
@@ -258,7 +258,7 @@ public class SimpleRadialMenuSettings
 {
     public int DefaultContainerRadius = 100;
     public bool DisplaySectors = true;
-    public bool DisplaySeparators = true;
+    public bool DisplayBorders = true;
     public bool NoBackground = false;
 }
 
