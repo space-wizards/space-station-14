@@ -10,7 +10,8 @@ public sealed class EmotionallyUnstableAccentSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private static readonly Regex RegexDots = new Regex(@"\.{1,3}");
+    private static readonly Regex DotRegex = new Regex(@"(?<!\.)\.(?=\s|$)");
+    private static readonly Regex ExclamationMarksRegex = new Regex(@"!+");
 
     public override void Initialize()
     {
@@ -19,19 +20,19 @@ public sealed class EmotionallyUnstableAccentSystem : EntitySystem
         SubscribeLocalEvent<EmotionallyUnstableAccentComponent, AccentGetEvent>(OnAccent);
     }
 
-    private void OnAccent(Entity<EmotionallyUnstableAccentComponent> entity, ref AccentGetEvent args)
+    private string Accentuate(EmotionallyUnstableAccentComponent component, string msg)
     {
-        var message = args.Message;
+        var message = msg;
 
         // This condition determines whether we will modify the message or not.
-        if (_random.Prob(entity.Comp.ChangeMessageChance))
+        if (_random.Prob(component.ChangeMessageChance))
         {
             // This condition determines the replacement characters: with a certain chance specified in the component,
             // the sentence will either become exclamatory or contemplative (exclamation marks will be replaced with ellipses).
-            if (_random.Prob(entity.Comp.ExclamatorySentenceChance))
+            if (_random.Prob(component.ExclamatorySentenceChance))
             {
                 // . => !
-                message = message.Replace(".", "!");
+                message = DotRegex.Replace(message, "!");
 
                 // If the last character in the message is not a '?', append a '!' at the end.
                 // This check must be performed before replacing '?', to avoid double exclamation marks in interrogative sentences.
@@ -44,18 +45,21 @@ public sealed class EmotionallyUnstableAccentSystem : EntitySystem
             else
             {
                 // . => ...
-                message = RegexDots.Replace(message, "...");
+                message = DotRegex.Replace(message, "...");
 
                 // ! => ...
-                message = message.Replace("!", "...");
+                message = ExclamationMarksRegex.Replace(message, "...");
 
                 // If the last character in the message is neither '?' nor '.', append '...' to the end.
                 if (message[message.Length - 1] != '?' && message[message.Length - 1] != '.')
                     message += "...";
             }
         }
-
-        args.Message = message;
+        return message;
+    }
+    private void OnAccent(Entity<EmotionallyUnstableAccentComponent> entity, ref AccentGetEvent args)
+    {
+        args.Message = Accentuate(entity.Comp, args.Message);
 
         if (entity.Comp.Emotes.Count == 0)
             return;

@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Traits.Assorted;
 
