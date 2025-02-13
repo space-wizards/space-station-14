@@ -22,11 +22,6 @@
   - !type:GroupLoadoutEffect
     proto: MasterRD
 
-- type: startingGear
-  id: ResearchDirectorMantle
-  equipment:
-    neck: ClothingNeckMantleRD
-
 - type: loadout
   id: ResearchDirectorCloak
   equipment:
@@ -67,8 +62,3 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterRD
-
-- type: loadout
-  id: ResearchDirectorAltHeadset
-  equipment:
-    ears: ClothingHeadsetAltScience

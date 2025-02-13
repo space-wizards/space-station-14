@@ -49,11 +49,6 @@
   - !type:GroupLoadoutEffect
     proto: MasterHoP
 
-- type: startingGear
-  id: HoPMantle
-  equipment:
-    neck: ClothingNeckMantleHOP
-
 # Back
 - type: loadout
   id: HoPBackpackIan
@@ -77,11 +72,6 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterHoP
-
-- type: loadout
-  id: HoPAltHeadset
-  equipment:
-    ears: ClothingHeadsetAltCommand
 
 # Shoes
 - type: loadout

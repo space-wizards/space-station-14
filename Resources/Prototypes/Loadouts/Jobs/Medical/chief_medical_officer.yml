@@ -83,8 +83,3 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCMO
-
-- type: loadout
-  id: ChiefMedicalOfficerAltHeadset
-  equipment:
-    ears: ClothingHeadsetAltMedical
