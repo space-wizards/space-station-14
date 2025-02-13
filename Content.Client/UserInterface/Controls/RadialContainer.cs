@@ -15,6 +15,7 @@ public class RadialContainer : LayoutContainer
 
     private readonly float[] _angles = new float[64];
     private readonly float[] _sectorMedians = new float[64];
+    private readonly Color[] _sectorColors = new Color[64];
 
     /// <summary>
     /// Increment of radius per child element to be rendered.
@@ -186,10 +187,16 @@ public class RadialContainer : LayoutContainer
             var child = children[i];
             _angles[i] = child.AngleSectorTo;
             _sectorMedians[i] = (child.AngleSectorTo + child.AngleSectorFrom) / 2;
+            
             if (child.IsHovered)
             {
+                _sectorColors[i] = child.HoverBackgroundColor;
                 selectedFrom = child.AngleSectorFrom;
                 selectedTo = child.AngleSectorTo;
+            }
+            else
+            {
+                _sectorColors[i] = child.BackgroundColor;
             }
         }
 
@@ -198,6 +205,7 @@ public class RadialContainer : LayoutContainer
         clone.SetParameter("selectedFrom", selectedFrom);
         clone.SetParameter("selectedTo", selectedTo);
         clone.SetParameter("childCount", children.Length);
+        clone.SetParameter("sectorColors", _sectorColors);
         
         var screenSize = _clyde.ScreenSize;
 

@@ -395,6 +395,8 @@ public interface IRadialMenuItemWithSector
     public Vector2 Position { get; }
 
     public bool IsHovered { get; }
+    Color HoverBackgroundColor { get; set; }
+    Color BackgroundColor { get; set; }
 }
 
 [Virtual]

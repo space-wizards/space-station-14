@@ -12,6 +12,8 @@ const highp vec4 borderColorLight = vec4(0.2, 0.78, 0.2, 0.1);
 uniform highp float innerRadius;
 uniform highp float outerRadius;
 
+// uniform highp vec4[64] sectorColors;
+
 uniform highp float[64] separatorAngles;
 uniform highp float[64] sectorMedianAngles;
 uniform highp int childCount;
@@ -71,13 +73,33 @@ void fragment()
 
     highp vec4 col = vec4(0.0);
 
+    //angle of the line
+    highp vec2 d = FRAGCOORD.xy - centerPos;
+    highp float angle = getAngle(d);
+
+    highp float diff = separatorAngles[1] - separatorAngles[0];
+
     if(r > innerRadius && r < outerRadius)
     {
-        //angle of the line
-        highp vec2 d = FRAGCOORD.xy - centerPos;
-        highp float angle = getAngle(d);
 
         highp float g = fillGradient(r, innerRadius, outerRadius);
+
+        // trying to mix in color per button
+
+        //highp float from = 0;
+        //for (int i = 0; i < childCount; i++)
+        //{
+        //    highp float to = separatorAngles[i];
+        //    if(angle > from && angle < to)
+        //    {
+        //        col +=  vec4(sectorColors[i].xyz, g);;
+        //    }
+        //
+        //    from = to;
+        //}
+
+        // normal flow
+
         if(angle > selectedFrom && angle < selectedTo)
         {
             col +=  vec4(selectedColor, g);
@@ -87,11 +109,13 @@ void fragment()
             col += vec4(sectorColor, g);
         }
 
-        highp float diff = separatorAngles[1] - separatorAngles[0];
+    }
 
-        for (int i = 0; i < childCount; i++)
-        {
-            highp float iAngle = separatorAngles[i];
+    for (int i = 0; i < childCount; i++)
+    {
+        highp float iAngle = separatorAngles[i];
+
+        if(r > innerRadius){
             col += separator(d, r, outerRadius, iAngle, 1.0) * borderColor;
 
             if(r > innerRadius + 15)
@@ -99,18 +123,27 @@ void fragment()
                 col += separator(d, r, outerRadius - 15, iAngle - (diff /2)* 0.2, 1.0) * 0.2 * borderColorLight;
                 col += separator(d, r, outerRadius - 15, iAngle + (diff /2)* 0.2, 1.0 ) * 0.2 * borderColorLight;
 
-                if( abs(sectorMedianAngles[i] - angle) < (diff /2)* 0.8)
+                if(abs(sectorMedianAngles[i] - angle) < (diff /2)* 0.8)
                 {
                     col += circle(r, innerRadius + 15, 2.0) * 0.2 * borderColorLight;
                     col += circle(r, outerRadius - 15, 2.0) * 0.2 * borderColorLight;
                 }
             }
         }
+
+        if(abs(sectorMedianAngles[i] - angle) < (diff/2)*0.2)
+        {
+            col += circle(r, innerRadius - 5, 4.0) * 0.4 * borderColor;
+        }
+
+        if(abs(sectorMedianAngles[i] - angle) < (diff/2)*0.6)
+        {
+            col += circle(r, outerRadius + 10, 4.0) * 0.4 * borderColor;
+        }
     }
 
     col += circle(r, innerRadius, 2.0) * borderColor;
     col += circle(r, outerRadius, 2.0) * borderColor;
-
 
     if(col != vec4(0.0)) {
         COLOR = col;
