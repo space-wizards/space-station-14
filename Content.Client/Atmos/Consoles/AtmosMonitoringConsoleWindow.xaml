@@ -1,0 +1,99 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:ui="clr-namespace:Content.Client.Atmos.Consoles"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               Title="{Loc 'atmos-monitoring-window-title'}"
+               Resizable="False"
+               SetSize="1120 750"
+               MinSize="1120 750">
+    <BoxContainer Orientation="Vertical">
+        <!-- Main display -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+            <!-- Nav map -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                <ui:AtmosMonitoringConsoleNavMapControl Name="NavMap" Margin="5 5" VerticalExpand="True" HorizontalExpand="True">
+
+                    <!-- System warning -->
+                    <PanelContainer Name="SystemWarningPanel"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    HorizontalExpand="True"
+                                    Margin="0 48 0 0"
+                                    Visible="False">
+                        <RichTextLabel Name="SystemWarningLabel" Margin="12 8 12 8"/>
+                    </PanelContainer>
+
+                </ui:AtmosMonitoringConsoleNavMapControl>
+
+                <!-- Nav map legend -->
+                <BoxContainer Orientation="Horizontal" Margin="0 10 0 10">
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                                 Modulate="#a9a9a9"
+                                 SetSize="16 16"
+                                 Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-monitoring-window-label-gas-opening'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
+                                 SetSize="16 16"
+                                 Modulate="#a9a9a9"
+                                 Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-monitoring-window-label-gas-scrubber'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_arrow_east.png"
+                                 SetSize="16 16"
+                                 Modulate="#a9a9a9"
+                                 Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-monitoring-window-label-gas-flow-regulator'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/NavMap/beveled_hexagon.png"
+                                 SetSize="16 16"
+                                 Modulate="#a9a9a9"
+                                 Margin="20 0 5 0"/>
+                    <Label Text="{Loc 'atmos-monitoring-window-label-thermoregulator'}"/>
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Atmosphere status -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="440" Margin="0 0 10 10">
+
+                <!-- Station name -->
+                <controls:StripeBack>
+                    <PanelContainer>
+                        <RichTextLabel Name="StationName" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 5 0 3"/>
+                    </PanelContainer>
+                </controls:StripeBack>
+
+                <!-- Alarm status (entries added by C# code) -->
+                <TabContainer Name="MasterTabContainer" VerticalExpand="True" HorizontalExpand="True" Margin="0 10 0 0">
+                    <ScrollContainer HorizontalExpand="True" Margin="8, 8, 8, 8">
+                        <BoxContainer Name="AtmosNetworksTable" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10"/>
+                    </ScrollContainer>
+                </TabContainer>
+
+                <!-- Overlay toggles -->
+                <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
+                    <Label Text="{Loc 'atmos-monitoring-window-toggle-overlays'}" Margin="0 0 0 5"/>
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                        <CheckBox Name="ShowPipeNetwork" Text="{Loc 'atmos-monitoring-window-show-pipe-network'}" Pressed="True" HorizontalExpand="True"/>
+                        <CheckBox Name="ShowGasPipeSensors" Text="{Loc 'atmos-monitoring-window-show-gas-pipe-sensors'}" Pressed="False" HorizontalExpand="True"/>
+                    </BoxContainer>
+                </BoxContainer>
+
+            </BoxContainer>
+
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'atmos-monitoring-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'atmos-monitoring-window-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
