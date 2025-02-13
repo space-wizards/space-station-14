@@ -135370,13 +135370,45 @@ entities:
     - type: Transform
       pos: 42.5,-30.5
       parent: 2
-- proto: SMESBasic
+- proto: SMESAdvanced
   entities:
+  - uid: 11504
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 1
+    - type: Transform
+      pos: -0.5,25.5
+      parent: 2
   - uid: 19960
     components:
+    - type: MetaData
+      name: Engineering Advanced SMES 2
+    - type: Transform
+      pos: 0.5,25.5
+      parent: 2
+  - uid: 19966
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 4
+    - type: Transform
+      pos: 0.5,23.5
+      parent: 2
+  - uid: 19967
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 5
     - type: Transform
       pos: 1.5,23.5
       parent: 2
+  - uid: 19968
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 3
+    - type: Transform
+      pos: 1.5,25.5
+      parent: 2
+- proto: SMESBasic
+  entities:
   - uid: 19961
     components:
     - type: Transform
@@ -135405,27 +135437,6 @@ entities:
       name: West Solar SMES
     - type: Transform
       pos: -65.5,-17.5
-      parent: 2
-  - uid: 19966
-    components:
-    - type: MetaData
-      name: Engineering SMES 3
-    - type: Transform
-      pos: 1.5,25.5
-      parent: 2
-  - uid: 19967
-    components:
-    - type: MetaData
-      name: Engineering SMES 2
-    - type: Transform
-      pos: 0.5,25.5
-      parent: 2
-  - uid: 19968
-    components:
-    - type: MetaData
-      name: Engineering SMES 1
-    - type: Transform
-      pos: -0.5,25.5
       parent: 2
   - uid: 19969
     components:
@@ -135478,11 +135489,6 @@ entities:
       name: AI SMES
     - type: Transform
       pos: -117.5,19.5
-      parent: 2
-  - uid: 19977
-    components:
-    - type: Transform
-      pos: 0.5,23.5
       parent: 2
   - uid: 25518
     components:
