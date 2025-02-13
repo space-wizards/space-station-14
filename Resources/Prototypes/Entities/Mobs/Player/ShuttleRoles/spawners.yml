@@ -142,6 +142,7 @@
     rarePrototypes:
     - RandomHumanoidVisitorWarden
     - RandomHumanoidVisitorHOS
+    - RandomHumanoidVisitorBrigmedicHarmony # Harmony Change
     rareChance: 0.05
 
 - type: entity
@@ -849,6 +850,7 @@
     - RandomHumanoidVisitorSecurityOfficer
     - RandomHumanoidVisitorDetective
     - RandomHumanoidVisitorWarden
+    - RandomHumanoidVisitorBrigmedicHarmony # Harmony Change
     - RandomHumanoidVisitorCargoTechnician
     - RandomHumanoidVisitorSalvageSpecialist
     - RandomHumanoidVisitorAtmosTech

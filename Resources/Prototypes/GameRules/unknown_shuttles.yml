@@ -21,6 +21,7 @@
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
     - id: UnknownShuttleChemLab # Harmony
+    - id: UnknownShuttleBrigmedic # Harmony
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable

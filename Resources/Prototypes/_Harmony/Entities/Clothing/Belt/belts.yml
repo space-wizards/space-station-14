@@ -1,0 +1,62 @@
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseRestrictedContraband]
+  id: ClothingBeltBrigmedHarmony
+  name: brigmedic belt
+  description: Can hold brigmedic gear like medicine and stunbatons.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Belt/brigmedic.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Belt/brigmedic.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
+        - Truncheon
+        - Wrench
+        - Bottle
+        - Spray
+        - Brutepack
+        - Bloodpack
+        - Gauze
+        - Ointment
+        - PillCanister
+        - Radio
+        - DiscreteHealthAnalyzer
+        - SurgeryTool
+        - Dropper
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - BalloonPopper
+        - Injector
+        - Pill
+        - HandLabeler
+  - type: ItemMapper
+    mapLayers:
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance

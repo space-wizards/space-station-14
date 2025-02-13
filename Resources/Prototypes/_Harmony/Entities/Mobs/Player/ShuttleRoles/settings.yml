@@ -1,0 +1,11 @@
+# Security
+
+- type: randomHumanoidSettings
+  id: VisitorBrigmedicHarmony
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-brigmedic
+    - type: Loadout
+      prototypes: [ VisitorBrigmedicHarmony ]
+      roleLoadout: [ RoleSurvivalSecurity ]

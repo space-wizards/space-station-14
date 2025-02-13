@@ -250,13 +250,20 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
+# Start of Harmony Change: Swaps Security and Medical Keys for Priority
+#     - EncryptionKeyMedical
+#     - EncryptionKeySecurity
       - EncryptionKeySecurity
+      - EncryptionKeyMedical
       - EncryptionKeyCommon
+# Start of Harmony Change: Updates Sprite Pathing
   - type: Sprite
-    sprite: Clothing/Ears/Headsets/brigmedic.rsi
+#   sprite: Clothing/Ears/Headsets/brigmedic.rsi
+    sprite: _Harmony/Clothing/Ears/Headsets/brigmedic.rsi
   - type: Clothing
-    sprite: Clothing/Ears/Headsets/brigmedic.rsi
+#   sprite: Clothing/Ears/Headsets/brigmedic.rsi
+    sprite: _Harmony/Clothing/Ears/Headsets/brigmedic.rsi
+# End of Harmony Change
 
 - type: entity
   parent: ClothingHeadset
