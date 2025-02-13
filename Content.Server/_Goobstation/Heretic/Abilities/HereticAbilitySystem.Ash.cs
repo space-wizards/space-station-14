@@ -52,12 +52,14 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         if (TryComp<FlammableComponent>(ent, out var flam))
         {
-            if (!flam.OnFire)
-            {
-                _flammable.AdjustFireStacks(ent, 1, flam, true);
-            }
+            _flammable.AdjustFireStacks(ent, 2, flam, true);
         }
-        _audio.PlayPvs(JauntExitSound, ent, AudioParams.Default.WithVolume(-2f));
+        // play a distinct sound, audible thru walls, so you can track where that slippery fuck went
+        _audio.PlayPvs(JauntExitSound, ent, AudioParams.Default
+            .WithVolume(-2f)
+            .WithMaxDistance(15f)
+            .WithRolloffFactor(0.8f)
+            );
     }
 
     private void OnVolcano(Entity<HereticComponent> ent, ref EventHereticVolcanoBlast args)
