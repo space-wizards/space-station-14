@@ -125,20 +125,26 @@ public sealed class ProximityDetectionSystem : EntitySystem
             closestEnt = ent;
         }
 
-        if (component.Distance != closestDistance)
+        var newDistance = component.Distance != closestDistance;
+        var newTarget = component.Target != closestEnt;
+
+        if (newDistance)
         {
             var updatedEv = new ProximityTargetUpdatedEvent(closestDistance, detector, closestEnt);
             RaiseLocalEvent(uid, ref updatedEv);
+
+            component.Distance = closestDistance;
         }
 
-        if (component.Target != closestEnt)
+        if (newTarget)
         {
             var newTargetEv = new NewProximityTargetEvent(detector, closestEnt);
             RaiseLocalEvent(uid, ref newTargetEv);
+
+            component.Target = closestEnt;
         }
 
-        component.Distance = closestDistance;
-        component.Target = closestEnt;
-        Dirty(detector);
+        if (newDistance || newTarget)
+            Dirty(detector);
     }
 }
