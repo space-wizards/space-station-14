@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Dino Wars has undergone an extensive rework after beta tester feedback.
-      Thank you for continuing to support the Dino Wars project.
-    type: Tweak
-  id: 620
-  time: '2024-12-02T12:42:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/846
 - author: widgetbeck
   changes:
   - message: Decapoids are done. The only remaining issue is that their urist does
@@ -4200,3 +4192,10 @@
   id: 1119
   time: '2025-02-13T17:19:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1672
+- author: Darkmajia
+  changes:
+  - message: Security cadets spawn with sunglasses.
+    type: Add
+  id: 1120
+  time: '2025-02-13T17:20:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1653
