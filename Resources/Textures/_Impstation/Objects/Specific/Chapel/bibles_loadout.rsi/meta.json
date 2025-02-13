@@ -17,6 +17,28 @@
     {
       "name": "bibble-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "quran"
+    },
+    {
+      "name": "quran-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "quran-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tanakh"
+    },
+    {
+      "name": "tanakh-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "tanakh-inhand-right",
+      "directions": 4
     }
   ]
 }

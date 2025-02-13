@@ -386,4 +386,6 @@
   minLimit: 1
   loadouts:
   - ChaplainBookBible
+  - ChaplainBookQuran
+  - ChaplainBookTanakh
   - ChaplainBookBibble

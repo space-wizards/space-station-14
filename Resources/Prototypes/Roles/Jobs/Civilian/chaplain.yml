@@ -21,6 +21,6 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - Bible
+#    - Bible #imp remove because we're handling it w/ loadouts
     - RubberStampChaplain
     - NullRodDefault

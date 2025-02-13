@@ -11,3 +11,31 @@
     size: Small
     heldPrefix: bibble
     sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: quran
+  description: New Interstellar Version 2340.
+  parent: Bible
+  id: Quran
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: quran
+  - type: Item
+    size: Small
+    heldPrefix: quran
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: tanakh
+  description: New Interstellar Version 2340.
+  parent: Bible
+  id: Tanakh
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: tanakh
+  - type: Item
+    size: Small
+    heldPrefix: tanakh
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi

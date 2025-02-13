@@ -15,6 +15,18 @@
     - Bible
 
 - type: loadout
+  id: ChaplainBookQuran
+  storage:
+    back:
+    - Quran
+
+- type: loadout
+  id: ChaplainBookTanakh
+  storage:
+    back:
+    - Tanakh
+
+- type: loadout
   id: ChaplainBookBibble
   storage:
     back:
