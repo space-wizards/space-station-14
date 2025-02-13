@@ -4,26 +4,26 @@ using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.EntityEffects.EffectConditions;
 using Content.Server.EntityEffects.Effects;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Popups;
+using Content.Server.Speech.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Speech;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared.Speech;
-using Content.Server.Popups;
-using Robust.Shared.Player;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Chat.Prototypes;
-using Content.Server.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -85,7 +85,7 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnEmote(Entity<RespiratorComponent> ent, ref EmoteEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;
 
         var (_, component) = ent;
