@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Removed the thief figurines objective.
-    type: Remove
-  id: 7449
-  time: '2024-09-27T19:04:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32413
 - author: Beck Thompson
   changes:
   - message: The appraisal tool verb is now predicted!
@@ -3884,3 +3877,10 @@
   id: 7948
   time: '2025-02-13T19:26:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34792
+- author: Winkarst-cpu
+  changes:
+  - message: Thrusters now deal heat damage.
+    type: Fix
+  id: 7949
+  time: '2025-02-13T19:27:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35088
