@@ -94,15 +94,7 @@ public sealed class BanMassCommand : LocalizedCommands
 
         if (args.Length == 2)
         {
-            var durations = new CompletionOption[]
-            {
-                new("0", LocalizationManager.GetString("cmd-ban-hint-duration-1")),
-                new("1440", LocalizationManager.GetString("cmd-ban-hint-duration-2")),
-                new("4320", LocalizationManager.GetString("cmd-ban-hint-duration-3")),
-                new("10080", LocalizationManager.GetString("cmd-ban-hint-duration-4")),
-                new("20160", LocalizationManager.GetString("cmd-ban-hint-duration-5")),
-                new("43800", LocalizationManager.GetString("cmd-ban-hint-duration-6")),
-            };
+            var durations = _bans.BanDurations;
 
             return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString("cmd-ban-hint-duration"));
         }

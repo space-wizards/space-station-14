@@ -16,6 +16,7 @@ using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -222,6 +223,16 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         var message = def.FormatBanMessage(_cfg, _localizationManager);
         player.Channel.Disconnect(message);
     }
+
+    public CompletionOption[] BanDurations { get; } =
+    {
+        new("0", Loc.GetString("cmd-ban-hint-duration-1")),
+        new("1440", Loc.GetString("cmd-ban-hint-duration-2")),
+        new("4320", Loc.GetString("cmd-ban-hint-duration-3")),
+        new("10080", Loc.GetString("cmd-ban-hint-duration-4")),
+        new("20160", Loc.GetString("cmd-ban-hint-duration-5")),
+        new("43800", Loc.GetString("cmd-ban-hint-duration-6")),
+    };
 
     #endregion
 
