@@ -7,6 +7,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
@@ -104,49 +105,36 @@ public sealed class CargoTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var testMap = await pair.CreateTestMap();
-
         var entManager = server.EntMan;
-        var mapManager = server.MapMan;
         var protoManager = server.ProtoMan;
+        var compFact = server.ResolveDependency<IComponentFactory>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = testMap.MapId;
-            var grid = mapManager.CreateGridEntity(mapId);
-            var coord = new EntityCoordinates(grid.Owner, 0, 0);
-
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => p.Components.ContainsKey("StaticPrice"))
                 .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
-                .Select(p => p.ID)
                 .ToList();
 
             foreach (var proto in protoIds)
             {
-                var ent = entManager.SpawnEntity(proto, coord);
+                // Sanity check
+                Assert.That(proto.TryGetComponent<StaticPriceComponent>(out var staticPriceComp, compFact), Is.True);
 
-                Assert.That(entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticPriceComp), Is.True,
-                    $"The prototype {proto} has a StaticPriceComponent but somehow does not when spawned?"); // Sanity check
-
-                if (entManager.TryGetComponent<StackPriceComponent>(ent, out var stackpricecomp)
-                    && stackpricecomp.Price > 0)
+                if (proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, compFact) && stackPriceComp.Price > 0)
                 {
                     Assert.That(staticPriceComp.Price, Is.EqualTo(0),
                         $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
                 }
 
-                if (entManager.HasComponent<StackComponent>(ent))
+                if (proto.HasComponent<StackComponent>(compFact))
                 {
                     Assert.That(staticPriceComp.Price, Is.EqualTo(0),
                         $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other.");
                 }
-
-                entManager.DeleteEntity(ent);
             }
-            mapManager.DeleteMap(mapId);
         });
 
         await pair.CleanReturnAsync();
