@@ -5,7 +5,7 @@ namespace Content.Shared.Smoking
     [Serializable, NetSerializable]
     public enum SmokingVisuals : byte
     {
-        CartInserted,
+        CartInserted,  // imp
         Smoking
     }
 }
