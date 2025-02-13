@@ -105,7 +105,6 @@ public sealed class CargoTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var entManager = server.EntMan;
         var protoManager = server.ProtoMan;
         var compFact = server.ResolveDependency<IComponentFactory>();
 
