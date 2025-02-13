@@ -15,6 +15,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Database;
+using Content.Shared.Power;
 
 namespace Content.Server.Atmos.Portable
 {

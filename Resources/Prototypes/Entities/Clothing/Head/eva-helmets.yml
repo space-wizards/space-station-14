@@ -62,7 +62,8 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/paramedhelm.rsi
   - type: TemperatureProtection
-    coefficient: 0.1
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:

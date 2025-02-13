@@ -154,8 +154,8 @@ public sealed partial class SalvageSystem
             }
             else if (comp.Stream == null && remaining < audioLength)
             {
-                var audio = _audio.PlayPvs(comp.Sound, uid).Value;
-                comp.Stream = audio.Entity;
+                var audio = _audio.PlayPvs(comp.Sound, uid);
+                comp.Stream = audio?.Entity;
                 _audio.SetMapAudio(audio);
                 comp.Stage = ExpeditionStage.MusicCountdown;
                 Dirty(uid, comp);

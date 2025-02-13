@@ -1,6 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface"
-                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                Title="{Loc door-electronics-configuration-title}">
     <Control Name="AccessLevelControlContainer" />
 
 </controls:FancyWindow>

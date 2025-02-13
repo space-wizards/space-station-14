@@ -118,3 +118,14 @@
   description: Can hold up to 15 arrows, and fits snug around your waist.
   icon: { sprite: Clothing/Belt/quiver.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: justice helm
+  id: ClothingHeadHelmetJustice
+  graph: HelmetJustice
+  startNode: start
+  targetNode: helmet
+  category: construction-category-clothing
+  description: Advanced security gear. Protects the station from ne'er-do-wells.
+  icon: { sprite: Clothing/Head/Helmets/justice.rsi, state: icon }
+  objectType: Item

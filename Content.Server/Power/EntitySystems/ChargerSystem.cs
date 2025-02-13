@@ -63,7 +63,7 @@ internal sealed class ChargerSystem : EntitySystem
             }
             else
             {
-                // add how much each item is charged it 
+                // add how much each item is charged it
                 foreach (var contained in container.ContainedEntities)
                 {
                     if (!TryComp<BatteryComponent>(contained, out var battery))
@@ -223,15 +223,15 @@ internal sealed class ChargerSystem : EntitySystem
         if (container.ContainedEntities.Count == 0)
             return CellChargerStatus.Empty;
 
-        if (!SearchForBattery(container.ContainedEntities[0], out _, out var heldBattery))
+        if (!SearchForBattery(container.ContainedEntities[0], out var heldEnt, out var heldBattery))
             return CellChargerStatus.Off;
 
-        if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
+        if (_battery.IsFull(heldEnt.Value, heldBattery))
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;
     }
-    
+
     private void TransferPower(EntityUid uid, EntityUid targetEntity, ChargerComponent component, float frameTime)
     {
         if (!TryComp(uid, out ApcPowerReceiverComponent? receiverComponent))
@@ -247,12 +247,6 @@ internal sealed class ChargerSystem : EntitySystem
             return;
 
         _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
-        // Just so the sprite won't be set to 99.99999% visibility
-        if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
-        {
-            _battery.SetCharge(batteryUid.Value, heldBattery.MaxCharge, heldBattery);
-        }
-
         UpdateStatus(uid, component);
     }
 

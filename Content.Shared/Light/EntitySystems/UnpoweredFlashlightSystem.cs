@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Light.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -13,6 +14,8 @@ namespace Content.Shared.Light.EntitySystems;
 
 public sealed class UnpoweredFlashlightSystem : EntitySystem
 {
+    // TODO: Split some of this to ItemTogglePointLight
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -20,6 +23,7 @@ public sealed class UnpoweredFlashlightSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
 
     public override void Initialize()
     {
@@ -76,6 +80,9 @@ public sealed class UnpoweredFlashlightSystem : EntitySystem
 
     private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
         if (!_light.TryGetLight(uid, out var light))
             return;
 

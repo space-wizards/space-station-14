@@ -8,6 +8,7 @@
     sprite: Objects/Storage/medalcase.rsi
     layers:
     - state: closed
+      map: ["closeLayer"]
     - state: open
       map: ["openLayer"]
   - type: Appearance

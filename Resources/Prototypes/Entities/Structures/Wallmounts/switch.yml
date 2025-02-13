@@ -7,6 +7,7 @@
     snap:
     - Wallmount
   components:
+  - type: StationAiWhitelist
   - type: WallMount
     arc: 360
   - type: Clickable
@@ -49,6 +50,7 @@
     snap:
     - Wallmount
   components:
+  - type: StationAiWhitelist
   - type: WallMount
     arc: 360
   - type: Clickable
@@ -146,10 +148,11 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: StationAiWhitelist
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      drawdepth: FloorObjects
+      drawdepth: HighFloorObjects
       sprite: Structures/conveyor.rsi
       layers:
         - state: switch-off
@@ -490,6 +493,14 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+
+- type: entity
+  id: LockableButtonCentcomm
+  suffix: CentComm
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
 
 # button frames
 
