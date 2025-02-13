@@ -263,10 +263,10 @@
     - UplinkExplosives
 
 - type: listing
-  id: UplinkSupermatterGrenade
-  name: uplink-supermatter-grenade-name
-  description: uplink-supermatter-grenade-desc
-  productEntity: SupermatterGrenade
+  id: UplinkSingularityGrenade
+  name: uplink-singularity-grenade-name
+  description: uplink-singularity-grenade-desc
+  productEntity: SingularityGrenade
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3

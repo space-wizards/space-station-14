@@ -165,13 +165,13 @@
 
 
 - type: entity
-  name: supermatter grenade
-  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
+  name: singularity grenade
+  description: Grenade that simulates the power of a singularity, pulling things in a heap.
   parent: [GrenadeBase, BaseSyndicateContraband]
-  id: SupermatterGrenade
+  id: SingularityGrenade
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
+    sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
   - type: OnUseTimerTrigger
     delay: 3
     beepInterval: 0.46
@@ -184,11 +184,6 @@
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 200
-    intensitySlope: 30
-    maxIntensity: 120
   - type: SoundOnTrigger
     removeOnTrigger: true
     sound:
@@ -225,12 +220,12 @@
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
-      - type: ExplodeOnTrigger
+      - type: DeleteOnTrigger
 
 - type: entity
   name: whitehole grenade
   description: Grenade that repulses everything around for some time.
-  parent: SupermatterGrenade
+  parent: SingularityGrenade
   id: WhiteholeGrenade
   components:
   - type: Sprite
