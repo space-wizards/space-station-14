@@ -163,7 +163,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             if (!sufficientSolvent)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vapecart-component-vape-incompatible"), target, user);
+                _popupSystem.PopupEntity(Loc.GetString("vapepen-component-vape-incompatible"), target, user);
                 return false;
             }
 
