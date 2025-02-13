@@ -1,6 +1,6 @@
 using System.Numerics;
+using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Prototypes;
-using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -16,7 +16,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedAnomalySystem))]
+[Access(typeof(SharedAnomalySystem), typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
@@ -184,21 +184,21 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The minimum amount of research points generated per second
     /// </summary>
-    [DataField("minPointsPerSecond")]
+    [DataField]
     public int MinPointsPerSecond = 10;
 
     /// <summary>
     /// The maximum amount of research points generated per second
     /// This doesn't include the point bonus for being unstable.
     /// </summary>
-    [DataField("maxPointsPerSecond")]
+    [DataField]
     public int MaxPointsPerSecond = 70;
 
     /// <summary>
     /// The multiplier applied to the point value for the
     /// anomaly being above the <see cref="GrowthThreshold"/>
     /// </summary>
-    [DataField("growingPointMultiplier")]
+    [DataField]
     public float GrowingPointMultiplier = 1.5f;
     #endregion
 
@@ -252,10 +252,13 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public Vector2 FloatingOffset = new(0, 0.15f);
+    public Vector2 FloatingOffset = new(0, 0);
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion
+
+    [DataField]
+    public bool DeleteEntity = true;
 }
 
 /// <summary>

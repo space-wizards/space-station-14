@@ -22,7 +22,7 @@
           - MachineMask
   - type: Sprite
     sprite: Structures/cargo_telepad.rsi
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     layers:
     - state: offline
       map: [ "enum.CargoTelepadLayers.Base" ]
@@ -30,8 +30,8 @@
       map: [ "enum.CargoTelepadLayers.Beam" ]
       shader: unshaded
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

@@ -2,18 +2,20 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.Salvage.Magnet;
-using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Procedural;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
+using Robust.Shared.Exceptions;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
+    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+
     [ValidatePrototypeId<RadioChannelPrototype>]
     private const string MagnetChannel = "Supply";
 
@@ -44,7 +46,19 @@ public sealed partial class SalvageSystem
             return;
         }
 
-        TakeMagnetOffer((station.Value, dataComp), args.Index, (uid, component));
+        var index = args.Index;
+        async void TryTakeMagnetOffer()
+        {
+            try
+            {
+                await TakeMagnetOffer((station.Value, dataComp), index, (uid, component));
+            }
+            catch (Exception e)
+            {
+                _runtimeLog.LogException(e, $"{nameof(SalvageSystem)}.{nameof(TakeMagnetOffer)}");
+            }
+        }
+        TryTakeMagnetOffer();
     }
 
     private void OnMagnetStartup(EntityUid uid, SalvageMagnetComponent component, ComponentStartup args)
@@ -269,6 +283,11 @@ public sealed partial class SalvageSystem
                 var grid = _mapManager.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
+            case DebrisOffering debris:
+                var debrisProto = _prototypeManager.Index<DungeonConfigPrototype>(debris.Id);
+                var debrisGrid = _mapManager.CreateGridEntity(salvMap);
+                await _dungeon.GenerateDungeonAsync(debrisProto, debrisGrid.Owner, debrisGrid.Comp, Vector2i.Zero, seed);
+                break;
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
 
@@ -309,7 +328,7 @@ public sealed partial class SalvageSystem
             bounds = bounds?.Union(childAABB) ?? childAABB;
 
             // Update mass scanner names as relevant.
-            if (offering is AsteroidOffering)
+            if (offering is AsteroidOffering or DebrisOffering)
             {
                 _metaData.SetEntityName(mapChild, Loc.GetString("salvage-asteroid-name"));
                 _gravity.EnableGravity(mapChild);

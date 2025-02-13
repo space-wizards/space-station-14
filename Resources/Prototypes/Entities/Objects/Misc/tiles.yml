@@ -40,6 +40,9 @@
     damage:
       types:
         Blunt: 5
+  - type: GuideHelp
+    guides:
+    - ExpandingRepairingStation
 
 - type: entity
   name: steel dark checker tile
@@ -1286,6 +1289,22 @@
   - type: Stack
     stackType: FloorTileBCircuit
 
+- type: entity
+  name: red circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemRCircuit
+  components:
+  - type: Sprite
+    state: rcircuit
+  - type: Item
+    heldPrefix: rcircuit
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorRedCircuit
+  - type: Stack
+    stackType: FloorTileRCircuit
+
 # Circuits stacks
 
 - type: entity
@@ -1299,6 +1318,14 @@
 - type: entity
   parent: FloorTileItemBCircuit
   id: FloorTileItemBCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: FloorTileItemRCircuit
+  id: FloorTileItemRCircuit4
   suffix: 4
   components:
   - type: Stack
@@ -1523,6 +1550,23 @@
     - FloorAstroSnow
   - type: Stack
     stackType: FloorTileAstroSnow
+
+- type: entity
+  id: FloorTileItemAstroAsteroidSand
+  parent: FloorTileItemBase
+  name: asteroid astro-sand
+  description: Fake sand. Luckily, it's not as coarse as the real thing.
+  components:
+  - type: Sprite
+    state: asteroid
+  - type: Item
+    heldPrefix: asteroid
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroAsteroidSand
+  - type: Stack
+    stackType: FloorTileAstroAsteroidSand
 
 - type: entity
   name: large wood floor

@@ -28,8 +28,8 @@
     sprite: Structures/Walls/solid.rsi
     state: wall_girder
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

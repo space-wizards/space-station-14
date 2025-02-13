@@ -9,6 +9,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -194,8 +195,20 @@ namespace Content.Client.ContextMenu.UI
                 return;
 
             // Do we need to do in-range unOccluded checks?
-            var ignoreFov = !_eyeManager.CurrentEye.DrawFov ||
-                (_verbSystem.Visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov;
+            var visibility = _verbSystem.Visibility;
+
+            if (!_eyeManager.CurrentEye.DrawFov)
+            {
+                visibility &= ~MenuVisibility.NoFov;
+            }
+
+            var ev = new MenuVisibilityEvent()
+            {
+                Visibility = visibility,
+            };
+
+            _entityManager.EventBus.RaiseLocalEvent(player, ref ev);
+            visibility = ev.Visibility;
 
             _entityManager.TryGetComponent(player, out ExaminerComponent? examiner);
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
@@ -209,7 +222,7 @@ namespace Content.Client.ContextMenu.UI
                     continue;
                 }
 
-                if (ignoreFov)
+                if ((visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov)
                     continue;
 
                 var pos = new MapCoordinates(_xform.GetWorldPosition(xform, xformQuery), xform.MapID);

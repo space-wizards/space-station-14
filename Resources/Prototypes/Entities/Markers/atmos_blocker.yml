@@ -86,7 +86,7 @@
 - type: entity
   name: Atmos Fix Freezer Marker
   id: AtmosFixFreezerMarker
-  description: "Change air temp to 235K, for freezer with a big of wiggle room to get set up."
+  description: "Change air temp to 235K, for freezer with a bit of wiggle room to get set up."
   parent: MarkerBase
   components:
     - type: Sprite
@@ -99,3 +99,12 @@
           state: freeze
     - type: AtmosFixMarker
       mode: 6
+
+- type: entity
+  parent: AtmosFixNitrogenMarker
+  id: AtmosFixVoxMarker
+  suffix: Vox Atmosphere
+  description: "Nitrogen @ 101 kPa, 20C"
+  components:
+  - type: AtmosFixMarker
+    mode: 7

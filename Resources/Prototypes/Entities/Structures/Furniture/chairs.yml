@@ -6,6 +6,7 @@
   placement:
     mode: PlaceFree
   components:
+  - type: Animateable
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -349,6 +350,7 @@
   - type: Construction
     graph: Seat
     node: chairFolding
+  - type: DamageExaminable
 
 - type: entity
   parent: ChairFolding

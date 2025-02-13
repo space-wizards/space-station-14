@@ -1,65 +1,63 @@
 ﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+/// <summary>
+/// Initializes a <see cref="GasPressurePumpWindow"/> and updates it when new server messages are received.
+/// </summary>
+[UsedImplicitly]
+public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
 {
-    /// <summary>
-    /// Initializes a <see cref="GasPressurePumpWindow"/> and updates it when new server messages are received.
-    /// </summary>
-    [UsedImplicitly]
-    public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private const float MaxPressure = Atmospherics.MaxOutputPressure;
+
+    [ViewVariables]
+    private GasPressurePumpWindow? _window;
+
+    public GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        [ViewVariables]
-        private const float MaxPressure = Atmospherics.MaxOutputPressure;
+    }
 
-        [ViewVariables]
-        private GasPressurePumpWindow? _window;
+    protected override void Open()
+    {
+        base.Open();
 
-        public GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        _window = this.CreateWindow<GasPressurePumpWindow>();
 
-        protected override void Open()
-        {
-            base.Open();
+        _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
+        _window.PumpOutputPressureChanged += OnPumpOutputPressurePressed;
+        Update();
+    }
 
-            _window = this.CreateWindow<GasPressurePumpWindow>();
+    public void Update()
+    {
+        if (_window == null)
+            return;
 
-            _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
-            _window.PumpOutputPressureChanged += OnPumpOutputPressurePressed;
-        }
+        _window.Title = Identity.Name(Owner, EntMan);
 
-        private void OnToggleStatusButtonPressed()
-        {
-            if (_window is null) return;
-            SendMessage(new GasPressurePumpToggleStatusMessage(_window.PumpStatus));
-        }
+        if (!EntMan.TryGetComponent(Owner, out GasPressurePumpComponent? pump))
+            return;
 
-        private void OnPumpOutputPressurePressed(string value)
-        {
-            var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
-            if (pressure > MaxPressure) pressure = MaxPressure;
+        _window.SetPumpStatus(pump.Enabled);
+        _window.MaxPressure = pump.MaxTargetPressure;
+        _window.SetOutputPressure(pump.TargetPressure);
+    }
 
-            SendMessage(new GasPressurePumpChangeOutputPressureMessage(pressure));
-        }
+    private void OnToggleStatusButtonPressed()
+    {
+        if (_window is null) return;
+        SendPredictedMessage(new GasPressurePumpToggleStatusMessage(_window.PumpStatus));
+    }
 
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (_window == null || state is not GasPressurePumpBoundUserInterfaceState cast)
-                return;
-
-            _window.Title = (cast.PumpLabel);
-            _window.SetPumpStatus(cast.Enabled);
-            _window.SetOutputPressure(cast.OutputPressure);
-        }
+    private void OnPumpOutputPressurePressed(float value)
+    {
+        SendPredictedMessage(new GasPressurePumpChangeOutputPressureMessage(value));
     }
 }

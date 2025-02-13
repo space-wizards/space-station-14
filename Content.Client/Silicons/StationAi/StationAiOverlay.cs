@@ -4,7 +4,9 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -12,6 +14,7 @@ public sealed class StationAiOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -21,6 +24,9 @@ public sealed class StationAiOverlay : Overlay
 
     private IRenderTexture? _staticTexture;
     private IRenderTexture? _stencilTexture;
+
+    private float _updateRate = 1f / 30f;
+    private float _accumulator;
 
     public StationAiOverlay()
     {
@@ -47,19 +53,22 @@ public sealed class StationAiOverlay : Overlay
         _entManager.TryGetComponent(playerEnt, out TransformComponent? playerXform);
         var gridUid = playerXform?.GridUid ?? EntityUid.Invalid;
         _entManager.TryGetComponent(gridUid, out MapGridComponent? grid);
+        _entManager.TryGetComponent(gridUid, out BroadphaseComponent? broadphase);
 
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
+        _accumulator -= (float) _timing.FrameTime.TotalSeconds;
 
-        if (grid != null)
+        if (grid != null && broadphase != null)
         {
-            // TODO: Pass in attached entity's grid.
-            // TODO: Credit OD on the moved to code
-            // TODO: Call the moved-to code here.
-
-            _visibleTiles.Clear();
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
-            _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
+
+            if (_accumulator <= 0f)
+            {
+                _accumulator = MathF.Max(0f, _accumulator + _updateRate);
+                _visibleTiles.Clear();
+                _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles);
+            }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
             var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);

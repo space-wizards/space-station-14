@@ -24,6 +24,12 @@ public sealed record CriminalRecord
     public string? Reason;
 
     /// <summary>
+    /// The name of the person who changed the status.
+    /// </summary>
+    [DataField]
+    public string? InitiatorName;
+
+    /// <summary>
     /// Criminal history of the person.
     /// This should have charges and time served added after someone is detained.
     /// </summary>
@@ -35,4 +41,4 @@ public sealed record CriminalRecord
 /// A line of criminal activity and the time it was added at.
 /// </summary>
 [Serializable, NetSerializable]
-public record struct CrimeHistory(TimeSpan AddTime, string Crime);
+public record struct CrimeHistory(TimeSpan AddTime, string Crime, string? InitiatorName);

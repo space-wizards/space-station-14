@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Silicons.StationAi;
 
-public sealed partial class StationAiSystem : EntitySystem
+public sealed partial class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IOverlayManager _overlayMgr = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -15,8 +15,8 @@ public sealed partial class StationAiSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        // InitializeAirlock();
-        // InitializePowerToggle();
+        InitializeAirlock();
+        InitializePowerToggle();
 
         SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerAttachedEvent>(OnAiAttached);
         SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerDetachedEvent>(OnAiDetached);

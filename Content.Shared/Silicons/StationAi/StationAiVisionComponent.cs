@@ -1,8 +1,9 @@
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Silicons.StationAi;
+namespace Content.Shared.StationAi;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]//, Access(typeof(SharedStationAiSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStationAiSystem))]
 public sealed partial class StationAiVisionComponent : Component
 {
     [DataField, AutoNetworkedField]

@@ -80,6 +80,86 @@
     maxTileBreak: 0
 
 - type: entity
+  id: ProjectileLocker
+  name: cursed locker
+  description: A cursed magical locker! Can you resist?
+  parent: ClosetSteelBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ResistLocker
+    resistTime: 30
+  - type: StoreOnCollide
+    lockOnCollide: true
+    disableWhenFirstOpened: true
+    whitelist:
+      components:
+        - Body
+  - type: LockVisuals
+    stateLocked: cursed_door
+    stateUnlocked: decursed_door
+  - type: Lock
+    breakOnAccessBreaker: false
+  - type: AccessReader
+    access: [["Wizard"]]
+    breakOnAccessBreaker: false
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Brute: 0
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/closet.rsi
+    layers:
+    - state: cursed
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: decursed_door
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: [ "enum.PaperLabelVisuals.Layer" ]
+    - state: cursed_door
+      map: [ "enum.LockVisualLayers.Lock" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+  #TODO: Will have to eventually make a custom visualizer for cursed lockers
+  - type: EntityStorageVisuals
+    stateBaseClosed: decursed
+    stateDoorOpen: decursed_open
+    stateDoorClosed: decursed_door
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        density: 75
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 0.6
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: false
+
+- type: entity
   id: ProjectilePolyboltBase
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
