@@ -196,6 +196,15 @@
     - SimpleHostile
 
 - type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretAllHostile
+  suffix: All hostile
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AllHostile
+
+- type: entity
   name: xeno turret
   description: Shoots 9mm acid projectiles.
   parent: BaseWeaponTurret

@@ -48,6 +48,47 @@
             type: AtmosAlertsComputerBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - AtmosphericAlertsComputer
+    - DeviceMonitoringAndControl
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerAtmosMonitoring
+  name: atmospheric network monitor
+  description: Used to monitor the station's atmospheric networks.
+  components:
+  - type: Computer
+    board: AtmosMonitoringComputerCircuitboard
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: tank
+    - map: ["computerLayerKeys"]
+      state: atmos_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AtmosMonitoringConsole
+    navMapTileColor: "#1a1a1a"
+    navMapWallColor: "#404040"
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.AtmosMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.AtmosMonitoringConsoleUiKey.Key:
+        type: AtmosMonitoringConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - AtmosphericNetworkMonitor
+    - DeviceMonitoringAndControl
 
 - type: entity
   parent: BaseComputer
@@ -71,8 +112,6 @@
     radius: 1.5
     energy: 1.6
     color: "#43ccb5"
-  - type: Rotatable
-    rotateWhileAnchored: true
 
 - type: entity
   parent: BaseComputer
@@ -97,8 +136,6 @@
     radius: 1.5
     energy: 1.6
     color: "#43ccb5"
-  - type: Rotatable
-    rotateWhileAnchored: true
   - type: ItemSlots
     slots:
       disk_slot:
@@ -115,6 +152,9 @@
       board: !type:Container
         ents: []
       disk_slot: !type:ContainerSlot {}
+  - type: GuideHelp
+    guides:
+    - ShuttleCraft
 
 - type: entity
   parent: BaseComputerShuttle
@@ -577,7 +617,7 @@
     color: "#3c5eb5"
   - type: Tag
     tags:
-    - EmagImmune
+    - AccessBreakerImmune
   - type: ItemSlots
   - type: ContainerContainer
     containers:
@@ -676,6 +716,39 @@
     color: "#f71713"
 
 - type: entity
+  parent: ComputerComms
+  id: WizardComputerComms
+  name: wizard communications computer
+  description: A computer capable of magically projecting your speech to the station. Using this to make an announcement will alert the station to your presence.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_wizard
+    - map: ["computerLayerKeys"]
+      state: wizard_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [[ "Wizard" ]]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-wizard
+    color: "#ff00ff"
+    canShuttle: false
+    global: true #announce to everyone they're about to fuck shit up
+    sound: /Audio/Announcements/war.ogg
+  - type: Computer
+    board: WizardCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#F317F3"
+
+- type: entity
   parent: BaseComputerAiAccess
   id: ComputerSolarControl
   name: solar control computer
@@ -708,6 +781,10 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+  - type: GuideHelp
+    guides:
+    - SolarPanels
+    - Power
 
 - type: entity
   parent: BaseComputerAiAccess
