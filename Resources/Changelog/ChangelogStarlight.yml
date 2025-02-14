@@ -3365,4 +3365,47 @@ Entries:
   id: 466
   time: '2025-02-14T01:43:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/324
+- author: Rinary
+  changes:
+  - message: Added mech siren
+    type: Add
+  id: 467
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: 'Added new security mech: paddy(needs to be mapped on every map)'
+    type: Add
+  id: 468
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Now internals toggleable and mech gas tank needs to be filled with gas.
+    type: Tweak
+  id: 469
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Now mech thrusters are toggleable and they draw mech power.
+    type: Tweak
+  id: 470
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Mech light draw rate changed from 2 to 1, draw delay changed from 1 second
+      to 3(high battery can work 60 minutes with toggled light).
+    type: Tweak
+  id: 471
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Now not every mech has his own spotlight.
+    type: Tweak
+  id: 472
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
 

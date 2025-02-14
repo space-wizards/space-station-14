@@ -96,8 +96,6 @@
     - NitrousOxide
     - Frezon
     #- Helium3 TODO: fusion
-  - type: AirIntake
-  # for intake and filter to work
   - type: AtmosDevice
     requireAnchored: false
     joinSystem: true
@@ -174,16 +172,10 @@
         node: start
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: PointLight
-    mask: /Textures/Effects/LightMasks/cone.png
-    autoRot: true
-    radius: 6
-    energy: 5
-    enabled: false
   - type: PowerCellDraw
     enabled: false
-    drawRate: 2
-    useRate: 0
+    drawRate: 1
+    delay: 3
 
 # Ripley MK-I
 - type: entity
@@ -219,6 +211,12 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 3
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechRipleyBattery
@@ -267,16 +265,92 @@
     baseSprintSpeed: 2
   - type: Damageable
     damageModifierSet: MediumArmorNT
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 3
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechRipley2Battery
   parent: MechRipley2
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
+      
+# Paddy
+- type: entity
+  id: MechPaddy
+  parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
+  name: Paddy
+  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: paddy
+    - state: paddy_sirens
+      map: [ "enum.MechVisualLayers.Siren" ]
+      shader: unshaded
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: paddy
+    openState: paddy-open
+    brokenState: paddy-broken
+    mechToPilotDamageMultiplier: 0.60
+    airtight: true
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+    siren: true
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 30 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 5
+    energy: 5
+    enabled: false
+
+- type: entity
+  id: MechPaddyBattery
+  parent: MechPaddy
+  suffix: Battery, Air
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
+      
+- type: entity
+  id: MechPaddyFilled
+  parent: MechPaddyBattery
+  suffix: Battery, Air, Filled
+  components:
+  - type: Mech
+    startingEquipment:
+      - WeaponMechCombatDisabler
+      - WeaponMechCombatFlashbangLauncher
 
 # Clarke
 - type: entity
@@ -313,18 +387,25 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.5
     baseSprintSpeed: 4.5
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    energy: 6
+    enabled: false
 
 - type: entity
   id: MechClarkeBattery
   parent: MechClarke
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # H.O.N.K.
 - type: entity
@@ -417,12 +498,14 @@
 - type: entity
   parent: MechHamtr
   id: MechHamtrBattery
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Vim!!!!!!!
 
@@ -485,12 +568,14 @@
 - type: entity
   parent: MechVim
   id: MechVimBattery
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Combat-Station Mechs
 
@@ -530,16 +615,24 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 2.6
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 6
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechGygaxBattery
   parent: MechGygax
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Durand
 - type: entity
@@ -580,21 +673,28 @@
     baseSprintSpeed: 2
   - type: Damageable
     damageModifierSet: MediumArmorNT
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 15
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechDurandBattery
   parent: MechDurand
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHigh
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 # Nanotrasen Combat Mechs
 
@@ -638,8 +738,7 @@
     baseSprintSpeed: 1.5
   - type: Damageable
     damageModifierSet: HeavyArmorNT
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 15
@@ -647,12 +746,14 @@
 - type: entity
   id: MechMarauderBattery
   parent: MechMarauder
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHyper
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechMarauderFilled
@@ -706,8 +807,7 @@
     baseSprintSpeed: 3.7
   - type: Damageable
     damageModifierSet: HeavyArmorNT
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 20
@@ -715,12 +815,14 @@
 - type: entity
   id: MechSeraphBattery
   parent: MechSeraph
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellAntiqueProto
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechSeraphFilled
@@ -777,21 +879,28 @@
     baseSprintSpeed: 3.7
   - type: Damageable
     damageModifierSet: MediumArmorSyndi
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 40
     doAfterDelay: 20
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    energy: 6
+    enabled: false
 
 - type: entity
   id: MechGygaxSyndieBattery
   parent: MechGygaxSyndie
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHyper
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechGygaxSyndieFilled
@@ -845,8 +954,7 @@
     baseSprintSpeed: 1.5
   - type: Damageable
     damageModifierSet: HeavyArmorSyndi
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 50
     doAfterDelay: 25
@@ -854,12 +962,14 @@
 - type: entity
   id: MechMaulerSyndieBattery
   parent: MechMaulerSyndie
-  suffix: Battery
+  suffix: Battery, Air
   components:
   - type: ContainerFill
     containers:
       mech-battery-slot:
       - PowerCellHyper
+      mech-gas-tank-slot:
+      - MechAirTankFilled
 
 - type: entity
   id: MechMaulerSyndieFilled
