@@ -25,6 +25,7 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+# Silicons
 - type: roleLoadout
   id: JobBorg
   nameDataset: NamesBorg
