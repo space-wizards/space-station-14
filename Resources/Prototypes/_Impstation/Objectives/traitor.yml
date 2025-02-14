@@ -221,6 +221,6 @@
   - type: Objective
     difficulty: 1.25
     icon:
-      sprite: Clothing/Neck/Cloaks/straight.rsi
+      sprite: _Impstation/Clothing/Neck/Cloaks/straight.rsi
       state: icon
   - type: AutoCompleteCondition
