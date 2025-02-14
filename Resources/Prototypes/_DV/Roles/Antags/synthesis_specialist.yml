@@ -3,6 +3,7 @@
   name: roles-antag-syndicate-synthesis-name
   objective: roles-antag-syndicate-synthesis-objective
   antagonist: true # making poisons and shit on demand is evil
+  playTimeTracker: AntagSynthesisSpecialist
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 86400 # 24h so you probably know some general lore or something

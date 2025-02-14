@@ -2,6 +2,7 @@
   id: Thief
   name: roles-antag-thief-name
   antagonist: true
+  playTimeTracker: AntagThief # imp
   setPreference: true
   objective: roles-antag-thief-objective
   guides: [ Thieves ]
