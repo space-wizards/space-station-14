@@ -50,6 +50,7 @@
   - type: RadiationBlocker
     resistance: 2
   - type: BlockWeather
+  - type: SunShadow
 
 - type: entity
   parent: BaseWall
@@ -543,7 +544,7 @@
   - type: Tag
     tags:
     - Wall
-    - Diagonal    
+    - Diagonal
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium_diagonal.rsi

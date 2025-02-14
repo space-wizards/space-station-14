@@ -13,11 +13,13 @@ public sealed class PlanetLightSystem : EntitySystem
         base.Initialize();
         _overlay = new(EntityManager);
         _overlayMan.AddOverlay(_overlay);
+        _overlayMan.AddOverlay(new SunShadowOverlay());
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         _overlayMan.RemoveOverlay(_overlay);
+        _overlayMan.RemoveOverlay<SunShadowOverlay>();
     }
 }
