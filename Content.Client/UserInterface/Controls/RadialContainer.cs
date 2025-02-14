@@ -221,6 +221,7 @@ public class RadialContainer : LayoutContainer
         clone.SetParameter("selectedTo", selectedTo);
         clone.SetParameter("childCount", i);
         clone.SetParameter("sectorColors", _sectorColors);
+        clone.SetParameter("borderColors", _borderColors);
         clone.SetParameter("centerPos", menuCenter);
         clone.SetParameter("screenSize", screenSize);
         clone.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier * UIScale);
