@@ -11,6 +11,7 @@
       flags:
       - Staff
       - Mentor
+      - ExtRoles
       - Retiree
   startingGear: NanoTrasenRepresentativeGear
   icon: JobIconNanotrasen
