@@ -41,6 +41,8 @@ public sealed class SunShadowOverlay : Overlay
         // Also looks like they stretch on right side of the screen quite badly, check PR.
         // Need some non-shitty way to get render targets instead of copy-paste slop.
         // Need to do per-layer blur just for roof.
+
+        // Feature todo: dynamic shadows for mobs and trees. Also ideally remove the fake tree shadows.
         var direction = new Vector2(2f, 0f);
         var length = direction.Length();
         var worldHandle = args.WorldHandle;
