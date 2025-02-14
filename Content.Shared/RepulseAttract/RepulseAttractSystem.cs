@@ -56,7 +56,7 @@ public sealed class RepulseAttractSystem : EntitySystem
         foreach (var target in _entSet)
         {
             if (!_physicsQuery.TryGetComponent(target, out var physics)
-                || (physics.CollisionLayer & (int)layer) == 0x0) // don't affect ghosts
+                || (physics.CollisionMask & (int)layer) == 0x0) // don't affect ghosts
                 continue;
 
             if (_whitelist.IsWhitelistFail(whitelist, target))
