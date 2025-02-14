@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: 'The Animal Friends Kit has an additional line to make its function clearer:
-      subjuzine requires mixing with blood.'
-    type: Add
-  id: 623
-  time: '2024-12-02T12:48:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/870
-- author: Darkmajia
-  changes:
   - message: Ultraviolet lights can now be crafted in autolathes.
     type: Add
   id: 624
@@ -4199,3 +4191,10 @@
   id: 1122
   time: '2025-02-13T22:38:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1607
+- author: formlessnameless
+  changes:
+  - message: Bonfires can cook things now. Start the cookout.
+    type: Add
+  id: 1123
+  time: '2025-02-14T01:39:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1677
