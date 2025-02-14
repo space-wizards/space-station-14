@@ -12,11 +12,13 @@
     },
     {
       "name": "equipped-OUTERCLOTHING",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "equipped-OUTERCLOTHING-vox",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump-vox"
     },
     {
       "name": "equipped-OUTERCLOTHING-monkey",
