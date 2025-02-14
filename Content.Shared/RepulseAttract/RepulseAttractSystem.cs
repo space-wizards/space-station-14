@@ -9,6 +9,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using System.Numerics;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.RepulseAttract;
 
@@ -20,9 +21,16 @@ public sealed class RepulseAttractSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xForm = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
 
+    private EntityQuery<TransformComponent> _xFormQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private HashSet<EntityUid> _entSet = new();
     public override void Initialize()
     {
         base.Initialize();
+
+        _xFormQuery = GetEntityQuery<TransformComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+
         SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelayOnMeleeHitSystem)], after: [typeof(SharedWieldableSystem)]);
     }
     private void OnMeleeAttempt(Entity<RepulseAttractComponent> ent, ref MeleeHitEvent args)
@@ -36,27 +44,25 @@ public sealed class RepulseAttractSystem : EntitySystem
     public bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid user)
     {
         var position = _xForm.GetMapCoordinates(ent.Owner);
-        return TryRepulseAttract(ent.Comp.Attract, position, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist);
+        return TryRepulseAttract(position, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionLayer);
     }
 
-    public bool TryRepulseAttract(bool attract, MapCoordinates position, float speed, float range, EntityWhitelist? whitelist = null)
+    public bool TryRepulseAttract(MapCoordinates position, float speed, float range, EntityWhitelist? whitelist = null, CollisionGroup layer = CollisionGroup.SingularityLayer)
     {
-        var entsInRange = _lookup.GetEntitiesInRange(position, range, flags: LookupFlags.Dynamic | LookupFlags.Sundries);
+        _entSet.Clear();
         var epicenter = position.Position;
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
+        _lookup.GetEntitiesInRange(position.MapId, epicenter, range, _entSet, flags: LookupFlags.Dynamic | LookupFlags.Sundries);
 
-        foreach (var target in entsInRange)
+        foreach (var target in _entSet)
         {
-            if (!bodyQuery.TryGetComponent(target, out var physics)
-                || physics.BodyType == BodyType.Static
-                || physics.CollisionLayer == (int)CollisionGroup.GhostImpassable) // don't affect ghosts
+            if (!_physicsQuery.TryGetComponent(target, out var physics)
+                || (physics.CollisionLayer & (int)layer) == 0x0) // don't affect ghosts
                 continue;
 
             if (_whitelist.IsWhitelistFail(whitelist, target))
                 continue;
 
-            var targetXForm = xformQuery.GetComponent(target);
+            var targetXForm = _xFormQuery.GetComponent(target);
 
             var targetPos = _xForm.GetMapCoordinates(target, targetXForm).Position;
 
@@ -68,9 +74,9 @@ public sealed class RepulseAttractSystem : EntitySystem
 
             // attract: throw all items directly to to the epicenter
             // repulse: throw them up to the maximum range
-            var throwDirection = attract ? -direction : direction.Normalized() * (range - direction.Length());
+            var throwDirection = speed < 0 ? -direction : direction.Normalized() * (range - direction.Length());
 
-            _throw.TryThrow(target, throwDirection, speed);
+            _throw.TryThrow(target, throwDirection, Math.Abs(speed));
         }
 
         return true;

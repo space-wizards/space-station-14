@@ -1,4 +1,5 @@
-﻿using Content.Shared.Whitelist;
+﻿using Content.Shared.Physics;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.RepulseAttract;
@@ -10,13 +11,8 @@ namespace Content.Shared.RepulseAttract;
 public sealed partial class RepulseAttractComponent : Component
 {
     /// <summary>
-    ///     Attracts if true, Repulse if false.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Attract;
-
-    /// <summary>
     ///     How fast should the Repulsion/Attraction be?
+    ///     A positive value will repulse objects, a negative value will attract
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Speed = 5.0f;
@@ -32,4 +28,11 @@ public sealed partial class RepulseAttractComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    ///     What collision layers should this effect apply to?
+    ///     The default excludes ghost mobs.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public CollisionGroup CollisionLayer = CollisionGroup.SingularityLayer;
 }

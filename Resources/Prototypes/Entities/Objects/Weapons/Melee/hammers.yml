@@ -81,9 +81,8 @@
     layers:
     - state: icon
   - type: RepulseAttract
-    speed: 15 #Anything above this pushes things too far away from the Wizard
+    speed: -15 #Anything above this pushes things too far away from the Wizard
     range: 5
-    attract: true
     whitelist:
       components:
       - MobMover
