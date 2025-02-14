@@ -38,6 +38,9 @@ public sealed class SunShadowOverlay : Overlay
     {
         // TODO: Fix jittering (imprecision due to matrix maths?)
         // Likely need to get all loca lcoords and shit.
+        // Also looks like they stretch on right side of the screen quite badly, check PR.
+        // Need some non-shitty way to get render targets instead of copy-paste slop.
+        // Need to do per-layer blur just for roof.
         var direction = new Vector2(2f, 0f);
         var length = direction.Length();
         var worldHandle = args.WorldHandle;
@@ -78,6 +81,10 @@ public sealed class SunShadowOverlay : Overlay
                 // - Extrapolate these along the sun direction.
                 // - Combine the above into 1 single polygon to draw.
 
+                // Note that this is range-limited for accuracy; if you set it too high it will clip through walls or other undesirable entities.
+                // This is probably not noticeable most of the time but if you want something "accurate" you'll want to code a solution.
+                // Ideally the CPU would have its own shadow-map copy that we could just ray-cast each vert into though
+                // You might need to batch verts or the likes as this could get expensive.
                 _lookup.GetEntitiesIntersecting(mapId, expandedBounds, _shadows);
 
                 foreach (var ent in _shadows)
