@@ -31,6 +31,17 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/eliteblueshield.rsi
 
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  id: ClothingUniformJumpskirtCorpsman
+  name: Corpsman's Skirt
+  description: Die in style on the front lines!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/corpsman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/corpsman.rsi
+
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 
 - type: entity

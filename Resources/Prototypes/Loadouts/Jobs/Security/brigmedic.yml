@@ -4,6 +4,11 @@
   equipment:
     head: ClothingHeadHatBeretBrigmedic
 
+- type: loadout
+  id: CorpsmanBeret
+  equipment:
+    head: ClothingHeadHatBeretCorpsman
+
 # Jumpsuit
 - type: loadout
   id: JumpsuitBrigmedic
@@ -14,6 +19,16 @@
   id: JumpskirtBrigmedic
   equipment:
     jumpsuit: ClothingUniformJumpskirtBrigmedic
+
+- type: loadout
+  id: JumpsuitCorpsman
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCorpsman
+
+- type: loadout
+  id: JumpskirtCorpsman
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCorpsman
 
 # Back
 - type: loadout
@@ -36,6 +51,11 @@
   id: BrigmedicCoat
   equipment:
     outerClothing: ClothingOuterCoatAMG
+
+- type: loadout
+  id: CorpsmanCoat
+  equipment:
+    outerClothing: ClothingOuterCoatCorpsman
 
 - type: loadout
   id: BrigmedicRig
