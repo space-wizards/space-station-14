@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Modified from existing sprites. Inhands modifided from Objects/Storage/boxes.rsi/inhand-(left/right) by SeamLesss (github)",
+    "copyright": "Modified from existing sprites. Inhands modified from Objects/Storage/boxes.rsi/inhand-(left/right) by SeamLesss (github)",
     "size": {
         "x": 32,
         "y": 32
