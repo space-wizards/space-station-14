@@ -336,6 +336,15 @@
   - BartenderCuteApron
 
 - type: loadoutGroup
+  id: BartenderShoes
+  name: loadout-group-bartender-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - BlackHeels
+  - ClownShoesExpert
+
+- type: loadoutGroup
   id: BartenderPDA
   name: loadout-group-bartender-id
   loadouts:
@@ -1202,6 +1211,18 @@
   loadouts:
   - ResearchDirectorLabCoat
   - ResearchDirectorWintercoat
+
+- type: loadoutGroup
+  id: ResearchDirectorShoes
+  name: loadout-group-research-director-shoes
+  loadouts:
+  - BrownShoes
+  - WhiteShoes
+  - LacedShoes
+  - LeatherShoes
+  - WhiteDressShoes
+  - ScienceWinterBoots
+  - RoboticistWinterBoots
 
 - type: loadoutGroup
   id: ScientistHead

@@ -61,17 +61,6 @@
   - AdminAssistantAltHeadset
 
 - type: loadoutGroup
-  id: AdminAssistantBackpack
-  name: loadout-group-admin-assistant-backpack
-  loadouts:
-  - CommonBackpack
-  - CommonSatchel
-  - CommonDuffel
-  - CommandVeteranBackpack #imp
-  - CommandVeteranSatchel #imp
-  - CommandVeteranDuffel #imp
-
-- type: loadoutGroup
   id: AdminAssistantGloves
   name: loadout-group-admin-assistant-gloves
   minLimit: 0
