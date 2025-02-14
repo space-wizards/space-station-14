@@ -12,7 +12,8 @@
     },
     {
       "name": "equipped-OUTERCLOTHING",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "inhand-left",
