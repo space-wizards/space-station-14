@@ -45,6 +45,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
     {
+        if (!HasComp<HandsComponent>(args.User))
+            return;
+
         SharedInteract(uid, component, args, args.Target, args.User);
     }
 
@@ -60,9 +63,6 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         //Handling does nothing and this thing annoyingly plays way too often.
         // HUH? What does this comment even mean?
-
-        if (!HasComp<HandsComponent>(user))
-            return;
 
         if (HasComp<SleepingComponent>(uid))
             return;
