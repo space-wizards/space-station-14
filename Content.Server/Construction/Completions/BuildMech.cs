@@ -44,7 +44,7 @@ public sealed partial class BuildMech : IGraphAction
             return;
         }
         
-        if (!containerSystem.TryGetContainer(uid, GasTankContainer, out var gasTankContainer))
+        if (!containerSystem.TryGetContainer(uid, GasTankContainer, out var gasTankContainer, containerManager))
         {
             Logger.Warning($"Mech construct entity {uid} did not have the specified '{GasTankContainer}' container! Aborting build mech action.");
             return;
@@ -74,9 +74,7 @@ public sealed partial class BuildMech : IGraphAction
             mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
             containerSystem.Insert(cell, mechComp.BatterySlot);
             if (mechComp.GasTankSlot.ContainedEntity == null && gasTank != null)
-            {
                 containerSystem.Insert(gasTank, mechComp.GasTankSlot);
-            }
         }
 
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);
