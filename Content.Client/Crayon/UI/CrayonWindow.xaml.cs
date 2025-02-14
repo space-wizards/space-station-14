@@ -20,7 +20,6 @@ namespace Content.Client.Crayon.UI
         private readonly SpriteSystem _spriteSystem = default!;
 
         private Dictionary<string, List<(string Name, Texture Texture)>>? _decals;
-
         private List<string>? _allDecals;
         private string? _autoSelected;
         private string? _selected;
