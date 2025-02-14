@@ -6,9 +6,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -17,7 +15,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;

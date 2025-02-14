@@ -3,11 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
-using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Clothing.Systems;
 
