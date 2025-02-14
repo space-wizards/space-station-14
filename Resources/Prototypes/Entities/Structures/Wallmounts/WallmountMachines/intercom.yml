@@ -73,6 +73,9 @@
   - type: Construction
     graph: Intercom
     node: intercom
+    containers:
+    - board
+    - key_slots
   - type: Destructible
     thresholds:
       - trigger:
