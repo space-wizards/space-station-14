@@ -1,13 +1,10 @@
 ﻿using System.Linq;
-using System.Reflection;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Content.Shared.CCVar.CVarAccess;
 using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Reflection;
 
 namespace Content.Server.Administration.Commands;
 
@@ -20,42 +17,9 @@ namespace Content.Server.Administration.Commands;
 [AnyCommand]
 public sealed class ChangeCvarCommand : IConsoleCommand
 {
-    [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-
-    private List<ChangableCVar> _changableCvars = new();
-    private bool _initialized;
-
-    private void Init()
-    {
-        if (_initialized) // hate this.
-            return;
-
-        _initialized = true;
-
-        var validCvarsDefs = _reflectionManager.FindTypesWithAttribute<CVarDefsAttribute>();
-
-        foreach (var type in validCvarsDefs)
-        {
-            foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy))
-            {
-                var allowed = field.GetCustomAttribute<CVarControl>();
-                if (allowed == null)
-                {
-                    continue;
-                }
-
-                var cvarDef = (CVarDef)field.GetValue(null)!;
-                _changableCvars.Add(new ChangableCVar(cvarDef.Name, allowed, _localizationManager));
-                // Possible todo? check if the cvar is registered in the config manager? or already registered in our list?
-                // Think engine will blow up anyways if its double registered? Not sure.
-                // This command should be fine with multiple registrations.
-            }
-        }
-    }
+    [Dependency] private readonly CVarControlManager _cVarControlManager = default!;
 
     /// <summary>
     /// Searches the list of cvars for a cvar that matches the search string.
@@ -68,7 +32,7 @@ public sealed class ChangeCvarCommand : IConsoleCommand
             return;
         }
 
-        var cvars = GetAllRunnableCvars(shell);
+        var cvars = _cVarControlManager.GetAllRunnableCvars(shell);
 
         var matches = cvars
             .Where(c =>
@@ -113,7 +77,7 @@ public sealed class ChangeCvarCommand : IConsoleCommand
             return;
         }
 
-        var cvars = GetAllRunnableCvars(shell);
+        var cvars = _cVarControlManager.GetAllRunnableCvars(shell);
 
         var cvar = args[0];
         if (cvar == "?")
@@ -160,7 +124,7 @@ public sealed class ChangeCvarCommand : IConsoleCommand
             {
                 var parsed = CVarCommandUtil.ParseObject(type, value);
                 // Value check, is it in the min/max range?
-                var control = _changableCvars.First(c => c.Name == cvar).Control;
+                var control = _cVarControlManager.GetCVar(cvar)!.Control; // Null check is done above.
                 var allowed = true;
                 if (control is { Min: not null, Max: not null })
                 {
@@ -234,9 +198,8 @@ public sealed class ChangeCvarCommand : IConsoleCommand
         // This is kinda scrunkly.
         // Ideally I would run init the moment the dependencies are injected, but IPostInjectInit.PostInject()
         // does not run on commands. Will result in first completion being a bit slow, but eh, it's fine.
-        Init();
 
-        var cvars = GetAllRunnableCvars(shell);
+        var cvars = _cVarControlManager.GetAllRunnableCvars(shell);
 
         if (args.Length == 1)
         {
@@ -252,56 +215,5 @@ public sealed class ChangeCvarCommand : IConsoleCommand
 
         var type = _configurationManager.GetCVarType(cvar);
         return CompletionResult.FromHint($"<{type.Name}>");
-    }
-
-    private List<ChangableCVar> GetAllRunnableCvars(IConsoleShell shell)
-    {
-        // Not a player, running as server. We COULD return all cvars,
-        // but a check later down the line will prevent it from anyways. Use the "cvar" command instead.
-        if (shell.Player == null)
-            return [];
-
-        var adminData = _adminManager.GetAdminData(shell.Player);
-        if (adminData == null)
-            return []; // Not an admin
-
-        return _changableCvars
-            .Where(cvar => adminData.HasFlag(cvar.Control.AdminFlags))
-            .ToList();
-    }
-
-    private sealed class ChangableCVar
-    {
-        private const string LocPrefix = "changecvar";
-
-        public string Name { get; }
-
-        // Holding a reference to the attribute might be skrunkly? Not sure how much mem it eats up.
-        public CVarControl Control { get; }
-
-        public string? ShortHelp;
-        public string? LongHelp;
-
-        public ChangableCVar(string name, CVarControl control, ILocalizationManager loc)
-        {
-            Name = name;
-            Control = control;
-
-            if (loc.TryGetString($"{LocPrefix}-simple-{name.Replace('.', '_')}", out var simple))
-            {
-                ShortHelp = simple;
-            }
-
-            if (loc.TryGetString($"{LocPrefix}-full-{name.Replace('.', '_')}", out var longHelp))
-            {
-                LongHelp = longHelp;
-            }
-
-            // If one is set and the other is not, we throw
-            if (ShortHelp == null && LongHelp != null || ShortHelp != null && LongHelp == null)
-            {
-                throw new InvalidOperationException("Short and long help must both be set or both be null.");
-            }
-        }
     }
 }
