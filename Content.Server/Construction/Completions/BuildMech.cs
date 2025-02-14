@@ -20,8 +20,11 @@ public sealed partial class BuildMech : IGraphAction
     [DataField("mechPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechPrototype = string.Empty;
 
-    [DataField("container")]
-    public string Container = "battery-container";
+    [DataField("batteryContainer")]
+    public string BatteryContainer = "battery-container";
+    
+    [DataField("gasTankContainer")]
+    public string GasTankContainer = "gas-tank-container";
 
     // TODO use or generalize ConstructionSystem.ChangeEntity();
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
@@ -35,22 +38,29 @@ public sealed partial class BuildMech : IGraphAction
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
         var mechSys = entityManager.System<MechSystem>();
 
-        if (!containerSystem.TryGetContainer(uid, Container, out var container, containerManager))
+        if (!containerSystem.TryGetContainer(uid, BatteryContainer, out var container, containerManager))
         {
-            Logger.Warning($"Mech construct entity {uid} did not have the specified '{Container}' container! Aborting build mech action.");
+            Logger.Warning($"Mech construct entity {uid} did not have the specified '{BatteryContainer}' container! Aborting build mech action.");
+            return;
+        }
+        
+        if (!containerSystem.TryGetContainer(uid, GasTankContainer, out var gasTankContainer, containerManager))
+        {
+            Logger.Warning($"Mech construct entity {uid} did not have the specified '{GasTankContainer}' container! Aborting build mech action.");
             return;
         }
 
         if (container.ContainedEntities.Count != 1)
         {
-            Logger.Warning($"Mech construct entity {uid} did not have exactly one item in the specified '{Container}' container! Aborting build mech action.");
+            Logger.Warning($"Mech construct entity {uid} did not have exactly one item in the specified '{BatteryContainer}' container! Aborting build mech action.");
         }
 
         var cell = container.ContainedEntities[0];
+        var gasTank = gasTankContainer.ContainedEntities[0];
 
         if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
         {
-            Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{Container}\"! Aborting build mech action.");
+            Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{BatteryContainer}\"! Aborting build mech action.");
             return;
         }
 
@@ -63,6 +73,8 @@ public sealed partial class BuildMech : IGraphAction
         {
             mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
             containerSystem.Insert(cell, mechComp.BatterySlot);
+            if (mechComp.GasTankSlot.ContainedEntity == null && gasTank != null)
+                containerSystem.Insert(gasTank, mechComp.GasTankSlot);
         }
 
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);

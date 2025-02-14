@@ -184,9 +184,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         gunEntity = default;
         gunComp = null;
 
-        if (TryComp<MechComponent>(entity, out var mech) &&
-            mech.CurrentSelectedEquipment.HasValue &&
-            TryComp<GunComponent>(mech.CurrentSelectedEquipment.Value, out var mechGun))
+        if (TryComp<MechComponent>(entity, out var mech) 
+            && mech.CurrentSelectedEquipment.HasValue 
+            && TryComp<GunComponent>(mech.CurrentSelectedEquipment.Value, out var mechGun))
         {
             gunEntity = mech.CurrentSelectedEquipment.Value;
             gunComp = mechGun;

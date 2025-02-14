@@ -6,8 +6,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: ripley
+      - sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
+        state: base
   - type: ConditionalSpawner
     prototypes:
       - MechRipleyBattery
@@ -20,8 +20,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: ripleymkii
+      - sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
+        state: base
   - type: ConditionalSpawner
     prototypes:
       - MechRipley2Battery
@@ -34,8 +34,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: honker
+      - sprite: Objects/Specific/Mech/Mechs/Basic/honker.rsi
+        state: base
   - type: ConditionalSpawner
     prototypes:
       - MechHonkerBattery
@@ -44,13 +44,8 @@
   name: H.O.N.K. Spawner
   suffix: Filled
   id: SpawnMechHonkerFilled
-  parent: MarkerBase
+  parent: SpawnMechHonker
   components:
-  - type: Sprite
-    layers:
-      - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: honker
   - type: ConditionalSpawner
     prototypes:
       - MechHonkerFilled
@@ -63,8 +58,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: clarke
+      - sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
+        state: base
   - type: ConditionalSpawner
     prototypes:
       - MechClarkeBattery
@@ -77,8 +72,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: gygax
+      - sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
+        state: base
   - type: ConditionalSpawner
     prototypes:
       - MechGygaxBattery
@@ -91,8 +86,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: durand
+      - sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
+        state: base
   - type: ConditionalSpawner
     prototypes:
       - MechDurandBattery

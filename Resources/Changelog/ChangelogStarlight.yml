@@ -3194,4 +3194,218 @@ Entries:
   id: 444
   time: '2025-02-06T16:03:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Thermal vision can now be toggled on and off.
+    type: Add
+  id: 445
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the thermal vision shader would fly off to the opposite
+      end of the universe.
+    type: Fix
+  id: 446
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the Cyclorite eye was mistakenly considered an implant.
+    type: Fix
+  id: 447
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where flash didn’t work with thermal and night vision.
+    type: Fix
+  id: 448
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where carried living creatures were displayed on top of the
+      sprite. Now, creatures inside a container are completely invisible.
+    type: Fix
+  id: 449
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the Abductor couldn't use the Wonderprod.
+    type: Fix
+  id: 450
+  time: '2025-02-09T04:04:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/314
+- author: STARLIGHT TEAM
+  changes:
+  - message: Updated Hristov to match the damage changes made by Wizden.
+    type: Add
+  id: 451
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added derivation property to bullets—this affects the random deviation
+      angle after penetrating a target. The larger the caliber, the more stable the
+      bullet's trajectory.
+    type: Fix
+  id: 452
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Slightly reduced thermal vision contrast.
+    type: Fix
+  id: 453
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed an armor penetration bug.
+    type: Fix
+  id: 454
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: Killer Tamashi
+  changes:
+  - message: Re-Re-Resprited M492. For the last time.
+    type: Tweak
+  id: 455
+  time: '2025-02-09T11:00:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/317
+- author: Rinary
+  changes:
+  - message: Added mech maintenance mode. Now for repairing, changing equipment needs
+      to enable maintenance mode.
+    type: Add
+  id: 456
+  time: '2025-02-09T15:28:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/318
+- author: Rinary
+  changes:
+  - message: Mechs are speaking.
+    type: Add
+  id: 457
+  time: '2025-02-09T15:28:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/318
+- author: Rinary
+  changes:
+  - message: Fixed bug when teleported player controlling mech.
+    type: Fix
+  id: 458
+  time: '2025-02-09T15:28:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/318
+- author: Conflee
+  changes:
+  - message: Changed the year displayed in the PDA from 3025 to 2525 to match lore
+      being written
+    type: Tweak
+  id: 459
+  time: '2025-02-11T07:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/319
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed both Lobster and Hotel Station
+    type: Tweak
+  id: 460
+  time: '2025-02-11T08:52:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/309
+- author: STARLIGHT TEAM
+  changes:
+  - message: Allow the eye to interact across maps. (The Abductor no longer needs
+      to fly to the station map to teleport onto the station.) (A change for the upcoming
+      new Blood Cult mode, specifically for Nar'Sie. 🤫)
+    type: Tweak
+  id: 461
+  time: '2025-02-12T05:20:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/321
+- author: Conflee
+  changes:
+  - message: Added RetroStation, High Pop. Currently not in rotation, has to be set
+      by Admins. For playtesting.
+    type: Add
+  id: 462
+  time: '2025-02-12T06:49:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/312
+- author: Rinary
+  changes:
+  - message: Now mech flashlight drains mech battery
+    type: Tweak
+  id: 463
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Added mech equipment types(WIP)
+    type: Add
+  id: 464
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Resprited Mechs
+    type: Tweak
+  id: 465
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Removed all dangerous command perms from QUERY to DANGER, now loading
+      prototypes and files available only for head staff
+    type: Tweak
+  id: 465
+  time: '2025-02-12T13:48:08.124134+00:00'
+  url: 'null'
+- author: OliviaCroft
+  changes:
+  - message: Added 5 new plushies.
+    type: Add
+  id: 466
+  time: '2025-02-14T01:43:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/324
+- author: Rinary
+  changes:
+  - message: Added mech siren
+    type: Add
+  id: 467
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: 'Added new security mech: paddy(needs to be mapped on every map)'
+    type: Add
+  id: 468
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Now internals toggleable and mech gas tank needs to be filled with gas.
+    type: Tweak
+  id: 469
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Now mech thrusters are toggleable and they draw mech power.
+    type: Tweak
+  id: 470
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Mech light draw rate changed from 2 to 1, draw delay changed from 1 second
+      to 3(high battery can work 60 minutes with toggled light).
+    type: Tweak
+  id: 471
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Rinary
+  changes:
+  - message: Now not every mech has his own spotlight.
+    type: Tweak
+  id: 472
+  time: '2025-02-14T14:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/328
 

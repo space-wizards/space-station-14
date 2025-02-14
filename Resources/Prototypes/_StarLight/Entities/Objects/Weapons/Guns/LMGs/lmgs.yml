@@ -11,6 +11,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/LMGs/M492.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: MagazineVisuals
     magState: mag
     steps: 4

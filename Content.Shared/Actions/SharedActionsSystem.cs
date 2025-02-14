@@ -621,6 +621,10 @@ public abstract class SharedActionsSystem : EntitySystem
             // even if we don't check for obstructions, we may still need to check the range.
             var xform = Transform(user);
 
+            // 🌟Starlight🌟 - Allow the eye to interact across maps.
+            if (TryComp<EyeComponent>(user, out var eye) && eye.Target is not null)
+                xform = Transform(eye.Target.Value);
+
             if (xform.MapID != coords.GetMapId(EntityManager))
                 return false;
 
