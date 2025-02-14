@@ -237,6 +237,7 @@
   - type: RadiationSource
     intensity: 0.1
     slope: 3
+    radiationScaleFactor: 5 # avoid uranium doomstacking
   - type: PointLight
     radius: 1.2
     energy: 0.8

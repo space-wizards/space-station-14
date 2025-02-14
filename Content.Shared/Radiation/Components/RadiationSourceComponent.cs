@@ -26,4 +26,11 @@ public sealed partial class RadiationSourceComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled = true;
+
+    /// <summary>
+    ///     For each RadiationScaleFactor items in a stack, Intensity gets added once. Stacks with items below RadiationScaleFactor don't have rads at all.
+    ///     Set to 1 to disable (so disabled by default)
+    /// </summary>
+    [DataField]
+    public int RadiationScaleFactor = 1;
 }
