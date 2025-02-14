@@ -95,8 +95,7 @@
     - type: GasTank
       outputPressure: 21.3
       air:
-        # If gas tank volume is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions
-        volume: 5
+        volume: 3000
         temperature: 293.15
       tankLowPressure: 30.0
 

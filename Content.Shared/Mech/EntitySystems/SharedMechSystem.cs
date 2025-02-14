@@ -51,6 +51,7 @@ public abstract class SharedMechSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
+        SubscribeLocalEvent<MechComponent, MechToggleInternalsEvent>(OnMechToggleInternals);
         SubscribeLocalEvent<MechComponent, MechEjectPilotEvent>(OnEjectPilotEvent);
         SubscribeLocalEvent<MechComponent, UserActivateInWorldEvent>(RelayInteractionEvent);
         SubscribeLocalEvent<MechComponent, ComponentStartup>(OnStartup);
@@ -72,6 +73,17 @@ public abstract class SharedMechSystem : EntitySystem
             return;
         args.Handled = true;
         CycleEquipment(uid);
+    }
+    
+    private void OnMechToggleInternals(EntityUid uid, MechComponent component, MechToggleInternalsEvent args)
+    {
+        if (args.Handled)
+            return;
+        args.Handled = true;
+        
+        component.Internals = !component.Internals;
+        
+        _actions.SetToggled(component.MechToggleInternalsActionEntity, component.Internals);
     }
 
     private void OnEjectPilotEvent(EntityUid uid, MechComponent component, MechEjectPilotEvent args)
@@ -103,6 +115,7 @@ public abstract class SharedMechSystem : EntitySystem
         component.PilotSlot = _container.EnsureContainer<ContainerSlot>(uid, component.PilotSlotId);
         component.EquipmentContainer = _container.EnsureContainer<Container>(uid, component.EquipmentContainerId);
         component.BatterySlot = _container.EnsureContainer<ContainerSlot>(uid, component.BatterySlotId);
+        component.GasTankSlot = _container.EnsureContainer<ContainerSlot>(uid, component.GasTankSlotId);
         UpdateAppearance(uid, component);
     }
 
@@ -153,8 +166,14 @@ public abstract class SharedMechSystem : EntitySystem
         _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
         _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
         _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);
+        if (component.Airtight)
+            _actions.AddAction(pilot, ref component.MechToggleInternalsActionEntity, component.MechToggleInternalsAction, mech);
         if (_light.TryGetLight(mech, out var light))
             _actions.AddAction(pilot, ref component.MechToggleLightActionEntity, component.MechToggleLightAction, mech);
+        if (component.SirenAvailable)
+            _actions.AddAction(pilot, ref component.MechToggleSirenActionEntity, component.MechToggleSirenAction, mech);
+        if (HasComp<MechThrustersComponent>(mech))
+            _actions.AddAction(pilot, ref component.MechToggleThrustersActionEntity, component.MechToggleThrustersAction, mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -471,6 +490,7 @@ public abstract class SharedMechSystem : EntitySystem
         _appearance.SetData(uid, MechVisuals.Open, IsEmpty(component), appearance);
         _appearance.SetData(uid, MechVisuals.Broken, component.Broken, appearance);
         _appearance.SetData(uid, MechVisuals.Light, component.Light, appearance);
+        _appearance.SetData(uid, MechVisuals.Siren, component.Siren, appearance);
     }
 
     private void OnDragDrop(EntityUid uid, MechComponent component, ref DragDropTargetEvent args)
@@ -511,6 +531,15 @@ public abstract class SharedMechSystem : EntitySystem
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent
+{
+}
+
+/// <summary>
+///     Event raised when the gas tank is successfully removed from the mech,
+///     on both success and failure
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class RemoveGasTankEvent : SimpleDoAfterEvent
 {
 }
 

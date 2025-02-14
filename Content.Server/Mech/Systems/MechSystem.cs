@@ -1,47 +1,53 @@
-using System.Linq;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Hands.Systems;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
-using Content.Shared.PowerCell;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Toggleable;
-using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
-using Content.Shared.Repairable;
+using Content.Shared.Mech;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Popups;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
-using Content.Shared.Wires;
-using Content.Shared.Weapons.Ranged.Events;
-using Content.Server.Body.Systems;
-using Content.Shared.Tools.Systems;
-using Robust.Server.Containers;
-using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Containers;
-using Robust.Shared.Player;
-using Content.Shared.Whitelist;
-using Content.Shared.Hands.Components;
-using Content.Server.Hands.Systems;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
+using Content.Shared.Popups;
+using Content.Shared.PowerCell;
+using Content.Shared.Repairable;
+using Content.Shared.Tag;
+using Content.Shared.Toggleable;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Whitelist;
+using Content.Shared.Wires;
+using Robust.Server.Containers;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Server.Mech.Systems;
 
 /// <inheritdoc/>
 public sealed partial class MechSystem : SharedMechSystem
 {
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -59,6 +65,7 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly GasTankSystem _gasTank = default!;
     
     /// <inheritdoc/>
     public override void Initialize()
@@ -66,12 +73,15 @@ public sealed partial class MechSystem : SharedMechSystem
         base.Initialize();
 
         SubscribeLocalEvent<MechComponent, ToggleActionEvent>(OnToggleLightEvent);
+        SubscribeLocalEvent<MechComponent, MechToggleSirensEvent>(OnMechToggleSirens);
+        SubscribeLocalEvent<MechComponent, MechToggleThrustersEvent>(OnMechToggleThrusters);
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, RemoveBatteryEvent>(OnRemoveBattery);
+        SubscribeLocalEvent<MechComponent, RemoveGasTankEvent>(OnRemoveGasTank);
         SubscribeLocalEvent<MechComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
         SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
@@ -88,6 +98,7 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
+        SubscribeLocalEvent<MechAirComponent, AtmosDeviceUpdateEvent>(OnAirUpdate);
 
         SubscribeLocalEvent<MechAirComponent, GetFilterAirEvent>(OnGetFilterAir);
 
@@ -100,11 +111,34 @@ public sealed partial class MechSystem : SharedMechSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<PowerCellDrawComponent, MechComponent>();
+        var lightDraw = EntityQueryEnumerator<PowerCellDrawComponent, MechComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var mechComp))
+        while (lightDraw.MoveNext(out var uid, out var comp, out var mechComp))
         {
             if (!mechComp.Light)
+                continue;
+
+            if (Timing.CurTime < comp.NextUpdateTime)
+                continue;
+
+            comp.NextUpdateTime += comp.Delay;
+
+            if (mechComp.BatterySlot.ContainedEntity == null 
+                || !TryComp<BatteryComponent>(mechComp.BatterySlot.ContainedEntity.Value, out var battery) )
+                continue;
+
+            if (!_battery.TryUseCharge(mechComp.BatterySlot.ContainedEntity.Value, comp.DrawRate))
+                continue;
+            
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
+            RaiseLocalEvent(uid, ref ev);
+        }
+        
+        var thrustDraw = EntityQueryEnumerator<MechThrustersComponent, MechComponent>();
+
+        while (thrustDraw.MoveNext(out var uid, out var comp, out var mechComp))
+        {
+            if (!comp.ThrustersEnabled)
                 continue;
 
             if (Timing.CurTime < comp.NextUpdateTime)
@@ -140,6 +174,50 @@ public sealed partial class MechSystem : SharedMechSystem
         ToggleLight(uid, component);
     }
     
+    private void OnMechToggleSirens(EntityUid uid, MechComponent component, MechToggleSirensEvent args)
+    {
+        if (args.Handled)
+            return;
+        
+        args.Handled = true;
+        
+        component.Siren = !component.Siren;
+        
+        Dirty(uid, component);
+        
+        _actions.SetToggled(component.MechToggleSirenActionEntity, component.Siren);
+        
+        UpdateAppearance(uid, component);
+    }
+    
+    private void OnMechToggleThrusters(EntityUid uid, MechComponent component, MechToggleThrustersEvent args)
+    {
+        if (args.Handled)
+            return;
+        
+        if (!TryComp<MechThrustersComponent>(uid, out var mechThrusters))
+            return;
+        
+        args.Handled = true;
+        
+        mechThrusters.ThrustersEnabled = !mechThrusters.ThrustersEnabled;
+        
+        _actions.SetToggled(component.MechToggleThrustersActionEntity, mechThrusters.ThrustersEnabled);
+        
+        if (mechThrusters.ThrustersEnabled)
+        {
+            AddComp<CanMoveInAirComponent>(uid);
+            AddComp<MovementAlwaysTouchingComponent>(uid);
+        }
+        else
+        {
+            RemComp<CanMoveInAirComponent>(uid);
+            RemComp<MovementAlwaysTouchingComponent>(uid);
+        }
+        
+        Dirty(uid, mechThrusters);
+    }
+    
     private void OnChargeChanged(Entity<MechComponent> ent, ref ChargeChangedEvent args)
     {
         if (args.Charge == 0 && ent.Comp.Light)
@@ -165,6 +243,8 @@ public sealed partial class MechSystem : SharedMechSystem
         _audioSystem.PlayPredicted(component.ToggleLightSound, uid, uid);
         
         component.Light = !component.Light;
+        
+        Dirty(uid, component);
         
         UpdateAppearance(uid, component);
     }
@@ -203,16 +283,35 @@ public sealed partial class MechSystem : SharedMechSystem
             _actionBlocker.UpdateCanMove(uid);
             return;
         }
+        
+        if (component.GasTankSlot.ContainedEntity == null && _tag.HasTag(args.Used, "MechAirTank"))
+        {
+            _actionBlocker.UpdateCanMove(uid);
+            return;
+        }
 
         if (_toolSystem.HasQuality(args.Used, "Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
-                new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+            if (component.BatterySlot.ContainedEntity != null)
             {
-                BreakOnMove = true
-            };
+                var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
+                    new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+                {
+                    BreakOnMove = true
+                };
 
-            _doAfter.TryStartDoAfter(doAfterEventArgs);
+                _doAfter.TryStartDoAfter(doAfterEventArgs);
+            }
+            else if (component.GasTankSlot.ContainedEntity != null)
+            {
+                var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
+                    new RemoveGasTankEvent(), uid, target: uid, used: args.Target)
+                {
+                    BreakOnMove = true
+                };
+
+                _doAfter.TryStartDoAfter(doAfterEventArgs);
+            }
         }
     }
 
@@ -236,6 +335,16 @@ public sealed partial class MechSystem : SharedMechSystem
         RemoveBattery(uid, component);
         _actionBlocker.UpdateCanMove(uid);
 
+        args.Handled = true;
+    }
+    
+    private void OnRemoveGasTank(EntityUid uid, MechComponent component, RemoveGasTankEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+        
+        _container.EmptyContainer(component.GasTankSlot);
+        
         args.Handled = true;
     }
 
@@ -554,6 +663,15 @@ public sealed partial class MechSystem : SharedMechSystem
 
         args.Gas = _atmosphere.GetContainingMixture(component.Mech, excite: args.Excite);
         args.Handled = true;
+    }
+    
+    private void OnAirUpdate(EntityUid uid, MechAirComponent comp, ref AtmosDeviceUpdateEvent args)
+    {
+        if (!TryComp<MechComponent>(uid, out var mech) || !mech.Airtight || mech.GasTankSlot.ContainedEntity == null || !mech.Internals)
+            return;
+        
+        var gasTank = Comp<GasTankComponent>(mech.GasTankSlot.ContainedEntity.Value);
+        _atmosphere.PumpGasTo(gasTank.Air, comp.Air, 70);
     }
 
     private void OnGetFilterAir(EntityUid uid, MechAirComponent comp, ref GetFilterAirEvent args)
