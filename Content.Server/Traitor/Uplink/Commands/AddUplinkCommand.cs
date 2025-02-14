@@ -83,19 +83,9 @@ namespace Content.Server.Traitor.Uplink.Commands
                 uplinkEntity = eUid;
             }
 
-            bool isDiscounted = false;
-            if (args.Length >= 3)
-            {
-                if (!bool.TryParse(args[2], out isDiscounted))
-                {
-                    shell.WriteLine(Loc.GetString("shell-invalid-bool"));
-                    return;
-                }
-            }
-
             // Finally add uplink
             var uplinkSys = _entManager.System<UplinkSystem>();
-            if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
+            if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
             }
