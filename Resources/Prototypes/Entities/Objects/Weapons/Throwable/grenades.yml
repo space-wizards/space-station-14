@@ -201,10 +201,10 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
-        maxRange: 8
-        baseRadialAcceleration: 145
-        baseTangentialAcceleration: 5
-        gravPulsePeriod: 0.01
+        maxRange: 10
+        baseRadialAcceleration: 15
+        baseTangentialAcceleration: 3
+        gravPulsePeriod: 0.03
       - type: SingularityDistortion
         intensity: 150
         falloffPower: 1.5
