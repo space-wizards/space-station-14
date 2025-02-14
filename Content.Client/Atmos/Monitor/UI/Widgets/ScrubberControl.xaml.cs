@@ -72,10 +72,10 @@ public sealed partial class ScrubberControl : BoxContainer
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
-		_copySettings.OnPressed += _ =>
-		{
-			ScrubberDataCopied?.Invoke(_data);
-		};
+        _copySettings.OnPressed += _ =>
+        {
+            ScrubberDataCopied?.Invoke(_data);
+        };
 
         foreach (var value in Enum.GetValues<Gas>())
         {
