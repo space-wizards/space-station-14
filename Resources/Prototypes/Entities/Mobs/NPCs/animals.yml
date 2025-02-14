@@ -229,6 +229,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: ExamineableHunger
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -663,6 +664,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: ExamineableHunger
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
