@@ -195,10 +195,6 @@ public sealed class ChangeCvarCommand : IConsoleCommand
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        // This is kinda scrunkly.
-        // Ideally I would run init the moment the dependencies are injected, but IPostInjectInit.PostInject()
-        // does not run on commands. Will result in first completion being a bit slow, but eh, it's fine.
-
         var cvars = _cVarControlManager.GetAllRunnableCvars(shell);
 
         if (args.Length == 1)
