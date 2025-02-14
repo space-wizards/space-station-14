@@ -3352,9 +3352,17 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/320
 - author: Rinary
   changes:
-  - message: 'Removed all dangerous command perms from QUERY to DANGER, now loading
-      prototypes and files available only for head staff'
+  - message: Removed all dangerous command perms from QUERY to DANGER, now loading
+      prototypes and files available only for head staff
     type: Tweak
   id: 465
   time: '2025-02-12T13:48:08.124134+00:00'
   url: 'null'
+- author: OliviaCroft
+  changes:
+  - message: Added 5 new plushies.
+    type: Add
+  id: 466
+  time: '2025-02-14T01:43:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/324
+
