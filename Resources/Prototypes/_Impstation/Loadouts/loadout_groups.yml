@@ -259,7 +259,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
-  - LeatherSatchel
+  - LeatherSatchel #imp
   - CommandVeteranBackpack #imp
   - CommandVeteranSatchel #imp
   - CommandVeteranDuffel #imp
@@ -269,9 +269,10 @@
   name: loadout-group-bartender-shoes
   loadouts:
   - BlackShoes
-  - LacedShoes
-  - BlackHeels
-  - ClownShoesExpert
+  - LacedShoes #imp
+  - LeatherShoes #imp
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
   id: StartingGearApidBotanist
