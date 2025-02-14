@@ -47,6 +47,7 @@
 - type: loadoutGroup
   id: AdminAssistantOuter
   name: loadout-group-admin-assistant-outerclothing
+  minLimit: 0
   loadouts:
   - BartenderVest
   - WinterCoatBlack
