@@ -1,0 +1,15 @@
+- type: accessLevel
+  id: Clown
+  name: id-card-access-level-clown
+
+- type: accessLevel
+  id: Librarian
+  name: id-card-access-level-librarian
+
+- type: accessLevel
+  id: Mime
+  name: id-card-access-level-mime
+  
+- type: accessLevel
+  id: Reporter
+  name: id-card-access-level-reporter
