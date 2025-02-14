@@ -20,6 +20,10 @@ public sealed partial class CCVars : CVars
     [CVarControl(AdminFlags.Debug)]
     public static readonly CVarDef<string> DebugTestCVar =
         CVarDef.Create("debug.test_cvar", "default", CVar.SERVER);
+
+    [CVarControl(AdminFlags.Debug)]
+    public static readonly CVarDef<float> DebugTestCVar2 =
+        CVarDef.Create("debug.test_cvar2", 123.42069f, CVar.SERVER);
 #endif
 
     /// <summary>
