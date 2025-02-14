@@ -126,10 +126,19 @@
   - type: StorageFill
     contents:
     - id: WaterVapeCart
+      amount: 2
     - id: SugarVapeCart
+      prob: 0.9
+      orGroup: cloud9-1
+    - id: HorsepussyVapeCart
+      prob: 0.1
+      orGroup: cloud9-1
     - id: NicotineVapeCart
+      prob: 0.6
+      orGroup: cloud9-2
     - id: THCVapeCart
-      prob: 0.5
+      prob: 0.4
+      orGroup: cloud9-2
   - type: Appearance
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
