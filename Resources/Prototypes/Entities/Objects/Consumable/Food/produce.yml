@@ -2655,9 +2655,9 @@
       - strange
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+    state: produce
   - type: Item
     heldPrefix: produce
-    state: produce
   - type: Produce
     seedId: anomalyBerry
   - type: Food
