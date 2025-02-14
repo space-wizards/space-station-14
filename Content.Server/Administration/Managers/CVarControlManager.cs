@@ -24,6 +24,10 @@ public sealed class CVarControlManager : IPostInjectInit
     void IPostInjectInit.PostInject()
     {
         _sawmill = _logger.GetSawmill("cvarcontrol");
+    }
+
+    public void Initialize()
+    {
         RegisterCVars();
     }
 
