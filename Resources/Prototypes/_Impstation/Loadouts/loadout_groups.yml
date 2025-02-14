@@ -259,6 +259,10 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel
+  - CommandVeteranBackpack #imp
+  - CommandVeteranSatchel #imp
+  - CommandVeteranDuffel #imp
 
 - type: loadoutGroup
   id: BartenderShoes
