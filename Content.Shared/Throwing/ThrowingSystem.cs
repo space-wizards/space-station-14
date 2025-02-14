@@ -143,10 +143,7 @@ public sealed class ThrowingSystem : EntitySystem
             return;
 
         if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0 && !unanchor)
-        {
-            Log.Warning($"Tried to throw entity {ToPrettyString(uid)} but can't throw {physics.BodyType} bodies!");
             return;
-        }
 
         // Allow throwing if this projectile only acts as a projectile when shot, otherwise disallow
         if (projectileQuery.TryGetComponent(uid, out var proj) && !proj.OnlyCollideWhenShot)
