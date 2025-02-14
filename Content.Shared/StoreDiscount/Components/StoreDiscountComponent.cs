@@ -17,6 +17,12 @@ public sealed partial class StoreDiscountComponent : Component
     /// </summary>
     [ViewVariables, DataField]
     public IReadOnlyList<StoreDiscountData> Discounts = Array.Empty<StoreDiscountData>();
+
+    /// <summary>
+    /// Number of discounts to add to a store
+    /// </summary>
+    [DataField]
+    public int TotalDiscounts { get; set; } = 6;
 }
 
 /// <summary>

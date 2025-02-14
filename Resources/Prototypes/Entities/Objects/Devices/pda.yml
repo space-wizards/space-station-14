@@ -120,6 +120,8 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
+  - type: StoreDiscount # move to uplink preset if you want nukies to have discounts
+    totalDiscounts: 6
 
 - type: entity
   parent: BasePDA

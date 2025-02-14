@@ -123,3 +123,5 @@
   - type: Store
     balance:
       Telecrystal: 99999
+  - type: StoreDiscount
+    totalDiscounts: 50
