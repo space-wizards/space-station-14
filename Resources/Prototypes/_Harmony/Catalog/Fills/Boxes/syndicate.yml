@@ -1,0 +1,18 @@
+- type: entity
+  name: deathrattle implant box
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  id: BoxDeathRattleImplantsTraitor
+  suffix: traitor
+  description: Two syndicate deathrattle implants.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: syringe
+  - type: Storage
+    grid:
+    - 0,0,2,2
+  - type: StorageFill
+    contents:
+      - id: DeathRattleImplanter
+        amount: 2

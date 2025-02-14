@@ -31,6 +31,29 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  # Harmony. Bonfire improvements below
+  - type: TriggerOnCollide
+    fixtureID: ignition
+  - type: Fixtures
+    fixtures:
+      ignition:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+  - type: IgniteOnCollide
+    fireStacks: 2
+    count: -1
+  - type: Construction
+    graph: BonfireGraph
+    node: bonfirenode
+  - type: IgnitionSource
+    ignited: true
+    temperature: 900
 
 - type: entity
   id: LegionnaireBonfire

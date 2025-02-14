@@ -1,0 +1,10 @@
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleEscapePodLanding
+  suffix: External, Pod, Glass, Docking
+  components:
+  - type: PriorityDock
+    tag: DockPod
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsExternal ]

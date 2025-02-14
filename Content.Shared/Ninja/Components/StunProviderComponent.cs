@@ -49,7 +49,7 @@ public sealed partial class StunProviderComponent : Component
     /// Time that someone is stunned for, stacks if done multiple times.
     /// </summary>
     [DataField]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(5);
+    public TimeSpan StunTime = TimeSpan.FromSeconds(1.5); // Harmony Change: Reduced to fit flash stun time
 
     /// <summary>
     /// How long stunning is disabled after stunning something.

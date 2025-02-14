@@ -18,6 +18,14 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables]
         public override bool Docked => DockedWith != null;
 
+        // Harmony
+        /// <summary>
+        /// True if there is currently a grid in FTL trying to dock here.
+        /// </summary>
+        [DataField]
+        public bool QueuedDocked = false;
+        // End Harmony
+
         /// <summary>
         /// Color that gets shown on the radar screen.
         /// </summary>

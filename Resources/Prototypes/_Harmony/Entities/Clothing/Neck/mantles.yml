@@ -8,3 +8,14 @@
     sprite: _Harmony/Clothing/Neck/Misc/instructormantle.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Neck/Misc/instructormantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCurator
+  name: curator's mantle
+  description: A faded brown mantle that shows your dedication to literature.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Neck/mantles/curatormantle.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Neck/mantles/curatormantle.rsi

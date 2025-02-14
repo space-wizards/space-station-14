@@ -48,3 +48,5 @@
     canThrowTrigger: true
     canMoveBreakout: true
   - type: LandAtCursor
+  - type: ExplosionResistance #Harmony Change -- Makes Bolas immune to explosives
+    damageCoefficient: 0.0

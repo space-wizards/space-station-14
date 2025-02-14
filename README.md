@@ -6,7 +6,7 @@ Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://githu
 
 ## Links
 
-[Harmony Wiki](http://wiki.harmony14.com/) | [Website (SS14)](https://spacestation14.io/) | [Steam (SS14)](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download (SS14)](https://spacestation14.io/about/nightlies/)
+[Harmony Wiki](http://wiki.harmony14.com/) | [Website (SS14)](https://spacestation14.io/) | [Steam (SS14)](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download (SS14)](https://spacestation14.io/about/nightlies/) | [Builds (Harmony)](http://cdn.harmony14.com/fork/harmony/)
 
 ## Documentation/Wiki
 
@@ -14,8 +14,9 @@ SS14 [docs site](https://docs.spacestation14.io/) has documentation on SS14s con
 
 ## Contributing
 
-We are happy to accept contributions from anybody. Get in Discord if you want to help.
-Just make sure your changes and pull requests are in accordance with the upstream [contribution guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
+We are happy to accept contributions from anybody. Get in Discord if you want to help and don't be afraid to ask for help either.
+
+Make sure to read our contributing guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md) if you are new to Harmony!
 
 ## Building
 

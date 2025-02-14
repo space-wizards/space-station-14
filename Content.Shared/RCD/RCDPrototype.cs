@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
@@ -45,10 +46,16 @@ public sealed partial class RCDPrototype : IPrototype
     public string? Prototype { get; private set; } = string.Empty;
 
     /// <summary>
+    /// If the entity can be flipped, this prototype is available as an alternate (mode dependent)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string? MirrorPrototype { get; private set; } = string.Empty;
+    
+    /// <summary>
     /// Number of charges consumed when the operation is completed
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public int Cost { get; private set; } = 1;
+    public FixedPoint2 Cost { get; private set; } = 1;
 
     /// <summary>
     /// The length of the operation

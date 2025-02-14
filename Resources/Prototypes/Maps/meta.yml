@@ -2,7 +2,8 @@
   id: Meta
   mapName: 'Meta Station'
   mapPath: /Maps/meta.yml
-  minPlayers: 40
+  minPlayers: 40 # Harmony, originally 50
+  maxPlayers: 80
   stations:
     Meta:
       stationProto: StandardNanotrasenStation
@@ -16,7 +17,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
           availableJobs:
-            #service
+            #service (18)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
@@ -27,38 +28,38 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
             Reporter: [ 2, 2 ]
-            #engineering
+            #engineering (11)
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 6, 8 ]
-            TechnicalAssistant: [ 6, 8 ]
-            #medical
+            StationEngineer: [ 5, 7 ]
+            TechnicalAssistant: [ 4, 4 ]
+            #medical (11)
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 3 ]
+            Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 6 ]
-            MedicalIntern: [ 4, 6 ]
+            MedicalIntern: [ 4, 4 ]
             Paramedic: [ 1, 2 ]
-            #science
+            #science (9)
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 5, 7 ]
-            ResearchAssistant: [ 3, 6 ]
-            #security
+            Scientist: [ 6, 8 ]
+            ResearchAssistant: [ 4, 4 ]
+            #security (12)
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 6 ]
+            SecurityOfficer: [ 7, 7 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
             Lawyer: [ 2, 2 ]
             PermaPrisoner: [ 1, 0 ] # HARMONY
-            #supply
+            #supply (10)
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 3, 5 ]
-            #civilian
+            CargoTechnician: [ 4, 6 ]
+            #civilian (3+)
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon
+            #silicon (5)
             StationAi: [ 1, 1 ]
             Borg: [ 4, 4 ]

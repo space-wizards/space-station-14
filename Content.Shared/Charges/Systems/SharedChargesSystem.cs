@@ -1,5 +1,6 @@
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Charges.Systems;
 
@@ -34,13 +35,13 @@ public abstract class SharedChargesSystem : EntitySystem
     /// <summary>
     /// Tries to add a number of charges. If it over or underflows it will be clamped, wasting the extra charges.
     /// </summary>
-    public virtual void AddCharges(EntityUid uid, int change, LimitedChargesComponent? comp = null)
+    public virtual void AddCharges(EntityUid uid, FixedPoint2 change, LimitedChargesComponent? comp = null)
     {
         if (!Query.Resolve(uid, ref comp, false))
             return;
 
         var old = comp.Charges;
-        comp.Charges = Math.Clamp(comp.Charges + change, 0, comp.MaxCharges);
+        comp.Charges = FixedPoint2.Clamp(comp.Charges + change, 0, comp.MaxCharges);
         if (comp.Charges != old)
             Dirty(uid, comp);
     }
@@ -84,7 +85,7 @@ public abstract class SharedChargesSystem : EntitySystem
     /// Gets the limited charges component and returns true if the number of charges remaining is less than the specified value.
     /// Will return false if there is no limited charges component.
     /// </summary>
-    public bool HasInsufficientCharges(EntityUid uid, int requiredCharges, LimitedChargesComponent? comp = null)
+    public bool HasInsufficientCharges(EntityUid uid, FixedPoint2 requiredCharges, LimitedChargesComponent? comp = null)
     {
         // can't be empty if there are no limited charges
         if (!Resolve(uid, ref comp, false))
@@ -96,7 +97,7 @@ public abstract class SharedChargesSystem : EntitySystem
     /// <summary>
     /// Uses up a specified number of charges. Must check HasInsufficentCharges beforehand to prevent using with insufficient remaining charges.
     /// </summary>
-    public virtual void UseCharges(EntityUid uid, int chargesUsed, LimitedChargesComponent? comp = null)
+    public virtual void UseCharges(EntityUid uid, FixedPoint2 chargesUsed, LimitedChargesComponent? comp = null)
     {
         AddCharges(uid, -chargesUsed, comp);
     }
