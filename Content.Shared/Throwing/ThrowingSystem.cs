@@ -142,7 +142,10 @@ public sealed class ThrowingSystem : EntitySystem
         if (baseThrowSpeed <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero || friction < 0)
             return;
 
-        if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0 && !unanchor)
+        if (unanchor && HasComp<AnchorableComponent>(uid))
+            _transform.Unanchor(uid);
+
+        if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
             return;
 
         // Allow throwing if this projectile only acts as a projectile when shot, otherwise disallow
@@ -154,9 +157,6 @@ public sealed class ThrowingSystem : EntitySystem
             Thrower = user,
             Animate = animated,
         };
-
-        if (unanchor && HasComp<AnchorableComponent>(uid))
-            _transform.Unanchor(uid);
 
         // if not given, get the default friction value for distance calculation
         var tileFriction = friction ?? _frictionModifier * TileFrictionController.DefaultFriction;
