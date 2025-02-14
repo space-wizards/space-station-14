@@ -32,7 +32,7 @@ public sealed class SunShadowOverlay : Overlay
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
         _lookup = _entManager.System<EntityLookupSystem>();
-        ZIndex = TileEmissionOverlay.ContentZIndex + 1;
+        ZIndex = TileEmissionOverlay.ContentZIndex + 2;
     }
 
     protected override void Draw(in OverlayDrawArgs args)

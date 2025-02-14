@@ -3,16 +3,12 @@ using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
 public sealed class RoofOverlay : Overlay
 {
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly IEntityManager _entManager;
 
     private readonly EntityLookupSystem _lookup;
@@ -22,8 +18,6 @@ public sealed class RoofOverlay : Overlay
     private readonly HashSet<Entity<OccluderComponent>> _occluders = new();
 
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
-
-    private IRenderTexture? _target;
 
     public const int ContentZIndex = -1;
 
@@ -58,17 +52,10 @@ public sealed class RoofOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var bounds = args.WorldBounds;
 
-        if (_target?.Size != viewport.LightRenderTarget.Size)
-        {
-            _target = _clyde
-                .CreateRenderTarget(viewport.LightRenderTarget.Size,
-                    new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "roof-target");
-        }
-
-        worldHandle.RenderInRenderTarget(_target,
+        worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
             () =>
             {
-                var invMatrix = _target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
 
                 var gridMatrix = _xformSystem.GetWorldMatrix(mapEnt);
                 var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
@@ -105,19 +92,6 @@ public sealed class RoofOverlay : Overlay
                     worldHandle.DrawRect(local, roofComp.Color);
                 }
 
-            }, Color.Transparent);
-
-        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
-            () =>
-            {
-                var invMatrix =
-                    viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
-                worldHandle.SetTransform(invMatrix);
-
-                var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
-                worldHandle.UseShader(maskShader);
-
-                worldHandle.DrawTextureRect(_target.Texture, bounds);
             }, null);
     }
 }

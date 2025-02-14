@@ -4,8 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
@@ -13,9 +11,7 @@ public sealed class TileEmissionOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
-    [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private SharedMapSystem _mapSystem;
     private SharedTransformSystem _xformSystem;
@@ -26,8 +22,6 @@ public sealed class TileEmissionOverlay : Overlay
     private readonly HashSet<Entity<TileEmissionComponent>> _entities = new();
 
     private List<Entity<MapGridComponent>> _grids = new();
-
-    private IRenderTexture? _target;
 
     public const int ContentZIndex = RoofOverlay.ContentZIndex + 1;
 
@@ -54,16 +48,10 @@ public sealed class TileEmissionOverlay : Overlay
         var expandedBounds = bounds.Enlarged(1.5f);
         var viewport = args.Viewport;
 
-        if (_target?.Size != viewport.LightRenderTarget.Size)
-        {
-            _target = _clyde
-                .CreateRenderTarget(viewport.LightRenderTarget.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "tile-emissions");
-        }
-
-        args.WorldHandle.RenderInRenderTarget(_target,
+        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
         () =>
         {
-            var invMatrix = _target.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+            var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
             _grids.Clear();
             _mapManager.FindGridsIntersecting(mapId, expandedBounds, ref _grids, approx: true);
 
@@ -95,23 +83,6 @@ public sealed class TileEmissionOverlay : Overlay
                     worldHandle.DrawRect(local, ent.Comp.Color);
                 }
             }
-        }, Color.Transparent);
-
-        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
-            () =>
-            {
-                var invMatrix =
-                    viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
-                worldHandle.SetTransform(invMatrix);
-
-                var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
-                worldHandle.UseShader(maskShader);
-
-                worldHandle.DrawTextureRect(_target.Texture, bounds);
-            }, null);
-
-        // This blurs for both this and RoofOverlay.
-        // TODO: Need to essentially draw everything to an enlarged texture and transform it back?
-        //_clyde.BlurRenderTarget(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 5f);
+        }, null);
     }
 }
