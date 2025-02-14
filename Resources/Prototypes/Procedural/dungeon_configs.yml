@@ -190,7 +190,7 @@
       Walls: WallReinforced
     spawnGroups:
       CornerClutter: BaseClutter
-      Entrance: SyndicateBaseEntrance
+      Entrance: SyndicateBaseEntrancePossiblyRigged
       EntranceFlank: SyndicateBaseWindow
       Junction: SyndicateBaseAirlock
       Window: SyndicateBaseWindow
@@ -315,6 +315,7 @@
 - type: entitySpawnEntry
   id: SyndicateBaseWindow
   entries:
+  - id: CableApcExtension
   - id: Grille
   - id: ReinforcedPlasmaWindow
 
