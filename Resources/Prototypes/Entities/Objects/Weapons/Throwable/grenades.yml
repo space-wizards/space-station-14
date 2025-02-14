@@ -450,6 +450,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
+  - type: OnUseTimerTrigger
+    delay: 1.5
   - type: SmokeOnTrigger
     duration: 2
     spreadAmount: 5
