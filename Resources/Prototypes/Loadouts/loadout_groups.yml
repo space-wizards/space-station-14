@@ -336,15 +336,6 @@
   - BartenderCuteApron
 
 - type: loadoutGroup
-  id: BartenderShoes
-  name: loadout-group-bartender-shoes
-  loadouts:
-  - BlackShoes
-  - LacedShoes
-  - BlackHeels
-  - ClownShoesExpert
-
-- type: loadoutGroup
   id: BartenderPDA
   name: loadout-group-bartender-id
   loadouts:
