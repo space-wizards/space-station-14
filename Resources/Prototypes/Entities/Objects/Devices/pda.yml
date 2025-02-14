@@ -121,7 +121,7 @@
   - type: Speech
     speechVerb: Robotic
   - type: StoreDiscount # move to uplink preset if you want nukies to have discounts
-    totalDiscounts: 6
+    totalDiscounts: 6 # if you want to edit this, you should probably also edit the one on TraitorRollUplinkImplant
 
 - type: entity
   parent: BasePDA

@@ -179,7 +179,7 @@
   id: TraitorRollUplinkImplant
   components:
   - type: StoreDiscount
-    totalDiscounts: 6
+    totalDiscounts: 6 # if you want to edit this, you should probably also edit the one on BasePDA
 
 - type: entity
   parent: BaseSubdermalImplant
