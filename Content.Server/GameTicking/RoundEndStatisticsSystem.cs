@@ -1,8 +1,6 @@
 using Content.Server.GameTicking.Events;
 using Content.Shared.GameTicking;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 
 namespace Content.Server.GameTicking
 {
@@ -19,7 +17,7 @@ namespace Content.Server.GameTicking
             SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
         }
 
-        private Dictionary<string, int> Statistics = new Dictionary<string, int>
+        private Dictionary<string, int> _statistics = new Dictionary<string, int>
         {
             { "SlippedCount", 0 },
             { "CreamedCount", 0 },
@@ -31,9 +29,9 @@ namespace Content.Server.GameTicking
             if (args.Handled)
                 return;
 
-            if (Statistics.TryGetValue(args.Key, out var currentValue))
+            if (_statistics.TryGetValue(args.Key, out var currentValue))
             {
-                Statistics[args.Key] = currentValue + args.Amount;
+                _statistics[args.Key] = currentValue + args.Amount;
             }
 
             args.Handled = true;
@@ -42,20 +40,20 @@ namespace Content.Server.GameTicking
         // Set all ints to zero
         private void OnRoundStart(RoundStartingEvent args)
         {
-            foreach (var key in Statistics.Keys.ToList())
+            foreach (var key in _statistics.Keys.ToList())
             {
-                Statistics[key] = 0;
+                _statistics[key] = 0;
             }
         }
 
         private void OnRoundEndText(RoundStatisticsAppendEvent args)
         {
-            foreach (var (key, value) in Statistics)
+            foreach (var (key, value) in _statistics)
             {
                 if (value <= 0)
                     continue;
 
-                var text = Loc.GetString($"round-end-statistic-{key.ToLower()}-times", ("count", value));
+                var text = Loc.GetString($"round-end-statistic-{key.ToLower()}", ("count", value));
                 args.AddLine(text);
             }
         }
