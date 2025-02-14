@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Worn and Icon sprites made by BoskiYourk for use in Harmony. Inhand sprites taken from commit: https://github.com/space-wizards/space-station-14/pull/15496/commits/705e765c1263e29df40a1354eb8f70dd582b5005",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "icon"
+      },
+      {
+        "name": "equipped-OUTERCLOTHING",
+        "directions": 4
+      },
+      {
+        "name": "equipped-OUTERCLOTHING-vox",
+        "directions": 4
+      },
+      {
+        "name": "inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "inhand-right",
+        "directions": 4
+      }
+    ]
+}

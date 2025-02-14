@@ -14,6 +14,14 @@
   - PermaPrisonerJumpsuit
   - PermaPrisonerJumpskirt
 
+# Medical
+- type: loadoutGroup
+  id: MedicalDoctorNeck
+  name: loadout-group-medical-doctor-neck
+  minLimit: 0
+  loadouts:
+  - Stethoscope
+
 # Civilian
 - type: loadoutGroup
   id: LibrarianOuterClothingHarmony

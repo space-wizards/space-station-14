@@ -3,3 +3,7 @@
   id: ClothingShoesGaloshes
 - type: Tag
   id: ClothingShoesDuckyGaloshes
+
+# Tag used for escape pod landing.
+- type: Tag
+  id: DockPod

@@ -111,3 +111,34 @@
   parent: BaseCommandHatRecipe
   id: ClothingHeadHatBeretResearchDirectorHarmony
   result: ClothingHeadHatBeretResearchDirectorHarmony
+
+## Cargo Technician
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCargoPantsHarmony
+  result: ClothingUniformJumpsuitCargoPantsHarmony
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCargoverallsHarmony
+  result: ClothingUniformJumpsuitCargoverallsHarmony
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCargoOfficeSlacksHarmony
+  result: ClothingUniformJumpsuitCargoOfficeSlacksHarmony
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+  result: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSeniorTechnicianHarmony
+  result: ClothingUniformJumpsuitSeniorTechnicianHarmony
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtSeniorTechnicianHarmony
+  result: ClothingUniformJumpskirtSeniorTechnicianHarmony

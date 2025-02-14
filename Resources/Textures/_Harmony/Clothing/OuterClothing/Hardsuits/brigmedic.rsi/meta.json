@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from commit https://github.com/space-wizards/space-station-14/pull/15496/commits/b62b3268aabb92c13c0301ef57143af58fcc0abe, and temporary vox sprites made by BoskiYourk for use in Harmony.",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "icon"
+      },
+      {
+        "name": "equipped-OUTERCLOTHING",
+        "directions": 4
+      },
+      {
+        "name": "equipped-OUTERCLOTHING-vox",
+        "directions": 4
+      },
+      {
+        "name": "inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "inhand-right",
+        "directions": 4
+      }
+    ]
+}

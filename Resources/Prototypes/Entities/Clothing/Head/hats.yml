@@ -185,15 +185,19 @@
 # End of Change
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband] # Harmony Change: Updated Contraband Level
   id: ClothingHeadHatBeretBrigmedic
-  name: brigmedical beret
+  name: brigmedic beret # Harmony Change: Updated Name
   description: White beret, looks like a cream pie on the head.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+# Start of Harmony Change: Updates Sprite Pathing
+#   sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_brigmedic.rsi 
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+#   sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_brigmedic.rsi 
+# End of Change
 
 - type: entity
   parent: [ ClothingHeadBase ]
