@@ -649,8 +649,7 @@
     baseSprintSpeed: 2
   - type: Damageable
     damageModifierSet: MediumArmorNT
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 15
@@ -709,8 +708,7 @@
     baseSprintSpeed: 1.5
   - type: Damageable
     damageModifierSet: HeavyArmorNT
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 15
@@ -779,8 +777,7 @@
     baseSprintSpeed: 3.7
   - type: Damageable
     damageModifierSet: HeavyArmorNT
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 20
@@ -852,8 +849,7 @@
     baseSprintSpeed: 3.7
   - type: Damageable
     damageModifierSet: MediumArmorSyndi
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 40
     doAfterDelay: 20
@@ -922,8 +918,7 @@
     baseSprintSpeed: 1.5
   - type: Damageable
     damageModifierSet: HeavyArmorSyndi
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
   - type: Repairable
     fuelCost: 50
     doAfterDelay: 25
