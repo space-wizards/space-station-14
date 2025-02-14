@@ -2,4 +2,5 @@
   id: Dragon
   name: roles-antag-dragon-name
   antagonist: true
+  playTimeTracker: AntagDragon # imp
   objective: roles-antag-dragon-objective

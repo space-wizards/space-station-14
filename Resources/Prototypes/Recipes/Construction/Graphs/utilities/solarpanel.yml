@@ -118,6 +118,26 @@
           steps:
             - tool: Prying
               doAfter: 0.5
+        # imp edits
+        - to: solarpanelplasma
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: Plasma
+            amount: 2
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+        - to: solarpaneluranium
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: Uranium
+            amount: 2
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+        # end imp edits
 
     - node: solarpanel_broken
       entity: SolarPanelBroken

@@ -76206,13 +76206,6 @@ entities:
     - type: Transform
       pos: -44.5,32.5
       parent: 2
-- proto: GasMinerNitrousOxide
-  entities:
-  - uid: 11504
-    components:
-    - type: Transform
-      pos: -44.5,40.5
-      parent: 2
 - proto: GasMinerOxygenStationLarge
   entities:
   - uid: 11505
@@ -101046,6 +101039,8 @@ entities:
       color: '#03FCD3FF'
   - uid: 14518
     components:
+    - type: MetaData
+      name: waste gas pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,45.5
@@ -101102,6 +101097,8 @@ entities:
       color: '#947507FF'
   - uid: 14526
     components:
+    - type: MetaData
+      name: n2o gas pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,39.5
@@ -101115,12 +101112,16 @@ entities:
       color: '#FF1212FF'
   - uid: 14528
     components:
+    - type: MetaData
+      name: co2 pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,37.5
       parent: 2
   - uid: 14529
     components:
+    - type: MetaData
+      name: tritium pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,43.5
@@ -101146,7 +101147,7 @@ entities:
     components:
     - type: MetaData
       desc: A pump that moves carbon dioxide by pressure.
-      name: co2 pump
+      name: h2o pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,35.5
@@ -101155,7 +101156,7 @@ entities:
     components:
     - type: MetaData
       desc: A pump that moves tritium by pressure.
-      name: tritium pump
+      name: plasma pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,41.5
@@ -120864,6 +120865,11 @@ entities:
       parent: 2
 - proto: Poweredlight
   entities:
+  - uid: 10629
+    components:
+    - type: Transform
+      pos: -44.5,46.5
+      parent: 2
   - uid: 11001
     components:
     - type: Transform
@@ -135364,13 +135370,45 @@ entities:
     - type: Transform
       pos: 42.5,-30.5
       parent: 2
-- proto: SMESBasic
+- proto: SMESAdvanced
   entities:
+  - uid: 11504
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 1
+    - type: Transform
+      pos: -0.5,25.5
+      parent: 2
   - uid: 19960
     components:
+    - type: MetaData
+      name: Engineering Advanced SMES 2
+    - type: Transform
+      pos: 0.5,25.5
+      parent: 2
+  - uid: 19966
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 4
+    - type: Transform
+      pos: 0.5,23.5
+      parent: 2
+  - uid: 19967
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 5
     - type: Transform
       pos: 1.5,23.5
       parent: 2
+  - uid: 19968
+    components:
+    - type: MetaData
+      name: Engineering Advanced SMES 3
+    - type: Transform
+      pos: 1.5,25.5
+      parent: 2
+- proto: SMESBasic
+  entities:
   - uid: 19961
     components:
     - type: Transform
@@ -135399,27 +135437,6 @@ entities:
       name: West Solar SMES
     - type: Transform
       pos: -65.5,-17.5
-      parent: 2
-  - uid: 19966
-    components:
-    - type: MetaData
-      name: Engineering SMES 3
-    - type: Transform
-      pos: 1.5,25.5
-      parent: 2
-  - uid: 19967
-    components:
-    - type: MetaData
-      name: Engineering SMES 2
-    - type: Transform
-      pos: 0.5,25.5
-      parent: 2
-  - uid: 19968
-    components:
-    - type: MetaData
-      name: Engineering SMES 1
-    - type: Transform
-      pos: -0.5,25.5
       parent: 2
   - uid: 19969
     components:
@@ -135472,11 +135489,6 @@ entities:
       name: AI SMES
     - type: Transform
       pos: -117.5,19.5
-      parent: 2
-  - uid: 19977
-    components:
-    - type: Transform
-      pos: 0.5,23.5
       parent: 2
   - uid: 25518
     components:
