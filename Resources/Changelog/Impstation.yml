@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: hi stamps fit in folders now :)
-    type: Tweak
-  id: 626
-  time: '2024-12-02T23:43:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/868
 - author: Darkmajia
   changes:
   - message: Rounds below 20 players now have their own gamemodes with a reduced threat
@@ -4192,3 +4185,10 @@
   id: 1125
   time: '2025-02-14T07:49:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1644
+- author: Sha-Seng
+  changes:
+  - message: Portable Criminal Records now fits in the tank slot!
+    type: Tweak
+  id: 1126
+  time: '2025-02-14T08:12:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1618
