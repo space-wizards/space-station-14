@@ -22,6 +22,7 @@
     - AnomalyFlora
     - AnomalyShadow
     - AnomalyTech
+    #- AnomalySanta 
     rareChance: 0.3
     rarePrototypes:
     - RandomAnomalyInjectorSpawner
@@ -66,5 +67,6 @@
     - AnomalyTrapGravity
     - AnomalyTrapTech
     - AnomalyTrapRock
+    #- AnomalyTrapSanta
     chance: 1
   

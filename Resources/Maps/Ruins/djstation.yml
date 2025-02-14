@@ -1146,7 +1146,7 @@ entities:
     - type: Transform
       pos: -4.5,-2.5
       parent: 2
-- proto: IntercomAll
+- proto: IntercomFreelance
   entities:
   - uid: 316
     components:

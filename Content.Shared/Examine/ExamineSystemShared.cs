@@ -385,6 +385,8 @@ namespace Content.Shared.Examine
                     totalMessage.PushNewline();
             }
 
+            totalMessage.TrimEnd();
+
             return totalMessage;
         }
 
@@ -409,8 +411,10 @@ namespace Content.Shared.Examine
         private void PopGroup()
         {
             DebugTools.Assert(_currentGroupPart != null);
-            if (_currentGroupPart != null)
+            if (_currentGroupPart != null && !_currentGroupPart.Message.IsEmpty)
+            {
                 Parts.Add(_currentGroupPart);
+            }
 
             _currentGroupPart = null;
         }

@@ -46,9 +46,7 @@
       allowedTiles:
         - FloorAsteroidSand
       entities:
-        - FloraRockSolid01
-        - FloraRockSolid02
-        - FloraRockSolid03
+        - FloraRockSolid
     # Large rock areas
     - !type:BiomeEntityLayer
       threshold: -0.20
@@ -135,18 +133,8 @@
       allowedTiles:
         - FloorPlanetGrass
       entities:
-        - FloraTree01
-        - FloraTree02
-        - FloraTree03
-        - FloraTree04
-        - FloraTree05
-        - FloraTree06
-        - FloraTreeLarge01
-        - FloraTreeLarge02
-        - FloraTreeLarge03
-        - FloraTreeLarge04
-        - FloraTreeLarge05
-        - FloraTreeLarge06
+        - FloraTree
+        - FloraTreeLarge
     # Rock formations
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -261,9 +249,7 @@
       allowedTiles:
         - FloorBasalt
       entities:
-        - FloraRockSolid01
-        - FloraRockSolid02
-        - FloraRockSolid03
+        - FloraRockSolid
     - !type:BiomeEntityLayer
       threshold: 0.2
       noise:
@@ -384,12 +370,7 @@
       allowedTiles:
         - FloorSnow
       entities:
-        - FloraTreeSnow01
-        - FloraTreeSnow02
-        - FloraTreeSnow03
-        - FloraTreeSnow04
-        - FloraTreeSnow05
-        - FloraTreeSnow06
+        - FloraTreeSnow
     # Rock formations
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -479,12 +460,7 @@
       allowedTiles:
         - FloorChromite
       entities:
-        - ShadowTree01
-        - ShadowTree02
-        - ShadowTree03
-        - ShadowTree04
-        - ShadowTree05
-        - ShadowTree06
+        - ShadowTree
     # Rock formations
     - !type:BiomeEntityLayer
       threshold: -0.2
@@ -548,12 +524,7 @@
       allowedTiles:
       - FloorAsteroidSand
       entities:
-      - FloraStalagmite1
-      - FloraStalagmite2
-      - FloraStalagmite3
-      - FloraStalagmite4
-      - FloraStalagmite5
-      - FloraStalagmite6
+      - FloraStalagmite
     - !type:BiomeEntityLayer
       threshold: -0.5
       invert: true
@@ -601,12 +572,7 @@
       allowedTiles:
         - FloorAsteroidSand
       entities:
-        - FloraStalagmite1
-        - FloraStalagmite2
-        - FloraStalagmite3
-        - FloraStalagmite4
-        - FloraStalagmite5
-        - FloraStalagmite6
+        - FloraStalagmite
     - !type:BiomeEntityLayer
       threshold: -0.6
       invert: true
