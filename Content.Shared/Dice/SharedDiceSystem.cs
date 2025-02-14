@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Dice;
 
-public sealed class SharedDiceSystem : EntitySystem
+public abstract class SharedDiceSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -61,7 +61,7 @@ public sealed class SharedDiceSystem : EntitySystem
 
     public void SetCurrentValue(Entity<DiceComponent> entity, int value)
     {
-        if (value % entity.Comp.Multiplier != 0 || value/ entity.Comp.Multiplier + entity.Comp.Offset < 1)
+        if (value % entity.Comp.Multiplier != 0 || value / entity.Comp.Multiplier + entity.Comp.Offset < 1)
         {
             Log.Error($"Attempted to set die {ToPrettyString(entity)} to an invalid value ({value}).");
             return;

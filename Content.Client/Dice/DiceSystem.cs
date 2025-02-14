@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Dice;
 
-public sealed class ClientDiceSystem : EntitySystem
+public sealed class DiceSystem : SharedDiceSystem
 {
     public override void Initialize()
     {
@@ -14,10 +14,10 @@ public sealed class ClientDiceSystem : EntitySystem
 
     private void OnDiceAfterHandleState(Entity<DiceComponent> entity, ref AfterAutoHandleStateEvent args)
     {
-        if (!TryComp(entity, out SpriteComponent? sprite))
+        if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
 
-        // TODO maybe just move each diue to its own RSI?
+        // TODO maybe just move each die to its own RSI?
         var state = sprite.LayerGetState(0).Name;
         if (state == null)
             return;
