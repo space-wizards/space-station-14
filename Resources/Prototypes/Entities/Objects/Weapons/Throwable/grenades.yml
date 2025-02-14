@@ -165,10 +165,10 @@
 
 
 - type: entity
+  parent: [ GrenadeBase, BaseSyndicateContraband ]
+  id: SingularityGrenade
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
-  parent: [GrenadeBase, BaseSyndicateContraband]
-  id: SingularityGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
