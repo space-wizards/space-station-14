@@ -64,7 +64,7 @@
   - !type:GroupLoadoutEffect
     proto: MasterSalvageSpecialist
 
-- type: loadout
+- type: startingGear
   id: SalvageMiningHeadset
   equipment:
     ears: ClothingHeadsetMining

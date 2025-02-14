@@ -78,7 +78,7 @@
   - !type:GroupLoadoutEffect
     proto: MasterCE
 
-- type: loadout
+- type: startingGear
   id: ChiefEngineerAltHeadset
   equipment:
     ears: ClothingHeadsetAltEngineering

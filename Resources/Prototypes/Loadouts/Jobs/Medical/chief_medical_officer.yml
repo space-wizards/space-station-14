@@ -84,7 +84,7 @@
   - !type:GroupLoadoutEffect
     proto: MasterCMO
 
-- type: loadout
+- type: startingGear
   id: ChiefMedicalOfficerAltHeadset
   equipment:
     ears: ClothingHeadsetAltMedical

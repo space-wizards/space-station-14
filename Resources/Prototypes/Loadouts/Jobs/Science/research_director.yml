@@ -68,7 +68,7 @@
   - !type:GroupLoadoutEffect
     proto: MasterRD
 
-- type: loadout
+- type: startingGear
   id: ResearchDirectorAltHeadset
   equipment:
     ears: ClothingHeadsetAltScience

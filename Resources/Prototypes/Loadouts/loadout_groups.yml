@@ -1011,8 +1011,8 @@
   id: HeadofSecurityEars
   name: loadout-group-head-of-security-ears
   loadouts:
-  - HeadofSecurityrHeadset
-  - HeadofSecurityrAltHeadset
+  - HeadofSecurityHeadset
+  - HeadofSecurityAltHeadset
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit

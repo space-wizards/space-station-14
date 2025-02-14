@@ -84,7 +84,7 @@
   - !type:GroupLoadoutEffect
     proto: MasterQM
 
-- type: loadout
+- type: startingGear
   id: QuartermasterAltHeadset
   equipment:
     ears: ClothingHeadsetAltCargo
