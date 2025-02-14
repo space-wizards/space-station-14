@@ -143,6 +143,7 @@
     - id: NewtonCradle
     - id: BoxEnvelope
     - id: BrbSign
+    - id: ClothingNeckLanyard #Harmony addition. Also obtainable through character loadouts and PTech vendor
 
 - type: entity
   id: CrateServiceFaxMachine

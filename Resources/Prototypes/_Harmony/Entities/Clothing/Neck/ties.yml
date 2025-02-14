@@ -2,13 +2,13 @@
   parent: ClothingNeckBase
   id: ClothingNeckLanyard
   name: lanyard
-  description: Just add paper
+  description: Use this to display information about yourself to others, or brag about your captain-stamped paperwork!
   components:
   - type: Lanyard
   - type: Sprite
-    sprite: Clothing/Neck/Ties/dettie.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/lanyard.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Ties/dettie.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/lanyard.rsi
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
