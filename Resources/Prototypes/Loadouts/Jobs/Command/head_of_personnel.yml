@@ -78,7 +78,7 @@
   - !type:GroupLoadoutEffect
     proto: MasterHoP
 
-- type: loadout
+- type: startingGear
   id: HoPAltHeadset
   equipment:
     ears: ClothingHeadsetAltCommand
