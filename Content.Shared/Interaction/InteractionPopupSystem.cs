@@ -1,4 +1,5 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -59,6 +60,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         //Handling does nothing and this thing annoyingly plays way too often.
         // HUH? What does this comment even mean?
+
+        if (!HasComp<HandsComponent>(user))
+            return;
 
         if (HasComp<SleepingComponent>(uid))
             return;
