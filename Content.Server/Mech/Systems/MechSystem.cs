@@ -1,5 +1,5 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Hands.Systems;
@@ -18,6 +18,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mech;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
@@ -110,11 +111,34 @@ public sealed partial class MechSystem : SharedMechSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<PowerCellDrawComponent, MechComponent>();
+        var lightDraw = EntityQueryEnumerator<PowerCellDrawComponent, MechComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var mechComp))
+        while (lightDraw.MoveNext(out var uid, out var comp, out var mechComp))
         {
             if (!mechComp.Light)
+                continue;
+
+            if (Timing.CurTime < comp.NextUpdateTime)
+                continue;
+
+            comp.NextUpdateTime += comp.Delay;
+
+            if (mechComp.BatterySlot.ContainedEntity == null 
+                || !TryComp<BatteryComponent>(mechComp.BatterySlot.ContainedEntity.Value, out var battery) )
+                continue;
+
+            if (!_battery.TryUseCharge(mechComp.BatterySlot.ContainedEntity.Value, comp.DrawRate))
+                continue;
+            
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
+            RaiseLocalEvent(uid, ref ev);
+        }
+        
+        var thrustDraw = EntityQueryEnumerator<MechThrustersComponent, MechComponent>();
+
+        while (thrustDraw.MoveNext(out var uid, out var comp, out var mechComp))
+        {
+            if (!comp.ThrustersEnabled)
                 continue;
 
             if (Timing.CurTime < comp.NextUpdateTime)
@@ -166,27 +190,29 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateAppearance(uid, component);
     }
     
-    private void OnMechToggleThrusters(EntityUid uid, MechComponent component, MechToggleSirensEvent args)
+    private void OnMechToggleThrusters(EntityUid uid, MechComponent component, MechToggleThrustersEvent args)
     {
         if (args.Handled)
             return;
         
-        if (!TryComp<MechTrustersComponent>(uid, out var mechThrusters))
+        if (!TryComp<MechThrustersComponent>(uid, out var mechThrusters))
             return;
         
         args.Handled = true;
         
-        mechThrusters.ThrustersEnabled = !component.ThrustersEnabled;
+        mechThrusters.ThrustersEnabled = !mechThrusters.ThrustersEnabled;
+        
+        _actions.SetToggled(component.MechToggleThrustersActionEntity, mechThrusters.ThrustersEnabled);
         
         if (mechThrusters.ThrustersEnabled)
         {
             AddComp<CanMoveInAirComponent>(uid);
-            AddComp<MovementAlwaysTouching>(uid);
+            AddComp<MovementAlwaysTouchingComponent>(uid);
         }
         else
         {
             RemComp<CanMoveInAirComponent>(uid);
-            RemComp<MovementAlwaysTouching>(uid);
+            RemComp<MovementAlwaysTouchingComponent>(uid);
         }
         
         Dirty(uid, mechThrusters);

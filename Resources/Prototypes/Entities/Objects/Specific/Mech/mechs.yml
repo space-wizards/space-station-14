@@ -180,8 +180,8 @@
     enabled: false
   - type: PowerCellDraw
     enabled: false
-    drawRate: 2
-    useRate: 0
+    drawRate: 1
+    delay: 3
 
 # Ripley MK-I
 - type: entity
