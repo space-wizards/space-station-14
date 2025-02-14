@@ -10,7 +10,7 @@
     CigPackSpirits: 2
     CigarCase: 1
     SmokingPipeFilledTobacco: 1
-    # BaseVape: 1
+    # Vape: 1
     VapeSwappable: 2          ##
     VapeCartContainerBasic: 3  #
     CustomVapeCartPackage: 1   # imp vapes
