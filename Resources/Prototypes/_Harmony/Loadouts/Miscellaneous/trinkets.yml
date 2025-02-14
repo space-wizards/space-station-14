@@ -54,6 +54,12 @@
     - ClothingNeckAxolotlPin
 
 - type: loadout
+  id: ClothingNeckLanyard
+  storage:
+    back:
+    - ClothingNeckLanyard
+
+- type: loadout
   id: HarmonicaInstrument
   storage:
     back:

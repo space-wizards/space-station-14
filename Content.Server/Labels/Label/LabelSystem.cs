@@ -6,15 +6,10 @@ using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Paper;
-using FastAccessors;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Toolshed.TypeParsers;
-using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Labels
 {
