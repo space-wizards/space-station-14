@@ -86,7 +86,10 @@
       "name": "strafe"
     },
     {
-      "name": "meson"
+      "name": "mech_night_vision_off"
+    },
+    {
+      "name": "mech_night_vision_on"
     },
     {
       "name": "mech_ivanov"
