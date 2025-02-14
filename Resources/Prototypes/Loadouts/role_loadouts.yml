@@ -69,7 +69,7 @@
   - BartenderNeck
   - BartenderJumpsuit
   - BartenderOuterClothing
-  - BartenderShoes
+  - BartenderShoes #imp
   - Glasses
   - CommonBackpack
   - BartenderPDA
@@ -383,7 +383,7 @@
   - ResearchDirectorJumpsuit
   - ResearchDirectorOuterClothing
   - ScientistGloves
-  - ResearchDirectorShoes
+  - ResearchDirectorShoes #imp
   - ResearchDirectorHeadset #imp
   - Glasses
   - ResearchDirectorBackpack #imp

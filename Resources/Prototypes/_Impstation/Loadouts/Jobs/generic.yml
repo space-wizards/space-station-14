@@ -1,0 +1,9 @@
+- type: loadout
+  id: WhiteDressShoes
+  equipment:
+    shoes: ClothingShoesDameDane
+
+- type: loadout
+  id: BlackHeels
+  equipment:
+    shoes: ClothingShoesHeelsBlack

@@ -204,6 +204,18 @@
   - CommandVeteranDuffel
 
 - type: loadoutGroup
+  id: ResearchDirectorShoes
+  name: loadout-group-research-director-shoes
+  loadouts:
+  - BrownShoes
+  - WhiteShoes
+  - LacedShoes
+  - LeatherShoes
+  - WhiteDressShoes
+  - ScienceWinterBoots
+  - RoboticistWinterBoots
+
+- type: loadoutGroup
   id: HeadofSecurityHeadset
   name: loadout-group-head-of-security-headset
   loadouts:
@@ -248,9 +260,18 @@
   - BrownShoes
   - LacedShoes
   - LeatherShoes
-  - HoPShoesWhite
+  - WhiteDressShoes
   - BlackCommandHeels
   - BlueCommandHeels
+
+- type: loadoutGroup
+  id: BartenderShoes
+  name: loadout-group-bartender-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - BlackHeels
+  - ClownShoesExpert
 
 - type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
   id: StartingGearApidBotanist
