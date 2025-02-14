@@ -45,6 +45,9 @@ public sealed partial class StoreSystem : EntitySystem
     {
         RefreshAllListings(component);
         component.StartingMap = Transform(uid).MapUid;
+
+        var ev = new StoreAddedEvent();
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)
@@ -53,10 +56,10 @@ public sealed partial class StoreSystem : EntitySystem
         if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
         {
             RefreshAllListings(component);
-        }
 
-        var ev = new StoreAddedEvent();
-        RaiseLocalEvent(uid, ref ev, true);
+            var ev = new StoreAddedEvent();
+            RaiseLocalEvent(uid, ref ev, true);
+        }
     }
 
     private void OnShutdown(EntityUid uid, StoreComponent component, ComponentShutdown args)
