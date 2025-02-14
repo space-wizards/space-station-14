@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: There is now a rate limit for most interactions. It should not be noticeable
-      most of the time, but may lead to mispredicts when spam-clicking.
-    type: Tweak
-  id: 7454
-  time: '2024-09-29T12:19:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32527
 - author: ArtisticRoomba
   changes:
   - message: HoS's energy shotgun is now correctly marked as grand theft contraband.
@@ -3887,3 +3879,12 @@
   id: 7953
   time: '2025-02-13T22:35:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35083
+- author: keronshb
+  changes:
+  - message: The Supermatter Grenade has been renamed to Singularity Grenade.
+    type: Tweak
+  - message: The Singularity Grenade no longer has an explosion.
+    type: Remove
+  id: 7954
+  time: '2025-02-14T15:01:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35122
