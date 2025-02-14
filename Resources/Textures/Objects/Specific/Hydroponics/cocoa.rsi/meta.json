@@ -1,11 +1,11 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13. produce-beans drawn by FillerVK, inhands by mubururu_",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13. produce-beans drawn by FillerVK, inhands by mubururu_ (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
     "states": [
         {
             "name": "dead"
