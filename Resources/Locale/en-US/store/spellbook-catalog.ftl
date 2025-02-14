@@ -26,6 +26,9 @@ spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away
 spellbook-mind-swap-name = Mind Swap
 spellbook-mind-swap-description = Exchange bodies with another person!
 
+spellbook-animate-name = Animate
+spellbook-animate-description = Bring an inanimate object to life!
+
 spellbook-smite-name = Smite
 spellbook-smite-desc = Don't like them? EXPLODE them into giblets! Requires Wizard Robe & Hat.
 
@@ -34,6 +37,9 @@ spellbook-cluwne-desc = For when you really hate someone and Smite isn't enough.
 
 spellbook-slip-name = Slippery Slope
 spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your target to be slippery. Requires Wizard Robe & Hat.
+
+spellbook-item-recall-name = Item Recall
+spellbook-item-recall-description = Mark a held item and summon it back at any time with just a snap of your fingers!
 
 # Equipment
 
@@ -51,6 +57,9 @@ spellbook-hammer-mjollnir-description = Wield the power of THUNDER in your hands
 
 spellbook-hammer-singularity-name = Singularity Hammer
 spellbook-hammer-singularity-description = Ever wonder what it'd be like to be the singularity? Swing this hammer to draw in your surroundings, even works if you miss!
+
+spellbook-staff-animation-name = Staff of Animation
+spellbook-staff-animation-description = Bring inanimate objects to life!
 
 # Events
 
