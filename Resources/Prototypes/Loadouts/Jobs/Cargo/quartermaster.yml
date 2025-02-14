@@ -59,6 +59,11 @@
   - !type:GroupLoadoutEffect
     proto: MasterQM
 
+- type: startingGear
+  id: QuartermasterMantle
+  equipment:
+    neck: ClothingNeckMantleQM
+
 # OuterClothing
 - type: loadout
   id: QuartermasterWintercoat
@@ -78,3 +83,8 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterQM
+
+- type: loadout
+  id: QuartermasterAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCargo

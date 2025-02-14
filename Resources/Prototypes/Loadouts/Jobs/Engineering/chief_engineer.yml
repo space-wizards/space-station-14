@@ -53,6 +53,11 @@
   - !type:GroupLoadoutEffect
     proto: MasterCE
 
+- type: startingGear
+  id: ChiefEngineerMantle
+  equipment:
+    neck: ClothingNeckMantleCE
+
 # OuterClothing
 - type: loadout
   id: ChiefEngineerWintercoat
@@ -72,3 +77,8 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCE
+
+- type: loadout
+  id: ChiefEngineerAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltEngineering

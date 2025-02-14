@@ -64,6 +64,11 @@
   - !type:GroupLoadoutEffect
     proto: MasterHoS
 
+- type: startingGear
+  id: HeadofSecurityMantle
+  equipment:
+    neck: ClothingNeckMantleHOS
+
 # OuterClothing
 - type: loadout
   id: HeadofSecurityCoat
@@ -77,14 +82,19 @@
 
 # Ears
 - type: loadout
-  id: HeadofSecurityHeadset
+  id: HeadofSecurityrHeadset
   equipment:
     ears: ClothingHeadsetSecurity
 
 - type: loadout
-  id: HeadofSecurityAltHeadset
+  id: HeadofSecurityrAltHeadset
   equipment:
     ears: ClothingHeadsetAltSecurity
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterHoS
+
+- type: loadout
+  id: HeadofSecurityrAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltSecurity

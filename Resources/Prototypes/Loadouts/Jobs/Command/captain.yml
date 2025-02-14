@@ -105,6 +105,11 @@
   - !type:GroupLoadoutEffect
     proto: MasterCap
 
+- type: loadout
+  id: CommandAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCommand
+
 # Shoes
 - type: loadout
   id: LaceupShoes

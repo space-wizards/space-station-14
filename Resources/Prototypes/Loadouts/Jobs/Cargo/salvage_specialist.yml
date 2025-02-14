@@ -17,6 +17,11 @@
   - !type:GroupLoadoutEffect
     proto: MasterSalvageSpecialist
 
+- type: startingGear
+  id: MiningCloak
+  equipment:
+    neck: ClothingNeckCloakMiner
+
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack
@@ -58,3 +63,8 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterSalvageSpecialist
+
+- type: loadout
+  id: SalvageMiningHeadset
+  equipment:
+    ears: ClothingHeadsetMining
