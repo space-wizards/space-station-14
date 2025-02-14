@@ -20,7 +20,7 @@ public sealed partial class ExamineableHungerComponent : Component
         { HungerThreshold.Okay, "examineable-hunger-component-examine-okay"},
         { HungerThreshold.Peckish, "examineable-hunger-component-examine-peckish"},
         { HungerThreshold.Starving, "examineable-hunger-component-examine-starving"},
-        { HungerThreshold.Dead, "examineable-hunger-component-examine-dead"}
+        { HungerThreshold.Dead, "examineable-hunger-component-examine-starving"}
     };
 
     /// <summary>
