@@ -83,3 +83,19 @@
       state: mech_siren_on
     event: !type:MechToggleSirensEvent
     useDelay: 1
+    
+- type: entity
+  id: ActionMechToggleThrusters
+  name: Toggle Thrusters
+  description: Turn on mech-mounted thrusters for flying in space.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_thrusters_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_thrusters_on
+    event: !type:MechToggleThrustersEvent
+    useDelay: 1

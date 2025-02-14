@@ -79,3 +79,7 @@ public sealed partial class MechToggleInternalsEvent : InstantActionEvent
 public sealed partial class MechToggleSirensEvent : InstantActionEvent
 {
 }
+
+public sealed partial class MechToggleThrustersEvent : InstantActionEvent
+{
+}

@@ -294,6 +294,7 @@
       state: paddy
     - state: paddy_sirens
       map: [ "enum.MechVisualLayers.Siren" ]
+      shader: unshaded
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
@@ -374,8 +375,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.5
     baseSprintSpeed: 4.5
-  - type: CanMoveInAir
-  - type: MovementAlwaysTouching
+  - type: MechThrusters
 
 - type: entity
   id: MechClarkeBattery

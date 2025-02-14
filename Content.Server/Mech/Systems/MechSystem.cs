@@ -73,6 +73,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         SubscribeLocalEvent<MechComponent, ToggleActionEvent>(OnToggleLightEvent);
         SubscribeLocalEvent<MechComponent, MechToggleSirensEvent>(OnMechToggleSirens);
+        SubscribeLocalEvent<MechComponent, MechToggleThrustersEvent>(OnMechToggleThrusters);
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
@@ -158,9 +159,37 @@ public sealed partial class MechSystem : SharedMechSystem
         
         component.Siren = !component.Siren;
         
+        Dirty(uid, component);
+        
         _actions.SetToggled(component.MechToggleSirenActionEntity, component.Siren);
         
         UpdateAppearance(uid, component);
+    }
+    
+    private void OnMechToggleThrusters(EntityUid uid, MechComponent component, MechToggleSirensEvent args)
+    {
+        if (args.Handled)
+            return;
+        
+        if (!TryComp<MechTrustersComponent>(uid, out var mechThrusters))
+            return;
+        
+        args.Handled = true;
+        
+        mechThrusters.ThrustersEnabled = !component.ThrustersEnabled;
+        
+        if (mechThrusters.ThrustersEnabled)
+        {
+            AddComp<CanMoveInAirComponent>(uid);
+            AddComp<MovementAlwaysTouching>(uid);
+        }
+        else
+        {
+            RemComp<CanMoveInAirComponent>(uid);
+            RemComp<MovementAlwaysTouching>(uid);
+        }
+        
+        Dirty(uid, mechThrusters);
     }
     
     private void OnChargeChanged(Entity<MechComponent> ent, ref ChargeChangedEvent args)
@@ -188,6 +217,8 @@ public sealed partial class MechSystem : SharedMechSystem
         _audioSystem.PlayPredicted(component.ToggleLightSound, uid, uid);
         
         component.Light = !component.Light;
+        
+        Dirty(uid, component);
         
         UpdateAppearance(uid, component);
     }

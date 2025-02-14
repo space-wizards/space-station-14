@@ -202,6 +202,8 @@ public sealed partial class MechComponent : Component
     public EntProtoId MechToggleInternalsAction = "ActionMechToggleInternals";
     [DataField]
     public EntProtoId MechToggleSirenAction = "ActionMechToggleSirens";
+    [DataField]
+    public EntProtoId MechToggleThrustersAction = "ActionMechToggleThrusters";
     #endregion
 
     #region Visualizer States
@@ -240,4 +242,5 @@ public sealed partial class MechComponent : Component
     [DataField] public EntityUid? MechToggleLightActionEntity;
     [DataField] public EntityUid? MechToggleInternalsActionEntity;
     [DataField] public EntityUid? MechToggleSirenActionEntity;
+    [DataField] public EntityUid? MechToggleThrustersActionEntity;
 }
