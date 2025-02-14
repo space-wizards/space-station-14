@@ -110,7 +110,7 @@
 
 - type: entity
   parent: [BaseTraitorObjective]
-  id: DisurptTrafficGimmickObjective # Used for rounds when basically every valid person will be a traitor.
+  id: DisruptTrafficGimmickObjective # Used for rounds when basically every valid person will be a traitor.
   name: Disrupt Station Traffic
   description: Attempt to disrupt traffic flow as much as possible around the station through any means. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
@@ -221,6 +221,6 @@
   - type: Objective
     difficulty: 1.25
     icon:
-      sprite: Clothing/Neck/Cloaks/straight.ris
+      sprite: Clothing/Neck/Cloaks/straight.rsi
       state: icon
   - type: AutoCompleteCondition
