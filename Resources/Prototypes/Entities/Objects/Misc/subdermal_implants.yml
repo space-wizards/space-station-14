@@ -175,6 +175,13 @@
         type: StoreBoundUserInterface
 
 - type: entity
+  parent: UplinkImplant
+  id: TraitorRollUplinkImplant
+  components:
+  - type: StoreDiscount
+    totalDiscounts: 6
+
+- type: entity
   parent: BaseSubdermalImplant
   id: EmpImplant
   name: EMP implant

@@ -24,7 +24,7 @@ public sealed class UplinkSystem : EntitySystem
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
-    private const string FallbackUplinkImplant = "UplinkImplant";
+    private const string FallbackUplinkImplant = "TraitorRollUplinkImplant";
     private const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
 
     /// <summary>
