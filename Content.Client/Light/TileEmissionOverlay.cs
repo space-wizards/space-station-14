@@ -29,6 +29,8 @@ public sealed class TileEmissionOverlay : Overlay
 
     private IRenderTexture? _target;
 
+    public const int ContentZIndex = RoofOverlay.ContentZIndex + 1;
+
     public TileEmissionOverlay(IEntityManager entManager)
     {
         IoCManager.InjectDependencies(this);
@@ -38,6 +40,7 @@ public sealed class TileEmissionOverlay : Overlay
         _xformSystem = entManager.System<SharedTransformSystem>();
 
         _xformQuery = entManager.GetEntityQuery<TransformComponent>();
+        ZIndex = ContentZIndex;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -106,5 +109,9 @@ public sealed class TileEmissionOverlay : Overlay
 
                 worldHandle.DrawTextureRect(_target.Texture, bounds);
             }, null);
+
+        // This blurs for both this and RoofOverlay.
+        // TODO: Need to essentially draw everything to an enlarged texture and transform it back?
+        //_clyde.BlurRenderTarget(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 5f);
     }
 }

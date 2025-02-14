@@ -22,7 +22,7 @@ public sealed class SunShadowOverlay : Overlay
     private readonly SharedMapSystem _maps = default!;
     private readonly SharedTransformSystem _xformSys = default!;
 
-    private readonly HashSet<Entity<SunShadowComponent>> _shadows = new();
+    private readonly HashSet<Entity<SunShadowCastComponent>> _shadows = new();
 
     private IRenderTexture? _target;
 
@@ -32,31 +32,40 @@ public sealed class SunShadowOverlay : Overlay
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
         _lookup = _entManager.System<EntityLookupSystem>();
+        ZIndex = TileEmissionOverlay.ContentZIndex + 1;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (!_entManager.TryGetComponent(args.MapUid, out SunShadowComponent? sun))
+            return;
+
+        var direction = sun.Direction;
+
+        // Nowhere to cast to so ignore it.
+        if (direction.Equals(Vector2.Zero))
+            return;
+
+        var length = direction.Length();
+        var worldHandle = args.WorldHandle;
+        var viewport = args.Viewport;
+        var eye = viewport.Eye;
+        var mapId = args.MapId;
+
+        if (eye == null)
+            return;
+
         // TODO: Fix jittering (imprecision due to matrix maths?)
         // Likely need to get all loca lcoords and shit.
         // Also looks like they stretch on right side of the screen quite badly, check PR.
         // Need some non-shitty way to get render targets instead of copy-paste slop.
-        // Need to do per-layer blur just for roof.
 
         // Feature todo: dynamic shadows for mobs and trees. Also ideally remove the fake tree shadows.
-        var direction = new Vector2(2f, 0f);
-        var length = direction.Length();
-        var worldHandle = args.WorldHandle;
-        var renderTarget = args.Viewport.LightRenderTarget;
-        var viewport = args.Viewport;
-        var eye = viewport.Eye;
-        var width = 0.35f;
-        var mapId = args.MapId;
+
+
         var worldBounds = args.WorldBounds;
         var expandedBounds = worldBounds.Enlarged(length + 0.1f);
         _shadows.Clear();
-
-        if (eye == null)
-            return;
 
         if (_target?.Size != viewport.LightRenderTarget.Size)
         {
@@ -71,7 +80,6 @@ public sealed class SunShadowOverlay : Overlay
             {
                 var invMatrix =
                     _target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
-                worldHandle.SetTransform(invMatrix);
                 var count = 0;
                 var indices = new Vector2[PhysicsConstants.MaxPolygonVertices];
                 var verts = new ValueList<Vector2>();
@@ -93,11 +101,12 @@ public sealed class SunShadowOverlay : Overlay
                 {
                     var xform = _entManager.GetComponent<TransformComponent>(ent.Owner);
                     var worldMatrix = _xformSys.GetWorldMatrix(xform);
+                    var renderMatrix = Matrix3x2.Multiply(worldMatrix, invMatrix);
 
-                    indices[0] = Vector2.Transform(new Vector2(-0.5f, -0.5f), worldMatrix);
-                    indices[1] = Vector2.Transform(new Vector2(0.5f, -0.5f), worldMatrix);
-                    indices[2] = Vector2.Transform(new Vector2(0.5f, 0.5f), worldMatrix);
-                    indices[3] = Vector2.Transform(new Vector2(-0.5f, 0.5f), worldMatrix);
+                    indices[0] = new Vector2(-0.5f, -0.5f);
+                    indices[1] = new Vector2(0.5f, -0.5f);
+                    indices[2] = new Vector2(0.5f, 0.5f);
+                    indices[3] = new Vector2(-0.5f, 0.5f);
 
                     indices[4] = indices[0] + direction;
                     indices[5] = indices[1] + direction;
@@ -105,6 +114,7 @@ public sealed class SunShadowOverlay : Overlay
                     indices[7] = indices[3] + direction;
 
                     var hull = PhysicsHull.ComputeHull(indices, 8);
+                    worldHandle.SetTransform(renderMatrix);
 
                     worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, hull.Points[..hull.Count], Color.White);
                 }

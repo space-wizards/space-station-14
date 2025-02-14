@@ -25,6 +25,8 @@ public sealed class RoofOverlay : Overlay
 
     private IRenderTexture? _target;
 
+    public const int ContentZIndex = -1;
+
     public RoofOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
@@ -34,7 +36,7 @@ public sealed class RoofOverlay : Overlay
         _mapSystem = _entManager.System<SharedMapSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
 
-        ZIndex = -1;
+        ZIndex = ContentZIndex;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
