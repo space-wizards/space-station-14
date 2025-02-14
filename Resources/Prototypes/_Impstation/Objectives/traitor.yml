@@ -117,7 +117,8 @@
   - type: Objective
     difficulty: 1.25
     icon:
-      sprite: _Impstation/Interface/Radial/RCD/cone.png
+      sprite: Objects/Misc/inflatable_wall.rsi
+      state: inflatable_wall
   - type: AutoCompleteCondition
 
 - type: entity
