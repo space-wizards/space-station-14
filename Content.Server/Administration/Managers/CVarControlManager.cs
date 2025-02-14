@@ -53,9 +53,6 @@ public sealed class CVarControlManager : IPostInjectInit
 
                 var cvarDef = (CVarDef)field.GetValue(null)!;
                 _changableCvars.Add(new ChangableCVar(cvarDef.Name, allowed, _localizationManager));
-                // Possible todo? check if the cvar is registered in the config manager? or already registered in our list?
-                // Think engine will blow up anyways if its double registered? Not sure.
-                // This command should be fine with multiple registrations.
             }
         }
 
