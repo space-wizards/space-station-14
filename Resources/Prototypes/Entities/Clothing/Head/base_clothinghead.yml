@@ -107,6 +107,7 @@
   components:
   - type: SlotBlock
     slots:
+    - eyes
     - mask
   - type: BreathMask
   - type: Item
@@ -143,6 +144,10 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  - type: SlotBlock
+    slots:
+    - eyes
+    - mask
   - type: BreathMask
   - type: Sprite
     state: icon # default state used by most inheritors
@@ -189,6 +194,10 @@
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
   components:
+  - type: SlotBlock
+    slots:
+    - eyes
+    - mask
   - type: Sprite
     layers:
     - state: icon
