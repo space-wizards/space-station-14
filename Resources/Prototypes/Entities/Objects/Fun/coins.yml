@@ -12,8 +12,8 @@
     size: Tiny
   - type: PhysicalComposition
     materialComposition:
-      Steel: 90
-      Diamond: 10
+      Steel: 4
+      Diamond: 1
   - type: StaticPrice
     price: 75
   - type: CoinFlippable
@@ -30,8 +30,8 @@
     state: coin_adamantium_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 90
-      Diamond: 10
+      Steel: 3
+      Diamond: 2
   - type: StaticPrice
     price: 250
 
@@ -44,7 +44,7 @@
     state: coin_bananium_tails
   - type: PhysicalComposition
     materialComposition:
-      Bananium: 100
+      Bananium: 5
   - type: StaticPrice
     price: 200
 
@@ -57,7 +57,7 @@
     state: coin_copper_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 5
   - type: StaticPrice
     price: 100
 
@@ -70,8 +70,8 @@
     state: coin_diamond_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 75 # Diluted - It's mostly fake
-      Diamond: 25
+      Steel: 2 # Diluted - It's partially fake
+      Diamond: 3
   - type: StaticPrice
     price: 500
 
@@ -84,8 +84,8 @@
     state: coin_gold_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 90 # Diluted - It's mostly fake
-      Gold: 10
+      Steel: 4 # Diluted - It's mostly fake
+      Gold: 1
   - type: StaticPrice
     price: 200
 
@@ -98,7 +98,7 @@
     state: coin_iron_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 5
   - type: StaticPrice
     price: 100
 
@@ -111,8 +111,8 @@
     state: coin_plasma_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 50 # Diluted - It's half fake
-      Plasma: 50
+      Steel: 3 # Diluted - It's mostly fake
+      Plasma: 2
   - type: StaticPrice
     price: 150
 
@@ -125,8 +125,8 @@
     state: coin_silver_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 50 # Diluted - It's half fake
-      Silver: 50
+      Steel: 3 # Diluted - It's half fake
+      Silver: 2
   - type: StaticPrice
     price: 100
 
@@ -139,8 +139,8 @@
     state: coin_uranium_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 90 # Diluted - It's mostly fake
-      Uranium: 10
+      Steel: 3 # Diluted - It's mostly fake
+      Uranium: 2
   - type: StaticPrice
     price: 150
 
@@ -154,6 +154,6 @@
     state: coin_game_tails
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 5
   - type: StaticPrice
     price: 50

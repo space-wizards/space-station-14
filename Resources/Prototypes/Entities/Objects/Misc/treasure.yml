@@ -118,28 +118,38 @@
   id: TreasureCoinPile
   table: !type:GroupSelector
     children:
+    - id: CoinNanotransen
+      weight: 20
+    - id: CoinCopper
+      weight: 20
     - id: CoinIron
-      weight: 24
+      weight: 20
     - id: CoinSilver
-      weight: 40
-    - id: CoinGold
-      weight: 24
-    - id: CoinAdamantium
-      weight: 11
-    - id: CoinDiamond
-      weight: 1
+      weight: 20
+    - id: CoinGame
+      weight: 20
 
 - type: entityTable
   id: TreasureCoinPileRare
   table: !type:GroupSelector
     children:
+    - id: CoinNanotransen
+      weight: 10
+    - id: CoinAdamantium
+      weight: 10
+    - id: CoinBananium
+      weight: 10
+    - id: CoinCopper
+      weight: 10
+    - id: CoinDiamond
+      weight: 10
+    - id: CoinGold
+      weight: 10
     - id: CoinIron
       weight: 10
+    - id: CoinPlasma
+      weight: 10
     - id: CoinSilver
-      weight: 25
-    - id: CoinGold
-      weight: 40
-    - id: CoinAdamantium
-      weight: 20
-    - id: CoinDiamond
-      weight: 5
+      weight: 10
+    - id: CoinUranium
+      weight: 10
