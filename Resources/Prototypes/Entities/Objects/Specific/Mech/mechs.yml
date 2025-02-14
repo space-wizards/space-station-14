@@ -172,12 +172,6 @@
         node: start
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: PointLight
-    mask: /Textures/Effects/LightMasks/cone.png
-    autoRot: true
-    radius: 6
-    energy: 5
-    enabled: false
   - type: PowerCellDraw
     enabled: false
     drawRate: 1
@@ -217,6 +211,12 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 3
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechRipleyBattery
@@ -265,6 +265,12 @@
     baseSprintSpeed: 2
   - type: Damageable
     damageModifierSet: MediumArmorNT
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 3
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechRipley2Battery
@@ -317,6 +323,12 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.5
     baseSprintSpeed: 4
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 5
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechPaddyBattery
@@ -376,6 +388,12 @@
     baseWalkSpeed: 2.5
     baseSprintSpeed: 4.5
   - type: MechThrusters
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    energy: 6
+    enabled: false
 
 - type: entity
   id: MechClarkeBattery
@@ -597,6 +615,12 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 2.6
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 6
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechGygaxBattery
@@ -653,6 +677,12 @@
   - type: Repairable
     fuelCost: 30
     doAfterDelay: 15
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    energy: 5
+    enabled: false
 
 - type: entity
   id: MechDurandBattery
@@ -853,6 +883,12 @@
   - type: Repairable
     fuelCost: 40
     doAfterDelay: 20
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    energy: 6
+    enabled: false
 
 - type: entity
   id: MechGygaxSyndieBattery
