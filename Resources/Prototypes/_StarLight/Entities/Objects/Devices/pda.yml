@@ -113,7 +113,6 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
     state: pda-blueshield
 
-
 - type: entity
   parent: BasePDA
   id: MiningPDA
