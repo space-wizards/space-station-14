@@ -64,6 +64,7 @@ namespace Content.Server.Cargo.Systems
             _audio.PlayPvs(component.ConfirmSound, uid);
             UpdateBankAccount(stationUid.Value, bank, (int) price);
             QueueDel(args.Used);
+            args.Handled = true;
         }
 
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)

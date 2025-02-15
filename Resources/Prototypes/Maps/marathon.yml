@@ -46,7 +46,7 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
+            SecurityOfficer: [ 8, 8 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
             Lawyer: [ 2, 2 ]
