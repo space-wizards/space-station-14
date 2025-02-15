@@ -28,7 +28,7 @@ public sealed partial class HarvestableSolutionComponent : Component
     /// LocId of label to display on the harvesting verb.
     /// </summary>
     [DataField]
-    public LocId VerbText = "udder-system-verb-milk";
+    public LocId VerbText = "harvestable-solution-component-harvest-verb";
 
     // TODO: Verb icon
 
@@ -36,11 +36,11 @@ public sealed partial class HarvestableSolutionComponent : Component
     /// LocId of popup message displayed when there is nothing to harvest.
     /// </summary>
     [DataField]
-    public LocId EmptyMessage = "udder-system-dry";
+    public LocId EmptyMessage = "harvestable-solution-component-harvest-empty";
 
     /// <summary>
     /// LocId of popup message displayed when successfully harvesting from the solution.
     /// </summary>
     [DataField]
-    public LocId SuccessMessage = "udder-system-success";
+    public LocId SuccessMessage = "harvestable-solution-component-harvest-success";
 }

@@ -83,9 +83,11 @@ public sealed class HarvestableSolutionSystem : EntitySystem
             return false;
 
         var quantity = solution.Volume;
+        var sourceIdentity = Identity.Entity(entity.Owner, EntityManager);
+        var targetIdentity = Identity.Entity(containerUid, EntityManager);
         if (quantity == 0)
         {
-            _popup.PopupClient(Loc.GetString(entity.Comp.EmptyMessage), entity.Owner, userUid);
+            _popup.PopupClient(Loc.GetString(entity.Comp.EmptyMessage, ("source", sourceIdentity), ("target", targetIdentity)), entity.Owner, userUid);
             return false;
         }
 
@@ -95,7 +97,7 @@ public sealed class HarvestableSolutionSystem : EntitySystem
         var split = _solutionContainer.SplitSolution(solutionEnt.Value, quantity);
         _solutionContainer.TryAddSolution(targetSoln.Value, split);
 
-        _popup.PopupClient(Loc.GetString(entity.Comp.SuccessMessage, ("amount", quantity), ("target", Identity.Entity(containerUid, EntityManager))), entity.Owner,
+        _popup.PopupClient(Loc.GetString(entity.Comp.SuccessMessage, ("source", sourceIdentity), ("amount", quantity), ("target", targetIdentity)), entity.Owner,
             userUid, PopupType.Medium);
 
         return true;
