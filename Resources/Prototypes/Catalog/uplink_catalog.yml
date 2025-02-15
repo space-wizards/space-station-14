@@ -1974,6 +1974,10 @@
     - !type:BuyerJobCondition
       whitelist:
       - Chaplain
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+        - SurplusBundle
 
 - type: listing
   id: uplinkRevolverCapGunFake
