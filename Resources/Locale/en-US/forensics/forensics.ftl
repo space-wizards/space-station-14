@@ -1,6 +1,7 @@
 forensic-scanner-interface-title = Forensic scanner
 forensic-scanner-interface-fingerprints = Fingerprints
 forensic-scanner-interface-fibers = Fibers
+forensic-scanner-interface-micro-fibers = Microfibers
 forensic-scanner-interface-dnas = DNAs
 forensic-scanner-interface-residues = Residues
 forensic-scanner-interface-no-data = No scan data available
@@ -14,6 +15,7 @@ forensic-pad-start-scan-target = {CAPITALIZE($user)} is trying to take a sample 
 forensic-pad-start-scan-user = You start taking a sample of {CAPITALIZE($target)}'s fingerprints.
 forensic-pad-already-used = This pad has already been used.
 forensic-scanner-match-fiber = Match in fiber found!
+forensic-scanner-match-micro-fiber = Match in microfiber found!
 forensic-scanner-match-fingerprint = Match in fingerprint found!
 forensic-scanner-match-none = No matches found!
 forensic-scanner-printer-not-ready = Printer is not ready yet.

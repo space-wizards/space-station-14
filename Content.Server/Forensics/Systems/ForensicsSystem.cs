@@ -133,6 +133,11 @@ namespace Content.Server.Forensics
                 dest.Fibers.Add(fiber);
             }
 
+            foreach (var microFiber in src.MicroFibers)
+            {
+                dest.MicroFibers.Add(microFiber);
+            }
+
             foreach (var print in src.Fingerprints)
             {
                 dest.Fingerprints.Add(print);
