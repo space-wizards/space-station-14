@@ -1,6 +1,5 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.CoinFlippable;
 
@@ -16,6 +15,12 @@ public sealed partial class CoinFlippableComponent : Component
     /// </summary>
     [DataField]
     public bool CanLandOnItsSide { get; private set; } = false;
+
+    /// <summary>
+    ///     Is there an associated side sprite for it to, rarely, land on? Assume no unless otherwise set.
+    /// </summary>
+    [DataField]
+    public bool IsWeighted { get; private set; } = false;
 
     /// <summary>
     ///     Percentage that it can land on its side (Only if CanLandOnItsSide is true) expressed as a float.

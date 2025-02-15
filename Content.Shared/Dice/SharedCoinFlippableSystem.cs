@@ -1,12 +1,18 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
-using Robust.Shared.GameStates;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CoinFlippable;
 
 public abstract class SharedCoinFlippableSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -14,41 +20,35 @@ public abstract class SharedCoinFlippableSystem : EntitySystem
         SubscribeLocalEvent<CoinFlippableComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<CoinFlippableComponent, LandEvent>(OnLand);
         SubscribeLocalEvent<CoinFlippableComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<CoinFlippableComponent, AfterAutoHandleStateEvent>(OnCoinFlippableAfterHandleState);
     }
 
-    private void OnCoinFlippableAfterHandleState(EntityUid uid, CoinFlippableComponent component, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateVisuals(uid, component);
-    }
-
-    private void OnUseInHand(EntityUid uid, CoinFlippableComponent component, UseInHandEvent args)
+    private void OnUseInHand(Entity<CoinFlippableComponent> entity, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
+        Roll(entity, args.User);
         args.Handled = true;
-        Roll(uid, component);
     }
 
-    private void OnLand(EntityUid uid, CoinFlippableComponent component, ref LandEvent args)
+    private void OnLand(Entity<CoinFlippableComponent> entity, ref LandEvent args)
     {
-        Roll(uid, component);
+        Roll(entity);
     }
 
-    private void OnExamined(EntityUid uid, CoinFlippableComponent coinFlippable, ExaminedEvent args)
+    private void OnExamined(Entity<CoinFlippableComponent> entity, ref ExaminedEvent args)
     {
-        string currentVal = "error";
-        switch (coinFlippable.CurrentValue) // Convert coinFlippable.CurrentValue to its proper string representation
+        string currentVal = "Error";
+        switch (entity.Comp.CurrentValue) // Convert CurrentValue to its proper string representation
         {
             case 0:
-                currentVal ="heads";
+                currentVal = Loc.GetString("coin-flippable-result-heads");
                 break;
             case 1:
-                currentVal ="tails";
+                currentVal = Loc.GetString("coin-flippable-result-tails");
                 break;
             case 2:
-                currentVal ="its side";
+                currentVal = Loc.GetString("coin-flippable-result-side");
                 break;
         }
 
@@ -61,16 +61,13 @@ public abstract class SharedCoinFlippableSystem : EntitySystem
         }
     }
 
-    public void SetCurrentSide(EntityUid uid, int side, CoinFlippableComponent? coinFlippable = null)
+    private void SetCurrentSide(Entity<CoinFlippableComponent> entity, int side)
     {
-        if (!Resolve(uid, ref coinFlippable))
-            return;
-
-        if (coinFlippable.CanLandOnItsSide)
+        if (entity.Comp.CanLandOnItsSide)
         {
             if (side < 0 || side > 2)
             {
-                Log.Error($"Attempted to set coinFlippable {ToPrettyString(uid)} to an invalid side ({side}).");
+                Log.Error($"Attempted to set coin {ToPrettyString(entity)} to an invalid side ({side}).");
                 return;
             }
         }
@@ -78,26 +75,22 @@ public abstract class SharedCoinFlippableSystem : EntitySystem
         {
             if (side < 0 || side > 1)
             {
-                Log.Error($"Attempted to set coinFlippable {ToPrettyString(uid)} to an invalid side ({side}).");
+                Log.Error($"Attempted to set coin {ToPrettyString(entity)} to an invalid side ({side}).");
                 return;
             }
         }
 
-        coinFlippable.CurrentValue = side;
-        Dirty(uid, coinFlippable);
-        UpdateVisuals(uid, coinFlippable);
+        entity.Comp.CurrentValue = side;
+        Dirty(entity);
     }
 
-    public void SetCurrentValue(EntityUid uid, int value, CoinFlippableComponent? coinFlippable = null)
+    public void SetCurrentValue(Entity<CoinFlippableComponent> entity, int value)
     {
-        if (!Resolve(uid, ref coinFlippable))
-            return;
-
-        if (coinFlippable.CanLandOnItsSide)
+        if (entity.Comp.CanLandOnItsSide)
         {
             if (value < 0 || value > 2)
             {
-                Log.Error($"Attempted to set coinFlippable {ToPrettyString(uid)} to an invalid value ({value}).");
+                Log.Error($"Attempted to set coin {ToPrettyString(entity)} to an invalid value ({value}).");
                 return;
             }
         }
@@ -105,21 +98,55 @@ public abstract class SharedCoinFlippableSystem : EntitySystem
         {
             if (value < 0 || value > 1)
             {
-                Log.Error($"Attempted to set coinFlippable {ToPrettyString(uid)} to an invalid value ({value}).");
+                Log.Error($"Attempted to set coin {ToPrettyString(entity)} to an invalid value ({value}).");
                 return;
             }
         }
 
-        SetCurrentSide(uid, value, coinFlippable);
+        SetCurrentSide(entity, value);
     }
 
-    protected virtual void UpdateVisuals(EntityUid uid, CoinFlippableComponent? coinFlippable = null)
+    private void Roll(Entity<CoinFlippableComponent> entity, EntityUid? user = null)
     {
-        // See client system.
-    }
+        // Generate Random Outcome
+        System.Random rand = new System.Random((int)_timing.CurTick.Value);
+        float roll = rand.NextSingle()*100.0F; // Random float between 0.0f and
 
-    public virtual void Roll(EntityUid uid, CoinFlippableComponent? coinFlippable = null)
-    {
-        // See the server system, client cannot predict rolling.
+        int rollResult = -1;
+        if (entity.Comp.CanLandOnItsSide)
+        {
+            if (roll < entity.Comp.PercentageSideLand)
+                rollResult = 2;
+            else if (roll < (entity.Comp.PercentageSideLand + (100 - entity.Comp.PercentageSideLand) / 2))
+                rollResult = 0; // 50% of remaining probability
+            else
+                rollResult = 1; // 50% of remaining probability
+        }
+        else
+        {
+            if (roll < 50.0F)
+                rollResult = 0; // 50% of remaining probability
+            else
+                rollResult = 1; // 50% of remaining probability
+        }
+        SetCurrentSide(entity, rollResult);
+
+        // Update Description
+        string currentVal = "error";
+        switch (entity.Comp.CurrentValue) // Convert coinFlippable.CurrentValue to its proper string representation
+        {
+            case 0:
+                currentVal = Loc.GetString("coin-flippable-result-heads");
+                break;
+            case 1:
+                currentVal = Loc.GetString("coin-flippable-result-tails");
+                break;
+            case 2:
+                currentVal = Loc.GetString("coin-flippable-result-side");
+                break;
+        }
+
+        _popup.PopupPredicted(Loc.GetString("coin-flippable-component-on-roll-land",("coin",entity),("currentSide",currentVal)), entity, user);
+        _audio.PlayPredicted(entity.Comp.Sound, entity, user);
     }
 }
