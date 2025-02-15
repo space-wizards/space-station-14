@@ -47,6 +47,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 
@@ -76,6 +77,7 @@ public sealed class MailSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
     [Dependency] private readonly RadioSystem _radioSystem = default!; // imp
+    [Dependency] private readonly IGameTiming _timing = default!; // imp
 
     private ISawmill _sawmill = default!;
 
@@ -101,7 +103,6 @@ public sealed class MailSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var interval = _config.GetCVar(DCCVars.MailTeleportIntervalInMinutes);
         var query = EntityQueryEnumerator<MailTeleporterComponent>();
 
         while (query.MoveNext(out var uid, out var mailTeleporter))
@@ -109,13 +110,18 @@ public sealed class MailSystem : EntitySystem
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 continue;
 
-            mailTeleporter.Accumulator += frameTime;
-
-            if (mailTeleporter.Accumulator < TimeSpan.FromMinutes(interval).TotalSeconds)
+            // imp. replacing the CCVar
+            if (_timing.CurTime < mailTeleporter.NextDelivery)
                 continue;
 
-            mailTeleporter.Accumulator -= (float)TimeSpan.FromMinutes(interval).TotalSeconds;
-            SpawnMail(uid, interval, mailTeleporter);
+            TimeSpan nextTimeToAdd;
+            if (_random.Prob(0.5f)) // weight the result towards the average. 
+                nextTimeToAdd = _random.Next(mailTeleporter.MinInterval, mailTeleporter.MaxInterval);
+            else
+                nextTimeToAdd = mailTeleporter.AverageInterval;
+
+            mailTeleporter.NextDelivery += _timing.CurTime + nextTimeToAdd;
+            SpawnMail(uid, nextTimeToAdd, mailTeleporter);
         }
     }
 
@@ -638,7 +644,7 @@ public sealed class MailSystem : EntitySystem
     /// <summary>
     /// Handle the spawning of all the mail for a mail teleporter.
     /// </summary>
-    private void SpawnMail(EntityUid uid, double interval, MailTeleporterComponent? component = null)
+    private void SpawnMail(EntityUid uid, TimeSpan nextDelivery, MailTeleporterComponent? component = null)
     {
         if (!Resolve(uid, ref component))
         {
@@ -723,7 +729,7 @@ public sealed class MailSystem : EntitySystem
         _audio.PlayPvs(component.TeleportSound, uid);
 
         if (component.RadioNotification) // imp
-            Report(uid, component.RadioChannel, component.ShipmentRecievedMessage, ("timeLeft", interval));
+            Report(uid, component.RadioChannel, component.ShipmentRecievedMessage, ("timeLeft", Math.Round(nextDelivery.TotalMinutes)));
     }
 
     private void Report(EntityUid source, string channelName, string messageKey, params (string, object)[] args) // imp

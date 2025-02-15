@@ -41,4 +41,12 @@ public sealed partial class MailTeleporterComponent : Component
     public LocId ShipmentRecievedMessage = "mail-recieved-message";
     [DataField]
     public string RadioChannel = "Supply";
+
+    [DataField]
+    public TimeSpan MaxInterval = TimeSpan.FromMinutes(7);
+    [DataField]
+    public TimeSpan MinInterval = TimeSpan.FromMinutes(3);
+    [DataField]
+    public TimeSpan AverageInterval = TimeSpan.FromMinutes(5);
+    public TimeSpan NextDelivery = TimeSpan.Zero;
 }
