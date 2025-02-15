@@ -98,48 +98,29 @@ namespace Content.Client.PDA
                 ToHomeScreen();
             };
 
-            PdaOwnerButton.OnPressed += _ =>
-            {
-                _clipboard.SetText(_pdaOwner);
-                _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
-            };
+            PdaOwnerButton.OnPressed += _ => CopyField(_pdaOwner);
 
-            IdInfoButton.OnPressed += _ =>
-            {
-                _clipboard.SetText(_owner + ", " + _jobTitle);
-                _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
-            };
+            IdInfoButton.OnPressed += _ => CopyField(_owner + ", " + _jobTitle);
 
-            StationNameButton.OnPressed += _ =>
-            {
-                _clipboard.SetText(_stationName);
-                _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
-            };
+            StationNameButton.OnPressed += _ => CopyField(_stationName);
 
-            StationAlertLevelButton.OnPressed += _ =>
-            {
-                _clipboard.SetText(_alertLevel);
-                _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
-            };
+            StationAlertLevelButton.OnPressed += _ => CopyField(_alertLevel);
 
-            StationTimeButton.OnPressed += _ =>
-            {
-                var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-                _clipboard.SetText(stationTime.ToString("hh\\:mm\\:ss"));
-                _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
-            };
+            StationTimeButton.OnPressed += _ => CopyField(_gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm\\:ss"));
 
-            StationAlertLevelInstructionsButton.OnPressed += _ =>
-            {
-                _clipboard.SetText(_instructions);
-                _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
-            };
+            StationAlertLevelInstructionsButton.OnPressed += _ => CopyField(_instructions);
 
 
 
 
             HideAllViews();
             ToHomeScreen();
+        }
+
+        private void CopyField(string data)
+        {
+            _clipboard.SetText(data);
+            _popupSystem.PopupCursor(Loc.GetString("comp-pda-ui-copied"));
         }
 
         public void UpdateState(PdaUpdateState state)
