@@ -1,9 +1,7 @@
+using Content.Shared.Armor;
 using Content.Shared.Atmos;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Examine;
 using Content.Shared.Inventory;
-using Content.Shared.Verbs;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -12,13 +10,12 @@ namespace Content.Shared.Clothing.EntitySystems;
 /// </summary>
 public sealed class FireProtectionSystem : EntitySystem
 {
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<FireProtectionComponent, InventoryRelayedEvent<GetFireProtectionEvent>>(OnGetProtection);
-        SubscribeLocalEvent<FireProtectionComponent, GetVerbsEvent<ExamineVerb>>(OnFireProtectionVerbExamine);
+        SubscribeLocalEvent<FireProtectionComponent, ArmorExamineEvent>(OnArmorExamine);
     }
 
     private void OnGetProtection(Entity<FireProtectionComponent> ent, ref InventoryRelayedEvent<GetFireProtectionEvent> args)
@@ -26,22 +23,14 @@ public sealed class FireProtectionSystem : EntitySystem
         args.Args.Reduce(ent.Comp.Reduction);
     }
 
-    private void OnFireProtectionVerbExamine(EntityUid uid, FireProtectionComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnArmorExamine(Entity<FireProtectionComponent> ent, ref ArmorExamineEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        var value = MathF.Round((1f - ent.Comp.Reduction) * 100, 1);
+
+        if (value == 0)
             return;
 
-        var examineMarkup = GetFireProtectionExamine(component.Reduction);
-        _examine.AddDetailedExamineVerb(args, component, examineMarkup,
-            Loc.GetString("fire-protection-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
-            Loc.GetString("fire-protection-examinable-verb-message"));
-    }
-
-    private FormattedMessage GetFireProtectionExamine(float reduction)
-    {
-        var msg = new FormattedMessage();
-        msg.AddMarkupOrThrow(Loc.GetString("fire-protection-reduction-value", ("value", MathF.Round((1f - reduction) * 100, 1))));
-
-        return msg;
+        args.Msg.PushNewline();
+        args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("value", value)));
     }
 }
