@@ -1,8 +1,9 @@
 - type: gameMap
-  id: StarlightLobster
+  id: Lobster
   mapName: 'Lobster Station'
   mapPath: /Maps/_Starlight/Stations/Lobster.yml
   minPlayers: 30
+  maxPlayers: 75
   stations:
     Lobster:
       stationProto: StandardNanotrasenStation

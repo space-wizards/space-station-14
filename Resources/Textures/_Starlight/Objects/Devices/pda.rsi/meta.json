@@ -37,6 +37,9 @@
     },
     {
       "name": "pda-blueshield"
+    },
+    {
+      "name": "pda-mining"
     }
   ]
 }
