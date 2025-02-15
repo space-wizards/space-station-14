@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Salvage corpses spawn heavily rotted, and extremely bloated.
-    type: Tweak
-  - message: Changelings are incapable of absorbing corpses once they reach the "extremely
-      bloated" stage.
-    type: Tweak
-  id: 628
-  time: '2024-12-02T23:54:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/860
 - author: Sha-Seng
   changes:
   - message: Crushers fit in your suit storage now (the tank slot!)
@@ -4189,3 +4179,11 @@
   id: 1127
   time: '2025-02-15T00:37:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1687
+- author: TheGrimbeeper
+  changes:
+  - message: Heretics should no longer be able to get themselves (or other heretics)
+      or changelings as targets
+    type: Fix
+  id: 1128
+  time: '2025-02-15T00:41:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1688
