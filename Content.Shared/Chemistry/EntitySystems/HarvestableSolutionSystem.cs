@@ -53,7 +53,13 @@ public sealed class HarvestableSolutionSystem : EntitySystem
 
     private bool TryStartHarvest(Entity<HarvestableSolutionComponent> entity, EntityUid userUid, EntityUid containerUid)
     {
-        var doAfterArgs = new DoAfterArgs(EntityManager, userUid, entity.Comp.Duration, new HarvestableSolutionDoAfterEvent(), entity, entity, used: containerUid)
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            userUid,
+            entity.Comp.Duration,
+            new HarvestableSolutionDoAfterEvent(),
+            entity,
+            entity,
+            used: containerUid)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -69,15 +75,22 @@ public sealed class HarvestableSolutionSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Target entity from which to harvest.</param>
     /// <param name="userUid">Entity performing the harvest action.</param>
-    /// <param name="containerUid">Container entity that the solution will be transferred into. The harvest will fail if this entity does not have a <see cref="RefillableSolutionComponent"/>.</param>
+    /// <param name="containerUid">Container entity that the solution will be transferred into.
+    /// The harvest will fail if this entity does not have a <see cref="RefillableSolutionComponent"/>.</param>
     /// <returns>True if any solution is harvested, otherwise false.</returns>
     public bool TryHarvest(Entity<HarvestableSolutionComponent?> entity, EntityUid userUid, EntityUid containerUid)
     {
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return false;
 
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionEnt, out var solution, errorOnMissing: false))
+        if (!_solutionContainer.TryGetSolution(entity.Owner,
+            entity.Comp.Solution,
+            out var solutionEnt,
+            out var solution,
+            errorOnMissing: false))
+        {
             return false;
+        }
 
         if (!_solutionContainer.TryGetRefillableSolution(containerUid, out var targetSoln, out var targetSolution))
             return false;
@@ -87,14 +100,21 @@ public sealed class HarvestableSolutionSystem : EntitySystem
         var targetIdentity = Identity.Entity(containerUid, EntityManager);
         if (quantity == 0)
         {
-            _popup.PopupClient(Loc.GetString(entity.Comp.EmptyMessage, ("source", sourceIdentity), ("target", targetIdentity)), entity.Owner, userUid);
+            _popup.PopupClient(Loc.GetString(entity.Comp.EmptyMessage,
+                ("source", sourceIdentity),
+                ("target", targetIdentity)),
+                entity.Owner,
+                userUid);
             return false;
         }
 
         if (targetSolution.AvailableVolume <= 0)
         {
             // Target container is full
-            _popup.PopupClient(Loc.GetString(entity.Comp.TargetFullMessage, ("target", targetIdentity)), entity.Owner, userUid);
+            _popup.PopupClient(Loc.GetString(entity.Comp.TargetFullMessage,
+                ("target", targetIdentity)),
+                entity.Owner,
+                userUid);
             return false;
         }
 
@@ -104,8 +124,13 @@ public sealed class HarvestableSolutionSystem : EntitySystem
         var split = _solutionContainer.SplitSolution(solutionEnt.Value, quantity);
         _solutionContainer.TryAddSolution(targetSoln.Value, split);
 
-        _popup.PopupClient(Loc.GetString(entity.Comp.SuccessMessage, ("source", sourceIdentity), ("amount", quantity), ("target", targetIdentity)), entity.Owner,
-            userUid, PopupType.Medium);
+        _popup.PopupClient(Loc.GetString(entity.Comp.SuccessMessage,
+            ("source", sourceIdentity),
+            ("amount", quantity),
+            ("target", targetIdentity)),
+            entity.Owner,
+            userUid,
+            PopupType.Medium);
 
         return true;
     }
