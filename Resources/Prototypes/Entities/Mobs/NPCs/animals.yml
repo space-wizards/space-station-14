@@ -830,6 +830,8 @@
     growthDelay: 30
   - type: HarvestableSolution
     solution: udder
+    emptyMessage: harvestable-solution-component-milk-empty
+    verbText: harvestable-solution-component-milk-verb
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -988,6 +990,8 @@
     growthDelay: 20
   - type: HarvestableSolution
     solution: udder
+    emptyMessage: harvestable-solution-component-milk-empty
+    verbText: harvestable-solution-component-milk-verb
   - type: Wooly
   - type: Food
     solution: wool
