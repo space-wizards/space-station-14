@@ -125,6 +125,7 @@
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+  - type: MultiHandedItem
   - type: NpcFactionMember
     factions:
       - SimpleHostile
