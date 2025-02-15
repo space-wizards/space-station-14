@@ -10,6 +10,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -44,6 +45,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -69,7 +71,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (_weldable.IsWelded(uid))
                 return;
 
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (_powerReceiverSystem.IsPowered(uid))
                 return;
 
             var nodeName = vent.PumpDirection switch
@@ -319,7 +321,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Welded, appearance);
             }
-            else if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered || !vent.Enabled)
+            else if (!_powerReceiverSystem.IsPowered(uid) || !vent.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Off, appearance);
