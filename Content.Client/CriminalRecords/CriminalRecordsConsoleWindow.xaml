@@ -58,7 +58,7 @@
                            StyleClasses="LabelBig" />
                     <BoxContainer Orientation="Horizontal"
                                   Margin="0 0 0 5">
-                        <Label Text="{Loc 'crew-monitoring-user-interface-job'}:"
+                        <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
                                FontColorOverride="DarkGray" />
                         <Label Text=":"
                                FontColorOverride="DarkGray" />
