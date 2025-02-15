@@ -11,8 +11,8 @@
   id: AnimalPoly
   name: steal-target-groups-animal-poly
   sprite:
-    sprite: Mobs/Animals/parrot.rsi
-    state: parrot
+    sprite: _NF/Mobs/NPC/Animals/parrot.rsi
+    state: sit
 
 # critical infrastructure
 

@@ -61,7 +61,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: ai
+    - state: sit
+      sprite: _NF/Mobs/NPC/Animals/parrot.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobParrotPoly
