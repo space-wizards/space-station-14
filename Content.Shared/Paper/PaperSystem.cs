@@ -116,7 +116,7 @@ public sealed class PaperSystem : EntitySystem
                 }
 
                 var ev = new PaperWriteAttemptEvent(entity.Owner);
-                RaiseLocalEvent(args.User, ev);
+                RaiseLocalEvent(args.User, ref ev);
                 if (ev.Cancelled)
                 {
                     if (ev.FailReason is not null)
@@ -173,7 +173,7 @@ public sealed class PaperSystem : EntitySystem
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
-        RaiseLocalEvent(args.Actor, ev);
+        RaiseLocalEvent(args.Actor, ref ev);
         if (ev.Cancelled)
             return;
 
