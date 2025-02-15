@@ -3431,4 +3431,12 @@ Entries:
   id: 475
   time: '2025-02-15T12:35:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/330
+- author: Sporerria
+  changes:
+  - message: Added The mining Specialist role a role dedicated to staying station
+      side and collecting matterials
+    type: Add
+  id: 476
+  time: '2025-02-15T13:24:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/326
 
