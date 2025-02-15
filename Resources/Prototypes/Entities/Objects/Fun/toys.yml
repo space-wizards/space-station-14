@@ -391,6 +391,8 @@
   name: space lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
+  - type: Item
+    heldPrefix: spacelizard
   - type: Sprite
     state: plushie_spacelizard
   - type: EmitSoundOnUse
