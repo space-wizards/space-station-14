@@ -27,13 +27,13 @@
             ]
         },
         {
-			"name": "analyzer-inhand-left",
-			"directions": 4
-		},
-		{
-			"name": "analyzer-inhand-right",
-			"directions": 4
-		},
+            "name": "analyzer-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "analyzer-inhand-right",
+            "directions": 4
+        },
         {
             "name": "icon"
         }
