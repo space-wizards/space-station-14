@@ -38,6 +38,7 @@ public sealed class HarvestableSolutionSystem : EntitySystem
                 TryStartHarvest(entity, user, used);
             },
             Text = Loc.GetString(entity.Comp.VerbText),
+            Icon = entity.Comp.VerbIcon,
             Priority = 2
         };
         args.Verbs.Add(verb);

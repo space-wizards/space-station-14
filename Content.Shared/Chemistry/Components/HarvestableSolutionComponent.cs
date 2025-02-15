@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -30,7 +31,11 @@ public sealed partial class HarvestableSolutionComponent : Component
     [DataField]
     public LocId VerbText = "harvestable-solution-component-harvest-verb";
 
-    // TODO: Verb icon
+    /// <summary>
+    /// Icon to display with the harvesting verb.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier VerbIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/spill.svg.192dpi.png"));
 
     /// <summary>
     /// LocId of popup message displayed when there is nothing to harvest.
