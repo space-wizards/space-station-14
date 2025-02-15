@@ -47,7 +47,7 @@
     - state: idroboticist
   - type: PresetIdCard
     job: Roboticist
-    
+
 - type: entity
   parent: IDCardStandard
   id: NanoTrasenRepresentativeIDCard
@@ -58,7 +58,7 @@
     - state: ert_commander
   - type: PresetIdCard
     job: NanoTrasenRepresentative
-    
+
 - type: entity
   parent: IDCardStandard
   id: IAAIDCard
@@ -71,7 +71,7 @@
     - state: idiaa
   - type: PresetIdCard
     job: IAA
-      
+
 - type: entity
   parent: IDCardStandard
   id: BlueShieldIDCard
@@ -84,3 +84,16 @@
     - state: idblueshield
   - type: PresetIdCard
     job: BlueShield
+
+- type: entity
+  parent: IDCardStandard
+  id: MiningIDCard
+  name: mining ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: default
+    - state: idstationminer
+  - type: PresetIdCard
+    job: MiningSpecialist

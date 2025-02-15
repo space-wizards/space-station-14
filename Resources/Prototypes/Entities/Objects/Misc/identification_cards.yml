@@ -739,7 +739,7 @@
   - type: IdCard
     jobTitle: job-title-cluwne
   - type: Unremoveable
-  
+
 - type: entity
   parent: IDCardStandard
   id: CluwneBeastIDCard

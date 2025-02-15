@@ -601,7 +601,7 @@
         - ReagentId: Uranium
           Quantity: 16
   - type: RadiationSource
-    intensity: 0.1
+    intensity: 0.07
     slope: 3
 
 - type: entity
@@ -641,7 +641,7 @@
         - ReagentId: Uranium
           Quantity: 2
   - type: RadiationSource
-    intensity: 0.1
+    intensity: 0.07
     slope: 3
 
 # Tastes like crust, tomato, cheese, radiation.

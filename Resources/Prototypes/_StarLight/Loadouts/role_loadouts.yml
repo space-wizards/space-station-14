@@ -9,7 +9,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobMagistrate
   groups:
@@ -17,7 +17,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
   groups:
@@ -26,7 +26,7 @@
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobIAA
   groups:
@@ -36,7 +36,7 @@
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobBlueShield
   groups:
@@ -45,3 +45,15 @@
   - Trinkets
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobMiningSpecialist
+  groups:
+  - GroupTankHarness
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistOuterClothing
+  - SalvageSpecialistShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
