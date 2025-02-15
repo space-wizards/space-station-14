@@ -3417,4 +3417,18 @@ Entries:
   id: 473
   time: '2025-02-15T12:17:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/329
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Lobster's engineering department
+    type: Tweak
+  id: 474
+  time: '2025-02-15T12:35:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/330
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Lobster's max population to 75
+    type: Tweak
+  id: 475
+  time: '2025-02-15T12:35:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/330
 
