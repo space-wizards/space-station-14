@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.EntitySystems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -15,3 +16,6 @@ public sealed partial class FireProtectionComponent : Component
     [DataField(required: true)]
     public float Reduction;
 }
+
+[ByRefEvent]
+public record struct FireProtectionExamineEvent(FormattedMessage Msg);
