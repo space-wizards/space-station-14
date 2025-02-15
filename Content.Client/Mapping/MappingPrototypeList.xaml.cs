@@ -220,10 +220,10 @@ public sealed partial class MappingPrototypeList : Control
             return;
         }
 
-        button.UnCollapse();
         if (button.Prototype?.Children == null)
             return;
 
+        button.UnCollapse();
         foreach (var child in button.Prototype.Children)
         {
             if (child.Children == null && Gallery)

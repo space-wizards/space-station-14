@@ -76,6 +76,11 @@ public sealed partial class MappingSpawnButton : Control
     public void UnCollapse()
     {
         CollapseButton.Pressed = true;
+
+        // Remove objects from the list before adding new ones to avoid duplicates
+        ChildrenPrototypes.DisposeAllChildren();
+        ChildrenPrototypesGallery.DisposeAllChildren();
+
         CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-down-solid.svg.192dpi.png";
     }
 
