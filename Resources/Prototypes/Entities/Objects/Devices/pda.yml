@@ -1307,7 +1307,7 @@
         tags:
         - Write
   - type: Unremoveable
-  
+
 - type: entity
   parent: ClownPDA
   id: CluwneBeastPDA
