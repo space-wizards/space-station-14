@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: HoS's energy shotgun is now correctly marked as grand theft contraband.
-    type: Tweak
-  id: 7455
-  time: '2024-09-29T12:22:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32521
 - author: Ilya246
   changes:
   - message: Steel cost of conveyor belt assemblies halved.
@@ -3888,3 +3881,20 @@
   id: 7954
   time: '2025-02-14T15:01:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35122
+- author: ArtisticRoomba
+  changes:
+  - message: The Solar Panels section of the Engineering Guidebook has been updated
+      to include information on upgrading solar panels, as well as how much each variant
+      produces.
+    type: Add
+  - message: The Tesla Engine section of the Engineering Guidebook has been slightly
+      reorganized to better outline the differences between Grounding Rods and Tesla
+      Coils, as well as tips on how to use them.
+    type: Tweak
+  - message: The Access Configurator section of the Engineering Guidebook has been
+      updated to reflect the recent addition of the Authentication Disruptor, as well
+      as how to fix access-broken doors and equipment the easy way.
+    type: Add
+  id: 7955
+  time: '2025-02-15T03:59:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34695
