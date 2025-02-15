@@ -828,6 +828,8 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
+  - type: HarvestableSolution
+    solution: udder
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -984,6 +986,8 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
+  - type: HarvestableSolution
+    solution: udder
   - type: Wooly
   - type: Food
     solution: wool

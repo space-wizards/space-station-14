@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -7,8 +6,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Udder;
-using Content.Shared.Verbs;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Animals;
@@ -21,8 +18,6 @@ public sealed class UdderSystem : EntitySystem
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
@@ -30,8 +25,6 @@ public sealed class UdderSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<UdderComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
-        SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -74,6 +67,8 @@ public sealed class UdderSystem : EntitySystem
             _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
         }
     }
+
+    /*
 
     private void AttemptMilk(Entity<UdderComponent?> udder, EntityUid userUid, EntityUid containerUid)
     {
@@ -140,6 +135,7 @@ public sealed class UdderSystem : EntitySystem
         };
         args.Verbs.Add(verb);
     }
+    */
 
     /// <summary>
     ///     Defines the text provided on examine.
