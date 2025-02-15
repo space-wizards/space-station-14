@@ -1,3 +1,14 @@
+# Extreme time requirement prestige cape due to how flashy it is
+# They already have a way to show off playing for 52 hours anyway
+- type: loadoutEffectGroup
+  id: DrillerCapeWorthy
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 360000 #100 hrs
+
 # Jumpsuit
 - type: loadout
   id: SalvageSpecialistJumpsuit
@@ -8,3 +19,46 @@
   id: SalvageSpecialistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSalvageSpecialist
+
+# Mantle
+
+- type: loadout
+  id: DrillerCape
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    neck: ClothingNeckCloakDriller
+
+# Eyes
+- type: loadout
+  id: GlassesGarGreen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGar
+
+- type: loadout
+  id: GlassesGarOrange
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarOrange
+
+- type: loadout
+  id: GlassesGarRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarGiga
+
+- type: loadout
+  id: GlassesGarBlack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarMecha
