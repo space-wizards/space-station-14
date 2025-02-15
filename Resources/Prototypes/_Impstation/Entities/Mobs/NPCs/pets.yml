@@ -246,12 +246,18 @@
   name: Poly
   parent: [ MobParrot ]
   id: MobParrotPoly
-  description: The Chief Engineer's most devoted snitch.
+  description: The Chief Engineer's beloved snitch.
   components:
   - type: Item
     size: Large
     shape:
     - 0,0,2,2
+  - type: Sprite # wearable on shoulder :)
+    sprite: _NF/Mobs/NPC/Animals/parrot.rsi
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
   - type: CanEscapeInventory
   - type: ActiveListener
     range: 5
