@@ -60,8 +60,6 @@
                                   Margin="0 0 0 5">
                         <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
                                FontColorOverride="DarkGray" />
-                        <Label Text=":"
-                               FontColorOverride="DarkGray" />
                         <TextureRect Name="PersonJobIcon"
                                      TextureScale="2 2"
                                      Margin="6 0"
