@@ -1924,7 +1924,7 @@
   loadouts:
   - ScarfBlack
 
-  - type: loadoutGroup
+- type: loadoutGroup
   id: PsychologistShoes
   name: loadout-group-psychologist-shoes
   loadouts:
