@@ -20,7 +20,7 @@
   - type: CoinFlippable
     currentValue: 1 # Starts on Tails
     canLandOnItsSide: true
-    UsesWeightedChances: true
+    usesWeightedChances: true
     weightedChances:
       "heads": 49.95
       "tails": 49.95
