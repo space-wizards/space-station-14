@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Slime People now take significant Caustic damage from skin contact &
-      injection with water and water vapor. Be careful!
-    type: Tweak
-  id: 631
-  time: '2024-12-03T02:05:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/876
 - author: Sha-Seng
   changes:
   - message: mimes have the basic french accent again (but stop talking!)
@@ -4186,3 +4178,10 @@
   id: 1130
   time: '2025-02-15T08:09:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1694
+- author: irismessage
+  changes:
+  - message: Our knowledge has widened.
+    type: Add
+  id: 1131
+  time: '2025-02-15T21:44:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1697
