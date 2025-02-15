@@ -38879,6 +38879,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: ClothingMaskBlushingMime
+  entities:
+  - uid: 4701
+    components:
+    - type: Transform
+      pos: -55.759308,65.51617
+      parent: 2
 - proto: ClothingMaskBreath
   entities:
   - uid: 5894
@@ -38946,13 +38953,6 @@ entities:
     components:
     - type: Transform
       pos: -55.415558,65.73492
-      parent: 2
-- proto: ClothingMaskSexyMime
-  entities:
-  - uid: 4701
-    components:
-    - type: Transform
-      pos: -55.759308,65.51617
       parent: 2
 - proto: ClothingNeckBling
   entities:
@@ -40811,7 +40811,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -234202.38
+      secondsUntilStateChange: -234288.11
       state: Opening
   - uid: 6747
     components:
@@ -40819,7 +40819,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -234203.08
+      secondsUntilStateChange: -234288.81
       state: Opening
   - uid: 6749
     components:
@@ -40827,7 +40827,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -234201.64
+      secondsUntilStateChange: -234287.38
       state: Opening
   - uid: 6750
     components:
@@ -40835,7 +40835,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -234201.02
+      secondsUntilStateChange: -234286.75
       state: Opening
 - proto: CyberPen
   entities:
@@ -84063,6 +84063,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -39.5,70.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 5712
+    components:
+    - type: Transform
+      pos: -32.5,18.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 1229
@@ -84284,11 +84291,6 @@ entities:
     components:
     - type: Transform
       pos: -17.5,5.5
-      parent: 2
-  - uid: 5712
-    components:
-    - type: Transform
-      pos: -32.5,18.5
       parent: 2
 - proto: SignMedical
   entities:
@@ -86641,6 +86643,28 @@ entities:
     components:
     - type: Transform
       pos: 0.5,17.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 15450
+    components:
+    - type: Transform
+      pos: -33.5,15.5
+      parent: 2
+  - uid: 15456
+    components:
+    - type: Transform
+      pos: -29.5,15.5
+      parent: 2
+  - uid: 15581
+    components:
+    - type: Transform
+      pos: -29.5,16.5
+      parent: 2
+  - uid: 15679
+    components:
+    - type: Transform
+      pos: -33.5,16.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -105368,16 +105392,25 @@ entities:
     - type: Transform
       pos: -60.5,32.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 7437
     components:
     - type: Transform
       pos: -58.5,32.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 7438
     components:
     - type: Transform
       pos: -61.5,30.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: WoodenBench
   entities:
   - uid: 8347

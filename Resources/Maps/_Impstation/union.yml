@@ -9663,14 +9663,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -21.5,-37.5
       parent: 2
-  - uid: 5998
-    components:
-    - type: MetaData
-      name: tech vault
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 43.5,-43.5
-      parent: 2
   - uid: 6937
     components:
     - type: Transform
@@ -10012,7 +10004,7 @@ entities:
       pos: -36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -88093.54
+      secondsUntilStateChange: -88182.92
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -10347,7 +10339,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -216430.62
+      secondsUntilStateChange: -216520.02
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11012,7 +11004,7 @@ entities:
       pos: 37.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -38766.066
+      secondsUntilStateChange: -38855.453
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11639,7 +11631,7 @@ entities:
       pos: -8.5,-0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -30889.691
+      secondsUntilStateChange: -30979.078
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -99546,6 +99538,11 @@ entities:
     - type: Transform
       pos: -8.5,15.5
       parent: 2
+  - uid: 5998
+    components:
+    - type: Transform
+      pos: 43.5,-43.5
+      parent: 2
 - proto: HighSecDoor
   entities:
   - uid: 1875
@@ -114603,6 +114600,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -22.5,10.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 6030
+    components:
+    - type: Transform
+      pos: 43.5,-41.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 10561
@@ -114760,14 +114764,6 @@ entities:
     components:
     - type: Transform
       pos: -37.5,-27.5
-      parent: 2
-- proto: SignMaterials
-  entities:
-  - uid: 6030
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 43.5,-41.5
       parent: 2
 - proto: SignMedical
   entities:
@@ -116598,6 +116594,23 @@ entities:
     components:
     - type: Transform
       pos: -31.5,-45.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 21450
+    components:
+    - type: Transform
+      pos: 45.5,-42.5
+      parent: 2
+  - uid: 21451
+    components:
+    - type: Transform
+      pos: 46.5,-43.5
+      parent: 2
+  - uid: 21452
+    components:
+    - type: Transform
+      pos: 45.5,-44.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

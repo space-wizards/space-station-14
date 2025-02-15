@@ -94907,6 +94907,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,-150.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 18998
+    components:
+    - type: Transform
+      pos: 0.5,-7.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 13478
@@ -96625,6 +96632,23 @@ entities:
     components:
     - type: Transform
       pos: -12.5,-253.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 18999
+    components:
+    - type: Transform
+      pos: -0.5,-6.5
+      parent: 2
+  - uid: 19000
+    components:
+    - type: Transform
+      pos: -1.5,-6.5
+      parent: 2
+  - uid: 19001
+    components:
+    - type: Transform
+      pos: -2.5,-6.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

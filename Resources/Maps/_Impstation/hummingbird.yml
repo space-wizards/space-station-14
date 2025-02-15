@@ -128753,6 +128753,13 @@ entities:
     - type: Transform
       pos: 39.5,55.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 19470
+    components:
+    - type: Transform
+      pos: 76.5,49.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 19421
@@ -129061,11 +129068,6 @@ entities:
     components:
     - type: Transform
       pos: 20.5,-1.5
-      parent: 2
-  - uid: 19470
-    components:
-    - type: Transform
-      pos: 76.5,49.5
       parent: 2
 - proto: SignMedical
   entities:
@@ -131342,6 +131344,23 @@ entities:
     components:
     - type: Transform
       pos: 11.5,-13.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 24461
+    components:
+    - type: Transform
+      pos: 71.5,51.5
+      parent: 2
+  - uid: 24462
+    components:
+    - type: Transform
+      pos: 72.5,51.5
+      parent: 2
+  - uid: 24463
+    components:
+    - type: Transform
+      pos: 73.5,51.5
       parent: 2
 - proto: SpawnMobFinfin
   entities:
@@ -156253,7 +156272,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -166435.5
+      secondsUntilStateChange: -166548.47
       state: Opening
     - type: Airlock
       autoClose: False
