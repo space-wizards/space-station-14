@@ -3408,4 +3408,35 @@ Entries:
   id: 472
   time: '2025-02-14T14:57:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/328
+- author: Conflee
+  changes:
+  - message: Tweaked radioactivity of plasma sheeta, uranium pizza, and uranium meteor
+      walls by reducing it to half, to prevent uranium sheet stacks from insta perma-killing
+      people as much
+    type: Tweak
+  id: 473
+  time: '2025-02-15T12:17:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/329
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Lobster's engineering department
+    type: Tweak
+  id: 474
+  time: '2025-02-15T12:35:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/330
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Lobster's max population to 75
+    type: Tweak
+  id: 475
+  time: '2025-02-15T12:35:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/330
+- author: Sporerria
+  changes:
+  - message: Added The mining Specialist role a role dedicated to staying station
+      side and collecting matterials
+    type: Add
+  id: 476
+  time: '2025-02-15T13:24:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/326
 

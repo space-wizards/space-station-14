@@ -21,7 +21,7 @@
       path: "/Audio/Items/Medical/healthscanner.ogg"
     damageContainers:
     - Silicon
-    
+
 - type: entity
   parent: BasePDA
   id: MagistratePDA
@@ -44,7 +44,7 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
-    
+
 - type: entity
   parent: BasePDA
   id: NanoTrasenRepresentativePDA
@@ -94,7 +94,7 @@
     borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
-      
+
 - type: entity
   parent: BasePDA
   id: BlueShieldPDA
@@ -112,3 +112,32 @@
   - type: Icon
     sprite: _Starlight/Objects/Devices/pda.rsi
     state: pda-blueshield
+
+- type: entity
+  parent: BasePDA
+  id: MiningPDA
+  name: mining PDA
+  description: there is dirt in every crack.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: MiningIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-mining
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#3e3ac3"
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-mining
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
