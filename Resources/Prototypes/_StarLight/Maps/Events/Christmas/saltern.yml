@@ -1,7 +1,7 @@
 - type: gameMap
   id: StarlightChristmasSaltern
   mapName: 'Saltern'
-  mapPath: /Maps/_Starlight/Stations/Saltern
+  mapPath: /Maps/_Starlight/Stations/Saltern.yml
   minPlayers: 0
   maxPlayers: 35
   fallback: true
