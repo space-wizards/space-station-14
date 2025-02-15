@@ -20,7 +20,7 @@
     - junk
     - meteorhell
   name: kessler-syndrome-title
-  showInVote: true # 🌟Starlight🌟
+  showInVote: false # 🌟Starlight🌟
   minPlayers: 10
   description: kessler-syndrome-description
   rules:
@@ -240,7 +240,7 @@
   name: zombieteors-title
   description: zombieteors-description
   minPlayers: 50 # 🌟Starlight🌟
-  showInVote: true # 🌟Starlight🌟
+  showInVote: false # 🌟Starlight🌟
   rules:
   - Zombie
   - BasicStationEventScheduler
@@ -257,7 +257,7 @@
   - vampires
   name: vampire-gamemode-title
   description: vampire-gamemode-description
-  showInVote: true # 🌟Starlight🌟
+  showInVote: false # 🌟Starlight🌟
   minPlayers: 50 # 🌟Starlight🌟
   rules:
   - Vampire
@@ -275,6 +275,7 @@
   name: changeling-gamemode-title
   description: changeling-gamemode-description
   showInVote: false
+  minPlayers: 50 # 🌟Starlight🌟
   rules:
     - Changeling
     - SubGamemodesRule
