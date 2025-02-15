@@ -91,6 +91,13 @@ public sealed class HarvestableSolutionSystem : EntitySystem
             return false;
         }
 
+        if (targetSolution.AvailableVolume <= 0)
+        {
+            // Target container is full
+            _popup.PopupClient(Loc.GetString(entity.Comp.TargetFullMessage, ("target", targetIdentity)), entity.Owner, userUid);
+            return false;
+        }
+
         if (quantity > targetSolution.AvailableVolume)
             quantity = targetSolution.AvailableVolume;
 

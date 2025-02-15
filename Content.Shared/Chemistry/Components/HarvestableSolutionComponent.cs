@@ -39,6 +39,12 @@ public sealed partial class HarvestableSolutionComponent : Component
     public LocId EmptyMessage = "harvestable-solution-component-harvest-empty";
 
     /// <summary>
+    /// LocId of popup message displayed when the harvest fails because the target container is full.
+    /// </summary>
+    [DataField]
+    public LocId TargetFullMessage = "harvestable-solution-component-harvest-target-full";
+
+    /// <summary>
     /// LocId of popup message displayed when successfully harvesting from the solution.
     /// </summary>
     [DataField]
