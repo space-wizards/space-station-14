@@ -10,6 +10,9 @@ survivor-role-greeting =
     Collect as much firepower as needed to guarantee your survival.
     Trust no one.
 
+survivor-round-end-alive-count = [color=yellow]{$aliveCount}[/color] survivors were marooned on the station.
+survivor-round-end-alive-on-centcomm-count = [color=green]{$aliveCount}[/color] survivors made it out alive.
+
 ## TODO: Wizard
 
 ## TODO: Wizard Apprentice (Coming sometime post-wizard release)
