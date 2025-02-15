@@ -498,12 +498,11 @@ public abstract class SharedMagicSystem : EntitySystem
             if (ev.MakeSurvivorAntagonist)
             {
                 // The performer shouldn't become a survivor
-                if (ent == ev.Performer || HasComp<SurvivorComponent>(ent))
+                if (ent == ev.Performer)
                     continue;
 
-                EnsureComp<SurvivorComponent>(ent);
                 var survivorEv = new AddSurvivorRoleEvent(ent);
-                RaiseLocalEvent(ent, ref survivorEv);
+                RaiseLocalEvent(ent, ref survivorEv, broadcast: true);
             }
         }
 

@@ -21,18 +21,19 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SurvivorComponent, AddSurvivorRoleEvent>(OnAddSurvivorRole);
+        SubscribeLocalEvent<AddSurvivorRoleEvent>(OnAddSurvivorRole);
     }
 
-    private void OnAddSurvivorRole(Entity<SurvivorComponent> ent, ref AddSurvivorRoleEvent args)
+    private void OnAddSurvivorRole(ref AddSurvivorRoleEvent args)
     {
-        if (!_mind.TryGetMind(args.ToBeSurvivor, out var mind, out var mindComp))
+        if (!_mind.TryGetMind(args.ToBeSurvivor, out var mind, out _) || HasComp<SurvivorComponent>(args.ToBeSurvivor))
             return;
 
+        EnsureComp<SurvivorComponent>(args.ToBeSurvivor);
         _adminLog.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(args.ToBeSurvivor)} has become a Survivor!");
-
         _role.MindAddRole(mind, "MindRoleSurvivor");
-
-        _antag.SendBriefing(args.ToBeSurvivor, Loc.GetString("survivor-role-greeting"), null, null);
+        _antag.SendBriefing(args.ToBeSurvivor, Loc.GetString("survivor-role-greeting"), Color.Olive, null);
     }
+
+    // TODO: Round End
 }
