@@ -620,16 +620,25 @@ public sealed class MappingState : GameplayStateBase
         // Double-click functionality if it's collapsible.
         if (_lastClicked is { } lastClicked &&
             lastClicked.Button == button &&
-            lastClicked.At > time - TimeSpan.FromSeconds(0.333) &&
-            string.IsNullOrEmpty(list.SearchBar.Text) &&
-            button.CollapseButton.Visible)
+            lastClicked.At > time - TimeSpan.FromSeconds(0.333))
         {
-            button.CollapseButton.Pressed = !button.CollapseButton.Pressed;
-            list.ToggleCollapse(button);
-            button.Button.Pressed = true;
-            list.Selected = button;
-            _lastClicked = null;
-            return;
+            if (button.CollapseButton.Visible && string.IsNullOrEmpty(list.SearchBar.Text))
+            {
+                button.CollapseButton.Pressed = !button.CollapseButton.Pressed;
+                list.ToggleCollapse(button);
+                button.Button.Pressed = true;
+                list.Selected = button;
+                _lastClicked = null;
+                return;
+            }
+
+            if (button.Parent == list.SearchList && button.Prototype != null)
+            {
+                list.SearchBar.SetText(string.Empty, true);
+                OnSelected(list, button.Prototype);
+                _lastClicked = null;
+                return;
+            }
         }
 
         // Toggle if it's the same button (at least if we just unclicked it).
