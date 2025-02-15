@@ -19,6 +19,16 @@
   group: market
 
 - type: cargoProduct
+  id: SecurityRiot
+  icon:
+    sprite: Clothing/OuterClothing/Armor/riot.rsi
+    state: icon
+  product: CrateSecurityRiot
+  cost: 7500
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
   id: TrackingImplant
   icon:
     sprite: Objects/Specific/Medical/implanter.rsi

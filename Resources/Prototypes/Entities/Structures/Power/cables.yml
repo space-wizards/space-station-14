@@ -99,6 +99,14 @@
       path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
+  id: CableHVUncuttable
+  parent: CableHV
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null
+
+- type: entity
   parent: CableBase
   id: CableMV
   name: MV power cable
@@ -141,6 +149,14 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: mvcable_
+
+- type: entity
+  id: CableMVUncuttable
+  parent: CableMV
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null
 
 - type: entity
   parent: CableBase
@@ -188,3 +204,11 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
+
+- type: entity
+  id: CableApcExtensionUncuttable
+  parent: CableApcExtension
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null
