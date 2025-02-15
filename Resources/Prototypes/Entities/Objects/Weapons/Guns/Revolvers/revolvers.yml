@@ -109,6 +109,14 @@
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
 - type: entity
+  parent: WeaponRevolverMateba
+  id: WeaponRevolverMatebaAP # For deathsquad
+  suffix: armor-piercing
+  components:
+  - type: RevolverAmmoProvider
+    proto: CartridgeMagnumAP
+
+- type: entity
   name: Python
   parent: [BaseWeaponRevolver, BaseSyndicateContraband]
   id: WeaponRevolverPython
