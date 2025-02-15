@@ -4262,7 +4262,7 @@ entities:
             4: 2184
           -13,4:
             3: 2184
-            6: 546
+            5: 546
           -12,5:
             0: 1
             1: 3856
@@ -4271,7 +4271,7 @@ entities:
           -11,5:
             1: 784
           -11,4:
-            5: 546
+            6: 546
           -11,6:
             0: 49152
           -11,3:
@@ -4604,9 +4604,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 0
+          - 0
           - 6666.982
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -4619,9 +4619,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
-          - 0
           - 6666.982
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -73379,6 +73379,13 @@ entities:
     - type: Transform
       pos: 56.5,-0.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 11208
+    components:
+    - type: Transform
+      pos: -12.5,18.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 11179
@@ -73558,13 +73565,6 @@ entities:
     components:
     - type: Transform
       pos: 13.5,19.5
-      parent: 2
-- proto: SignMaterials
-  entities:
-  - uid: 11208
-    components:
-    - type: Transform
-      pos: -12.5,18.5
       parent: 2
 - proto: SignMedical
   entities:
@@ -74739,6 +74739,23 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-9.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 14224
+    components:
+    - type: Transform
+      pos: -11.5,16.5
+      parent: 2
+  - uid: 14225
+    components:
+    - type: Transform
+      pos: -12.5,16.5
+      parent: 2
+  - uid: 14226
+    components:
+    - type: Transform
+      pos: -13.5,16.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

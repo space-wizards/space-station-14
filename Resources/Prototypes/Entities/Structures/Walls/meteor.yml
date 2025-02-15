@@ -196,7 +196,7 @@
           state: rock_asteroid_west
         - state: rock_uranium
     - type: RadiationSource
-      intensity: 2.3
+      intensity: 0.3
       slope: 0.1
 
 - type: entity
