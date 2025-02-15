@@ -771,3 +771,4 @@ login-tips-dataset-586 =
     If you waste time, something really bad
     Might turn up.
 login-tips-dataset-587 = if you follow the arrows you won't ever get lost.
+login-tips-dataset-588 = ◆ has been copied. Please paste anywhere!
