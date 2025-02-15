@@ -3,5 +3,5 @@
 /// <summary>
 /// Component for the SurvivorRuleSystem
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SurvivorRuleSystem))]
 public sealed partial class SurvivorRuleComponent : Component;
