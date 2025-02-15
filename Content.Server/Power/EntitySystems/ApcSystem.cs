@@ -102,9 +102,6 @@ public sealed class ApcSystem : EntitySystem
         if (!Resolve(uid, ref apc, ref battery))
             return;
 
-        if (apc.PowerDisabled)
-            return;
-
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 
@@ -124,12 +121,6 @@ public sealed class ApcSystem : EntitySystem
     {
         if (!Resolve(uid, ref apc, ref battery, false))
             return;
-
-        if (apc.PowerDisabled)
-        {
-            apc.MainBreakerEnabled = false;
-            battery.CanDischarge = false;
-        }
 
         if (apc.LastChargeStateTime == null || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {
