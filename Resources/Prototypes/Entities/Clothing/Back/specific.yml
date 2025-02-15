@@ -18,6 +18,9 @@
           type: StorageBoundUserInterface
         enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-chameleon
+      microFiberColor: micro-fibers-grey
 
 - type: entity
   parent: [Clothing, ClothingSlotBase]
