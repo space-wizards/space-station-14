@@ -71,7 +71,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (_weldable.IsWelded(uid))
                 return;
 
-            if (_powerReceiverSystem.IsPowered(uid))
+            if (!_powerReceiverSystem.IsPowered(uid))
                 return;
 
             var nodeName = vent.PumpDirection switch
