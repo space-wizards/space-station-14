@@ -4,6 +4,7 @@
   name: coin
   description: An old, metal, worthless Nanotransen spendie. Flipping heads after finding one is good luck.
   components:
+  - type: UseDelay
   - type: Sprite
     sprite: Objects/Fun/coins.rsi
     state: coin_nanotransen_tails
@@ -17,9 +18,13 @@
   - type: StaticPrice
     price: 75
   - type: CoinFlippable
+    currentValue: 1 # Starts on Tails
     canLandOnItsSide: true
-    percentageSideLand: 0.1 # 0.1% or 1 in 1000
-    currentValue: 1
+    UsesWeightedChances: true
+    weightedChances:
+      "heads": 49.95
+      "tails": 49.95
+      "side": 0.1 # 1 in 1000 probability
 
 - type: entity
   parent: CoinNanotransen

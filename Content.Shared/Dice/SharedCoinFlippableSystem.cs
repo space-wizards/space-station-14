@@ -63,6 +63,7 @@ public abstract class SharedCoinFlippableSystem : EntitySystem
 
     private void SetCurrentSide(Entity<CoinFlippableComponent> entity, int side)
     {
+        // Error Handling
         if (entity.Comp.CanLandOnItsSide)
         {
             if (side < 0 || side > 2)
@@ -84,50 +85,102 @@ public abstract class SharedCoinFlippableSystem : EntitySystem
         Dirty(entity);
     }
 
-    public void SetCurrentValue(Entity<CoinFlippableComponent> entity, int value)
-    {
-        if (entity.Comp.CanLandOnItsSide)
-        {
-            if (value < 0 || value > 2)
-            {
-                Log.Error($"Attempted to set coin {ToPrettyString(entity)} to an invalid value ({value}).");
-                return;
-            }
-        }
-        else
-        {
-            if (value < 0 || value > 1)
-            {
-                Log.Error($"Attempted to set coin {ToPrettyString(entity)} to an invalid value ({value}).");
-                return;
-            }
-        }
-
-        SetCurrentSide(entity, value);
-    }
-
     private void Roll(Entity<CoinFlippableComponent> entity, EntityUid? user = null)
     {
+        // Error Handling (Done before the roll just in case settings change)
+        if (entity.Comp.UsesWeightedChances)
+        {
+            // Ensure Proper Dictionary Values Exist
+            if (entity.Comp.CanLandOnItsSide)
+            {
+                if (!entity.Comp.WeightedChances.ContainsKey("heads") ||
+                    !entity.Comp.WeightedChances.ContainsKey("tails") ||
+                    !entity.Comp.WeightedChances.ContainsKey("side"))
+                {
+                    Log.Error($"The proper keys of WeightedChances on {ToPrettyString(entity)} do not exist.");
+                    return;
+                }
+            }
+            else
+            {
+                if (!entity.Comp.WeightedChances.ContainsKey("heads") ||
+                    !entity.Comp.WeightedChances.ContainsKey("tails"))
+                {
+                    Log.Error($"The proper keys of WeightedChances on {ToPrettyString(entity)} do not exist.");
+                    return;
+                }
+            }
+            // Ensure Dictionary Values Sum to 100% (if using)
+            if (entity.Comp.UsesWeightedChances)
+            {
+                if (entity.Comp.CanLandOnItsSide)
+                {
+                    if (entity.Comp.WeightedChances["heads"] +
+                        entity.Comp.WeightedChances["tails"] +
+                        entity.Comp.WeightedChances["side"] != 100.0)
+                    {
+                        Log.Error($"WeightedChances on {ToPrettyString(entity)} do not sum to 100%. " +
+                                  $"Proof: {entity.Comp.WeightedChances["heads"]} + " +
+                                  $"{entity.Comp.WeightedChances["tails"]} + " +
+                                  $"{entity.Comp.WeightedChances["side"]} = " +
+                                  $"{entity.Comp.WeightedChances["heads"] + entity.Comp.WeightedChances["tails"] + entity.Comp.WeightedChances["side"]}%");
+                        return;
+                    }
+                }
+                else
+                {
+                    if (entity.Comp.WeightedChances["heads"] +
+                        entity.Comp.WeightedChances["tails"] != 100.0)
+                    {
+                        Log.Error($"WeightedChances on {ToPrettyString(entity)} do not sum to 100%. " +
+                                  $"Proof: {entity.Comp.WeightedChances["heads"]} + " +
+                                  $"{entity.Comp.WeightedChances["tails"]} = " +
+                                  $"{entity.Comp.WeightedChances["heads"] + entity.Comp.WeightedChances["tails"]}%");
+                        return;
+                    }
+                }
+            }
+        }
+
         // Generate Random Outcome
         System.Random rand = new System.Random((int)_timing.CurTick.Value);
         float roll = rand.NextSingle()*100.0F; // Random float between 0.0f and
 
         int rollResult = -1;
-        if (entity.Comp.CanLandOnItsSide)
+        Dictionary<string, float> chances;
+        if (entity.Comp.CanLandOnItsSide) // If it can land on its side...
         {
-            if (roll < entity.Comp.PercentageSideLand)
+            if (entity.Comp.UsesWeightedChances)
+            {
+                chances = entity.Comp.WeightedChances;
+            }
+            else // Defaults to Hardcoded values if customs not desired
+            {
+                chances = entity.Comp.DefaultChancesWithoutSide;
+            }
+            // Actual Roll
+            if (roll < chances["heads"])
+                rollResult = 0;
+            else if (roll < chances["heads"]+chances["tails"])
+                rollResult = 1;
+            else
                 rollResult = 2;
-            else if (roll < (entity.Comp.PercentageSideLand + (100 - entity.Comp.PercentageSideLand) / 2))
-                rollResult = 0; // 50% of remaining probability
-            else
-                rollResult = 1; // 50% of remaining probability
         }
-        else
+        else // If it cant land on its side...
         {
-            if (roll < 50.0F)
-                rollResult = 0; // 50% of remaining probability
+            if (entity.Comp.UsesWeightedChances)
+            {
+                chances = entity.Comp.WeightedChances;
+            }
+            else // Defaults to Hardcoded values if customs not desired
+            {
+                chances = entity.Comp.DefaultChancesWithoutSide;
+            }
+            // Actual Roll
+            if (roll < chances["heads"])
+                rollResult = 0;
             else
-                rollResult = 1; // 50% of remaining probability
+                rollResult = 1;
         }
         SetCurrentSide(entity, rollResult);
 

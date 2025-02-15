@@ -14,20 +14,43 @@ public sealed partial class CoinFlippableComponent : Component
     ///     Is there an associated side sprite for it to, rarely, land on? Assume no unless otherwise set.
     /// </summary>
     [DataField]
-    public bool CanLandOnItsSide { get; private set; } = false;
+    public bool CanLandOnItsSide { get; private set; } = true;
 
     /// <summary>
-    ///     Is there an associated side sprite for it to, rarely, land on? Assume no unless otherwise set.
+    ///     Are the chances default or custom?
+    ///     Default is either:
+    ///         A) 50%, 50%
+    ///         B) 49.5%, 49.5%, 0.1%
+    ///     Depending on if CanLandOnItsSide is set or not
     /// </summary>
     [DataField]
-    public bool IsWeighted { get; private set; } = false;
+    public bool UsesWeightedChances { get; private set; } = true;
 
     /// <summary>
-    ///     Percentage that it can land on its side (Only if CanLandOnItsSide is true) expressed as a float.
-    ///     0.1% by default (1 in 1000 odds). It should be a rare event after all.
+    ///     The chance of landing on each side, expressed as a dictionary of floats.
+    ///     Should add up to 100%. Will log an error otherwise.
+    ///     Takes CanLandOnItsSide into consideration, ignoring the value of "side" if neccesary.
+    ///
+    ///     Must define in .yml:
+    ///     "heads": xx.xx
+    ///     "tails": xx.xx
+    ///     "side": xx.xx
     /// </summary>
     [DataField]
-    public float PercentageSideLand { get; private set; } = 0.1F;
+    public Dictionary<string, float> WeightedChances { get; private set; } = new Dictionary<string, float>{};
+
+    public Dictionary<string, float> DefaultChancesWithoutSide = new Dictionary<string, float>
+    {
+        { "heads", 50.0F },
+        { "tails", 50.0F }
+    };
+
+    public Dictionary<string, float> DefaultChancesWithSide = new Dictionary<string, float>
+    {
+        { "heads", 49.95F },
+        { "tails", 49.95F },
+        { "side", 0.1F } // 1 in 1000 probability
+    };
 
     /// <summary>
     ///     The currently displayed value.
