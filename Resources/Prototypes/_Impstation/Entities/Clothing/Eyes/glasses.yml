@@ -17,3 +17,102 @@
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowJobIcons
+
+- type: entity
+  parent: [ ClothingEyesBase, BaseLensSlot ]
+  id: ClothingEyesGlassesColorfulBase
+  name: colorful glasses
+  abstract: true
+  description: Colorful glasses for your face.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/pink.rsi
+    - type: Clothing
+      sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/pink.rsi
+      slots:
+      - HEAD
+      - EYES
+    - type: Tag
+      tags:
+      - WhitelistChameleon
+      - DroneUsable
+
+- type: entity
+  parent: ClothingEyesGlassesColorfulBase
+  id: ClothingEyesGlassesColorfulPink
+  name: colorful pink glasses
+  description: You look lovely!
+
+- type: entity
+  parent: ClothingEyesGlassesColorfulBase
+  id: ClothingEyesGlassesColorfulRed
+  name: colorful red glasses
+  description: They're no rose tinted glasses.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/red.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/red.rsi
+
+- type: entity
+  parent: ClothingEyesGlassesColorfulBase
+  id: ClothingEyesGlassesColorfulBlue
+  name: colorful blue glasses
+  description: No need to feel blue.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/blue.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/blue.rsi
+
+- type: entity
+  parent: ClothingEyesGlassesColorfulBase
+  id: ClothingEyesGlassesColorfulGreen
+  name: colorful green glasses
+  description: Green with envy.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/green.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/green.rsi
+
+- type: entity
+  parent: ClothingEyesGlassesColorfulBase
+  id: ClothingEyesGlassesColorfulPurple
+  name: colorful purple glasses
+  description: Scientifically accurate!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/purple.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/purple.rsi
+
+- type: entity
+  parent: ClothingEyesGlassesColorfulBase
+  id: ClothingEyesGlassesColorfulYellow
+  name: colorful yellow glasses
+  description: Now that's cash money!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/yellow.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/yellow.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesGarMecha
+  name: mecha gar glasses
+  description: Believe in me! Believe in the me who believes in you!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    state: icon-mecha
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    equippedPrefix: mecha
+  - type: Item
+    heldPrefix: mecha
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10

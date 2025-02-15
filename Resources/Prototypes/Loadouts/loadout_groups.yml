@@ -78,6 +78,14 @@
   loadouts:
   - Glasses
   - GlassesCheapSunglasses
+  # imp edit start - its in the middle for alphabetizing reasons sorry
+  - GlassesColorfulPink
+  - GlassesColorfulRed
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPurple
+  - GlassesColorfulYellow
+  # imp edit end
   - GlassesJamjar
   - GlassesJensen
 
@@ -955,7 +963,7 @@
   minLimit: 0
   loadouts:
   - MinerCloak
-  - DrillerCape
+  - DrillerCape # imp
   - SaMantle
   - ScarfBrown
 
@@ -974,12 +982,20 @@
   loadouts:
   - Glasses
   - GlassesCheapSunglasses
-  - GlassesJamjar
-  - GlassesJensen
+  # imp edit start - in the middle for alphabetizing purposes
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPink
+  - GlassesColorfulPurple
+  - GlassesColorfulRed
+  - GlassesColorfulYellow
+  - GlassesGarBlack
   - GlassesGarGreen
   - GlassesGarOrange
   - GlassesGarRed
-  - GlassesGarBlack
+  # imp edit end
+  - GlassesJamjar
+  - GlassesJensen
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing
