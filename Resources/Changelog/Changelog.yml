@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: CuteMoonGod
-  changes:
-  - message: Fixed execution system showing character name instead of their identity
-    type: Fix
-  id: 7457
-  time: '2024-09-29T22:36:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32536
 - author: drakewill-CRL
   changes:
   - message: Fix error in gas exchange processing order.
@@ -3898,3 +3891,11 @@
   id: 7956
   time: '2025-02-15T04:29:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35164
+- author: VerinSenpai
+  changes:
+  - message: Air alarm devices now return to their previous settings after a power
+      cycle.
+    type: Fix
+  id: 7957
+  time: '2025-02-15T06:07:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34887
