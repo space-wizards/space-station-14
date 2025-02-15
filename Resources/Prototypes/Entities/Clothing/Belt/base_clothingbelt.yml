@@ -17,6 +17,9 @@
       Cloth: 50
   - type: StaticPrice
     price: 20
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-leather
+    microFiberColor: micro-fibers-brown
 
 - type: entity
   abstract: true

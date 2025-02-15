@@ -45,7 +45,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
             SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
-            SubscribeLocalEvent<FiberComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+            SubscribeLocalEvent<MicroFiberComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         }
 
         private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
@@ -217,7 +217,7 @@ namespace Content.Server.Forensics
                 return false;
             }
 
-            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
+            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count + forensicsComp.MicroFibers.Count;
             var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
 
             if (hasRemovableDNA || totalPrintsAndFibers > 0)
@@ -255,6 +255,7 @@ namespace Content.Server.Forensics
                 return;
 
             targetComp.Fibers = new();
+            targetComp.MicroFibers = new();
             targetComp.Fingerprints = new();
 
             if (targetComp.CanDnaBeCleaned)
@@ -313,12 +314,12 @@ namespace Content.Server.Forensics
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
 
-        private void OnEntInserted(Entity<FiberComponent> ent, ref EntInsertedIntoContainerMessage args)
+        private void OnEntInserted(Entity<MicroFiberComponent> ent, ref EntInsertedIntoContainerMessage args)
         {
             if (!TryComp<ForensicsComponent>(args.Entity, out var targetComp))
                 return;
 
-            targetComp.Fibers.Add(string.IsNullOrEmpty(ent.Comp.FiberColor) ? Loc.GetString("forensic-fibers", ("material", ent.Comp.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", ent.Comp.FiberColor), ("material", ent.Comp.FiberMaterial)));
+            targetComp.MicroFibers.Add(string.IsNullOrEmpty(ent.Comp.MicroFiberColor) ? Loc.GetString("forensic-fibers", ("material", ent.Comp.MicroFiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", ent.Comp.MicroFiberColor), ("material", ent.Comp.MicroFiberMaterial)));
         }
 
         #region Public API
