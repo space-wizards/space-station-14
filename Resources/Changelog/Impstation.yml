@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Rounds below 20 players now have their own gamemodes with a reduced threat
-      level.
-    type: Add
-  - message: Listening Post can now spawn during Spy vs Spy rounds.
-    type: Fix
-  id: 627
-  time: '2024-12-02T23:53:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/872
-- author: Darkmajia
-  changes:
   - message: Salvage corpses spawn heavily rotted, and extremely bloated.
     type: Tweak
   - message: Changelings are incapable of absorbing corpses once they reach the "extremely
@@ -4192,3 +4182,10 @@
   id: 1126
   time: '2025-02-14T08:12:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1618
+- author: FlippenPage
+  changes:
+  - message: made heretic transmutation runes less visible
+    type: Tweak
+  id: 1127
+  time: '2025-02-15T00:37:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1687
