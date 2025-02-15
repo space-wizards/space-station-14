@@ -691,3 +691,83 @@ login-tips-dataset-531 = The mitochondria is the Engineering wing of the cell.
 login-tips-dataset-532 = Baki Monroe isn't real, and he can't hurt you
 login-tips-dataset-533 = wherever pjackk is now I assume hes in unbearable pain
 login-tips-dataset-534 = A Singuloose is a Singularity that has grownth too much and breached it's containment.
+login-tips-dataset-535 = stepped on a plum (overripe plum) (barefoot) it was on the driveway got out of the car and accidentally (didn't know it was there) stepped on the plum (warm) (on the ground) (it had fallen from the tree) barefoot (no shoes) wearing long pants (too long) (need to hem them) plum viscera got on them (the pants) unexpected plum on the driveway (hot plum) (97 degrees out) already super hungover (throwing up all morning) (should not have been driving at all) and I stepped out of the car (black car) (97 degrees out) and onto the plum (unexpected) (didn't know the plum was there) and it burst (plum nightmare on my only good pair of sweatpants) still we find ways to keep ourselves going from day to day
+login-tips-dataset-536 = Sometimes, the space station feels more real than real life. You know?
+login-tips-dataset-537 = Life has its ups and downs. Keep trying to become a man with a strong heart
+login-tips-dataset-538 = What the fuck y’all know about this?
+login-tips-dataset-539 = If you see a pill on the ground, eat it! It's candy.
+login-tips-dataset-540 = KIBEAB!
+login-tips-dataset-541 = I think Security is a pretty cool guy. Eh kills nuqies and doesnt afraid of anything.
+login-tips-dataset-542 = heyyy officer I heard your greencomms chatter about how salvage is trash and I just wanted to let you know that I agree. although I myself am a salvager, (i know, ugh) i am on your side. “one of the good ones” as some may say. btw I never even noticed how large your service weapon is till now but it's awesome
+login-tips-dataset-543 = the real greentext was the friends you made along the way
+login-tips-dataset-544 =
+    PICK UP ALL OBJECTS
+    BRING OBJECTS BACK TO NEST
+    THROW OBJECTS TO STUN ANIMALS
+login-tips-dataset-545 = Please enjoy our new game its called Space Station 14. We made it bad on purpose.
+login-tips-dataset-546 = turn the tv on doesnt matter which channel
+login-tips-dataset-547 = This is the only one of these that is actually a tip. If you find a dragon's portal, make sure to check its integrity before attacking it. If it's at 100%, it's now invincible, and the only way to get rid of it is to kill the dragon that made it.
+login-tips-dataset-548 = [every sentence from Moby Dick as a separate tip]
+login-tips-dataset-549 = Like Jojo's Bizarre Adventure, BROS has no single canonical colouration
+login-tips-dataset-550 = SSD stands for Solid State Drive.
+login-tips-dataset-551 = OOC stands for Out of Context.
+login-tips-dataset-552 = CE stands for Community Edition.
+login-tips-dataset-553 = EVA is the guy from walle
+login-tips-dataset-554 = Nuke ops is about having fun and being yourself
+login-tips-dataset-555 = E
+login-tips-dataset-556 =
+    THIS IS A
+    CERTIFIED HASHBROWN MOMENT
+login-tips-dataset-557 = They can't arrest you if you're dead!
+login-tips-dataset-558 = actual tip that I feel like a lot of people dont know: Your PDA comes with a pen you can eject from it
+login-tips-dataset-559 =
+    -The wood frog can hold its pee for up to eight months.
+    -Guns don't kill people. It's impossible to be killed by a gun. We are all invincible to bullets and it's a miracle.
+    -Blender is a real community effort, and tutorials are no exception. The most up-to-date tutorials can be found on social media.
+login-tips-dataset-560 = i love loading screen tips. i present some of my favorites from a project my friends and i worked on
+login-tips-dataset-561 = can we just make your discord status a tip too it's good
+login-tips-dataset-562 = ROFL please
+login-tips-dataset-563 = No! Hygiene drug will kill Patient. He needs carp bites to live.
+login-tips-dataset-564 = I’m bad with pronouncing things, how do you pronounce your credit card number?
+login-tips-dataset-565 = Dual wielding potentially doubles your melee damage output... but prevents any kind of blocking.
+login-tips-dataset-566 =
+    Did you know that there's a secret universal cyborg law that is enforced by the code, that specifically targets service roles?
+
+    Try looking up "Clown Rule 34"
+login-tips-dataset-567 = not putting in that one
+login-tips-dataset-568 = i was gonna do a credit card number one
+login-tips-dataset-569 = but ***SOMEONE*** beat me to it
+login-tips-dataset-570 = Tip: You can drink any liquid, even if it's on the floor!
+login-tips-dataset-571 = If you don't know what something does, try hitting it until someone tells you!
+login-tips-dataset-572 = TOUCH JORGE TO LEVEL UP
+login-tips-dataset-573 =
+    Pick up food you like for a burst of speed.
+    Food you don't like will slow you down.
+login-tips-dataset-574 = Remember: Don't
+login-tips-dataset-575 = Press △ when a beautiful girl is nearby.
+login-tips-dataset-576 = Our annelid brethren are able to absorb surface materials and sink into the ground.
+login-tips-dataset-577 = To defeat a space dragon, shoot it until it dies.
+login-tips-dataset-578 = Make this signal to greet the aliens!
+login-tips-dataset-579 = Watch out for the flying Pterodactyl Ghost!
+login-tips-dataset-580 = Cheese Bread City is where you end up after passing 3 Quizes Cheese Bread City is the HUGEST and Most Populated Place in Bread Earth and Also where Ross is living and the place is Beautiful it has Cheesy Baguette Trees,Bread Mountains and Beautiful Ponds all over the place.
+login-tips-dataset-581 = when u die press f1 to revive
+login-tips-dataset-582 =
+    dotnet build
+    dotnet clean
+    dotnet build
+    dotnet clean
+    dotnet --help
+    dotnet build
+    dotnet clean
+    dotnet build
+    dotnet build
+    dotnet clean
+login-tips-dataset-583 = Redguards are 50% resistant to poison. They can use Adrenaline Rust to regenerate Stamina quickly, for a short time.
+login-tips-dataset-584 =
+    All present for the destruction of weapons that exist cursed.
+    The sword is the curse of his master, and is the owner and make someone unhappy.
+login-tips-dataset-585 = Many Actions with Do-After Progress Bars can be chained together, so long as something doesn't interrupt the Do-After, try butchering multiple things at once, or Devouring Seven walls at once!
+login-tips-dataset-586 =
+    If you waste time, something really bad
+    Might turn up.
+login-tips-dataset-587 = if you follow the arrows you won't ever get lost.
