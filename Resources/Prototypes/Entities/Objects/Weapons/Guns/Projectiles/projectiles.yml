@@ -65,6 +65,7 @@
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: TimedDespawn
     lifetime: 10
+  - type: Engraveable # imp
 
 - type: entity
   id: BaseBulletTrigger # Trigger-on-collide bullets
@@ -878,7 +879,7 @@
   components:
     - type: EmbeddableProjectile
       deleteOnRemove: true
-      sound: 
+      sound:
         path: /Audio/_Impstation/Effects/grapple_impact.ogg
     - type: Clickable
     - type: InteractionOutline
