@@ -251,8 +251,20 @@ public sealed class PaperSystem : EntitySystem
 [ByRefEvent]
 public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 
-public class PaperWriteAttemptEvent(EntityUid paper): CancellableEntityEventArgs
+/// <summary>
+/// Cancellable event for attempting to write on a piece of paper.
+/// </summary>
+/// <param name="paper"></param>
+[ByRefEvent]
+public struct PaperWriteAttemptEvent(EntityUid paper)
 {
     public EntityUid Paper = paper;
     public string? FailReason = null;
+    private bool _cancelled = false;
+    public bool Cancelled => _cancelled;
+
+    public void Cancel()
+    {
+        _cancelled = true;
+    }
 }
