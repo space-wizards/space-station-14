@@ -48,6 +48,7 @@ public sealed class MappingState : GameplayStateBase
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resources = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ILocalizationManager _localization = default!;
 
     private EntityMenuUIController _entityMenuController = default!;
 
@@ -356,7 +357,11 @@ public sealed class MappingState : GameplayStateBase
             else
             {
                 var entity = prototype as EntityPrototype;
-                var name = entity?.Name ?? prototype.ID;
+                var tile = prototype as ContentTileDefinition;
+                var name = entity?.Name ?? tile?.Name ?? prototype.ID;
+
+                if (tile != null && _localization.TryGetString(tile.Name, out var locName))
+                    name = locName;
 
                 if (!string.IsNullOrWhiteSpace(entity?.EditorSuffix))
                     name = $"{name} [{entity.EditorSuffix}]";
