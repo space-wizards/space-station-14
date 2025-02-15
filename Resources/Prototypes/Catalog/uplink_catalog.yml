@@ -1948,15 +1948,32 @@
   productEntity: HolyHandGrenade
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 14
+    Telecrystal: 10
   cost:
-    Telecrystal: 20
+    Telecrystal: 15
   categories:
   - UplinkJob
   conditions:
   - !type:BuyerJobCondition
     whitelist:
     - Chaplain
+
+  - type: listing
+    id: uplinkHyperEutacticBlade
+    name: uplink-hypereutanic-blade-name
+    description: uplink-hypereutanic-blade-desc
+    productEntity: HyperEutacticBlade
+    discountCategory: rareDiscounts
+    discountDownTo:
+      Telecrystal: 16
+    cost:
+      Telecrystal: 20
+    categories:
+    - UplinkJob
+    conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+      - Chaplain
 
 - type: listing
   id: uplinkRevolverCapGunFake
