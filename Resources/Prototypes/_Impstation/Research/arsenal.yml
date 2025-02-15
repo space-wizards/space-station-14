@@ -19,7 +19,7 @@
   id: EnhancedSecurityDevices
   name: research-technology-enhanced-security-devices
   icon:
-    sprite: _Impstation/Objects/Tools/pribar.rsi
+    sprite: _Impstation/Objects/Tools/pribarplus.rsi
     state: icon
   discipline: Arsenal
   tier: 2
