@@ -3,8 +3,10 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -53,6 +55,8 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
+        [Dependency] private readonly StaminaSystem _stamina = default!;
+        [Dependency] private readonly SharedBuckleSystem _buckle = default!;
 
         public override void Initialize()
         {
@@ -691,6 +695,14 @@ namespace Content.Shared.Cuffs
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             _container.Remove(cuffsToRemove, cuffable.Container);
+
+            // Uncuffs while buckled put you at the edge of stamcrit
+            if (_buckle.IsBuckled(target))
+            {
+                _stamina.TakeStaminaDamage(target, 99);
+                // TODO add a popup here when there is support for non-overlapping popups
+                //_popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-buckled-stamina"), target, user, PopupType.MediumCaution);
+            }
 
             if (_net.IsServer)
             {
