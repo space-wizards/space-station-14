@@ -32,10 +32,6 @@ public sealed class FireProtectionSystem : EntitySystem
             return;
 
         var examineMarkup = GetFireProtectionExamine(component.Reduction);
-
-        var ev = new FireProtectionExamineEvent(examineMarkup);
-        RaiseLocalEvent(uid, ref ev);
-
         _examine.AddDetailedExamineVerb(args, component, examineMarkup,
             Loc.GetString("fire-protection-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
             Loc.GetString("fire-protection-examinable-verb-message"));
