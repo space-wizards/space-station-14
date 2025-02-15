@@ -204,7 +204,7 @@
   components:
   - type: MindRole
     antagPrototype: Survivor
-    roleType: SoloAntagonist
+    roleType: SurvivorAntagonist
   - type: SurvivorRole
 
 # Thief
