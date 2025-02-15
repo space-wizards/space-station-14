@@ -852,11 +852,6 @@ entities:
             904: 20,-12
             919: -2,27
         - node:
-            color: '#EFB34196'
-            id: BrickTileSteelCornerSe
-          decals:
-            9882: 37,-7
-        - node:
             color: '#334E6DC8'
             id: BrickTileSteelCornerSw
           decals:
@@ -927,7 +922,6 @@ entities:
             id: BrickTileSteelCornerSw
           decals:
             9863: 26,-15
-            9881: 35,-7
         - node:
             color: '#A4610696'
             id: BrickTileSteelEndE
@@ -1581,7 +1575,6 @@ entities:
             4094: 29,-2
             9862: 27,-15
             9865: 28,-15
-            9883: 36,-7
         - node:
             color: '#334E6DC8'
             id: BrickTileSteelLineW
@@ -2618,6 +2611,13 @@ entities:
             6439: 0,-25
             8732: 17,36
         - node:
+            color: '#FFFFFFFF'
+            id: Delivery
+          decals:
+            11857: 35,-7
+            11858: 36,-7
+            11859: 37,-7
+        - node:
             color: '#D4D4D496'
             id: DeliveryGreyscale
           decals:
@@ -3393,7 +3393,6 @@ entities:
             9891: 27,-15
             9892: 26,-12
             9893: 28,-11
-            9903: 37,-7
             9904: 35,-4
             9911: 32,-4
             9930: 24,-10
@@ -4371,7 +4370,6 @@ entities:
             9897: 28,-12
             9898: 26,-14
             9907: 37,-6
-            9908: 35,-7
             9909: 32,-5
             9910: 33,-2
             9937: 31,-21
@@ -5497,7 +5495,6 @@ entities:
             9894: 28,-14
             9895: 26,-11
             9905: 37,-5
-            9906: 36,-7
             9912: 32,-2
             9913: 39,-38
             9936: 35,-19
@@ -12679,13 +12676,6 @@ entities:
       parent: 2
 - proto: AirlockEngineeringGlassLocked
   entities:
-  - uid: 362
-    components:
-    - type: MetaData
-      name: glass airlock (Storage Closet)
-    - type: Transform
-      pos: 34.5,-5.5
-      parent: 2
   - uid: 1358
     components:
     - type: MetaData
@@ -13974,7 +13964,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -284100.44
+      secondsUntilStateChange: -284323.6
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -39155,11 +39145,6 @@ entities:
       parent: 2
 - proto: CableMVStack10
   entities:
-  - uid: 8503
-    components:
-    - type: Transform
-      pos: 31.633419,-21.30586
-      parent: 2
   - uid: 8504
     components:
     - type: Transform
@@ -55279,11 +55264,6 @@ entities:
       parent: 2
 - proto: GasAnalyzer
   entities:
-  - uid: 9013
-    components:
-    - type: Transform
-      pos: 31.659569,-21.632576
-      parent: 2
   - uid: 9434
     components:
     - type: Transform
@@ -78035,6 +78015,11 @@ entities:
       parent: 2
 - proto: HighSecCommandLocked
   entities:
+  - uid: 362
+    components:
+    - type: Transform
+      pos: 34.5,-5.5
+      parent: 2
   - uid: 537
     components:
     - type: MetaData
@@ -80260,11 +80245,6 @@ entities:
     components:
     - type: Transform
       pos: -10.5,31.5
-      parent: 2
-  - uid: 15307
-    components:
-    - type: Transform
-      pos: 31.5,-20.5
       parent: 2
 - proto: LootSpawnerScienceMinor
   entities:
@@ -87897,6 +87877,11 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+  - uid: 8503
+    components:
+    - type: Transform
+      pos: 37.521935,-4.3060074
+      parent: 2
 - proto: SheetPlastic
   entities:
   - uid: 6572
@@ -87964,11 +87949,6 @@ entities:
       parent: 2
 - proto: SheetSteel10
   entities:
-  - uid: 6087
-    components:
-    - type: Transform
-      pos: 37.594734,-4.4439025
-      parent: 2
   - uid: 7812
     components:
     - type: Transform
@@ -89513,6 +89493,13 @@ entities:
     - type: Transform
       pos: 46.5,11.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 8069
+    components:
+    - type: Transform
+      pos: 34.5,-6.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 1354
@@ -89769,13 +89756,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,30.5
-      parent: 2
-- proto: SignMaterials
-  entities:
-  - uid: 12670
-    components:
-    - type: Transform
-      pos: 34.5,-6.5
       parent: 2
 - proto: SignMedical
   entities:
@@ -91079,6 +91059,23 @@ entities:
     - type: Transform
       pos: 31.5,-30.5
       parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 9013
+    components:
+    - type: Transform
+      pos: 35.5,-6.5
+      parent: 2
+  - uid: 12670
+    components:
+    - type: Transform
+      pos: 36.5,-6.5
+      parent: 2
+  - uid: 15307
+    components:
+    - type: Transform
+      pos: 37.5,-6.5
+      parent: 2
 - proto: SpawnMobFoxRenault
   entities:
   - uid: 4527
@@ -91576,10 +91573,10 @@ entities:
     - type: Transform
       pos: 35.5,-21.5
       parent: 2
-  - uid: 2301
+  - uid: 8068
     components:
     - type: Transform
-      pos: 36.5,-4.5
+      pos: 27.5,-13.5
       parent: 2
   - uid: 9118
     components:
@@ -92429,20 +92426,20 @@ entities:
       parent: 2
 - proto: SuitStorageEngi
   entities:
+  - uid: 2301
+    components:
+    - type: Transform
+      pos: 31.5,-21.5
+      parent: 2
+  - uid: 6087
+    components:
+    - type: Transform
+      pos: 31.5,-23.5
+      parent: 2
   - uid: 8055
     components:
     - type: Transform
-      pos: 37.5,-6.5
-      parent: 2
-  - uid: 8068
-    components:
-    - type: Transform
-      pos: 36.5,-6.5
-      parent: 2
-  - uid: 8069
-    components:
-    - type: Transform
-      pos: 35.5,-6.5
+      pos: 31.5,-22.5
       parent: 2
 - proto: SuitStorageEVA
   entities:
