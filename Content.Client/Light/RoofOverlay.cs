@@ -19,7 +19,7 @@ public sealed class RoofOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
-    public const int ContentZIndex = -1;
+    public const int ContentZIndex = BeforeLightTargetOverlay.ContentZIndex + 1;
 
     public RoofOverlay(IEntityManager entManager)
     {
@@ -51,11 +51,13 @@ public sealed class RoofOverlay : Overlay
 
         var worldHandle = args.WorldHandle;
         var bounds = args.WorldBounds;
+        var lightoverlay = IoCManager.Resolve<IOverlayManager>().GetOverlay<BeforeLightTargetOverlay>();
+        var target = lightoverlay.EnlargedLightTarget;
 
-        worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+        worldHandle.RenderInRenderTarget(target,
             () =>
             {
-                var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                var invMatrix = target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
 
                 var gridMatrix = _xformSystem.GetWorldMatrix(mapEnt);
                 var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);

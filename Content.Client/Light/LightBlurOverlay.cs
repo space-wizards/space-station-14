@@ -13,10 +13,12 @@ public sealed class LightBlurOverlay : Overlay
 
     [Dependency] private readonly IClyde _clyde = default!;
 
+    public const int ContentZIndex = TileEmissionOverlay.ContentZIndex + 1;
+
     public LightBlurOverlay()
     {
         IoCManager.InjectDependencies(this);
-        ZIndex = TileEmissionOverlay.ContentZIndex + 1;
+        ZIndex = ContentZIndex;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -24,7 +26,8 @@ public sealed class LightBlurOverlay : Overlay
         if (args.Viewport.Eye == null)
             return;
 
+        var target = IoCManager.Resolve<IOverlayManager>().GetOverlay<BeforeLightTargetOverlay>().EnlargedLightTarget;
         // Yeah that's all this does keep walkin.
-        _clyde.BlurRenderTarget(args.Viewport, args.Viewport.LightRenderTarget, args.Viewport.Eye, 14f * 5f);
+        //_clyde.BlurRenderTarget(args.Viewport, target, args.Viewport.Eye, 14f * 5f);
     }
 }

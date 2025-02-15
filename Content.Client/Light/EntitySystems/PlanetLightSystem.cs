@@ -6,22 +6,25 @@ public sealed class PlanetLightSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    private RoofOverlay _overlay = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        _overlay = new(EntityManager);
-        _overlayMan.AddOverlay(_overlay);
+        _overlayMan.AddOverlay(new BeforeLightTargetOverlay());
+        _overlayMan.AddOverlay(new RoofOverlay(EntityManager));
+        _overlayMan.AddOverlay(new TileEmissionOverlay(EntityManager));
         _overlayMan.AddOverlay(new LightBlurOverlay());
         _overlayMan.AddOverlay(new SunShadowOverlay());
+        _overlayMan.AddOverlay(new AfterLightTargetOverlay());
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _overlayMan.RemoveOverlay(_overlay);
+        _overlayMan.RemoveOverlay<BeforeLightTargetOverlay>();
+        _overlayMan.RemoveOverlay<RoofOverlay>();
+        _overlayMan.RemoveOverlay<TileEmissionOverlay>();
         _overlayMan.RemoveOverlay<LightBlurOverlay>();
         _overlayMan.RemoveOverlay<SunShadowOverlay>();
+        _overlayMan.RemoveOverlay<AfterLightTargetOverlay>();
     }
 }

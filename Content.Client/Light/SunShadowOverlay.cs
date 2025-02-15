@@ -18,9 +18,8 @@ public sealed class SunShadowOverlay : Overlay
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    private readonly EntityLookupSystem _lookup = default!;
-    private readonly SharedMapSystem _maps = default!;
-    private readonly SharedTransformSystem _xformSys = default!;
+    private readonly EntityLookupSystem _lookup;
+    private readonly SharedTransformSystem _xformSys;
 
     private readonly HashSet<Entity<SunShadowCastComponent>> _shadows = new();
 
@@ -29,10 +28,9 @@ public sealed class SunShadowOverlay : Overlay
     public SunShadowOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
         _lookup = _entManager.System<EntityLookupSystem>();
-        ZIndex = TileEmissionOverlay.ContentZIndex + 2;
+        ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
