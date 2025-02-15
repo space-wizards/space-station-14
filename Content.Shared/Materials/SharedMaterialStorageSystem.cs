@@ -23,6 +23,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    [Dependency] private readonly SharedStackSystem _sharedStackSystem = default!;
+
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
     /// </summary>
@@ -140,7 +142,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="entity"></param>
     /// <param name="materials"></param>
     /// <returns>If the amount can be changed</returns>
-    public bool CanChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string,int> materials)
+    public bool CanChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string, int> materials)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -194,7 +196,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="entity"></param>
     /// <param name="materials"></param>
     /// <returns>If the amount can be changed</returns>
-    public bool TryChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string,int> materials)
+    public bool TryChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string, int> materials)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -292,6 +294,85 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
+    /// Tries to insert as much of an entity as possible into the material storage.
+    /// </summary>
+    public virtual bool TryInsertMaxPossibleMaterialEntity(EntityUid user,
+        EntityUid toInsert,
+        EntityUid receiver,
+        MaterialStorageComponent? storage = null,
+        MaterialComponent? material = null,
+        PhysicalCompositionComponent? composition = null)
+    {
+        if (!Resolve(receiver, ref storage))
+            return false;
+
+        if (!Resolve(toInsert, ref material, ref composition, false))
+            return false;
+
+        if (_whitelistSystem.IsWhitelistFail(storage.Whitelist, toInsert))
+            return false;
+
+        if (HasComp<UnremoveableComponent>(toInsert))
+            return false;
+
+        int multiplier;
+        bool partialStack = false;
+        if (storage.StorageLimit is not null && HasComp<StackComponent>(toInsert))
+        {
+            var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
+            var volumePerSheet = 0;
+            foreach (var (_, vol) in composition.MaterialComposition)
+            {
+                volumePerSheet += vol;
+            }
+            multiplier = availableVolume / volumePerSheet;
+            partialStack = true;
+        }
+        else
+        {
+            multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
+        }
+
+        // Material Whitelist checked implicitly by CanChangeMaterialAmount();
+
+        var totalVolume = 0;
+        foreach (var (mat, vol) in composition.MaterialComposition)
+        {
+            if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, storage))
+                return false;
+            totalVolume += vol * multiplier;
+        }
+
+        if (!CanTakeVolume(receiver, totalVolume, storage))
+            return false;
+
+        foreach (var (mat, vol) in composition.MaterialComposition)
+        {
+            TryChangeMaterialAmount(receiver, mat, vol * multiplier, storage);
+        }
+
+        var insertingComp = EnsureComp<InsertingMaterialStorageComponent>(receiver);
+        insertingComp.EndTime = _timing.CurTime + storage.InsertionTime;
+        if (!storage.IgnoreColor)
+        {
+            _prototype.TryIndex<MaterialPrototype>(composition.MaterialComposition.Keys.First(), out var lastMat);
+            insertingComp.MaterialColor = lastMat?.Color;
+        }
+        _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
+        Dirty(receiver, insertingComp);
+
+        if (partialStack)
+        {
+            _sharedStackSystem.Use(toInsert, multiplier);
+        }
+
+        var ev = new MaterialEntityInsertedEvent(material);
+        RaiseLocalEvent(receiver, ref ev);
+        return true;
+    }
+
+
+    /// <summary>
     /// Broadcasts an event that will collect a list of which materials
     /// are allowed to be inserted into the materialStorage.
     /// </summary>
@@ -312,6 +393,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (args.Handled || !component.InsertOnInteract)
             return;
         args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component);
+        if (args.Handled)
+            return;
+        args.Handled = TryInsertMaxPossibleMaterialEntity(args.User, args.Used, uid, component);
     }
 
     private void OnDatabaseModified(Entity<MaterialStorageComponent> ent, ref TechnologyDatabaseModifiedEvent args)
