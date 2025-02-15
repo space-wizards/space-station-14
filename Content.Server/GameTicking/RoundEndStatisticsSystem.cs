@@ -12,7 +12,7 @@ namespace Content.Server.GameTicking
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeNetworkEvent<ChangeStatsValueEvent>(ChangeValue);
+            SubscribeLocalEvent<ChangeStatsValueEvent>(ChangeValue);
             SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
             SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
         }
@@ -21,6 +21,7 @@ namespace Content.Server.GameTicking
         {
             { "SlippedCount", 0 },
             { "CreamedCount", 0 },
+            { "MoppedCount", 0},
         };
 
         // Change the value by given int

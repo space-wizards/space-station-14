@@ -94,6 +94,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message", ("thrower", args.Thrown)), uid, args.Target);
             var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
             if (TryComp<ActorComponent>(args.Target, out var actor))
@@ -101,7 +106,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", Identity.Name(uid, EntityManager)), ("thrower", args.Thrown)), uid, otherPlayers, false);
-            RaiseNetworkEvent(new ChangeStatsValueEvent("CreamedCount", 1));
+            RaiseLocalEvent(new ChangeStatsValueEvent("CreamedCount", 1));
         }
 
         private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)

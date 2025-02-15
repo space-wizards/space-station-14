@@ -109,8 +109,6 @@ public sealed class SlipperySystem : EntitySystem
         if (attemptCausingEv.Cancelled)
             return;
 
-        RaiseNetworkEvent(new ChangeStatsValueEvent("SlippedTimes", 1));
-
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
 
@@ -136,6 +134,7 @@ public sealed class SlipperySystem : EntitySystem
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
+        RaiseLocalEvent(new ChangeStatsValueEvent("SlippedCount", 1));
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }
