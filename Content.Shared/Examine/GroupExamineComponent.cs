@@ -22,7 +22,6 @@ namespace Content.Shared.Examine
                 {
                     "Armor",
                     "ClothingSpeedModifier",
-                    "FireProtection",
                 },
             },
         };

@@ -1,1 +1,1 @@
-fire-protection-reduction-value = - [color=orange]Fire damage[/color] reduced by [color=lightblue]{$value}%[/color].
+fire-protection-reduction-value = - [color=orange]Fire[/color] damage reduced by [color=lightblue]{$value}%[/color].
