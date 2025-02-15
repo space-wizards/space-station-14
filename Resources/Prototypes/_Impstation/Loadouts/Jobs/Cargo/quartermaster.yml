@@ -23,3 +23,8 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: VeteranQM
+
+- type: loadout
+  id: QuartermasterWintercoatXXXL
+  equipment:
+    outerClothing: ClothingOuterCoatQmHuge
