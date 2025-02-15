@@ -1,0 +1,23 @@
+<tabs:DeltaTab xmlns="https://spacestation14.io"
+                  xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                  xmlns:tabs="clr-namespace:Content.Client._DV.Options.UI.Tabs"
+                  xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:s="clr-namespace:Content.Client.Stylesheets">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-general-forknotice'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.ConcerningOrangeFore}"
+                   StyleClasses="LabelKeyText"/>
+            <Label Text="{Loc 'ui-options-general-accessibility'}"
+                   FontColorOverride="{xNamespace:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <CheckBox Name="DisableFiltersCheckBox" Text="{Loc 'ui-options-no-filters'}" />
+        </BoxContainer>
+        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
+            <Button Name="ApplyButton"
+                    Text="{Loc 'ui-options-apply'}"
+                    TextAlign="Center"
+                    HorizontalAlignment="Right" />
+        </controls:StripeBack>
+    </BoxContainer>
+</tabs:DeltaTab>
