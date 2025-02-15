@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Crushers fit in your suit storage now (the tank slot!)
-    type: Tweak
-  id: 629
-  time: '2024-12-03T00:03:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/849
 - author: DinnerCalzone
   changes:
   - message: Adjusted the painted stripe on bar, chapel, janitor, and lawyer airlocks
@@ -4187,3 +4180,10 @@
   id: 1128
   time: '2025-02-15T00:41:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1688
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Six lovely pairs of glasses available now in your loadout menu!
+    type: Add
+  id: 1129
+  time: '2025-02-15T00:50:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1679
