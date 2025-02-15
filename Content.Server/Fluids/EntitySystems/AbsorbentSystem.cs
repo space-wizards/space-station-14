@@ -323,7 +323,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
 
-        RaiseLocalEvent(new ChangeStatsValueEvent("MoppedCount", 1));
+        var evChangeStatsValue = new ChangeStatsValueEvent("MoppedCount", 1);
+        RaiseLocalEvent(ref evChangeStatsValue);
 
         return true;
     }

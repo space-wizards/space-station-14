@@ -1,62 +1,66 @@
-using Content.Server.GameTicking.Events;
-using Content.Shared.GameTicking;
 using System.Linq;
+using Content.Server.GameTicking.Events;
+using Content.Server.GameTicking.Prototypes;
+using Content.Shared.GameTicking;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
-namespace Content.Server.GameTicking
+namespace Content.Server.GameTicking;
+
+/// <summary>
+/// System for count different stuff and show it in round end summary.
+/// </summary>
+public sealed class RoundEndStatisticsSystem : EntitySystem
 {
-    /// <summary>
-    /// System for count different stuff and show it in round end summary.
-    /// </summary>
-    public sealed class RoundEndStatisticsSystem : EntitySystem
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    List<RoundStatisticPrototype>? _statistics;
+
+    public override void Initialize()
     {
-        public override void Initialize()
+        base.Initialize();
+
+        SubscribeLocalEvent<ChangeStatsValueEvent>(ChangeValue);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+        SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
+
+        _statistics = _prototypeManager.EnumeratePrototypes<RoundStatisticPrototype>().ToList();
+    }
+
+    // Change the value by given int
+    private void ChangeValue(ref ChangeStatsValueEvent args)
+    {
+        var key = args.Key;
+        var stat = _statistics?.FirstOrDefault(s => s.ID == key);
+        if (stat != null)
         {
-            base.Initialize();
-            SubscribeLocalEvent<ChangeStatsValueEvent>(ChangeValue);
-            SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-            SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
+            stat.StatCount += args.Amount;
+            return;
         }
 
-        private Dictionary<string, int> _statistics = new Dictionary<string, int>
+        DebugTools.Assert(false);
+    }
+
+    // Set all ints to zero
+    private void OnRoundStart(RoundStartingEvent args)
+    {
+        if (_statistics == null)
+            return;
+
+        _statistics.ForEach(stat => stat.StatCount = 0);
+    }
+
+    // Format and send all statistic
+    private void OnRoundEndText(RoundStatisticsAppendEvent args)
+    {
+        if (_statistics == null)
+            return;
+
+        foreach (var stat in _statistics.Where(s => s.StatCount > 0))
         {
-            { "SlippedCount", 0 },
-            { "CreamedCount", 0 },
-            { "MoppedCount", 0},
-        };
-
-        // Change the value by given int
-        public void ChangeValue(ChangeStatsValueEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (_statistics.TryGetValue(args.Key, out var currentValue))
-            {
-                _statistics[args.Key] = currentValue + args.Amount;
-            }
-
-            args.Handled = true;
+            var text = Loc.GetString(stat.StatString, ("count", stat.StatCount));
+            args.AddLine(text);
         }
 
-        // Set all ints to zero
-        private void OnRoundStart(RoundStartingEvent args)
-        {
-            foreach (var key in _statistics.Keys.ToList())
-            {
-                _statistics[key] = 0;
-            }
-        }
-
-        private void OnRoundEndText(RoundStatisticsAppendEvent args)
-        {
-            foreach (var (key, value) in _statistics)
-            {
-                if (value <= 0)
-                    continue;
-
-                var text = Loc.GetString($"round-end-statistic-{key.ToLower()}", ("count", value));
-                args.AddLine(text);
-            }
-        }
     }
 }

@@ -109,8 +109,12 @@ public sealed class SlipperySystem : EntitySystem
         if (attemptCausingEv.Cancelled)
             return;
 
-        var ev = new SlipEvent(other);
-        RaiseLocalEvent(uid, ref ev);
+        var evSlip = new SlipEvent(other);
+        RaiseLocalEvent(uid, ref evSlip);
+
+        var evChangeStatsValue = new ChangeStatsValueEvent("SlippedCount", 1);
+        RaiseLocalEvent(ref evChangeStatsValue);
+
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
@@ -134,7 +138,6 @@ public sealed class SlipperySystem : EntitySystem
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
-        RaiseLocalEvent(new ChangeStatsValueEvent("SlippedCount", 1));
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }

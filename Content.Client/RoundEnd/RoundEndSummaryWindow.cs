@@ -186,7 +186,6 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical
             };
 
-
             var statsLabel = new RichTextLabel();
 
             statsLabel.SetMarkup(string.IsNullOrEmpty(roundStats)
