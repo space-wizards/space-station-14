@@ -94,13 +94,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             pump.Blocked = false;
 
             // Pump mechanism won't do anything if the pressure is too high/too low unless you overclock it.
-            if ((inputStartingPressure < pump.LowerThreshold) || (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
+            if ((inputStartingPressure <= pump.LowerThreshold) || (outputStartingPressure >= pump.HigherThreshold) && !pump.Overclocked)
             {
                 pump.Blocked = true;
             }
 
             // Overclocked pumps can only force gas a certain amount.
-            if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
+            if ((outputStartingPressure - inputStartingPressure >= pump.OverclockThreshold) && pump.Overclocked)
             {
                 pump.Blocked = true;
             }
