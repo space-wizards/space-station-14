@@ -541,6 +541,11 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: DeviceNetwork
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
+      deviceNetId: Wireless
 - proto: AirAlarm
   entities:
   - uid: 218
@@ -2180,6 +2185,66 @@ entities:
     - type: Transform
       pos: 11.5,-16.5
       parent: 2
+  - uid: 1140
+    components:
+    - type: Transform
+      pos: 12.5,-17.5
+      parent: 2
+  - uid: 1141
+    components:
+    - type: Transform
+      pos: 14.5,-17.5
+      parent: 2
+  - uid: 1142
+    components:
+    - type: Transform
+      pos: 13.5,-17.5
+      parent: 2
+  - uid: 1143
+    components:
+    - type: Transform
+      pos: 3.5,-18.5
+      parent: 2
+  - uid: 1144
+    components:
+    - type: Transform
+      pos: 15.5,-17.5
+      parent: 2
+  - uid: 1145
+    components:
+    - type: Transform
+      pos: 15.5,-18.5
+      parent: 2
+  - uid: 1146
+    components:
+    - type: Transform
+      pos: 2.5,-18.5
+      parent: 2
+  - uid: 1147
+    components:
+    - type: Transform
+      pos: 1.5,-18.5
+      parent: 2
+  - uid: 1148
+    components:
+    - type: Transform
+      pos: 3.5,9.5
+      parent: 2
+  - uid: 1149
+    components:
+    - type: Transform
+      pos: 2.5,9.5
+      parent: 2
+  - uid: 1150
+    components:
+    - type: Transform
+      pos: 13.5,9.5
+      parent: 2
+  - uid: 1151
+    components:
+    - type: Transform
+      pos: 14.5,9.5
+      parent: 2
 - proto: CableHV
   entities:
   - uid: 459
@@ -2768,6 +2833,36 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,4.5
       parent: 2
+  - uid: 1152
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-16.5
+      parent: 2
+  - uid: 1153
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-17.5
+      parent: 2
+  - uid: 1154
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-17.5
+      parent: 2
+  - uid: 1155
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-16.5
+      parent: 2
+  - uid: 1158
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,-18.5
+      parent: 2
 - proto: ChairOfficeDark
   entities:
   - uid: 645
@@ -3065,29 +3160,27 @@ entities:
       parent: 2
 - proto: ClosetWallEmergencyFilledRandom
   entities:
-  - uid: 66
+  - uid: 191
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 1.5,-6.5
+      pos: 1.5,-0.5
       parent: 2
-  - uid: 118
+  - uid: 475
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 15.5,-6.5
+      rot: 3.141592653589793 rad
+      pos: 1.5,-8.5
       parent: 2
-  - uid: 155
+  - uid: 1159
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 15.5,-2.5
+      rot: 3.141592653589793 rad
+      pos: 15.5,-8.5
       parent: 2
-  - uid: 184
+  - uid: 1160
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 1.5,-2.5
+      pos: 15.5,-0.5
       parent: 2
 - proto: ComputerAlert
   entities:
@@ -3191,6 +3284,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,8.5
+      parent: 2
+- proto: DefibrillatorCabinetFilled
+  entities:
+  - uid: 1165
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 16.5,-10.5
       parent: 2
 - proto: DoubleEmergencyNitrogenTankFilled
   entities:
@@ -3397,7 +3498,6 @@ entities:
       parent: 2
     - type: GasFilter
       filteredGas: Nitrogen
-      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 414
@@ -3407,7 +3507,6 @@ entities:
       parent: 2
     - type: GasFilter
       filteredGas: Oxygen
-      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasMinerNitrogen
@@ -3437,7 +3536,6 @@ entities:
       inletTwoConcentration: 0.78
       inletOneConcentration: 0.22
       targetPressure: 4500
-      enabled: True
     - type: AtmosPipeColor
       color: '#03FCD3FF'
 - proto: GasOutletInjector
@@ -5055,7 +5153,6 @@ entities:
       parent: 2
     - type: GasPressurePump
       targetPressure: 4500
-      enabled: True
   - uid: 404
     components:
     - type: Transform
@@ -5064,7 +5161,6 @@ entities:
       parent: 2
     - type: GasPressurePump
       targetPressure: 4500
-      enabled: True
   - uid: 408
     components:
     - type: Transform
@@ -5073,7 +5169,6 @@ entities:
       parent: 2
     - type: GasPressurePump
       targetPressure: 303.3
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasVentPump
@@ -6124,6 +6219,43 @@ entities:
     - type: Transform
       pos: 6.3648415,-19.594425
       parent: 2
+- proto: Screen
+  entities:
+  - uid: 66
+    components:
+    - type: Transform
+      pos: 1.5,-6.5
+      parent: 2
+  - uid: 118
+    components:
+    - type: Transform
+      pos: 15.5,-6.5
+      parent: 2
+  - uid: 155
+    components:
+    - type: Transform
+      pos: 15.5,-2.5
+      parent: 2
+  - uid: 184
+    components:
+    - type: Transform
+      pos: 1.5,-2.5
+      parent: 2
+  - uid: 1161
+    components:
+    - type: Transform
+      pos: 11.5,7.5
+      parent: 2
+  - uid: 1162
+    components:
+    - type: Transform
+      pos: 6.5,3.5
+      parent: 2
+  - uid: 1163
+    components:
+    - type: Transform
+      pos: 6.5,-12.5
+      parent: 2
 - proto: ShuttleWindow
   entities:
   - uid: 30
@@ -6500,57 +6632,6 @@ entities:
         611:
         - On: Open
         - Off: Close
-        588:
-        - On: Open
-        - Off: Close
-        587:
-        - On: Open
-        - Off: Close
-        589:
-        - On: Open
-        - Off: Close
-        590:
-        - On: Open
-        - Off: Close
-        591:
-        - On: Open
-        - Off: Close
-        592:
-        - On: Open
-        - Off: Close
-        593:
-        - On: Open
-        - Off: Close
-        595:
-        - On: Open
-        - Off: Close
-        596:
-        - On: Open
-        - Off: Close
-        597:
-        - On: Open
-        - Off: Close
-        598:
-        - On: Open
-        - Off: Close
-        599:
-        - On: Open
-        - Off: Close
-        600:
-        - On: Open
-        - Off: Close
-        601:
-        - On: Open
-        - Off: Close
-        602:
-        - On: Open
-        - Off: Close
-        603:
-        - On: Open
-        - Off: Close
-        594:
-        - On: Open
-        - Off: Close
       lastSignals:
         Status: True
     - type: Label
@@ -6611,6 +6692,57 @@ entities:
         626:
         - On: Open
         - Off: Close
+        587:
+        - On: Open
+        - Off: Close
+        588:
+        - On: Open
+        - Off: Close
+        589:
+        - On: Open
+        - Off: Close
+        590:
+        - On: Open
+        - Off: Close
+        591:
+        - On: Open
+        - Off: Close
+        592:
+        - On: Open
+        - Off: Close
+        593:
+        - On: Open
+        - Off: Close
+        594:
+        - On: Open
+        - Off: Close
+        595:
+        - On: Open
+        - Off: Close
+        596:
+        - On: Open
+        - Off: Close
+        597:
+        - On: Open
+        - Off: Close
+        598:
+        - On: Open
+        - Off: Close
+        599:
+        - On: Open
+        - Off: Close
+        600:
+        - On: Open
+        - Off: Close
+        601:
+        - On: Open
+        - Off: Close
+        602:
+        - On: Open
+        - Off: Close
+        603:
+        - On: Open
+        - Off: Close
       lastSignals:
         Status: True
     - type: Label
@@ -6664,6 +6796,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-0.5
+      parent: 2
+- proto: Sink
+  entities:
+  - uid: 1164
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 11.5,0.5
       parent: 2
 - proto: SodaDispenser
   entities:
@@ -6915,6 +7055,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,0.5
       parent: 2
+  - uid: 1156
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-17.5
+      parent: 2
+  - uid: 1157
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-16.5
+      parent: 2
 - proto: TableWood
   entities:
   - uid: 54
@@ -7114,20 +7266,6 @@ entities:
     - type: Transform
       pos: 7.5,-19.5
       parent: 2
-- proto: VendingMachineWallMedical
-  entities:
-  - uid: 191
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 16.5,-13.5
-      parent: 2
-  - uid: 475
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 10.5,-13.5
-      parent: 2
 - proto: VendingMachineYouTool
   entities:
   - uid: 515
@@ -7293,12 +7431,6 @@ entities:
     components:
     - type: Transform
       pos: 16.5,-15.5
-      parent: 2
-  - uid: 237
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 15.5,-15.5
       parent: 2
   - uid: 252
     components:
@@ -7780,6 +7912,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 9.5,-12.5
       parent: 2
+  - uid: 237
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 15.5,-15.5
+      parent: 2
   - uid: 238
     components:
     - type: Transform
@@ -7803,6 +7941,7 @@ entities:
   - uid: 242
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 10.5,-15.5
       parent: 2
   - uid: 243

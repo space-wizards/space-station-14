@@ -5,6 +5,7 @@
   name: crate
   description: A large container for items.
   components:
+  - type: Animateable
   - type: Transform
     noRot: true
   - type: Icon
@@ -72,8 +73,8 @@
           Invoice: { state: invoice }
   - type: PaperLabel
     labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
       whitelist:
         components:
         - Paper
