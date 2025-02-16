@@ -198,6 +198,10 @@ namespace Content.IntegrationTests.Tests
                 var meta = root["meta"];
                 var version = meta["format"].AsInt();
 
+                // TODO MAP TESTS
+                // Move this to some separate test?
+                CheckDoNotMap(map, root, protoManager);
+
                 if (version >= 7)
                 {
                     v7Maps.Add(map);
@@ -206,23 +210,6 @@ namespace Content.IntegrationTests.Tests
 
                 var postMapInit = meta["postmapinit"].AsBool();
                 Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
-
-                // testing that maps have nothing with the DoNotMap entity category
-                // I do it here because it's basically copy-paste code for the most part
-                var yamlEntities = root["entities"];
-                if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
-                    return;
-                foreach (var yamlEntity in (YamlSequenceNode)yamlEntities)
-                {
-                    var protoId = yamlEntity["proto"].AsString();
-                    protoManager.TryIndex(protoId, out var proto, false);
-                    if (proto is null || proto.EditorSuffix is null)
-                        continue;
-                    if (proto.Categories.Contains(dnmCategory) && !DoNotMapWhitelist.Contains(map.ToString()))
-                    {
-                        Assert.Fail($"\nMap {map} has the DO NOT MAP category in prototype {proto.Name}");
-                    }
-                }
             }
 
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
@@ -249,6 +236,34 @@ namespace Content.IntegrationTests.Tests
             Assert.That(IsPreInit(path, loader, deps), Is.False);
 
             await pair.CleanReturnAsync();
+        }
+
+        /// <summary>
+        /// Check that maps do not have any entities that belong to the DoNotMap entity category
+        /// </summary>
+        private void CheckDoNotMap(ResPath map, YamlNode node, IPrototypeManager protoManager)
+        {
+            if (DoNotMapWhitelist.Contains(map.ToString()))
+                return;
+
+            var yamlEntities = node["entities"];
+            if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
+                return;
+
+            Assert.Multiple(() =>
+            {
+                foreach (var yamlEntity in (YamlSequenceNode)yamlEntities)
+                {
+                    var protoId = yamlEntity["proto"].AsString();
+
+                    // This doesn't properly handle prototype migrations, but thats not a significant issue.
+                    if (!protoManager.TryIndex(protoId, out var proto, false))
+                        continue;
+
+                    Assert.That(!proto.Categories.Contains(dnmCategory),
+                        $"\nMap {map} contains entities in the DO NOT MAP category ({proto.Name})");
+                }
+            });
         }
 
         private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps)
