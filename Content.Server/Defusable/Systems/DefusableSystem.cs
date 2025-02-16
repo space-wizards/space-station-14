@@ -133,7 +133,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         var xform = Transform(uid);
         if (!xform.Anchored)
-            _transform.AnchorEntity(uid, xform);
+            _transform.AnchorEntity((uid, xform));
 
         SetBolt(comp, true);
         SetActivated(comp, true);

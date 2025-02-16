@@ -165,7 +165,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
 
         if (!xform.Anchored)
-            _transformSystem.AnchorEntity(uid, xform);
+            _transformSystem.AnchorEntity((uid, xform));
 
         RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 

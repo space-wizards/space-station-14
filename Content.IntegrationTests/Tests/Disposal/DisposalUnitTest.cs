@@ -188,7 +188,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Anchor the disposal unit
-                xformSystem.AnchorEntity(unitUid, entityManager.GetComponent<TransformComponent>(unitUid));
+                xformSystem.AnchorEntity((unitUid, entityManager.GetComponent<TransformComponent>(unitUid)));
 
                 // No power
                 Assert.That(unitComponent.Powered, Is.False);

@@ -189,7 +189,7 @@ public sealed partial class BlockingSystem : EntitySystem
             }
 
             //Don't allow someone to block if they're somehow not anchored.
-            _transformSystem.AnchorEntity(user, xform);
+            _transformSystem.AnchorEntity((user, xform));
             if (!xform.Anchored)
             {
                 CantBlockError(user);

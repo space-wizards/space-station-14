@@ -43,7 +43,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
 
         if (isDeployed && transform.GridUid != null)
         {
-            _transform.AnchorEntity(uid, transform);
+            _transform.AnchorEntity((uid, transform));
             if (fixture != null)
                 _physics.SetHard(uid, fixture, true);
         }
