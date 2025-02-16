@@ -93,3 +93,12 @@
   - type: RuleGrids
   - type: LoadMapRule
     mapPath: /Maps/_Starlight/Shuttles/VoxATS.yml
+
+  #Pig's ERT Shuttle
+  - type: entity
+  parent: BaseGameRule
+  id: ERTShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    mapPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
