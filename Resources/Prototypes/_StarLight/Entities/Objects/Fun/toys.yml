@@ -632,4 +632,168 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toysqueak2.ogg
-      
+
+- type: entity
+  parent: BasePlushie
+  id: StinkyPlush
+  name: Spiro Plushie
+  description: Spiro Velox? Now as a plushie!! It... smells?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: stinky_plush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: JessPlush
+  name: Jessica Plushie
+  description: Your favourite and most robust CentComm Operator.. She makes those noises cause she loves cats a bit too much
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: jess_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: SiffyPlush
+  name: Siffy Plushie
+  description: Your favorite NT engineer that totally does their job and you will have power for the whole shift
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: siffy_plush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: StalksPlush
+  name: Stalks Plushie
+  description: Your favorite NT REP Stalks, now with an er~ I mean a fancy cane..
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: saltho_plush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Stamp/automatic_stamp.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/glass_break1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Stamp/automatic_stamp.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Effects/gib1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/metal_thud2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: IgnisPlush
+  name: Scarlet Plushie
+  description: Your favorite CentComm Operator who always summons rain to the station somehow, even thought it's space..
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: ignis_plush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/weh.ogg

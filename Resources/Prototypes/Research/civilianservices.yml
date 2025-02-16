@@ -20,8 +20,8 @@
   id: CritterMechs
   name: research-technology-critter-mechs
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: hamtr
+    sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
+    state: base
   discipline: CivilianServices
   tier: 1
   cost: 7500
@@ -161,8 +161,8 @@
   id: HONKMech
   name: research-technology-honk-mech
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: honker
+    sprite: Objects/Specific/Mech/Mechs/Basic/honker.rsi
+    state: base
   discipline: CivilianServices
   tier: 2
   cost: 7500

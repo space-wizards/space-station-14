@@ -9,7 +9,7 @@
     layers:
       - state: green
       - state: roboticist
-      
+
 - type: entity
   id: SpawnPointMagistrate
   parent: SpawnPointJobBase
@@ -23,7 +23,7 @@
       - state: green
       - state: magistrate
       - state: jobicon
-      
+
 - type: entity
   id: SpawnPointNtrep
   parent: SpawnPointJobBase
@@ -37,7 +37,7 @@
       - state: green
       - state: ntrep
       - state: jobicon
-      
+
 - type: entity
   id: SpawnPointIAA
   parent: SpawnPointJobBase
@@ -51,7 +51,7 @@
       - state: green
       - state: iaa
       - state: jobicon
-      
+
 - type: entity
   id: SpawnPointBlueShield
   parent: SpawnPointJobBase
@@ -65,3 +65,15 @@
       - state: green
       - state: obs
       - state: jobicon
+
+- type: entity
+  id: SpawnPointminingspecialist
+  parent: SpawnPointJobBase
+  name: miningspecialist
+  components:
+  - type: SpawnPoint
+    job_id: MiningSpecialist
+  - type: Sprite
+    layers:
+    - state: green
+    - state: salvagespecialist

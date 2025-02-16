@@ -18,14 +18,14 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
-    
+
 - type: entity
   parent: ClothingUniformJumpsuitAtmos
   id: ClothingUniformJumpsuitAtmosSyndie
   name: Contortionist's Jumpsuit
   components:
   - type: VentCrawClothing
-  
+
 - type: entity
   parent: ClothingUniformBase
   id: MagistrateUniformSuit
@@ -35,7 +35,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitNtrep
@@ -57,7 +57,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
-    
+
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitBlueShield
@@ -78,7 +78,30 @@
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi    
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMiningSpecialist
+  name: mining specialist's jumpsuit
+  description: A suit passed down through many generations. a fine layer of dust trails behind it.
+  components:
+  - type: RollUpSleeves
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/mining.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/mining.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseSecurityContraband]
+  id: ClothingUniformJumpsuitCorpsman
+  name: Corpsman's Suit
+  description: Die in style on the front lines!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi 
 
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 

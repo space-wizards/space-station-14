@@ -1000,13 +1000,16 @@
   loadouts:
   - BrigmedicBeret
   - SecurityHelmet
+  - CorpsmanBeret
 
 - type: loadoutGroup
   id: BrigmedicJumpsuit
   name: loadout-group-brigmedic-jumpsuit
   loadouts:
   - JumpsuitBrigmedic
+  - JumpsuitCorpsman
   - JumpskirtBrigmedic
+  - JumpskirtCorpsman
 
 - type: loadoutGroup
   id: BrigmedicBackpack
@@ -1022,6 +1025,7 @@
   loadouts:
   - BrigmedicCoat
   - SecurityOfficerWintercoat
+  - CorpsmanCoat
 
 - type: loadoutGroup
   id: BrigmedicBelt

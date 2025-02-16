@@ -37,8 +37,6 @@ public sealed class NightVisionSystem : EntitySystem
     {
         if (ent.Comp.Effect == null)
             AddNightVision(ent.Owner, ent.Comp);
-        else if (HasComp<EyeProtectionComponent>(ent.Owner))
-            RemoveNightVision(ent.Comp);
     }
 
     private void OnPlayerDetached(Entity<NightVisionComponent> ent, ref LocalPlayerDetachedEvent args)
@@ -69,8 +67,6 @@ public sealed class NightVisionSystem : EntitySystem
 
         if (ent.Comp.Effect == null)
             AddNightVision(ent.Owner, ent.Comp);
-        else if (HasComp<EyeProtectionComponent>(ent.Owner))
-            RemoveNightVision(ent.Comp);
     }
 
     private void OnVisionShutdown(Entity<NightVisionComponent> ent, ref ComponentShutdown args)
@@ -81,8 +77,6 @@ public sealed class NightVisionSystem : EntitySystem
 
     private void AddNightVision(EntityUid uid, NightVisionComponent component)
     {
-        if (HasComp<EyeProtectionComponent>(uid)) return;
-
         _overlayMan.AddOverlay(_overlay);
         component.Effect = SpawnAttachedTo(component.EffectPrototype, Transform(uid).Coordinates);
         if (TryComp<MechPilotComponent>(uid, out var mechPilot))
