@@ -25,17 +25,16 @@ public sealed class SpawnTableOnUseSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         var coords = Transform(ent).Coordinates;
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
         foreach (var id in spawns)
         {
             var spawned = Spawn(id, coords);
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User):user} used {ToPrettyString(ent):spawner} which spawned {ToPrettyString(spawned)}");
-            _hands.TryPickupAnyHand(args.User, spawned);
+            _hands.PickupOrDrop(args.User, spawned);
         }
 
         Del(ent);
+        args.Handled = true;
     }
 }

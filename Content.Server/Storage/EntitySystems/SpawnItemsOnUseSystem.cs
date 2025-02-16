@@ -80,26 +80,20 @@ namespace Content.Server.Storage.EntitySystems
                 _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 
+            // The entity is often deleted, so play the sound at its position rather than parenting
             if (component.Sound != null)
-            {
-                // The entity is often deleted, so play the sound at its position rather than parenting
-                var coordinates = Transform(uid).Coordinates;
-                _audio.PlayPvs(component.Sound, coordinates);
-            }
+                _audio.PlayPvs(component.Sound, coords);
 
             component.Uses--;
 
             // Delete entity only if component was successfully used
             if (component.Uses <= 0)
-            {
-                args.Handled = true;
-                EntityManager.DeleteEntity(uid);
-            }
+                Del(uid);
 
             if (entityToPlaceInHands != null)
-            {
                 _hands.PickupOrDrop(args.User, entityToPlaceInHands.Value);
-            }
+
+            args.Handled = true;
         }
     }
 }
