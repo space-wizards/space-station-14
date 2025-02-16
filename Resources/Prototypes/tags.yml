@@ -1196,6 +1196,9 @@
   id: Spray
 
 - type: Tag
+  id: SprayNozzle
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
