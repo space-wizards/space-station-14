@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Golinth
-  changes:
-  - message: Firebots can now be constructed by scientists - the bots wander the station
-      looking for fires to put out with their built-in extinguisher.
-    type: Add
-  id: 7463
-  time: '2024-10-01T03:13:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32482
 - author: ScarKy0
   changes:
   - message: Binary encryption key now uses an AI icon
@@ -3898,3 +3890,10 @@
   id: 7962
   time: '2025-02-16T16:14:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34515
+- author: Velken
+  changes:
+  - message: ': Paramedic Siren''s light is now visible to all and not just the wearer.'
+    type: Fix
+  id: 7963
+  time: '2025-02-16T18:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35203
