@@ -10,10 +10,9 @@ public static class AudioFun
     private const float MinPitchScale = 0.2f;
     private const float MaxPitchScale = 2.5f;
 
-    public static AudioParams? FunAudioParams(AudioParams? audioParams)
+    public static AudioParams FunAudioParams(AudioParams? audioParams = null)
     {
-        if (audioParams == null)
-            return null;
+        audioParams ??= AudioParams.Default;
 
         return audioParams.Value.WithPitchScale(_random.NextFloat() * (MaxPitchScale - MinPitchScale) + MinPitchScale)
             .WithVariation(0);
