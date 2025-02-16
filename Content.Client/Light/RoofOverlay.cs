@@ -67,6 +67,9 @@ public sealed class RoofOverlay : Overlay
         if (_grids.Count == 0)
             return;
 
+        var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
+        var scale = viewport.RenderScale / (Vector2.One / lightScale);
+
         worldHandle.RenderInRenderTarget(target,
             () =>
             {
@@ -75,7 +78,7 @@ public sealed class RoofOverlay : Overlay
                     if (!_entManager.TryGetComponent(grid.Owner, out RoofComponent? roof))
                         continue;
 
-                    var invMatrix = target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                    var invMatrix = target.GetWorldToLocalMatrix(eye, scale);
 
                     var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
                     var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
