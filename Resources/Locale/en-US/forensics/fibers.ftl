@@ -11,6 +11,7 @@ fibers-nitrile = nitrile
 fibers-nanomachines = insulative nanomachine
 fibers-chameleon = holographic chameleon
 fibers-rubber = rubber
+fibers-textile = textile
 
 fibers-purple = purple
 fibers-red = red
