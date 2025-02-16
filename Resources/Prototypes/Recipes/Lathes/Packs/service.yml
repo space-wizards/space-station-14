@@ -1,0 +1,62 @@
+## Static
+
+- type: latheRecipePack
+  id: ServiceStatic
+  recipes:
+  - Bucket
+  - DrinkMug
+  - DrinkMugMetal
+  - DrinkGlass
+  - DrinkShotGlass
+  - DrinkGlassCoupeShaped
+  - CustomDrinkJug
+  - FoodPlate
+  - FoodPlateSmall
+  - FoodPlatePlastic
+  - FoodPlateSmallPlastic
+  - FoodBowlBig
+  - FoodPlateTin
+  - FoodPlateMuffinTin
+  - FoodKebabSkewer
+  - SprayBottle
+  - MopItem
+  - Holoprojector
+  - WetFloorSign
+
+- type: latheRecipePack
+  id: ServiceBoardsStatic
+  recipes:
+  - BiogeneratorMachineCircuitboard
+  - UniformPrinterMachineCircuitboard
+  - MicrowaveMachineCircuitboard
+  - ReagentGrinderMachineCircuitboard
+  - ElectricGrillMachineCircuitboard
+  - BoozeDispenserMachineCircuitboard
+  - SodaDispenserMachineCircuitboard
+
+## Dynamic
+
+- type: latheRecipePack
+  id: Janitor
+  recipes:
+  - AdvMopItem
+  - WeaponSprayNozzle
+  - ClothingBackpackWaterTank
+  - MegaSprayBottle
+
+- type: latheRecipePack
+  id: Instruments
+  recipes:
+  - SynthesizerInstrument
+
+- type: latheRecipePack
+  id: ServiceBoards
+  recipes:
+  - BiofabricatorMachineCircuitboard
+  - FatExtractorMachineCircuitboard
+  - HydroponicsTrayMachineCircuitboard # roundstart gear being unlocked roundstart when
+  - SeedExtractorMachineCircuitboard # ^
+  - MassMediaCircuitboard
+  - ReagentGrinderIndustrialMachineCircuitboard
+  - JukeboxCircuitBoard
+  - DawInstrumentMachineCircuitboard

@@ -90,6 +90,12 @@ public sealed partial class CCVars
         CVarDef.Create("admin.server_ban_erase_player", false, CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     If true, will reset the last time the player has read the rules. This will mean on their next login they will be shown the rules again.
+    /// </summary>
+    public static readonly CVarDef<bool> ServerBanResetLastReadRules =
+        CVarDef.Create("admin.server_ban_reset_last_read_rules", true, CVar.ARCHIVE | CVar.SERVER);
+
+    /// <summary>
     ///     Minimum players sharing a connection required to create an alert. -1 to disable the alert.
     /// </summary>
     /// <remarks>
@@ -176,4 +182,11 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> BanHardwareIds =
         CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// If true, players are allowed to connect to multiple game servers at once.
+    /// If false, they will be kicked from the first when connecting to another.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
+        CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
 }

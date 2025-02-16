@@ -80,6 +80,9 @@
   - type: Construction
     graph: Intercom
     node: intercom
+    containers:
+    - board
+    - key_slots
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
@@ -338,3 +341,16 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyStationMaster
+
+- type: entity
+  id: IntercomFreelance
+  parent: Intercom
+  suffix: Freelance
+  components:
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyFreelance
