@@ -21,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Content.Server.EntityEffects.Effects;
 
 namespace Content.Server.Medical;
 
@@ -81,9 +82,9 @@ public sealed class HealingSystem : EntitySystem
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0)
-            _bloodstreamSystem.TryModifyBloodLevel(entity.Owner, healing.ModifyBloodLevel);
+            _bloodstreamSystem.TryModifyBloodLevel(entity, healing.ModifyBloodLevel);
 
-        var healed = _damageable.TryChangeDamage(entity.Owner, healing.Damage, true, origin: args.Args.User);
+        var healed = _damageable.TryChangeDamage(entity, healing.Damage, true, origin: args.Args.User);
 
         if (healed == null && healing.BloodlossModifier != 0)
             return;
@@ -107,7 +108,7 @@ public sealed class HealingSystem : EntitySystem
         if (entity.Owner != args.User)
         {
             _adminLogger.Add(LogType.Healed,
-                $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(entity.Owner):target} for {total:damage} damage");
+                $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(entity):target} for {total:damage} damage");
         }
         else
         {
@@ -115,39 +116,46 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        _audio.PlayPvs(healing.HealingEndSound, entity, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         // Logic to determine the whether or not to repeat the healing action
-        args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
+        args.Repeat = (CanHealingCompomentBeUsed(entity, healing) && !dontRepeat);
         if (!args.Repeat && !dontRepeat)
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), entity.Owner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), entity, args.User);
         args.Handled = true;
     }
 
-    private bool HasDamage(Entity<DamageableComponent> ent, HealingComponent healing)
+    private bool CanHealingCompomentBeUsed(EntityUid targetEntityUid, HealingComponent healingComponent)
     {
-        var damageableDict = ent.Comp.Damage.DamageDict;
-        var healingDict = healing.Damage.DamageDict;
-        foreach (var type in healingDict)
-        {
-            if (damageableDict[type.Key].Value > 0)
+        if (!TryComp<DamageableComponent>(targetEntityUid, out var damageableComponent))
+            return false;
+
+        if (TryComp<BloodstreamComponent>(targetEntityUid, out var bloodstreamComponent) &&
+            _solutionContainerSystem.ResolveSolution(targetEntityUid, bloodstreamComponent.BloodSolutionName, ref bloodstreamComponent.BloodSolution, out var bloodSolution))
+        { // This is blood having target
+
+            if (healingComponent.ModifyBloodLevel > 0 && // blood restoring componment is being used
+                bloodSolution.Volume < bloodSolution.MaxVolume) // there is blood to restore
+            {
+                if (healingComponent.BloodReagentWhitelist.Count != 0) // There is a whitelist
+                {
+                    return healingComponent.BloodReagentWhitelist.Contains(bloodstreamComponent.BloodReagent); // is blood type is whitelisted
+                }
+
+                return true;
+            }
+            // Is ent bleeding and can we stop it?
+            if (healingComponent.BloodlossModifier < 0 && bloodstreamComponent.BleedAmount > 0)
             {
                 return true;
             }
         }
 
-        if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
+        var damageableDict = damageableComponent.Damage.DamageDict;
+        var healingDict = healingComponent.Damage.DamageDict;
+        foreach (var type in healingDict)
         {
-            // Is ent missing blood that we can restore?
-            if (healing.ModifyBloodLevel > 0
-                && _solutionContainerSystem.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
-                && bloodSolution.Volume < bloodSolution.MaxVolume)
-            {
-                return true;
-            }
-
-            // Is ent bleeding and can we stop it?
-            if (healing.BloodlossModifier < 0 && bloodstream.BleedAmount > 0)
+            if (damageableDict[type.Key].Value > 0)
             {
                 return true;
             }
@@ -192,7 +200,7 @@ public sealed class HealingSystem : EntitySystem
         if (TryComp<StackComponent>(uid, out var stack) && stack.Count < 1)
             return false;
 
-        if (!HasDamage((target, targetDamage), component))
+        if (!CanHealingCompomentBeUsed(target, component))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid, user);
             return false;
