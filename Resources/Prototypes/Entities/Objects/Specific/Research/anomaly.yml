@@ -21,7 +21,8 @@
     - ScannersAndVessels
   - type: Item
     storedRotation: -90
-  - tags:
+  - type: Tag
+    tags:
     - AnomalyTool
 
 - type: entity
@@ -62,7 +63,8 @@
       params:
         maxDistance: 1
         volume: -8
-  - tags:
+  - type: Tag
+    tags:
     - AnomalyTool
 
 - type: entity
