@@ -24,6 +24,11 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -111,20 +116,6 @@
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TimerStartBehavior
-    - trigger:
-        !type:DamageTrigger
-        damage: 45
-      behaviors:
-      - !type:TriggerBehavior
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: OnUseTimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
@@ -170,6 +161,19 @@
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
   components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
   - type: OnUseTimerTrigger
@@ -350,6 +354,19 @@
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: EmpGrenade
   components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
