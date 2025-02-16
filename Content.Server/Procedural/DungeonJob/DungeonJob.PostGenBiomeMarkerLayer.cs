@@ -94,7 +94,7 @@ public sealed partial class DungeonJob
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)
-                    _transform.AnchorEntity(ent, xform);
+                    _transform.AnchorEntity((ent, xform));
 
                 await SuspendDungeon();
                 if (!ValidateResume())
