@@ -102,8 +102,6 @@
         amount: 2
       - id: FrenchHornInstrument
         amount: 2
-      - id: SaxophoneInstrument
-        amount: 2
       - id: EuphoniumInstrument
       - id: TubaInstrument
 
@@ -134,6 +132,8 @@
   - type: StorageFill
     contents:
       - id: RecorderInstrument
+        amount: 2
+      - id: SaxophoneInstrument
         amount: 2
       - id: BagpipeInstrument
       - id: ClarinetInstrument

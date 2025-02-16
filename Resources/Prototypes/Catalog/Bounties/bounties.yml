@@ -297,7 +297,7 @@
   description: bounty-description-percussion
   entries:
   - name: bounty-item-percussion
-    amount: 4
+    amount: 7
     whitelist:
       tags:
       - PercussionInstrument
