@@ -24,6 +24,26 @@
   equipment:
     eyes: ClothingEyesGlasses
 
+- type: loadout
+  id: GarGlasses
+  equipment:
+    eyes: ClothingEyesGlassesGar
+
+- type: loadout
+  id: OrangeGarGlasses
+  equipment:
+    eyes: ClothingEyesGlassesGarOrange
+
+- type: loadout
+  id: GigaGarGlasses
+  equipment:
+    eyes: ClothingEyesGlassesGarGiga
+
+- type: loadout
+  id: CheapSunglasses
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+
 # Special options
 # Jamjar
 - type: loadout
