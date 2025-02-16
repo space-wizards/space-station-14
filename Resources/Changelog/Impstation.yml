@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The command prestige cloaks now count as cloaks for a thief's steal objective.
-    type: Tweak
-  id: 635
-  time: '2024-12-03T16:34:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/773
-- author: DinnerCalzone
-  changes:
-  - message: All species with sex-based emotes may now choose between male, female,
-      and unisex sexes to choose their emote sounds. Unisex uses both male and female
-      emote sounds.
-    type: Add
-  id: 636
-  time: '2024-12-03T16:37:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/866
 - author: Sha-Seng
   changes:
   - message: Black mime hardsuit, crafted using black suspenders
@@ -4186,3 +4170,17 @@
   id: 1134
   time: '2025-02-16T02:44:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1696
+- author: mqole
+  changes:
+  - message: Syndicats can now send and receive messages on the Syndicate radio channel.
+    type: Add
+  id: 1135
+  time: '2025-02-16T08:29:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1708
+- author: TheGrimbeeper
+  changes:
+  - message: Gray stomachs are now able to be used as ingredients in rituals
+    type: Fix
+  id: 1136
+  time: '2025-02-16T08:29:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1705
