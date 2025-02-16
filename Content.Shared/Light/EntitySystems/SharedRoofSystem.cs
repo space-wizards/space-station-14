@@ -5,6 +5,9 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Light.EntitySystems;
 
+/// <summary>
+/// Handles the roof flag for tiles that gets used for the RoofOverlay.
+/// </summary>
 public abstract class SharedRoofSystem : EntitySystem
 {
     [Dependency] private readonly SharedMapSystem _maps = default!;

@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Light;
 
+/// <inheritdoc/>
 public sealed class LightCycleSystem : SharedLightCycleSystem
 {
     [Dependency] private readonly ClientGameTicker _ticker = default!;
