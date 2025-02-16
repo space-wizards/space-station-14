@@ -1,6 +1,6 @@
 - type: entity
-  id: OrganAnimalRuminantStomach
   parent: OrganAnimalStomach
+  id: OrganAnimalRuminantStomach
   name: ruminant stomach
   categories: [ HideSpawnMenu ]
   components:
