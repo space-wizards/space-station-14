@@ -8,7 +8,7 @@ public static class AudioFun
     private static readonly RobustRandom _random = new();
 
     private const float MinPitchScale = 0.2f;
-    private const float MaxPitchScale = 2.5f;
+    private const float MaxPitchScale = 2.0f;
 
     public static AudioParams FunAudioParams(AudioParams? audioParams = null)
     {
