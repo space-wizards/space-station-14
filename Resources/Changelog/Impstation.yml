@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: Jamjar glasses now have a side view consistent with their front!
-    type: Tweak
-  id: 638
-  time: '2024-12-03T16:41:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/877
 - author: DinnerCalzone
   changes:
   - message: (Xeno Station) Added birgmedic spawner and brigmedic locker.
@@ -4183,3 +4176,10 @@
   id: 1137
   time: '2025-02-16T08:31:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1691
+- author: Pivotbash
+  changes:
+  - message: Sec Spaceblade now costs 1 Utility Token. Whoops!
+    type: Fix
+  id: 1138
+  time: '2025-02-16T12:20:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1703
