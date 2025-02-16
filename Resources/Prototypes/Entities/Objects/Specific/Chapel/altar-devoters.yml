@@ -16,11 +16,10 @@
     tags:
     - DevoterNanotrasen
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: nanotrasen
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: nanotrasen
+    sprite: Objects/Specific/Chapel/Devoters/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/nanotrasen.rsi
 
 - type: entity
   parent: BaseAltarDevoter
@@ -32,11 +31,10 @@
     tags:
     - DevoterChaos
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: chaos
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: chaos
+    sprite: Objects/Specific/Chapel/Devoters/chaos.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/chaos.rsi
 
 - type: entity
   parent: BaseAltarDevoter
@@ -48,11 +46,10 @@
     tags:
     - DevoterDruid
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: druid
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: druid
+    sprite: Objects/Specific/Chapel/Devoters/druid.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/druid.rsi
 
 - type: entity
   parent: BaseAltarDevoter
@@ -64,11 +61,10 @@
     tags:
     - DevoterToolbox
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: toolbox
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: toolbox
+    sprite: Objects/Specific/Chapel/Devoters/toolbox.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/toolbox.rsi
 
 - type: entity
   parent: BaseAltarDevoter
@@ -80,11 +76,10 @@
     tags:
     - DevoterSpaceChristian
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: space_christian
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: space_christian
+    sprite: Objects/Specific/Chapel/Devoters/space_christian.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/space_christian.rsi
 
 - type: entity
   parent: BaseAltarDevoter
@@ -96,11 +91,10 @@
     tags:
     - DevoterSatana
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: satana
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: satana
+    sprite: Objects/Specific/Chapel/Devoters/satana.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/satana.rsi
 
 - type: entity
   parent: BaseAltarDevoter
@@ -112,8 +106,7 @@
     tags:
     - DevoterTechnology
   - type: Sprite
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: technology
-  - type: Icon
-    sprite: Objects/Specific/Chapel/devoter.rsi
-    state: technology
+    sprite: Objects/Specific/Chapel/Devoters/technology.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/technology.rsi
