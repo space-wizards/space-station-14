@@ -9,6 +9,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server._DV.Mail;
 
@@ -127,7 +128,7 @@ public sealed class MailToCommand : IConsoleCommand
 
         var teleporterQueue = containerSystem.EnsureContainer<Container>((EntityUid)teleporterUid, "queued");
         containerSystem.Insert(mailUid, teleporterQueue);
-        shell.WriteLine(Loc.GetString("command-mailto-success", ("timeToTeleport", TimeSpan.FromMinutes(_config.GetCVar(DCCVars.MailTeleportIntervalInMinutes)).TotalSeconds - teleporterComponent.Accumulator)));
+        shell.WriteLine(Loc.GetString("command-mailto-success"));
     }
 }
 
@@ -140,12 +141,13 @@ public sealed class MailNowCommand : IConsoleCommand
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IGameTiming _timing = default!; // imp
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         foreach (var mailTeleporter in _entityManager.EntityQuery<MailTeleporterComponent>())
         {
-            mailTeleporter.Accumulator += (float) TimeSpan.FromMinutes(_config.GetCVar(DCCVars.MailTeleportIntervalInMinutes)).TotalSeconds - mailTeleporter.Accumulator;
+            mailTeleporter.NextDelivery = _timing.CurTime;
         }
 
         shell.WriteLine(Loc.GetString("command-mailnow-success"));

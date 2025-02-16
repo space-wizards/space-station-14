@@ -16,12 +16,6 @@ public sealed class DCCVars
         CVarDef.Create("shuttle.shipyard", true, CVar.SERVERONLY);
 
     /// <summary>
-    /// How often mail is delivered in minutes
-    /// </summary>
-    public static readonly CVarDef<double> MailTeleportIntervalInMinutes =
-        CVarDef.Create("mail.teleportinterval", 5.0d, CVar.SERVERONLY);
-
-    /// <summary>
     /// How many mail candidates do we need per actual delivery sent when
     /// the mail goes out? The number of candidates is divided by this number
     /// to determine how many deliveries will be teleported in.
