@@ -76696,6 +76696,11 @@ entities:
     - type: Transform
       pos: -92.5,-20.5
       parent: 2
+  - uid: 26311
+    components:
+    - type: Transform
+      pos: -36.5,-23.5
+      parent: 2
 - proto: DonkpocketBoxSpawner
   entities:
   - uid: 9150
@@ -142930,6 +142935,13 @@ entities:
     components:
     - type: Transform
       pos: -125.5,-45.5
+      parent: 2
+- proto: SpawnMobChemDog
+  entities:
+  - uid: 26310
+    components:
+    - type: Transform
+      pos: -36.5,-23.5
       parent: 2
 - proto: SpawnPointAdminAssistant
   entities:
