@@ -1,7 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
-using Robust.Shared.Network;
+using Content.Shared.GameTicking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -29,6 +29,9 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModifier = default!;
+
+    [ValidatePrototypeId<RoundStatisticPrototype>]
+    public const string SlippedCount = "SlippedCount";
 
     public override void Initialize()
     {
@@ -109,8 +112,12 @@ public sealed class SlipperySystem : EntitySystem
         if (attemptCausingEv.Cancelled)
             return;
 
-        var ev = new SlipEvent(other);
-        RaiseLocalEvent(uid, ref ev);
+        var evSlip = new SlipEvent(other);
+        RaiseLocalEvent(uid, ref evSlip);
+
+        var evChangeStatsValue = new ChangeStatsValueEvent(SlippedCount, 1);
+        RaiseLocalEvent(ref evChangeStatsValue);
+
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {

@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
@@ -28,6 +29,9 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+
+    [ValidatePrototypeId<RoundStatisticPrototype>]
+    public const string MoppedCount = "MoppedCount";
 
     public override void Initialize()
     {
@@ -321,6 +325,9 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         localPos = userXform.LocalRotation.RotateVec(localPos);
 
         _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
+
+        var evChangeStatsValue = new ChangeStatsValueEvent(MoppedCount, 1);
+        RaiseLocalEvent(ref evChangeStatsValue);
 
         return true;
     }
