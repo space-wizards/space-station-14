@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using Content.Server.Administration.Logs;
+﻿using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
-using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Survivor;
 using Content.Shared.Survivor.Components;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -18,13 +20,15 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly TransformSystem _xform = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<AddSurvivorRoleEvent>(OnAddSurvivorRole);
+        SubscribeLocalEvent<SurvivorRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
     private void OnAddSurvivorRole(ref AddSurvivorRoleEvent args)
@@ -43,6 +47,11 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
             GameTicker.StartGameRule(survivorRule);
     }
 
+    private void OnGetBriefing(Entity<SurvivorRoleComponent> ent, ref GetBriefingEvent args)
+    {
+        args.Append(Loc.GetString("survivor-role-greeting"));
+    }
+
     protected override void AppendRoundEndText(EntityUid uid,
         SurvivorRuleComponent component,
         GameRuleComponent gameRule,
@@ -50,29 +59,37 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     {
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
-        // Using this instead of alive antagonists to make checking for centcomm easier
-        var aliveSurvivors = EntityQuery<SurvivorComponent, TransformComponent>();
+        // Using this instead of alive antagonists to make checking for shuttle & if the ent is alive easier
+        var existingSurvivors = EntityQuery<SurvivorComponent, TransformComponent, MobStateComponent>();
 
-        args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", aliveSurvivors.Count())));
+        var alive = 0;
+        var aliveOnShuttle = 0;
+        var eShuttle = _eShuttle.GetShuttle();
 
-        var aliveOnCentComm = 0;
-        var centCommMapUid = _roundEnd.GetCentcomm();
-
-        if (centCommMapUid is null)
+        if (eShuttle is null)
             return;
 
-        // TODO: Detects CentComm but didn't detect the survivor ON centcomm
-        foreach (var (_, xform) in aliveSurvivors)
-        {
-            var mapUid = xform.MapUid;
+        var eShuttleMapPos = _xform.GetMapCoordinates(Transform(eShuttle.Value));
 
-            if (mapUid != centCommMapUid.Value)
+        foreach (var (_, xform, mobStateComp) in existingSurvivors)
+        {
+            // Checking this instead of the system since we're already going through a query
+            //  Can't get .Owner so there'd have to be an entire different way to get a UID
+            //   Which is a lot more messy than just doing this
+            if (mobStateComp.CurrentState != MobState.Alive)
                 continue;
 
-            aliveOnCentComm++;
+            if (eShuttleMapPos.MapId != _xform.GetMapCoordinates(xform).MapId)
+            {
+                alive++;
+                continue;
+            }
+
+            aliveOnShuttle++;
         }
 
-        args.AddLine(Loc.GetString("survivor-round-end-alive-on-centcomm-count", ("aliveCount", aliveOnCentComm)));
+        args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", alive)));
+        args.AddLine(Loc.GetString("survivor-round-end-alive-on-shuttle-count", ("aliveCount", aliveOnShuttle)));
 
         // Player manifest at EOR shows who's a survivor so no need for extra info here.
     }
