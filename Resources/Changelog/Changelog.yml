@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Binary encryption key now uses an AI icon
-    type: Tweak
-  id: 7464
-  time: '2024-10-01T04:03:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32327
 - author: BramvanZijp
   changes:
   - message: Fixed borgs being able to be briefly disabled by others.
@@ -3897,3 +3890,10 @@
   id: 7963
   time: '2025-02-16T18:43:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35203
+- author: slarticodefast
+  changes:
+  - message: Fixed uplink items not being able to be used in your hand.
+    type: Fix
+  id: 7964
+  time: '2025-02-16T18:47:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35218
