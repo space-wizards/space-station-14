@@ -115,7 +115,7 @@ public sealed class SlipperySystem : EntitySystem
         var evSlip = new SlipEvent(other);
         RaiseLocalEvent(uid, ref evSlip);
 
-        var evChangeStatsValue = new ChangeStatsValueEvent("SlippedCount", 1);
+        var evChangeStatsValue = new ChangeStatsValueEvent(SlippedCount, 1);
         RaiseLocalEvent(ref evChangeStatsValue);
 
 
