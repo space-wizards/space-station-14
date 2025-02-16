@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: AI can now use fire alarms.
-    type: Add
-  id: 7459
-  time: '2024-09-30T09:56:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32467
 - author: BramvanZijp
   changes:
   - message: The Engineering Cyborg's Advanced Tool Module now has jaws of life and
@@ -3901,3 +3894,10 @@
   id: 7958
   time: '2025-02-16T08:35:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32522
+- author: metalgearsloth
+  changes:
+  - message: Fix lighting quality affecting planet lighting.
+    type: Fix
+  id: 7959
+  time: '2025-02-16T13:29:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35207
