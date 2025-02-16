@@ -19,7 +19,7 @@ public sealed class BeforeLightTargetOverlay : Overlay
     /// <summary>
     /// In metres
     /// </summary>
-    private float _skirting = 1.5f;
+    private float _skirting = 2f;
 
     public const int ContentZIndex = -10;
 
