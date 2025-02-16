@@ -28,10 +28,16 @@ public sealed partial class WieldableComponent : Component
 
     /// <summary>
     ///     Whether using the item inhand while wielding causes the item to unwield.
-    ///     Unwielding can conflict with other inhand actions. 
+    ///     Unwielding can conflict with other inhand actions.
     /// </summary>
     [DataField]
     public bool UnwieldOnUse = true;
+
+    /// <summary>
+    ///     Should use delay trigger after the wield/unwield?
+    /// </summary>
+    [DataField]
+    public bool UseDelayOnWield = true;
 
     [DataField("wieldedInhandPrefix")]
     public string? WieldedInhandPrefix = "wielded";

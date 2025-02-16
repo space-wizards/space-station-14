@@ -4,6 +4,7 @@ using Content.Shared.Anomaly.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -41,19 +42,22 @@ public abstract class SharedAnomalySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
-        SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
+        SubscribeLocalEvent<AnomalyComponent, LandEvent>(OnLand);
     }
 
     private void OnAnomalyThrowStart(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitStartEvent args)
     {
-        if (!TryComp<CorePoweredThrowerComponent>(args.Used, out var corePowered) || !TryComp<PhysicsComponent>(ent, out var body))
+        if (!TryComp<CorePoweredThrowerComponent>(args.Weapon, out var corePowered) || !TryComp<PhysicsComponent>(ent, out var body))
             return;
+
+        // anomalies are static by default, so we have set them to dynamic to be throwable
         _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
         ChangeAnomalyStability(ent, Random.NextFloat(corePowered.StabilityPerThrow.X, corePowered.StabilityPerThrow.Y), ent.Comp);
     }
 
-    private void OnAnomalyThrowEnd(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitEndEvent args)
+    private void OnLand(Entity<AnomalyComponent> ent, ref LandEvent args)
     {
+        // revert back to static
         _physics.SetBodyType(ent, BodyType.Static);
     }
 
