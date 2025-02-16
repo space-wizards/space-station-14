@@ -1,0 +1,130 @@
+- type: currency
+  id: SalvageTicket
+  displayName: materials-unit-credits
+  cash:
+    1: SalvageTicket
+  canWithdraw: true
+
+- type: entity
+  parent: BaseItem
+  id: SalvageTicket
+  name: ticket
+  description: exchange your tickets for equipment!
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      SalvageTicket: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: SalvageTicket
+    count: 1
+    baseLayer: base
+    layerStates:
+    - icon
+    layerCountStates:
+    - 1
+  - type: Sprite
+    sprite: _Starlight/Objects/Economy/salvage_ticket.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+  - type: Currency
+    price:
+      SalvageTicket: 1
+
+- type: material
+  id: SalvageTicket
+  name: ticket
+  unit: materials-unit-credit
+  stackEntity: SalvageTicket
+  icon: { sprite: /Textures/_Starlight/Objects/Economy/salvage_ticket.rsi, state: icon }
+  price: 1
+
+- type: stack
+  id: SalvageTicket
+  name: ticket
+  icon: { sprite: /Textures/_Starlight/Objects/Economy/salvage_ticket.rsi, state: icon }
+  spawn: SalvageTicket
+  
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket5
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+  
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket10
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
+    
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket15
+  suffix: 15
+  components:
+  - type: Stack
+    count: 15
+    
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket20
+  suffix: 20
+  components:
+  - type: Stack
+    count: 20
+    
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket25
+  suffix: 25
+  components:
+  - type: Stack
+    count: 25
+    
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket30
+  suffix: 30
+  components:
+  - type: Stack
+    count: 30
+    
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket50
+  suffix: 50
+  components:
+  - type: Stack
+    count: 50
+    
+- type: entity
+  parent: SalvageTicket
+  id: SalvageTicket100
+  suffix: 100
+  components:
+  - type: Stack
+    count: 100
