@@ -95,7 +95,7 @@
     mapPath: /Maps/_Starlight/Shuttles/VoxATS.yml
 
   #Pig's ERT Shuttle
-  - type: entity
+- type: entity
   parent: BaseGameRule
   id: ERTShuttleSpawn
   components:
