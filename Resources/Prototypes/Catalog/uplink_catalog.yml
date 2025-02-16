@@ -1181,6 +1181,22 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkReinforcementRadioSyndicateCyborgSaboteur
+  name:  uplink-reinforcement-radio-cyborg-saboteur-name
+  description: uplink-reinforcement-radio-cyborg-saboteur-desc
+  productEntity: ReinforcementRadioSyndicateCyborgSaboteur
+  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-borg-saboteur }
+  cost:
+    Telecrystal: 50
+  categories:
+  - UplinkAllies
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkReinforcementRadioSyndicateAncestor
   name: uplink-reinforcement-radio-ancestor-name
   description: uplink-reinforcement-radio-ancestor-desc
