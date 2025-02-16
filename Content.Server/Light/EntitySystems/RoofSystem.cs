@@ -4,6 +4,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Light.EntitySystems;
 
+/// <inheritdoc/>
 public sealed class RoofSystem : SharedRoofSystem
 {
     [Dependency] private readonly SharedMapSystem _maps = default!;
