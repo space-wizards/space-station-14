@@ -34,12 +34,13 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <summary>
     /// This event is relevant when a PDA/uplink is created and a discount component is already on it
     /// </summary>
-    private void OnStoreStartup(EntityUid store, StoreComponent storeComponent, StoreAddedEvent ev)
+    private void OnStoreStartup(Entity<StoreComponent> entity, ref StoreAddedEvent args)
     {
-        if (!TryComp<StoreDiscountComponent>(store, out var discountComponent))
-        {
+        if (!TryComp<StoreComponent>(entity, out var storeComponent))
             return;
-        }
+
+        if (!TryComp<StoreDiscountComponent>(entity, out var discountComponent))
+            return;
 
         ActivateDiscounts(storeComponent, discountComponent);
     }
@@ -47,17 +48,18 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <summary>
     /// This event is relevant when a PDA/uplink already existed and discounts are added later
     /// </summary>
-    private void OnDiscountStartup(EntityUid store, StoreDiscountComponent component, ComponentStartup args)
+    private void OnDiscountStartup(Entity<StoreDiscountComponent> entity, ref ComponentStartup args)
     {
-        if (!TryComp<StoreComponent>(store, out var storeComponent))
-        {
+        if (!TryComp<StoreComponent>(entity, out var storeComponent))
             return;
-        }
+
+        if (!TryComp<StoreDiscountComponent>(entity, out var discountComponent))
+            return;
 
         // should only happen once if this components startup event fires but has not yet been initialized
-        if (component.Discounts.Count == 0 && component.TotalDiscounts > 0)
+        if (discountComponent.Discounts.Count == 0 && discountComponent.TotalDiscounts > 0)
         {
-            ActivateDiscounts(storeComponent, component);
+            ActivateDiscounts(storeComponent, discountComponent);
         }
     }
 

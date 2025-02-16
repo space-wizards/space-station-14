@@ -22,7 +22,7 @@ public sealed partial class StoreDiscountComponent : Component
     /// Number of discounts to add to a store
     /// </summary>
     [DataField]
-    public int TotalDiscounts { get; set; } = 6;
+    public int TotalDiscounts = 6;
 }
 
 /// <summary>

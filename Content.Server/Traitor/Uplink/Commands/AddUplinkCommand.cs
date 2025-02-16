@@ -85,7 +85,7 @@ namespace Content.Server.Traitor.Uplink.Commands
 
             // Finally add uplink
             var uplinkSys = _entManager.System<UplinkSystem>();
-            if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity))
+            if (!uplinkSys.AddUplink(user, 20, uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
             }
