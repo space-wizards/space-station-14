@@ -10,10 +10,10 @@
     {
       "name": "nanotrasen"
     },
-{
+    {
       "name": "druid"
     },
-{
+    {
       "name": "chaos"
     },
     {
@@ -45,6 +45,9 @@
       "delays": [
         [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
       ]
+    },
+    {
+      "name": "undevoted"
     }
   ]
 }
