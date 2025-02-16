@@ -18,7 +18,6 @@ namespace Content.Client.Options.UI
             Tabs.SetTabTitle(2, Loc.GetString("ui-options-tab-controls"));
             Tabs.SetTabTitle(3, Loc.GetString("ui-options-tab-audio"));
             Tabs.SetTabTitle(4, Loc.GetString("ui-options-tab-accessibility"));
-            Tabs.SetTabTitle(5, Loc.GetString("ui-options-tab-extra")); // Extra settings
 
             UpdateTabs();
         }
