@@ -696,10 +696,10 @@ namespace Content.Shared.Cuffs
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 
-            // Uncuffs while buckled put you at the edge of stamcrit
-            if (_buckle.IsBuckled(target))
+            // If someone uncuffs an entity while it's buckled, it gets stamcrit
+            if (_buckle.IsBuckled(target) && target != user)
             {
-                _stamina.TakeStaminaDamage(target, 99);
+                _stamina.TakeStaminaDamage(target, 100);
                 // TODO add a popup here when there is support for non-overlapping popups
                 //_popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-buckled-stamina"), target, user, PopupType.MediumCaution);
             }
