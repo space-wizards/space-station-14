@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -25,8 +26,49 @@ public sealed class StoreDiscountSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
+        SubscribeLocalEvent<StoreDiscountComponent, ComponentStartup>(OnDiscountStartup);
+        SubscribeLocalEvent<StoreComponent, StoreAddedEvent>(OnStoreStartup);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
+    }
+
+    /// <summary>
+    /// This event is relevant when a PDA/uplink is created and a discount component is already on it
+    /// </summary>
+    private void OnStoreStartup(Entity<StoreComponent> entity, ref StoreAddedEvent args)
+    {
+        if (!TryComp<StoreComponent>(entity, out var storeComponent))
+            return;
+
+        if (!TryComp<StoreDiscountComponent>(entity, out var discountComponent))
+            return;
+
+        ActivateDiscounts(storeComponent, discountComponent);
+    }
+
+    /// <summary>
+    /// This event is relevant when a PDA/uplink already existed and discounts are added later
+    /// </summary>
+    private void OnDiscountStartup(Entity<StoreDiscountComponent> entity, ref ComponentStartup args)
+    {
+        if (!TryComp<StoreComponent>(entity, out var storeComponent))
+            return;
+
+        if (!TryComp<StoreDiscountComponent>(entity, out var discountComponent))
+            return;
+
+        // should only happen once if this components startup event fires but has not yet been initialized
+        if (discountComponent.Discounts.Count == 0 && discountComponent.TotalDiscounts > 0)
+        {
+            ActivateDiscounts(storeComponent, discountComponent);
+        }
+    }
+
+    private void ActivateDiscounts(StoreComponent storeComponent, StoreDiscountComponent discountComponent)
+    {
+        var storeItems = storeComponent.FullListingsCatalog;
+        var discounts = InitializeDiscounts(storeItems, discountComponent.TotalDiscounts);
+        ApplyDiscounts(storeItems, discounts);
+        discountComponent.Discounts = discounts;
     }
 
     /// <summary> Decrements discounted item count, removes discount modifier and category, if counter reaches zero. </summary>
@@ -55,23 +97,9 @@ public sealed class StoreDiscountSystem : EntitySystem
         purchasedItem.Categories.Remove(DiscountedStoreCategoryPrototypeKey);
     }
 
-    /// <summary> Initialized discounts if required. </summary>
-    private void OnStoreInitialized(ref StoreInitializedEvent ev)
-    {
-        if (!ev.UseDiscounts)
-        {
-            return;
-        }
-
-        var discountComponent = EnsureComp<StoreDiscountComponent>(ev.Store);
-        var discounts = InitializeDiscounts(ev.Listings);
-        ApplyDiscounts(ev.Listings, discounts);
-        discountComponent.Discounts = discounts;
-    }
-
     private IReadOnlyList<StoreDiscountData> InitializeDiscounts(
         IReadOnlyCollection<ListingDataWithCostModifiers> listings,
-        int totalAvailableDiscounts = 6
+        int totalAvailableDiscounts
     )
     {
         // Get list of categories with cumulative weights.
@@ -212,7 +240,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         return discountAmountByCurrencyId;
     }
 
-    private void ApplyDiscounts(IReadOnlyList<ListingDataWithCostModifiers> listings, IReadOnlyCollection<StoreDiscountData> discounts)
+    private void ApplyDiscounts(HashSet<ListingDataWithCostModifiers> listings, IReadOnlyCollection<StoreDiscountData> discounts)
     {
         foreach (var discountData in discounts)
         {
@@ -222,12 +250,11 @@ public sealed class StoreDiscountSystem : EntitySystem
             }
 
             ListingDataWithCostModifiers? found = null;
-            for (var i = 0; i < listings.Count; i++)
+            foreach (var listing in listings)
             {
-                var current = listings[i];
-                if (current.ID == discountData.ListingId)
+                if (listing.ID == discountData.ListingId)
                 {
-                    found = current;
+                    found = listing;
                     break;
                 }
             }
@@ -380,18 +407,3 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
     }
 }
-
-/// <summary>
-/// Event of store being initialized.
-/// </summary>
-/// <param name="TargetUser">EntityUid of store entity owner.</param>
-/// <param name="Store">EntityUid of store entity.</param>
-/// <param name="UseDiscounts">Marker, if store should have discounts.</param>
-/// <param name="Listings">List of available listings items.</param>
-[ByRefEvent]
-public record struct StoreInitializedEvent(
-    EntityUid TargetUser,
-    EntityUid Store,
-    bool UseDiscounts,
-    IReadOnlyList<ListingDataWithCostModifiers> Listings
-);
