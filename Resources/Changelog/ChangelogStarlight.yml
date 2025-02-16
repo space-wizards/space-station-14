@@ -3461,4 +3461,18 @@ Entries:
   id: 479
   time: '2025-02-16T17:09:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/331
+- author: Rinary
+  changes:
+  - message: Added Salvage Ticket Machine.
+    type: Add
+  id: 480
+  time: '2025-02-16T19:27:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/335
+- author: Rinary
+  changes:
+  - message: Added Salvage Tickets.
+    type: Add
+  id: 481
+  time: '2025-02-16T19:27:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/335
 
