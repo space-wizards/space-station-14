@@ -2,6 +2,7 @@
   id: InitialInfected
   name: roles-antag-initial-infected-name
   antagonist: true
+  playTimeTracker: AntagInitialInfected # imp
   setPreference: true
   objective: roles-antag-initial-infected-objective
   guides: [ Zombies ]
@@ -10,6 +11,7 @@
   id: Zombie
   name: roles-antag-zombie-name
   antagonist: true
+  playTimeTracker: AntagZombie
   setPreference: false
   objective: roles-antag-zombie-objective
   guides: [ Zombies ]

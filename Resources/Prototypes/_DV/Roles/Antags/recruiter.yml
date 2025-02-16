@@ -3,6 +3,7 @@
   name: roles-antag-syndicate-recruiter-name
   objective: roles-antag-syndicate-recruiter-objective
   antagonist: false # you ask questions and write papers not kill people
+  playTimeTracker: AntagSyndicateRecruiter
 
 - type: startingGear
   id: SyndicateRecruiterGear
