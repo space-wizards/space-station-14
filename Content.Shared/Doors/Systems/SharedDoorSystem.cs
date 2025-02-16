@@ -220,7 +220,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
     {
-        if (door.State == DoorState.Welded || !door.CanPry)
+        if (door.State == DoorState.Welded || !door.CanPry || GetColliding(uid).Any())
             args.Cancelled = true;
     }
 
