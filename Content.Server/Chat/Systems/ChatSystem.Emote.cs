@@ -13,7 +13,6 @@ public partial class ChatSystem
 {
     private FrozenDictionary<string, EmotePrototype> _wordEmoteDict = FrozenDictionary<string, EmotePrototype>.Empty;
 
-
     protected override void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
         base.OnPrototypeReload(obj);
@@ -154,7 +153,7 @@ public partial class ChatSystem
 
         // if general params for all sounds set - use them
         var param = proto.GeneralParams ?? sound.Params;
-        _audio.PlayPvs(sound, uid, AudioFun.FunAudioParams(AudioFun.FunAudioParams(param)));
+        _audio.PlayPvs(sound, uid, AudioFun.FunAudioParams(param));
         return true;
     }
     /// <summary>

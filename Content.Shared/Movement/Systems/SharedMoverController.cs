@@ -265,11 +265,11 @@ public abstract partial class SharedMoverController : VirtualController
                 // If we're a relay target then predict the sound for all relays.
                 if (relayTarget != null)
                 {
-                    _audio.PlayPredicted(sound, uid, relayTarget.Source, AudioFun.FunAudioParams(AudioFun.FunAudioParams(audioParams)));
+                    _audio.PlayPredicted(sound, uid, relayTarget.Source, AudioFun.FunAudioParams(audioParams));
                 }
                 else
                 {
-                    _audio.PlayPredicted(sound, uid, uid, AudioFun.FunAudioParams(AudioFun.FunAudioParams(audioParams)));
+                    _audio.PlayPredicted(sound, uid, uid, AudioFun.FunAudioParams(audioParams));
                 }
             }
         }
