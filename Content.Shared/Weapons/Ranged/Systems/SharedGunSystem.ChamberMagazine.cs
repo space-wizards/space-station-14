@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -168,7 +169,7 @@ public abstract partial class SharedGunSystem
                 _slots.SetLock(uid, ChamberSlot, true, slots);
             }
 
-            Audio.PlayPredicted(component.BoltClosedSound, uid, user);
+            Audio.PlayPredicted(component.BoltClosedSound, uid, user, AudioFun.FunAudioParams());
         }
         else
         {

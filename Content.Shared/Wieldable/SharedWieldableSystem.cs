@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Audio;
 using Content.Shared.Camera;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
@@ -254,7 +255,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         SetWielded((used, component), true);
 
         if (component.WieldSound != null)
-            _audio.PlayPredicted(component.WieldSound, used, user);
+            _audio.PlayPredicted(component.WieldSound, used, user, AudioFun.FunAudioParams());
 
         //This section handles spawning the virtual item(s) to occupy the required additional hand(s).
         //Since the client can't currently predict entity spawning, only do this if this is running serverside.

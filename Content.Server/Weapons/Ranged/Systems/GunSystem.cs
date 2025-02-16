@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Cargo.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -127,7 +128,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     else
                     {
                         userImpulse = false;
-                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
+                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, AudioFun.FunAudioParams());
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -245,7 +246,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
                     }
 
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -284,7 +285,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
 
             MuzzleFlash(gunUid, ammoComp, mapDirection.ToAngle(), user);
-            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams());
         }
     }
 
@@ -376,7 +377,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(DamagePitchVariation)));
                 playedSound = true;
             }
         }
