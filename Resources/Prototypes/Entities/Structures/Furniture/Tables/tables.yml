@@ -250,7 +250,7 @@
       types:
         Blunt: 8
     bonkTime: 3
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -307,7 +307,7 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -367,7 +367,7 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -427,7 +427,7 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -473,7 +473,7 @@
   - type: Construction
     graph: Table
     node: TableBrass
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -521,7 +521,7 @@
     node: TableWood
   - type: Tag
     tags:
-    - Table
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -565,7 +565,7 @@
     node: TableCarpet
   - type: Tag
     tags:
-    - Table
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -597,7 +597,7 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -634,7 +634,7 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCarpet
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -672,7 +672,7 @@
     key: fancytable
   - type: Tag
     tags:
-    - Table
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -692,7 +692,7 @@
     node: TableFancyBlue
   - type: IconSmooth
     key: fancytableblue
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -710,7 +710,7 @@
     node: TableFancyCyan
   - type: IconSmooth
     key: fancytablecyan
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -728,7 +728,7 @@
     node: TableFancyBlack
   - type: IconSmooth
     key: fancytableblack
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -746,7 +746,7 @@
     node: TableFancyRed
   - type: IconSmooth
     key: fancytablered
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -764,7 +764,7 @@
     node: TableFancyPurple
   - type: IconSmooth
     key: fancytablepurple
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -782,7 +782,7 @@
     node: TableFancyPink
   - type: IconSmooth
     key: fancytablepink
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -800,7 +800,7 @@
     node: TableFancyGreen
   - type: IconSmooth
     key: fancytablegreen
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -818,7 +818,7 @@
     node: TableFancyOrange
   - type: IconSmooth
     key: fancytableorange
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
@@ -836,7 +836,7 @@
     node: TableFancyWhite
   - type: IconSmooth
     key: fancytablewhite
-  - type: Tag # goob edit
+  - type: Tag # imp edit
     tags:
     - Table
 
