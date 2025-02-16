@@ -56,11 +56,19 @@
          "directions":4
       },
       {
+         "name":"pipeBendBroken",
+         "directions":4
+      },
+      {
          "name": "pipeFourway",
          "directions":4
       },
       {
          "name":"pipeStraight",
+         "directions":4
+      },
+      {
+         "name":"pipeStraightBroken",
          "directions":4
       },
       {
