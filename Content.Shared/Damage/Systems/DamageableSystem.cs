@@ -249,12 +249,12 @@ namespace Content.Shared.Damage
         {
             if (_netMan.IsServer)
             {
-                args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageModifierSetId, component.HealthBarThreshold);
+                args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageContainerID, component.DamageModifierSetId, component.HealthBarThreshold);
             }
             else
             {
                 // avoid mispredicting damage on newly spawned entities.
-                args.State = new DamageableComponentState(component.Damage.DamageDict.ShallowClone(), component.DamageModifierSetId, component.HealthBarThreshold);
+                args.State = new DamageableComponentState(component.Damage.DamageDict.ShallowClone(), component.DamageContainerID, component.DamageModifierSetId, component.HealthBarThreshold);
             }
         }
 
@@ -287,6 +287,7 @@ namespace Content.Shared.Damage
                 return;
             }
 
+            component.DamageContainerID = state.DamageContainerId;
             component.DamageModifierSetId = state.ModifierSetId;
             component.HealthBarThreshold = state.HealthBarThreshold;
 
