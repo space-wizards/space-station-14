@@ -1,16 +1,12 @@
 using System.Linq;
-using Content.Server.Doors.Electronics;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Doors.Electronics;
-using Content.Shared.Doors;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Doors.Electronics;
+namespace Content.Server.Doors.Systems;
 
 public sealed class DoorElectronicsSystem : EntitySystem
 {
@@ -38,8 +34,9 @@ public sealed class DoorElectronicsSystem : EntitySystem
             }
         }
 
-        var state = new DoorElectronicsConfigurationState(accesses);
-        _uiSystem.SetUiState(uid, DoorElectronicsConfigurationUiKey.Key, state);
+        _uiSystem.SetUiState(uid,
+            DoorElectronicsConfigurationUiKey.Key,
+            new DoorElectronicsConfigurationState(accesses));
     }
 
     private void OnChangeConfiguration(
@@ -47,8 +44,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
         DoorElectronicsComponent component,
         DoorElectronicsUpdateConfigurationMessage args)
     {
-        var accessReader = EnsureComp<AccessReaderComponent>(uid);
-        _accessReader.SetAccesses(uid, accessReader, args.AccessList);
+        _accessReader.SetAccesses(uid, EnsureComp<AccessReaderComponent>(uid), args.AccessList);
     }
 
     private void OnAccessReaderChanged(

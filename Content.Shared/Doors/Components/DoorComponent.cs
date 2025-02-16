@@ -18,16 +18,12 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
     /// </summary>
-    /// <remarks>
-    /// This should never be set directly, use <see cref="SharedDoorSystem.SetState(EntityUid, DoorState, DoorComponent?)"/> instead.
-    /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField, AutoNetworkedField]
-    [Access(typeof(SharedDoorSystem))]
+    [DataField, AutoNetworkedField, Access(typeof(SharedDoorSystem))]
     public DoorState State = DoorState.Closed;
 
     #region Timing
-    // if you want do dynamically adjust these times, you need to add networking for them. So for now, they are all
+
+    // if you want to dynamically adjust these times, you need to add networking for them. So for now, they are all
     // read-only.
 
     /// <summary>
@@ -69,41 +65,38 @@ public sealed partial class DoorComponent : Component
     [AutoNetworkedField, ViewVariables]
     public TimeSpan? NextStateChange;
 
-    /// <summary>
-    ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
-    ///     but not yet actually closed.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Partial;
     #endregion
 
     #region Sounds
+
     /// <summary>
     /// Sound to play when the door opens.
     /// </summary>
-    [DataField("openSound")]
+    [DataField]
     public SoundSpecifier? OpenSound;
 
     /// <summary>
     /// Sound to play when the door closes.
     /// </summary>
-    [DataField("closeSound")]
+    [DataField]
     public SoundSpecifier? CloseSound;
 
     /// <summary>
     /// Sound to play if the door is denied.
     /// </summary>
-    [DataField("denySound")]
+    [DataField]
     public SoundSpecifier? DenySound;
 
     /// <summary>
     /// Sound to play when door has been emagged or possibly electrically tampered
     /// </summary>
-    [DataField("sparkSound")]
+    [DataField]
     public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+
     #endregion
 
     #region Crushing
+
     /// <summary>
     ///     This is how long a door-crush will stun you. This also determines how long it takes the door to open up
     ///     again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
@@ -133,20 +126,35 @@ public sealed partial class DoorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<EntityUid> CurrentlyCrushing = new();
+
     #endregion
 
     #region Graphics
 
     /// <summary>
-    /// The key used when playing door opening/closing/emagging/deny animations.
+    /// The key used when playing door opening animations.
     /// </summary>
-    public const string AnimationKey = "door_animation";
+    public const string AnimationKeyOpen = "door_animation_open";
+
+    /// <summary>
+    /// The key used when playing door closing animations.
+    /// </summary>
+    public const string AnimationKeyClose = "door_animation_close";
+
+    /// <summary>
+    /// The key used when playing door emagging animations.
+    /// </summary>
+    public const string AnimationKeyEmag = "door_animation_emag";
+
+    /// <summary>
+    /// The key used when playing door deny animations.
+    /// </summary>
+    public const string AnimationKeyDeny = "door_animation_deny";
 
     /// <summary>
     /// The sprite state used for the door when it's open.
     /// </summary>
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public string OpenSpriteState = "open";
 
     /// <summary>
@@ -159,7 +167,6 @@ public sealed partial class DoorComponent : Component
     /// The sprite state used for the door when it's closed.
     /// </summary>
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public string ClosedSpriteState = "closed";
 
     /// <summary>
@@ -227,6 +234,7 @@ public sealed partial class DoorComponent : Component
     #endregion Graphics
 
     #region Serialization
+
     /// <summary>
     ///     Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
     /// </summary>
@@ -250,12 +258,12 @@ public sealed partial class DoorComponent : Component
                 return;
 
             NextStateChange = IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(value.Value);
-
         }
     }
+
     #endregion
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanPry = true;
 
     [DataField]
@@ -264,7 +272,7 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// Default time that the door should take to pry open.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float PryTime = 1.5f;
 
     [DataField]
@@ -273,41 +281,96 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// Whether the door blocks light.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool Occludes = true;
 
     /// <summary>
     /// Whether the door will open when it is bumped into.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool BumpOpen = true;
 
     /// <summary>
     /// Whether the door will open when it is activated or clicked.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool ClickOpen = true;
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int OpenDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 }
 
 [Serializable, NetSerializable]
 public enum DoorState : byte
 {
+    /// <summary>
+    /// The door is closed, shut, etc.
+    /// <remarks>Transitions to open attempt states, welded, denying, emagging.</remarks>
+    /// </summary>
     Closed,
+
+    /// <summary>
+    /// The door is attempting to close under its own power.
+    /// </summary>
+    /// <remarks>Transitions to PartiallyClosed or Open.</remarks>
+    AttemptingCloseBySelf,
+
+    /// <summary>
+    /// The door is attempting to close due to an external force, such as a crowbar.
+    /// </summary>
+    /// <remarks>Transitions to PartiallyClosed or Open.</remarks>
+    AttemptingCloseByPrying,
+
+    /// <summary>
+    /// The door is currently in the process of closing.
+    /// </summary>
+    /// <remarks>Transitions to Closed.</remarks>
     Closing,
+
+    /// <summary>
+    /// The door is currently open, ajar, agape, etc.
+    /// </summary>
+    /// <remarks>Transitions to close attempt states.</remarks>
     Open,
+
+    /// <summary>
+    /// The door is attempting to open under its own power.
+    /// </summary>
+    /// <remarks>Transitions to PartiallyOpen or Closed.</remarks>
+    AttemptingOpenBySelf,
+
+    /// <summary>
+    /// The door is attempting to open due to an external force, such as a crowbar.
+    /// </summary>
+    /// <remarks>Transitions to PartiallyOpen or Closed.</remarks>
+    AttemptingOpenByPrying,
+
+    /// <summary>
+    /// The door is currently in the process of opening.
+    /// </summary>
+    /// <remarks>Transitions to Open.</remarks>
     Opening,
+
+    /// <summary>
+    /// The door is welded shut. Door stuck. Please, I'm begging you.
+    /// </summary>
+    /// <remarks>Transitions back to Closed if the welding is fixed.</remarks>
     Welded,
+
+    /// <summary>
+    /// The door is currently denying a tider access to something important.
+    /// </summary>
+    /// <remarks>Transitions back to Closed.</remarks>
     Denying,
-    Emagging
+
+    /// <summary>
+    /// The door is currently being emagged by a tider, who wants access to something important.
+    /// </summary>
+    /// <remarks>Transitions back to Closed.</remarks>
+    Emagging,
 }
 
 [Serializable, NetSerializable]
