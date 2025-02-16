@@ -42,7 +42,15 @@ namespace Content.Shared.Construction.Conditions
             var tagSystem = entManager.System<TagSystem>();
 
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(entManager.GetComponent<TransformComponent>(user).MapID, rUserToObj, maxLength: length,
-                predicate: (e) => !tagSystem.HasTag(e, "Wall"));
+                predicate: (e) => {
+                    if (tagSystem.HasTag(e, "Wall")) {
+                        return false;
+                    }
+                    if (!tagSystem.HasTag(e, "Window")) {
+                        return true;
+                    }
+                    return tagSystem.HasTag(e, "WindowDirectional");
+                });
 
             var targetWall = userToObjRaycastResults.FirstOrNull();
 
