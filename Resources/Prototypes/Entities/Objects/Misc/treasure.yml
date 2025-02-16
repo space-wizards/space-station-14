@@ -158,6 +158,9 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
+  - type: Tag
+    tags:
+    - Coin
   - type: StaticPrice
     price: 75
 

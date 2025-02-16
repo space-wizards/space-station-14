@@ -138,17 +138,69 @@
     state: icon
 
 - type: construction
-  name: improvised shotgun shell
+  name: empty improvised shell
+  id: ShellShotgunImprovisedEmpty
+  graph: ImprovisedShotgunShellEmptyGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A hollow homemade shotgun shell that can be filled with a somewhat deadly variety of makeshift pellets.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised-empty
+
+- type: construction
+  name: improvised shell (glass)
   id: ShellShotgunImprovised
   graph: ImprovisedShotgunShellGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  description: Stuff a handful of glass shards and match sticks into an empty shotgun shell.
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: improvised
+
+- type: construction
+  name: improvised shell (incendiary)
+  id: ShellShotgunImprovisedIncendiary
+  graph: ImprovisedIncendiaryShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Fill an empty shotgun shell with welding fuel and stuff it with a handful of glass shards and match sticks.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised-incendiary
+
+- type: construction
+  name: improvised shell (uranium glass)
+  id: ShellShotgunImprovisedUranium
+  graph: ImprovisedUraniumShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Stuff a handful of uranium glass shards and match sticks into an empty shotgun shell.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised-uranium
+
+- type: construction
+  name: improvised shell (coin slug)
+  id: ShellShotgunCoin
+  graph: CoinShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Push a stack of rock hard coins and a handful of match sticks into an empty shotgun shell.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: coinshot
 
 - type: construction
   name: rifle stock
