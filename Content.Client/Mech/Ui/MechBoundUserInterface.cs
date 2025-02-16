@@ -2,7 +2,6 @@ using Content.Client.UserInterface.Fragments;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui;
@@ -38,8 +37,13 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         if (state is not MechBoundUiState msg)
             return;
         UpdateEquipmentControls(msg);
-        _menu?.UpdateMechStats();
         _menu?.UpdateEquipmentView();
+    }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        if (message is MechEnergyMessage msg)
+            _menu?.UpdateMechStats(msg.Charge, msg.MaxEnergy);
     }
 
     public void UpdateEquipmentControls(MechBoundUiState state)
