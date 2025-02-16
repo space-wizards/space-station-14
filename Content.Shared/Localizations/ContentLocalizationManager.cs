@@ -148,8 +148,9 @@ namespace Content.Shared.Localizations
         public static string FormatPlaytime(TimeSpan time)
         {
             var hours = (int)time.TotalHours;
-            var rounded = (int)Math.Ceiling(time.TotalMinutes);
-            var minutes = rounded - hours * 60;
+            var minutes = time.Minutes;
+            if (hours == 0 && minutes == 0)
+                minutes = 1;
             return Loc.GetString($"zzzz-fmt-playtime", ("hours", hours), ("minutes", minutes));
         }
 
