@@ -96,13 +96,13 @@
     alarmOnPulse: true
 
 - type: wireLayout
-  id: Arcade
+  id: SpaceVillainArcade
+  dummyWires: 2
   wires:
   - !type:PowerWireAction
   - !type:SpeechWireAction
-  - !type:ArcadeOverflowWireAction
-  - !type:ArcadePlayerInvincibleWireAction
-  - !type:ArcadeEnemyInvincibleWireAction
+  - !type:ArcadePlayerInvincibilityWireAction
+  - !type:ArcadeVillainInvincibilityWireAction
   - !type:AiInteractWireAction
 
 - type: wireLayout
