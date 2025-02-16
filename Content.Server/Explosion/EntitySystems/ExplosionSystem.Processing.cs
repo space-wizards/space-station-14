@@ -668,6 +668,11 @@ sealed class Explosion
     /// </summary>
     private readonly bool _canCreateVacuum;
 
+    /// <summary>
+    ///     Whether this explosion can throw away items.
+    /// </summary>
+    private readonly bool _canThrowItems;
+
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
     private readonly SharedMapSystem _mapSystem;
@@ -690,6 +695,7 @@ sealed class Explosion
         float tileBreakScale,
         int maxTileBreak,
         bool canCreateVacuum,
+        bool canThrowItems,
         IEntityManager entMan,
         IMapManager mapMan,
         EntityUid visualEnt,
@@ -708,6 +714,7 @@ sealed class Explosion
         _tileBreakScale = tileBreakScale;
         _maxTileBreak = maxTileBreak;
         _canCreateVacuum = canCreateVacuum;
+        _canThrowItems = canThrowItems;
         _entMan = entMan;
 
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
@@ -767,7 +774,7 @@ sealed class Explosion
             _currentDamage = ExplosionType.DamagePerIntensity * _currentIntensity;
 
             // only throw if either the explosion is small, or if this is the outer ring of a large explosion.
-            var doThrow = Area < _system.ThrowLimit || CurrentIteration > _tileSetIntensity.Count - 6;
+            var doThrow = _canThrowItems && (Area < _system.ThrowLimit || CurrentIteration > _tileSetIntensity.Count - 6);
             _currentThrowForce = doThrow ? 10 * MathF.Sqrt(_currentIntensity) : 0;
 
             // for each grid/space tile set
@@ -923,5 +930,6 @@ public sealed class QueuedExplosion
     public float TotalIntensity, Slope, MaxTileIntensity, TileBreakScale;
     public int MaxTileBreak;
     public bool CanCreateVacuum;
+    public bool CanThrowItems;
     public EntityUid? Cause; // The entity that exploded, for logging purposes.
 }
