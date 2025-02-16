@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Black mime hardsuit, crafted using black suspenders
-    type: Add
-  - message: Red mime hardsuit (original) now crafted using red suspenders
-    type: Tweak
-  id: 637
-  time: '2024-12-03T16:40:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/880
 - author: ATDoop
   changes:
   - message: Jamjar glasses now have a side view consistent with their front!
@@ -4184,3 +4175,11 @@
   id: 1136
   time: '2025-02-16T08:29:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1705
+- author: kipdotnet
+  changes:
+  - message: Quartermasters can now pick an extra extra extra large winter coat in
+      the loadout screen.
+    type: Add
+  id: 1137
+  time: '2025-02-16T08:31:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1691
