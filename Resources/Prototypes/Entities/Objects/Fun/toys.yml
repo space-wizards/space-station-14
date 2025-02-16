@@ -713,7 +713,6 @@
   - type: RgbLightController
     layers: [ 0 ]
   - type: Item
-    heldPrefix: rainbowcarpplush
     inhandVisuals:
       left:
       - state: rainbowcarpplush-inhand-left
@@ -739,6 +738,22 @@
   components:
   - type: Sprite
     state: plushie_slime
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Slime/slime_squish.ogg
 
 - type: entity
   parent: BasePlushie
@@ -1348,6 +1363,28 @@
     heldPrefix: orb
   - type: TileFrictionModifier
     modifier: 0.001
+
+- type: entity
+  parent: PonderingOrb
+  id: PonderingOrbWizard
+  name: pondering orb
+  description: Ponderous, man... Really ponderous. Magically shows the station's camera network.
+  suffix: Wizard
+  components:
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
 
 - type: entity
   parent: BaseItem
