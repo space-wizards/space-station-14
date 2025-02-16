@@ -285,6 +285,18 @@
     Hotsauce: 3
 
 - type: reaction
+  id: CookingColdsauce
+  reactants:
+    JuiceTomato:
+      amount: 1
+    TableSalt:
+      amount: 1
+    FrostOil:
+      amount: 1
+  products:
+    Coldsauce: 3
+
+- type: reaction
   id: CookingVinegar
   reactants:
     Ethanol:
