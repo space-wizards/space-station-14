@@ -10,8 +10,19 @@ survivor-role-greeting =
     Collect as much firepower as needed to guarantee your survival.
     Trust no one.
 
-survivor-round-end-alive-count = [color=yellow]{$aliveCount}[/color] survivor(s) were marooned on the station.
-survivor-round-end-alive-on-shuttle-count = [color=green]{$aliveCount}[/color] survivor(s) made it out alive.
+survivor-round-end-alive-count =
+{
+    $aliveCount ->
+        [one] [color=yellow]{$aliveCount}[/color] survivor was marooned on the station.
+        *[other] [color=yellow]{$aliveCount}[/color] survivors were marooned on the station.
+}
+
+survivor-round-end-alive-on-shuttle-count =
+{
+    $aliveCount ->
+        [one] [color=green]{$aliveCount}[/color] survivor made it out alive.
+        *[other] [color=green]{$aliveCount}[/color] survivors made it out alive.
+}
 
 ## TODO: Wizard
 
