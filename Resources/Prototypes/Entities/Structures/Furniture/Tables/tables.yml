@@ -851,7 +851,7 @@
   components:
   - type: Tag
     tags:
-      - Table
+      - Table # imp edit
       - Debug
   - type: Sprite
     sprite: Structures/Furniture/Tables/debug.rsi
