@@ -19,7 +19,6 @@ public sealed class MechNightVisionSystem : EntitySystem
 
         SubscribeLocalEvent<MechEquipmentActionComponent, MechToggleNightVisionEvent>(OnNightVisionToggle);
         
-        SubscribeLocalEvent<MechComponent, BeforePilotInsertEvent>(OnPilotInsert);
         SubscribeLocalEvent<MechComponent, BeforePilotEjectEvent>(OnPilotEject);
     }
 
@@ -47,19 +46,6 @@ public sealed class MechNightVisionSystem : EntitySystem
         _actions.SetToggled(comp.EquipmentActionEntity, comp.EquipmentToggled);
     }
     
-    private void OnPilotInsert(EntityUid uid, MechComponent component, ref BeforePilotInsertEvent args)
-    {
-        if (HasComp<NightVisionComponent>(args.Pilot))
-            return;
-        var equipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
-        foreach (var ent in equipment)
-            if (HasComp<MechNightVisionComponent>(ent) && TryComp<MechEquipmentActionComponent>(ent, out var actionComp) && actionComp.EquipmentToggled)
-            {
-                AddComp<NightVisionComponent>(args.Pilot);
-                actionComp.EquipmentComponentAdded = true;
-            }
-    }
-    
     private void OnPilotEject(EntityUid uid, MechComponent component, ref BeforePilotEjectEvent args)
     {
         if (!HasComp<NightVisionComponent>(args.Pilot))
@@ -70,6 +56,9 @@ public sealed class MechNightVisionSystem : EntitySystem
             {
                 RemComp<NightVisionComponent>(args.Pilot);
                 actionComp.EquipmentComponentAdded = false;
+                actionComp.EquipmentToggled = false;
+                
+                _actions.SetToggled(actionComp.EquipmentActionEntity, actionComp.EquipmentToggled);
             }
     }
 }
