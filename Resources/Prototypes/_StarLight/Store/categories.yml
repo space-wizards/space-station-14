@@ -92,3 +92,17 @@
 - type: storeCategory
   id: UplinkCybernetics
   name: Cybernetics
+  
+# salvage
+
+- type: storeCategory
+  id: SalvageEquipment
+  name: Equipment
+  
+- type: storeCategory
+  id: SalvageWeapons
+  name: Weapons
+  
+- type: storeCategory
+  id: SalvageConsumeables
+  name: Consumeables

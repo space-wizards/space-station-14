@@ -1,0 +1,205 @@
+- type: listing
+  id: VendorGrapplingGun
+  productEntity: WeaponGrapplingGun
+  cost:
+    SalvageTicket: 40
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+  - !type:BuyerAccessCondition
+    
+- type: listing
+  id: VendorMechClarke
+  productEntity: MechClarke
+  cost:
+    SalvageTicket: 700
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorClothingOuterHardsuitMaxim
+  productEntity: ClothingOuterHardsuitMaxim
+  cost:
+    SalvageTicket: 1500
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorClothingOuterHardsuitLuxury
+  productEntity: ClothingOuterHardsuitLuxury
+  cost:
+    SalvageTicket: 150
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorClothingOuterHardsuitSalvage
+  productEntity: ClothingOuterHardsuitSalvage
+  cost:
+    SalvageTicket: 250
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorClothingOuterHardsuitSpatio
+  productEntity: ClothingOuterHardsuitSpatio
+  cost:
+    SalvageTicket: 100
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMiningDrill
+  productEntity: MiningDrill
+  cost:
+    SalvageTicket: 200
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMiningDrillDiamond
+  productEntity: MiningDrillDiamond
+  cost:
+    SalvageTicket: 400
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponMechMelleDrill
+  productEntity: WeaponMechMelleDrill
+  cost:
+    SalvageTicket: 400
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponMechMelleDrillDiamond
+  productEntity: WeaponMechMelleDrillDiamond
+  cost:
+    SalvageTicket: 600
+  categories:
+  - SalvageEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponLaserImmolator
+  productEntity: WeaponLaserImmolator
+  cost:
+    SalvageTicket: 500
+  categories:
+  - SalvageWeapons
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponShotgunGA12
+  productEntity: WeaponShotgunGA12
+  cost:
+    SalvageTicket: 200
+  categories:
+  - SalvageWeapons
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponShotgunCycler
+  productEntity: WeaponShotgunCycler
+  cost:
+    SalvageTicket: 500
+  categories:
+  - SalvageWeapons
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorWeaponLr30
+  productEntity: WeaponLr30
+  cost:
+    SalvageTicket: 300
+  categories:
+  - SalvageWeapons
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorSpeedLoaderShotgunEmpty
+  productEntity: SpeedLoaderShotgunEmpty
+  cost:
+    SalvageTicket: 100
+  categories:
+  - SalvageConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorBoxLethalshot
+  productEntity: BoxLethalshot
+  cost:
+    SalvageTicket: 200
+  categories:
+  - SalvageConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMagazineBatteryLr30
+  productEntity: MagazineBatteryLr30
+  cost:
+    SalvageTicket: 100
+  categories:
+  - SalvageConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMedkitAdvancedFilled
+  productEntity: MedkitAdvancedFilled
+  cost:
+    SalvageTicket: 250
+  categories:
+  - SalvageConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMedkitFilled
+  productEntity: MedkitFilled
+  cost:
+    SalvageTicket: 150
+  categories:
+  - SalvageConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorMedkitCombatFilled
+  productEntity: MedkitCombatFilled
+  cost:
+    SalvageTicket: 400
+  categories:
+  - SalvageConsumeables
+  conditions:
+  - !type:BuyerAccessCondition
