@@ -42,10 +42,6 @@ public sealed class SharedMagbootsSystem : EntitySystem
         {
             UpdateMagbootEffects(container.Owner, ent, args.Activated);
         }
-
-        var prefix = args.Activated ? "on" : null;
-        _item.SetHeldPrefix(ent, prefix);
-        _clothing.SetEquippedPrefix(ent, prefix);
     }
 
     private void OnGotUnequipped(Entity<MagbootsComponent> ent, ref ClothingGotUnequippedEvent args)
