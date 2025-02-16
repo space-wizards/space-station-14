@@ -7,11 +7,15 @@ public static class AudioFun
 {
     private static readonly RobustRandom _random = new();
 
+    private const float MinPitchScale = 0.2f;
+    private const float MaxPitchScale = 2.5f;
+
     public static AudioParams? FunAudioParams(AudioParams? audioParams)
     {
         if (audioParams == null)
             return null;
 
-        return audioParams.Value.WithPitchScale(_random.NextFloat() * (2.0f - 0.2f) + 0.2f).WithVariation(0);
+        return audioParams.Value.WithPitchScale(_random.NextFloat() * (MaxPitchScale - MinPitchScale) + MinPitchScale)
+            .WithVariation(0);
     }
 }
