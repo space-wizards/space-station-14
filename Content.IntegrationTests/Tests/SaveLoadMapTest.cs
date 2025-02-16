@@ -39,12 +39,12 @@ namespace Content.IntegrationTests.Tests
                 {
                     var mapGrid = mapManager.CreateGridEntity(mapId);
                     xformSystem.SetWorldPosition(mapGrid, new Vector2(10, 10));
-                    mapSystem.SetTile(mapGrid, new Vector2i(0, 0), new Tile(1, (TileRenderFlag) 1, 255));
+                    mapSystem.SetTile(mapGrid, new Vector2i(0, 0), new Tile(typeId: 1, flags: 1, variant: 255));
                 }
                 {
                     var mapGrid = mapManager.CreateGridEntity(mapId);
                     xformSystem.SetWorldPosition(mapGrid, new Vector2(-8, -8));
-                    mapSystem.SetTile(mapGrid, new Vector2i(0, 0), new Tile(2, (TileRenderFlag) 1, 254));
+                    mapSystem.SetTile(mapGrid, new Vector2i(0, 0), new Tile(typeId: 2, flags: 1, variant: 254));
                 }
 
                 Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));
@@ -73,7 +73,7 @@ namespace Content.IntegrationTests.Tests
                     Assert.Multiple(() =>
                     {
                         Assert.That(xformSystem.GetWorldPosition(gridXform), Is.EqualTo(new Vector2(10, 10)));
-                        Assert.That(mapSystem.GetTileRef(gridUid, mapGrid, new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag) 1, 255)));
+                        Assert.That(mapSystem.GetTileRef(gridUid, mapGrid, new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(typeId: 1, flags: 1, variant: 255)));
                     });
                 }
                 {
@@ -87,7 +87,7 @@ namespace Content.IntegrationTests.Tests
                     Assert.Multiple(() =>
                     {
                         Assert.That(xformSystem.GetWorldPosition(gridXform), Is.EqualTo(new Vector2(-8, -8)));
-                        Assert.That(mapSystem.GetTileRef(gridUid, mapGrid, new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag) 1, 254)));
+                        Assert.That(mapSystem.GetTileRef(gridUid, mapGrid, new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(typeId: 2, flags: 1, variant: 254)));
                     });
                 }
             });

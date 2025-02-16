@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: drakewill-CRL
-  changes:
-  - message: Fix error in gas exchange processing order.
-    type: Fix
-  id: 7458
-  time: '2024-09-30T05:14:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32088
 - author: qwerltaz
   changes:
   - message: AI can now use fire alarms.
@@ -3899,3 +3892,12 @@
   id: 7957
   time: '2025-02-15T06:07:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34887
+- author: DoutorWhite & metalgearsloth
+  changes:
+  - message: Added planet lighting for indoor / outdoor areas.
+    type: Add
+  - message: Added day-night cycle functionality.
+    type: Add
+  id: 7958
+  time: '2025-02-16T08:35:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32522
