@@ -122,4 +122,10 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier RechargeSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_charge.ogg");
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField]
+    public SoundSpecifier NewGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
 }
