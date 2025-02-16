@@ -5,6 +5,9 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Arcade.WireActions.SpaceVillain;
 
+/// <summary>
+///
+/// </summary>
 public sealed partial class ArcadeVillainInvincibilityWireAction : BaseToggleWireAction
 {
     private SpaceVillainArcadeSystem _villainArcadeSystem = default!;
@@ -12,7 +15,6 @@ public sealed partial class ArcadeVillainInvincibilityWireAction : BaseToggleWir
     public override string Name { get; set; } = "wire-name-arcade-villain-invincible";
     public override Color Color { get; set; } = Color.Purple;
     public override object? StatusKey { get; } = VillainInvincibilityWireKey.StatusKey;
-    public override object? TimeoutKey { get; } = VillainInvincibilityWireKey.TimeoutKey;
 
     public override void Initialize()
     {

@@ -6,5 +6,4 @@ namespace Content.Shared.Arcade.SpaceVillain;
 public enum VillainInvincibilityWireKey : byte
 {
     StatusKey,
-    TimeoutKey
 }
