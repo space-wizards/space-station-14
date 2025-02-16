@@ -347,6 +347,7 @@ namespace Content.Shared.Verbs
         public override bool CloseMenuDefault => false; // for examine verbs, this will close the examine tooltip.
 
         public bool ShowOnExamineTooltip = true;
+        public bool HoverVerb = false; // aligned to the left, gives text on hover
     }
 
     /// <summary>
