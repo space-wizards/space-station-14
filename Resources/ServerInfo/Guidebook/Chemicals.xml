@@ -23,11 +23,14 @@ Knowing different types of chemicals and their effects is important for being ab
 ## Foods
 <GuideReagentGroupEmbed Group="Foods"/>
 
+## Biological
+<GuideReagentGroupEmbed Group="Biological"/>
+
 ## Botanical
 <GuideReagentGroupEmbed Group="Botanical"/>
 
-## Biological
-<GuideReagentGroupEmbed Group="Biological"/>
+## Domestic
+<GuideReagentGroupEmbed Group="Domestic"/>
 
 ## Special
 <GuideReagentGroupEmbed Group="Special"/>

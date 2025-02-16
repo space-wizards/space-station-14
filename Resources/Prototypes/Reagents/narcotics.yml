@@ -1,4 +1,22 @@
 - type: reagent
+  id: Bananadine
+  name: reagent-name-bananadine
+  group: Narcotics
+  desc: reagent-desc-bananadine
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#ffff00"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+
+- type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
   group: Narcotics
@@ -109,8 +127,58 @@
           min: 30
 
 - type: reagent
+  id: Happiness
+  name: reagent-name-happiness
+  group: Narcotics
+  desc: reagent-desc-happiness
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: paintthinner
+  color: "#EE35FF"
+  metabolisms:
+    Narcotic:
+      effects:
+        - !type:Emote
+          emote: Laugh
+          showInChat: true
+          probability: 0.1
+          conditions:
+          - !type:ReagentThreshold
+            max: 20
+        - !type:Emote
+          emote: Whistle
+          showInChat: true
+          probability: 0.1
+          conditions:
+          - !type:ReagentThreshold
+            max: 20
+        - !type:Emote
+          emote: Crying
+          showInChat: true
+          probability: 0.1
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+        - !type:PopupMessage # we dont have sanity/mood so this will have to do
+          type: Local
+          visualType: Medium
+          messages:
+          - "psicodine-effect-fearless"
+          - "psicodine-effect-anxieties-wash-away"
+          - "psicodine-effect-at-peace"
+          probability: 0.2
+          conditions:
+          - !type:ReagentThreshold
+            max: 20
+        - !type:GenericStatusEffect
+          key: SeeingRainbows
+          component: SeeingRainbows
+          type: Add
+          time: 5
+          refresh: false
+
+- type: reagent
   id: Stimulants
-  name: reagent-name-stimulants
+  name: reagent-name-stimulants # Hyperzine
   group: Narcotics
   desc: reagent-desc-stimulants
   physicalDesc: reagent-physical-desc-energizing
@@ -127,8 +195,8 @@
         sprintSpeedModifier: 1.3
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
-            min: 80 #please wait 3 minutes before using another stimpack
+        - !type:ReagentThreshold
+          min: 80 #please wait 3 minutes before using another stimpack
         damage:
           types:
             Poison: 1
@@ -167,55 +235,19 @@
     Medicine:
       metabolismRate: 1.0
       effects:
-        - !type:ResetNarcolepsy
-        - !type:SatiateHunger
-          factor: 1
-        - !type:SatiateThirst
-          factor: 1
-        - !type:HealthChange
-          conditions:
-          - !type:TotalDamage
-            min: 70 # only heals when you're more dead than alive
-          damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
-            groups:
-              Burn: -1
-              Brute: -1
-
-- type: reagent
-  id: THC
-  name: reagent-name-thc
-  group: Narcotics
-  desc: reagent-desc-thc
-  flavor: bitter
-  flavorMinimum: 0.05
-  color: "#808080"
-  physicalDesc: reagent-physical-desc-crystalline
-  plantMetabolism:
-  - !type:PlantAdjustNutrition
-    amount: -5
-  - !type:PlantAdjustHealth
-    amount: -1
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 16
-        refresh: false
-
-- type: reagent
-  id: Nicotine
-  name: reagent-name-nicotine
-  group: Narcotics
-  desc: reagent-desc-nicotine
-  flavor: bitter
-  color: "#C0C0C0"
-  physicalDesc: reagent-physical-desc-strong-smelling
-  plantMetabolism:
-  - !type:PlantAdjustHealth
-    amount: -5
+      - !type:ResetNarcolepsy
+      - !type:SatiateHunger
+        factor: 1
+      - !type:SatiateThirst
+        factor: 1
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: 70 # only heals when you're more dead than alive
+        damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
+          groups:
+            Burn: -1
+            Brute: -1
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
@@ -248,40 +280,35 @@
         boozePower: 5
 
 - type: reagent
-  id: SpaceDrugs
-  name: reagent-name-space-drugs
+  id: MuteToxin
+  name: reagent-name-mute-toxin
   group: Narcotics
-  desc: reagent-desc-space-drugs
+  desc: reagent-desc-mute-toxin
   physicalDesc: reagent-physical-desc-syrupy
-  flavor: bitter
-  color: "#63806e"
+  color: "#000000"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
   metabolisms:
     Narcotic:
       effects:
       - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
+        key: Muted
+        component: Muted
         type: Add
-        time: 5
+        time: 10
         refresh: false
 
 - type: reagent
-  id: Bananadine
-  name: reagent-name-bananadine
+  id: Nicotine
+  name: reagent-name-nicotine
   group: Narcotics
-  desc: reagent-desc-bananadine
-  physicalDesc: reagent-physical-desc-powdery
+  desc: reagent-desc-nicotine
   flavor: bitter
-  color: "#ffff00"
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 5
-        refresh: false
+  color: "#C0C0C0"
+  physicalDesc: reagent-physical-desc-strong-smelling
+  plantMetabolism:
+  - !type:PlantAdjustHealth
+    amount: -5
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
@@ -305,25 +332,6 @@
         component: ForcedSleeping
         refresh: false
         type: Add
-
-- type: reagent
-  id: MuteToxin
-  name: reagent-name-mute-toxin
-  group: Narcotics
-  desc: reagent-desc-mute-toxin
-  physicalDesc: reagent-physical-desc-syrupy
-  color: "#000000"
-  boilingPoint: 255.0
-  meltingPoint: 36.0
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: Muted
-        component: Muted
-        type: Add
-        time: 10
-        refresh: false
 
 - type: reagent
   id: NorepinephricAcid
@@ -368,6 +376,24 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+
+- type: reagent
+  id: SpaceDrugs
+  name: reagent-name-space-drugs
+  group: Narcotics
+  desc: reagent-desc-space-drugs
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: bitter
+  color: "#63806e"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
 
 - type: reagent
   id: TearGas
@@ -416,51 +442,25 @@
           min: 20
 
 - type: reagent
-  id: Happiness
-  name: reagent-name-happiness
+  id: THC
+  name: reagent-name-thc
   group: Narcotics
-  desc: reagent-desc-happiness
-  physicalDesc: reagent-physical-desc-soothing
-  flavor: paintthinner
-  color: "#EE35FF"
+  desc: reagent-desc-thc
+  flavor: bitter
+  flavorMinimum: 0.05
+  color: "#808080"
+  physicalDesc: reagent-physical-desc-crystalline
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: -1
   metabolisms:
     Narcotic:
       effects:
-      - !type:Emote
-        emote: Laugh
-        showInChat: true
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          max: 20
-      - !type:Emote
-        emote: Whistle
-        showInChat: true
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          max: 20
-      - !type:Emote
-        emote: Crying
-        showInChat: true
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          min: 20
-      - !type:PopupMessage # we dont have sanity/mood so this will have to do
-        type: Local
-        visualType: Medium
-        messages:
-        - "psicodine-effect-fearless"
-        - "psicodine-effect-anxieties-wash-away"
-        - "psicodine-effect-at-peace"
-        probability: 0.2
-        conditions:
-        - !type:ReagentThreshold
-          max: 20
       - !type:GenericStatusEffect
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
+        time: 16
         refresh: false
