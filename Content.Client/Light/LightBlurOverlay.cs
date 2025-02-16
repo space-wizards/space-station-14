@@ -39,6 +39,6 @@ public sealed class LightBlurOverlay : Overlay
 
         var target = beforeOverlay.EnlargedLightTarget;
         // Yeah that's all this does keep walkin.
-        //_clyde.BlurRenderTarget(args.Viewport, target, _blurTarget, args.Viewport.Eye, 14f * 2f);
+        _clyde.BlurRenderTarget(args.Viewport, target, _blurTarget, args.Viewport.Eye, 14f * 5f);
     }
 }
