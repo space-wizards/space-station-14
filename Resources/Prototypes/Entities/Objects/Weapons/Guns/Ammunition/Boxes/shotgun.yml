@@ -34,7 +34,8 @@
 - type: entity
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  name: shell box (beanbag)
+  name: shell box (12G beanbag)
+  description: A cardboard box full of 12 gauge beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -51,9 +52,10 @@
       - state: beanbag
 
 - type: entity
-  name: shell box (lethal)
+  name: shell box (12G pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
+  description: A cardboard box full of standard 12 gauge pellet shotshells, which fire small lead balls in a wide cone.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
@@ -66,9 +68,10 @@
       - state: lethal
 
 - type: entity
-  name: shell box (slug)
+  name: shell box (12G slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
+  description: A cardboard box full of 12 gauge slugs, which fire a single large projectile with a much longer range.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
@@ -85,9 +88,10 @@
       - state: slug
 
 - type: entity
-  name: shell box (flare)
+  name: shell box (12G flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
+  description: A cardboard box full of 12 gauge illumination flares. Useable by both shotguns and emergency flare guns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
@@ -104,9 +108,10 @@
       - state: flare
 
 - type: entity
-  name: shell box (incendiary)
+  name: shell box (12G incendiary pellet)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
+  description: A cardboard box full of exotic 12 gauge incendiary shotshells, designed to fill a cone in front of you with burning pellets.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
@@ -123,9 +128,10 @@
       - state: incendiary
 
 - type: entity
-  name: shell box (uranium)
+  name: shell box (12G uranium pellet)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
+  description: A cardboard box full of experimental 12 gauge uranium-core shotshells, for added radiation damage to the target.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
@@ -142,9 +148,10 @@
       - state: uranium
 
 - type: entity
-  name: shell box (practice)
+  name: shell box (12G practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
+  description: A cardboard box full of 12 gauge training rounds, with tiny, non-harmful projectiles.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
@@ -161,9 +168,10 @@
       - state: practice
 
 - type: entity
-  name: shell box (tranquilizer)
+  name: shell box (12G tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
+  description: A cardboard box full of special 12 gauge tranquilizer slugs. These rounds are very low velocity and contain an auto-injecting syringe preloaded with chloral hydrate for knocking out animals.
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer

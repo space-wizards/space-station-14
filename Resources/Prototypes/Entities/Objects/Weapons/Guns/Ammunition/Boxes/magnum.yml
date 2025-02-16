@@ -27,7 +27,8 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnum
-  name: ammunition box (.45 magnum)
+  name: ammunition box (.44 magnum)
+  description: Cardboard box of .44x1.63 magnum rounds. This version contains standard FMJ rounds for general use.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -41,7 +42,8 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumPractice
-  name: ammunition box (.45 magnum practice)
+  name: ammunition box (.44 magnum practice)
+  description: Cardboard box of .44x1.63 magnum rounds. This version contains non-harmful ammunition for practicing your quick draw.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -56,7 +58,7 @@
 - type: entity
   id: MagazineBoxMagnumIncendiary
   parent: BaseMagazineBoxMagnum
-  name: ammunition box (.45 magnum incendiary)
+  name: ammunition box (.44 magnum incendiary)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumIncendiary
@@ -71,7 +73,7 @@
 - type: entity
   id: MagazineBoxMagnumUranium
   parent: BaseMagazineBoxMagnum
-  name: ammunition box (.45 magnum uranium)
+  name: ammunition box (.44 magnum uranium)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
@@ -86,7 +88,8 @@
 - type: entity
   id: MagazineBoxMagnumAP
   parent: BaseMagazineBoxMagnum
-  name: ammunition box (.45 magnum armor-piercing)
+  name: ammunition box (.44 magnum AP)
+  description: Cardboard box of .44x1.63 magnum rounds. This version contains highly illegal armor-piercing ammunition, which goes straight through common body armor.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

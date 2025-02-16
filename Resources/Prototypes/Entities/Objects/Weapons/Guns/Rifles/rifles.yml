@@ -55,7 +55,7 @@
   name: AKMS
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleAk
-  description: An iconic weapon of war. Uses .30 rifle ammo.
+  description: A somewhat battered rifle of a design originating from old earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design. Feeds from .308 30-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -148,7 +148,7 @@
   name: Lecter
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleLecter
-  description: A high end military grade assault rifle. Uses .20 rifle ammo.
+  description: The standard combat rifle used by nearly all of Nanotrasen’s armed forces. Operating in semi or fully automatic, it can be used to great effect in all manner of environments. Feeds from .223 25-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi

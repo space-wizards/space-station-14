@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.223 rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -20,16 +20,18 @@
 
 - type: entity
   id: CartridgeRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.223 rifle)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. High-velocity intermediate cartridge designed by Nanotrasen for use in combat rifles. A good balance of recoil, velocity, and stopping power.
   components:
   - type: CartridgeAmmo
     proto: BulletRifle
 
 - type: entity
   id: CartridgeRiflePractice
-  name: cartridge (.20 rifle practice)
+  name: cartridge (.223 rifle practice)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. Intermediate rifle cartridge with a blue rubber tip for use in training scenarios.
   components:
   - type: CartridgeAmmo
     proto: BulletRiflePractice
@@ -39,12 +41,13 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#22C4EB"
 
 - type: entity
   id: CartridgeRifleIncendiary
-  name: cartridge (.20 rifle incendiary)
+  name: cartridge (.223 rifle incendiary)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. Replaces the lead payload with a self-igniting incendiary compound.
   components:
   - type: CartridgeAmmo
     proto: BulletRifleIncendiary
@@ -54,12 +57,13 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
+        color: "#EB0101"
 
 - type: entity
   id: CartridgeRifleUranium
-  name: cartridge (.20 rifle uranium)
+  name: cartridge (.223 rifle uranium)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. Specialized rifle round containing an expensive uranium core that severely irradiates the target after impact. Developed by Nanotrasen for use in combat rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletRifleUranium
@@ -69,4 +73,4 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#65fe08"
+        color: "#3AEB16"

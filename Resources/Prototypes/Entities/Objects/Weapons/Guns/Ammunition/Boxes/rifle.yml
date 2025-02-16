@@ -27,8 +27,8 @@
 - type: entity
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifleBig
-  name: ammunition box (.20 rifle)
-  suffix: Big
+  name: large ammunition box (.223 rifle)
+  description: A large metal box of .223x1.78 cartridges in standard NT packaging. This box contains FMJ rounds for most use cases.
   components:
   - type: BallisticAmmoProvider
     capacity: 200
@@ -48,7 +48,8 @@
 - type: entity
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifle
-  name: ammunition box (.20 rifle)
+  name: ammunition box (.223 rifle)
+  description: A box of .223x1.78 cartridges in standard NT packaging. This box contains FMJ rounds for most use cases.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -62,7 +63,8 @@
 - type: entity
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRiflePractice
-  name: ammunition box (.20 rifle practice)
+  name: ammunition box (.223 rifle practice)
+  description: A box of .223x1.78 cartridges in standard NT packaging. This box contains practice rounds for firing exercises and training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -77,7 +79,8 @@
 - type: entity
   id: MagazineBoxRifleIncendiary
   parent: BaseMagazineBoxRifle
-  name: ammunition box (.20 rifle incendiary)
+  name: ammunition box (.223 rifle incendiary)
+  description: A box of .223x1.78 cartridges in standard NT packaging. This box contains incendiary ammunition which burns inside the target.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
@@ -92,7 +95,8 @@
 - type: entity
   id: MagazineBoxRifleUranium
   parent: BaseMagazineBoxRifle
-  name: ammunition box (.20 rifle uranium)
+  name: ammunition box (.223 rifle uranium)
+  description: A box of .223x1.78 cartridges in standard NT packaging. This box contains uranium-cored ammunition which irradiates the target.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium
