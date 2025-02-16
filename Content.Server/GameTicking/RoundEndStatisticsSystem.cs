@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.GameTicking.Events;
-using Content.Server.GameTicking.Prototypes;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
