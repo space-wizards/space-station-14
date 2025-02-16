@@ -22,6 +22,9 @@
   id: AnomalyHost
 
 - type: Tag
+  id: AnomalyTool
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag

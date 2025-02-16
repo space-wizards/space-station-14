@@ -32,6 +32,8 @@
         - JawsOfLife
         - GPS
         - WeldingMask
+        - Payload
+        - AnomalyTool
       components:
         - StationMap
         - SprayPainter
