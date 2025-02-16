@@ -7,7 +7,7 @@
     - type: MachineBoard
       prototype: Holopad
       stackRequirements:
-        Capacitor: 4
+        Capacitor: 2
         Cable: 4
         Glass: 2
     - type: Construction
@@ -24,7 +24,7 @@
   - type: MachineBoard
     prototype: HolopadLongRange
     stackRequirements:
-      Capacitor: 8
+      Capacitor: 4
       Cable: 4
       Glass: 2
   - type: Construction
