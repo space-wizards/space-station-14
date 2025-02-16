@@ -133,7 +133,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             _popupSystem.PopupEntity(msg, uid, user);
 
             if (component.SoundPerceivedByOthers)
-                _audio.PlayPvs(sfx, target);
+                _audio.PlayPvs(sfx, target, AudioFun.FunAudioParams());
             else
                 _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
             return;

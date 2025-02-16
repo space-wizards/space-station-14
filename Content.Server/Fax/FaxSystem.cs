@@ -118,7 +118,7 @@ public sealed class FaxSystem : EntitySystem
         if (comp.PrintingQueue.Count > 0)
         {
             comp.PrintingTimeRemaining = comp.PrintingTime;
-            _audioSystem.PlayPvs(comp.PrintSound, uid);
+            _audioSystem.PlayPvs(comp.PrintSound, uid, AudioFun.FunAudioParams());
         }
     }
 
@@ -555,7 +555,7 @@ public sealed class FaxSystem : EntitySystem
 
         component.SendTimeoutRemaining += component.SendTimeout;
 
-        _audioSystem.PlayPvs(component.SendSound, uid);
+        _audioSystem.PlayPvs(component.SendSound, uid, AudioFun.FunAudioParams());
 
         UpdateUserInterface(uid, component);
     }

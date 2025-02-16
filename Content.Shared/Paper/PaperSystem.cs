@@ -171,7 +171,7 @@ public sealed class PaperSystem : EntitySystem
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {args.Text}");
 
-            _audio.PlayPvs(entity.Comp.Sound, entity);
+            _audio.PlayPvs(entity.Comp.Sound, entity, AudioFun.FunAudioParams());
         }
 
         entity.Comp.Mode = PaperAction.Read;

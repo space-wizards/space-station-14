@@ -146,7 +146,7 @@ public sealed class ItemToggleSystem : EntitySystem
             if (predicted)
                 _audio.PlayPredicted(comp.SoundFailToActivate, uid, user, AudioFun.FunAudioParams());
             else
-                _audio.PlayPvs(comp.SoundFailToActivate, uid);
+                _audio.PlayPvs(comp.SoundFailToActivate, uid, AudioFun.FunAudioParams());
 
             if (attempt.Popup != null && user != null)
             {
@@ -198,7 +198,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (predicted)
             _audio.PlayPredicted(soundToPlay, uid, user, AudioFun.FunAudioParams());
         else
-            _audio.PlayPvs(soundToPlay, uid);
+            _audio.PlayPvs(soundToPlay, uid, AudioFun.FunAudioParams());
 
         comp.Activated = true;
         UpdateVisuals((uid, comp));
@@ -218,7 +218,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (predicted)
             _audio.PlayPredicted(soundToPlay, uid, user, AudioFun.FunAudioParams());
         else
-            _audio.PlayPvs(soundToPlay, uid);
+            _audio.PlayPvs(soundToPlay, uid, AudioFun.FunAudioParams());
 
         comp.Activated = false;
         UpdateVisuals((uid, comp));
@@ -286,7 +286,7 @@ public sealed class ItemToggleSystem : EntitySystem
             var loop = comp.ActiveSound.Params.WithLoop(true);
             var stream = args.Predicted
                 ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, AudioFun.FunAudioParams(loop))
-                : _audio.PlayPvs(comp.ActiveSound, uid, loop);
+                : _audio.PlayPvs(comp.ActiveSound, uid, AudioFun.FunAudioParams(loop));
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
         }

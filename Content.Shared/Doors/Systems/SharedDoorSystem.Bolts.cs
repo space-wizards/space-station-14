@@ -105,7 +105,7 @@ public abstract partial class SharedDoorSystem
         if (predicted)
             Audio.PlayPredicted(sound, ent, user: user, AudioFun.FunAudioParams());
         else
-            Audio.PlayPvs(sound, ent);
+            Audio.PlayPvs(sound, ent, AudioFun.FunAudioParams());
         return true;
     }
 

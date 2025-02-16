@@ -49,7 +49,7 @@ public sealed class ClumsySystem : EntitySystem
 
         args.TargetGettingInjected = args.EntityUsingHypospray;
         args.InjectMessageOverride = "hypospray-component-inject-self-clumsy-message";
-        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent, AudioFun.FunAudioParams());
     }
 
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)
@@ -64,7 +64,7 @@ public sealed class ClumsySystem : EntitySystem
             return;
 
         args.DefibTarget = args.EntityUsingDefib;
-        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent, AudioFun.FunAudioParams());
 
     }
 
@@ -88,8 +88,8 @@ public sealed class ClumsySystem : EntitySystem
         _stun.TryParalyze(ent, ent.Comp.GunShootFailStunTime, true);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means)
-        _audio.PlayPvs(ent.Comp.GunShootFailSound, ent);
-        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
+        _audio.PlayPvs(ent.Comp.GunShootFailSound, ent, AudioFun.FunAudioParams());
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent, AudioFun.FunAudioParams());
 
         _popup.PopupEntity(Loc.GetString("gun-clumsy"), ent, ent);
         args.Cancel();

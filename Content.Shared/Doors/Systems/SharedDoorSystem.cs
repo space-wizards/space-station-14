@@ -287,7 +287,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (predicted)
             Audio.PlayPredicted(door.DenySound, uid, user, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-3)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.DenySound, uid, AudioParams.Default.WithVolume(-3));
+            Audio.PlayPvs(door.DenySound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-3)));
     }
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -367,7 +367,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (predicted)
             Audio.PlayPredicted(door.OpenSound, uid, user, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-5)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPvs(door.OpenSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-5)));
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
@@ -460,7 +460,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (predicted)
             Audio.PlayPredicted(door.CloseSound, uid, user, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-5)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.CloseSound, uid, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPvs(door.CloseSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-5)));
     }
 
     /// <summary>

@@ -152,7 +152,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
                 _audioSystem.PlayPredicted(component.Sound, coords, user, AudioFun.FunAudioParams(AudioFun.FunAudioParams()));
             else if (_netMan.IsServer)
                 // don't predict sounds that client couldn't have played already
-                _audioSystem.PlayPvs(component.Sound, coords);
+                _audioSystem.PlayPvs(component.Sound, coords, AudioFun.FunAudioParams());
         }
         else
         {
@@ -160,7 +160,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
                 _audioSystem.PlayPredicted(component.Sound, uid, user, AudioFun.FunAudioParams(AudioFun.FunAudioParams()));
             else if (_netMan.IsServer)
                 // don't predict sounds that client couldn't have played already
-                _audioSystem.PlayPvs(component.Sound, uid);
+                _audioSystem.PlayPvs(component.Sound, uid, AudioFun.FunAudioParams());
         }
     }
 
@@ -187,7 +187,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         if (_netMan.IsServer && sound != null)
         {
-            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
+            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(volume)));
         }
     }
 

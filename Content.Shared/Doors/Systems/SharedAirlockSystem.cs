@@ -159,7 +159,7 @@ public abstract class SharedAirlockSystem : EntitySystem
         if (predicted)
             Audio.PlayPredicted(sound, ent, user: user, AudioFun.FunAudioParams());
         else
-            Audio.PlayPvs(sound, ent);
+            Audio.PlayPvs(sound, ent, AudioFun.FunAudioParams());
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)
