@@ -3,6 +3,7 @@ using Content.Shared.CCVar;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -16,7 +17,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadMultiGridMap()
         {
-            const string mapPath = @"/Maps/Test/TestMap.yml";
+            var mapPath = new ResPath("/Maps/Test/TestMap.yml");
 
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
@@ -31,7 +32,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var dir = new ResPath(mapPath).Directory;
+                var dir = mapPath.Directory;
                 resManager.UserData.CreateDir(dir);
 
                 mapSystem.CreateMap(out var mapId);
@@ -47,15 +48,17 @@ namespace Content.IntegrationTests.Tests
                     mapSystem.SetTile(mapGrid, new Vector2i(0, 0), new Tile(typeId: 2, flags: 1, variant: 254));
                 }
 
-                Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));
-                Assert.Multiple(() => mapManager.DeleteMap(mapId));
+                Assert.That(mapLoader.TrySaveMap(mapId, mapPath));
+                mapSystem.DeleteMap(mapId);
             });
 
             await server.WaitIdleAsync();
 
+            MapId newMap = default;
             await server.WaitAssertion(() =>
             {
-                Assert.That(mapLoader.TryLoad(new MapId(10), mapPath, out _));
+                Assert.That(mapLoader.TryLoadMap(mapPath, out var map, out _));
+                newMap = map!.Value.Comp.MapId;
             });
 
             await server.WaitIdleAsync();
@@ -63,7 +66,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var gridUid, out var mapGrid) ||
+                    if (!mapManager.TryFindGridAt(newMap, new Vector2(10, 10), out var gridUid, out var mapGrid) ||
                         !sEntities.TryGetComponent<TransformComponent>(gridUid, out var gridXform))
                     {
                         Assert.Fail();
@@ -77,7 +80,7 @@ namespace Content.IntegrationTests.Tests
                     });
                 }
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var gridUid, out var mapGrid) ||
+                    if (!mapManager.TryFindGridAt(newMap, new Vector2(-8, -8), out var gridUid, out var mapGrid) ||
                         !sEntities.TryGetComponent<TransformComponent>(gridUid, out var gridXform))
                     {
                         Assert.Fail();
