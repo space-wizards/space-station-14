@@ -6,7 +6,7 @@
          MinSize="800 128">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <BoxContainer Name="RoleNameBox" Orientation="Vertical" Margin="10">
-            <Label Name="LoadoutNameLabel" Text="{Loc 'loadout-name-edit-label'}"/>
+            <Label Name="LoadoutNameLabel"/>
             <PanelContainer HorizontalExpand="True" SetHeight="24">
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
