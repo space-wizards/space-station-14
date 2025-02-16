@@ -27,9 +27,6 @@
     sprite: Structures/Machines/arcade.rsi
     state: arcade
   - type: WiresPanel
-  - type: Wires
-    layoutId: Arcade
-    boardName: wires-board-name-arcade
   - type: WiresVisuals
   - type: TypingIndicator
     proto: robot
@@ -74,13 +71,12 @@
   - type: Arcade
   - type: ArcadeRewards
     rewards: !type:NestedSelector
-      tableId: LockerFillQuarterMaster
+      tableId: SpaceVillainArcadeRewards
   - type: SpaceVillainArcade
     villainFirstNames: SpaceVillainFirstNamesDataset
     villainLastNames: SpaceVillainLastNamesDataset
-  - type: WiresPanel
   - type: Wires
-    layoutId: Arcade
+    layoutId: SpaceVillainArcade
     boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
@@ -148,8 +144,8 @@
 
 # Toys table
 - type: entityTable
-  id: IngredientTable
-  table: !type:GroupSelector
+  id: SpaceVillainArcadeRewards
+  table: !type:AllSelector
     children:
     #Common
     - !type:GroupSelector

@@ -1,5 +1,6 @@
 using Content.Server.Arcade.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Arcade.EntitySystems;
 
@@ -8,6 +9,8 @@ namespace Content.Server.Arcade.EntitySystems;
 /// </summary>
 public sealed class ArcadeSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
     public void SetPlayer(EntityUid uid, EntityUid? player, ArcadeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -24,19 +27,19 @@ public sealed class ArcadeSystem : EntitySystem
         return component.Player;
     }
 
-    public SoundSpecifier? GetWinSound(EntityUid uid, ArcadeComponent? component = null)
+    public void PlayWinSound(EntityUid uid, ArcadeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return null;
+            return;
 
-        return component.WinSound;
+        _audioSystem.PlayPvs(component.WinSound, uid);
     }
 
-    public SoundSpecifier? GetLossSound(EntityUid uid, ArcadeComponent? component = null)
+    public void PlayLossSound(EntityUid uid, ArcadeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return null;
+            return;
 
-        return component.LossSound;
+        _audioSystem.PlayPvs(component.LossSound, uid);
     }
 }

@@ -18,6 +18,7 @@ public sealed class SpaceVillainArcadeSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private readonly ArcadeRewardsSystem _rewardsSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ArcadeSystem _arcadeSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
@@ -276,21 +277,22 @@ public sealed class SpaceVillainArcadeSystem : EntitySystem
                 component.PlayerStatus = Loc.GetString("space-villain-game-player-wins-message");
                 component.VillainStatus = Loc.GetString("space-villain-game-enemy-dies-message", ("enemyName", component.VillainName));
 
-                _audioSystem.PlayPvs(_arcadeSystem.GetWinSound(ent), ent.Owner);
+                _arcadeSystem.PlayWinSound(ent);
+                _rewardsSystem.GiveReward(ent);
 
                 return false;
             case (true, false):
                 component.PlayerStatus = Loc.GetString("space-villain-game-player-loses-message");
                 component.VillainStatus = Loc.GetString("space-villain-game-enemy-cheers-message", ("enemyName", component.VillainName));
 
-                _audioSystem.PlayPvs(_arcadeSystem.GetLossSound(ent), ent.Owner);
+                _arcadeSystem.PlayLossSound(ent);
 
                 return false;
             case (true, true):
                 component.PlayerStatus = Loc.GetString("space-villain-game-player-loses-message");
                 component.VillainStatus = Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", component.VillainName));
 
-                _audioSystem.PlayPvs(_arcadeSystem.GetLossSound(ent), ent.Owner);
+                _arcadeSystem.PlayLossSound(ent);
 
                 return false;
         }
@@ -328,5 +330,49 @@ public sealed class SpaceVillainArcadeSystem : EntitySystem
     private static bool IsAILoss(SpaceVillainArcadeComponent component)
     {
         return component.VillainHP <= 0 || component.VillainMP <= 0;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void SetPlayerInvincibility(EntityUid uid, bool invincibility, SpaceVillainArcadeComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.PlayerInvincible = invincibility;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public bool GetPlayerInvincibility(EntityUid uid, SpaceVillainArcadeComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        return component.PlayerInvincible;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public void SetVillainInvincibility(EntityUid uid, bool invincibility, SpaceVillainArcadeComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.VillainInvincible = invincibility;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public bool GetVillainInvincibility(EntityUid uid, SpaceVillainArcadeComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        return component.VillainInvincible;
     }
 }
