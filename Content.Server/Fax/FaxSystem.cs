@@ -10,6 +10,7 @@ using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Shared.UserInterface;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
@@ -620,6 +621,6 @@ public sealed class FaxSystem : EntitySystem
     private void NotifyAdmins(string faxName)
     {
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
-        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-8f)));
     }
 }

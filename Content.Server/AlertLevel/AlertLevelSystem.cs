@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -178,7 +179,7 @@ public sealed class AlertLevelSystem : EntitySystem
             if (detail.Sound != null)
             {
                 var filter = _stationSystem.GetInOwningStation(station);
-                _audio.PlayGlobal(detail.Sound, filter, true, detail.Sound.Params);
+                _audio.PlayGlobal(detail.Sound, filter, true, AudioFun.FunAudioParams(detail.Sound.Params));
             }
             else
             {
