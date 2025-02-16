@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: SGD is now derived from Decapoid technology, for flavor.
-    type: Tweak
-  id: 634
-  time: '2024-12-03T16:34:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/887
 - author: hivehum
   changes:
   - message: The command prestige cloaks now count as cloaks for a thief's steal objective.
@@ -4183,3 +4176,13 @@
   id: 1133
   time: '2025-02-16T02:43:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1695
+- author: widgetbeck
+  changes:
+  - message: The mail telepad will now notify Supply when a shipment arrives, complete
+      with the time until the next shipment.
+    type: Add
+  - message: The time between mail shipments is now slightly randomized.
+    type: Add
+  id: 1134
+  time: '2025-02-16T02:44:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1696
