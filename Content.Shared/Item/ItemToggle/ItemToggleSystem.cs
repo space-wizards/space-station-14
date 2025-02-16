@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
@@ -143,7 +144,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (attempt.Cancelled)
         {
             if (predicted)
-                _audio.PlayPredicted(comp.SoundFailToActivate, uid, user);
+                _audio.PlayPredicted(comp.SoundFailToActivate, uid, user, AudioFun.FunAudioParams());
             else
                 _audio.PlayPvs(comp.SoundFailToActivate, uid);
 
@@ -195,7 +196,7 @@ public sealed class ItemToggleSystem : EntitySystem
         var (uid, comp) = ent;
         var soundToPlay = comp.SoundActivate;
         if (predicted)
-            _audio.PlayPredicted(soundToPlay, uid, user);
+            _audio.PlayPredicted(soundToPlay, uid, user, AudioFun.FunAudioParams());
         else
             _audio.PlayPvs(soundToPlay, uid);
 
@@ -215,7 +216,7 @@ public sealed class ItemToggleSystem : EntitySystem
         var (uid, comp) = ent;
         var soundToPlay = comp.SoundDeactivate;
         if (predicted)
-            _audio.PlayPredicted(soundToPlay, uid, user);
+            _audio.PlayPredicted(soundToPlay, uid, user, AudioFun.FunAudioParams());
         else
             _audio.PlayPvs(soundToPlay, uid);
 
@@ -284,7 +285,7 @@ public sealed class ItemToggleSystem : EntitySystem
         {
             var loop = comp.ActiveSound.Params.WithLoop(true);
             var stream = args.Predicted
-                ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, loop)
+                ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, AudioFun.FunAudioParams(loop))
                 : _audio.PlayPvs(comp.ActiveSound, uid, loop);
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;

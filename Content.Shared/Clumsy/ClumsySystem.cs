@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Climbing.Components;
@@ -109,9 +110,9 @@ public sealed class ClumsySystem : EntitySystem
 
         HitHeadClumsy(ent, args.BeingClimbedOn);
 
-        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent);
+        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent, AudioFun.FunAudioParams());
 
-        _audio.PlayPredicted(ent.Comp.TableBonkSound, ent, ent);
+        _audio.PlayPredicted(ent.Comp.TableBonkSound, ent, ent, AudioFun.FunAudioParams());
 
         var gettingPutOnTableName = Identity.Entity(args.GettingPutOnTable, EntityManager);
         var puttingOnTableName = Identity.Entity(args.PuttingOnTable, EntityManager);

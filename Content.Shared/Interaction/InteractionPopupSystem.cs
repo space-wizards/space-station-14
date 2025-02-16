@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
@@ -145,7 +146,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         if (component.SoundPerceivedByOthers)
         {
-            _audio.PlayPredicted(sfx, target, user);
+            _audio.PlayPredicted(sfx, target, user, AudioFun.FunAudioParams());
             return;
         }
 

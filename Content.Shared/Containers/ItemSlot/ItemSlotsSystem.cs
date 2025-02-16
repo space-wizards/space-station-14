@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
@@ -300,7 +301,7 @@ namespace Content.Shared.Containers.ItemSlots
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null, AudioFun.FunAudioParams());
         }
 
         /// <summary>
@@ -553,7 +554,7 @@ namespace Content.Shared.Containers.ItemSlots
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, AudioFun.FunAudioParams());
         }
 
         /// <summary>

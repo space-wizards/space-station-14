@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -139,7 +140,7 @@ public sealed class PaperSystem : EntitySystem
                     ("stamp", args.Used));
             _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
 
-            _audio.PlayPredicted(stampComp.Sound, entity, args.User);
+            _audio.PlayPredicted(stampComp.Sound, entity, args.User, AudioFun.FunAudioParams());
 
             UpdateUserInterface(entity);
         }

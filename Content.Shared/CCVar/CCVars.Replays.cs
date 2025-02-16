@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Configuration;
+﻿using Robust.Shared;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 

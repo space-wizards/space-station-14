@@ -4,6 +4,7 @@ using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Audio;
+using Content.Shared.Chat;
 
 namespace Content.Server.Chat.Systems;
 

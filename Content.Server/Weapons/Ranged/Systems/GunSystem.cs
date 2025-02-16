@@ -128,7 +128,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     else
                     {
                         userImpulse = false;
-                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, AudioFun.FunAudioParams());
+                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, AudioFun.FunAudioParams(AudioFun.FunAudioParams()));
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -246,7 +246,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
                     }
 
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams());
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams(AudioFun.FunAudioParams()));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -285,7 +285,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
 
             MuzzleFlash(gunUid, ammoComp, mapDirection.ToAngle(), user);
-            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams(AudioFun.FunAudioParams()));
         }
     }
 
