@@ -97,16 +97,12 @@ public sealed class ContrabandSystem : EntitySystem
         }
 
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
-        _examine.AddHoverExamineVerb(args,
+        _examine.AddDetailedExamineVerb(args,
             component,
-            examineMarkup.ToString(),
-            "/Textures/Interface/VerbIcons/lock.svg.192dpi.png");
-        // _examine.AddDetailedExamineVerb(args,
-        //     component,
-        //     examineMarkup,
-        //     Loc.GetString("contraband-examinable-verb-text"),
-        //     "/Textures/Interface/VerbIcons/lock.svg.192dpi.png",
-        //     Loc.GetString("contraband-examinable-verb-message"));
+            examineMarkup,
+            Loc.GetString("contraband-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/lock.svg.192dpi.png",
+            Loc.GetString("contraband-examinable-verb-message"));
     }
 
     private FormattedMessage GetContrabandExamine(String deptMessage, String carryMessage)
