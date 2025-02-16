@@ -893,6 +893,10 @@
         requireInputValidation: false
   - type: StationMap #imp
   - type: GhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 36000 # ten hours
     makeSentient: true
     name: Maintenance Drone
     description: Maintain the station. Ignore other beings except drones.
@@ -986,6 +990,8 @@
     tags:
       - CannotSuicide
       - EmagImmune
+      - CanPilot
+      - VimPilot
 
 # onestar is kinda fucked cause the loadout component is broken. sooo they gotta find guns somewhere i guess. /shrug.
 - type: entity
