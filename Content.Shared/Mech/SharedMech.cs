@@ -83,3 +83,23 @@ public sealed partial class MechToggleSirensEvent : InstantActionEvent
 public sealed partial class MechToggleThrustersEvent : InstantActionEvent
 {
 }
+
+public sealed partial class MechToggleNightVisionEvent : InstantActionEvent
+{
+}
+
+[ByRefEvent]
+public readonly record struct BeforePilotEjectEvent(EntityUid Mech, EntityUid Pilot)
+{
+    public readonly EntityUid Mech = Mech;
+
+    public readonly EntityUid Pilot = Pilot;
+}
+
+[ByRefEvent]
+public readonly record struct BeforePilotInsertEvent(EntityUid Mech, EntityUid Pilot)
+{
+    public readonly EntityUid Mech = Mech;
+
+    public readonly EntityUid Pilot = Pilot;
+}

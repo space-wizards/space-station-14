@@ -3,7 +3,7 @@ using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Shared.Mech.Equipment.Systems;
+namespace Content.Shared.Mech.Equipment.EntitySystems;
 
 /// <summary>
 /// Handles everything for mech soundboard.
