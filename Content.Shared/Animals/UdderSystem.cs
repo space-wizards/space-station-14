@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
-using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -36,7 +35,6 @@ public sealed class UdderSystem : EntitySystem
         SubscribeLocalEvent<UdderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnMapInit(EntityUid uid, UdderComponent component, MapInitEvent args)
@@ -145,49 +143,5 @@ public sealed class UdderSystem : EntitySystem
             Priority = 2
         };
         args.Verbs.Add(verb);
-    }
-
-    /// <summary>
-    ///     Defines the text provided on examine.
-    ///     Changes depending on the amount of hunger the target has.
-    /// </summary>
-    private void OnExamine(Entity<UdderComponent> entity, ref ExaminedEvent args)
-    {
-
-        var entityIdentity = Identity.Entity(args.Examined, EntityManager);
-
-        string message;
-
-        // Check if the target has hunger, otherwise return not hungry.
-        if (!TryComp<SatiationComponent>(entity, out var satiation) ||
-            _satiation.GetThresholdOrNull((entity, satiation), HungerSatiation) is not {} hungerThreshold)
-        {
-            message = Loc.GetString("udder-system-examine-none", ("entity", entityIdentity));
-            args.PushMarkup(message);
-            return;
-        }
-
-        // Choose the correct examine string based on HungerThreshold.
-        switch (hungerThreshold)
-        {
-            case >= SatiationThreshold.Full:
-                message = Loc.GetString("udder-system-examine-overfed", ("entity", entityIdentity));
-                break;
-
-            case SatiationThreshold.Okay:
-                message = Loc.GetString("udder-system-examine-okay", ("entity", entityIdentity));
-                break;
-
-            case SatiationThreshold.Concerned:
-                message = Loc.GetString("udder-system-examine-hungry", ("entity", entityIdentity));
-                break;
-
-            // There's a final hunger threshold called "dead" but animals don't actually die so we'll re-use this.
-            case <= SatiationThreshold.Desperate:
-                message = Loc.GetString("udder-system-examine-starved", ("entity", entityIdentity));
-                break;
-        }
-
-        args.PushMarkup(message);
     }
 }
