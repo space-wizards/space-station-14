@@ -8,8 +8,7 @@
   },
   "states": [
     {
-      "name": "full",
-      "bump": "bump"
+      "name": "full"
     },
     {
       "name": "head_f",
