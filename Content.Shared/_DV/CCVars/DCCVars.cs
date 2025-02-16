@@ -121,5 +121,5 @@ public sealed class DCCVars
     /// Disables all vision filters for species like Vulpkanin or Harpies. There are good reasons someone might want to disable these.
     /// </summary>
     public static readonly CVarDef<bool> NoVisionFilters =
-        CVarDef.Create("accessibility.no_vision_filters", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("accessibility.no_vision_filters", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
