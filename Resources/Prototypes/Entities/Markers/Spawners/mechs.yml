@@ -8,6 +8,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
         state: base
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechRipleyBattery
@@ -22,6 +23,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
         state: base
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechRipley2Battery
@@ -36,6 +38,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/Mechs/Basic/honker.rsi
         state: base
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechHonkerBattery
@@ -60,6 +63,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
         state: base
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechClarkeBattery
@@ -74,6 +78,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
         state: base
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechGygaxBattery
@@ -88,6 +93,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
         state: base
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechDurandBattery
@@ -102,6 +108,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: marauder
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechMarauderBattery
@@ -117,6 +124,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: marauder
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechMarauderFilled
@@ -131,6 +139,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: seraph
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechSeraphBattery
@@ -146,6 +155,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: seraph
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechSeraphFilled
@@ -160,6 +170,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: darkgygax
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechGygaxSyndieBattery
@@ -175,6 +186,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: darkgygax
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechGygaxSyndieFilled
@@ -189,6 +201,7 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: mauler
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechMaulerSyndieBattery
@@ -204,6 +217,23 @@
       - state: green
       - sprite: Objects/Specific/Mech/mecha.rsi
         state: mauler
+      - state: mechicon
   - type: ConditionalSpawner
     prototypes:
       - MechMaulerSyndieFilled
+      
+- type: entity
+  name: Paddy Spawner
+  suffix: Filled
+  id: SpawnMechPaddyFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: paddy
+      - state: mechicon
+  - type: ConditionalSpawner
+    prototypes:
+      - MechPaddyFilled

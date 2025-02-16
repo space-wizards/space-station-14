@@ -3439,4 +3439,26 @@ Entries:
   id: 476
   time: '2025-02-15T13:24:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/326
+- author: Killer Tamashi
+  changes:
+  - message: Added Corpsman hat/jacket/uniform.
+    type: Add
+  id: 477
+  time: '2025-02-16T09:22:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/332
+- author: Rinary
+  changes:
+  - message: Added Mech Night Vision Camera(allows to enable night vision) as new
+      passive equipment.
+    type: Add
+  id: 478
+  time: '2025-02-16T16:26:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/334
+- author: PubliclyExecutedPig
+  changes:
+  - message: Re-added Saltern to the map pool
+    type: Add
+  id: 479
+  time: '2025-02-16T17:09:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/331
 

@@ -283,14 +283,8 @@ public sealed partial class MechSystem : SharedMechSystem
             _actionBlocker.UpdateCanMove(uid);
             return;
         }
-        
-        if (component.GasTankSlot.ContainedEntity == null && _tag.HasTag(args.Used, "MechAirTank"))
-        {
-            _actionBlocker.UpdateCanMove(uid);
-            return;
-        }
 
-        if (_toolSystem.HasQuality(args.Used, "Prying") && component.BatterySlot.ContainedEntity != null)
+        if (_toolSystem.HasQuality(args.Used, "Prying"))
         {
             if (component.BatterySlot.ContainedEntity != null)
             {
