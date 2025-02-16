@@ -12,6 +12,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Visuals;
+using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
@@ -111,7 +112,17 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume(pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
+            var transferVol = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+            var transferRatio = transferVol / inlet.Air.Volume;
+
+            // Make sure we don't pump over the pressure limit.
+            // This calculation is simplified by assuming both gasses have the same specific heat capacity.
+            var pressureDelta = pump.HigherThreshold - outputStartingPressure;
+            var limitMoles = (pressureDelta * outlet.Air.Volume) / (inlet.Air.Temperature * Atmospherics.R);
+            var limitRatio = limitMoles / inlet.Air.TotalMoles;
+
+            var removedRatio = Math.Min(transferRatio, limitRatio);
+            var removed = inlet.Air.RemoveRatio(removedRatio);
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
