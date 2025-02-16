@@ -32,7 +32,6 @@
         - JawsOfLife
         - GPS
         - WeldingMask
-        - Payload
         - RemoteSignaller
       components:
         - StationMap
