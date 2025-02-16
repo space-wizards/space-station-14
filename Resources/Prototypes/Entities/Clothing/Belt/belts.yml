@@ -33,7 +33,7 @@
         - GPS
         - WeldingMask
         - Payload
-        - AnomalyTool
+        - RemoteSignaller
       components:
         - StationMap
         - SprayPainter

@@ -22,9 +22,6 @@
   id: AnomalyHost
 
 - type: Tag
-  id: AnomalyTool
-
-- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -1056,6 +1053,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: RemoteSignaller
 
 - type: Tag
   id: ReptilianFood

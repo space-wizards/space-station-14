@@ -21,9 +21,6 @@
     - ScannersAndVessels
   - type: Item
     storedRotation: -90
-  - type: Tag
-    tags:
-    - AnomalyTool
 
 - type: entity
   id: AnomalyLocatorUnpowered
@@ -63,9 +60,6 @@
       params:
         maxDistance: 1
         volume: -8
-  - type: Tag
-    tags:
-    - AnomalyTool
 
 - type: entity
   id: AnomalyLocator
