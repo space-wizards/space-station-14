@@ -862,7 +862,7 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemHealEyeDamage
+      - !type:ChemChangeEyeDamage
 
 - type: reagent
   id: Cognizine
@@ -1169,7 +1169,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
