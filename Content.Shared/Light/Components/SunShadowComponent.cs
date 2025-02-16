@@ -14,4 +14,7 @@ public sealed partial class SunShadowComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Vector2 Direction;
+
+    [DataField, AutoNetworkedField]
+    public float Alpha;
 }

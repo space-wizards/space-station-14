@@ -39,9 +39,10 @@ public sealed class SunShadowOverlay : Overlay
             return;
 
         var direction = sun.Direction;
+        var alpha = Math.Clamp(sun.Alpha, 0f, 1f);
 
         // Nowhere to cast to so ignore it.
-        if (direction.Equals(Vector2.Zero))
+        if (direction.Equals(Vector2.Zero) || alpha == 0f)
             return;
 
         var length = direction.Length();
@@ -56,7 +57,6 @@ public sealed class SunShadowOverlay : Overlay
         // TODO: Fix jittering (imprecision due to matrix maths?)
         // Likely need to get all loca lcoords and shit.
         // Also looks like they stretch on right side of the screen quite badly, check PR.
-        // Need some non-shitty way to get render targets instead of copy-paste slop.
 
         // Feature todo: dynamic shadows for mobs and trees. Also ideally remove the fake tree shadows.
 
@@ -72,15 +72,16 @@ public sealed class SunShadowOverlay : Overlay
                     new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "sun-shadow-target");
         }
 
+        var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
+        var scale = viewport.RenderScale / (Vector2.One / lightScale);
+
         // Draw shadow polys to stencil
         args.WorldHandle.RenderInRenderTarget(_target,
             () =>
             {
                 var invMatrix =
-                    _target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
-                var count = 0;
+                    _target.GetWorldToLocalMatrix(eye, scale);
                 var indices = new Vector2[PhysicsConstants.MaxPolygonVertices];
-                var verts = new ValueList<Vector2>();
 
                 // Go through shadows in range.
 
@@ -123,13 +124,13 @@ public sealed class SunShadowOverlay : Overlay
             () =>
             {
                 var invMatrix =
-                    viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                    viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, scale);
                 worldHandle.SetTransform(invMatrix);
 
                 var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
                 worldHandle.UseShader(maskShader);
 
-                worldHandle.DrawTextureRect(_target.Texture, worldBounds, Color.Black.WithAlpha(0.8f));
+                worldHandle.DrawTextureRect(_target.Texture, worldBounds, Color.Black.WithAlpha(alpha));
             }, null);
     }
 }
