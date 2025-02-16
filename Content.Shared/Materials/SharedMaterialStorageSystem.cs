@@ -3,12 +3,15 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Stacks;
+using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Research.Components;
+using Content.Shared.Construction.Steps;
+
 
 namespace Content.Shared.Materials;
 
@@ -22,8 +25,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-
     [Dependency] private readonly SharedStackSystem _sharedStackSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
@@ -316,7 +319,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             return false;
 
         int multiplier;
-        bool partialStack = false;
+        var partialStack = false;
         if (storage.StorageLimit is not null && HasComp<StackComponent>(toInsert))
         {
             var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
@@ -332,6 +335,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         {
             multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
         }
+
+        if (multiplier <= 0)
+            return false; // 0 sheets fit, don't do anything
 
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();
 
@@ -365,6 +371,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         {
             _sharedStackSystem.Use(toInsert, multiplier);
         }
+
+//        _popupSystem.PopupCursor(Loc.GetString("machine-insert-item-amount", ("user", user), ("machine", receiver),
+//            ("item", toInsert), ("amount",multiplier)), user);
 
         var ev = new MaterialEntityInsertedEvent(material);
         RaiseLocalEvent(receiver, ref ev);
