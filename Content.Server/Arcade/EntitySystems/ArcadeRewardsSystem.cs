@@ -1,14 +1,18 @@
+using System.Linq;
 using Content.Server.Arcade.Components;
 using Content.Shared.EntityTable;
-using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Arcade.EntitySystems;
 
 public sealed partial class ArcadeRewardsSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityTableSystem _entityTableSystem = default!;
+
+    private readonly Random _random = new();
 
     public override void Initialize()
     {
@@ -22,7 +26,7 @@ public sealed partial class ArcadeRewardsSystem : EntitySystem
         var (_, component) = ent;
 
         // Random amount of rewards
-        component.Amount = _random.Next(component.MinAmount, component.MaxAmount);
+        component.Amount = _robustRandom.Next(component.MinAmount, component.MaxAmount);
     }
 
     /// <summary>
@@ -30,9 +34,11 @@ public sealed partial class ArcadeRewardsSystem : EntitySystem
     /// </summary>
     public void GiveReward(EntityUid uid, ArcadeRewardsComponent? component = null, TransformComponent? xForm = null)
     {
-        if (!Resolve(uid, ref component, ref xForm))
+        if (!Resolve(uid, ref component, ref xForm) || component.Amount <= 0)
             return;
 
+        var selectedEntity = component.Rewards.GetSpawns(_random, EntityManager, _prototypeManager).First().Id;
+        EntityManager.SpawnEntity(selectedEntity, xForm.Coordinates);
 
         component.Amount--;
     }

@@ -3,13 +3,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.SpaceVillain;
 
-public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
+public sealed class SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private SpaceVillainArcadeMenu? _menu;
-
-    public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -25,15 +21,7 @@ public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        switch (message)
-        {
-            case SpaceVillainInitialDataMessage initial:
-                _menu!.VillainNameLabel.Text = initial.VillainName;
-                _menu?.UpdateData(initial.PlayerHP, initial.PlayerMP, initial.VillainHP, initial.VillainMP);
-                break;
-            case SpaceVillainUpdateDataMessage update:
-                _menu?.UpdateData(update.PlayerHP, update.PlayerMP, update.VillainHP, update.VillainMP);
-                break;
-        }
+        if (message is SpaceVillainUpdateDataMessage update)
+            _menu?.UpdateData(update.PlayerHP, update.PlayerMP, update.VillainName, update.VillainHP, update.VillainMP, update.PlayerStatus, update.VillainStatus);
     }
 }

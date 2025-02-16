@@ -12,7 +12,7 @@ public sealed partial class ArcadeRewardsComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public EntityTableSelector Rewards;
 
     /// <summary>

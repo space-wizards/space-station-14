@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: SpaceVillainFirstNamesDataset
+  values:
+    prefix: space-villain-first-name-
+    count: 11
+
+- type: localizedDataset
+  id: SpaceVillainLastNamesDataset
+  values:
+    prefix: space-villain-last-name-
+    count: 15

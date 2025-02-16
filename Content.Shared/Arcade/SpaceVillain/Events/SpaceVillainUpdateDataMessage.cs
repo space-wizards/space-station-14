@@ -6,25 +6,40 @@ namespace Content.Shared.Arcade.SpaceVillain.Events;
 ///
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SpaceVillainUpdateDataMessage(byte playerHP, byte playerMP, byte villainHP, byte villainMP) : BoundUserInterfaceMessage
+public sealed class SpaceVillainUpdateDataMessage(int playerHP, int playerMP, string villainName, int villainHP, int villainMP, string playerStatus, string villainStatus) : BoundUserInterfaceMessage
 {
     /// <summary>
     ///
     /// </summary>
-    public byte PlayerHP = playerHP;
+    public int PlayerHP = playerHP;
 
     /// <summary>
     ///
     /// </summary>
-    public byte PlayerMP = playerMP;
+    public int PlayerMP = playerMP;
 
     /// <summary>
     ///
     /// </summary>
-    public byte VillainHP = villainHP;
+    public string VillainName = villainName;
 
     /// <summary>
     ///
     /// </summary>
-    public byte VillainMP = villainMP;
+    public int VillainHP = villainHP;
+
+    /// <summary>
+    ///
+    /// </summary>
+    public int VillainMP = villainMP;
+
+    /// <summary>
+    ///
+    /// </summary>
+    public string PlayerStatus = playerStatus;
+
+    /// <summary>
+    ///
+    /// </summary>
+    public string VillainStatus = villainStatus;
 }

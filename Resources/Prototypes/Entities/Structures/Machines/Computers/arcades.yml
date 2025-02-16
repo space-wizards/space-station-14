@@ -71,7 +71,13 @@
       visible: false
   - type: PointLight
     color: "#e3a136"
+  - type: Arcade
+  - type: ArcadeRewards
+    rewards: !type:NestedSelector
+      tableId: LockerFillQuarterMaster
   - type: SpaceVillainArcade
+    villainFirstNames: SpaceVillainFirstNamesDataset
+    villainLastNames: SpaceVillainLastNamesDataset
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
@@ -103,8 +109,6 @@
   - type: ArcadeRewards
     minAmount: 5
     maxAmount: 8
-  - type: SpaceVillainArcade
-
 
 #- type: entity
 #  id: BlockGameArcade
@@ -141,3 +145,96 @@
 #    maximumWait: 240
 #  - type: SpeakOnUIClosed
 #    pack: BlockGameGoodbyes
+
+# Toys table
+- type: entityTable
+  id: IngredientTable
+  table: !type:GroupSelector
+    children:
+    #Common
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - id: Basketball
+      - id: BalloonNT
+      - id: BalloonCorgi
+      - id: BoxDonkSoftBox
+      - id: BeachBall
+      - id: CandyBucket
+      - id: CrayonBox
+      - id: ClothingHeadHatCowboyRed
+      - id: FoamCutlass
+      - id: Football
+      - id: GlowstickBase #green
+      - id: GlowstickBlue
+      - id: GlowstickYellow
+      - id: GlowstickPurple
+      - id: GlowstickRed
+      - id: HarmonicaInstrument
+      - id: OcarinaInstrument
+      - id: RecorderInstrument
+      - id: GunpetInstrument
+      - id: BirdToyInstrument
+      - id: MysteryFigureBox
+      - id: PlushieHampter
+      - id: PlushieLizard
+      - id: PlushieRainbowLizard
+      - id: PlushieAtmosian
+      - id: PlushieSpaceLizard
+      - id: PlushieNuke
+      - id: PlushieCarp
+      - id: PlushieMagicarp
+      - id: PlushieHolocarp
+      - id: PlushieRainbowCarp
+      - id: PlushieRatvar
+      - id: PlushieNar
+      - id: PlushieSnake
+      - id: PlushieArachind
+      - id: PlushieMoth
+      - id: PlushieHampter
+      - id: PlushiePenguin
+      - id: PlushieHuman
+      - id: PlushieRouny
+      - id: PlushieBee
+      - id: PlushieSlime
+      - id: PlushieGhost
+      - id: PlushieDiona
+      - id: PlushieSharkBlue
+      - id: PlushieVox
+      - id: PlushieXeno
+      - id: PlasticBanana
+      - id: SnapPopBox
+      - id: ToyMouse
+      - id: ToyAi
+      - id: ToyGriffin
+      - id: ToyHonk
+      - id: ToyIan
+      - id: ToyMarauder
+      - id: ToyMauler
+      - id: ToyGygax
+      - id: ToyOdysseus
+      - id: ToyOwlman
+      - id: ToyDeathRipley
+      - id: ToyPhazon
+      - id: ToyFireRipley
+      - id: ToyReticence
+      - id: ToyRipley
+      - id: ToySeraph
+      - id: ToyDurand
+      - id: ToySkeleton
+      - id: ToySword
+      - id: ToyAmongPequeno
+      - id: ToyRubberDuck
+      - id: WhoopieCushion
+    #Rare
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - id: ToySword
+      - id: WeaponWaterPistol
+      - id: ToyNuke
+      - id: ToyHammer
+      - id: RevolverCapGun
+      - id: FoamCrossbow
+      - id: FoamBlade
+      - id: BoxCartridgeCap
