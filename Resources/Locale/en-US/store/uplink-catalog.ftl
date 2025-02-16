@@ -191,6 +191,9 @@ uplink-dna-scrambler-implanter-desc = A single use implant that can be activated
 uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
 
+uplink-smoke-screen-implanter-name = Smoke Screen Implanter
+uplink-smoke-screen-implanter-desc = Creates a small cloud of smoke for you to slip away in. Can be used up to three times before you run out of gas.
+
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
 
@@ -227,6 +230,9 @@ uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect f
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
+
+uplink-duffel-runner-name = Syndicate Runner Bundle
+uplink-duffel-runner-desc = A duffelbag containing everything you need to go fast and not get caught.
 
 uplink-ammo-bundle-name = Ammo Bundle
 uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
@@ -323,6 +329,9 @@ uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping and, in zero gravity, allow you to move normally, at the cost of a slight slowdown. Additionally, they have jetpack functionality and come fueled, but don't last for long.
+
+uplink-clothing-shoes-boots-speed-syndie-name = Blood-red Speed Boots
+uplink-clothing-shoes-boots-speed-syndie-desc = A pair of boots for when you gotta go fast. They offer no protection from slipping and you'll have to recharge the battery eventually.
 
 uplink-eva-syndie-name = Syndicate EVA Bundle
 uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than what's needed to survive in space.
