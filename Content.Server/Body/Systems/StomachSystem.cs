@@ -1,5 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -75,7 +76,9 @@ namespace Content.Server.Body.Systems
                     stomach.ReagentDeltas.Remove(item);
                 }
 
-                _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
+                // _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
+                TryComp<ReactionMixerComponent>(uid, out var reactionMixer);
+                _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value, true, reactionMixer);
 
                 // Transfer everything to the body solution!
                 _solutionContainerSystem.TryAddSolution(bodySolution.Value, transferSolution);
