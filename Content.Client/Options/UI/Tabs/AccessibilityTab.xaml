@@ -8,6 +8,7 @@
                 <CheckBox Name="DisableSinguloWarpingCheckBox" Text="{Loc 'ui-options-disable-singulo-warp'}" />
                 <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
                 <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
+                <CheckBox Name="DisableFiltersCheckBox" Text="{Loc 'ui-options-no-filters'}" />
                 <ui:OptionSlider Name="ChatWindowOpacitySlider" Title="{Loc 'ui-options-chat-window-opacity'}" />
                 <ui:OptionSlider Name="ScreenShakeIntensitySlider" Title="{Loc 'ui-options-screen-shake-intensity'}" />
                 <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
