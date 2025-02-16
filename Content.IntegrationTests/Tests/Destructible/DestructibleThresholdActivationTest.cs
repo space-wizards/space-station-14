@@ -1,12 +1,11 @@
 using System.Linq;
-using Content.Server.Destructible;
-using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -28,7 +27,6 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            var audio = sEntitySystemManager.GetEntitySystem<SharedAudioSystem>();
 
             var testMap = await pair.CreateTestMap();
 

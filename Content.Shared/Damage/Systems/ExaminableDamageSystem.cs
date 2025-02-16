@@ -1,14 +1,12 @@
 ﻿using System.Linq;
-using Content.Server.Damage.Components;
-using Content.Server.Destructible;
-using Content.Server.Destructible.Thresholds.Triggers;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.Examine;
 using Content.Shared.Rounding;
 using Robust.Shared.Prototypes;
+using ExaminableDamageComponent = Content.Shared.Damage.Components.ExaminableDamageComponent;
 
-namespace Content.Server.Damage.Systems;
+namespace Content.Shared.Damage.Systems;
 
 public sealed class ExaminableDamageSystem : EntitySystem
 {
@@ -17,23 +15,16 @@ public sealed class ExaminableDamageSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ExaminableDamageComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ExaminableDamageComponent, ExaminedEvent>(OnExamine);
-    }
-
-    private void OnInit(EntityUid uid, ExaminableDamageComponent component, ComponentInit args)
-    {
-        if (component.MessagesProtoId == null)
-            return;
-        component.MessagesProto = _prototype.Index<ExaminableDamagePrototype>(component.MessagesProtoId);
     }
 
     private void OnExamine(EntityUid uid, ExaminableDamageComponent component, ExaminedEvent args)
     {
-        if (component.MessagesProto == null)
+        if (!_prototype.TryIndex(component.MessagesProtoId, out var proto))
             return;
 
-        var messages = component.MessagesProto.Messages;
+        var messages = proto.Messages;
+
         if (messages.Length == 0)
             return;
 
@@ -48,15 +39,17 @@ public sealed class ExaminableDamageSystem : EntitySystem
         if (!Resolve(uid, ref component, ref damageable, ref destructible))
             return 0;
 
-        if (component.MessagesProto == null)
+        if (!_prototype.TryIndex(component.MessagesProtoId, out var proto))
             return 0;
 
-        var maxLevels = component.MessagesProto.Messages.Length - 1;
+        var maxLevels = proto.Messages.Length - 1;
         if (maxLevels <= 0)
             return 0;
 
         var trigger = (DamageTrigger?) destructible.Thresholds
-            .LastOrDefault(threshold => threshold.Trigger is DamageTrigger)?.Trigger;
+            .LastOrDefault(threshold => threshold.Trigger is DamageTrigger)
+            ?.Trigger;
+
         if (trigger == null)
             return 0;
 

@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
@@ -9,16 +10,18 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public sealed partial class EmptyContainersBehaviour : IThresholdBehavior
     {
-        [DataField("containers")]
+        [DataField]
         public List<string> Containers = new();
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner,
+            IDependencyCollection collection,
+            EntityManager entManager,
+            EntityUid? cause = null)
         {
-            if (!system.EntityManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
+            if (!entManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
                 return;
 
-            var containerSys = system.EntityManager.System<ContainerSystem>();
-
+            var containerSys = entManager.System<ContainerSystem>();
 
             foreach (var containerId in Containers)
             {

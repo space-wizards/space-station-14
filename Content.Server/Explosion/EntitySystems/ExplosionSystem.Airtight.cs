@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Destructible;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.FixedPoint;

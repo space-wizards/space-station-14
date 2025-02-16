@@ -1,11 +1,12 @@
 ﻿using System.Numerics;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Random;
 using Robust.Shared.Spawners;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
@@ -49,32 +50,38 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
     [DataField]
     public float SpawnAfter;
 
-    public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid uid,
+        IDependencyCollection collection,
+        EntityManager entManager,
+        EntityUid? cause = null)
     {
+        var random = collection.Resolve<IRobustRandom>();
+        var protoManager = collection.Resolve<IPrototypeManager>();
+        
         // Get the position at which to start initially spawning entities
-        var transform = system.EntityManager.System<TransformSystem>();
+        var transform = entManager.System<TransformSystem>();
         var position = transform.GetMapCoordinates(uid);
         // Helper function used to randomly get an offset to apply to the original position
-        Vector2 GetRandomVector() => new (system.Random.NextFloat(-SpawnOffset, SpawnOffset), system.Random.NextFloat(-SpawnOffset, SpawnOffset));
+        Vector2 GetRandomVector() => new (random.NextFloat(-SpawnOffset, SpawnOffset), random.NextFloat(-SpawnOffset, SpawnOffset));
         // Randomly pick the entity to spawn and randomly pick how many to spawn
-        var entity = system.PrototypeManager.Index(WeightedEntityTable).Pick(system.Random);
-        var amountToSpawn = system.Random.NextFloat(MinSpawn, MaxSpawn);
+        var entity = protoManager.Index(WeightedEntityTable).Pick(random);
+        var amountToSpawn = random.NextFloat(MinSpawn, MaxSpawn);
 
         // Different behaviors for delayed spawning and immediate spawning
         if (SpawnAfter != 0)
         {
             // if it fails to get the spawner, this won't ever work so just return
-            if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
+            if (!protoManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
                 return;
 
             // spawn the spawner, assign it a lifetime, and assign the entity that it will spawn when despawned
             for (var i = 0; i < amountToSpawn; i++)
             {
-                var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(GetRandomVector()));
-                system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
+                var spawner = entManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(GetRandomVector()));
+                entManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
                 timedDespawnComponent.Lifetime = SpawnAfter;
-                system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entity);
+                entManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
+                entManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entity);
             }
         }
         else
@@ -82,7 +89,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
             // directly spawn the desired entities
             for (var i = 0; i < amountToSpawn; i++)
             {
-                system.EntityManager.SpawnEntity(entity, position.Offset(GetRandomVector()));
+                entManager.SpawnEntity(entity, position.Offset(GetRandomVector()));
             }
         }
     }
