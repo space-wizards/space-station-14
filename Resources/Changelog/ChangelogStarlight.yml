@@ -3454,4 +3454,11 @@ Entries:
   id: 478
   time: '2025-02-16T16:26:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/334
+- author: PubliclyExecutedPig
+  changes:
+  - message: Re-added Saltern to the map pool
+    type: Add
+  id: 479
+  time: '2025-02-16T17:09:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/331
 
