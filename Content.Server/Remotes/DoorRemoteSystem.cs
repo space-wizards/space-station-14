@@ -14,7 +14,6 @@ namespace Content.Shared.Remotes
     public sealed class DoorRemoteSystem : SharedDoorRemoteSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
 
@@ -84,7 +83,7 @@ namespace Content.Shared.Remotes
                 case OperatingMode.ToggleEmergencyAccess:
                     if (airlockComp != null)
                     {
-                        _airlock.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess);
+                        _doorSystem.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess);
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
