@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Swapped placement of the robotech deluxe and exosuit fabricators
-      in robotics to reduce instances of cyborg endoskeletons spawning in the wall.
-    type: Tweak
-  id: 640
-  time: '2024-12-03T16:40:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/884
 - author: Sha-Seng
   changes:
   - message: Passenger winter coat replaced with the version that actually has a hood
@@ -4175,3 +4167,10 @@
   id: 1139
   time: '2025-02-16T12:24:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1706
+- author: Sha-Seng
+  changes:
+  - message: Thaven now have all underwear options (yay)
+    type: Add
+  id: 1140
+  time: '2025-02-16T12:25:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1710
