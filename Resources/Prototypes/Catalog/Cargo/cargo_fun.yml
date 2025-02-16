@@ -89,6 +89,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunWaterBalloons
+  icon:
+    sprite: Objects/Fun/water_balloons.rsi
+    state: water_balloon_cargo_icon
+  product: CrateWaterBalloons
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunPlushies
   icon:
     sprite: Objects/Fun/toys.rsi
