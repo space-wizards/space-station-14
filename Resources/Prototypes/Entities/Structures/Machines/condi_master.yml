@@ -1,0 +1,87 @@
+- type: entity
+  id: CondiMaster
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: CondiMaster Neo
+  description: A civilian grade chemical manipulator for filtering and mixing kitchen-based mixtures.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/mixerchef.rsi
+    snapCardinals: true
+    layers:
+    - state: mixerchef_active
+    - state: mixerchef_screen
+      map: [ "enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: ChemMaster
+    pillDosageLimit: 0 # required for prototype to function
+    canMakePills: false # removes pill button ui from 2nd screen
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ActivatableUI
+    key: enum.ChemMasterUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.ChemMasterUiKey.Key:
+        type: ChemMasterBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  # Machine / Construction stuff
+  - type: WiresPanel
+  - type: Machine
+    board: ChemMasterMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      outputSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+      outputSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          tags:
+          - Bottle
+  - type: SolutionContainerManager
+    solutions:
+      buffer:
+        maxVol: 300
+  - type: DumpableSolution
+    solution: buffer
+    unlimited: false
