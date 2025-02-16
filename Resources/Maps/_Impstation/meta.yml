@@ -14660,7 +14660,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -254931.84
+      secondsUntilStateChange: -254974.5
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14924,7 +14924,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -109585.59
+      secondsUntilStateChange: -109628.25
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -84123,7 +84123,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -32424.63
+      secondsUntilStateChange: -32467.285
       state: Closing
   - uid: 9615
     components:
@@ -148136,6 +148136,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,11.5
       parent: 5350
+- proto: SignDrones
+  entities:
+  - uid: 8902
+    components:
+    - type: Transform
+      pos: 44.5,-0.5
+      parent: 5350
 - proto: SignElectricalMed
   entities:
   - uid: 1503
@@ -148403,13 +148410,6 @@ entities:
     components:
     - type: Transform
       pos: -39.5,1.5
-      parent: 5350
-- proto: SignMaterials
-  entities:
-  - uid: 8902
-    components:
-    - type: Transform
-      pos: 44.5,-0.5
       parent: 5350
 - proto: SignMedical
   entities:
@@ -151138,6 +151138,23 @@ entities:
     components:
     - type: Transform
       pos: 58.5,-11.5
+      parent: 5350
+- proto: SpawnMobDrone
+  entities:
+  - uid: 28671
+    components:
+    - type: Transform
+      pos: 43.5,-2.5
+      parent: 5350
+  - uid: 28672
+    components:
+    - type: Transform
+      pos: 42.5,-2.5
+      parent: 5350
+  - uid: 28673
+    components:
+    - type: Transform
+      pos: 42.5,-1.5
       parent: 5350
 - proto: SpawnMobFoxRenault
   entities:
@@ -184823,7 +184840,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -38136.543
+      secondsUntilStateChange: -38179.195
       state: Opening
     - type: ContainerContainer
       containers:

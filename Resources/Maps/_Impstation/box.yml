@@ -11917,7 +11917,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -82936.875
+      secondsUntilStateChange: -82983.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -85306,7 +85306,7 @@ entities:
       pos: -8.5,-70.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -34661.9
+      secondsUntilStateChange: -34708.316
       state: Closing
   - uid: 5277
     components:
@@ -86089,7 +86089,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -77125.41
+      secondsUntilStateChange: -77171.83
       state: Closing
   - uid: 15010
     components:
@@ -125075,7 +125075,7 @@ entities:
       pos: 28.5,-34.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -56895.758
+      secondsUntilStateChange: -56942.176
       state: Closing
 - proto: hydroponicsSoil
   entities:
@@ -144921,6 +144921,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 17.490667,-11.707433
       parent: 8364
+- proto: SignDrones
+  entities:
+  - uid: 21495
+    components:
+    - type: Transform
+      pos: -51.5,-3.5
+      parent: 8364
 - proto: SignElectricalMed
   entities:
   - uid: 764
@@ -145153,13 +145160,6 @@ entities:
     components:
     - type: Transform
       pos: -18.5,-16.5
-      parent: 8364
-- proto: SignMaterials
-  entities:
-  - uid: 21495
-    components:
-    - type: Transform
-      pos: -51.5,-3.5
       parent: 8364
 - proto: SignMedical
   entities:
@@ -147473,6 +147473,23 @@ entities:
     components:
     - type: Transform
       pos: 12.5,-57.5
+      parent: 8364
+- proto: SpawnMobDrone
+  entities:
+  - uid: 28464
+    components:
+    - type: Transform
+      pos: -50.5,-7.5
+      parent: 8364
+  - uid: 28465
+    components:
+    - type: Transform
+      pos: -50.5,-5.5
+      parent: 8364
+  - uid: 28466
+    components:
+    - type: Transform
+      pos: -50.5,-6.5
       parent: 8364
 - proto: SpawnMobFoxRenault
   entities:

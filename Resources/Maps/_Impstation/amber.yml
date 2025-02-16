@@ -125921,6 +125921,13 @@ entities:
     - type: Transform
       pos: 15.5,4.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 2270
+    components:
+    - type: Transform
+      pos: 29.5,-17.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 1748
@@ -126151,11 +126158,6 @@ entities:
       parent: 2
 - proto: SignMaterials
   entities:
-  - uid: 2270
-    components:
-    - type: Transform
-      pos: 29.5,-17.5
-      parent: 2
   - uid: 12579
     components:
     - type: Transform
@@ -128056,6 +128058,23 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-2.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 23417
+    components:
+    - type: Transform
+      pos: 26.5,-17.5
+      parent: 2
+  - uid: 23418
+    components:
+    - type: Transform
+      pos: 27.5,-17.5
+      parent: 2
+  - uid: 23419
+    components:
+    - type: Transform
+      pos: 28.5,-17.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

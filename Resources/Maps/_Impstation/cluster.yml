@@ -5858,7 +5858,7 @@ entities:
       pos: -4.5,45.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8511.578
+      secondsUntilStateChange: -8531.765
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -5930,7 +5930,7 @@ entities:
       pos: 17.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5742.511
+      secondsUntilStateChange: -5762.6978
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -68246,6 +68246,23 @@ entities:
     components:
     - type: Transform
       pos: 36.5,-11.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 12905
+    components:
+    - type: Transform
+      pos: 11.5,27.5
+      parent: 2
+  - uid: 12906
+    components:
+    - type: Transform
+      pos: 12.5,27.5
+      parent: 2
+  - uid: 12907
+    components:
+    - type: Transform
+      pos: 13.5,27.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

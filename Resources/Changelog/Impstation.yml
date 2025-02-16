@@ -1,59 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: Adds cruise 2 for testing!!
-    type: Add
-  - message: mob spawns for cruise
-    type: Add
-  - message: washing machines
-    type: Add
-  - message: moved some old cruise stuff into the impstation specific files
-    type: Tweak
-  id: 625
-  time: '2024-12-02T23:39:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/863
-- author: Sha-Seng
-  changes:
-  - message: hi stamps fit in folders now :)
-    type: Tweak
-  id: 626
-  time: '2024-12-02T23:43:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/868
-- author: Darkmajia
-  changes:
-  - message: Rounds below 20 players now have their own gamemodes with a reduced threat
-      level.
-    type: Add
-  - message: Listening Post can now spawn during Spy vs Spy rounds.
-    type: Fix
-  id: 627
-  time: '2024-12-02T23:53:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/872
-- author: Darkmajia
-  changes:
-  - message: Salvage corpses spawn heavily rotted, and extremely bloated.
-    type: Tweak
-  - message: Changelings are incapable of absorbing corpses once they reach the "extremely
-      bloated" stage.
-    type: Tweak
-  id: 628
-  time: '2024-12-02T23:54:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/860
-- author: Sha-Seng
-  changes:
-  - message: Crushers fit in your suit storage now (the tank slot!)
-    type: Tweak
-  id: 629
-  time: '2024-12-03T00:03:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/849
-- author: DinnerCalzone
-  changes:
-  - message: Adjusted the painted stripe on bar, chapel, janitor, and lawyer airlocks
-      to look a bit less washed out.
-    type: Tweak
-  id: 630
-  time: '2024-12-03T00:09:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/873
 - author: widgetbeck
   changes:
   - message: Slime People now take significant Caustic damage from skin contact &
@@ -4198,3 +4143,46 @@
   id: 1124
   time: '2025-02-14T02:22:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1681
+- author: TheGrimbeeper
+  changes:
+  - message: reduced radioactivity of uranium and uranium-based materials
+    type: Tweak
+  id: 1125
+  time: '2025-02-14T07:49:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1644
+- author: Sha-Seng
+  changes:
+  - message: Portable Criminal Records now fits in the tank slot!
+    type: Tweak
+  id: 1126
+  time: '2025-02-14T08:12:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1618
+- author: FlippenPage
+  changes:
+  - message: made heretic transmutation runes less visible
+    type: Tweak
+  id: 1127
+  time: '2025-02-15T00:37:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1687
+- author: TheGrimbeeper
+  changes:
+  - message: Heretics should no longer be able to get themselves (or other heretics)
+      or changelings as targets
+    type: Fix
+  id: 1128
+  time: '2025-02-15T00:41:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1688
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Six lovely pairs of glasses available now in your loadout menu!
+    type: Add
+  id: 1129
+  time: '2025-02-15T00:50:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1679
+- author: FlippenPage
+  changes:
+  - message: Added Drone rooms!
+    type: Add
+  id: 1130
+  time: '2025-02-15T08:09:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1694
