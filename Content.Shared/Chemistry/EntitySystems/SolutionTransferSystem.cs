@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Linguini.Syntax.Ast;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -101,7 +102,7 @@ public sealed class SolutionTransferSystem : EntitySystem
 
     private void OnAfterInteract(Entity<SolutionTransferComponent> ent, ref AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Target is not {} target)
+        if (!args.CanReach || args.Target is not { } target)
             return;
 
         var (uid, comp) = ent;
@@ -116,7 +117,7 @@ public sealed class SolutionTransferSystem : EntitySystem
             var transferAmount = comp.TransferAmount; // This is the player-configurable transfer amount of "uid," not the target reagent tank.
 
             // if the receiver has a smaller transfer limit, use that instead
-            if (refill?.MaxRefill is {} maxRefill)
+            if (refill?.MaxRefill is { } maxRefill)
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferred = Transfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount);
@@ -129,6 +130,19 @@ public sealed class SolutionTransferSystem : EntitySystem
                     : "comp-solution-transfer-fill-normal";
 
                 _popup.PopupClient(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
+                return;
+            }
+        }
+
+        //extra case for like scooping yknow how it be
+        if (HasComp<ScoopableSolutionComponent>(target)
+            && _solution.TryGetRefillableSolution(uid, out _, out var ownerSol))
+        {
+            if (ownerSol.Volume == 0)  //ill make this lil bit smoother later, being split made it easier to debug
+            {
+                Log.Debug("save triggered, not transfering");
+
+                args.Handled = true;  // do nothin since the scoop component is handling it
                 return;
             }
         }
@@ -151,6 +165,13 @@ public sealed class SolutionTransferSystem : EntitySystem
                 var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
                 _popup.PopupClient(message, uid, args.User);
             }
+        }
+
+        //delete when done, debug thingi u.u
+        if (_solution.TryGetRefillableSolution(uid, out ownerSoln, out ownerSol))
+        {
+            //.Debug($"yippee {ownerSol.Volume}");
+            Log.Debug("this should happen FIRST");
         }
     }
 

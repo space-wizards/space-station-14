@@ -2,6 +2,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -19,12 +20,19 @@ public sealed class ScoopableSolutionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ScoopableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<ScoopableSolutionComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(SolutionTransferSystem)]);
     }
 
     private void OnInteractUsing(Entity<ScoopableSolutionComponent> ent, ref InteractUsingEvent args)
     {
-        TryScoop(ent, args.Used, args.User);
+        if (!ent.Comp.General)
+        {
+            TryScoop(ent, args.Used, args.User);
+        }
+        else
+        {
+            TryGeneralScoop(ent, args.Used, args.User);
+        }
     }
 
     public bool TryScoop(Entity<ScoopableSolutionComponent> ent, EntityUid beaker, EntityUid user)
@@ -48,6 +56,31 @@ public sealed class ScoopableSolutionSystem : EntitySystem
                 QueueDel(ent);
         }
 
+        return true;
+    }
+
+    /// <summary>
+    /// Safe variation so the component can be added into any chem container, needs Safety to be true
+    /// </summary>
+    public bool TryGeneralScoop(Entity<ScoopableSolutionComponent> ent, EntityUid beaker, EntityUid user)
+    {
+        //ill clean up the comments and stuff before like making this not a draft so dont worry u.u
+
+        
+        if (!_solution.TryGetSolution(ent.Owner, ent.Comp.Solution, out var sol, out var containerSolution)  //try get solution
+         || !_solution.TryGetRefillableSolution(beaker, out var target, out var targetSolution))
+            return false;
+
+        if (targetSolution.Volume > 0)  //check if its empty 
+            return false;
+ 
+        var scooped = _solutionTransfer.Transfer(user, ent, sol.Value, beaker, target.Value, containerSolution.Volume);  //do the scooping
+        if (scooped == 0)
+            return false;
+
+        _popup.PopupClient(Loc.GetString(ent.Comp.Popup, ("scooped", ent.Owner), ("beaker", beaker)), user, user);  //message
+
+        Log.Debug("this should happen AFTER"); 
         return true;
     }
 }
