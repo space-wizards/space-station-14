@@ -1976,3 +1976,31 @@
         - !type:AdjustReagent
           reagent: Ethanol
           amount: 0.25
+
+- type: reagent
+  id: BloodRedBooze
+  name: reagent-name-blood-red-booze
+  parent: BaseAlcohol
+  desc: reagent-desc-blood-red-booze
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: bloodredbooze
+  color: "#d73827"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bloodredbooze.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+            reagent: Ethanol
+            amount: 0.15
+      - !type:GenericStatusEffect
+               key: Drowsiness
+               time: 1.0
+               type: Remove
+  fizziness: 0.6
