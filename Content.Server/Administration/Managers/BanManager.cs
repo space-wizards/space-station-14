@@ -230,6 +230,26 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         player.Channel.Disconnect(message);
     }
 
+    public async void CreateAsnBan(string asn, NetUserId banningAdmin, uint? minutes, NoteSeverity severity, string reason)
+    {
+        DateTimeOffset? expires = null;
+        if (minutes > 0)
+        {
+            expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes.Value);
+        }
+
+        var asnBanDef = new ServerAsnBanDef(
+            asn,
+            banningAdmin,
+            DateTimeOffset.Now,
+            expires,
+            severity,
+            reason,
+            null);
+
+        await _db.AddServerAsnBanAsync(asnBanDef);
+    }
+
     #endregion
 
     #region Job Bans
