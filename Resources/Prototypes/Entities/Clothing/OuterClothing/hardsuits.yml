@@ -306,12 +306,12 @@
     modifiers:
       coefficients:
         Blunt: 0.5
-        Slash: 0.6
-        Piercing: 0.6
+        Slash: 0.5
+        Piercing: 0.5
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.65
+    sprintModifier: 0.65
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
