@@ -77,6 +77,7 @@
   - type: HolidayRsiSwap
     sprite:
       festive: Objects/Weapons/Bombs/c4gift.rsi
+  - type: Engraveable # imp
 
 - type: entity
   name: seismic charge
