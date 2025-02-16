@@ -298,8 +298,26 @@ namespace Content.Client.Examine
             {
                 Name = "ExamineButtonsHBox",
                 Orientation = LayoutOrientation.Horizontal,
-                HorizontalAlignment = Control.HAlignment.Right,
+                HorizontalAlignment = Control.HAlignment.Stretch,
                 VerticalAlignment = Control.VAlignment.Bottom,
+            };
+
+            var hoverExamineBox = new BoxContainer
+            {
+                Name = "HoverExamineHBox",
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalAlignment = Control.HAlignment.Left,
+                VerticalAlignment = Control.VAlignment.Center,
+                HorizontalExpand = true
+            };
+
+            var clickExamineBox = new BoxContainer
+            {
+                Name = "ClickExamineHBox",
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalAlignment = Control.HAlignment.Right,
+                VerticalAlignment = Control.VAlignment.Center,
+                HorizontalExpand = true
             };
 
             // Examine button time
@@ -316,8 +334,15 @@ namespace Content.Client.Examine
 
                 var button = new ExamineButton(examine);
 
-                button.OnPressed += VerbButtonPressed;
-                buttonsHBox.AddChild(button);
+                if (examine.HoverVerb)
+                {
+                    hoverExamineBox.AddChild(button);
+                }
+                else
+                {
+                    button.OnPressed += VerbButtonPressed;
+                    clickExamineBox.AddChild(button);
+                }
             }
 
             var vbox = _examineTooltipOpen?.GetChild(0).GetChild(0);
@@ -334,6 +359,8 @@ namespace Content.Client.Examine
             {
                 vbox.Children.Remove(hbox.First());
             }
+            buttonsHBox.AddChild(hoverExamineBox);
+            buttonsHBox.AddChild(clickExamineBox);
             vbox.AddChild(buttonsHBox);
         }
 
