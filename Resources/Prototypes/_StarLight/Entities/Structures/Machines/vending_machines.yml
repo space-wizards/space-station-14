@@ -177,3 +177,21 @@
     categories:
     - SLSecurity
     - SLBrigmedic
+    
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineSalvage
+  name: salvage ticket machine
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/salvage.rsi
+  - type: Store
+    name: vendor-salvage-ticket-machine
+    categories:
+    - SalvageEquipment
+    - SalvageWeapons
+    - SalvageConsumeables
+    currencyWhitelist:
+    - SalvageTicket
