@@ -116,9 +116,11 @@ public abstract partial class SharedMoverController : VirtualController
         InputMoverComponent mover,
         EntityUid physicsUid,
         PhysicsComponent physicsComponent,
-        TransformComponent xform,
+        Entity<TransformComponent> entXform,
         float frameTime)
     {
+        var xform = entXform.Comp;
+
         var canMove = mover.CanMove;
         if (RelayTargetQuery.TryGetComponent(uid, out var relayTarget))
         {
@@ -249,7 +251,8 @@ public abstract partial class SharedMoverController : VirtualController
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                 var worldRot = _transform.GetWorldRotation(xform);
-                _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
+
+                _transform.SetLocalRotation(entXform.Owner, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot, xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
@@ -365,18 +368,18 @@ public abstract partial class SharedMoverController : VirtualController
     /// </summary>
     private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, EntityUid physicsUid, PhysicsComponent collider)
     {
-        var enlargedAABB = _lookup.GetWorldAABB(physicsUid, transform).Enlarged(mover.GrabRangeVV);
+        var enlargedAABB = new Box2Rotated(_lookup.GetWorldAABB(physicsUid, transform).Enlarged(mover.GrabRangeVV));
 
         foreach (var otherCollider in broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
         {
-            if (otherCollider == collider)
+            if (otherCollider.Comp == collider)
                 continue; // Don't try to push off of yourself!
 
             // Only allow pushing off of anchored things that have collision.
-            if (otherCollider.BodyType != BodyType.Static ||
-                !otherCollider.CanCollide ||
-                ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
-                (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
+            if (otherCollider.Comp.BodyType != BodyType.Static ||
+                !otherCollider.Comp.CanCollide ||
+                ((collider.CollisionMask & otherCollider.Comp.CollisionLayer) == 0 &&
+                (otherCollider.Comp.CollisionMask & collider.CollisionLayer) == 0) ||
                 (TryComp(otherCollider.Owner, out PullableComponent? pullable) && pullable.BeingPulled))
             {
                 continue;
@@ -472,12 +475,12 @@ public abstract partial class SharedMoverController : VirtualController
             return sound != null;
         }
 
-        var position = grid.LocalToTile(xform.Coordinates);
+        var position = _mapSystem.LocalToTile(uid, grid, xform.Coordinates);
         var soundEv = new GetFootstepSoundEvent(uid);
 
         // If the coordinates have a FootstepModifier component
         // i.e. component that emit sound on footsteps emit that sound
-        var anchored = grid.GetAnchoredEntitiesEnumerator(position);
+        var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, position);
 
         while (anchored.MoveNext(out var maybeFootstep))
         {
@@ -499,7 +502,7 @@ public abstract partial class SharedMoverController : VirtualController
         // Walking on a tile.
         // Tile def might have been passed in already from previous methods, so use that
         // if we have it
-        if (tileDef == null && grid.TryGetTileRef(position, out var tileRef))
+        if (tileDef == null && _mapSystem.TryGetTileRef(uid, grid, position, out var tileRef))
         {
             tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
         }
