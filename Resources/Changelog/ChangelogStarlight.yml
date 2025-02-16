@@ -3439,4 +3439,11 @@ Entries:
   id: 476
   time: '2025-02-15T13:24:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/326
+- author: Killer Tamashi
+  changes:
+  - message: Added Corpsman hat/jacket/uniform.
+    type: Add
+  id: 477
+  time: '2025-02-16T09:22:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/332
 
