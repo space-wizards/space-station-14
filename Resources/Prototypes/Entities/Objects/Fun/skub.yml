@@ -15,8 +15,24 @@
   - type: EmitSoundOnUse
     sound:
       collection: Skub
+  - type: EmitSoundOnLand
+    sound:
+      collection: Skub
   - type: EmitSoundOnTrigger
     sound:
       collection: Skub
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Skub
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Skub
+  - type: MeleeWeapon
+    soundHit:
+      collection: Skub
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
   - type: UseDelay
     delay: 2.0
