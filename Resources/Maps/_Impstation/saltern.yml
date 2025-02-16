@@ -5192,7 +5192,7 @@ entities:
       pos: -29.5,-18.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -5602.707
+      secondsUntilStateChange: -5653.8823
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -34925,7 +34925,7 @@ entities:
       pos: 3.5,29.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -20303.205
+      secondsUntilStateChange: -20354.38
       state: Closing
   - uid: 8815
     components:
@@ -60218,6 +60218,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -26.497889,6.2645836
       parent: 31
+- proto: SignDrones
+  entities:
+  - uid: 7224
+    components:
+    - type: Transform
+      pos: 26.5,2.5
+      parent: 31
 - proto: SignElectrical
   entities:
   - uid: 11377
@@ -60329,13 +60336,6 @@ entities:
     components:
     - type: Transform
       pos: 12.5,8.5
-      parent: 31
-- proto: SignMaterials
-  entities:
-  - uid: 7224
-    components:
-    - type: Transform
-      pos: 26.5,2.5
       parent: 31
 - proto: SignMedical
   entities:
@@ -61259,6 +61259,23 @@ entities:
     components:
     - type: Transform
       pos: 33.5,12.5
+      parent: 31
+- proto: SpawnMobDrone
+  entities:
+  - uid: 12243
+    components:
+    - type: Transform
+      pos: 25.5,1.5
+      parent: 31
+  - uid: 12244
+    components:
+    - type: Transform
+      pos: 26.5,1.5
+      parent: 31
+  - uid: 12245
+    components:
+    - type: Transform
+      pos: 27.5,1.5
       parent: 31
 - proto: SpawnMobFoxRenault
   entities:

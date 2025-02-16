@@ -140023,6 +140023,13 @@ entities:
     - type: Transform
       pos: -101.5,25.5
       parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 2534
+    components:
+    - type: Transform
+      pos: -107.5,-30.5
+      parent: 2
 - proto: SignElectricalMed
   entities:
   - uid: 18084
@@ -140266,14 +140273,6 @@ entities:
     components:
     - type: Transform
       pos: -97.5,8.5
-      parent: 2
-- proto: SignMaterials
-  entities:
-  - uid: 2534
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -107.5,-30.5
       parent: 2
 - proto: SignMedical
   entities:
@@ -142796,6 +142795,23 @@ entities:
     components:
     - type: Transform
       pos: -46.5,-9.5
+      parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 26304
+    components:
+    - type: Transform
+      pos: -112.5,-32.5
+      parent: 2
+  - uid: 26305
+    components:
+    - type: Transform
+      pos: -111.5,-32.5
+      parent: 2
+  - uid: 26306
+    components:
+    - type: Transform
+      pos: -110.5,-32.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

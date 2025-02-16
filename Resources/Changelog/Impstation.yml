@@ -1,76 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Rounds below 20 players now have their own gamemodes with a reduced threat
-      level.
-    type: Add
-  - message: Listening Post can now spawn during Spy vs Spy rounds.
-    type: Fix
-  id: 627
-  time: '2024-12-02T23:53:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/872
-- author: Darkmajia
-  changes:
-  - message: Salvage corpses spawn heavily rotted, and extremely bloated.
-    type: Tweak
-  - message: Changelings are incapable of absorbing corpses once they reach the "extremely
-      bloated" stage.
-    type: Tweak
-  id: 628
-  time: '2024-12-02T23:54:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/860
-- author: Sha-Seng
-  changes:
-  - message: Crushers fit in your suit storage now (the tank slot!)
-    type: Tweak
-  id: 629
-  time: '2024-12-03T00:03:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/849
-- author: DinnerCalzone
-  changes:
-  - message: Adjusted the painted stripe on bar, chapel, janitor, and lawyer airlocks
-      to look a bit less washed out.
-    type: Tweak
-  id: 630
-  time: '2024-12-03T00:09:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/873
-- author: widgetbeck
-  changes:
-  - message: Slime People now take significant Caustic damage from skin contact &
-      injection with water and water vapor. Be careful!
-    type: Tweak
-  id: 631
-  time: '2024-12-03T02:05:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/876
-- author: Sha-Seng
-  changes:
-  - message: mimes have the basic french accent again (but stop talking!)
-    type: Tweak
-  id: 632
-  time: '2024-12-03T04:39:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/867
-- author: Darkmajia
-  changes:
-  - message: Corpses in any stage of rotting grant halved biomass and no evolution
-      points when absorbed by changelings. This was already live, but not reflected
-      in the changelog. Only extremely bloated corpses are inedible.
-    type: Tweak
-  - message: Goblins grant halved biomass and no evolution points when absorbed by
-      changelings. They're kinda small and stinky and really not that tasty.
-    type: Tweak
-  - message: Salvage corpses should no longer gib almost instantly past a certain
-      period of time.
-    type: Fix
-  id: 633
-  time: '2024-12-03T16:33:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/888
-- author: widgetbeck
-  changes:
-  - message: SGD is now derived from Decapoid technology, for flavor.
-    type: Tweak
-  id: 634
-  time: '2024-12-03T16:34:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/887
 - author: hivehum
   changes:
   - message: The command prestige cloaks now count as cloaks for a thief's steal objective.
@@ -4192,3 +4120,69 @@
   id: 1126
   time: '2025-02-14T08:12:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1618
+- author: FlippenPage
+  changes:
+  - message: made heretic transmutation runes less visible
+    type: Tweak
+  id: 1127
+  time: '2025-02-15T00:37:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1687
+- author: TheGrimbeeper
+  changes:
+  - message: Heretics should no longer be able to get themselves (or other heretics)
+      or changelings as targets
+    type: Fix
+  id: 1128
+  time: '2025-02-15T00:41:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1688
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Six lovely pairs of glasses available now in your loadout menu!
+    type: Add
+  id: 1129
+  time: '2025-02-15T00:50:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1679
+- author: FlippenPage
+  changes:
+  - message: Added Drone rooms!
+    type: Add
+  id: 1130
+  time: '2025-02-15T08:09:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1694
+- author: irismessage
+  changes:
+  - message: Our knowledge has widened.
+    type: Add
+  id: 1131
+  time: '2025-02-15T21:44:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1697
+- author: Sha-Seng
+  changes:
+  - message: Security jetpacks are now in security hardsuit lockers (they're coming
+      for you)
+    type: Tweak
+  id: 1132
+  time: '2025-02-16T01:25:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1668
+- author: widgetbeck
+  changes:
+  - message: Drones now have a station pinpointer in their pocket, so they don't get
+      lost in space.
+    type: Add
+  - message: Drones now have a 10-hour Engineering time requirement. Learn the G menu.
+    type: Add
+  - message: Drones can now pilot shuttles.
+    type: Add
+  id: 1133
+  time: '2025-02-16T02:43:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1695
+- author: widgetbeck
+  changes:
+  - message: The mail telepad will now notify Supply when a shipment arrives, complete
+      with the time until the next shipment.
+    type: Add
+  - message: The time between mail shipments is now slightly randomized.
+    type: Add
+  id: 1134
+  time: '2025-02-16T02:44:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1696

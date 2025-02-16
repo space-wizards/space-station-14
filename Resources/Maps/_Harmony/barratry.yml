@@ -16477,11 +16477,6 @@ entities:
     - type: Transform
       pos: -65.5,57.5
       parent: 1
-  - uid: 5300
-    components:
-    - type: Transform
-      pos: -48.5,30.5
-      parent: 1
   - uid: 5655
     components:
     - type: Transform
@@ -52171,12 +52166,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -39.5,19.5
       parent: 1
-  - uid: 5014
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -49.5,30.5
-      parent: 1
   - uid: 5054
     components:
     - type: Transform
@@ -52199,6 +52188,12 @@ entities:
     components:
     - type: Transform
       pos: 7.5,38.5
+      parent: 1
+  - uid: 17158
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -50.5,30.5
       parent: 1
 - proto: DeployableBarrier
   entities:
@@ -85207,6 +85202,11 @@ entities:
     - type: Transform
       pos: 26.5,22.5
       parent: 1
+  - uid: 5014
+    components:
+    - type: Transform
+      pos: -48.5,30.5
+      parent: 1
   - uid: 6196
     components:
     - type: Transform
@@ -89718,6 +89718,16 @@ entities:
     components:
     - type: Transform
       pos: -43.49778,-9.467924
+      parent: 1
+  - uid: 17748
+    components:
+    - type: Transform
+      pos: -53.580936,27.692635
+      parent: 1
+  - uid: 17749
+    components:
+    - type: Transform
+      pos: -53.424686,27.48951
       parent: 1
 - proto: PartRodMetal1
   entities:
@@ -98892,6 +98902,11 @@ entities:
     - type: Transform
       pos: -66.25047,25.549358
       parent: 1
+  - uid: 17747
+    components:
+    - type: Transform
+      pos: -51.56531,29.55201
+      parent: 1
 - proto: SheetPlastic
   entities:
   - uid: 10653
@@ -100305,6 +100320,14 @@ entities:
     - type: Transform
       pos: -51.5,66.5
       parent: 1
+- proto: SignDrones
+  entities:
+  - uid: 5300
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -49.5,30.5
+      parent: 1
 - proto: SignElectricalMed
   entities:
   - uid: 17511
@@ -101238,7 +101261,7 @@ entities:
       pos: 16.5,48.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -36158.92
+      secondsUntilStateChange: -36275.32
       state: Opening
 - proto: SpaceCash10000
   entities:
@@ -101415,6 +101438,21 @@ entities:
     components:
     - type: Transform
       pos: -8.5,-15.5
+      parent: 1
+  - uid: 17744
+    components:
+    - type: Transform
+      pos: -52.5,28.5
+      parent: 1
+  - uid: 17745
+    components:
+    - type: Transform
+      pos: -53.5,28.5
+      parent: 1
+  - uid: 17746
+    components:
+    - type: Transform
+      pos: -54.5,28.5
       parent: 1
 - proto: SpawnMobFoxRenault
   entities:

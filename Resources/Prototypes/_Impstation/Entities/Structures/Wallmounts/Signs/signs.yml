@@ -66,3 +66,12 @@
   components:
   - type: Sprite
     state: mats_supply
+
+- type: entity
+  parent: BaseSign
+  id: SignDrones
+  name: drones sign
+  description: A sign indicating nearby drones, and their home.
+  components:
+  - type: Sprite
+    state: drones
