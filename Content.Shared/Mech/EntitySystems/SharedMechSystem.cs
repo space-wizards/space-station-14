@@ -160,9 +160,17 @@ public abstract class SharedMechSystem : EntitySystem
         else
             _audioSystem.PlayEntity(component.CriticalDamageSound, pilot, mech);
 
+        UpdateActions(mech, pilot, component);
+    }
+    
+    private void UpdateActions(EntityUid mech, EntityUid pilot, MechComponent? component = null)
+    {
+        if (!Resolve(mech, ref component))
+            return;
+        
         if (_net.IsClient)
             return;
-
+        
         _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
         _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
         _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);
@@ -174,6 +182,10 @@ public abstract class SharedMechSystem : EntitySystem
             _actions.AddAction(pilot, ref component.MechToggleSirenActionEntity, component.MechToggleSirenAction, mech);
         if (HasComp<MechThrustersComponent>(mech))
             _actions.AddAction(pilot, ref component.MechToggleThrustersActionEntity, component.MechToggleThrustersAction, mech);
+        var equipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        foreach (var ent in equipment)
+            if (TryComp<MechEquipmentActionComponent>(ent, out var actionComp))
+                _actions.AddAction(pilot, ref actionComp.EquipmentActionEntity, actionComp.EquipmentAction, ent);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -184,6 +196,12 @@ public abstract class SharedMechSystem : EntitySystem
         RemComp<InteractionRelayComponent>(pilot);
 
         _actions.RemoveProvidedActions(pilot, mech);
+        if (!TryComp<MechComponent>(mech, out var mechComp))
+            return;
+        var equipment = new List<EntityUid>(mechComp.EquipmentContainer.ContainedEntities);
+        foreach (var ent in equipment)
+            if (TryComp<MechEquipmentActionComponent>(ent, out var actionComp))
+                _actions.RemoveProvidedActions(pilot, ent);
     }
 
     /// <summary>
@@ -244,10 +262,10 @@ public abstract class SharedMechSystem : EntitySystem
     /// <summary>
     /// Inserts an equipment item into the mech.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="toInsert"></param>
-    /// <param name="component"></param>
-    /// <param name="equipmentComponent"></param>
+    /// <param name="uid"> Mech </param>
+    /// <param name="toInsert"> Equipment what inserted </param>
+    /// <param name="component"> Mech Component </param>
+    /// <param name="equipmentComponent"> Equipment Component </param>
     public void InsertEquipment(EntityUid uid, EntityUid toInsert, MechComponent? component = null,
         MechEquipmentComponent? equipmentComponent = null)
     {
@@ -262,12 +280,22 @@ public abstract class SharedMechSystem : EntitySystem
 
         if (_whitelistSystem.IsWhitelistFail(component.EquipmentWhitelist, toInsert))
             return;
+        
+        if (!TryComp<MetaDataComponent>(toInsert, out var toInsertMeta))
+            return;
+        
+        var equipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        foreach (var ent in equipment)
+            if (TryComp<MetaDataComponent>(ent, out var entMeta) && entMeta.EntityPrototype == toInsertMeta.EntityPrototype)
+                return;
 
         equipmentComponent.EquipmentOwner = uid;
         _container.Insert(toInsert, component.EquipmentContainer);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
         UpdateUserInterface(uid, component);
+        if (component.PilotSlot.ContainedEntity != null)
+            UpdateActions(uid, component.PilotSlot.ContainedEntity.Value, component);
     }
 
     /// <summary>
@@ -419,6 +447,12 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         SetupUser(uid, toInsert.Value);
+        
+        var ev = new BeforePilotInsertEvent(uid, toInsert.Value);
+        RaiseLocalEvent(uid, ref ev);
+        
+        RaiseLocalEvent(toInsert.Value, ref ev);
+        
         _container.Insert(toInsert.Value, component.PilotSlot);
         UpdateAppearance(uid, component);
         return true;
@@ -427,8 +461,8 @@ public abstract class SharedMechSystem : EntitySystem
     /// <summary>
     /// Attempts to eject the current pilot from the mech
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
+    /// <param name="uid"> mech </param>
+    /// <param name="component"> mech component </param>
     /// <returns>Whether or not the pilot was ejected.</returns>
     public bool TryEject(EntityUid uid, MechComponent? component = null)
     {
@@ -444,6 +478,11 @@ public abstract class SharedMechSystem : EntitySystem
         }
 
         var pilot = component.PilotSlot.ContainedEntity.Value;
+        
+        var ev = new BeforePilotEjectEvent(uid, pilot);
+        RaiseLocalEvent(uid, ref ev);
+        
+        RaiseLocalEvent(pilot, ref ev);
 
         _container.RemoveEntity(uid, pilot);
         return true;
