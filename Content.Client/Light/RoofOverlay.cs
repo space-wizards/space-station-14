@@ -10,6 +10,7 @@ namespace Content.Client.Light;
 public sealed class RoofOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
 
     private readonly EntityLookupSystem _lookup;
     private readonly SharedMapSystem _mapSystem;
@@ -50,8 +51,8 @@ public sealed class RoofOverlay : Overlay
         var eye = args.Viewport.Eye;
 
         var worldHandle = args.WorldHandle;
-        var bounds = args.WorldBounds;
-        var lightoverlay = IoCManager.Resolve<IOverlayManager>().GetOverlay<BeforeLightTargetOverlay>();
+        var lightoverlay = _overlay.GetOverlay<BeforeLightTargetOverlay>();
+        var bounds = lightoverlay.EnlargedBounds;
         var target = lightoverlay.EnlargedLightTarget;
 
         worldHandle.RenderInRenderTarget(target,

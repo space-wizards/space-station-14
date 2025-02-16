@@ -12,6 +12,7 @@ public sealed class TileEmissionOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
 
     private SharedMapSystem _mapSystem;
     private SharedTransformSystem _xformSystem;
@@ -44,21 +45,22 @@ public sealed class TileEmissionOverlay : Overlay
 
         var mapId = args.MapId;
         var worldHandle = args.WorldHandle;
-        var bounds = args.WorldBounds;
-        var expandedBounds = bounds.Enlarged(1.5f);
+        var lightoverlay = _overlay.GetOverlay<BeforeLightTargetOverlay>();
+        var bounds = lightoverlay.EnlargedBounds;
+        var target = lightoverlay.EnlargedLightTarget;
         var viewport = args.Viewport;
 
-        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+        args.WorldHandle.RenderInRenderTarget(target,
         () =>
         {
-            var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+            var invMatrix = target.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
             _grids.Clear();
-            _mapManager.FindGridsIntersecting(mapId, expandedBounds, ref _grids, approx: true);
+            _mapManager.FindGridsIntersecting(mapId, bounds, ref _grids, approx: true);
 
             foreach (var grid in _grids)
             {
                 var gridInvMatrix = _xformSystem.GetInvWorldMatrix(grid);
-                var localBounds = gridInvMatrix.TransformBox(expandedBounds);
+                var localBounds = gridInvMatrix.TransformBox(bounds);
                 _entities.Clear();
                 _lookup.GetLocalEntitiesIntersecting(grid.Owner, localBounds, _entities);
 

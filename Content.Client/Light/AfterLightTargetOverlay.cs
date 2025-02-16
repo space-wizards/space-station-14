@@ -41,19 +41,7 @@ public sealed class AfterLightTargetOverlay : Overlay
          */
 
         // at 1-1 render scale it's mostly fine but at 4x4 it's way too fkn big
-        var oldScale = viewport.RenderScale / 2f;
         var newScale = viewport.RenderScale / 2f;
-
-        var oldMatrix =
-            lightOverlay.EnlargedLightTarget.GetWorldToLocalMatrix(viewport.Eye, oldScale);
-
-        args.WorldHandle.RenderInRenderTarget(lightOverlay.EnlargedLightTarget,
-            () =>
-            {
-                worldHandle.SetTransform(oldMatrix);
-                worldHandle.DrawRect(new Box2(Vector2.Zero, Vector2.One), Color.Green);
-
-            }, null);
 
         var localMatrix =
             viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, newScale);

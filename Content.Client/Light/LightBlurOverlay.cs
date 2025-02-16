@@ -1,4 +1,3 @@
-using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 
@@ -12,8 +11,11 @@ public sealed class LightBlurOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
 
     public const int ContentZIndex = TileEmissionOverlay.ContentZIndex + 1;
+
+    private IRenderTarget? _blurTarget;
 
     public LightBlurOverlay()
     {
@@ -26,8 +28,17 @@ public sealed class LightBlurOverlay : Overlay
         if (args.Viewport.Eye == null)
             return;
 
-        var target = IoCManager.Resolve<IOverlayManager>().GetOverlay<BeforeLightTargetOverlay>().EnlargedLightTarget;
+        var beforeOverlay = _overlay.GetOverlay<BeforeLightTargetOverlay>();
+        var size = beforeOverlay.EnlargedLightTarget.Size;
+
+        if (_blurTarget?.Size != size)
+        {
+            _blurTarget = _clyde
+                .CreateRenderTarget(size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "enlarged-light-blur");
+        }
+
+        var target = beforeOverlay.EnlargedLightTarget;
         // Yeah that's all this does keep walkin.
-        //_clyde.BlurRenderTarget(args.Viewport, target, args.Viewport.Eye, 14f * 5f);
+        _clyde.BlurRenderTarget(args.Viewport, target, _blurTarget, args.Viewport.Eye, 14f * 2f);
     }
 }

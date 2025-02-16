@@ -9,12 +9,20 @@ public sealed class PlanetLightSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<GetClearColorEvent>(OnClearColor);
+
         _overlayMan.AddOverlay(new BeforeLightTargetOverlay());
         _overlayMan.AddOverlay(new RoofOverlay(EntityManager));
         _overlayMan.AddOverlay(new TileEmissionOverlay(EntityManager));
         _overlayMan.AddOverlay(new LightBlurOverlay());
         _overlayMan.AddOverlay(new SunShadowOverlay());
         _overlayMan.AddOverlay(new AfterLightTargetOverlay());
+    }
+
+    private void OnClearColor(ref GetClearColorEvent ev)
+    {
+        ev.Color = Color.Transparent;
     }
 
     public override void Shutdown()
