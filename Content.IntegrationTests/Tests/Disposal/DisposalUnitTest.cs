@@ -181,7 +181,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 });
 
                 // Can't insert, unanchored and unpowered
-                xformSystem.Unanchor(unitUid, entityManager.GetComponent<TransformComponent>(unitUid));
+                xformSystem.Unanchor((unitUid, entityManager.GetComponent<TransformComponent>(unitUid)));
                 UnitInsertContains(disposalUnit, unitComponent, false, disposalSystem, human, wrench, disposalUnit, disposalTrunk);
             });
 

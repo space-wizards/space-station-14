@@ -259,7 +259,7 @@ public sealed partial class BlockingSystem : EntitySystem
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             if (xform.Anchored)
-                _transformSystem.Unanchor(user, xform);
+                _transformSystem.Unanchor((user, xform));
 
             _actionsSystem.SetToggled(component.BlockingToggleActionEntity, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);

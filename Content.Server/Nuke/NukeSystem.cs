@@ -181,7 +181,7 @@ public sealed class NukeSystem : EntitySystem
         var xform = Transform(uid);
         if (xform.Anchored)
         {
-            _transform.Unanchor(uid, xform);
+            _transform.Unanchor((uid, xform));
             _itemSlots.SetLock(uid, component.DiskSlot, true);
         }
         else

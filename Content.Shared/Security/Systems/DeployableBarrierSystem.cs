@@ -49,7 +49,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
         }
         else
         {
-            _transform.Unanchor(uid, transform);
+            _transform.Unanchor((uid, transform));
             if (fixture != null)
                 _physics.SetHard(uid, fixture, false);
         }

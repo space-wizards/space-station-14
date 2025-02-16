@@ -114,7 +114,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         var xform = Transform(uid);
 
         RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, used));
-        _transformSystem.Unanchor(uid, xform);
+        _transformSystem.Unanchor((uid, xform));
         RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
         _popup.PopupClient(Loc.GetString("anchorable-unanchored"), uid, args.User);

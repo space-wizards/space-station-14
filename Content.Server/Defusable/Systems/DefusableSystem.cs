@@ -203,7 +203,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         comp.Bolted = false;
 
         if (xform.Anchored)
-            _transform.Unanchor(uid, xform);
+            _transform.Unanchor((uid, xform));
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
     }
