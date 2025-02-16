@@ -506,6 +506,7 @@
     node: TableWood
   - type: Tag
     tags:
+    - Table
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -549,6 +550,7 @@
     node: TableCarpet
   - type: Tag
     tags:
+    - Table
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -649,6 +651,7 @@
     key: fancytable
   - type: Tag
     tags:
+    - Table
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -800,6 +803,7 @@
   components:
   - type: Tag
     tags:
+      - Table
       - Debug
   - type: Sprite
     sprite: Structures/Furniture/Tables/debug.rsi
