@@ -6,6 +6,8 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared.Follower.Components;
+using System.Threading;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -50,13 +52,21 @@ public abstract partial class SharedStationAiSystem
         if (!TryGetCore(ent.Owner, out var core) || core.Comp?.RemoteEntity == null)
             return;
 
+        if (TryGetEye(ent.Owner, out var eye) && TryComp<FollowerComponent>(eye, out var followerComp))
+        {
+            _followerSystem.StopFollowingEntity(ent.Owner, followerComp.Following);
+            ent.Comp.lostFollowed = false;
+            ent.Comp.cancelRecaptureTokens.Cancel();
+            ent.Comp.cancelRecaptureTokens = new CancellationTokenSource();
+        }
+        
         _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
     }
 
     /// <summary>
     /// Tries to get the entity held in the AI core using StationAiCore.
     /// </summary>
-    private bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
+    public bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
     {
         held = EntityUid.Invalid;
 
@@ -89,7 +99,7 @@ public abstract partial class SharedStationAiSystem
         return true;
     }
 
-    private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
+    public bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
     {
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
             container.ID != StationAiCoreComponent.Container ||
@@ -101,6 +111,21 @@ public abstract partial class SharedStationAiSystem
         }
 
         core = (container.Owner, coreComp);
+        return true;
+    }
+
+    public bool TryGetEye(EntityUid ent, out EntityUid? aiEye)
+    {
+        if(!HasComp<StationAiHeldComponent>(ent) ||
+           !TryGetCore(ent, out var aiCore) ||
+           aiCore.Comp == null ||
+           aiCore.Comp.RemoteEntity == null)
+        {
+            aiEye = null;
+            return false;
+        }
+
+        aiEye = aiCore.Comp.RemoteEntity.Value;
         return true;
     }
 
@@ -167,6 +192,8 @@ public abstract partial class SharedStationAiSystem
 
         var verb = new AlternativeVerb
         {
+            // Should always be higher priority than follow AltVerb
+            Priority = 20,
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () => 
             {

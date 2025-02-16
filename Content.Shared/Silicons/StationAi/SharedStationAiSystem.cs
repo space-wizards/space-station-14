@@ -17,6 +17,8 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
+using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -29,6 +31,10 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+
+using System.Threading;
+using Timer = Robust.Shared.Timing.Timer;
+
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -50,13 +56,15 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   SharedElectrocutionSystem _electrify = default!;
     [Dependency] private readonly   SharedEyeSystem _eye = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
-    [Dependency] private readonly   SharedMindSystem _mind = default!;
+    [Dependency] private   readonly   SharedMindSystem _mind = default!;
     [Dependency] private readonly   SharedMoverController _mover = default!;
     [Dependency] private readonly   SharedPopupSystem _popup = default!;
     [Dependency] private readonly   SharedPowerReceiverSystem PowerReceiver = default!;
     [Dependency] private readonly   SharedTransformSystem _xforms = default!;
     [Dependency] private readonly   SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly   StationAiVisionSystem _vision = default!;
+    [Dependency] private   readonly FollowerSystem _followerSystem = default!;
+    [Dependency] private   readonly SharedMapSystem _maps = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
@@ -104,6 +112,138 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
+    }
+    
+    private float _updateEyeFollowTimer = 0f;
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        
+        // Don't need to run it repeadetly.
+        // If run repeadetly, obviously tanks FPS really hard
+        _updateEyeFollowTimer += frameTime;
+        if(_updateEyeFollowTimer >= 0.5f)
+        {
+            UpdateEyeFollow();
+            _updateEyeFollowTimer = 0f;
+        }
+    }
+
+    /// <summary>
+    /// Checks if AI eye should stop following entity
+    /// </summary>
+    public void UpdateEyeFollow()
+    {
+        var query = EntityQueryEnumerator<StationAiHeldComponent>();
+        while (query.MoveNext(out var uid, out var heldComp))
+        {
+            NetEntity? nEnt; // For alerts
+            if (!TryGetEye(uid, out var eye) || eye == null)
+                continue;
+            
+            // Checking if eye already follows something or have followed something
+            EntityUid? followed = heldComp.lastFollowedEntity;
+            bool visible = false;
+
+            // If we lost followed entity - try check if it's visible and re-follow if it is
+            if (heldComp.lostFollowed)
+            {
+                // Should not ever happen, but in case...
+                if(followed == null)
+                {
+                    heldComp.lostFollowed = false;
+                    continue;
+                }
+
+                if(!TryVisibleCheck(followed.Value, uid, out visible))
+                    continue;
+                
+                if(visible)
+                {
+                    if(TryGetNetEntity(uid, out nEnt))
+                        RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.FollowedFound));
+                    
+                    _followerSystem.StartFollowingEntity(uid, followed.Value);
+                    heldComp.lostFollowed = false;
+                    heldComp.cancelRecaptureTokens.Cancel();
+                    heldComp.cancelRecaptureTokens = new CancellationTokenSource();
+                }
+                continue;
+            }
+
+            // Make some updates if already following something
+            if (!TryComp<FollowerComponent>(eye.Value, out var followerComp))
+            {
+                continue;
+            }
+            
+            // Handle follwed entity leaving FoV
+            followed = followerComp.Following;
+            heldComp.lastFollowedEntity = followerComp.Following;
+
+            if(!TryVisibleCheck(followed.Value, uid, out visible))
+                continue;
+            // Check for lostFollowed is here to prevent multiple runs
+            if(!visible)
+            {   
+                if(TryGetNetEntity(uid, out nEnt))
+                    RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.LostFollowed));
+                _followerSystem.StopFollowingEntity(uid, followed.Value);
+                Timer.Spawn(10000, () => { CancelReFollowing((uid, heldComp)); }, heldComp.cancelRecaptureTokens.Token);
+                heldComp.lostFollowed = true;
+            }
+            // End of loop
+        }   
+    }
+    
+    /// <summary>
+    /// Checks if AI can actually see target in FoV, grid independent.
+    /// Returns true if does not fail, false if fails.
+    /// </summary>
+    private bool TryVisibleCheck(EntityUid target, EntityUid aiHeld, out bool visible)
+    {   
+        visible = false;
+        var aiTransform = Transform(aiHeld);
+        var targetTransform = Transform(target);
+        if (aiTransform.GridUid == null)
+            return false;
+
+        if (!_broadphaseQuery.TryComp(aiTransform.GridUid.Value, out var broadphase) ||
+            !_gridQuery.TryComp(aiTransform.GridUid.Value, out var grid))
+        {
+            return false;
+        }
+
+        Vector2i targetTileCoords;
+
+        // target is on the same grid as AI
+        if(targetTransform.GridUid != null && targetTransform.GridUid == aiTransform.GridUid)
+        {
+            var coords = targetTransform.Coordinates;
+            targetTileCoords = _maps.LocalToTile(aiTransform.GridUid.Value, grid, coords);
+        }
+        // target is not on grid or on a different grid
+        else
+        {
+            // can't follow on different map duh
+            if (targetTransform.MapPosition.MapId != aiTransform.MapPosition.MapId)
+                return true; // visible = false
+            var coords = _maps.MapToGrid(aiTransform.GridUid.Value, targetTransform.MapPosition);
+
+            targetTileCoords = _maps.LocalToTile(aiTransform.GridUid.Value, grid, coords);
+        }
+
+        visible = _vision.IsAccessible((aiTransform.GridUid.Value, broadphase, grid), targetTileCoords);
+        return true;
+    }
+
+    private void CancelReFollowing(Entity<StationAiHeldComponent> held)
+    {
+        if(TryGetNetEntity(held.Owner, out var nEnt) && nEnt != null)
+            RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.ReFollowingCanceled));
+        
+        held.Comp.lostFollowed = false;
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -572,6 +712,18 @@ public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
 
 [Serializable, NetSerializable]
+public sealed class AiAlertEvent : HandledEntityEventArgs
+{
+    public NetEntity target;
+    public AiAlertType type;
+    public AiAlertEvent(NetEntity alertTarget, AiAlertType alertType)
+    {
+        target = alertTarget; 
+        type = alertType;
+    }
+}
+
+[Serializable, NetSerializable]
 public enum StationAiVisualState : byte
 {
     Key,
@@ -583,4 +735,15 @@ public enum StationAiState : byte
     Empty,
     Occupied,
     Dead,
+}
+
+[Serializable, NetSerializable]
+public enum AiAlertType : byte
+{
+    // AI eye follow alerts
+    LostFollowed,
+    FollowedFound,
+    ReFollowingCanceled,
+
+    AiWireSnipped,
 }
