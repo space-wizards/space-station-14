@@ -65,6 +65,11 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtColorGrey
   result: ClothingUniformJumpskirtColorGrey
+  
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitLoungewear
+  result: ClothingUniformJumpsuitLoungewear
 
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
