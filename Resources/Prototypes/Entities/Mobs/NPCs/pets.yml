@@ -9,7 +9,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
@@ -36,6 +36,30 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalIan
+  - type: Inventory
+    speciesId: dog
+    templateId: corgi
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
+            state: mask
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
+            state: eyes
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
+            state: neck
 
 - type: entity
   name: Old Ian
@@ -84,6 +108,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
 
 - type: entity
   name: real mouse
@@ -107,6 +134,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
 
 - type: entity
   name: Puppy Ian
