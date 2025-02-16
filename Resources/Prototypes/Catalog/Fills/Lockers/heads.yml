@@ -319,6 +319,7 @@
       prob: 0.50
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
+    - id: ClothingShoesBootsMagSec
     - id: ClothingHeadsetAltSecurity
     - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench

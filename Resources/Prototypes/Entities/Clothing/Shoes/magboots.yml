@@ -118,3 +118,20 @@
   - type: InstantAction
     itemIconStyle: BigItem
     event: !type:ToggleActionEvent
+
+- type: entity
+  parent: [ClothingShoesBootsMagBase, BaseSecurityContraband]
+  id: ClothingShoesBootsMagSec
+  name: security magboots
+  description: A decades old prototype version of current engineering magboots, the most NT was willing to provide for a department other than their primary breadwinner.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-sec.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-sec.rsi
+    equipDelay: 3
+    unequipDelay: 3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.75
