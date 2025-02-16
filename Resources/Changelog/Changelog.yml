@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: pofitlo-Git
-  changes:
-  - message: Added a camera bug in the syndicate uplink that cost 4 TC and allow you
-      watch all cameras on station.
-    type: Add
-  id: 7461
-  time: '2024-09-30T22:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30250
 - author: kosticia
   changes:
   - message: The maximum number of ID cards required to complete a thief's objective
@@ -3899,3 +3891,10 @@
   id: 7960
   time: '2025-02-16T15:35:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35213
+- author: metalgearsloth
+  changes:
+  - message: Rooves now block weather.
+    type: Tweak
+  id: 7961
+  time: '2025-02-16T15:55:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35214
