@@ -11,7 +11,7 @@ survivor-role-greeting =
     Trust no one.
 
 survivor-round-end-alive-count = [color=yellow]{$aliveCount}[/color] survivors were marooned on the station.
-survivor-round-end-alive-on-centcomm-count = [color=green]{$aliveCount}[/color] survivors made it out alive.
+survivor-round-end-alive-on-shuttle-count = [color=green]{$aliveCount}[/color] survivors made it out alive.
 
 ## TODO: Wizard
 
