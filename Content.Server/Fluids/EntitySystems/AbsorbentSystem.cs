@@ -31,9 +31,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
 
-    [ValidatePrototypeId<RoundStatisticPrototype>]
-    public const string MoppedCount = "MoppedCount";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -327,8 +324,11 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
 
-        var evChangeStatsValue = new ChangeStatsValueEvent(MoppedCount, 1);
-        RaiseLocalEvent(ref evChangeStatsValue);
+        if (absorber.CleanedStatistic is not null)
+        {
+            var evChangeStatsValue = new ChangeStatsValueEvent(absorber.CleanedStatistic, 1);
+            RaiseLocalEvent(ref evChangeStatsValue);
+        }
 
         return true;
     }

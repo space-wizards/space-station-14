@@ -1,7 +1,9 @@
 using Content.Shared.Audio;
 using Content.Shared.FixedPoint;
+using Content.Shared.RoundStatistics;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids;
 
@@ -38,4 +40,10 @@ public sealed partial class AbsorbentComponent : Component
         {
             Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
         };
+
+    /// <summary>
+    /// RoundStatistic to increment when this entity absorbs a puddle.
+    /// </summary>
+    [DataField]
+    public ProtoId<RoundStatisticPrototype>? CleanedStatistic;
 }
