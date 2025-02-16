@@ -28,7 +28,8 @@ namespace Content.Server.Announcements
             }
             else
             {
-                var message = string.Join(' ', new ArraySegment<string>(args, 1, args.Length-1));
+                // Explicit IEnumerable<string> due to overload ambiguity on .NET 9
+                var message = string.Join(' ', (IEnumerable<string>)new ArraySegment<string>(args, 1, args.Length-1));
                 chat.DispatchGlobalAnnouncement(message, args[0], colorOverride: Color.Gold);
             }
             shell.WriteLine("Sent!");
