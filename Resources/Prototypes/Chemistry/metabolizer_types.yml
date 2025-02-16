@@ -1,6 +1,58 @@
 # If your species wants to metabolize stuff differently,
 # you'll likely have to tag its metabolizers with something other than Human.
 
+# Breathing
+- type: metabolizerType
+  id: O2Oxygenate
+  name: metabolizer-type-o2-oxygenate
+
+- type: metabolizerType
+  id: N2Oxygenate
+  name: metabolizer-type-n2-oxygenate
+
+- type: metabolizerType
+  id: O2Toxic
+  name: metabolizer-type-o2-toxic
+
+- type: metabolizerType
+  id: CarbonDioxideTolerance
+  name: metabolizer-type-co2-tolerance
+
+# Food/Drinks
+- type: metabolizerType
+  id: TheobromineIntolerance
+  name: metabolizer-type-theobromine-intolerance
+
+- type: metabolizerType
+  id: AlcoholTolerance
+  name: metabolizer-type-alcohol-tolerance
+
+# Species
+- type: metabolizerType
+  id: Human
+  name: metabolizer-type-human
+
+- type: metabolizerType
+  id: Slime
+  name: metabolizer-type-slime
+
+- type: metabolizerType
+  id: Dwarf
+  name: metabolizer-type-dwarf
+
+- type: metabolizerType
+  id: Moth
+  name: metabolizer-type-moth
+
+- type: metabolizerType
+  id: Arachnid
+  name: metabolizer-type-arachnid
+
+- type: metabolizerType
+  id: Vox
+  name: metabolizer-type-vox
+
+# Other creatures
 - type: metabolizerType
   id: Animal
   name: metabolizer-type-animal
@@ -14,33 +66,9 @@
   name: metabolizer-type-dragon
 
 - type: metabolizerType
-  id: Human
-  name: metabolizer-type-human
-
-- type: metabolizerType
-  id: Slime
-  name: metabolizer-type-slime
-
-- type: metabolizerType
-  id: Vox
-  name: metabolizer-type-vox
-
-- type: metabolizerType
   id: Rat
   name: metabolizer-type-rat
 
 - type: metabolizerType
   id: Plant
   name: metabolizer-type-plant
-
-- type: metabolizerType
-  id: Dwarf
-  name: metabolizer-type-dwarf
-
-- type: metabolizerType
-  id: Moth
-  name: metabolizer-type-moth
-
-- type: metabolizerType
-  id: Arachnid
-  name: metabolizer-type-arachnid

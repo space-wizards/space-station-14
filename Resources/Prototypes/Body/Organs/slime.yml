@@ -10,7 +10,9 @@
     - type: Stomach
     - type: Metabolizer
       maxReagents: 6
-      metabolizerTypes: [ Slime ]
+      metabolizerTypes:
+      - N2Oxygenate
+      - Slime
       removeEmpty: true
       groups:
         - id: Food
@@ -37,7 +39,7 @@
       size: Small
       heldPrefix: brain
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
@@ -55,7 +57,9 @@
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
-    metabolizerTypes: [ Slime ]
+    metabolizerTypes:
+    - N2Oxygenate
+    - Slime
     groups:
     - id: Gas
       rateModifier: 100.0
