@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore, Bighorn and Demonic are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore, Bighorn and Demonic are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2. Bump maps by notquitehadouken for SS14.",
   "size": {
     "x": 32,
     "y": 32
@@ -9,79 +9,98 @@
   "states": [
     {
       "name": "tail_smooth_front",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_large_front",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_large"
     },
     {
       "name": "tail_spikes_front",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_spikes"
     },
     {
       "name": "tail_dtiger_front",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_ltiger_front",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth_behind_primary",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth_behind_secondary",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth_behind",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_large_behind",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_large"
     },
     {
       "name": "tail_spikes_behind",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_spikes"
     },
     {
       "name": "tail_dtiger_behind",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_ltiger_behind",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth_primary",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth_secondary",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_large",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_large"
     },
     {
       "name": "tail_spikes",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_spikes"
     },
     {
       "name": "tail_dtiger",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_ltiger",
-      "directions": 4
+      "directions": 4,
+      "bump": "tail_bump_regular"
     },
     {
       "name": "tail_smooth_wagging_primary",
@@ -475,19 +494,23 @@
     },
     {
       "name": "snout_round",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_round"
     },
     {
       "name": "snout_roundlight",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_roundlight"
     },
     {
       "name": "snout_sharp",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_sharp"
     },
     {
       "name": "snout_sharplight",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_sharplight"
     },
     {
       "name": "horns_simple",
@@ -607,11 +630,13 @@
     },
     {
       "name": "snout_splotch_primary",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_splotch"
     },
     {
       "name": "snout_splotch_secondary",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_splotch"
     },
     {
       "name": "frills_neckfull",

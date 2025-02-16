@@ -5,6 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
+    "flatNormal": true,
     "copyright": "Modified from plastitanium_window.rsi by Flareguy for Space Station 14, transparency tweaked by Ubaser.",
     "states": [
         {

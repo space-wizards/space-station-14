@@ -5,6 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
+    "flatNormal": true,
     "copyright": "Sprited by SonicHDC (Github) for Space Station 14",
     "states": [
         {

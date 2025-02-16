@@ -6,6 +6,7 @@
     "x": 32,
     "y": 32
   },
+  "flatNormal": true,
   "states": [
     {
       "name": "full"
