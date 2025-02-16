@@ -41,6 +41,19 @@ namespace Content.IntegrationTests.Tests
             "/Maps/centcomm.yml"
         };
 
+        private static readonly string[] DoNotMapWhitelist =
+        {
+            "/Maps/centcomm.yml",
+            "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
+            "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
+            "/Maps/meta.yml", // Contains warden's rubber stamp
+            "/Maps/reach.yml", // Contains handheld crew monitor
+            "/Maps/Shuttles/ShuttleEvent/cruiser.yml", // Contains LSE-1200c "Perforator"
+            "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
+            "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
+            "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+        };
+
         private static readonly string[] GameMaps =
         {
             "Dev",
@@ -159,6 +172,7 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
+            var protoManager = server.ResolveDependency<IPrototypeManager>();
             var loader = server.System<MapLoaderSystem>();
 
             var mapFolder = new ResPath("/Maps");
@@ -191,6 +205,10 @@ namespace Content.IntegrationTests.Tests
                 var root = yamlStream.Documents[0].RootNode;
                 var meta = root["meta"];
                 var version = meta["format"].AsInt();
+
+                // TODO MAP TESTS
+                // Move this to some separate test?
+                CheckDoNotMap(map, root, protoManager);
 
                 if (version >= 7)
                 {
@@ -226,6 +244,34 @@ namespace Content.IntegrationTests.Tests
             Assert.That(IsPreInit(path, loader, deps), Is.False);
 
             await pair.CleanReturnAsync();
+        }
+
+        /// <summary>
+        /// Check that maps do not have any entities that belong to the DoNotMap entity category
+        /// </summary>
+        private void CheckDoNotMap(ResPath map, YamlNode node, IPrototypeManager protoManager)
+        {
+            if (DoNotMapWhitelist.Contains(map.ToString()))
+                return;
+
+            var yamlEntities = node["entities"];
+            if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
+                return;
+
+            Assert.Multiple(() =>
+            {
+                foreach (var yamlEntity in (YamlSequenceNode)yamlEntities)
+                {
+                    var protoId = yamlEntity["proto"].AsString();
+
+                    // This doesn't properly handle prototype migrations, but thats not a significant issue.
+                    if (!protoManager.TryIndex(protoId, out var proto, false))
+                        continue;
+
+                    Assert.That(!proto.Categories.Contains(dnmCategory),
+                        $"\nMap {map} contains entities in the DO NOT MAP category ({proto.Name})");
+                }
+            });
         }
 
         private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps)
