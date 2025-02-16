@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The Engineering Cyborg's Advanced Tool Module now has jaws of life and
-      a power drill instead of an omnitool, with a multitool replacing the network
-      configurator.
-    type: Tweak
-  id: 7460
-  time: '2024-09-30T17:38:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32487
 - author: pofitlo-Git
   changes:
   - message: Added a camera bug in the syndicate uplink that cost 4 TC and allow you
@@ -3901,3 +3892,10 @@
   id: 7959
   time: '2025-02-16T13:29:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35207
+- author: metalgearsloth
+  changes:
+  - message: Re-enable blur for rooves and increase amount of blur.
+    type: Tweak
+  id: 7960
+  time: '2025-02-16T15:35:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35213
