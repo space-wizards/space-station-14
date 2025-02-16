@@ -180,7 +180,7 @@ public sealed class SpaceVillainArcadeSystem : EntitySystem
         component.HealTracker = 0;
 
         SendData(ent, null);
-        _audioSystem.PlayPvs(component.NewGameSound, ent.Owner);
+        _arcadeSystem.PlayNewGameSound(ent);
     }
 
     private void OnBUIClosed(Entity<SpaceVillainArcadeComponent> ent, ref BoundUIClosedEvent args)

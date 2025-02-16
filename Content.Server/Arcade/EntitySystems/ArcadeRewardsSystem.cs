@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Arcade.Components;
-using Content.Shared.EntityTable;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -10,7 +9,6 @@ public sealed partial class ArcadeRewardsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly EntityTableSystem _entityTableSystem = default!;
 
     private readonly Random _random = new();
 
@@ -34,7 +32,7 @@ public sealed partial class ArcadeRewardsSystem : EntitySystem
     /// </summary>
     public void GiveReward(EntityUid uid, ArcadeRewardsComponent? component = null, TransformComponent? xForm = null)
     {
-        if (!Resolve(uid, ref component, ref xForm) || component.Amount <= 0)
+        if (!Resolve(uid, ref component, ref xForm) || component.Amount <= 0 || component.Rewards == null)
             return;
 
         var selectedEntity = component.Rewards.GetSpawns(_random, EntityManager, _prototypeManager).First().Id;

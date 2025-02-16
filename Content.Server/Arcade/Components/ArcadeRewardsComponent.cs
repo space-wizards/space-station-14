@@ -13,7 +13,7 @@ public sealed partial class ArcadeRewardsComponent : Component
     ///
     /// </summary>
     [DataField(required: true)]
-    public EntityTableSelector Rewards;
+    public EntityTableSelector? Rewards;
 
     /// <summary>
     ///
@@ -30,6 +30,6 @@ public sealed partial class ArcadeRewardsComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int Amount = 0;
 }

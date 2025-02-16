@@ -106,41 +106,41 @@
     minAmount: 5
     maxAmount: 8
 
-#- type: entity
-#  id: BlockGameArcade
-#  description: An arcade cabinet with a strangely familiar game.
-#  name: NT block game
-#  parent: ArcadeBase
-#  components:
-#  - type: Sprite
-#    sprite: Structures/Machines/arcade.rsi
-#    layers:
-#    - map: ["computerLayerBody"]
-#      state: arcade
-#    - map: ["computerLayerScreen"]
-#      state: screen_blockgame
-#    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-#      state: panel
-#      visible: false
-#  - type: BlockGameArcade
-#  - type: ActivatableUI
-#    key: enum.BlockGameUiKey.Key
-#  - type: ActivatableUIRequiresPower
-#  - type: StationAiWhitelist
-#  - type: UserInterface
-#    interfaces:
-#      enum.BlockGameUiKey.Key:
-#        type: BlockGameBoundUserInterface
-#      enum.WiresUiKey.Key:
-#        type: WiresBoundUserInterface
-#  - type: Computer
-#    board: BlockGameArcadeComputerCircuitboard
-#  - type: Advertise
-#    pack: BlockGameAds
-#    minimumWait: 60 # Arcades are noisy
-#    maximumWait: 240
-#  - type: SpeakOnUIClosed
-#    pack: BlockGameGoodbyes
+- type: entity
+  id: BlockGameArcade
+  description: An arcade cabinet with a strangely familiar game.
+  name: NT block game
+  parent: ArcadeBase
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/arcade.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: screen_blockgame
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
+  - type: BlockGameArcade
+  - type: ActivatableUI
+    key: enum.BlockGameArcadeUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
+  - type: UserInterface
+    interfaces:
+      enum.BlockGameArcadeUiKey.Key:
+        type: BlockGameArcadeBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: BlockGameArcadeComputerCircuitboard
+  - type: Advertise
+    pack: BlockGameAds
+    minimumWait: 60 # Arcades are noisy
+    maximumWait: 240
+  - type: SpeakOnUIClosed
+    pack: BlockGameGoodbyes
 
 # Toys table
 - type: entityTable

@@ -2,8 +2,11 @@
 
 namespace Content.Shared.Arcade.BlockGame;
 
+/// <summary>
+///
+/// </summary>
 [Serializable, NetSerializable]
-public enum BlockGameUiKey
+public enum BlockGameArcadeUiKey : byte
 {
     Key,
 }

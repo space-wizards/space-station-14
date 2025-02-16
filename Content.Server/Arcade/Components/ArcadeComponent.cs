@@ -12,7 +12,7 @@ public sealed partial class ArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Player = null;
 
     /// <summary>
@@ -26,4 +26,10 @@ public sealed partial class ArcadeComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier LossSound = new SoundPathSpecifier("/Audio/Effects/Arcade/gameover.ogg");
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField]
+    public SoundSpecifier NewGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
 }

@@ -6,7 +6,7 @@ namespace Content.Shared.Arcade.SpaceVillain;
 ///
 /// </summary>
 [Serializable, NetSerializable]
-public enum SpaceVillainArcadeUiKey
+public enum SpaceVillainArcadeUiKey : byte
 {
     Key,
 }

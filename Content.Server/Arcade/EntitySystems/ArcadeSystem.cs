@@ -42,4 +42,12 @@ public sealed class ArcadeSystem : EntitySystem
 
         _audioSystem.PlayPvs(component.LossSound, uid);
     }
+
+    public void PlayNewGameSound(EntityUid uid, ArcadeComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        _audioSystem.PlayPvs(component.NewGameSound, uid);
+    }
 }

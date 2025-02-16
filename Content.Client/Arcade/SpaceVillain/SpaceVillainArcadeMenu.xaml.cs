@@ -24,6 +24,9 @@ public sealed partial class SpaceVillainArcadeMenu : FancyWindow
         NewGameButton.OnPressed += _ => OnNewGame?.Invoke();
     }
 
+    /// <summary>
+    ///
+    /// </summary>
     public void UpdateData(int playerHP, int playerMP, string villainName, int villainHP, int villainMP, string playerStatus, string villainStatus)
     {
         var unactive = playerHP == 0 || playerMP == 0 || villainHP == 0 || villainMP == 0;

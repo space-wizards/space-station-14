@@ -26,7 +26,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int PlayerHP = 0;
 
     /// <summary>
@@ -38,7 +38,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int PlayerMP = 0;
 
     /// <summary>
@@ -56,7 +56,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string VillainName = "Villain";
 
     /// <summary>
@@ -74,7 +74,7 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int VillainHP = 0;
 
     /// <summary>
@@ -92,17 +92,19 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int HealTracker = 0;
 
     /// <summary>
     ///
     /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public string PlayerStatus = string.Empty;
 
     /// <summary>
     ///
     /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public string VillainStatus = string.Empty;
 
     /// <summary>
@@ -122,10 +124,4 @@ public sealed partial class SpaceVillainArcadeComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier RechargeSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_charge.ogg");
-
-    /// <summary>
-    ///
-    /// </summary>
-    [DataField]
-    public SoundSpecifier NewGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
 }
