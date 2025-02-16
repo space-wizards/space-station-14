@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -215,12 +216,17 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         args.NetEventTarget = GetNetEntity(args.EventTarget);
 
         if (args.BreakOnMove)
+        {
+            doAfter.UserInStorage = HasComp<InsideEntityStorageComponent>(args.User);
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
-        if (args.Target != null && args.BreakOnMove)
-        {
-            var targetPosition = Transform(args.Target.Value).Coordinates;
-            doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
+            if (args.Target != null)
+            {
+                doAfter.TargetInStorage = HasComp<InsideEntityStorageComponent>(args.Target.Value);
+
+                var targetPosition = Transform(args.Target.Value).Coordinates;
+                doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
+            }
         }
 
         doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
