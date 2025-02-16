@@ -3446,4 +3446,12 @@ Entries:
   id: 477
   time: '2025-02-16T09:22:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/332
+- author: Rinary
+  changes:
+  - message: Added Mech Night Vision Camera(allows to enable night vision) as new
+      passive equipment.
+    type: Add
+  id: 478
+  time: '2025-02-16T16:26:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/334
 
