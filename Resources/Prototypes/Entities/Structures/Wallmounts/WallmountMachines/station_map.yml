@@ -1,22 +1,15 @@
 - type: entity
+  parent: BaseWallmountMetallic
   id: StationMapBroken
   name: station map
   description: A virtual map of the surrounding station.
   suffix: Wall broken
-  placement:
-    mode: SnapgridCenter
   components:
-    - type: InteractionOutline
-    - type: Clickable
-    - type: Transform
-      anchored: true
     - type: Sprite
       sprite: Structures/Machines/station_map.rsi
       drawdepth: WallMountedItems
       layers:
         - state: station_map_broken
-    - type: Damageable
-      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
         - trigger:
@@ -30,17 +23,16 @@
               acts: [ "Destruction" ]
 
 - type: entity
+  parent: BaseWallmountMachine
   id: StationMap
   name: station map
-  parent: BaseComputer
   description: A virtual map of the surrounding station.
   suffix: Wall
-  placement:
-    mode: SnapgridCenter
   components:
+    - type: WallMount
+      arc: 360
+    - type: Appearance
     - type: StationMap
-    - type: Transform
-      anchored: true
     - type: Sprite
       sprite: Structures/Machines/station_map.rsi
       layers:
@@ -59,9 +51,6 @@
         board: !type:Container
     - type: ApcPowerReceiver
       powerLoad: 200
-    - type: WallMount
-      arc: 360
-    - type: ExtensionCableReceiver
     - type: Construction
       graph: StationMap
       node: station_map
@@ -88,15 +77,25 @@
       interfaces:
         enum.StationMapUiKey.Key:
           type: StationMapBoundUserInterface
+    - type: EmitSoundOnUIOpen
+      sound:
+        collection: Keyboard
+        params:
+          volume: -1
+          variation: 0.10
+          pitch: 1.10  # low pitch keyboard sounds feel kinda weird
+      blacklist:
+        tags:
+        - NoConsoleSound
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: StationMapAssembly
   name: station map assembly
   description: A station map assembly.
   components:
   - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
+    arc: 360
   - type: Sprite
     sprite: Structures/Machines/station_map.rsi
     layers:
@@ -113,9 +112,3 @@
   - type: Construction
     graph: StationMap
     node: assembly
-  - type: Transform
-    anchored: true
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
