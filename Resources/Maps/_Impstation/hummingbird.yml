@@ -131463,7 +131463,7 @@ entities:
     - type: Transform
       pos: 46.5,12.5
       parent: 2
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 19882
     components:
