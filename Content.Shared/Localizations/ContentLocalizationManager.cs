@@ -149,6 +149,8 @@ namespace Content.Shared.Localizations
         {
             var hours = (int)time.TotalHours;
             var minutes = (int)(time.TotalMinutes - time.TotalHours * 60);
+            if (hours == 0 && minutes == 0)
+                minutes = 1;
             return Loc.GetString($"zzzz-fmt-playtime", ("hours", hours), ("minutes", minutes));
         }
 
