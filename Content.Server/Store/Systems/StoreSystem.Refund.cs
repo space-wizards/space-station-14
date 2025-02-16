@@ -74,10 +74,6 @@ public sealed partial class StoreSystem
 
     private void CheckDisableRefund(Entity<StoreRefundComponent> ent)
     {
-        // we don't check if the interactions are handled and some of them may delete the entity
-        if (TerminatingOrDeleted(ent.Owner))
-            return;
-
         var component = ent.Comp;
 
         if (component.StoreEntity == null || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp) || !storeComp.RefundAllowed)

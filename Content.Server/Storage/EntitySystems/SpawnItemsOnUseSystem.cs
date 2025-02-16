@@ -4,10 +4,8 @@ using Content.Server.Storage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using static Content.Shared.Storage.EntitySpawnCollection;
 
@@ -20,6 +18,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -88,7 +87,12 @@ namespace Content.Server.Storage.EntitySystems
 
             // Delete entity only if component was successfully used
             if (component.Uses <= 0)
-                Del(uid);
+            {
+                // Don't delete the entity in the event bus, so we queue it for deletion.
+                // We need the free hand for the new item, so we send it to nullspace.
+                _transform.DetachEntity(uid, Transform(uid));
+                QueueDel(uid);
+            }
 
             if (entityToPlaceInHands != null)
                 _hands.PickupOrDrop(args.User, entityToPlaceInHands.Value);

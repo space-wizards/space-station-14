@@ -103,10 +103,6 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     private void OnEmitSoundOnUseInHand(EntityUid uid, EmitSoundOnUseComponent component, UseInHandEvent args)
     {
         // Intentionally not checking whether the interaction has already been handled.
-        // Some UseInHand subscriptions delete the entity, so we have to check for that.
-        if (TerminatingOrDeleted(uid))
-            return;
-
         TryEmitSound(uid, component, args.User);
 
         if (component.Handle)
