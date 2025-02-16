@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.GameTicking.Events;
 using Content.Shared.GameTicking;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,20 +13,52 @@ namespace Content.Server.GameTicking;
 public sealed class RoundEndStatisticsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
 
-    private Dictionary<ProtoId<RoundStatisticPrototype>, (RoundStatisticPrototype stat, int statCount)> _statistics = new();
+    private Dictionary<ProtoId<RoundStatisticPrototype>, int> Statistics => FindOrCreateHolderEntity().Comp.Statistics;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundEndStatisticsComponent, MapInitEvent>(OnComponentMapInit);
+        SubscribeLocalEvent<RoundEndStatisticsComponent, PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<ChangeStatsValueEvent>(ChangeValue);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
+    }
 
-        _statistics = _prototypeManager
-            .EnumeratePrototypes<RoundStatisticPrototype>()
-            .ToDictionary(stat => new ProtoId<RoundStatisticPrototype>(stat.ID), stat => (stat, 0));
+    private Entity<RoundEndStatisticsComponent> FindOrCreateHolderEntity()
+    {
+        // Try to find existing entity
+        var query = EntityQueryEnumerator<RoundEndStatisticsComponent>();
+        while (query.MoveNext(out var uid, out var statsComp))
+        {
+            return (uid, statsComp);
+        }
+
+        // Didn't find one, so create a new one
+        return CreateHolderEntity();
+    }
+
+    private Entity<RoundEndStatisticsComponent> CreateHolderEntity()
+    {
+        // Create an empty entity in nullspace
+        var uid = Spawn(null, MapCoordinates.Nullspace);
+        _meta.SetEntityName(uid, "Round Statistics Holder");
+
+        // Add holder component
+        var statsComp = AddComp<RoundEndStatisticsComponent>(uid);
+        return (uid, statsComp);
+    }
+
+    private void UpdatePrototypes(IEnumerable<RoundStatisticPrototype> protos)
+    {
+        foreach (var proto in protos)
+        {
+            // Initialize any new stats to 0, preserving existing stats.
+            Statistics.TryAdd(proto.ID, 0);
+        }
     }
 
     // Change the value by the given int
@@ -33,9 +66,9 @@ public sealed class RoundEndStatisticsSystem : EntitySystem
     {
         var key = new ProtoId<RoundStatisticPrototype>(args.Key);
 
-        if (_statistics.TryGetValue(key, out var entry))
+        if (Statistics.TryGetValue(key, out _))
         {
-            _statistics[key] = (entry.stat, entry.statCount + args.Amount);
+            Statistics[key] += args.Amount;
         }
         else
         {
@@ -43,22 +76,42 @@ public sealed class RoundEndStatisticsSystem : EntitySystem
         }
     }
 
-    // Set all ints to zero on roundstart
+    private void OnComponentMapInit(Entity<RoundEndStatisticsComponent> entity, ref MapInitEvent args)
+    {
+        // Set up a counter for each statistic prototype
+        var protos = _prototypeManager.EnumeratePrototypes<RoundStatisticPrototype>();
+        UpdatePrototypes(protos);
+    }
+
+    private void OnPrototypesReloaded(Entity<RoundEndStatisticsComponent> entity, ref PrototypesReloadedEventArgs args)
+    {
+        if (args.TryGetModified<RoundStatisticPrototype>(out var modified))
+        {
+            // Add counters for any new statistics
+            UpdatePrototypes(modified.Select(_prototypeManager.Index<RoundStatisticPrototype>));
+        }
+    }
+
+    // Set all count to zero on roundstart
     private void OnRoundStart(RoundStartingEvent args)
     {
-        foreach (var key in _statistics.Keys.ToList())
+        foreach (var key in Statistics.Keys)
         {
-            var stat = _statistics[key];
-            _statistics[key] = (stat.stat, 0);
+            Statistics[key] = 0;
         }
     }
 
     // Format and send all statistics on roundend
     private void OnRoundEndText(RoundStatisticsAppendEvent args)
     {
-        foreach (var stat in _statistics.Values.Where(s => s.statCount > 0))
+        foreach (var (statId, count) in Statistics.Where(s => s.Value > 0))
         {
-            var text = Loc.GetString(stat.stat.StatString, ("count", stat.statCount));
+            if (!_prototypeManager.TryIndex(statId, out var stat))
+            {
+                Log.Warning($"Unknown RoundStatisticPrototype id '{statId}'");
+                continue;
+            }
+            var text = Loc.GetString(stat.StatString, ("count", count));
             args.AddLine(text);
         }
     }
