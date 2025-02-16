@@ -99,3 +99,19 @@
       state: mech_thrusters_on
     event: !type:MechToggleThrustersEvent
     useDelay: 1
+    
+- type: entity
+  id: ActionMechToggleNightVision
+  name: Toggle Camera
+  description: Turn on the night vision camera mounted on the Mech.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_night_vision_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_night_vision_on
+    event: !type:MechToggleNightVisionEvent
+    useDelay: 1
