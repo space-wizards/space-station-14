@@ -391,145 +391,11 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } user)
             return;
 
-        if (!TryComp(user, out ActionsComponent? component))
-            return;
-
         var actionEnt = GetEntity(ev.Action);
+        var actionCoords = GetCoordinates(ev.EntityCoordinatesTarget);
+        var entTarget = GetEntity(ev.EntityTarget);
 
-        if (!TryComp(actionEnt, out MetaDataComponent? metaData))
-            return;
-
-        var name = Name(actionEnt, metaData);
-
-        // Does the user actually have the requested action?
-        if (!component.Actions.Contains(actionEnt))
-        {
-            _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
-            return;
-        }
-
-        if (!TryGetActionData(actionEnt, out var action))
-            return;
-
-        DebugTools.Assert(action.AttachedEntity == user);
-        if (!action.Enabled)
-            return;
-
-        // check for action use prevention
-        // TODO: make code below use this event with a dedicated component
-        var attemptEv = new ActionAttemptEvent(user);
-        RaiseLocalEvent(actionEnt, ref attemptEv);
-        if (attemptEv.Cancelled)
-            return;
-
-        var curTime = GameTiming.CurTime;
-        if (IsCooldownActive(action, curTime))
-            return;
-
-        // TODO: Replace with individual charge recovery when we have the visuals to aid it
-        if (action is { Charges: < 1, RenewCharges: true })
-            ResetCharges(actionEnt, true, true);
-
-        BaseActionEvent? performEvent = null;
-
-        if (action.CheckConsciousness && !_actionBlockerSystem.CanConsciouslyPerformAction(user))
-            return;
-
-        // Validate request by checking action blockers and the like:
-        switch (action)
-        {
-            case EntityTargetActionComponent entityAction:
-                if (ev.EntityTarget is not { Valid: true } netTarget)
-                {
-                    Log.Error($"Attempted to perform an entity-targeted action without a target! Action: {name}");
-                    return;
-                }
-
-                var entityTarget = GetEntity(netTarget);
-
-                var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
-
-                if (!ValidateEntityTarget(user, entityTarget, (actionEnt, entityAction)))
-                    return;
-
-                _adminLogger.Add(LogType.Action,
-                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(entityTarget):target}.");
-
-                if (entityAction.Event != null)
-                {
-                    entityAction.Event.Target = entityTarget;
-                    Dirty(actionEnt, entityAction);
-                    performEvent = entityAction.Event;
-                }
-
-                break;
-            case WorldTargetActionComponent worldAction:
-                if (ev.EntityCoordinatesTarget is not { } netCoordinatesTarget)
-                {
-                    Log.Error($"Attempted to perform a world-targeted action without a target! Action: {name}");
-                    return;
-                }
-
-                var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user, _transformSystem.ToMapCoordinates(entityCoordinatesTarget).Position);
-
-                if (!ValidateWorldTarget(user, entityCoordinatesTarget, (actionEnt, worldAction)))
-                    return;
-
-                _adminLogger.Add(LogType.Action,
-                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {entityCoordinatesTarget:target}.");
-
-                if (worldAction.Event != null)
-                {
-                    worldAction.Event.Target = entityCoordinatesTarget;
-                    Dirty(actionEnt, worldAction);
-                    performEvent = worldAction.Event;
-                }
-
-                break;
-            case EntityWorldTargetActionComponent entityWorldAction:
-            {
-                var actionEntity = GetEntity(ev.EntityTarget);
-                var actionCoords = GetCoordinates(ev.EntityCoordinatesTarget);
-
-                if (actionEntity is null && actionCoords is null)
-                {
-                    Log.Error($"Attempted to perform an entity-world-targeted action without an entity or world coordinates! Action: {name}");
-                    return;
-                }
-
-                var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
-
-                if (!ValidateEntityWorldTarget(user, actionEntity, actionCoords, entWorldAction))
-                    return;
-
-                _adminLogger.Add(LogType.Action,
-                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(actionEntity):target} {actionCoords:target}.");
-
-                if (entityWorldAction.Event != null)
-                {
-                    entityWorldAction.Event.Entity = actionEntity;
-                    entityWorldAction.Event.Coords = actionCoords;
-                    Dirty(actionEnt, entityWorldAction);
-                    performEvent = entityWorldAction.Event;
-                }
-                break;
-            }
-            case InstantActionComponent instantAction:
-                if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
-                    return;
-
-                _adminLogger.Add(LogType.Action,
-                    $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(action.Container ?? user):provider}.");
-
-                performEvent = instantAction.Event;
-                break;
-        }
-
-        // All checks passed. Perform the action!
-        PerformAction(user, component, actionEnt, action, performEvent, curTime);
+        IsValidAction(user, actionEnt, entTarget, actionCoords);
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, Entity<EntityTargetActionComponent> actionEnt)
@@ -683,6 +549,7 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
+        //In the RaiseLocalEvent something isn't targetting correctly, likely we aren't sending the coorect coordinates
         if (!handled)
             return; // no interaction occurred.
 
@@ -1016,6 +883,140 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     #endregion
+
+    public void IsValidAction(EntityUid user, EntityUid actionEnt, EntityUid? entTarget, EntityCoordinates? actionCoords)
+    {
+        if (!TryComp(user, out ActionsComponent? component))
+            return;
+
+        if (!TryComp(actionEnt, out MetaDataComponent? metaData))
+            return;
+
+        var name = Name(actionEnt, metaData);
+          // Does the user actually have the requested action?
+        if (!component.Actions.Contains(actionEnt))
+        {
+            _adminLogger.Add(LogType.Action,
+                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
+            return;
+        }
+
+        if (!TryGetActionData(actionEnt, out var action))
+            return;
+
+        DebugTools.Assert(action.AttachedEntity == user);
+        if (!action.Enabled)
+            return;
+
+        // check for action use prevention
+        // TODO: make code below use this event with a dedicated component
+        var attemptEv = new ActionAttemptEvent(user);
+        RaiseLocalEvent(actionEnt, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
+        var curTime = GameTiming.CurTime;
+        if (IsCooldownActive(action, curTime))
+            return;
+
+        // TODO: Replace with individual charge recovery when we have the visuals to aid it
+        if (action is { Charges: < 1, RenewCharges: true })
+            ResetCharges(actionEnt, true, true);
+
+        BaseActionEvent? performEvent = null;
+
+        if (action.CheckConsciousness && !_actionBlockerSystem.CanConsciouslyPerformAction(user))
+            return;
+
+        // Validate request by checking action blockers and the like:
+        switch (action)
+        {
+            case EntityTargetActionComponent entityAction:
+                if (entTarget is not { Valid: true } entityTarget)
+                {
+                    Log.Error($"Attempted to perform an entity-targeted action without a target! Action: {name}");
+                    return;
+                }
+
+                var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
+                _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
+
+                if (!ValidateEntityTarget(user, entityTarget, (actionEnt, entityAction)))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(entityTarget):target}.");
+
+                if (entityAction.Event != null)
+                {
+                    entityAction.Event.Target = entityTarget;
+                    Dirty(actionEnt, entityAction);
+                    performEvent = entityAction.Event;
+                }
+
+                break;
+            case WorldTargetActionComponent worldAction:
+                if (actionCoords is not { } entityCoordinatesTarget)
+                {
+                    Log.Error($"Attempted to perform a world-targeted action without a target! Action: {name}");
+                    return;
+                }
+
+                _rotateToFaceSystem.TryFaceCoordinates(user, _transformSystem.ToMapCoordinates(entityCoordinatesTarget).Position);
+
+                if (!ValidateWorldTarget(user, entityCoordinatesTarget, (actionEnt, worldAction)))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {entityCoordinatesTarget:target}.");
+
+                if (worldAction.Event != null)
+                {
+                    worldAction.Event.Target = entityCoordinatesTarget;
+                    Dirty(actionEnt, worldAction);
+                    performEvent = worldAction.Event;
+                }
+
+                break;
+            case EntityWorldTargetActionComponent entityWorldAction:
+            {
+
+                if (entTarget is null || actionCoords is null)
+                {
+                    Log.Error($"Attempted to perform an entity-world-targeted action without an entity or world coordinates! Action: {name}");
+                    return;
+                }
+
+                var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
+
+                if (!ValidateEntityWorldTarget(user, entTarget, actionCoords, entWorldAction))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(actionEnt):target} {actionCoords:target}.");
+
+                if (entityWorldAction.Event != null)
+                {
+                    entityWorldAction.Event.Entity = entTarget;
+                    entityWorldAction.Event.Coords = actionCoords;
+                    Dirty(actionEnt, entityWorldAction);
+                    performEvent = entityWorldAction.Event;
+                }
+                break;
+            }
+            case InstantActionComponent instantAction:
+                if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(action.Container ?? user):provider}.");
+
+                performEvent = instantAction.Event;
+                break;
+        }
+        // All checks passed. Perform the action!
+        PerformAction(user, component, actionEnt, action, performEvent, curTime);
+    }
 
     private void OnRelayActionCompChange(Entity<ActionsComponent> ent, ref RelayedActionComponentChangeEvent args)
     {

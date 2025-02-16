@@ -1,6 +1,7 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -23,11 +24,11 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
     }
 
-    public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
+    public bool TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
             return false;
-
+        /*
         if (!TryComp<EntityWorldTargetActionComponent>(user.Comp.ActionEnt, out var action))
             return false;
 
@@ -37,15 +38,23 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (action.Event != null)
         {
             action.Event.Coords = Transform(target).Coordinates;
+        }*/
+
+        if (user.Comp.ActionEnt is not { Valid: true } entityTarget)
+        {
+            Log.Error($"An NPC attempted to perform an entity-targeted action without a target!");
+            return false;
         }
 
-        _actions.PerformAction(user,
+        _actions.IsValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
+
+        /*_actions.PerformAction(user,
             null,
             user.Comp.ActionEnt.Value,
             action,
             action.BaseEvent,
             _timing.CurTime,
-            false);
+            false);*/
         return true;
     }
 
@@ -60,7 +69,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             if (!htn.Blackboard.TryGetValue<EntityUid>(comp.TargetKey, out var target, EntityManager))
                 continue;
 
-            TryUseTentacleAttack((uid, comp), target);
+            TryUseAction((uid, comp), target);
         }
     }
 }
