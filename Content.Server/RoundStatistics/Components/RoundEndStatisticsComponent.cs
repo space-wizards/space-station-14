@@ -1,7 +1,8 @@
-using Content.Shared.GameTicking;
+using Content.Server.RoundStatistics.Systems;
+using Content.Shared.RoundStatistics;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameTicking;
+namespace Content.Server.RoundStatistics.Components;
 
 /// <summary>
 /// Holds round statistic data.

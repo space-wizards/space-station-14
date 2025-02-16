@@ -1,11 +1,14 @@
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.RoundStatistics.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.RoundStatistics;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameTicking;
+namespace Content.Server.RoundStatistics.Systems;
 
 /// <summary>
 /// Manages and displays round-end statistics, counting events and formatting results for the round summary.

@@ -1,6 +1,4 @@
-using Robust.Shared.Serialization;
-
-namespace Content.Shared.GameTicking;
+namespace Content.Shared.RoundStatistics;
 
 /// <summary>
 /// Event that raised to transfer a certain int to a certain statistic prototype

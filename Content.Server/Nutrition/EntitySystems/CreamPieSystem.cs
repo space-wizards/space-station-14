@@ -10,6 +10,7 @@ using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
+using Content.Shared.RoundStatistics;
 using Content.Shared.Throwing;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;

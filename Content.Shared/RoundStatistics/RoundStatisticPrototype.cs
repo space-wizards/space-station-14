@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.GameTicking;
+namespace Content.Shared.RoundStatistics;
 
 /// <summary>
 /// Used to create round statistics
