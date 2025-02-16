@@ -29,6 +29,9 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
 
+        [ValidatePrototypeId<RoundStatisticPrototype>]
+        public const string CreamedCount = "CreamedCount";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -101,7 +104,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", Identity.Name(uid, EntityManager)), ("thrower", args.Thrown)), uid, otherPlayers, false);
-            var evChangeStatsValue = new ChangeStatsValueEvent("CreamedCount", 1);
+            var evChangeStatsValue = new ChangeStatsValueEvent(CreamedCount, 1);
             RaiseLocalEvent(ref evChangeStatsValue);
         }
 

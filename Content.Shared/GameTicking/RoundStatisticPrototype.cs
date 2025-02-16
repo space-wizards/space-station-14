@@ -17,6 +17,4 @@ public sealed class RoundStatisticPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public LocId StatString;
-
-    public int StatCount;
 }
