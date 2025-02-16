@@ -103,7 +103,7 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ShockTime = 8f;
+    public float ShockTime = 3f;
 
     [DataField, AutoNetworkedField]
     public float SiemensCoefficient = 1f;
