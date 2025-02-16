@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: (Xeno Station) Added birgmedic spawner and brigmedic locker.
-    type: Add
-  - message: (Xeno Station) The gas filter hooked up to the cryo pod is no longer
-      insane and now functions how it does on every other station.
-    type: Tweak
-  - message: (Xeno Station) The station now has a player range of 40 - 80, up from
-      25 - 70 (it's big).
-    type: Tweak
-  - message: (Barratry Station) Added birgmedic spawner and brigmedic locker.
-    type: Add
-  id: 639
-  time: '2024-12-03T16:41:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/878
-- author: DinnerCalzone
-  changes:
   - message: (Hummingbird) Swapped placement of the robotech deluxe and exosuit fabricators
       in robotics to reduce instances of cyborg endoskeletons spawning in the wall.
     type: Tweak
@@ -4183,3 +4168,10 @@
   id: 1138
   time: '2025-02-16T12:20:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1703
+- author: mqole
+  changes:
+  - message: Dolby can now spawn as a station pet.
+    type: Add
+  id: 1139
+  time: '2025-02-16T12:24:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1706
