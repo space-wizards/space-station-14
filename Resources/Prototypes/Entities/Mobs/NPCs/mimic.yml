@@ -40,3 +40,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 1
+  - type: Butcherable
+    spawned:
+    - id: DrinkChangelingStingCan
+      amount: 1
