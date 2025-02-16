@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: The maximum number of ID cards required to complete a thief's objective
-      has been changed from 15 to 10.
-    type: Tweak
-  id: 7462
-  time: '2024-09-30T22:40:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32411
 - author: Golinth
   changes:
   - message: Firebots can now be constructed by scientists - the bots wander the station
@@ -3898,3 +3890,11 @@
   id: 7961
   time: '2025-02-16T15:55:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35214
+- author: n00kii
+  changes:
+  - message: Fixed laser weapon visuals being broken when shooting across grids or
+      into space.
+    type: Fix
+  id: 7962
+  time: '2025-02-16T16:14:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34515
