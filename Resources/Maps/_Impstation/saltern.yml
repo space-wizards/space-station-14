@@ -61343,7 +61343,7 @@ entities:
     - type: Transform
       pos: -4.5,-22.5
       parent: 31
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 8862
     components:

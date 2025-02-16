@@ -99423,7 +99423,7 @@ entities:
     - type: Transform
       pos: -12.5,-18.5
       parent: 2
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 17054
     components:

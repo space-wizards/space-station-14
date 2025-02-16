@@ -123136,7 +123136,7 @@ entities:
     - type: Transform
       pos: 22.5,12.5
       parent: 2
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 18666
     components:

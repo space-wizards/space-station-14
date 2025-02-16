@@ -96720,7 +96720,7 @@ entities:
     - type: Transform
       pos: 5.5,-304.5
       parent: 2
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 13752
     components:
