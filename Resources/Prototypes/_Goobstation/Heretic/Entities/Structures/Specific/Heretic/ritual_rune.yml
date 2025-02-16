@@ -7,7 +7,7 @@
   components:
   - type: HereticRitualRune
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: HighFloorObjects
     sprite: _Goobstation/Heretic/ritual_rune.rsi
     state: icon
   - type: Clickable
@@ -25,7 +25,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: HighFloorObjects
     sprite: _Goobstation/Heretic/ritual_rune.rsi
     state: icon_drawanim
 
@@ -40,6 +40,6 @@
   - type: TimedDespawn
     lifetime: 1
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: HighFloorObjects
     sprite: _Goobstation/Heretic/ritual_rune.rsi
     state: icon_ritualanim

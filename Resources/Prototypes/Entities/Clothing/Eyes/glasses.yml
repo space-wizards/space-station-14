@@ -53,25 +53,6 @@
         Blunt: 10
 
 - type: entity
-  parent: ClothingEyesBase
-  id: ClothingEyesGlassesGarMecha
-  name: mecha gar glasses
-  description: Believe in me! Believe in the me who believes in you!
-  components:
-  - type: Sprite
-    sprite: Clothing/Eyes/Glasses/gar.rsi
-    state: icon-mecha
-  - type: Clothing
-    sprite: Clothing/Eyes/Glasses/gar.rsi
-    equippedPrefix: mecha
-  - type: Item
-    heldPrefix: mecha
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-
-- type: entity
   parent: [ClothingEyesBase, BaseLensSlot, BaseEngineeringContraband] # BaseLensSlot from imp
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion

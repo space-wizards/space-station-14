@@ -377,7 +377,7 @@ SignChemistry1: SignChem
 SignChemistry2: SignChem
 SignCourt: SignLawyer
 SignAtmosMinsky: SignAtmos
-SignDrones: SignMaterials
+# SignDrones: SignMaterials - Reverted on Imp.
 SignShield: null # what was this even for?
 SignHydro2: SignHydro1
 SignHydro3: SignHydro1
