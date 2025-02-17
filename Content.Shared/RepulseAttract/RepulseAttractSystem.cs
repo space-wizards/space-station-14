@@ -5,11 +5,9 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Whitelist;
 using Content.Shared.Wieldable;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using System.Numerics;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.RepulseAttract;
 
@@ -21,14 +19,12 @@ public sealed class RepulseAttractSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xForm = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
 
-    private EntityQuery<TransformComponent> _xFormQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<EntityUid> _entSet = new();
     public override void Initialize()
     {
         base.Initialize();
 
-        _xFormQuery = GetEntityQuery<TransformComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelayOnMeleeHitSystem)], after: [typeof(SharedWieldableSystem)]);
@@ -44,10 +40,10 @@ public sealed class RepulseAttractSystem : EntitySystem
     public bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid user)
     {
         var position = _xForm.GetMapCoordinates(ent.Owner);
-        return TryRepulseAttract(position, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionLayer);
+        return TryRepulseAttract(position, user, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionLayer);
     }
 
-    public bool TryRepulseAttract(MapCoordinates position, float speed, float range, EntityWhitelist? whitelist = null, CollisionGroup layer = CollisionGroup.SingularityLayer)
+    public bool TryRepulseAttract(MapCoordinates position, EntityUid? user, float speed, float range, EntityWhitelist? whitelist = null, CollisionGroup layer = CollisionGroup.SingularityLayer)
     {
         _entSet.Clear();
         var epicenter = position.Position;
@@ -56,15 +52,13 @@ public sealed class RepulseAttractSystem : EntitySystem
         foreach (var target in _entSet)
         {
             if (!_physicsQuery.TryGetComponent(target, out var physics)
-                || (physics.CollisionMask & (int)layer) == 0x0) // don't affect ghosts
+                || (physics.CollisionLayer & (int)layer) != 0x0) // exclude layers like ghosts
                 continue;
 
             if (_whitelist.IsWhitelistFail(whitelist, target))
                 continue;
 
-            var targetXForm = _xFormQuery.GetComponent(target);
-
-            var targetPos = _xForm.GetMapCoordinates(target, targetXForm).Position;
+            var targetPos = _xForm.GetWorldPosition(target);
 
             // vector from epicenter to target entity
             var direction = targetPos - epicenter;
@@ -76,7 +70,7 @@ public sealed class RepulseAttractSystem : EntitySystem
             // repulse: throw them up to the maximum range
             var throwDirection = speed < 0 ? -direction : direction.Normalized() * (range - direction.Length());
 
-            _throw.TryThrow(target, throwDirection, Math.Abs(speed));
+            _throw.TryThrow(target, throwDirection, Math.Abs(speed), user, recoil: false, compensateFriction: true);
         }
 
         return true;

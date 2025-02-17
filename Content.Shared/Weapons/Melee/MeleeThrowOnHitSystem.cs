@@ -37,7 +37,10 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         if (_delay.IsDelayed(weapon.Owner))
             return;
 
-        var userPos = _transform.GetMapCoordinates(args.User).Position;
+        if (args.HitEntities.Count == 0)
+            return;
+
+        var userPos = _transform.GetWorldPosition(args.User);
         foreach (var target in args.HitEntities)
         {
             var targetPos = _transform.GetMapCoordinates(target).Position;

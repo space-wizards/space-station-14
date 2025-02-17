@@ -30,9 +30,9 @@ public sealed partial class RepulseAttractComponent : Component
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    ///     What collision layers should this effect apply to?
-    ///     The default excludes ghost mobs.
+    ///     What collision layers should be excluded?
+    ///     The default excludes ghost mobs, revenants, the AI camera etc.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public CollisionGroup CollisionLayer = CollisionGroup.SingularityLayer;
+    public CollisionGroup CollisionLayer = CollisionGroup.GhostImpassable;
 }
