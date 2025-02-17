@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var state = new ChemMasterBoundUserInterfaceState(
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
-                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
+                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel, chemMaster.CanMakePills, chemMaster.CanMakeBottles);
 
             _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
         }
@@ -144,7 +144,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             else // Container to buffer
             {
-                amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
+                amount = FixedPoint2.Min(FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id)), bufferSolution.AvailableVolume);
                 _solutionContainerSystem.RemoveReagent(containerSoln.Value, id, amount);
                 bufferSolution.AddReagent(id, amount);
             }
