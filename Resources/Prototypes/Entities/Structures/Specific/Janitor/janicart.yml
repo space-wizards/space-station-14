@@ -28,6 +28,8 @@
     solution: bucket
   - type: RefillableSolution
     solution: bucket
+  - type: DumpableSolution
+    solution: bucket
   - type: ExaminableSolution
     solution: bucket
   - type: Tag
@@ -241,6 +243,8 @@
     - type: DrainableSolution
       solution: bucket
     - type: RefillableSolution
+      solution: bucket
+    - type: DumpableSolution
       solution: bucket
     - type: ExaminableSolution
       solution: bucket
