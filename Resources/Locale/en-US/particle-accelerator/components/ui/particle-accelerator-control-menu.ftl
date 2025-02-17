@@ -8,7 +8,6 @@ particle-accelerator-control-menu-alarm-control-1 = [bold][color=red]PARTICLE ST
 particle-accelerator-control-menu-alarm-control-2 = [bold][color=red]LIMITER FAILURE[/bold][/color]
 particle-accelerator-control-menu-scan-parts-button = Scan Parts
 particle-accelerator-control-menu-check-containment-field-warning = Ensure containment field is active before operation
-particle-accelerator-control-menu-foo-bar-baz = FOO-BAR-BAZ
 particle-accelerator-control-menu-status-label = [bold]Status:[/bold]
 particle-accelerator-control-menu-status-unknown = [font="Monospace"][color=red]Unknown[/color][/bold]
 particle-accelerator-control-menu-status-operational = [font="Monospace"][color=green]Operational[/color][/bold]
@@ -16,6 +15,8 @@ particle-accelerator-control-menu-status-incomplete = [font="Monospace"][color=r
 particle-accelerator-control-menu-draw = [bold]Draw:[/bold]
 particle-accelerator-control-menu-draw-value = [font="Monospace"]{$watts}/{$lastReceive}[/font]
 particle-accelerator-control-menu-draw-not-available = [font="Monospace"][color=gray]N/A[/color][/font]
+particle-accelerator-control-menu-flavor-left = Please keep the clown away from this console!
+particle-accelerator-control-menu-flavor-right = v 1.6
 
 particle-accelerator-radio-message-on = PA power has been switched on.
 particle-accelerator-radio-message-off = PA power has been switched off.

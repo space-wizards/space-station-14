@@ -65,7 +65,7 @@
   files:
   - /Audio/Effects/Footsteps/clownstep1.ogg
   - /Audio/Effects/Footsteps/clownstep2.ogg
-  
+
 - type: soundCollection
   id: FootstepJester
   files:
@@ -189,7 +189,7 @@
   id: FootstepBlood
   files:
   - /Audio/Effects/Footsteps/gib_step.ogg
-  
+
 - type: soundCollection
   id: FootstepSticky
   files:
@@ -211,3 +211,12 @@
   id: FootstepHoverBorg
   files:
   - /Audio/Effects/Footsteps/borgwalk2.ogg
+
+- type: soundCollection
+  id: FootstepHighHeels
+  files:
+  - /Audio/Effects/Footsteps/heelsclack1.ogg
+  - /Audio/Effects/Footsteps/heelsclack2.ogg
+  - /Audio/Effects/Footsteps/heelsclack3.ogg
+  - /Audio/Effects/Footsteps/heelsclack4.ogg
+  - /Audio/Effects/Footsteps/heelsclack5.ogg

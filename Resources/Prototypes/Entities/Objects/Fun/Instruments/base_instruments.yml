@@ -62,11 +62,9 @@
         density: 80
         mask:
         - Impassable
-        - HighImpassable
         - MidImpassable
         layer:
         - Opaque
-        - HighImpassable
         - MidImpassable
         - BulletImpassable
   - type: StaticPrice

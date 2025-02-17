@@ -11,6 +11,7 @@ namespace Content.Shared.Construction
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
         /// <summary>
         ///     Get predicate for construction obstruction checks.
