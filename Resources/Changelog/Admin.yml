@@ -759,5 +759,12 @@ Entries:
   id: 94
   time: '2025-02-13T22:03:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35131
+- author: ScarKy0
+  changes:
+  - message: universal access config has additional accesses added
+    type: Add
+  id: 95
+  time: '2025-02-16T21:51:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35229
 Name: Admin
 Order: 1
