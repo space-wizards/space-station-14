@@ -33,7 +33,7 @@
 - type: accessGroup
   id: Service
   tags:
-  - HeadOfPersonnel
+  # HeadOfPersonnel imp edit, not head of service department anymore
   - Bar
   - Kitchen
   - Hydroponics
@@ -43,6 +43,7 @@
   - Chapel
   - Lawyer
   #imp edit start
+  - HospitalityDirector
   - Clown
   - Librarian
   - Mime

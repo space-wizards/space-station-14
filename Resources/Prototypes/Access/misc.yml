@@ -32,5 +32,12 @@
   - Chapel
   - Hydroponics
   - Atmospherics
-  - Courier # Imp
-  - Logistics #imp
+  #imp edit start
+  - Clown
+  - Courier
+  - HospitalityDirector
+  - Librarian
+  - Logistics
+  - Mime
+  - Reporter
+  #imp edit end

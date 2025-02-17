@@ -1,4 +1,8 @@
 - type: accessLevel
+  id: HospitalityDirector
+  name: id-card-access-level-hospitality-director
+
+- type: accessLevel
   id: Clown
   name: id-card-access-level-clown
 

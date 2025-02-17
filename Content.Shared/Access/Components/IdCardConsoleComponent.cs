@@ -63,6 +63,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "External",
         "HeadOfPersonnel",
         "HeadOfSecurity",
+        "HospitalityDirector", // Imp
         "Hydroponics",
         "Janitor",
         "Kitchen",
