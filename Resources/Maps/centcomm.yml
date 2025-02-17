@@ -16282,6 +16282,181 @@ entities:
     - type: Transform
       pos: -12.5,5.5
       parent: 1668
+  - uid: 9343
+    components:
+    - type: Transform
+      pos: 34.5,-13.5
+      parent: 1668
+  - uid: 9344
+    components:
+    - type: Transform
+      pos: 33.5,-13.5
+      parent: 1668
+  - uid: 9345
+    components:
+    - type: Transform
+      pos: 33.5,-14.5
+      parent: 1668
+  - uid: 9346
+    components:
+    - type: Transform
+      pos: 33.5,-15.5
+      parent: 1668
+  - uid: 9347
+    components:
+    - type: Transform
+      pos: 33.5,-16.5
+      parent: 1668
+  - uid: 9348
+    components:
+    - type: Transform
+      pos: 32.5,-16.5
+      parent: 1668
+  - uid: 9349
+    components:
+    - type: Transform
+      pos: 31.5,-16.5
+      parent: 1668
+  - uid: 9350
+    components:
+    - type: Transform
+      pos: 30.5,-16.5
+      parent: 1668
+  - uid: 9351
+    components:
+    - type: Transform
+      pos: 29.5,-16.5
+      parent: 1668
+  - uid: 9352
+    components:
+    - type: Transform
+      pos: 28.5,-16.5
+      parent: 1668
+  - uid: 9353
+    components:
+    - type: Transform
+      pos: 27.5,-16.5
+      parent: 1668
+  - uid: 9354
+    components:
+    - type: Transform
+      pos: 26.5,-16.5
+      parent: 1668
+  - uid: 9355
+    components:
+    - type: Transform
+      pos: 25.5,-16.5
+      parent: 1668
+  - uid: 9356
+    components:
+    - type: Transform
+      pos: 24.5,-16.5
+      parent: 1668
+  - uid: 9357
+    components:
+    - type: Transform
+      pos: 23.5,-16.5
+      parent: 1668
+  - uid: 9358
+    components:
+    - type: Transform
+      pos: 22.5,-16.5
+      parent: 1668
+  - uid: 9359
+    components:
+    - type: Transform
+      pos: 22.5,-17.5
+      parent: 1668
+  - uid: 9360
+    components:
+    - type: Transform
+      pos: 22.5,-18.5
+      parent: 1668
+  - uid: 9361
+    components:
+    - type: Transform
+      pos: 22.5,-19.5
+      parent: 1668
+  - uid: 9362
+    components:
+    - type: Transform
+      pos: 22.5,-20.5
+      parent: 1668
+  - uid: 9363
+    components:
+    - type: Transform
+      pos: 22.5,-21.5
+      parent: 1668
+  - uid: 9364
+    components:
+    - type: Transform
+      pos: 22.5,-23.5
+      parent: 1668
+  - uid: 9365
+    components:
+    - type: Transform
+      pos: 22.5,-24.5
+      parent: 1668
+  - uid: 9366
+    components:
+    - type: Transform
+      pos: 22.5,-25.5
+      parent: 1668
+  - uid: 9367
+    components:
+    - type: Transform
+      pos: 22.5,-22.5
+      parent: 1668
+  - uid: 9368
+    components:
+    - type: Transform
+      pos: 22.5,-26.5
+      parent: 1668
+  - uid: 9369
+    components:
+    - type: Transform
+      pos: 21.5,-26.5
+      parent: 1668
+  - uid: 9370
+    components:
+    - type: Transform
+      pos: 20.5,-26.5
+      parent: 1668
+  - uid: 9371
+    components:
+    - type: Transform
+      pos: 19.5,-26.5
+      parent: 1668
+  - uid: 9372
+    components:
+    - type: Transform
+      pos: 18.5,-26.5
+      parent: 1668
+  - uid: 9373
+    components:
+    - type: Transform
+      pos: 17.5,-26.5
+      parent: 1668
+  - uid: 9374
+    components:
+    - type: Transform
+      pos: 16.5,-26.5
+      parent: 1668
+  - uid: 9375
+    components:
+    - type: Transform
+      pos: 15.5,-26.5
+      parent: 1668
+  - uid: 9376
+    components:
+    - type: Transform
+      pos: 14.5,-26.5
+      parent: 1668
+  - uid: 9377
+    components:
+    - type: Transform
+      pos: 13.5,-26.5
+      parent: 1668
 - proto: CableHVStack
   entities:
   - uid: 6780
