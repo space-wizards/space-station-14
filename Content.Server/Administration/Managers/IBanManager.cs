@@ -52,4 +52,14 @@ public interface IBanManager
     /// </summary>
     /// <param name="pSession">Player's session</param>
     public void SendRoleBans(ICommonSession pSession);
+
+    /// <summary>
+    /// Bans the specified Autonomous System Number (ASN)
+    /// </summary>
+    /// <param name="asn">Target autonomous system number</param>
+    /// <param name="banningAdmin">The person who banned our target</param>
+    /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
+    /// <param name="severity">Severity of the resulting ban note</param>
+    /// <param name="reason">Reason for the ban</param>
+    public void CreateAsnBan(string asn, NetUserId banningAdmin, uint? minutes, NoteSeverity severity, string reason);
 }

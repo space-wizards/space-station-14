@@ -1061,6 +1061,100 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ServerAsnBan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("server_asn_ban_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Asn")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("asn");
+
+                    b.Property<bool>("AutoDelete")
+                        .HasColumnType("boolean")
+                        .HasColumnName("auto_delete");
+
+                    b.Property<DateTime>("BanTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ban_time");
+
+                    b.Property<Guid?>("BanningAdmin")
+                        .HasColumnType("uuid")
+                        .HasColumnName("banning_admin");
+
+                    b.Property<DateTime?>("ExpirationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expiration_time");
+
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("boolean")
+                        .HasColumnName("hidden");
+
+                    b.Property<DateTime?>("LastEditedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_edited_at");
+
+                    b.Property<Guid?>("LastEditedById")
+                        .HasColumnType("uuid")
+                        .HasColumnName("last_edited_by_id");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("reason");
+
+                    b.Property<int>("Severity")
+                        .HasColumnType("integer")
+                        .HasColumnName("severity");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server_asn_ban");
+
+                    b.HasIndex("Asn")
+                        .HasDatabaseName("IX_server_asn_ban_asn");
+
+                    b.HasIndex("BanningAdmin");
+
+                    b.HasIndex("LastEditedById");
+
+                    b.ToTable("server_asn_ban", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerAsnUnban", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("unban_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BanId")
+                        .HasColumnType("integer")
+                        .HasColumnName("ban_id");
+
+                    b.Property<DateTime>("UnbanTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("unban_time");
+
+                    b.Property<Guid?>("UnbanningAdmin")
+                        .HasColumnType("uuid")
+                        .HasColumnName("unbanning_admin");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server_asn_unban");
+
+                    b.HasIndex("BanId")
+                        .IsUnique();
+
+                    b.ToTable("server_asn_unban", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
                 {
                     b.Property<int>("Id")
@@ -1187,6 +1281,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("connection_id");
 
+                    b.Property<int?>("ServerAsnBanId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_asn_ban_id");
+
                     b.HasKey("Id")
                         .HasName("PK_server_ban_hit");
 
@@ -1195,6 +1293,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("ConnectionId")
                         .HasDatabaseName("IX_server_ban_hit_connection_id");
+
+                    b.HasIndex("ServerAsnBanId")
+                        .HasDatabaseName("IX_server_ban_hit_server_asn_ban_id");
 
                     b.ToTable("server_ban_hit", (string)null);
                 });
@@ -1812,6 +1913,39 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Server");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ServerAsnBan", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "CreatedBy")
+                        .WithMany("AdminServerAsnBansCreated")
+                        .HasForeignKey("BanningAdmin")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_server_asn_ban_player_banning_admin");
+
+                    b.HasOne("Content.Server.Database.Player", "LastEditedBy")
+                        .WithMany("AdminServerAsnBansLastEdited")
+                        .HasForeignKey("LastEditedById")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_server_asn_ban_player_last_edited_by_id");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("LastEditedBy");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerAsnUnban", b =>
+                {
+                    b.HasOne("Content.Server.Database.ServerAsnBan", "Ban")
+                        .WithOne("Unban")
+                        .HasForeignKey("Content.Server.Database.ServerAsnUnban", "BanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_server_asn_unban_server_asn_ban_ban_id");
+
+                    b.Navigation("Ban");
+                });
+
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "CreatedBy")
@@ -1883,6 +2017,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_server_ban_hit_connection_log_connection_id");
+
+                    b.HasOne("Content.Server.Database.ServerAsnBan", null)
+                        .WithMany("BanHits")
+                        .HasForeignKey("ServerAsnBanId")
+                        .HasConstraintName("FK_server_ban_hit_server_asn_ban_server_asn_ban_id");
 
                     b.Navigation("Ban");
 
@@ -2040,6 +2179,10 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("AdminNotesReceived");
 
+                    b.Navigation("AdminServerAsnBansCreated");
+
+                    b.Navigation("AdminServerAsnBansLastEdited");
+
                     b.Navigation("AdminServerBansCreated");
 
                     b.Navigation("AdminServerBansLastEdited");
@@ -2095,6 +2238,13 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("ConnectionLogs");
 
                     b.Navigation("Rounds");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerAsnBan", b =>
+                {
+                    b.Navigation("BanHits");
+
+                    b.Navigation("Unban");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>

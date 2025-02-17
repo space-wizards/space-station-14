@@ -33,6 +33,8 @@ namespace Content.Server.Database
         public DbSet<Blacklist> Blacklist { get; set; } = null!;
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
+        public DbSet<ServerAsnBan> AsnBan { get; set; } = default!;
+        public DbSet<ServerAsnUnban> AsnUnban { get; set; } = default!;
         public DbSet<ServerBanExemption> BanExemption { get; set; } = default!;
         public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
@@ -153,6 +155,9 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ServerBan>()
                 .HasIndex(p => p.PlayerUserId);
+
+            modelBuilder.Entity<ServerAsnBan>()
+                .HasIndex(p => p.Asn);
 
             modelBuilder.Entity<ServerUnban>()
                 .HasIndex(p => p.BanId)
@@ -320,6 +325,20 @@ namespace Content.Server.Database
             modelBuilder.Entity<ServerRoleBan>()
                 .HasOne(ban => ban.LastEditedBy)
                 .WithMany(author => author.AdminServerRoleBansLastEdited)
+                .HasForeignKey(ban => ban.LastEditedById)
+                .HasPrincipalKey(author => author.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<ServerAsnBan>()
+                .HasOne(ban => ban.CreatedBy)
+                .WithMany(author => author.AdminServerAsnBansCreated)
+                .HasForeignKey(ban => ban.BanningAdmin)
+                .HasPrincipalKey(author => author.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<ServerAsnBan>()
+                .HasOne(ban => ban.LastEditedBy)
+                .WithMany(author => author.AdminServerAsnBansLastEdited)
                 .HasForeignKey(ban => ban.LastEditedById)
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
@@ -590,6 +609,8 @@ namespace Content.Server.Database
         public List<AdminMessage> AdminMessagesLastEdited { get; set; } = null!;
         public List<AdminMessage> AdminMessagesDeleted { get; set; } = null!;
         public List<ServerBan> AdminServerBansCreated { get; set; } = null!;
+        public List<ServerAsnBan> AdminServerAsnBansCreated { get; set; } = null!;
+        public List<ServerAsnBan> AdminServerAsnBansLastEdited { get; set; } = null!;
         public List<ServerBan> AdminServerBansLastEdited { get; set; } = null!;
         public List<ServerRoleBan> AdminServerRoleBansCreated { get; set; } = null!;
         public List<ServerRoleBan> AdminServerRoleBansLastEdited { get; set; } = null!;
@@ -885,6 +906,81 @@ namespace Content.Server.Database
         public List<ServerBanHit> BanHits { get; set; } = null!;
     }
 
+    [Table("server_asn_ban"), Index(nameof(Asn))]
+    public class ServerAsnBan
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The target ASN to ban
+        /// </summary>
+        public string Asn { get; set; } = null!;
+
+        /// <summary>
+        /// The time when the ban was applied by an administrator.
+        /// </summary>
+        public DateTime BanTime { get; set; }
+
+        /// <summary>
+        /// The time the ban will expire. If null, the ban is permanent and will not expire naturally.
+        /// </summary>
+        public DateTime? ExpirationTime { get; set; }
+
+        /// <summary>
+        /// The administrator-stated reason for applying the ban.
+        /// </summary>
+        public string Reason { get; set; } = null!;
+
+        /// <summary>
+        /// The severity of the reason for the ban
+        /// </summary>
+        public NoteSeverity Severity { get; set; }
+
+        /// <summary>
+        /// User ID of the admin that applied the ban.
+        /// </summary>
+        [ForeignKey("CreatedBy")]
+        public Guid? BanningAdmin { get; set; }
+
+        public Player? CreatedBy { get; set; }
+
+        /// <summary>
+        /// User ID of the admin that last edited the note
+        /// </summary>
+        [ForeignKey("LastEditedBy")]
+        public Guid? LastEditedById { get; set; }
+
+        public Player? LastEditedBy { get; set; }
+
+        /// <summary>
+        /// When the ban was last edited
+        /// </summary>
+        public DateTime? LastEditedAt { get; set; }
+
+        /// <summary>
+        /// If present, an administrator has manually repealed this ban.
+        /// </summary>
+        public ServerAsnUnban? Unban { get; set; }
+
+        /// <summary>
+        /// Whether this ban should be automatically deleted from the database when it expires.
+        /// </summary>
+        /// <remarks>
+        /// This isn't done automatically by the game,
+        /// you will need to set up something like a cron job to clear this from your database,
+        /// using a command like this:
+        /// psql -d ss14 -c "DELETE FROM server_asn_ban WHERE auto_delete AND expiration_time &lt; NOW()"
+        /// </remarks>
+        public bool AutoDelete { get; set; }
+
+        /// <summary>
+        /// Whether to display this ban in the admin remarks (notes) panel
+        /// </summary>
+        public bool Hidden { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
+    }
+
     /// <summary>
     /// An explicit repeal of a <see cref="ServerBan"/> by an administrator.
     /// Having an entry for a ban neutralizes it.
@@ -903,6 +999,36 @@ namespace Content.Server.Database
         /// The ban that is being repealed.
         /// </summary>
         public ServerBan Ban { get; set; } = null!;
+
+        /// <summary>
+        /// The admin that repealed the ban.
+        /// </summary>
+        public Guid? UnbanningAdmin { get; set; }
+
+        /// <summary>
+        /// The time the ban repealed.
+        /// </summary>
+        public DateTime UnbanTime { get; set; }
+    }
+
+    /// <summary>
+    /// An explicit repeal of a <see cref="ServerAsnBan"/> by an administrator.
+    /// Having an entry for a ban neutralizes it.
+    /// </summary>
+    [Table("server_asn_unban")]
+    public class ServerAsnUnban
+    {
+        [Column("unban_id")] public int Id { get; set; }
+
+        /// <summary>
+        /// The ID of ban that is being repealed.
+        /// </summary>
+        public int BanId { get; set; }
+
+        /// <summary>
+        /// The ban that is being repealed.
+        /// </summary>
+        public ServerAsnBan Ban { get; set; } = null!;
 
         /// <summary>
         /// The admin that repealed the ban.
