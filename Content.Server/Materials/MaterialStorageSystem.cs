@@ -114,6 +114,35 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         return true;
     }
 
+    public override bool TryInsertMaxPossibleMaterialEntity(EntityUid user,
+        EntityUid toInsert,
+        EntityUid receiver,
+        MaterialStorageComponent? storage = null,
+        MaterialComponent? material = null,
+        PhysicalCompositionComponent? composition = null)
+    {
+        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
+            return false;
+        if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
+            return false;
+        TryComp<StackComponent>(toInsert, out var stack);
+        var count = stack?.Count ?? 1;
+        if (!base.TryInsertMaxPossibleMaterialEntity(user, toInsert, receiver, storage, material, composition))
+        {
+            _popup.PopupEntity(Loc.GetString("machine-insert-fail", ("machine", receiver)), receiver, user);
+            return false;
+        }
+        count -= stack?.Count ?? 1;
+        _audio.PlayPvs(storage.InsertingSound, receiver);
+        _popup.PopupEntity(Loc.GetString("machine-insert-item-amount", ("user", user), ("machine", receiver),
+            ("item", toInsert), ("amount", count)), receiver);
+
+        // Logging
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
+        return true;
+    }
+
     /// <summary>
     ///     Spawn an amount of a material in stack entities.
     ///     Note the 'amount' is material dependent.
