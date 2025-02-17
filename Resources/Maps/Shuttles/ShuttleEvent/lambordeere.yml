@@ -1206,6 +1206,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,5.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        50:
+        - Pressed: DoorBolt
   - uid: 199
     components:
     - type: MetaData
@@ -1214,6 +1218,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,2.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        82:
+        - Pressed: DoorBolt
 - proto: SMESBasic
   entities:
   - uid: 65

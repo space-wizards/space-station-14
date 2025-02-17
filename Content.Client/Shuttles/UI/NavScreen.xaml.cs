@@ -15,6 +15,7 @@ public sealed partial class NavScreen : BoxContainer
     [Dependency] private readonly IEntityManager _entManager = default!;
     private SharedTransformSystem _xformSystem;
 
+    private EntityUid? _consoleEntity; // Entity of controlling console
     private EntityUid? _shuttleEntity;
 
     public NavScreen()
@@ -33,6 +34,12 @@ public sealed partial class NavScreen : BoxContainer
     public void SetShuttle(EntityUid? shuttle)
     {
         _shuttleEntity = shuttle;
+    }
+
+    public void SetConsole(EntityUid? console)
+    {
+        _consoleEntity = console;
+        NavRadar.SetConsole(console);
     }
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
@@ -74,13 +81,19 @@ public sealed partial class NavScreen : BoxContainer
         // Get the positive reduced angle.
         var displayRot = -worldRot.Reduced();
 
-        GridPosition.Text = $"{worldPos.X:0.0}, {worldPos.Y:0.0}";
-        GridOrientation.Text = $"{displayRot.Degrees:0.0}";
+        GridPosition.Text = Loc.GetString("shuttle-console-position-value",
+            ("X", $"{worldPos.X:0.0}"),
+            ("Y", $"{worldPos.Y:0.0}"));
+        GridOrientation.Text = Loc.GetString("shuttle-console-orientation-value",
+            ("angle", $"{displayRot.Degrees:0.0}"));
 
         var gridVelocity = gridBody.LinearVelocity;
         gridVelocity = displayRot.RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
-        GridLinearVelocity.Text = $"{gridVelocity.X + 10f * float.Epsilon:0.0}, {gridVelocity.Y + 10f * float.Epsilon:0.0}";
-        GridAngularVelocity.Text = $"{-gridBody.AngularVelocity + 10f * float.Epsilon:0.0}";
+        GridLinearVelocity.Text = Loc.GetString("shuttle-console-linear-velocity-value",
+            ("X", $"{gridVelocity.X + 10f * float.Epsilon:0.0}"),
+            ("Y", $"{gridVelocity.Y + 10f * float.Epsilon:0.0}"));
+        GridAngularVelocity.Text = Loc.GetString("shuttle-console-angular-velocity-value",
+            ("angularVelocity", $"{-MathHelper.RadiansToDegrees(gridBody.AngularVelocity) + 10f * float.Epsilon:0.0}"));
     }
 }
