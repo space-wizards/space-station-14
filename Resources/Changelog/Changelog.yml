@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: BackeTako
-  changes:
-  - message: Gay Pin
-    type: Add
-  id: 7466
-  time: '2024-10-01T21:07:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32584
-- author: BackeTako
-  changes:
-  - message: Reinforced walls sprite see throu top
-    type: Fix
-  id: 7467
-  time: '2024-10-01T21:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32578
-- author: Zylo
-  changes:
-  - message: Seismic charges being uncraftable
-    type: Fix
-  id: 7468
-  time: '2024-10-02T02:56:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32459
 - author: slarticodefast
   changes:
   - message: Fixed the chameleon settings menu not showing up for the voice mask.
@@ -3899,3 +3878,24 @@
   id: 7965
   time: '2025-02-16T22:30:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34945
+- author: psykana
+  changes:
+  - message: DNA Scrambler implant now requires confirmation to activate
+    type: Add
+  id: 7966
+  time: '2025-02-17T06:16:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35232
+- author: Emisse
+  changes:
+  - message: Centcomm has been rebuilt from the ground up.
+    type: Tweak
+  id: 7967
+  time: '2025-02-17T08:51:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35240
+- author: Sparlight
+  changes:
+  - message: Space debris has returned to Wizden servers.
+    type: Add
+  id: 7968
+  time: '2025-02-17T12:56:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34795
