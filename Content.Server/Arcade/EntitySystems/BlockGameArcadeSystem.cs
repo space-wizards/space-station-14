@@ -3,10 +3,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Arcade.BlockGame;
 using Content.Shared.Arcade.BlockGame.Events;
 using Content.Shared.Power;
-using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Arcade.EntitySystems.SpaceVillain;
 

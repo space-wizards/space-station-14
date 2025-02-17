@@ -13,11 +13,11 @@ public sealed partial class BlockGameArcadeComponent : Component
     ///
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public BlockGameArcadeBlock[] DefaultField = [];
+    public BlockGameArcadeBlock[] PreviewField = new BlockGameArcadeBlock[9];
 
     /// <summary>
     ///
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public BlockGameArcadeBlock[] CurrentField = [];
+    public BlockGameArcadeBlock[] MainField = new BlockGameArcadeBlock[100];
 }
