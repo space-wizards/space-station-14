@@ -243,7 +243,7 @@ public sealed partial class ShuttleSystem
             }
         }
 
-        if (HasComp<PreventPilotComponent>(shuttleUid))
+        if (HasComp<PreventPilotComponent>(shuttleUid) || HasComp<PreventFTLComponent>(shuttleUid))
         {
             reason = Loc.GetString("shuttle-console-prevent");
             return false;
