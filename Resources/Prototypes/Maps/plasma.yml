@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_plasma.yml
         - type: StationJobs
-          availableJobs: #Total of 74 jobs roundstart, max of 104 inc. latejoins and trainees.
+          availableJobs: #Total of 70 jobs roundstart, max of 100 inc. latejoins and trainees.
             #command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -62,8 +62,7 @@
             SecurityCadet: [ 4, 4 ]
             SecurityOfficer: [ 6, 8 ]
             Warden: [ 1, 1 ]
-            # supply - 14-19
-            SalvageSpecialist: [ 4, 4 ]
+            # supply - 10-15
             CargoTechnician: [ 4, 6 ]
             Courier: [ 2, 2 ] # imp
             SalvageSpecialist: [ 4, 4 ]
