@@ -199,15 +199,15 @@ public sealed class NewsSystem : SharedNewsSystem
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-            UpdateReaderUi(ent, loaderUid);
+        UpdateReaderUi(ent, loaderUid);
 
-            if (!ent.Comp.NotificationOn)
-                return;
+        if (!ent.Comp.NotificationOn)
+            return;
 
         _cartridgeLoaderSystem.SendNotification(
             loaderUid,
             Loc.GetString("news-pda-notification-header"),
-                                                args.Article.Title);
+            args.Article.Title);
     }
 
     private void OnArticleDeleted(Entity<NewsReaderCartridgeComponent> ent, ref NewsArticleDeletedEvent args)
@@ -215,7 +215,7 @@ public sealed class NewsSystem : SharedNewsSystem
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-            UpdateReaderUi(ent, loaderUid);
+        UpdateReaderUi(ent, loaderUid);
     }
 
     private void OnReaderUiMessage(Entity<NewsReaderCartridgeComponent> ent, ref CartridgeMessageEvent args)
