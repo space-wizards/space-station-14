@@ -30,13 +30,14 @@ public sealed partial class NanoChatLookupView : PanelContainer
         {
             var contact = contacts[idx];
             var isEvenRow = idx % 2 == 0;
-            var contactControl = new ContactControl(contact, state, isEvenRow, OnStartChat);
+            var contactControl = new ContactContainer(contact, state, isEvenRow, OnStartChat);
             ContactsList.AddChild(contactControl);
         }
     }
-    public sealed class  ContactControl : Control
+
+    public sealed class ContactContainer : PanelContainer
     {
-        public ContactControl(NanoChatRecipient contact, NanoChatUiState state, bool isEvenRow, Action<NanoChatRecipient>? onStartChat)
+        public ContactContainer(NanoChatRecipient contact, NanoChatUiState state, bool isEvenRow, Action<NanoChatRecipient>? onStartChat)
         {
             HorizontalExpand = true;
             StyleClasses.Add(isEvenRow ? "PanelBackgroundBaseDark" : "PanelBackgroundLight");
