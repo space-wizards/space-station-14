@@ -5,7 +5,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Bloodsucker ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Bloodsucker
 
 - type: entity
   id: OrganBloodsuckerLiver
@@ -14,7 +16,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Bloodsucker ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Bloodsucker
 
 - type: entity
   id: OrganBloodsuckerHeart
@@ -23,4 +27,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Bloodsucker ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Bloodsucker
