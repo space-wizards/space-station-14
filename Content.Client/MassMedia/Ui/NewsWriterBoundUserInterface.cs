@@ -20,6 +20,8 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
+        base.Open();
+
         _menu = this.CreateWindow<NewsWriterMenu>();
 
         _menu.ArticleEditorPanel.PublishButtonPressed += OnPublishButtonPressed;
