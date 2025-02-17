@@ -66,9 +66,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             MinHeight = 10
         });
 
-        var hasAccess = _player.LocalEntity is not { } local ||
-                        !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access) ||
-                        _accessReader.IsAllowed(local, Entity, access);
+        var hasAccess = HasAccess();
         foreach (var techId in database.CurrentTechnologyCards)
         {
             var tech = _prototype.Index<TechnologyPrototype>(techId);
@@ -79,10 +77,13 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 
         var unlockedTech = database.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
         SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
+    }
 
-        RediscoverButton.Disabled = !hasAccess || state.Points < state.RediscoverCost;
-        RediscoverButton.Text =
-            Loc.GetString("research-console-menu-server-rediscover-button", ("cost", state.RediscoverCost));
+    public void Update(Entity<ResearchServerComponent> ent)
+    {
+        ResearchServerComponent server = ent;
+        RediscoverButton.Disabled = !HasAccess() || server.Points < server.RediscoverCost;
+        RediscoverButton.Text = Loc.GetString("research-console-menu-server-rediscover-button", ("cost", server.RediscoverCost));
     }
 
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)
@@ -143,6 +144,13 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             };
             TierDisplayContainer.AddChild(control);
         }
+    }
+
+    private bool HasAccess()
+    {
+        return _player.LocalEntity is not { } local ||
+               !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access) ||
+               _accessReader.IsAllowed(local, Entity, access);
     }
 
     /// <summary>

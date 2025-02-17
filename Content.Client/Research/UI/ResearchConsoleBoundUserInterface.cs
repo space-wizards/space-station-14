@@ -35,6 +35,11 @@ public sealed class ResearchConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         };
     }
 
+    public void Update(Entity<ResearchServerComponent> server)
+    {
+        _consoleMenu?.Update(server);
+    }
+
     public override void OnProtoReload(PrototypesReloadedEventArgs args)
     {
         base.OnProtoReload(args);
