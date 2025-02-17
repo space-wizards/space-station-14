@@ -75,8 +75,6 @@
       count: 1
     - type: UseDelay #The component that prevents the server from being spammed too much
       delay: 3.5
-    - type: Appearance #The component that gives the item a visual
-      appearance: _Impstation/Objects/Fishing/fishingrod_Ling.rsi
     - type: Sprite #The component that contains the visual itself
       sprite: _Impstation/Objects/Fishing/fishingrod_Ling.rsi
       layers:
