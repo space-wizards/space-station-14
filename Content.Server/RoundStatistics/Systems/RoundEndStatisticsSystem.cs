@@ -18,12 +18,16 @@ public sealed class RoundEndStatisticsSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
 
-    private Dictionary<ProtoId<RoundStatisticPrototype>, int> Statistics => FindOrCreateHolderEntity().Comp.Statistics;
+    private Entity<RoundEndStatisticsComponent>? _cachedEntity;
+
+    private Dictionary<ProtoId<RoundStatisticPrototype>, int> Statistics => (_cachedEntity ??= FindOrCreateHolderEntity()).Comp.Statistics;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundEndStatisticsComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<RoundEndStatisticsComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RoundEndStatisticsComponent, MapInitEvent>(OnComponentMapInit);
         SubscribeLocalEvent<RoundEndStatisticsComponent, PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<ChangeStatsValueEvent>(ChangeValue);
@@ -77,6 +81,18 @@ public sealed class RoundEndStatisticsSystem : EntitySystem
         {
             DebugTools.Assert(false);
         }
+    }
+
+    private void OnComponentInit(Entity<RoundEndStatisticsComponent> entity, ref ComponentInit args)
+    {
+        DebugTools.Assert(_cachedEntity == null);
+
+        _cachedEntity = entity;
+    }
+
+    private void OnComponentShutdown(Entity<RoundEndStatisticsComponent> entity, ref ComponentShutdown args)
+    {
+        _cachedEntity = null;
     }
 
     private void OnComponentMapInit(Entity<RoundEndStatisticsComponent> entity, ref MapInitEvent args)
