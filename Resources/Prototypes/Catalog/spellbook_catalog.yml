@@ -197,6 +197,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookStaffAnimation
+  name: spellbook-staff-animation-name
+  description: spellbook-staff-animation-description
+  productEntity: AnimationStaff
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Event
 - type: listing
   id: SpellbookEventSummonGhosts

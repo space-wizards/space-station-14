@@ -29,7 +29,7 @@
     </Box>
   </Box>
 
-  SMESes can store [color=orange][protodata="SMESBasic" comp="Battery" member="MaxCharge" format="N0"/] J[/color] of energy, and can output a maximum [color=orange][protodata="SMESBasic" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] W[/color] of power.
+  SMESes can store [color=orange][protodata="SMESBasic" comp="Battery" member="MaxCharge" format="N0"/] J[/color] of energy and can output a maximum [color=orange][protodata="SMESBasic" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] W[/color] of power.
 
   If the battery is full, the SMES will pass through the power it receives from the input cable to the output cable. In the event of a power deficit, the SMES will ramp up to supplement the power draw.
 
@@ -41,10 +41,10 @@
   </Box>
 
   They're primarily used in station SMES arrays to store large amounts of power for the station's power grid.
-  They help to buy engineers time to setup power at roundstart, or to provide power in the event of a power deficit for extended periods of time.
+  They help to buy engineers time to setup power at roundstart or to provide power in the event of a power deficit for extended periods of time.
 
-  Advanced SMESes can store [color=orange][protodata="SMESAdvanced" comp="Battery" member="MaxCharge" format="N0"/] J[/color] of energy, and can output a maximum [color=orange][protodata="SMESAdvanced" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] W[/color] of power.
+  Advanced SMESes can store [color=orange][protodata="SMESAdvanced" comp="Battery" member="MaxCharge" format="N0"/] J[/color] of energy and can output a maximum [color=orange][protodata="SMESAdvanced" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] W[/color] of power.
 
-  Keep in mind that these aren't a magic solution to power deficits, and they can't store infinite energy.
+  Keep in mind that these aren't a magic solution to power deficits and they can't store infinite energy.
   A station load will drain these battries quickly if there is no power source partially supporting them.
 </Document>
