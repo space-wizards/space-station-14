@@ -6,6 +6,7 @@
   description: Do it however you like, just make sure they don't make it to centcom.
   components:
   - type: Objective
+    issuer: objective-issuer-syndicate
     difficulty: 1.75
     unique: true
   - type: TargetObjective
@@ -21,6 +22,7 @@
   description: Identify yourself at your own risk. We just need them alive.
   components:
   - type: Objective
+    issuer: objective-issuer-syndicate
     difficulty: 1.75
     unique: true
   - type: TargetObjective
@@ -31,15 +33,15 @@
       component: null
 
 #Gimmick Objectives
-
 - type: entity
   parent: [BaseTraitorObjective]
-  id: KidnapGimmickObjective 
+  id: KidnapGimmickObjective
   name: Kidnap Crew
   description: Try to kidnap active crew members and leave them stranded but alive in unpleasant places. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
     difficulty: 1.25
+    unique: true
     icon:
       sprite: Objects/Misc/cablecuffs.rsi
       state: cuff
@@ -53,6 +55,7 @@
   components:
   - type: Objective
     difficulty: 1.25
+    unique: true
     icon:
       sprite: Objects/Weapons/Grenades/modular.rsi
       state: complete
@@ -66,6 +69,7 @@
   components:
   - type: Objective
     difficulty: 1.25
+    unique: true
     icon:
       sprite: Objects/Weapons/Guns/Pistols/viper.rsi
       state: icon
@@ -78,6 +82,7 @@
   description: If anyone gets arrested, try to rescue them. The Syndicate values its employees! This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Misc/handcuffs.rsi
@@ -91,6 +96,7 @@
   description: Waste Medbay's time by causing a lot of non-fatal injuries around the station. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Specific/Medical/medical.rsi
@@ -104,6 +110,7 @@
   description: Become a hitman and resolve personal disputes on the station. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Weapons/Guns/Pistols/viper.rsi
@@ -117,6 +124,7 @@
   description: Attempt to disrupt traffic flow as much as possible around the station through any means. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Misc/inflatable_wall.rsi
@@ -130,6 +138,7 @@
   description: Make as much of the station as possible accessible to the public. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Weapons/Melee/cane.rsi
@@ -143,6 +152,7 @@
   description: Syndicate gear must not fall into the wrong hands. Confiscate, recover, or destroy any captured gear. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Misc/Handy_Flags/syndie_handy_flag.rsi
@@ -156,6 +166,7 @@
   description: Attempt to discredit, silence, or eliminate any witnesses to the many crimes that occur on the station. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Objects/Weapons/Guns/Pistols/viper.rsi
@@ -169,6 +180,7 @@
   description: Try to undermine the authority of the station command staff through any means necessary. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Clothing/Head/Hats/captain.rsi
@@ -182,6 +194,7 @@
   description: See how much trouble you can get up to without ever getting spotted using syndicate gear. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Clothing/Head/Hats/brownfedora.rsi
@@ -195,6 +208,7 @@
   description: Try to become a trusted ally of the security staff while secretly committing terrible crimes. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: Clothing/Head/Helmets/security.rsi
@@ -208,6 +222,7 @@
   description: Try to become a supervillain by using costumes, treachery, and a lot of bluster and bravado. This objective is not tracked and will automatically succeed, so just have fun with it!
   components:
   - type: Objective
+    unique: true
     difficulty: 1.25
     icon:
       sprite: _Impstation/Clothing/Neck/Cloaks/straight.rsi
