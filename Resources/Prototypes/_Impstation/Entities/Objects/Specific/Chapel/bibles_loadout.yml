@@ -39,3 +39,73 @@
     size: Small
     heldPrefix: tanakh
     sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: kojiki
+  description: A spiritually important text detailing yokai and their mythologies, and how to coexist with them.
+  parent: Bible
+  id: Kojiki
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: kojiki
+  - type: Item
+    size: Small
+    heldPrefix: kojiki
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: tao teachings
+  description: Comprises many spiritually important texts, none of which are the true Tao.
+  parent: Bible
+  id: TaoTeachings
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: tao
+  - type: Item
+    size: Small
+    heldPrefix: tao
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: principia discordia
+  description: Tenet V - A Discordian is Forbidden of Believing what they Read.
+  parent: Bible
+  id: PrincipiaDiscordia
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: principia-discordia
+  - type: Item
+    size: Small
+    heldPrefix: principia-discordia
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: chaplain's grimoire
+  description: Is it holy? Is it arcane? Wizard Federation lawyers are still wands-deep in the lawsuit.
+  parent: Bible
+  id: ChaplainsGrimoire
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: grimoire
+  - type: Item
+    size: Small
+    heldPrefix: grimoire
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: unitology tome
+  description: Hallowed by NanoTrasen standards, this is just six volumes discussing xenoarch and asking for spesos.
+  parent: Bible
+  id: UnitologyTome
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: unitology
+  - type: Item
+    size: Small
+    heldPrefix: unitology
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi

@@ -39,6 +39,21 @@
     {
       "name": "tanakh-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "tao"
+    },
+    {
+      "name": "kojiki"
+    },
+    {
+      "name": "principia-discordia"
+    },
+    {
+      "name": "grimoire"
+    },
+    {
+      "name": "unitology"
     }
   ]
 }

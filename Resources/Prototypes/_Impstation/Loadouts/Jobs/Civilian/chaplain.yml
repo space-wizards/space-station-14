@@ -31,3 +31,33 @@
   storage:
     back:
     - Bibble
+
+- type: loadout
+  id: ChaplainBookTao
+  storage:
+    back:
+    - TaoTeachings
+
+- type: loadout
+  id: ChaplainBookKojiki
+  storage:
+    back:
+    - Kojiki
+
+- type: loadout
+  id: ChaplainBookGrimoire
+  storage:
+    back:
+    - ChaplainsGrimoire
+
+- type: loadout
+  id: ChaplainBookDiscordia
+  storage:
+    back:
+    - PrincipiaDiscordia
+
+- type: loadout
+  id: ChaplainBookUnitology
+  storage:
+    back:
+    - UnitologyTome
