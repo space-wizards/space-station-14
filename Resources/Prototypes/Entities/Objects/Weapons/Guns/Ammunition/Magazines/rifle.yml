@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: BaseMagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "magazine (.223 rifle)"
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -35,8 +35,9 @@
 # Magazines
 - type: entity
   id: MagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "magazine (.223 rifle)"
   parent: BaseMagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type comes with standard lead-tipped FMJ.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -49,9 +50,10 @@
 
 - type: entity
   id: MagazineRifleEmpty
-  name: "magazine (.20 rifle any)"
+  name: "magazine (.223 rifle any)"
   suffix: empty
   parent: MagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -62,16 +64,18 @@
 
 - type: entity
   id: MagazineRifleIncendiary
-  name: "magazine (.20 rifle incendiary)"
+  name: "magazine (.223 rifle incendiary)"
   parent: MagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains red-tipped incendiary ammunition that burns the target from the inside.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
 
 - type: entity
   id: MagazineRiflePractice
-  name: "magazine (.20 rifle practice)"
+  name: "magazine (.223 rifle practice)"
   parent: BaseMagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains practice ammo with blue rubber tips, denoted by a blue strip around the magazine.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -84,8 +88,9 @@
 
 - type: entity
   id: MagazineRifleUranium
-  name: "magazine (.20 rifle uranium)"
+  name: "magazine (.223 rifle uranium)"
   parent: BaseMagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains green-tipped uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium

@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeLightRifle
-  name: cartridge (.30 rifle)
+  name: cartridge (.308 rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -20,16 +20,18 @@
 
 - type: entity
   id: CartridgeLightRifle
-  name: cartridge (.30 rifle)
+  name: cartridge (.308 rifle)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Intermediate rifle cartridge comparable to the .223 cartridge, but somewhat wider and shorter. Commonly used by aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifle
 
 - type: entity
   id: CartridgeLightRiflePractice
-  name: cartridge (.30 rifle practice)
+  name: cartridge (.308 rifle practice)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Intermediate rifle cartridge with a blue rubber tip for use in training scenarios. Commonly used in aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
@@ -39,12 +41,13 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#2B36EB"
 
 - type: entity
   id: CartridgeLightRifleIncendiary
-  name: cartridge (.30 rifle incendiary)
+  name: cartridge (.308 rifle incendiary)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Commonly used in aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
@@ -54,12 +57,13 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
+        color: "#870000"
 
 - type: entity
   id: CartridgeLightRifleUranium
-  name: cartridge (.30 rifle uranium)
+  name: cartridge (.308 rifle uranium)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Contains an expensive uranium core that severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleUranium
@@ -69,4 +73,4 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#65fe08"
+        color: "#3AEB16"

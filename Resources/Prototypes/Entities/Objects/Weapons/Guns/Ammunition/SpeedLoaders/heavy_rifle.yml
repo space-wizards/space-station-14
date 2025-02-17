@@ -1,7 +1,8 @@
 - type: entity
-  id: SpeedLoaderLightRifle
-  name: "speed loader (.30 rifle)"
+  id: SpeedLoaderHeavyRifle
+  name: "speed loader (.325 rifle)"
   parent: [ BaseItem, BaseRestrictedContraband ]
+  description: 5-round 'stripper clip' for the Kardashev-Mosin. Holds five .325x2 rifle cartridges.
   components:
   - type: Tag
     tags:
@@ -11,9 +12,9 @@
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgeLightRifle
+        - CartridgeHeavyRifle
     capacity: 5
-    proto: CartridgeLightRifle
+    proto: CartridgeHeavyRifle
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/light_rifle_speed_loader.rsi
     layers:

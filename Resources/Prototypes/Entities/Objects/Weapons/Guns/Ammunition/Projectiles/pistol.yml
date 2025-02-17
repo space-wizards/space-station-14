@@ -1,6 +1,6 @@
 - type: entity
   id: BulletPistol
-  name: bullet (.35 auto)
+  name: bullet (.38 auto)
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: BulletPistolPractice
-  name: bullet (.35 auto practice)
+  name: bullet (.38 auto practice)
   parent: BaseBulletPractice
   categories: [ HideSpawnMenu ]
   components:

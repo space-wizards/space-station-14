@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxCaselessRifle
-  name: ammunition box (.25 caseless)
+  name: ammunition box (.20 caseless)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -28,7 +28,8 @@
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
-  name: ammunition box (.25 caseless)
+  name: ammunition box (.20 caseless)
+  description: A cardboard box full of .20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -42,7 +43,8 @@
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRiflePractice
-  name: ammunition box (.25 caseless practice)
+  name: ammunition box (.20 caseless practice)
+  description: A cardboard box full of 0.20x0.34 caseless rounds. This version contains non-harmful training ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

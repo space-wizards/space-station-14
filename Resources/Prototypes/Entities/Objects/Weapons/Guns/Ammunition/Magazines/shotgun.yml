@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazineShotgun
-  name: ammo drum (.50 shells)
+  name: shotgun drum (12 gauge pellet)
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -35,17 +35,19 @@
 
 - type: entity
   id: MagazineShotgunEmpty
-  name: ammo drum (.50 shells any)
+  name: shotgun drum (12G any)
   suffix: empty
   parent: BaseMagazineShotgun
+  description: Large 8-round drum for the Bulldog shotgun.
   components:
   - type: BallisticAmmoProvider
     proto: null
 
 - type: entity
   id: MagazineShotgun
-  name: ammo drum (.50 pellet)
+  name: shotgun drum (12G pellet)
   parent: BaseMagazineShotgun
+  description: Large 8-round drum for the Bulldog shotgun. Contains pellet shotshells, for filling a target area with lead.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgun
@@ -58,8 +60,9 @@
 
 - type: entity
   id: MagazineShotgunBeanbag
-  name: ammo drum (.50 beanbags)
+  name: shotgun drum (12G beanbag)
   parent: BaseMagazineShotgun
+  description: Large 8-round drum for the Bulldog shotgun. Contains nonlethal beanbag rounds for incapacitating targets.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
@@ -72,8 +75,9 @@
 
 - type: entity
   id: MagazineShotgunSlug
-  name: ammo drum (.50 slug)
+  name: shotgun drum (12G slug)
   parent: BaseMagazineShotgun
+  description: Large 8-round drum for the Bulldog shotgun. Contains heavy slugs for accurate fire at medium range.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunSlug
@@ -86,8 +90,9 @@
 
 - type: entity
   id: MagazineShotgunIncendiary
-  name: ammo drum (.50 incendiary)
+  name: shotgun drum (12G incendiary)
   parent: BaseMagazineShotgun
+  description: Large 8-round drum for the Bulldog shotgun. Contains incendiary shotshells which fill a target area with flaming pellets.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunIncendiary
