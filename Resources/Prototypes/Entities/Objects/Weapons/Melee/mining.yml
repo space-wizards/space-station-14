@@ -154,7 +154,7 @@
   - type: Prying
 
 - type: entity
-  parent: [ BaseWeaponCrusher, BaseKnife, BaseSecurityCargoContraband]
+  parent: [ CombatKnife, BaseWeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherDagger
   name: crusher dagger
   description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.
@@ -169,6 +169,9 @@
     damage:
       types:
         Slash: 15
+  - type: Item
+    sprite: Objects/Weapons/Melee/crusher_dagger.rsi
+    storedSprite: null
 
 # Like a crusher... but better
 - type: entity
