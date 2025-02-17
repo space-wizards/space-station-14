@@ -3490,3 +3490,11 @@ Entries:
   id: 483
   time: '2025-02-17T09:44:07.545890+00:00'
   url: 'null'
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added an admeme only ERT Shuttle - Admins rejoice!
+    type: Add
+  id: 484
+  time: '2025-02-17T09:46:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/336
+
