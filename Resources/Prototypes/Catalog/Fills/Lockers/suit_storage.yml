@@ -10,7 +10,6 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVA
-        - id: ClothingMaskBreath
 
 #Basic EVA (Big Ass Helmet)
 - type: entity
@@ -23,7 +22,6 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVALarge
-        - id: ClothingMaskBreath
 
 #Emergency EVA
 - type: entity
@@ -35,7 +33,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterSuitEmergency
-        - id: ClothingMaskBreath
 
 #Prisoner EVA
 - type: entity
@@ -48,7 +45,6 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVAPrisoner
         - id: ClothingHeadHelmetEVALarge
-        - id: ClothingMaskBreath
 
 #Syndicate EVA
 - type: entity
@@ -73,7 +69,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitPirateEVA
-        - id: ClothingMaskGas
 
 #NTSRA Voidsuit
 - type: entity
@@ -86,7 +81,6 @@
         - id: JetpackVoidFilled
         - id: ClothingOuterHardsuitAncientEVA
         - id: ClothingHeadHelmetAncient
-        - id: ClothingMaskBreath
 
 #HARDSUITS
 #Basic hardsuit
@@ -99,7 +93,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitBasic
-        - id: ClothingMaskBreath
 
 #Engineering hardsuit
 - type: entity
@@ -112,7 +105,6 @@
         - id: OxygenTankFilled
         - id: ClothingShoesBootsMag
         - id: ClothingOuterHardsuitEngineering
-        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -126,7 +118,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitAtmos
-        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Atmospherics"]]
 
@@ -140,7 +131,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSecurity
-        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Security"]]
 
@@ -206,7 +196,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWarden
-        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Armory"]]
 
@@ -247,7 +236,6 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSyndie
         - id: ClothingShoesBootsMagSyndie
-        - id: ClothingMaskGasSyndicate
 
 #Pirate Captain's hardsuit
 - type: entity
@@ -259,7 +247,6 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitPirateCap
-        - id: ClothingMaskGas
 
 #Wizard
 - type: entity
@@ -271,4 +258,3 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWizard
-        - id: ClothingMaskBreath
