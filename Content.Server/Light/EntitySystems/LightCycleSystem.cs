@@ -1,5 +1,6 @@
 using Content.Shared;
 using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Light.EntitySystems;

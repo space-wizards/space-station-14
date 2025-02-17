@@ -1,7 +1,7 @@
 using Content.Shared.Light.Components;
 using Robust.Shared.Map.Components;
 
-namespace Content.Shared;
+namespace Content.Shared.Light.EntitySystems;
 
 public abstract class SharedLightCycleSystem : EntitySystem
 {

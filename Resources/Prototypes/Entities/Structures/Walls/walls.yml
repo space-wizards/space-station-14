@@ -50,6 +50,7 @@
   - type: RadiationBlocker
     resistance: 2
   - type: BlockWeather
+  - type: SunShadowCast
 
 - type: entity
   parent: BaseWall
