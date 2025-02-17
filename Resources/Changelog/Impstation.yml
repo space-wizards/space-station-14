@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: A fun toy that can be found in a grand lottery crate.
-    type: Add
-  - message: A Very Fun Toy that admins can play with and if you are astronomically
-      lucky can find in a grand lottery crate.
-    type: Add
-  id: 643
-  time: '2024-12-03T16:53:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/847
 - author: suyo
   changes:
   - message: Added a spare expedition console board to the QM's locker. If they both
@@ -4168,3 +4158,10 @@
   id: 1142
   time: '2025-02-16T23:18:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1709
+- author: LandsharkRAWR
+  changes:
+  - message: Changed Witch Robe and Witch Hat to a new design and sprite.
+    type: Tweak
+  id: 1143
+  time: '2025-02-17T01:19:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1660
