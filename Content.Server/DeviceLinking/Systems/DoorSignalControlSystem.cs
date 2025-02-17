@@ -44,7 +44,7 @@ namespace Content.Server.DeviceLinking.Systems
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
                     if (door.State == DoorState.Closed)
-                        _doorSystem.TryOpen(uid, door);
+                        _doorSystem.TryOpen((uid, door));
                 }
             }
             else if (args.Port == component.ClosePort)
@@ -52,14 +52,14 @@ namespace Content.Server.DeviceLinking.Systems
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
                     if (door.State == DoorState.Open)
-                        _doorSystem.TryClose(uid, door);
+                        _doorSystem.TryClose((uid, door));
                 }
             }
             else if (args.Port == component.TogglePort)
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    _doorSystem.TryToggleDoor(uid, door);
+                    _doorSystem.TryToggleDoor((uid, door));
                 }
             }
             else if (args.Port == component.InBolt)
@@ -90,8 +90,8 @@ namespace Content.Server.DeviceLinking.Systems
                 _signalSystem.SendSignal(uid, door.OutOpen, false);
             }
             else if (args.State == DoorState.Open
-                  || args.State == DoorState.Opening
-                  || args.State == DoorState.Closing
+                  || args.State == DoorState.AttemptingOpenBySelf
+                  || args.State == DoorState.AttemptingCloseBySelf
                   || args.State == DoorState.Emagging)
             {
                 // say the door is open whenever it would be letting air pass

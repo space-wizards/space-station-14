@@ -433,7 +433,7 @@ public abstract class SharedMagicSystem : EntitySystem
                 _door.SetBoltsDown((target, doorBoltComp), false, predicted: true);
 
             if (TryComp<DoorComponent>(target, out var doorComp) && doorComp.State is not DoorState.Open)
-                _door.StartOpening(target);
+                _door.StartOpening((target, doorComp));
 
             if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked)
                 _lock.Unlock(target, args.Performer, lockComp);
