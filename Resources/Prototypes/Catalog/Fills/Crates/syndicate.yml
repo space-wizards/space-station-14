@@ -16,7 +16,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitJuggernaut
+      - id: ClothingOuterHardsuitJuggernautLocked
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
       - id: DoubleEmergencyOxygenTankFilled
