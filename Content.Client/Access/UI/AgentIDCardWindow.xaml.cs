@@ -45,8 +45,21 @@ namespace Content.Client.Access.UI
 
             var jobIconButtonGroup = new ButtonGroup();
             var i = 0;
-            var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection).ToList();
-            icons.Sort((x, y) => string.Compare(x.LocalizedJobName, y.LocalizedJobName, StringComparison.CurrentCulture));
+            // TEMP
+            var iconGroups = _prototypeManager.EnumeratePrototypes<JobIconGroupPrototype>().ToList();
+            List<JobIconPrototype> icons = new();
+            foreach (var group in iconGroups)
+            {
+                foreach (var iconID in group.Icons)
+                {
+                    if (!_prototypeManager.TryIndex<JobIconPrototype>(iconID, out var proto))
+                        continue;
+
+                    icons.Add(proto);
+                }
+            }
+            // var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection).ToList();
+            // icons.Sort((x, y) => string.Compare(x.LocalizedJobName, y.LocalizedJobName, StringComparison.CurrentCulture));
             foreach (var jobIcon in icons)
             {
                 String styleBase = StyleBase.ButtonOpenBoth;

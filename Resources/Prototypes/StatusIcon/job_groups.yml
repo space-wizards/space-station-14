@@ -1,0 +1,104 @@
+- type: jobIconGroup
+  id: CargoIconGroup
+  icons:
+  - JobIconQuarterMaster
+  - JobIconCargoTechnician
+  - JobIconShaftMiner
+
+- type: jobIconGroup
+  id: CommandIconGroup
+  icons:
+  - JobIconCaptain
+  - JobIconChiefEngineer
+  - JobIconChiefMedicalOfficer
+  - JobIconHeadOfPersonnel
+  - JobIconHeadOfSecurity
+  - JobIconQuarterMaster
+  - JobIconResearchDirector
+
+- type: jobIconGroup
+  id: EngineeringIconGroup
+  icons:
+  - JobIconChiefEngineer
+  - JobIconStationEngineer
+  - JobIconTechnicalAssistant
+  - JobIconAtmosphericTechnician
+
+- type: jobIconGroup
+  id: MedicalIconGroup
+  icons:
+  - JobIconChiefMedicalOfficer
+  - JobIconMedicalDoctor
+  - JobIconMedicalIntern
+  - JobIconChemist
+  - JobIconParamedic
+  - JobIconPsychologist
+  - JobIconVirologist
+  - JobIconGeneticist
+
+- type: jobIconGroup
+  id: ResearchIconGroup
+  icons:
+  - JobIconResearchDirector
+  - JobIconScientist
+  - JobIconResearchAssistant
+  - JobIconRoboticist
+
+- type: jobIconGroup
+  id: SecurityIconGroup
+  icons:
+  - JobIconHeadOfSecurity
+  - JobIconSecurityOfficer
+  - JobIconSecurityCadet
+  - JobIconWarden
+  - JobIconDetective
+  - JobIconBrigmedic
+  - JobIconPrisoner
+
+- type: jobIconGroup
+  id: ServiceIconGroup
+  icons:
+  - JobIconHeadOfPersonnel
+  - JobIconServiceWorker
+  - JobIconBartender
+  - JobIconBotanist
+  - JobIconChef
+  - JobIconReporter
+  - JobIconZookeeper
+
+- type: jobIconGroup
+  id: EntertainerIconGroup
+  icons:
+  - JobIconClown
+  - JobIconMime
+  - JobIconMusician
+  - JobIconBoxer
+
+- type: jobIconGroup
+  id: CivilianIconGroup
+  icons:
+  - JobIconPassenger
+  - JobIconChaplain
+  - JobIconLawyer
+  - JobIconLibrarian
+  - JobIconJanitor
+  - JobIconVisitor
+
+- type: jobIconGroup
+  id: SiliconIconGroup
+  icons:
+  - JobIconStationAi
+  - JobIconBorg
+
+- type: jobIconGroup
+  id: MiscIconGroup
+  icons:
+  - JobIconNanotrasen
+  - JobIconNoId
+  - JobIconUnknown
+
+- type: jobIconGroup
+  id: AntagonistIconGroup
+  icons:
+  - JobIconSyndicate
+  - JobIconZombie
