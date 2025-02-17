@@ -164,6 +164,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             explosive.TileBreakScale,
             explosive.MaxTileBreak,
             explosive.CanCreateVacuum,
+            explosive.CanThrowItems,
             user);
 
         if (explosive.DeleteAfterExplosion ?? delete)
@@ -233,6 +234,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         float tileBreakScale = 1f,
         int maxTileBreak = int.MaxValue,
         bool canCreateVacuum = true,
+        bool canThrowItems = true,
         EntityUid? user = null,
         bool addLog = true)
     {
@@ -242,7 +244,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
         var posFound = _transformSystem.TryGetMapOrGridCoordinates(uid, out var gridPos, pos);
 
-        QueueExplosion(mapPos, typeId, totalIntensity, slope, maxTileIntensity, uid, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
+        QueueExplosion(mapPos, typeId, totalIntensity, slope, maxTileIntensity, uid, tileBreakScale, maxTileBreak, canCreateVacuum, canThrowItems, addLog: false);
 
         if (!addLog)
             return;
@@ -274,6 +276,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         float tileBreakScale = 1f,
         int maxTileBreak = int.MaxValue,
         bool canCreateVacuum = true,
+        bool canThrowItems = true,
         bool addLog = true)
     {
         if (totalIntensity <= 0 || slope <= 0)
@@ -315,6 +318,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             TileBreakScale = tileBreakScale,
             MaxTileBreak = maxTileBreak,
             CanCreateVacuum = canCreateVacuum,
+            CanThrowItems = canThrowItems,
             Cause = cause
         };
         _explosionQueue.Enqueue(boom);
@@ -387,6 +391,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             queued.TileBreakScale,
             queued.MaxTileBreak,
             queued.CanCreateVacuum,
+            queued.CanThrowItems,
             EntityManager,
             _mapManager,
             visualEnt,
