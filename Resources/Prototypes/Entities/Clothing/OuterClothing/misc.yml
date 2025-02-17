@@ -168,7 +168,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent: [ ClothingOuterBase, BaseMagicalContraband ]
   id: ClothingOuterWizardBase
   components:
   - type: WizardClothes
