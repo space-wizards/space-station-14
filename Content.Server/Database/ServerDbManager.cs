@@ -217,6 +217,16 @@ namespace Content.Server.Database
         Task AddAdminAsync(Admin admin, CancellationToken cancel = default);
         Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default);
 
+        /// <summary>
+        /// Update whether an admin has voluntarily deadminned.
+        /// </summary>
+        /// <remarks>
+        /// This does nothing if the player is not an admin.
+        /// </remarks>
+        /// <param name="userId">The user ID of the admin.</param>
+        /// <param name="deadminned">Whether the admin is deadminned or not.</param>
+        Task UpdateAdminDeadminnedAsync(NetUserId userId, bool deadminned, CancellationToken cancel = default);
+
         Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
         Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
         Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
@@ -272,7 +282,7 @@ namespace Content.Server.Database
         #region Rules
 
         Task<DateTimeOffset?> GetLastReadRules(NetUserId player);
-        Task SetLastReadRules(NetUserId player, DateTimeOffset time);
+        Task SetLastReadRules(NetUserId player, DateTimeOffset? time);
 
         #endregion
 
@@ -322,6 +332,14 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region IPintel
+
+        Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score);
+        Task<IPIntelCache?> GetIPIntelCache(IPAddress ip);
+        Task<bool> CleanIPIntelCache(TimeSpan range);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -331,6 +349,15 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="notification">The notification to trigger</param>
         void InjectTestNotification(DatabaseNotification notification);
+
+        /// <summary>
+        /// Send a notification to all other servers connected to the same database.
+        /// </summary>
+        /// <remarks>
+        /// The local server will receive the sent notification itself again.
+        /// </remarks>
+        /// <param name="notification">The notification to send.</param>
+        Task SendNotification(DatabaseNotification notification);
 
         #endregion
     }
@@ -666,6 +693,12 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.UpdateAdminAsync(admin, cancel));
         }
 
+        public Task UpdateAdminDeadminnedAsync(NetUserId userId, bool deadminned, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.UpdateAdminDeadminnedAsync(userId, deadminned, cancel));
+        }
+
         public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
         {
             DbWriteOpsMetric.Inc();
@@ -797,7 +830,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetLastReadRules(player));
         }
 
-        public Task SetLastReadRules(NetUserId player, DateTimeOffset time)
+        public Task SetLastReadRules(NetUserId player, DateTimeOffset? time)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SetLastReadRules(player, time));
@@ -991,6 +1024,23 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
+        public Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.UpsertIPIntelCache(time, ip, score));
+        }
+
+        public Task<IPIntelCache?> GetIPIntelCache(IPAddress ip)
+        {
+            return RunDbCommand(() => _db.GetIPIntelCache(ip));
+        }
+
+        public Task<bool> CleanIPIntelCache(TimeSpan range)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.CleanIPIntelCache(range));
+        }
+
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)
         {
             lock (_notificationHandlers)
@@ -1002,6 +1052,12 @@ namespace Content.Server.Database
         public void InjectTestNotification(DatabaseNotification notification)
         {
             HandleDatabaseNotification(notification);
+        }
+
+        public Task SendNotification(DatabaseNotification notification)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SendNotification(notification));
         }
 
         private async void HandleDatabaseNotification(DatabaseNotification notification)

@@ -90,6 +90,12 @@ public sealed partial class CCVars
         CVarDef.Create("admin.server_ban_erase_player", false, CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     If true, will reset the last time the player has read the rules. This will mean on their next login they will be shown the rules again.
+    /// </summary>
+    public static readonly CVarDef<bool> ServerBanResetLastReadRules =
+        CVarDef.Create("admin.server_ban_reset_last_read_rules", true, CVar.ARCHIVE | CVar.SERVER);
+
+    /// <summary>
     ///     Minimum players sharing a connection required to create an alert. -1 to disable the alert.
     /// </summary>
     /// <remarks>
@@ -150,6 +156,22 @@ public sealed partial class CCVars
         CVarDef.Create("admin.bypass_max_players", true, CVar.SERVERONLY);
 
     /// <summary>
+    ///     Determines whether admins count towards the total playercount when determining whether the server is over <see cref="SoftMaxPlayers"/>
+    ///     Ideally this should be used in conjuction with <see cref="AdminBypassPlayers"/>.
+    ///     This also applies to playercount limits in whitelist conditions
+    ///     If false, then admins will not be considered when checking whether the playercount is already above the soft player cap
+    /// </summary>
+    public static readonly CVarDef<bool> AdminsCountForMaxPlayers =
+        CVarDef.Create("admin.admins_count_for_max_players", false, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Should admins be hidden from the player count reported to the launcher/via api?
+    /// This is hub advert safe, in case that's a worry.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminsCountInReportedPlayerCount =
+        CVarDef.Create("admin.admins_count_in_playercount", false, CVar.SERVERONLY);
+
+    /// <summary>
     ///     Determine if custom rank names are used.
     ///     If it is false, it'd use the actual rank name regardless of the individual's title.
     /// </summary>
@@ -160,4 +182,11 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> BanHardwareIds =
         CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// If true, players are allowed to connect to multiple game servers at once.
+    /// If false, they will be kicked from the first when connecting to another.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
+        CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
 }
