@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Harmony/Shuttles/emergency_pioneer.yml
         - type: StationCargoShuttle
-          path: /Maps/_Harmony/Shuttles/cargo_barratry.yml
+          path: /Maps/_Impstation/Shuttles/cargo_barratry.yml # imp
         - type: StationJobs
           availableJobs:
             #service
