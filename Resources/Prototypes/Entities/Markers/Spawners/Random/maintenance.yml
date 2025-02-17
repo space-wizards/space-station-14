@@ -222,6 +222,7 @@
       - id: PowerCellMedium
       - id: PowerCellSmall
       - id: Soap
+      - id: EmptyWaterBalloon
       - id: Wirecutter
       - id: Screwdriver
       - id: Wrench
@@ -263,6 +264,7 @@
       - id: ToolboxMechanicalFilled
       - id: ClothingBeltUtility
       - id: ToolboxArtisticFilled
+      - id: BoxWaterBalloon
       - id: GeigerCounter
       - id: trayScanner
       - id: HandheldGPSBasic
