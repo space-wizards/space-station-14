@@ -1,70 +1,85 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts.dmi for acting as a base, modified by PixelTheKermit (github) for SS14",
+  "copyright": "https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts.dmi for acting as a base, modified by PixelTheKermit (github) for SS14. Bump maps by notquitehadouken for SS14.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "full"
+      "name": "full",
+      "bump": "bump"
     },
     {
       "name": "head_f",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "head_m",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_arm",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_foot",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_hand",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_leg",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_arm",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_foot",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_hand",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_leg",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "torso_f",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "torso_m",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "eyes",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "template",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     }
   ]
 }
