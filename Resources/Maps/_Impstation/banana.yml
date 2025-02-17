@@ -17432,7 +17432,7 @@ entities:
     - type: Transform
       pos: -28.5,-4.5
       parent: 2
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 2363
     components:

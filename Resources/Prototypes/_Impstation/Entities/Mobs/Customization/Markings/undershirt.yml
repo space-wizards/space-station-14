@@ -548,3 +548,146 @@
   sprites:
   - sprite: Mobs/Customization/undershirt.rsi
     state: strapless
+
+# Thaven-specific sprites, all unisex
+# Can be removed if we ever get displacement maps for markings
+
+- type: marking
+  id: UndershirtDefaultT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: undershirt
+
+- type: marking
+  id: UndershirtRolledT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: rolled_undershirt
+
+- type: marking
+  id: UndershirtSleevelessT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: sleeveless
+
+- type: marking
+  id: UndershirtRolledSleevelessT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: rolled_undershirt_sleeveless
+
+- type: marking
+  id: UndershirtGrossSleevelessT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: gross_sleeveless
+
+- type: marking
+  id: UndershirtNanotrasenT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: nanotrasen
+
+- type: marking
+  id: UndershirtBinderT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: binder
+
+- type: marking
+  id: UndershirtBraSportsT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: sports
+
+- type: marking
+  id: UndershirtBraStraplessT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: strapless
+
+- type: marking
+  id: UndershirtBraClassicT
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven_undershirt.rsi
+    state: classic

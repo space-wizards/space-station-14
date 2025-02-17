@@ -101,7 +101,7 @@
   id: BaseSeclinkRadio
   name: SecLink radio
   description: Housing a miniature teleporter, you can use this to trade your SecLink Tokens for useful equipment! It's a little suspiciously familiar, but it's probably nothing to worry about.
-  suffix: Empty
+  suffix: 1OfEach
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Security/seclink.rsi
