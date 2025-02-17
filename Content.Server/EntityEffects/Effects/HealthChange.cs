@@ -44,23 +44,25 @@ namespace Content.Server.EntityEffects.Effects
 
             var damageSpec = new DamageSpecifier(Damage);
 
-            var universalDamageModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentHealModifier;
-            var universalHealModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentHealModifier;
+            var universalReagentDamageModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentDamageModifier;
+            var universalReagentHealModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentHealModifier;
 
-            if (universalDamageModifier != 1 || universalHealModifier != 1)
+            if (universalReagentDamageModifier != 1 || universalReagentHealModifier != 1)
             {
                 foreach (var (type, val) in damageSpec.DamageDict)
                 {
                     if (val < 0f)
                     {
-                        damageSpec.DamageDict[type] = val * universalHealModifier;
+                        damageSpec.DamageDict[type] = val * universalReagentHealModifier;
                     }
                     if (val > 0f)
                     {
-                        damageSpec.DamageDict[type] = val * universalDamageModifier;
+                        damageSpec.DamageDict[type] = val * universalReagentDamageModifier;
                     }
                 }
             }
+
+            damageSpec = entSys.GetEntitySystem<DamageableSystem>().ApplyUniversalAllModifiers(damageSpec);
 
             foreach (var group in prototype.EnumeratePrototypes<DamageGroupPrototype>())
             {
@@ -139,20 +141,20 @@ namespace Content.Server.EntityEffects.Effects
                 scale = ScaleByQuantity ? reagentArgs.Quantity * reagentArgs.Scale : reagentArgs.Scale;
             }
 
-            var universalDamageModifier = args.EntityManager.System<DamageableSystem>().UniversalReagentHealModifier;
-            var universalHealModifier = args.EntityManager.System<DamageableSystem>().UniversalReagentHealModifier;
+            var universalReagentDamageModifier = args.EntityManager.System<DamageableSystem>().UniversalReagentDamageModifier;
+            var universalReagentHealModifier = args.EntityManager.System<DamageableSystem>().UniversalReagentHealModifier;
 
-            if (universalDamageModifier != 1 || universalHealModifier != 1)
+            if (universalReagentDamageModifier != 1 || universalReagentHealModifier != 1)
             {
                 foreach (var (type, val) in damageSpec.DamageDict)
                 {
                     if (val < 0f)
                     {
-                        damageSpec.DamageDict[type] = val * universalHealModifier;
+                        damageSpec.DamageDict[type] = val * universalReagentHealModifier;
                     }
                     if (val > 0f)
                     {
-                        damageSpec.DamageDict[type] = val * universalDamageModifier;
+                        damageSpec.DamageDict[type] = val * universalReagentDamageModifier;
                     }
                 }
             }
