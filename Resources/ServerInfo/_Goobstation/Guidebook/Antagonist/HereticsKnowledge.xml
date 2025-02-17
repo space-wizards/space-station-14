@@ -1,0 +1,40 @@
+<Document>
+	#Knowledge
+
+	##Knowledge Points
+	As a Heretic, your eldritch knowledge is what sets you above the heathens.
+	
+	Collecting Knowledge Points is your main goal, as well as your ticket to greater power.
+	
+	Knowledge Points can be spent in the knowledge store to unlock new spells and rituals.
+
+	You can gain knowledge points and become stronger through a few ways:
+	- Draining influences that spawn randomly around the station.
+	- Sacrificing crew members your dark patrons hunger for.
+	- Automatically getting one knowledge point every 20 minutes.
+	
+
+	## Heretical Research
+	Once you have some knowledge points, it's time to research! Open up your knowledge store using the action button.
+	
+	Your first selection will commit you to a path that defines your initial abilities and Final Ascension.
+	
+	You can earn abilities from other paths to a limited degree, but only when you have researched sufficient knowledge from your main path.
+
+
+	## Eldritch Influences
+	<Box>
+		<GuideEntityEmbed Entity="EldritchInfluence" Caption=""/>
+	</Box>
+	Influences are the easy way to gain knowledge points. Whenever there are Heretics aboard Space Station 14, influences will randomly spawn across the station.
+	
+	They are not visible to the naked eye of a crew member, hovewer they [bold]will[/bold] become visible after harvesting, aside from suddenly changing colors.
+	
+	PRO TIP: Harvesting with a [color=orange]Focus[/color] equipped will yield double the points from influences.
+	<Box>
+		<GuideEntityEmbed Entity="EldritchInfluenceSpent" Caption="Harvested influence. Notice the glow."/>
+	</Box>
+
+	Each influence can only be harvested once, so the heretic that goes the fastest and grabs the most influences first has to do less killing and sacrificing to reach their ascensions.
+
+</Document>

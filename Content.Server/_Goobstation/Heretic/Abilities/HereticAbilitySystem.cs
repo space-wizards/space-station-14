@@ -32,6 +32,7 @@ using Content.Shared.Localizations;
 using Robust.Shared.Audio;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Server.Heretic.Abilities;
 
@@ -57,7 +58,9 @@ public sealed partial class HereticAbilitySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly BlindableSystem _blindable = default!;
     [Dependency] private readonly VomitSystem _vomit = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
     [Dependency] private readonly PhysicsSystem _phys = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly ThrowingSystem _throw = default!;

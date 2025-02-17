@@ -1,0 +1,5 @@
+- type: speechVerb
+  id: Supermatter
+  name: chat-speech-verb-name-supermatter
+  speechVerbStrings:
+  - chat-speech-verb-supermatter

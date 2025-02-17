@@ -1822,7 +1822,7 @@
   name: raw thaven fillet
   parent: FoodMeatBase
   # MeatFish?...
-  id: FoodSpElfMeat
+  id: FoodThavenMeat
   description: Concerning.
   components:
   - type: FlavorProfile

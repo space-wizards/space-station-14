@@ -1,0 +1,64 @@
+# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
+# like turning the artifact into a tool, or gun, or whatever.
+- type: artifactEffect
+  id: EffectAltar
+  targetDepth: 4
+  effectHint: artifact-effect-hint-communication
+  blacklist:
+    components:
+    - Item
+  permanentComponents:
+  - type: Prayable
+
+- type: artifactEffect
+  id: EffectBed
+  targetDepth: 4
+  effectHint: artifact-effect-hint-storage
+  blacklist:
+    components:
+    - Item
+  permanentComponents:
+  - type: Strap
+    position: Down
+    rotation: -90
+  - type: HealOnBuckle
+    damage:
+      types:
+        Blunt: -0.4
+        Slash: -0.4
+        Pierce: -0.4
+        Heat: -0.4
+        Cold: -0.4
+        Shock: -0.3
+        Caustic: -0.2
+        Asphyxiation: -0.4
+        Bloodloss: -0.3
+        Poison: -0.3
+        Radiation: -0.2
+
+- type: artifactEffect
+  id: EffectBedHandheld
+  targetDepth: 4
+  effectProb: 0.3
+  effectHint: artifact-effect-hint-storage
+  whitelist:
+    components:
+    - Item
+  permanentComponents:
+  - type: Strap
+    position: Down
+    rotation: -90
+  - type: HealOnBuckle
+    damage:
+      types:
+        Blunt: -0.4
+        Slash: -0.4
+        Pierce: -0.4
+        Heat: -0.4
+        Cold: -0.4
+        Shock: -0.3
+        Caustic: -0.2
+        Asphyxiation: -0.4
+        Bloodloss: -0.3
+        Poison: -0.3
+        Radiation: -0.2

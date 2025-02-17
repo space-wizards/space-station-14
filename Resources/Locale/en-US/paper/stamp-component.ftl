@@ -19,4 +19,3 @@ stamp-component-stamped-name-syndicate = Syndicate
 stamp-component-stamped-name-ce = Chief Engineer
 stamp-component-stamped-name-greytide = Greytide
 stamp-component-stamped-name-psychologist = Psychologist
-stamp-component-stamped-name-borg = Cyborg

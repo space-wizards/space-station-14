@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: PlantAnalyzer
+  parent: BaseToolRecipe
+  result: PlantAnalyzerEmpty
+  materials:
+    Glass: 500
+    Steel: 500
+    Plastic: 100
+    Gold: 100

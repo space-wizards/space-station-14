@@ -1,0 +1,53 @@
+- type: entity
+  name: fun baton
+  parent: [Stunbaton, BaseRestrictedContraband]
+  id: Funbaton
+  description: A powered implement capable of safely entertaining any criminal, just be mindful of the 'on' switch.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/funbaton.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: StaminaDamageOnHit
+    damage: 35
+    sound: /Audio/_Impstation/Weapons/funbaton.ogg
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/funbaton.rsi
+    quickEquip: false
+    slots:
+    - Belt
+
+- type: entity
+  name: stun bat
+  parent: [Stunbaton, BaseRestrictedContraband]
+  id: Stunbat
+  description: A Stun Baton designed with the athletic security officer in mind. Using this unpowered is sure to have a foul called.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/stunbat.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/stunbat.rsi
+    quickEquip: false
+    slots:
+    - Belt
+
+- type: entity
+  name: stun sabre
+  parent: [Stunbaton, BaseRestrictedContraband]
+  id: Stunsabre
+  description: A state-of-the-art Stun Baton derived from the signature weapons of underground assassins. Unpowered, it's no better than hitting someone with a stick.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/stunsabre.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/stunsabre.rsi
+    quickEquip: false
+    slots:
+    - Belt

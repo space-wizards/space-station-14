@@ -1,0 +1,117 @@
+- type: entity
+  id: PartApid
+  parent: [BaseItem, BasePart]
+  name: "apid body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoApid
+  name: "apid torso"
+  parent: [PartApid, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "torso"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadApid
+  name: "apid head"
+  parent: [PartApid, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "head"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmApid
+  name: "left apid arm"
+  parent: [PartApid, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmApid
+  name: "right apid arm"
+  parent: [PartApid, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandApid
+  name: "left apid hand"
+  parent: [PartApid, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandApid
+  name: "right apid hand"
+  parent: [PartApid, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegApid
+  name: "left apid leg"
+  parent: [PartApid, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegApid
+  name: "right apid leg"
+  parent: [PartApid, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootApid
+  name: "left apid foot"
+  parent: [PartApid, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootApid
+  name: "right apid foot"
+  parent: [PartApid, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: "r_foot"

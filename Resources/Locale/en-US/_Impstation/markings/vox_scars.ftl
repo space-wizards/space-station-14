@@ -1,20 +1,20 @@
-marking-ScarsVoxRoadrashLeftHead-roadrash_l_head = Vox Left Head Scar (Road rash)
-marking-ScarsVoxRoadrashLeftHead = Vox Left Head Scar (Road rash)
+marking-ScarsVoxRoadrashLeftHead-roadrash_l_head = Road Rash (Left)
+marking-ScarsVoxRoadrashLeftHead = Road Rash (Left)
 
-marking-ScarsVoxRoadrashRightHead-roadrash_r_head = Vox Right Head Scar (Road rash)
-marking-ScarsVoxRoadrashRightHead = Vox Right Head Scar (Road rash)
+marking-ScarsVoxRoadrashRightHead-roadrash_r_head = Road Rash (Right)
+marking-ScarsVoxRoadrashRightHead = Road Rash (Right)
 
-marking-ScarsVoxBigslashLeftHead-bigslash_l_head = Vox Left Head Scar (Big Slash)
-marking-ScarsVoxBigslashLeftHead = Vox Right Head Scar (Road rash)
+marking-ScarsVoxBigslashLeftHead-bigslash_l_head = Big Slash (Left)
+marking-ScarsVoxBigslashLeftHead = Big Slash (Left)
 
-marking-ScarsVoxBigslashRightHead-roadrash_r_head = Vox Right Head Scar (Big Slash)
-marking-ScarsVoxBigslashRightHead = Vox Right Head Scar (Big Slash)
+marking-ScarsVoxBigslashRightHead-roadrash_r_head = Big Slash (Right)
+marking-ScarsVoxBigslashRightHead = Big Slash (Right)
 
-marking-ScarsVoxSlashLeftHead-slash_l_head = Vox Left Head Scar (Slash)
-marking-ScarsVoxSlashLeftHead = Vox Left Head Scar (Slash)
+marking-ScarsVoxSlashLeftHead-slash_l_head = Slash (Left)
+marking-ScarsVoxSlashLeftHead = Slash (Left)
 
-marking-ScarsVoxSlashRightHead-slash_r_head = Vox Right Head Scar (Slash)
-marking-ScarsVoxSlashRightHead = Vox Right Head Scar (Slash)
+marking-ScarsVoxSlashRightHead-slash_r_head = Slash (Right)
+marking-ScarsVoxSlashRightHead = Slash (Right)
 
-marking-ScarsVoxClawTorso-claw_torso = Vox Chest Scar (Claw)
-marking-ScarsVoxClawTorso = Vox Chest Scar (Claw)
+marking-ScarsVoxClawTorso-claw_torso = Claw Scar
+marking-ScarsVoxClawTorso = Claw Scar

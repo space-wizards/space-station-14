@@ -43,6 +43,11 @@
       - !type:DumpRestockInventory
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 11
+    staminaCost: 15
 
 - type: entity
   parent: BaseVendingMachineRestock
@@ -135,6 +140,7 @@
     - ViroDrobeInventory
     - WinterDrobeInventory
     - CuraDrobeInventory
+    - CourierDrobeInventory # imp
   - type: Sprite
     layers:
     - state: base
@@ -481,6 +487,8 @@
   - type: VendingMachineRestock
     canRestock:
     - ChemVendInventory
+    - ChemVendInventorySyndicate # DeltaV: Let it restock synthesis/nukie vendor
+    - ChemVendInventoryInterdyne # Imp: let it restock Interdyne ChemVend
   - type: Sprite
     layers:
     - state: base

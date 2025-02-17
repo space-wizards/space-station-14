@@ -1,0 +1,54 @@
+- type: speechSounds
+  id: Dino
+  saySound:
+    collection: DinoSpeech
+  askSound:
+    collection: DinoSpeech
+  exclaimSound:
+    collection: DinoSpeech
+
+- type: emoteSounds
+  id: DinoEmotes
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: DinoSpeech
+    Laugh:
+      collection: DinoSpeech
+    Sneeze:
+      collection: DinoSpeech
+    Cough:
+      collection: DinoSpeech
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: DinoSpeech
+    Snore:
+      collection: DinoSpeech
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: DinoSpeech
+    Crying:
+      collection: DinoSpeech
+    Whistle:
+      collection: DinoSpeech
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Gasp:
+      path: /Audio/_Impstation/Voice/Dino/dino_gasp.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Voice/Dino/dino_gasp.ogg

@@ -22,7 +22,7 @@
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (.50 stun slug)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
     tags:
@@ -56,7 +56,7 @@
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
     tags:
@@ -133,7 +133,7 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: Nocturine
+        - ReagentId: ChloralHydrate
           Quantity: 7
   - type: SolutionTransfer
     maxTransferAmount: 7

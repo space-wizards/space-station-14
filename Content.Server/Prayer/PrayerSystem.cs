@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers; // Funkystation
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
@@ -9,6 +10,8 @@ using Content.Shared.Chat;
 using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio; // Funkystation
+using Robust.Shared.Audio.Systems; // Funkystation
 using Robust.Shared.Player;
 
 namespace Content.Server.Prayer;
@@ -24,7 +27,8 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
-
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!; // Funkystation
+    [Dependency] private readonly IAdminManager _adminManager = default!; // Funkystation
     public override void Initialize()
     {
         base.Initialize();
@@ -106,5 +110,9 @@ public sealed class PrayerSystem : EntitySystem
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+    /// Funkystation addition start
+        _audioSystem.PlayGlobal("/Audio/Effects/holy.ogg",
+            Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+    /// Funkystation addition end
     }
 }

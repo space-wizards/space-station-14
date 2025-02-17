@@ -1,8 +1,0 @@
-- type: loadoutGroup
-  id: ChemistGloves
-  name: loadout-group-chemistry-gloves
-  minLimit: 0
-  loadouts:
-  - LatexGloves
-  - NitrileGloves
-  - ChemistryGloves

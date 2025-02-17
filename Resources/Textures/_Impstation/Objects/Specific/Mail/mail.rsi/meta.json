@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "postmark taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a and edited by Honeyed_Lemons, fragile, icon, locked, priority, and priority_inactive by AftrLite(Github), broken, and trash by Honeyed_Lemons_ on the Impstation Discord",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "trash"
+    },
+    {
+      "name": "fragile"
+    },
+    {
+      "name": "priority"
+    },
+    {
+      "name": "priority_inactive"
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "postmark"
+    }
+  ]
+}

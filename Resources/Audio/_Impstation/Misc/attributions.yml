@@ -1,0 +1,9 @@
+- files: ["amber.ogg"]
+  license: "Custom"
+  copyright: "Combination of redalert.ogg (attributed in /Resources/Audio/Misc) and Cthulhu growl.wav by cylon8472 (CC-BY-4.0)"
+  source: "https://freesound.org/people/cylon8472/sounds/249686/"
+
+- files: ["dino-rift.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Cthulhu growl.wav by cylon8472"
+  source: "https://freesound.org/people/cylon8472/sounds/249686/"

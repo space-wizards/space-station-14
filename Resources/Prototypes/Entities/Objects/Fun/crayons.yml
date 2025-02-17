@@ -40,6 +40,8 @@
   - type: FoodSequenceElement
     entries:
       Burger: CrayonBurger
+  - type: SignatureWriter # imp
+    font: ComicNeueBold
 
 - type: entity
   parent: Crayon

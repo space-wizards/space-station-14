@@ -71,11 +71,17 @@
       - FoodSoupBungo
       - FoodMealCornInButter
       - FoodSoupStew
-      - FoodMealBigLollipop #impstation edit
-      - FoodMealBigLollipop #impstation edit
-      - FoodMealFruitLollipop #imp
-      - FoodMealClothLollipop #imp
-      - FoodMealMeatLollipop #imp
+      # imp edit start
+      - FoodMealBigLollipop
+      - FoodMealBigLollipop
+      - FoodMealFruitLollipop
+      - FoodMealClothLollipop
+      - FoodMealMeatLollipop
+      - FoodToddlerRingsStew
+      - BoxConversationHeart
+      - BoxChocolateHearts
+      - BoxMacarons
+      # imp edit end
     chance: 0.8
     offset: 0.0
     #rare
@@ -99,5 +105,7 @@
       - FoodSoupEyeball
       - FoodSoupElectron
       - FoodNoodlesCopy
-      - FoodMealCultLollipop
+      - FoodMealCultLollipop #imp
+      - FoodCamelSoup #imp
+      - FoodGummyWorm #imp
     rareChance: 0.05

@@ -463,25 +463,6 @@
 
 # service modules
 - type: entity
-  id: BorgModuleBartender
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: bartender cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-beer
-  - type: ItemBorgModule
-    items:
-    - Lighter
-    - DrinkShaker
-    - BarSpoon
-    - BorgIceBucket
-    - Pitcher
-    - BorgDropper
-
-# depreciated. included in case of merge errors
-- type: entity
   id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: service cyborg module
@@ -570,24 +551,6 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
-- type: entity
-  id: BorgModulePaper
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: bureaucracy cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-pen
-  - type: ItemBorgModule
-    items:
-    - Pen
-    - BooksBag
-    - HandLabeler
-    - RubberStampApproved
-    - RubberStampDenied
-    - RubberStampBorg
-
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
@@ -609,7 +572,7 @@
   id: BorgModuleOperative
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, Tier2Contraband ]
   name: operative cyborg module
-  description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
+  description: A module that comes with a crowbar, an Emag, an Access Breaker and a syndicate pinpointer.
   components:
     - type: Sprite
       layers:
@@ -619,7 +582,7 @@
       items:
       - Crowbar
       - Emag
-      - Doorjack #Delta-V add doorjack, emag no longer opens doors.
+      - AccessBreaker
       - PinpointerSyndicateNuclear
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }
@@ -657,6 +620,9 @@
         - PinpointerSyndicateNuclear
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
+    - type: Tag #imp edit - let crew borgs use the l6 if salvagers find one or an assault borg is killed.
+      tags:
+      - BorgModuleGeneric
 
 - type: entity
   id: BorgModuleMartyr

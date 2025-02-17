@@ -165,54 +165,6 @@
     revertOnCrit: true
     duration: 20
 
-- type: polymorph
-  id: ArtifactBee
-  configuration:
-    entity: MobBee
-    forced: true
-    transferName: true
-    transferHumanoidAppearance: true
-    inventory: None
-    revertOnDeath: true
-    revertOnCrit: true
-    duration: 25
-
-- type: polymorph
-  id: ArtifactClownSpider
-  configuration:
-    entity: MobClownSpider
-    forced: true
-    transferName: true
-    transferHumanoidAppearance: true
-    inventory: None
-    revertOnDeath: true
-    revertOnCrit: true
-    duration: 25
-
-- type: polymorph
-  id: ArtifactFinfin
-  configuration:
-    entity: MobFinfin
-    forced: true
-    transferName: true
-    transferHumanoidAppearance: true
-    inventory: None
-    revertOnDeath: true
-    revertOnCrit: true
-    duration: 25
-
-- type: polymorph
-  id: ArtifactRod
-  configuration:
-    entity: ImmovableRodArtifactPoly #CLANG
-    transferName: true
-    transferDamage: false
-    inventory: None
-    duration: 3
-    forced: true
-    revertOnCrit: false
-    revertOnDeath: false
-
 # Polymorphs for Wizards polymorph self spell
 - type: polymorph
   id: WizardSpider

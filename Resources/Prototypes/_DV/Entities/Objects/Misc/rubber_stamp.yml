@@ -1,0 +1,13 @@
+- type: entity
+  parent: RubberStampBase
+  id: RubberStampAdminAssistant
+  name: administrative assistant rubber stamp
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-admin-assistant
+    stampedColor: "#4191f2"
+    stampState: "paper_stamp-admin-assistant"
+  - type: Sprite
+    sprite: _DV/Objects/Misc/stamps.rsi
+    state: stamp-admin-assistant

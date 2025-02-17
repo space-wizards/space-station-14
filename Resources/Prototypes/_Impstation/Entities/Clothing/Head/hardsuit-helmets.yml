@@ -24,3 +24,47 @@
     sprite: _Impstation/Clothing/Head/Hardsuits/mimeblack.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Head/Hardsuits/mimeblack.rsi
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitCourier
+  name: courier hardsuit helmet
+  description: A hermetically sealed hood, for keeping the void out and the air in.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hardsuits/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hardsuits/courier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Cold: 0.9
+
+# antag hardsuit
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitRepomen
+  name: cybersun repomen's hardsuit helmet
+  description: Now you could run, you could hide, you could try to.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Helmets/repomansuithelmet.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Helmets/repomansuithelmet.rsi
+  - type: PointLight
+    color: "#d1c906"
+
+# Dinosaur Commander hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitDino
+  name: dinosaur commander's helmet
+  description: Risen from the ashes of prehistory, forged in the temporal flux of one second in the past, this helmet embodies the true fearsome nature of the Dino Wars.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hardsuits/dinosuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hardsuits/dinosuit.rsi
+  - type: FactionClothing
+    faction: Dino

@@ -56,6 +56,7 @@
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
+    trivial: true #imp edit
   - type: EscapeShuttleCondition
 
 - type: entity
@@ -69,6 +70,7 @@
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
+    trivial: true #imp edit
   - type: ObjectiveBlacklistRequirement
     blacklist:
       components:
@@ -303,14 +305,3 @@
   - type: StealCondition
     stealGroup: NukeDisk
     owner: objective-condition-steal-station
-
-#- type: entity
-#  parent: BaseTraitorStealObjective
-#  id: StealSupermatterSliverObjective
-#  components:
-#  - type: Objective
-#    difficulty: 3.5
-#  - type: StealCondition
-#    stealGroup: SupermatterSliver
-#    objectiveNoOwnerText: objective-condition-steal-smsliver-title
-#    descriptionText: objective-condition-steal-smsliver-description

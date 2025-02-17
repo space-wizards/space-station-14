@@ -31,6 +31,7 @@
       - ChiefEngineer
       - ChiefMedicalOfficer
       - Command
+      - Courier #Imp
       - Engineering
       - External
       - HeadOfPersonnel
@@ -39,6 +40,7 @@
       - Janitor
       - Kitchen
       - Lawyer
+      - Logistics #Imp
       - Maintenance
       - Medical
       - Quartermaster
@@ -98,6 +100,7 @@
     - Chemistry
     - ChiefEngineer
     - ChiefMedicalOfficer
+    - Courier #Imp
     - Command
     - Engineering
     - External
@@ -107,6 +110,7 @@
     - Janitor
     - Kitchen
     - Lawyer
+    - Logistics #Imp
     - Maintenance
     - Medical
     - Quartermaster

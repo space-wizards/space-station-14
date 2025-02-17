@@ -1,1 +1,352 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, generic, service, command, science, security, medical, supply, and engineering taken from shiptest at https://github.com/shiptest-ss13/Shiptest/pull/1473, additional sprites created by EmoGarbage404", "states": [{"name": "abductor_mod"}, {"name": "airalarm_electronics"}, {"name": "ash_plating"}, {"name": "beaker_holder"}, {"name": "blank_mod"}, {"name": "bluespacearray"}, {"name": "boris"}, {"name": "boris_recharging", "delays": [[1.0, 1.0]]}, {"name": "card_mini"}, {"name": "card_mod"}, {"name": "cargodisk"}, {"name": "cart_connector"}, {"name": "cddrive"}, {"name": "cell"}, {"name": "cell_con"}, {"name": "cell_con_micro"}, {"name": "cell_micro"}, {"name": "cell_mini"}, {"name": "charger_APC"}, {"name": "charger_lambda"}, {"name": "charger_pda"}, {"name": "charger_wire"}, {"name": "clock_mod", "delays": [[0.6, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "command"}, {"name": "cpu"}, {"name": "cpu_adv"}, {"name": "cpu_command"}, {"name": "cpu_engineering"}, {"name": "cpu_medical"}, {"name": "cpu_science"}, {"name": "cpu_security"}, {"name": "cpu_service"}, {"name": "cpu_super", "delays": [[0.1, 0.1]]}, {"name": "cpu_supply"}, {"name": "cpuboard"}, {"name": "cpuboard_adv"}, {"name": "cpuboard_super", "delays": [[0.1, 0.1]]}, {"name": "cyborg_upgrade"}, {"name": "cyborg_upgrade1"}, {"name": "cyborg_upgrade2"}, {"name": "cyborg_upgrade3"}, {"name": "cyborg_upgrade4"}, {"name": "cyborg_upgrade5"}, {"name": "datadisk_base"},  {"name": "datadisk_gene", "delays": [[0.1, 0.1, 0.1]]}, {"name": "datadisk_encrypted", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "datadisk_hydro", "delays": [[0.1, 0.1, 0.1]]}, {"name": "datadisk_label"}, {"name": "depositbox"}, {"name": "door_electronics"}, {"name": "engineering"}, {"name": "flopdrive"}, {"name": "generic"}, {"name": "harddisk"}, {"name": "harddisk_micro"}, {"name": "harddisk_mini"}, {"name": "holodisk", "delays": [[0.1, 0.1]]}, {"name": "id_mod"}, {"name": "mainboard"}, {"name": "mcontroller"}, {"name": "medical"}, {"name": "net_wired"}, {"name": "power_mod"}, {"name": "printer"}, {"name": "printer_mini"}, {"name": "prizevendor"}, {"name": "radio"}, {"name": "radio_micro"}, {"name": "radio_mini"}, {"name": "ram"}, {"name": "rndmajordisk"}, {"name": "science"}, {"name": "secmodschematic"}, {"name": "security"}, {"name": "selfrepair_off"}, {"name": "selfrepair_on", "delays": [[0.1, 0.1, 0.1, 0.1]]}, {"name": "service"}, {"name": "servo"}, {"name": "ssd"}, {"name": "ssd_large"}, {"name": "ssd_micro"}, {"name": "ssd_mini"}, {"name": "std_mod"}, {"name": "supply"}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, generic, service, command, science, security, medical, supply, and engineering taken from shiptest at https://github.com/shiptest-ss13/Shiptest/pull/1473, additional sprites created by EmoGarbage404, cpu_syndicate sprite derived from previous examples and created by Alpaccalypse at https://github.com/space-wizards/space-station-14/pull/34104",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "abductor_mod"
+    },
+    {
+      "name": "airalarm_electronics"
+    },
+    {
+      "name": "ash_plating"
+    },
+    {
+      "name": "beaker_holder"
+    },
+    {
+      "name": "blank_mod"
+    },
+    {
+      "name": "bluespacearray"
+    },
+    {
+      "name": "boris"
+    },
+    {
+      "name": "boris_recharging",
+      "delays": [
+        [
+          1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "card_mini"
+    },
+    {
+      "name": "card_mod"
+    },
+    {
+      "name": "cargodisk"
+    },
+    {
+      "name": "cart_connector"
+    },
+    {
+      "name": "cddrive"
+    },
+    {
+      "name": "cell"
+    },
+    {
+      "name": "cell_con"
+    },
+    {
+      "name": "cell_con_micro"
+    },
+    {
+      "name": "cell_micro"
+    },
+    {
+      "name": "cell_mini"
+    },
+    {
+      "name": "charger_APC"
+    },
+    {
+      "name": "charger_lambda"
+    },
+    {
+      "name": "charger_pda"
+    },
+    {
+      "name": "charger_wire"
+    },
+    {
+      "name": "clock_mod",
+      "delays": [
+        [
+          0.6,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "command"
+    },
+    {
+      "name": "cpu"
+    },
+    {
+      "name": "cpu_adv"
+    },
+    {
+      "name": "cpu_command"
+    },
+    {
+      "name": "cpu_engineering"
+    },
+    {
+      "name": "cpu_medical"
+    },
+    {
+      "name": "cpu_science"
+    },
+    {
+      "name": "cpu_security"
+    },
+    {
+      "name": "cpu_service"
+    },
+    {
+      "name": "cpu_super",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cpu_supply"
+    },
+    {
+      "name": "cpu_syndicate"
+    },
+    {
+      "name": "cpuboard"
+    },
+    {
+      "name": "cpuboard_adv"
+    },
+    {
+      "name": "cpuboard_super",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cyborg_upgrade"
+    },
+    {
+      "name": "cyborg_upgrade1"
+    },
+    {
+      "name": "cyborg_upgrade2"
+    },
+    {
+      "name": "cyborg_upgrade3"
+    },
+    {
+      "name": "cyborg_upgrade4"
+    },
+    {
+      "name": "cyborg_upgrade5"
+    },
+    {
+      "name": "datadisk_base"
+    },
+    {
+      "name": "datadisk_gene",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "datadisk_encrypted",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "datadisk_hydro",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "datadisk_label"
+    },
+    {
+      "name": "depositbox"
+    },
+    {
+      "name": "door_electronics"
+    },
+    {
+      "name": "engineering"
+    },
+    {
+      "name": "flopdrive"
+    },
+    {
+      "name": "generic"
+    },
+    {
+      "name": "harddisk"
+    },
+    {
+      "name": "harddisk_micro"
+    },
+    {
+      "name": "harddisk_mini"
+    },
+    {
+      "name": "holodisk",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "id_mod"
+    },
+    {
+      "name": "mainboard"
+    },
+    {
+      "name": "mcontroller"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "net_wired"
+    },
+    {
+      "name": "power_mod"
+    },
+    {
+      "name": "printer"
+    },
+    {
+      "name": "printer_mini"
+    },
+    {
+      "name": "prizevendor"
+    },
+    {
+      "name": "radio"
+    },
+    {
+      "name": "radio_micro"
+    },
+    {
+      "name": "radio_mini"
+    },
+    {
+      "name": "ram"
+    },
+    {
+      "name": "rndmajordisk"
+    },
+    {
+      "name": "science"
+    },
+    {
+      "name": "secmodschematic"
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "selfrepair_off"
+    },
+    {
+      "name": "selfrepair_on",
+      "delays": [
+        [
+          0.1, 
+          0.1, 
+          0.1, 
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "service"
+    },
+    {
+      "name": "servo"
+    },
+    {
+      "name": "ssd"
+    },
+    {
+      "name": "ssd_large"
+    },
+    {
+      "name": "ssd_micro"
+    },
+    {
+      "name": "ssd_mini"
+    },
+    {
+      "name": "std_mod"
+    },
+    {
+      "name": "supply"
+    }
+  ]
+}

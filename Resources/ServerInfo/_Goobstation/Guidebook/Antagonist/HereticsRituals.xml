@@ -1,0 +1,42 @@
+<Document>
+  #Rituals & Sacrifices
+
+  <Box>
+    <GuideEntityEmbed Entity="HereticRuneRitual" Caption=""/>
+  </Box>
+  ## Transmutation is Key
+  Eventually, you'll need to start using proper magics. To draw a transmutation rune, you'll need a writing tool, such as a pen or crayon.
+
+  [color=red][bold]To start drawing a rune[/bold][/color], activate [color=green]Mansus Grasp[/color] in your offhand and click on the floor with your writing tool.
+  These runes are highly noticeable and take up a 3x3 area.
+
+  [color=red][bold]To remove a rune[/bold][/color], use your pen on it with an activated [color=green]Mansus Grasp[/color] in your off-hand.
+  You can also freely use other Heretics' runes.
+
+  [color=red][bold]To choose a ritual[/bold][/color], simply click the rune with your empty hand and select one from the radial menu.
+
+  [color=red][bold]To start the ritual[/bold][/color], use your [color=green]Mansus Grasp[/color] on the rune once you've made a selection.
+  You can always see your chosen ritual by [bold]inspecting[/bold] the rune.
+
+  Transmutation Rituals allow you to create powerful artifacts, demonic monsters, and many useful tools that will help you progress towards ultimate power.
+
+  ## Sacrifices
+  Now it's time for you to grow some balls and start sacrificing your beloved coworkers for points.
+
+  The Mansus desires only a select few Heathens (non-heretics) at any moment.
+
+  You can reroll your targets by invoking the [color=yellow]Relentless Heartbeat[/color] ritual.
+
+  At the start of the round you will be assigned a number of sacrifice targets. [bold]You will only be able to sacrifice these targets.[/bold]
+  - One target will be a Head of Staff. Heads of staff are worth an additional point!
+  - One target will be a member of security.
+  - One target will be a member of your department.
+  - Other targets will be completely random crewmembers.
+
+  Follow your [color=red]Living Heart[/color] to your target of choice and incapacitate them through any means necessary.
+
+  If your target's in critical condition or dead, they're ready to sacrifice.
+
+  Drag them over a transmutation rune and invoke the [color=yellow]Heartbeat of the Mansus[/color] ritual to sacrifice them.
+
+</Document>

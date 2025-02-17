@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Examine;
@@ -33,16 +34,27 @@ public sealed class EntityHeaterSystem : EntitySystem
 
     public override void Update(float deltaTime)
     {
-        var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var placer, out var power))
+        var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent>(); //Imp edit
+        while (query.MoveNext(out var uid, out var comp, out var placer))
         {
-            if (!power.Powered)
+            var energy = comp.Power * deltaTime; //Just use base power if no power required
+            if (comp.RequirePower)
+            {
+                TryComp<ApcPowerReceiverComponent>(uid, out var power);
+                if (power == null)
+                    continue;
+                if (!power.Powered)
+                    continue;
+
+                // don't divide by total entities since its a big grill
+                // excess would just be wasted in the air but that's not worth simulating
+                // if you want a heater thermomachine just use that...
+                energy = power.PowerReceived * deltaTime;
+            }
+
+            if (TryComp<FlammableComponent>(uid, out var flammable) && !flammable.OnFire)
                 continue;
 
-            // don't divide by total entities since its a big grill
-            // excess would just be wasted in the air but that's not worth simulating
-            // if you want a heater thermomachine just use that...
-            var energy = power.PowerReceived * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
                 _temperature.ChangeHeat(ent, energy);
@@ -52,6 +64,9 @@ public sealed class EntityHeaterSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, EntityHeaterComponent comp, ExaminedEvent args)
     {
+        if (!comp.RequirePower) //Imp edit
+            return;
+
         if (!args.IsInDetailsRange)
             return;
 
@@ -63,10 +78,13 @@ public sealed class EntityHeaterSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        var setting = (int) comp.Setting;
+        if (!comp.RequirePower) //Imp edit
+            return;
+
+        var setting = (int)comp.Setting;
         setting++;
         setting %= SettingCount;
-        var nextSetting = (EntityHeaterSetting) setting;
+        var nextSetting = (EntityHeaterSetting)setting;
 
         args.Verbs.Add(new AlternativeVerb()
         {

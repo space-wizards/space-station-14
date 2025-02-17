@@ -6,10 +6,12 @@ using Content.Server.Objectives;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
 
@@ -102,7 +104,7 @@ public sealed partial class AntagSelectionSystem
         // make pool non-nullable
         // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
         // antag selection.
-        var poolSize = playerCount ?? GetTotalPlayerCount(_playerManager.Sessions);
+        var poolSize = playerCount ?? GetTotalPlayerCount(_player.Sessions);
 
         // factor in other definitions' affect on the count.
         var countOffset = 0;
@@ -133,7 +135,7 @@ public sealed partial class AntagSelectionSystem
             if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.OriginalOwnerUserId == null)
                 continue;
 
-            if (!_playerManager.TryGetPlayerData(mindComp.OriginalOwnerUserId.Value, out var data))
+            if (!_player.TryGetPlayerData(mindComp.OriginalOwnerUserId.Value, out var data))
                 continue;
 
             output.Add((mind, data, name));
@@ -177,7 +179,7 @@ public sealed partial class AntagSelectionSystem
     public bool HasPrimaryAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
     {
         if (session == null)
-            return true;
+            return false;
 
         if (def.PrefRoles.Count == 0)
             return false;
@@ -192,14 +194,39 @@ public sealed partial class AntagSelectionSystem
     public bool HasFallbackAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
     {
         if (session == null)
-            return true;
+            return false;
 
         if (def.FallbackRoles.Count == 0)
             return false;
 
-        var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
+        var pref = (HumanoidCharacterProfile)_pref.GetPreferences(session.UserId).SelectedCharacter;
         return pref.AntagPreferences.Any(p => def.FallbackRoles.Contains(p));
     }
+    /// imp addition
+    /// <summary>
+    /// Checks if a given session has jobs that can be an antagonist enabled
+    /// </summary>
+    public bool HasValidAntagJobs(ICommonSession? session)
+    {
+        if (session == null)
+            return false;
+
+        var pref = (HumanoidCharacterProfile)_pref.GetPreferences(session.UserId).SelectedCharacter;
+        if (pref.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
+            return true;
+
+        var profileJobs = pref.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
+        foreach (var jobId in profileJobs)
+        {
+            if (!_prototype.TryIndex(jobId, out var job))
+                continue;
+            if (job.CanBeAntag)
+                return true;
+        }
+
+        return false;
+    }
+    /// end imp addition
 
     /// <summary>
     /// Returns all the antagonists for this rule who are currently alive
@@ -348,7 +375,7 @@ public sealed partial class AntagSelectionSystem
 
         if (!TryGetNextAvailableDefinition(rule, out var def))
             def = rule.Comp.Definitions.Last();
-        MakeAntag(rule, player, def.Value, null);
+        MakeAntag(rule, player, def.Value);
     }
 
     /// <summary>

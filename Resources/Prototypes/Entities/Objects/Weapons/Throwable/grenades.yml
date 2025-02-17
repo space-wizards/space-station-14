@@ -418,10 +418,10 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
   - type: Tag
-    tags:
+    tags: #imp special
     - CleanerGrenade
     - Grenade
-  - type: CartridgeAmmo
+  - type: CartridgeAmmo #imp special
     proto: BulletGrenadeCleaner
     deleteOnSpawn: true
   - type: SmokeOnTrigger

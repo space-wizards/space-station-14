@@ -2,24 +2,29 @@
 # NT does not have approval to hand this stuff out
 - type: contrabandSeverity
   id: DecapoidEmpire
+  examineColor: red
   examineText: contraband-examine-text-DecapoidEmpire
 
 # tier 1 contraband: syndicate pajamas, flags, duffels, etc
 - type: contrabandSeverity
   id: Tier1Contraband
+  examineColor: crimson
   examineText: contraband-examine-text-Tier1
 
 # tier 2 contraband: espionage/sabotage items a la emag, cham projector, cybersun pen, etc
 - type: contrabandSeverity
+  examineColor: crimson
   examineText: contraband-examine-text-Tier2
   id: Tier2Contraband
 
 # tier 3 contraband: military-level equipment a la blood-red hardsuit, china lake, etc
 - type: contrabandSeverity
   id: Tier3Contraband
+  examineColor: crimson
   examineText: contraband-examine-text-Tier3
 
 # tier X contraband: paranormal/extraordinary equipment, a la heretic blade, changeling armblade, etc
 - type: contrabandSeverity
   id: TierXContraband
+  examineColor: purple
   examineText: contraband-examine-text-TierX

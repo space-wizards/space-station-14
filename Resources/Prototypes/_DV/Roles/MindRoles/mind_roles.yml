@@ -1,0 +1,46 @@
+# Delta V content merge to bring it into line with the new system - impstation addition
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleRecruiter
+  name: Recruiter Role
+  components:
+  - type: MindRole
+    antagPrototype: Recruiter
+    exclusiveAntag: true
+  - type: RecruiterRole
+  - type: RoleBriefing
+    briefing: recruiter-role-briefing
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRolePostOperator
+  name: Listening Post Role
+  components:
+  - type: MindRole
+    antagPrototype: ListeningPost
+    exclusiveAntag: true
+  - type: ListeningPostRole
+  - type: RoleBriefing
+    briefing: listening-post-role-briefing
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSynthesis
+  name: Synthesis Specialist Role
+  components:
+  - type: MindRole
+    antagPrototype: SynthesisSpecialist
+    exclusiveAntag: true
+  - type: SynthesisRole
+  - type: RoleBriefing
+    briefing: synthesis-role-briefing
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleFugitive
+  name: Fugitive Role
+  components:
+  - type: MindRole
+    antagPrototype: Fugitive
+    exclusiveAntag: true
+  - type: FugitiveRole

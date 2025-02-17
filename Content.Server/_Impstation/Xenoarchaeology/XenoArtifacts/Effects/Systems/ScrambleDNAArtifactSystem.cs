@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 using Content.Shared.Humanoid;
 using Content.Shared.Forensics;
 using Content.Server.Forensics;
+using Content.Server.IdentityManagement;
 
 
 
@@ -19,6 +20,7 @@ public sealed class ScrambleDNAArtifactSystem : EntitySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
 
 
@@ -61,7 +63,7 @@ public sealed class ScrambleDNAArtifactSystem : EntitySystem
         {
             var newProfile = (HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species));
             _humanoidAppearance.LoadProfile(target, newProfile, humanoid);
-            _metaData.SetEntityName(target, newProfile.Name);
+            _metaData.SetEntityName(target, newProfile.Name, raiseEvents: false);
             if (TryComp<DnaComponent>(target, out var dna))
             {
                 dna.DNA = _forensicsSystem.GenerateDNA();
@@ -73,6 +75,7 @@ public sealed class ScrambleDNAArtifactSystem : EntitySystem
             {
                 fingerprint.Fingerprint = _forensicsSystem.GenerateFingerprint();
             }
+            _identity.QueueIdentityUpdate(target); // manually queue identity update since we don't raise the event
         }
     }
 

@@ -13,10 +13,10 @@ public sealed partial class StunOnContactComponent : Component
     public string FixtureId = "fix";
 
     /// <summary>
-    /// The duration of the stun.
+    /// The duration of the stun. Edited 5 -> 3.5 for impstation
     /// </summary>
     [DataField]
-    public TimeSpan Duration = TimeSpan.FromSeconds(5);
+    public TimeSpan Duration = TimeSpan.FromSeconds(3.5); 
 
     [DataField]
     public EntityWhitelist Blacklist = new();

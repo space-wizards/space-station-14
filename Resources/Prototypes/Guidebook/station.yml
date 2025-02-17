@@ -22,4 +22,4 @@
 - type: guideEntry
   id: AlertProcedure
   name: guide-entry-alertprocedure
-  text: "/ServerInfo/Guidebook/DeltaV/AlertProcedure.xml"
+  text: "/ServerInfo/Guidebook/_DV/AlertProcedure.xml"

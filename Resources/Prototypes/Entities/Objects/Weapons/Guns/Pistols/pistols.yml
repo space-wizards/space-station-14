@@ -69,7 +69,7 @@
     price: 500
 
 - type: entity
-  name: viper
+  name: Viper
   parent: [BaseWeaponPistol, Tier3Contraband]
   id: WeaponPistolViper
   description: A small, easily-concealable but somewhat underpowered handgun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
@@ -102,10 +102,10 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
-  name: echis
+  name: Echis
   parent: [ BaseItem, Tier3Contraband ]
   id: WeaponPistolEchis
-  description: A viper pistol for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  description: A Viper pistol for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
   - type: Gun
     fireRate: 5
@@ -137,10 +137,10 @@
   - type: AmmoCounter
 
 - type: entity
-  name: cobra
+  name: Cobra
   parent: [ BaseWeaponPistol, Tier3Contraband ]
   id: WeaponPistolCobra
-  description: A rugged, integrally-suppressed handgun. Perfect for the robust operator who wants to leave no trace. Uses .25 caseless ammo.
+  description: A rugged, integrally-suppressed handgun. Perfect for the robust operator who wants to leave no trace. Uses .25 caseless ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
@@ -186,10 +186,10 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
-  name: mk 58
+  name: Mk 58
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolMk58
-  description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo.
+  description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi

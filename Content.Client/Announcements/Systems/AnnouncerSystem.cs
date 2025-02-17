@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Client.Audio;
-using Content.Shared._EinsteinEngine.CCVar;
+using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared.Announcements.Events;
 using Content.Shared.Announcements.Systems;
 using Robust.Client.Audio;

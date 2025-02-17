@@ -1,0 +1,19 @@
+- type: vendingMachineInventory
+  id: CourierDrobeInventory
+  startingInventory:
+    ClothingBackpackCargo: 3
+    ClothingBackpackSatchelCargo: 3
+    ClothingBackpackDuffelCargo: 3
+    MailBag: 2
+    ClothingUniformJumpsuitCourier: 3
+    ClothingUniformJumpskirtCourier: 3
+    ClothingShoesLeather: 3
+    ClothingHeadHatCouriersoft: 3
+    ClothingHeadBandBlue: 3
+    ClothingHeadsetCargo: 3
+    ClothingOuterWinterCourier: 2
+    ClothingNeckScarfStripedBrown: 3
+    ClothingNeckScarfStripedBlue: 3
+    ClothingShoesBootsWinterCourier: 2
+  contrabandInventory:
+    ClothingMaskClownCargo: 1

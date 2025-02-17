@@ -4,7 +4,7 @@ using Content.Shared.Announcements.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Utility;
-using Content.Shared._EinsteinEngine.CCVar;
+using Content.Shared._EinsteinEngines.CCVar;
 
 namespace Content.Server.Announcements.Systems;
 

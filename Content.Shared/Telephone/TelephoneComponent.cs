@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -93,6 +94,12 @@ public sealed partial class TelephoneComponent : Component
     public bool UnlistedNumber = false;
 
     /// <summary>
+    /// Speech is relayed through this entity instead of the telephone
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Entity<SpeechComponent>? Speaker = null;
+
+    /// <summary>
     /// Telephone number for this device
     /// </summary>
     /// <remarks>
@@ -127,9 +134,10 @@ public sealed partial class TelephoneComponent : Component
 
     /// <summary>
     /// The presumed name and/or job of the last person to call this telephone
+    /// and the name of the device that they used to do so
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public (string?, string?) LastCallerId;
+    public (string?, string?, string?) LastCallerId;
 }
 
 #region: Telephone events

@@ -4,7 +4,7 @@
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
     state: icon
   product: CrateArmoryMachinePistol
-  cost: 6500
+  cost: 6000
   category: cargoproduct-category-name-armory
   group: market
 
@@ -14,7 +14,7 @@
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk92hb.rsi
     state: icon
   product: CrateArmoryBurstPistol
-  cost: 6500
+  cost: 6000
   category: cargoproduct-category-name-armory
   group: market
 
@@ -24,6 +24,6 @@
     sprite: _Impstation/Objects/Weapons/Guns/Rifles/daito.rsi
     state: icon
   product: CrateArmoryDMR
-  cost: 10000
+  cost: 9000
   category: cargoproduct-category-name-armory
   group: market

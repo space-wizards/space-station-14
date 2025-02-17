@@ -1,0 +1,9 @@
+- type: loadout
+  id: ClothingUniformFuneralSuit
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuit #imp
+
+- type: loadout
+  id: ClothingUniformFuneralSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuitSkirt #imp

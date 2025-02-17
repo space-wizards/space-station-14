@@ -24,7 +24,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable, Tier3Contraband]
   id: WeaponLauncherChinaLake
-  description: THOOMP.
+  description: THOOMP. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi

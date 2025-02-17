@@ -41,9 +41,6 @@
   - type: StaminaDamageOnHit
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
-  - type: StaminaDamageOnCollide
-    damage: 35
-    sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 360
@@ -71,3 +68,7 @@
   - type: Construction
     graph: makeshiftstunprod
     node: msstunprod
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+  - type: DamageOtherOnHit
+  # end imp edits #

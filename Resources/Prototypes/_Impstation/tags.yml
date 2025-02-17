@@ -3,6 +3,9 @@
   id: BeltUtility
 
 - type: Tag
+  id: BorgModuleTckTck
+
+- type: Tag
   id: Cablecuffs
 
 - type: Tag
@@ -33,6 +36,9 @@
   id: Gastropod
 
 - type: Tag
+  id: HolyArrow
+
+- type: Tag
   id: MagazineBR
 
 - type: Tag
@@ -45,16 +51,22 @@
   id: MagazineZipper
 
 - type: Tag
-  id: HolyArrow
-
-- type: Tag
   id: MimeBeltBlack
 
 - type: Tag
   id: MimeBeltRed
 
 - type: Tag
+  id: MultitoolDefibrillatorTarget
+
+- type: Tag
   id: NullRod
+
+- type: Tag
+  id: OreBag
+
+- type: Tag
+  id: RubberStamp
 
 - type: Tag
   id: SecTicket
@@ -69,7 +81,7 @@
   id: SprayPainter
 
 - type: Tag
-  id: RubberStamp
+  id: VapeCart
 
 - type: Tag
   id: Vaporizer
@@ -84,4 +96,10 @@
   id: WeaponSurvivalRifleUpgradeSMGKit
 
 - type: Tag
-  id: BorgModuleTckTck
+  id: EvidenceMarker
+
+- type: Tag
+  id: Pribar
+
+- type: Tag
+  id: HandheldCriminalRecords

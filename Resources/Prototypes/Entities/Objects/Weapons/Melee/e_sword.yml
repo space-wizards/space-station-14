@@ -71,6 +71,23 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+    activatedStaminaCost: 6
+  - type: ItemToggleEmbedPassiveDamage
+  - type: ItemToggleEmbeddableProjectile
+    activatedEmbedOnThrow: true
+  - type: ItemToggleThrowingAngle
+    activatedAngle: 225
+    deleteOnDeactivate: true
+  - type: DamageOtherOnHit
+  - type: EmbeddableProjectile
+    embedOnThrow: false
+  - type: EmbedPassiveDamage
+  - type: ItemToggleSignatureWriter
+    activatedFont: AndTheDoorCreeeaked
+    activatedColor: black
+  # end imp edits #
 
 - type: entity
   name: energy sword
@@ -153,6 +170,8 @@
     energy: 1.5
     color: white
     netsync: false
+  - type: ItemToggleThrowingAngle # imp
+    activatedAngle: 135
 
 - type: entity
   name: pen
@@ -194,7 +213,6 @@
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
-      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -223,6 +241,30 @@
   - type: Tag
     tags:
     - Write
+  # imp edits #
+  - type: ItemToggleEmbeddableProjectile
+    activatedOffset: 0.0,0.0
+    activatedRemovalTime: 3
+  - type: ItemToggleThrowingAngle
+    activatedAngle: 135
+    deleteOnDeactivate: false
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+    staminaCost: 3.5
+  - type: EmbeddableProjectile
+    offset: 0.3,0.0
+    removalTime: 0.0
+    embedOnThrow: true
+  - type: EmbedPassiveDamage
+    damage:
+      types:
+        Blunt: 0
+  - type: ThrowingAngle
+    angle: 315
+  - type: SignatureWriter
+  # end imp edits #
 
 - type: entity
   parent: [BaseItem, Tier3Contraband]

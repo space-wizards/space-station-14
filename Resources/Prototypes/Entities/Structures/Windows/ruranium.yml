@@ -51,7 +51,7 @@
   - type: StaticPrice
     price: 215
   - type: RadiationBlocker
-    resistance: 10
+    resistance: 5
 
 - type: entity
   id: UraniumReinforcedWindowDirectional
@@ -122,6 +122,9 @@
     drawdepth: WallTops
     sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
   - type: IconSmooth
     mode: Diagonal
     key: windows

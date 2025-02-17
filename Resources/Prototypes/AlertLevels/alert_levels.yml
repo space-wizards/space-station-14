@@ -70,10 +70,73 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
-    pink:
+    pink: # imp
       announcement: alert-level-pink-announcement
       sound: /Audio/_Impstation/Misc/pink.ogg
       color: Pink
       emergencyLightColor: Pink
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    amber:
+      announcement: alert-level-amber-announcement
+      selectable: false
+      sound: /Audio/_Impstation/Misc/amber.ogg
+      disableSelection: true
+      color: DarkGoldenrod
+      emergencyLightColor: DarkGoldenrod
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200
+    burgundy: # admeme
+      announcement: alert-level-burgundy-announcement
+      selectable: false
+      sound: /Audio/Misc/redalert.ogg # feel free to replace these with funnier sounds
+      disableSelection: true
+      color: DarkRed
+      emergencyLightColor: DarkRed
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    khaki:
+      announcement: alert-level-khaki-announcement
+      selectable: false
+      sound: /Audio/_Impstation/Misc/redalert_inverted.ogg
+      disableSelection: true
+      color: Khaki
+      emergencyLightColor: Khaki
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    denim:
+      announcement: alert-level-denim-announcement
+      selectable: false
+      sound: /Audio/Misc/redalert.ogg
+      disableSelection: true
+      color: LightBlue
+      emergencyLightColor: LightBlue
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    chartreuse:
+      announcement: alert-level-chartreuse-announcement
+      selectable: false
+      sound: /Audio/Misc/notice2.ogg
+      disableSelection: true
+      color: Chartreuse
+      emergencyLightColor: Chartreuse
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    white:
+      announcement: alert-level-white-announcement
+      selectable: false
+      sound: /Audio/Misc/notice1.ogg
+      disableSelection: true
+      color: White
+      emergencyLightColor: White
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    puce:
+      announcement: alert-level-puce-announcement
+      selectable: false
+      sound: /Audio/Misc/notice1.ogg
+      disableSelection: true
+      color: PaleVioletRed
+      emergencyLightColor: PaleVioletRed
+      forceEnableEmergencyLights: true
+      shuttleTime: 600

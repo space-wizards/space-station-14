@@ -90,7 +90,7 @@
 
 - type: entity
   id: MachineAnomalyVesselExperimental
-  parent: MachineAnomalyVessel
+  parent: [ MachineAnomalyVessel, BaseScienceContraband ]
   name: experimental anomaly vessel
   description: An advanced anomaly vessel capable of greater research potential at the cost of increased volatility and low-level radioactive decay into the environment.
   components:
@@ -116,7 +116,7 @@
 
 - type: entity
   id: MachineAPE
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseScienceContraband ]
   name: A.P.E.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:

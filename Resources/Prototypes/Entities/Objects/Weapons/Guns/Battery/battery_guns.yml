@@ -476,7 +476,7 @@
   name: disabler SMG
   parent: [ BaseWeaponBattery, BaseRestrictedContraband ]
   id: WeaponDisablerSMG
-  description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
+  description: An advanced weapon that exhausts organic targets, weakening them until they collapse. #imp
   components:
   - type: Item
     size: Large
@@ -549,7 +549,7 @@
   name: antique laser pistol
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
-  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
@@ -740,15 +740,15 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserSpread
-    fireCost: 150 #imp revert
+    fireCost: 150
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpread
-      fireCost: 150 #imp revert
-    - proto: BulletLaserHeavySpread #imp revert
-      fireCost: 150 #imp revert
+      fireCost: 150
+    - proto: BulletLaserSpreadNarrow
+      fireCost: 200
     - proto: BulletDisablerSmgSpread
-      fireCost: 150 #imp revert
+      fireCost: 120
   - type: Item
     size: Large
     shape:
@@ -761,9 +761,11 @@
   - type: StealTarget
     stealGroup: WeaponEnergyShotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: Battery # THE WORLD RESET
-    maxCharge: 1050
-    startingCharge: 1050
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 25 #takes 42 seconds to fully recharge, the answer to life, the universe and everything
+    autoRechargeRate: 24
+    autoRechargePause: true
+    autoRechargePauseTime: 30

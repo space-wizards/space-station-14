@@ -1,0 +1,65 @@
+- type: entity
+  parent: BaseFXEntity
+  categories: [ HideSpawnMenu ]
+  id: CargoTelepadVFX
+  components:
+  - type: TimedDespawn
+    lifetime: 1.2
+  - type: Sprite
+    layers:
+    - sprite: _Impstation/Effects/teleportvfx.rsi
+      offset: "0,0.25"
+      state: cargovfx
+      shader: unshaded
+      netsync: false
+      drawdepth: Mobs
+  - type: PointLight
+    color: "#FF9719"
+    radius: 1.2
+    energy: 3.5
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.2
+      maxDuration: 1.2
+      startValue: 0.1
+      endValue: 3.5
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
+
+- type: entity
+  parent: BaseFXEntity
+  categories: [ HideSpawnMenu ]
+  id: MailTelepadVFX
+  components:
+  - type: TimedDespawn
+    lifetime: 1.2
+  - type: Sprite
+    layers:
+    - sprite: _Impstation/Effects/teleportvfx.rsi
+      offset: "0,0.25"
+      state: mailvfx
+      shader: unshaded
+      netsync: false
+      drawdepth: Mobs
+  - type: PointLight
+    color: "#33c7ff"
+    radius: 1.2
+    energy: 3.5
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.2
+      maxDuration: 1.2
+      startValue: 0.1
+      endValue: 3.5
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true

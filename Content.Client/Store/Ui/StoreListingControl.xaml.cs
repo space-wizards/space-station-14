@@ -22,7 +22,8 @@ public sealed partial class StoreListingControl : Control
     private readonly bool _hasBalance;
     private readonly string _price;
     private readonly string _discount;
-    public StoreListingControl(ListingDataWithCostModifiers data, string price, string discount, bool hasBalance, Texture? texture = null)
+    private readonly string? _extra; //imp addition
+    public StoreListingControl(ListingDataWithCostModifiers data, string price, string discount, bool hasBalance, Texture? texture = null, string? extra = null)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -33,6 +34,7 @@ public sealed partial class StoreListingControl : Control
         _hasBalance = hasBalance;
         _price = price;
         _discount = discount;
+        _extra = extra; //imp addition
 
         StoreItemName.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
         StoreItemDescription.SetMessage(ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(_data, _prototype));
@@ -74,6 +76,12 @@ public sealed partial class StoreListingControl : Control
         {
             DiscountSubText.Text = _discount;
             StoreItemBuyButton.Text = _price;
+        }
+
+        //imp addition
+        if(_extra != null)
+        {
+            DiscountSubText.Text = _extra;
         }
     }
 

@@ -1,0 +1,117 @@
+- type: entity
+  parent: BaseItem
+  id: BaseVapeSwappable
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SmokingVisuals.CartInserted:
+        enum.SolutionContainerLayers.Base:
+          True: { visible: true }
+          False: { visible: false }
+        enum.SolutionContainerLayers.Overlay:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: fill
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+      cart_slot:
+        name: vapepen-component-vape-cart-slot-name-default
+        whitelist:
+          tags:
+          - VapeCart
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      cart_slot: !type:ContainerSlot
+  - type: VapePen
+    damage:
+      types:
+        Heat: 0.5
+        Asphyxiation: 2
+
+- type: entity
+  parent: BaseItem
+  id: BaseVapeDisposable
+  abstract: true
+  components:
+  - type: Appearance
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        locked: true
+      cart_slot:
+        name: vapepen-component-vape-cart-slot-name-default
+        startingItem: WaterVapeCart
+        locked: true
+        whitelist:
+          tags:
+          - VapeCart
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      cart_slot: !type:ContainerSlot
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 75
+  - type: VapePen
+    damage:
+      types:
+        Heat: 0.5
+        Asphyxiation: 2
+    chargeUse: 72
+
+- type: entity
+  parent: BaseItem
+  id: BaseVapeCart
+  abstract: true
+  components:
+  - type: Item
+    size: Tiny
+  - type: Appearance
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
+    layers:
+    - state: cart
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: cart-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 15
+  - type: ExaminableSolution
+    solution: smokable
+  - type: SolutionItemStatus
+    solution: smokable
+  - type: TrashOnSolutionEmpty
+    solution: smokable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: Tag
+    tags:
+      - VapeCart
+  - type: VapeCart

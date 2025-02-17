@@ -30,6 +30,9 @@
                         <FloatSpinBox Name="CInternalBound" HorizontalExpand="True" />
                     </BoxContainer>
                 </BoxContainer>
+                <BoxContainer>
+                    <CheckBox Name="CPressureLockout" Text="{Loc 'air-alarm-ui-vent-pressure-lockout-label'}" />
+                </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
                     <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>

@@ -74,6 +74,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: DamageOtherOnHit # imp
+    staminaCost: 9
 
 - type: entity
   name: extinguisher spray

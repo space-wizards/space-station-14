@@ -1,0 +1,143 @@
+- type: entity
+  name: discombobulator
+  parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
+  id: WeaponFunnyDisabler
+  description: A self-defense weapon that humours organic targets, entertaining them until they collapse.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/clowndisabler.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/clowndisabler.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/clowndisabler.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 100
+    
+- type: entity
+  name: pocket disabler
+  parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
+  id: WeaponPocketDisabler
+  description: A compact version of the iconic Disabler, but packs no less of a punch!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disablerderringer.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disablerderringer.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 100
+
+- type: entity
+  name: auto disabler
+  parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
+  id: WeaponAutoDisabler
+  description: A Disabler built for sustained, automatic fire at the cost of stunning power.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/autodisabler.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/autodisabler.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: true
+  - type: Gun
+    minAngle: 2
+    maxAngle: 18
+    angleIncrease: 3
+    angleDecay: 18
+    fireRate: 3
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/autodisabler.ogg
+  - type: Battery
+    maxCharge: 1440
+    startingCharge: 1440
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletAutoDisabler
+    fireCost: 80
+    
+- type: entity
+  name: stun projector
+  parent: [ BaseWeaponBatterySmall, BaseSecurityCommandContraband ]
+  id: WeaponStunProjector
+  description: A disabler that accelerates its energy to the speed of light.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/stunprojector.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: Small
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/stunprojector.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Gun
+    fireRate: 1.3
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: HitscanDisabler
+    fireCost: 150
+  - type: Battery
+    maxCharge: 1050
+    startingCharge: 1050

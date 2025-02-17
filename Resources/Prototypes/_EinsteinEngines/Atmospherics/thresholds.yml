@@ -1,0 +1,15 @@
+- type: alarmThreshold
+  id: supermatterTemperature
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 313.15
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.9
+
+- type: alarmThreshold
+  id: supermatterPressure
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 550 # HazardHighPressure from Atmospherics.cs
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5

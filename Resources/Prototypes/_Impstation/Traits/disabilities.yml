@@ -1,10 +1,10 @@
 - type: trait
-  id: PainInsensitivity
-  name: trait-pain-insensitivity-name
-  description: trait-pain-insensitivity-desc
+  id: Hemophilia
+  name: trait-hemophilia-name
+  description: trait-hemophilia-desc
   category: Disabilities
   components:
-    - type: PainInsensitivity
+    - type: Hemophilia
 
 - type: trait
   id: RandomUnrevivable

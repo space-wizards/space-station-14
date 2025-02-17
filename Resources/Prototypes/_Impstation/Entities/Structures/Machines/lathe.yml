@@ -72,6 +72,7 @@
       - DrinkWaterBottleEmpty #imp recipe
       - Pitcher #imp recipe
       - BarSpoon #imp recipe
+      - DrinkDisposableCup #imp recipe
       #food      
       - KitchenKnife
       - FoodPlate
@@ -97,6 +98,8 @@
       - ClothingHeadHatCone
       - SprayPainter
       - HandLabeler
+      - TapeRecorder
+      - CassetteTape
     dynamicRecipes:
       #janitorial
       - MegaSprayBottle
@@ -104,6 +107,9 @@
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
       - CleanerGrenade #imp recipe
+      #service
+      - PlantAnalyzer #NF recipe
+      - FishingRod #imp recipe
       #misc.
       - FauxTileAstroGrass
       - FauxTileMowedAstroGrass

@@ -1,0 +1,139 @@
+- type: entity
+  name: mail capsule
+  suffix: Primed
+  id: MailCapsulePrimed
+  parent: BaseItem
+  components:
+  - type: ThrowingAngle
+    angle: 180
+  - type: EmbeddableProjectile
+    minimumSpeed: 1
+    removalTime: 0.1
+  - type: Tag
+    tags:
+    - MailCapsule
+    - Trash
+  - type: Sprite
+    sprite: _NF/Objects/Misc/mail_capsule.rsi
+    layers:
+      - state: icon-empty
+  - type: ItemSlots
+    slots:
+      mail_slot:
+        insertVerbText: Put in Mail
+        ejectVerbText: Take out Mail
+        name: Mail
+        startingItem: null
+        whitelist:
+          tags:
+          - Book
+          - Document
+          - Mail
+          components:
+          - Mail
+          - Paper
+          - HyperlinkBook
+        insertOnInteract: true
+        priority: 3
+      food_slot:
+        insertVerbText: Put in Food
+        ejectVerbText: Take out Food
+        name: Food
+        startingItem: null
+        whitelist:
+          components:
+          - Food
+        insertOnInteract: true
+        priority: 2
+      cash_slot:
+        insertVerbText: Put in Cash
+        ejectVerbText: Take out Cash
+        name: Cash
+        startingItem: null
+        whitelist:
+          components:
+          - Currency
+        insertOnInteract: true
+        priority: 1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        showEnts: False
+        occludes: true
+        ents: []
+      mail_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: true
+        ent: null
+      food_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: true
+        ent: null
+      cash_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: true
+        ent: null
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      icon-food:
+        whitelist:
+          components:
+          - Food
+      icon-cash:
+        whitelist:
+          components:
+          - Currency
+      icon-mail:
+        whitelist:
+          tags:
+          - Book
+          - Document
+          - Mail
+          components:
+          - Mail
+          - Paper
+          - HyperlinkBook
+    sprite: _NF/Objects/Misc/mail_capsule.rsi
+  - type: Dumpable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20 #excess damage avoids cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 9.5
+
+- type: entity
+  name: mail capsule box
+  parent: BoxCardboard
+  id: BoxMailCapsulePrimed
+  description: A box of primed mail capsules.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,4,3
+  - type: StorageFill
+    contents:
+      - id: MailCapsulePrimed
+        amount: 10
+  - type: Sprite
+    layers:
+      - state: box

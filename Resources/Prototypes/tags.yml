@@ -1,6 +1,9 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
 
 - type: Tag
+  id: AccessBreakerImmune
+
+- type: Tag
   id: AirAlarm
 
 - type: Tag
@@ -462,6 +465,9 @@
   id: Debug
 
 - type: Tag
+  id: Diagonal
+
+- type: Tag
   id: Dice
 
 - type: Tag
@@ -691,6 +697,9 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
+  id: HardsuitSpatio
 
 - type: Tag
   id: Haunted
@@ -1045,9 +1054,6 @@
   id: Pizza
 
 - type: Tag
-  id: PlantAnalyzer
-
-- type: Tag
   id: PlantBGone
 
 - type: Tag
@@ -1230,9 +1236,6 @@
 
 - type: Tag
   id: Smokable
-
-- type: Tag
-  id: SnapPop
 
 - type: Tag
   id: SnowyLabs
@@ -1425,6 +1428,9 @@
 
 - type: Tag
   id: WeldingMask
+
+- type: Tag #imp addon (why the fuck doesn't this exist upstream)
+  id: WeldingTool
 
 - type: Tag
   id: WetFloorSign

@@ -10,7 +10,7 @@
 
 - type: preloadedGrid
   id: DisasterEvacPod
-  path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
+  path: /Maps/_Impstation/Shuttles/ShuttleEvent/disaster_evacpod.yml # imp
   copies: 3
 
 # The power of 3 clowns has proved too strong for the players and may need to be 1984ed.
@@ -77,6 +77,11 @@
 - type: preloadedGrid
   id: Lambordeere
   path: /Maps/Shuttles/ShuttleEvent/lambordeere.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ManOWar
+  path: /Maps/Shuttles/ShuttleEvent/manowar.yml
   copies: 1
 
 - type: preloadedGrid

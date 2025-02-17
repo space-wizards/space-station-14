@@ -20,6 +20,8 @@
     rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
     raffle:
       settings: default
+    mindRoles:
+    - MindRoleGhostRoleTeamFreeAgent
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [GoblinRobeOSP]
@@ -37,6 +39,8 @@
     rules: ghost-role-information-familiar-rules
     raffle:
       settings: default
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
   - type: Prying # approved by mira
     pryPowered: true
     force: true
@@ -50,9 +54,17 @@
     attributes:
       proper: true
       gender: male
+  - type: CanRummage
+    rummageLoot: !type:NestedSelector
+      tableId: GoblinKnightLoot
   - type: RandomHumanoidAppearance
     randomizeName: false
     hair: GoblinHairA
+    hairColor: "#ffdd56"
+    eyeColor: "#0d4883"
+    age: 35
+    sex: Male
+    skinColor: "#608c76"
 
 - type: entity
   parent: MobGoblin
@@ -65,7 +77,34 @@
     rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
     raffle:
       settings: default
+    mindRoles:
+    - MindRoleGhostRoleTeamFreeAgent
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [GoblinOSPEVA]
   - type: RandomHumanoidAppearance
+
+- type: entityTable
+  id: GoblinKnightLoot
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # garbage weight
+      weight: 50
+      children:
+      - id: RandomSpawner100 
+    - !type:GroupSelector # funny weight
+      weight: 15
+      children:
+      - id: ToyHammer
+      - id: ToySword 
+      - !type:GroupSelector # foam swords
+        children:
+        - id: FoamBlade
+        - id: FoamCutlass
+    - !type:GroupSelector # rare weight
+      weight: 2
+      children:
+      - id: UtilitySword
+      - id: Claymore 
+      - id: EnergySword
+        weight: 0.2

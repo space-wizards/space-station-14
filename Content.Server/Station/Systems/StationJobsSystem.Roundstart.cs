@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Antag;
 using Content.Server.Administration.Managers;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
@@ -17,6 +18,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -293,6 +295,7 @@ public sealed partial class StationJobsSystem
             if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
             {
                 assignedJobs.Add(player, (null, EntityUid.Invalid));
+                _antag.QueuedAntags.Remove(player); // imp edit
                 continue;
             }
 
@@ -359,6 +362,9 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 if (!_prototypeManager.TryIndex(jobId, out var job))
+                    continue;
+
+                if (!job.CanBeAntag && _antag.QueuedAntags.ContainsKey(player)) //imp edit
                     continue;
 
                 if (weight is not null && job.Weight != weight.Value)

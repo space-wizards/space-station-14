@@ -1,0 +1,175 @@
+# Base Nyano Mail
+- type: entity
+  parent: BaseMail
+  id: MailEngineeringCables
+  suffix: cables
+  components:
+  - type: Mail
+    contents:
+    - id: CableHVStack
+      orGroup: Cables
+    - id: CableMVStack
+      orGroup: Cables
+    - id: CableApcStack
+      orGroup: Cables
+
+- type: entity
+  parent: BaseMail
+  id: MailEngineeringKudzuDeterrent
+  suffix: antikudzu
+  components:
+  - type: Mail
+    contents:
+    - id: PlantBGoneSpray
+
+- type: entity
+  parent: BaseMail
+  id: MailEngineeringSheetGlass
+  suffix: sheetglass
+  components:
+  - type: Mail
+    contents:
+    - id: SheetGlass
+
+- type: entity
+  parent: BaseMail
+  id: MailEngineeringWelderReplacement
+  suffix: welder
+  components:
+  - type: Mail
+    contents:
+    - id: Welder
+
+# Frontier Mail
+
+- type: entity
+  parent: BaseMail
+  id: MailNFCircuitboardIndustrial
+  suffix: industrial circuitboard
+  components:
+  - type: Mail
+    contents:
+    - id: ThermomachineFreezerMachineCircuitBoard
+      orGroup: Board
+      prob: 0.5
+    - id: ThermomachineHeaterMachineCircuitBoard
+      orGroup: Board
+      prob: 0.5
+    - id: HellfireFreezerMachineCircuitBoard
+      orGroup: Board
+      prob: 0.25
+    - id: HellfireHeaterMachineCircuitBoard
+      orGroup: Board
+      prob: 0.25
+    - id: CryoPodMachineCircuitboard # Medical as well
+      orGroup: Board
+      prob: 0.5
+    - id: ChemMasterMachineCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: ChemDispenserMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: StasisBedMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: BiomassReclaimerMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: BiofabricatorMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: TurboItemRechargerCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: AutolatheHyperConvectionMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: ProtolatheHyperConvectionMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: HotplateMachineCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: CircuitImprinterHyperConvectionMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: SheetifierMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: RadarConsoleCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: OreProcessorIndustrialMachineCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: GasRecyclerMachineCircuitboard
+      orGroup: Board
+      prob: 0.1
+
+- type: entity
+  parent: BaseMail
+  id: MailNFCircuitboardService
+  suffix: service circuitboard
+  components:
+  - type: Mail
+    contents:
+    - id: ComputerTelevisionCircuitboard
+      orGroup: Board
+    - id: ReagentGrinderMachineCircuitboard
+      orGroup: Board
+    - id: ReagentGrinderIndustrialMachineCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: SurveillanceWirelessCameraMovableCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: MicrowaveMachineCircuitboard
+      orGroup: Board
+    - id: ElectricGrillMachineCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: FatExtractorMachineCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: SeedExtractorMachineCircuitboard
+      orGroup: Board
+      prob: 0.5
+    - id: BoozeDispenserMachineCircuitboard
+      orGroup: Board
+    - id: SodaDispenserMachineCircuitboard
+      orGroup: Board
+    - id: JukeboxCircuitBoard
+      orGroup: Board
+    - id: TelecomServerCircuitboard
+      orGroup: Board
+      prob: 0.25
+    - id: ComputerMassMediaCircuitboard
+      orGroup: Board
+      prob: 0.1
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailNFPowerTool 
+  suffix: power tool
+  components:
+  - type: Mail
+    contents:
+    - id: PaperMailNFPowerTool
+      orGroup: Paper
+    - id: JawsOfLife
+      orGroup: Gift
+      prob: 0.33
+    - id: PowerDrill
+      orGroup: Gift
+      prob: 0.33
+    - id: WelderIndustrial
+      orGroup: Gift
+      prob: 0.20
+      # Rare
+    - id: WelderIndustrialAdvanced
+      orGroup: Gift
+      prob: 0.10
+    - id: WelderExperimental
+      orGroup: Gift
+      prob: 0.04

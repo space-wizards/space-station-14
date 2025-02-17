@@ -13,3 +13,35 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-regal-black
   - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesSpaceNinja
+  id: ClothingHandsGlovesSpaceNinjaWeak
+  suffix: weak stun
+  components:
+  - type: NinjaGloves
+    abilities:
+    - components:
+      - type: BatteryDrainer
+      - type: StunProvider
+        stunTime: 3
+        cooldown: 30
+        stunCharge: 180
+        noPowerPopup: ninja-no-power
+        whitelist:
+          components:
+          - Stamina
+      - type: EmagProvider
+        whitelist:
+          components:
+          - Airlock
+    - objective: StealResearchObjective
+      components:
+      - type: ResearchStealer
+    - objective: TerrorObjective
+      components:
+      - type: CommsHacker
+        threats: NinjaThreats
+    - objective: MassArrestObjective
+      components:
+      - type: CriminalRecordsHacker

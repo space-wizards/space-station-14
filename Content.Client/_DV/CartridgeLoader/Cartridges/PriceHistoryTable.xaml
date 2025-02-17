@@ -1,0 +1,25 @@
+<cartridges:PriceHistoryTable
+    xmlns="https://spacestation14.io"
+    xmlns:cartridges="clr-namespace:Content.Client._DV.CartridgeLoader.Cartridges"
+    Orientation="Vertical"
+    HorizontalExpand="True"
+    Margin="0,5,0,0">
+
+    <!-- Header -->
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <Label Text="{Loc stock-trading-price-history}"
+               HorizontalExpand="True"
+               StyleClasses="LabelSubText" />
+    </BoxContainer>
+
+    <!-- Price history panel -->
+    <PanelContainer Name="HistoryPanel"
+                    HorizontalExpand="True"
+                    Margin="0,2,0,0">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      HorizontalAlignment="Center">
+            <GridContainer Name="PriceGrid" Columns="5" />
+        </BoxContainer>
+    </PanelContainer>
+</cartridges:PriceHistoryTable>

@@ -118,6 +118,7 @@
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
+  contraband: Tier3Contraband # imp
   metabolisms:
     Narcotic:
       metabolismRate: 1.0
@@ -255,6 +256,7 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: bitter
   color: "#63806e"
+  contraband: Minor
   metabolisms:
     Narcotic:
       effects:
@@ -293,6 +295,7 @@
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0
+  contraband: Tier2Contraband # imp
   metabolisms:
     Narcotic:
       effects:
@@ -313,6 +316,7 @@
   desc: reagent-desc-mute-toxin
   physicalDesc: reagent-physical-desc-syrupy
   color: "#000000"
+  contraband: Tier2Contraband # imp
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
@@ -335,6 +339,7 @@
   color: "#96a8b5"
   boilingPoint: 255.0
   meltingPoint: 36.0
+  contraband: Minor
   metabolisms:
     Narcotic:
       effects:

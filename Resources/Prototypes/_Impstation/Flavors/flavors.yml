@@ -24,6 +24,11 @@
   description: flavor-complex-horsepussy
 
 - type: flavor
+  id: moscowmule
+  flavorType: Complex
+  description: flavor-complex-moscowmule
+
+- type: flavor
   id: drinkdrink
   flavorType: Base
   description: flavor-base-drinkdrink
@@ -87,7 +92,7 @@
   id: whimsy
   flavorType: Base
   description: flavor-base-whimsy
-  
+
 - type: flavor
   id: secticket
   flavorType: Complex
@@ -107,3 +112,18 @@
   id: medium
   flavorType: Complex
   description: flavor-complex-medium
+
+- type: flavor
+  id: rodent
+  flavorType: Complex
+  description: flavor-complex-rodent
+
+- type: flavor
+  id: lovepotion
+  flavorType: Complex
+  description: flavor-complex-lovepotion
+
+- type: flavor
+  id: orangecoffee
+  flavorType: Complex
+  description: flavor-complex-orangecoffee

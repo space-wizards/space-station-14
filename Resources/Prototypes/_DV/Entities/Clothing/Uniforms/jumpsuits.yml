@@ -1,0 +1,21 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitChemShirt
+  name: formal chemistry suit
+  description: There's still some odd stains on this suit. Hm.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAdminAssistant
+  name: administrative assistant's jumpsuit
+  description: A suit worn by the Administrative Assistant. Smells of burnt coffee.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi

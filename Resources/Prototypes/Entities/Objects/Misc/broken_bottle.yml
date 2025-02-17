@@ -20,7 +20,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 2
+        Slash: 4
   - type: Tag
     tags:
     - Trash
@@ -31,3 +31,8 @@
   - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
+  # imp edits #
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+  # end imp edits #

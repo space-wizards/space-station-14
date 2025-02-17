@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by kipdotnet (github) for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coffeemachine",
+      "directions": 4
+    },
+    {
+      "name": "unshaded",
+      "directions": 4
+    }
+  ]
+}

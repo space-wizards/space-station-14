@@ -5,3 +5,30 @@
     proto: SeniorBartender
   equipment:
     outerClothing: ClothingOuterApronCuteBar
+
+- type: loadout
+  id: ClothingUniformNightclubSuit
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuit #imp
+
+- type: loadout
+  id: ClothingUniformNightclubSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuitSkirt #imp
+
+- type: loadout
+  id: ClothingUniformSeniorBartender
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+  equipment:
+    jumpsuit: ClothingUniformSeniorBartender #imp
+
+- type: loadout
+  id: ClothingUniformSeniorBartenderSkirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+  equipment:
+    jumpsuit: ClothingUniformSeniorBartenderSkirt #imp
+    

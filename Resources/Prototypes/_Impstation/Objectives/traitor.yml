@@ -6,6 +6,7 @@
   description: Do it however you like, just make sure they don't make it to centcom.
   components:
   - type: Objective
+    issuer: objective-issuer-syndicate
     difficulty: 1.75
     unique: true
   - type: TargetObjective
@@ -21,6 +22,7 @@
   description: Identify yourself at your own risk. We just need them alive.
   components:
   - type: Objective
+    issuer: objective-issuer-syndicate
     difficulty: 1.75
     unique: true
   - type: TargetObjective
@@ -29,3 +31,200 @@
   - type: ObjectiveBlacklistRequirement
     blacklist:
       component: null
+
+#Gimmick Objectives
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: KidnapGimmickObjective
+  name: Kidnap Crew
+  description: Try to kidnap active crew members and leave them stranded but alive in unpleasant places. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    difficulty: 1.25
+    unique: true
+    icon:
+      sprite: Objects/Misc/cablecuffs.rsi
+      state: cuff
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: TrapsGimmickObjective
+  name: Booby Trap the Station
+  description: Lay various traps around the station. Be dastardly. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    difficulty: 1.25
+    unique: true
+    icon:
+      sprite: Objects/Weapons/Grenades/modular.rsi
+      state: complete
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: EliminatePrisonersGimmickObjective
+  name: Kill Anyone Who's Caught
+  description: If anyone gets arrested, try to eliminate them. The Syndicate does not appreciate failure. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    difficulty: 1.25
+    unique: true
+    icon:
+      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: RescuePrisonersGimmickObjective
+  name: Rescue Syndicate Operatives from Prison
+  description: If anyone gets arrested, try to rescue them. The Syndicate values its employees! This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Misc/handcuffs.rsi
+      state: handcuff
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: MedbayInjuryGimmickObjective
+  name: Cause Mass Non-Lethal Injuries
+  description: Waste Medbay's time by causing a lot of non-fatal injuries around the station. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Specific/Medical/medical.rsi
+      state: gauze
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: HitmanGimmickObjective
+  name: Become a Hitman
+  description: Become a hitman and resolve personal disputes on the station. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: DisruptTrafficGimmickObjective
+  name: Disrupt Station Traffic
+  description: Attempt to disrupt traffic flow as much as possible around the station through any means. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Misc/inflatable_wall.rsi
+      state: inflatable_wall
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: AccessibilityGimmickObjective
+  name: Make the Station Accessible
+  description: Make as much of the station as possible accessible to the public. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Weapons/Melee/cane.rsi
+      state: cane
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: RecoverGimmickObjective
+  name: Recover Stolen Syndicate Gear
+  description: Syndicate gear must not fall into the wrong hands. Confiscate, recover, or destroy any captured gear. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Misc/Handy_Flags/syndie_handy_flag.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: WitnessGimmickObjective
+  name: Silence the Witnesses
+  description: Attempt to discredit, silence, or eliminate any witnesses to the many crimes that occur on the station. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: UndermineGimmickObjective
+  name: Undermine Station Authority
+  description: Try to undermine the authority of the station command staff through any means necessary. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Clothing/Head/Hats/captain.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: UnseenGimmickObjective
+  name: Push Your Luck
+  description: See how much trouble you can get up to without ever getting spotted using syndicate gear. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Clothing/Head/Hats/brownfedora.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: TrustedGimmickObjective
+  name: Become a Trusted Ally of Security
+  description: Try to become a trusted ally of the security staff while secretly committing terrible crimes. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: Clothing/Head/Helmets/security.rsi
+      state: icon
+  - type: AutoCompleteCondition
+
+- type: entity
+  parent: [BaseTraitorObjective]
+  id: SupervillainGimmickObjective
+  name: Become a Supervillain
+  description: Try to become a supervillain by using costumes, treachery, and a lot of bluster and bravado. This objective is not tracked and will automatically succeed, so just have fun with it!
+  components:
+  - type: Objective
+    unique: true
+    difficulty: 1.25
+    icon:
+      sprite: _Impstation/Clothing/Neck/Cloaks/straight.rsi
+      state: icon
+  - type: AutoCompleteCondition

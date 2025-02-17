@@ -12,6 +12,9 @@
     layers:
     - state: bag
       map: ["unfoldedLayer", "enum.StorageVisualLayers.Base"]
+    - state: bag_overlay #imp
+      map: ["unfoldedLayerOverlay"] #imp
+      shader: unshaded #imp
     - state: bag_folded
       map: ["foldedLayer"]
       visible: false
@@ -133,7 +136,6 @@
     solution: food
   - type: Extractable
     grindableSolutionName: food
-  - type: SupermatterImmune
 
 - type: entity
   parent: Ash

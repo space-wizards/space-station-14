@@ -3,11 +3,12 @@ using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Goobstation.Standing;
 
@@ -15,8 +16,10 @@ public abstract class SharedLayingDownSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -26,9 +29,9 @@ public abstract class SharedLayingDownSystem : EntitySystem
 
         SubscribeNetworkEvent<ChangeLayingDownEvent>(OnChangeState);
 
-        SubscribeLocalEvent<StandingStateComponent, StandingUpDoAfterEvent>(OnStandingUpDoAfter);
         SubscribeLocalEvent<LayingDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
         SubscribeLocalEvent<LayingDownComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<LayingDownComponent, StandUpDoAfterEvent>(OnDoAfter);
     }
 
     public override void Shutdown()
@@ -47,7 +50,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return;
         }
 
-        RaiseNetworkEvent(new ChangeLayingDownEvent());
+        RaiseNetworkEvent(new ChangeLayingDownEvent(intentional: true));
     }
 
     private void OnChangeState(ChangeLayingDownEvent ev, EntitySessionEventArgs args)
@@ -72,22 +75,20 @@ public abstract class SharedLayingDownSystem : EntitySystem
         if (HasComp<KnockedDownComponent>(uid) || !_mobState.IsAlive(uid))
             return;
 
-        if (_standing.IsDown(uid, standing))
-            TryStandUp(uid, layingDown, standing);
-        else
-            TryLieDown(uid, layingDown, standing);
-    }
-
-    private void OnStandingUpDoAfter(EntityUid uid, StandingStateComponent component, StandingUpDoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || HasComp<KnockedDownComponent>(uid) ||
-            _mobState.IsIncapacitated(uid) || !_standing.Stand(uid))
+        var isDown = _standing.IsDown(uid, standing);
+        if (_timing.CurTime < layingDown.NextLayDown && isDown)
         {
-            component.CurrentState = StandingState.Lying;
+            var timeRemaining = layingDown.NextLayDown - _timing.CurTime;
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, uid, timeRemaining, new StandUpDoAfterEvent(), uid) { };
+
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
             return;
         }
 
-        component.CurrentState = StandingState.Standing;
+        if (isDown)
+            TryStandUp(uid, layingDown, standing);
+        else
+            TryLieDown(uid, layingDown, standing, isIntentional: ev.Intentional);
     }
 
     private void OnRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -111,6 +112,20 @@ public abstract class SharedLayingDownSystem : EntitySystem
         _standing.Stand(uid, standingState);
     }
 
+    private void OnDoAfter(EntityUid uid, LayingDownComponent component, StandUpDoAfterEvent args)
+    {
+        if (args.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("popup-laying-down-stand-up-cancel"), uid, uid);
+            return;
+        }
+
+        if (!TryComp<StandingStateComponent>(uid, out StandingStateComponent? standing))
+            return;
+
+        TryStandUp(uid, component, standing);
+    }
+
     public bool TryStandUp(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null)
     {
         if (!Resolve(uid, ref standingState, false) ||
@@ -122,21 +137,11 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return false;
         }
 
-        var args = new DoAfterArgs(EntityManager, uid, layingDown.StandingUpTime, new StandingUpDoAfterEvent(), uid)
-        {
-            BreakOnDamage = true,
-            BreakOnHandChange = false,
-            RequireCanInteract = false
-        };
-
-        if (!_doAfter.TryStartDoAfter(args))
-            return false;
-
-        standingState.CurrentState = StandingState.GettingUp;
+        _standing.Stand(uid, standingState);
         return true;
     }
 
-    public bool TryLieDown(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null, DropHeldItemsBehavior behavior = DropHeldItemsBehavior.NoDrop)
+    public bool TryLieDown(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null, DropHeldItemsBehavior behavior = DropHeldItemsBehavior.NoDrop, bool isIntentional = false)
     {
         if (!Resolve(uid, ref standingState, false) ||
             !Resolve(uid, ref layingDown, false) ||
@@ -148,13 +153,11 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return false;
         }
 
-        _standing.Down(uid, true, behavior != DropHeldItemsBehavior.NoDrop, false, standingState);
+        _standing.Down(uid, true, behavior != DropHeldItemsBehavior.NoDrop, false, standingState, intentional: isIntentional);
+        layingDown.NextLayDown = _timing.CurTime + layingDown.Cooldown;
         return true;
     }
 }
-
-[Serializable, NetSerializable]
-public sealed partial class StandingUpDoAfterEvent : SimpleDoAfterEvent;
 
 public enum DropHeldItemsBehavior : byte
 {

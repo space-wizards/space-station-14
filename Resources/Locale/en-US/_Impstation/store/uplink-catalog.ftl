@@ -9,3 +9,9 @@ uplink-nemesis-br-desc = Precise and Deadly: the stylish Nemesis-11 Battle Rifle
 
 uplink-rifle-magazine-nemesis-name = Rifle Magazine (.25 Caseless)
 uplink-rifle-magazine-nemesis-desc = Rifle magazine with 24 cartridges. Compatible with the Nemesis-11.
+
+uplink-bulletcatcher-name = ACME brand "Bulletcatcher™"
+uplink-bulletcatcher-desc = Security aiming guns at you? Worse, your audience? Put a quick stop to that with the ACME brand "Bulletcatcher™"! When they point that rifle at your face, point our patented pipe right back at them!
+
+uplink-spaceblade-name = weaponized space blade
+uplink-spaceblade-desc = One of those hot new 'space blade' toys that kids love, except with the edges sharpened for maximum ankle shredding.

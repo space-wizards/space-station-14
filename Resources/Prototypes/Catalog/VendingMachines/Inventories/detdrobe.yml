@@ -9,6 +9,10 @@
     ClothingHeadHatFedoraBrown: 2
     ClothingUniformJumpsuitDetectiveGrey: 2
     ClothingUniformJumpskirtDetectiveGrey: 2
+    ClothingUniformDetectiveSuit: 2 #imp
+    ClothingUniformDetectiveSuitSkirt: 2 #imp
+    ClothingUniformMiamiVice: 2 #imp
+    ClothingUniformMiamiViceSkirt: 2 #imp
     ClothingOuterVestDetective: 2
     ClothingNeckTieDet: 2
     ClothingHeadHatFedoraGrey: 2

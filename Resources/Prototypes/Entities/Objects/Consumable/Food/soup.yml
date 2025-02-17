@@ -552,7 +552,7 @@
 
 - type: entity
   name: amanita jelly
-  parent: FoodInjectableBase
+  parent: [FoodInjectableBase, BaseMajorContraband]
   id: FoodJellyAmanita
   description: It's evil, don't touch it!
   components:

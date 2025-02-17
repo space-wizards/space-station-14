@@ -57,6 +57,11 @@
 
 - type: latheRecipe
   parent: BaseLightRecipe
+  id: WarmLightBulb
+  result: WarmLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: GlowstickRed
   result: GlowstickRed
   materials:
@@ -91,22 +96,6 @@
     Wood: 100
 
 - type: latheRecipe
-  id: DeskBell
-  result: DeskBell
-  completetime: 1
-  materials:
-    Steel: 50
-
-- type: latheRecipe
-  id: Drone
-  result: Drone
-  completetime: 6
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 500
-
-- type: latheRecipe
   id: SynthesizerInstrument
   result: SynthesizerInstrument
   completetime: 4
@@ -129,6 +118,20 @@
   completetime: 4
   materials:
     Steel: 300
+
+- type: latheRecipe
+  id: DoubleEmergencyOxygenTank
+  result: DoubleEmergencyOxygenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: DoubleEmergencyNitrogenTank
+  result: DoubleEmergencyNitrogenTank
+  completetime: 4
+  materials:
+    Steel: 250
 
 - type: latheRecipe
   id: ClothingShoesBootsMagSci
@@ -186,6 +189,11 @@
   parent: BaseFauxTileRecipe
   id: FauxTileAstroSnow
   result: FloorTileItemAstroSnow
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSand
+  result: FloorTileItemAstroAsteroidSand
 
 - type: latheRecipe
   id: FloorGreenCircuit

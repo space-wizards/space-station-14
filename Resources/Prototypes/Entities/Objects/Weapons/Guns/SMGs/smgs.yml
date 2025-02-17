@@ -85,7 +85,7 @@
   name: C-20r submachine gun
   parent: [BaseWeaponSubMachineGun, Tier3Contraband]
   id: WeaponSubMachineGunC20r
-  description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo.
+  description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -106,9 +106,9 @@
     maxAngle: 32
     shotsPerBurst: 5
     availableModes:
-    - SemiAuto
     - Burst
     - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
@@ -123,7 +123,7 @@
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
   id: WeaponSubMachineGunDrozd
-  description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo.
+  description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo. #imp
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -142,13 +142,14 @@
     - type: Gun
       minAngle: 21
       maxAngle: 32
-      fireRate: 12
+      fireRate: 6
       burstFireRate: 12
-      selectedMode: Burst
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
       availableModes:
-        - Burst
+      - Burst
+      - FullAuto
+      - SemiAuto
       shotsPerBurst: 3
       burstCooldown: 0.25
     - type: ItemSlots
@@ -228,7 +229,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
   id: WeaponSubMachineGunWt550
-  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
+  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -258,9 +259,9 @@
     burstCooldown: 0.2
     burstFireRate: 7
     availableModes:
-    - SemiAuto
     - Burst
     - FullAuto
+    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:

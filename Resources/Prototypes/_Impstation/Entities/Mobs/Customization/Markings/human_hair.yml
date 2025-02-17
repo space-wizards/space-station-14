@@ -13,3 +13,11 @@
   sprites:
     - sprite: _Impstation/Mobs/Customization/human_hair.rsi
       state: lowpigtails
+
+- type: marking
+  id: HumanHairFrenchBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: frenchbraid
