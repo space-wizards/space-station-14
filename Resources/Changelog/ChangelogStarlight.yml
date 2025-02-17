@@ -3475,4 +3475,18 @@ Entries:
   id: 481
   time: '2025-02-16T19:27:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/335
-
+- author: Rinary
+  changes:
+  - message: Now Salvage has MindShield and can't be antag.
+    type: Tweak
+  id: 482
+  time: '2025-02-17T09:43:09.650707+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added Access Lock to juggernaut suit, now if you wear juggernaut suit
+      without Nukeops access, you will die(copy it using agent id from basic card).
+    type: Tweak
+  id: 483
+  time: '2025-02-17T09:44:07.545890+00:00'
+  url: 'null'
