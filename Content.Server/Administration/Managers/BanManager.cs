@@ -53,7 +53,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         _netManager.RegisterNetMessage<MsgRoleBans>();
 
-        _db.SubscribeToNotifications(OnDatabaseNotification);
+        _db.SubscribeToJsonNotification<BanNotificationData>(
+            _taskManager,
+            _sawmill,
+            BanNotificationChannel,
+            ProcessBanNotification,
+            OnDatabaseNotificationEarlyFilter);
 
         _userDbData.AddOnLoadPlayer(CachePlayerData);
         _userDbData.AddOnPlayerDisconnect(ClearPlayerData);

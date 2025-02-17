@@ -3,6 +3,7 @@ player-tab-username = Username
 player-tab-character = Character
 player-tab-job = Job
 player-tab-antagonist = Antagonist
+player-tab-roletype = Role Type
 player-tab-playtime = Playtime
 player-tab-show-disconnected = Show Disconnected
 player-tab-overlay = Overlay
