@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: AI can now use fire alarms.
-    type: Add
-  id: 7459
-  time: '2024-09-30T09:56:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32467
-- author: BramvanZijp
-  changes:
-  - message: The Engineering Cyborg's Advanced Tool Module now has jaws of life and
-      a power drill instead of an omnitool, with a multitool replacing the network
-      configurator.
-    type: Tweak
-  id: 7460
-  time: '2024-09-30T17:38:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32487
-- author: pofitlo-Git
-  changes:
-  - message: Added a camera bug in the syndicate uplink that cost 4 TC and allow you
-      watch all cameras on station.
-    type: Add
-  id: 7461
-  time: '2024-09-30T22:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30250
-- author: kosticia
-  changes:
-  - message: The maximum number of ID cards required to complete a thief's objective
-      has been changed from 15 to 10.
-    type: Tweak
-  id: 7462
-  time: '2024-09-30T22:40:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32411
-- author: Golinth
-  changes:
-  - message: Firebots can now be constructed by scientists - the bots wander the station
-      looking for fires to put out with their built-in extinguisher.
-    type: Add
-  id: 7463
-  time: '2024-10-01T03:13:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32482
-- author: ScarKy0
-  changes:
-  - message: Binary encryption key now uses an AI icon
-    type: Tweak
-  id: 7464
-  time: '2024-10-01T04:03:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32327
-- author: BramvanZijp
-  changes:
-  - message: Fixed borgs being able to be briefly disabled by others.
-    type: Fix
-  id: 7465
-  time: '2024-10-01T15:13:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32485
-- author: BackeTako
-  changes:
-  - message: Gay Pin
-    type: Add
-  id: 7466
-  time: '2024-10-01T21:07:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32584
-- author: BackeTako
-  changes:
-  - message: Reinforced walls sprite see throu top
-    type: Fix
-  id: 7467
-  time: '2024-10-01T21:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32578
-- author: Zylo
-  changes:
-  - message: Seismic charges being uncraftable
-    type: Fix
-  id: 7468
-  time: '2024-10-02T02:56:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32459
 - author: slarticodefast
   changes:
   - message: Fixed the chameleon settings menu not showing up for the voice mask.
@@ -3901,3 +3826,76 @@
   id: 7958
   time: '2025-02-16T08:35:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32522
+- author: metalgearsloth
+  changes:
+  - message: Fix lighting quality affecting planet lighting.
+    type: Fix
+  id: 7959
+  time: '2025-02-16T13:29:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35207
+- author: metalgearsloth
+  changes:
+  - message: Re-enable blur for rooves and increase amount of blur.
+    type: Tweak
+  id: 7960
+  time: '2025-02-16T15:35:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35213
+- author: metalgearsloth
+  changes:
+  - message: Rooves now block weather.
+    type: Tweak
+  id: 7961
+  time: '2025-02-16T15:55:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35214
+- author: n00kii
+  changes:
+  - message: Fixed laser weapon visuals being broken when shooting across grids or
+      into space.
+    type: Fix
+  id: 7962
+  time: '2025-02-16T16:14:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34515
+- author: Velken
+  changes:
+  - message: ': Paramedic Siren''s light is now visible to all and not just the wearer.'
+    type: Fix
+  id: 7963
+  time: '2025-02-16T18:43:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35203
+- author: slarticodefast
+  changes:
+  - message: Fixed uplink items not being able to be used in your hand.
+    type: Fix
+  id: 7964
+  time: '2025-02-16T18:47:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35218
+- author: PicklOH
+  changes:
+  - message: Added a lethals drum to the Bulldog bundle.
+    type: Add
+  - message: Removed a beanbag drum from the Bulldog bundle.
+    type: Remove
+  id: 7965
+  time: '2025-02-16T22:30:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34945
+- author: psykana
+  changes:
+  - message: DNA Scrambler implant now requires confirmation to activate
+    type: Add
+  id: 7966
+  time: '2025-02-17T06:16:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35232
+- author: Emisse
+  changes:
+  - message: Centcomm has been rebuilt from the ground up.
+    type: Tweak
+  id: 7967
+  time: '2025-02-17T08:51:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35240
+- author: Sparlight
+  changes:
+  - message: Space debris has returned to Wizden servers.
+    type: Add
+  id: 7968
+  time: '2025-02-17T12:56:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34795
