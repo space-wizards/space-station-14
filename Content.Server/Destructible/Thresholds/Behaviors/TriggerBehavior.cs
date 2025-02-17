@@ -1,10 +1,16 @@
-﻿namespace Content.Server.Destructible.Thresholds.Behaviors;
+﻿using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Destructible.Thresholds.Behaviors;
+
+namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [DataDefinition]
 public sealed partial class TriggerBehavior : IThresholdBehavior
 {
-    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner,
+        IDependencyCollection collection,
+        EntityManager entManager,
+        EntityUid? cause = null)
     {
-        system.TriggerSystem.Trigger(owner, cause);
+        entManager.System<TriggerSystem>().Trigger(owner, cause);
     }
 }

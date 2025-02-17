@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Fluids.Components;
 using JetBrains.Annotations;
 
@@ -18,16 +19,21 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// If none are available do nothing.
         /// </summary>
         /// <param name="owner">Entity on which behavior is executed</param>
-        /// <param name="system">system calling the behavior</param>
+        /// <param name="collection"></param>
+        /// <param name="entManager"></param>
         /// <param name="cause"></param>
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        /// <param name="system">system calling the behavior</param>
+        public void Execute(EntityUid owner,
+            IDependencyCollection collection,
+            EntityManager entManager,
+            EntityUid? cause = null)
         {
-            var solutionContainerSystem = system.EntityManager.System<SharedSolutionContainerSystem>();
-            var spillableSystem = system.EntityManager.System<PuddleSystem>();
+            var solutionContainerSystem = entManager.System<SharedSolutionContainerSystem>();
+            var spillableSystem = entManager.System<PuddleSystem>();
 
-            var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
+            var coordinates = entManager.GetComponent<TransformComponent>(owner).Coordinates;
 
-            if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
+            if (entManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
                 solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName, out _, out var compSolution))
             {
                 spillableSystem.TrySplashSpillAt(owner, coordinates, compSolution, out _, false, user: cause);

@@ -7,6 +7,7 @@ using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
@@ -47,6 +48,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
+    [Dependency] private   readonly DamageExamineSystem _damageExamine = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
