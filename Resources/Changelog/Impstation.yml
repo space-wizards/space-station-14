@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Impstation changelogs now let you know when they've been updated - just
-      like this one!
-    type: Add
-  id: 647
-  time: '2024-12-04T13:19:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/897
-- author: Darkmajia
-  changes:
   - message: Space wind has been disabled.
     type: Remove
   id: 648
@@ -4170,3 +4162,11 @@
   id: 1146
   time: '2025-02-17T01:45:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1683
+- author: widgetbeck
+  changes:
+  - message: NT's mail telepads no longer exponentially increase the time between
+      deliveries.
+    type: Fix
+  id: 1147
+  time: '2025-02-17T04:22:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1715
