@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Guidebook;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
@@ -57,5 +58,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [DataField("accessDeniedSound")]
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+
+        #region GuidebookData
+
+        [GuidebookData]
+        public float Volume => Air.Volume;
+
+        #endregion
     }
 }

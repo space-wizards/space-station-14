@@ -16,6 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
+using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -47,6 +48,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
             BluespaceEffect(uid, component, component, true);
+
+        EnsureComp<ArrivalsBlacklistComponent>(uid); // To stop people getting to arrivals terminal
     }
 
     public void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)

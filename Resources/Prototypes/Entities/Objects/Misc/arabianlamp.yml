@@ -7,10 +7,10 @@
   - type: Appearance
   - type: AccessReader
     access: [ [ "CentralCommand" ] ]
-    breakOnEmag: false
+    breakOnAccessBreaker: false
   - type: Lock
     lockOnClick: false
-    breakOnEmag: false
+    breakOnAccessBreaker: false
   - type: EntityStorage
     capacity: 1 # Its smol.
     itemCanStoreMobs: false #  just leaving this here explicitly since I know at some point someone will want to use this to hold a mob. This also prevents it from becoming His Grace.
