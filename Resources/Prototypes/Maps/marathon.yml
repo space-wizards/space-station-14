@@ -16,54 +16,54 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_rod.yml
         - type: StationJobs
-          availableJobs:
-            #service
+          availableJobs: # Total of 63 jobs roundstart, max of 79 inc. latejoins and trainees.
+            # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            AdministrativeAssistant : [ 1, 1 ]
+            AdministrativeAssistant : [ 1, 1 ] # imp
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            # service - 16-17
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
-            Chef: [ 2, 2 ]
-            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 3, 3 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 4 ]
-            MedicalIntern: [ 3, 3 ]
-            Psychologist: [ 1, 1 ]
-            Paramedic: [ 1, 1 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 3, 3 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
-            Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 2, 2 ]
-            Brigmedic: [ 1, 1 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 3, 3 ]
-            Courier: [ 2, 2 ]
-            SupplyAssistant: [ 2, 2 ]
-            #civilian
-            Passenger: [ -1, -1 ]
+            Chef: [ 2, 2 ]
             Clown: [ 1, 1 ]
+            Janitor: [ 2, 2 ]
+            Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Reporter: [ 1, 1 ]
-            #silicon
-            StationAi: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            # engineering - 7-10
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 4, 4 ]
+            TechnicalAssistant: [ 3, 3 ]
+            # medical - 8-11
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 4 ]
+            MedicalIntern: [ 3, 3 ]
+            Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
+            # science - 7-10
             Borg: [ 2, 2 ]
+            ResearchAssistant: [ 3, 3 ]
+            Scientist: [ 4, 4 ]
+            StationAi: [ 1, 1 ]
+            # security - 9-13
+            Brigmedic: [ 1, 1 ] # imp
+            Detective: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 4, 4 ]
+            SecurityOfficer: [ 4, 4 ]
+            Warden: [ 1, 1 ]
+            # supply - 8-10
+            CargoTechnician: [ 3, 3 ]
+            Courier: [ 2, 2 ] # imp
+            SalvageSpecialist: [ 3, 3 ]
+            SupplyAssistant: [ 2, 2 ] # imp
+            # civilian
+            Passenger: [ -1, -1 ]
