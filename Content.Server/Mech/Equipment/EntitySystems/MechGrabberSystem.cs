@@ -1,7 +1,7 @@
-using System.Linq;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
+using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
@@ -10,12 +10,12 @@ using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using System.Linq;
 
 namespace Content.Server.Mech.Equipment.EntitySystems;
 
@@ -148,7 +148,10 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!TryComp<MechComponent>(args.User, out var mech) || mech.PilotSlot.ContainedEntity == target)
             return;
 
-        if (mech.Energy + component.GrabEnergyDelta < 0)
+        if (!TryComp<BatteryComponent>(mech.BatterySlot.ContainedEntity, out var battery))
+            return;
+
+        if (battery.CurrentCharge + component.GrabEnergyDelta < 0)
             return;
 
         if (!_interaction.InRangeUnobstructed(args.User, target))

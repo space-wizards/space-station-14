@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mech;
@@ -59,4 +59,11 @@ public sealed partial class MechOpenUiEvent : InstantActionEvent
 
 public sealed partial class MechEjectPilotEvent : InstantActionEvent
 {
+}
+
+[Serializable, NetSerializable]
+public sealed class MechEnergyMessage(float charge, float maxEnergy) : BoundUserInterfaceMessage
+{
+    public readonly float Charge = charge;
+    public readonly float MaxEnergy = maxEnergy;
 }
