@@ -344,14 +344,6 @@
   - BartenderCuteApron
 
 - type: loadoutGroup
-  id: BartenderShoes
-  name: loadout-group-bartender-shoes
-  loadouts:
-  - BlackShoes
-  - LacedShoes
-  - ClownShoesExpert
-
-- type: loadoutGroup
   id: BartenderPDA
   name: loadout-group-bartender-id
   loadouts:
@@ -435,9 +427,10 @@
   id: LibrarianShoes
   name: loadout-group-librarian-shoes
   loadouts:
-  - LeatherShoes
-  - LacedShoes
   - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: LawyerJumpsuit
@@ -469,6 +462,7 @@
   loadouts:
   - LacedShoes
   - LeatherShoes
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -525,7 +519,9 @@
   loadouts:
   - BlackShoes
   - LacedShoes
-  - ClownShoesExpert
+  - LeatherShoes #imp
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: loadoutGroup
   id: JanitorHead
@@ -816,8 +812,9 @@
   id: MusicianShoes
   name: loadout-group-musician-shoes
   loadouts:
-  - LacedShoes
   - BlackShoes
+  - LacedShoes
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: Instruments
@@ -1233,8 +1230,10 @@
   name: loadout-group-research-director-shoes
   loadouts:
   - BrownShoes
-  - LeatherShoes
   - WhiteShoes
+  - LacedShoes #imp
+  - LeatherShoes
+  - WhiteDressShoes #imp
   - ScienceWinterBoots
   - RoboticistWinterBoots
 
@@ -1923,8 +1922,10 @@
   name: loadout-group-reporter-shoes
   loadouts:
   - WhiteShoes
+  - LacedShoes #imp
   - LeatherShoes
-  - ClownShoesExpert
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: loadoutGroup
   id: PsychologistJumpsuit
@@ -1944,10 +1945,12 @@
   id: PsychologistShoes
   name: loadout-group-psychologist-shoes
   loadouts:
-  - LeatherShoes
   - BlackShoes
   - WhiteShoes
-  - ClownShoesExpert # imp
+  - LacedShoes #imp
+  - LeatherShoes
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: loadoutGroup
   id: BoxerJumpsuit

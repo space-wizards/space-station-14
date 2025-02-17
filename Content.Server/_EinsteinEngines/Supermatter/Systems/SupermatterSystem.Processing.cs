@@ -8,6 +8,7 @@ using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Chat;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -799,6 +800,23 @@ public sealed partial class SupermatterSystem
     private void HandleStatus(EntityUid uid, SupermatterComponent sm)
     {
         var currentStatus = GetStatus(uid, sm);
+
+        // Send port updates out for any linked devices
+        if (sm.Status != currentStatus && HasComp<DeviceLinkSourceComponent>(uid))
+        {
+            var port = currentStatus switch
+            {
+                SupermatterStatusType.Normal => sm.PortNormal,
+                SupermatterStatusType.Caution => sm.PortCaution,
+                SupermatterStatusType.Warning => sm.PortWarning,
+                SupermatterStatusType.Danger => sm.PortDanger,
+                SupermatterStatusType.Emergency => sm.PortEmergency,
+                SupermatterStatusType.Delaminating => sm.PortDelaminating,
+                _ => sm.PortInactive
+            };
+
+            _link.InvokePort(uid, port);
+        }
 
         sm.Status = currentStatus;
 
