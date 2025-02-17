@@ -18,8 +18,17 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
-        Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
-        Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
+        Next.OnPressed += _ =>
+        {
+            Next.Disabled = true;
+            OnNextButtonPressed?.Invoke();
+        };
+
+        Prev.OnPressed += _ =>
+        {
+            Prev.Disabled = true;
+            OnPrevButtonPressed?.Invoke();
+        };
         NotificationSwitch.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
     }
 
