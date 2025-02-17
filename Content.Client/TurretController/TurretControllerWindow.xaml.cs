@@ -71,7 +71,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         if (_owner == null)
             return;
 
-        // Set up arament buttons
+        // Set up armament buttons
         SafeButton.OnToggled += args => OnArmamentButtonPressed(SafeButton, -1);
         StunButton.OnToggled += args => OnArmamentButtonPressed(StunButton, 0);
         LethalButton.OnToggled += args => OnArmamentButtonPressed(LethalButton, 1);

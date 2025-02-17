@@ -106,7 +106,7 @@
                             </PanelContainer>
 
                             <!-- Access configuration -->
-                            <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" VerticalExpand="True" HorizontalExpand="True" MinHeight="68">
+                            <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" VerticalExpand="True" HorizontalExpand="True" MinHeight="70">
 
                                 <!-- Access groups -->
                                 <BoxContainer Name="AccessGroupList" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.5" Margin="0 0 10 0">
