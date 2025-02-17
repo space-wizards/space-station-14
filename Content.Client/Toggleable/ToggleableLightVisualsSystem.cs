@@ -1,7 +1,9 @@
 using Content.Client.Clothing;
 using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
@@ -62,8 +64,23 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
             || !enabled)
             return;
 
+        if (!TryComp(uid, out SpriteComponent? sprite))
+            return;
+
         if (!component.ClothingVisuals.TryGetValue(args.Slot, out var layers))
             return;
+
+        //Check for any species specific data for sprite layers
+        if (TryComp(args.Equipee, out InventoryComponent? inventory) && inventory.SpeciesId != null && sprite.BaseRSI != null) 
+        {
+            foreach (var layer in layers) 
+            {
+                if (sprite.BaseRSI.TryGetState($"{layer.State}-{inventory.SpeciesId}", out _))
+                    layer.State = $"{layer.State}-{inventory.SpeciesId}";
+            else 
+                continue;
+            } 
+        }
 
         var modulate = AppearanceSystem.TryGetData<Color>(uid, ToggleableLightVisuals.Color, out var color, appearance);
 
