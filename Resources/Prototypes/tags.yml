@@ -420,6 +420,9 @@
   id: Cryobeaker
 
 - type: Tag
+  id: CrystalBlack
+
+- type: Tag
   id: CrystalBlue
 
 - type: Tag
@@ -436,6 +439,9 @@
 
 - type: Tag
   id: CrystalRed
+
+- type: Tag
+  id: CrystalYellow
 
 - type: Tag
   id: CubanCarp
