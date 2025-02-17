@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: Widgetbeck, TGRCDev
-  changes:
-  - message: Courtesy of @TGRCdev, the Blocking action will now deactivate when the
-      entity blocking is crit or stunned.
-    type: Fix
-  - message: Decapoid claws have reduced Piercing damage and increased Structural
-      damage.
-    type: Tweak
-  - message: Decapoid claws can now be used as a shield, blocking 20% of incoming
-      damage when active.
-    type: Tweak
-  - message: Decapoids now have greater friction while weightless and near structures.
-    type: Tweak
-  - message: Decapoid guidebook entry update.
-    type: Tweak
-  id: 653
-  time: '2024-12-04T15:27:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/895
 - author: Sha-Seng
   changes:
   - message: Stun Enforcers now come from nonlethals research to make advanced riot
@@ -4168,3 +4150,10 @@
   id: 1152
   time: '2025-02-17T15:24:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1682
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added 14 New "Gimmick" Traitor Objectives.
+    type: Add
+  id: 1153
+  time: '2025-02-17T15:36:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1686
