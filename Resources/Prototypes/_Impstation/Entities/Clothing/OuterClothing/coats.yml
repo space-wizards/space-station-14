@@ -2,7 +2,7 @@
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCommandContraband]
   id: ClothingOuterCoatCMO
   name: chief medical officer's prestige lab coat
-  description: A medical lab coat for the Chief Medical Officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky. 
+  description: A medical lab coat for the Chief Medical Officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi
@@ -19,7 +19,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatJokester
   name: jokester's coat
-  description: A snazzy, striking red overcoat for professional comedians. The shoulder pads enable higher-brow humor. 
+  description: A snazzy, striking red overcoat for professional comedians. The shoulder pads enable higher-brow humor.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Coats/clown_jokestercoat.rsi
@@ -39,3 +39,67 @@
     sprite: _Impstation/Clothing/OuterClothing/Coats/qm_hugecoat.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Coats/qm_hugecoat.rsi
+
+- type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatFieldJacket
+  name: field jacket
+  description: A soft black suit jacket with loose cuffs. The white logos mark the wearer as Nanotrasen security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatCargoBomber
+  name: cargo bomber
+  description: A brown bomber jacket, worn with the sleeves pushed up. Embroidered on the back is a long-forgotten symbol of Cargonia.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/cargo_bomber.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/cargo_bomber.rsi #imp
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterCoatBomberSecurity
+  name: field bomber
+  description: A red bomber jacket, worn open with the sleeves pushed up. The Nanotrasen logo on the front and the shield on the back are sewn with special high-vis thread.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_sec.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_sec.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatEngineerBomber
+  name: engineering bomber
+  description: An orange bomber jacket, worn with the sleeves pushed up. Features high-vis yellow thread, because safety is your number one concern.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/engineer_bomber.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/engineer_bomber.rsi #imp
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMedicalBomber
+  name: medical bomber
+  description: A light-blue bomber jacket, worn with the sleeves pushed up. Embroidered on the back is a caduceus, to remind you to do no harm.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/med_bomber.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/med_bomber.rsi #imp
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatScienceBomber
+  name: science bomber
+  description: A purple bomber jacket, worn with the sleeves pushed up. Embroidered on the back is a microscope, because it's important to fuss over the little things.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/sci_bomber.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/sci_bomber.rsi #imp
