@@ -102,3 +102,10 @@
   materials:
     Wood: 200
     Steel: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: DrinkDisposableCup
+  result: DrinkDisposableCup
+  materials:
+    Cardboard: 25
