@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Chem master now displays reagent colors and sorts alphabetically.
-    type: Tweak
-  id: 655
-  time: '2024-12-04T18:51:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/903
-- author: hivehum
-  changes:
-  - message: The medsec hud now takes sunglasses to craft, instead of security glasses.
-    type: Tweak
-  id: 656
-  time: '2024-12-04T20:39:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/904
 - author: DinnerCalzone
   changes:
   - message: Adjusted player count range of a number of maps to better reflect what
@@ -4154,3 +4140,19 @@
   id: 1154
   time: '2025-02-17T16:24:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1167
+- author: Toby222, Honeyed_Lemons_
+  changes:
+  - message: Adds Nanochat Lookup! Look up your friends in your Nanochat app today!
+    type: Add
+  - message: The Nanochat ui has been spruced up a lot, look at keybinds too!
+    type: Tweak
+  id: 1155
+  time: '2025-02-17T18:30:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1692
+- author: hivehum, flippenpage
+  changes:
+  - message: You can now be colorblind.
+    type: Add
+  id: 1156
+  time: '2025-02-17T18:30:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1702
