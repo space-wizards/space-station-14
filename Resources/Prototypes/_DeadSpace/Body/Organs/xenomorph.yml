@@ -1,0 +1,44 @@
+- type: entity
+  id: BaseXenoOrganUnGibbable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/organs.rsi
+  - type: Organ
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: FluorosulfuricAcid
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: FluorosulfuricAcid
+          Quantity: 5
+
+- type: entity
+  id: BaseXenoOrgan
+  parent: BaseXenoOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  id: OrganXenoBrain
+  parent: BaseXenoOrganUnGibbable
+  name: мозг
+  description: "Источник невероятного, бесконечного интеллекта. Хонк."
+  components:
+  - type: Sprite
+    state: brain_xeno
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement

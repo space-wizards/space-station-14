@@ -1,0 +1,59 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingBlood
+  name: кольцо с кровавым алмазом
+  description: Кольцо из чистого золота, в центре которого находится красивый алмаз кроваво-красного оттенка. На кольце виднеется торговый марка производителя "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _ADT/KD/RingBlood.rsi
+  - type: Clothing
+    sprite: _ADT/KD/RingBlood.rsi
+  - type: Item
+    size: Tiny
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingEmerald
+  name: кольцо с изумрудом
+  description: Золотая классика в мире колец аккуратный, модный и стильный идеальный подарок для любви всей вашей жизни. На кольце виднеется торговый марка производителя "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _ADT/KD/RingEmerald.rsi
+  - type: Clothing
+    sprite: _ADT/KD/RingEmerald.rsi
+  - type: Item
+    size: Tiny
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingPlazma
+  name: кольцо с плазмой
+  description: Очень элегантное кольцо только истинные ценители моды могут оценить ваше превосходное кольцо, с  твердым ионизированным газа по центре. если вы зададите вопрос "Откуда достали твердый плазму", мы скажем - "Потому что". На кольце виднеется торговый марка производителя "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _ADT/KD/RingPlazma.rsi
+  - type: Clothing
+    sprite: _ADT/KD/RingPlazma.rsi
+  - type: Item
+    size: Tiny
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingTurk
+  name: кольцо с туркенитом
+  description: Красивый кольцо ничем особенным не выделяется, но для своих цен они вполне приемлемы. На кольце виднеется торговый марка производителя "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _ADT/KD/RingTurk.rsi
+  - type: Clothing
+    sprite: _ADT/KD/RingTurk.rsi
+  - type: Item
+    size: Tiny
+  - type: StaticPrice
+    price: 1000

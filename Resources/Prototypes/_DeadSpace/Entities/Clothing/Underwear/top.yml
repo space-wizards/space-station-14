@@ -1,0 +1,540 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingUnderwearTopBase
+  name: based underweart
+  description: Вы не должны его видеть.
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots: [underweart]
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+
+# Sirena
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraWhite
+  name: бра
+  description: Стандартное нижнее белье для женского персонала Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Top/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSports
+  name: спортивное бра
+  description: Стандартное нижнее белье для женского персонала Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Top/sportsbra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSportsAlternative
+  name: альтернативное спортивное бра
+  description: Стандартное нижнее белье для женского персонала Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Top/sportsbraalt.rsi
+
+# DS14 pants
+## Antags
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraNuclearOperative
+  name: бра ядерного оперативника
+  description: Стандартное нижнее бельё ядерного оперативника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Antag/nuclear_operative/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraPirate
+  name: бра капера
+  description: Стандартное нижнее бельё капера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Antag/pirate/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSyndicateAgent
+  name: бра агента синдиката
+  description: Стандартное нижнее бельё агента синдиката.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Antag/syndicate_agent/women/bra.rsi
+
+## Cargo
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCargoTechnician
+  name: бра грузчика
+  description: Стандартное нижнее бельё грузчика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/cargo_technician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraQuartermaster
+  name: бра квартирмейстера
+  description: Стандартное нижнее бельё квартирмейстера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/quartermaster/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSalvageSpecialist
+  name: бра утилизатора
+  description: Стандартное нижнее бельё утилизатора.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/salvage_specialist/women/bra.rsi
+
+## Civilian
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBartender
+  name: бра бармена
+  description: Стандартное нижнее бельё бармена.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/bartender/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBotanist
+  name: бра ботаника
+  description: Стандартное нижнее бельё ботаника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/botanist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBoxer
+  name: бра боксёра
+  description: Стандартное нижнее бельё боксёра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/boxer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChaplain
+  name: бра священника
+  description: Стандартное нижнее бельё священника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/chaplain/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChef
+  name: бра шефа
+  description: Стандартное нижнее бельё шефа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/chef/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraClown
+  name: бра клоуна
+  description: Стандартное нижнее бельё клоуна.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/clown/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraHeadofPersonnel
+  name: бра главы персонала
+  description: Стандартное нижнее бельё главы персонала.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/head_of_personnel/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraJanitor
+  name: бра уборщика
+  description: Стандартное нижнее бельё уборщика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/janitor/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLibrarian
+  name: бра библиотекаря
+  description: Стандартное нижнее бельё библиотекаря.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/librarian/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMime
+  name: бра мима
+  description: Стандартное нижнее бельё мима.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMusician
+  name: бра музыканта
+  description: Стандартное нижнее бельё музыканта.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/musician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraReporter
+  name: бра репортёра
+  description: Стандартное нижнее бельё репортёра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraService
+  name: бра сервисного работника
+  description: Стандартное нижнее бельё сервисного работника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/service/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraZoo
+  name: бра зоотехника
+  description: Стандартное нижнее бельё зоотехника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/zoo/women/bra.rsi
+
+# Command
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCaptain
+  name: бра капитана
+  description: Стандартное нижнее бельё капитана.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/captain/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCBURN
+  name: бра РХБЗЗ
+  description: Стандартное нижнее бельё РХБЗЗ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/cburn/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCentcomm
+  name: бра центрального командования
+  description: Стандартное нижнее бельё центрального командования.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/centcomm/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraDeathSquad
+  name: бра эскадрона смерти
+  description: Стандартное нижнее бельё эскадрона смерти.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/death_squad/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraERT
+  name: бра ОБР
+  description: Стандартное нижнее бельё ОБР.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/ert/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBlueShieldOfficer
+  name: бра ОСЩ
+  description: Стандартное нижнее бельё ОСЩ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/blueshield/women/bra.rsi
+
+# Engineering
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraAtmosphericTechnician
+  name: бра атмосферного техника
+  description: Стандартное нижнее бельё атмосферного техника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/atmospheric_technician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChiefEngineer
+  name: бра старшего инженера
+  description: Стандартное нижнее бельё старшего инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/chief_engineer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraEngineer
+  name: бра инженера
+  description: Стандартное нижнее бельё инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/engineer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSeniorEngineer
+  name: бра ведущего инженера
+  description: Стандартное нижнее бельё ведущего инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/senior_engineer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraTechnicalAssistant
+  name: бра инженера стажёра
+  description: Стандартное нижнее бельё инженера стажёра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/technical_assistant/women/bra.rsi
+
+# Law
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraIAA
+  name: бра агента внутренних дел
+  description: Стандартное нижнее бельё агента внутренних дел.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Law/iaa/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLawyer
+  name: бра юриста
+  description: Стандартное нижнее бельё юриста.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Law/lawyer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMagistrat
+  name: бра магистрата
+  description: Стандартное нижнее бельё магистрата.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Law/magistrat/women/bra.rsi
+
+# Medical
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraChemist
+  name: бра химика
+  description: Стандартное нижнее бельё химика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/chemist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCMO
+  name: бра главного врача
+  description: Стандартное нижнее бельё главного врача.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/cmo/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraDoctor
+  name: бра врача
+  description: Стандартное нижнее бельё врача.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/doctor/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraIntern
+  name: бра интерна
+  description: Стандартное нижнее бельё интерна.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/intern/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraParamedic
+  name: бра парамедика
+  description: Стандартное нижнее бельё парамедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/paramedic/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraPsychologist
+  name: бра психолога
+  description: Стандартное нижнее бельё психолога.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/psychologist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSeniorPhysician
+  name: бра ведущего врача
+  description: Стандартное нижнее бельё ведущего врача.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/senior_physician/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCoroner
+  name: бра коронера
+  description: Стандартное нижнее бельё коронера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/coroner/women/bra.rsi
+
+# Science
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraResearchAssistant
+  name: бра научного ассистента
+  description: Стандартное нижнее бельё научного ассистента.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/research_assistant/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraResearchDirector
+  name: бра научного руководителя
+  description: Стандартное нижнее бельё научного руководителя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/research_director/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraScientist
+  name: бра учёного
+  description: Стандартное нижнее бельё учёного.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/scientist/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSeniorResearcher
+  name: бра ведущего учёного
+  description: Стандартное нижнее бельё ведущего учёного.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/senior_researcher/women/bra.rsi
+
+# Security
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraBrigmedic
+  name: бра бригмедика
+  description: Стандартное нижнее бельё бригмедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/brigmedic/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraCadet
+  name: бра кадета СБ
+  description: Стандартное нижнее бельё кадета СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/cadet/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraDetective
+  name: бра детектива
+  description: Стандартное нижнее бельё детектива.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/detective/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraHeadofSecurity
+  name: бра главы службы безопасности
+  description: Стандартное нижнее бельё главы службы безопасности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/head_of_security/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSecurityOfficer
+  name: бра офицера СБ
+  description: Стандартное нижнее бельё офицера СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/security_officer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSeniorOfficer
+  name: бра инструктора СБ
+  description: Стандартное нижнее бельё инструктора СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/senior_officer/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraWarden
+  name: бра смотрителя
+  description: Стандартное нижнее бельё смотрителя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/warden/women/bra.rsi

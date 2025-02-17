@@ -165,3 +165,13 @@
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraEntertainment
+
+# DS14-start
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterSecurity
+  suffix: Security
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraSecurity
+# DS14-end

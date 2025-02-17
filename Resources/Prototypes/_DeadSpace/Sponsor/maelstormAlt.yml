@@ -1,0 +1,401 @@
+- type: sponsorLoadout
+  id: maelstormAlt
+  entity: ClothingBackpackMaelstormAlt
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: maelstormAltSheath
+  entity: ClothingBeltSheathMaelstormAltFilled 
+  sponsorOnly: true
+  whitelistJobs: [Captain]
+
+- type: sponsorLoadout
+  id: maelstormAltBlueShield
+  entity: ClothingBackpackBlueShieldMaelstormAlt
+  sponsorOnly: true
+  whitelistJobs: [BlueShieldOfficer]
+
+- type: sponsorLoadout
+  id: maelstormAltCOG
+  entity: WeaponPistolDesertEagleMaelstormAlt
+  sponsorOnly: true
+  whitelistJobs: [CentralCommandOperator]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackMaelstormAlt
+  name: старая командирская сумка
+  description: Старая командирская сумка красноармейца времён революций, однако получившая модернизацию блюспейс технологиями. Выглядит потрёпанной.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingUnderwearTopMaelstormAlt
+      - id: ClothingUnderwearBottomMaelstormAlt
+      - id: ClothingUnderwearSocksMaelstormAlt
+      - id: ClothingHeadHatMaelstormAlt
+      - id: ClothingOuterCoatMaelstormAlt
+      - id: ClothingHandsGlovesMaelstormAlt
+      - id: ClothingUniformJumpsuitMaelstormAlt
+      - id: WatchMaelstormAlt
+      - id: CaseMaelstormAlt
+      - id: JawsOfLife
+      - id: MaelstormAltWhistle
+      - id: BoxMRE
+
+# Бельё
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopMaelstormAlt
+  name: белый кошачьи топик-бра
+  description: OwO!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomMaelstormAlt
+  name: белые кошачьи стринги
+  description: ">W<!"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/pants.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMaelstormAlt
+  name: белые кошачьи чулки
+  description: UwU!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/socks.rsi
+
+# Пилотка
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMaelstormAlt
+  name: зимняя парадная пилотка НКВБ
+  description: Устарелая униформенная пилотка Наркомата Всесоюзной Безопасности, предназначенная для носки в холодную погоду.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/cap.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/cap.rsi
+
+# Шинель
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCoatMaelstormAlt
+  name: зимняя парадная шинель НКВБ 
+  description: Устарелая униформенная парадная шинель Наркомата Всесоюзной Безопасности, предназначенная для носки в холодную погоду. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/coat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatMaelstormAlt]
+  id: ClothingOuterCoatMaelstormAltOpened
+  name: зимняя парадная шинель НКВБ
+
+# Перчи
+- type: entity
+  parent: ClothingHandsGlovesColorWhite
+  id: ClothingHandsGlovesMaelstormAlt
+  name: белые парадные перчатки НКВБ
+  description: Красивые, уставные парадные перчатки Наркомата Всесоюзной Безопасности. Изолированы, для безопасности служащих.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/gloves.rsi
+
+# Рюкзак ОСЩ
+- type: entity
+  parent: ClothingBackpackBlueShield
+  id: ClothingBackpackBlueShieldMaelstormAlt
+  name: рюкзак для экспериментального скафандра ВОХР КГБ
+  description: Рюкзак, куда складывается скафандр. Выглядит мрачновато
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/backpack_blueshield.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterHardsuitMaelstormAlt
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,9,5
+  - type: StorageFill
+    contents:
+      - id: JetpackVoidFilledMaelstormAlt
+      - id: ClothingShoesBootsMagMaelstormAlt
+      - id: BoxSurvivalSecurity
+      - id: Zipties
+        amount: 3
+      - id: MagazinePistolSubMachineGun
+        amount: 4
+      - id: WeaponSubMachineGunDrozd
+      - id: HandheldCrewMonitor
+      - id: ADTtelescopicBaton # ADT
+      - id: PaperLawMaelstormAltBLueShield
+
+# Скаф
+- type: entity
+  parent: ClothingOuterHardsuitBlueShield
+  id: ClothingOuterHardsuitMaelstormAlt
+  name: экспериментальный скафандр ВОХР КГБ
+  description: Экспериментальный скафандр Военизированной Охраны Главного Управления Комиссариата Государственной Безопасности. Вам страшно при виде его....
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMaelstormAlt
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitBlueShield
+  id: ClothingHeadHelmetHardsuitMaelstormAlt
+  categories: [ HideSpawnMenu ]
+  name: шлем экспериментального скафандра ВОХР КГБ
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/helmet.rsi
+  - type: PointLight
+    color: '#ff1c37'
+
+# Магнитки
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagMaelstormAlt
+  name: тяжелые боевые сапоги ВОХР КГБ
+  description: Тяжелый сапоги Военизированной Охраны Главного Управления Комиссариата Государственной Безопасности для работы в невесомости. Почему на них кровь ?.. 
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/maelstormAlt/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/maelstormAlt/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Джет
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoidFilledMaelstormAlt
+  name: переносная атмосферная система ВОХР КГБ
+  description: Сложная система атмосферы для  экспериментального скафандра Военизированной Охраны Главного Управления Комиссариата Государственной Безопасности , оснащенная функцией джетпака. Она издает страшные звуки
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/maelstormAlt/jetpack.rsi
+    size: Huge
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/jetpack.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+
+# Мундир
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMaelstormAlt
+  name: парадный мундир НКВБ
+  description: Устарелый парадный двубортный мундир Наркомата Всесоюзной Безопасности. Кажется , от него веет приятным ароматом
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/jumpsuit.rsi
+
+# Сабля капитана
+- type: entity
+  parent: CaptainSabre
+  id: CaptainSabreMaelstormAlt
+  name: парадная шашка НКВБ 
+  description: Красивая парадная шашка Наркомата Всесоюзной Безопасности. На ней написано "СМЕРТЬ ШПИОНАМ И КОНТРРЕВОЛЮЦИОННОЙ ГИДРЕ"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/melee.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/maelstormAlt/melee.rsi
+
+# Ножны сабли капитана
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltSheathMaelstormAlt
+  name: ножны парадной шашки НКВБ 
+  description: Ножны к  парадной шашке НКВБ . На красном транспаранте написано "Перспективному курсанту от Генерального Комиссара Всесоюзной Безопасности"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/sheath.rsi
+  - type: Item
+    size: Huge
+
+- type: entity
+  id: ClothingBeltSheathMaelstormAltFilled
+  parent: ClothingBeltSheathMaelstormAlt
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - CaptainSabreMaelstormAlt
+
+# Часы
+- type: entity
+  parent: BaseItem
+  id: WatchMaelstormAlt
+  name: древние карманные часы
+  description: Фамильные часы рода Карстен. Они настолько старые, что ржавчина помогает шестерёнкам и необходима для их работы. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/watch.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/maelstormAlt/watch.rsi
+    size: Tiny
+  - type: Clock
+
+# Кейс
+- type: entity
+  parent: BaseItem
+  id: CaseMaelstormAlt
+  name: кейс для печатей
+  description: Обычный кейс , в основном для печатей , редко , для пистолетов
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/case.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/maelstormAlt/case.rsi
+    size: Normal
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,3,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: UseDelay
+    delay: 0.5
+
+# Приказ
+- type: entity
+  parent: PaperPrintedUSSPCentcomm
+  id: PaperLawMaelstormAlt
+  name: распечатанный документ
+  description: Лист бумаги с заголовком генерального штаба. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    content: paper-law-maelstormalt
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#cc0000'
+      stampedName: Генеральный Штаб
+    - stampedColor: '#00be00'
+      stampedName: Одобрено
+
+# Приказ ОСЩ
+- type: entity
+  parent: PaperPrintedUSSPCentcomm
+  id: PaperLawMaelstormAltBLueShield
+  name: распечатанный документ
+  description: Лист бумаги с заголовком генерального штаба. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    content: paper-law-maelstormblueshield
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#cc0000'
+      stampedName: Генеральный Штаб
+    - stampedColor: '#00be00'
+      stampedName: Одобрено
+
+#Свисток
+- type: entity
+  parent: BaseItem
+  id: MaelstormAltWhistle
+  name: красноармейский свисток
+  description: "ВСЕ В ОКОП!!!"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/maelstorm/whistles.rsi
+    size: Tiny
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstorm/whistles.rsi
+    state: frontline
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstorm/whistles.rsi
+    quickEquip: false
+    slots: neck
+  - type: UseDelay
+    delay: 3
+  - type: EmitSoundOnUse
+    sound:
+      collection: TrenchWhistle
+  - type: Whistle
+    distance: 10
+
+# Дигл
+- type: entity
+  parent: WeaponPistolDesertEagle
+  id: WeaponPistolDesertEagleMaelstormAlt
+  name: "зимняя пантера"
+  description: Крупнокалиберный пистолет родом из далёкого СССП. На нем выгравировано "Спасибо , товарищ Данко"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/maelstormAlt/deserteagle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/maelstormAlt/deserteagle.rsi

@@ -4,7 +4,7 @@
     Margin="4"
     MinSize="50 50">
     <GridContainer
-        Columns="3">
+        Columns="2">
         <cc:CommandButton Command="startround" Text="{Loc administration-ui-round-tab-start-round}" />
         <cc:CommandButton Command="endround" Text="{Loc administration-ui-round-tab-end-round}" />
         <cc:CommandButton Command="restartround" Text="{Loc administration-ui-round-tab-restart-round}" />

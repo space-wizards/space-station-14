@@ -1,3 +1,24 @@
+#FIX
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterVestKevlar
+  name: web vest
+  description: A synthetic armor vest. This one has added webbing and ballistic plates.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Vests/webvest.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Vests/webvest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6 #ballistic plates = better protection
+          Slash: 0.6
+          Piercing: 0.3
+          Heat: 0.9
+    - type: ExplosionResistance
+      damageCoefficient: 0.9
+
 #Web vest
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]

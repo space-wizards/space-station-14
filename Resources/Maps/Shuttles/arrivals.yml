@@ -17,7 +17,6 @@ entities:
     - type: MetaData
       name: NT-Arrivals 1101
     - type: Transform
-      parent: invalid
     - type: MapGrid
       chunks:
         -1,-1:
@@ -226,7 +225,6 @@ entities:
       pos: 3.5,-2.5
       parent: 292
     - type: Door
-      secondsUntilStateChange: -623.03485
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -243,7 +241,6 @@ entities:
       pos: 3.5,4.5
       parent: 292
     - type: Door
-      secondsUntilStateChange: -624.7682
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -260,7 +257,6 @@ entities:
       pos: -4.5,4.5
       parent: 292
     - type: Door
-      secondsUntilStateChange: -619.23486
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -277,7 +273,6 @@ entities:
       pos: -4.5,-2.5
       parent: 292
     - type: Door
-      secondsUntilStateChange: -621.1349
       state: Opening
     - type: DeviceLinkSource
       lastSignals:

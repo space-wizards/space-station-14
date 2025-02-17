@@ -1,4 +1,4 @@
-- type: job
+﻿- type: job
   id: Captain
   name: job-name-captain
   description: job-description-captain
@@ -6,16 +6,23 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # 15 hours
+      time: 72000 # 20 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # 15 hours
+      time: 72000 # 20 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 54000 # 15 hours
+      time: 108000 # 30 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 54000 # 15 hours
+      time: 72000 # 20 hours
+    - !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 18000 # 5 hours
+    - !type:OverallPlaytimeRequirement
+      time: 504000 # 140 hours
+    - !type:AgeRequirement
+      requiredAge: 26
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
@@ -24,6 +31,12 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  #start-backmen: currency
+  minBankBalance: 400
+  maxBankBalance: 600
+  wageDepartment: Command
+  wage: 200
+  #end-backmen: currency
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -39,6 +52,7 @@
     gloves: ClothingHandsGlovesCaptain
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
+    socks: ClothingUnderwearSocksCaptain
   storage:
     back:
     - Flash

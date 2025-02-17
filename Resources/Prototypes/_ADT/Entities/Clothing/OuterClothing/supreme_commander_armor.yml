@@ -1,0 +1,24 @@
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ADTClothingOuterClothingSupreneCommanderArmor
+  name: панцирь высшего главнокомандующего
+  description: То что не пробьешь, не создать, но мы создали, полностью покрыт блюспейс пластинами, одевая его вы чувствуете себя императором человечества.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Armor/supreme-commander-armor.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Armor/supreme-commander-armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.01 #true best armor in the game
+        Slash: 0.01
+        Piercing: 0.01
+        Heat: 0.01
+        Radiation: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.01
+  - type: GroupExamine
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.1

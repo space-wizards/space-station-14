@@ -1,0 +1,283 @@
+
+- type: entity
+  parent: SimpleSpaceMobBase
+  id: BaseMobDemonRS
+  name: демон
+  description: Монстр!
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Demons/demon_simple.rsi
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MovementAlwaysTouching
+  - type: GhostTakeoverAvailable
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 3
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: Stamina
+  - type: Appearance
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodMaxVolume: 150
+    bloodlossThreshold: 0.4
+  - type: CombatMode
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 45
+    soundHit:
+        path: /Audio/Effects/demon_attack1.ogg
+        params:
+          volume: -100
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Blunt: 7
+        Piercing: 1
+        Heat: 5
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Demon
+  - type: Damageable
+    damageModifierSet: Demon
+  - type: AutoDeleteOnDeath
+  - type: Vocal
+    sounds:
+      Male: Demon
+      Female: Demon
+      Unsexed: Demon
+  - type: ZombieImmune
+  - type: ImmunitetInfectionDead
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    - Critical
+    damageCap: 0
+    damage:
+      types:
+        Poison: -2
+      groups:
+        Brute: -2
+        Burn: -2
+  - type: TTS
+    voice: Avozu
+
+- type: entity
+  parent: BaseMobDemonRS
+  id: MobDemonSlaughter
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: slaughter_demon
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: slaughter_demon
+      Dead:
+        Base: slaughter_demon
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: StunAttack
+  - type: Damageable
+    damageModifierSet: SlaughterDemon
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 45
+    soundHit:
+        path: /Audio/Effects/demon_attack1.ogg
+        params:
+          volume: -100
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Blunt: 12
+        Piercing: 1
+        Heat: 10
+        Structural: 25
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-slaughter-name
+    description: ghost-role-information-slaughter-description
+    rules: ghost-role-information-slaughter-rules
+  - type: Reflect
+    reflectProb: 0.25
+
+- type: entity
+  parent: BaseMobDemonRS
+  id: MobDemonHonker
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: honk_demon
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: honk_demon
+      Dead:
+        Base: honk_demon
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 45
+    soundHit:
+        path: /Audio/Items/bikehorn.ogg
+        params:
+          volume: -100
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 2.5
+        Blunt: 3
+        Piercing: 1
+        Heat: 10
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClownFast
+  - type: StunRadius
+    stunRadiusSound:
+      collection: HonkDemonLaugh
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-honker-name
+    description: ghost-role-information-honker-description
+    rules: ghost-role-information-honker-rules
+
+- type: entity
+  parent: BaseMobDemonRS
+  id: MobDemonIfrit
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: demon
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: demon
+      Dead:
+        Base: demon
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-demon-name
+    description: ghost-role-information-demon-description
+    rules: ghost-role-information-demon-rules
+  - type: Gun
+    fireRate: 1.5
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot: /Audio/Magic/fireball.ogg
+  - type: BallisticAmmoProvider
+    proto: FireballBullet
+
+- type: entity
+  parent: BaseMobDemonRS
+  id: MobDemonJaunt
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: jaunt
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: jaunt
+      Dead:
+        Base: jaunt
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
+  - type: DemonDash
+  - type: LimitedCharges
+    maxCharges: 1
+    charges: 1
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-jaunt-name
+    description: ghost-role-information-jaunt-description
+    rules: ghost-role-information-jaunt-rules
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 45
+    soundHit:
+        path: /Audio/Effects/demon_attack1.ogg
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Blunt: 7
+        Piercing: 1
+        Heat: 5
+
+- type: entity
+  id: FireballBullet
+  name: огненный шар
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 10
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+      - state: fireballbullet
+  - type: Ammo

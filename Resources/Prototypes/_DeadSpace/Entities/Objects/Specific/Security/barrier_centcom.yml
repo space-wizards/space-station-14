@@ -1,0 +1,40 @@
+- type: entity
+  name: развёртываемый барьер ЦК
+  id: DeployableBarrierCentcomm
+  description: Специальный барьер используемый Центральным Командованием. Крепче и эффективнее обычного. Проведите вашей картой/КПК для разблокировки и блокировки. 
+  parent: DeployableBarrier
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Security/barrier_centcom.rsi
+    layers:
+    - state: idle
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 950
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 450
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel:
+            min: 5
+            max: 5
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    enabled: false
+    radius: 3
+    color: green

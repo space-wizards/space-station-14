@@ -1,0 +1,16 @@
+<Control
+    xmlns="https://spacestation14.io">
+    <BoxContainer>
+        <TextureButton
+            Name="Controller"
+            Access="Public"
+            VerticalExpand="True"
+            HorizontalExpand="True">
+            <TextureRect Access="Public" Name="Icon"
+                         VerticalExpand="True"
+                         HorizontalExpand="True"
+                         VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="KeepAspect">
+            </TextureRect>
+        </TextureButton>
+    </BoxContainer>
+</Control>

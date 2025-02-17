@@ -362,7 +362,7 @@ namespace Content.Server.Voting.Managers
             // Still allow vote if availbable one is different from current one
             if (voteType == StandardVoteType.Preset)
             {
-                var presets = GetGamePresets();
+                var presets = GetGamePresets(true);
                 if (presets.Count == 1 && presets.Select(x => x.Key).Single() == _entityManager.System<GameTicker>().Preset?.ID)
                     return false;
             }
@@ -418,6 +418,7 @@ namespace Content.Server.Voting.Managers
             if (v.Cancelled)
                 return;
 
+            VoteStarted = false;
             v.Cancelled = true;
             v.Finished = true;
             v.Dirty = true;

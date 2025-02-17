@@ -1,0 +1,23 @@
+- type: entity
+  name: армейский нож Ириса
+  parent: BaseKnife
+  id: ADTAstraKnife
+  description: Сверкающий в свете ламп и звёзд лезвие, отдающее отобранными им и зазубринами на спине, страхом и волей к жизни. На полотне неизвестной марки стали было отпечатана фраза - Ad multos annos, которая имела конец ниже - Ad memorandum. Вдоль пяты было рукотворно оставлено имя - Вальтор.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/astra-knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    size: Small
+    sprite: _ADT/Objects/Weapons/Melee/astra-knife.rsi
+  - type: DisarmMalus
+    malus: 0.225

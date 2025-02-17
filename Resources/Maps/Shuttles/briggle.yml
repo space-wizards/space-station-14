@@ -19,7 +19,6 @@ entities:
       name: NT-Briggle
     - type: Transform
       pos: -0.5104167,-0.625
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -147,7 +146,6 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -347.64847
       state: Opening
 - proto: AirlockSecurityGlassLocked
   entities:

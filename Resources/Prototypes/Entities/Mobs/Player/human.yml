@@ -18,7 +18,9 @@
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
-    nameSegments: [names_death_commando]
+    nameSegments:
+    - names_first_male
+    - names_last_male
   - type: NpcFactionMember
     factions:
     - Syndicate

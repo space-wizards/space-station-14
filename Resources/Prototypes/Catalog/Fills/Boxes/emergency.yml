@@ -39,6 +39,46 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  parent: BoxSurvival
+  id: BoxSurvivalBeer
+  suffix: Standart for dwarfs
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkBeerCan
+
+- type: entity
+  parent: BoxSurvival
+  id: BoxSurvivalNonBreather
+  suffix: Standard for non breathers
+  components:
+  - type: StorageFill
+    contents:
+    - id: Brutepack5
+    - id: Ointment5
+    - id: Gauze5
+    - id: Flare
+    - id: DrinkWaterBottleFull
+
+- type: entity
+  parent: BoxSurvival
+  id: BoxSurvivalRobotNonBreather
+  suffix: Standard for robot non breathers
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingHeadHatWelding
+    - id: CableApcStack5
+    - id: CrowbarRed
+    - id: Flare
+    - id: DrinkWaterBottleFull
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalEngineering
   name: extended-capacity survival box
@@ -79,7 +119,20 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  parent: BoxSurvivalEngineering
+  id: BoxSurvivalEngineeringBeer
+  suffix: Extended beer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkBeerCan
 
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalSecurity
   name: survival box
@@ -120,7 +173,20 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalSecurityBeer
+  suffix: Security beer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkBeerCan
 
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalMedical
   name: survival box
@@ -159,6 +225,20 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxSurvivalMedical
+  id: BoxSurvivalMedicalBeer
+  suffix: Medical beer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedical
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkBeerCan
 
 - type: entity
   parent: BoxCardboard
@@ -202,6 +282,20 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  parent: BoxHug
+  id: BoxHugBeer
+  suffix: Emergency beer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyFunnyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkBeerCan
+
+- type: entity
   parent: BoxSurvival
   id: BoxMime
   suffix: Mime, Emergency
@@ -234,6 +328,20 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxSurvivalNitrogen
+  id: BoxMimeBeer
+  suffix: Mime, Emergency beer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguette
+    - id: DrinkBeerCan
 
 - type: entity
   parent: BoxCardboard
@@ -272,3 +380,53 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  name: survival box
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalBrigmedic
+  description: It's a box with basic internals inside.
+  suffix: Brigmedic
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
+  name: survival box
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalBrigmedicNitrogen
+  description: It's a box with basic internals inside.
+  suffix: Brigmedic N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+    # Intentionally wrong picture on the box to mimic the NT one
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+  name: survival box
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalBrigmedicBeer
+  suffix: Brigmedic beer
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkBeerCan

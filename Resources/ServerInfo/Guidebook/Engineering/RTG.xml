@@ -1,25 +1,21 @@
 <Document>
-  # Radioisotope Thermoelectric Generator (RTG)
+  # Радиоизотопный термоэлектрический генератор (РИТЭГ)
 
   <Box>
-    <GuideEntityEmbed Entity="GeneratorRTG" Caption="RTG" />
+    <GuideEntityEmbed Entity="GeneratorRTG" Caption="РИТЭГ" />
   </Box>
 
-  A Radioisotope Thermoelectric Generator (RTG) is a passive power source that generates power from the decay of radioactive isotopes.
-
-  They require no maintenance and are a reliable source of power, making them ideal for powering essential systems that need to be online at all times, like Telecoms, the AI, or the Crew Monitoring Server.
-
-  RTGs always generate [color=orange][protodata="GeneratorRTG" comp="PowerSupplier" member="MaxSupply" format="N0"/] W[/color] of power, and must be connected to an [color=orange]HV power[/color] [textlink="network" link="VoltageNetworks"] to function.
-
-  However, they're only accessible through salvage finding one on an expedition. Should they bring some in, make sure to thank them!
+  Получение энергии с помощью Радиоизотопного термоэлектрического генератора (РИТЭГа) схоже с выработкой энергии от солнечных панелей.
+  РИТЭГи производят лишь [color=#a4885c]10 кВт[/color] энергии, но делают это бесконечно и без использования топлива.
+  Выходит, что если вы подключите РИТЭГ к электросети, он будет давать вам [color=#a4885c]бесплатную электроэнергию[/color].
+  Однако, достать их можно только на экспедиции. Не забудьте поблагодарить Утилизаторов, если они найдут вам несколько!
 
   ## RTG Damage
   <Box>
-    <GuideEntityEmbed Entity="GeneratorRTGDamaged" Caption="Damaged RTG" />
+    <GuideEntityEmbed Entity="GeneratorRTGDamaged" Caption="Повреждённый РИТЭГ" />
   </Box>
-  If RTGs take enough damage, they can become damaged RTGs.
-  Damaged RTGs behave just like regular ones, but they're [color=yellow]radioactive[/color].
-
-  That means they're more dangerous, but on the bright side, you can put radiation collectors next to them to turn that radiation into more power.
-  This is usually more worthwhile, considering the power is still free, so long as you can find a safe spot to put the RTG(s) in.
+  Иногда РИТЭГи повреждаются.
+  Повереждённые РИТЭГи работают также как и обычные, но при этом они [color=yellow]радиоактивны[/color].
+  Это означает, что они более опасны, но вы можете использовать это, разместив поблизости накопители радиации, преобразующие излучение в ещё больше энергии.
+  Обычно, это намного выгоднее, ведь энергия все ещё бесплатная, пока у вас есть безопасное место чтобы разместить РИТЭГи.
 </Document>

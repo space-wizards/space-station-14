@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server.DeadSpace.NoShuttleFTL;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
@@ -246,6 +247,12 @@ public sealed partial class ShuttleSystem
         if (HasComp<PreventPilotComponent>(shuttleUid))
         {
             reason = Loc.GetString("shuttle-console-prevent");
+            return false;
+        }
+
+        if (HasComp<NoShuttleFTLComponent>(shuttleUid))
+        {
+            reason = Loc.GetString("shuttle-console-noftl");
             return false;
         }
 

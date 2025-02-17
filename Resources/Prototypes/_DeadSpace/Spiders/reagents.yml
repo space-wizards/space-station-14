@@ -1,0 +1,164 @@
+- type: reagent
+  id: SpiderExtract
+  name: reagent-name-spider-extract
+  group: Medicine
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#fcf7f9"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Burn: -2
+            Toxin: -2
+            Airloss: -2
+            Brute: -2
+          types:
+            Bloodloss:
+              -1
+
+- type: reagent
+  id: Karachnocid
+  name: reagent-name-karachnocid
+  group: Medicine
+  desc: reagent-desc-karachnocid
+  physicalDesc: reagent-physical-desc-harsh
+  flavor: savory
+  color: "#3b7c3a"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Toxin: 10
+            Airloss: 15
+
+- type: reaction
+  id: Karachnocid
+  impact: Medium
+  minTemp: 325
+  reactants:
+    PestKiller:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+    PolytrinicAcid:
+      amount: 1
+  products:
+    Karachnocid: 3
+
+- type: reagent
+  id: SpiderExtractLurker
+  name: reagent-name-extract-lurker
+  group: Medicine
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#fcf7f9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleedAmount
+        amount: -1.5
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -0.5
+            Toxin: -0.5
+            Airloss: -5
+            Brute: -0.5
+
+- type: reagent
+  id: SpiderLurkerSmokeExtract
+  name: reagent-name-extract-smoke-lurker
+  group: Medicine
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: bitter
+  color: "#fcf7f9"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:MovespeedModifier
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+          shouldHave: false
+        walkSpeedModifier: 0.5
+        sprintSpeedModifier: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+          shouldHave: false
+        damage:
+          groups:
+            Toxin: 3
+            Airloss: 3
+
+- type: reagent
+  id: SpiderReaperExtract
+  name: reagent-name-extract-reaper
+  group: Medicine
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#fcf7f9"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Burn: -4
+            Toxin: -4
+            Airloss: -4
+            Brute: -4
+          types:
+            Bloodloss:
+              -1
+
+- type: reagent
+  id: SpiderEggs
+  name: reagent-name-spider-eggs
+  group: Toxins
+  desc: reagent-desc-spider-eggs
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: terrible
+  color: "#7FFFD4"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:CauseEgg
+        duration: 360
+        spawned:
+        - id: MobSpiderTerrorGuardian
+          amount: 4
+        conditions:
+        - !type:ReagentThreshold
+          min: 1

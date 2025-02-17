@@ -34,16 +34,6 @@
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
   product: CrateTrackingImplants
-  cost: 1000
-  category: cargoproduct-category-name-armory
-  group: market
-
-- type: cargoProduct
-  id: TrainingBombs
-  icon:
-    sprite: Structures/Machines/bomb.rsi
-    state: training-bomb
-  product: CrateTrainingBombs
   cost: 3000
   category: cargoproduct-category-name-armory
   group: market
@@ -54,7 +44,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   product: CrateArmoryLaser
-  cost: 4800
+  cost: 4000
   category: cargoproduct-category-name-armory
   group: market
 
@@ -64,6 +54,16 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: icon
   product: CrateArmoryPistols
-  cost: 5200
+  cost: 2500
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryDominator
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/dominator.rsi
+    state: icon-0
+  product: CrateArmoryDominator
+  cost: 5500
   category: cargoproduct-category-name-armory
   group: market

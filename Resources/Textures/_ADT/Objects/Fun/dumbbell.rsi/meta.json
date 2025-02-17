@@ -1,0 +1,37 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by Prazat, discord: sk111112",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+            "name": "dumbbell20kg"
+        },
+        {
+            "name": "dumbbell15kg"
+        },
+        {
+            "name": "dumbbell10kg"
+        },
+        {
+            "name": "dumbbell8kg"
+        },
+        {
+            "name": "dumbbell5kg"
+        },
+        {
+            "name": "dumbbell2kg"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

@@ -18,7 +18,6 @@ entities:
       name: NT-Route Alpha 8b
     - type: Transform
       pos: -0.5104167,-0.47916666
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesBigSunglasses
+  name: большие солнцезащитные очки
+  description: Эти великолепные солнцезащитные очки обладают не только забавным и стильным дизайном, но и исключительной функциональностью. Их огромные рамки способны полностью прикрывать глаза, защищая их от ультрафиолетовых лучей и нежелательного солнечного блеска.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/glasses_big_black.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/glasses_big_black.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - WhitelistChameleon

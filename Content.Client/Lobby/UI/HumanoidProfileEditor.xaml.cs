@@ -9,8 +9,10 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
+using Content.DeadSpace.Interfaces.Client;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
+using Content.Shared.Corvax.CCCVars;
 using Content.Shared.GameTicking;
 using Content.Shared.Guidebook;
 using Content.Shared.Humanoid;
@@ -31,6 +33,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 
@@ -49,6 +52,7 @@ namespace Content.Client.Lobby.UI
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
+        private IClientSponsorsManager? _sponsorsManager; // DS14-sponsors
 
         private FlavorText.FlavorText? _flavorText;
         private TextEdit? _flavorTextEdit;
@@ -209,6 +213,18 @@ namespace Content.Client.Lobby.UI
             };
 
             #endregion Gender
+
+            // Corvax-TTS-Start
+            #region Voice
+
+            if (configurationManager.GetCVar(CCCVars.TTSEnabled))
+            {
+                TTSContainer.Visible = true;
+                InitializeVoice();
+            }
+
+            #endregion
+            // Corvax-TTS-End
 
             RefreshSpecies();
 
@@ -591,6 +607,8 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void RefreshSpecies()
         {
+            IoCManager.Instance!.TryResolveType(out _sponsorsManager); // DS14-sponsors
+
             SpeciesButton.Clear();
             _species.Clear();
 
@@ -606,6 +624,16 @@ namespace Content.Client.Lobby.UI
                 {
                     SpeciesButton.SelectId(i);
                 }
+
+                if (_sponsorsManager != null && _species[i].SponsorOnly)
+                {
+                    SpeciesButton.SetItemDisabled(SpeciesButton.GetIdx(i), true);
+
+                    if (_sponsorsManager.TryGetInfo(out var sponsor) && sponsor.AllowedMarkings.Contains(_species[i].ID))
+                    {
+                        SpeciesButton.SetItemDisabled(SpeciesButton.GetIdx(i), false);
+                    }
+                }
             }
 
             // If our species isn't available then reset it to default.
@@ -614,6 +642,14 @@ namespace Content.Client.Lobby.UI
                 if (!speciesIds.Contains(Profile.Species))
                 {
                     SetSpecies(SharedHumanoidAppearanceSystem.DefaultSpecies);
+                }
+                var chosenSpecies = _species.Find(x => x.Name == Profile.Species);
+                if (_sponsorsManager != null && chosenSpecies != null && chosenSpecies.SponsorOnly)
+                {
+                    if (_sponsorsManager.TryGetInfo(out var sponsor) && sponsor.AllowedMarkings.Contains(chosenSpecies.ID))
+                    {
+                        SetSpecies(SharedHumanoidAppearanceSystem.DefaultSpecies);
+                    }
                 }
             }
         }
@@ -645,11 +681,16 @@ namespace Content.Client.Lobby.UI
 
                 var title = Loc.GetString(antag.Name);
                 var description = Loc.GetString(antag.Objective);
-                selector.Setup(items, title, 250, description, guides: antag.Guides);
+                selector.Setup(items, title, 350, description, guides: antag.Guides); // DS14
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                // DS14-syndicate-sponsor-start
+                if (_sponsorsManager?.TryGetInfo(out var sponsor) == true && sponsor.HavePriorityAntag)
+                {
+                    selector.UnlockRequirements();
+                }
+                else if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -659,6 +700,7 @@ namespace Content.Client.Lobby.UI
                 {
                     selector.UnlockRequirements();
                 }
+                // DS14-syndicate-sponsor-end
 
                 selector.OnSelected += preference =>
                 {
@@ -752,6 +794,7 @@ namespace Content.Client.Lobby.UI
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
+            UpdateTTSVoicesControls(); // Corvax-TTS
             UpdateMarkings();
             UpdateHairPickers();
             UpdateCMarkingsHair();
@@ -907,7 +950,7 @@ namespace Content.Client.Lobby.UI
                     };
                     var jobIcon = _prototypeManager.Index(job.Icon);
                     icon.Texture = jobIcon.Icon.Frame0();
-                    selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
+                    selector.Setup(items, job.LocalizedName, 350, job.LocalizedDescription, icon, job.Guides); // DS14
 
                     if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
@@ -1185,6 +1228,7 @@ namespace Content.Client.Lobby.UI
             }
 
             UpdateGenderControls();
+            UpdateTTSVoicesControls(); // Corvax-TTS
             Markings.SetSex(newSex);
             ReloadPreview();
         }
@@ -1194,6 +1238,14 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithGender(newGender);
             ReloadPreview();
         }
+
+        // Corvax-TTS-Start
+        private void SetVoice(string newVoice)
+        {
+            Profile = Profile?.WithVoice(newVoice);
+            IsDirty = true;
+        }
+        // Corvax-TTS-End
 
         private void SetSpecies(string newSpecies)
         {
@@ -1578,7 +1630,8 @@ namespace Content.Client.Lobby.UI
 
             try
             {
-                var profile = _entManager.System<HumanoidAppearanceSystem>().FromStream(file, _playerManager.LocalSession!);
+                var allowedMarkings = _sponsorsManager?.TryGetInfo(out var sponsor) == true ? sponsor.AllowedMarkings.ToArray() : [];
+                var profile = _entManager.System<HumanoidAppearanceSystem>().FromStream(file, _playerManager.LocalSession!, allowedMarkings);
                 var oldProfile = Profile;
                 SetProfile(profile, CharacterSlot);
 

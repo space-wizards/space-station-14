@@ -197,6 +197,30 @@
 
 - type: latheRecipe
   parent: BaseToolRecipe
+  id: EmergencyOxygenTank
+  result: EmergencyOxygenTank
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: OxygenTank
+  result: OxygenTank
+  completetime: 2
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: GeigerCounter
+  result: GeigerCounter
+  completetime: 2
+  materials:
+    Plastic: 200
+    
+- type: latheRecipe
+  parent: BaseToolRecipe
   id: HoloprojectorField
   result: HoloprojectorFieldEmpty
   completetime: 3

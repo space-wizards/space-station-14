@@ -1,0 +1,38 @@
+- type: tile
+  id: VebTile
+  name: плита из паутины
+  sprite: /Textures/Tiles/veb.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  footstepSounds:
+    collection: BarestepCarpet
+  itemDrop: FloorVebTileItem
+  friction: 0.05
+  heatCapacity: 10000
+
+- type: entity
+  id: FloorVebTileItem
+  parent: FloorTileItemBase
+  components:
+  - type: Sprite
+    state: veb
+  - type: Item
+    heldPrefix: veb
+  - type: FloorTile
+    outputs:
+    - Plating
+    - VebTile
+  - type: Stack
+    stackType: FloorVebTile
+
+- type: stack
+  id: FloorVebTile
+  name: плита из паутины
+  spawn: FloorVebTileItem
+  maxCount: 30

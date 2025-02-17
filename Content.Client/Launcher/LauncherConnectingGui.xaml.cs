@@ -46,6 +46,12 @@ namespace Content.Client.Launcher
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
 
             ChangeLoginTip();
+
+            // DS14-Connect-To-Another-Server-start
+            JoinToAnotherServerButton.OnPressed += _ => _state.ConnectToAnotherServer();
+            JoinToDiscordButton.OnPressed += _ => _state.ConnectToDiscord();
+            // DS14-Connect-To-Another-Server-end
+
             RetryButton.OnPressed += ReconnectButtonPressed;
             ReconnectButton.OnPressed += ReconnectButtonPressed;
 

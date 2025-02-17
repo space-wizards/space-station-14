@@ -1,0 +1,19 @@
+- type: entity
+  id: BulletEnergyCrossbow
+  name: bullet(crossbow)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Poison: 15
+  - type: StaminaDamageOnCollide
+    damage: 35
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
+    layers:
+    - state: bulletcrossbow
+  - type: StunOnCollide
+    stunAmount: 1
+    knockdownAmount: 1

@@ -1,0 +1,156 @@
+- type: species
+  id: Xenomorph
+  name: species-name-xeno
+  roundStart: true
+  sponsorOnly: true
+  prototype: MobXenomorph
+  sprites: MobXenoSprites
+  markingLimits: MobXenoMarkingLimits
+  dollPrototype: MobXenomorphDummy
+  skinColoration: Hues
+  sexes:
+  - Unsexed
+  naming: FirstLast
+  maleFirstNames: firstMaleXeno
+  femaleFirstNames: firstFemaleXeno
+  maleLastNames: XenoLast
+  femaleLastNames: XenoLast
+
+- type: speciesBaseSprites
+  id: MobXenoSprites
+  sprites:
+    Head: MobXenoHead
+    Eyes: MobXenoEyes
+    Chest: MobXenoTorso
+    LArm: MobXenoLArm
+    RArm: MobXenoRArm
+    LHand: MobXenoLHand
+    RHand: MobXenoRHand
+    LLeg: MobXenoLLeg
+    RLeg: MobXenoRLeg
+    LFoot: MobXenoLFoot
+    RFoot: MobXenoRFoot
+    Tail: MobHumanoidAnyMarking
+
+- type: markingPoints
+  id: MobXenoMarkingLimits
+  points:
+    Hair:
+      points: 0
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Tail: # the cat tail joke
+      points: 1
+      required: true
+      defaultMarkings: [ XenoTail ]
+    HeadTop: # the cat ear joke
+      points: 0
+      required: false
+    Chest:
+      points: 0
+      required: false
+    Legs:
+      points: 0
+      required: false
+    Arms:
+      points: 0
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobXenoEyes
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/line_markings.rsi
+    state: line_defoult
+
+- type: humanoidBaseSprite
+  id: MobXenoAnyMarking
+
+- type: humanoidBaseSprite
+  id: MobXenoMarkingMatchSkin
+  markingsMatchSkin: false
+
+- type: humanoidBaseSprite
+  id: MobXenoHead
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobXenoHeadMale
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobXenoHeadFemale
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobXenoTorso
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobXenoTorsoMale
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobXenoTorsoFemale
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobXenoLLeg
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobXenoLArm
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobXenoLHand
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobXenoLFoot
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobXenoRLeg
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobXenoRArm
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobXenoRHand
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobXenoRFoot
+  baseSprite:
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_foot

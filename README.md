@@ -1,38 +1,40 @@
 <p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
 
-Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), our homegrown engine written in C#.
+Space Station 14 это ремейк SS13, который работает на собственном движке [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), написанном на C#.
 
-This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
+Это репозиторий исходного кода билда **Фобос** русскоязычного проекта **Мёртвый Космос**. Репозиторий является форком [основного официального репозитория игры](https://github.com/space-wizards/space-station-14). Цель репозитория — предоставить сообществу Мёртвого Космоса инструменты для развития билда с учётом его потребностей.
 
-If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
+## Ссылки
 
-## Links
+[Discord](https://discord.gg/ds14) | [Wiki](https://wiki.deadspace14.net) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Клиент без Steam](https://spacestation14.io/about/nightlies/) | [Основной официальный репозиторий игры](https://github.com/space-wizards/space-station-14)
 
-[Website](https://spacestation14.io/) | [Discord](https://discord.ss14.io/) | [Forum](https://forum.spacestation14.io/) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.io/about/nightlies/)
+## Лицензия
 
-## Documentation/Wiki
+В целях поддержания развития проекта, сохранения его уникальных черт созданных его сообществом и предотвращения нежелательного коммерческого использования в игре с упором на развитие сообщества, а не его коммерциализацию, данный репозиторий лицензирован в соответствии с условиями [лицензионного соглашения Мёртвого Космоса](https://github.com/dead-space-server/space-station-14-fobos/blob/master/LICENSE.TXT). Мы не стремимся к полному разграничению нашего кода и кода других проектов, поэтому во избежание инцидентов рекомендуется брать их код из их репозиториев. В начале лицензируемых файлов указан комментарий, который служит напоминанием о применимых условиях использования кода. Если в каком-то файле он отсутствует, это **не означает**, что файл не подпадает под действие лицензии.
 
-Our [docs site](https://docs.spacestation14.io/) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
+Оригинальный код Space Station 14 разработанный [Space Wizards Federation](https://github.com/space-wizards/space-station-14) и код основанный на нём распространяется под лицензией [MIT](https://github.com/dead-space-server/space-station-14-fobos/blob/master/MIT_LICENSE.TXT) и не ограничивается лицензионным соглашением Мёртвого Космоса. Код проекта [Corvax](https://github.com/space-syndicate/space-station-14) и код основанный на нём также распространяется под лицензией [MIT](https://github.com/dead-space-server/space-station-14-fobos/blob/master/MIT_LICENSE.TXT).
 
-## Contributing
+Большинство ассетов лицензированы под [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), если не указано иное. Ассеты имеют свою лицензию и авторские права в файле метаданных. [Пример](https://github.com/dead-space-server/space-station-14-fobos/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json).
 
-We are happy to accept contributions from anybody. Get in Discord if you want to help. We've got a [list of issues](https://github.com/space-wizards/space-station-14-content/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!  
-Just make sure your changes and pull requests are in accordance with the [contribution guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
+> [!CAUTION]  
+> Лицензионное соглашение Мёртвого Космоса запрещает коммерческое использование, публичный хостинг без разрешения и нелицензированное распространение. Любые модификации должны передаваться обратно в проект на условиях, описанных в лицензии.
 
-We are not currently accepting translations of the game on our main repository. If you would like to translate the game into another language consider creating a fork or contributing to a fork.
+## Документация
 
-## Building
+На официальном сайте с [документацией](https://docs.spacestation14.io/) имеется вся необходимая информация о контенте SS14, движке, дизайне игры и многом другом. Также там есть информация для начинающих разработчиков, однако помните, что Мёртвый Космос имеет свои изменения и особенности.
 
-1. Clone this repo.
-2. Run `RUN_THIS.py` to init submodules and download the engine.
-3. Compile the solution.
+## Для контрибьюторов
 
-[More detailed instructions on building the project.](https://docs.spacestation14.com/en/general-development/setup.html)
+В случае если вы хотите добавить новый контент, будет лучше, если сначала вы предложите его в [основной официальный репозиторий игры](https://github.com/space-wizards/space-station-14), чтобы улучшения стали доступны всем игрокам. Если ваше изменение специфично для нашего форка (например, изменения баланса, уникальные механики или контент, не соответствующий дизайну основной игры), то лучше сначала обсудите его необходимость на нашем сервере [Discord](https://discord.gg/ds14) — это поможет согласовать дизайн и избежать дублирования работы.
 
-## License
+Если у вас возникли сложности с реализацией идей, технические вопросы или требуется наставничество — участники сообщества всегда готовы помочь в нашем [Discord](https://discord.gg/ds14).
 
-All code for the content repository is licensed under [MIT](https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT).
+Перед отправкой пул-реквеста (в наш или основной репозиторий) мы рекомендуем вам ознакомиться с официальным [руководством по пул-реквестам](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
 
-Most assets are licensed under [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) unless stated otherwise. Assets have their license and the copyright in the metadata file. [Example](https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json).
+## Сборка
 
-Note that some assets are licensed under the non-commercial [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) or similar non-commercial licenses and will need to be removed if you wish to use this project commercially.
+1. Склонируйте репозиторий.
+2. Запустите `RUN_THIS.py` для инициализации подмодулей и скачивания движка.
+3. Скомпилируйте проект.
+
+[Более подробная инструкция по запуску проекта](https://docs.spacestation14.com/en/general-development/setup.html).

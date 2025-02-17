@@ -1,0 +1,426 @@
+# Shotgun
+
+- type: entity
+  name: автодробовик 9000 Альфа
+  parent: WeaponShotgunBulldog
+  id: WeaponShotgun9000Alpha
+  description: Автоматический дробовик 50 калибра. Настолько же стильный, насколько и убойный.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/Auto9000Alfa.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/Auto9000Alfa.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    fireRate: 2.5
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineShotgun9000Alpha
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShotgun9000Alpha
+
+- type: entity
+  id: MagazineShotgun9000Alpha
+  name: барабан 9000 Альфа (12х70 дробь)
+  parent: BaseMagazineShotgun
+  components:
+  - type: Tag
+    tags:
+    - MagazineShotgun9000Alpha
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
+    mayTransfer: true
+    whitelist:
+      tags:
+      - ShellShotgun
+    capacity: 20
+    soundRack:
+      path: /Audio/_Corvax/Weapons/Guns/Cock/shotgun_cock.ogg # Corvax-Guns
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/MagazineAuto9000Alfa.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunEmpty9000Alpha
+  name: барабан 9000 Альфа (12х70 любые)
+  suffix: Пустой
+  parent: MagazineShotgun9000Alpha
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: pellets
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunBeanbag9000Alpha
+  name: барабан 9000 Альфа (12х70 травматические)
+  parent: MagazineShotgun9000Alpha
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+  - type: Sprite
+    layers:
+    - state: beanbag
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunSlug9000Alpha
+  name: барабан 9000 Альфа (12х70 пуля)
+  parent: MagazineShotgun9000Alpha
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunSlug
+  - type: Sprite
+    layers:
+    - state: slug
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineShotgunIncendiary9000Alpha
+  name: барабан 9000 Альфа (12х70 зажигательные)
+  parent: MagazineShotgun9000Alpha
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: Tag
+  id: MagazineShotgun9000Alpha
+
+# SMG
+
+- type: entity
+  name: ПП-9000
+  parent: WeaponSubMachineGunAtreides
+  id: WeaponSubMachineGunPP9000
+  description: Высококачественный пистолет пулемёт с высокой скорострельностью и полимерным корпусом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/PP9000.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/PP9000.rsi
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -19
+    maxAngle: -16
+  - type: Gun
+    fireRate: 10
+    minAngle: 21
+    maxAngle: 32
+    angleIncrease: 1.5
+    angleDecay: 6
+    selectedMode: FullAuto
+    shotsPerBurst: 5
+    burstCooldown: 0.2
+    burstFireRate: 12
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGunPP9000
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGunPP9000
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  id: MagazinePistolSubMachineGunPP9000
+  name: магазин ПП-9000 (9х19 мм авто)
+  parent: MagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgePistol
+    whitelist:
+      tags:
+      - CartridgePistol
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/MagazinePP9000.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+    - MagazinePistolSubMachineGunPP9000
+
+- type: entity
+  id: MagazinePistolSubMachineGunPP9000Empty
+  name: магазин ПП-9000 (9х19 мм авто любые)
+  suffix: Пустой
+  parent: MagazinePistolSubMachineGunPP9000
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazinePistolSubMachineGunPP9000Practice
+  name: магазин ПП-9000 (9х19 мм авто учебные)
+  parent: MagazinePistolSubMachineGunPP9000
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolSubMachineGunPP9000Uranium
+  name: магазин ПП-9000 (9х19 мм авто урановые)
+  parent: MagazinePistolSubMachineGunPP9000
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: Tag
+  id: MagazinePistolSubMachineGunPP9000
+
+# Laser
+
+- type: entity
+  parent: [BaseWeaponPowerCell, BaseGunWieldable]
+  id: WeaponLaserRifleM1000
+  name: лазерный автомат М1000
+  description: Жаропрочный лазерный автомат со средним темпом стрельбы. Идеально подходит для близкой и средней дистанции боя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/LaserM1000.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/LaserM1000.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    fireRate: 6
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+      params:
+        volume: 1
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellM1000
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+          - PowerCellM1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  id: PowerCellM1000
+  parent: BaseItem
+  name: батарея лазерного автомата М1000
+  description: Мощная батарея, способная конденсировать большое количество энергии для непрерывной стрельбы.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/MagazineLaserM1000.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - PowerCellM1000
+  - type: Battery
+    maxCharge: 2400
+    startingCharge: 2400
+  - type: ProjectileBatteryAmmoProvider
+    proto: EmitterBolt
+    fireCost: 80
+  - type: PowerCell
+  - type: Appearance
+  - type: PowerCellVisuals
+  - type: Riggable
+
+- type: Tag
+  id: PowerCellM1000
+
+# Machinegun
+
+- type: entity
+  name: пулемёт 3000PRO
+  parent: BaseWeaponLightMachineGun
+  id: WeaponLightMachineGun3000PRO
+  description: Тяжёлый пулемёт из титанового сплава. Совмещает в себе как убойность, так и изящество.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/3000PRO.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/3000PRO.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    minAngle: 24
+    maxAngle: 45
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 9
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifleBox3000PRO
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineLightRifleBox3000PRO
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeLightRifle
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  id: MagazineLightRifleBox3000PRO
+  name: "короб патронов 3000PRO (7.62х39 мм винтовочный)"
+  parent: MagazineLightRifleBox
+  components:
+  - type: Tag
+    tags:
+    - MagazineLightRifleBox3000PRO
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifle
+    capacity: 150
+    whitelist:
+      tags:
+        - CartridgeLightRifle
+  - type: Item
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/Magazine3000PRO.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: Tag
+  id: MagazineLightRifleBox3000PRO
+
+# Headset
+- type: entity
+  parent: ClothingHeadsetAltFreelancer
+  id: ClothingHeadsetMedTech
+  name: полноразмерная гарнитура MedTech
+  description: Стильная гарнитура, необходимая для связи с сотрудниками MedTech.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyFreelance
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/headset.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/headset.rsi

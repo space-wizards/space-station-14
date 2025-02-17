@@ -1,0 +1,23 @@
+- type: playTimeTracker
+  id: TypanAtmosTech
+
+- type: playTimeTracker
+  id: TypanBotanist
+
+- type: playTimeTracker
+  id: TypanCargotech
+
+- type: playTimeTracker
+  id: TypanChef
+
+- type: playTimeTracker
+  id: TypanMedic
+
+- type: playTimeTracker
+  id: TypanRD
+
+- type: playTimeTracker
+  id: TypanScience
+
+- type: playTimeTracker
+  id: TypanTelecommunicationsOfficer

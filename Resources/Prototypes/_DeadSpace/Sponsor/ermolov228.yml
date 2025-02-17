@@ -1,0 +1,250 @@
+- type: sponsorLoadout
+  id: ermolov228
+  entity: ClothingBackpackErmolov228
+  sponsorOnly: true
+
+# Sound Collection
+- type: soundCollection
+  id: Ermolov228Whistle
+  files:
+    - /Audio/_DeadSpace/Sponsor/ermolov228/whistle_1.ogg
+    - /Audio/_DeadSpace/Sponsor/ermolov228/whistle_2.ogg
+  
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackErmolov228
+  name: потрёпанная сумка
+  description: Вместилище полезных и не очень вещей, ей явно уже не один десяток лет
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/satchel.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/satchel.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,15,5
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckErmolov228 
+      - id: ClothingOuterHardsuitErmolov228 
+      - id: WhistleErmolov228 
+      - id: JetpackVoidFilledErmolov228 
+      - id: ClothingBeltErmolov228 
+      - id: PDAErmolov228 
+      - id: ObjectsMugErmolov228 
+      - id: ClothingShoesBootsMagErmolov228
+      - id: ClothingHandsGlovesCombatErmolov228
+      - id: PaperLawErmolov228
+      - id: RemoteSignallerAdvanced
+      - id: SyringeUncookedAnimalProteinsErmolov228
+        amount: 9
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltErmolov228
+  name: пояс исследователя
+  description: Универсальный пояс с множеством карманов и креплений, специально созданный для длительных экспедиций в бездне.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+      
+# Neck
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckErmolov228
+  name: кружевной воротник
+  description: Каким образом он всегда остаётся чистым?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/neck.rsi
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitErmolov228
+  name: купол Рассвета
+  description: Герметичный костюм исследователя бездны, модифицированный для нахождения в открытом космосе.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/hardsuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: unshaded
+      - state: smoke
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitErmolov228
+  - type: Item
+    size: Huge
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.85
+  - type: HideLayerClothing
+    slots:
+    - Tail
+    hideOnToggle: true
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitErmolov228
+  categories: [ HideSpawnMenu ]
+  name: купол Рассвета
+  description: Герметичный костюм исследователя бездны, модифицированный для нахождения в открытом космосе.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/helmet.rsi
+  - type: PointLight
+    color: "#db94ff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Whistle
+- type: entity
+  parent: BaseWhistle
+  id: WhistleErmolov228
+  name: молящиеся руки
+  description: Свисток, являющийся одним из артефактов бездны, в виде сложенных в молитве ладоней.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/whistle.rsi
+    state: whistle
+    scale: 0.7, 0.7
+  - type: UseDelay
+    delay: 2.75
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/whistle.rsi
+  - type: Whistle
+    distance: 5
+  - type: EmitSoundOnUse
+    sound:
+      collection: Ermolov228Whistle
+
+# Jetpack
+- type: entity
+  id: JetpackVoidFilledErmolov228
+  parent: JetpackVoidFilled
+  name: прототип X-01
+  description: Прыжковый ранец, модифицированный для открытого космоса.
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/black.rsi
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/black.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/black.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDAErmolov228
+  name: КПК исследователя
+  description: Компактное устройство, содержащее всю необходимую информацию для любого исследователя.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/ermolov228/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/pda.rsi
+  - type: PdaBorderColor
+    borderColor: "#3b3a41"
+    accentVColor: "#eccaf9"
+  - type: PointLight
+    color: "#da45ff"
+
+# Mug
+- type: entity
+  parent: DrinkBaseMug
+  id: ObjectsMugErmolov228
+  name: кружка "Лучший отец в мире"
+  description: Простая белая кружка с потёртой надписью, напоминающая о доме и важных моментах.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/mug.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesCombatErmolov228
+  name: перчатки исследователя
+  description: Укреплённые перчатки из высокопрочных материалов, обеспечивающие защиту в работе с опасными объектами.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/gloves.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMagAdv
+  id: ClothingShoesBootsMagErmolov228
+  name: магнитные сапоги
+  description: Сапоги с мощными магнитами, позволяющими передвигаться по поверхностям в условиях невесомости и нестабильной гравитации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ermolov228/magboots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ermolov228/magboots.rsi
+
+# PaperLaw
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawErmolov228
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-ermolov228
+
+# Syringe
+- type: entity
+  parent: PrefilledSyringe
+  id: SyringeUncookedAnimalProteinsErmolov228
+  name: шприц с животными протеинами
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 15

@@ -669,6 +669,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("last_read_rules");
 
+                    // DS14-start
+                    b.Property<int>("Money")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("money");
+                    // DS14-end
+
                     b.Property<string>("LastSeenAddress")
                         .IsRequired()
                         .HasColumnType("TEXT")

@@ -253,7 +253,7 @@
     - CargoBoardsStatic
     - MedicalBoardsStatic
     - EngineeringBoardsStatic
-    - CircuitFloorsStatic
+    # - CircuitFloorsStatic # DS14: moved to CutterMachine recipes
     dynamicPacks:
     - EngineeringBoards
     - CargoBoards
@@ -309,6 +309,7 @@
     - RoboticsStatic
     - BorgModulesStatic
     - BorgLimbsStatic
+    - BorgSecLimbsStatic
     dynamicPacks:
     - Robotics
     - BorgModules
@@ -392,6 +393,7 @@
     - SecurityPracticeStatic
     - SecurityAmmoStatic
     - SecurityWeaponsStatic
+    - SecurityBorgModulesStatic
     dynamicPacks:
     - SecurityEquipment
     - SecurityBoards
@@ -671,6 +673,7 @@
     runningState: building
     staticPacks:
     - FloorTilesStatic
+    - CircuitFloorsStatic
   - type: MaterialStorage
     whitelist:
       tags:
@@ -679,3 +682,4 @@
         - Wooden
         - RawMaterial
         - Plastic
+        - Ingot

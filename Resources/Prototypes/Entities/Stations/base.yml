@@ -104,6 +104,15 @@
       alertLevelPrototype: stationAlerts
 
 - type: entity
+  id: BaseStationERTCall # DS14
+  abstract: true
+  components:
+    - type: ERTCall
+      ertTeamPrototype: stationERTTeams
+      timeToApprove: 300 # 5 min
+      timeToAnotherSpawn: 900 # 15 min
+
+- type: entity
   id: BaseStationExpeditions
   abstract: true
   components:

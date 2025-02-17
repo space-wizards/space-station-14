@@ -1,0 +1,96 @@
+- type: entity
+  parent: FoodBakedBase
+  id: ADTFoodCroissantCream
+  name: круассан с кремом
+  description: Хрустящий и румяный круассан с кремовой начинкой внутри.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/croissant.rsi
+    state: cream
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - creamy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
+
+- type: entity
+  parent: FoodBakedBase
+  id: ADTFoodCroissantChocolate
+  name: круассан с шоколадом
+  description: Хрустящий и румяный круассан с шоколадно-ореховой начинкой внутри.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/croissant.rsi
+    state: chocolate
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - nutty
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 1
+
+- type: entity
+  parent: FoodBakedBase
+  id: ADTFoodCroissantCheese
+  name: сырный круассан
+  description: Круассан с плавленным сыром внутри.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/croissant.rsi
+    state: cheese
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 1
+
+- type: entity
+  parent: FoodInjectableBase
+  id: ADTFoodHotDog
+  name: хот-дог
+  description: Мягкая булочка с сосиской и кетчупом. Для перекуса на бегу между кухней и своим отделом.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - spicy
+  - type: Food
+    transferAmount: 3
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/croissant.rsi
+    state: hotdog
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 3

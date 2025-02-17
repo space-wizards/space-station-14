@@ -1,0 +1,135 @@
+- type: sponsorLoadout
+  id: ClothingBackpackTier4SponsorLoadout
+  entity: ClothingBackpackTier4Sponsor
+  sponsorOnly: true
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier4Sponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Существо
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsWatchDivine
+      - id: ClothingMaskSkull
+      - id: ClothingOuterHoodiePink
+      - id: ClothingNeckWingsBlackVampire
+      - id: ClothingNeckWingsPegas
+      - id: ClothingNeckWingsSkeletonRed
+      - id: ClothingOuterWizard
+      - id: ClothingHeadHatWizardFake
+      - id: BedsheetWiz
+      - id: ClothingUniformJumpsuitSkeleton
+      - id: ClothingNeckWingsMagic
+      - id: ClothingOuterAtmosianBomberJacket
+      - id: ClothingMaskGasAtmosian
+      - id: ClothingCloakAtmosian
+      - id: ClothingHeadHatFancyCrown
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier4HOSIAASponsorLoadout
+  entity: ClothingBackpackTier4HOSIAASponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier4HOSIAASponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Существо, ГСБ АВД
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLeatherUSSPBlack
+      - id: ClothingHeadHatCapUSSPBlack
+      - id: ClothingOuterCoatUSSPOvercoatBlack
+      - id: ClothingShoesUSSPBlack
+      - id: ClothingUniformJumpsuitUSSPBlack
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier4HOSSponsorLoadout
+  entity: ClothingBackpackTier4HOSSponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier4HOSSponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Существо, ГСБ
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitHoSOld
+      - id: ClothingOuterCoatHoSOvercoat
+      - id: ClothingHeadHatCapHoS
+      - id: CigarGoldCase
+
+# OopsieDoopsie
+- type: sponsorLoadout
+  id: ClothingOuterAtmosianBomberJacketLoadout
+  entity: ClothingOuterAtmosianBomberJacket
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: ClothingMaskGasAtmosianLoadout
+  entity: ClothingMaskGasAtmosian
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: ClothingCloakAtmosianLoadout
+  entity: ClothingCloakAtmosian
+  sponsorOnly: true
+
+# ondapapers
+- type: sponsorLoadout
+  id: FancyCrownLoadout
+  entity: ClothingHeadHatFancyCrown
+  sponsorOnly: true
+
+# NEKISH
+- type: sponsorLoadout
+  id: OldHoSJumpsuitLoadout
+  entity: ClothingUniformJumpsuitHoSOld
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: sponsorLoadout
+  id: OldHoSCoatLoadout
+  entity: ClothingOuterCoatHoSOvercoat
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: sponsorLoadout
+  id: OldHoSCapLoadout
+  entity: ClothingHeadHatCapHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: sponsorLoadout
+  id: OldHoSGlovesLoadout
+  entity: ClothingHandsGlovesLeatherHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: sponsorLoadout
+  id: OldHoSBeltLoadout
+  entity: ClothingBeltHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: sponsorLoadout
+  id: OldHoSBackpackLoadout
+  entity: ClothingBackpackSatchelHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: sponsorLoadout
+  id: OldUSSPJumpsuitLoadout
+  entity: ClothingUniformJumpsuitUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]

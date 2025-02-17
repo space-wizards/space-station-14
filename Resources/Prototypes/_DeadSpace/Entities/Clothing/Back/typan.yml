@@ -1,0 +1,52 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSatchelTypan
+  name: сумка синдиката
+  description: Модная сумка в красно-чёрных тонах.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/bag.rsi
+  - type: Storage
+    grid:
+    - 0,0,1,3
+    - 3,0,6,3
+    - 8,0,9,3
+
+- type: entity
+  name: сумка для растений синдиката
+  id: TypanPlantBag
+  parent: BaseStorageItem
+  description: Сумка для ботаников, чтобы легко переносить свои огромные урожаи.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/plant_bag.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - belt
+  - type: Storage
+    grid:
+    - 0,0,7,4
+    maxItemSize: Small
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+        - Produce
+        - Seed
+  - type: Dumpable
+  
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterApronTypanBotanist
+  name: фартук ботаника синдиката
+  suffix: Botanical
+  description: Толстый фартук, идеально подходящий для защиты вашей нежной плоти от пятен, грязи и крови.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/apron_botanist.rsi 
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/apron_botanist.rsi 

@@ -20,9 +20,9 @@
     attackRate: 4
     damage:
       types:
-        Slash: 2
-        Blunt: 2
-        Structural: 4
+        Slash: 3
+        Blunt: 3
+        Structural: 5
     soundHit:
       path: /Audio/Weapons/chainsaw.ogg
       params:
@@ -30,8 +30,8 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 4
-        Structural: 4
+        Slash: 5
+        Structural: 5
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/chainsaw.rsi

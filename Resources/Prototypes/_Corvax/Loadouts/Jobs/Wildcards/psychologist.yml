@@ -1,0 +1,24 @@
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersPsychologist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersPsychologist
+
+- type: loadout
+  id: UnderwearBottomPantiesPsychologist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesPsychologist
+
+- type: loadout
+  id: UnderwearTopBraPsychologist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraPsychologist

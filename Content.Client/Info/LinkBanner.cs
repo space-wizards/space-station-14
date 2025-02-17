@@ -1,4 +1,5 @@
 ﻿using Content.Client.Changelog;
+using Content.Client.Credits;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
@@ -55,6 +56,18 @@ namespace Content.Client.Info
                 buttons.AddChild(button);
                 _infoLinks.Add((cVar, button));
             }
+
+            var bugReport = _cfg.GetCVar(CCVars.InfoLinksBugReport);
+            if (bugReport != "")
+            {
+                var reportButton = new Button {Text = Loc.GetString("server-info-report-button")};
+                reportButton.OnPressed += args => uriOpener.OpenUri(bugReport);
+                buttons.AddChild(reportButton);
+            }
+
+            var creditsButton = new Button {Text = Loc.GetString("server-info-credits-button")};
+            creditsButton.OnPressed += args => new CreditsWindow().Open();
+            buttons.AddChild(creditsButton);
         }
 
         protected override void EnteredTree()

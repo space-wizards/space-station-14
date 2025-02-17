@@ -58,6 +58,9 @@
       "name": "poster1_contraband"
     },
     {
+      "name": "quadro_electronics"
+    },
+    {
       "name": "poster2_contraband"
     },
     {
@@ -397,46 +400,129 @@
       "name": "random_anything"
     },
     {
-      "name": "poster52_contraband"
+      "name": "poster52_contraband",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "poster53_contraband"
+      "name": "poster53_contraband",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "poster54_contraband"
+      "name": "poster54_contraband",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "bagelmap"
+      "name": "bagelmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "deltamap"
+      "name": "deltamap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "marathonmap"
+      "name": "marathonmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "originmap"
+      "name": "originmap",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "moosemap"
+      "name": "moosemap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "packedmap"
+      "name": "packedmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "pillarmap"
+      "name": "pillarmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "salternmap"
+      "name": "salternmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "splitmap"
+      "name": "splitmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "lighthousemap"
+      "name": "lighthousemap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
-      "name": "waystationmap"
+      "name": "waystationmap",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     }
   ]
 }

@@ -1,0 +1,134 @@
+{
+    "version": 1,
+    "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
+    "copyright": "Neko and Vulp by mok_kom (discord), Plaf by hq._.dishka (discord), Vulp and Plaf animation/resprite by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "neko0",
+            "delays": [
+                [
+                    0.3,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "neko1"
+        },
+        {
+            "name": "neko2"
+        },
+        {
+            "name": "neko3",
+            "delays": [
+                [
+                    0.5,
+                    0.2,
+                    0.4,
+                    0.2,
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.05,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "vulp0",
+            "delays": [
+                [
+                    0.3,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "vulp1"
+        },
+        {
+            "name": "vulp2"
+        },
+        {
+            "name": "vulp3",
+            "delays": [
+                [
+                    0.3,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "plaf0",
+            "delays": [
+                [
+                    0.5,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "plaf1"
+        },
+        {
+            "name": "plaf2"
+        },
+        {
+            "name": "plaf3",
+            "delays": [
+                [
+                    0.5,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4
+                ]
+            ]
+        }
+    ]
+}

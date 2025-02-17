@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by nope_ingeneer",
+    "states": [
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "base"
+        }
+    ]
+}

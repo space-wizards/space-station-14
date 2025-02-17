@@ -1,0 +1,27 @@
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCoroner
+  categories: [ HideSpawnMenu ]
+  name: капюшон зимней куртки коронера
+  description: Капюшон, чтобы держать голову в тепле.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hoods/Coat/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hoods/Coat/coroner.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCoroner
+  name: шапочка коронера
+  description: Чёрная шапочка, которая не дает вашим волосам щекотать внутренности трупов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/coroner.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

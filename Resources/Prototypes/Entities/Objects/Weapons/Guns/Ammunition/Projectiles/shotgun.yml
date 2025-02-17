@@ -152,6 +152,7 @@
   - type: SolutionInjectOnProjectileHit
     transferAmount: 15
     solution: ammo
+    blockSlots: OUTERCLOTHING #tranquillizer darts shouldn't be blocked by a mask
   - type: InjectableSolution
     solution: ammo
 

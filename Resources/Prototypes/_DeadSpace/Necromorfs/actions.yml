@@ -1,0 +1,203 @@
+- type: entity
+  id: ActionAbsorptionDeadNecro
+  name: Поглотить некроморфа
+  description: Поглотите некроморфа, чтобы создать симбиоз.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    icon:
+      sprite: Interface/Actions/devour.rsi
+      state: icon
+    event: !type:AbsorptionDeadNecroActionEvent
+
+- type: entity
+  id: ActionInfectionNecro
+  name: Заразить существо
+  description: Заражает мёртвое существо инфекцией.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_damtype_toxin
+    event: !type:InfectionNecroActionEvent
+
+- type: entity
+  id: ActionSpawnPointNecro
+  name: Призвать некроморфа
+  description: Отсоеденить ранее поглощенного некроморфа.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    icon: _DeadSpace/Interface/Actions/slash.png
+    event: !type:SpawnPointNecroActionEvent
+
+- type: entity
+  id: ActionDevaEnrage
+  name: Бешенство
+  description: Вы впадаете в бешенство и пытаетесь сьесть ближайшего противника!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    icon: _DeadSpace/Interface/Actions/deva.png
+    itemIconStyle: NoItem
+    event: !type:DevaEnrageActionEvent
+
+- type: entity
+  id: ActionUnitologyHead
+  name: Передать знания
+  description: Ментально передаёт свою роль и знания другому юнитологу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_overload_off
+    event: !type:UnitologyHeadActionEvent
+    checkCanAccess: false
+    range: 2
+
+- type: entity
+  id: ActionOrderToSlave
+  name: Ограничить раба
+  description: Снять или дать ограничения в движении рабу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingArmy
+    event: !type:OrderToSlaveActionEvent
+    checkCanAccess: false
+    range: 10
+
+- type: entity
+  id: ActionUnitologObeliskSpawn
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    priority: -1
+    icon: _DeadSpace/Interface/Actions/obelisk.png
+    event: !type:ObeliskActionEvent
+
+- type: entity
+  id: ActionSpawnLeviathan
+  name: Стать левиафаном
+  description: Вы пожрали множество существ и готовы стать левиафаном.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 20
+    priority: -1
+    icon: _DeadSpace/Interface/Actions/leviathan.png
+    event: !type:SpawnLeviathanActionEvent
+
+- type: entity
+  id: ActionSelectEntity
+  name: Выбрать сущность для появления
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    priority: -1
+    icon: _DeadSpace/Interface/Actions/select.png
+    event: !type:SelectEntityActionEvent
+
+- type: entity
+  id: ActionSpawnPoint
+  name: Создать в точке
+  description: Создаёт существо в точке.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    useDelay: 10
+    icon: _DeadSpace/Interface/Actions/create.png
+    itemIconStyle: NoItem
+    priority: -1
+    event: !type:SpawnPointActionEvent
+    checkCanAccess: false
+    range: 0
+
+- type: entity
+  id: ActionHiveRaiseArmy
+  name: Улей
+  description: Создать личинку!
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon: _DeadSpace/Necromorfs/larva.png
+    event: !type:RatKingRaiseArmyActionEvent
+
+- type: entity
+  id: ActionHiveDomain
+  name: Пустить газ
+  description: Выпускает некрогаз в пространство.
+  components:
+  - type: InstantAction
+    useDelay: 120
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingDomain
+    event: !type:RatKingDomainActionEvent
+
+- type: entity
+  id: ActionHiveOrderStay
+  name: Остановить
+  description: Команда для подконтрольных существ.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon: _DeadSpace/Interface/Actions/stayOff.png
+    iconOn: _DeadSpace/Interface/Actions/stay.png
+    event:
+      !type:RatKingOrderActionEvent
+        type: Stay
+    priority: 5
+
+- type: entity
+  id: ActionHiveOrderFollow
+  name: За мной
+  description: Команда для подконтрольных существ.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon: _DeadSpace/Interface/Actions/followOff.png
+    iconOn: _DeadSpace/Interface/Actions/follow.png
+    event:
+      !type:RatKingOrderActionEvent
+      type: Follow
+    priority: 6
+
+- type: entity
+  id: ActionHiveOrderCheeseEm
+  name: Атака
+  description: Команда для подконтрольных существ.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon: _DeadSpace/Interface/Actions/attackOff.png
+    iconOn: _DeadSpace/Interface/Actions/attack.png
+    event:
+      !type:RatKingOrderActionEvent
+      type: CheeseEm
+    priority: 7
+
+- type: entity
+  id: ActionHiveOrderLoose
+  name: Вольно
+  description: Команда для подконтрольных существ.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon: _DeadSpace/Interface/Actions/looseOff.png
+    iconOn: _DeadSpace/Interface/Actions/loose.png
+    event:
+      !type:RatKingOrderActionEvent
+      type: Loose
+    priority: 8

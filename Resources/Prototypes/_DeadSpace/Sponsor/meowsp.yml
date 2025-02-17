@@ -1,0 +1,183 @@
+- type: sponsorLoadout
+  id: meowsp
+  entity: ClothingBackpackmeowsp
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackmeowsp
+  name: чёрный блюспейс вещмешок
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/meowsp/duffel.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltmeowspFilled
+      - id: ClothingHandsGlovesmeowsp
+      - id: ClothingOuterHardsuitmeowsp
+      - id: ClothingHeadHatmeowsp
+      - id: ClothingUniformJumpsuitmeowsp
+      - id: ClothingShoesBootsMagmeowsp
+      - id: ClothingUnderSocksmeowsp
+      - id: JetpackVoidFilled
+      - id: DominatorMedkitAdvanced
+      - id: ADTtelescopicBaton
+      - id: ToySword
+      - id: SpaceCash1000
+      - id: WeaponDisablerToySponsor
+      - id: ClothingEyesGlassesBigSunglasses
+      - id: PaperLawmeowsp
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltmeowspFilled
+  name: чёрный пояс
+  description: Пояс в котором можно носить небольшие предметы.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/security.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/security.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesmeowsp
+  name: белые боевые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitmeowsp
+  name: няно скафандр
+  description: Очень дорогой скафандр сделанный на заказ. Встроенный экзоскелет увеличивает скорость передвижения владельца. Не фелиниду будет в нём крайне не удобно находится.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/meowsp/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/meowsp/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitmeowsp
+  - type: Item
+    size: Huge
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.15
+  - type: HeldSpeedModifier
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitmeowsp
+  categories: [ HideSpawnMenu ]
+  name: шлем няно скафанда
+  description: Милый шлем с ушками сделанный на заказ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/meowsp/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/meowsp/helmet.rsi
+  - type: PointLight
+    color: "#3281FD"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Head
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatmeowsp
+  name: бантиковая лента
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/head.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/head.rsi
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitmeowsp
+  name: костюм с морским воротником
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuit.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagmeowsp
+  name: улучшенные няно-магнитные ботинки
+  description: Магнитные ботинки в чёрном цвете.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/meowsp/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/meowsp/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksmeowsp
+  name: полосатые чулки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/socks.rsi
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawmeowsp
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-meowsp

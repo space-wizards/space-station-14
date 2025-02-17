@@ -1,0 +1,34 @@
+- type: paperworkForm
+  id: Nukeops1
+  category: nukeops
+  name: paperwork-form-title-syndicate-1
+  text: "/Paperwork/Syndicate/1.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: Nukeops2
+  category: nukeops
+  name: paperwork-form-title-syndicate-2
+  text: "/Paperwork/Syndicate/2.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: Nukeops3
+  category: nukeops
+  name: paperwork-form-title-syndicate-3
+  text: "/Paperwork/Syndicate/3.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: Nukeops4
+  category: nukeops
+  name: paperwork-form-title-syndicate-4
+  text: "/Paperwork/Syndicate/4.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT
+
+- type: paperworkForm
+  id: Nukeops5
+  category: nukeops
+  name: paperwork-form-title-syndicate-5
+  text: "/Paperwork/Syndicate/5.xml"
+  paperPrototype: PaperPrintedNukeopsSyndicateToNT

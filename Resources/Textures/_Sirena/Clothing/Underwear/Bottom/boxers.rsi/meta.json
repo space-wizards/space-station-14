@@ -1,0 +1,18 @@
+{
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-UNDERWEARB",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}

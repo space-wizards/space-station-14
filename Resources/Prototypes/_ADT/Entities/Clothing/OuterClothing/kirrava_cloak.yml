@@ -1,0 +1,24 @@
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterKirasCloak
+  name: мантия рыси
+  description: Необчная накидка с капюшоном и ушками.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/WinterCoats/kiras_cloakn.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/WinterCoats/kiras_cloakn.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterKiras
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodWinterKiras
+  categories: [ HideSpawnMenu ]
+  name: капюшон с ушками
+  description: Ой какие ушки!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hood/Coat/kirava_hoodsec.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hood/Coat/kirava_hoodsec.rsi

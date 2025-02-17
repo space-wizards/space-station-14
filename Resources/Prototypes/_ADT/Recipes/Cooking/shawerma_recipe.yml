@@ -1,0 +1,43 @@
+- type: microwaveMealRecipe
+  id: ADTRecipeShawermaDefault
+  name: shawerma recipe
+  result: ADTShawermaDefault
+  time: 20
+  solids:
+    FoodTomato: 1
+    FoodMeatCutlet: 3
+    FoodDough: 1
+    FoodCarrot: 1
+    FoodOnionRedSlice: 1
+    FoodCabbage: 1
+  reagents:
+    Mayo: 2
+
+- type: microwaveMealRecipe
+  id: ADTRecipeShawermaCheese
+  name: cheese shawerma recipe
+  result: ADTShawermaCheese
+  time: 20
+  solids:
+    FoodTomato: 1
+    FoodMeatCutlet: 3
+    FoodDough: 1
+    FoodCarrot: 1
+    FoodOnionRedSlice: 1
+    FoodCabbage: 1
+    FoodCheeseSlice: 1
+  reagents:
+    Mayo: 2
+
+- type: microwaveMealRecipe
+  id: ADTRecipeShawermaMeat
+  name: shawerma recipe
+  result: ADTShawermaMeat
+  time: 20
+  solids:
+    FoodMeatCutlet: 3
+    FoodMeatCooked: 1
+    FoodEgg: 2
+    FoodMeatMeatball: 1
+  reagents:
+    Mayo: 2

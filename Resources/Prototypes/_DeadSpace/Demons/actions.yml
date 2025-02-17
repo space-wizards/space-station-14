@@ -1,0 +1,107 @@
+- type: entity
+  id: ActionHeraldEnrage
+  name: Впасть в бешенство
+  description: Вы сильно злы! Ваша скорость увеличена.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 180
+    icon:
+      sprite: _DeadSpace/Demons/demon_boss.rsi
+      state: herald
+    event: !type:HeraldEnrageActionEvent
+
+- type: entity
+  id: ActionHeraldSpawn
+  name: Открыть портал
+  description: Открывает портал в ад, и да начнётся нашествие демонов!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: _DeadSpace/Demons/demon_boss.rsi
+      state: herald
+    event: !type:HeraldSpawnActionEvent
+
+- type: entity
+  id: ActionStunAttack
+  name: Оглушающая атака
+  description: Ваша следующая атака собьёт жертву с ног.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_damtype_brute
+    event: !type:StunAttackActionEvent
+
+- type: entity
+  id: ActionStunRadius
+  name: Шутка
+  description: Заставляет всех вокруг упасть со смеху.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 60
+    icon:
+      sprite: Objects/Specific/Mech/mecha_equipment.rsi
+      state: mecha_honker
+    event: !type:StunRadiusActionEvent
+
+- type: entity
+  id: ActionDemonDash
+  name: Демонический рывок
+  description: Телепортирует вас в указанную точку.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: blink
+    itemIconStyle: NoItem
+    priority: -1
+    event: !type:DemonDashEvent
+    checkCanAccess: false
+    range: 0
+
+- type: entity
+  id: ActionDemonShadowGrapple
+  name: Притянуть существо
+  description: Оглушает и притягивает выбранное существо.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 30
+    icon: _DeadSpace/Demons/ability_icons/shadow_grapple.png
+    event: !type:ShadowGrappleEvent
+    checkCanAccess: false
+    range: 10
+
+- type: entity
+  id: ActionLockShadowCocoon
+  name: Засунуть в кокон
+  description: Помещает существо в теневой кокон.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 30
+    icon:
+      sprite: _DeadSpace/Demons/shadow_cocoon.rsi
+      state: cocoon
+    event: !type:LockCocoonEvent
+    checkCanAccess: false
+    range: 3
+
+- type: entity
+  id: ActionDemonShadowCrawl
+  name: Войти в астрал
+  description: Вы исчезаете из физического мира.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: _DeadSpace/Demons/ability_icons/shadow_crawl.png
+    itemIconStyle: NoItem
+    useDelay: 60
+    event: !type:ShadowCrawlActionEvent

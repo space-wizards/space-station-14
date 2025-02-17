@@ -79,8 +79,20 @@
       {
         "name": "inventory"
       },
+	  {
+        "name": "underweart"
+      },
+	  {
+        "name": "underwearb"
+      },
+	  {
+        "name": "socks"
+      },
       {
         "name": "pda"
+      },
+      {
+        "name": "module"
       },
       {
         "name": "web"

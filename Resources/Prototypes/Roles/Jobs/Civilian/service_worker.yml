@@ -3,16 +3,28 @@
   name: job-name-serviceworker
   description: job-description-serviceworker
   playTimeTracker: JobServiceWorker
+  requirements:
+    - !type:OverallPlaytimeRequirement
+        time: 3600 # 1 hour
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service
   access:
+  - Bar
   - Service
   - Maintenance
-  - Bar
-  - Kitchen
+  - Janitor
+  - Theatre
   extendedAccess:
+  - Chapel
+  - Kitchen
   - Hydroponics
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 40
+  #end-backmen: currency
 
 - type: startingGear
   id: ServiceWorkerGear
@@ -20,6 +32,4 @@
     shoes: ClothingShoesColorBlack
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksService

@@ -1,0 +1,71 @@
+- type: entity
+  name: паук принцесса
+  parent: BaseMobSpiderTerror
+  id: MobSpiderTerrorPrincess
+  description: Она огромная, выглядит величественно.
+  components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 3
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 2.5
+  - type: Sprite
+    scale: 1.5, 1.5
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/terror_princess.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 7
+        Poison: 1
+        Structural: 20
+      groups:
+        Brute: 7
+  - type: Stamina
+    critThreshold: 100
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 250
+    bloodlossThreshold: 0.4
+  - type: SpawnAgainst
+    duration: 15
+    spawnAgainstAction: ActionSpawnAgainst
+    spawnedEntities:
+      - CocoonSpider # Что спавнить
+    spawnSound:
+      collection: SpiderHatches # Звуки спавна
+  - type: Bloodsucker
+    maxCountReagent: 500 # Ёмкость
+    countReagent: 500 # Сколько реагента при спавне
+    duration: 2 # Длительность сосания
+    howMuchWillItSuck: 20 # Сколько высосет за один укус
+    injectSound:
+      collection: SpiderHatches # Звуки после высасывания
+  - type: NeededBloodForSpawnAgainst # Пример
+    defaultCost: 10 # Стандартная цена на не заданный результат
+  - type: Puller
+    needsHands: false
+  - type: SpiderKing
+  - type: Damageable
+    damageModifierSet: HeadSpiderTerror

@@ -1,0 +1,35 @@
+- type: job
+  id: CentralCommandAdministrator
+  name: job-name-centcom-administrator
+  description: job-description-centcom-administrator
+  playTimeTracker: JobCentralCommandAdministrator
+  setPreference: false
+  startingGear: CentcomAdministratorGear
+  icon: "JobIconNanotrasenRed"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CentcomAdministratorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesDominator
+    id: CentcomAdministratorPDA
+    ears: ClothingHeadsetAltCentCom
+    neck: ClothingNeckCloakCentcom
+    pocket1: RubberStampCentcom
+    pocket2: ClothingMaskGasCentcom
+  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
+  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
+  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
+  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
+  # storage:
+  #   back:
+  #   - 

@@ -1,0 +1,194 @@
+- type: body
+  id: MobDeadSquadNecro
+  name: "DeadSquadNecro"
+  root: torso
+  slots:
+    head:
+      part: HeadHuman
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoHuman
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right_arm:
+      part: RightArmHuman
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmHuman
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandHuman
+    left_hand:
+      part: LeftHandHuman
+    right_leg:
+      part: RightLegHuman
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegHuman
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootHuman
+    left_foot:
+      part: LeftFootHuman
+
+- type: entity
+  parent: WeaponPulseCarbine
+  categories: [ HideSpawnMenu ]
+  id: WeaponPulseCarbineNecro
+  name: винтовка заражённого бойца
+  description: Высокотехнологичный энергетический карабин, который предпочитают оперативники ОБР NanoTrasen.
+  components:
+  - type: Unremoveable
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 100
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+
+- type: entity
+  parent: BaseKnife
+  categories: [ HideSpawnMenu ]
+  id: WeaponNecroClaws
+  name: клешни некроморфа
+  components:
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/claws.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Slash: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/claws.rsi
+    state: icon
+  - type: Unremoveable
+
+- type: startingGear
+  id: DeadSquadNecroGear
+  inhand:
+  - WeaponPulseCarbineNecro
+  - WeaponNecroClaws
+
+- type: damageModifierSet
+  id: DeadSquadNecro
+  coefficients:
+    Blunt: 0.4
+    Slash: 0.4
+    Piercing: 0.4
+    Shock: 0.2
+    Cold: 0
+    Heat: 0.4
+    Poison: 0
+    Radiation: 0
+
+- type: entity
+  name: заражённый боец эскадрона смерти
+  parent:
+  - SimpleSpaceMobBase
+  id: MobDeadSquadNecro
+  components:
+  - type: Vocal
+    sounds:
+      Male: Necro
+      Female: Necro
+      Unsexed: Necro
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Damageable
+    damageModifierSet: DeadSquadNecro
+  - type: Loadout
+    prototypes: [DeadSquadNecroGear]
+  - type: Hands
+  - type: NightVision
+  - type: Body
+    prototype: MobDeadSquadNecro
+    requiredLegs: 2
+  - type: ImmunNecroobelisk
+  - type: ZombieImmune
+  - type: IgnoreKudzu
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Necromorfs/dead_squad.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+  - type: NpcFactionMember
+    factions:
+      - Necromorfs
+  - type: Tool
+    qualities:
+      - Prying
+  - type: Prying
+    pryPowered: !type:Bool
+        true
+    force: !type:Bool
+      true
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: running
+      Dead:
+        Base: dead
+  - type: CombatMode
+  - type: Bloodstream
+    bloodReagent: NecromorfBlood
+    bloodMaxVolume: 200
+    bloodlossThreshold: 0
+  - type: MobPrice
+    price: 200
+  - type: NonSpreaderZombie

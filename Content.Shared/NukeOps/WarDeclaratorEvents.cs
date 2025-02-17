@@ -13,9 +13,9 @@ public enum WarConditionStatus : byte
     WarReady,
     YesWar,
     NoWarUnknown,
-    NoWarTimeout,
+    // NoWarTimeout, // DS14 no stealth nuke
     NoWarSmallCrew,
-    NoWarShuttleDeparted
+    // NoWarShuttleDeparted // DS14 no stealth nuke
 }
 
 [Serializable, NetSerializable]

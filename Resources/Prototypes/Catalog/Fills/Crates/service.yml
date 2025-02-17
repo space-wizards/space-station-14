@@ -197,7 +197,6 @@
       - id: BookMedicalReferenceBook
       - id: BookHowToSurvive
       - id: BookChemicalCompendium
-      - id: BookSpaceLaw
 
 - type: entity
   id: CrateServiceSodaDispenser
@@ -359,4 +358,13 @@
       - id: BoxCandle
         amount: 2
       - id: BoxCandleSmall
+        amount: 2
+
+- type: entity
+  id: CrateServicePhotocopierToners
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxPhotocopierToners
         amount: 2

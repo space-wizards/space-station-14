@@ -1,6 +1,10 @@
 - type: soundCollection
   id: RoundEnd
   files:
-  - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
-  - /Audio/Announcements/RoundEnd/disappointed.ogg
-  - /Audio/Announcements/RoundEnd/notevenpaidforthis.ogg
+  - /Audio/_DeadSpace/Announcements/RoundEnd/1.ogg
+  - /Audio/_DeadSpace/Announcements/RoundEnd/2.ogg
+  - /Audio/_DeadSpace/Announcements/RoundEnd/3.ogg
+  - /Audio/_DeadSpace/TauCeti/admin_cap_gone.ogg
+  - /Audio/_DeadSpace/TauCeti/admin_hos_gone.ogg
+  - /Audio/_DeadSpace/TauCeti/aimalf.ogg
+  - /Audio/_DeadSpace/TauCeti/animes.ogg

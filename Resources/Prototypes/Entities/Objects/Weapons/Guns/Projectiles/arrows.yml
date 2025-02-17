@@ -52,6 +52,7 @@
   - type: SolutionInjectOnEmbed
     transferAmount: 2
     solution: ammo
+    blockSlots: OUTERCLOTHING
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Appearance

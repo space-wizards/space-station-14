@@ -1,0 +1,5 @@
+- type: loadout
+  id: CorporateLaw
+  storage:
+    back:
+    - HyperLinkBookCorporateLaw

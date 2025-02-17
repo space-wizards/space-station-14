@@ -3,6 +3,9 @@
   name: job-name-cargotech
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
+  requirements:
+    - !type:OverallPlaytimeRequirement
+        time: 3600 # 1 hour
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
   supervisors: job-supervisors-qm
@@ -11,6 +14,12 @@
   - Maintenance
   extendedAccess:
   - Salvage
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Cargo
+  wage: 45
+  #end-backmen: currency
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay
@@ -22,6 +31,4 @@
     id: CargoPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksCargoTech

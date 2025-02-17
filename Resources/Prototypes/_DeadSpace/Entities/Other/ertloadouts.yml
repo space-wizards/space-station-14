@@ -1,0 +1,514 @@
+# Loadout cases
+
+## Base
+- type: entity
+  parent: BaseItem
+  id: BaseERTloadoutPrimary
+  abstract: true
+  name: кейс неопределённости
+  description: Прочный военный кейс для оружия.
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _DeadSpace/Other/ertloadouts/ertcases.rsi
+    state: amber
+  - type: ThiefUndeterminedBackpack
+    maxSelectedSets: 1
+    possibleSets:
+    - KammererSet
+    - DrozdSet
+    - LaserCarbineSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  parent: BaseItem
+  id: BaseERTloadoutSecondary
+  abstract: true
+  name: коробка неопределённости
+  description: Коробка с табельным оружием.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+  - type: Sprite
+    sprite: _DeadSpace/Other/ertloadouts/ertboxes.rsi
+    state: amber
+  - type: ThiefUndeterminedBackpack
+    maxSelectedSets: 1
+    possibleSets:
+    - Mk58Set
+    - DominatorSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+## Security
+- type: entity
+  id: ERTloadoutSecuritySecondary
+  name: коробка неопределённости
+  description: Коробка с табельным оружием. Принадлежит службе безопасности.
+  suffix: СБ, Вторичное
+  parent: BaseERTloadoutSecondary
+  components:
+  - type: Sprite
+    state: security
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - Mk58DisablerSet
+    - DominatorSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+
+## Amber
+- type: entity
+  id: ERTloadoutAmberPrimary
+  name: кейс неопределённости
+  description: Прочный военный кейс для оружия. Принадлежит отряду "Эмбер". 
+  suffix: ОБР, Эмбер, Основное
+  parent: BaseERTloadoutPrimary
+  components:
+  - type: Sprite
+    state: amber
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - KammererSet
+    - DrozdSet
+    - LaserCarbineSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  id: ERTloadoutAmberSecondary
+  name: коробка неопределённости
+  description: Коробка с табельным оружием. Принадлежит отряду "Эмбер".
+  suffix: ОБР, Эмбер, Вторичное
+  parent: BaseERTloadoutSecondary
+  components:
+  - type: Sprite
+    state: amber
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - Mk58Set
+    - DominatorSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+## Red
+- type: entity
+  id: ERTloadoutRedPrimary
+  name: кейс неопределённости
+  description: Прочный военный кейс для оружия. Принадлежит отряду "Красный".
+  suffix: ОБР, Красный, Основное
+  parent: BaseERTloadoutPrimary
+  components:
+  - type: Sprite
+    state: red
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - EnforcerSet
+    - WT550Set
+    - LaserCannonSet
+    - XrayCannonSet
+    - LaserRifleSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  id: ERTloadoutRedSecondary
+  name: коробка неопределённости
+  description: Коробка с табельным оружием. Принадлежит отряду "Красный".
+  suffix: ОБР, Красный, Вторичное
+  parent: BaseERTloadoutSecondary
+  components:
+  - type: Sprite
+    state: red
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - MatebaSet
+    - LaserGunSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+## Gamma
+- type: entity
+  id: ERTloadoutGammaPrimary
+  name: кейс неопределённости
+  description: Прочный военный кейс для оружия. Принадлежит отряду "Гамма".
+  suffix: ОБР, Гамма, Основное
+  parent: BaseERTloadoutPrimary
+  components:
+  - type: Sprite
+    state: gamma
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - EnergyShotgunSet
+    - VectorSet
+    - PulseCarbineSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  id: ERTloadoutGammaSecondary
+  name: коробка неопределённости
+  description: Коробка с табельным оружием. Принадлежит отряду "Гамма".
+  suffix: ОБР, Гамма, Вторичное
+  parent: BaseERTloadoutSecondary
+  components:
+  - type: Sprite
+    state: gamma
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - N1984Set
+    - PulsePistolSet
+    - AdvancedLaserSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+## CBURN
+- type: entity
+  id: ERTloadoutCBURNPrimary
+  name: кейс неопределённости
+  description: Прочный военный кейс для оружия. Принадлежит отряду РХБЗЗ. 
+  suffix: РХБЗЗ, Съерра, Основное
+  parent: BaseERTloadoutPrimary
+  components:
+  - type: Sprite
+    state: cburn
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - LecterSet
+    - EnforcerCBURNSet
+    - LaserCannonSet
+    - LaserRifleSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  id: ERTloadoutCBURNSecondary
+  name: коробка неопределённости
+  description: Коробка с табельным оружием. Принадлежит отряду РХБЗЗ.
+  suffix: РХБЗЗ, Съерра, Вторичное
+  parent: BaseERTloadoutSecondary
+  components:
+  - type: Sprite
+    state: cburn
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - LaserGunSet
+    - SawnSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+# Sets
+
+## Primary
+### Дробовики
+- type: thiefBackpackSet
+  id: KammererSet
+  name: ert-loadout-category-kammerer-name
+  description: ert-loadout-category-kammerer-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+    state: icon
+  content:
+  - WeaponShotgunKammerer
+  - BoxLethalshot
+  - BoxBeanbag
+
+- type: thiefBackpackSet
+  id: EnforcerSet
+  name: ert-loadout-category-enforcer-name
+  description: ert-loadout-category-enforcer-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    state: icon
+  content:
+  - WeaponShotgunEnforcer
+  - BoxLethalshot
+  - BoxShotgunSlug
+  - BoxBeanbag
+
+- type: thiefBackpackSet
+  id: EnforcerCBURNSet
+  name: ert-loadout-category-enforcer-name
+  description: ert-loadout-category-enforcer-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    state: icon
+  content:
+  - WeaponShotgunEnforcer
+  - BoxLethalshot
+  - BoxShotgunSlug
+  - BoxShotgunIncendiary
+
+- type: thiefBackpackSet
+  id: EnergyShotgunSet
+  name: ert-loadout-category-energyshotgun-name
+  description: ert-loadout-category-energyshotgun-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    state: icon
+  content:
+  - WeaponEnergyShotgun
+
+### Автоматическое
+- type: thiefBackpackSet
+  id: DrozdSet
+  name: ert-loadout-category-drozd-name
+  description: ert-loadout-category-drozd-description
+  sprite:
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunDrozd
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+
+- type: thiefBackpackSet
+  id: WT550Set
+  name: ert-loadout-category-wt550-name
+  description: ert-loadout-category-wt550-description
+  sprite:
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunWt550
+  - MagazinePistolSubMachineGunTopMounted
+  - MagazinePistolSubMachineGunTopMounted
+  - MagazinePistolSubMachineGunTopMounted
+  - MagazineBoxPistol
+
+- type: thiefBackpackSet
+  id: VectorSet
+  name: ert-loadout-category-vector-name
+  description: ert-loadout-category-vector-description
+  sprite:
+    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunVector
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - MagazineBoxPistol
+  - MagazineBoxPistol
+
+- type: thiefBackpackSet
+  id: LecterSet
+  name: ert-loadout-category-lecter-name
+  description: ert-loadout-category-lecter-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    state: icon
+  content:
+  - WeaponRifleLecter
+  - MagazineRifle
+  - MagazineRifle
+  - MagazineRifle
+  - MagazineBoxRifle
+
+### Лазеры
+- type: thiefBackpackSet
+  id: LaserCarbineSet
+  name: ert-loadout-category-lasercarbine-name
+  description: ert-loadout-category-lasercarbine-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    state: icon
+  content:
+  - WeaponLaserCarbine
+
+- type: thiefBackpackSet
+  id: LaserCannonSet
+  name: ert-loadout-category-lasercannon-name
+  description: ert-loadout-category-lasercannon-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    state: icon
+  content:
+  - WeaponLaserCannon
+
+- type: thiefBackpackSet
+  id: LaserRifleSet
+  name: ert-loadout-category-laserrifle-name
+  description: ert-loadout-category-laserrifle-description
+  sprite:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/laser_rifle.rsi
+    state: icon
+  content:
+  - WeaponLaserRifle
+
+- type: thiefBackpackSet
+  id: XrayCannonSet
+  name: ert-loadout-category-xraycannon-name
+  description: ert-loadout-category-xraycannon-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    state: icon
+  content:
+  - WeaponXrayCannon
+
+- type: thiefBackpackSet
+  id: PulseCarbineSet
+  name: ert-loadout-category-pulsecarbine-name
+  description: ert-loadout-category-pulsecarbine-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    state: icon
+  content:
+  - WeaponPulseCarbine
+
+## Secondary
+### Огнестрельное
+- type: thiefBackpackSet
+  id: Mk58Set
+  name: ert-loadout-category-mk58-name
+  description: ert-loadout-category-mk58-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: icon
+  content:
+  - WeaponPistolMk58
+  - MagazinePistol
+  - MagazinePistol
+  - MagazinePistol
+
+- type: thiefBackpackSet
+  id: Mk58DisablerSet
+  name: ert-loadout-category-mk58-name
+  description: ert-loadout-category-mk58-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: icon
+  content:
+  - WeaponPistolMk58
+  - WeaponDisabler
+
+- type: thiefBackpackSet
+  id: MatebaSet
+  name: ert-loadout-category-mateba-name
+  description: ert-loadout-category-mateba-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+    state: icon
+  content:
+  - WeaponRevolverMateba
+  - SpeedLoaderMagnum
+  - SpeedLoaderMagnum
+  - SpeedLoaderMagnum
+  - MagazineBoxMagnum
+
+- type: thiefBackpackSet
+  id: N1984Set
+  name: ert-loadout-category-n1984-name
+  description: ert-loadout-category-n1984-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+    state: icon
+  content:
+  - WeaponPistolN1984
+  - MagazineMagnum
+  - MagazineMagnum
+  - MagazineMagnum
+  - MagazineBoxMagnum
+  - MagazineBoxMagnum
+
+- type: thiefBackpackSet
+  id: SawnSet
+  name: ert-loadout-category-sawn-name
+  description: ert-loadout-category-sawn-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    state: icon
+  content:
+  - WeaponShotgunSawn
+  - BoxShotgunIncendiary
+
+### Лазеры
+- type: thiefBackpackSet
+  id: DominatorSet
+  name: ert-loadout-category-dominator-name
+  description: ert-loadout-category-dominator-description
+  sprite:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/dominator.rsi
+    state: icon-0
+  content:
+  - PistolDominator
+
+- type: thiefBackpackSet
+  id: LaserGunSet
+  name: ert-loadout-category-lasergun-name
+  description: ert-loadout-category-lasergun-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    state: icon
+  content:
+  - WeaponLaserGun
+
+- type: thiefBackpackSet
+  id: AdvancedLaserSet
+  name: ert-loadout-category-advancedlaser-name
+  description: ert-loadout-category-advancedlaser-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    state: icon
+  content:
+  - WeaponAdvancedLaser
+
+- type: thiefBackpackSet
+  id: PulsePistolSet
+  name: ert-loadout-category-pulsepistol-name
+  description: ert-loadout-category-pulsepistol-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    state: icon
+  content:
+  - WeaponPulsePistol

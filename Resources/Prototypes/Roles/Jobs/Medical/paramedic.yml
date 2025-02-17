@@ -6,17 +6,23 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
-      time: 14400 #4 hrs
-    - !type:OverallPlaytimeRequirement
-      time: 54000 # 15 hrs
+      time: 36000 # 10 hours
   startingGear: ParamedicGear
   icon: "JobIconParamedic"
   supervisors: job-supervisors-cmo
   access:
   - Medical
   - Maintenance
+  - Paramedic
+  - Coroner
   extendedAccess:
   - Chemistry
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Medical
+  wage: 60
+  #end-backmen: currency
 
 - type: startingGear
   id: ParamedicGear
@@ -24,6 +30,7 @@
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalEMTFilled
+    socks: ClothingUnderwearSocksParamedic
   storage:
     back:
     - EmergencyRollerBedSpawnFolded

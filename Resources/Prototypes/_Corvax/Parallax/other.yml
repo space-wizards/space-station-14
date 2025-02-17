@@ -1,0 +1,103 @@
+- type: parallax
+  id: Water
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      slowness: 0.5
+      scrolling: "0.1, 0"
+      tiled: true
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      slowness: 0
+      scrolling: "-0.1, 0"
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      slowness: 0
+      scrolling: "-0.1, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false
+
+- type: parallax
+  id: IceWater
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      slowness: 0.5
+      scrolling: "0.1, 0"
+      tiled: true
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      slowness: 0
+      scrolling: "-0.1, 0"
+      tiled: true
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/IceParallax.png"
+      slowness: 0
+      scrolling: "0, 0"
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/IceParallax.png"
+      slowness: 0
+      scrolling: "0, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false
+
+- type: parallax
+  id: Ice
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/Snow/ice.png"
+      slowness: 0
+      scrolling: "0, 0"
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/Snow/ice.png"
+      slowness: 0
+      scrolling: "-0, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false
+
+- type: parallax
+  id: Lava
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/LavaParallax.png"
+      slowness: 0
+      scrolling: "0.1, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: true
+ 
+- type: parallax
+  id: LavaLight
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/LavaLightParallax.png"
+      slowness: 0
+      scrolling: "0.1, 0"
+      tiled: true
+  layersLQUseHQ: true

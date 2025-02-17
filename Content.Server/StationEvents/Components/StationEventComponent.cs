@@ -87,4 +87,10 @@ public sealed partial class StationEventComponent : Component
     /// </summary>
     [DataField]
     public bool OccursDuringRoundEnd = true;
+
+    /// <summary>
+    /// Will this event start randomly or not.
+    /// </summary>
+    [DataField]
+    public bool WillNotStartRandomly = false;
 }

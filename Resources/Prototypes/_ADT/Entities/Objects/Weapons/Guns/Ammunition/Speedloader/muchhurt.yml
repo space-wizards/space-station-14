@@ -1,0 +1,40 @@
+- type: entity
+  id: BaseSpeedLoader357
+  name: спидлоадер (.357 магнум)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - SpeedLoader357
+  - type: SpeedLoader
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Cartridge357
+    capacity: 7
+  - type: Sprite
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+- type: entity
+  id: SpeedLoader357
+  name: спидлоадер (.357 магнум)
+  parent: BaseSpeedLoader357
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge357
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/muchhurt_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: base-7
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: base
+    steps: 8
+    zeroVisible: false
+  - type: Appearance

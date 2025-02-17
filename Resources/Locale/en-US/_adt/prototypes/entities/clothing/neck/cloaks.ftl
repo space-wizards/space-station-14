@@ -1,0 +1,14 @@
+ent-ADTClothingNeckSupremeCommanderCloak = плащ высшего главнокомандующего
+    .desc = Не дайте ему запачкаться, сделан из супер-технологичного блюспейс шитья, такой носит только один человек, и это - вы.
+ent-ADTClothingNeckKnightCloak = плащ рыцаря
+    .desc = Шёлковый и внушительный рыцарский плащ. За честь короны!
+ent-ADTClothingNeckHoPAltCloak = торжественный плащ главы персонала
+    .desc = Плащ главы персонала для особых случаев.
+ent-ADTClothingNeckDarkGreyCloak = темно-серый плащ
+    .desc = Даже грейтайд заслуживает иметь свой плащ.
+ent-ADTClothingNeckGothicCloak = готический плащ
+    .desc = Для классических вампиров, ценящих старый стиль.
+ent-ADTClothingNeckSyndicateCloak = плащ Синдиката
+    .desc = Антагонизируй со стилем!
+ent-ADTClothingNeckNukeOpsCloak = плащ ядерных оперативников
+    .desc = Согреет вас холодными вечерами на аванпосте ядерных оперативников.

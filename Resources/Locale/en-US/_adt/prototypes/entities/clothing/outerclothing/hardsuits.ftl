@@ -1,0 +1,12 @@
+ent-ADTClothingOuterHardsuitCybersunBodyGuard = скафандр телохранителя Cybersun
+    .desc = Тяжелобронированный скафандр элитного подразделения телохранителей Cybersun
+ent-ADTClothingOuterHardsuitCybersunCrysis = скафандр суперсолдата Cybersun
+    .desc = Самая передовая, секретная технология CyberSun в сфере защиты. Кажется эта разработка ведёт к созданию супер солдат. Пахнет пластитаном и бесчестным боем.
+ent-ADTClothingOuterHardsuitCerber = скафандр броне отряда "Церберы"
+    .desc = Специализированный черный скафандр, который использовался в азиатских странах 19 века, центральной полицией.
+ent-ADTClothingOuterHardsuitSaibaSain = элитный скафандр самурая
+    .desc = Разработка из плазматических волокн, наномашин и кремния. Пахнет как цветение сакуры.
+ent-ADTClothingOuterHardsuitIlisium = скафандр Ilisium
+    .desc = Ilisium...
+ent-ADTSpaceMarinne = скафандр чемпиона
+    .desc = Скафандр принадлежащий лучшими из лучших воинов древности. Не очерните его имя.

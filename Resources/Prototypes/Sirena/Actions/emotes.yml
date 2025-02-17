@@ -1,0 +1,112 @@
+# flip animation
+- type: entity
+  id: EmoteFlip
+  name: сделать сальто
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/blight.png
+    event: !type:EmoteFlipActionEvent
+
+# jump animation
+- type: entity
+  id: EmoteJump
+  name: прыгнуть
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: InstantAction
+      icon: Interface/Actions/blight.png
+      event: !type:EmoteJumpActionEvent
+
+  # turn around in 4 directions animation
+- type: entity
+  id: EmoteTurn
+  name: кружится
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: InstantAction
+      icon: Interface/Actions/blight.png
+      event: !type:EmoteTurnActionEvent
+
+  # stop-tail animation
+- type: entity
+  id: EmoteStopTail
+  name: перестать вилять хвостом
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: InstantAction
+      icon: Interface/Actions/blight.png
+      event: !type:EmoteStopTailActionEvent
+
+  # start-tail animation
+- type: entity
+  id: EmoteStartTail
+  name: начать вилять хвостом
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: InstantAction
+      icon: Interface/Actions/blight.png
+      event: !type:EmoteStartTailActionEvent
+
+# Using EmoteAnimation from IC action chat
+- type: emote
+  id: EmoteFlip
+  name: chat-emote-name-flip
+  icon: Interface/Emotes/somersaults.png
+  category: Animations
+  chatMessages: ["chat-emote-msg-flip"]
+  chatTriggers:
+    - сделал сальто
+    - сделала сальто
+    - делает сальто
+    - устроила сальто
+    - устроил сальто
+
+- type: emote
+  id: EmoteJump
+  name: chat-emote-name-jump
+  icon: Interface/Emotes/jump.png
+  category: Animations
+  chatMessages: ["chat-emote-msg-jump"]
+  chatTriggers:
+    - прыгает
+    - прыгнула
+    - прыгнул
+    - подпрыгнул
+    - подпрыгнула
+    - подскакивает
+
+- type: emote
+  id: EmoteTurn
+  name: chat-emote-name-turn
+  icon: Interface/Emotes/spin.png
+  category: Animations
+  chatMessages: ["chat-emote-msg-turn"]
+  chatTriggers:
+    - кружится
+    - оборачивается
+    - танцует
+    - покружилась
+    - покружился
+
+# Using EmoteAnimation from IC action chat
+- type: emote
+  id: EmoteStopTail
+  name: chat-emote-name-stop-tail
+  category: Animations
+  chatMessages: ["chat-emote-msg-stop-tail"]
+  chatTriggers:
+    - хвост замирает
+    - прекратил вилять хвостом
+    - прекратила вилять хвостом
+    - прекратило вилять хвостом
+    - прекратили вилять хвостом
+
+- type: emote
+  id: EmoteStartTail
+  name: chat-emote-name-start-tail
+  category: Animations
+  chatMessages: ["chat-emote-msg-start-tail"]
+  chatTriggers:
+    - виляет хвостом
+    - хвост двигается

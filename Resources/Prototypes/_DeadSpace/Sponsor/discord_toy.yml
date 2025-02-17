@@ -1,0 +1,4 @@
+- type: sponsorLoadout
+  id: DiscordToyLoadout
+  entity: DiscordToy
+  sponsorOnly: true

@@ -25,6 +25,7 @@
       Ammonia: stationAmmonia
       NitrousOxide: stationNO
       Frezon: danger
+      InfectionDeadSpace: stationInfectionDeadSpace
   - type: Tag
     tags:
       - AirSensor

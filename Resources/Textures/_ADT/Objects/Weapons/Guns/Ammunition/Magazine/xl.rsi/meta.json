@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "art by RED idea and code by nope_ingeneer",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "beanbag"
+        },
+        {
+            "name": "pellets"
+        },
+        {
+            "name": "slug"
+        },
+        {
+            "name": "mag-1"
+        }
+    ]
+}

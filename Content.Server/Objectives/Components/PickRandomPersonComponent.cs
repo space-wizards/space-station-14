@@ -1,4 +1,6 @@
 using Content.Server.Objectives.Systems;
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives.Components;
 
@@ -8,4 +10,9 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(KillPersonConditionSystem))]
 public sealed partial class PickRandomPersonComponent : Component
 {
+    /// <summary>
+    /// List of jobs, that won't be kill objectives
+    /// </summary>
+    [DataField]
+    public List<ProtoId<JobPrototype>?> IgnoredJobs = new();
 }

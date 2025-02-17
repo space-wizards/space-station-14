@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.DeadSpace.CCCCVars;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -72,6 +73,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
     // DB auto-saving logic.
     private TimeSpan _saveInterval;
     private TimeSpan _lastSave;
+    private static float _play_time_multiplier = 1f;
 
     // List of pending DB save operations.
     // We must block server shutdown on these to avoid losing data.
@@ -90,6 +92,8 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
         _net.RegisterNetMessage<MsgPlayTime>();
 
         _cfg.OnValueChanged(CCVars.PlayTimeSaveInterval, f => _saveInterval = TimeSpan.FromSeconds(f), true);
+
+        _cfg.OnValueChanged(CCCCVars.PlayTimeMultiplier, multiplier_num => _play_time_multiplier = multiplier_num, true);
     }
 
     public void Shutdown()
@@ -345,7 +349,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
     private static void AddTimeToTracker(PlayTimeData data, string tracker, TimeSpan time)
     {
         ref var timer = ref CollectionsMarshal.GetValueRefOrAddDefault(data.TrackerTimes, tracker, out _);
-        timer += time;
+        timer += time * _play_time_multiplier;
 
         data.DbTrackersDirty.Add(tracker);
     }

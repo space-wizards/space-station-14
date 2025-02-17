@@ -1,0 +1,377 @@
+- type: entity
+  parent: BaseItem
+  name: карта
+  description: Приятная на ощупь бумажная игральная карта выпуска NanoTrasen.
+  id: BaseCard
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/cards/cards.rsi
+    layers:
+    - state: based
+      map: [ "enum.CardVisuals.Card" ]
+    scale: 0.6, 0.6
+  - type: Item
+    size: Tiny
+  - type: Riggable
+  - type: Tag
+    tags:
+    - Card
+  - type: Card
+  - type: Appearance
+
+- type: entity
+  parent: BaseCard
+  id: Clubs6
+  components:
+  - type: Card
+    reserveState: clubs-6
+
+- type: entity
+  parent: BaseCard
+  id: Clubs7
+  components:
+  - type: Card
+    reserveState: clubs-7
+
+- type: entity
+  parent: BaseCard
+  id: Clubs8
+  components:
+  - type: Card
+    reserveState: clubs-8
+
+- type: entity
+  parent: BaseCard
+  id: Clubs9
+  components:
+  - type: Card
+    reserveState: clubs-9
+
+- type: entity
+  parent: BaseCard
+  id: Clubs10
+  components:
+  - type: Card
+    reserveState: clubs-10
+
+- type: entity
+  parent: BaseCard
+  id: ClubsA
+  components:
+  - type: Card
+    reserveState: clubs-a
+
+- type: entity
+  parent: BaseCard
+  id: ClubsJ
+  components:
+  - type: Card
+    reserveState: clubs-j
+
+- type: entity
+  parent: BaseCard
+  id: ClubsK
+  components:
+  - type: Card
+    reserveState: clubs-k
+
+- type: entity
+  parent: BaseCard
+  id: ClubsQ
+  components:
+  - type: Card
+    reserveState: clubs-q
+
+- type: entity
+  parent: BaseCard
+  id: Diamonds6
+  components:
+  - type: Card
+    reserveState: diamonds-6
+
+- type: entity
+  parent: BaseCard
+  id: Diamonds7
+  components:
+  - type: Card
+    reserveState: diamonds-7
+
+- type: entity
+  parent: BaseCard
+  id: Diamonds8
+  components:
+  - type: Card
+    reserveState: diamonds-8
+
+- type: entity
+  parent: BaseCard
+  id: Diamonds9
+  components:
+  - type: Card
+    reserveState: diamonds-9
+
+- type: entity
+  parent: BaseCard
+  id: Diamonds10
+  components:
+  - type: Card
+    reserveState: diamonds-10
+
+- type: entity
+  parent: BaseCard
+  id: DiamondsA
+  components:
+  - type: Card
+    reserveState: diamonds-a
+
+- type: entity
+  parent: BaseCard
+  id: DiamondsJ
+  components:
+  - type: Card
+    reserveState: diamonds-j
+
+- type: entity
+  parent: BaseCard
+  id: DiamondsK
+  components:
+  - type: Card
+    reserveState: diamonds-k
+
+- type: entity
+  parent: BaseCard
+  id: DiamondsQ
+  components:
+  - type: Card
+    reserveState: diamonds-q
+
+- type: entity
+  parent: BaseCard
+  id: Hearts6
+  components:
+  - type: Card
+    reserveState: hearts-6
+
+- type: entity
+  parent: BaseCard
+  id: Hearts7
+  components:
+  - type: Card
+    reserveState: hearts-7
+
+- type: entity
+  parent: BaseCard
+  id: Hearts8
+  components:
+  - type: Card
+    reserveState: hearts-8
+
+- type: entity
+  parent: BaseCard
+  id: Hearts9
+  components:
+  - type: Card
+    reserveState: hearts-9
+
+- type: entity
+  parent: BaseCard
+  id: Hearts10
+  components:
+  - type: Card
+    reserveState: hearts-10
+
+- type: entity
+  parent: BaseCard
+  id: HeartsA
+  components:
+  - type: Card
+    reserveState: hearts-a
+
+- type: entity
+  parent: BaseCard
+  id: HeartsJ
+  components:
+  - type: Card
+    reserveState: hearts-j
+
+- type: entity
+  parent: BaseCard
+  id: HeartsK
+  components:
+  - type: Card
+    reserveState: hearts-k
+
+- type: entity
+  parent: BaseCard
+  id: HeartsQ
+  components:
+  - type: Card
+    reserveState: hearts-q
+
+- type: entity
+  parent: BaseCard
+  id: Spades6
+  components:
+  - type: Card
+    reserveState: spades-6
+
+- type: entity
+  parent: BaseCard
+  id: Spades7
+  components:
+  - type: Card
+    reserveState: spades-7
+
+- type: entity
+  parent: BaseCard
+  id: Spades8
+  components:
+  - type: Card
+    reserveState: spades-8
+
+- type: entity
+  parent: BaseCard
+  id: Spades9
+  components:
+  - type: Card
+    reserveState: spades-9
+
+- type: entity
+  parent: BaseCard
+  id: Spades10
+  components:
+  - type: Card
+    reserveState: spades-10
+
+- type: entity
+  parent: BaseCard
+  id: SpadesA
+  components:
+  - type: Card
+    reserveState: spades-a
+
+- type: entity
+  parent: BaseCard
+  id: SpadesJ
+  components:
+  - type: Card
+    reserveState: spades-j
+
+- type: entity
+  parent: BaseCard
+  id: SpadesK
+  components:
+  - type: Card
+    reserveState: spades-k
+
+- type: entity
+  parent: BaseCard
+  id: SpadesQ
+  components:
+  - type: Card
+    reserveState: spades-q
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: BaseCardBin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/cards/cardbin.rsi
+    state: card_bin0
+    drawdepth: SmallObjects
+    noRot: true
+  - type: Appearance
+  - type: ItemMapper
+    sprite: _DeadSpace/Items/cards/cardbin.rsi
+    mapLayers:
+      card_bin1:
+        whitelist:
+          tags:
+          - Card
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
+        density: 500
+        mask:
+          - TabletopMachineMask
+  - type: InteractionOutline
+  - type: CardBin
+  - type: Bin
+    maxItems: 37
+    whitelist:
+      tags:
+      - Card
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+
+- type: entity
+  parent: BaseCardBin
+  id: CardBinEmpty
+  name: колода карт
+  description: Колода карт для тех кому действительно более не чем занятся.
+  suffix: Пустая
+  components:
+  - type: Bin
+    maxItems: 37
+    whitelist:
+      tags:
+      - Card
+
+- type: entity
+  parent: BaseCardBin
+  id: CardBin
+  name: колода карт
+  description: Колода карт для тех кому действительно более не чем занятся.
+  suffix: 36
+  components:
+  - type: Bin
+    maxItems: 37
+    initialContents:
+    - Clubs6
+    - Clubs7
+    - Clubs8
+    - Clubs9
+    - Clubs10
+    - ClubsA
+    - ClubsJ
+    - ClubsK
+    - ClubsQ
+    - Diamonds6
+    - Diamonds7
+    - Diamonds8
+    - Diamonds9
+    - Diamonds10
+    - DiamondsA
+    - DiamondsJ
+    - DiamondsK
+    - DiamondsQ
+    - Hearts6
+    - Hearts7
+    - Hearts8
+    - Hearts9
+    - Hearts10
+    - HeartsA
+    - HeartsJ
+    - HeartsK
+    - HeartsQ
+    - Spades6
+    - Spades7
+    - Spades8
+    - Spades9
+    - Spades10
+    - SpadesA
+    - SpadesJ
+    - SpadesK
+    - SpadesQ
+    whitelist:
+      tags:
+      - Card
+
+- type: Tag
+  id: Card

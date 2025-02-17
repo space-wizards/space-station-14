@@ -7,13 +7,16 @@ using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Voting;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -30,6 +33,8 @@ namespace Content.Server.Voting.Managers
         private VotingSystem? _votingSystem;
         private RoleSystem? _roleSystem;
         private GameTicker? _gameTicker;
+
+        public bool VoteStarted;
 
         private static readonly Dictionary<StandardVoteType, CVarDef<bool>> VoteTypesToEnableCVars = new()
         {
@@ -56,7 +61,7 @@ namespace Content.Server.Voting.Managers
                     CreateRestartVote(initiator);
                     break;
                 case StandardVoteType.Preset:
-                    CreatePresetVote(initiator);
+                    CreatePresetVote(initiator, args);
                     break;
                 case StandardVoteType.Map:
                     CreateMapVote(initiator);
@@ -212,9 +217,24 @@ namespace Content.Server.Voting.Managers
                 Loc.GetString("ui-vote-restart-fail-not-enough-ghost-players", ("ghostPlayerRequirement", ghostPercentageRequirement)));
         }
 
-        private void CreatePresetVote(ICommonSession? initiator)
+        private void CreatePresetVote(ICommonSession? initiator, string[]? args = null)
         {
-            var presets = GetGamePresets();
+            if (VoteStarted)
+                return;
+
+            var presets = GetGamePresets(false);
+            if (args is { Length: > 0 })
+            {
+                presets = presets
+                    .Where(allPreset => args.Contains(allPreset.Key))
+                    .ToDictionary(preset => preset.Key, preset => preset.Value);
+
+                presets = presets.Count > 0 ? presets : GetGamePresets(true);
+            }
+            else
+            {
+                presets = GetGamePresets(true);
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -222,7 +242,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset)),
+                DisplayVotes = false,
             };
 
             if (alone)
@@ -236,6 +257,7 @@ namespace Content.Server.Voting.Managers
             WirePresetVoteInitiator(options, initiator);
 
             var vote = CreateVote(options);
+            VoteStarted = true;
 
             vote.OnFinished += (_, args) =>
             {
@@ -255,6 +277,7 @@ namespace Content.Server.Voting.Managers
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Preset vote finished: {picked}");
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 ticker.SetGamePreset(picked);
+                VoteStarted = false;
             };
         }
 
@@ -573,14 +596,18 @@ namespace Content.Server.Voting.Managers
             DirtyCanCallVoteAll();
         }
 
-        private Dictionary<string, string> GetGamePresets()
+        private Dictionary<string, string> GetGamePresets(bool standardVote)
         {
             var presets = new Dictionary<string, string>();
 
             foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
             {
-                if(!preset.ShowInVote)
-                    continue;
+                switch (standardVote)
+                {
+                    case true when !preset.ShowInVote:
+                    case false when !preset.ShowInAdminVote:
+                        continue;
+                }
 
                 if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
                     continue;

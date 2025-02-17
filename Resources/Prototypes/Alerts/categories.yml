@@ -33,3 +33,9 @@
 
 - type: alertCategory
   id: Battery
+
+- type: alertCategory
+  id: BlobResource
+
+- type: alertCategory
+  id: BlobHealth

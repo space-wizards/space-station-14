@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Name="VBox" Orientation="Vertical">
-        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}">
+        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" Visible="False">
 
         </controls:NanoHeading>
         <BoxContainer Name="Loaded" Orientation="Vertical"
@@ -15,7 +15,7 @@
             <controls:VSpacer/>
             <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
                     HorizontalAlignment="Center"
-                    Margin="0 5 0 0"/>
+                    Margin="0 5 0 0" Visible="False"/>
         </BoxContainer>
         <Label Name="Unloaded" Text="{Loc 'lobby-character-preview-panel-unloaded-preferences-label'}"/>
     </BoxContainer>

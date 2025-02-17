@@ -7,7 +7,7 @@
     contents:
       - id: BoxSyringe
       - id: EpinephrineChemistryBottle
-        amount: 1
+        amount: 2
       - id: Brutepack
         amount: 2
       - id: Ointment
@@ -26,7 +26,7 @@
     contents:
       - id: BoxSyringe
       - id: EpinephrineChemistryBottle
-        amount: 1
+        amount: 2
       - id: Brutepack
         amount: 2
       - id: Ointment
@@ -44,7 +44,6 @@
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
-        prob: 0.6
       - id: ClothingHeadMirror
         prob: 0.1
       - id: ClothingHandsGlovesLatex
@@ -79,7 +78,6 @@
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
-        prob: 0.6
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingEyesHudMedical
@@ -139,9 +137,34 @@
       - id: ClothingUniformJumpsuitParamedic
       - id: ClothingUniformJumpskirtParamedic
       - id: ClothingEyesHudMedical
+      - id: Defibrillator
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingMaskSterile
       - id: HandheldGPSBasic
       - id: MedkitFilled
         prob: 0.3
+      - id: MedkitAdvancedFilled
+
+- type: entity
+  id: LockerCoronerFilled
+  suffix: Filled
+  parent: LockerCoroner
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCoroner
+      - id: ClothingNeckApronCoroner
+      - id: ClothingOuterWinterCoroner
+      - id: ClothingOuterCoroner
+      - id: ClothingUniformJumpsuitCoroner
+      - id: ClothingUniformJumpskirtCoroner
+      - id: ClothingUniformJumpsuitCoronerAlt
+      - id: ClothingShoesBootsJackCoroner
+      - id: RubberStampCoroner
+      - id: HandheldAutopsyScanner
+      - id: BoxBodyBag
+        amount: 2
+      - id: ClothingHandsGlovesLatex
+        amount: 2
+      - id: ClothingMaskSterile

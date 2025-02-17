@@ -1,0 +1,65 @@
+- type: listing
+  id: ShamblersJuiceInventory1
+  productEntity: DrinkShamblersJuiceCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ShamblersJuiceInventory2
+  productEntity: DrinkGrapeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ShamblersJuiceInventory3
+  productEntity: DrinkRootBeerCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ShamblersJuiceInventory4
+  productEntity: DrinkIcedTeaCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ShamblersJuiceInventory5
+  productEntity: DrinkLemonLimeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ShamblersJuiceInventory6
+  productEntity: DrinkFourteenLokoCan
+  cost:
+    SpaceCash: 5
+  categories:
+    - ShamblersJuiceInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15

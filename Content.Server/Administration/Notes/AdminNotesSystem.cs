@@ -9,6 +9,9 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Robust.Server.Audio;
+using Content.Server.Administration.Managers;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Administration.Notes;
 
@@ -19,6 +22,8 @@ public sealed class AdminNotesSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly EuiManager _euis = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
 
     public override void Initialize()
     {
@@ -68,6 +73,7 @@ public sealed class AdminNotesSystem : EntitySystem
         foreach (var watchlist in watchlists)
         {
             _chat.SendAdminAlert(Loc.GetString("admin-notes-watchlist", ("player", username), ("message", watchlist.Message)));
+            _audioSystem.PlayGlobal("/Audio/_DeadSpace/Misc/watchlist.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-2f));
         }
 
         var messagesToShow = messages.OrderBy(x => x.CreatedAt).Where(x => !x.Dismissed).ToArray();

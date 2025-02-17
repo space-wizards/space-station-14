@@ -66,6 +66,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
+        public const string StyleClassLobbyBackground = "LobbyBackground";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -237,6 +238,18 @@ namespace Content.Client.Stylesheets
                 Texture = borderedTransparentWindowBackgroundTex,
             };
             borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+
+            var backgroundTex = resCache.GetTexture("/Textures/Interface/Nano/lobby_b.png");
+            var background = new StyleBoxTexture
+            {
+                Texture = backgroundTex,
+                Mode = StyleBoxTexture.StretchMode.Tile
+            };
+
+            background.SetPatchMargin(StyleBox.Margin.All, 24);
+            background.SetExpandMargin(StyleBox.Margin.All, -4);
+            background.SetContentMarginOverride(StyleBox.Margin.All, 8);
 
             var hotbarBackground = new StyleBoxTexture
             {
@@ -1651,6 +1664,13 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Bwoink/pinned.png"))
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassLobbyBackground}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, background),
                     }),
 
                 // Unpinned button style

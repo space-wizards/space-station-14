@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsJackCoroner
+  name: сапоги коронера
+  description: Кто сказал, что кровь не может быть модной? Ой, а что там на подошве...
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Shoes/Boots/coroner.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Shoes/Boots/coroner.rsi

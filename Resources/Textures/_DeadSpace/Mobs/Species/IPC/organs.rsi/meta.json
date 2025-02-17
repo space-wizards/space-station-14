@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/obj/medical/organs/organs.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "heart-c-off"
+    },
+    {
+      "name": "heart-c-on",
+      "delays": [
+        [
+          0.4,
+          0.2,
+          0.4,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "heart-c-u-off"
+    },
+    {
+      "name": "heart-c-u-on"
+    },
+    {
+      "name": "heart-c-u2-off"
+    },
+    {
+      "name": "heart-c-u2-on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "heart-c-s-off"
+    },
+    {
+      "name": "heart-c-s-on",
+      "delays": [
+        [
+          0.4,
+          0.2,
+          0.4,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "liver-c"
+    },
+    {
+      "name": "liver-c-u"
+    },
+    {
+      "name": "liver-c-u2"
+    },
+    {
+      "name": "liver-c-s"
+    },
+    {
+      "name": "kidneys-c"
+    },
+    {
+      "name": "kidneys-c-u2"
+    },
+    {
+      "name": "stomach-c"
+    },
+    {
+      "name": "stomach-c-u"
+    },
+    {
+      "name": "stomach-c-u2"
+    },
+    {
+      "name": "stomach-c-s"
+    },
+    {
+      "name": "lungs-c"
+    },
+    {
+      "name": "lungs-c-u"
+    },
+    {
+      "name": "lungs-c-u2"
+    },
+    {
+      "name": "lungs-c-s"
+    },
+    {
+      "name": "tonguerobot"
+    },
+    {
+      "name": "cybernetic_eyeballs"
+    },
+    {
+      "name": "ears-c-u"
+    },
+    {
+      "name": "posibrain"
+    }
+  ]
+}

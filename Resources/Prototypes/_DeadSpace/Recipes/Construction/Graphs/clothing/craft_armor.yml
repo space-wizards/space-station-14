@@ -1,0 +1,19 @@
+- type: constructionGraph
+  id: ClothingCraftArmor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: clothingCraftArmor
+          steps:
+            - tag: Handcuffs
+              icon:
+                  sprite: Objects/Misc/cablecuffs.rsi
+                  state: cuff
+                  color: red
+              name: cuffs
+            - material: Steel
+              amount: 6
+              doAfter: 10
+    - node: clothingCraftArmor
+      entity: ClothingOuterArmorBasicCraft

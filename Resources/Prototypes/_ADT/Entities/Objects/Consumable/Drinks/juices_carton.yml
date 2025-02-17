@@ -1,0 +1,34 @@
+- type: entity
+  parent: DrinkBase
+  id: ADTDrinkJuiceBerryCarton
+  name: ягодный сок
+  description: Пакет сока из разных видов ягод.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: JuiceBerry
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Drinks/berryjuice.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: ADTDrinkJuiceLemonCarton
+  name: лимонный сок
+  description: Пакет лимонного сока. Очень кислый.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Drinks/lemonjuice.rsi
+

@@ -16,6 +16,9 @@ ClothingHeadHelmetHelmetOld: ClothingHeadHelmetBasic
 # Bulletproof armor is almost statistically identical to kevlar, however, before this kevlar armor was the closest thing there was to "basic" armor. It makes the most sense to replace it with this.
 ClothingOuterVestKevlar: ClothingOuterArmorBasic
 
+# 2023-07-11 - Corvax
+SpawnMobRaccoonMorticia: SpawnMobGorillaLargo
+
 # 2023-07-10
 Intercom: IntercomCommon
 
@@ -89,10 +92,10 @@ GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
 GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
 
 # 2023-12-10
-SpawnPointSeniorResearcher: null
-SpawnPointSeniorOfficer: null
-SpawnPointSeniorEngineer: null
-SpawnPointSeniorPhysician: null
+# SpawnPointSeniorResearcher: null
+# SpawnPointSeniorOfficer: null
+# SpawnPointSeniorEngineer: null
+# SpawnPointSeniorPhysician: null
 
 # 2023-12-12
 #No this is not the CMO hardsuit, their prototype IDs were just confusingly similar
@@ -230,6 +233,9 @@ Observationskit: null
 # 2024-02-26
 CrateBaseWeldable: CrateGenericSteel
 
+# 2024-02-28 - DS14
+ZetaToMedipen: ZetaTwoMedipen
+
 # 2024-03-05
 BookBotanicalTextbook: BookRandomStory
 BookEscalation: BookRandomStory
@@ -267,6 +273,12 @@ ImprovisedExplosiveFuel: FireBombFuel
 
 # 2024-03-16
 ClothingHeadHatHairflower: FoodPoppy
+
+# 2024-03-25 - DS14
+ADTPilotSuit: ClothingOuterHardsuitPilot
+ADTPilotSuitSEC: ClothingOuterHardsuitSecurityPilot
+ADTPilotSuitHelm: ClothingHeadHelmetHardsuitPilot
+ADTPilotSuitHelmSEC: ClothingHeadHelmetHardsuitSecurityPilot
 
 # 2024-03-21
 RPED: null
@@ -337,15 +349,86 @@ ReinforcementRadioSyndicateMonkeyNukeops: ReinforcementRadioSyndicateAncestorNuk
 # 2024-05-01
 DrinkBottleGoldschlager: DrinkBottleGildlager
 
+# 2024-05-04 - DS14
+Bullet357Rubber: Bullet357
+Cartridge357Rubber: Cartridge357
+MagazineBox357Rubber: MagazineBox357
+SpeedLoader357Rubber: SpeedLoader357
+CrateArmoryVector: null
+HeadTerminator: null
+
+# 2024-05-07 - DS14
+ClothingBackpackADTBlueShieldOfficerFilled: ClothingBackpackBlueShield
+
+# 2024-05-08 - DS14
+SpawnPointGhostUrist: null
+JessusX: null
+ADTClothingBeltInvestigatorHolster: null
+ADTInvestigatorIDCard: null
+ADTInvestigatorPDA: null
+SirenaChokerWithSpike: null
+SirenaChokerWithHeart: null
+GasMinerlittleSpawning: null
+GasMiniMinerPlasma: null
+ADTEncryptionKeyLawyer: EncryptionKeyLaw
+ADTClothingHeadsetLawyer: ClothingHeadsetLaw
+ADTEncryptionKeySpec: null
+ADTClothingHeadsetSpec: null
+EncryptionKeyIAA: EncryptionKeyLaw
+ADTEncryptionKeyMerc: EncryptionKeyMerc
+ADTClothingHeadsetMerc: ClothingHeadsetMerc
+ClothingHeadsetCSO: null
+
+# 2024-05-09 - DS14
+PrinterDoc: null
+ERTSpawnerEngineering: null
+ERTSpawnerLeader: null
+ERTSpawnerMedical: null
+ERTSpawnerSrcurity: null
+PilotPDA: null
+SpawnPointPilot: null
+
 # 2024-05-14
 soda_dispenser: SodaDispenser
 chem_master: ChemMaster
+
+# 2023-07-12 - Backmen
+# VendingMachineCigs: BackmenVendingMachineCigs
+# VendingMachineCoffee: BackmenVendingMachineCoffee
+# VendingMachineCola: BackmenVendingMachineCola
+# VendingMachineColaBlack: BackmenVendingMachineColaBlack
+# VendingMachineDiscount: BackmenVendingMachineDiscount
+# VendingMachineSnack: BackmenVendingMachineSnack
+# VendingMachineSnackBlue: BackmenVendingMachineSnackBlue
+# VendingMachineSnackGreen: BackmenVendingMachineSnackGreen
+# VendingMachineSnackOrange: BackmenVendingMachineSnackOrange
+# VendingMachineSnackTeal: BackmenVendingMachineSnackTeal
+# VendingMachineSovietSoda: BackmenVendingMachineSovietSoda
+# VendingMachineChang: BackmenVendingMachineChang
+# VendingMachineDonut: BackmenVendingMachineDonut
+# VendingMachineSoda: BackmenVendingMachineSoda
+# VendingMachineStarkist: BackmenVendingMachineStarkist
+# VendingMachineDrGibb: BackmenVendingMachineDrGibb
+# VendingMachinePwrGame: BackmenVendingMachinePwrGame
+# VendingMachineShamblersJuice: BackmenVendingMachineShamblersJuice
+# VendingMachineColaRed: BackmenVendingMachineColaRed
+# VendingMachineSpaceUp: BackmenVendingMachineSpaceUp
+# VendingMachineHappyHonk: BackmenVendingMachineHappyHonk
 
 # 2024-05-21
 CrateJanitorExplosive: ClosetJanitorBombFilled
 
 # 2024-05-27
 DoorRemoteFirefight: null
+
+# 2024-06-02 - DS14
+BackmenVendingLootBox: null
+VendingMachineBoxingDrobe: null
+
+# 2024-06-03 - DS14
+ADTClothingBackpackERTMedicalFilledL: null
+ADTClothingBackpackERTSecurityFilledL: null
+ADTClothingBackpackERTLeaderFilledL: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
@@ -356,6 +439,12 @@ LostCargoTechnicianSpawner: VisitorCargoTechnicianSpawner
 ClownTroupeSpawner: VisitorClownSpawner
 TravelingChefSpawner: VisitorChefSpawner
 SyndieDisasterVictimSpawner: SyndieVisitorSpawner
+
+# 2024-06-09 - DS14
+ClothingBackpackSatchelClownFilled: ClothingBackpackSatchelClown
+
+# 2024-06-09 - DS14
+Discordtoy: DiscordToy
 
 # 2024-06-15
 ClothingOuterCoatInspector: ClothingOuterCoatJensen
@@ -368,6 +457,17 @@ BookChefGaming: BookHowToCookForFortySpaceman
 
 #2024-06-29
 IntercomAssesmbly: IntercomAssembly
+
+#2024-07-17 - DS14
+ClothingHeadsetAltCSO: null
+ClothingBackpackLeaderDuffelCBURNNECROFilled: null
+ClothingBackpackDuffelCBURNNECROFilled: null
+ClothingBackpackDuffelCBURNSCSTFilled: null
+ActionToggleMagbootsAdvanced: null
+ADTClothingHeadHatBeretBlueshield: ClothingHeadHatBeretBlueShield
+ADTClothingBlueshieldArmor: ClothingOuterArmorBasicBlueShield
+SpawnPointMaid: null
+BookSpaceLaw: HyperLinkBookCorporateLaw
 
 # 2024-07-7
 SignScience1: SignScience
@@ -415,6 +515,9 @@ ClothingBeltSuspenders: ClothingBeltSuspendersRed
 # 2024-08-19
 ClothingNeckShockCollar: ClothingBackpackElectropack
 
+#2024-09-01 - DS14
+WeaponDrippenwagenAltIceCrusher: null
+
 # 2024-08-22
 ComputerShuttleSalvage: null
 SalvageShuttleConsoleCircuitboard: null
@@ -438,6 +541,21 @@ BlueprintFlare: null
 
 # 2024-10-04
 BaseAdvancedPen: Pen
+
+# 2024-10-08 - DS14
+WeaponTurretNanoSAI: WeaponTurretLaserNanoTrasen
+WeaponTurretLaserOnestar: WeaponTurretLaserHostile
+WeaponTurretLaserNanoTrasenAI: WeaponTurretLaserNanoTrasen
+ClothingDeathSquadBackpackFilled: ClothingDeathSquadronBackpack
+ClothingBackpackPsychologistFilled: ClothingBackpackMedical
+ClothingBackpackDuffelPsychologistFilled: ClothingBackpackDuffelMedical
+ClothingBackpackSatchelPsychologistFilled: ClothingBackpackSatchelMedical
+SpawnPointADTBlueShieldOfficer: SpawnPointBlueShieldOfficer
+ADTBlueShieldOfficerIDCard: BlueShieldOfficerIDCard
+ClothingBackpackFilledCentcomRepresentative: ClothingBackpack
+BoxFolderRedFilled: BoxFolderBase
+SpawnPointStationAI: PlayerStationAi
+ADTWeaponPistolX01: WeaponPistolX01
 
 # 2024-10-09
 # Removal of separate borg chassis parts, replace them with generic borg parts.
@@ -474,6 +592,31 @@ RightLegBorgJanitor: RightLegBorg
 HeadBorgJanitor: LightHeadBorg
 TorsoBorgJanitor: TorsoBorg
 
+# 2024-10-13 - DS14
+ClothingHandsGlovesDragonFox: null
+ADTClothingEyesHudAdvanced: ClothingEyesHudAdvanced
+FoodBakedVulpkaninPlate: null
+LootSpawnerContraband: null
+LootSpawnerContrabandHigh: null
+LootSpawnerContrabandLow: null
+BoxFolderWhiteFilled: null
+FloorNecroTileItemFlesh: null
+CoreNecromant: null
+ADTObjectWeaponsMeleeKiiravaSword: null
+ADTObjectWeaponsMeleeArkalis: null
+ADTObjectWeaponsMeleeSupremeSabre: null
+ADTGunRifleAN: null
+ADTClothingHeadHatOktyabrinaOrientalEars: null
+ADTClothingUniformAJohanPants: null
+
+# 2024-10-20 - DS14
+PlushieGSB: PlushieLizard
+PlushieInstructor: PlushieLizard
+PlushieOfficer: PlushieLizard
+PlushieLera: PlushieLizard
+PlushieKel: PlushieLizard
+PlushieCap: PlushieLizard
+
 # 2024-11-17
 PresentRandomAsh: PresentRandomCoal
 
@@ -482,6 +625,22 @@ CrateCrewMonitoringBoards: CrateCrewMonitoring
 
 # 2024-11-25
 CrateSlimepersonLifeSupport: CrateNitrogenInternals
+
+# 2024-11-13 - DS14
+WeaponAdvancedLaserBlackLightning: WeaponAdvancedLaser
+ClothingBackpackBlackLightningFilledLeader: null
+ClothingBackpackBlackLightningFilled: null
+ClothingBeltBlackLightningLeaderWebbingFilled: null
+ClothingBeltBlackLightningWebbingFilled: null
+ClothingNeckMantleCHVKhoulder: null
+BlackLightningUnit: null
+BlackLightningLeader: null
+CrateWeaponArtefact: null
+WeaponArtifactSpawn: null
+ActionWeaponArtifact: null
+ArtifactWeaponScanner: null
+ArtifactWeaponStone: null
+WeaponLaserArtifact: null
 
 # 2024-12-01
 DungeonMasterCircuitBoard: GameMasterCircuitBoard
@@ -536,6 +695,51 @@ LightTree04: LightTree
 LightTree05: LightTree
 LightTree06: LightTree
 
+# 2024-12-22 - DS14
+CrateEngineeringIndustrialSMES: null
+ADTSMESIndustrial: SMESAdvanced
+ADTSMESIndustrialEmpty: SMESAdvancedEmpty
+
+# 2025-01-05 - DS14
+Temp_EventScreen: null
+PaperSecOrderEmergencyOrderOne: null
+
+# 2025-01-13 - DS14
+TravelingChefSpawnerUnitology: null
+TravelingDoctorSpawnerUnitology: null
+TravelingDoctorSpawner: null
+
+# 2025-01-19 - DS14
+ADTSummerShadeGlass: null
+ADTWinterSunGlass: null
+ADTHungoverAngelGlass: null
+ADTCitrusBalanceGlass: null
+ADTDobryiDrinkGlass: null
+ADTMilkEclipseGlass: null
+ADTArcticExplosionGlass: null
+ADTSugarKnightGlass: null
+ADTGrapeLadyGlass: null
+ADTSaturdayBaronGlass: null
+ADTArcticLatteGlass: null
+ADTAzureBlueGlass: null
+ADTEclipsedEclispeGlass: null
+ADTSpaceBushGlass: null
+ADTAppleMartiniGlass: null
+ADTBacardiAppleGlass: null
+ADTClothingBackpackDuffelSyndicateFilledXC67Ammo: ClothingBackpackDuffelSyndicateFilledXC67Ammo
+ADTClothingBackpackDuffelSyndicateFilledXC67: ClothingBackpackDuffelSyndicateFilledXC67
+ClothingBackpackDuffelSyndicateFilledBuldogAmmoXL: ClothingBackpackDuffelSyndicateFilledBuldogAmmoXL
+ADTClothingBackpackDuffelSyndicateFilledBuldogAmmo: ClothingBackpackDuffelSyndicateFilledBuldogAmmo
+ADTClothingBackpackDuffelSyndicateFilledC20Ammo: ClothingBackpackDuffelSyndicateFilledC20Ammo
+ADTClothingBackpackDuffelSyndicateFilledAKMS: ClothingBackpackDuffelSyndicateFilledAKMS
+ADTtelescopicBatonBob: ADTtelescopicBaton
+ADTtelescopicBatonKon: ADTtelescopicBaton
+
+# 2025-01-30 - DS14
+ActionToggleNightVision: null
+ClothingHeadsetSOC: null
+EncryptionKeySOC: null
+
 #2024-12-28
 DrinkIrishCarBomb: DrinkIrishSlammer
 
@@ -549,3 +753,10 @@ FoodCondimentPacketFrostoil: FoodCondimentPacketColdsauce
 #2025-02-05
 WeaponSubMachineGunVector: null
 WeaponSubMachineGunVectorRubber: null
+
+# 2025-02-14 - DS14
+ExplosionRuneBook: null
+IgniteRuneBook: null
+LootSpawnerScienceMinor: null
+LootSpawnerScienceMajor: null
+LootSpawnerRoboticsBorgModule: null

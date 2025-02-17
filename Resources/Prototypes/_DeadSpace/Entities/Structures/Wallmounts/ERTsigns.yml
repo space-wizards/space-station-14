@@ -1,0 +1,118 @@
+- type: entity
+  parent: BaseSign
+  id: SignERTember
+  name: ОБР "ЭМБЕР"
+  description: Стальной знак с эмблемой ОБР "ЭМБЕР"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: ert_ember
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTember
+  id: SignERTemberDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла ОБР "ЭМБЕР"
+
+- type: entity
+  parent: BaseSign
+  id: SignERTred
+  name: ОБР кода "КРАСНЫЙ"
+  description: Стальной знак с эмблемой ОБР кода "КРАСНЫЙ"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: ert_red
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTred
+  id: SignERTredDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла ОБР кода "КРАСНЫЙ"
+
+- type: entity
+  parent: BaseSign
+  id: SignERTgamma
+  name: ОБР кода "ГАММА"
+  description: Стальной знак с эмблемой ОБР кода "ГАММА"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: ert_gamma
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTgamma
+  id: SignERTgammaDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла ОБР кода "ГАММА"
+
+- type: entity
+  parent: BaseSign
+  id: SignERTengi
+  name: ОБР инженеров
+  description: Стальной знак с эмблемой ОБР Инженеров
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: ert_engi
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTengi
+  id: SignERTengiDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла ОБР Инженеров
+
+- type: entity
+  parent: BaseSign
+  id: SignERTjanitor
+  name: ОБР уборщиков
+  description: Стальной знак с эмблемой ОБР Уборщиков
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: ert_janitor
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTjanitor
+  id: SignERTjanitorDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла ОБР Уборщиков
+
+- type: entity
+  parent: BaseSign
+  id: SignERTcburn
+  name: отряд РХБЗЗ
+  description: Стальной знак с эмблемой отряда РХБЗЗ
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: cburn
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTcburn
+  id: SignERTcburnDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла отряда РХБЗЗ
+
+- type: entity
+  parent: BaseSign
+  id: SignERTsierra
+  name: отряд РХБЗЗ кода "СЬЕРРА"
+  description: Стальной знак с эмблемой отряда РХБЗЗ кода "СЬЕРРА"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
+    state: cburn_sierra
+    scale: 0.85, 0.85
+
+- type: entity
+  parent: SignERTsierra
+  id: SignERTsierraDocking
+  suffix: Стыковка
+  description: Зона стыковки шаттла отряда РХБЗЗ кода "СЬЕРРА"

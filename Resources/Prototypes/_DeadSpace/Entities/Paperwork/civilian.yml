@@ -1,0 +1,41 @@
+- type: paperworkForm
+  id: Civilian0
+  category: civilian
+  name: paperwork-form-title-civilian-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedCivilian
+
+- type: paperworkForm
+  id: Civilian1
+  category: civilian
+  name: paperwork-form-title-civilian-1
+  text: "/Paperwork/Civilian/1.xml"
+  paperPrototype: PaperPrintedCivilian
+
+- type: paperworkForm
+  id: Civilian2
+  category: civilian
+  name: paperwork-form-title-civilian-2
+  text: "/Paperwork/Civilian/2.xml"
+  paperPrototype: PaperPrintedCivilian
+
+- type: paperworkForm
+  id: Civilian3
+  category: civilian
+  name: paperwork-form-title-civilian-3
+  text: "/Paperwork/Civilian/3.xml"
+  paperPrototype: PaperPrintedCivilian
+
+- type: paperworkForm
+  id: Civilian4
+  category: civilian
+  name: paperwork-form-title-civilian-4
+  text: "/Paperwork/Civilian/4.xml"
+  paperPrototype: PaperPrintedCivilian
+
+- type: paperworkForm
+  id: Civilian5
+  category: civilian
+  name: paperwork-form-title-civilian-5
+  text: "/Paperwork/Civilian/5.xml"
+  paperPrototype: PaperPrintedCivilian

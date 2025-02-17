@@ -4,14 +4,15 @@
     ClothingBackpackDuffelAtmospherics: 2
     ClothingBackpackSatchelAtmospherics: 2
     ClothingBackpackAtmospherics: 2
-    ClothingUniformJumpsuitAtmos: 3
-    ClothingUniformJumpskirtAtmos: 3
-    ClothingUniformJumpsuitAtmosCasual: 3
-    ClothingShoesColorWhite: 3
+    ClothingUniformJumpsuitAtmos: 2 # DS14-value
+    ClothingUniformJumpskirtAtmos: 2 # DS14-value
+    ClothingUniformJumpsuitAtmosCasual: 4 # DS14-value
+    ClothingShoesColorWhite: 4 # DS14-value
     ClothingHeadsetEngineering: 2
     ClothingHeadHelmetFire: 2
     ClothingOuterSuitFire: 2
-    ClothingOuterWinterAtmos: 2
-    ClothingNeckScarfStripedLightBlue: 3
+    ClothingOuterWinterAtmos: 4 # DS14-value
+    ClothingNeckScarfStripedLightBlue: 4 # DS14-value
+    ClothingOuterCoatAtmosWorking: 4 # DS14
   contrabandInventory:
     ToyFigurineAtmosTech: 1

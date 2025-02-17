@@ -4,6 +4,7 @@ using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
+using static Content.Shared.Shuttles.Systems.SharedShuttleConsoleSystem;
 
 namespace Content.Client.Shuttles.BUI;
 
@@ -26,6 +27,19 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.RequestBeaconFTL += OnFTLBeaconRequest;
         _window.DockRequest += OnDockRequest;
         _window.UndockRequest += OnUndockRequest;
+        _window.ThrustersRestartRequest += OnThrustersRestartRequest;
+
+        // DS14-start
+        var navScreen = FindChildByType<NavScreen>(_window);
+
+        if (navScreen != null)
+        {
+            navScreen.OnSignalButtonPressed += () =>
+            {
+                SendMessage(new ShuttleConsoleSignalButtonPressedMessage());
+            };
+        }
+        // DS14-end
     }
 
     private void OnUndockRequest(NetEntity entity)
@@ -63,6 +77,16 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         });
     }
 
+    private void OnThrustersRestartRequest(NetEntity ent, float gyroscopeThrust, float thrusterThrust)
+    {
+        SendMessage(new ThrustersRestartMessage()
+        {
+            ShuttleEntity = ent,
+            GyroscopeThrust = gyroscopeThrust,
+            ThrustersThrust = thrusterThrust,
+        });
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -81,4 +105,24 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
         _window?.UpdateState(Owner, cState);
     }
+
+    // DS14-start
+    private T? FindChildByType<T>(Control parent) where T : class
+    {
+        foreach (var child in parent.Children)
+        {
+            if (child is T match)
+                return match;
+
+            if (child is Control container)
+            {
+                var result = FindChildByType<T>(container);
+                if (result != null)
+                    return result;
+            }
+        }
+
+        return null;
+    }
+    // DS14-end
 }

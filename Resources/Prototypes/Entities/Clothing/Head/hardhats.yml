@@ -65,6 +65,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - HardHat
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -76,6 +77,10 @@
     sprite: Clothing/Head/Hardhats/blue.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/blue.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -87,6 +92,10 @@
     sprite: Clothing/Head/Hardhats/orange.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/orange.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -98,7 +107,11 @@
     sprite: Clothing/Head/Hardhats/red.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/red.rsi
-
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+   
 - type: entity
   parent: ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatWhite
@@ -109,6 +122,10 @@
     sprite: Clothing/Head/Hardhats/white.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/white.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -120,6 +137,10 @@
     sprite: Clothing/Head/Hardhats/yellow.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/yellow.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -131,6 +152,10 @@
     sprite: Clothing/Head/Hardhats/dark_yellow.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/dark_yellow.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

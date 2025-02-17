@@ -1,0 +1,15 @@
+ent-BaseMagazineBoxLightRifle = коробка патронов (7.62х39 мм винтовочные)
+    .desc = { ent-BaseItem.desc }
+ent-MagazineBoxLightRifleBig = ящик патронов (7.62х39 мм винтовочные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+    .suffix = Big
+ent-MagazineBoxLightRifle = коробка патронов 7.62х39 мм винтовочные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRiflePractice = коробка патронов (7.62х39 мм винтовочные учебные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleRubber = коробка патронов (7.62х39 мм винтовочные резиновые)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleIncendiary = коробка патронов (7.62х39 мм винтовочные зажигательные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleUranium = коробка патронов (7.62х39 мм винтовочные урановые)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }

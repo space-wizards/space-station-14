@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: ADTCyberHypospray
+  name: гипоспрей Cybersun
+  description: Великолепный медицинский девайс в удобном дизайне от Cybersun!
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Specific/cyberhypo.rsi
+    state: hypo
+  - type: Item
+    sprite: _ADT/Objects/Specific/cyberhypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5

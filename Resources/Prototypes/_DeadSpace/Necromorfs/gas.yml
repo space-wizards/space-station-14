@@ -1,0 +1,100 @@
+- type: reagent
+  id: InfectionDeadSpace
+  name: reagent-name-infectionDeadSpace
+  desc: reagent-desc-infectionDeadSpace
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#404040"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:CauseInfectionDead
+        conditions:
+        - !type:ReagentThreshold
+          min: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "infectionDeadSpace-smell" ]
+        probability: 0.1
+
+- type: gas
+  id: 9
+  name: gases-infectionDeadSpace
+  specificHeat: 20
+  heatCapacityRatio: 1.4
+  molarMass: 44
+  gasOverlaySprite: /Textures/_DeadSpace/Effects/atmospherics.rsi
+  gasOverlayState: miasma
+  gasMolesVisible: 2
+  gasVisbilityFactor: 3.5
+  color: "#404040"
+  reagent: InfectionDeadSpace
+  pricePerMole: 0.2
+
+- type: entity
+  name: InfectionDeadSpace gas miner
+  parent: GasMinerBase
+  id: GasMinerInfectionDeadSpace
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: InfectionDeadSpace
+
+- type: alarmThreshold
+  id: stationInfectionDeadSpace
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.05
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: entity
+  parent: GasCanister
+  id: InfectionDeadCanister
+  name: канистра для хранения
+  suffix: НЕКРОИНФЕКЦИЯ
+  components:
+    - type: Sprite
+      layers:
+        - state: yellow
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles: # List of gasses for easy reference
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Ammonia
+          - 0 # N2O
+          - 0 # Frezon
+          - 1871.71051 # InfectionDead
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            StorageCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior

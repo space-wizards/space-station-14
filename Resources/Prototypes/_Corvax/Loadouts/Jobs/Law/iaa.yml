@@ -1,0 +1,24 @@
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersIAA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersIAA
+
+- type: loadout
+  id: UnderwearBottomPantiesIAA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesIAA
+
+- type: loadout
+  id: UnderwearTopBraIAA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraIAA

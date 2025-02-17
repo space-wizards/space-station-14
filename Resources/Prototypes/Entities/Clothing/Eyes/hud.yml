@@ -54,6 +54,11 @@
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
+  - type: EyeProtection
+    protectionTime: 5
+  - type: GuideHelp
+    guides:
+    - Security
   - type: Tag
     tags:
     - HudSecurity
@@ -175,6 +180,7 @@
     damageContainers:
     - Biological
     - Inorganic
+    - Silicon
   - type: ShowSyndicateIcons
 
 - type: entity
@@ -191,6 +197,7 @@
     damageContainers:
     - Biological
     - Inorganic
+    - Silicon
   - type: ShowHungerIcons
   - type: ShowThirstIcons
   - type: ShowSyndicateIcons
@@ -288,3 +295,22 @@
   parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudDiagFlipped
   name: diagnostic hud eyepatch
+
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, ShowMedicalIcons, BaseCommandContraband]
+  id: ClothingEyesHudAdvanced
+  name: Advanced hud
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Eyes/HUD/advanced_hud.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Eyes/HUD/advanced_hud.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5

@@ -2,6 +2,8 @@ namespace Content.Server.Chat;
 
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -15,7 +17,7 @@ public sealed partial class EmoteOnDamageComponent : Component
     /// Chance of preforming an emote when taking damage and not on cooldown.
     /// </summary>
     [DataField("emoteChance"), ViewVariables(VVAccess.ReadWrite)]
-    public float EmoteChance = 0.5f;
+    public float EmoteChance = 0.75f;
 
     /// <summary>
     /// A set of emotes that will be randomly picked from.
@@ -49,4 +51,14 @@ public sealed partial class EmoteOnDamageComponent : Component
     /// </summary>
     [DataField("emoteCooldown"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    ///     A list of damage group types that are considered before activating emote.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<DamageGroupPrototype>>? ValidDamageGroups = new()
+    {
+        "Brute",
+        "Burn",
+    };
 }

@@ -1,0 +1,33 @@
+- type: entity
+  parent: ChemicalMedipen
+  id: SCSTMedipen
+  name: медипен ОППУ
+  description: Разработка Нанотресен. Содержит вещества для лечения колющих повреждений и ядов.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: microstimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: microstimpen_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+          - ReagentId: Stellibinin
+            Quantity: 5
+          - ReagentId: Omnizine
+            Quantity: 20
+          - ReagentId: Puncturase
+            Quantity: 5
+  - type: StaticPrice
+    price: 300
+  - type: Tag
+    tags: []

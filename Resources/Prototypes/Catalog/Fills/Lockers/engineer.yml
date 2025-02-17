@@ -38,7 +38,7 @@
       - id: CableApcStack
         prob: 0.3
       - id: SprayPainter
-        prob: 0.7
+        prob: 0.5
 
 - type: entity
   id: LockerElectricalSuppliesFilled
@@ -112,6 +112,8 @@
       - id: HolofanProjector
       - id: RCD
       - id: RCDAmmo
+      - id: ClothingOuterCoatAtmosWorking
+        prob: 0.75
 
 - type: entity
   id: LockerEngineerFilledHardsuit

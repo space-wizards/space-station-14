@@ -11,18 +11,24 @@
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
-      - id: ClothingShoesBootsJack
-      - id: ClothingOuterCoatWarden
+      # - id: ClothingShoesBootsJack # DS14-disabled
+      # - id: ClothingOuterCoatWarden # DS14-disabled
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
-      - id: BookSpaceLaw
+      # - id: BookSpaceLaw # DS14-disabled
+      - id: ClothingHeadHatCapWardenAlt # Corvax-SecFashion
+      - id: ClothingOuterCoatWardenAlt # Corvax-SecFashion
       - id: ClothingBackpackElectropack
         amount: 2
       - id: RemoteSignaller
         amount: 2
+      - id: ClothingNeckBodyCamera # DS14
+        amount: 4
+      - id: ClothingHandsGlovesArkalyse # DS14
+      - id: BoxTapeRecorder # DS14
 
 - type: entity
   id: LockerWardenFilled
@@ -37,8 +43,8 @@
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
-      - id: ClothingShoesBootsJack
-      - id: ClothingOuterCoatWarden
+      # - id: ClothingShoesBootsJack # DS14-disabled
+      # - id: ClothingOuterCoatWarden # DS14-disabled
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
@@ -49,6 +55,10 @@
       - id: RemoteSignaller
         amount: 2
       - id: Binoculars
+      - id: ClothingNeckBodyCamera # DS14
+        amount: 4
+      - id: ClothingHandsGlovesArkalyse # DS14
+      - id: BoxTapeRecorder # DS14
 
 - type: entity
   id: LockerSecurityFilled
@@ -58,10 +68,10 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
-        prob: 0.8
-      - id: WeaponDisabler
-      - id: ClothingUniformJumpsuitSecGrey
-        prob: 0.3
+      #   prob: 0.8 # DS14-disabled
+      # - id: WeaponDisabler # DS14-disabled
+      # - id: ClothingUniformJumpsuitSecGrey # DS14-disabled
+      #   prob: 0.3 # DS14-disabled
       - id: ClothingHeadHelmetBasic
       - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
@@ -70,13 +80,14 @@
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
-      - id: ClothingShoesBootsJack
-      - id: WeaponMeleeNeedle
-        prob: 0.1
+      # - id: ClothingShoesBootsJack # DS14-disabled
+      # - id: WeaponMeleeNeedle # DS14-disabled
+      #   prob: 0.1 # DS14-disabled
       - id: HoloprojectorSecurity
         prob: 0.6
-      - id: BookSpaceLaw
-        prob: 0.5
+      - id: ERTloadoutSecuritySecondary # DS14
+      - id: ClothingNeckBodyCamera # DS14
+      - id: ClothingMaskGasSecurity # DS14
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -85,33 +96,34 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
-      - id: WeaponDisabler
+      - id: ClothingHeadsetBrigmedic
       - id: TrackingImplanter
-        amount: 2
+      - id: RubberStampBrigmedic
       - id: ClothingOuterHardsuitBrigmedic
-      - id: BoxSterileMask
-      - id: ClothingHeadHatBeretBrigmedic
+      - id: ClothingHandsGlovesLatex
       - id: ClothingOuterCoatAMG
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
       - id: ClothingUniformJumpskirtOfLife
+      - id: ClothingHeadHatBeretBrigmedic
+      - id: ClothingHeadHatBeretSecurityMedic
+      - id: ClothingOuterVestArmorMedSec
+      - id: ClothingOuterVestSecurityMedic
+      - id: ClothingOuterCoatLabSecurityMedic
         prob: 0.1
       - id: MedkitFilled
       - id: MedkitCombatFilled
-        prob: 0.6
-      - id: MedkitAdvancedFilled
         prob: 0.4
+      - id: MedkitAdvancedFilled
+        prob: 0.1
       - id: MedkitOxygenFilled
         prob: 0.3
       - id: MedkitBruteFilled
-        prob: 0.3
+        prob: 0.2
       - id: MedkitToxinFilled
-        prob: 0.3
+        prob: 0.2
       - id: MedkitBurnFilled
-        prob: 0.7
-      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
-        prob: 0.15
+        prob: 0.3
 
 - type: entity
   id: LockerDetectiveFilled
@@ -120,8 +132,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
-        prob: 0.3
+      # - id: ClothingEyesGlassesSecurity # DS14-disabled
+      #   prob: 0.3 # DS14-disabled
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
@@ -130,12 +142,18 @@
       - id: ForensicScanner
       - id: LogProbeCartridge
       - id: BoxForensicPad
+        amount: 2 # DS14
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
       - id: RubberStampDetective
       - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
+      - id: FlippoEngravedLighter # DS14
+      - id: ADTtelescopicBaton # ADT
+      - id: BoxFolderRed # DS14
+      - id: BoxFolderYellow # DS14
+      - id: BoxTapeRecorder # DS14
 
 - type: entity
   id: ClosetBombFilled
@@ -149,7 +167,7 @@
       - id: Wirecutter
       - id: Screwdriver
       - id: Multitool
-        prob: 0.5
+        prob: 0.75 # DS14-value
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
@@ -160,6 +178,16 @@
     contents:
     - id: WeaponDisabler
       amount: 5
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
+  id: GunSafeDominator
+  name: dominators safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: PistolDominator
+      amount: 3
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
@@ -206,7 +234,7 @@
     contents:
     - id: WeaponShotgunEnforcer
       amount: 2
-    - id: BoxLethalshot
+    - id: MagazineShotgun
       amount: 4
 
 - type: entity
@@ -218,8 +246,8 @@
     contents:
     - id: WeaponShotgunKammerer
       amount: 2
-    - id: BoxLethalshot
-      amount: 2
+    - id: MagazineShotgun
+      amount: 4
 
 - type: entity
   id: GunSafeSubMachineGunWt550
@@ -243,3 +271,20 @@
     contents:
     - id: WeaponLaserCarbine
       amount: 3
+
+- type: entity
+  id: LockerBlueShieldFilled
+  suffix: BlueShield, Filled
+  parent: LockerBlueShield
+  components:
+  - type: StorageFill
+    contents:
+      - id: NitrogenTankFilled
+      - id: OxygenTankFilled
+      - id: MedkitFilled
+      - id: MedkitCombatFilled
+      - id: MedkitAdvancedFilled
+      - id: ClothingEyesHudAdvanced
+      - id: RubberStampBlueShield
+      - id: WeaponDisabler
+      - id: ClothingHeadHelmetSwat

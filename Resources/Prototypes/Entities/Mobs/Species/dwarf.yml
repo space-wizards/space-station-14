@@ -36,7 +36,7 @@
           !type:PhysShapeCircle
           radius: 0.35
         # they r smaller
-        density: 120
+        density: 600
         restitution: 0.0
         mask:
         - MobMask
@@ -63,6 +63,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Sanity # DS14
 
 - type: entity
   parent: BaseSpeciesDummy

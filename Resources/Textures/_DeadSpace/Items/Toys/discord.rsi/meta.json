@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By cybermusor (discord) and hqdishka (discord) for ss14 server Мёртвый Космос",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+            "name": "blue"
+          },
+          {
+            "name": "blue-inhand-left",
+            "directions": 4
+          },
+          {
+            "name": "blue-inhand-right",
+            "directions": 4
+          }
+    ]
+  }

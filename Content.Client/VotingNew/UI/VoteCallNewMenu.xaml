@@ -1,0 +1,13 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    Title="{Loc ui-new-vote-call-title}"
+    MinWidth="500">
+
+    <GridContainer Columns="1">
+        <Control Name="PresetsContainer" Access="Public"/>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="VoteStartButton" Access="Public" Text="{Loc 'ui-new-vote-call-button'}" HorizontalAlignment="Center"/>
+            <OptionButton Margin="2 1" Name="PresetsButton" Access="Public" HorizontalExpand="False" />
+        </BoxContainer>
+    </GridContainer>
+</DefaultWindow>

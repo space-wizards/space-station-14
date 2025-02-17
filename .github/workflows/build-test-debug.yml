@@ -1,6 +1,7 @@
 name: Build & Test Debug
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master, staging, stable ]
   merge_group:

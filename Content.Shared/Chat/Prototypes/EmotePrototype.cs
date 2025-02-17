@@ -40,7 +40,7 @@ public sealed partial class EmotePrototype : IPrototype
     ///     An icon used to visually represent the emote in radial UI.
     /// </summary>
     [DataField]
-    public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/scream.png"));
+    public SpriteSpecifier? Icon;
 
     /// <summary>
     ///     Determines conditions to this emote be available to use
@@ -81,5 +81,8 @@ public enum EmoteCategory : byte
     Invalid = 0,
     Vocal = 1 << 0,
     Hands = 1 << 1,
+    // Sirena-Animations-Start
+    Animations = 1 << 2,
+    // Sirena-Animations-End
     General = byte.MaxValue
 }

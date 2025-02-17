@@ -1,6 +1,6 @@
 - type: gameMap
   id: Saltern
-  mapName: 'Saltern'
+  mapName: 'Saltern Station'
   mapPath: /Maps/saltern.yml
   minPlayers: 0
   maxPlayers: 35
@@ -31,23 +31,28 @@
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 4, 4 ]
+            SeniorEngineer: [ 1, 1 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 4, 4 ]
             Paramedic: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            # MedicalSurgeon: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
             Borg: [ 2, 2 ]
+            SeniorResearcher: [ 1, 1 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             SecurityCadet: [ 4, 4 ]
+            SeniorOfficer: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 1, 3 ]
@@ -57,4 +62,15 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-
+            # DS14
+            BlueShieldOfficer: [ 1, 1 ]
+            BorgSecurity: [ 1, 1 ]
+            # Magistrat: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            ClownSponsor: [ 0, 2 ]
+            Coroner: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]

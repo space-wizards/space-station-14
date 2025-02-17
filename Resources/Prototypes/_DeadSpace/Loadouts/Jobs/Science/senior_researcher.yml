@@ -1,0 +1,53 @@
+# Head
+- type: loadout
+  id: ScientificBeret
+  equipment:
+    head: ClothingHeadHatBeretRND
+
+# Jumpsuit
+- type: loadout
+  id: SeniorResearcherJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorResearcher
+
+- type: loadout
+  id: SeniorResearcherJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorResearcher
+
+# OuterClothing
+- type: loadout
+  id: SeniorResearcherLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatLabSeniorResearcher
+
+# ID
+- type: loadout
+  id: SeniorResearcherPDA
+  equipment:
+    id: SeniorResearcherPDA
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersSeniorResearcher
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersSeniorResearcher
+
+- type: loadout
+  id: UnderwearBottomPantiesSeniorResearcher
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesSeniorResearcher
+
+- type: loadout
+  id: UnderwearTopBraSeniorResearcher
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraSeniorResearcher

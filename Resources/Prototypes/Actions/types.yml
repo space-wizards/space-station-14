@@ -10,6 +10,15 @@
 # actions
 
 - type: entity
+  id: ActionOpenEmotes
+  name: Open emote panel
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/emotes.png
+    event: !type:OpenEmotesActionEvent
+    checkCanInteract: false
+
+- type: entity
   id: ActionScream
   name: Scream
   description: AAAAAAAAAAAAAAAAAAAAAAAAA
@@ -19,6 +28,16 @@
     icon: Interface/Actions/scream.png
     event: !type:ScreamActionEvent
     checkCanInteract: false
+
+- type: entity
+  id: OwOVoice
+  name: Change speech
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      icon: Interface/Actions/owo-button.png
+      iconOn: Interface/Actions/owo-button-on.png
+      event: !type:OwOAccentActionEvent
 
 - type: entity
   id: ActionTurnUndead
@@ -66,7 +85,7 @@
     checkCanInteract: false
     checkConsciousness: false
     itemIconStyle: BigAction
-    priority: -20
+    priority: 20 # DS14-value
     icon:
       sprite: Actions/Implants/implants.rsi
       state: explosive
@@ -82,7 +101,7 @@
     checkCanInteract: false
     checkConsciousness: false
     itemIconStyle: BigAction
-    priority: -20
+    priority: 20 # DS14-value
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: gib
@@ -97,7 +116,7 @@
     charges: 3
     checkCanInteract: false
     itemIconStyle: BigAction
-    priority: -20
+    priority: 20 # DS14-value
     icon:
       sprite: Actions/Implants/implants.rsi
       state: freedom

@@ -1,0 +1,53 @@
+- type: entity
+  id: NecroMoon
+  name: луна
+  description: Вы можете убить пророка, но вам не убить бога! Мы идём. Мы голодны. Мы здесь.
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: EventHorizon
+    radius: 5
+    canBreachContainment: false
+    colliderFixtureId: EventHorizonCollider
+    consumerFixtureId: EventHorizonConsumer
+  - type: GravityWell
+    baseRadialAcceleration: 20
+    maxRange: 10
+  - type: Fixtures
+    fixtures:
+      EventHorizonCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 1
+        hard: true
+        restitution: 0.8
+        density: 1000
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+      EventHorizonConsumer:
+        shape:
+          !type:PhysShapeCircle
+            radius: 1
+        hard: false
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+  - type: RandomWalk # To make the singularity move around.
+    maxSpeed: 2.5
+    minSpeed: 1.875
+  - type: PointLight
+    enabled: true
+    radius: 10
+  - type: Appearance
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Necromorfs/moon.rsi
+    layers:
+    - state: moon
+      map: [ "enum.DamageStateVisualLayers.Base" ]

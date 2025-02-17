@@ -1,0 +1,10 @@
+- type: construction
+  name: double toy sword
+  id: ToyDoubleSword
+  graph: ToyDoubleSword
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: A toy double-bladed sword created from two toy swords!
+  icon: { sprite: Objects/Weapons/Melee/e_sword_double.rsi, state: e_sword_double }
+  objectType: Item

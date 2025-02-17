@@ -1,0 +1,18 @@
+{
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By discord user Sadcmb#0262 (400322885526224926)",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-UNDERWEARB",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}

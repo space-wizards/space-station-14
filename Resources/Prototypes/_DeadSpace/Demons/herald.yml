@@ -1,0 +1,71 @@
+- type: entity
+  id: MobGhostHerald
+  parent:
+  - BaseMob
+  components:
+  - type: MindContainer
+  - type: InputMover
+  - type: MobMover
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
+  - type: Sprite
+    noRot: true
+    drawdepth: Ghosts
+    sprite: _DeadSpace/Demons/demon_boss.rsi
+    layers:
+    - state: herald_ghost
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+  - type: MovementIgnoreGravity
+  - type: Damageable
+    damageContainer: Biological
+  - type: Examiner
+  - type: NoSlip
+  - type: Actions
+  - type: Eye
+    drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: DoAfter
+  - type: Alerts
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: Visibility
+    layer: 2
+  - type: Speech
+    speechVerb: Ghost
+  - type: HeraldGhost
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-heraldghost-name
+    description: ghost-role-information-heraldghost-description
+    rules: ghost-role-information-heraldghost-rules
+  - type: Vocal
+    sounds:
+      Male: Demon
+      Female: Demon
+      Unsexed: Demon
+  - type: TTS
+    voice: Volibear

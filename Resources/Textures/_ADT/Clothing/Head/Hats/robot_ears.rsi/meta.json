@@ -1,0 +1,24 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:Moroz=3#1708",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4,
+            "delays": [
+                [ 0.2, 0.2 ],
+                [ 0.2, 0.2 ],
+                [ 0.2, 0.2 ],
+                [ 0.2, 0.2 ]
+            ]
+        }
+    ]
+}

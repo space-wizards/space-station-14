@@ -19,35 +19,40 @@
         - Belt
     - type: AccessOverrider
       accessLevels:
-      - Armory
-      - Atmospherics
-      - Bar
-      - Brig
-      - Detective
       - Captain
-      - Cargo
-      - Chapel
-      - Chemistry
-      - ChiefEngineer
-      - ChiefMedicalOfficer
-      - Command
-      - Engineering
-      - External
       - HeadOfPersonnel
       - HeadOfSecurity
+      - ChiefEngineer
+      - ResearchDirector
+      - ChiefMedicalOfficer
+      - Quartermaster
+      - Command
+      - Cryogenics
+      - Lawyer
+      - Armory
+      - Detective
+      - Brigmedic
+      - Security
+      - Brig
+      - Chemistry
+      - Paramedic
+      - Coroner
+      - Medical
+      - Research
+      - Atmospherics
+      - Engineering
+      - SeniorSalvage
+      - Salvage
+      - Cargo
+      - Service
+      - Bar
+      - Chapel
       - Hydroponics
       - Janitor
       - Kitchen
-      - Lawyer
-      - Maintenance
-      - Medical
-      - Quartermaster
-      - Research
-      - ResearchDirector
-      - Salvage
-      - Security
-      - Service
       - Theatre
+      - Maintenance
+      - External
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg
@@ -87,39 +92,47 @@
     sprite: Objects/Tools/universal_access_configurator.rsi
   - type: AccessOverrider
     accessLevels:
-    - Armory
-    - Atmospherics
-    - Bar
-    - Brig
-    - Detective
     - Captain
-    - Cargo
-    - Chapel
-    - Chemistry
-    - ChiefEngineer
-    - ChiefMedicalOfficer
-    - Command
-    - Engineering
-    - External
     - HeadOfPersonnel
     - HeadOfSecurity
+    - ChiefEngineer
+    - ResearchDirector
+    - ChiefMedicalOfficer
+    - Quartermaster
+    - Command
+    - Cryogenics
+    - Lawyer
+    - Armory
+    - Detective
+    - Brigmedic
+    - Security
+    - Brig
+    - Chemistry
+    - Paramedic
+    - Coroner
+    - Medical
+    - Research
+    - Atmospherics
+    - Engineering
+    - SeniorSalvage
+    - Salvage
+    - Cargo
+    - Service
+    - Bar
+    - Chapel
     - Hydroponics
     - Janitor
     - Kitchen
-    - Lawyer
-    - Maintenance
-    - Medical
-    - Quartermaster
-    - Research
-    - ResearchDirector
-    - Salvage
-    - Security
-    - Service
     - Theatre
+    - Maintenance
+    - External
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
     - Wizard
+    - AccessReserved1
+    - AccessReserved2
+    - AccessReserved3
     privilegedIdSlot:
       name: id-card-console-privileged-id
       ejectSound: /Audio/Machines/id_swipe.ogg

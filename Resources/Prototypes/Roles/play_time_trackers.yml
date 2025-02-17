@@ -13,6 +13,9 @@
 - type: playTimeTracker # Used as a tracker for all borgs and midround borging.
   id: JobBorg
 
+- type: playTimeTracker # Used as a tracker for all borgs and midround borging.
+  id: JobBorgSecurity
+
 - type: playTimeTracker
   id: JobBotanist
 
@@ -26,6 +29,21 @@
   id: JobCentralCommandOfficial
 
 - type: playTimeTracker
+  id: JobCentralCommandAdministrator
+
+- type: playTimeTracker
+  id: JobCentralCommandOperator
+
+- type: playTimeTracker
+  id: JobCentralCommandSpecialOperationsOfficer
+
+- type: playTimeTracker
+  id: JobCentralCommandBlueShieldOfficer
+
+- type: playTimeTracker
+  id: JobCentralCommandOfficer
+
+- type: playTimeTracker
   id: JobChaplain
 
 - type: playTimeTracker
@@ -33,6 +51,9 @@
 
 - type: playTimeTracker
   id: JobChemist
+
+- type: playTimeTracker
+  id: JobMedicalSurgeon
 
 - type: playTimeTracker
   id: JobChiefEngineer
@@ -47,22 +68,61 @@
   id: JobDetective
 
 - type: playTimeTracker
-  id: JobERTChaplain
+  id: JobERTEngineerAmber
 
 - type: playTimeTracker
-  id: JobERTEngineer
+  id: JobERTEngineerRed
 
 - type: playTimeTracker
-  id: JobERTJanitor
+  id: JobERTEngineerGamma
 
 - type: playTimeTracker
-  id: JobERTLeader
+  id: JobERTJanitorAmber
 
 - type: playTimeTracker
-  id: JobERTMedical
+  id: JobERTJanitorRed
 
 - type: playTimeTracker
-  id: JobERTSecurity
+  id: JobERTJanitorGamma
+
+- type: playTimeTracker
+  id: JobERTLeaderAmber
+
+- type: playTimeTracker
+  id: JobERTLeaderRed
+
+- type: playTimeTracker
+  id: JobERTLeaderGamma
+
+- type: playTimeTracker
+  id: JobERTMedicalAmber
+
+- type: playTimeTracker
+  id: JobERTMedicalRed
+
+- type: playTimeTracker
+  id: JobERTMedicalGamma
+
+- type: playTimeTracker
+  id: JobERTSecurityAmber
+
+- type: playTimeTracker
+  id: JobERTSecurityRed
+
+- type: playTimeTracker
+  id: JobERTSecurityGamma
+
+- type: playTimeTracker
+  id: JobCBURNLeader
+
+- type: playTimeTracker
+  id: JobCBURNSierraLeader
+
+- type: playTimeTracker
+  id: JobCBURNAgent
+
+- type: playTimeTracker
+  id: JobCBURNSierraAgent
 
 - type: playTimeTracker
   id: JobDeathSquad
@@ -71,10 +131,16 @@
   id: JobCBURN
 
 - type: playTimeTracker
+  id: JobERTChaplain
+
+- type: playTimeTracker
   id: JobHeadOfPersonnel
 
 - type: playTimeTracker
   id: JobHeadOfSecurity
+
+- type: playTimeTracker
+  id: JobBrigmedic
 
 - type: playTimeTracker
   id: JobJanitor
@@ -131,6 +197,18 @@
   id: JobSecurityOfficer
 
 - type: playTimeTracker
+  id: JobSeniorEngineer
+
+- type: playTimeTracker
+  id: JobSeniorOfficer
+
+- type: playTimeTracker
+  id: JobSeniorPhysician
+
+- type: playTimeTracker
+  id: JobSeniorResearcher
+
+- type: playTimeTracker
   id: JobServiceWorker
 
 - type: playTimeTracker
@@ -153,3 +231,27 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+- type: playTimeTracker
+  id: JobMagistrat
+
+# - type: playTimeTracker
+#   id: JobADTInvestigator
+
+- type: playTimeTracker
+  id: JobBlueShieldOfficer
+
+- type: playTimeTracker
+  id: JobCoroner
+
+- type: playTimeTracker
+  id: JobSeniorSalvageSpecialist
+
+- type: playTimeTracker
+  id: JobSeniorAdministrator
+
+- type: playTimeTracker
+  id: JobSecurityPilot
+
+- type: playTimeTracker
+  id: JobClownSponsor

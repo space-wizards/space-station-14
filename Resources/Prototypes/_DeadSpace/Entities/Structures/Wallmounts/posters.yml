@@ -1,0 +1,43 @@
+# АБСК
+- type: entity
+  parent: PosterBase
+  id: PosterABSK
+  name: плакат "АБСК"
+  description: Плакат с символом доблестных вульпканинов спасателей из "Ассамблейской Благотворительно-Спасательной Компании" - сокращёно АБСК. Они вас из огня и лап ксеноморфов вытащат.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Structures/Wallmounts/posters.rsi
+      state: absk
+
+# Мяу! by chuiomoio
+- type: entity
+  parent: PosterBase
+  id: PosterMeow
+  name: Мяу!
+  description: Постер с рекламой какой-то ЧВК. Кажется, вы слышали какие-то новости о провалившихся переговорах руководства Nanotrasen с этой организацией. Если они увенчались успехом, на станции могли бы появиться телохранители-горничные глав.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Structures/Wallmounts/posters.rsi
+      state: meow
+
+# Dies Liberatis by milkywaynoway
+- type: entity
+  parent: PosterBase
+  id: PosterDiesLiberatis
+  name: Dies Liberatis
+  description: Плакат, посвящённый празднику Dies Liberatis. Кажется ему уже несколько лет. Интересно, как он здесь оказался?
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Structures/Wallmounts/posters.rsi
+      state: dies_liberatis
+
+# hb2 by hq._.dishka
+- type: entity
+  parent: PosterBase
+  id: PosterHB2
+  name: плакат "Начало пути"
+  description: Рекламный плакат с датой основания популярной металкор-группы с планеты Фелис. На нём изображены глаза солистов. В правом нижнем углу красуется автограф h&b.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Structures/Wallmounts/posters.rsi
+      state: hb2

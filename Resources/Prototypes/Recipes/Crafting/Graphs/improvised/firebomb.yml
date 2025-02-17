@@ -69,7 +69,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 5
+        amount: 25
       steps:
       - tool: Cutting
         doAfter: 2

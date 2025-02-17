@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Adventure Times MRP Big Chungus",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "adtsummershade"
+        },
+        {
+            "name": "adtwintersun"
+        },
+        {
+            "name": "adthungoverangel"
+        },
+        {
+            "name": "adtcitrusbalance"
+        },
+        {
+            "name": "adtdobryidrink"
+        },
+        {
+            "name": "adtmilkeclipse"
+        },
+        {
+            "name": "adtarcticexplosion"
+        },
+        {
+            "name": "adtsugarknight"
+        },
+        {
+            "name": "adtgrapelady"
+        },
+        {
+            "name": "adtsaturdaybaron"
+        },
+        {
+            "name": "adtarcticlatte"
+        },
+        {
+            "name": "adtazureblue"
+        },
+        {
+            "name": "adteclipsedeclispe"
+        },
+        {
+            "name": "adtspacebush"
+        },
+        {
+            "name": "adtbizconversation"
+        },
+        {
+            "name": "adtapplemartini"
+        },
+        {
+            "name": "adtbacardiapple"
+	}
+    ]
+}

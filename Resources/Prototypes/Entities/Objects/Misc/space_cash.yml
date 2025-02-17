@@ -13,6 +13,7 @@
   - type: PhysicalComposition
     materialComposition:
       Credit: 1
+  - type: AtmCurrency # backmen: currency
   - type: StaticPrice
     price: 0
   - type: Stack

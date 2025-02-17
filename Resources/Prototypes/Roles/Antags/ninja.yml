@@ -4,14 +4,14 @@
   antagonist: true
   setPreference: false
   objective: roles-antag-space-ninja-objective
-  guides: [ SpaceNinja ]
+  # guides: [ SpaceNinja ] # DS14: disabled due to lack of localization
 
 #Ninja Gear
 - type: startingGear
   id: SpaceNinjaGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitNinja
-    back: ClothingBackpackSatchel
+    back: ADTClothingBackpackSatchelninja
     mask: ClothingMaskNinja
     head: ClothingHeadHelmetSpaceNinja
     eyes: ClothingEyesVisorNinja

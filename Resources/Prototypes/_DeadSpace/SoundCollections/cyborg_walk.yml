@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: FootstepBorgSec
+  files:
+  - /Audio/_DeadSpace/Effects/Footsteps/robotic1.ogg
+  - /Audio/_DeadSpace/Effects/Footsteps/robotic2.ogg

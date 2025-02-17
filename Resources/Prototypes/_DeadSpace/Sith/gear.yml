@@ -1,0 +1,27 @@
+- type: startingGear
+  id: SithGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSith
+    back: ClothingBackpackSatchel
+    neck: ClothingNeckSith
+    mask: ClothingMaskSith
+    head: ClothingHeadHelmetSith
+    gloves: ClothingHandsGlovesSith
+    outerClothing: ClothingOuterHardsuitSith
+    shoes: ClothingShoesBootsSith
+    id: AgentIDCard
+    ears: ClothingHeadsetGrey
+    pocket1: EnergySwordSith
+    pocket2: PinpointerStation
+    suitstorage: OxygenTankFilled
+  inhand:
+    - JetpackBlackFilled
+  storage:
+    back:
+    - BoxSurvival
+    - Crowbar
+    - Wrench
+    - Screwdriver
+    - Wirecutter
+    - Welder
+    - Multitool

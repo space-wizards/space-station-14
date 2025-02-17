@@ -81,6 +81,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReaderCartridge
+      - BankCartridge
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -155,7 +156,7 @@
   - type: Pda
     id: PassengerIDCard
   - type: PdaBorderColor
-    borderColor: "#717059"
+    borderColor: "#67665a"
 
 - type: entity
   parent: BasePDA
@@ -171,8 +172,8 @@
        !type:String
        pda-interntech
   - type: PdaBorderColor
-    borderColor: "#717059"
-    accentVColor: "#949137"
+    borderColor: "#67665a"
+    accentHColor: "#7C5D00"
   - type: Icon
     state: pda-interntech
 
@@ -190,8 +191,8 @@
        !type:String
        pda-internmed
   - type: PdaBorderColor
-    borderColor: "#717059"
-    accentVColor: "#447987"
+    borderColor: "#67665a"
+    accentVColor: "#12445b"
   - type: Icon
     state: pda-internmed
   - type: GuideHelp
@@ -212,8 +213,8 @@
        !type:String
        pda-interncadet
   - type: PdaBorderColor
-    borderColor: "#717059"
-    accentVColor: "#A32D26"
+    borderColor: "#67665a"
+    accentVColor: "#2f303c"
   - type: Icon
     state: pda-interncadet
 
@@ -231,8 +232,8 @@
        !type:String
        pda-internsci
   - type: PdaBorderColor
-    borderColor: "#717059"
-    accentVColor: "#8900c9"
+    borderColor: "#67665a"
+    accentHColor: "#8900c9"
   - type: Icon
     state: pda-internsci
 
@@ -250,8 +251,8 @@
        !type:String
        pda-internservice
   - type: PdaBorderColor
-    borderColor: "#717059"
-    accentVColor: "#00cc35"
+    borderColor: "#67665a"
+    accentHColor: "#4b640f"
   - type: Icon
     state: pda-internservice
 
@@ -269,7 +270,7 @@
        !type:String
        pda-cook
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
+    borderColor: "#817d6f"
   - type: Icon
     state: pda-cook
   - type: ReplacementAccent # for random sentience event
@@ -290,7 +291,7 @@
        pda-hydro
   - type: PdaBorderColor
     borderColor: "#44843c"
-    accentVColor: "#00cc35"
+    accentVColor: "#4b640f"
   - type: Icon
     state: pda-hydro
 
@@ -397,7 +398,7 @@
        !type:String
        pda-mime
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
+    borderColor: "#817d6f"
     accentHColor: "#333333"
   - type: Icon
     state: pda-mime
@@ -483,8 +484,8 @@
        !type:String
        pda-miner
   - type: PdaBorderColor
-    borderColor: "#af9366"
-    accentVColor: "#8900c9"
+    borderColor: "#735321"
+    accentVColor: "#62237F"
   - type: Icon
     state: pda-miner
   - type: CartridgeLoader
@@ -646,7 +647,7 @@
        pda-hop
   - type: PdaBorderColor
     borderColor: "#789876"
-    accentHColor: "#447987"
+    accentHColor: "#12445b"
   - type: Icon
     state: pda-hop
 
@@ -665,7 +666,7 @@
        pda-ce
   - type: PdaBorderColor
     borderColor: "#949137"
-    accentHColor: "#447987"
+    accentHColor: "#12445b"
   - type: Icon
     state: pda-ce
 
@@ -684,7 +685,7 @@
        pda-engineer
   - type: PdaBorderColor
     borderColor: "#949137"
-    accentVColor: "#A32D26"
+    accentVColor: "#772d32"
   - type: Icon
     state: pda-engineer
 
@@ -702,9 +703,9 @@
        !type:String
        pda-cmo
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    borderColor: "#817d6f"
+    accentHColor: "#12445b"
+    accentVColor: "#12445b"
   - type: Icon
     state: pda-cmo
 
@@ -722,8 +723,8 @@
        !type:String
        pda-medical
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentVColor: "#447987"
+    borderColor: "#817d6f"
+    accentVColor: "#12445b"
   - type: Icon
     state: pda-medical
   - type: GuideHelp
@@ -743,6 +744,28 @@
 
 - type: entity
   parent: BaseMedicalPDA
+  id: SurgeonPDA
+  name: surgeon PDA
+  description: Red spots remained after one of the operations.
+  components:
+  - type: Pda
+    id: SurgeonIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-surgeon
+  - type: PdaBorderColor
+    borderColor: "#817d6f"
+    accentVColor: "#12445b"
+  - type: Icon
+    state: pda-surgeon
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
+
+- type: entity
+  parent: BaseMedicalPDA
   id: ParamedicPDA
   name: paramedic PDA
   description: Shiny and sterile.
@@ -755,7 +778,7 @@
        !type:String
        pda-paramedic
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
+    borderColor: "#817d6f"
     accentVColor: "#2a4b5b"
   - type: Icon
     state: pda-paramedic
@@ -774,7 +797,7 @@
        !type:String
        pda-chemistry
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
+    borderColor: "#817d6f"
     accentVColor: "#B34200"
   - type: Icon
     state: pda-chemistry
@@ -793,8 +816,8 @@
        !type:String
        pda-rd
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentHColor: "#447987"
+    borderColor: "#817d6f"
+    accentHColor: "#12445b"
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-rd
@@ -813,7 +836,7 @@
        !type:String
        pda-science
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
+    borderColor: "#817d6f"
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-science
@@ -832,8 +855,8 @@
        !type:String
        pda-hos
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#447987"
+    borderColor: "#2f303c"
+    accentHColor: "#12445b"
   - type: Icon
     state: pda-hos
   - type: CartridgeLoader
@@ -858,7 +881,7 @@
        !type:String
        pda-warden
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#2f303c"
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
@@ -877,7 +900,7 @@
        !type:String
        pda-security
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#2f303c"
   - type: Icon
     state: pda-security
 
@@ -914,6 +937,38 @@
       - LogProbeCartridge
       - AstroNavCartridge
 
+# DS14-centcom-jobs-start
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomOfficialPDA
+  components:
+  - type: Pda
+    id: CentcomOfficialIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomAdministratorPDA
+  components:
+  - type: Pda
+    id: CentcomAdministratorIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomOperatorPDA
+  components:
+  - type: Pda
+    id: CentcomOperatorIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomSpecialOperationsOfficerPDA
+  components:
+  - type: Pda
+    id: CentcomSpecialOperationsOfficerIDCard
+
+# DS14-centcom-jobs-end
+
 - type: entity
   parent: CentcomPDA
   id: AdminPDA
@@ -937,6 +992,7 @@
       - WantedListCartridge
       - MedTekCartridge
       - AstroNavCartridge
+      - BankCartridge
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1000,8 +1056,8 @@
        !type:String
        pda-atmos
   - type: PdaBorderColor
-    borderColor: "#949137"
-    accentVColor: "#447987"
+    borderColor: "#7C5D00"
+    accentHColor: "#12445b"
   - type: Icon
     state: pda-atmos
 
@@ -1054,6 +1110,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
+      - BankCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1070,9 +1127,9 @@
        !type:String
        pda-ert
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    borderColor: "#772d32"
+    accentHColor: "#12445b"
+    accentVColor: "#12445b"
   - type: Icon
     state: pda-ert
   - type: CartridgeLoader
@@ -1136,6 +1193,24 @@
   - type: Pda
     id: ERTSecurityIDCard
 
+# DS14-ert-start
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTLeaderRedPDA
+  components:
+  - type: Pda
+    id: ERTLeaderRedIDCard
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTLeaderGammaPDA
+  components:
+  - type: Pda
+    id: ERTLeaderGammaIDCard
+
+# DS14-ert-end
+
 - type: entity
   parent: ERTLeaderPDA
   id: CBURNPDA
@@ -1144,10 +1219,40 @@
   components:
   - type: Pda
     id: CBURNIDcard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-cburn
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    borderColor: "#171E1B"
+    accentHColor: "#54685F"
+    accentVColor: "#54685F"
+
+# DS14-cburn-start
+
+- type: entity
+  parent: CBURNPDA
+  id: CBURNLeaderPDA
+  components:
+  - type: Pda
+    id: CBURNLeaderIDcard
+
+- type: entity
+  parent: CBURNPDA
+  id: CBURNSierraPDA
+  components:
+  - type: Pda
+    id: CBURNSierraIDcard
+
+- type: entity
+  parent: CBURNPDA
+  id: CBURNSierraLeaderPDA
+  components:
+  - type: Pda
+    id: CBURNSierraLeaderIDcard
+
+# DS14-cburn-end
 
 - type: entity
   parent: BasePDA
@@ -1163,8 +1268,8 @@
        !type:String
        pda-medical
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentVColor: "#447987"
+    borderColor: "#817d6f"
+    accentVColor: "#12445b"
   - type: Icon
     state: pda-medical
 
@@ -1268,9 +1373,9 @@
        !type:String
        pda-brigmedic
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#d7d7d0"
-    accentVColor: "#d7d7d0"
+    borderColor: "#2f303c"
+    accentHColor: "#817d6f"
+    accentVColor: "#817d6f"
   - type: Icon
     state: pda-brigmedic
   - type: CartridgeLoader
@@ -1341,7 +1446,7 @@
        !type:String
        pda-seniorresearcher
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
+    borderColor: "#817d6f"
     accentHColor: "#8900c9"
     accentVColor: "#8900c9"
   - type: Icon
@@ -1361,8 +1466,8 @@
        !type:String
        pda-seniorphysician
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentHColor: "#447987"
+    borderColor: "#817d6f"
+    accentHColor: "#12445b"
     accentVColor: "#B34200"
   - type: Icon
     state: pda-seniorphysician
@@ -1381,8 +1486,9 @@
        !type:String
        pda-seniorofficer
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentVColor: "#DFDFDF"
+    borderColor: "#2f303c"
+    accentHColor: "#67665a"
+    accentVColor: "#2f303c"
   - type: Icon
     state: pda-seniorofficer
 
@@ -1401,6 +1507,97 @@
        pda-pirate
   - type: Icon
     state: pda-pirate
+
+- type: entity
+  parent: BasePDA
+  id: CoronerPDA
+  name: coroner PDA
+  description: I wonder whose pulse is on the screen? I hope he doesn't stop...
+  components:
+  - type: Pda
+    id: CoronerIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-coroner
+  - type: PdaBorderColor
+    borderColor: "#212121"
+    accentHColor: "#EAEAEA"
+    accentVColor: "#EAEAEA"
+  - type: Icon
+    state: pda-coroner
+
+- type: entity
+  parent: BasePDA
+  id: SecurityPilotPDA
+  name: security pilot PDA
+  description: Smells like space shuttles.
+  components:
+  - type: Pda
+    id: SecurityPilotIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-security
+  - type: PdaBorderColor
+    borderColor: "#2f303c"
+  - type: Icon
+    state: pda-security
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: SeniorSalvagePDA
+  name: senior salvage PDA
+  description: Smells like ash.
+  components:
+  - type: Pda
+    id: SeniorSalvageIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-seniorminer
+  - type: PdaBorderColor
+    borderColor: "#735321"
+    accentHColor: "#62237F"
+    accentVColor: "#62237F"
+  - type: Icon
+    state: pda-seniorminer
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: SeniorServicePDA
+  name: senior service PDA
+  description: Smells like service dep.
+  components:
+  - type: Pda
+    id: SeniorServiceIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-seniorservice
+  - type: PdaBorderColor
+    borderColor: "#789876"
+    accentHColor: "#CEC155"
+  - type: Icon
+    state: pda-seniorservice
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1424,6 +1621,7 @@
     preinstalled:
       - NotekeeperCartridge
       - MedTekCartridge
+      - BankCartridge
 
 - type: entity
   parent: BasePDA

@@ -1,0 +1,15 @@
+ent-SithForceShield = { ent-BaseShield }
+    .desc = { ent-BaseShield.desc }
+ent-RandomHumanoidSpawnerSith = Ренегат
+    .desc = { "" }
+    .suffix = ТОЛЬКО ДЛЯ ИВЕНТОВ ИЛИ ТЕСТОВ, Без целей, Призрачная роль
+ent-BaseSithObjective = { ent-BaseObjective }
+    .desc = { ent-BaseObjective.desc }
+ent-SubordinationCommandObjective = { ent-BaseSithObjective }
+    .desc = С помощью силы вы можете уничтожить импланты защиты разума. Подчините командование станции.
+ent-SithSurviveObjective = Выжить
+    .desc = Вам нужно остатся в живых.
+ent-SpawnPointGhostSith = { ent-BaseAntagSpawner }
+    .desc = { ent-BaseAntagSpawner.desc }
+ent-EnergySwordSith = энергомеч ренегата
+    .desc = { ent-EnergySword.desc }

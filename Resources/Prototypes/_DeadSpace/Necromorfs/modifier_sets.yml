@@ -1,0 +1,47 @@
+- type: damageModifierSet
+  id: Necromorf
+  coefficients:
+    Blunt: 0.6
+    Slash: 1.25
+    Piercing: 0.6
+    Shock: 0.8
+    Cold: 0
+    Heat: 1
+    Poison: 0.25
+    Radiation: 0.0
+
+- type: damageModifierSet
+  id: CorpseCollectorLvl1
+  coefficients:
+    Blunt: 0.6
+    Slash: 1
+    Piercing: 0.6
+    Shock: 0.6
+    Cold: 0
+    Heat: 1
+    Poison: 0
+    Radiation: 0.0
+
+- type: damageModifierSet
+  id: CorpseCollectorLvl2
+  coefficients:
+    Blunt: 0.4
+    Slash: 1
+    Piercing: 0.4
+    Shock: 0.4
+    Cold: 0
+    Heat: 0.8
+    Poison: 0
+    Radiation: 0
+
+- type: damageModifierSet
+  id: CorpseCollectorLvl3
+  coefficients:
+    Blunt: 0.3
+    Slash: 0.7
+    Piercing: 0.3
+    Shock: 0.3
+    Cold: 0
+    Heat: 0.6
+    Poison: 0
+    Radiation: 0

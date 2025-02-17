@@ -158,8 +158,8 @@
     color: "#FFFFEE"
   - type: Flash
   - type: LimitedCharges
-    maxCharges: 3
-    charges: 3
+    maxCharges: 2
+    charges: 2
   - type: AutoRecharge
     rechargeDuration: 30
   - type: MeleeWeapon

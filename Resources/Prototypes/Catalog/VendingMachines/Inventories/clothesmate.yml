@@ -1,10 +1,10 @@
-# DO NOT ADD MORE, USE UNIFORM DYING
+# DO NOT ADD MORE, USE UNIFORM DYING # DO ADD MORE, DO NOT USE UNIFORM DYING
 - type: vendingMachineInventory
   id: ClothesMateInventory
   startingInventory:
-    ClothingBackpack: 5
-    ClothingBackpackDuffel: 5
-    ClothingBackpackSatchel: 3
+    ClothingBackpack: 4 # DS14-value
+    ClothingBackpackDuffel: 4 # DS14-value
+    ClothingBackpackSatchel: 4 # DS14-value
     ClothingBackpackSatchelLeather: 2
     ClothingRandomSpawner: 8
     ClothingHeadHatBeret: 4
@@ -13,20 +13,28 @@
     ClothingHeadBandGreen: 2
     ClothingHeadBandRed: 2
     ClothingHeadBandSkull: 2
-    ClothingHeadHatGreyFlatcap: 3
-    ClothingHeadHatBrownFlatcap: 3
-    ClothingUniformJumpsuitColorGrey: 8
-    ClothingUniformJumpskirtColorGrey: 8
-    ClothingUniformJumpsuitColorWhite: 3
-    ClothingUniformJumpskirtColorWhite: 3
-    ClothingUniformJumpsuitColorBlack: 3
-    ClothingUniformJumpskirtColorBlack: 3
+    ClothingOuterCoatLetterman: 4 # DS14
+    ClothingOuterCoatLettermanN: 4 # DS14
+    ClothingOuterCoatLettermanRed: 4 # DS14
+    ClothingUniformJumpskirtPencilBlack: 4 # DS14
+    ClothingUniformJumpskirtPencilBurgandy: 4 # DS14
+    ClothingUniformJumpskirtPencilCheckered: 4 # DS14
+    ClothingUniformJumpskirtPencilNavy: 4 # DS14
+    ClothingUniformJumpskirtPencilTan: 4 # DS14
+    ClothingHeadHatGreyFlatcap: 4 # DS14-value
+    ClothingHeadHatBrownFlatcap: 4 # DS14-value
+    ClothingUniformJumpsuitColorGrey: 4 # DS14-value
+    ClothingUniformJumpskirtColorGrey: 4 # DS14-value
+    ClothingUniformJumpsuitColorWhite: 4 # DS14-value
+    ClothingUniformJumpskirtColorWhite: 4 # DS14-value
+    ClothingUniformJumpsuitColorBlack: 4 # DS14-value
+    ClothingUniformJumpskirtColorBlack: 4 # DS14-value
     ClothingUniformJumpsuitColorBlue: 2
     ClothingUniformJumpskirtColorBlue: 2
     ClothingUniformJumpsuitColorYellow: 2
     ClothingUniformJumpskirtColorYellow: 2
     ClothingUniformJumpsuitColorGreen: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
+    # DO NOT ADD MORE, USE UNIFORM DYING # DO ADD MORE, DO NOT USE UNIFORM DYING
     ClothingUniformJumpskirtColorGreen: 2
     ClothingUniformJumpsuitColorOrange: 2
     ClothingUniformJumpskirtColorOrange: 2
@@ -55,47 +63,97 @@
     ClothingUniformJumpskirtCasualRed: 2
     ClothingUniformJumpsuitCasualGreen: 2
     ClothingUniformJumpskirtCasualGreen: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
-    ClothingShoesColorBlack: 8
+    ClothingUniformJumpsuitSuitCheckered: 4 # DS14
+    ClothingUniformJumpsuitSuitTan: 4 # DS14
+    ClothingUniformJumpsuitSuitWaiter: 4 # DS14
+    # DO NOT ADD MORE, USE UNIFORM DYING # DO ADD MORE, DO NOT USE UNIFORM DYING
+    ClothingShoesColorBlack: 4 # DS14-value
     ClothingShoesColorBrown: 4
-    ClothingShoesColorWhite: 3
+    ClothingShoesColorWhite: 4 # DS14-value
     ClothingShoesColorBlue: 2
     ClothingShoesColorYellow: 2
     ClothingShoesColorGreen: 2
     ClothingShoesColorOrange: 2
     ClothingShoesColorRed: 2
     ClothingShoesColorPurple: 2
-    ClothingHeadHatGreysoft: 8
-    ClothingHeadHatMimesoft: 3
+    ADTClothingFootWrapsWhite: 4 # ADT
+    ADTClothingFootWrapsBlack: 4 # ADT
+    ADTClothingFootWrapsHighWhite: 4 # ADT
+    ADTClothingFootWrapsHighBlack: 4 # ADT
+    ClothingHeadHatGreysoft: 4 # DS14-value
+    ClothingHeadHatMimesoft: 4 # DS14-value
     ClothingHeadHatBluesoft: 2
     ClothingHeadHatYellowsoft: 2
     ClothingHeadHatGreensoft: 2
     ClothingHeadHatOrangesoft: 2
     ClothingHeadHatRedsoft: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
+    # DO NOT ADD MORE, USE UNIFORM DYING # DO ADD MORE, DO NOT USE UNIFORM DYING
     ClothingHeadHatBlacksoft: 2
     ClothingHeadHatPurplesoft: 2
     ClothingHeadHatCorpsoft: 2
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
-    ClothingBeltStorageWaistbag: 3
-    ClothingEyesGlasses: 6
-    ClothingHandsGlovesColorBlack: 4
-    ClothingHandsGlovesColorGray: 4
-    ClothingHandsGlovesColorBrown: 2
-    ClothingHandsGlovesColorWhite: 2
-    ClothingHandsGlovesColorRed: 2
-    ClothingHandsGlovesColorBlue: 2
+    ClothingNeckScarfStripedRed: 4
+    ClothingNeckScarfStripedBlue: 4
+    ClothingNeckScarfStripedGreen: 4
+    ClothingHeadHatFez: 2
+    ClothingBeltStorageWaistbag: 4
+    ClothingEyesGlasses: 4
+    ClothingEyesGlassesBigSunglasses: 2 # DS14
+    ADTClothingSandals: 2
+    ADTClothingUniformTurleneckBlack: 2
+    ADTClothingUniformTurleneckBlackWomen: 2
+    ADTClothingUniformTurleneckBlue: 2
+    ADTClothingUniformTurleneckBlueBlack: 2
+    ADTClothingUniformTurleneckBlueWomen: 2
+    ADTClothingUniformTurleneckGolub: 2
+    ADTClothingUniformTurleneckGolubBlack: 2
+    ADTClothingUniformTurleneckGolubWomen: 2
+    ADTClothingUniformTurleneckGreen: 2
+    ADTClothingUniformTurleneckGreenBlack: 2
+    ADTClothingUniformTurleneckGreenWomen: 2
+    ADTClothingUniformTurleneckOrange: 2
+    ADTClothingUniformTurleneckOrangeBlack: 2
+    ADTClothingUniformTurleneckOrangeWomen: 2
+    ADTClothingUniformTurleneckPurpur: 2
+    ADTClothingUniformTurleneckPurpurBlack: 2
+    ADTClothingUniformTurleneckPurpurWomen: 2
+    ADTClothingUniformTurleneckRed: 2
+    ADTClothingUniformTurleneckRedBlack: 2
+    ADTClothingUniformTurleneckRedWomen: 2
+    ADTClothingUniformTurleneckSalat: 2
+    ADTClothingUniformTurleneckSalatBlack: 2
+    ADTClothingUniformTurleneckSalatWomen: 2
+    ADTClothingUniformTurleneckWhite: 2
+    ADTClothingUniformTurleneckWhiteBlack: 2
+    ADTClothingUniformTurleneckWhiteWomen: 2
+    ADTClothingUniformTurleneckBlackSleeveless: 2
+    ADTClothingUniformTurleneckBlackWomenSleeveless: 2
+    ADTClothingUniformTurleneckWhiteSleeveless: 2
+    ADTClothingUniformTurleneckWhiteBlackSleeveless: 2
+    ADTClothingUniformTurleneckWhiteWomenSleeveless: 2
+    ADTClothingNeckGothicCloak: 2
+    ADTClothingNeckDarkGreyCloak: 2
+    ClothingNeckMantleMaid: 2 # DS14
+    ClothingHandsGlovesColorBlack: 2
+    ClothingHandsGlovesColorGray: 2
+    ClothingHandsGlovesColorBrown: 1
+    ClothingHandsGlovesColorWhite: 1
+    ClothingHandsGlovesColorRed: 1
+    ClothingHandsGlovesColorBlue: 1
     ClothingHandsGlovesColorTeal: 2
-    ClothingHandsGlovesColorGreen: 2
-    ClothingHandsGlovesColorOrange: 2
-    ClothingHandsGlovesColorPurple: 2
-    ClothingEyesGlassesCheapSunglasses: 3
-    # DO NOT ADD MORE, USE UNIFORM DYING
-  contrabandInventory:
+    ClothingHandsGlovesColorGreen: 1 # DS14-value
+    ClothingHandsGlovesColorOrange: 1 # DS14-value
+    ClothingHandsGlovesColorPurple: 1 # DS14-value
+    ClothingNeckWingsAngel: 1 # DS14
+    ClothingNeckWingsSkeleton: 1 # DS14
+    ClothingNeckWingsSkeletonBlack: 1 # DS14
+  emaggedInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
     ToyFigurinePassenger: 1
     ToyFigurineGreytider: 1
-  # DO NOT ADD MORE, USE UNIFORM DYING
+  # DO NOT ADD MORE, USE UNIFORM DYING # DO ADD MORE, DO NOT USE UNIFORM DYING
+    ADTClothingNeckSyndicateCloak: 1 # ADT
+    ClothingOuterCoatLettermanS: 4 # DS14

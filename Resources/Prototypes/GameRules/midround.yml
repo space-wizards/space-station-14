@@ -24,8 +24,8 @@
       allowNonHumans: true
       multiAntagSetting: NotExclusive
       startingGear: ThiefGear
-      components:
-      - type: Pacified
+      # components:
+      # - type: Pacified # DS14 no pacified thiefs
       mindRoles:
       - MindRoleThief
       briefing:

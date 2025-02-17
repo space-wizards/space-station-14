@@ -11,6 +11,7 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Fine
+  locationPreference: Left # Corvax-TypingIndicator
 
 - type: healthIcon
   id: HealthIconCritical
@@ -18,6 +19,7 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Critical
+  locationPreference: Left # Corvax-TypingIndicator
 
 - type: healthIcon
   id: HealthIconDead
@@ -25,6 +27,7 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Dead
+  locationPreference: Left # Corvax-TypingIndicator
 
 - type: healthIcon
   id: HealthIconRotting
@@ -32,4 +35,5 @@
   icon:
     sprite: /Textures/Interface/Misc/health_icons.rsi
     state: Rotting
+  locationPreference: Left # Corvax-TypingIndicator
 

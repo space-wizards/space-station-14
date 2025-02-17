@@ -13,6 +13,8 @@
        - id: ClothingShoesColorBlack
          amount: 2
        - id: ClothingMaskMuzzle
+       - id: ClothingHeadsetGrey # DS14
+         amount: 2
 
 #- type: entity
 #  id: WardrobePajamaFilled
@@ -190,6 +192,12 @@
        - id: ClothingShoesBootsSalvage
          amount: 2
        - id: ClothingUniformJumpsuitSalvageSpecialist
+         amount: 2
+       - id: ClothingUniformJumpsuitSalvageFormal
+         amount: 2
+       - id: ClothingUniformJumpskirtCargoSalvage
+         amount: 2
+       - id: ClothingUniformJumpskirtCargoSalvageFormal
          amount: 2
 
  - type: entity

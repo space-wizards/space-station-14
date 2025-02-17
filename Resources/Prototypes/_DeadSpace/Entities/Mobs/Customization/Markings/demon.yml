@@ -1,0 +1,133 @@
+- type: marking
+  id: DemomTail1
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: demon_tail
+
+- type: marking
+  id: DemomTailLong
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: long
+
+- type: marking
+  id: DemomTailUp
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: up
+
+- type: marking
+  id: DemonCowEars
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: cow_ears
+
+- type: marking
+  id: DemonEars
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: demon_ears
+
+- type: marking
+  id: DemonCowHorns
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: cow_horns
+
+- type: marking
+  id: DemonHornsDeer
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: deer_antlers_horns
+
+- type: marking
+  id: DemonHornsSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: small_horns
+
+- type: marking
+  id: DemonChestCowSpots
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: cow_spots
+
+- type: marking
+  id: DemonChestGuard
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: guards_stripes
+
+- type: marking
+  id: DemonChestLinesEmperos
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: lines_emperos
+
+- type: marking
+  id: DemonChestQueenLines
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: queen_lines
+
+- type: marking
+  id: DemonChestTreeLines
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: tree_lines
+
+- type: marking
+  id: DemonChestTrinitySpots
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Demon]
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: trinity_spots
+
+- type: marking
+  id: DemonGoatee
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+  - sprite: _ADT/Mobs/Demon/custom.rsi
+    state: goatee

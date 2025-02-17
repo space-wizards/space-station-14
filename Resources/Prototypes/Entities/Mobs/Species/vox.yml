@@ -71,9 +71,14 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "jumpsuit" ]
+    - map: [ "underwearb" ] # Sirena
+    - map: [ "underweart" ] # Sirena
     - map: [ "enum.HumanoidVisualLayers.LFoot" ]
     - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "socks" ] # Sirena
+    - map: [ "jumpsuit" ]
+    # - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+    # - map: [ "enum.HumanoidVisualLayers.RFoot" ]
     - map: [ "enum.HumanoidVisualLayers.LHand" ]
     - map: [ "enum.HumanoidVisualLayers.RHand" ]
     - map: [ "gloves" ]
@@ -142,6 +147,7 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: shoes
+  - type: Sanity # DS14
 
 - type: entity
   parent: BaseSpeciesDummy

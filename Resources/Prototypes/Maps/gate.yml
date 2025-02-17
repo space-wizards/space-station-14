@@ -8,7 +8,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Gate Station {1}'
+          mapNameTemplate: '{0} Gate {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'ED'
@@ -37,20 +37,20 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
-            Paramedic: [ 2, 2 ]
+            Paramedic: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
+            # MedicalSurgeon: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 4, 4 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
+            Warden: [ 2, 2 ]
             SecurityOfficer: [ 6, 6 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 2, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
@@ -60,6 +60,24 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon
+            # seniors
+            SeniorEngineer: [1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            # law
+            # Magistrat: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            Lawyer: [ 4, 4 ]
+            # silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
+            BorgSecurity: [ 1, 1 ]
+            # DS14
+            BlueShieldOfficer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            ClownSponsor: [ 0, 2 ]
+            Coroner: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]

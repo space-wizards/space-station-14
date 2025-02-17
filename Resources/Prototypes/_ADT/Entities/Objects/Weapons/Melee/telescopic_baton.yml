@@ -1,0 +1,42 @@
+- type: entity
+  parent: BaseItem
+  id: ADTtelescopicBaton
+  name: телескопическая дубинка
+  description: Не очень большая и не очень опасная, выдвижная дубинка. Может храниться в карманах в сложенном состоянии.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/telescopic_baton.rsi
+    layers:
+    - state: telescope_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: SwitchableWeapon
+    openSound: "/Audio/_ADT/open_telescopic_baton.ogg"
+    closeSound: "/Audio/_ADT/close_telescopic_baton.ogg"
+    damageOpen:
+      types:
+        Blunt: 3
+    damageFolded:
+      types:
+        Blunt: 0
+    staminaDamageFolded: 0
+    staminaDamageOpen: 30
+  - type: StaminaDamageOnHit
+    damage: 0
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 3
+  - type: Item
+    size: Small
+    sprite: _ADT/Objects/Weapons/Melee/telescopic_baton.rsi
+  - type: UseDelay
+    delay: 1
+  - type: DisarmMalus
+    malus: 0
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: telescope_on}
+          False: {state: telescope_off}

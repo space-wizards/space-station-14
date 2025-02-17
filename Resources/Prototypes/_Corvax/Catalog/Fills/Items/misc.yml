@@ -1,0 +1,14 @@
+- type: entity
+  id: ClothingShoesBootsJackSecFilled
+  parent: ClothingShoesBootsJackSec
+  suffix: Filled
+  components:
+  - type: ItemSlots
+    slots:
+      item:
+        startingItem: CombatKnife
+        name: clothing-military-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm

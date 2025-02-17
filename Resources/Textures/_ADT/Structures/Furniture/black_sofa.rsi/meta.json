@@ -1,0 +1,24 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:LunaLita#0840",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "sofa_left",
+            "directions": 4
+        },
+        {
+            "name": "sofa_middle",
+            "directions": 4
+        },
+        {
+            "name": "sofa_right",
+            "directions": 4
+        }
+    ]
+}
+

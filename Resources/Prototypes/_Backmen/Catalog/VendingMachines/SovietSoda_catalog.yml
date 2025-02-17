@@ -1,0 +1,10 @@
+﻿- type: listing
+  id: BodaInventory
+  productEntity: DrinkSodaWaterCan
+  cost:
+    SpaceCash: 5
+  categories:
+    - BodaInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 30

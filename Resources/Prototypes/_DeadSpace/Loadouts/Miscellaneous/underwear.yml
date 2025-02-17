@@ -1,0 +1,40 @@
+# Sex
+- type: loadoutEffectGroup
+  id: MaleUnderwear
+  effects:
+  - !type:SexLoadoutEffect
+    sexes:
+    - Male
+    - Unsexed
+
+- type: loadoutEffectGroup
+  id: FemaleUnderwear
+  effects:
+  - !type:SexLoadoutEffect
+    sexes:
+    - Female
+
+# Default underwear
+- type: loadout
+  id: UnderwearBottomBoxersWhite
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersWhite
+
+- type: loadout
+  id: UnderwearBottomPantiesWhite
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesWhite
+
+- type: loadout
+  id: UnderwearTopBraWhite
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraWhite

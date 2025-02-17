@@ -18,10 +18,10 @@ public sealed partial class CCVars
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", true, CVar.ARCHIVE);
 
         /// <summary>
-        ///     Controls the duration of the lobby timer in seconds. Defaults to 2 minutes and 30 seconds.
+        ///     Controls the duration of the lobby timer in seconds. Defaults to 2 minutes and 30 seconds. DS14 defaults to 4 minutes.
         /// </summary>
         public static readonly CVarDef<int>
-            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
+            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 240, CVar.ARCHIVE); // DS14-value
 
         /// <summary>
         ///     Controls if players can latejoin at all.
@@ -378,7 +378,7 @@ public sealed partial class CCVars
         ///     If true, contraband severity can be viewed in the examine menu
         /// </summary>
         public static readonly CVarDef<bool> ContrabandExamine =
-            CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("game.contraband_examine", false, CVar.SERVER | CVar.REPLICATED); // DS14-value
 
         /// <summary>
         ///     Size of the lookup area for adding entities to the context menu
@@ -390,6 +390,6 @@ public sealed partial class CCVars
         ///     Should the clients window show the server hostname in the title?
         /// </summary>
         public static readonly CVarDef<bool> GameHostnameInTitlebar =
-            CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("game.hostname_in_titlebar", false, CVar.SERVER | CVar.REPLICATED); // DS14-value
 
 }

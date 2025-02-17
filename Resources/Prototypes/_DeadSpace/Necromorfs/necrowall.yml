@@ -1,0 +1,27 @@
+- type: entity
+  id: NecroWall
+  name: некроморфные волокна
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: NecroWall
+    regen: 10
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/necrowall.rsi
+    state: stage1
+  - type: NecroWallVisuals
+  - type: Transform
+    anchored: true
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.2
+    sprintSpeedModifier: 0.2
+    ignoreWhitelist:
+      components:
+      - IgnoreKudzu
+  - type: Damageable

@@ -20,6 +20,12 @@
   - ClothingUniformJumpsuitQMTurtleneck
   - ClothingUniformJumpskirtQMTurtleneck
   - ClothingUniformJumpsuitQMFormal
+  - ClothingUniformJumpsuitCargoAlt # DS14
+  - ClothingUniformJumpsuitCargoFormal # DS14
+  - ClothingUniformJumpskirtCargoFormal # DS14
+  - ClothingUniformJumpsuitSalvageFormal # DS14
+  - ClothingUniformJumpskirtCargoSalvage # DS14
+  - ClothingUniformJumpskirtCargoSalvageFormal # DS14
 
 - type: latheRecipePack
   id: ClothingCommand
@@ -110,6 +116,8 @@
   - ClothingHeadHatWarden
   - ClothingUniformJumpsuitWarden
   - ClothingUniformJumpskirtWarden
+  - ClothingUniformJumpsuitCoroner # DS14
+  - ClothingUniformJumpskirtCoroner # DS14
 
 - type: latheRecipePack
   id: ClothingService
@@ -131,6 +139,8 @@
   - ClothingUniformJumpsuitMime
   - ClothingUniformJumpskirtMime
   - ClothingUniformJumpsuitMusician
+  - ClothingUniformJumpsuitMimeSexyWhite # DS14
+  - ClothingUniformJumpsuitMimeSexyBlack # DS14
 
 - type: latheRecipePack
   id: WinterCoats
@@ -163,6 +173,7 @@
   - ClothingOuterWinterSci
   - ClothingOuterWinterRobo
   - ClothingOuterWinterSec
+  - ClothingOuterWinterClownDownjacket # DS14
 
 - type: latheRecipePack
   id: Ties

@@ -1,0 +1,175 @@
+﻿# Fobos
+
+- type: lobbyBackground
+  id: Oblomok
+  background: /Textures/LobbyScreens/Fobos/anomaly_il_cargo.webp
+
+- type: lobbyBackground
+  id: Particle_accelerator
+  background: /Textures/LobbyScreens/Fobos/anomaly_il_engineering_scene.webp
+
+- type: lobbyBackground
+  id: Rnd_reunmo
+  background: /Textures/LobbyScreens/Fobos/anomaly_il_rnd.webp
+
+- type: lobbyBackground
+  id: Tango
+  background: /Textures/LobbyScreens/Fobos/anomaly_il_tango.webp
+
+- type: lobbyBackground
+  id: Bartender
+  background: /Textures/LobbyScreens/Fobos/arbuz_bartender.webp
+
+- type: lobbyBackground
+  id: Lawyer
+  background: /Textures/LobbyScreens/Fobos/arbuz_lawyer.webp
+
+- type: lobbyBackground
+  id: Newyear
+  background: /Textures/LobbyScreens/Fobos/arbuz_newyear.webp
+
+- type: lobbyBackground
+  id: Syndi
+  background: /Textures/LobbyScreens/Fobos/arbuz_syndi.webp
+
+- type: lobbyBackground
+  id: Librarian
+  background: /Textures/LobbyScreens/Fobos/charon_librarian.webp
+
+- type: lobbyBackground
+  id: Scientist
+  background: /Textures/LobbyScreens/Fobos/charon_scientist.webp
+
+- type: lobbyBackground
+  id: Ritoka
+  background: /Textures/LobbyScreens/Fobos/doner_alfred_and_tessie.webp
+
+- type: lobbyBackground
+  id: End_of_round
+  background: /Textures/LobbyScreens/Fobos/doner_evelina_sleeping.webp
+
+- type: lobbyBackground
+  id: Boggart
+  background: /Textures/LobbyScreens/Fobos/doner_gerion_dart.webp
+
+- type: lobbyBackground
+  id: Mia
+  background: /Textures/LobbyScreens/Fobos/doner_mia.webp
+
+- type: lobbyBackground
+  id: New_doctor
+  background: /Textures/LobbyScreens/Fobos/doner_new_doctor.webp
+
+- type: lobbyBackground
+  id: Robot
+  background: /Textures/LobbyScreens/Fobos/doner_robot.webp
+
+- type: lobbyBackground
+  id: Nukeops
+  background: /Textures/LobbyScreens/Fobos/doner_syndicate.webp
+
+- type: lobbyBackground
+  id: Unity
+  background: /Textures/LobbyScreens/Fobos/doner_unity_squish.webp
+
+- type: lobbyBackground
+  id: Karpocargo
+  background: /Textures/LobbyScreens/Fobos/karp_cargo.webp
+
+- type: lobbyBackground
+  id: Cook
+  background: /Textures/LobbyScreens/Fobos/karp_cook.webp
+
+- type: lobbyBackground
+  id: Frontier
+  background: /Textures/LobbyScreens/Fobos/karp_frontier.webp
+
+- type: lobbyBackground
+  id: HoP
+  background: /Textures/LobbyScreens/Fobos/karp_hop.webp
+
+- type: lobbyBackground
+  id: Necro
+  background: /Textures/LobbyScreens/Fobos/karp_necro.webp
+
+- type: lobbyBackground
+  id: Priest
+  background: /Textures/LobbyScreens/Fobos/karp_priest.webp
+
+- type: lobbyBackground
+  id: Security
+  background: /Textures/LobbyScreens/Fobos/karp_sec_range.webp
+
+- type: lobbyBackground
+  id: Seno
+  background: /Textures/LobbyScreens/Fobos/karp_sec_xeno.webp
+
+- type: lobbyBackground
+  id: Hero
+  background: /Textures/LobbyScreens/Fobos/taiga_cargo.webp
+
+- type: lobbyBackground
+  id: Advocate
+  background: /Textures/LobbyScreens/Fobos/taiga_lawyer.webp
+
+- type: lobbyBackground
+  id: ApophisNewYear
+  background: /Textures/LobbyScreens/Fobos/apophis_new_year.webp
+
+- type: lobbyBackground
+  id: DeimosNewYear
+  background: /Textures/LobbyScreens/Fobos/deimos_new_year.webp
+
+- type: lobbyBackground
+  id: FobosNewYear
+  background: /Textures/LobbyScreens/Fobos/fobos_new_year.webp
+
+- type: lobbyBackground
+  id: MarinesNewYear
+  background: /Textures/LobbyScreens/Fobos/marines_new_year.webp
+
+- type: lobbyBackground
+  id: SoyuzNewYear
+  background: /Textures/LobbyScreens/Fobos/soyuz_new_year.webp
+
+- type: lobbyBackground
+  id: TitanNewYear
+  background: /Textures/LobbyScreens/Fobos/titan_new_year.webp
+
+# Soyuz
+
+# - type: lobbyBackground
+#   id: Anime1
+#   background: /Textures/LobbyScreens/Soyuz/Anime1.png
+
+# - type: lobbyBackground
+#   id: FirstSqaud
+#   background: /Textures/LobbyScreens/Soyuz/first_squad.png
+
+# - type: lobbyBackground
+#   id: NewYearUSSPMoth1
+#   background: /Textures/LobbyScreens/Soyuz/ds_newyear1_moth.png
+
+# - type: lobbyBackground
+#   id: NewYearUSSPMoth2
+#   background: /Textures/LobbyScreens/Soyuz/ds_newyear2_moth.png
+
+# - type: lobbyBackground
+#   id: Union1
+#   background: /Textures/LobbyScreens/Soyuz/union1.png
+
+# - type: lobbyBackground
+#   id: Zavod
+#   background: /Textures/LobbyScreens/Soyuz/zavod.png
+
+# - type: lobbyBackground
+#   id: moli_utilizatori
+#   background: /Textures/LobbyScreens/Soyuz/moli_utilizatori.png
+
+# - type: lobbyBackground
+#   id: communist_banquet
+#   background: /Textures/LobbyScreens/Soyuz/communist_banquet.png
+
+# - type: lobbyBackground
+#   id: dawning
+#   background: /Textures/LobbyScreens/Soyuz/dawning.png

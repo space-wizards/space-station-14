@@ -1,0 +1,3 @@
+- type: accessLevel
+  id: Lawyer
+  name: id-card-access-level-lawyer

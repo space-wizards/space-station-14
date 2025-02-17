@@ -51,9 +51,9 @@
         scaleByQuantity: true
         damage:
           types:
-            Blunt: 0.1
-            Slash: 0.1
-            Piercing: 0.15
+            Blunt: 1
+            Slash: 1
+            Piercing: 1.5
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -66,7 +66,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Poison: 0.25
+            Poison: 2.5
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -110,6 +110,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ImmunitetInfectionDead # DS14
 
 - type: entity
   parent: BaseSpeciesDummy

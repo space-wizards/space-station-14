@@ -1,6 +1,6 @@
 - type: gameMap
   id: Oasis
-  mapName: 'Oasis'
+  mapName: 'Oasis Station'
   mapPath: /Maps/oasis.yml
   minPlayers: 70
   stations:
@@ -13,7 +13,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'B'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_accordia.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_oasis.yml
         - type: StationJobs
           availableJobs:
             #service
@@ -40,19 +40,17 @@
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
+            # MedicalSurgeon: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
             ResearchAssistant: [ 6, 6 ]
-            StationAi: [ 1, 1 ]
-            Borg: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 8, 8 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 3, 3 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
@@ -62,3 +60,24 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            # seniors
+            SeniorEngineer: [1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            # law
+            # Magistrat: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            Lawyer: [ 4, 4 ]
+            # silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 2 ]
+            BorgSecurity: [ 1, 1 ]
+            # DS14
+            BlueShieldOfficer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            ClownSponsor: [ 0, 2 ]
+            Coroner: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]

@@ -196,7 +196,7 @@
   - type: ToggleableLightVisuals
   - type: PointLight
     enabled: false
-    radius: 3
+    radius: 4 # DS14
     energy: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true

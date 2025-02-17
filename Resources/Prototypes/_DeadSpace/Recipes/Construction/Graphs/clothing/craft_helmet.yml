@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: ClothingCraftHelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: clothingCraftHelmet
+          steps:
+            - tag: HardHat
+              name: Каска
+              icon:
+                sprite: Clothing/Head/Hardhats/yellow.rsi
+                state: icon
+            - tag: Handcuffs
+              icon:
+                  sprite: Objects/Misc/cablecuffs.rsi
+                  state: cuff
+                  color: red
+              name: cuffs
+            - material: Steel
+              amount: 3
+              doAfter: 10
+    - node: clothingCraftHelmet
+      entity: ClothingHeadHatHardhatCraft

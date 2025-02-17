@@ -18,6 +18,8 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: ADTtelescopicBaton # ADT
+    - id: BoxPhotocopierToners # DS14
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -48,9 +50,11 @@
     - id: PlushieNuke
       prob: 0.1
     - id: RubberStampCaptain
-    - id: SpaceCash1000
+    # - id: SpaceCash1000 # DS14
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
+    - id: ADTtelescopicBaton # ADT
+    - id: ClothingEyesHudAdvanced # DS14
 
 # No laser table + Laser table
 - type: entityTable
@@ -70,6 +74,7 @@
     - id: ClothingMaskGasCaptain
     - id: JetpackCaptainFilled
     - id: OxygenTankFilled
+    - id: ClothingShoesBootsMagCaptain # DS14
 
 # No laser locker, used when the antique laser is placed in the special display crate
 - type: entity
@@ -134,6 +139,9 @@
     - id: RubberStampHop
     - id: WeaponDisabler
     - id: ClothingEyesHudCommand
+    - id: BoxPhotocopierToners # DS14
+    - id: PetBowlWater # DS14
+    - id: WeaponMiniatureEnergyGun # DS14
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -155,13 +163,16 @@
     - id: CigarCase
       prob: 0.15
     - id: ClothingBeltChiefEngineerFilled
-    - id: ClothingEyesGlassesMeson
+    # - id: ClothingEyesGlassesMeson # DS14
+    - id: ClothingEyesGlassesMesonCE # DS14
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingHeadsetAltEngineering
     - id: DoorRemoteEngineering
-    - id: RCD
-    - id: RCDAmmo
+    # - id: RCD # DS14
+    # - id: RCDAmmo # DS14
     - id: RubberStampCE
+    - id: ADTtelescopicBaton # ADT
+    - id: RCDCE # DS14
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -208,7 +219,8 @@
     - id: BoxEncryptionKeyMedical
     - id: ClothingBackpackDuffelSurgeryFilled
     - id: ClothingCloakCmo
-    - id: ClothingEyesHudMedical
+    # - id: ClothingEyesHudMedical
+    - id: ClothingEyesHudCMO # DS14
     - id: ClothingHandsGlovesNitrile
     - id: ClothingHeadHatBeretCmo
     - id: ClothingHeadsetAltMedical
@@ -220,6 +232,7 @@
     - id: MedkitFilled
     - id: RubberStampCMO
     - id: MedTekCartridge
+    - id: ADTtelescopicBaton # ADT
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -271,6 +284,11 @@
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
     - id: RubberStampRd
+    - id: ADTtelescopicBaton # ADT
+    - id: ClothingHandsGlovesColorYellow # DS14
+    - id: AsimovCircuitBoard # DS14
+    - id: CorporateCircuitBoard # DS14
+    - id: NTDefaultCircuitBoard # DS14
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -312,8 +330,8 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: WeaponEnergyShotgun
-    - id: BookSpaceLaw
+    # - id: WeaponEnergyShotgun # DS14
+    # - id: BookSpaceLaw # DS14
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase
       prob: 0.50
@@ -322,6 +340,7 @@
     - id: ClothingHeadsetAltSecurity
     - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench
+    - id: ClothingOuterCoatHoSGreatcoat # Corvax-Resprite
     - id: ClothingShoesBootsJack
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
@@ -330,6 +349,14 @@
     - id: WeaponDisabler
     - id: WantedListCartridge
     - id: DrinkHosFlask
+    - id: ClothingMaskGasSwat # DS14
+    - id: WeaponPistolX01 # DS14
+    - id: HyperLinkBookCorporateLaw # DS14
+    - id: HyperLinkBookSOPSecurity # DS14
+    - id: PistolDominator # DS14
+    - id: ClothingNeckBodyCamera # DS14
+    - id: PortableCameraMonitor # DS14
+    - id: PetBowlWater # DS14
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -379,6 +406,6 @@
     - id: WeaponRevolverDeckard
     - id: ClothingOuterHardsuitBasic
     - id: JetpackBlue
-    - id: SpaceCash1000
+    - id: SpaceCash10000
     - id: BeachBall
     - id: BikeHorn

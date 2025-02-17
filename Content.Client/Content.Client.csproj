@@ -17,6 +17,8 @@
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeadSpace\Content.DeadSpace.Interfaces.Client\Content.DeadSpace.Interfaces.Client.csproj" />
+    <ProjectReference Include="..\DeadSpace\Content.DeadSpace.Interfaces.Shared\Content.DeadSpace.Interfaces.Shared.csproj" />
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />

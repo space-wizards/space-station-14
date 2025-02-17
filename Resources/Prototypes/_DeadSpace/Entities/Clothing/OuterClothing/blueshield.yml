@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitBlueShield
+  name: скафандр офицера "Синий Щит"
+  description: Скафандр предназначенный для защитника командования.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Heat: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Radiation: 0.5
+        Caustic: 0.6
+        Stun: 0.85 # DS14-value: 4 stunbaton hits for stun
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBlueShield
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingOuterCoatHoSGreatcoat
+  id: ClothingOuterArmorBasicBlueShield
+  name: бронежилет офицера "Синий Щит"
+  description: Защитные характеристики данного бронежилета превосходят обычный и идентичны бронированной шинели главы службы безопасности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Armor/blueshield_armor.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Armor/blueshield_armor.rsi

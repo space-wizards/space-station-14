@@ -147,3 +147,15 @@
   cost: 350
   category: cargoproduct-category-name-engineering
   group: market
+
+# ADT-start
+
+- type: cargoProduct
+  id: EngineeringVoidJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+    state: icon
+  product: CrateEngineeringVoidJetpack
+  cost: 8000
+  category: cargoproduct-category-name-engineering
+  group: market

@@ -245,6 +245,9 @@ public sealed class EventManagerSystem : EntitySystem
         if (GameTicker.IsGameRuleActive(prototype.ID))
             return false;
 
+        if (stationEvent.WillNotStartRandomly)
+            return false;
+
         if (stationEvent.MaxOccurrences.HasValue && GetOccurrences(prototype) >= stationEvent.MaxOccurrences.Value)
         {
             return false;

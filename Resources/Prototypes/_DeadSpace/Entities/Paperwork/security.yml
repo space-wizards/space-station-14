@@ -1,0 +1,48 @@
+- type: paperworkForm
+  id: Security0
+  category: security
+  name: paperwork-form-title-security-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedSecurity
+
+- type: paperworkForm
+  id: Security1
+  category: security
+  name: paperwork-form-title-security-1
+  text: "/Paperwork/Security/1.xml"
+  paperPrototype: PaperPrintedSecurity
+
+- type: paperworkForm
+  id: Security2
+  category: security
+  name: paperwork-form-title-security-2
+  text: "/Paperwork/Security/2.xml"
+  paperPrototype: PaperPrintedSecurity
+
+- type: paperworkForm
+  id: Security4
+  category: security
+  name: paperwork-form-title-security-4
+  text: "/Paperwork/Security/4.xml"
+  paperPrototype: PaperPrintedSecurity
+
+- type: paperworkForm
+  id: Security5
+  category: security
+  name: paperwork-form-title-security-5
+  text: "/Paperwork/Security/5.xml"
+  paperPrototype: PaperPrintedSecurity
+
+- type: paperworkForm
+  id: Security6
+  category: security
+  name: paperwork-form-title-security-6
+  text: "/Paperwork/Security/6.xml"
+  paperPrototype: PaperPrintedSecurity
+
+- type: paperworkForm
+  id: Security7
+  category: security
+  name: paperwork-form-title-security-7
+  text: "/Paperwork/Security/7.xml"
+  paperPrototype: PaperPrintedSecurity

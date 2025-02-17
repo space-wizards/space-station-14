@@ -1,0 +1,102 @@
+- type: factionIcon
+  id: Egg
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - Egg
+      - Spider
+  icon:
+    sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
+    state: Egg
+
+- type: entity
+  parent: BaseStructure
+  name: связующая паутина
+  description: Центр улья, связующее звено между пауками.
+  id: TelecomServerSpiderTerror
+  components:
+  - type: Tag
+    tags:
+    - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/telecom.rsi
+    layers:
+    - state: norka
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: SpiderHatches
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 0
+  - type: TelecomServer
+  - type: ContainerContainer
+    containers:
+      key_slots: !type:Container
+  - type: EncryptionKeyHolder
+    keySlots: 1
+  - type: Appearance
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySpiderTerror
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeySpiderTerror
+  name: ядро паучьего улья
+  description: Кажется, что оно шевелится, но на самом деле и правда лишь кажется.
+  components:
+  - type: EncryptionKey
+    channels:
+      - SpiderTerrorChannel
+    defaultChannel: SpiderTerrorChannel
+  - type: Sprite
+    sprite: Objects/Misc/eggspider.rsi
+    state: icon
+  - type: PointLight
+    radius: 1.5
+    energy: 3
+    color: "#4faffb"
+  - type: StaticPrice
+    price: 3000
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseSpiderObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-spider-terror
+  - type: RoleRequirement
+    roles:
+      mindRoles:
+      - SpiderTerrorRole
+
+- type: entity
+  parent: BaseSpiderObjective
+  id: CaptureSpiderTerrorObjective
+  components:
+  - type: Objective
+    unique: false
+    icon:
+      sprite: _DeadSpace/Spiders/egg.rsi
+      state: tomb
+  - type: NumberObjective
+    min: 4000
+    max: 4000
+    title: objective-condition-capture-spiderterror-title
+  - type: SpiderTerrorConditions

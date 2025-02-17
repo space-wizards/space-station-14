@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtXmas
+  name: юбка-комбинезон рождественского эльфа
+  description: Мечтали почувствовать себя эльфом на службе у Санты? Ваш час настал!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/xmas.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/xmas.rsi

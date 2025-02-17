@@ -127,7 +127,7 @@
   targetNode: woodenBuckler
   category: construction-category-weapons
   description: A nicely carved wooden shield!
-  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: buckler-icon }
+  icon: { sprite: Objects/Weapons/Melee/buckler-shield.rsi, state: icon }
   objectType: Item
 
 - type: construction

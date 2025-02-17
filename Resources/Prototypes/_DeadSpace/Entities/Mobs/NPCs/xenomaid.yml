@@ -1,0 +1,123 @@
+- type: entity
+  name: Эллен Луиза
+  parent: SimpleMobBase
+  id: XenoMaidMob
+  description: Ксеноморф горничная. Ой... Кажется у вас тут грязно, давайте уберусь?
+  components:
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: /Textures/_DeadSpace/Mobs/Pets/xenomaid.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: maid
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Dead
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+     collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      groups:
+        Brute: 5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: maid
+      Critical:
+        Base: xenomaid_dead
+      Dead:
+        Base: xenomaid_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
+    - id: ClothingUniformJumpskirtJanimaidmini
+      amount: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+    - FootstepSound
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: InteractionPopup
+    successChance: 0.8
+    interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/_DeadSpace/Animals/xeno_maid_meow.ogg
+      params:
+        volume: 20
+  - type: ReplacementAccent
+    accent: xeno
+  - type: TypingIndicator
+    proto: alien
+  - type: Speech
+    speechVerb: LargeMob
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: NoSlip
+  - type: TTS
+    voice: Magess
+  - type: Puller
+    needsHands: false
+  - type: Hands
+  - type: ComplexInteraction
+  - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
+    molsPerSecondPerUnitMass: 0.0005
+  - type: Body
+    prototype: XenoMaid
+
+- type: entity
+  name: спавнер ксеноморфа горничной
+  id: SpawnMobXenoMaid
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: maid
+        sprite: _DeadSpace/Mobs/Pets/xenomaid.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - XenoMaidMob

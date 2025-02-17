@@ -157,6 +157,8 @@
         orGroup: Guns
       - id: RevolverCapGunFake
         orGroup: Guns
+      - id: WeaponLaserRifle # DS14
+        orGroup: Guns
       speech: action-speech-spell-summon-guns
       
 - type: entity

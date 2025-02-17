@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from https://github.com/Baystation12/Baystation12 at commit ec023cc3f8f7f170ec30d1a2cc32bd973c3d21fc.",
+  "states": [
+    {
+      "name": "eftpos"
+    }
+  ]
+}

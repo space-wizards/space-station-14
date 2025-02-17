@@ -253,3 +253,16 @@
   icon:
     sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
     state: icon
+
+ # DS14
+
+- type: construction
+  name: бейсбольная бита с гвоздями
+  id: BaseBallBatSteel
+  graph: BaseBallBatSteel
+  startNode: start
+  targetNode: baseballbatsteel
+  category: construction-category-weapons
+  description: Прочная бейсбольная бита, но теперь с гвоздями, выглядит довольно устращающе.
+  icon: { sprite: _DeadSpace/Objects/Weapons/Melee/baseball_bat_with_nails.rsi, state: icon }
+  objectType: Item

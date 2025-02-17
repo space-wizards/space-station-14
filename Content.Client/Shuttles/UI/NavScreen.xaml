@@ -14,8 +14,8 @@
                       VerticalAlignment="Top"
                       HorizontalAlignment="Right"
                       VerticalExpand="True"
-                      MinWidth="256"
-                      MaxWidth="256"
+                      MinWidth="271"
+                      MaxWidth="271"
                       Margin="5 0 5 5"
                       Orientation="Vertical">
                     <controls1:StripeBack
@@ -52,7 +52,8 @@
                                Align="Right"/>
                     </controls:GridContainer>
                     <controls1:StripeBack
-                        MinSize="48 48">
+                        MinSize="48 48"
+                        Margin="0 10 0 0">
                         <controls:Label Name="NavSettingsLabel" Text="{controls:Loc 'shuttle-console-nav-settings'}"
                                VerticalExpand="True"
                                HorizontalAlignment="Center"/>
@@ -65,5 +66,49 @@
                             Text="{controls:Loc 'shuttle-console-dock-toggle'}"
                             TextAlign="Center"
                             ToggleMode="True"/>
+                    <!-- Signal -->
+                    <controls1:StripeBack
+                        MinSize="48 48"
+                        Margin="0 10 0 0">
+                        <controls:Label Name="SignalSettingsLabel" Text="{controls:Loc 'shuttle-console-signal-settings'}"
+                               VerticalExpand="True"
+                               HorizontalAlignment="Center"/>
+                    </controls1:StripeBack>
+                    <controls:Button Name="SignalButton"
+                            Text="{controls:Loc 'shuttle-console-signal-toggle'}"
+                            TextAlign="Center"/>
+                    <!-- Thrusters Config -->
+                    <controls1:StripeBack
+                        MinSize="48 48"
+                        Margin="0 10 0 0">
+                        <controls:Label
+                            Name="NavThrustersLabel" Text="{controls:Loc 'shuttle-console-thrust-title'}"
+                            VerticalExpand="True" HorizontalAlignment="Center"/>
+                    </controls1:StripeBack>
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="GyroscopesThrustBox">
+                        <controls:Label Text="{controls:Loc 'shuttle-console-thrust-gyroscope'}"/>
+                        <controls:SliderIntInput Name="GyroscopesThrust"
+                                                 Access="Public"
+                                                 MinValue="1"
+                                                 MaxValue="2000"
+                                                 Value="2000"
+                                                 HorizontalExpand="True"/>
+                    </controls:BoxContainer>
+                    <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="ThrustersThrustBox">
+                        <controls:Label Text="{controls:Loc 'shuttle-console-thrust-thrusters'}"/>
+                        <controls:SliderIntInput Name="ThrustersThrust"
+                                                 Access="Public"
+                                                 MinValue="1"
+                                                 MaxValue="100"
+                                                 Value="100"
+                                                 HorizontalExpand="True"/>
+                    </controls:BoxContainer>
+                    <!-- <controls:BoxContainer Orientation="Vertical" HorizontalExpand="True" Name="ThrustRestartButtonBox" Margin="0 5 0 0">
+                        <controls:Button
+                            Name="ThrustersRestartButton" Text="{controls:Loc 'shuttle-console-thrust-btn-text'}"
+                            ToolTip="{controls:Loc 'shuttle-console-thrust-btn-tooltip'}"
+                            TextAlign="Center"/>
+                    </controls:BoxContainer> -->
+                    <!-- End Thrusters Config -->
                 </controls:BoxContainer>
             </controls:BoxContainer>

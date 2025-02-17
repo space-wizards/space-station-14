@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "size": {
+        "y": 7,
+        "x": 24
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from and modified https://github.com/tgstation/tgstation/blob/886ca0f8dddf83ecaf10c92ff106172722352192/icons/effects/progessbar.dmi",
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
+}

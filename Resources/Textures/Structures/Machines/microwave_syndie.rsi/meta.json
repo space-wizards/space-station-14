@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from /tg/station at commit 9065b811726ae52be5d1889f436c01a24efbf47a, edited by github user @Flareguy for Space Station 14, modified by Vermidia",
+    "copyright": "Taken from /tg/station at commit 9065b811726ae52be5d1889f436c01a24efbf47a, edited by github user @Flareguy for Space Station 14, modified by Vermidia, resprited by @mishutka09",
     "states": [
         {
             "name": "mw"
@@ -16,8 +16,18 @@
         {
             "name": "mw0"
         },
-        {
-            "name": "mw_running_unlit"
+        { 
+            "name": "mw_running_unlit",
+            "delays": [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
         },
         {
             "name": "mwb"
@@ -29,7 +39,13 @@
             "name": "mwbloody1"
         },
         {
-            "name": "mwo"
+            "name": "mwo",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
         }
       ]
     }

@@ -1,0 +1,19 @@
+- type: microwaveMealRecipe
+  id: ADTRecipeSausageRaw
+  name: raw sausage recipe
+  result: ADTFoodSausageRaw
+  time: 10
+  solids:
+    FoodMeatCutlet: 1
+  reagents:
+    Milk: 5
+    TableSalt: 2
+    Egg: 6
+
+- type: microwaveMealRecipe
+  id: ADTRecipeSausageFried
+  name: fried sausage recipe
+  result: ADTFoodSausageFried
+  time: 5
+  solids:
+    ADTFoodSausageRaw: 1

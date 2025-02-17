@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:LunaLita#0840",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "bloody_army_soldier",
+            "directions": 4
+        },
+        {
+            "name": "bloody_army_soldier_dead"
+        },
+        {
+            "name": "demonic_mouth",
+            "directions": 4
+        },
+        {
+            "name": "demonic_mouth_dead"
+        },
+        {
+            "name": "dark_rattlesnake",
+            "directions": 4
+        },
+        {
+            "name": "dark_rattlesnake_dead"
+        }
+    ]
+}

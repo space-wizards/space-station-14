@@ -1,0 +1,25 @@
+- type: entity
+  id: BlobSpawn
+  parent: BaseGameRule
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 10
+    earliestStart: 20
+    minimumPlayers: 40
+  - type: BlobSpawnRule
+    carrierBlobProtos:
+    - MobMouseCancer
+    - MobMouse
+    - MobMouse1
+    - MobMouse2
+    playersPerCarrierBlob: 40
+    maxCarrierBlob: 1
+
+- type: entity
+  id: WageScheduler
+  parent: BaseGameRule
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WageSchedulerRule

@@ -1,0 +1,17 @@
+- type: construction
+  name: шкафчик для дефибриллятора 
+  id: DefibrillatorCabinet
+  graph: DefibrillatorCabinet
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: Небольшой настенный шкафчик, предназначенный для хранения дефибриллятора.
+  icon: 
+    sprite: Structures/Wallmounts/defib_cabinet.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition

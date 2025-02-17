@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "JustKekc & moroz_3",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "stripes_body", "directions": 4 },
+        { "name": "skeleton_body", "directions": 4 },
+        { "name": "patch", "directions": 4 },
+        { "name": "blots_body", "directions": 4 },
+        { "name": "points", "directions": 4 }
+    ]
+}

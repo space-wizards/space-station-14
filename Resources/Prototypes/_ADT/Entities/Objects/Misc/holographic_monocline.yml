@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseItem
+  id: ADTHolographicMonoclineL
+  name: голографический моноклинок
+  description: Это устройство обладает удивительной остротой и эфемерной болью.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/holographic-monocline.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 10
+        Piercing: 5
+        Radiation: 10
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/holographic-monocline.rsi
+  - type: Tool
+    qualities:
+      - Prying
+  - type: IgniteOnMeleeHit
+    fireStacks: 1

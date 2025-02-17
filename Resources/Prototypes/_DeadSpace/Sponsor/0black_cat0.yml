@@ -1,0 +1,299 @@
+- type: sponsorLoadout
+  id: 0black_cat0
+  entity: ClothingBackpack0black_cat0
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpack0black_cat0
+  name: рюкзак темного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  # categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBelt0black_cat0Filled
+      - id: ClothingHandsGloves0black_cat0
+      - id: ClothingOuterHardsuit0black_cat0
+      - id: ClothingUniformJumpsuit0black_cat0
+      - id: ClothingShoesBootsMag0black_cat0
+      - id: JetpackVoidFilled0black_cat0
+      - id: 0black_cat0MedkitAdvanced
+      - id: SpaceCash10000
+      - id: WeaponDisabler0black_cat0
+      - id: LightImplanter
+      - id: ClothingNeckCloak0black_cat0
+      - id: ClothingOuterCoat0black_cat0
+      - id: ClothingMask0black_cat0
+      - id: ClothingBeltSheath0black_cat0
+      - id: PDA0black_cat0
+
+- type: entity
+  name: аптечка тёмного воителя
+  description: Продвинутый набор для оказания помощи при продвинутых ранах. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  parent: MedkitAdvancedFilled
+  id: 0black_cat0MedkitAdvanced
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/medkit.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/0black_cat0/medkit.rsi
+    size: Normal
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBelt0black_cat0Filled
+  name: пояс инструментов темного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGloves0black_cat0
+  name: съёмная шерсть в виде лапок феленидов
+  description: Cделано специально для феленидов, которые потеряли свои лапки. Данные протезы по мимо внешнего вида имеют и другие свойства.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/gloves.rsi
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuit0black_cat0
+  name: скафандр тёмного воителя
+  description: Изысканные доспехи. Имеют хорошую прочность, а так же сделаны более удобными для передвижения. Характеристики идентичны скафандру атмос-техника.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuit0black_cat0
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuit0black_cat0
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра тёмного воителя
+  description: Изысканные доспехи. Имеют хорошую прочность, а так же сделаны более удобными для передвижения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/helmet.rsi
+  - type: PointLight
+    color: red
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuit0black_cat0
+  name: костюм темного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/jumpsuit.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMag0black_cat0
+  name: магнитные сапоги темного воителя
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/0black_cat0/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/0black_cat0/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Other
+- type: entity
+  parent: WeaponDisabler
+  id: WeaponDisabler0black_cat0
+  name: станнер темного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/0black_cat0/disabler.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/0black_cat0/disabler.rsi
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisablerPractice
+      fireCost: 100
+
+- type: entity
+  id: JetpackVoid0black_cat0
+  parent: JetpackVoid
+  name: джетпак темного воителя
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/0black_cat0/jetpack.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/jetpack.rsi
+
+- type: entity
+  parent: JetpackVoid0black_cat0
+  id: JetpackVoidFilled0black_cat0
+  name: джетпак темного воителя
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 150 minutes of thrust
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 11.315 # oxygen
+        - 11.315 # nitrogen
+
+# Gasmask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMask0black_cat0
+  name: противогаз тёмного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/gasmask.rsi
+
+# Coat
+- type: entity
+  parent: ClothingOuterCoatSyndieCapArmored
+  id: ClothingOuterCoat0black_cat0
+  name: бронированный тренч тёмного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/coat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/coat.rsi
+
+# Sheath
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltSheath0black_cat0
+  name: ножны катаны тёмного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/sheath.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/0black_cat0/sheath.rsi
+  - type: Item
+    size: Normal
+  - type: ContainerFill
+    containers:
+      item:
+      - Katana0black_cat0
+
+# Katana
+- type: entity
+  name: катана тёмного воителя
+  parent: Katana
+  id: Katana0black_cat0
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/katana.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 0
+  - type: StaminaDamageOnHit
+    damage: 30
+  - type: Item
+    sprite: _DeadSpace/Sponsor/0black_cat0/katana.rsi
+  - type: Tag
+    tags:
+    - CaptainSabre
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloak0black_cat0
+  name: плащ тёмного воителя
+  description: Накидка в чёрном цвете. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/cloak.rsi
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDA0black_cat0
+  name: кпк тёмного воителя
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/0black_cat0/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/pda.rsi
+  - type: Pda
+    penSlot:
+      startingItem: Pen0black_cat0
+
+# Pen
+- type: entity
+  name: ручка тёмного воителя
+  parent: Pen
+  id: Pen0black_cat0
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/0black_cat0/pen.rsi

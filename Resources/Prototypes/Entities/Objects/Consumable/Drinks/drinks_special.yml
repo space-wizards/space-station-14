@@ -39,6 +39,8 @@
     mixOnInteract: false
     reactionTypes:
     - Shake
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   parent: DrinkGlassBase
@@ -169,3 +171,5 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
+  - type: Item
+    size: Large # DS14

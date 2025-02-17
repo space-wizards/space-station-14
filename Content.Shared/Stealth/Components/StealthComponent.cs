@@ -65,7 +65,7 @@ public sealed partial class StealthComponent : Component
     /// Maximum visibility. Note that the visual effect caps out at +1, but this value is allowed to be larger or smaller.
     /// </summary>
     [DataField("maxVisibility")]
-    public float MaxVisibility = 1.5f;
+    public float MaxVisibility = -0.25f;
 
     /// <summary>
     ///     Localization string for how you'd like to describe this effect.

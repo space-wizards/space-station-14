@@ -1,0 +1,92 @@
+﻿- type: alert
+  id: BlobResource
+  icons:
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point0
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point1
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point2
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point3
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point4
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point5
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point6
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point7
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point8
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point9
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point10
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point11
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point12
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point13
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point14
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point15
+  - sprite: /Textures/_Backmen/Interface/Alerts/blob_resource.rsi
+    state: point16
+  name: blob-resource-alert-name
+  description: blob-resource-alert-desc
+  minSeverity: 0
+  maxSeverity: 16
+
+- type: alert
+  id: BlobHealth
+  category: Health
+  icons:
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point0
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point1
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point2
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point3
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point4
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point5
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point6
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point7
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point8
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point9
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point10
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point11
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point12
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point13
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point14
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point15
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point16
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point17
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point18
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point19
+    - sprite: /Textures/_Backmen/Interface/Alerts/blob_health.rsi
+      state: point20
+  name: blob-health-alert-name
+  description: blob-health-alert-desc
+  minSeverity: 0
+  maxSeverity: 20

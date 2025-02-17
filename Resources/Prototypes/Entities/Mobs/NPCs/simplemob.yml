@@ -35,6 +35,8 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+  - type: Sanity # DS14
+  - type: ExamineBlood # DS14
 
 - type: entity
   abstract: true
@@ -67,6 +69,8 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
+  - type: Sanity # DS14
+  - type: ExamineBlood # DS14
 
 - type: entity
   parent:
@@ -113,3 +117,5 @@
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
+  - type: Sanity # DS14
+  - type: ExamineBlood # DS14

@@ -1,8 +1,9 @@
 - type: marking
   id: CatEars
-  bodyPart: Special
-  markingCategory: Special
-  speciesRestriction: [Human]
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf]
+  sponsorOnly: true # Corvax-Sponsors
   coloring:
     default:
       type:
@@ -25,7 +26,8 @@
   id: CatTail
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Human]
+  speciesRestriction: [Human, Dwarf]
+  sponsorOnly: true # Corvax-Sponsors
   coloring:
     default:
       type:
@@ -37,4 +39,4 @@
         - !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
-    state: tail_cat
+    state: tail_cat_wag # Corvax-Sponsors

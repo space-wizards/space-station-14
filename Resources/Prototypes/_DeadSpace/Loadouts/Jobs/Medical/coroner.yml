@@ -1,0 +1,57 @@
+# Jumpsuit
+- type: loadout
+  id: CoronerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoroner
+
+- type: loadout
+  id: CoronerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCoroner
+
+# Back
+- type: loadout
+  id: CoronerBackpack
+  equipment:
+    back: ClothingBackpackCoroner
+
+- type: loadout
+  id: CoronerSatchel
+  equipment:
+    back: ClothingBackpackSatchelCoroner
+
+- type: loadout
+  id: CoronerDuffel
+  equipment:
+    back: ClothingBackpackDuffelCoroner
+
+# Head
+- type: loadout
+  id: CoronerHead
+  equipment:
+    head: ClothingHeadHatCoroner
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersCoroner
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersCoroner
+
+- type: loadout
+  id: UnderwearBottomPantiesCoroner
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesCoroner
+
+- type: loadout
+  id: UnderwearTopBraCoroner
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraCoroner

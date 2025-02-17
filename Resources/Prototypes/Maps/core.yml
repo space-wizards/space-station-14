@@ -1,6 +1,6 @@
 - type: gameMap
   id: Core
-  mapName: 'Core'
+  mapName: 'Core Station'
   mapPath: /Maps/core.yml
   minPlayers: 35
   maxPlayers: 70
@@ -23,7 +23,7 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 2]
             Chef: [ 1, 1 ]
-            Janitor: [ 2, 2 ]
+            Janitor: [ 4, 4 ]
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Chaplain: [ 1, 1 ]
@@ -32,29 +32,34 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             StationEngineer: [ 4, 4 ]
-            AtmosphericTechnician: [ 2, 2 ]
+            AtmosphericTechnician: [ 3, 3 ]
             TechnicalAssistant: [ 2, 2 ]
+            SeniorEngineer: [ 1, 1 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            MedicalDoctor: [ 3, 4 ]
+            MedicalDoctor: [ 3, 3 ]
             Chemist: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 2 ]
+            Paramedic: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            # MedicalSurgeon: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]
-            ResearchAssistant: [ 1, 1 ]
+            ResearchAssistant: [ 2, 2 ]
+            SeniorResearcher: [ 1, 1 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            Lawyer: [ 1, 1 ]
+            IAA: [ 1, 1 ]
             SecurityCadet: [ 1, 1 ]
             Detective: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
             #supply
             CargoTechnician: [ 3, 3 ]
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 2 ]
+            SalvageSpecialist: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
@@ -65,3 +70,14 @@
             # silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
+            # DS14
+            BlueShieldOfficer: [ 1, 1 ]
+            BorgSecurity: [ 1, 1 ]
+            # Magistrat: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            Brigmedic: [ 1, 1 ]
+            ClownSponsor: [ 0, 2 ]
+            Coroner: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]

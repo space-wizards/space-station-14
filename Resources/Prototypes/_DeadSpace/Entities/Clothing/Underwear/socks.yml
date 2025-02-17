@@ -1,0 +1,531 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingUnderwearSocksBase
+  name: based socks
+  description: "You should not see this. If you see it, let Neko Dar#8948 know."
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots: [socks]
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+
+# Sirena
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksHigh
+  name: high socks
+  description: Nanotrasen high socks for station employees. Painted white.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Socks/socksknee.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksBee
+  name: bee socks
+  description: Make them loins buzz!
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/bee.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksCoder
+  name: coder socks
+  description: It's time to code sisters!!11!
+  components:
+  - type: Sprite
+    sprite: Clothing/Under/Socks/coder.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksNormal
+  name: socks
+  description: Standard Nanotrasen socks for station employees. Dyed white.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Socks/socksnorm.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksShort
+  name: short socks
+  description: Nanotrasen short socks for station employees. Dyed white.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Socks/socksshort.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksThigh
+  name: stockings
+  description: Standard Nanotrasen stockings for station employees. Dyed white.
+  components:
+  - type: Sprite
+    sprite: _Sirena/Clothing/Underwear/Socks/socksthigh.rsi
+
+# DS14 socks
+## Cargo
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksQuartermaster
+  name: носки квартирмейстера
+  description: Стандартные носки квартирмейстера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/quartermaster/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCargoTech
+  name: носки грузчика
+  description: Стандартные носки для отдела снабжения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/cargo_technician/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSalvage
+  name: носки утилизатора
+  description: Стандартные носки утилизатора.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/salvage_specialist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSeniorSalvage
+  name: носки ведущего утилизатора
+  description: Стандартные носки ведущего утилизатора.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Cargo/senior_salvage/socks.rsi
+
+## Civilian
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksHeadofPersonnel
+  name: носки главы персонала
+  description: Стандартные носки главы персонала.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/head_of_personnel/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksService
+  name: носки сервисного работника
+  description: Стандартные носки сервисного работника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/service/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBartender
+  name: носки бармена
+  description: Стандартные носки бармена. Похожи на всеми любимый пенный напиток.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/bartender/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBotanist
+  name: носки ботаника
+  description: Стандартные носки ботаника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/botanist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBoxer
+  name: носки боксёра
+  description: Стандартные носки боксёра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/boxer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChaplain
+  name: носки священника
+  description: Стандартные носки священника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/chaplain/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChef
+  name: носки шефа
+  description: Стандартные носки шефа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/chef/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksClown
+  name: носки клоуна
+  description: Стандартные носки клоуна.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/clown/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksJanitor
+  name: носки уборщика
+  description: Стандартные носки уборщика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/janitor/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksLibrarian
+  name: носки библиотекаря
+  description: Стандартные носки библиотекаря.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/librarian/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMime
+  name: носки мима
+  description: Стандартные носки мима. Пахнут... пирогами?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/socks.rsi  
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMusician
+  name: носки музыканта
+  description: Стандартные носки музыканта.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/mime/socks.rsi  
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCurator
+  name: носки менеджера
+  description: Стандартные носки менеджера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/socks.rsi  
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksReporter
+  name: носки репортёра
+  description: Стандартные носки репортёра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/reporter/socks.rsi  
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksZoo
+  name: носки зоотехника
+  description: Стандартные носки зоотехника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Civilian/zoo/socks.rsi 
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCaptain
+  name: носки капитана
+  description: Стандартные носки капитана.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/captain/socks.rsi
+
+## Engineering
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChiefEngineer
+  name: носки старшего инженера
+  description: Стандартные носки старшего инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/chief_engineer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksEngineer
+  name: носки инженера
+  description: Стандартные носки инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/engineer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksAtmos
+  name: носки атмосферного техника
+  description: Стандартные носки атмосферного техника.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/atmospheric_technician/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSeniorEngineer
+  name: носки ведущего инженера
+  description: Стандартные носки ведущего инженера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/senior_engineer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksTechnicalAssistant
+  name: носки инженера стажёра
+  description: Стандартные носки инженера стажёра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Engineering/technical_assistant/socks.rsi
+
+## Medical
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCMO
+  name: носки главного врача
+  description: Стандартные носки главного врача.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/cmo/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCoroner
+  name: носки коронера
+  description: Стандартные носки коронера.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/coroner/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksChemist
+  name: носки химика
+  description: Стандартные носки химика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/chemist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksIntern
+  name: носки интерна
+  description: Стандартные носки интерна.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/intern/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksDoctor
+  name: носки врача
+  description: Стандартные носки врача.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/doctor/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksParamedic
+  name: носки парамедика
+  description: Стандартные носки парамедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/paramedic/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksPsychologist
+  name: носки психолога
+  description: Стандартные носки психолога.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/psychologist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSeniorPhysician
+  name: носки ведущего врача
+  description: Стандартные носки ведущего врача.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Medical/senior_physician/socks.rsi
+
+## Science
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksResearchDirector
+  name: носки научного руководителя
+  description: Стандартные носки научного руководителя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/research_director/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksScientist
+  name: носки учёного
+  description: Стандартные носки учёного.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/scientist/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksResearchAssistant
+  name: носки научного ассистента
+  description: Стандартные научного ассистента.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/research_assistant/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSeniorResearcher
+  name: носки ведущего учёного
+  description: Стандартные ведущего учёного.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Science/senior_researcher/socks.rsi
+
+## Security
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksHeadOfSecurity
+  name: носки главы службы безопасности
+  description: Стандартные носки главы службы безопасности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/head_of_security/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBrigmedic
+  name: носки бригмедика
+  description: Стандартные носки бригмедика.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/brigmedic/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksCadet
+  name: носки кадета СБ
+  description: Стандартные носки кадета СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/cadet/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksDetective
+  name: носки детектива
+  description: Стандартные носки детектива.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/detective/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSecurityOfficer
+  name: носки офицера СБ
+  description: Стандартные носки офицера СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/security_officer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSecurityPilot
+  name: носки пилота СБ
+  description: Стандартные носки пилота СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/security_officer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksSeniorOfficer
+  name: носки инструктора СБ
+  description: Стандартные носки инструктора СБ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/senior_officer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksWarden
+  name: носки смотрителя
+  description: Стандартные носки смотрителя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Security/warden/socks.rsi
+
+## Law
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSockIAA
+  name: носки агента внутренних дел
+  description: Стандартные носки агента внутренних дел.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Law/iaa/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSockLawyer
+  name: носки юриста
+  description: Стандартные носки юриста.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Law/lawyer/socks.rsi
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSockMagistrat
+  name: носки магистрата
+  description: Стандартные носки магистрата.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Law/magistrat/socks.rsi
+
+# Misc
+
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksThighXmas
+  name: рождественские чулки
+  description: Солнце светит, эльфы пашут, вот такая доля наша.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/xmas.rsi

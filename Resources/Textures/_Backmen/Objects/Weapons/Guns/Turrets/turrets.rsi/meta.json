@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/blob/09474de7f31086562e89db97d4cbc0879fa9d422/icons/obj/machines/one_star/machines.dmi, recolored by kirillcas",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "nanotrasen",
+      "directions": 8
+    },
+    {
+      "name": "onestar",
+      "directions": 8
+    },
+    {
+        "name": "team_a",
+        "directions": 8
+    },
+    {
+        "name": "team_b",
+        "directions": 8
+    },
+    {
+      "name": "stand"
+    }
+  ]
+}

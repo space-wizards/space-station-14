@@ -5,12 +5,18 @@
   description: job-description-station-ai
   playTimeTracker: JobStationAi
   requirements:
-  - !type:RoleTimeRequirement
-    role: JobBorg
-    time: 54000  # 15 hrs
+    - !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 72000 # 20 hours
+    - !type:OverallPlaytimeRequirement
+      time: 648000 # 180 hours
+  weight: 18
   canBeAntag: false
   icon: JobIconStationAi
-  supervisors: job-supervisors-rd
+  supervisors: job-supervisors-crew
   jobEntity: StationAiBrain
   jobPreviewEntity: PlayerStationAiPreview
   applyTraits: false
@@ -22,9 +28,9 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 144000 # 40 hrs
+      time: 216000 # 60 hrs
   canBeAntag: false
   icon: JobIconBorg
-  supervisors: job-supervisors-rd
+  supervisors: job-supervisors-crew
   jobEntity: PlayerBorgBattery
   applyTraits: false

@@ -1,0 +1,80 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:LunaLita#0840",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full_f"
+        },
+        {
+            "name": "full_m"
+        },
+        {
+            "name": "full_t"
+        },
+        {
+            "name": "head_f",
+            "directions": 4
+        },
+        {
+            "name": "head_m",
+            "directions": 4
+        },
+        {
+            "name": "head_t",
+            "directions": 4
+        },
+        {
+            "name": "l_arm",
+            "directions": 4
+        },
+        {
+            "name": "l_foot",
+            "directions": 4
+        },
+        {
+            "name": "l_hand",
+            "directions": 4
+        },
+        {
+            "name": "l_leg",
+            "directions": 4
+        },
+        {
+            "name": "r_arm",
+            "directions": 4
+        },
+        {
+            "name": "r_foot",
+            "directions": 4
+        },
+        {
+            "name": "r_hand",
+            "directions": 4
+        },
+        {
+            "name": "r_leg",
+            "directions": 4
+        },
+        {
+            "name": "torso_f",
+            "directions": 4
+        },
+        {
+            "name": "torso_m",
+            "directions": 4
+        },
+        {
+            "name": "torso_t",
+            "directions": 4
+        },
+        {
+            "name": "tail",
+            "directions": 4
+        }
+    ]
+}

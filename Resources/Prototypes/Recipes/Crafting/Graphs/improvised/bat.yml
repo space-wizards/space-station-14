@@ -29,3 +29,27 @@
         
     - node: bat
       entity: BaseBallBat
+
+# DS14
+- type: constructionGraph
+  id: BaseBallBatSteel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: baseballbatsteel
+          steps:
+            - material: Steel
+              amount: 10
+              doAfter: 2
+            - material: Cable
+              amount: 10
+              doAfter: 1
+            - tag: BaseballBat
+              name: Бейсбольная бита
+              icon:
+                sprite: _DeadSpace/Objects/Weapons/Melee/baseball_bat_with_nails.rsi
+                state: icon
+              doAfter: 1
+    - node: baseballbatsteel
+      entity: BaseBallBatSteel

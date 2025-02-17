@@ -1,0 +1,605 @@
+- type: entity
+  id: BorgChassisSecurity
+  parent: [BaseBorgChassisNT, ShowSecurityIcons]
+  name: киборг службы безопасности
+  description: Бронированный киборг, чья главная цель — защита станции от любой угрозы. Принадлежит отделу службы безопасности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/SecurityBorg/securityborg.rsi
+    layers:
+    - state: sec
+    - state: sec_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: sec_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 6
+    moduleWhitelist:
+      tags:
+      - BorgModuleSecurity
+      - BorgModuleGeneric
+    hasMindState: sec_e
+    noMindState: sec_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: _DeadSpace/SecurityBorg/securityborg.rsi
+      state: sec
+    name: cyborg
+  - type: Construction
+    graph: CyborgSec
+    containers:
+    - part-container
+    - cell_slot
+    node: security
+  - type: Speech
+    speechVerb: Robotic
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Inventory
+    templateId: borgSec
+  - type: SiliconLawProvider
+    laws: NTDefault
+  - type: IntrinsicRadioTransmitter
+    channels:
+      - Binary
+      - Security
+      - Common
+  - type: ActiveRadio
+    channels:
+      - Binary
+      - Security
+      - Common
+  - type: AccessReader
+    access: [["Command"], ["Security"]]
+  - type: Damageable
+    damageModifierSet: SecurityBorg
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Loadout
+    prototypes: [ BorgSecurity ]
+  - type: TTS
+    voice: Glowtron
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorgSec
+  - type: FlashImmunity
+
+- type: entity
+  id: PlayerBorgChassisSecurity
+  parent: BorgChassisSecurity
+  suffix: Батарея, Модули
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleArrestSecurity
+        - BorgModulEnergySecurity
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+# Защита для борга
+
+- type: damageModifierSet
+  id: SecurityBorg
+  coefficients:
+    Blunt: 0.75
+    Slash: 0.75
+    Piercing: 0.75
+    Shock: 0.75
+    Heat: 0.75
+
+# Слот под айди карту + сама айди карта
+
+- type: inventoryTemplate
+  id: borgSec
+  slots:
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    uiWindowPos: 1,0
+    strippingWindowPos: 2,4
+    displayName: ID
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 0,1
+    strippingWindowPos: 0,0
+    displayName: Head
+    offset: 0.015, 0.06
+
+- type: startingGear
+  id: BorgSecurity
+  equipment:
+    id: IdBorgSec
+
+- type: entity
+  parent: SecurityIDCard
+  id: IdBorgSec
+  name: киборг службы безопасности
+  description: Карта, необходимая для доступа в различные области станции.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/id_borg_sec.rsi
+    layers:
+    - state: icon
+  - type: IdCard
+    jobTitle: job-name-borg-security
+  - type: Item
+    heldPrefix: blue
+  - type: Unremoveable
+
+# Модули + составляющие
+
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponLaserGunBorg
+  name: лазерная установка киборга
+  description: Установка созданная специально для боргов службы безопасности.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borglaser.rsi
+    state: icon
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 20
+
+- type: entity
+  parent: WeaponDisabler
+  id: WeaponDisablerBorg
+  name: станнер киборга
+  description: Оружие для самозащиты, которое изнуряет органические цели, пока они не свалятся с ног.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/stannerborg.rsi
+    layers:
+    - state: icon
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 10
+
+- type: entity
+  parent: Stunbaton
+  id: StunbatonBorg
+  name: дубинка-шокер киборга
+  description: Электрошоковая дубинка для обездвиживания людей. Слишком усердное причинение вреда с помощью этого предмета считается дурным тоном.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
+
+- type: entity
+  id: BorgModulEnergySecurity
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: энергетический модуль
+  description: Часть технологии, которая дает киборгам новые возможности.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_module_sec.rsi
+    layers:
+    - state: security
+    - state: icon-energy
+  - type: ItemBorgModule
+    items:
+    - WeaponDisablerBorg
+    - WeaponLaserGunBorg
+
+- type: entity
+  id: BorgModuleArrestSecurity
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: арест модуль
+  description: Часть технологии, которая дает киборгам новые возможности.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_module_sec.rsi
+    layers:
+    - state: security
+    - state: icon-arrest
+  - type: ItemBorgModule
+    items:
+    - StunbatonBorg
+    - BorgSecJawsOfLife
+
+- type: entity
+  id: BaseBorgModuleSecurity
+  parent: BaseBorgModule
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - BorgModuleSecurity
+
+- type: entity
+  name: челюсти жизни киборга СБ
+  parent: JawsOfLife
+  id: BorgSecJawsOfLife
+  categories: [ HideSpawnMenu ]
+  description: Набор челюстей жизни, скомпонованных при помощи магии науки.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec_jaws.rsi
+    state: sec_borg_jaws_pry
+  - type: Tool
+    qualities:
+      - Prying
+    speedModifier: 2.0
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec_jaws.rsi
+          state: sec_borg_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec_jaws.rsi
+          state: sec_borg_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 12
+
+# Все части тела киборга
+
+- type: entity
+  id: LeftArmBorgSec
+  parent: LeftArmBorg
+  name: левая рука киборга службы безопасности
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_l_arm
+  - type: Icon
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_l_arm
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
+    - BorgSecLArm
+
+- type: entity
+  id: RightArmBorgSec
+  parent: RightArmBorg
+  name: правая рука киборга службы безопасности
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_r_arm
+  - type: Icon
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_r_arm
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
+    - BorgSecRArm
+
+- type: entity
+  id: LeftLegBorgSec
+  parent: LeftLegBorg
+  name: левая нога киборга службы безопасности
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_l_leg
+  - type: Icon
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_l_leg
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - BorgSecLLeg
+
+- type: entity
+  id: RightLegBorgSec
+  parent: RightLegBorg
+  name: правая нога киборга службы безопасности
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_r_leg
+  - type: Icon
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_r_leg
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - BorgSecRLeg
+
+- type: entity
+  id: HeadBorgSec
+  parent: LightHeadBorg
+  name: голова киборга службы безопасности
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_head
+  - type: Icon
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_head
+  - type: Tag
+    tags:
+    - Trash
+    - BorgHead
+    - BorgSecHead
+
+- type: entity
+  id: TorsoBorgSec
+  parent: TorsoBorg
+  name: туловище киборга службы безопасности
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_chest
+  - type: Icon
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: sec_chest
+  - type: Tag
+    tags:
+    - Trash
+    - BorgSecTorso
+
+- type: entity
+  parent: CyborgEndoskeleton
+  id: CyborgEndoskeletonSec
+  name: эндоскелет киборга службы безопасности
+  description: Каркас, на котором собираются киборги службы безопасности. Значительно менее жуткий, чем ожидалось, но всеравно крепче классического эндоскелета.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    noRot: true
+    drawdepth: Items
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    state: robo_suit_sec
+  - type: Appearance
+  - type: ItemMapper
+    sprite: /Textures/_DeadSpace/SecurityBorg/borg_sec.rsi
+    mapLayers:
+      sec_l_arm+o:
+        whitelist:
+          tags:
+          - BorgSecLArm
+      sec_r_arm+o:
+        whitelist:
+          tags:
+          - BorgSecRArm
+      sec_l_leg+o:
+        whitelist:
+          tags:
+          - BorgSecLLeg
+      sec_r_leg+o:
+        whitelist:
+          tags:
+          - BorgSecRLeg
+      sec_head+o:
+        whitelist:
+          tags:
+          - BorgSecHead
+      sec_chest+o:
+        whitelist:
+          tags:
+          - BorgSecTorso
+  - type: ContainerContainer
+    containers:
+      part-container: !type:Container
+      cell_slot: !type:Container
+  - type: PartAssembly
+    parts:
+      security:
+      - BorgSecLArm
+      - BorgSecRArm
+      - BorgSecLLeg
+      - BorgSecRLeg
+      - BorgSecHead
+      - BorgSecTorso
+  - type: Construction
+    graph: CyborgSec
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: Pullable
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+
+# Фабрикатор и рецепты
+
+- type: latheRecipe
+  id: LeftArmBorgSec
+  result: LeftArmBorgSec
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 200
+    Gold: 50
+    Silver: 75
+
+- type: latheRecipe
+  id: RightArmBorgSec
+  result: RightArmBorgSec
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 200
+    Gold: 50
+    Silver: 75
+
+- type: latheRecipe
+  id: LeftLegBorgSec
+  result: LeftLegBorgSec
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 200
+    Gold: 50
+    Silver: 75
+
+- type: latheRecipe
+  id: RightLegBorgSec
+  result: RightLegBorgSec
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 200
+    Gold: 50
+    Silver: 75
+
+- type: latheRecipe
+  id: HeadBorgSec
+  result: HeadBorgSec
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 400
+    Gold: 100
+    Silver: 200
+
+- type: latheRecipe
+  id: TorsoBorgSec
+  result: TorsoBorgSec
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 400
+    Gold: 100
+    Silver: 200
+
+- type: latheRecipe
+  id: CyborgEndoskeletonSec
+  result: CyborgEndoskeletonSec
+  category: Robotics
+  completetime: 5
+  materials:
+    Steel: 2500
+
+# Модули в охранном тех-фабе
+
+- type: latheRecipe
+  id: BorgModuleArrestSecurity
+  result: BorgModuleArrestSecurity
+  completetime: 5
+  materials:
+    Steel: 300
+    Glass: 300
+    Gold: 50
+    Silver: 100
+
+- type: latheRecipe
+  id: BorgModulEnergySecurity
+  result: BorgModulEnergySecurity
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 500
+    Gold: 50
+    Silver: 75
+
+# Крафт киборга
+
+- type: constructionGraph
+  id: CyborgSec
+  start: start
+  graph:
+  - node: start
+    entity: CyborgEndoskeletonSec
+    edges:
+
+    - to: start
+      conditions:
+      - !type:ContainerNotEmpty
+        container: part-container
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+          - !type:EmptyAllContainers
+
+    - to: security
+      steps:
+      - assemblyId: security
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: second flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+  - node: security
+    entity: BorgChassisSecurity

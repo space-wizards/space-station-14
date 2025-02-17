@@ -70,7 +70,7 @@
                 <!-- List of contactable holopads (the list is created in C#) -->
                 <BoxContainer Name="HolopadContactListContainer" Orientation="Vertical" Margin="10 0 10 5" ReservesSpace="False" Visible="False">
                     <PanelContainer Name="HolopadContactListHeaderPanel">
-                        <Label Text="{Loc 'holopad-window-select-contact-from-list'}" HorizontalAlignment="Center" Margin="0 3 0 3"/>
+                        <RichTextLabel Name="HolopadContactListText" HorizontalAlignment="Center" Margin="0 3 0 3"/>
                     </PanelContainer>
 
                     <PanelContainer Name="HolopadContactListPanel">

@@ -218,4 +218,14 @@
   category: cargoproduct-category-name-service
   group: market
 
+# DS14-start
 
+- type: cargoProduct
+  id: ServicePhotocopierToners
+  icon:
+    sprite: _DeadSpace/Objects/Misc/tonercartridge.rsi
+    state: icon
+  product: CrateServicePhotocopierToners
+  cost: 1000
+  category: cargoproduct-category-name-service
+  group: market

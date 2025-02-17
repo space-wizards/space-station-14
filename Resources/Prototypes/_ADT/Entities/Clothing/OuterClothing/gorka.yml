@@ -1,0 +1,18 @@
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ADTClothingGorkaset
+  name: комплект одежды "Горка"
+  description: Горный Штурмовой Костюм он же Горка, универсальный комплект одежды, используется военнослужащими, охотниками и рыболовами, туристами в Советском Союзе. За счёт специальной обработке ткани была повышена устойчивость к колюще-режущим воздействиям, а также высокая надежность и долговечность.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Armor/gorka.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Armor/gorka.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.9
+        Piercing: 0.85
+        Heat: 0.8
+  - type: GroupExamine

@@ -24,6 +24,7 @@ public enum CollisionGroup
     InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
     // Y dis door passable when all the others impassable / collision.
     DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
+    BlobImpassable     = 1 << 9, // 512 Blob Tiles // backmen: blob
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -42,6 +43,14 @@ public enum CollisionGroup
     // Birds/other small flyers
     FlyingMobMask = Impassable | HighImpassable,
     FlyingMobLayer = Opaque | BulletImpassable,
+
+    // start-backmen: blob
+    BlobMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
+    BlobMobLayer = Opaque | BulletImpassable,
+
+    FlyingBlobMobMask = Impassable | HighImpassable,
+    FlyingBlobMobLayer = Opaque | BulletImpassable,
+    // end-backmen: blob
 
     // Mechs
     LargeMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
@@ -76,6 +85,7 @@ public enum CollisionGroup
     ItemMask = Impassable | HighImpassable,
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+    BlobTileLayer = Opaque | BlobImpassable | BulletImpassable, // backmen: blob
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
 

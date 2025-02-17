@@ -1,0 +1,70 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseMagazineBox357
+  name: коробка патронов (.357 магнум)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Cartridge357
+    proto: Cartridge357
+    capacity: 60
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+# Boxes
+- type: entity
+  parent: BaseMagazineBox357
+  id: MagazineBox357
+  name: коробка патронов (.357 магнум)
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge357
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBox357
+  id: MagazineBox357Practice
+  name: коробка патронов (.357 магнум учебные)
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge357Practice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  id: MagazineBox357Incendiary
+  parent: BaseMagazineBox357
+  name: коробка патронов (.357 магнум зажигательные)
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge357Incendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary

@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  id: ClownBible
+  name: библия хонкоматери
+  description: Хонк!
+  components:
+  - type: UseDelay
+    delay: 3.0
+  # - type: ClownBible
+  #   damageOnUntrainedUse:
+  #     groups:
+  #       Burn: 10
+  - type: Prayable
+    bibleUserOnly: true
+    sentMessage: prayer-popup-notify-honkmother-sent
+    notificationPrefix: prayer-chat-notify-honkmother
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#fca9f4"
+    - state: icon_honk
+    - state: detail_bookmark
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Tag
+    tags:
+    - Book

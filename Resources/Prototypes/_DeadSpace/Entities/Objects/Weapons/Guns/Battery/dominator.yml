@@ -1,0 +1,74 @@
+- type: entity
+  parent: BaseWeaponBatterySmall
+  id: PistolDominator
+  name: доминатор
+  description: Высокотехнологичное оружие созданное правоохранительной организацией Sibyl System, предназначенное специально для борьбы с преступностью. Имеет два режима стрельбы, перед использованием необходимо предварительно привязать его к ID карте и иметь её при себе для стрельбы.
+  suffix: Пистолет
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/dominator.rsi
+    layers:
+    - state: base-0
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-3-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/dominator.rsi
+  - type: Gun
+    fireRate: 1.75
+    soundGunshot:
+      path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/dominator.ogg
+      params:
+        volume: -2
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
+  - type: Dominator
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 50
+      switchSound:
+        path: /Audio/_DeadSpace/Weapons/Guns/Dominator/nonlethal-paralyzer.ogg
+    - proto: DominatorBullet
+      fireCost: 50
+      switchSound:
+        path: /Audio/_DeadSpace/Weapons/Guns/Dominator/lethal-eliminator.ogg
+  - type: UseDelay
+    delay: 3.1
+  - type: AccessReader
+    access: [["Armory"]]
+  - type: Tag
+    tags:
+    - Sidearm
+    - BatteryWeaponFireModesSprites
+  - type: StaticPrice
+    price: 750
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+
+- type: entity
+  name: лазерный заряд
+  id: DominatorBullet
+  parent: EmitterBolt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/dominator.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#f00a19"
+  - type: Projectile
+    damage:
+      types:
+        Heat: 16

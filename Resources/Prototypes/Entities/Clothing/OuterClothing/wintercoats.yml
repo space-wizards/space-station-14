@@ -1212,3 +1212,24 @@
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterColorYellow
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterClownDownjacket
+  name: clown down jacket
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    layers:
+    - state: CLOWN-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: CLOWN-inhand-left
+      right:
+      - state: CLOWN-inhand-right
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: CLOWN-equipped-OUTERCLOTHING

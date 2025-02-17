@@ -1,0 +1,30 @@
+- type: constructionGraph
+  id: Fan
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: litleFan
+      steps:
+      - material: Gold
+        amount: 4
+        doAfter: 1
+
+  - node: litleFan
+    entity: AtmosDeviceFanTiny
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotGold1
+        amount: 4
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+

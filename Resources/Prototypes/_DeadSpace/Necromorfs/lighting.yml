@@ -1,0 +1,14 @@
+- type: entity
+  name: lightning
+  id: NecroLightning
+  parent: BaseLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "tentacles_0"
+      shader: unshaded
+  - type: Beam
+    sound: /Audio/Effects/Fluids/splat.ogg

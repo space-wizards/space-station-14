@@ -1,0 +1,27 @@
+{
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/blob/10f1193ed286281a868e5824428938addbc045af/icons/mob/huds/hud.dmi",
+    "version": 1,
+    "size": { "y": 8, "x": 8 },
+    "states": [
+        {
+            "name": "dead_state"
+        },
+        {
+            "name": "life_state"
+        },
+        {
+            "name": "defib_state",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

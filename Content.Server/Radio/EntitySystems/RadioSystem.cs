@@ -14,6 +14,10 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
+using Content.Shared.Access.Components;
+using System.Text.RegularExpressions;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -28,11 +32,27 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
 
     private EntityQuery<TelecomExemptComponent> _exemptQuery;
+
+    private readonly Dictionary<string, string[]> _departments = new Dictionary<string, string[]>
+    {
+        { "fcdf03", ["командование", "кэп", "капитан", "глава персонала"] },
+        { "d98b71", ["юридический отдел", "магистрат", "юрист"] },
+        { "1563bd", ["служба безопасности", "бриг", "варден", "смотритель", "инструктор", "детектив", "пилот сб", "бригмед", "кадет"] },
+        { "57b8f0", ["медицинский отдел", "главный врач", "ведущий врач", "химик", "врач", "парамед", "коронер", "психолог", "интерн"] },
+        { "c68cfa", ["научный отдел", "рнд", "нио", "научный руководитель", "ведущий учёный", "учёный", "робоёб", "лаборант", "анома"] },
+        { "f2ac26", ["инженерный отдел", "инженерный", "старший инженер", "ведущий инженер", "атмосферный техник", "атмос", "инженер", "инженер стажёр"] },
+        { "a46106", ["отдел снабжения", "карго", "каргонцы", "ведущий утилизатор", "ведущий утиль", "утиль", "утилизатор", "грузчик"] },
+        { "6ca729", ["сервисный отдел", "сервис", "менеджер", "шеф", "повар", "ботаник", "бармен", "боксер", "уборщик", "библиотекарь", "священик", "святой отец", "зоотехник", "репортёр", "музыкант"] },
+        { "2ed2fd", ["искусственный интеллект", "юнит", "борг"] },
+        { "fb77f3", ["клуня", "клоун"] },
+        { "d0d0d0", ["мим"] }
+    };
 
     public override void Initialize()
     {
@@ -93,14 +113,42 @@ public sealed class RadioSystem : EntitySystem
             ? FormattedMessage.EscapeText(message)
             : message;
 
+        // DS14-start
+
+        var headsetColor = TryComp(radioSource, out HeadsetComponent? headset) ? headset.Color : channel.Color;
+
+        var job = String.Empty;
+        if (_inventory.HasSlot(messageSource, "id"))
+        {
+            job = Loc.GetString("chat-radio-source-unknown");
+
+            if (_inventory.TryGetSlotEntity(messageSource, "id", out var idSlotEntity))
+            {
+                if (TryComp(idSlotEntity, out PdaComponent? pda))
+                    idSlotEntity = pda.ContainedId;
+
+                job = TryComp(idSlotEntity, out IdCardComponent? idCard) && !string.IsNullOrEmpty(idCard.LocalizedJobTitle)
+                    ? _chat.SanitizeMessageCapital(idCard.LocalizedJobTitle)
+                    : Loc.GetString("chat-radio-source-unknown");
+            }
+
+            job = $"\\[{job}\\] ";
+        }
+
+        content = Highlight(content);
+
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
-            ("color", channel.Color),
+            ("channel-color", channel.Color),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("channel", $"\\[{channel.LocalizedName}\\]"),
             ("name", name),
-            ("message", content));
+            ("message", content),
+            ("headset-color", headsetColor),
+            ("job", job));
+
+        // DS14-end
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
@@ -110,7 +158,7 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []); // DS14
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);
@@ -150,6 +198,8 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(receiver, ref ev);
         }
 
+        RaiseLocalEvent(new RadioSpokeEvent(messageSource, message, ev.Receivers.ToArray())); // DS14
+
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
         else
@@ -174,4 +224,46 @@ public sealed class RadioSystem : EntitySystem
         }
         return false;
     }
+
+    // DS14-start
+    private string Highlight(string msg)
+    {
+
+        foreach (var department in _departments)
+        {
+            string color = department.Key;
+            foreach (string word in department.Value)
+            {
+                string redex_word = RedexWord(word);
+
+                Regex regex = new Regex($@"\w*{redex_word}\w*", RegexOptions.IgnoreCase);
+                MatchCollection matches = regex.Matches(msg);
+
+                foreach (Match match in matches)
+                {
+                    msg = msg.Replace(match.Value, "[color=#" + color + "]" + match.Value + "[/color]");
+                }
+            }
+        }
+        return msg;
+    }
+
+    private string RedexWord(string word)
+    {
+        string redex_word = "";
+        foreach (char letter in word)
+        {
+            string add_letter = letter.ToString();
+            if (letter == 'л')
+                add_letter = "[лв]";
+            if (letter == 'р')
+                add_letter = "[рв]";
+            if (letter == 'ы')
+                add_letter = "[иы]";
+            redex_word += add_letter + "+";
+        }
+
+        return redex_word.Remove(redex_word.Length - 1);
+    }
+    // DS14-end
 }

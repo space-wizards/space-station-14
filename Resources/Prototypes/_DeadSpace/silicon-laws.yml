@@ -1,0 +1,29 @@
+﻿#ERT
+- type: siliconLaw
+  id: ERT0
+  order: 0
+  lawString: law-ert-0
+
+- type: siliconLaw
+  id: ERT1
+  order: 1
+  lawString: law-ert-1
+
+- type: siliconLaw
+  id: ERT2
+  order: 2
+  lawString: law-ert-2
+
+- type: siliconLaw
+  id: ERT3
+  order: 3
+  lawString: law-ert-3
+
+- type: siliconLawset
+  id: ERT
+  laws:
+  - ERT0
+  - ERT1
+  - ERT2
+  - ERT3
+  obeysTo: laws-owner-beings

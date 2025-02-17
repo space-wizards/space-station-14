@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "icon by RiceMar1244 based on icon taken from tg station at commit https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57, edited by GaussiArson",
+  "copyright": "icon by RiceMar1244 based on icon taken from tg station at commit https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57, resprite by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -14,7 +14,13 @@
 			"name": "base"
 		},
 		{
-			"name": "mag-unshaded-0"
+			"name": "mag-unshaded-0",
+			"delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
 		},
 		{
 			"name": "mag-unshaded-1"

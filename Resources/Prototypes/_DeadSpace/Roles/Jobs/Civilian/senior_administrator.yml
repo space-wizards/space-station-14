@@ -1,0 +1,73 @@
+- type: job
+  id: SeniorAdministrator
+  name: job-name-senior-administrator
+  description: job-description-senior-administrator
+  playTimeTracker: JobSeniorAdministrator
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobBartender
+      time: 21600 # 6 hours
+    - !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 21600 # 6 hours
+    - !type:RoleTimeRequirement
+      role: JobChaplain
+      time: 7200 # 2 hours
+    - !type:RoleTimeRequirement
+      role: JobChef
+      time: 21600 # 6 hours
+    - !type:RoleTimeRequirement
+      role: JobClown
+      time: 7200 # 2 hours
+    - !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 7200 # 2 hours
+    - !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 7200 # 2 hours
+    - !type:RoleTimeRequirement
+      role: JobMime
+      time: 7200 # 2 hours
+    - !type:RoleTimeRequirement
+      role: JobMusician
+      time: 7200 # 2 hours
+    - !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 7200 # 2 hours
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 216000 # 60 hours
+    - !type:AgeRequirement
+      requiredAge: 24
+  startingGear: SeniorAdministratorGear
+  icon: "JobIconSeniorAdministrator"
+  supervisors: job-supervisors-hop
+  access:
+  - Bar
+  - Service
+  - Maintenance
+  - Janitor
+  - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 85
+  #end-backmen: currency
+
+- type: startingGear
+  id: SeniorAdministratorGear
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    id: SeniorServicePDA
+    ears: ClothingHeadsetService
+    belt: BoxFolderClipboard
+    socks: ClothingUnderwearSocksCurator
+  storage:
+    back:
+    - RubberStampSeniorAdministrator

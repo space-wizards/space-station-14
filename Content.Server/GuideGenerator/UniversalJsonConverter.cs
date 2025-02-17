@@ -73,6 +73,11 @@ namespace Content.Server.GuideGenerator
                 // If the field has a [JsonIgnore] attribute, skip it
                 if (Attribute.GetCustomAttribute(prop, typeof(JsonIgnoreAttribute), true) != null) continue;
 
+                // If GetIndexParameters().Length is not 0 then it means that property is indexed
+                // And since we cannot get its values without passing index (which type can LITERALLY BE ANYTHING) then let's just skip it
+                // Yeah, i know that this will lead to a potential data loss, but what i can do about it?
+                if (prop.GetIndexParameters().Length != 0) continue; // Corvax-Wiki
+
                 // If the property has a [JsonPropertyName] attribute, get the property name. Otherwise, use the property name.
                 JsonPropertyNameAttribute? attr = (JsonPropertyNameAttribute?) Attribute.GetCustomAttribute(prop, typeof(JsonPropertyNameAttribute), true);
                 string name = attr == null ? prop.Name : attr.Name;

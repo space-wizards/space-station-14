@@ -1,0 +1,40 @@
+- type: inventoryTemplate
+  id: mukhtar
+  slots:
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 1,1
+    strippingWindowPos: 1,1
+    displayName: Mask
+    offset: -0.03, 0.145
+    whitelist:
+      tags:
+        - PetWearable
+  - name: suitstorage
+    slotTexture: suit_storage
+    slotFlags: SUITSTORAGE
+    stripTime: 3
+    uiWindowPos: 1,0
+    strippingWindowPos: 2,5
+    displayName: Suit Storage
+    whitelist:
+      components:
+        - GasTank
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    stripTime: 12
+    uiWindowPos: 2,0
+    strippingWindowPos: 2,4
+    displayName: ID
+  - name: eyes
+    slotTexture: glasses
+    slotFlags: EYES
+    stripTime: 3
+    uiWindowPos: 0,0
+    strippingWindowPos: 0,0
+    displayName: Eyes
+    whitelist:
+      tags:
+        - MukhtarWearable

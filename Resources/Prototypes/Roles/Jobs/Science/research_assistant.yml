@@ -1,20 +1,27 @@
-﻿- type: job
+- type: job
   id: ResearchAssistant
   name: job-name-research-assistant
   description: job-description-research-assistant
   playTimeTracker: JobResearchAssistant
   requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 3600 # 1 hours
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 54000 #15 hrs
+      time: 54000 # 15 hours
       inverted: true # stop playing intern if you're good at science!
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
-  canBeAntag: false
   access:
   - Research
   - Maintenance
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Science
+  wage: 45
+  #end-backmen: currency
 
 - type: startingGear
   id: ResearchAssistantGear
@@ -22,7 +29,4 @@
     shoes: ClothingShoesColorWhite
     id: ResearchAssistantPDA
     ears: ClothingHeadsetScience
-    pocket2: BookScientistsGuidebook
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksResearchAssistant

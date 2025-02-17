@@ -1,0 +1,18 @@
+- type: entity
+  parent: BaseItem
+  id: ADTBathBroom
+  name: банный веник
+  description: Веник из сушеных листьев, для тех, что ценят классическую баню. Поддать пару!
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Misc/bathbroom.rsi
+    state: icon
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: Item
+    size: Small
+    sprite: _ADT/Objects/Misc/bathbroom.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 3

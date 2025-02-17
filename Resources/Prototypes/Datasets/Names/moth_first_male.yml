@@ -1,50 +1,49 @@
 - type: dataset
   id: names_moth_first_male
   values:
-  - Agrius # Agrius
-  - Atlas # Attacus atlas
-  - Attacus # Attacus
-  - Caesar # Attacus caesar
-  - Hercules # Coscinocera hercules
-  - Rannoch # Itame brunneata, "Rannoch Looper"
-  - Socrates # Acosmeryx socrates
-  - Solus # Saturniidae solus
+  - Агриус # Agrius
+  - Атлас # Attacus atlas
+  - Аттакус # Attacus
+  - Цезарь # Attacus caesar
+  - Геркулес # Coscinocera hercules
+  - Раннох # Itame brunneata, "Rannoch Looper"
+  - Сократ # Acosmeryx socrates
+  - Солус # Saturniidae solus
 
   # Other languages
-  - Ash # Hebrew עש "moth"
-  - Azar # Persian "fire"
-  - Kaiser # German "emperor" descendant of the Latin caesar
-  - Rex # Latin "king"
-  - Rajas # Sanskrit "darkness" or "dust"
-  - Skoros # Greek "clothes moth"
+  - Эш # Hebrew עש "moth"
+  - Азар # Persian "fire"
+  - Кайзер # German "emperor" descendant of the Latin caesar
+  - Раджас # Sanskrit "darkness" or "dust"
+  - Скорос # Greek "clothes moth"
 
   # Myth and legend
-  - Bladud # legendary king of the Britons who crafted wings and died in his attempt at flight
-  - Daedalus # father of Icarus
-  - Erebus # Greek primordial deity of darkness
-  - Icarus # the classic
-  - Jatayu # Hindu figure, similar to Icarus
-  - Koho # Japanese reading of 夸父（こほ）
-  - Kuafu # Chinese giant 夸父, similar to Icarus
-  - Lucifer # more commonly-known fall-from-heaven figure
-  - Merlin # Arthurian wizard
-  - Phaethon # another Greek figure, similar to Icarus
-  - Wolford # rendering of Bladud from the Welsh blaidd "wolf" + iudd "lord"
+  - Бладуд # legendary king of the Britons who crafted wings and died in his attempt at flight
+  - Дедал # father of Icarus
+  - Эребус # Greek primordial deity of darkness
+  - Икар # the classic
+  - Джатайу # Hindu figure, similar to Icarus
+  - Кохо # Japanese reading of 夸父（こほ）
+  - Куафу # Chinese giant 夸父, similar to Icarus
+  - Люцифер # more commonly-known fall-from-heaven figure
+  - Мерлин # Arthurian wizard
+  - Фаэтон # another Greek figure, similar to Icarus
+  - Волфорд # rendering of Bladud from the Welsh blaidd "wolf" + iudd "lord"
 
   # Fun names
-  - Ace
-  - Altair
-  - Dusty
-  - Gambit
-  - Hawk
-  - Mothew
-  - Timothy
+  - Эйс
+  - Альтаир
+  - Дасти
+  - Гамбит
+  - Хоук
+  - Мотью
+  - Тимоти
 
   # Common names, filler
-  - Asher
-  - Isaac
-  - Roman
-  - Samuel
-  - Sebastian
-  - Silas
-  - Simon
+  - Эшер
+  - Роман
+  - Исаак
+  - Самюэл
+  - Себастиан
+  - Сайлас
+  - Саймон

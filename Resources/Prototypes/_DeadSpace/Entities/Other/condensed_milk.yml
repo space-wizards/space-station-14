@@ -1,0 +1,137 @@
+- type: reagent
+  id: CondensedMilk
+  name: reagent-name-condensed-milk
+  desc: reagent-desc-condensed-milk
+  slippery: true
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: sweet
+  color: "#FFDEAD"
+  recognizable: true
+  boilingPoint: 290.0
+  meltingPoint: 18.2
+  tileReactions:
+    - !type:SpillTileReaction
+      paralyzeTime: 3
+      launchForwardsMultiplier: 2
+      requiredSlipSpeed: 1
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkCondensedMilk
+  name: баночка со сгущёнкой
+  description: Пищевой продукт пригодный к употреблению.
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: _DeadSpace/Other/condensed_milk.rsi
+    state: icon
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+    scale: 0.7, 0.7
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CondensedMilk
+          Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: reaction
+  id: CondensedMilk
+  minTemp: 370
+  reactants:
+    Water:
+      amount: 1
+    Milk:
+      amount: 1
+    Sugar:
+      amount: 2
+  products:
+    CondensedMilk: 4
+
+- type: reagent
+  id: BoiledCondensedMilk
+  name: reagent-name-condensed-milk
+  desc: reagent-desc-condensed-milk
+  slippery: false
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: sweet
+  color: "#86521f"
+  recognizable: true
+  boilingPoint: 250.0
+  meltingPoint: 380.2
+  viscosity: 0.5
+  tileReactions:
+    - !type:SpillTileReaction
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+
+- type: reaction
+  id: BoiledCondensedMilk
+  minTemp: 370
+  reactants:
+    Water:
+      amount: 1
+    CondensedMilk:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    BoiledCondensedMilk: 3
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkBoiledCondensedMilk
+  name: баночка с варёной сгущенкой
+  description: Пищевой продукт пригодный к употреблению.
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: _DeadSpace/Other/boiledcondensed_milk.rsi
+    state: icon
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+    scale: 0.7, 0.7
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BoiledCondensedMilk
+          Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill
+  - type: TrashOnSolutionEmpty
+    solution: drink

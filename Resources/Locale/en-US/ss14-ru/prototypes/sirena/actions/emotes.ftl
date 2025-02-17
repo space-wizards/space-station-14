@@ -1,0 +1,10 @@
+ent-EmoteFlip = сделать сальто
+    .desc = { "" }
+ent-EmoteJump = прыгнуть
+    .desc = { "" }
+ent-EmoteTurn = кружится
+    .desc = { "" }
+ent-EmoteStopTail = перестать вилять хвостом
+    .desc = { "" }
+ent-EmoteStartTail = начать вилять хвостом
+    .desc = { "" }

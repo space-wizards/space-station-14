@@ -1,0 +1,37 @@
+- type: entity
+  id: WeaponEnergyCrossbow
+  name: энергетический арбалет
+  description: Маленькое, скрытное, смертоносное устройство.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Bow/crossbow.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Small
+  - type: Gun
+    fireRate: 0.5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -14
+  - type: AmmoCounter
+  - type: RechargeBasicEntityAmmo
+    rechargeSound:
+      path: /Audio/Magic/forcewall.ogg
+      params:
+        volume: -50
+    rechargeCooldown: 1
+  - type: BasicEntityAmmoProvider
+    proto: BulletEnergyCrossbow
+    capacity: 1
+    count: 1
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - Belt
+  - type: UseDelay
+    delay: 0.3

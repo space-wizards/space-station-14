@@ -14,10 +14,36 @@
     species:
     - Arachnid
     - Diona
-    - Dwarf
     - Human
     - Moth
     - Reptilian
+    # DS14-species-start
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    # DS14-species-end
+
+- type: loadoutEffectGroup
+  id: NonBreather
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    # DS14-species-start
+    - Xenomorph
+    # DS14-species-end
+
+- type: loadoutEffectGroup
+  id: RobotNonBreather
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    # DS14-species-start
+    - IPC
+    - IPS
+    # DS14-species-end
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -25,6 +51,13 @@
   - !type:SpeciesLoadoutEffect
     species:
     - Vox
+    
+- type: loadoutEffectGroup
+  id: EffectSpeciesDwarf
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Dwarf
 
 # Basic
 - type: loadout
@@ -45,6 +78,33 @@
     back:
     - BoxSurvivalNitrogen
 
+- type: loadout
+  id: EmergencyNonBreather
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NonBreather
+  storage:
+    back:
+    - BoxSurvivalNonBreather
+
+- type: loadout
+  id: EmergencyRobotNonBreather
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: RobotNonBreather
+  storage:
+    back:
+    - BoxSurvivalRobotNonBreather
+    
+- type: loadout
+  id: EmergencyBeer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxSurvivalBeer
+
 # Clown
 - type: loadout
   id: EmergencyOxygenClown
@@ -63,6 +123,15 @@
   storage:
     back:
     - BoxHugNitrogen
+
+- type: loadout
+  id: EmergencyBeerClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxHugBeer
 
 # Mime
 - type: loadout
@@ -83,6 +152,14 @@
     back:
     - BoxMimeNitrogen
 
+- type: loadout
+  id: EmergencyBeerMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxMimeBeer
 
 # Engineering / Extended
 - type: loadout
@@ -103,6 +180,15 @@
     back:
     - BoxSurvivalEngineeringNitrogen
 
+- type: loadout
+  id: EmergencyBeerExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxSurvivalEngineeringBeer
+
 # Medical
 - type: loadout
   id: EmergencyOxygenMedical
@@ -122,6 +208,15 @@
     back:
     - BoxSurvivalMedicalNitrogen
 
+- type: loadout
+  id: EmergencyBeerMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxSurvivalMedicalBeer
+
 # Security
 - type: loadout
   id: EmergencyOxygenSecurity
@@ -140,6 +235,42 @@
   storage:
     back:
     - BoxSurvivalSecurityNitrogen
+
+- type: loadout
+  id: EmergencyBeerSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxSurvivalSecurityBeer
+
+- type: loadout
+  id: EmergencyOxygenBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalBrigmedic
+
+- type: loadout
+  id: EmergencyNitrogenBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalBrigmedicNitrogen
+
+- type: loadout
+  id: EmergencyBeerBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - BoxSurvivalBrigmedicBeer
 
 # Syndicate
 - type: loadout

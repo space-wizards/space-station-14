@@ -1,0 +1,46 @@
+- type: entity
+  id: BaseCartridge357
+  name: cartridge (.357 magnum)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - Cartridge357
+  - type: CartridgeAmmo
+    proto: Bullet357
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  id: Cartridge357
+  name: cartridge (.357 magnum)
+  parent: BaseCartridge357
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet357
+
+- type: entity
+  id: Cartridge357Practice
+  name: cartridge (.357 magnum practice)
+  parent: BaseCartridge357
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet357Practice
+
+- type: entity
+  id: Cartridge357Incendiary
+  name: cartridge (.357 magnum incendiary)
+  parent: BaseCartridge357
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet357Incendiary
+

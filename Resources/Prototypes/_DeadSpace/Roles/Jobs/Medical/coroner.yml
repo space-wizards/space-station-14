@@ -1,0 +1,32 @@
+- type: job
+  id: Coroner
+  name: job-name-coroner
+  description: job-description-coroner
+  playTimeTracker: JobCoroner
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 36000 # 10 hours
+    - !type:OverallPlaytimeRequirement
+      time: 144000 # 40 hours
+  startingGear: CoronerGear
+  icon: "JobIconCoroner"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+  - Coroner
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Medical
+  wage: 55
+  #end-backmen: currency
+
+- type: startingGear
+  id: CoronerGear
+  equipment:
+    shoes: ClothingShoesBootsJackCoroner
+    id: CoronerPDA
+    ears: ClothingHeadsetMedicalScience
+    socks: ClothingUnderwearSocksCoroner

@@ -11,12 +11,19 @@
       department: Medical
       time: 36000 # 10 hours
     - !type:DepartmentTimeRequirement
+      department: Science
+      time: 18000 # 5 hours
+    - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
+      time: 54000 # 15 hours
     - !type:DepartmentTimeRequirement
       department: Command
       time: 36000 # 10 hours
-  weight: 20
+    - !type:OverallPlaytimeRequirement
+      time: 216000 # 60 hours
+    - !type:AgeRequirement
+      requiredAge: 26
+  weight: 15
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
@@ -24,6 +31,7 @@
   access:
   - Command
   - HeadOfPersonnel
+  - SeniorSalvage
   - Bar
   - Service
   - Maintenance
@@ -48,6 +56,15 @@
   - Cargo
   - Atmospherics
   - Medical
+  - Coroner
+  - Paramedic
+  - Brigmedic
+  #start-backmen: currency
+  minBankBalance: 400
+  maxBankBalance: 600
+  wageDepartment: Command
+  wage: 140
+  #end-backmen: currency
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -60,9 +77,11 @@
   equipment:
     shoes: ClothingShoesColorBrown
     id: HoPPDA
+    eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
+    socks: ClothingUnderwearSocksHeadofPersonnel
   storage:
     back:
     - Flash

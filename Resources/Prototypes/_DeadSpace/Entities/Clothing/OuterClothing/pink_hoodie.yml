@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterHoodiePink
+  name: розовое худи
+  description: Смотритесь стильно, как будто собрались на встречу с розовыми вульпочками!
+  suffix: Спонсор
+  components:
+  - type: Sprite
+    sprite:  _DeadSpace/Clothing/OuterClothing/Misc/pink_hoodie.rsi
+  - type: Clothing
+    sprite:  _DeadSpace/Clothing/OuterClothing/Misc/pink_hoodie.rsi

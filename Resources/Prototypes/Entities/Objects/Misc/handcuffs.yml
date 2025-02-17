@@ -37,7 +37,7 @@
   parent: Handcuffs
   components:
   - type: Handcuff
-    breakoutTime: 3
+    breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
     color: forestgreen
@@ -79,7 +79,7 @@
     size: Tiny
     storedRotation: 0
   - type: Handcuff
-    breakoutTime: 3
+    breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
     bodyIconState: body-overlay
     breakOnRemove: true

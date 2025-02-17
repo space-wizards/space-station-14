@@ -1,30 +1,35 @@
 - type: vendingMachineInventory
   id: SecDrobeInventory
   startingInventory:
-    ClothingBackpackSecurity: 3
-    ClothingBackpackSatchelSecurity: 3
-    ClothingBackpackDuffelSecurity: 3
-    ClothingUniformJumpsuitSec: 3
-    ClothingShoesBootsJack: 3
-    ClothingHeadHatBeretSecurity: 3
-    ClothingHeadHatSecsoft: 3
-    ClothingHeadBandRed: 3
-    ClothingMaskNeckGaiterRed: 3
-    ClothingHandsGlovesColorBlack: 3
-    ClothingHandsGlovesFingerless: 3
-    ClothingUniformJumpskirtSec: 3
-    ClothingUniformJumpsuitSecGrey: 3
-    ClothingUniformJumpskirtSecGrey: 3
-    ClothingUniformJumpsuitSecBlue: 3
-    ClothingHeadsetSecurity: 3
-    ClothingOuterWinterSec: 2
-    ClothingOuterArmorBasic: 2
+    ClothingBackpackSecurity: 4
+    ClothingBackpackSatchelSecurity: 4
+    ClothingBackpackDuffelSecurity: 4
+    ClothingUniformJumpsuitSec: 4
+    ClothingShoesBootsJack: 4
+    ClothingHeadHatBeretSecurity: 4
+    ClothingHeadHatSecsoft: 4
+    ClothingHeadBandRed: 4
+    ClothingMaskNeckGaiterRed: 2
+    ClothingHandsGlovesColorBlack: 8
+    ClothingHandsGlovesFingerless: 6
+    ClothingUniformJumpskirtSec: 4
+    ClothingUniformJumpsuitSecGrey: 6
+    ClothingUniformJumpskirtSecGrey: 6
+    ClothingUniformJumpsuitSecBlue: 4
+    ClothingHeadsetSecurity: 4
+    ClothingOuterWinterSec: 4
+    ClothingOuterArmorBasic: 4
     ClothingNeckScarfStripedRed: 3
-    ClothingOuterArmorBasicSlim: 2
-    ClothingEyesBlindfold: 1
-    ClothingShoesBootsCombat: 1
+    ClothingOuterArmorBasicSlim: 4
+    ClothingEyesBlindfold: 2
+    ClothingOuterCoatSecurityOvercoat: 6
+    ClothingMaskNeckGaiter: 2
     ClothingShoesBootsWinterSec: 2
-    ClothingHeadHelmetJustice: 1
+    ClothingShoesBootsCowboyBlack: 1
+    ClothingHeadHatCowboyBlack: 1
+    HyperLinkBookCorporateLaw: 2
+    HyperLinkBookSOPSecurity: 2
+    ClothingHeadHelmetJustice: 2
   contrabandInventory:
     ClothingMaskClownSecurity: 1
     ToyFigurineSecurity: 1

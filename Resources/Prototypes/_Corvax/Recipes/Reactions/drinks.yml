@@ -1,0 +1,171 @@
+- type: reaction
+  id: Yorsh
+  reactants:
+    Beer:
+      amount: 4
+    Vodka:
+      amount: 1
+  products:
+    Yorsh: 5
+
+- type: reaction
+  id: Alexander
+  reactants:
+    Cognac:
+      amount: 1
+    Coffee:
+      amount: 1
+    Cream:
+      amount: 1
+  products:
+    Alexander: 3
+
+- type: reaction
+  id: Daiquiri
+  reactants:
+    Rum:
+      amount: 4
+    JuiceLime:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Daiquiri: 6
+
+- type: reaction
+  id: MojitoAlt
+  reactants:
+    Daiquiri:
+      amount: 6
+    JuiceLime:
+      amount: 3
+    SodaWater:
+      amount: 4
+    Sugar:
+      amount: 3
+  products:
+    Mojito: 16
+
+- type: reaction
+  id: Negroni
+  reactants:
+    Martini:
+      amount: 3
+    Campari:
+      amount: 2
+    Vermouth:
+      amount: 1
+  products:
+    Negroni: 6
+
+- type: reaction
+  id: EspressoMartini
+  reactants:
+    BlackRussian:
+      amount: 6
+    Sugar:
+      amount: 1
+    Coffee:
+      amount: 3
+  products:
+    EspressoMartini: 10
+
+- type: reaction
+  id: OldFashioned
+  reactants:
+    Whiskey:
+      amount: 7
+    Campari:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    OldFashioned: 10
+
+- type: reaction
+  id: BadTouch
+  reactants:
+    Vodka: 
+      amount: 1
+    LemonLime:
+      amount: 1
+    SpaceUp:
+      amount: 2
+    BlueCuracao:
+      amount: 1
+    Absinthe:
+      amount: 1
+  products:
+    BadTouch: 6
+
+- type: reaction
+  id: DarkAndStormy
+  reactants:
+    Rum: 
+      amount: 1
+    Ale: # Must be ginger beer
+      amount: 2
+  products:
+    DarkAndStormy: 3
+
+- type: reaction
+  id: Bramble
+  reactants:
+    JuiceBerry:
+      amount: 1
+    Sugar:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Gin:
+      amount: 3
+  products:
+    Bramble: 6
+
+- type: reaction
+  id: MaiTai
+  reactants: # Orgeat may be added
+    Rum:
+      amount: 3
+    JuiceLime:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    MaiTai: 6
+
+- type: reaction
+  id: MoscowMule
+  reactants:
+    Yorsh: # Must be ginger beer + vodka
+      amount: 5
+    JuiceLime:
+      amount: 1
+  products:
+    MoscowMule: 6
+
+- type: reaction
+  id: Paloma
+  reactants:
+    Tequila:
+      amount: 1
+    Grenadine:
+      amount: 2
+  products:
+    Paloma: 3
+
+- type: reaction
+  id: Boyarsky
+  reactants:
+    Vodka:
+      amount: 3
+    Grenadine:
+      amount: 2
+    Hotsauce:
+      amount: 1
+  products:
+    Boyarsky: 6

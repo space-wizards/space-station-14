@@ -1,3 +1,4 @@
+using Content.Shared.Corvax.TTS;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Enums;
@@ -46,6 +47,14 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField(required: true), AutoNetworkedField]
     public ProtoId<SpeciesPrototype> Species { get; set; }
 
+    // Corvax-TTS-Start
+    /// <summary>
+    ///     Current voice. Used for correct cloning.
+    /// </summary>
+    [DataField("voice")]
+    public ProtoId<TTSVoicePrototype> Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice;
+    // Corvax-TTS-End
+
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
@@ -70,6 +79,11 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
+
+    // Corvax-ChatColor-Start
+    [DataField("speakerColor")]
+    public Color SpeakerColor = Color.White;
+    // Corvax-ChatColor-End
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings

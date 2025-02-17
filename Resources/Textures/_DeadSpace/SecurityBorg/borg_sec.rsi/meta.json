@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation and re-sprite mally0352",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sec_l_arm"
+    },
+    {
+      "name": "sec_r_arm"
+    },
+    {
+      "name": "sec_l_leg"
+    },
+    {
+      "name": "sec_r_leg"
+    },
+    {
+      "name": "sec_chest"
+    },
+    {
+      "name": "sec_head"
+    },
+    {
+      "name": "sec_head+o"
+    },
+    {
+      "name": "sec_chest+o"
+    },
+    {
+      "name": "sec_l_arm+o"
+    },
+    {
+      "name": "sec_r_arm+o"
+    },
+    {
+      "name": "sec_l_leg+o"
+    },
+    {
+      "name": "sec_r_leg+o"
+    },
+    {
+      "name": "robo_suit_sec"
+    }
+  ]
+}

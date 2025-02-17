@@ -1,0 +1,35 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckNecklaceWithEmerald
+  name: колье с изумрудом
+  description: Этот камень так завораживает..Он прямо как твои зеленые глаза.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/necklace_with_emerald.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckNecklaceWithPlasma
+  name: колье с плазмой
+  description: Это точно безопасно?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/necklace_with_plasma.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckNecklaceWithSapphire
+  name: колье с сапфиром
+  description: Этому колье не хватает рубинов!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/necklace_with_sapphire.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckRaincoatForAShortDress
+  name: плащ для свадебного платья
+  description: Плащ с золотым напылением. Ослепляюще.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/raincoat_for_a_short_dress.rsi

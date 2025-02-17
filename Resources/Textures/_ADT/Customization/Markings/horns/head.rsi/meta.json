@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:JayJacobs#1187",
+    "states": [
+        {
+            "name": "durak",
+            "directions": 4
+        },
+        {
+            "name": "horn1",
+            "directions": 4
+        },
+        {
+            "name": "horn2",
+            "directions": 4
+        },
+        {
+            "name": "horn3",
+            "directions": 4
+        },
+        {
+            "name": "horn4",
+            "directions": 4
+        },
+        {
+            "name": "horn5",
+            "directions": 4
+        },
+        {
+            "name": "horn6",
+            "directions": 4
+        },
+        {
+            "name": "lord",
+            "directions": 4
+        },
+        {
+            "name": "oldpain",
+            "directions": 4
+        },
+        {
+            "name": "tavrhorn",
+            "directions": 4
+        },
+        {
+            "name": "telehorn",
+            "directions": 4
+        },
+        {
+            "name": "vampirehorn",
+            "directions": 4
+        }
+    ]
+}

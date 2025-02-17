@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.DeadSpace.Interfaces.Server;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
@@ -39,6 +40,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
+    private IServerSponsorsManager? _sponsorsManager; // DS14-sponsors
 
     public override void Initialize()
     {
@@ -59,6 +61,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<IsJobAllowedEvent>(OnIsJobAllowed);
         SubscribeLocalEvent<GetDisallowedJobsEvent>(OnGetDisallowedJobs);
         _adminManager.OnPermsChanged += AdminPermsChanged;
+
+        IoCManager.Instance!.TryResolveType(out _sponsorsManager); // DS14-sponsors
     }
 
     public override void Shutdown()
@@ -191,6 +195,17 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public bool IsAllowed(ICommonSession player, string role)
     {
+        // DS14-sponsors-start
+        if (_sponsorsManager?.TryGetInfo(player.UserId, out var sponsorInfo) == true && sponsorInfo != null)
+        {
+            if (sponsorInfo.AllowJob)
+                return true;
+
+            if (_prototypes.TryIndex<JobPrototype>(role, out var jobb) && sponsorInfo.AllowedMarkings.Contains(jobb.ID))
+                return true;
+        }
+        // DS14-sponsors-end
+
         if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
@@ -230,6 +245,18 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return;
 
+        // DS14-sponsors-start
+        if (_sponsorsManager != null)
+        {
+            var info = _sponsorsManager.TryGetInfo(userId, out var sponsorInfo);
+            if (info && sponsorInfo != null)
+            {
+                if (sponsorInfo.AllowJob)
+                    return;
+            }
+        }
+        // DS14-sponsors-end
+
         var player = _playerManager.GetSessionById(userId);
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
         {
@@ -245,6 +272,16 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             {
                 continue;
             }
+            // DS14-sponsors-start
+            if (_sponsorsManager != null)
+            {
+                if (_prototypes.TryIndex(jobs[i], out var jobb) && _sponsorsManager.TryGetInfo(userId, out var sponsorInfo))
+                {
+                    if (sponsorInfo.AllowedMarkings.Contains(jobb.ID))
+                        continue;
+                }
+            }
+            // DS14-sponsors-end
 
             jobs.RemoveSwap(i);
             i--;

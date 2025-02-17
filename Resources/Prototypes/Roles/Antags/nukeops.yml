@@ -5,9 +5,13 @@
   setPreference: true
   objective: roles-antag-nuclear-operative-objective
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
-  guides: [ NuclearOperatives ]
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+  # guides: [ NuclearOperatives ] # DS14: disabled due to lack of localization
 
 - type: antag
   id: NukeopsMedic
@@ -16,12 +20,16 @@
   setPreference: true
   objective: roles-antag-nuclear-operative-agent-objective
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
-  - !type:RoleTimeRequirement
-    role: JobChemist
-    time: 10800 # 3h
-  guides: [ NuclearOperatives ]
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 144000 # 40 hours
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+  # guides: [ NuclearOperatives ] # DS14: disabled due to lack of localization
 
 - type: antag
   id: NukeopsCommander
@@ -30,13 +38,17 @@
   setPreference: true
   objective: roles-antag-nuclear-operative-commander-objective
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 18000 # 5h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 108000 # 30 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 72000 # 20 hours
   # should be changed to nukie playtime when thats tracked (wyci)
-  guides: [ NuclearOperatives ]
+  # guides: [ NuclearOperatives ] # DS14: disabled due to lack of localization
 
 - type: startingGear
   id: SyndicateOperativeGearFullNoUplink
@@ -100,6 +112,6 @@
 #Lone Operative Gear
 - type: startingGear
   id: SyndicateLoneOperativeGearFull
-  parent: SyndicateOperativeGearFull
+  parent: SyndicateOperativeGearFullNoUplink # DS14
   equipment:
     pocket2: BaseUplinkRadio60TC

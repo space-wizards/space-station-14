@@ -13,7 +13,13 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
+using Robust.Shared.Console;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+// DS14-start
+using Content.Client.UserInterface.ControlExtensions;
+using static Robust.Client.UserInterface.Controls.LineEdit;
+using static Robust.Client.UserInterface.Controls.BaseButton;
+// DS14-end
 
 namespace Content.Client.Chemistry.UI
 {
@@ -37,6 +43,11 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            // DS14-start
+            SearchBar.OnTextChanged += OnPanelInfoSearchChanged;
+            ClearSearchButton.OnPressed += OnClearSearchPressed;
+            // DS14-end
 
             // Pill type selection buttons, in total there are 20 pills.
             // Pill rsi file should have states named as pill1, pill2, and so on.
@@ -127,6 +138,45 @@ namespace Content.Client.Chemistry.UI
             return buttons;
         }
 
+        // DS14-start
+        private void OnPanelInfoSearchChanged(LineEditEventArgs args)
+        {
+            if (string.IsNullOrEmpty(args.Text))
+            {
+                ClearSearchButton.Disabled = true;
+
+                foreach (var reagent in BufferInfo.Children)
+                {
+                    reagent.Visible = true;
+                }
+                return;
+            }
+
+            ClearSearchButton.Disabled = false;
+
+            foreach (var reagent in BufferInfo.Children.OfType<PanelContainer>())
+            {
+                var label = reagent.Children.FirstOrDefault()?.Children.OfType<Label>().FirstOrDefault();
+
+                if (label?.Text == null)
+                {
+                    continue;
+                }
+                reagent.Visible = label.Text.Contains(args.Text, StringComparison.CurrentCultureIgnoreCase);
+            }
+        }
+
+        private void OnClearSearchPressed(ButtonEventArgs args)
+        {
+            foreach (var reagent in BufferInfo.Children.OfType<PanelContainer>())
+            {
+                reagent.Visible = true;
+            }
+
+            SearchBar.Clear();
+        }
+        // DS14-end
+
         /// <summary>
         /// Update the UI state when new state data is received from the server.
         /// </summary>
@@ -140,17 +190,17 @@ namespace Content.Client.Chemistry.UI
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
-    
+
             BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
-    
+
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
             CreateBottleButton.Disabled = castState.OutputContainerInfo?.Reagents == null;
             CreatePillButton.Disabled = castState.OutputContainerInfo?.Entities == null;
-            
+
             UpdateDosageFields(castState);
         }
-        
+
         //assign default values for pill and bottle fields.
         private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
         {
@@ -162,7 +212,7 @@ namespace Content.Client.Chemistry.UI
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
             PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-            
+
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
@@ -247,7 +297,7 @@ namespace Content.Client.Chemistry.UI
                 BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, true));
             }
         }
-        
+
         private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
         {
             control.Children.Clear();
@@ -295,7 +345,7 @@ namespace Content.Client.Chemistry.UI
                     _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
                     var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                     var reagentColor = proto?.SubstanceColor ?? default(Color);
-        
+
                     control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
                 }
             }
@@ -315,7 +365,7 @@ namespace Content.Client.Chemistry.UI
             }
             //this calls the separated button builder, and stores the return to render after labels
             var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
-            
+
             // Create the row layout with the color panel
             var rowContainer = new BoxContainer
             {
@@ -358,7 +408,7 @@ namespace Content.Client.Chemistry.UI
                 Children = { rowContainer }
             };
         }
-        
+
         public string LabelLine
         {
             get => LabelLineEdit.Text;

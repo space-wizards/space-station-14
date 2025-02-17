@@ -1,0 +1,30 @@
+- type: htnCompound
+  id: BlobPodCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: ZombifyCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: htnCompound
+  id: ZombifyCompound
+  branches:
+    - tasks:
+        # TODO: Kill this shit
+        - !type:HTNPrimitiveTask
+          operator: !type:PickBlobPodZombifyTargetOperator
+            targetKey: MovementTarget
+            zombifyKey: ZombifyTarget
+            rangeKey: IdleRange
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+            targetKey: MovementTarget
+        - !type:HTNPrimitiveTask
+          operator: !type:BlobPodZombifyOperator
+            zombifyKey: ZombifyTarget

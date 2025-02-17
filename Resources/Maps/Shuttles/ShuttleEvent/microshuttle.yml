@@ -17,7 +17,6 @@ entities:
       name: PC-Luxury
     - type: Transform
       pos: -0.50006104,-0.5
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

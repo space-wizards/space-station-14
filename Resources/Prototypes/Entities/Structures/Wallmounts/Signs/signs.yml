@@ -250,6 +250,15 @@
   - type: Sprite
     state: direction_pods
 
+- type: entity
+  parent: BaseSignDirectional
+  id: SignDirectionalLaw
+  name: law sign
+  description: A direction sign, pointing to the way to a law department.
+  components:
+  - type: Sprite
+    state: direction_law
+
 # Regular Signs
 
 - type: entity

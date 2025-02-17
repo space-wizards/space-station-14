@@ -29,3 +29,28 @@
   id: YellowBoxingGloves
   equipment:
     gloves: ClothingHandsGlovesBoxingYellow
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersBoxer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersBoxer
+
+- type: loadout
+  id: UnderwearBottomPantiesBoxer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesBoxer
+
+- type: loadout
+  id: UnderwearTopBraBoxer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraBoxer

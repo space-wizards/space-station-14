@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://youtu.be/dQw4w9WgXcQ",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base-1"
+        },
+        {
+            "name": "base-2"
+        },
+        {
+            "name": "base-3"
+        },
+        {
+            "name": "base-4"
+        },
+        {
+            "name": "base-5"
+        },
+        {
+            "name": "base-6"
+        },
+        {
+            "name": "base-7"
+        },
+        {
+            "name": "rubber-1"
+        },
+        {
+            "name": "rubber-2"
+        },
+        {
+            "name": "rubber-3"
+        },
+        {
+            "name": "rubber-4"
+        },
+        {
+            "name": "rubber-5"
+        },
+        {
+            "name": "rubber-6"
+        },
+        {
+            "name": "rubber-7"
+        }
+    ]
+}

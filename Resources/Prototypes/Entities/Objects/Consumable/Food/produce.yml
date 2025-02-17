@@ -1767,7 +1767,7 @@
     seedId: gatfruit
   - type: Food
     trash:
-    - WeaponRevolverPython
+    - WeaponRevolverPython357
   - type: Tag
     tags:
     - Fruit # It's in the name

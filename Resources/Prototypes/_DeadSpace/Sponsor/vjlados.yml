@@ -1,0 +1,355 @@
+- type: sponsorLoadout
+  id: Vjlados
+  entity: ClothingBackpackVjlados
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: VjladosSilver
+  entity: ClothingBackpackVjladosSilver
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackVjlados
+  name: зелёный украшенный блюспейс рюкзак
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Окрашен в зелёный цвет. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltVjladosFilled
+      - id: ClothingNeckCloakVjlados
+      - id: ClothingHandsGlovesVjlados
+      - id: ClothingOuterHardsuitVjlados
+      - id: ClothingHeadHatVjlados
+      - id: ClothingUniformJumpsuitVjlados
+      - id: ClothingShoesBootsMagVjlados
+      - id: ClothingUnderwearBottomVjlados
+      - id: ClothingShoesVjlados
+      - id: ClothingUnderSocksVjlados
+      - id: JetpackVoidFilled
+      - id: MedkitAdvancedFilled
+      - id: ADTtelescopicBaton
+      - id: ToySword
+      - id: PaperLawsvjlados
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackVjladosSilver
+  name: чёрный рюкзак с шипами
+  description: Этот аксессуар выражает непокорный дух и стиль.
+  # categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/backpacksilver.rsi
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltKatanaVjlados
+      - id: ClothingHeadHatBlackVjlados
+      - id: ClothingUniformJumpsuitGreyVjlados
+      - id: ClothingOuterHoodieVjlados
+      - id: ClothingShoesSwagVjlados
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltVjladosFilled
+  name: зелёный украшенный пояс
+  description: Пояс окрашенный в зелёный цвет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase]
+  id: ClothingBeltKatanaVjlados
+  name: пояс для катаны
+  description: Пояс для катаны подчеркивает стойкость и готовность к приключениям в стиле свэг.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/beltkatana.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/beltkatana.rsi
+  - type: Item
+    size: Huge
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        whitelist:
+          tags:
+          - KatanaVjlados
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - KatanaVjlados
+  - type: Appearance
+  - type: ContainerFill
+    containers:
+      item:
+      - ToyKatanaVjlados
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakVjlados
+  name: зелёный украшенный плащ
+  description: Накидка в зелёном цвете. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesVjlados
+  name: белые боевые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitVjlados
+  name: зелёный украшенный скафандр
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Характеристики идентичны скафандру атмос-техника.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitVjlados
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitVjlados
+  categories: [ HideSpawnMenu ]
+  name: зелёный шлем
+  description: Шлем изолирующий владельца от страшного вакуума снаружи.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/helmet.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Head
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatVjlados
+  name: бантиковая лента
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/head.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/head.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBlackVjlados
+  name: черная короткая шапка
+  description: Создает решительный и свэговый стиль, ты не забрал ее у отца.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/hatblackshort.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/hatblackshort.rsi
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVjlados
+  name: костюм с морским воротником
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGreyVjlados
+  name: модный комбинезон
+  description: Короткая футболка и джоггеры с оранжевыми вставками.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuitvjlados.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuitvjlados.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagVjlados
+  name: зелёные украшенные магнитные ботинки
+  description: Магнитные ботинки в зелёном цвете.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# ClothingOuter
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterHoodieVjlados
+  name: голубая худи
+  description: Яркая голубая худи придает образу свэговости.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite:  _DeadSpace/Sponsor/vjlados/outerhoodie.rsi
+  - type: Clothing
+    sprite:  _DeadSpace/Sponsor/vjlados/outerhoodie.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomVjlados
+  name: класические стринги
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/panties.rsi
+
+# Shoes
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesVjlados
+  name: ботиночки морской флотилии
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/shoes.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/shoes.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSwagVjlados
+  name: модные кроссовки
+  description: Кроссовки в стиле свэг, которые добавляют дерзости и энергии образу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/shoesswag.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/shoesswag.rsi
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksVjlados
+  name: полосатые чулки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/socks.rsi
+
+# Other
+- type: entity
+  parent: CaptainSabre
+  id: ToyKatanaVjlados
+  name: игрушечная катана
+  description: Придает игровому стилю серьзный акцент.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/swordkatana.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 0
+        Blunt: 0
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    sprite: _DeadSpace/Sponsor/vjlados/swordkatana.rsi
+  - type: DisarmMalus
+    malus: 0
+  - type: StaminaDamageOnHit
+    damage: 8
+  - type: Tag
+    tags:
+    - KatanaVjlados
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawsvjlados
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-vjlados

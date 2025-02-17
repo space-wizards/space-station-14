@@ -100,7 +100,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// Total width of the angle for wide attacks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public Angle Angle = Angle.FromDegrees(60);
 
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]

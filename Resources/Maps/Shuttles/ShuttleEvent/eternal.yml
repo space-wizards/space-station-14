@@ -19,7 +19,6 @@ entities:
       name: SRV-Eternal
     - type: Transform
       pos: -0.5208333,-0.45833334
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

@@ -1,0 +1,51 @@
+- type: entity
+  parent: BaseComputer
+  id: ComputerWage
+  name: консоль ЗУП
+  description: Позволяет управлять заработной платой экипажа.
+  components:
+  - type: Construction
+    graph: nullgraph
+    node: nullnode
+  - type: WageConsole
+  - type: UserInterface
+    interfaces:
+      enum.WageUiKey.Key:
+        type: WageConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.WageUiKey.Key
+    singleUser: true
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: explosive
+    - map: ["computerLayerKeys"]
+      state: security_key
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+
+- type: constructionGraph
+  id: nullgraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: nullnode
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2.5
+
+  - node: nullnode
+    actions:
+    - !type:AppearanceChange
+    entity: ComputerFrame

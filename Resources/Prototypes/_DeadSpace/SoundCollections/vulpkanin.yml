@@ -1,0 +1,48 @@
+- type: soundCollection
+  id: VulpkaninMaleScreams
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/male_fox_scream1.ogg
+    - /Audio/_DeadSpace/Voice/Vulpkanin/male_fox_scream2.ogg
+
+- type: soundCollection
+  id: VulpkaninFemaleScreams
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/female_fox_scream1.ogg
+    - /Audio/_DeadSpace/Voice/Vulpkanin/female_fox_scream2.ogg
+
+- type: soundCollection
+  id: VulpkaninMaleHowl
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/male_wolf_howl.ogg
+
+- type: soundCollection
+  id: VulpkaninFemaleHowl
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/female_wolf_howl.ogg
+
+- type: soundCollection
+  id: VulpkaninMaleGrowl
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/male_wolf_growl.ogg
+
+- type: soundCollection
+  id: VulpkaninFemaleGrowl
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/female_fox_growl.ogg
+
+- type: soundCollection
+  id: VulpkaninCry
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/fox_cry1.ogg
+    - /Audio/_DeadSpace/Voice/Vulpkanin/fox_cry2.ogg
+
+- type: soundCollection
+  id: VulpkaninSneezes
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/fox_sneeze.ogg
+
+- type: soundCollection
+  id: VulpkaninLaugh
+  files:
+    - /Audio/_DeadSpace/Voice/Vulpkanin/fox_laugh1.ogg
+    - /Audio/_DeadSpace/Voice/Vulpkanin/fox_laugh2.ogg

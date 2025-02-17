@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation wiki at https://tgstation13.org/wiki/File:Emag.png, inhand sprites modified from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e",
+  "copyright": "Taken from tgstation wiki at https://tgstation13.org/wiki/File:Emag.png, inhand sprites modified from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e, resprited by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -16,7 +16,15 @@
       "directions": 4
     },
     {
-      "name": "icon"
+      "name": "icon",
+      "delays": [
+        [
+          0.3,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
     }
   ]
 }

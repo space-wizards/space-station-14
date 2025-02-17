@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "taken and recolored from tg station at commit https://github.com/tgstation/tgstation/blob/832ae532766d491d91db53746d15b4b55be3f2b0",
+    "copyright": "taken from tg station at commit https://github.com/tgstation/tgstation/blob/832ae532766d491d91db53746d15b4b55be3f2b0, resprite by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
     "size": {
         "x": 32,
         "y": 32
@@ -32,6 +32,10 @@
             ]
         },
         {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
             "name": "inhand-left-0"
         },
         {
@@ -45,6 +49,10 @@
         },
         {
             "name": "inhand-left-4"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         },
         {
             "name": "inhand-right-0"

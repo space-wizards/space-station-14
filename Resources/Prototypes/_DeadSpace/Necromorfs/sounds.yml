@@ -1,0 +1,30 @@
+- type: soundCollection
+  id: NecroScreams
+  files:
+    - /Audio/_DeadSpace/Necromorfs/necromorphSound.ogg
+    - /Audio/_DeadSpace/Necromorfs/necromorphSound2.ogg
+    - /Audio/_DeadSpace/Necromorfs/necroSlasher1.ogg
+    - /Audio/_DeadSpace/Necromorfs/necroSlasher2.ogg
+
+- type: soundCollection
+  id: ConvergenceMusic
+  files:
+    - /Audio/_DeadSpace/Necromorfs/plasma_cutters_are_your_friend.ogg
+
+- type: soundCollection
+  id: DevaEat
+  files:
+    - /Audio/_DeadSpace/Necromorfs/deva_eat1.ogg
+    - /Audio/_DeadSpace/Necromorfs/deva_eat2.ogg
+    - /Audio/_DeadSpace/Necromorfs/deva_eat3.ogg
+
+- type: soundCollection
+  id: DevaEnrage
+  files:
+    - /Audio/_DeadSpace/Necromorfs/deva_enrage1.ogg
+    - /Audio/_DeadSpace/Necromorfs/deva_enrage2.ogg
+
+- type: soundCollection
+  id: SoundsHeadaches
+  files:
+    - /Audio/_DeadSpace/Necromorfs/headaches.ogg

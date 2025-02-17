@@ -1,0 +1,1 @@
+speak-vv-blob = Блоб

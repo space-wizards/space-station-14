@@ -1,0 +1,160 @@
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetCBURNSCSTLeader
+  name: шлем лидера ОППУ
+  description: Устойчивый к давлению и ударостойкий шлем ОППУ.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/cburn/cburncommanderhelmet.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: off-equipped-HELMET
+        shader: unshaded
+  - type: PointLight
+    color: orange
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.005
+    coolingCoefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Poison: 0.9
+
+- type: entity
+  parent: ClothingOuterHardsuitCBURNLeader
+  id: ClothingOuterHardsuitCBURNSCSTLeader
+  name: скафандр лидера ОППУ
+  description: Легкий, но прочный экзокостюм, используемый для специальных операций по устранению пауков ужаса.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/cburn/cburncommander.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Spiders/cburn/cburncommander.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection   
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Poison: 0.6
+        Piercing: 0.8
+        Heat: 0.1
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 1.2
+    sprintModifier: 1.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURNSCSTLeader
+  - type: AutoInjectReagentClothingOnAllowedState # Автоиньектор при смене состояния сущности
+    durationRegenReagents: 120 # кд способности
+    allowedStates: # При каких состояниях
+    - Critical
+    reagents: # Что впрыскивать
+      DexalinPlus: 5
+      Epinephrine: 15
+      Puncturase: 5
+      Omnizine: 5
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetCBURNSCSTSoldier
+  name: шлем солдата ОППУ
+  description: Устойчивый к давлению и ударостойкий шлем ОППУ.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/cburn/cburnxenohelmet.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: off-equipped-HELMET
+        shader: unshaded
+  - type: PointLight
+    color: orange
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.5
+    coolingCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Poison: 0.9
+
+- type: entity
+  parent: ClothingOuterHardsuitCBURN
+  id: ClothingOuterHardsuitCBURNSCSTSoldier
+  name: скафандр солдата ОППУ
+  description: Легкий, но прочный экзокостюм, используемый для специальных операций по устранению пауков ужаса.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/cburn/cburnxeno.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Spiders/cburn/cburnxeno.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Poison: 0.6
+        Piercing: 0.8
+        Heat: 0.1
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.1
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURNSCSTSoldier
+  - type: AutoInjectReagentClothingOnAllowedState # Автоиньектор при смене состояния сущности
+    durationRegenReagents: 120 # кд способности
+    allowedStates: # При каких состояниях
+    - Critical
+    reagents: # Что впрыскивать
+      DexalinPlus: 5
+      Epinephrine: 15
+      Puncturase: 5
+      Omnizine: 5
+      TranexamicAcid: 5
+

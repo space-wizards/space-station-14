@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ADTClothingOuterApronBar
+  name: фартук бармена
+  description: Фартук, который используют лучшие бармены и баристы NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Misc/apronbar.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Misc/apronbar.rsi

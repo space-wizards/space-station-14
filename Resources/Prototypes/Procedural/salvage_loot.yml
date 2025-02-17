@@ -18,6 +18,9 @@
         - proto: CyborgEndoskeleton
           cost: 3
           prob: 0.5
+        - proto: CyborgEndoskeletonSec
+          cost: 6
+          prob: 0.5
         - proto: ChemDispenserMachineCircuitboard
           cost: 2
         - proto: CircuitImprinter
@@ -97,6 +100,9 @@
           cost: 5
         - proto: TechnologyDiskRare
           cost: 5
+          prob: 0.75
+        - proto: CrateScienceTopDisk
+          cost: 5
           prob: 0.5
         - proto: ThrusterUnanchored
         - proto: WaterTankHighCapacity
@@ -105,6 +111,27 @@
         - proto: WeaponTeslaGun
           prob: 0.1
           cost: 2
+        - proto: ADTWeaponWarhammer
+          cost: 5
+          prob: 0.1
+        - proto: CrateSyndicateSuperSurplusBundle
+          cost: 5
+          prob: 0.0001
+        - proto: CrateBerserk
+          cost: 5
+          prob: 0.055
+        - proto: Katana
+          cost: 5
+          prob: 0.25
+        - proto: CrateMaterialPlastic
+          cost: 5
+          prob: 1
+        - proto: CrateMaterialSteel
+          cost: 5
+          prob: 1
+        - proto: CargoTelepadMachineCircuitboard
+          cost: 5
+          prob: 0.1
 
 # Mob loot table
 

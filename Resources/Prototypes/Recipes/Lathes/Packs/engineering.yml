@@ -19,12 +19,15 @@
   - HandheldStationMap
   - ClothingHeadHatWelding
   - ClothingHeadHatCone
+  - GeigerCounter # DS14
 
 - type: latheRecipePack
   id: AtmosStatic
   recipes:
   - AirTank
   - GasAnalyzer
+  - EmergencyOxygenTank # DS14
+  - OxygenTank # DS14
 
 - type: latheRecipePack
   id: ElectronicsStatic
@@ -87,3 +90,4 @@
   - TelecomServerCircuitboard
   - SMESAdvancedMachineCircuitboard
   - HolopadMachineCircuitboard
+  - SalvageExpeditionsComputerCircuitboard # Corvax-Cringe

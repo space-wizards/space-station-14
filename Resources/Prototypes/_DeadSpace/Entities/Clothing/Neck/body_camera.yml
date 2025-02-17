@@ -1,0 +1,26 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBodyCamera
+  name: нательная камера
+  description: Лучше не кидать жёлуди рядом с владельцем этой камеры.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/body_camera.rsi
+  - type: Eye
+  - type: WiredNetworkConnection
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Camera:
+        type: SurveillanceCameraSetupBoundUi
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+  - type: StationAiVision
+  - type: Tag
+    tags:
+    - WhitelistChameleon

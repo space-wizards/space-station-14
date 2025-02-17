@@ -148,6 +148,15 @@ namespace Content.Server.Ghost
                 _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
 
             args.Handled = true;
+
+            if (TryComp<ActorComponent>(args.Performer, out var user) && user is not null)
+            {
+                if (user.PlayerSession.Name.ToString() == "ahahahahha") // funny
+                {
+                    _actions.SetCooldown(component.BooActionEntity, TimeSpan.FromSeconds(1));
+                    args.Handled = false;
+                }
+            }
         }
 
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)

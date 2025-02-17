@@ -296,9 +296,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                         ("time", timeRemain.ToString("mm\\:ss")));
                     continue;
                 }
+                else
+                {
+                    continue;
+                }
             }
 
-            nukeops.LeftOutpost = true;
+            // nukeops.LeftOutpost = true;
+            ev.Cancelled = true;
+            ev.Reason = Loc.GetString("war-ops-infiltrator-unavailable-nowar");
         }
     }
 
@@ -360,8 +366,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (EntityQuery<NukeopsRoleComponent>().Count() < nukieRule.WarDeclarationMinOps)
             return WarConditionStatus.NoWarSmallCrew;
 
-        if (nukieRule.LeftOutpost)
-            return WarConditionStatus.NoWarShuttleDeparted;
+        // if (nukieRule.LeftOutpost)
+        //     return WarConditionStatus.NoWarShuttleDeparted;
 
         if (oldStatus == WarConditionStatus.YesWar)
             return WarConditionStatus.WarReady;

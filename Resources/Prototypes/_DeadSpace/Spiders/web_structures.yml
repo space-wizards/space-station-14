@@ -1,0 +1,170 @@
+- type: accessLevel
+  id: SpiderTerror
+  name: Паук
+
+- type: entity
+  name: дверь из паутины
+  parent: BaseStructure
+  id: AirlockWebTerror
+  suffix: Пауки, закрытая
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/smash.ogg"
+  - type: InteractionOutline
+  - type: AccessReader
+    access: [["SpiderTerror"]]
+  - type: Sprite
+    sprite: Structures/Doors/web_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: closed
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+  - type: AnimationPlayer
+  - type: Physics
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+  - type: Door
+    crushDamage:
+      types:
+        Blunt: 15
+    openSound:
+      path: /Audio/_DeadSpace/Spiders/Eggs/gib1.ogg
+    closeSound:
+      path: /Audio/_DeadSpace/Spiders/Eggs/gib2.ogg
+    denySound:
+      path: /Audio/_DeadSpace/Spiders/Eggs/gib3.ogg
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openingAnimationTime: 1
+    closingAnimationTime: 1
+  - type: ApcPowerReceiver
+    powerLoad: 0
+  - type: PlacementReplacement
+    key: walls
+  - type: Appearance
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Airtight
+    fixVacuum: true
+    noAirWhenFullyAirBlocked: false
+  - type: Occluder
+  - type: DoorBolt
+  - type: BlockWeather
+  - type: Airlock
+    emergencyAccessLayer: false
+    animatePanel: false
+    openingSpriteState: opening
+    closingSpriteState: closing
+
+- type: entity
+  parent: BaseWall
+  id: WallWebSpiderTerror
+  name: стена из паутины
+  description: Удерживает пауков внутри и снаружи.
+  components:
+  - type: Clickable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: Structures/Walls/web.rsi
+  - type: Icon
+    sprite: Structures/Walls/web.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+  - type: IconSmooth
+    key: webs
+    base: wall
+  - type: Construction
+    graph: WebStructures
+    node: wall
+
+- type: entity
+  name: паучий столб притязаний
+  parent: BaseStructure
+  id: SpiderTomb
+  components:
+  - type: Tag
+    tags:
+    - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Spiders/egg.rsi
+    layers:
+    - state: tomb
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Appearance
+  - type: SpiderTerrorTomb
+    range: 5

@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "From #mally0352 for Space Station 14 server Мёртвый Космос",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "mag-1"
+        }
+    ]
+}

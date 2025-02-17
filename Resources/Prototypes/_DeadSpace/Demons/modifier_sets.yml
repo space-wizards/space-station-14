@@ -1,0 +1,39 @@
+- type: damageModifierSet
+  id: Demon
+  coefficients:
+    Blunt: 1
+    Slash: 1
+    Piercing: 1
+    Shock: 0.2
+    Cold: 1
+    Heat: 0.2
+    Poison: 0.25
+    Radiation: 0
+
+- type: damageModifierSet
+  id: SlaughterDemon
+  coefficients:
+    Blunt: 1
+    Slash: 1
+    Piercing: 1
+    Shock: 0.2
+    Cold: 1
+    Heat: 0.2
+    Poison: 0.25
+    Radiation: 0
+
+- type: damageModifierSet
+  id: StandardBorg
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Heat: 0.9
+
+- type: damageModifierSet
+  id: CombatBorg
+  coefficients:
+    Blunt: 0.6
+    Slash: 0.6
+    Piercing: 0.6
+    Heat: 0.7

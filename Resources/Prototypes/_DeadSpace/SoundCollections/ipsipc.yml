@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: IPSIPCScreams
+  files:
+    - /Audio/_DeadSpace/Voice/IPSIPC/robot_scream1.ogg
+    - /Audio/_DeadSpace/Voice/IPSIPC/robot_scream2.ogg

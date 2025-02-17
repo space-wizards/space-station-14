@@ -1,0 +1,49 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ADTClothingBeltSupremeCommanderSheath
+  name: ножны высшего главнокомандующего
+  description: Где моя прелесть?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Belt/supreme-commander-sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _ADT/Clothing/Belt/supreme-commander-sheath.rsi
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    whitelist:
+      tags:
+        - SupremeCommanderSabre
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - SupremeCommanderSabre
+  - type: Appearance
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ADTClothingBeltSupremeSheath
+  name: ножны
+  description: Где моя прелесть?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Belt/supreme-sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _ADT/Clothing/Belt/supreme-sheath.rsi
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    whitelist:
+      tags:
+        - SupremeSabre
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - SupremeSabre
+  - type: Appearance

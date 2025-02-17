@@ -6,9 +6,11 @@
   - type: StorageFill
     contents:
       - id: ClothingHandsGlovesLatex
+        amount: 2
       - id: ClothingHeadsetScience
       - id: ClothingMaskSterile
       - id: ClothingOuterCoatRnd
+        amount: 2
       - id: AnomalyScanner
       - id: NodeScanner
       - id: NetworkConfigurator

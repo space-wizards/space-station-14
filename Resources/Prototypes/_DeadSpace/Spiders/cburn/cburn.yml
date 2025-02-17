@@ -1,0 +1,173 @@
+- type: startingGear
+  id: CBURNSCSTLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackERTLeader
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNSCSTLeader
+    shoes: ADTClothingShoesBootsMagERT
+    id: CBURNPDA
+    pocket1: KukriKnife
+    pocket2: WeaponPulsePistol
+    suitstorage: OxygenTankFilled
+    belt: ClothingBeltBandolier
+  storage:
+    back:
+    - BoxSurvivalEngineering
+    - WeaponShotgunBulldog
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - SCSTMedipen
+    - SCSTMedipen
+    - SCSTMedipen
+    - SCSTMedipen
+    - SCSTMedipen
+    - Crowbar
+
+- type: startingGear
+  id: CBURNSCSTSoldierGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackERTMedical
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNSCSTSoldier
+    shoes: ADTClothingShoesBootsMagERT
+    id: CBURNPDA
+    pocket1: KukriKnife
+    pocket2: WeaponPulsePistol
+    suitstorage: OxygenTankFilled
+    belt: ClothingBeltBandolier
+  storage:
+    back:
+    - BoxSurvivalEngineering
+    - WeaponShotgunBulldog
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - SCSTMedipen
+    - SCSTMedipen
+    - SCSTMedipen
+    - SCSTMedipen
+    - SCSTMedipen
+    - Crowbar
+
+- type: randomHumanoidSettings
+  id: CBURNLeaderSCST
+  parent: EventHumanoidERTZombieImmune
+  components:
+  - type: CburnStaff
+  - type: MindShield
+  - type: Loadout
+    prototypes: [CBURNSCSTLeaderGear]
+  - type: GhostRole
+    name: ghost-role-information-cburn-agent-name
+    description: ghost-role-information-cburn-agent-description
+    rules: ghost-role-information-nonantagonist-rules
+    requirements:
+      - !type:DepartmentTimeRequirement
+        department: Medical
+        time: 36000 # 10 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 72000 # 20 hours
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 36000 # 10 hours
+  - type: GhostTakeoverAvailable
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstERTLeader
+    - NamesLastERT
+
+- type: randomHumanoidSettings
+  id: CBURNSoldierSCST
+  parent: EventHumanoidERTZombieImmune
+  components:
+  - type: CburnStaff
+  - type: MindShield
+  - type: Loadout
+    prototypes: [CBURNSCSTSoldierGear]
+  - type: GhostRole
+    name: ghost-role-information-cburn-agent-name
+    description: ghost-role-information-cburn-agent-description
+    rules: ghost-role-information-nonantagonist-rules
+    requirements:
+      - !type:DepartmentTimeRequirement
+        department: Medical
+        time: 36000 # 10 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 72000 # 20 hours
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 36000 # 10 hours
+  - type: GhostTakeoverAvailable
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstERT
+    - NamesLastERT
+
+- type: entity
+  id: RandomHumanoidCBURNSoldierSCST
+  name: боец ОППУ, ghost role
+  suffix: РХБЗ, Пауки ужаса, Призрачная роль
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: cburn
+  - type: RandomHumanoidSpawner
+    settings: CBURNSoldierSCST
+
+- type: entity
+  name: боец ОППУ, spawner
+  id: CBURNSoldierSCSTSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: cburn
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidCBURNSoldierSCST
+
+- type: entity
+  id: RandomHumanoidSpawnerCBURNLeaderSCST
+  name: ОППУ лидер, ghost role
+  suffix: РХБЗ, Пауки ужаса, Призрачная роль
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    state: cburn
+  - type: RandomHumanoidSpawner
+    settings: CBURNLeaderSCST
+
+- type: entity
+  name: лидер ОППУ, spawner
+  id: CBURNLeaderSCSTSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: cburn
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSpawnerCBURNLeaderSCST

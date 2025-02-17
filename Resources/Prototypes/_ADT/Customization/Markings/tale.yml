@@ -1,0 +1,7 @@
+﻿- type: marking
+  id: ADTAllsuccubus
+  bodyPart: Chest
+  markingCategory: Chest
+  sprites:
+    - sprite: _ADT/Customization/Markings/horns/tale.rsi
+      state: succubus

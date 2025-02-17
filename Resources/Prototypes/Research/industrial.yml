@@ -119,6 +119,21 @@
   - RipleyPeripheralsElectronics
   - MechEquipmentGrabber
 
+- type: technology
+  id: HUD
+  name: research-technology-hud
+  icon:
+    sprite: Clothing/Eyes/Hud/diag.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 7000
+  recipeUnlocks:
+  - ClothingEyesHudDiagnostic
+  - ClothingEyesHudMedical
+  - ClothingEyesHudSecurity
+  - ClothingEyesHudAdvanced
+
 # Tier 2
 
 - type: technology
@@ -182,6 +197,8 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
+    - SalvageExpeditionsComputerCircuitboard # Corvax-Cringe
+    - BorgModuleAdvancedMining # DS14
 
 # Tier 3
 

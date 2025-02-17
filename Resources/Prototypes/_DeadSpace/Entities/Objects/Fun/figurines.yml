@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseFigurine
+  id: BaseFigurineDS14
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Fun/figurines.rsi
+
+- type: entity
+  parent: BaseFigurineDS14
+  id: ToyFigurineERTCAP
+  name: фигурка Командира ОБР
+  description: Минифигурка командира ОБР.
+  components:
+  - type: Sprite
+    state: ertcap
+  - type: SpeakOnTrigger
+    pack: FigurinesHoP
+
+- type: entity
+  parent: BaseFigurineDS14
+  id: ToyFigurineERTEngi
+  name: фигурка инженера ОБР
+  description: Минифигурка инженера ОБР.
+  components:
+  - type: Sprite
+    state: ertengi
+  - type: SpeakOnTrigger
+    pack: FigurinesHoP
+
+- type: entity
+  parent: BaseFigurineDS14
+  id: ToyFigurineERTJunitor
+  name: фигурка уборщика ОБР
+  description: Минифигурка уборщика ОБР.
+  components:
+  - type: Sprite
+    state: ertjunitor
+  - type: SpeakOnTrigger
+    pack: FigurinesHoP
+
+- type: entity
+  parent: BaseFigurineDS14
+  id: ToyFigurineERTOfficer
+  name: фигурка офицера ОБР
+  description: Минифигурка офицера ОБР.
+  components:
+  - type: Sprite
+    state: ertofficer
+  - type: SpeakOnTrigger
+    pack: FigurinesHoP
+
+- type: entity
+  parent: BaseFigurineDS14
+  id: ToyFigurineERTMedic
+  name: фигурка медика ОБР
+  description: Минифигурка медика ОБР.
+  components:
+  - type: Sprite
+    state: ertmedic
+  - type: SpeakOnTrigger
+    pack: FigurinesHoP

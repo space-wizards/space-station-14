@@ -1,0 +1,6 @@
+- type: vendingMachineInventory
+  id: ToysInventory
+  startingInventory:
+    PresentToys: 15
+    PresentFigurine: 15
+    PresentGame: 5

@@ -1,0 +1,43 @@
+- type: job
+  id: CentralCommandOfficial
+  name: job-name-centcomoff
+  description: job-description-centcomoff
+  playTimeTracker: JobCentralCommandOfficial
+  setPreference: false
+  startingGear: CentcomGear
+  icon: "JobIconNanotrasenRed"
+  supervisors: job-supervisors-centcom-administrator
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CentcomGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    back: ClothingBackpackSatchelOfficial
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcom
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestWeb
+    id: CentcomOfficialPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: WeaponPistolN1984
+    pocket1: RubberStampCentcom
+    pocket2: ClothingMaskGasCentcom
+  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
+  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
+  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
+  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
+  # storage:
+  #   back:
+  #   - 
+
+- type: entity
+  parent: ClothingBackpackSatchelHoS
+  id: ClothingBackpackSatchelOfficial
+  name: чёрная сумка
+  description: Стильная чёрная кожаная сумка.

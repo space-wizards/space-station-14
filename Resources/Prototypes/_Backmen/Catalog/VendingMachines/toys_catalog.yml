@@ -1,0 +1,32 @@
+- type: listing
+  id: ToysInventory1
+  productEntity: PresentFigurine
+  cost:
+    SpaceCash: 30
+  categories:
+    - ToysInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ToysInventory2
+  productEntity: PresentToys
+  cost:
+    SpaceCash: 45
+  categories:
+    - ToysInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ToysInventory3
+  productEntity: PresentGame
+  cost:
+    SpaceCash: 90
+  categories:
+    - ToysInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15

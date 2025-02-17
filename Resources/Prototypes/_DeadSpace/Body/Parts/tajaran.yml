@@ -1,0 +1,134 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartTajaran
+  parent: [BaseItem, BasePart]
+  name: "tajaran body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoTajaran
+  name: "тело таяра"
+  parent: [PartTajaran, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/CatSkin/parts.rsi
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadTajaran
+  name: "голова таяра"
+  parent: [PartTajaran, BaseHead]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/CatSkin/parts.rsi
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmTajaran
+  name: "левая рука таяра"
+  parent: [PartTajaran, BaseLeftArm]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "l_arm"
+
+- type: entity
+  id: RightArmTajaran
+  name: "правая рука таяра"
+  parent: [PartTajaran, BaseRightArm]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "r_arm"
+
+- type: entity
+  id: LeftHandTajaran
+  name: "левая кисть таяра"
+  parent: [PartTajaran, BaseLeftHand]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "l_hand"
+
+- type: entity
+  id: RightHandTajaran
+  name: "правая кисть таяра"
+  parent: [PartTajaran, BaseRightHand]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "r_hand"
+
+- type: entity
+  id: TailTajaran
+  name: "хвост таяра"
+  parent: [PartTajaran, BaseTail]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "tail_m"
+
+- type: entity
+  id: LeftLegTajaran
+  name: "левая нога таяра"
+  parent: [PartTajaran, BaseLeftLeg]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "l_leg"
+    - type: MovementBodyPart
+      walkSpeed: 2.7
+      sprintSpeed: 4.6
+
+- type: entity
+  id: RightLegTajaran
+  name: "правая нога таяра"
+  parent: [PartTajaran, BaseRightLeg]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "r_leg"
+    - type: MovementBodyPart
+      walkSpeed: 2.7
+      sprintSpeed: 4.6
+
+- type: entity
+  id: LeftFootTajaran
+  name: "левая ступня таяра"
+  parent: [PartTajaran, BaseLeftFoot]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "l_foot"
+
+- type: entity
+  id: RightFootTajaran
+  name: "правая ступня таяра"
+  parent: [PartTajaran, BaseRightFoot]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/CatSkin/parts.rsi
+      state: "r_foot"

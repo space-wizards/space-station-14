@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
+  "copyright": "Made by inspector_jeleshka (discord)",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+      {
+		"name": "lvl1",
+		"directions": 4
+      },
+      {
+		"name": "lvl2",
+		"directions": 4
+      },
+      {
+		"name": "lvl3",
+		"directions": 4
+      },
+      {
+		"name": "dead"
+      }
+  ]
+}

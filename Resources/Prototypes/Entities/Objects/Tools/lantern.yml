@@ -87,8 +87,8 @@
       energy: 10
     - type: Flash
     - type: LimitedCharges
-      maxCharges: 15
-      charges: 15
+      maxCharges: 5
+      charges: 5
     - type: MeleeWeapon
       damage:
         types:

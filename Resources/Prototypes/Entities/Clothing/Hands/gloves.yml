@@ -268,6 +268,7 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
+    fiberColor: fibers-black
 
 # can't parent combat gloves since they are butcherable
 - type: entity

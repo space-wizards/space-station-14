@@ -1,0 +1,28 @@
+- type: entity
+  name: инъектор дезоксиэфедрина
+  parent: ChemicalMedipen
+  id: DesoxyephedrineMedipen
+  description: Медипен который помогает обрести максимальную мобильность в пылу сражения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: steam
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: steam_empty
+  - type: Hypospray
+    transferAmount: 20
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
+        - ReagentId: Dylovene
+          Quantity: 10
+  - type: Tag
+    tags: []

@@ -1,0 +1,49 @@
+- type: body
+  id: IPS
+  name: "КПС"
+  root: torso
+  slots:
+    head:
+      part: HeadIPS
+      connections:
+      - torso
+      organs:
+        brain: OrganIPCBrain
+        eyes: OrganIPCEyes
+    torso:
+      part: TorsoIPS
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganIPCHeart
+        lungs: OrganIPCLungs
+        stomach: OrganIPCStomach
+        liver: OrganIPCLiver
+        kidneys: OrganIPCKidneys
+    right arm:
+      part: RightArmIPC
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmIPC
+      connections:
+      - left hand
+    right hand:
+      part: RightHandIPC
+    left hand:
+      part: LeftHandIPC
+    right leg:
+      part: RightLegIPC
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegIPC
+      connections:
+      - left foot
+    right foot:
+      part: RightFootIPC
+    left foot:
+      part: LeftFootIPC

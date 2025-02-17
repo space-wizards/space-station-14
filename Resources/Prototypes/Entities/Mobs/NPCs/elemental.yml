@@ -167,9 +167,9 @@
     attackMemoryLength: 10
   - type: NpcFactionMember
     factions:
-      - SimpleNeutral
+      - SimpleHostile # DS14
   - type: RadiationSource
-    intensity: 2
+    intensity: 1 # DS14
     slope: 0.3
   - type: Destructible
     thresholds:
@@ -188,7 +188,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
-    radius: 2
+    radius: 3 # DS14
     energy: 3
     color: "#06DF24"
 

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
@@ -25,6 +25,8 @@
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: Headset
+    color: "#a46106"
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -40,6 +42,8 @@
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
+  - type: Headset
+    color: "#2681a5"
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -54,6 +58,8 @@
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/command.rsi
+  - type: Headset
+    color: "#fcdf03"
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -70,6 +76,8 @@
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: Headset
+    color: "#f2ac26"
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -88,6 +96,8 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: StealTarget
     stealGroup: ClothingHeadsetAltMedical
+  - type: Headset
+    color: "#57b8f0"
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -100,10 +110,13 @@
       - EncryptionKeySecurity
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+      - EncryptionKeyLaw
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Headset
+    color: "#1563bd"
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -120,6 +133,8 @@
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/science.rsi
+  - type: Headset
+    color: "#c68cfa"
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
@@ -128,6 +143,7 @@
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
   components:
   - type: Headset
+    color: "#8f4a4b"
   - type: EncryptionKeyHolder
     keySlots: 5
   - type: ContainerFill
@@ -145,6 +161,7 @@
   name: freelancer's over-ear headset
   components:
     - type: Headset
+      color: "#f6ce64"
     - type: EncryptionKeyHolder
       keySlots: 5
     - type: ContainerFill

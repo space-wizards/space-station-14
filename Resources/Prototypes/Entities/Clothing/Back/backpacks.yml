@@ -201,7 +201,9 @@
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
     grid:
-    - 0,0,10,3
+    - 0,0,9,5
+  - type: ExplosionResistance # DS14
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBackpackERTLeader

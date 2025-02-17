@@ -1,0 +1,14 @@
+ent-BaseMagazineBoxMagnum = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-MagazineBoxMagnum = коробка патронов (.44 магнум)
+    .desc = { ent-BaseMagazineBoxMagnum.desc }
+ent-MagazineBoxMagnumPractice = коробка патронов (.44 магнум учебные)
+    .desc = { ent-BaseMagazineBoxMagnum.desc }
+ent-MagazineBoxMagnumRubber = коробка патронов (.44 магнум резиновые)
+    .desc = { ent-BaseMagazineBoxMagnum.desc }
+ent-MagazineBoxMagnumIncendiary = коробка патронов (.44 магнум зажигательные)
+    .desc = { ent-BaseMagazineBoxMagnum.desc }
+ent-MagazineBoxMagnumUranium = коробка патронов (.44 магнум урановые)
+    .desc = { ent-BaseMagazineBoxMagnum.desc }
+ent-MagazineBoxMagnumAP = коробка патронов (.44 магнум бронебойные)
+    .desc = { ent-BaseMagazineBoxMagnum.desc }

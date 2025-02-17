@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "made by inspector_jeleshka, cburn by gribgear (discord) for Space Station 14 server Мёртвый Космос",
+    "states": [
+        {
+            "name": "ert_ember"
+        },
+        {
+            "name": "ert_red"
+        },
+        {
+            "name": "ert_gamma"
+        },
+        {
+            "name": "ert_engi"
+        },
+        {
+            "name": "ert_janitor"
+        },
+        {
+            "name": "cburn"
+        },
+        {
+            "name": "cburn_sierra"
+        }
+    ]
+}

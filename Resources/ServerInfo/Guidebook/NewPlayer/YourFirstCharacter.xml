@@ -1,54 +1,54 @@
 <Document>
-# The Captains and the Clowns
-This is a guide for editing your character's appearance. Make sure you read Character Creation first.
-Upon creating your character, you may be intimidated by your vast range of options.
+# Капитаны и клоуны
+Это руководство по редактированию внешности вашего персонажа. Сначала обязательно прочитайте "Создание персонажа".
+При создании персонажа вы можете быть напуганы огромным количеством возможностей.
   
-It's okay to make your first character [color=#a4885c]randomized[/color] and roll with it, even experienced players do it.
-Making your first character doesn't have to be precise, either. You can [color=#a4885c]wing it[/color] and see what happens.
+Вполне нормально сделать своего первого персонажа [color=#a4885c]случайным[/color] и начать с ним играть, так поступают даже опытные игроки.
+Создание первого персонажа также не обязательно должно быть точным. Вы можете [color=#a4885c]сымпровизировать[/color] и посмотреть, что получится.
   
-If you'd like to be [color=#a4885c]methodical[/color], though, creating a character is easy to do one step at a time.
+Если вы предпочитаете [color=#a4885c]методичный[/color] подход, то персонажа легко создать пошагово.
 
-## Choosing a Species
-Most species have minor differences, which you can read about under the [color=#a4885c]Species[/color] entry.
-However, you may find that it's easier to make your first character as a human, moth, dwarf or reptilian.
+## Выбор расы
+У большинства рас есть небольшие различия, о которых вы можете прочитать в разделе [color=#a4885c]Расы[/color].
+Однако вы можете обнаружить, что вам проще создать своего первого персонажа в виде человека, ниана, дворфа или унатха.
 
-This shouldn't discourage you from getting creative with your character, though.
+Однако это не должно отбить у вас желание творчески подойти к созданию своего персонажа.
 
-This guide will assume you are creating a human, but the process is similar across all species.
+В этом руководстве предполагается, что вы создаете человека, но процесс похож для всех видов.
 
-## Minor Characteristics
-These include:
-- Age (18-29 for young, 30-59 for middle-aged, 60+ for old)
-- Sex (your sprite, as seen by toggling "Show clothing")
-- Pronouns (what the game will refer to you as)
-- Skin color (may be a slider or RGB depending on species)
-- Eye color (RGB)
-- Hair color (RGB)
+## Незначительные характеристики
+Они включают:
+- Возраст (18-29 для молодых, 30-59 для средних, 60+ для старых)
+- Пол (ваш спрайт, который можно увидеть, переключив "Показать одежду")
+- Местоимения (то, как игра будет обращаться к вам)
+- Цвет кожи (может быть ползунком или RGB в зависимости от вида)
+- Цвет глаз (RGB)
+- Цвет волос (RGB)
 
-These are minor changes and have little effect on gameplay. This is what players will read when they [color=#a4885c]examine you[/color]. ("young man")
+Это незначительные изменения, которые мало влияют на игровой процесс. Это то, что игроки будут читать, когда будут [color=#a4885c]осматривать вас[/color]. ("человек молодого возраста")
 
-## Hair and Facial Hair
-Again, you may be intimidated by the vast range of options. That's okay.
+## Волосы и лицевая растительность
+И снова вас может испугать огромное количество вариантов. Это нормально.
 
-[color=#a4885c]Take your time with it.[/color] You can skim or click through each of the options and find which one you like.
-Sometimes it's easier to set your desired hair color before looking at the options.
+[color=#a4885c]Не торопитесь с этим.[/color] Вы можете просмотреть или щелкнуть по каждому из вариантов и найти тот, который вам нравится.
+Иногда проще установить желаемый цвет волос, прежде чем просматривать варианты.
 
-If you really can't decide, some popular haircut options include Floorlength Bedhead, Modern, Buisness, CIA or simply bald.
-Alternatively, [color=#a4885c]randomize[/color] a separate character and see what kind of haircuts they're rocking with. Suprise yourself.
+Если вы не можете определиться с выбором, некоторые популярные варианты стрижек включают в себя "Небрежная", "Современная", "Деловая", "ЦРУ" или просто "Лысый".
+Как вариант, [color=#a4885c]сгенерируйте[/color] отдельного персонажа и посмотрите, с какими стрижками он ходит. Удивите себя.
 
-Don't feel obligated to use any of these, though.
+Однако не чувствуйте себя обязаннымы использовать какую-либо из них.
   
-## Markings
-Markings range from [color=#a4885c]scars and snouts[/color] to [color=#a4885c]tattoos and tails[/color].
-Think of them like [color=#a4885c]accessories[/color] that are a part of your body, for giving your character some extra flair and uniqueness. They cannot be changed during the round.
+## Черты внешности
+Черты внешности варьируются от [color=#a4885c]шрамов и мордочек[/color] до [color=#a4885c]татуировок и хвостов[/color].
+Думайте о них как об [color=#a4885c]аксессуарах[/color], которые являются частью вашего тела и придают вашему персонажу дополнительную изюминку и уникальность. Они не могут быть изменены в течение раунда.
 
-Some species have more marking options than others. Humans are more limited in terms of markings than moths or reptilians.
+Некоторые виды имеют больше возможностей для черт, чем другие. Люди более ограничены в плане внешности, чем нианы или унатхи.
 
-You can have a set number of markings in each '[color=#a4885c]category[/color]', as seen at the top. For example, reptilians can have one chest marking but two markings on the top of their heads.
-These are [color=#a4885c]cosmetic[/color] and have no effect on gameplay.
+Вы можете иметь определённое количество черт в каждой '[color=#a4885c]категории[/color]', как видно вверху. Например, у унатхов может быть одна метка на груди, но две метки на макушке головы.
+Они носят [color=#a4885c]косметический[/color] характер и не влияют на игровой процесс.
 
-## How to stand out
-Memorable characters are usually remembered for their personality, their deeds and their [color=#a4885c]robustness[/color], but that doesn't mean you have to be some sort of hotshot.
+## Как выделиться
+Запоминающимися персонажей обычно делает их индивидуальность, поступки и [color=#a4885c]робастность[/color], но это не значит, что вы должны быть каким-то зазнайкой.
 
-Don't sweat having a big, flashy and memorable character. Make your own story that you'll be remembered for.
+Не стремитесь иметь большого, яркого и запоминающегося персонажа. Создайте свою собственную историю, которая запомнится вам надолго.
 </Document>

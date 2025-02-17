@@ -58,8 +58,8 @@ public sealed class WarDeclaratorSystem : EntitySystem
         var ev = new WarDeclaredEvent(ent.Comp.CurrentStatus, ent);
         RaiseLocalEvent(ref ev);
 
-        if (ent.Comp.DisableAt < _gameTiming.CurTime)
-            ev.Status = WarConditionStatus.NoWarTimeout;
+        // if (ent.Comp.DisableAt < _gameTiming.CurTime)
+        //     ev.Status = WarConditionStatus.NoWarTimeout;
 
         ent.Comp.CurrentStatus = ev.Status;
 

@@ -1,0 +1,97 @@
+- type: sponsorLoadout
+  id: ClothingBackpackTier3SponsorLoadout
+  entity: ClothingBackpackTier3Sponsor
+  sponsorOnly: true
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier3Sponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Маг
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsWatchDivine
+      - id: ClothingMaskSkull
+      - id: ClothingOuterHoodiePink
+      - id: ClothingNeckWingsBlackVampire
+      - id: ClothingNeckWingsPegas
+      - id: ClothingNeckWingsSkeletonRed
+      - id: ClothingOuterWizard
+      - id: ClothingHeadHatWizardFake
+      - id: BedsheetWiz
+      - id: ClothingUniformJumpsuitSkeleton
+      - id: ClothingNeckWingsMagic
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier3HOSIAASponsorLoadout
+  entity: ClothingBackpackTier3HOSIAASponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier3HOSIAASponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Маг, ГСБ АВД
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLeatherUSSPBlack
+      - id: ClothingHeadHatCapUSSPBlack
+      - id: ClothingOuterCoatUSSPOvercoatBlack
+      - id: ClothingShoesUSSPBlack
+
+# jesuisunfou
+- type: sponsorLoadout
+  id: OldUSSPGlovesLoadout
+  entity: ClothingHandsGlovesLeatherUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: sponsorLoadout
+  id: OldUSSPCapLoadout
+  entity: ClothingHeadHatCapUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: sponsorLoadout
+  id: ClothingUniformJumpsuitSkeletonLoadout
+  entity: ClothingUniformJumpsuitSkeleton
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: OldUSSPOvercoatLoadout
+  entity: ClothingOuterCoatUSSPOvercoatBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: sponsorLoadout
+  id: OldUSSPShoesLoadout
+  entity: ClothingShoesUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+# ?
+- type: sponsorLoadout
+  id: ClothingOuterWizardLoadout
+  entity: ClothingOuterWizard
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: ClothingHeadHatWizardFakeLoadout
+  entity: ClothingHeadHatWizardFake
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: BedsheetWizLoadout
+  entity: BedsheetWiz
+  sponsorOnly: true
+
+# choui
+- type: sponsorLoadout
+  id: ClothingNeckWingsMagicLoadout
+  entity: ClothingNeckWingsMagic
+  sponsorOnly: true

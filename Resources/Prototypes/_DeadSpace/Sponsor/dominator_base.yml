@@ -1,0 +1,181 @@
+- type: sponsorLoadout
+  id: DominatorBase
+  entity: ClothingBackpackDominator
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDominator
+  name: зелёный украшенный рюкзак
+  description: Вместительный рюкзак с множеством карманов. Окрашен в зелёный цвет. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,11,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltDominatorFilled
+      - id: ClothingNeckCloakDominator
+      - id: ClothingHandsGlovesDominator
+      - id: ClothingOuterHardsuitDominator
+      - id: ClothingHeadHatDominator
+      - id: ClothingUniformJumpsuitDominator
+      - id: ClothingShoesBootsMagDominator
+      - id: ClothingUnderSocksDominator
+      - id: ToySword
+      - id: WeaponDisablerToySponsor
+
+- type: entity
+  name: продвинутая аптечка первой помощи
+  description: Продвинутый набор для оказания помощи при продвинутых ранах.
+  categories: [ HideSpawnMenu ]
+  parent: MedkitAdvancedFilled
+  id: DominatorMedkitAdvanced
+  components:
+  - type: Sprite
+    state: advkit
+  - type: Item
+    size: Normal
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltDominatorFilled
+  name: зелёный украшенный пояс
+  description: Пояс окрашенный в зелёный цвет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: CrowbarRed
+      - id: WelderExperimental
+      - id: Multitool
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakDominator
+  name: зелёный украшенный плащ
+  description: Накидка в зелёном цвете. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesDominator
+  name: белые боевые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitDominator
+  name: зелёный украшенный скафандр
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Характеристики идентичны скафандру атмос-техника.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitDominator
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitDominator
+  categories: [ HideSpawnMenu ]
+  name: зелёный шлем
+  description: Шлем изолирующий владельца от страшного вакуума снаружи.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/helmet.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Head
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDominator
+  name: бантиковая лента
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/head.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/head.rsi
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitDominator
+  name: костюм с морским воротником
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/jumpsuit.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagDominator
+  name: зелёные украшенные магнитные ботинки
+  description: Магнитные сапоги, используемые во время работы вне корабля, чтобы оставаться надёжно прикреплённым к поверхности.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksDominator
+  name: полосатые чулки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/socks.rsi

@@ -1,0 +1,18 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHardhatCraft
+  name: самодельный бронированный шлем
+  description: Жёлтая каска с приделанной к ней металлической пластиной.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/crafthelmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/crafthelmet.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.8
+  - type: Construction
+    graph: ClothingCraftHelmet
+    node: clothingCraftHelmet

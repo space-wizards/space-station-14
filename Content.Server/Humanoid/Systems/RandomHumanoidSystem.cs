@@ -58,6 +58,8 @@ public sealed class RandomHumanoidSystem : EntitySystem
 
         EntityManager.InitializeAndStartEntity(humanoid);
 
+        _humanoid.LoadProfile(humanoid, profile); // DS14: I really don't remember why this line is needed and I'm afraid to remove it
+
         return humanoid;
     }
 }

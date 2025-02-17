@@ -5,7 +5,7 @@
         <BoxContainer Orientation="Horizontal" Name="ProgressionBox" Visible="False">
             <Label Name="ProgressionLabel"
                    Text="{Loc 'salvage-expedition-window-progression'}"
-                   SetWidth="96"
+                   SetWidth="200"
                    Margin="5"/>
             <ProgressBar Name="ProgressionBar"
                          HorizontalExpand="True"
@@ -18,7 +18,7 @@
         <BoxContainer Orientation="Horizontal">
             <Label Name="NextOfferLabel"
                    Text="{Loc 'salvage-expedition-window-next'}"
-                   SetWidth="96"
+                   SetWidth="200"
                    Margin="5"/>
             <ProgressBar Name="NextOfferBar"
                          HorizontalExpand="True"

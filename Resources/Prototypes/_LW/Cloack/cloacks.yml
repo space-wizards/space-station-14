@@ -1,0 +1,80 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakHangler
+  name: плащ семьи ханглер
+  description: Торжественно-выходной плащ семьи Ханглер.
+  components:
+  - type: Sprite
+    sprite: _LW/Cloack/unnown.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakNanotrasenVip
+  name: плащ Фронтира
+  description: Выдается легендам осваивавшим сектор Фронтира
+  components:
+  - type: Sprite
+    sprite: _LW/Cloack/nanotrasenvip.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakFoxyorg
+  name: плащ организации "лиса"
+  description: Плащ экипажа Промышленно-Научной Организации "Лиса". Чем они занимаются на самом деле?
+  components:
+  - type: Sprite
+    sprite: _LW/Cloack/foxorg.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakSunset
+  name: плащ "закат"
+  description: Стильный фиолетовый плащ в тонах заката
+  components:
+  - type: Sprite
+    sprite: _LW/Cloack/sunsetcloack.rsi
+
+- type: entity
+  parent: ClothingNeckCloakHop
+  id: ClothingNeckCloakSr
+  name: плащ главы персонала фронтира
+  description: Зелёный плащ с белым воротником с золотой выкройкой, свидетельствующий что вы являетесь хранителем каждого шлюза на станции.
+  components:
+  - type: Sprite
+    sprite: _LW/Clothing/Neck/Cloaks/sr.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, ClothingSlotBase]
+  id: ClothingNeckCloakJanitor
+  name: плащ уборщика
+  description: Как ты вообще это достал? ты сам его сделал?
+  components:
+  - type: Sprite
+    sprite: _LW/Clothing/Neck/Cloaks/janitor.rsi
+  - type: Clothing
+    sprite: _LW/Clothing/Neck/Cloaks/janitor.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: Plunger
+        whitelist:
+          tags:
+          - Plunger
+  - type: ItemMapper
+    mapLayers:
+      plunger:
+        whitelist:
+          tags:
+            - Plunger
+    sprite: _LW/Clothing/Neck/Cloaks/janitor.rsi
+  - type: Appearance
+
+- type: entity
+  id: ClothingNeckCloakJanitorFilled
+  parent: ClothingNeckCloakJanitor
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - Plunger

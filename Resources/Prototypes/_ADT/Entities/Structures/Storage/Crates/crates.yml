@@ -1,0 +1,15 @@
+- type: entity
+  parent: CrateGeneric
+  id: LavalandChest
+  name: древний сундук
+  description: Сундук истощяющий зловещую энергию вокруг. Вам кажется его глаз следить за вами.
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Storage/Crates/lavaland.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: _ADT/Structures/Storage/Crates/lavaland.rsi
+    state: base

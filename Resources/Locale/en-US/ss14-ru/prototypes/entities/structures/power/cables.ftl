@@ -1,0 +1,17 @@
+ent-CableBase = { "" }
+    .desc = { "" }
+ent-CableHV = HV power cable
+    .desc = An orange high voltage power cable.
+ent-CableHVUncuttable = { ent-CableHV }
+    .suffix = uncuttable
+    .desc = { ent-CableHV.desc }
+ent-CableMV = MV power cable
+    .desc = A medium voltage power cable.
+ent-CableMVUncuttable = { ent-CableMV }
+    .suffix = uncuttable
+    .desc = { ent-CableMV.desc }
+ent-CableApcExtension = LV power cable
+    .desc = A cable used to connect machines to an APC.
+ent-CableApcExtensionUncuttable = { ent-CableApcExtension }
+    .suffix = uncuttable
+    .desc = { ent-CableApcExtension.desc }

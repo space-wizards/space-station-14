@@ -1,0 +1,382 @@
+#Tactick
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckTactick
+  name: тактическая водолазка
+  description: Тактическая и удобная водолазка с усиленной синтетической тканью.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_tactick.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_tactick.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.9
+        Piercing: 0.85
+        Heat: 0.8
+
+#Mercenary
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckAmerc
+  name: водолазка Наёмника
+  description: Практичная и удобная водолазка оливкового цвета.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_amerc.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_amerc.rsi
+
+#Black
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlack
+  name: чёрная водолазка
+  description: Практичная и удобная водолазка черного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlackWomen
+  name: чёрная водолазка с юбкой
+  description: Практичная и удобная водолазка черного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black_women.rsi
+
+#Blue
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlue
+  name: синяя водолазка
+  description: Практичная и удобная водолазка синего цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blue.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlueBlack
+  name: синяя водолазка
+  description: Практичная и удобная водолазка синего цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blueblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blueblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlueWomen
+  name: синяя водолазка с юбкой
+  description: Практичная и удобная водолазка синего цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blue_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blue_women.rsi
+
+#golub
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckGolub
+  name: голубая водолазка
+  description: Практичная и удобная водолазка голубого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_golub.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_golub.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckGolubBlack
+  name: голубая водолазка
+  description: Практичная и удобная водолазка голубого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_golubblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_golubblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckGolubWomen
+  name: голубая водолазка с юбкой
+  description: Практичная и удобная водолазка голубого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_golub_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_golub_women.rsi
+
+#Green
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckGreen
+  name: зелёная водолазка
+  description: Практичная и удобная водолазка зелёного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_green.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckGreenBlack
+  name: зелёная водолазка
+  description: Практичная и удобная водолазка зелёного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_greenblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_greenblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckGreenWomen
+  name: зелёная водолазка с юбкой
+  description: Практичная и удобная водолазка зелёного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_green_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_green_women.rsi
+
+#Orange
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckOrange
+  name: оранжевая водолазка
+  description: Практичная и удобная водолазка оранжевого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_orange.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_orange.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckOrangeBlack
+  name: оранжевая водолазка
+  description: Практичная и удобная водолазка оранжевого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_orangeblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_orangeblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckOrangeWomen
+  name: оранжевая водолазка с юбкой
+  description: Практичная и удобная водолазка оранжевого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_orange_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_orange_women.rsi
+
+#Purpur
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckPurpur
+  name: фиолетовая водолазка
+  description: Практичная и удобная водолазка фиолетового цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_purpur.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_purpur.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckPurpurBlack
+  name: фиолетовая водолазка
+  description: Практичная и удобная водолазка фиолетового цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_purpurblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_purpurblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckPurpurWomen
+  name: фиолетовая водолазка с юбкой
+  description: Практичная и удобная водолазка фиолетового цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_purpur_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_purpur_women.rsi
+
+#Red
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckRed
+  name: красная водолазка
+  description: Практичная и удобная водолазка красного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_red.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckRedBlack
+  name: красная водолазка
+  description: Практичная и удобная водолазка красного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_redblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_redblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckRedWomen
+  name: красная водолазка с юбкой
+  description: Практичная и удобная водолазка красного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_red_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_red_women.rsi
+
+#Salat
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckSalat
+  name: жёлтая водолазка
+  description: Практичная и удобная водолазка жёлтого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_salat.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_salat.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckSalatBlack
+  name: жёлтая водолазка
+  description: Практичная и удобная водолазка жёлтого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_salatblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_salatblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckSalatWomen
+  name: жёлтая водолазка с юбкой
+  description: Практичная и удобная водолазка жёлтого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_salat_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_salat_women.rsi
+
+#White
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckWhite
+  name: белая водолазка
+  description: Практичная и удобная водолазка белого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_white.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_white.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckWhiteBlack
+  name: белая водолазка
+  description: Практичная и удобная водолазка белого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_whiteblack.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_whiteblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckWhiteWomen
+  name: белая водолазка с юбкой
+  description: Практичная и удобная водолазка белого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_white_women.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_white_women.rsi
+
+#sleeveless
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlackSleeveless
+  name: чёрная водолазка
+  description: Практичная и удобная водолазка чёрного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blacksleeveless.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_blacksleeveless.rsi
+
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckBlackWomenSleeveless
+  name: чёрная водолазка с юбкой
+  description: Практичная и удобная водолазка чёрного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black_womensleeveless.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black_womensleeveless.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckWhiteSleeveless
+  name: белая водолазка
+  description: Практичная и удобная водолазка белого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_whitesleeveless.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_whitesleeveless.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckWhiteBlackSleeveless
+  name: белая водолазка
+  description: Практичная и удобная водолазка белого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_whiteblacksleeveless.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_whiteblacksleeveless.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformTurleneckWhiteWomenSleeveless
+  name: белая водолазка с юбкой
+  description: Практичная и удобная водолазка белого цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_white_womensleeveless.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_white_womensleeveless.rsi

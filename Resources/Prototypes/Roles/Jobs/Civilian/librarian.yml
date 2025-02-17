@@ -3,12 +3,22 @@
   name: job-name-librarian
   description: job-description-librarian
   playTimeTracker: JobLibrarian
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600 # 1 hour
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 50
+  #end-backmen: currency
 
 - type: startingGear
   id: LibrarianGear
@@ -17,7 +27,11 @@
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d20Dice
+    belt: BooksBag
     pocket2: HandLabeler # for making named bestsellers
+    socks: ClothingUnderwearSocksLibrarian
+  inhand:
+    - BriefcaseBrownFilled
   storage:
     back:
     - BookRandom

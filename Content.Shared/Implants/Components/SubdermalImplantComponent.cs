@@ -64,6 +64,13 @@ public sealed partial class UseFreedomImplantEvent : InstantActionEvent
 
 }
 
+// DS14-implants-start
+public sealed partial class UseAdrenalImplantEvent : InstantActionEvent
+{
+
+}
+// DS14-implants-end
+
 /// <summary>
 /// Used for triggering trigger events on the implant via action
 /// </summary>

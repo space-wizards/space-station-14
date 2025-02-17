@@ -1,0 +1,12 @@
+ent-ActionRevertPolymorph = Revert
+    .desc = Revert back into your original form.
+ent-ActionPolymorph = { "" }
+    .desc = { "" }
+ent-ActionPolymorphWizardSpider = Spider Polymorph
+    .desc = Polymorphs you into a Spider.
+ent-ActionPolymorphWizardRod = Rod Form
+    .desc = CLANG!
+ent-ActionPolymorphJaunt = Ethereal Jaunt
+    .desc = Melt into the Ethereal Plane for a quick getaway!
+ent-ActionPolymorphJauntII = Ethereal Jaunt II
+    .desc = Melt into the Ethereal Plane for an even quicker getaway!

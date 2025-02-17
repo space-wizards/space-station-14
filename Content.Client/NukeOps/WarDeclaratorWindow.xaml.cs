@@ -71,16 +71,16 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-small-crew");
                 StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
                 break;
-            case WarConditionStatus.NoWarShuttleDeparted:
-                StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
-                InfoLabel.Text = Loc.GetString("war-declarator-conditions-left-outpost");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
-                break;
-            case WarConditionStatus.NoWarTimeout:
-                StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
-                InfoLabel.Text = Loc.GetString("war-declarator-conditions-time-out");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
-                break;
+            // case WarConditionStatus.NoWarShuttleDeparted:
+            //     StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
+            //     InfoLabel.Text = Loc.GetString("war-declarator-conditions-left-outpost");
+            //     StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+            //     break;
+            // case WarConditionStatus.NoWarTimeout:
+            //     StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
+            //     InfoLabel.Text = Loc.GetString("war-declarator-conditions-time-out");
+            //     StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+            //     break;
             case WarConditionStatus.NoWarUnknown:
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-unknown");
@@ -102,8 +102,8 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
                 var timeLeft = _endTime.Subtract(_gameTiming.CurTime);
                 if (timeLeft > TimeSpan.Zero)
                     InfoLabel.Text = Loc.GetString("war-declarator-boost-timer", ("time", timeLeft.ToString("mm\\:ss")));
-                else
-                    UpdateStatus(WarConditionStatus.NoWarTimeout);
+                // else
+                //     UpdateStatus(WarConditionStatus.NoWarTimeout);
                 break;
 
             case WarConditionStatus.WarReady:

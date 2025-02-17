@@ -1,0 +1,18 @@
+{
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By discord user SWG#6421 (481693809806278657)",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-UNDERWEART",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}

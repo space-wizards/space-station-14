@@ -1,0 +1,12 @@
+- type: entity
+  id: RCDCE
+  parent: [ RCD, BaseEngineeringContraband ]
+  name: РСУ старшего инженера
+  description: Улучшенная версия базового РСУ которая самовосстанавливет заряды.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Tools/cercd.rsi
+    layers:
+    - state: icon
+  - type: AutoRecharge
+    rechargeDuration: 10

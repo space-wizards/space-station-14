@@ -60,6 +60,9 @@
         - id: MaterialToothSpaceCarp1
           amount: 1
           maxAmount: 4
+        - id: FoodCaviar # DS14
+          amount: 2
+          maxAmount: 4
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -85,6 +88,7 @@
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: NightVision # DS14
 
 - type: entity
   parent: BaseMobCarp
@@ -124,6 +128,12 @@
     - type: Sprite
       sprite: Mobs/Aliens/Carps/holo.rsi
     - type: Physics
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        50: Dead
+    - type: Stamina
+      critThreshold: 100
     - type: Fixtures
       fixtures:
         fix1:

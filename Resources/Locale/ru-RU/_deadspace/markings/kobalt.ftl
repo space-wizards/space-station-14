@@ -1,0 +1,8 @@
+marking-LizardTailSmoothKobolt-tail_smooth = Кобольд, хвост (Гладкий)
+marking-LizardTailSmoothKobolt = Кобольд, хвост (Гладкий)
+marking-LizardTailSpikesKobolt-tail_spikes = Кобольд, хвост (Шипастый)
+marking-LizardTailSpikesKobolt = Кобольд, хвост (Шипастый)
+marking-LizardTailLTigerKobolt-tail_ltiger = Кобольд, хвост (Светлые тигриные полоски)
+marking-LizardTailLTigerKobolt = Кобольд, хвост (Светлые тигриные полоски)
+marking-LizardTailDTigerKobolt-tail_dtiger = Кобольд, хвост (Тёмные тигриные полоски)
+marking-LizardTailDTigerKobolt = Кобольд, хвост (Тёмные тигриные полоски)

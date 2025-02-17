@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ADTClothingOuterSuitRacoon
+  name: костюм енота
+  description: Это же Мортиша!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Suits/racoon.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Suits/racoon.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ADTClothingOuterSuitFox
+  name: костюм лисы
+  description: Алиса???
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Suits/fox.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Suits/fox.rsi

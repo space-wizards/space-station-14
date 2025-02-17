@@ -1,0 +1,9 @@
+ent-BriefcaseIAAFilled = { ent-BriefcaseBrown }
+    .suffix = IAA, DO NOT MAP
+    .desc = { ent-BriefcaseBrown.desc }
+ent-BriefcaseMagistratFilled = { ent-BriefcaseBrown }
+    .suffix = Magistrat, DO NOT MAP
+    .desc = { ent-BriefcaseBrown.desc }
+ent-BriefcaseLawyerFilled = { ent-BriefcaseBrown }
+    .suffix = Lawyer, DO NOT MAP
+    .desc = { ent-BriefcaseBrown.desc }

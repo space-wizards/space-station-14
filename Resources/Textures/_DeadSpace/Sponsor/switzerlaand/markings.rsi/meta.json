@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by gribgear (discord)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+            "name": "bandaged_L_eye",
+            "directions": 4
+        },
+        {
+            "name": "bandaged_R_eye",
+            "directions": 4
+        },
+        {
+            "name": "kitsune_primary",
+            "directions": 4
+        },
+        {
+            "name": "kitsune_secondary",
+            "directions": 4
+        }
+    ]
+}

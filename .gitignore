@@ -10,6 +10,13 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Secret
+Secrets
+Resources/Prototypes/DeadSpaceSecrets
+Resources/Prototypes/DeadSpaceSecretsServer
+Resources/Textures/DeadSpaceSecrets
+Resources/Locale/ru-RU/deadspace-secrets
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

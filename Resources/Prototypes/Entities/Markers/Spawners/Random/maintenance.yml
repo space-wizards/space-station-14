@@ -155,6 +155,17 @@
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin
+        # Corvax-Pins-Start
+        - id: ClothingNeckUSSPPin
+        - id: ClothingNeckDonkPin
+        - id: ClothingNeckEarthPin
+        - id: ClothingNeckLogistikaPin
+        - id: ClothingNeckDeForestPin
+        - id: ClothingNeckNakamuraPin
+        - id: ClothingNeckNanoTrasenPin
+        - id: ClothingNeckSyndicakePin
+        - id: ClothingNeckVitezstviPin
+        # Corvax-Pins-End
     # Rare Group
     - !type:GroupSelector
       weight: 2

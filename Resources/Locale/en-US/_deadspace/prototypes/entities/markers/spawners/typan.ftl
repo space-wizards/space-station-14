@@ -1,0 +1,16 @@
+ent-SpawnPointLatejoinTypanAtmos = атмосферный инженер Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanBotanist = ботаник Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanCargotech = грузчик Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanChef = повар Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanMedic = медик Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanRD = директор исследований Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanScience = учёный Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTypanOfficer = офицер телекомуникаций Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }

@@ -1,0 +1,164 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatBMF
+  name: парадная фуражка ВКФ СССП
+  description: Белый парадная фуражка Военно-космического флота СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/bmf.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/bmf.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadMusical
+  name: парадная фуражка военного оркестра
+  description: Парадная фуражка Военно-оркестровая службы СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/musical.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/musical.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadKVD
+  name: голубой Берет КДВ
+  description: Голубой берет военнослужащих Космо-десантных войск
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/kvdhead.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/kvdhead.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadMVD
+  name: серый Берет МВД
+  description: Серый берет подразделений специального назначения МВД СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/mvd.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/mvd.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadMSH
+  name: оранжевый Берет МЧС
+  description: Оранжевый берет МЧС СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/msh.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/msh.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadSea
+  name: чёрный Берет
+  description: Чёрный берет военнослужащих морской пехоты
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/sea.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/sea.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadMil
+  name: малиновый берет СВ СССП
+  description: Малиновый берет военнослужащих войск СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/millitary.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/millitary.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadBorder
+  name: зелёный Берет ПВ СССП
+  description: Зелёный берет военнослужащих Пограничных войск СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/Nine/border.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/Nine/border.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBMF
+  name: белый парадная форма ВКФ СССП
+  description: Полная парадная форма Военно-космического флота СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/bmf.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/bmf.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformMusical
+  name: парадная форма военного оркестра
+  description: Полная парадная форма Военно-оркестровая службы СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/musical.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/musical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformKVD
+  name: парадная форма КДВ и ВДВ СССП
+  description: Полная парадная форма Космо-Десантных Войск и Воздушно-десантных войск ССО
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/kvd.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/kvd.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformSea
+  name: парадная форма МП СССП
+  description: Полная парадная форма Морской Пехоты СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/sea.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/sea.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformCommon
+  name: обще-войсковой парадная форма
+  description: Чистая и опрятная парадная форма СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/commonnine.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/commonnine.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformMillitary
+  name: парадная форма СВ СССП
+  description: Полная парадная форма Сухопутных Войск СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/millitary.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/millitary.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBorder
+  name: парадная форма ПВ СССП
+  description: Полная парадная форма пограничных войск СССП
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Nine/border.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Nine/border.rsi

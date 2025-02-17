@@ -22,7 +22,9 @@
       - id: WeaponShotgunEnforcer
         amount: 2
       - id: BoxLethalshot
-        amount: 4
+        amount: 3
+      - id: ClothingBeltBandolier
+        amount: 2
 
 - type: entity
   id: CrateTrackingImplants
@@ -88,3 +90,14 @@
       amount: 2
     - id: RiotShield
       amount: 2
+
+- type: entity
+  id: CrateArmoryDominator
+  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  name: dominator crate
+  description: Contains three dominators. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: PistolDominator
+        amount: 3

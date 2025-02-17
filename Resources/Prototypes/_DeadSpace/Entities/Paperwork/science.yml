@@ -1,0 +1,41 @@
+- type: paperworkForm
+  id: Science0
+  category: science
+  name: paperwork-form-title-science-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedScience
+
+- type: paperworkForm
+  id: Science1
+  category: science
+  name: paperwork-form-title-science-1
+  text: "/Paperwork/Science/1.xml"
+  paperPrototype: PaperPrintedScience
+
+- type: paperworkForm
+  id: Science2
+  category: science
+  name: paperwork-form-title-science-2
+  text: "/Paperwork/Science/2.xml"
+  paperPrototype: PaperPrintedScience
+
+- type: paperworkForm
+  id: Science3
+  category: science
+  name: paperwork-form-title-science-3
+  text: "/Paperwork/Science/3.xml"
+  paperPrototype: PaperPrintedScience
+
+- type: paperworkForm
+  id: Science4
+  category: science
+  name: paperwork-form-title-science-4
+  text: "/Paperwork/Science/4.xml"
+  paperPrototype: PaperPrintedScience
+
+- type: paperworkForm
+  id: Science5
+  category: science
+  name: paperwork-form-title-science-5
+  text: "/Paperwork/Science/5.xml"
+  paperPrototype: PaperPrintedScience

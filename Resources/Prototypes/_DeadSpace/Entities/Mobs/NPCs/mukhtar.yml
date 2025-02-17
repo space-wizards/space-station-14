@@ -1,0 +1,132 @@
+- type: entity
+  name: Мухтар
+  parent: SimpleMobBase
+  id: MobMukhtar
+  description: Верный пёс отдела службы безопасности.
+  suffix: Призрачная роль
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: /Textures/_DeadSpace/Mobs/Pets/mukhtar.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mukhtar
+    scale: 0.9, 0.9
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: dog
+    templateId: mukhtar
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mukhtar
+      Critical:
+        Base: mukhtar_dead
+      Dead:
+        Base: mukhtar_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    # - id: MukhtarIDCard
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    successChance: 0.05
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: GhostRole
+    allowMovement: true
+    name: ghost-role-information-mukhtar-name
+    description: ghost-role-information-mukhtar-description
+    rules: ghost-role-information-nonantagonist-rules
+    requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 144000 # 40 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 72000 # 20 hours
+  - type: GhostTakeoverAvailable
+  - type: BarkAccent
+  - type: Speech
+    speechSounds: Dog
+    speechVerb: SmallMob
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: CombatMode
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+    - DoorBumpOpener
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 35
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 4
+        Piercing: 1
+  - type: StaminaDamageOnHit
+    damage: 40
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.7
+    baseSprintSpeed: 4.8
+  - type: Loadout
+    prototypes: [ MobMukhtarGear ]
+  - type: IdExaminable
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
+
+- type: startingGear
+  id: MobMukhtarGear
+  equipment:
+    id: MukhtarIDCard
+
+- type: entity
+  name: спавнер Мухтар
+  id: SpawnMobMukhtar
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobMukhtar

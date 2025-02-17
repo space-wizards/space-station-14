@@ -315,10 +315,23 @@
         - state: idbartender
     - type: PresetIdCard
       job: Bartender
-      name: Pun Pun
+      name: Пун Пун
     - type: Tag #  Ignore Chameleon tags
       tags:
       - DoorBumpOpener
+
+- type: entity
+  parent: IDCardStandard
+  id: MukhtarIDCard
+  name: mukhtar ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idsecurityofficer
+    - type: PresetIdCard
+      job: SecurityOfficer
+      name: Мухтар
 
 - type: entity
   parent: IDCardStandard
@@ -462,6 +475,56 @@
     layers:
     - state: default
     - state: idbrigmedic
+  - type: PresetIdCard
+    job: Brigmedic
+
+- type: entity
+  parent: IDCardStandard
+  id: CoronerIDCard # DS14
+  name: coroner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcoroner
+  - type: PresetIdCard
+    job: Coroner
+
+- type: entity
+  parent: IDCardStandard
+  id: SecurityPilotIDCard # DS14
+  name: coroner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idsecuritypilot
+  - type: PresetIdCard
+    job: SecurityPilot
+
+- type: entity
+  parent: IDCardStandard
+  id: SeniorSalvageIDCard # DS14
+  name: coroner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorcargo
+  - type: PresetIdCard
+    job: SeniorSalvageSpecialist
+
+- type: entity
+  parent: IDCardStandard
+  id: SeniorServiceIDCard # DS14
+  name: coroner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorservice
+  - type: PresetIdCard
+    job: SeniorAdministrator
 
 - type: entity
   parent: IDCardStandard
@@ -475,7 +538,47 @@
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
+    job: CentralCommandOfficer # DS14
+
+# DS14-centcom-jobs-start
+
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomOfficialIDCard
+  components:
+  - type: PresetIdCard
     job: CentralCommandOfficial
+
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomAdministratorIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: idcentcom
+  - type: PresetIdCard
+    job: CentralCommandAdministrator
+
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomOperatorIDCard
+  components:
+  - type: PresetIdCard
+    job: CentralCommandOperator
+
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomSpecialOperationsOfficerIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: idcentcom
+  - type: PresetIdCard
+    job: CentralCommandSpecialOperationsOfficer
+
+# DS14-centcom-jobs-end
 
 - type: entity
   parent: IDCardStandard
@@ -487,7 +590,7 @@
     - state: gold
     - state: ert_commander
   - type: PresetIdCard
-    job: ERTLeader
+    job: ERTLeaderAmber # DS14
   - type: Item
     heldPrefix: gold
 
@@ -515,7 +618,7 @@
     - state: gold
     - state: ert_engineer
   - type: PresetIdCard
-    job: ERTEngineer
+    job: ERTEngineerAmber # DS14
 
 - type: entity
   parent: IDCardStandard
@@ -527,7 +630,7 @@
     - state: gold
     - state: ert_janitor
   - type: PresetIdCard
-    job: ERTJanitor
+    job: ERTJanitorAmber # DS14
 
 - type: entity
   parent: IDCardStandard
@@ -539,7 +642,7 @@
     - state: gold
     - state: ert_medic
   - type: PresetIdCard
-    job: ERTMedical
+    job: ERTMedicalAmber # DS14
 
 - type: entity
   parent: IDCardStandard
@@ -551,7 +654,81 @@
     - state: gold
     - state: ert_security
   - type: PresetIdCard
-    job: ERTSecurity
+    job: ERTSecurityAmber # DS14
+
+# DS14-ert-start
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: ERTLeaderRedIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTLeaderRed
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: ERTLeaderGammaIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTLeaderGamma
+
+- type: entity
+  parent: ERTEngineerIDCard
+  id: ERTEngineerRedIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTEngineerRed
+
+- type: entity
+  parent: ERTEngineerIDCard
+  id: ERTEngineerGammaIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTEngineerGamma
+
+- type: entity
+  parent: ERTJanitorIDCard
+  id: ERTJanitorRedIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTJanitorRed
+
+- type: entity
+  parent: ERTJanitorIDCard
+  id: ERTJanitorGammaIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTJanitorGamma
+
+- type: entity
+  parent: ERTMedicIDCard
+  id: ERTMedicRedIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTMedicalRed
+
+- type: entity
+  parent: ERTMedicIDCard
+  id: ERTMedicGammaIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTMedicalGamma
+
+- type: entity
+  parent: ERTSecurityIDCard
+  id: ERTSecurityRedIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTSecurityRed
+
+- type: entity
+  parent: ERTSecurityIDCard
+  id: ERTSecurityGammaIDCard
+  components:
+  - type: PresetIdCard
+    job: ERTSecurityGamma
+
+# DS14-ert-end
 
 - type: entity
   parent: IDCardStandard
@@ -734,7 +911,38 @@
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
-    job: CBURN
+    job: CBURNAgent
+
+# DS14-cburn-start
+
+- type: entity
+  parent: CentcomIDCard
+  id: CBURNLeaderIDcard
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: idcentcom
+  - type: Item
+    heldPrefix: gold
+  - type: PresetIdCard
+    job: CBURNLeader
+
+- type: entity
+  parent: CBURNIDcard
+  id: CBURNSierraIDcard
+  components:
+  - type: PresetIdCard
+    job: CBURNSierraAgent
+
+- type: entity
+  parent: CBURNLeaderIDcard
+  id: CBURNSierraLeaderIDcard
+  components:
+  - type: PresetIdCard
+    job: CBURNSierraLeader
+
+# DS14-cburn-end
 
 - type: entity
   parent: IDCardStandard
@@ -759,6 +967,8 @@
     layers:
     - state: default
     - state: idseniorengineer
+  - type: PresetIdCard
+    job: SeniorEngineer
 
 - type: entity
   parent: ResearchIDCard
@@ -769,6 +979,8 @@
     layers:
     - state: default
     - state: idseniorresearcher
+  - type: PresetIdCard
+    job: SeniorResearcher
 
 - type: entity
   parent: MedicalIDCard
@@ -779,6 +991,8 @@
     layers:
     - state: default
     - state: idseniorphysician
+  - type: PresetIdCard
+    job: SeniorPhysician
 
 - type: entity
   parent: SecurityIDCard
@@ -789,6 +1003,20 @@
     layers:
     - state: default
     - state: idseniorofficer
+  - type: PresetIdCard
+    job: SeniorOfficer
+
+- type: entity
+  parent: MedicalIDCard
+  id: SurgeonIDCard
+  name: surgeon ID �ard
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idsurgeon
+  - type: PresetIdCard
+    job: MedicalSurgeon
 
 - type: entity
   parent: IDCardStandard

@@ -10,6 +10,9 @@ using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Server.Audio;
+using Content.Server.Administration.Managers;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -24,6 +27,9 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+
 
     public override void Initialize()
     {
@@ -71,8 +77,8 @@ public sealed class PrayerSystem : EntitySystem
     /// <summary>
     /// Subtly messages a player by giving them a popup and a chat message.
     /// </summary>
-    /// <param name="target">The IPlayerSession that you want to send the message to</param>
-    /// <param name="source">The IPlayerSession that sent the message</param>
+    /// <param name="target">The ICommonSession that you want to send the message to</param>
+    /// <param name="source">The ICommonSession that sent the message</param>
     /// <param name="messageString">The main message sent to the player via the chatbox</param>
     /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
     public void SendSubtleMessage(ICommonSession target, ICommonSession source, string messageString, string popupMessage)
@@ -82,7 +88,7 @@ public sealed class PrayerSystem : EntitySystem
 
         var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
-        _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
+        _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Medium);
         _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.Channel);
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity.Value):player} received subtle message from {source.Name}: {message}");
     }
@@ -90,7 +96,7 @@ public sealed class PrayerSystem : EntitySystem
     /// <summary>
     /// Sends a message to the admin channel with a message and username
     /// </summary>
-    /// <param name="sender">The IPlayerSession who sent the original message</param>
+    /// <param name="sender">The ICommonSession who sent the original message</param>
     /// <param name="comp">Prayable component used to make the prayer</param>
     /// <param name="message">Message to be sent to the admin chat</param>
     /// <remarks>
@@ -105,6 +111,7 @@ public sealed class PrayerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
+        _audioSystem.PlayGlobal("/Audio/_DeadSpace/Misc/pew-connor.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-6f));
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
     }
 }

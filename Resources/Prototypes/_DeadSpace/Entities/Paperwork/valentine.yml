@@ -1,0 +1,6 @@
+- type: paperworkForm
+  id: Valentine0
+  category: civilian
+  name: paperwork-form-title-valentine-0
+  text: "/Paperwork/valentine.xml"
+  paperPrototype: ValentineCard

@@ -1,11 +1,13 @@
-namespace Content.Server.Chat.Systems;
-
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Content.Shared.Speech.Muting;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+
+namespace Content.Server.Chat.Systems;
 
 public sealed class EmoteOnDamageSystem : EntitySystem
 {
@@ -13,6 +15,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -29,11 +32,29 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         if (emoteOnDamage.LastEmoteTime + emoteOnDamage.EmoteCooldown > _gameTiming.CurTime)
             return;
 
+        // DS14-start
+        if (HasComp<MutedComponent>(uid) || HasComp<PainNumbnessComponent>(uid))
+            return;
+        // DS14-end
+
         if (emoteOnDamage.Emotes.Count == 0)
             return;
 
         if (!_random.Prob(emoteOnDamage.EmoteChance))
             return;
+
+        // DS14-start
+        if (emoteOnDamage.ValidDamageGroups != null && args.DamageDelta != null)
+        {
+            foreach (var (group, _) in args.DamageDelta.GetDamagePerGroup(_prototype))
+            {
+                if (!emoteOnDamage.ValidDamageGroups.Contains(group))
+                    return;
+                if (args.DamageDelta.GetTotal() < 8)
+                    return;
+            }
+        }
+        // DS14-end
 
         var emote = _random.Pick(emoteOnDamage.Emotes);
         if (emoteOnDamage.WithChat)
@@ -42,7 +63,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         }
         else
         {
-            _chatSystem.TryEmoteWithoutChat(uid,emote);
+            _chatSystem.TryEmoteWithoutChat(uid, emote);
         }
 
         emoteOnDamage.LastEmoteTime = _gameTiming.CurTime;

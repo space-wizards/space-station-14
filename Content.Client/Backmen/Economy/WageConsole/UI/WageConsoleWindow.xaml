@@ -1,0 +1,25 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Backmen.Reinforcement.UI"
+                      MinWidth="600" MinHeight="350" Title="{Loc wageconsole-title}">
+    <BoxContainer Orientation="Vertical" HorizontalAlignment="Stretch">
+        <!-- Station name -->
+        <controls:StripeBack HorizontalAlignment="Stretch">
+            <PanelContainer>
+                <RichTextLabel Name="StationName" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Margin="0 5 0 3" />
+            </PanelContainer>
+        </controls:StripeBack>
+        <!-- Main display -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+
+        </BoxContainer>
+        <!-- Data -->
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="6">
+            <BoxContainer Name="SourcesList" Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True" />
+        </ScrollContainer>
+    </BoxContainer>
+</controls:FancyWindow>

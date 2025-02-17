@@ -148,10 +148,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-        Heat: 0.8
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.75
+        Stun: 0.65 # DS14-value: 4 stunbaton hits for stun
   # phase cloak
   - type: ToggleClothing
     action: ActionTogglePhaseCloak
@@ -163,7 +164,7 @@
       minVisibility: 0.1
       lastVisibility: 0.1
   - type: PowerCellDraw
-    drawRate: 1.8 # 200 seconds on the default cell
+    drawRate: 3.6 # 100 seconds on the default cell
   - type: ToggleCellDraw
   # throwing star ability
   - type: ItemCreator

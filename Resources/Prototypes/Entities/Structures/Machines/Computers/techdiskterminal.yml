@@ -30,6 +30,8 @@
     radius: 0.8
     energy: 0.5
     color: "#b53ca1"
+  - type: AccessReader
+    access: [["ResearchDirector"], ["Captain"]] # DS14
 
 - type: weightedRandom
   id: TechDiskTierWeights
@@ -42,4 +44,10 @@
   id: RareTechDiskTierWeights
   weights:
     2: 19
+    3: 1
+
+- type: weightedRandom
+  id: SuperRareTechDiskTierWeights
+  weights:
+    2: 4
     3: 1

@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "SK aka Prasat (discord: prazat911) for Adventure Time",
+    "size": {
+        "x": 96,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "palm1"
+        },
+        {
+            "name": "palm2"
+        }
+    ]
+}

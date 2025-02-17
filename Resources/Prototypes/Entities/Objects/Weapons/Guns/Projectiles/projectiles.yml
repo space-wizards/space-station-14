@@ -160,6 +160,9 @@
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
+  - type: Reflective
+    reflective:
+    - Energy
   - type: FlyBySound
     sound:
       collection: EnergyMiss
@@ -193,8 +196,8 @@
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
   - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 5
+    stunAmount: 1
+    knockdownAmount: 1
 
 - type: entity
   name : disabler bolt
@@ -235,6 +238,46 @@
     damage:
       types:
         Heat: 5
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  name : laser bolt
+  id: ADTBulletLaser
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Guns/Projectiles/projectiles_ss.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: Projectile
+    impactEffect: BulletImpactEffectLaser
+    damage:
+      types:
+        Heat: 20
     soundHit:
       collection: WeakHit
     forceSound: true
@@ -454,8 +497,8 @@
         - MobState
     damage:
       types:
-        Blunt: 20
-        Slash: 5
+        Blunt: 25 # DS14-value
+        Slash: 10 # DS14-value
   - type: Projectile
     impactEffect: BulletImpactEffectKinetic
     damage:
@@ -713,9 +756,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 150 # a ~2 tile radius
+    totalIntensity: 300 # a ~4 tile radius # DS14-value
     intensitySlope: 5
-    maxIntensity: 10
+    maxIntensity: 15 # DS14-value
 
 - type: entity
   id: BulletGrenadeFlash
@@ -799,7 +842,7 @@
     - type: Projectile
       damage:
         types:
-          Caustic: 5
+          Caustic: 10
     - type: Sprite
       sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
       layers:
@@ -1052,3 +1095,38 @@
     proto: BulletDisablerSmg
     count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
     spread: 9
+
+# ADT-start
+
+- type: entity
+  id: ADTBulletChargestrong
+  name: charge bolt
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  description: Marks a target for additional damage.
+  components:
+  - type: Reflective
+    reflective:
+    - NonEnergy
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: chronobolt
+        shader: unshaded
+  - type: GatheringProjectile
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+        - MobState
+    damage:
+      types:
+        Blunt: 80
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 0
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.4

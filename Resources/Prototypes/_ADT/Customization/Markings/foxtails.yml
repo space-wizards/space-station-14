@@ -1,0 +1,22 @@
+- type: marking
+  id: ADTFoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human, Dwarf, Felinid, Vulpkanin]
+  sponsorOnly: True
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+          category: Hair
+      fallbackTypes:
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
+  sprites:
+  - sprite: _ADT/Mobs/Customization/fox_parts.rsi
+    state: tail_fox_wag_stripes_prime
+  - sprite: _ADT/Mobs/Customization/fox_parts.rsi
+    state: tail_fox_wag_stripes_second
+  - sprite: _ADT/Mobs/Customization/fox_parts.rsi
+    state: tail_fox_wag_stripes_third

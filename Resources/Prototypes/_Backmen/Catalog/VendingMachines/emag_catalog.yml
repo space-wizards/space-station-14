@@ -1,0 +1,80 @@
+# Drinks
+- type: listing
+  id: DrinkInventoryEmag1
+  productEntity: DrinkNukieCan
+  cost:
+    SpaceCash: 15
+  categories:
+    - DrinkVendInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: DrinkInventoryEmag2
+  productEntity: DrinkChangelingStingCan
+  cost:
+    SpaceCash: 15
+  categories:
+    - DrinkVendInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+# Happy honk
+- type: listing
+  id: HappyHonkInventoryEmag1
+  productEntity: HappyHonkNukie
+  cost:
+    SpaceCash: 40
+  categories:
+    - HappyHonkInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: HappyHonkInventoryEmag2
+  productEntity: HappyHonkCluwne
+  cost:
+    SpaceCash: 40
+  categories:
+    - HappyHonkInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+# Cigs
+- type: listing
+  id: CigaretteMachineInventoryEmag1
+  productEntity: CigPackSyndicate
+  cost:
+    SpaceCash: 20
+  categories:
+    - CigaretteMachineInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: CigaretteMachineInventoryEmag2
+  productEntity: FlippoSyndicateLighter
+  cost:
+    SpaceCash: 25
+  categories:
+    - CigaretteMachineInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+# Coffee
+- type: listing
+  id: HotDrinksMachineInventoryEmag1
+  productEntity: DrinkNothing
+  cost:
+    SpaceCash: 15
+  categories:
+    - HotDrinksMachineInventoryEmag
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

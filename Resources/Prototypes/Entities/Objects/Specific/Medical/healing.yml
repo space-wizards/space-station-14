@@ -55,6 +55,17 @@
     stackType: Ointment
     count: 1
 
+# DS14-start
+- type: entity
+  id: Ointment5
+  parent: Ointment
+  suffix: 5
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 5
+# DS14-end
+
 - type: entity
   id: Ointment10Lingering
   parent: Ointment
@@ -142,6 +153,17 @@
   - type: Stack
     stackType: Brutepack
     count: 1
+
+# DS14-start
+- type: entity
+  id: Brutepack5
+  parent: Brutepack
+  suffix: 5
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 5
+# DS14-end
 
 - type: entity
   id: Brutepack10Lingering
@@ -296,6 +318,17 @@
   components:
   - type: Stack
     count: 1
+
+# DS14-start
+- type: entity
+  id: Gauze5
+  parent: Gauze
+  suffix: 5
+  components:
+  - type: Stack
+    lingering: true
+    count: 5
+# DS14-end
 
 - type: entity
   id: Gauze10Lingering

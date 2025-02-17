@@ -1,0 +1,118 @@
+- type: marking
+  id: LizardFrillsAquatic1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_aquatic
+
+- type: marking
+  id: LizardFrillsShort1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_short
+
+- type: marking
+  id: LizardFrillsSimple1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_simple
+
+- type: marking
+  id: LizardFrillsDivinity1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_divinity
+
+- type: marking
+  id: LizardFrillsBig1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_big
+
+- type: marking
+  id: LizardFrillsAxolotl1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_axolotl
+
+- type: marking
+  id: LizardFrillsHood1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_hood_primary
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: frills_hood_secondary
+
+- type: marking
+  id: LizardHornsAngler1
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_angler
+
+- type: marking
+  id: LizardHornsCurled1
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_curled
+
+- type: marking
+  id: LizardHornsRam1
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_ram
+
+- type: marking
+  id: LizardHornsShort1
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_short
+
+- type: marking
+  id: LizardHornsSimple1
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_simple
+
+- type: marking
+  id: LizardHornsDouble1
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shark]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_double

@@ -1,0 +1,17 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+            Title="{Loc 'admin-player-actions-window-ert'}"
+            MinWidth="300">
+    <BoxContainer Orientation="Vertical">
+        <Control MinSize="0 10" />
+        <GridContainer Columns="2" HSeparationOverride="4">
+            <cc:CommandButton Command="ert_accept" Name="_acceptERTButton" Text="{Loc 'admin-player-actions-window-accept'}" />
+            <Label Text="{Loc 'accept-ert-command-description'}" />
+            <cc:CommandButton Command="ert_fake_accept" Name="_fakeAcceptERTButton" Text="{Loc 'admin-player-actions-window-fake-accept'}" />
+            <Label Text="{Loc 'fake-accept-ert-command-description'}" />
+            <cc:CommandButton Command="ert_refuse" Name="_refuseERTButton" Text="{Loc 'admin-player-actions-window-refuse'}" />
+            <Label Text="{Loc 'refuse-ert-command-description'}" />
+        </GridContainer>
+        <Control MinSize="0 10" />
+    </BoxContainer>
+</DefaultWindow>

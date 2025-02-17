@@ -73,6 +73,30 @@
     sprite: Clothing/Shoes/Boots/highheelboots.rsi
 
 - type: entity
+  parent: [ ClothingShoesMilitaryBase, BaseRestrictedContraband ]
+  id: ClothingShoesHighheelBootsAlt
+  name: high-heeled boots
+  description: Snazy boots for when you want to be stylish, yet prepared.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/highheelboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/highheelboots.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        startingItem: CombatKnife
+        name: clothing-military-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm
+
+- type: entity
   parent: [ ClothingShoesMilitaryBase ]
   id: ClothingShoesBootsMerc
   name: mercenary boots

@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, micro_mani by EmoGarbage404 (github)",
+  "copyright": "Taken from BeeStation at commit https://github.com/BeeStation/BeeStation-Hornet/commit/3eed41635791f62b3f7b60f411e3c4427d842a15б, triphasic_scan_module.png modified by github:Morb0",
   "states": [
     {
       "name": "adv_capacitor"
@@ -20,16 +20,7 @@
       ]
     },
     {
-      "name": "adv_scan_module",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "adv_scan_module"
     },
     {
       "name": "adv_scan_module_static"
@@ -79,8 +70,6 @@
       "name": "femto_mani",
       "delays": [
         [
-          0.3,
-          0.1,
           0.1,
           0.1
         ]
@@ -117,10 +106,10 @@
       "name": "quadratic_capacitor",
       "delays": [
         [
-          0.3,
-          0.1,
-          0.1,
-          0.1
+          0.15,
+          0.15,
+          0.15,
+          0.15
         ]
       ]
     },
@@ -128,6 +117,7 @@
       "name": "quadultra_micro_laser",
       "delays": [
         [
+          0.1,
           0.1,
           0.1
         ]
@@ -146,16 +136,7 @@
       "name": "romos2"
     },
     {
-      "name": "scan_module",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "scan_module"
     },
     {
       "name": "subspace_amplifier",
@@ -200,9 +181,8 @@
       "delays": [
         [
           0.1,
-          0.1,
-          0.1,
-          0.1,
+          0.3,
+          0.05,
           0.1
         ]
       ]

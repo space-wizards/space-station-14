@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:LunaLita#0840",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cow_ears",
+            "directions": 4
+        },
+        {
+            "name": "demon_ears",
+            "directions": 4
+        },
+        {
+            "name": "goatee",
+            "directions": 4
+        },
+        {
+            "name": "cow_horns",
+            "directions": 4
+        },
+        {
+            "name": "cow_spots",
+            "directions": 4
+        },
+        {
+            "name": "deer_antlers_horns",
+            "directions": 4
+        },
+        {
+            "name": "guards_stripes",
+            "directions": 4
+        },
+        {
+            "name": "lines_emperos",
+            "directions": 4
+        },
+        {
+            "name": "queen_lines",
+            "directions": 4
+        },
+        {
+            "name": "small_horns",
+            "directions": 4
+        },
+        {
+            "name": "tree_lines",
+            "directions": 4
+        },
+        {
+            "name": "trinity_spots",
+            "directions": 4
+        },
+        {
+            "name": "demon_tail",
+            "directions": 4
+        },
+        {
+            "name": "long",
+            "directions": 4
+        },
+        {
+            "name": "up",
+            "directions": 4
+        }
+    ]
+}

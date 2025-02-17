@@ -1,0 +1,37 @@
+- type: entity
+  id: BorgModuleAdvancedMining
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: продвинутый шахтёрский модуль
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: cargo
+    - state: icon-mining-adv
+  - type: ItemBorgModule
+    items:
+    - BorgMiningJawsOfLife
+    - MiningDrillDiamond
+    - AdvancedMineralScannerUnpowered
+    - OreBagOfHolding
+    - RadioHandheld
+    - Fulton0
+  - type: BorgModuleIcon
+    icon: { sprite: /Textures/_DeadSpace/Interface/Actions/actions_borg.rsi, state: adv-mining-module }
+
+- type: entity
+  id: BorgModuleMiningWeapon
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: оружейный утилизаторский модуль
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: cargo
+    - state: icon-pka
+  - type: ItemBorgModule
+    items:
+    - WeaponProtoKineticAcceleratorBorg
+    - WeaponCrusherDagger
+  - type: BorgModuleIcon
+    icon: { sprite: /Textures/_DeadSpace/Interface/Actions/actions_borg.rsi, state: pka-mining-module }

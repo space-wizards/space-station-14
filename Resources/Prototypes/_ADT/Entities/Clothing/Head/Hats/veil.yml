@@ -1,0 +1,33 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatsBlackVeil
+  name: чёрная фата
+  description: Готично, красиво. Для тех кто рушит традиции, но не очень.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/black_veil.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/black_veil.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatsWhiteVeil
+  name: белая фата
+  description: Для тех кто следует традициям.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/white_veil.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/white_veil.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+  - type: Item
+    size: Small

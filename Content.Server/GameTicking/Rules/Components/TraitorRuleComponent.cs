@@ -1,6 +1,6 @@
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
-﻿using Content.Shared.NPC.Prototypes;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
@@ -21,7 +21,7 @@ public sealed partial class TraitorRuleComponent : Component
     public ProtoId<NpcFactionPrototype> NanoTrasenFaction = "NanoTrasen";
 
     [DataField]
-    public ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
+    public ProtoId<NpcFactionPrototype> SyndicateFaction = "SyndicateAgent"; // DS14-agents-faction
 
     [DataField]
     public ProtoId<DatasetPrototype> CodewordAdjectives = "adjectives";

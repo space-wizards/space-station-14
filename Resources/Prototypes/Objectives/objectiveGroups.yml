@@ -21,7 +21,8 @@
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
-    EnergyShotgunStealObjective: 0.5
+    # EnergyShotgunStealObjective: 0.5
+    WeaponX01StealObjective: 0.25
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -33,8 +34,8 @@
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
-    DieObjective: 0.05
-    #HijackShuttleObjective: 0.02
+    DieObjective: 0.04
+    HijackShuttleObjective: 0.02
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
@@ -111,6 +112,7 @@
     RenaultStealObjective: 1
     ShivaStealObjective: 1
     TropicoStealObjective: 1
+    PolyStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

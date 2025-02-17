@@ -1,0 +1,14 @@
+ent-SithForceShield = { ent-BaseShield }
+    .desc = { ent-BaseShield.desc }
+ent-RandomHumanoidSpawnerSith = { "" }
+    .desc = { "" }
+ent-BaseSithObjective = { ent-BaseObjective }
+    .desc = { ent-BaseObjective.desc }
+ent-SubordinationCommandObjective = { ent-BaseSithObjective }
+    .desc = { ent-BaseSithObjective.desc }
+ent-SithSurviveObjective = { ent-BaseSithObjective }
+    .desc = { ent-BaseSithObjective.desc }
+ent-SpawnPointGhostSith = { ent-BaseAntagSpawner }
+    .desc = { ent-BaseAntagSpawner.desc }
+ent-EnergySwordSith = { ent-EnergySword }
+    .desc = { ent-EnergySword.desc }

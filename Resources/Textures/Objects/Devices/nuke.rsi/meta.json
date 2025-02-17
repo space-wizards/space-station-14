@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/835fd60545178a19064f5df9981dac6e1b220775/icons/obj/stationobjs.dmi, nukefestive by Alekshhh (Github), nuclearbomb_gay by PJB3005",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d, nukefestive by Alekshhh (Github), nuclearbomb_gay by PJB3005",
   "size": {
     "x": 32,
     "y": 32

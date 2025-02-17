@@ -1,0 +1,14 @@
+ent-BaseMobBehonker = behonker
+    .desc = A floating demon aspect of the honkmother.
+ent-MobBehonkerElectrical = behonker
+    .suffix = Pyro
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerPyro = behonker
+    .suffix = Electrical
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerGrav = behonker
+    .suffix = Grav
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerIce = behonker
+    .suffix = Ice
+    .desc = { ent-BaseMobBehonker.desc }

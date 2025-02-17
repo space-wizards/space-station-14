@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ParadiseSS13/Paradise/blob/7e6075a9347261120ca200e07a330a8adc23278e/icons/mob/cargorillia.dmi",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "crawling",
+      "directions": 4
+    },
+    {
+      "name": "standing",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+- type: factionIcon
+  id: EventFaction
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - EventRole
+  icon:
+    sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
+    state: Event

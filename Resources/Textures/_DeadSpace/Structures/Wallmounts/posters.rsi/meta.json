@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "poster 'absk' by shaxid22 (discord) for Space Station 14 server Мёртвый Космос, poster 'meow' by chuiomoio (discord) for Space Station 14 server Мёртвый Космос, poster 'dies_liberatis' by milkywaynoway (discord) for Space Station 14 server Мёртвый Космос, 'hb2' by hq._.dishka (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "absk"
+    },
+    {
+      "name": "meow"
+    },
+    {
+      "name": "dies_liberatis"
+    },
+    {
+      "name": "hb2"
+    }
+  ]
+}

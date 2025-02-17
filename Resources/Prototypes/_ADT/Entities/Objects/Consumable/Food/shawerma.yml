@@ -1,0 +1,114 @@
+- type: entity
+  parent: FoodInjectableBase
+  id: ADTShawermaBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - vegetables
+      - meaty
+      - magical
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/shawerma.rsi
+    state: shawerma
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+  - type: Item
+    sprite: _ADT/Objects/Consumable/Food/shawerma.rsi
+
+- type: entity
+  name: шаурма
+  parent: ADTShawermaBase
+  id: ADTShawermaDefault
+  description: Овощи, салат и мясо, завернутые в лаваш и с добавлением соуса. Очень сытно и вкусно.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - vegetables
+      - meaty
+      - magical
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/shawerma.rsi
+    state: shawerma
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+
+- type: entity
+  name: шаурма в сырном лаваше
+  parent: ADTShawermaBase
+  id: ADTShawermaCheese
+  description: Овощи, салат и мясо, завернутые в сырный лаваш и с добавлением соуса. Очень сытно и вкусно.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - vegetables
+      - meaty
+      - cheesy
+      - magical
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/shawerma.rsi
+    state: cheese_shawerma
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 16
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 4
+
+- type: entity
+  name: мясная шаурма
+  parent: ADTShawermaBase
+  id: ADTShawermaMeat
+  description: Кусочки мяса, фарша и яйца, завернутые в бекон. Не забудьте потом вытереть руки.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bacon
+      - egg
+      - meaty
+      - magical
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/shawerma.rsi
+    state: meat_shawerma
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 6

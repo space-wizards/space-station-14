@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ADTClothingOuterCoatCyberSun
+  name: лабораторный халат Cybersun
+  description: Лабораторный халат Cybersun, предоставляющий минимальную защиту от вредного воздействия окружающей среды.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Coats/labcyber.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Coats/labcyber.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75

@@ -200,6 +200,14 @@
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.9
+        Piercing: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
 
 #Thunderdome Helmet
 - type: entity
@@ -309,6 +317,62 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
+  - type: IdentityBlocker
+
+#- type: entity
+#  parent: ClothingHeadEVAHelmetBase
+#  id: ClothingHeadHelmetVoidParamed
+#  name: Paramedic Void Helmet
+#  description: A void helmet made for paramedics.
+#  components:
+#  - type: Sprite
+#    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+#  - type: Clothing
+#    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+#  - type: IngestionBlocker
+#  - type: DiseaseProtection
+#    protection: 0.15
+#  - type: TemperatureProtection
+#    coefficient: 0.1
+#  - type: Armor
+#    modifiers:
+#      coefficients:
+#        Slash: 0.95
+#        Heat: 0.90
+#        Radiation: 0.75
+
+
+#- type: entity
+#  parent: ClothingHeadEVAHelmetBase
+#  id: ClothingHeadHelmetAncient
+#  name: NTSRA void helmet
+#  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
+#  components:
+#  - type: Sprite
+#    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+#  - type: Clothing
+#    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+#  - type: IngestionBlocker
+#  - type: TemperatureProtection
+#    coefficient: 0.1
+#  - type: Armor
+#    modifiers:
+#      coefficients:
+#        Slash: 0.95
+#        Heat: 0.90
+#        Radiation: 0.75
+
+#FixPrototype
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetHelmet
+  name: ERT leader helmet
+  description: An in-atmosphere helmet worn by the leader of a Nanotrasen Emergency Response Team. Has blue highlights.
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Helmets/ert_leader.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Helmets/ert_leader.rsi
 
 #ERT HELMETS
 #ERT Leader Helmet

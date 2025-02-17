@@ -1,0 +1,39 @@
+- type: job
+  id: CentralCommandBlueShieldOfficer
+  name: job-name-centcom-officer
+  description: job-description-centcom-officer
+  playTimeTracker: JobCentralCommandBlueShieldOfficer
+  setPreference: false
+  startingGear: CentcomBlueShieldGear
+  icon: "JobIconBlueShieldOfficer"
+  supervisors: job-supervisors-centcom-administrator
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CentcomBlueShieldGear
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    jumpsuit: ClothingUniformJumpsuitBlueShield
+    back: ClothingBackpackBlueShield
+    mask: ClothingMaskGasSecurity
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorBasicBlueShield
+    shoes: ClothingShoesBootsJackFilled
+    id: BlueShieldOfficerPDA
+    pocket1: PistolBlueShield
+    pocket2: PinpointerUniversal
+    belt: ClothingBeltMilitaryWebbingBlueShieldFilled
+  storage:
+    back:
+    - DesoxyephedrineMedipen
+    - DesoxyephedrineMedipen
+    - DesoxyephedrineMedipen 
+    - WelderIndustrialAdvanced
+    - ClothingEyesGlassesMeson
+    - MedkitCombatFilled

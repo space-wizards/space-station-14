@@ -1,0 +1,31 @@
+- type: entity
+  parent: ClothingOuterHardsuitSecurity
+  id: ClothingOuterHardsuitPilot
+  name: pilot hardsuit
+  description: The second skin of those who love speed and stars.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/pilotsuit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/pilotsuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPilot
+
+- type: entity
+  parent: ClothingOuterHardsuitSecurity
+  id: ClothingOuterHardsuitSecurityPilot
+  name: security pilot hardsuit
+  description: For keepers of order among the stars.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/pilotsuitsec.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/pilotsuitsec.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityPilot

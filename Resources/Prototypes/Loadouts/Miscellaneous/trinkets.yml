@@ -28,6 +28,13 @@
     back:
     - ClothingNeckHeadphones
 
+# DS14: HatDeer
+- type: loadout
+  id: HatDeer
+  storage:
+    back:
+    - ClothingHeadHatDeer
+
 # Toys
 - type: loadout
   id: PlushieLizard

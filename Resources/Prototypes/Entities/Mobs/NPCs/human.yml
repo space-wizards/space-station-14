@@ -30,6 +30,20 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
+  name: salvager
+  parent: BaseMobVulpkanin
+  id: MobEvilVulpkanin
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
   name: spirate
   parent: BaseMobHuman
   id: MobSpirate
@@ -63,6 +77,11 @@
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
+    # Corvax-start
+    - type: AutoImplant
+      implants:
+        - DeathAcidifierImplant
+    # Corvax-end
 
 - type: entity
   name: syndicate shuttle pilot

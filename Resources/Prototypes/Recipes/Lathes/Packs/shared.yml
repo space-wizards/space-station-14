@@ -49,3 +49,7 @@
   - HandHeldMassScanner
   - ClothingMaskWeldingGas
   - SignallerAdvanced
+  - ClothingEyesHudDiagnostic # DS14
+  - ClothingEyesHudMedical # DS14
+  - ClothingEyesHudSecurity # DS14
+  - ClothingEyesHudAdvanced # DS14

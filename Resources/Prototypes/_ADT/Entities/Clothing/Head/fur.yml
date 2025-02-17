@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatRacoon
+  name: шапка от костюма енота
+  description: Это пренадлежит Мортише?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Misc/racoonhead.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Misc/racoonhead.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatFox
+  name: шапка от костюма лисы
+  description: Алиса!!!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Misc/foxhead.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Misc/foxhead.rsi
+  - type: IngestionBlocker

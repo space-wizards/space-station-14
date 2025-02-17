@@ -492,9 +492,7 @@
         maxVol: 30
         reagents:
         - ReagentId: Omnizine
-          Quantity: 25
-        - ReagentId: TranexamicAcid
-          Quantity: 5
+          Quantity: 30
   - type: Hypospray
     solutionName: pen
     transferAmount: 30

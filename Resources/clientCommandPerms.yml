@@ -8,7 +8,7 @@
     - hardquit
     - svbind
     - bind
-    - exec # macro moment
+    # - exec # macro moment # DS14: DO NOT ENABLE
     - cls
     - vram
     - monitor
@@ -25,7 +25,6 @@
     - gc
     - gc_mode
     - cvar
-    - fuckrules
     - midipanic
     - replay_recording_start
     - replay_recording_stop
@@ -41,6 +40,7 @@
 
 - Flags: DEBUG
   Commands:
+    - fuckrules
     - atvrange
     - atvmode
     - atvcbm
@@ -85,3 +85,4 @@
     - uploadfile
     - loadprototype
     - uploadfolder
+    - exec # macro moment

@@ -56,5 +56,9 @@
             <Label Name="TargetedPowerSupply" Text="0" />
             <Label Text=" kW" />
         </BoxContainer>
+        <BoxContainer></BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-power-attention'}" FontColorOverride="Red" />
+        </BoxContainer>
     </GridContainer>
 </DefaultWindow>

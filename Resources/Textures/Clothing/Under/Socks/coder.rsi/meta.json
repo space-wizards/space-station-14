@@ -11,8 +11,8 @@
       "name": "icon"
     },
     {
-      "name": "equipped-FEET",
-      "directions": 4
+        "name": "equipped-SOCKS",
+        "directions": 4
     }
   ]
 }

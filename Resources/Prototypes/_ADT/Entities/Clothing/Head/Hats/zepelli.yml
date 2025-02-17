@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTZepelli
+  name: шляпа Цеппели
+  description: Доработано одним бизнесменом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/zepelli.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/zepelli.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+  - type: Item
+    size: Normal

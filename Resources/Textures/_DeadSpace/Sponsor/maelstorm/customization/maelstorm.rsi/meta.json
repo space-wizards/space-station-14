@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by nope_ingeneer",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+          "name": "augtorso_m",
+          "directions": 4
+      },
+      {
+          "name": "l_augleg",
+          "directions": 4
+      },
+      {
+          "name": "l_augfoot",
+          "directions": 4
+      },
+      {
+          "name": "l_augarm",
+          "directions": 4
+      },
+      {
+          "name": "l_aughand",
+          "directions": 4
+      }
+    ]
+  }

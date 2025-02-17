@@ -2,7 +2,16 @@
   id: Sneeze
   name: chat-emote-name-sneeze
   category: Vocal
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
   chatMessages: ["chat-emote-msg-sneeze"]
+  chatTriggers:
+    - чихает
 
 - type: emote
   id: Cough
@@ -15,17 +24,13 @@
   blacklist:
     components:
     - BorgChassis
+    - ComputerEmotes
   chatMessages: ["chat-emote-msg-cough"]
   chatTriggers:
     - cough
     - coughs
     - coughed 
     - cough.
-    - coughs.
-    - coughed.
-    - cough!
-    - coughs!
-    - coughed!
 
 - type: emote
   id: CatMeow
@@ -62,6 +67,7 @@
   blacklist:
     components:
     - BorgChassis
+    - ComputerEmotes
   chatMessages: ["chat-emote-msg-yawn"]
   chatTriggers:
     - yawn

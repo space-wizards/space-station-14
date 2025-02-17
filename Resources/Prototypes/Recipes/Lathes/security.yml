@@ -90,6 +90,15 @@
 
 - type: latheRecipe
   parent: BaseWeaponRecipeLong
+  id: WeaponLaserRifle # DS14
+  result: WeaponLaserRifle
+  materials:
+    Steel: 2000
+    Plastic: 750
+    Silver: 500
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
   id: WeaponLaserSvalinn
   result: WeaponLaserSvalinn
   materials:
@@ -497,6 +506,13 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
+  id: MagazineBox357Incendiary
+  result: MagazineBox357Incendiary
+  materials:
+    Plastic: 1000
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
   id: MagazineBoxLightRifleIncendiary
   result: MagazineBoxLightRifleIncendiary
   materials:
@@ -508,6 +524,13 @@
   result: MagazineBoxRifleIncendiary
   materials:
     Plastic: 750
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoader357
+  result: SpeedLoader357
+  materials:
+    Steel: 1500
 
 - type: latheRecipe
   parent: BaseAmmoRecipe

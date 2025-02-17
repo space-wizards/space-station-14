@@ -22,6 +22,8 @@
   - MopItem
   - Holoprojector
   - WetFloorSign
+  - CassetteTape # DS14
+  - TapeRecorder # DS14
 
 - type: latheRecipePack
   id: ServiceBoardsStatic
@@ -43,6 +45,7 @@
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
   - MegaSprayBottle
+  - BagOfSummoningGarbage # DS14
 
 - type: latheRecipePack
   id: Instruments

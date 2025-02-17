@@ -1,0 +1,11 @@
+- type: alert
+  id: ForcePower
+  clickEvent: !type:ChangeForcePowerAlertEvent
+  icons:
+  - sprite: /Textures/_DeadSpace/Sith/alert.rsi
+    state: blue
+  - sprite: /Textures/_DeadSpace/Sith/alert.rsi
+    state: red
+  maxSeverity: 2
+  name: alerts-forcepower-name
+  description: alerts-forcepower-desc

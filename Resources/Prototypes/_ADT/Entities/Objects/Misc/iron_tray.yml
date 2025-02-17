@@ -1,0 +1,28 @@
+- type: entity
+  parent: BaseStorageItem
+  id: ADTIronTray
+  name: железный поднос
+  description: Поднос для разноса еды и напитков.
+  components:
+    - type: Sprite
+      sprite: _ADT/Objects/Misc/iron_tray.rsi
+      state: icon
+    - type: Storage
+      maxItemSize: Normal
+      grid:
+        - 0,0,5,3
+      whitelist:
+        components:
+          - Food
+          - Utensil
+    - type: Item
+      size: Normal
+      shape:
+        - 0,0,2,1
+    - type: UseDelay
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 8
+      soundHit:
+        path: "/Audio/Weapons/smash.ogg"

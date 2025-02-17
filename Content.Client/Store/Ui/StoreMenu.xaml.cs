@@ -43,6 +43,15 @@ public sealed partial class StoreMenu : DefaultWindow
         SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
     }
 
+    // begin: backmen-currency
+    public bool CanBuyFromBank = false;
+    public void SetCanBuyFromBank(bool hasComponent)
+    {
+        CanBuyFromBank = hasComponent;
+    }
+
+    // end: backmen-currency
+
     public void UpdateBalance(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
         Balance = balance;
@@ -125,7 +134,7 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var hasBalance = listing.CanBuyWith(Balance);
+        var hasBalance = listing.CanBuyWith(Balance) || CanBuyFromBank;
 
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
 

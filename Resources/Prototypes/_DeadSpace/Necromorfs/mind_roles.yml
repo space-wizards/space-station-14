@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleUnitology
+  name: Роль Юнитолога
+  components:
+  - type: MindRole
+    antagPrototype: Uni
+  - type: UnitologyRole
+
+- type: entity
+  parent: MindRoleUnitology
+  id: MindRoleHeadUnitology
+  name: Роль Старшего Юнитолога
+  components:
+  - type: MindRole
+    antagPrototype: UniHead
+
+- type: entity
+  parent: MindRoleUnitology
+  id: MindRoleEnslavedUnitology
+  name: Роль Порабощённого
+  components:
+  - type: MindRole
+    antagPrototype: UniEnslaved

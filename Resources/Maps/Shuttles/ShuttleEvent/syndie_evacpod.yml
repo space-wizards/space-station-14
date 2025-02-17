@@ -18,7 +18,6 @@ entities:
       desc: Evacuation pod
       name: Evacuation pod
     - type: Transform
-      parent: invalid
     - type: MapGrid
       chunks:
         -1,-1:

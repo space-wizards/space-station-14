@@ -1,0 +1,5 @@
+﻿fluent==0.10.0
+pydash==8.0.1
+PyYAML==6.0.1
+typing_extensions==4.9.0
+chardet

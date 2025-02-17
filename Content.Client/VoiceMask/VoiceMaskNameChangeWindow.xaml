@@ -12,5 +12,11 @@
             <Label Text="{Loc 'voice-mask-name-change-speech-style'}" />
             <OptionButton Name="SpeechVerbSelector" /> <!-- Populated in LoadVerbs -->
         </BoxContainer>
+        <!-- Corvax-TTS-Start -->
+        <BoxContainer Orientation="Horizontal" Visible="False" Name="TTSContainer">
+            <Label Text="{Loc 'voice-mask-voice-change-info'}" />
+            <OptionButton Name="VoiceSelector" />
+        </BoxContainer>
+        <!-- Corvax-TTS-End -->
     </BoxContainer>
 </controls:FancyWindow>

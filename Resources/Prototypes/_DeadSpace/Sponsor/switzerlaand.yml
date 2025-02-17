@@ -1,0 +1,339 @@
+- type: sponsorLoadout
+  id: switzerlaand
+  entity: ClothingBackpackswitzerlaand
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: switzerlaandWeaponSprayNozzle
+  entity: WeaponSprayNozzle
+  sponsorOnly: true
+  whitelistJobs: [Janitor]
+
+- type: sponsorLoadout
+  id: switzerlaandClothingBackpackWaterTank
+  entity: ClothingBackpackWaterTank
+  sponsorOnly: true
+  whitelistJobs: [Janitor]
+
+- type: sponsorLoadout
+  id: switzerlaandClothingBeltJanitorswitzerlaandFilled
+  entity: ClothingBeltJanitorswitzerlaandFilled
+  sponsorOnly: true
+  whitelistJobs: [Janitor]
+
+- type: sponsorLoadout
+  id: SpaceCleanerTankFullswitzerlaand
+  entity: SpaceCleanerTankFull
+  sponsorOnly: true
+  whitelistJobs: [Janitor]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpackDuffelHolding
+  id: ClothingBackpackswitzerlaand
+  name: бездонный вещмешок
+  description: Вещмешок, открывающийся в локальный карман блюспейса.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltswitzerlaandFilled
+      - id: ClothingNeckCloakswitzerlaand
+      - id: ClothingHandsGlovesswitzerlaand
+      - id: ClothingOuterHardsuitswitzerlaand
+      - id: ClothingHeadHatswitzerlaand
+      - id: ClothingUniformJumpsuitswitzerlaand
+      - id: ClothingShoesBootsMagswitzerlaand
+      - id: ClothingUnderSocksswitzerlaand
+      - id: JetpackVoidFilled
+      - id: ADTtelescopicBaton
+      - id: ToySword
+      - id: WeaponDisablerToySponsor
+      - id: ClothingOuterArmorBasicswitzerlaand
+      - id: ClothingEyesGlassesswitzerlaand
+      - id: ClothingMaskGasswitzerlaand
+      - id: ClothingUnderwearTopBraswitzerlaand
+      - id: ClothingUnderwearBottomPantiesswitzerlaand
+      - id: PaperLawswitzerlaand
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltswitzerlaandFilled
+  name: зелёный украшенный пояс
+  description: Пояс окрашенный в зелёный цвет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+- type: entity
+  id: ClothingBeltJanitorswitzerlaandFilled
+  parent: ClothingBeltJanitor
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StorageFill
+    contents:
+      - id: CleanerGrenade
+        amount: 8
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakswitzerlaand
+  name: плащ Nanotrasen
+  description: Величественный синий плащ, представляющий Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesswitzerlaand
+  name: белые боевые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitswitzerlaand
+  name: скафандр Nanotrasen
+  description: Очень дорогой усиленный скафандр сделанный на заказ. Окрашен в фирменный синий цвет Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitswitzerlaand
+  - type: Item
+    size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitswitzerlaand
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра Nanotrasen
+  description: На внутренней стороне шлема нанесена гравировка "switzerlaand".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/helmet.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Head
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatswitzerlaand
+  name: синяя фуражка
+  description: Фуражка окрашенная в фирменный синий цвет Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/head.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/head.rsi
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitswitzerlaand
+  name: комбинезон Nanotrasen
+  description: Комбинезон окрашенный в фирменный синий цвет Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/jumpsuit.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagswitzerlaand
+  name: магнитные сапоги
+  description: Магнитные сапоги, используемые во время работы вне корабля, чтобы оставаться надёжно прикреплённым к поверхности.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/switzerlaand/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/switzerlaand/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksswitzerlaand
+  name: синие носки
+  description: Стандартные носки окрашенные в фирменный цвет Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/socks.rsi
+
+# Armor
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBasicswitzerlaand
+  name: бронежилет
+  description: Стандартный бронежилет типа I, обеспечивающий достойную защиту от большинства видов повреждений.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/armor.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/armor.rsi
+
+# Glasses
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesswitzerlaand
+  name: солнцезащитные очки
+  description: Обычные солнцезащитные очки. Сделают вас крутым даже ночью... Подождите, какая ночь, мы же в космосе...
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/sunglasses.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/sunglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+
+# Gas mask
+- type: entity
+  parent: ClothingMaskGasSecurity
+  id: ClothingMaskGasswitzerlaand
+  name: синий противогаз
+  description: Закрывающая лицо маска, которую можно подключить к дыхательному баллону.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/mask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/switzerlaand/mask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Top
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraswitzerlaand
+  name: синие бра
+  description: Стандартное нижнее бельё окрашенное в фирменный цвет Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/underwear/bra.rsi
+
+# Bottom
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesswitzerlaand
+  name: синие стринги
+  description: Стандартное нижнее бельё окрашенное в фирменный цвет Nanotrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/switzerlaand/underwear/pants.rsi
+
+# Markings
+
+- type: marking
+  id: BandagedEyeRightswitzerlaand
+  bodyPart: Head
+  markingCategory: Head
+  sponsorOnly: true
+  sprites:
+  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+    state: bandaged_R_eye
+
+- type: marking
+  id: BandagedEyeLeftswitzerlaand
+  bodyPart: Head
+  markingCategory: Head
+  sponsorOnly: true
+  sprites:
+  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+    state: bandaged_L_eye
+
+- type: marking
+  id: switzerlaandTail
+  bodyPart: Tail
+  markingCategory: Tail
+  sponsorOnly: true
+  sprites:
+  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+    state: kitsune_primary
+  - sprite: _DeadSpace/Sponsor/switzerlaand/markings.rsi
+    state: kitsune_secondary
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawswitzerlaand
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-switzerlaand

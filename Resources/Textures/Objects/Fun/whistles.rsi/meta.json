@@ -28,6 +28,13 @@
     },
     {
       "name": "trench"
+    },
+    {
+      "name": "frontline-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "frontline"
     }
   ]
 }

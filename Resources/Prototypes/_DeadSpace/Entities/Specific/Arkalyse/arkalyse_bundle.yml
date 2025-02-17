@@ -1,0 +1,31 @@
+- type: entity
+  parent: PaperPrintedSyndicate
+  id: ArkalyseInfo
+  name: Martial Arts for dummies
+  description: It was glued to the back cover of the book.
+  components:
+  - type: Paper
+    content: paper-text-arkalyse-manual
+    stampedBy:
+    - stampedColor: '#F00010'
+      stampedName: Синдикат
+    stampState: paper_stamp-syndicate
+
+- type: entity
+  name: arkalyse box
+  parent: BoxCardboard
+  id: BoxArkalyse
+  description: A box containing a manual.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BookArkalyse
+      - id: ArkalyseInfo
+      - id: ClothingHeadBandBlack
+      - id: ClothingEyesEyepatch
+      - id: FlippoSyndicateLighter
+      - id: CigarGold
+  - type: Sprite
+    layers:
+      - state: box_of_doom_big
+      - state: writing_of_doom

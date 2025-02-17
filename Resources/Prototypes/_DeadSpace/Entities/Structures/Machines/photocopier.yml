@@ -1,0 +1,660 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: PhotocopierBase
+  name: копировальный аппарат
+  description: ЦК закупило их чтобы сэкономить на ручках для юридического отдела.
+  suffix: Стандартный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/photocopier.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: icon
+      map: [ "enum.PhotocopierVisuals.VisualState" ]
+  - type: Icon
+    sprite: _DeadSpace/Structures/Machines/photocopier.rsi
+    state: icon
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.10,0.15,0.50"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ActivatableUI
+    key: enum.PhotocopierUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.PhotocopierUiKey.Key:
+        type: PhotocopierBoundUi
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: Photocopier
+    paperSlot:
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+    photocopierType: Default
+  - type: GenericVisualizer
+    visuals:
+      enum.PhotocopierVisuals.VisualState:
+        base:
+          Normal: { state: icon }
+          Scanning: { state: scanning }
+          Printing: { state: printing }
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      Paper: !type:ContainerSlot
+
+- type: entity
+  parent: PhotocopierBase
+  id: PhotocopierCommand
+  name: копировальный аппарат командования
+  description: ЦК закупило их чтобы сэкономить на ручках для юридического отдела.
+  suffix: Командование
+  components:
+  - type: Photocopier
+    paperSlot:
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+    photocopierType: Command
+
+- type: entity
+  parent: PhotocopierBase
+  id: PhotocopierCentcomm
+  name: копировальный аппарат Центкома
+  description: От этого копировального аппарата веет понижением зарплаты станции.
+  suffix: Центком
+  components:
+  - type: Photocopier
+    paperSlot:
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+    photocopierType: Centcomm
+
+- type: entity
+  parent: PhotocopierBase
+  id: PhotocopierSyndicate
+  name: копировальный аппарат Синдиката
+  description: Скорее всего он был украден со станции NanoTrasen.
+  suffix: Синдикат
+  components:
+  - type: Photocopier
+    paperSlot:
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+    photocopierType: Syndicate
+
+- type: entity
+  parent: PhotocopierBase
+  id: PhotocopierNukeops
+  name: копировальный аппарат ядерных оперативников
+  description: Скорее всего он был украден со станции NanoTrasen.
+  suffix: Ядерные оперативники
+  components:
+  - type: Photocopier
+    paperSlot:
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+    photocopierType: Nukeops
+
+- type: entity
+  parent: BaseItem
+  id: PhotocopierTonerCartridge
+  name: тонер для копировального аппарата
+  description: Пахнет блюспейсом.
+  components:
+  - type: Item
+    sprite: _DeadSpace/Objects/Misc/tonercartridge.rsi
+    size: Small
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/tonercartridge.rsi
+    state: icon
+  - type: StaticPrice
+    price: 80
+  - type: TonerCartridge
+
+- type: entity
+  name: коробка тонеров для копировального аппарата
+  parent: BoxCardboard
+  id: BoxPhotocopierToners
+  description: Коробка с запасными тонерами на случай если клоун выпьет всю краску из картриджей.
+  components:
+  - type: StorageFill
+    contents:
+      - id: PhotocopierTonerCartridge
+        amount: 2
+  - type: Sprite
+    layers:
+      - state: box
+  - type: Storage
+    grid:
+    - 0,0,3,1
+
+# NT
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedCargo
+  description: Лист бумаги с заголовком отдела снабжения.
+  suffix: Nanotrasen, Снабжение
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_cargo.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedCivilian
+  description: Лист бумаги с заголовком сервисного отдела.
+  suffix: Nanotrasen, Сервис
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_civilian.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedCommand
+  description: Лист бумаги с заголовком командования.
+  suffix: Nanotrasen, Командование
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_command.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedEngineering
+  description: Лист бумаги с заголовком инженерного отдела.
+  suffix: Nanotrasen, Инженерный
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_engineering.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedLaw
+  description: Лист бумаги с заголовком юридического отдела.
+  suffix: Nanotrasen, Юридический
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_law.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedMedical
+  description: Лист бумаги с заголовком медицинского отдела.
+  suffix: Nanotrasen, Медицинский
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_medical.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedScience
+  description: Лист бумаги с заголовком научного отдела.
+  suffix: Nanotrasen, Научный
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_science.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedSecurity
+  description: Лист бумаги с заголовком отдела службы безопасности.
+  suffix: Nanotrasen, Служба безопасности
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_security.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedCentcomm
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  suffix: Nanotrasen, Центком
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nt_centcomm.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+# USSP
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPCargo
+  description: Лист бумаги с заголовком отдела почты.
+  suffix: СССП, Почта
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_cargo.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPCivilian
+  description: Лист бумаги с заголовком отдела обслуживания.
+  suffix: СССП, Обслуживание
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_civilian.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPCommand
+  description: Лист бумаги с заголовком командования.
+  suffix: СССП, Командование
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_command.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPEngineering
+  description: Лист бумаги с заголовком инженерного отдела.
+  suffix: СССП, Инженерный
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_engineering.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPLaw
+  description: Лист бумаги с заголовком юридического отдела.
+  suffix: СССП, Юридический
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_law.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPMedical
+  description: Лист бумаги с заголовком медицинского отдела.
+  suffix: СССП, Медицинский
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_medical.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPScience
+  description: Лист бумаги с заголовком научно-исследовательского отдела.
+  suffix: СССП, Научный
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_science.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPSecurity
+  description: Лист бумаги с заголовком отдела милиции.
+  suffix: СССП, Милиция
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_security.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 2.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedUSSPCentcomm
+  description: Лист бумаги с заголовком генерального штаба. Страшно даже смотреть на него.
+  suffix: СССП, Генштаб
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_ussp_centcomm.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 4.0, 0.0, 0.0
+
+# Syndicate
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedSyndicate
+  description: Лист бумаги с заголовком синдиката.
+  suffix: Синдикат
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_syndicate.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 4.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedNukeopsSyndicateToNT
+  description: Лист бумаги с заголовком синдиката.
+  suffix: Синдикат-Nanotrasen, Ядерные оперативники
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_syndicate_nt.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 4.0, 0.0, 0.0
+
+- type: entity
+  name: распечатанный документ
+  parent: Paper
+  id: PaperPrintedNukeopsSyndicateToUSSP
+  description: Лист бумаги с заголовком синдиката.
+  suffix: Синдикат-СССП, Ядерные оперативники
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_syndicate_ussp.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    headerMargin: 0.0, 4.0, 0.0, 0.0

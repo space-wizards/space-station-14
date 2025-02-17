@@ -1,0 +1,146 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartShark
+  parent: [BaseItem, BasePart]
+  name: "shark body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoShark
+  name: "тело акулы"
+  parent: [PartShark, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadShark
+  name: "голова акулы"
+  parent: [PartShark, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmShark
+  name: "левая рука акулы"
+  parent: [PartShark, BaseLeftArm]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "l_arm"
+
+- type: entity
+  id: RightArmShark
+  name: "правая рука акулы"
+  parent: [PartShark, BaseRightArm]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "r_arm"
+
+- type: entity
+  id: LeftHandShark
+  name: "левая кисть акулы"
+  parent: [PartShark, BaseLeftHand]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "l_hand"
+
+- type: entity
+  id: RightHandShark
+  name: "правая кисть акулы"
+  parent: [PartShark, BaseRightHand]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "r_hand"
+
+- type: entity
+  id: TailShark
+  name: "хвост акулы"
+  parent: [PartShark, BaseTail]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "tail_m"
+
+- type: entity
+  id: LeftLegShark
+  name: "левая нога акулы"
+  parent: [PartShark, BaseLeftLeg]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "l_leg"
+    - type: MovementBodyPart
+      walkSpeed: 2.7
+      sprintSpeed: 4.5
+
+- type: entity
+  id: RightLegShark
+  name: "правая нога акулы"
+  parent: [PartShark, BaseRightLeg]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "r_leg"
+    - type: MovementBodyPart
+      walkSpeed: 2.7
+      sprintSpeed: 4.5
+
+- type: entity
+  id: LeftFootShark
+  name: "левая ступня акулы"
+  parent: [PartShark, BaseLeftFoot]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "l_foot"
+    - type: Icon
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "l_foot"
+    - type: BodyPart
+      partType: Foot
+      symmetry: Left
+
+- type: entity
+  id: RightFootShark
+  name: "правая ступня акулы"
+  parent: [PartShark, BaseRightFoot]
+  components:
+    - type: Sprite
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "r_foot"
+    - type: Icon
+      sprite: _ADT/Mobs/Customization/Shark/parts.rsi
+      state: "r_foot"
+    - type: BodyPart
+      partType: Foot
+      symmetry: Right

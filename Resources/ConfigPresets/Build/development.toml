@@ -31,3 +31,14 @@ preload_grids = false
 
 [admin]
 see_own_notes = true
+
+[infolinks]
+discord = "https://discord.gg/ds14"
+wiki = "https://wiki.deadspace14.net/"
+patreon = "https://boosty.to/deadstation14"
+
+[server]
+rules_file = "DeadSpaceDefaultRuleset"
+
+[typan]
+enabled = false

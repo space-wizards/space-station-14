@@ -1,0 +1,23 @@
+- type: entity
+  id: ValentineCard
+  name: валентинка
+  parent: Paper
+  description: Шаблон данной валентинки был разработан министерством труда и социальной защиты ОПЗ. Говорят эти валентинки способны побороть демографический кризис.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/bureaucracy.rsi
+      layers:
+      - state: valentine_card
+      - state: valentine_card
+        map: ["enum.PaperVisualLayers.Writing"]
+        visible: false
+      - state: paper_stamp-generic
+        map: ["enum.PaperVisualLayers.Stamp"]
+        visible: false
+    - type: PaperVisuals
+      headerImagePath: "/Textures/Interface/Paper/paper_heading_valentine_heart.svg.96dpi.png"
+      headerMargin: 0.0, 0.0, 0.0, 2.0
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_pink.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 4.0, 4.0, 4.0, 4.0
+      maxWritableArea: 400.0, 256.0

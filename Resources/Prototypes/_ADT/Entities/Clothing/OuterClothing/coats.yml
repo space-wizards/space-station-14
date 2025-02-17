@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ADTClothingOuterCoatInvestigator
+  name: бушлат следователя службы безопасности
+  description: Один вид этого бушлата повышает вероятность чистосердечного признания подозреваемого на 50%.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Coats/investigator_coat.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Coats/investigator_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.7
+        Heat: 0.8

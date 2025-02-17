@@ -1,0 +1,26 @@
+- type: entity
+  parent: Paper
+  id: TapeRecorderTranscript
+  name: расшифровка записи
+  description: Распечатанный текст с аудиокассеты, содержащий записанный разговор.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper_dotmatrix_grey
+    - state: paper_dotmatrix_grey_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
+    backgroundImageTile: true
+    backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
+    contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix_gray.svg.96dpi.png"
+    contentImageNumLines: 2
+    contentMargin: 16.0, 16.0, 16.0, 0.0
+    # Make this a wide dot-matrix printer
+    maxWritableArea: 400.0, 0.0
+  - type: Paper
+    editingDisabled: true

@@ -1,0 +1,66 @@
+﻿- type: listing
+  id: ChangInventory1
+  productEntity: FoodCondimentPacketSoy
+  cost:
+    SpaceCash: 5
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 30
+
+- type: listing
+  id: ChangInventory2
+  productEntity: FoodSnackCookieFortune
+  cost:
+    SpaceCash: 5
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ChangInventory3
+  productEntity: DrinkRamen
+  cost:
+    SpaceCash: 15
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ChangInventory4
+  productEntity: DrinkHellRamen
+  cost:
+    SpaceCash: 15
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ChangInventory5
+  productEntity: FoodSnackChowMein
+  cost:
+    SpaceCash: 15
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: ChangInventory6
+  productEntity: FoodSnackDanDanNoodles
+  cost:
+    SpaceCash: 15
+  categories:
+    - ChangInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+

@@ -14,15 +14,16 @@
     ClothingEyesHudSecurity: 2
     ClothingEyesEyepatchHudSecurity: 2
     ClothingBeltSecurityWebbing: 5
-    CombatKnife: 3
+    # CombatKnife: 3
     Zipties: 12
     RiotShield: 2
     RiotLaserShield: 2
     RiotBulletShield: 2
-    RadioHandheldSecurity: 5
+    RadioHandheldSecurity: 6 # DS14-value
+    RadioHandheld: 6 # DS14
+    ClothingNeckBodyCamera: 4 # DS14
   # security officers need to follow a diet regimen!
   contrabandInventory:
-    WeaponMeleeNeedle: 2
     FoodDonutHomer: 12
     FoodBoxDonut: 2
     #box evidence

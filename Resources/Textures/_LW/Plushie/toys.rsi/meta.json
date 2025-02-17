@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Я забыл кто нарисовал..., но принадлежит Lua <3",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plushie_hackslua"
+    },
+    {
+      "name": "plushie_lilamarrnes"
+    }
+  ]
+}

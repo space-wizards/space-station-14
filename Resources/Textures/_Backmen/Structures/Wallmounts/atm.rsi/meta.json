@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/Baystation12/Baystation12 at commit 0c2c999f74f2998912ae009223df83cbd987aa5d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "off"
+    },
+    {
+      "name": "normal-unshaded"
+    },
+    {
+      "name": "frame"
+    },
+    {
+      "name": "framewired"
+    }
+  ]
+}

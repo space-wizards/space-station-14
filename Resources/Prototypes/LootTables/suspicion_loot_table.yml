@@ -90,6 +90,9 @@
   - id: WeaponDisabler
     amount: 0
     maxAmount: 4
+  - id: WeaponLaserRifle # DS14
+    amount: 0
+    maxAmount: 1
 
   - id: WeaponLauncherChinaLake
     prob: 0.30

@@ -1,0 +1,168 @@
+# Mad Paradox
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDragonFoxMadParadox
+  name: рюкзак KUMA
+  description: Вместительный и стильный рюкзак для удобного хранения всех необходимых вещей.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/backpackmadparadox.rsi
+    - type: Storage
+      maxItemSize: Huge
+      grid:
+      - 0,0,15,6
+
+- type: entity
+  parent: ClothingBackpackDragonFoxMadParadox
+  id: ClothingBackpackDragonFoxMadParadoxFilled
+  suffix: Заполненный, Mad Paradox
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingBeltStorageWaistbagDragonFoxMadParadox
+    - id: ClothingNeckMantleDragonFoxMadParadox
+    - id: ClothingEyesHudMultiversalDragonFoxMadParadox
+    - id: ClothingHandsGlovesDragonFoxMadParadox
+    - id: ClothingOuterWinterCoatToggleableDragonFoxMadParadox
+    - id: ClothingUniformJumpsuitDragonFoxMadParadox
+    - id: ClothingShoesBootsMagDragonFoxMadParadox
+
+# WaistBag
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltStorageWaistbagDragonFoxMadParadox
+  name: поясная сумка KUMA
+  description: Компактная сумка на поясе, идеально подходящая для хранения мелочей под рукой.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/waistbag_leather.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/waistbag_leather.rsi
+    - type: Storage
+      grid:
+      - 0,0,9,1
+    - type: Item
+      size: Huge
+
+# Magboots
+- type: entity
+  parent: [ClothingShoesBootsMagBase, ClothingShoesBootsSpeed]
+  id: ClothingShoesBootsMagDragonFoxMadParadox
+  name: магнитные ботинки KUMA
+  description: Инновационные ботинки, которые повышают скорость и комфорт передвижения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/bootsmadparadox.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/bootsmadparadox.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.3
+    sprintModifier: 1.3
+  - type: ToggleClothing
+    action: ActionToggleMagboots
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+# Hud
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudMultiversalDragonFoxMadParadox
+  name: визор Данота
+  description: Уникальный техно-магический предмет, полезный для исследователей и искателей приключений.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/glassesmadparadox.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/glassesmadparadox.rsi
+    - type: EyeProtection
+    - type: IdentityBlocker
+      coverage: EYES
+    - type: FlashImmunity
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesDragonFoxMadParadox
+  name: боевые перчатки KUMA
+  description: Надёжные трикотажные перчатки, обеспечивающие комфорт и защиту при работе.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/glovesmadparadox.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/glovesmadparadox.rsi
+    - type: Item
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+      inhandVisuals:
+        left:
+        - state: inhand-left
+          color: "#535353"
+        right:
+        - state: inhand-right
+          color: "#535353"
+
+# Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleDragonFoxMadParadox
+  name: плащ KUMA
+  description: Элегантный плащ с волшебным налётом, защищающий от непогоды и добавляющий загадочности.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/mantlemadparadox.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/mantlemadparadox.rsi
+
+# Coat
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterCoatToggleableDragonFoxMadParadox
+  name: мантия с ушками KUMA
+  description: уютная мантия в стиле харадзюку с капюшоном для стильных приключений.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/outerclothingmadparadox.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/outerclothingmadparadox.rsi
+    - type: ToggleableClothing
+      clothingPrototype: ClothingHeadHatHoodWinterDragonFoxMadParadox
+      slot: head
+    - type: Storage
+      grid:
+      - 0,0,3,2
+
+# Hood
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterDragonFoxMadParadox
+  categories: [ HideSpawnMenu ]
+  name: капюшон KUMA
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/hoodmadparadox.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/hoodmadparadox.rsi
+    - type: HideLayerClothing
+      slots:
+      - Hair
+      - HeadTop
+      - HeadSide
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitDragonFoxMadParadox
+  name: комбинезон KUMA
+  description: Модный комбинезон с комфортным кроем, обеспечивающий свободу движений.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/unidormmadparadox.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/DragonFox/MadParadox/unidormmadparadox.rsi

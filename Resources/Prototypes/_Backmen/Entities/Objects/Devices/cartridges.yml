@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: BaseItem
+  id: BankCartridge
+  name: bank cartridge
+  description: A program for managing bank account
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+      netsync: false
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: UIFragment
+      ui: !type:BankUi
+    - type: Cartridge
+      programName: bank-program-name
+      icon:
+        sprite: _Backmen/Structures/Wallmounts/atm.rsi
+        state: off
+    - type: BankCartridge

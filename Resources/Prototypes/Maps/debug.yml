@@ -27,6 +27,9 @@
         - type: StationJobs
           availableJobs:
             Captain: [ -1, -1 ]
+        # - type: StationDnd # DS14
+        #   configs:
+        #   - lavaland
 
 - type: gameMap
   id: TestTeg

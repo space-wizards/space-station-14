@@ -1,0 +1,9 @@
+﻿- type: palette # Удалить, когда можно будет раскрывать декали по категориям
+  id: WoodColors
+  name: Wood
+  colors:
+    Light: "#a88661"
+    Default: "#55391a"
+    Dark: "#4b362b"
+    Black: "#2e211a"
+    Red: "#612620"

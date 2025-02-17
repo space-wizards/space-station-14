@@ -1,0 +1,72 @@
+- type: entity
+  parent: BaseItem
+  id: BaseHyperLinkBook
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+  - type: Tag
+    tags:
+    - Book
+  - type: StaticPrice
+    price: 35
+
+- type: entity
+  parent: BaseHyperLinkBook
+  id: HyperLinkBookCorporateLaw
+  name: corporate law
+  description: A book of complicated laws for shitsec on station.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#ab1515"
+    - state: icon_law
+      color: "#fff300"
+    - state: detail_bookmark
+  - type: HyperLink
+    urlType: CorporateLaw
+  - type: Tag
+    tags:
+    - Book
+
+- type: entity
+  parent: BaseHyperLinkBook
+  id: HyperLinkBookSOPSecurity
+  name: standard operating procedures of security dep
+  description: A book of standard operating procedures of security dep on station.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#0365a8"
+    - state: icon_stunbaton
+  - type: HyperLink
+    urlType: SOPSec
+  - type: Tag
+    tags:
+    - Book
+
+- type: entity
+  parent: BaseHyperLinkBook
+  id: HyperLinkBookSOPLaw
+  name: standard operating procedures of law dep
+  description: A book of standard operating procedures of law dep on station.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#ab1515"
+    - state: icon_law
+      color: "#fff300"
+  - type: HyperLink
+    urlType: SOPLaw
+  - type: Tag
+    tags:
+    - Book

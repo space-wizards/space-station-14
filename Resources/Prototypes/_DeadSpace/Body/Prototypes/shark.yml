@@ -1,0 +1,53 @@
+- type: body
+  id: ADTSharkBody
+  name: "Shark"
+  root: torso
+  slots:
+    head:
+      part: HeadShark
+      connections:
+        - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoShark
+      organs:
+        heart: OrganAnimalHeart
+        lungs: OrganHumanLungs
+        stomach: OrganSharkStomach
+        liver: OrganAnimalLiver
+        kidneys: OrganHumanKidneys
+      connections:
+        - right arm
+        - left arm
+        - right leg
+        - left leg
+        - tail
+    right arm:
+      part: RightArmShark
+      connections:
+        - right hand
+    left arm:
+      part: LeftArmShark
+      connections:
+        - left hand
+    right hand:
+      part: RightHandShark
+    left hand:
+      part: LeftHandShark
+    right leg:
+      part: RightLegShark
+      connections:
+        - right foot
+    left leg:
+      part: LeftLegShark
+      connections:
+        - left foot
+    right foot:
+      part: RightFootShark
+    left foot:
+      part: LeftFootShark
+    tail:
+      part: TailShark
+

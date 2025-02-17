@@ -111,10 +111,48 @@
   id: ClothingUniformJumpskirtCargo
   result: ClothingUniformJumpskirtCargo
 
+# DS14-start
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCargoAlt
+  result: ClothingUniformJumpsuitCargoAlt
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCargoFormal
+  result: ClothingUniformJumpsuitCargoFormal
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCargoFormal
+  result: ClothingUniformJumpskirtCargoFormal
+
+# DS14-end
+
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSalvageSpecialist
   result: ClothingUniformJumpsuitSalvageSpecialist
+
+# DS14-start
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSalvageFormal
+  result: ClothingUniformJumpsuitSalvageFormal
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCargoSalvage
+  result: ClothingUniformJumpskirtCargoSalvage
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCargoSalvageFormal
+  result: ClothingUniformJumpskirtCargoSalvageFormal
+
+# DS14-end
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
@@ -403,6 +441,16 @@
   id: ClothingUniformJumpskirtMime
   result: ClothingUniformJumpskirtMime
 
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitMimeSexyWhite
+  result: ClothingUniformJumpsuitMimeSexyWhite
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitMimeSexyBlack
+  result: ClothingUniformJumpsuitMimeSexyBlack
+
 ## Musician
 
 - type: latheRecipe
@@ -570,6 +618,16 @@
 
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCoroner
+  result: ClothingUniformJumpsuitCoroner
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCoroner
+  result: ClothingUniformJumpskirtCoroner
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitWarden
   result: ClothingUniformJumpsuitWarden
 
@@ -624,6 +682,7 @@
   id: ClothingOuterWinterRD
   result: ClothingOuterWinterRD
 
+
 # Winter coats
 - type: latheRecipe
   parent: BaseCoatRecipe
@@ -634,6 +693,11 @@
   parent: BaseCoatRecipe
   id: ClothingOuterWinterClown
   result: ClothingOuterWinterClown
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterWinterClownDownjacket
+  result: ClothingOuterWinterClownDownjacket
 
 - type: latheRecipe
   parent: BaseCoatRecipe

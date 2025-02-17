@@ -1,0 +1,19 @@
+- type: soundCollection
+  id: LobbyMusic
+  files:
+    - /Audio/_DeadSpace/Lobby/Bubblegum.ogg
+    - /Audio/_DeadSpace/Lobby/endless_space_remix.ogg
+    - /Audio/_DeadSpace/Lobby/Flip_flap_remix.ogg
+    - /Audio/_DeadSpace/Lobby/Phoron_will_make_us_rich.ogg
+    - /Audio/_DeadSpace/Lobby/Space_Asshole.ogg
+    - /Audio/_DeadSpace/Lobby/Spaced.ogg
+    - /Audio/_DeadSpace/Lobby/THUNDERDOME.ogg
+    - /Audio/_DeadSpace/Lobby/THUNDERDOME_remix.ogg
+    - /Audio/_DeadSpace/Lobby/Tin_Tin_on_Moon.ogg
+    - /Audio/_DeadSpace/Lobby/Traitor.ogg
+    - /Audio/_DeadSpace/Lobby/Komak_The_Maid_x_Takai_The_Maid_-_They_Know_Youre_A_Liar.ogg
+    # - /Audio/_Corvax/Lobby/NewYear/carol-of-the-bells.ogg # Corvax-NewYearMusic
+    # - /Audio/_Corvax/Lobby/NewYear/dance-of-sugar-plum-fairy.ogg # Corvax-NewYearMusic
+    # - /Audio/_Corvax/Lobby/NewYear/deck-in-the-halls.ogg # Corvax-NewYearMusic
+    # - /Audio/_Corvax/Lobby/NewYear/jingle-bells.ogg # Corvax-NewYearMusic
+    # - /Audio/_Corvax/Lobby/NewYear/wish-you-a-merry-christmas.ogg # Corvax-NewYearMusic

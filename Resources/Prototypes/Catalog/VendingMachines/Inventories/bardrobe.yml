@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: BarDrobeInventory
   startingInventory:
+    BookNewDrink: 2 # DS14
     ClothingHeadHatBowlerHat: 2
     ClothingHeadHatTophat: 2
     ClothingEyesHudBeer: 2
@@ -16,5 +17,13 @@
     ClothingOuterVest: 2
     ClothingBeltBandolier: 2
     ClothingEyesGlassesSunglasses: 2
+    ADTClothingUniformRedgiSuit: 2 # ADT
+    ADTClothingUniformRedgiJumpskirt: 2 # ADT
+    ADTClothingHeadHatRedji: 1 # ADT
+    ADTClothingRedjiShoes: 1 # ADT
+    ADTClothingOuterJacketBartender: 2 # ADT
+    ADTClothingUniformNewBarmanSuit: 2 # ADT
+    ADTClothingUniformNewBarmanSkirt: 2 # ADT
+    ADTClothingOuterApronBar: 2 # ADT
   contrabandInventory:
     ToyFigurineBartender: 1

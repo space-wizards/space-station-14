@@ -1,0 +1,49 @@
+- type: entity
+  id: SithLightning
+  parent: BaseLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 2
+
+- type: entity
+  id: BaseForcePower
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Sith/force.rsi
+    drawdepth: Effects
+  - type: Physics
+    canCollide: false
+  - type: PointLight
+    enabled: true
+    color: "#4080FF"
+    radius: 1
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: TimedDespawn
+    lifetime: 1.65
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  id: PullForcePower
+  categories: [ HideSpawnMenu ]
+  parent: BaseForcePower
+  components:
+  - type: Sprite
+    layers:
+    - state: "reanimation"
+      shader: unshaded
+
+- type: entity
+  id: PushForcePower
+  categories: [ HideSpawnMenu ]
+  parent: BaseForcePower
+  components:
+  - type: Sprite
+    layers:
+    - state: "animation"
+      shader: unshaded

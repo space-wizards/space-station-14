@@ -1,0 +1,61 @@
+- type: Tag
+  id: BatteryWeaponFireModesSprites
+
+- type: Tag
+  id: BorgSecRLeg
+
+- type: Tag
+  id: BorgSecTorso
+
+- type: Tag
+  id: BorgSecHead
+
+- type: Tag
+  id: BorgSecLLeg
+
+- type: Tag
+  id: BorgSecRArm
+
+- type: Tag
+  id: BorgSecLArm
+
+- type: Tag
+  id: BorgModuleSecurity
+
+- type: Tag
+  id: DockCentcommERT
+
+- type: Tag
+  id: FelinidFood
+
+- type: Tag 
+  id: FittableInBackpackCase
+
+- type: Tag 
+  id: HardHat
+
+- type: Tag
+  id: KatanaVjlados
+
+- type: Tag
+  id: MagazineEagle
+
+- type: Tag
+  id: MagazineEagleAP
+
+- type: Tag
+  id: MukhtarWearable
+
+- type: Tag
+  id: Necro
+
+- type: Tag
+  id: MagazineTommyCapGun
+
+- type: Tag
+  id: ToySword
+
+- type: Tag
+  id: SnapPop
+
+  # Обязательно в алфавитном порядке

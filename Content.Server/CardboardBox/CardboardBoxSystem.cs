@@ -4,12 +4,15 @@ using Content.Shared.Access.Components;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Damage;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Slippery;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -27,6 +30,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityStorageSystem _storage = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly EntityManager _entity = default!;
 
     public override void Initialize()
     {
@@ -40,6 +45,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
+
+        SubscribeLocalEvent<CardboardBoxComponent, SlipEvent>(OnSlip);
     }
 
     private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
@@ -94,6 +101,10 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     {
         // If this box has a stealth/chameleon effect, disable the stealth effect while the box is open.
         _stealth.SetEnabled(uid, false);
+        if (HasComp<StealthComponent>(uid))
+        {
+            EntityManager.RemoveComponent<SlipperyComponent>(uid);
+        }
     }
 
     private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, ref StorageAfterCloseEvent args)
@@ -103,6 +114,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         {
             _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
             _stealth.SetEnabled(uid, true, stealth);
+            EntityManager.EnsureComponent<SlipperyComponent>(uid, out var slippery);
+            slippery.ParalyzeTime = 2;
         }
     }
 
@@ -138,5 +151,25 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
         RemComp<RelayInputMoverComponent>(component.Mover.Value);
         component.Mover = null;
+    }
+
+    private void OnSlip(EntityUid uid, CardboardBoxComponent component, ref SlipEvent args)
+    {
+        if (component.Mover != null)
+            _stun.TryParalyze(component.Mover.Value, TimeSpan.FromSeconds(2), true);
+
+        if (TryComp<EntityStorageComponent>(uid, out var box))
+        {
+            for (var i = 0; i < box.Contents.Count; i++)
+            {
+                var ent = _entity.GetNetEntity(box.Contents.ContainedEntities[i]);
+
+                if (_entity.HasComponent<HumanoidAppearanceComponent>(_entity.GetEntity(ent)))
+                    _stun.TryParalyze(_entity.GetEntity(ent), TimeSpan.FromSeconds(2), true);
+            }
+        }
+
+        _audio.PlayPvs(component.EffectSound, uid);
+        _storage.OpenStorage(uid);
     }
 }

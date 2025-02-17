@@ -69,3 +69,5 @@
   components:
   - type: TechnologyDisk
     tierWeightPrototype: RareTechDiskTierWeights
+  - type: StaticPrice
+    price: 5000

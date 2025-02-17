@@ -1,0 +1,10 @@
+- type: microwaveMealRecipe
+  id: ADTFriedEggSausageRecipe
+  name: fried egg with sausage recipe
+  result: ADTFriedEggSausage
+  time: 10
+  reagents:
+    Egg: 12
+  solids:
+    ADTFoodSausageRaw: 1
+    FoodPlateSmall: 1

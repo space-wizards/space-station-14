@@ -1,0 +1,80 @@
+- type: entity
+  parent: BaseGameRule
+  id: SithSpawn
+  components:
+  - type: SithRule
+  - type: StationEvent
+    weight: 3
+    duration: null
+    earliestStart: 60
+    reoccurrenceDelay: 60
+    minimumPlayers: 30
+  - type: SpaceSpawnRule
+  - type: AntagLoadProfileRule
+    speciesOverride: Human
+    speciesOverrideBlacklist:
+    - Arachnid
+    - Diona
+    - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+    - IPC
+    - IPS
+  - type: AntagObjectives
+    objectives:
+    - SubordinationCommandObjective
+    - SithSurviveObjective
+  - type: AntagSelection
+    agentName: sith-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSith
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: SithGear
+      briefing:
+        text: sith-role-greeting
+        color: Green
+        sound: /Audio/_DeadSpace/Sith/sith-arrived-at-the-space-station.ogg
+      components:
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+      - type: Sith
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      - type: AutoImplant
+        implants:
+        - DeathAcidifierImplant
+      - type: RandomMetadata
+        nameSegments:
+        - names_sith_title
+        - names_sith
+      - type: SithSubmissionAbility
+      - type: SithForceShieldAbility
+        proto: SithForceShield
+      - type: SithLightningAbility
+      - type: SithForceAbility
+        strenghtPush: 1
+        numberOfPulses: 1
+        range: 5
+        soundPush:
+          collection: SithPush
+          params:
+            volume: 3
+        soundPull:
+          collection: SithPull
+          params:
+            volume: 3
+      mindRoles:
+      - MindRoleSith

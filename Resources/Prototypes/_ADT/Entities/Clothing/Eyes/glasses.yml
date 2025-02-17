@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ADTClothingEyesSupremeCommanderGlass
+  name: высшие ультра-гига-мужицкие очки
+  description: Вероятность успешного завершения этой миссии была ноль процентов. Но, видимо, в вашем случае любые расчёты теряют смысл.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Eyes/Glasses/supreme-commander-glasses.rsi
+    state: icon
+  - type: Clothing
+    sprite: _ADT/Clothing/Eyes/Glasses/supreme-commander-glasses.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: PointLight
+    color: cyan

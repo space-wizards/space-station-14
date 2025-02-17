@@ -82,9 +82,9 @@
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5
-      dependsOn: outerClothing
-      dependsOnComponents:
-      - type: AllowSuitStorage
+      dependsOn: jumpsuit # DS14
+      # dependsOnComponents: # DS14
+      # - type: AllowSuitStorage # DS14
       displayName: Suit Storage
     - name: belt
       slotTexture: belt

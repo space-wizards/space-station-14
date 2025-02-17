@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by ss14nekow (discord) for ss14 https://discord.com/channels/1030160796401016883/1268867129789382677/1269419701226700852",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          2.5,
+          0.05,
+          3.4,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "deny-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "eject-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.8,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

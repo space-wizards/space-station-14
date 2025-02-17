@@ -1,0 +1,33 @@
+- type: job
+  id: TypanMedic
+  name: job-name-typan-medic
+  playTimeTracker: TypanMedic
+  description: Медик из далёкого космоса.
+  startingGear: SyndicateParamedic
+  icon: "JobIconSyndicateParamedic"
+  supervisors: job-supervisors-typan-telecommunications-officer
+  canBeAntag: false
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 6000
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000
+  access:
+  - SyndicateAgent
+  - NuclearOperative
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: SyndicateParamedic
+  equipment:
+    eyes: ClothingEyesHudSyndicateAgentTypan
+    ears: ClothingHeadsetAltTypan
+    jumpsuit: ClothingUniformJumpsuitParamedicSyndie
+    outerClothing: ClothingOuterMedTypan
+    shoes: ClothingShoesBootsCombat
+    id: MedicalPDASyndi
+    back: ClothingBackpackSyndicate
+    belt: ClothingBeltMedicalFilled

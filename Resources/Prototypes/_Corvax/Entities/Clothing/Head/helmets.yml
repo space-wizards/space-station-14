@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetSecurityMedic
+  name: security medic helmet
+  description: A standard issue combat helmet for security medics. Has decent tensile strength and armor. Keep your head down.
+  components:
+    - type: Sprite
+      sprite: _Corvax/Clothing/Head/Helmets/security_medic.rsi
+    - type: Clothing
+      sprite: _Corvax/Clothing/Head/Helmets/security_medic.rsi

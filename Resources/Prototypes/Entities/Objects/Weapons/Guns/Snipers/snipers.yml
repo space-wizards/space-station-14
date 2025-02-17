@@ -46,6 +46,16 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: Gun
+    useKey: false
+  - type: MeleeWeapon
+    attackRate: 2
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 5
+        Slash: 8
+  - type: GunRequiresWield
 
 - type: entity
   name: Hristov
@@ -57,6 +67,9 @@
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    slots:
+    - Back
+    quickEquip: false
   - type: GunRequiresWield
   - type: Gun
     fireRate: 0.4
@@ -69,7 +82,7 @@
     whitelist:
       tags:
       - CartridgeAntiMateriel
-    capacity: 5
+    capacity: 10
     proto: CartridgeAntiMateriel
   - type: SpeedModifiedOnWield
     walkModifier: 0.25

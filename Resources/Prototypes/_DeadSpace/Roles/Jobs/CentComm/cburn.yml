@@ -1,0 +1,230 @@
+# DS14 CBURN GEAR
+
+# Leader
+## CBURN
+- type: job
+  id: CBURNLeader
+  name: job-name-cburn-leader
+  description: job-description-cburnleader
+  playTimeTracker: JobCBURNLeader
+  setPreference: false
+  startingGear: CBURNLeaderGear
+  icon: "JobIconNanotrasenRed"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CBURNLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingMilitaryBackpack
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesHudAdvanced
+    ears: ClothingHeadsetCentCom
+    neck: ClothingNeckMantleCBURNLeaderShoulder
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNLeader
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNLeaderPDA
+    belt: ClothingBeltMilitaryWebbing
+    pocket1: DoubleEmergencyOxygenTankFilled
+  storage:
+    back:
+    - GrenadeIncendiary
+    - PillCanisterCBURN
+    - CrowbarRed
+    - WeaponFlareGun
+    - BoxShotgunFlare
+    - Flash
+    - DoorRemoteAll
+    - EmergencyMedipen
+    - BoxMRE
+    - PinpointerNuclear
+    - ERTloadoutCBURNPrimary
+    - ERTloadoutCBURNSecondary
+
+## CBURN Sierra
+- type: job
+  id: CBURNSierraLeader
+  name: job-name-cburn-leader
+  description: job-description-cburnleader
+  playTimeTracker: JobCBURNSierraLeader
+  setPreference: false
+  startingGear: CBURNSierraLeaderGear
+  icon: "JobIconNanotrasenRed"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CBURNSierraLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingMilitaryBackpack
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesHudAdvanced
+    ears: ClothingHeadsetCentCom
+    neck: ClothingNeckMantleCBURNLeaderShoulder
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNLeader
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNSierraLeaderPDA
+    suitstorage: AirTankFilled
+    belt: ClothingBeltMilitaryWebbing
+    pocket1: DoubleEmergencyOxygenTankFilled
+  storage:
+    back:
+    - WeaponShotgunEnforcer
+    - GrenadeIncendiary
+    - CrowbarRed
+    - WeaponFlareGun
+    - BoxShotgunFlare
+    - MagazineShotgun
+    - MagazineShotgun
+    - MagazineShotgun
+    - MagazineShotgun
+    - MagazineShotgunSlug
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunBeanbag
+    - ZetaTwoMedipen
+    - ZetaTwoMedipen
+    - TelescopicShield
+    - WeaponLaserSvalinn
+    - Flash
+    - DoorRemoteAll
+    - EmergencyMedipen
+    - BoxMRE
+    - PinpointerNuclear
+    - PowerCellSmall
+    - PowerCellMedium
+
+# Agent
+
+## CBURN 
+- type: job
+  id: CBURNAgent
+  name: job-name-cburn-agent
+  description: job-description-cburnagent
+  playTimeTracker: JobCBURNAgent
+  setPreference: false
+  startingGear: CBURNAgentGear
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CBURNAgentGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingMilitaryBackpack
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesHudAdvanced
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURN
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    belt: ClothingBeltMilitaryWebbing
+    pocket1: DoubleEmergencyOxygenTankFilled
+  storage:
+    back:
+    - GrenadeIncendiary
+    - CrowbarRed
+    - WeaponFlareGun
+    - BoxShotgunFlare
+    - EmergencyMedipen
+    - BoxMRE
+    - WeaponDisabler
+    - ERTloadoutCBURNPrimary
+    - ERTloadoutCBURNSecondary
+
+## CBURN Sierra
+- type: job
+  id: CBURNSierraAgent
+  name: job-name-cburn-agent
+  description: job-description-cburnagent
+  playTimeTracker: JobCBURNSierraAgent
+  setPreference: false
+  startingGear: CBURNSierraAgentGear
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CBURNSierraAgentGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingMilitaryBackpack
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesHudAdvanced
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURN
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNSierraPDA
+    suitstorage: AirTankFilled
+    belt: ClothingBeltMilitaryWebbing
+  storage:
+    back:
+    - WeaponShotgunEnforcer
+    - GrenadeIncendiary
+    - CrowbarRed
+    - WeaponFlareGun
+    - BoxShotgunFlare
+    - MagazineShotgun
+    - MagazineShotgun
+    - MagazineShotgun
+    - MagazineShotgun
+    - MagazineShotgunSlug
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunBeanbag
+    - ZetaTwoMedipen
+    - ZetaTwoMedipen
+    - TelescopicShield
+    - EmergencyMedipen
+    - BoxMRE
+    - WeaponDisabler
+    - WeaponLaserSvalinn
+    - PowerCellSmall
+    - PowerCellMedium
+
+# Other
+- type: entity
+  parent: ClothingNeckMantleHOSShoulder
+  id: ClothingNeckMantleCBURNLeaderShoulder
+  name: наплечная мантия командира РХБЗЗ
+  description: Мантия отличающая командира РХБЗЗ от его подчинённых.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCBURN
+  name: баночка для таблеток
+  description: Содержит пять таблеток амбузола. Часть стандартного снаряжения члена РХБЗЗ.
+  suffix: Амбузол, РХБЗЗ
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillAmbuzol
+      amount: 5

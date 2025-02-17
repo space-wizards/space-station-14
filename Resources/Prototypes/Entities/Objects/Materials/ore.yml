@@ -37,7 +37,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawGold: 100
+      RawGold: 300
   - type: Extractable
     grindableSolutionName: goldore
   - type: SolutionContainerManager
@@ -70,7 +70,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawDiamond: 100
+      RawDiamond: 300
   - type: Extractable
     grindableSolutionName: diamondore
   - type: SolutionContainerManager
@@ -103,7 +103,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawIron: 100
+      RawIron: 300
   - type: Extractable
     grindableSolutionName: ironore
   - type: SolutionContainerManager
@@ -136,7 +136,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawPlasma: 100
+      RawPlasma: 300
   - type: PointLight
     radius: 1.2
     energy: 0.6
@@ -174,7 +174,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawSilver: 100
+      RawSilver: 300
   - type: Extractable
     grindableSolutionName: silverore
   - type: SolutionContainerManager
@@ -207,7 +207,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawQuartz: 100
+      RawQuartz: 300
   - type: Extractable
     grindableSolutionName: quartzore
   - type: SolutionContainerManager
@@ -240,7 +240,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawUranium: 100
+      RawUranium: 300
   - type: PointLight
     radius: 1.2
     energy: 0.8
@@ -281,7 +281,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawBananium: 100
+      RawBananium: 300
   - type: PointLight
     radius: 1.2
     energy: 1
@@ -339,7 +339,7 @@
           Quantity: 0.1
   - type: PhysicalComposition
     materialComposition:
-      Coal: 100
+      Coal: 300
   - type: Item
     heldPrefix: coal
 
@@ -388,7 +388,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      RawSalt: 100
+      RawSalt: 300
   - type: Extractable
     grindableSolutionName: saltore
   - type: SolutionContainerManager

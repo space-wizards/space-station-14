@@ -1,0 +1,22 @@
+- type: entity
+  name: плитка гипоаллергенного шоколада
+  parent: FoodSnackBase
+  id: ADTHypoAllergenChocolateBar
+  description: На вкус как картон, но теперь безопасный для унатхов, вульп и прочих.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/hypoallergen_chocolate.rsi
+    state: hypoallergen_chocolate
+  - type: Item
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: CocoaPowder
+          Quantity: 1

@@ -1,0 +1,25 @@
+- type: entity
+  name: железа заразителя
+  parent: FoodProduceBase
+  id: InfectorGland
+  description: Мешочек с жидкостью
+  components:
+  # надо доработать
+  # - type: FlavorProfile
+  #   flavors:
+  #     - apple
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: ExtractInfectorDead
+          Quantity: 10
+  - type: Sprite
+    sprite: _DeadSpace/Other/infector_gland.rsi
+    state: gland
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: ExtractInfectorDead
+        Quantity: 10

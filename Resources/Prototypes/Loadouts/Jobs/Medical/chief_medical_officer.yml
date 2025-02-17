@@ -70,3 +70,27 @@
   equipment:
     outerClothing: ClothingOuterWinterCMO
 
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersCMO
+
+- type: loadout
+  id: UnderwearBottomPantiesCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesCMO
+
+- type: loadout
+  id: UnderwearTopBraCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraCMO

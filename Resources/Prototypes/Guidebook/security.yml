@@ -6,7 +6,7 @@
   - Forensics
   - Defusal
   - CriminalRecords
-  - SpaceLaw
+  # - SpaceLaw
 
 - type: guideEntry
   id: Forensics

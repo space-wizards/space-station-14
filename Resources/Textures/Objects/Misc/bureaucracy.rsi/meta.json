@@ -181,9 +181,6 @@
       "name": "paper_stamp-chaplain"
     },
     {
-      "name": "paper_stamp-lawyer"
-    },
-    {
       "name": "paper_stamp-clown"
     },
     {
@@ -191,9 +188,6 @@
     },
     {
       "name": "paper_stamp-deny"
-    },
-    {
-      "name": "paper_stamp-detective"
     },
     {
       "name": "paper_stamp-hop"
@@ -220,6 +214,30 @@
       "name": "paper_stamp-trader"
     },
     {
+      "name": "paper_stamp-approve"
+    },
+    {
+      "name": "paper_stamp-cent"
+    },
+    {
+      "name": "paper_stamp-mag"
+    },
+    {
+      "name": "paper_stamp-iaa"
+    },
+    {
+      "name": "paper_stamp-coroner"
+    },
+    {
+      "name": "paper_stamp-lawyer"
+    },
+    {
+      "name": "paper_stamp-detective"
+    },
+    {
+      "name": "paper_stamp-blueshield"
+    },
+    {
       "name": "paper_stamp-warden"
     },
     {
@@ -233,6 +251,18 @@
     },
     {
       "name": "paper_stamp-psychologist"
+    },
+    {
+      "name": "paper_stamp-senior-administrator"
+    },
+    {
+      "name": "valentine_card"
+    },
+    {
+      "name": "paper_dotmatrix_grey"
+    },
+    {
+      "name": "paper_dotmatrix_grey_words"
     }
   ]
 }

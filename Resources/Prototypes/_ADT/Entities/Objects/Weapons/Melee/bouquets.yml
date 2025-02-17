@@ -1,0 +1,120 @@
+
+- type: entity
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeWhiteBouquet
+  name: белый букет
+  description: Букет из белых роз. Классика.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/white_bouquet.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/white_bouquet.rsi
+  - type: DisarmMalus
+
+- type: entity
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeRoseBouquet
+  name: розовый букет
+  description: Нежный букет из розовых цветов гибискуса. Специально для нее.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/rose_bouquet.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/rose_bouquet.rsi
+  - type: DisarmMalus
+
+- type: entity
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeYellowBouquet
+  name: жёлтый букет
+  description: Это букет из желтых пионов. Специально для ценителей пионов.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/yellow_bouquet.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/yellow_bouquet.rsi
+  - type: DisarmMalus
+
+- type: entity
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeBlackBouquet
+  name: чёрный букет
+  description: Эти розы точно не окрашены. Они такие были всегда.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/black_bouquet.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/black_bouquet.rsi
+  - type: DisarmMalus
+
+- type: entity
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeLiliacBouquet
+  name: сиреневый букет
+  description: Маленький шедевр генетики - розы сорта "Флидефарбен Розен". Приобрели не только цвет, но и запах сирени.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/liliac_bouquet.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/liliac_bouquet.rsi
+  - type: DisarmMalus
+
+- type: entity
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeBouquetWithBeer
+  name: пивной букет
+  description: Будьте уникальным! Подарите букет который можно съесть, заодно опрокинув по бутылочке пивасика.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/bouquet_with_beer.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 1
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/bouquet_with_beer.rsi
+  - type: DisarmMalus

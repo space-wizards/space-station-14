@@ -1,0 +1,175 @@
+# Command
+- type: roleLoadout
+  id: JobBlueShieldOfficer
+  groups:
+  - GroupTankHarness
+  - BlueShieldOfficerJumpsuit
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - DefaultWhiteUnderwear # DS14-Underwear
+
+# Civilian
+- type: roleLoadout
+  id: JobSeniorAdministrator
+  groups:
+  - GroupTankHarness
+  - SeniorAdministratorJumpsuit
+  - CommonBackpack
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - ServiceUnderwear # DS14-Underwear
+
+- type: roleLoadout
+  id: JobClownSponsor
+  groups:
+  - GroupTankHarness
+  - ClownHead
+  - ClownJumpsuit
+  - ClownBackpack
+  - ClownOuterClothing
+  - ClownShoes
+  - Glasses
+  - SurvivalClown
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - ClownUnderwear # DS14-Underwear
+
+# Cargo
+- type: roleLoadout
+  id: JobSeniorSalvageSpecialist
+  groups:
+  - GroupTankHarness
+  - SalvageSpecialistJumpsuit
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistOuterClothing
+  - SalvageSpecialistShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - SalvageSpecialistUnderwear # DS14-Underwear
+
+# Law
+- type: roleLoadout
+  id: JobMagistrat
+  groups:
+  - GroupTankHarness
+  - LawyerNeck
+  - MagistratJumpsuit
+  - CommonBackpack
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - MagistratUnderwear # DS14-Underwear
+
+# Engineering
+- type: roleLoadout
+  id: JobSeniorEngineer
+  groups:
+  - GroupTankHarness
+  - SeniorEngineerHead
+  - SeniorEngineerJumpsuit
+  - StationEngineerBackpack
+  - StationEngineerOuterClothing
+  - StationEngineerShoes
+  - SeniorEngineerID
+  - SurvivalExtended
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - SeniorEngineerUnderwear # DS14-Underwear
+
+# Science
+- type: roleLoadout
+  id: JobSeniorResearcher
+  groups:
+  - GroupTankHarness
+  - SeniorResearcherHead
+  - ScientistNeck
+  - SeniorResearcherJumpsuit
+  - ScientistBackpack
+  - SeniorResearcherOuterClothing
+  - ScientistGloves
+  - ScientistShoes
+  - SeniorResearcherPDA
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - SeniorResearcherUnderwear # DS14-Underwear
+
+# Security
+- type: roleLoadout
+  id: JobBrigmedic
+  groups:
+  - GroupTankHarness
+  - BrigmedicJumpsuit
+  - BrigmedicBackpack
+  - SurvivalBrigmedic
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - BrigmedicUnderwear # DS14-Underwear
+
+- type: roleLoadout
+  id: JobSeniorOfficer
+  groups:
+  - GroupTankHarness
+  - SeniorOfficerJumpsuit
+  - SeniorOfficerBackpack
+  - SecurityOuterClothing
+  - SecurityShoes
+  - SeniorOfficerPDA
+  - SecurityBelt
+  - SurvivalSecurity
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - SeniorOfficerUnderwear # DS14-Underwear
+
+- type: roleLoadout
+  id: JobSecurityPilot
+  groups:
+  - GroupTankHarness
+  - SecurityJumpsuit
+  - SecurityBackpack
+  - SecurityShoes
+  - SecurityBelt
+  - SurvivalSecurity
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - SecurityUnderwear # DS14-Underwear
+
+# Medical
+- type: roleLoadout
+  id: JobSeniorPhysician
+  groups:
+  - GroupTankHarness
+  - SeniorPhysicianHead
+  - MedicalMask
+  - SeniorPhysicianJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - SeniorPhysicianOuterClothing
+  - MedicalShoes
+  - SeniorPhysicianPDA
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - SeniorPhysicianUnderwear # DS14-Underwear
+
+- type: roleLoadout
+  id: JobCoroner
+  groups:
+  - GroupTankHarness
+  - CoronerHead
+  - MedicalMask
+  - CoronerJumpsuit
+  - MedicalGloves
+  - CoronerBackpack
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - CoronerUnderwear # DS14-Underwear

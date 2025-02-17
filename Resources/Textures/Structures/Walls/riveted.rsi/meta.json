@@ -1,1 +1,46 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/vgstation-coders/vgstation13/raw/99cc2ab62d65a3a7b554dc7b21ff5f57c835f973/icons/turf/walls.dmi", "states": [{"name": "full"}, {"name": "riveted0", "directions": 4}, {"name": "riveted1", "directions": 4}, {"name": "riveted2", "directions": 4}, {"name": "riveted3", "directions": 4}, {"name": "riveted4", "directions": 4}, {"name": "riveted5", "directions": 4}, {"name": "riveted6", "directions": 4}, {"name": "riveted7", "directions": 4}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/raw/99cc2ab62d65a3a7b554dc7b21ff5f57c835f973/icons/turf/walls.dmi modified by ko4erga (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "riveted0",
+      "directions": 4
+    },
+    {
+      "name": "riveted1",
+      "directions": 4
+    },
+    {
+      "name": "riveted2",
+      "directions": 4
+    },
+    {
+      "name": "riveted3",
+      "directions": 4
+    },
+    {
+      "name": "riveted4",
+      "directions": 4
+    },
+    {
+      "name": "riveted5",
+      "directions": 4
+    },
+    {
+      "name": "riveted6",
+      "directions": 4
+    },
+    {
+      "name": "riveted7",
+      "directions": 4
+    }
+  ]
+}

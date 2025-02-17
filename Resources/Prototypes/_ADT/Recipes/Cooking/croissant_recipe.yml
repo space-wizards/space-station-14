@@ -1,0 +1,55 @@
+- type: microwaveMealRecipe
+  id: ADTFoodCroissantCreamRecipe
+  name: croissant with cream recipe
+  result: ADTFoodCroissantCream
+  time: 10
+  reagents:
+    Egg: 6
+    Sugar: 5
+    Cream: 5
+  solids:
+    FoodDoughSlice: 1
+
+- type: microwaveMealRecipe
+  id: ADTFoodCroissantChocolateRecipe
+  name: croissant with chocolate recipe
+  result: ADTFoodCroissantChocolate
+  time: 10
+  reagents:
+    Egg: 6
+    Sugar: 5
+  solids:
+    FoodDoughSlice: 1
+    FoodSnackChocolateBar: 1
+
+- type: microwaveMealRecipe
+  id: ADTFoodCroissantCheeseRecipe
+  name: croissant with cheese recipe
+  result: ADTFoodCroissantCheese
+  time: 10
+  reagents:
+    Egg: 6
+    Sugar: 5
+  solids:
+    FoodDoughSlice: 1
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: ADTFoodHotDogRecipe
+  name: hot dog
+  result: ADTFoodHotDog
+  time: 10
+  reagents:
+    Ketchup: 2
+  solids:
+    FoodDoughSlice: 1
+    ADTFoodSausageRaw: 1
+
+- type: microwaveMealRecipe
+  id: ADTFoodMealPigblanketRecipe
+  name: pig blanket
+  result: FoodMealPigblanket
+  time: 5
+  solids:
+    FoodDoughSlice: 1
+    ADTFoodSausageRaw: 1

@@ -33,7 +33,7 @@
         - CrateTrashCartFilled
         - ClosetMaintenanceFilledRandom
         - ClosetEmergencyFilledRandom
-      rareChance: 0.4
+      rareChance: 0.8
       prototypes:
         - CrateSalvageAssortedGoodies
       chance: 0.9

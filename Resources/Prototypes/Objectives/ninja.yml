@@ -12,20 +12,20 @@
       mindRoles:
       - NinjaRole
 
-- type: entity
-  parent: BaseNinjaObjective
-  id: DoorjackObjective
-  components:
-  - type: Objective
-    icon:
-      sprite: Objects/Tools/emag.rsi
-      state: icon
-  - type: NumberObjective
-    min: 15
-    max: 40
-    title: objective-condition-doorjack-title
-    description: objective-condition-doorjack-description
-  - type: DoorjackCondition
+# - type: entity
+#   parent: BaseNinjaObjective
+#   id: DoorjackObjective
+#   components:
+#   - type: Objective
+#     icon:
+#       sprite: Objects/Tools/emag.rsi
+#       state: icon
+#   - type: NumberObjective
+#     min: 5 # Corvax-MRP
+#     max: 25 # Corvax-MRP
+#     title: objective-condition-doorjack-title
+#     description: objective-condition-doorjack-description
+#   - type: DoorjackCondition
 
 - type: entity
   parent: BaseNinjaObjective
@@ -85,3 +85,33 @@
     icon:
       sprite: Objects/Weapons/Melee/stunbaton.rsi
       state: stunbaton_on
+
+# DS14
+
+- type: entity
+  parent: [BaseNinjaObjective, BaseKillObjective]
+  id: NinjaKillRandomPersonObjective
+  description: Do it however you like, just make sure they don't make it to centcom.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-kill-head-title
+  - type: PickRandomPerson
+    ignoredJobs:
+    - Passenger
+    - TypanAtmosTech
+    - TypanBotanist
+    - TypanCargotech
+    - TypanChef
+    - TypanMedic
+    - TypanRD
+    - TypanScience
+    - TypanTelecommunicationsOfficer
+  - type: KillPersonCondition
+    # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
+    # if ce flies a shittle to centcom you better find a way onto it
+    requireDead: true

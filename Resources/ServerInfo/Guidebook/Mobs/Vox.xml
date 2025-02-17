@@ -1,26 +1,16 @@
 <Document>
-  # Vox
+  # Воксы
 
   <Box>
     <GuideEntityEmbed Entity="MobVox" Caption=""/>
   </Box>
 
-  [color=#ffa500]Warning! This species is not recommended for new players due to their fatal allergy to oxygen![/color]
+  [color=#ffa500]Внимание! Эта раса имеет сильно ограничивающие игровые механики и не рекомендуется для новых игроков. [/color]
 
-  Vox breathe nitrogen, and [color=#ffa500] oxygen is toxic to them.[/color]
-  Unfortunately, space stations tend to be full of oxygen,
-  so Vox must use an internal nitrogen supply at almost all times to avoid fatal exposure.
+  Они дышат азотом, а [color=#ffa500]кислород для них очень токсичен[/color].
+  Чтобы не отравиться кислородом в атмосфере станции, они должны постоянно использовать дыхательные приспособления.
+  Для приёма пищи или питья вам придётся снимать дыхательную маску, хотя вариант введения пищи в жидком виде вполне возможен.
 
-  Vox always spawn wearing working nitrogen internals equipment.
-  A spare breathing mask and an emergency nitrogen canister is provided in their survival box.
-
-  Vox [color=#1e90ff]slowly recover from low levels of poison damage[/color] on their own,
-  so long as they are careful not to exceed 20 poison damage.
-  This allows them to endure breathing station air for up to thirty seconds at a time without lasting damage,
-  letting them quickly eat, drink, take oral medication, and so on.
-  A thirty second oxygen exposure takes them two minutes to recover from.
-  If their health does not seem to improve within a minute of oxygen exposure, they should seek medical attention.
-
-  Vox deal Slash damage with their unarmed attack.
+  Они используют когти в рукопашном бою, и их атаки наносят режущий урон вместо ударного.
 
 </Document>

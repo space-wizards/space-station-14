@@ -15,7 +15,6 @@ criminal-records-status-wanted = Wanted
 criminal-records-status-detained = Detained
 criminal-records-status-suspected = Suspect
 criminal-records-status-discharged = Discharged
-criminal-records-status-paroled = Paroled
 
 criminal-records-console-wanted-reason = Wanted Reason
 criminal-records-console-suspected-reason = Suspected Reason
@@ -40,7 +39,6 @@ criminal-records-console-suspected = {$officer} marked {$name} ({$job}) as suspi
 criminal-records-console-not-suspected = {$name} ({$job}) has been cleared of suspicion by {$officer}.
 criminal-records-console-detained = {$name} ({$job}) has been detained by {$officer}.
 criminal-records-console-released = {$name} ({$job}) has been released by {$officer}.
-criminal-records-console-paroled = {$name} ({$job}) has been released on parole by {$officer}.
 criminal-records-console-not-parole = {$officer} cleared the parole status of {$name} ({$job}).
 criminal-records-console-unknown-officer = <unknown>
 

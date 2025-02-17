@@ -1,134 +1,174 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "soap-1"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, resprited by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+      "x": 32,
+      "y": 32
     },
-    {
-      "name": "soap-2"
-    },
-    {
-      "name": "soap-3"
-    },
-    {
-      "name": "soap-4"
-    },
-    {
-      "name": "deluxe-1"
-    },
-    {
-      "name": "deluxe-2"
-    },
-    {
-      "name": "deluxe-3"
-    },
-    {
-      "name": "deluxe-4"
-    },
-    {
-      "name": "gibs-1"
-    },
-    {
-      "name": "gibs-2"
-    },
-    {
-      "name": "gibs-3"
-    },
-    {
-      "name": "gibs-4"
-    },
-    {
-      "name": "nt-1"
-    },
-    {
-      "name": "nt-2"
-    },
-    {
-      "name": "nt-3"
-    },
-    {
-      "name": "nt-4"
-    },
-    {
-      "name": "omega-1"
-    },
-    {
-      "name": "omega-2"
-    },
-    {
-      "name": "omega-3"
-    },
-    {
-      "name": "omega-4"
-    },
-    {
-      "name": "syndie-1"
-    },
-    {
-      "name": "syndie-2"
-    },
-    {
-      "name": "syndie-3"
-    },
-    {
-      "name": "syndie-4"
-    },
-    {
-      "name": "syndie-soaplet"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "deluxe-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "deluxe-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "gibs-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "gibs-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "nt-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "nt-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "omega-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "omega-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "syndie-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "syndie-inhand-right",
-      "directions": 4
-    }
-  ]
-}
+    "states": [
+      {
+        "name": "soap-1"
+      },
+      {
+        "name": "soap-2"
+      },
+      {
+        "name": "soap-3"
+      },
+      {
+        "name": "soap-4"
+      },
+      {
+        "name": "deluxe-1"
+      },
+      {
+        "name": "deluxe-2"
+      },
+      {
+        "name": "deluxe-3"
+      },
+      {
+        "name": "deluxe-4"
+      },
+      {
+        "name": "gibs-1"
+      },
+      {
+        "name": "gibs-2"
+      },
+      {
+        "name": "gibs-3"
+      },
+      {
+        "name": "gibs-4"
+      },
+      {
+        "name": "nt-1"
+      },
+      {
+        "name": "nt-2"
+      },
+      {
+        "name": "nt-3"
+      },
+      {
+        "name": "nt-4"
+      },
+      {
+        "name": "omega-1"
+      },
+      {
+        "name": "omega-2"
+      },
+      {
+        "name": "omega-3"
+      },
+      {
+        "name": "omega-4"
+      },
+      {
+        "name": "syndie-1"
+      },
+      {
+        "name": "syndie-2"
+      },
+      {
+        "name": "syndie-3"
+      },
+      {
+        "name": "syndie-4"
+      },
+      {
+        "name": "syndie-soaplet"
+      },
+      {
+        "name": "honk-1"
+      },
+      {
+        "name": "honk-2"
+      },
+      {
+        "name": "honk-3"
+      },
+      {
+        "name": "honk-4"
+      },
+      {
+        "name": "kriss-1"
+      },
+      {
+        "name": "kriss-2"
+      },
+      {
+        "name": "kriss-3"
+      },
+      {
+        "name": "kriss-4"
+      },
+      {
+        "name": "inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "deluxe-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "deluxe-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "gibs-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "gibs-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "nt-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "nt-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "omega-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "omega-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "syndie-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "syndie-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "honk-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "honk-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "kriss-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "kriss-inhand-right",
+        "directions": 4
+      }
+    ]
+  }

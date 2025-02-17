@@ -1,10 +1,10 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/26818af618762ff52319b3417be8cdc1279e99b7/icons/obj/weapons/guns/energy.dmi",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/26818af618762ff52319b3417be8cdc1279e99b7/icons/obj/weapons/guns/energy.dmi, resprite by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
     "size": {
         "x": 32,
-        "y": 32
+        "y": 32 
     },
     "states": [
         {

@@ -50,7 +50,14 @@ namespace Content.Server.Administration.UI
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:
-                            _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                            if (doAnnounce.EnableTTS && !doAnnounce.CustomTTS)
+                                _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold,
+                                    originalMessage: doAnnounce.Announcement, usePresetTTS: true);
+                            else if (doAnnounce.EnableTTS)
+                                _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold,
+                                    originalMessage: doAnnounce.Announcement, voice: doAnnounce.Voice);
+                            else
+                                _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
                             break;
                     }
 

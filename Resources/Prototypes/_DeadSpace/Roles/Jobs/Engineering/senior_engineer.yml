@@ -1,0 +1,39 @@
+- type: job
+  id: SeniorEngineer
+  name: job-name-senior-engineer
+  description: job-description-senior-engineer
+  playTimeTracker: JobSeniorEngineer
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 36000 # 10 hours
+    - !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 216000 # 60 hours
+    - !type:AgeRequirement
+      requiredAge: 24
+  startingGear: SeniorEngineerGear
+  icon: "JobIconSeniorEngineer"
+  supervisors: job-supervisors-ce
+  access:
+  - Maintenance
+  - Engineering
+  - External
+  - Atmospherics
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Engineering
+  wage: 70
+  #end-backmen: currency
+
+- type: startingGear
+  id: SeniorEngineerGear
+  equipment:
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityEngineering
+    ears: ClothingHeadsetEngineering
+    socks: ClothingUnderwearSocksSeniorEngineer

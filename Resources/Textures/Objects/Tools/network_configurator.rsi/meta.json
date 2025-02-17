@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by 20kdc (github) for ss14",
+  "copyright": "Made by 20kdc (github) for ss14, Resprite by github: Mureixlol",
   "size": {
     "x": 32,
     "y": 32
@@ -11,6 +11,14 @@
       "name": "icon",
       "delays": [
         [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
           0.1,
           0.1,
           0.1,

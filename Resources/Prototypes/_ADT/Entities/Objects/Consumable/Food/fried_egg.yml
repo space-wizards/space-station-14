@@ -1,0 +1,26 @@
+- type: entity
+  name: яичница с сосисками
+  parent: FoodInjectableBase
+  id: ADTFriedEggSausage
+  description: Два яйца, пожаренных вместе с сосиской.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - egg
+      - meaty
+  - type: Food
+    transferAmount: 3
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/fried_egg.rsi
+    state: fried_egg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 3

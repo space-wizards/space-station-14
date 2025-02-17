@@ -11,6 +11,9 @@
     - 0,0,1,3
     - 3,0,6,3
     - 8,0,9,3
+  - type: Tag
+    tags:
+    - MonkeyWearable
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -178,3 +181,17 @@
     maxItemSize: Huge
     grid:
     - 0,0,19,9
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingSatchelBlueCat
+  name: кошачья сумка
+  description: Мягкая и пушистая сумка в виде умилительного голубого котёнка. Стоп, кто мяукает?!
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/bluecat.rsi
+  - type: Storage
+    storageOpenSound:
+        path: /Audio/Animals/cat_meow.ogg

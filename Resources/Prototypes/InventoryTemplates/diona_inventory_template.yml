@@ -78,20 +78,20 @@
       stripHidden: true
     - name: suitstorage
       slotTexture: suit_storage
-      slotFlags:   SUITSTORAGE
+      slotFlags: SUITSTORAGE
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5
-      dependsOn: outerClothing
-      dependsOnComponents:
-      - type: AllowSuitStorage
+      dependsOn: jumpsuit # DS14
+      # dependsOnComponents: # DS14
+      # - type: AllowSuitStorage # DS14
       displayName: Suit Storage
     - name: id
       slotTexture: id
       fullTextureName: template_small
       slotFlags: IDCARD
-      slotGroup: SecondHotbar
+      slotGroup: MainHotbar
       stripTime: 6
       uiWindowPos: 2,1
       strippingWindowPos: 2,4

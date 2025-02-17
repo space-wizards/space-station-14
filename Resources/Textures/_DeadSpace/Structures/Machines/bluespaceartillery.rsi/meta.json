@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/29fe7720ca78f4999ae1c29a8abb2ebeaaf4bb4d",
+  "size": {
+    "x": 384,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

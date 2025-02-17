@@ -1,0 +1,37 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | red resprite for Space Station 14 server Мёртвый Космос by hq._.dishka (discord)",
+
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "botanist"
+        },
+        {
+            "name": "cargo_technician"
+        },
+        {
+            "name": "chef"
+        },
+        {
+            "name": "atmospheric_technician"
+        },
+        {
+            "name": "medical_doctor"
+        },
+        {
+            "name": "research_director"
+        },
+        {
+            "name": "scientist"
+        },
+        {
+            "name": "security_officer"
+        }
+        
+    ]
+}

@@ -1,0 +1,37 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by Prazat, discord: sk111112",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+            "name": "icon5"
+        },
+        {
+            "name": "icon10"
+        },
+        {
+            "name": "icon15"
+        },
+        {
+            "name": "icon20"
+        },
+        {
+            "name": "icon25"
+        },
+        {
+            "name": "icon30"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

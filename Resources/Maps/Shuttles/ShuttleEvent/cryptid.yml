@@ -20,7 +20,6 @@ entities:
       name: SRV-Cryptid
     - type: Transform
       pos: -0.48958334,-0.4375
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

@@ -19,6 +19,7 @@
   - Medical
   - Quartermaster
   - Salvage
+  - SeniorSalvage
   - Cargo
   - Research
   - Service
@@ -32,3 +33,6 @@
   - Chapel
   - Hydroponics
   - Atmospherics
+  - Paramedic
+  - Brigmedic
+  - Coroner

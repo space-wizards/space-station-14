@@ -3,6 +3,10 @@
   name: job-name-botanist
   description: job-description-botanist
   playTimeTracker: JobBotanist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600 # 1 hours
   startingGear: BotanistGear
   icon: "JobIconBotanist"
   supervisors: job-supervisors-hop
@@ -17,6 +21,12 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty
     prototype: CannabisSeeds
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 60
+  #end-backmen: currency
 
 - type: startingGear
   id: BotanistGear
@@ -25,6 +35,4 @@
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled
-  #storage:
-    #back:
-    #- Stuff
+    sock: ClothingUnderwearSocksBotanist

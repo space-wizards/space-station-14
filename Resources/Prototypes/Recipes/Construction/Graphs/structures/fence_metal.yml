@@ -9,7 +9,6 @@
     - to: straight
       completed:
       - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5
@@ -17,7 +16,6 @@
     - to: corner
       completed:
       - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5
@@ -25,7 +23,6 @@
     - to: end
       completed:
       - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5
@@ -33,7 +30,6 @@
     - to: gate
       completed:
       - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5

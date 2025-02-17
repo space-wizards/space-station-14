@@ -5,7 +5,7 @@
     xmlns:at="clr-namespace:Content.Client.Administration.UI.Tabs.AtmosTab"
     Margin="4"
     MinSize="50 50">
-    <GridContainer Columns="4">
+    <GridContainer Columns="2">
         <cc:UICommandButton Text="{Loc admin-ui-atmos-add}" Command="addatmos" WindowType="{x:Type at:AddAtmosWindow}" />
         <cc:UICommandButton Text="{Loc admin-ui-atmos-add-gas}" Command="addgas" WindowType="{x:Type at:AddGasWindow}" />
         <cc:UICommandButton Text="{Loc admin-ui-atmos-fill-gas}" Command="fillgas" WindowType="{x:Type at:FillGasWindow}" />

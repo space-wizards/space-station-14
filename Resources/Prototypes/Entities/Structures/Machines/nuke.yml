@@ -63,8 +63,8 @@
         - HalfWallLayer
   - type: PointLight
     enabled: false
-    radius: 4
-    energy: 2.0
+    radius: 8
+    energy: 3.0
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight

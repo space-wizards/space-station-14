@@ -1,0 +1,119 @@
+- type: sponsorLoadout
+  id: ClothingBackpackTier7SponsorLoadout
+  entity: ClothingBackpackTier7Sponsor
+  sponsorOnly: true
+
+- type: entity
+  parent: ClothingBackpackDuffelMilitary
+  id: ClothingBackpackTier7Sponsor
+  name: расширенный вещмешок
+  description: Вещмешок использующий технологию микро блюспейс карманов для увеличения общего объёма.
+  suffix: Набор вещей спонсора, Король
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,9,5
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsWatchDivine
+      - id: ClothingMaskSkull
+      - id: ClothingOuterHoodiePink
+      - id: ClothingNeckWingsBlackVampire
+      - id: ClothingNeckWingsPegas
+      - id: ClothingNeckWingsSkeletonRed
+      - id: ClothingOuterWizard
+      - id: ClothingHeadHatWizardFake
+      - id: BedsheetWiz
+      - id: ClothingUniformJumpsuitSkeleton
+      - id: ClothingNeckWingsMagic
+      - id: ClothingOuterAtmosianBomberJacket
+      - id: ClothingMaskGasAtmosian
+      - id: ClothingCloakAtmosian
+      - id: ClothingHeadHatFancyCrown
+      - id: ClothingCloakGamer
+      - id: ClothingNeckWingsViolet
+      - id: ClothingOuterWinterKirasCloak
+      - id: ClothingOuterCoatPineappleTrenchSponsor
+      - id: ClothingNeckCloakBoneKing
+      - id: ClothingNeckMantleWhiteKing
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier7HOSIAASponsorLoadout
+  entity: ClothingBackpackTier7HOSIAASponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier7HOSIAASponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Король, ГСБ АВД
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLeatherUSSPBlack
+      - id: ClothingHeadHatCapUSSPBlack
+      - id: ClothingOuterCoatUSSPOvercoatBlack
+      - id: ClothingShoesUSSPBlack
+      - id: ClothingUniformJumpsuitUSSPBlack
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier7HOSSponsorLoadout
+  entity: ClothingBackpackTier7HOSSponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier7HOSSponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Король, ГСБ
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitHoSOld
+      - id: ClothingOuterCoatHoSOvercoat
+      - id: ClothingHeadHatCapHoS
+      - id: CigarGoldCase
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPineappleTrenchSponsor
+  name: королевский тренч
+  description: Элегантный и стильный, красный тренч выделяется своей утонченностью и смелостью. Сочетание классического дизайна с насыщенным оттенком красного создает неповторимый облик для тех, кто ценит изысканность и хочет подчеркнуть свою индивидуальность.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/King/pineappletrench.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/King/pineappletrench.rsi
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBoneKing
+  name: костяной плащ
+  description: Накидка, похожая на сочетание костей и сосудов... Завораживает!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/King/cloak.rsi
+
+# Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleWhiteKing
+  name: белая наплечная мантия
+  description: Наплечная мантия в белом цвете.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/King/mantle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/King/mantle.rsi

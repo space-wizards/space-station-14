@@ -10,6 +10,9 @@ using Content.Shared.Power;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Server.Popups;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -17,6 +20,8 @@ public sealed partial class ParticleAcceleratorSystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!; // DS14
+    [Dependency] private readonly PopupSystem _popup = default!; // DS14
 
     private void InitializeControlBoxSystem()
     {
@@ -183,7 +188,7 @@ public sealed partial class ParticleAcceleratorSystem
                     _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
                         false,
-                        AudioParams.Default.WithVolume(-8f));
+                        AudioParams.Default.WithVolume(-2f)); // DS14-value
                     comp.EffectCooldown = _gameTiming.CurTime + comp.CooldownDuration;
                 }
             }
@@ -363,6 +368,17 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
+        // DS14-start
+        if (msg.Actor is not { Valid: true } mob)
+            return;
+
+        if (!CanUse(mob, uid))
+        {
+            _popup.PopupEntity(Loc.GetString("particle-accelerator-control-menu-permission-denied"), uid, msg.Actor);
+            return;
+        }
+        // DS14-end
+
         if (msg.Enabled)
         {
             if (comp.Assembled)
@@ -382,6 +398,17 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
+
+        // DS14-start
+        if (msg.Actor is not { Valid: true } mob)
+            return;
+
+        if (!CanUse(mob, uid))
+        {
+            _popup.PopupEntity(Loc.GetString("particle-accelerator-control-menu-permission-denied"), uid, msg.Actor);
+            return;
+        }
+        // DS14-end
 
         SetStrength(uid, msg.State, msg.Actor, comp);
 
@@ -413,4 +440,15 @@ public sealed partial class ParticleAcceleratorSystem
             _ => 0
         };
     }
+
+    // DS14-start
+    private bool CanUse(EntityUid user, EntityUid accelerator)
+    {
+        if (TryComp<AccessReaderComponent>(accelerator, out var accessReaderComponent))
+        {
+            return _accessReader.IsAllowed(user, accelerator, accessReaderComponent);
+        }
+        return false;
+    }
+    // DS14-end
 }

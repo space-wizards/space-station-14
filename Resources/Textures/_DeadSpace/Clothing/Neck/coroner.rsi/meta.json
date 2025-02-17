@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation, inhand sprites made and recolored by chuiomoio (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+        "name": "icon-bloody"
+      },
+      {
+        "name": "equipped-NECK-bloody",
+        "directions": 4
+      },
+      {
+        "name": "inhand-left-bloody",
+        "directions": 4
+      },
+      {
+        "name": "inhand-right-bloody",
+        "directions": 4
+      }
+  ]
+}

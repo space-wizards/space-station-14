@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: Urist McXeno
+  parent: BaseMobXenomorph
+  id: MobXenomorph

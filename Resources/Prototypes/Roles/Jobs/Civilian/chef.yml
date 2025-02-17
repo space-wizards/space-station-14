@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 1800
+      time: 3600 # 1 hour
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
@@ -17,6 +17,12 @@
   extendedAccess:
   - Hydroponics
   - Bar
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 60
+  #end-backmen: currency
 
 - type: startingGear
   id: ChefGear
@@ -25,6 +31,4 @@
     id: ChefPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltChefFilled
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksChef

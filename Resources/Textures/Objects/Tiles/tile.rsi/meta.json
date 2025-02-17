@@ -142,8 +142,30 @@
     {
       "name": "lino"
     },
+	{
+      "name": "necromeat"
+    },
+	{
+      "name": "necromeat-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "necromeat-inhand-left",
+      "directions": 4
+    },
     {
       "name": "meat"
+    },
+	{
+      "name": "veb"
+    },
+	{
+      "name": "veb-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "veb-inhand-left",
+      "directions": 4
     },
     {
       "name": "meat-inhand-right",

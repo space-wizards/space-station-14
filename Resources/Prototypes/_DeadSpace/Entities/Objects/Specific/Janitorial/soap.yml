@@ -1,0 +1,24 @@
+- type: entity
+  name: мыло Крисса
+  id: SoapKriss
+  parent: Soap
+  description: Брусок мыла бренда Kriss. Пахнет кошкодевочкой.
+  components:
+  - type: Sprite
+    layers:
+    - state: kriss-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: kriss-
+  - type: Slippery
+    paralyzeTime: 2
+    launchForwardsMultiplier: 14
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 240 #In the Greek alphabet, Omega is the 24th letter
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 240
+  - type: Visibility
+    layer: 2

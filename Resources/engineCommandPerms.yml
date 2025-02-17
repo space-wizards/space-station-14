@@ -95,7 +95,6 @@
 
 - Flags: FUN
   Commands:
-  - tippy
   - tip
 
 - Flags: SERVER
@@ -105,6 +104,7 @@
   - unpausemap
   - restart
   - shutdown
+  - tippy
 
 - Flags: SPAWN
   Commands:

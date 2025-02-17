@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterCoroner
+  name: зимняя куртка коронера
+  description: Идеальное сочетание тепла и стиля для тех, кто любит замораживать не только своих пациентов, но и окружающих своим холодом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/WinterCoats/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/WinterCoats/coroner.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterCoroner
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoroner
+  name: роба коронера
+  description: Роба которая помогает не испачкаться для тех, кто считает, что черный – единственный цвет радуги, который они видят каждый день.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/coroner.rsi

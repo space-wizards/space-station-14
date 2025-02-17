@@ -1,0 +1,12 @@
+ent-BaseMobDemonRS = демон
+    .desc = Монстр!
+ent-MobDemonSlaughter = { ent-BaseMobDemonRS }
+    .desc = { ent-BaseMobDemonRS.desc }
+ent-MobDemonHonker = { ent-BaseMobDemonRS }
+    .desc = { ent-BaseMobDemonRS.desc }
+ent-MobDemonIfrit = { ent-BaseMobDemonRS }
+    .desc = { ent-BaseMobDemonRS.desc }
+ent-MobDemonJaunt = { ent-BaseMobDemonRS }
+    .desc = { ent-BaseMobDemonRS.desc }
+ent-FireballBullet = огненный шар
+    .desc = { ent-BaseBullet.desc }

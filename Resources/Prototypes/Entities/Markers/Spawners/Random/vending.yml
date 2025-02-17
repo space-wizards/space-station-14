@@ -11,27 +11,26 @@
       state: any
   - type: RandomSpawner
     prototypes:
-    - VendingMachineChang
-    - VendingMachineCigs
-    - VendingMachineCoffee
-    - VendingMachineCola #Robust Sofdrinks
-    - VendingMachineColaBlack #Robust Sofdrinks [Black]
-    - VendingMachineColaRed #Space Cola
-    - VendingMachineDiscount
-    - VendingMachineDonut
-    - VendingMachineDrGibb
-    - VendingMachinePwrGame
-    - VendingMachineShamblersJuice
-    - VendingMachineSmite
-    - VendingMachineSnack
-    - VendingMachineSnackBlue
-    - VendingMachineSnackGreen
-    - VendingMachineSnackOrange
-    - VendingMachineSnackTeal
-    - VendingMachineSoda #Robust Sofdrinks [Soda]
-    - VendingMachineSovietSoda #Boda
-    - VendingMachineSpaceUp
-    - VendingMachineStarkist
+    - BackmenVendingMachineCigs
+    - BackmenVendingMachineCoffee
+    - BackmenVendingMachineCola
+    - BackmenVendingMachineColaRed
+    - BackmenVendingMachineColaBlack
+    - BackmenVendingMachineDiscount
+    - BackmenVendingMachineSnack
+    - BackmenVendingMachineSnackBlue
+    - BackmenVendingMachineSnackGreen
+    - BackmenVendingMachineSnackOrange
+    - BackmenVendingMachineSnackTeal
+    - BackmenVendingMachineSovietSoda
+    - BackmenVendingMachineChang
+    - BackmenVendingMachineDonut
+    - BackmenVendingMachineShamblersJuice
+    - BackmenVendingMachinePwrGame
+    - BackmenVendingMachineSoda
+    - BackmenVendingMachineDrGibb
+    - BackmenVendingMachineStarkist
+    - BackmenVendingMachineSpaceUp
     chance: 1
 
 
@@ -43,8 +42,8 @@
       weight: 40
     - id: VendingMachineWinter
       weight: 40
-    - id: VendingMachinePride
-      weight: 10
+    # - id: VendingMachinePride
+    #   weight: 10
     - id: VendingMachineTheater
       weight: 10
 

@@ -1,0 +1,9 @@
+- type: loadoutGroup
+  id: PsychologistUnderwear
+  name: loadout-group-psychologist-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersPsychologist
+  - UnderwearTopBraPsychologist
+  - UnderwearBottomPantiesPsychologist

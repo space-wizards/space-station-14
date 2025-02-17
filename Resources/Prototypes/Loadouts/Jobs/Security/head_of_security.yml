@@ -64,10 +64,13 @@
   - !type:GroupLoadoutEffect
     proto: MasterHoS
 
-- type: startingGear
-  id: HeadofSecurityMantle
+- type: loadout
+  id: HeadofSecurityMantleShoulder
   equipment:
-    neck: ClothingNeckMantleHOS
+    neck: ClothingNeckMantleHOSShoulder
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHoS
 
 # OuterClothing
 - type: loadout
@@ -79,3 +82,28 @@
   id: HeadofSecurityWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterHoS
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersHeadofSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersHeadofSecurity
+
+- type: loadout
+  id: UnderwearBottomPantiesHeadofSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesHeadofSecurity
+
+- type: loadout
+  id: UnderwearTopBraHeadofSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraHeadofSecurity

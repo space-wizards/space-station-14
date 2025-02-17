@@ -11,20 +11,28 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class RevolutionaryRuleComponent : Component
 {
     /// <summary>
-    /// When the round will if all the command are dead (Incase they are in space)
+    /// When will the percentage of revolutionaries and the living command be checked.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan CommandCheck;
+    public TimeSpan Check;
 
     /// <summary>
-    /// The amount of time between each check for command check.
+    /// The amount of time between each check.
     /// </summary>
     [DataField]
-    public TimeSpan TimerWait = TimeSpan.FromSeconds(20);
+    public TimeSpan TimerWait = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// The time it takes after the last head is killed for the shuttle to arrive.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ShuttleCallTime = TimeSpan.FromMinutes(5);
+
+    public RevolutionaryStage Stage = RevolutionaryStage.Initial;
+}
+
+public enum RevolutionaryStage : byte
+{
+    Initial,
+    Massacre
 }

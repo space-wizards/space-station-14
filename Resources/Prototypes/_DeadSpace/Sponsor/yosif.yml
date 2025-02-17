@@ -1,0 +1,437 @@
+- type: sponsorLoadout
+  id: Yosif
+  entity: ClothingBackpackYosif
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: YosifBelt
+  entity: ClothingBeltYosifFilled
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackYosif
+  name: cозвездие Ориона
+  description: Вы видите перед собой созвездие из нескольких звёзд, вглядываясь в него вы чувствуете желание погрузить руку в самый центр него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckCloakYosif
+      - id: ClothingHeadsetYosif
+      - id: ClothingHandsGlovesYosif
+      - id: ClothingOuterHardsuitYosif
+      - id: ClothingShoesBootsMagYosif
+      - id: ClothingOuterCoatYosif
+      - id: ToyBladeYosif
+      - id: PlushieYosifAnita
+      - id: PlushieYosifEvelina
+      - id: PlushieYosifLucius
+      - id: PDAYosif
+      - id: JetpackVoidFilledYosif
+      - id: ClothingEyesGlassesMesonYosif
+      - id: ClothingHandsRingYosif
+      - id: SpaceCash1000
+      - id: DominatorMedkitAdvanced
+      - id: ADTtelescopicBaton
+      - id: PaperLawYosif
+      - id: ADTClothingUniformRabbitDress
+      - id: ClothingUniformJumpskirtMaid
+      - id: ADTClothingHeadPinkHat
+      - id: ClothingShoesSchoolWhite
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltYosifFilled
+  name: инструментальный пояс Властителя звёзд
+  description: Пояс подготовленный специально под заказ для хранения инструментов высшего качества.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrillYosif
+      - id: SyndicateJawsOfLifeYosif
+      - id: WelderExperimentalYosif
+      - id: Multitool
+
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalYosif
+  name: плазменный резак "Орион"
+  description: С виду стандартный сварочный аппарат, однако использующий особое топливо, и отличный процесс нагрева, для более эффективной работы пользователя
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/welder_experimental.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Yosif/welder_experimental.rsi
+
+- type: entity
+  name: челюсти Ориона
+  description: Пс... пока никто не видит! Воспользуйся ими для нелегального проникновения!
+  parent: SyndicateJawsOfLife
+  id: SyndicateJawsOfLifeYosif
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/jaws_of_life.rsi
+    state: jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _DeadSpace/Sponsor/Yosif/jaws_of_life.rsi
+          state: jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _DeadSpace/Sponsor/Yosif/jaws_of_life.rsi
+          state: jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillYosif
+  name: портативная дрель Ориона
+  description: Многофункциональный инструмент для монтажных работ.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/drill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Yosif/drill.rsi
+    size: Small
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: _DeadSpace/Sponsor/Yosif/drill.rsi
+          state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _DeadSpace/Sponsor/Yosif/drill.rsi
+          state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakYosif
+  name: плащ Тени
+  description: Потрёпанный плащ с золотой обрамкой, кажется что когда-либо его можно было сливать с монетами.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesYosif
+  name: перчатки властителя звёзд
+  description: Способные на прикосновения даже к таким горячим светяшкам как звёзды.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitYosif
+  name: скафандр модификации "Орион"
+  description: Идеально подходящий скафандр для путешествий по неизведанным просторам космоса.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitYosif
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitYosif
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра "Орион"
+  description: Шлем с специально выполненными прорезями под рожки хозяина скафандра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/helmet.rsi
+  - type: PointLight
+    color: "#ffffff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagYosif
+  name: луноходы "Орион"
+  description: Магнитные ботинки приспособленные для ходьбы в зонах критической гравитации и её отсутствии. Похоже испытания проводились прямо на луне.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/Yosif/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/Yosif/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Coat
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatYosif
+  name: пальто лунного неба
+  description: Пальто в тематике звёздного неба. А правда ли это не портал ведущий в космос?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite:  _DeadSpace/Sponsor/Yosif/coat.rsi
+  - type: Clothing
+    sprite:  _DeadSpace/Sponsor/Yosif/coat.rsi
+
+# E_Sword
+- type: entity
+  parent: ToySword
+  id: ToyBladeYosif
+  name: лазерная метла
+  description: Да, лазерная метла.. действительно ли ею можно будет убрать мусор? Идеально подошла бы для горничной осщ...
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EnergySword
+    colorOptions:
+      - Blue
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/e_broomstick.rsi
+    layers:
+      - state: e_sword
+        shader: unshaded
+      - state: e_sword_blade
+        color: blue
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: Normal
+    sprite: _DeadSpace/Sponsor/Yosif/e_broomstick.rsi
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: blue
+    netsync: false
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+        - state: inhand-left-blade
+          shader: unshaded
+      right:
+        - state: inhand-right-blade
+          shader: unshaded
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        variation: 0.125
+  - type: UseDelay
+    delay: 1.0
+
+# Headset
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetYosif
+  name: гарнитура Модификации "Орион"
+  description: Довольно практичная, однако все же выделяющаяся гарнитура.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/headset.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/headset.rsi
+
+# HUD
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesGlassesMesonYosif
+  name: модифицированный визор "Орион"
+  description: Визор оснащённый специальным дизайном и темой подсветки иконок.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+
+# Jetpack
+- type: entity
+  id: JetpackVoidFilledYosif
+  parent: JetpackVoidFilled
+  name: арходемонический джетпак "Орион"
+  description: Созданный в результате сочетания Блюспейс технологий и демонической энергии - данный джетпак, выполненный в полуночной тематике позволяет пользователю эффективно маневрировать в условиях ваккума и/или нулевой гравитации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Yosif/jetpack.rsi
+    size: Huge
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/jetpack.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+
+# Jewel
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingYosif
+  name: ожерелье любви
+  description: Только не нажимай..ю
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/jewelry.rsi
+    scale: "0.7, 0.7"
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Yosif/jewelry.rsi
+  - type: Insulated
+  - type: Item
+    size: Tiny
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDAYosif
+  name: КПК модификации "Орион"
+  description: В активной вкладке виднеется луна, Во время просмотра ваши глаза и разум все больше и больше зацикливаются на бескайних просторах космоса позади этой прекрастной звезды.Компенсация психологической страховки после долгого просмотра не предоставляется.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/Yosif/pda.rsi 
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/pda.rsi
+
+#Plushie
+- type: entity
+  parent: BasePlushie
+  id: PlushieYosifAnita
+  name: плюшевая Анита
+  description: Милая плюшевая игрушка.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/plushie.rsi
+    state: anita
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieYosifEvelina
+  name: плюшевая Эвелина
+  description: Милая плюшевая игрушка.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/plushie.rsi
+    state: evelina
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieYosifLucius
+  name: плюшевая Люциус
+  description: Милая плюшевая игрушка.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Yosif/plushie.rsi
+    state: lucius
+
+# Law
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawYosif
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-yosif

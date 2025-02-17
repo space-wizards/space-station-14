@@ -1,0 +1,13 @@
+# Временное решение, просто респрайт порталов. Нужно будет удалить когда гейтвеи нормально починят
+- type: entity
+  id: PortalGate
+  parent: BasePortal
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/gateway.rsi
+    layers:
+    - state: portal
+  - type: PointLight
+    radius: 3
+    energy: 1
+    netsync: false

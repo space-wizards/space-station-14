@@ -39,6 +39,9 @@
 		{"name": "LLeg_Brute_100", "directions": 4},
 		{"name": "RArm_Brute_100", "directions": 4},
 		{"name": "RLeg_Brute_100", "directions": 4},
-		{"name": "Chest_Brute_100", "directions": 4}
-	]
+		{"name": "Chest_Brute_100", "directions": 4},
+        {"name": "Tail_Brute_20", "directions": 4},
+        {"name": "Tail_Brute_40", "directions": 4},
+        {"name": "Tail_Brute_100", "directions": 4}
+    ]
 }

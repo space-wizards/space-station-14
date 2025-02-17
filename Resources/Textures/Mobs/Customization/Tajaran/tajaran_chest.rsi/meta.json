@@ -1,0 +1,15 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "belly1", "directions": 4 },
+        { "name": "belly2", "directions": 4 },
+        { "name": "belly3", "directions": 4 },
+        { "name": "chest", "directions": 4 }
+    ]
+}

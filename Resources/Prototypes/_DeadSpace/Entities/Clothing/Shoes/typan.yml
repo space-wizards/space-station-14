@@ -1,0 +1,22 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsTypan
+  name: ботинки атмосферного инженера
+  description: Кожаные ботинки, предпочитаемые инженерными работниками на станциях синдиката.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Matchbox
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesBootsCombatSyndie
+  name: ботинки синдиката 
+  description: Ботинки для боевых операций или боевых действий.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Shoes/syndicate.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Shoes/syndicate.rsi

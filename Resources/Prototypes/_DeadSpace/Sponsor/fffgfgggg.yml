@@ -1,0 +1,162 @@
+- type: sponsorLoadout
+  id: fffgfgggg
+  entity: ClothingBackpackfffgfgggg
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackfffgfgggg
+  name: блюспейс рюкзак смерти
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesfffgfgggg
+      - id: ClothingOuterHardsuitfffgfgggg
+      - id: ClothingShoesBootsMagfffgfgggg
+      - id: ClothingUniformJumpsuitfffgfgggg
+      - id: ClothingMaskfffgfgggg
+      - id: ClothingEyesHudMedicalfffgfgggg
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesfffgfgggg
+  name: перчатки с черепами
+  description: Чёрно-красные перчатки с черепушками, жестоко и красиво.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/fffgfgggg/gloves.rsi
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitfffgfgggg
+  name: скафандр с черепами
+  description: Огромный, красивый скафандр с большим красным плащом на спине.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/fffgfgggg/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitfffgfgggg
+  - type: Item
+    size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitfffgfgggg
+  categories: [ HideSpawnMenu ]
+  name: шлем смерти
+  description: Красивый чёрно-красный шлем, даже смерть его боится.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/fffgfgggg/helmet.rsi
+  - type: PointLight
+    radius: 7
+    energy: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagfffgfgggg
+  name: чёрно-красный магнитные ботинки
+  description: Магнитные ботинки в чёрно-красном исполнении с черепами.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/fffgfgggg/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/fffgfgggg/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+
+
+# Uniform
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitfffgfgggg
+  name: чёрно-красная униформа
+  description: Чёрно-красная униформа, её владелец знает толк в красоте.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/fffgfgggg/jumpsuit.rsi
+
+# Mask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskfffgfgggg
+  name: чёрно-красный респиратор
+  description: Чёрно-красный респиратор, защитит от пыли и... Всё.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/gas.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/fffgfgggg/gas.rsi
+
+# Eyes
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudMedicalfffgfgggg
+  name: чёрно-красный визор
+  description: Визор с красным дисплеем, строго и со стилем.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/fffgfgggg/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/fffgfgggg/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.Lobby;
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
@@ -13,6 +14,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.DeadSpace.Interfaces.Client;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
@@ -24,6 +26,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    private IClientSponsorsManager? _sponsorsManager; // DS14-sponsors
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
@@ -43,6 +46,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         _net.RegisterNetMessage<MsgJobWhitelist>(RxJobWhitelist);
 
         _client.RunLevelChanged += ClientOnRunLevelChanged;
+
+        IoCManager.Instance!.TryResolveType(out _sponsorsManager); // DS14-sponsors
     }
 
     private void ClientOnRunLevelChanged(object? sender, RunLevelChangedEventArgs e)
@@ -107,6 +112,17 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         if (player == null)
             return true;
 
+        // DS14-sponsors-start
+        if (_sponsorsManager?.TryGetInfo(out var sponsorInfo) == true && (sponsorInfo.AllowJob || sponsorInfo.AllowedMarkings.Contains(job.ID)))
+            return true;
+
+        if (_sponsorsManager != null && job.SponsorOnly)
+        {
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-sponsor-only"));
+            return false;
+        }
+        // DS14-sponsors-end
+
         return CheckRoleRequirements(job, profile, out reason);
     }
 
@@ -122,6 +138,11 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
         if (requirements == null || !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
+
+        // DS14-meteor-sponsor-start
+        if (_sponsorsManager?.TryGetInfo(out var sponsorInfo) == true && sponsorInfo.AllowJob == true)
+            return true;
+        // DS14-meteor-sponsor-end
 
         var reasons = new List<string>();
         foreach (var requirement in requirements)

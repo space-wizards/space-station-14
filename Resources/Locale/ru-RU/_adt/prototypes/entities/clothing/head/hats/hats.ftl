@@ -1,0 +1,10 @@
+ent-ADTClothingHeadHatsGreatDruidWreath = большой венок друидов
+    .desc = Он такой тяжелый, но это стоит того что бы с гордостью его носить.
+ent-ADTClothingHeadHatsDungeonMasterHat = фуражка Мастера
+    .desc = Для настоящих Dungeon Masters.
+ent-ADTClothingHeadMarineBeret = берет лейтенанта морской пехоты
+    .desc = Этот берет содержит эмблему Морской Пехоты ТСФ, 417-го полка, 2-го батальона, отряда «Браво».
+ent-ADTClothingHeadHatsJohanCap = фуражка Йохана
+    .desc = Выглядит странно, но круто!
+ent-ADTClothingHeadHatsInvestigatorCap = фуражка следователя службы безопасности
+    .desc = Слава NanoTrasen!

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprite made by stranik2435 (discord), resprite by ravanesus (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mukhtar",
+      "directions": 4
+    },
+    {
+      "name": "mukhtar_dead",
+      "directions": 1
+    }
+  ]
+}

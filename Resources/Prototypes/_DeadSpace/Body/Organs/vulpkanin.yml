@@ -1,0 +1,4 @@
+﻿- type: entity
+  id: OrganVulpkaninStomach
+  parent: OrganAnimalStomach
+  categories: [ HideSpawnMenu ]

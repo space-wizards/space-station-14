@@ -12,6 +12,7 @@
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   - ShuttleGunKineticCircuitboard
+  - BorgModuleMiningWeapon # DS14
   # These are roundstart but not replenishable for salvage
 
 - type: technology
@@ -35,6 +36,7 @@
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
+  - MagazineBox357Incendiary # ADT
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -142,6 +144,7 @@
   cost: 10000
   recipeUnlocks:
   - WeaponLaserCannon
+  - WeaponLaserRifle # DS14
 
 - type: technology
   id: WaveParticleHarnessing

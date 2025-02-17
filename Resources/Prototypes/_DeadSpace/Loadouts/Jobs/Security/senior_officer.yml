@@ -1,0 +1,57 @@
+# Jumpsuit
+- type: loadout
+  id: SeniorOfficerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorOfficer
+
+- type: loadout
+  id: SeniorOfficerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorOfficer
+
+# Back
+- type: loadout
+  id: SeniorOfficerBackpack
+  equipment:
+    back: ClothingBackpackSecurity
+
+- type: loadout
+  id: SeniorOfficerSatchel
+  equipment:
+    back: ClothingBackpackSatchelSecurity
+
+- type: loadout
+  id: SeniorOfficerDuffel
+  equipment:
+    back: ClothingBackpackDuffelSecurity
+
+# PDA
+- type: loadout
+  id: SeniorOfficerPDA
+  equipment:
+    id: SeniorOfficerPDA
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersSeniorOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersSeniorOfficer
+
+- type: loadout
+  id: UnderwearBottomPantiesSeniorOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesSeniorOfficer
+
+- type: loadout
+  id: UnderwearTopBraSeniorOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraSeniorOfficer

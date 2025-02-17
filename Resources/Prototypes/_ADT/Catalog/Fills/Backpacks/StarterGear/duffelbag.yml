@@ -1,0 +1,68 @@
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledAKMS
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleAk
+      - id: MagazineLightRifle
+        amount: 4
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  id: ClothingBackpackDuffelSyndicateFilledC20Ammo
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolSubMachineGun
+        amount: 4
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  id: ClothingBackpackDuffelSyndicateFilledBuldogAmmo
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazineShotgunSlug
+      - id: MagazineShotgunSlug
+      - id: MagazineShotgun
+      - id: MagazineShotgun
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  id: ClothingBackpackDuffelSyndicateFilledBuldogAmmoXL
+  components:
+  - type: StorageFill
+    contents:
+      - id: ADTMagazineShotgunSlugXL
+      - id: ADTMagazineShotgunSlugXL
+      - id: ADTMagazineShotgunXL
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledXC67
+  components:
+  - type: StorageFill
+    contents:
+      - id: ADTWeaponRifleXC67
+      - id: ADTExtMagazineRifle
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  id: ClothingBackpackDuffelSyndicateFilledXC67Ammo
+  components:
+  - type: StorageFill
+    contents:
+      - id: ADTExtMagazineRifle
+        amount: 3
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  id: ClothingBackpackDuffelSyndicateFilledAKAmmo
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazineLightRifle
+        amount: 4

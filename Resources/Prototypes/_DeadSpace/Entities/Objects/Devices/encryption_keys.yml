@@ -1,0 +1,60 @@
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyDeathSquad
+  name: ключ шифрования эскадрона смерти
+  description: Ключ шифрования отряда, несущего смерть.
+  components:
+  - type: EncryptionKey
+    channels:
+    - DeathSquad
+    defaultChannel: DeathSquad
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: nano_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyLaw
+  name: ключ шифрования юридического отдела
+  description: Ключ шифрования, используемый самыми ненавидимыми (после клоуна) персонами.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Law
+    defaultChannel: Law
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: nano_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyMerc
+  name: ключ шифрования наёмника
+  description: Ключ шифрования.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Merc
+    defaultChannel: Merc
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: nano_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyTypan
+  name: красный ключ шифрования
+  description: Ключ шифрования, используемый... хм... кем же?
+  suffix: Тайпан
+  components:
+  - type: EncryptionKey
+    channels:
+    - Typan
+    defaultChannel: Typan
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_typ

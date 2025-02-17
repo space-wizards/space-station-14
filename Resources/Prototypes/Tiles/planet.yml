@@ -22,12 +22,14 @@
   sprite: /Textures/Tiles/Planet/Desert/desert.png
   variants: 6
   placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+# Corvax-Mapping-Start: Better visual look
+  - 0.75
+  - 0.06
+  - 0.06
+  - 0.06
+  - 0.06
+  - 0.01
+# Corvax-Mapping-End
   isSubfloor: true
   footstepSounds:
     collection: FootstepAsteroid

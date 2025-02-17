@@ -10,6 +10,8 @@ using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.DeadSpace.Events.Roles.Components;
+using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.Administration.Systems;
 
@@ -17,9 +19,16 @@ public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly UnitologyRuleSystem _unitologyRule = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultTraitorRule = "Traitor";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string UnitologyRule = "Unitology";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string SpiderTerrorRule = "SpiderTerror";
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultInitialInfectedRule = "Zombie";
@@ -80,6 +89,20 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(initialInfected);
 
+        Verb blobAntag = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-blob"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/_Backmen/Interface/Actions/blob.rsi"), "blobFactory"),
+            Act = () =>
+            {
+                EnsureComp<Shared.Backmen.Blob.Components.BlobCarrierComponent>(args.Target).HasMind = HasComp<ActorComponent>(args.Target);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-blob"),
+        };
+        args.Verbs.Add(blobAntag);
+
         Verb zombie = new()
         {
             Text = Loc.GetString("admin-verb-text-make-zombie"),
@@ -138,6 +161,34 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(headRev);
 
+        Verb uni = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-unitolog"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi/Unitology.png")),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<UnitologyRuleComponent>(targetPlayer, UnitologyRule);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-unitolog"),
+        };
+        args.Verbs.Add(uni);
+
+        Verb spiderTerror = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-spider-terror"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi/Egg.png")),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<SpiderTerrorRuleComponent>(targetPlayer, SpiderTerrorRule);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-spider-terror"),
+        };
+        args.Verbs.Add(spiderTerror);
+
         Verb thief = new()
         {
             Text = Loc.GetString("admin-verb-text-make-thief"),
@@ -151,5 +202,22 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-thief"),
         };
         args.Verbs.Add(thief);
+
+        args.Verbs.Add(new Verb
+        {
+            Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+            Text = Loc.GetString("admin-verb-text-give-take-event-role"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi/Event.png")),
+            Act = () =>
+            {
+                if (HasComp<EventRoleComponent>(args.Target))
+                    RemComp<EventRoleComponent>(args.Target);
+                else
+                    EnsureComp<EventRoleComponent>(args.Target);
+            },
+            Impact = LogImpact.Medium,
+        });
+
     }
 }

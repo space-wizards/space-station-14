@@ -117,8 +117,8 @@
   components:
   - type: StealCondition
     stealGroup: IDCard
-    minCollectionSize: 5
-    maxCollectionSize: 10
+    minCollectionSize: 4 # DS14-value
+    maxCollectionSize: 8 # DS14-value
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
@@ -349,16 +349,16 @@
   - type: Objective
     difficulty: 0.5
 
-- type: entity
-  parent: BaseThiefStealStructureObjective
-  id: FreezerHeaterStealObjective
-  components:
-  - type: NotJobRequirement
-    job: AtmosphericTechnician
-  - type: StealCondition
-    stealGroup: FreezerHeater
-  - type: Objective
-    difficulty: 0.5
+# - type: entity
+#   parent: BaseThiefStealStructureObjective
+#   id: FreezerHeaterStealObjective # DS14-disabled
+#   components:
+#   - type: NotJobRequirement
+#     job: AtmosphericTechnician
+#   - type: StealCondition
+#     stealGroup: FreezerHeater
+#   - type: Objective
+#     difficulty: 0.5
 
 - type: entity
   parent: BaseThiefStealStructureObjective

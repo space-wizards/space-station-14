@@ -78,6 +78,10 @@
       - !type:AdjustReagent
         reagent: Inaprovaline
         amount: -2.0
+      - !type:CureEgg
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
     Gas:
       effects:
       - !type:HealthChange

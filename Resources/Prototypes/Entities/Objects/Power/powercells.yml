@@ -18,8 +18,8 @@
     solutions:
       battery:
         maxVol: 5
-  - type: InjectableSolution
-    solution: battery
+  # - type: InjectableSolution
+  #   solution: battery
   - type: DrawableSolution
     solution: battery
   - type: Extractable

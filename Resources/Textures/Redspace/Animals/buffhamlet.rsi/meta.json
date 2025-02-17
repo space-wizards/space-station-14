@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC0-1.0",
+    "copyright": "Created by vandy",
+    "states": [
+      {
+        "name": "dead"
+      },
+      {
+        "name": "icon"
+      },
+      {
+        "name": "omegahamlet",
+        "directions": 4
+      }
+    ]
+  }

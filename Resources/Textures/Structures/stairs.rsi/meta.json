@@ -1,29 +1,26 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/02b9f6894af4419c9f7e699a22c402b086d8067e",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/2ddbdca1b7fb5cb85cbdcd566a489cbc4794edcf/icons/obj/stairs.dmi and https://github.com/tgstation/tgstation/blob/b2dda940c5abb74d1a53d21c371788edffd0db5b/icons/turf/floors.dmi. Modified by jaraten(discord/GitHub)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
 		{
-			"name": "stairs_white",
-            "directions": 4
+			"name": "stairs_white"
 		},
         {
             "name": "stairs_stage_white"
         },
         {
-            "name": "stairs_steel",
-            "directions": 4
+            "name": "stairs_steel"
         },
         {
             "name": "stairs_stage_steel"
         },
         {
-            "name": "stairs_dark",
-            "directions": 4
+            "name": "stairs_dark"
         },
         {
             "name": "stairs_stage_dark"

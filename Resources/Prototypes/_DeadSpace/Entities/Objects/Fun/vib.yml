@@ -1,0 +1,9 @@
+- type: entity
+  parent: BaseItem
+  id: VIB
+  name: блюспейс О.В.Х.
+  description: Утерянное прошлым Капитаном, очень важное устройство. При правильном применении позволяет получить от ЦентКома коды от ядерной боеголовки.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Fun/vib.rsi
+    state: icon

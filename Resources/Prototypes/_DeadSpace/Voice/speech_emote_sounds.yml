@@ -1,0 +1,381 @@
+- type: emoteSounds
+  id: MaleFelinid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FelinidScreams
+    ScreamOnDamage:
+      collection: FelinidScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+    Hiss:
+      collection: FelinidHisses
+    Meow:
+      collection: FelinidMeows
+    Mew:
+      collection: FelinidMews
+    Growl:
+      collection: FelinidGrowls
+    Purr:
+      collection: FelinidPurrs
+
+- type: emoteSounds
+  id: FemaleFelinid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FelinidScreams
+    ScreamOnDamage:
+      collection: FelinidScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: CluwneHorn
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    Hiss:
+      collection: FelinidHisses
+    Meow:
+      collection: FelinidMeows
+    Mew:
+      collection: FelinidMews
+    Growl:
+      collection: FelinidGrowls
+    Purr:
+      collection: FelinidPurrs
+
+- type: emoteSounds
+  id: IPSIPC
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: IPSIPCScreams
+    ScreamOnDamage:
+      collection: IPSIPCScreams
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg
+
+- type: emoteSounds
+  id: MaleNeco
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: NecoScreams
+    ScreamOnDamage:
+      collection: NecoScreams
+    Laugh:
+      collection: NecoLaugh
+    Sneeze:
+      collection: NecoSneezes
+    Cough:
+      collection: NecoCoughs
+    Crying:
+      collection: NecoCry
+    Whistle:
+      collection: Whistles
+
+- type: emoteSounds
+  id: FemaleNeco
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: NecoScreams
+    ScreamOnDamage:
+      collection: NecoScreams
+    Laugh:
+      collection: NecoLaugh
+    Sneeze:
+      collection: NecoSneezes
+    Cough:
+      collection: NecoCoughs
+    Crying:
+      collection: NecoCry
+    Whistle:
+      collection: Whistles
+
+- type: emoteSounds
+  id: MaleVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: VulpkaninMaleScreams
+    ScreamOnDamage:
+      collection: VulpkaninMaleScreams
+    Laugh:
+      collection: VulpkaninLaugh
+    Sneeze:
+      collection: VulpkaninSneezes
+    Cough:
+      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: VulpkaninCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+    Howl:
+      collection: VulpkaninMaleHowl
+    Growl:
+      collection: VulpkaninMaleGrowl
+
+- type: emoteSounds
+  id: FemaleVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: VulpkaninFemaleScreams
+    ScreamOnDamage:
+      collection: VulpkaninFemaleScreams
+    Laugh:
+      collection: VulpkaninLaugh
+    Sneeze:
+      collection: VulpkaninSneezes
+    Cough:
+      collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: VulpkaninCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    Howl:
+      collection: VulpkaninFemaleHowl
+    Growl:
+      collection: VulpkaninFemaleGrowl
+
+- type: emoteSounds
+  id: MaleTajaran
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: TajaranMaleScreams
+    ScreamOnDamage:
+      collection: TajaranMaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: TajaranMaleSneezes
+    Cough:
+      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: TajaranYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: TajaranMaleSigh
+    Crying:
+      collection: TajaranMaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: TajaranMaleDeathGasp
+    Hiss:
+      collection: TajaranMaleHisses
+    Meow:
+      collection: TajaranMaleMeows
+
+- type: emoteSounds
+  id: FemaleTajaran
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: TajaranFemaleScreams
+    ScreamOnDamage:
+      collection: TajaranFemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: TajaranFemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: TajaranYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: CluwneHorn
+    Sigh:
+      collection: TajaranFemaleSigh
+    Crying:
+      collection: TajaranFemaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: TajaranFemaleDeathGasp
+    Hiss:
+      collection: TajaranFemaleHisses
+    Meow:
+      collection: TajaranFemaleMeows
+
+- type: emoteSounds
+  id: MaleMed
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: MedScreams
+    ScreamOnDamage:
+      collection: MedScreams
+    Laugh:
+      collection: MedLaugh
+    Sneeze:
+      collection: MedSneezes
+    Cough:
+      collection: MedCoughs
+    Crying:
+      collection: MedCry
+    Whistle:
+      collection: Whistles

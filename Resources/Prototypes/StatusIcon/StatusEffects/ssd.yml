@@ -3,4 +3,4 @@
   icon:
     sprite: /Textures/Effects/ssd.rsi
     state: default0
-  locationPreference: Left
+  locationPreference: Right # Corvax-TypingIndicator

@@ -1,0 +1,143 @@
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardCargo
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typancargo.rsi
+    layers:
+    - state: typancardcargo
+  - type: PresetIdCard
+    job: TypanCargotech
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardCom
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typansec.rsi
+    layers:
+    - state: typancardcom
+  - type: Access
+    tags:
+    - Armory
+    - Cargo
+    - Medical
+    - Engineering
+    - Research
+    - Service
+    - SyndicateAgent
+    - Quartermaster
+    - ResearchDirector
+    - NuclearOperative
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardEng
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typaneng.rsi
+    layers:
+    - state: typancardeng
+  - type: Access
+    tags:
+    - Engineering
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardMed
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typanmed.rsi
+    layers:
+    - state: typancardmed
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardRd
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typanrd.rsi
+    layers:
+    - state: typancardrd
+  - type: PresetIdCard
+    job: TypanRD
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardScience
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typanscien.rsi
+    layers:
+    - state: typancardscience
+  - type: PresetIdCard
+    job: TypanScience
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardBotanist
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typanbotan.rsi
+    layers:
+    - state: typancardbotanist
+  - type: PresetIdCard
+    job: TypanBotanist
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess
+
+- type: entity
+  parent: IDCardStandard
+  id: TypanIDCardChef
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/typanchef.rsi
+    layers:
+    - state: typancardchef
+  - type: PresetIdCard
+    job: TypanChef
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess

@@ -1,0 +1,167 @@
+- type: entity
+  id: ActionExplosionAbility
+  name: Взрыв
+  description: Взорваться.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 60
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: explosive
+    event: !type:ExplosionAbilityActionEvent
+
+- type: entity
+  id: ActionStunRadiusSpider
+  name: Крик
+  description:  Пронзительный крик станит всех врагов поблизости.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 60
+    icon:
+      sprite: Interface/Actions/voice-mask.rsi
+      state: icon
+    event: !type:StunRadiusActionEvent
+
+- type: entity
+  id: ActionSpiderKnight
+  name: Сменить состояние
+  description: Обычное, защита или атака? Потребляет кровь.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 0.5
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_cycle_equip_on
+    event: !type:SpiderKnightActionEvent
+
+- type: entity
+  id: ActionInvisibility
+  name: Невидимость
+  description: Вы становитесь невидимым.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    icon: Interface/Actions/eyeclose.png
+    event: !type:InvisibilityActionEvent
+
+- type: entity
+  id: ActionSpiderLurker
+  name: Дымок
+  description: Выпускает дым, стоит 10 крови.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_smoke
+    event: !type:SpiderLurkerActionEvent
+
+- type: entity
+  id: ActionSuckBlood
+  name: Высосать кровь
+  description: Поглощает кровь у выбранной цели.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/devour.rsi
+      state: icon
+    event: !type:SuckBloodActionEvent
+
+- type: entity
+  id: ActionChainAbility
+  name: Заплести
+  description: Заплести цель паутиной.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 3
+    icon:
+      sprite: Objects/Misc/handcuffs.rsi
+      state: handcuff
+    event: !type:ChainAbilityActionEvent
+
+- type: entity
+  id: ActionAutoInjectReagent
+  name: Выделить вещества
+  description: Выделяет вещества и впрыскивает их в ваше тело.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_damtype_toxin
+    event: !type:AutoInjectReagentActionEvent
+
+- type: entity
+  id: ActionSpawnAgainst
+  name: Заспавнить напротив
+  description: Спавнит выбранную сущность напротив.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: _DeadSpace/Interface/Actions/create.png
+    event: !type:SpawnAgainstActionEvent
+    checkCanInteract: false
+
+- type: entity
+  id: ActionEvolution
+  name: Эволюционировать
+  description: Эволюционирует в выбранную сущность.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    icon: { sprite: Interface/Actions/actions_mecha.rsi, state: mech_ivanov }
+    event: !type:EvolutionActionEvent
+    checkCanInteract: false
+
+- type: entity
+  id: ActionLockCocoon
+  name: Заплести цель паутиной
+  description: Помещает существо в кокон.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 10
+    icon:
+      sprite: _DeadSpace/Spiders/cocoon.rsi
+      state: cocoon
+    event: !type:LockCocoonEvent
+    checkCanAccess: false
+    range: 2
+
+- type: entity
+  id: ActionSpiderInfector
+  name: Впрыснуть яйца
+  description: Помещает в существо паучье яйца.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 10
+    icon:
+      sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
+      state: Egg
+    event: !type:SpiderInfectorActionEvent
+    checkCanAccess: false
+    range: 2
+
+- type: entity
+  id: ActionHatch
+  name: Вылупиться
+  description: Вылезти из носителя.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    icon:
+      sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
+      state: Egg
+    event: !type:HatchActionEvent

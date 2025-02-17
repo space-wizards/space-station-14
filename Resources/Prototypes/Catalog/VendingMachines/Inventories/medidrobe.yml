@@ -4,6 +4,9 @@
     ClothingBackpackDuffelMedical: 4
     ClothingBackpackMedical: 4
     ClothingBackpackSatchelMedical: 4
+    ClothingBackpackDuffelCoroner: 1
+    ClothingBackpackCoroner: 1
+    ClothingBackpackSatchelCoroner: 1
     ClothingUniformJumpsuitMedicalDoctor: 4
     ClothingUniformJumpskirtMedicalDoctor: 4
     ClothingBeltMedical: 4
@@ -15,7 +18,7 @@
     ClothingHandsGlovesNitrile: 2
     ClothingHeadsetMedical: 4
     ClothingOuterWinterMed: 2
-    ClothingOuterHospitalGown: 5
+    ClothingOuterHospitalGown: 6
     UniformScrubsColorGreen: 4
     UniformScrubsColorBlue: 4
     UniformScrubsColorPurple: 4

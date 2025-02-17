@@ -1,0 +1,187 @@
+- type: entity
+  name: наручники из паутины
+  description: Липкие.
+  id: SpiderHandcuffs
+  parent: BaseItem
+  components:
+  - type: Item
+    size: Small
+    storedRotation: 90
+  - type: Handcuff
+    uncuffTime: 3600
+    used: true
+    breakOnRemove: true
+    brokenPrototype: MaterialWebSilk1
+    cuffedRSI: _DeadSpace/Spiders/handcuffs.rsi
+    bodyIconState: body-overlay
+    startCuffSound:
+      collection: SpiderHatches
+    endCuffSound:
+      collection: SpiderHatches
+    startBreakoutSound:
+      collection: SpiderHatches
+    startUncuffSound:
+      collection: SpiderHatches
+    endUncuffSound:
+      collection: SpiderHatches
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/handcuffs.rsi
+    state: handcuff
+  - type: Tag
+    tags:
+    - Handcuffs
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    resetOnHandSelected: false
+    animation: WeaponArcDisarm
+    damage:
+      types:
+        Blunt: 0
+  - type: UseDelay
+    delay: 3
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesBlindfoldWeb
+  name: повязка из паутины
+  description: Липкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/blindfold.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Spiders/blindfold.rsi
+  - type: Blindfold
+  - type: Construction
+    graph: Blindfold
+    node: blindfold
+  - type: FlashImmunity
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 1
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsLaceupWeb
+  name: повязка из паутины
+  suffix: для ног
+  description: Липкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/boots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Spiders/boots.rsi
+  - type: CaptiveShackles
+  - type: ClothingSpeedModifier
+    walkModifier: 0.02
+    sprintModifier: 0.02
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 1
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingSpiderMaskMuzzle
+  name: кляп из паутины
+  description: Нужно остановить этот ужасный шум.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/muzzle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Spiders/muzzle.rsi
+  - type: IngestionBlocker
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: mumble
+
+- type: entity
+  name: паук скрытень
+  parent: BaseMobSpiderTerror
+  id: MobSpiderTerrorLurker
+  description: Плохо видно.
+  components:
+  - type: HipoHand
+    quantity: 5 # Сколько впрыскивать
+    countReagent: 10 # Сколько при спавне
+    maxCountReagent: 10 # Хранилище реагента
+    durationRegenReagent: 10 # Время регена
+    reagent: SpiderExtractLurker # Что в хранилище
+  - type: Sprite
+    scale: 1, 1
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/lurker.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      groups:
+        Brute: 10
+      types:
+        Poison: 1
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 250
+    bloodlossThreshold: 0.4
+  - type: Bloodsucker
+    maxCountReagent: 60 # Ёмкость
+    countReagent: 30 # Сколько реагента при спавне
+    duration: 2 # Длительность сосания
+    howMuchWillItSuck: 10 # Сколько высосет за один укус
+    injectSound:
+      collection: SpiderHatches # Звуки после высасывания
+  - type: Puller
+    needsHands: false
+  - type: SpiderLurker
+    bloodCost: 10
+    duration: 10
+    spreadAmount: 30
+    movementBuff: 2
+    solution:
+      reagents:
+      - ReagentId: SpiderLurkerSmokeExtract
+        Quantity: 30
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 4
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 2000
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological

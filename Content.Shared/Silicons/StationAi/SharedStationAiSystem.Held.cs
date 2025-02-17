@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
+using Content.Shared.DeadSpace.StationAI.UI;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -28,6 +30,8 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+
+        SubscribeLocalEvent<StationAiHeldComponent, AIEyeCamerasActionEvent>(OnOpenUiCams);
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
@@ -193,6 +197,14 @@ public abstract partial class SharedStationAiSystem
     private void ShowDeviceNotRespondingPopup(EntityUid toEntity)
     {
         _popup.PopupClient(Loc.GetString("ai-device-not-responding"), toEntity, PopupType.MediumCaution);
+    }
+
+    private void OnOpenUiCams(Entity<StationAiHeldComponent> ent, ref AIEyeCamerasActionEvent args)
+    {
+        if (!TryComp<ActorComponent>(ent, out var actorComponent))
+            return;
+
+        _uiSystem.TryToggleUi(ent.Owner, AICameraListUiKey.Key, actorComponent.PlayerSession);
     }
 }
 

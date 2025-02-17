@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseBigBox
   name: cardboard box #it's still just a box
   description: Huh? Just a box...
@@ -21,6 +21,13 @@
           layer:
             - MobLayer
           hard: true
+        slips:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          hard: false
+          layer:
+          - SlipLayer
     - type: Pullable
     - type: CardboardBox
       effectSound: /Audio/Effects/chime.ogg
@@ -68,9 +75,12 @@
       quiet: true
     - type: Stealth
       hadOutline: true
+      maxVisibility: 0.5
     - type: StealthOnMove
-      passiveVisibilityRate: -0.37
+      passiveVisibilityRate: -0.50
       movementVisibilityRate: 0.20
+    - type: StepTrigger
+      intersectRatio: 0.2
 
 - type: entity
   id: BigBox

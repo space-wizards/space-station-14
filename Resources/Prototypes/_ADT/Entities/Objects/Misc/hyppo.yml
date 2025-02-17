@@ -1,0 +1,33 @@
+- type: entity
+  parent: BaseItem
+  id: JanaHypo
+  name: экспериментальный гипоспрей Яны
+  description: Был сконструирован и улучшен благодаря Джолин. Пахнет как бикаридин.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Misc/Hyppo.rsi
+    state: hypo
+  - type: Item
+    sprite: _ADT/Objects/Misc/Hyppo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 50
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0
+  - type: StaticPrice
+    price: 750
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 2
+    softness: 5
+    autoRot: true
+    color: "#be090e"
+    energy: 3

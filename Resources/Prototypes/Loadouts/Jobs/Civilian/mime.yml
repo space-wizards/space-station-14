@@ -41,6 +41,22 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtMime
 
+- type: loadout
+  id: MimeJumpSexyWhite
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMimeSexyWhite
+
+- type: loadout
+  id: MimeJumpSexyBlack
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMimeSexyBlack
+
+# Neck
+- type: loadout
+  id: MimeNeckSexy
+  equipment:
+    neck: ClothingNeckMimeSexy
+
 # Back
 - type: loadout
   id: MimeBackpack
@@ -73,3 +89,28 @@
   id: MimeSuspendersBlack
   equipment:
     belt: ClothingBeltSuspendersBlack
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersMime
+
+- type: loadout
+  id: UnderwearBottomPantiesMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesMime
+
+- type: loadout
+  id: UnderwearTopBraMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraMime

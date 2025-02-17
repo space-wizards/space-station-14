@@ -1,0 +1,108 @@
+- type: sponsorLoadout
+  id: TheQG
+  entity: ClothingBackpackTheQG
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackTheQG
+  name: белый украшенный вещмешок
+  description: Вместительный вещмешок. Окрашен в белый цвет. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/TheQG/duffel.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltDominatorFilled
+      - id: ClothingNeckCloakDominator
+      - id: ClothingHandsGlovesDominator
+      - id: ClothingOuterHardsuitDominator
+      - id: ClothingHeadHatDominator
+      - id: ClothingUniformJumpsuitDominator
+      - id: ClothingShoesBootsMagDominator
+      - id: ClothingUnderSocksDominator
+      - id: ToySword
+      - id: WeaponDisablerToySponsor
+      - id: ClothingHeadHatBeretTheQG
+      - id: ClothingNeckMantleTheQG
+      - id: ClothingUniformJumpsuitTheQG
+      - id: ClothingWebbingTheQG
+      - id: PaperLawsTheQG
+
+# Beret
+- type: entity
+  parent: ClothingHeadHatBeret
+  id: ClothingHeadHatBeretTheQG
+  name: берет 51-десантной дивизии
+  description: Берет, символизирующий принадлежность к элитному подразделению вооруженных сил, известному своей смелостью и высоким профессионализмом.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/TheQG/beret.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/TheQG/beret.rsi
+
+# Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleTheQG
+  name: белая наплечная мантия
+  description: Наплечная мантия в белом цвете. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/TheQG/mantle_shoulder.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/TheQG/mantle_shoulder.rsi
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTheQG
+  name: белая тактическая юбка-костюм
+  description: Белая юбка-костюм. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/TheQG/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/TheQG/jumpsuit.rsi
+
+# Webbing
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingWebbingTheQG
+  name: РПС 51-десантной дивизии
+  description: Ременно-плечевая система тактических ремней, которую носят представители 51-десантной дивизии.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/TheQG/webbing.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/TheQG/webbing.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Item
+    size: Normal
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawsTheQG
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено 
+    content: paper-law-TheQG

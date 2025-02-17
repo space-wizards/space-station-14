@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:LunaLita#0840",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "blody_eyes",
+            "directions": 4
+        },
+        {
+            "name": "blody_eyes_dead"
+        },
+        {
+            "name": "bunch_demonic_eyes",
+            "directions": 4
+        },
+        {
+            "name": "bunch_demonic_eyes_dead"
+        },
+        {
+            "name": "demonic_eye",
+            "directions": 4
+        },
+        {
+            "name": "demonic_eye_dead"
+        }
+    ]
+}

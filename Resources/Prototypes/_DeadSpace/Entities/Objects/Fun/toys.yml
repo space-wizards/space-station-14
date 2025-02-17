@@ -1,0 +1,148 @@
+- type: entity
+  parent: BasePlushie
+  id: DiscordToy
+  name: плюшевый Клайд
+  description: На бирке красуется надпись "Слава Мёртвому Космосу!"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/discord.rsi
+    state: blue
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_DeadSpace/Items/Toys/DiscordToy/discord-notification1.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_DeadSpace/Items/Toys/DiscordToy/user_join.ogg
+      volume: -5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_DeadSpace/Items/Toys/DiscordToy/call_ringing.ogg
+      params:
+        volume: -5
+  - type: Item
+    heldPrefix: blue
+    storedRotation: -90
+    size: Normal
+  - type: UseDelay
+    delay: 2.0
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_DeadSpace/Items/Toys/DiscordToy/user_join.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_DeadSpace/Items/Toys/DiscordToy/user_leave.ogg
+      params:
+        volume: -5
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieJokerge
+  name: плюшевый jokerge
+  description: Увы...
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/jokerge.rsi
+    state: jokerge
+    
+- type: entity
+  name: двухклинковый игрушечный меч
+  parent: ToySword
+  id: ToyEnergySwordDouble
+  description: Два игрушечных меча в одном. Мечта любого клоуна.
+  components:
+  - type: Construction
+    graph: ToyDoubleSword
+    node: icon
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    layers:
+      - state: e_sword_double
+      - state: e_sword_double_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
+  - type: Wieldable
+  - type: StaminaDamageOnHit
+    damage: 10
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieFloran
+  name: плюшевый флоран
+  description: Интересно, откуда они тут взялись?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/floran.rsi
+    state: floran
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieJuggernaut
+  name: плюшевый джаггернаут
+  description: Мягкая игрушка, напоминающая джаггернаута ядерных оперативников Синдиката. На бирке указано, что оперативники это полнейшая выдумка.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/juggernaut.rsi
+    state: juggernaut
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLieutenant
+  name: плюшевый лейтенант хома
+  description: Хладнокровный и расчётливы, специализирующийся на управлении специальными операциями. Способен принимать взвешенные решения в критических ситуациях не смотря на то что он хомяк.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/lieutenant.rsi
+    state: lieutenant
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieIps
+  name: плюшевый КПС
+  description: Милый плюшевый КПС.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/plushie_ips.rsi
+    state: ips
+
+- type: entity
+  id: MagazineTommyCapGun
+  name: магазин для игрушечного томми гана
+  parent: BaseItem
+  components:
+  - type: Tag
+    tags:
+      - MagazineTommyCapGun
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeCap
+    proto: CartridgeCap
+    capacity: 20
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/TommyGun/magazine.rsi  
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance

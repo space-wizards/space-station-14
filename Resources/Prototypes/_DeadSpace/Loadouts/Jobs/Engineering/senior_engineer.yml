@@ -1,0 +1,47 @@
+# Head
+- type: loadout
+  id: SeniorEngineerBeret
+  equipment:
+    head: ClothingHeadHatBeretEngineering
+
+# Jumpsuit
+- type: loadout
+  id: SeniorEngineerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorEngineer
+
+- type: loadout
+  id: SeniorEngineerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorEngineer
+
+# ID
+- type: loadout
+  id: SeniorEngineerPDA
+  equipment:
+    id: SeniorEngineerPDA
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersSeniorEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersSeniorEngineer
+
+- type: loadout
+  id: UnderwearBottomPantiesSeniorEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesSeniorEngineer
+
+- type: loadout
+  id: UnderwearTopBraSeniorEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraSeniorEngineer

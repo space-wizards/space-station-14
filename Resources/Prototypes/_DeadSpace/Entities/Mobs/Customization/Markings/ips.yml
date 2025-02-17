@@ -1,0 +1,433 @@
+- type: marking
+  id: IPSHead1
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: blue_s
+
+- type: marking
+  id: IPSHead2
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: breakout_s
+
+- type: marking
+  id: IPSHead3
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: console_s
+
+- type: marking
+  id: IPSHead4
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: eight_s
+
+- type: marking
+  id: IPSHead5
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: goggles_hesp_alt_s
+
+- type: marking
+  id: IPSHead6
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: goggles_s
+
+- type: marking
+  id: IPSHead7
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: gol_glider_s
+
+- type: marking
+  id: IPSHead8
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: green_s
+
+- type: marking
+  id: IPSHead9
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: heart_s
+
+- type: marking
+  id: IPSHead10
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: monoeye_s
+
+- type: marking
+  id: IPSHead11
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: music_s
+
+- type: marking
+  id: IPSHead12
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: nature_s
+
+- type: marking
+  id: IPSHead13
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: off_hesp_alt_s
+
+- type: marking
+  id: IPSHead14
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: orange_hesp_alt_s
+
+- type: marking
+  id: IPSHead15
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: orange_s
+
+- type: marking
+  id: IPSHead16
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: pink_hesp_alt_s
+
+- type: marking
+  id: IPSHead17
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: pink_s
+
+- type: marking
+  id: IPSHead18
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: purple_s
+
+- type: marking
+  id: IPSHead19
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: rainbow_hesp_alt_s
+
+- type: marking
+  id: IPSHead20
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: rainbow_s
+
+- type: marking
+  id: IPSHead21
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: red_s
+
+- type: marking
+  id: IPSHead22
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: rgb_hesp_alt_s
+
+- type: marking
+  id: IPSHead23
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: rgb_s
+
+- type: marking
+  id: IPSHead24
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: scroll_hesp_alt_s
+
+- type: marking
+  id: IPSHead25
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: scroll_s
+
+- type: marking
+  id: IPSHead26
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: shower_s
+
+- type: marking
+  id: IPSHead27
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: smoking_s
+
+- type: marking
+  id: IPSHead28
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: static_s
+
+- type: marking
+  id: IPSHead29
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: test_s
+
+- type: marking
+  id: IPSHead30
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: waiting_s
+
+- type: marking
+  id: IPSHead31
+  bodyPart: Eyes
+  markingCategory: Head
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  speciesRestriction: [IPS]
+  sprites:
+  - sprite: _DeadSpace/Mobs/Customization/ips_face.rsi
+    state: yellow_s

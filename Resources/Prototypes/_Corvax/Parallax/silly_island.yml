@@ -1,0 +1,74 @@
+- type: parallax
+  id: SillyIsland
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean.png"
+      slowness: 0.5
+      scale: "1, 1"
+      scrolling: "0, -0.05"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean_Overlay2.png"
+      slowness: 0.3
+      scale: "0.5, 0.5"
+      scrolling: "0.08, 0.08"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean_Overlay.png"
+      slowness: 0.05
+      scale: "0.4, 0.4"
+      scrolling: "-0.1, -0.1"
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.875
+  layersLQUseHQ: false
+
+- type: parallax
+  id: SillyIce
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean.png"
+      slowness: 0.5
+      shader: ""
+      scale: "1, 1"
+      scrolling: "0, -0.05"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean_Overlay2.png"
+      slowness: 0.3
+      scale: "0.5, 0.5"
+      scrolling: "0.08, 0.08"
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean_Overlay.png"
+      slowness: 0.05
+      scale: "0.4, 0.4"
+      scrolling: "-0.1, -0.1"
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyIceParallax.png"
+      slowness: 0
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/SillyOcean.png"
+      slowness: 0.5
+      scale: "1, 1"
+      scrolling: "0, -0.05"
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Corvax/Parallax/IceParallax.png"
+      slowness: 0
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false

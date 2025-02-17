@@ -1,0 +1,197 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformLushWhiteWeddingDress
+  name: пышное белое платье
+  description: Ты выглядишь так нежно... Как зефир!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/lush_white_wedding_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/lush_white_wedding_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformLushRoseWeddingDress
+  name: пышное розовое платье
+  description: Специально для принцессы.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/lush_rose_wedding_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/lush_rose_wedding_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformWhiteGhoticWeddingDress
+  name: белое готическое свадебное платье
+  description: Это платье идеально подчёркивает твою фигуру. Ты будешь самой соблазнительной невестой.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_ghotic_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_ghotic_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlackGhoticWeddingDress
+  name: чёрное готическое свадебное платье
+  description: Мортиша Аддамс одобрила бы. Лучше этого платья ты не найдёшь.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_ghotic_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_ghotic_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformWhiteShortWeddingDress
+  name: белое короткое свадебное платье
+  description: Белое платье с золотыми блёстками. Для тех, кто устал от длинных подолов!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_short_wedding_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_short_wedding_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformWhiteWeddingWomenSuit
+  name: белый свадебный женский костюм
+  description: Это женский костюм. Для тех, кто устал от платьев. Выглядит сексуально.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_wedding_women_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_wedding_women_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlackWeddingWomenSuit
+  name: чёрный свадебный женский костюм
+  description: Это женский костюм. Для тех, кто устал от платьев. Выглядит сексуально.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_wedding_women_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_wedding_women_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformRedCocktailDress
+  name: красное коктейльное платье
+  description: Девочка, это платье создано для вечеринки! Порви танцпол!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/red_cocktail_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/red_cocktail_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlackElegantDress
+  name: чёрное элегантное платье
+  description: Оно не слишком короткое? Мой зад не видно?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_elegant_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_elegant_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformOrangeBeachSuit
+  name: оранжевый пляжный костюм
+  description: Цвет настроения — оранжевый. Для фанатов апельсинов и хорошего загара.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/orange_beach_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/orange_beach_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformDruidLeaderDress
+  name: платье предводительницы друидов
+  description: Оно такое лёгкое и нежное!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/druid_leader_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/druid_leader_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformLilitBlackDress
+  name: чёрное платье Лилит
+  description: Красивое элегантное платье. Специально для вечернего события.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/lilit_black_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/lilit_black_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlueLatexDress
+  name: голубое латексное платье
+  description: Где-то я такое уже видел... Это из сериала?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/blue_latex_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/blue_latex_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformLeopardDress
+  name: леопардовое платье
+  description: Детка, в этом платье ты просто супер кошечка! Мррау!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/leopard_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/leopard_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformRedgiJumpskirt
+  name: юбка-костюм заведующей отелем
+  description: Потёртый, но от того не менее стильный, костюм для женской половины персонала.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/skirt_redji.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/skirt_redji.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformNewBarmanSkirt
+  name: обновлённый костюм-юбка бармена
+  description: Обновлённый комплект одежды для более изысканого разлития напитков.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/new_barman_skirt.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/new_barman_skirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformRabbitDress
+  name: кроличий купальник
+  description: А куда здесь крепить КПК?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/rabbit_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/rabbit_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformYunaBlackDress
+  name: черное платье
+  description: Черное платье для торжеств.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/yuna_black_dress.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpskirt/yuna_black_dress.rsi

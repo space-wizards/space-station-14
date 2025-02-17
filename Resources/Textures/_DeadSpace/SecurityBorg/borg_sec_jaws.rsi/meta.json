@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created mally0352 (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sec_borg_jaws_pry"
+    },
+    {
+      "name": "sec_borg_jaws_cutter"
+    }
+  ]
+}

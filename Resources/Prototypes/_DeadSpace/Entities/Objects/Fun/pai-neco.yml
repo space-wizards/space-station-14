@@ -1,0 +1,38 @@
+- type: entity
+  parent: PersonalAI
+  id: PersonalNecoAI
+  name: персональный ИИ кошкогорничная
+  description: Твоя персональная неко-горничная!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Fun/pai-neco.rsi
+    layers:
+    - state: pai-base
+    - state: pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-neco-system-role-name
+    roleDescription: pai-neco-system-role-description
+    roleRules: ghost-role-information-familiar-rules
+  - type: OwOAccent
+
+- type: entity
+  parent: SyndicatePersonalAI
+  id: SyndicatePersonalNecoAI
+  name: персональный ИИ кошкогорничная
+  description: Твоя персональная неко-горничная!
+  suffix: персональный ИИ кошкогорничная Синдиката
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Fun/pai-neco.rsi
+    layers:
+    - state: syndicate-pai-base
+    - state: syndicate-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-neco-system-role-name-syndicate
+    roleDescription: pai-neco-system-role-description-syndicate
+    roleRules: ghost-role-information-familiar-rules
+  - type: OwOAccent

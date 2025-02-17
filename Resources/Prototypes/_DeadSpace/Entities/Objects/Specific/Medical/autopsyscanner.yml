@@ -1,0 +1,62 @@
+- type: entity
+  id: HandheldAutopsyScannerUnpowered
+  parent: BaseItem
+  name: сканер аутопсии
+  description: Ручной сканер аутопсии, способный определить причину смерти и напечатать подробный отчёт.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Medical/autopsyscanner.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: analyzer
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: ActivatableUI
+    key: enum.AutopsyScannerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.AutopsyScannerUiKey.Key:
+        type: AutopsyScannerBoundUserInterface
+  - type: ItemToggle
+    onUse: false
+  - type: AutopsyScanner
+    scanningSound:
+      path: "/Audio/_DeadSpace/Items/Medical/autopsyscanner.ogg"
+    scanningErrorSound:
+      path: "/Audio/_DeadSpace/Items/Medical/autopsyscanner-error.ogg"
+  - type: Tag
+    tags:
+      - DiscreteHealthAnalyzer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+
+- type: entity
+  id: HandheldAutopsyScanner
+  name: сканер аутопсии
+  description: Ручной сканер аутопсии, способный определить причину смерти и напечатать подробный отчёт.
+  suffix: Заряжен
+  parent: [ HandheldAutopsyScannerUnpowered, PowerCellSlotSmallItem]
+  components:
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ActivatableUIRequiresPowerCell
+
+- type: entity
+  id: HandheldAutopsyScannerEmpty
+  name: сканер аутопсии
+  description: Ручной сканер аутопсии, способный определить причину смерти и напечатать подробный отчёт.
+  suffix: Пустой
+  parent: HandheldAutopsyScanner
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

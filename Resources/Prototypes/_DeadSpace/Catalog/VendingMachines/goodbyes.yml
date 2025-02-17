@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: ClownVendGoodbyes
+  values:
+    prefix: thankyou-clownvend-
+    count: 5

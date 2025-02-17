@@ -1,0 +1,38 @@
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitKloopRe
+  name: ударопрочный шлем
+  description: Устойчивый к давлению и ударостойкий шлем ОПНУ. Создано NanoTrasen.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/kloopre/helmet.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: off-equipped-HELMET
+        shader: unshaded
+  - type: PointLight
+    color: blue
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitKloopRee
+  name: ударопрочный скафандр
+  description: Легкий, но прочный экзокостюм. Создано NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/kloopre/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/kloopre/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitKloopRe
+  - type: Item
+    size: Huge

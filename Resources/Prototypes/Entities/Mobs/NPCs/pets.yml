@@ -195,6 +195,14 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/_ADT/carakal_purr.ogg
+    interactFailureSound:
+      path: /Audio/_ADT/carakal_hiss.ogg
 
 - type: entity
   name: Bandito
@@ -267,6 +275,9 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+  - type: Speech
+    speechSounds: Cat
+    speechVerb: SmallMob
 
 - type: entity
   name: McGriff
@@ -326,6 +337,9 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMcGriff
+  - type: Speech
+    speechSounds: Dog
+    speechVerb: SmallMob
 
 - type: entity
   name: Paperwork
@@ -529,6 +543,13 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: GhostRole
+    prob: 0.5
+    name: ghost-role-information-alexander-name
+    description: ghost-role-information-alexander-description
+  - type: GhostTakeoverAvailable
+  - type: TTS
+    voice: Chen
 
 - type: entity
   name: Renault
@@ -586,6 +607,9 @@
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
     rules: ghost-role-information-nonantagonist-rules
+    requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 72000 # 20 hours
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
@@ -612,6 +636,8 @@
     flavors:
     - meaty
     - sadness
+  - type: Hunger
+    baseDecayRate: 0.1 # DS14: not soo hungry
 
 - type: entity
   name: Shiva

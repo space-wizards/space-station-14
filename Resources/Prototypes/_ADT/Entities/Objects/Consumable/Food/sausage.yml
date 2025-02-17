@@ -1,0 +1,45 @@
+- type: entity
+  name: сосиска
+  parent: FoodMeatBase
+  id: ADTFoodSausageRaw
+  description: Обычная сосиска. Сырая, но сгодится, если нет еды лучше.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/sausage.rsi
+    state: raw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 1
+
+- type: entity
+  name: жареная сосиска
+  parent: FoodMeatBase
+  id: ADTFoodSausageFried
+  description: Обычная сосиска, но теплее, аппетитнее и с хрустящей корочкой.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/sausage.rsi
+    state: fried
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 6

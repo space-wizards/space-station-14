@@ -54,6 +54,7 @@
       - id: DrinkMilkCarton
         amount: 2
       - id: DrinkSoyMilkCarton
+      - id: ADTIronTray
 
 - type: entity
   id: ClosetJanitorFilled

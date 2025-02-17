@@ -21,7 +21,6 @@ entities:
     - type: MetaData
       name: NT-Quark
     - type: Transform
-      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:

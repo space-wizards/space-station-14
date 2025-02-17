@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/simple/demon.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "demon",
+      "directions": 4
+    },
+    {
+      "name": "honk_demon",
+      "directions": 4
+    },
+    {
+      "name": "bow_demon",
+      "directions": 4
+    },
+    {
+      "name": "jaunt",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.15,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.15,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.15,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.2,
+          0.15,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "slaughter_demon",
+      "directions": 4
+    }
+  ]
+}

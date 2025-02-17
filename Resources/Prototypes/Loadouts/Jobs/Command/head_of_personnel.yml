@@ -68,3 +68,28 @@
   id: HoPWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHoP
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersHeadofPersonnel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersHeadofPersonnel
+
+- type: loadout
+  id: UnderwearBottomPantiesHeadofPersonnel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesHeadofPersonnel
+
+- type: loadout
+  id: UnderwearTopBraHeadofPersonnel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraHeadofPersonnel

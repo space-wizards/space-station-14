@@ -42,8 +42,8 @@
     storedRotation: 90
 
 - type: entity
-  parent: BaseHandheldInstrument
-  id: PhoneInstrument
+  parent: BaseItem
+  id: PhoneInstrument # DS14
   name: red phone
   description: Should anything ever go wrong...
   components:
@@ -53,8 +53,6 @@
   - type: EmitSoundOnLand
     sound:
        path: /Audio/Items/ring.ogg
-  - type: Instrument
-    program: 124
   - type: Item
     size: Small
   - type: Prayable
@@ -62,6 +60,8 @@
     notificationPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
+  - type: UseDelay # DS14
+    delay: 300
 
 - type: entity
   parent: PhoneInstrument

@@ -19,7 +19,7 @@ namespace Content.Client.RoundEnd
         {
             _entityManager = entityManager;
 
-            MinSize = SetSize = new Vector2(520, 580);
+            MinSize = SetSize = new Vector2(780, 670); // DS14-resize
 
             Title = Loc.GetString("round-end-summary-window-title");
 

@@ -600,6 +600,7 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(maiden);
         }
 
+        /* DS14-disabled
         var angerPointingArrowsName = Loc.GetString("admin-smite-anger-pointing-arrows-name").ToLowerInvariant();
         Verb angerPointingArrows = new()
         {
@@ -614,6 +615,7 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", angerPointingArrowsName, Loc.GetString("admin-smite-anger-pointing-arrows-description"))
         };
         args.Verbs.Add(angerPointingArrows);
+        */
 
         var dustName = Loc.GetString("admin-smite-dust-name").ToLowerInvariant();
         Verb dust = new()

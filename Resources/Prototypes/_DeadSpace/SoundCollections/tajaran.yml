@@ -1,0 +1,80 @@
+- type: soundCollection
+  id: TajaranMaleScreams
+  files:
+    - /Audio/_DeadSpace/Voice/Tajaran/male_scream1.ogg
+    - /Audio/_DeadSpace/Voice/Tajaran/male_scream2.ogg
+
+- type: soundCollection
+  id: TajaranFemaleScreams
+  files:
+    - /Audio/_DeadSpace/Voice/Tajaran/female_scream1.ogg
+    - /Audio/_DeadSpace/Voice/Tajaran/female_scream2.ogg
+
+- type: soundCollection
+  id: TajaranMaleSneezes
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/male_sneeze.ogg
+
+- type: soundCollection
+  id: TajaranFemaleSneezes
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/female_sneeze.ogg
+
+- type: soundCollection
+  id: TajaranYawn
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/yawn.ogg
+
+- type: soundCollection
+  id: TajaranMaleSigh
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/male_sigh.ogg
+
+- type: soundCollection
+  id: TajaranFemaleSigh
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/female_sigh.ogg
+
+- type: soundCollection
+  id: TajaranMaleCry
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/male_cry.ogg
+
+- type: soundCollection
+  id: TajaranFemaleCry
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/female_cry.ogg
+
+- type: soundCollection
+  id: TajaranMaleDeathGasp
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/male_deathgasp.ogg
+
+- type: soundCollection
+  id: TajaranFemaleDeathGasp
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/female_deathgasp.ogg
+
+- type: soundCollection
+  id: TajaranMaleHisses
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/male_hiss1.ogg
+  - /Audio/_DeadSpace/Voice/Tajaran/male_hiss2.ogg
+
+- type: soundCollection
+  id: TajaranFemaleHisses
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/female_hiss1.ogg
+  - /Audio/_DeadSpace/Voice/Tajaran/female_hiss2.ogg
+
+- type: soundCollection
+  id: TajaranMaleMeows
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/male_meow1.ogg
+  - /Audio/_DeadSpace/Voice/Tajaran/male_meow2.ogg
+
+- type: soundCollection
+  id: TajaranFemaleMeows
+  files:
+  - /Audio/_DeadSpace/Voice/Tajaran/female_meow1.ogg
+  - /Audio/_DeadSpace/Voice/Tajaran/female_meow2.ogg

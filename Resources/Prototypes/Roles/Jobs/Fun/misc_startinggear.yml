@@ -52,7 +52,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     eyes: ClothingEyesHudSyndicate
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorRaid # DS14
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpack
     shoes: ClothingShoesBootsCombatFilled
@@ -66,9 +66,9 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSyndieFormal
     head: ClothingHeadHatOutlawHat
-    outerClothing: ClothingOuterArmorBasicSlim
+    outerClothing: ClothingOuterArmorRaid # DS14
     back: ClothingBackpackSatchel
-    pocket1: BaseUplinkRadio25TC
+    pocket1: BaseUplinkRadio40TC # DS14
     pocket2: EnergySword
 
 # Nanotrasen Paramilitary Unit Gear
@@ -102,6 +102,10 @@
     ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: PunPunIDCard
+    back: ClothingBackpackSatchel
+  storage:
+    back:
+    - BoxSurvival
 
 # DeathMatch Gear
 
@@ -117,20 +121,20 @@
 
 #Brigmedic
 
-- type: startingGear
-  id: BrigmedicGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitBrigmedic
-    outerClothing: ClothingOuterCoatAMG
-    back: ClothingBackpackBrigmedic
-    shoes: ClothingShoesColorRed
-    gloves: ClothingHandsGlovesNitrile
-    eyes: ClothingEyesHudMedical
-    head: ClothingHeadHatBeretBrigmedic
-    id: BrigmedicPDA
-    ears: ClothingHeadsetBrigmedic
-    mask: ClothingMaskBreathMedicalSecurity
-    belt: ClothingBeltMedicalFilled
+# - type: startingGear
+#   id: BrigmedicGear
+#   equipment:
+#     jumpsuit: ClothingUniformJumpsuitBrigmedic
+#     outerClothing: ClothingOuterCoatAMG
+#     back: ClothingBackpackBrigmedic
+#     shoes: ClothingShoesColorRed
+#     gloves: ClothingHandsGlovesNitrile
+#     eyes: ClothingEyesHudMedical
+#     head: ClothingHeadHatBeretBrigmedic
+#     id: BrigmedicPDA
+#     ears: ClothingHeadsetBrigmedic
+#     mask: ClothingMaskBreathMedicalSecurity
+#     belt: ClothingBeltMedicalFilled
 
 # Aghost
 - type: startingGear
@@ -144,6 +148,8 @@
     - trayScanner
     - AccessConfiguratorUniversal
     - Multitool
+    - AnomalyScanner
+    - PortableUniversalIdConsole
 
 #Gladiator with spear
 - type: startingGear

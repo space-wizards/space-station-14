@@ -48,5 +48,10 @@ namespace Content.Shared.Shuttles.Systems
 
             args.Cancel();
         }
+
+        // DS14-start
+        [Serializable, NetSerializable]
+        public sealed class ShuttleConsoleSignalButtonPressedMessage : BoundUserInterfaceMessage { }
+        // DS14-end
     }
 }

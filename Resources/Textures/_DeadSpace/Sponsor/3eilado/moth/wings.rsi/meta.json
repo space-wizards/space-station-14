@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Created by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "wings",
+      "directions": 4
+    },
+    {
+      "name": "gradient",
+      "directions": 4
+    },
+    {
+      "name": "stars",
+      "directions": 4
+    }
+  ]
+}

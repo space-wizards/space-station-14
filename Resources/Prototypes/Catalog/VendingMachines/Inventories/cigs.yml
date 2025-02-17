@@ -8,15 +8,17 @@
     CigPackMixed: 2
     CigarCase: 1
     SmokingPipeFilledTobacco: 1
-    Vape: 1
-    Matchbox: 5
-    PackPaperRollingFilters: 3
+    # Vape: 1
+    Matchbox: 4 # DS14-value
+    PackPaperRollingFilters: 4 # DS14-value
     CheapLighter: 4
     Lighter: 2
     FlippoLighter: 2
+    GroundTobacco: 10  # DS14
   contrabandInventory:
-    GroundTobacco: 3
+    # GroundTobacco: 3
     CigarGold: 2
     Igniter: 1
   emaggedInventory:
+    FlippoSyndicateLighter: 1 # DS14
     CigPackSyndicate: 1

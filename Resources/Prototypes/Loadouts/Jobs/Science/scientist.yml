@@ -1,12 +1,12 @@
-# Senior Time
-- type: loadoutEffectGroup
-  id: SeniorResearcher
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Science
-      time: 216000 #60 hrs
+# # Senior Time
+# - type: loadoutEffectGroup
+#   id: SeniorResearcher
+#   effects:
+#   - !type:JobRequirementLoadoutEffect
+#     requirement:
+#       !type:DepartmentTimeRequirement
+#       department: Science
+#       time: 216000 #60 hrs
 
 # Head
 - type: startingGear
@@ -14,12 +14,13 @@
   equipment:
     head: ClothingHeadHatBeretRND
 
-- type: loadout
-  id: ScientificBeret
-  startingGear: ScientificBeret
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
+# - type: loadout
+#   id: ScientificBeret
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorResearcher
+#   equipment:
+#     head: ClothingHeadHatBeretRND
 
 - type: loadout
   id: RoboticistCap
@@ -59,21 +60,21 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtRoboticist
 
-- type: loadout
-  id: SeniorResearcherJumpsuit
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitSeniorResearcher
+# - type: loadout
+#   id: SeniorResearcherJumpsuit
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorResearcher
+#   equipment:
+#     jumpsuit: ClothingUniformJumpsuitSeniorResearcher
 
-- type: loadout
-  id: SeniorResearcherJumpskirt
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtSeniorResearcher
+# - type: loadout
+#   id: SeniorResearcherJumpskirt
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorResearcher
+#   equipment:
+#     jumpsuit: ClothingUniformJumpskirtSeniorResearcher
 
 # Back
 - type: loadout
@@ -117,13 +118,13 @@
   equipment:
     outerClothing: ClothingOuterWinterRobo
 
-- type: loadout
-  id: SeniorResearcherLabCoat
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-  equipment:
-    outerClothing: ClothingOuterCoatLabSeniorResearcher
+# - type: loadout
+#   id: SeniorResearcherLabCoat
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorResearcher
+#   equipment:
+#     outerClothing: ClothingOuterCoatLabSeniorResearcher
 
 # Gloves
 - type: loadout
@@ -148,10 +149,35 @@
   equipment:
     id: SciencePDA
 
+# - type: loadout
+#   id: SeniorResearcherPDA
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorResearcher
+#   equipment:
+#     id: SeniorResearcherPDA
+
+# Underwear
 - type: loadout
-  id: SeniorResearcherPDA
+  id: UnderwearBottomBoxersScientist
   effects:
   - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
+    proto: MaleUnderwear
   equipment:
-    id: SeniorResearcherPDA
+    underwearb: ClothingUnderwearBottomBoxersScientist
+
+- type: loadout
+  id: UnderwearBottomPantiesScientist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesScientist
+
+- type: loadout
+  id: UnderwearTopBraScientist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraScientist

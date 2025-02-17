@@ -3,6 +3,10 @@
   name: job-name-psychologist
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000 # 5 hours
   startingGear: PsychologistGear
   icon: "JobIconPsychologist"
   supervisors: job-supervisors-cmo
@@ -11,6 +15,12 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Medical
+  wage: 55
+  #end-backmen: currency
 
 - type: startingGear
   id: PsychologistGear
@@ -18,6 +28,7 @@
     shoes: ClothingShoesLeather
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
+    socks: ClothingUnderwearSocksPsychologist
   storage:
     back:
     - RubberStampPsychologist

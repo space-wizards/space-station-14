@@ -82,9 +82,9 @@
   - type: StorageFill
     contents:
       - id: MedicatedSuture
+        amount: 2
       - id: RegenerativeMesh
       - id: Bloodpack
-        amount: 2
 
 - type: entity
   id: MedkitCombatFilled
@@ -95,7 +95,7 @@
     contents:
       - id: MedicatedSuture
       - id: RegenerativeMesh
-      - id: SyringeEphedrine
+      - id: DesoxyephedrineMedipen
       - id: SyringeSaline
       - id: BruteAutoInjector
       - id: BurnAutoInjector

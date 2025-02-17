@@ -1,0 +1,9 @@
+- type: entity
+  parent: FlaskBase
+  id: ADTDrinkArmyFlask
+  name: армейская фляга
+  description: Довольно качественная фляга.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Drinks/ArmyFlask.rsi

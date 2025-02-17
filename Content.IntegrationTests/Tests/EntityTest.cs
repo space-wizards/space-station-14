@@ -107,6 +107,8 @@ namespace Content.IntegrationTests.Tests
                     .ToList();
                 foreach (var protoId in protoIds)
                 {
+                    if (!map.GridCoords.IsValid(entityMan)) // To avoid random errors
+                        continue;
                     entityMan.SpawnEntity(protoId, map.GridCoords);
                 }
             });
@@ -240,6 +242,7 @@ namespace Content.IntegrationTests.Tests
                 "StationEvent",
                 "TimedDespawn",
 
+                "Eftpos", // attach to bank account on mapinit
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
             };
@@ -355,6 +358,7 @@ namespace Content.IntegrationTests.Tests
                 "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
+                "StationDnd", // DS14: Requires config
             };
 
             // TODO TESTS

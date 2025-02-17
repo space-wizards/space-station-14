@@ -1,0 +1,12 @@
+- type: factionIcon
+  id: BlobFaction
+  priority: 10
+  showTo:
+    components:
+      - BlobCarrier
+      - BlobObserver
+      - ZombieBlob
+      - Blobbernaut
+  icon:
+    sprite: /Textures/_Backmen/Interface/Misc/antag_icon.rsi
+    state: blob

@@ -1,0 +1,30 @@
+- type: vendingMachineInventory
+  id: ClownVendDispenserInventory
+  startingInventory:
+    LauncherCreamPie: 1
+    BananaPhoneInstrument: 1
+    Soap: 1
+    SnapPopBox: 1
+    RevolverCapGun: 1
+    SpeedLoaderCap: 2
+    BoxCartridgeCap: 1
+    ToyHammer: 1
+    WhoopieCushion: 1
+    CrazyGlue: 2
+    DrinkSpaceLube: 2
+    CrayonBox: 2
+    FoodBanana: 5
+    FoodPieBananaCream: 8
+    HappyHonk: 2
+  emaggedInventory:
+    SoapSyndie: 1
+    SlipocalypseClusterSoap: 1
+    ClothingHeadHatTacticalMaidHeadband: 1
+    BalloonOperative: 1
+    BalloonAgent: 1
+    BalloonElite: 1
+    BalloonJuggernaut: 1
+    BalloonCommander: 1
+    GrenadeDummy: 1
+    SyndieTrickyBomb: 1
+    HappyHonkNukieSnacks: 1

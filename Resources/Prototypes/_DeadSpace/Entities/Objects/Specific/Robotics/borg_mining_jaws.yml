@@ -1,0 +1,37 @@
+- type: entity
+  name: челюсти жизни шахтёрского киборга
+  parent: JawsOfLife
+  id: BorgMiningJawsOfLife
+  categories: [ HideSpawnMenu ]
+  description: Бюджетные челюсти жизни, разработанные для работы в полевых условиях.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Misc/borg_mining_jaws.rsi
+    state: mining_borg_jaws_pry
+  - type: Tool
+    qualities:
+      - Prying
+    speedModifier: 1.2
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Prying
+    speedModifier: 1.2
+    pryPowered: true
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: /Textures/_DeadSpace/Objects/Misc/borg_mining_jaws.rsi
+          state: mining_borg_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: /Textures/_DeadSpace/Objects/Misc/borg_mining_jaws.rsi
+          state: mining_borg_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8

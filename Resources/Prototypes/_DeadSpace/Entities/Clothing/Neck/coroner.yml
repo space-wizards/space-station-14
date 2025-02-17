@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckApronCoroner
+  name: фартук коронера
+  description: Фартук делает "тик-так" - время вскрывать трупы!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/coroner.rsi

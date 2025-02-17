@@ -1,0 +1,140 @@
+- type: entity
+  parent: BaseShield
+  id: SithForceShield
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: force-icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/shields.rsi
+    heldPrefix: force
+  - type: Reflect
+    reflectProb: 0.8
+
+- type: entity
+  id: RandomHumanoidSpawnerSith
+  components:
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    state: red
+  - type: RandomHumanoidSpawner
+    settings: RandomHumanoidSettingsSith
+
+- type: randomHumanoidSettings
+  id: RandomHumanoidSettingsSith
+  randomizeName: false
+  speciesBlacklist:
+  - Arachnid
+  - Diona
+  - Dwarf
+  # - Human
+  - Moth
+  - Reptilian
+  - SlimePerson
+  - Vox
+  - Demon
+  - Shark
+  - Tajaran
+  - Vulpkanin
+  - Felinid
+  - Kobolt
+  - Xenomorph
+  - IPC
+  - IPS
+  components:
+  - type: Sith
+  - type: SithSubmissionAbility
+  - type: SithForceShieldAbility
+    proto: SithForceShield
+  - type: SithLightningAbility
+  - type: SithForceAbility
+    strenghtPush: 1
+    numberOfPulses: 1
+    range: 5
+    soundPush:
+      collection: SithPush
+      params:
+        volume: 3
+    soundPull:
+      collection: SithPull
+      params:
+        volume: 3
+  - type: GhostRole
+    name: ghost-role-information-sith-name
+    description: ghost-role-information-sith-description
+    rules: ghost-role-information-antagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ SithGear ]
+  - type: RandomMetadata
+    nameSegments:
+    - names_sith
+    - names_sith_title
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseSithObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-sith
+  - type: RoleRequirement
+    roles:
+      mindRoles:
+      - SithRole
+
+- type: entity
+  parent: BaseSithObjective
+  id: SubordinationCommandObjective
+  components:
+  - type: Objective
+    icon: _DeadSpace/Sith/actions/submission.png
+  - type: NumberObjective
+    min: 4
+    max: 4
+    title: objective-condition-subordination-command-title
+  - type: SithSubmissionConditions
+
+- type: entity
+  parent: [BaseSithObjective, BaseSurviveObjective]
+  id: SithSurviveObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _DeadSpace/Sith/bondrewd_helm.rsi
+      state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostSith
+  components:
+  - type: GhostRole
+    name: ghost-role-information-sith-name
+    description: ghost-role-information-sith-description
+    rules: ghost-role-information-antagonist-rules
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 144000 # 40h overall
+    raffle:
+      settings: default
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+
+- type: entity
+  parent: EnergySword
+  id: EnergySwordSith
+  components:
+  - type: EnergySword
+    activatedColor: red
+    colorOptions:
+    - red
+  - type: SithEsword

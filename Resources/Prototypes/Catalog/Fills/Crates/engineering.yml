@@ -243,3 +243,32 @@
         tableId: RandomTechBoardTable
         rolls: !type:RangeNumberSelector
           range: 3, 7
+
+# ADT-start
+
+- type: entity
+  id: CrateEngineeringVoidJetpack
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: JetpackVoid
+        amount: 2
+
+- type: entity
+  id: ADTCargoUtilisatorComplectCrate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSpatio
+      - id: ClothingMaskGasExplorer
+      - id: ClothingShoesBootsMag
+      - id: ClothingUniformJumpsuitSalvageSpecialist
+      - id: ClothingUniformJumpsuitSalvageFormal
+      - id: ClothingUniformJumpskirtCargoSalvage
+      - id: ClothingUniformJumpskirtCargoSalvageFormal
+      - id: ClothingBackpackSatchelSalvage
+      - id: ClothingBackpackDuffelSalvage
+      - id: ClothingBackpackSalvage
+      - id: SurvivalKnife

@@ -1,0 +1,72 @@
+- type: entity
+  id: NecroKudzu
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/necrokudzu.rsi
+    state: kudzu_11
+    drawdepth: FloorTiles
+  - type: Appearance
+  - type: KudzuVisuals
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Kudzu
+    growthTickChance: 0.1
+    spreadChance: 0.4
+    damageRecovery:
+      types:
+        Slash: -0.25
+        Heat: -0.50
+        Cold: -0.50
+        Blunt: -0.25
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 10
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 2
+  - type: GrowingKudzu
+  - type: AtmosExposed
+  - type: ActiveEdgeSpreader
+  - type: EdgeSpreader
+    id: Kudzu
+  - type: LeviathanTerritory
+  - type: NecroKudzu
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.2
+    sprintSpeedModifier: 0.2
+    ignoreWhitelist:
+      components:
+      - IgnoreKudzu

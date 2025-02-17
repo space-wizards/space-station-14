@@ -1,0 +1,106 @@
+- type: entity
+  name: magistrat's rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampMagistrat
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-magistrat
+    stampedColor: "#650E00"
+    stampState: "paper_stamp-mag"
+  - type: Sprite
+    sprite: _ADT/KD/Magistrat.rsi
+    state: stamp-magistrat
+
+- type: entity
+  name: brigmedic's rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampBrigmedic
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-brigmedic
+    stampedColor: "#CC2369"
+    stampState: "paper_stamp-hos"
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/rubberstampbrigmedic.rsi
+    state: stamp-brigmedic
+
+- type: entity
+  name: meme deny rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampMemeDeny
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-meme-deny
+    stampedColor: "#a23e3e"
+    stampState: "paper_stamp-deny"
+  - type: Sprite
+    state: stamp-deny
+
+- type: entity
+  name: coroner rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampCoroner
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-coroner
+    stampedColor: "#121212"
+    stampState: "paper_stamp-coroner"
+  - type: Sprite
+    state: stamp-chaplain
+
+- type: entity
+  name: lawyer rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampLawyer
+  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu ] # they actually can't map, ha-ha
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-lawyer
+    stampedColor: "#2F0069"
+    stampState: "paper_stamp-lawyer"
+  - type: Sprite
+    state: stamp-rd
+
+- type: entity
+  name: blue shield rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampBlueShield
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-blueshield
+    stampedColor: "#1b527f"
+    stampState: "paper_stamp-blueshield"
+  - type: Sprite
+    state: stamp-cap
+
+- type: entity
+  name: senior administrator rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampSeniorAdministrator
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-senior-administrator
+    stampedColor: "#25A400"
+    stampState: "paper_stamp-senior-administrator"
+  - type: Sprite
+    state: stamp-senior-administrator
+
+- type: entity
+  name: лапка печать
+  parent: RubberStampBase
+  id: RubberStampMeow
+  components:
+  - type: Stamp
+    stampedName: мяу
+    stampedColor: "#323232"
+    stampState: "paper_stamp-mime"
+    stampTexture: "/Textures/Interface/Stamps/meow.png"
+  - type: Sprite
+    state: stamp-greytide

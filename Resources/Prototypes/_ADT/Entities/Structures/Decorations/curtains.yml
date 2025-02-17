@@ -1,0 +1,152 @@
+- type: entity
+  id: ADTHospitalCurtainsRed
+  parent: HospitalCurtains
+  name: шторы
+  description: Содержат менее 1% ртути.
+  components:
+  - type: Occluder
+  - type: Sprite
+    snapCardinals: true
+    sprite: _ADT/Structures/Decoration/curtains.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - Opaque
+  - type: Door
+    canCrush: false
+    performCollisionCheck: false
+    bumpOpen: false
+    clickOpen: true
+    closeTimeOne: 0.5
+    closeTimeTwo: 0.1
+    openTimeOne: 0.5
+    openTimeTwo: 0.1
+    openSound:
+      path: /Audio/Effects/curtain_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/curtain_openclose.ogg
+  - type: Appearance
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Construction
+    graph: Curtains
+    node: Curtains
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCloth1:
+            min: 1
+            max: 2
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: ADTHospitalCurtainsRedOpen
+  parent: ADTHospitalCurtainsRed
+  suffix: Открытый
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsOpen
+
+  #красные шторы от Флоппы
+- type: entity
+  id: ADTAlternativeCurtainsRed
+  parent: HospitalCurtains
+  name: красные шторы
+  description: Содержат менее 1% ртути.
+  components:
+  - type: Occluder
+  - type: Sprite
+    snapCardinals: true
+    sprite: _ADT/Structures/Decoration/altred_curtains.rsi #спрайты от floppo4ka
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - Opaque
+  - type: Door
+    canCrush: false
+    performCollisionCheck: false
+    bumpOpen: false
+    clickOpen: true
+    closeTimeOne: 0.5
+    closeTimeTwo: 0.1
+    openTimeOne: 0.5
+    openTimeTwo: 0.1
+    openSound:
+      path: /Audio/Effects/curtain_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/curtain_openclose.ogg
+  - type: Appearance
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Construction
+    graph: Curtains
+    node: Curtains
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCloth1:
+            min: 1
+            max: 2
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: ADTAlternativeCurtainsRedOpen
+  parent: ADTAlternativeCurtainsRed
+  suffix: Открытый
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsOpen

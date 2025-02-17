@@ -1,0 +1,9 @@
+- type: entity
+  id: BannerSpider
+  parent: BannerBase
+  name: знамя клана паука
+  description: Простота и яркость флага подчёркивают устрашающую репутацию клана.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Decoration/banner.rsi
+    state: banner-spider

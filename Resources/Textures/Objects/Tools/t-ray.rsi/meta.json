@@ -1,10 +1,10 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-	"copyright": "/tg/station, 'icons/obj/device.dmi' commit 2b8b045d, redrawn by Ubaser.",
+	"copyright": "Taken from skyrat-tg at https://github.com/Skyrat-SS13/Skyrat-tg/commit/31156a1fcd48d67a717e7b63c11513172b28eeb1",
 	"size": { "x": 32, "y": 32 },
 	"states": [
-		{ "name": "tray-on" , "delays": [[0.1, 1.0]]},
+		{ "name": "tray-on" , "delays": [[0.2, 0.2]]},
 		{ "name": "tray-off" }
 	]
 }

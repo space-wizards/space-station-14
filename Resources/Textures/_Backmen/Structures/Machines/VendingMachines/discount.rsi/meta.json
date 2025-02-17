@@ -1,0 +1,52 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Hyenh#6078 (313846233099927552)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "broken"
+        },
+        {
+            "name": "deny-unshaded",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "eject-unshaded",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.8,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "normal-unshaded",
+            "delays": [
+                [
+                    4,
+                    0.1,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "off"
+        },
+        {
+            "name": "panel"
+        }
+    ]
+}

@@ -68,6 +68,19 @@
 
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesGlassesMesonCE
+  name: chief engineer super goggles
+  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/mesonce.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/mesonce.rsi
+  - type: EyeProtection
+  - type: FlashImmunity
+
+- type: entity
+  parent: ClothingEyesBase
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
@@ -80,6 +93,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - MukhtarWearable # DS14
     - WhitelistChameleon
 
 - type: entity
@@ -110,6 +124,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - MukhtarWearable # DS14
     - WhitelistChameleon
 
 - type: entity
@@ -124,6 +139,9 @@
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: VisionCorrection
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - MukhtarWearable # DS14
 
 - type: entity
   parent: ClothingEyesBase
@@ -138,6 +156,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - MukhtarWearable # DS14
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
@@ -155,6 +174,7 @@
     tags:
     - Sunglasses
     - HamsterWearable
+    - MukhtarWearable # DS14
     - WhitelistChameleon
 
 - type: entity
@@ -176,6 +196,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - MukhtarWearable # DS14
     - WhitelistChameleon
   - type: GuideHelp
     guides:
@@ -200,6 +221,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - MukhtarWearable # DS14
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
@@ -220,6 +242,9 @@
     protectionTime: 5
   - type: IdentityBlocker
     coverage: EYES
+  - type: Tag
+    tags:
+    - MukhtarWearable # DS14
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -265,3 +290,5 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+  - type: NightVisionClothing
+    color: "#41af0e"

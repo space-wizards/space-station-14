@@ -13,6 +13,8 @@
     - type: MothAccent
     - type: ReplacementAccent
       accent: dwarf
+    - type: OwOAccent # DS14
+    - type: RoarAccent # DS14
 
 # 1 Cost
 

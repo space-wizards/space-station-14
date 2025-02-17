@@ -8,50 +8,6 @@
   },
   "states": [
     {
-      "name": "riot-icon"
-    },
-    {
-      "name": "riot-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "riot-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "riot_laser-icon"
-    },
-    {
-      "name": "riot_laser-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "riot_laser-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "riot_bullet-icon"
-    },
-    {
-      "name": "riot_bullet-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "riot_bullet-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "ratvarian-icon"
-    },
-    {
-      "name": "ratvarian-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "ratvarian-inhand-left",
-      "directions": 4
-    },
-    {
       "name": "mirror-icon",
       "delays": [
         [
@@ -123,17 +79,6 @@
       ]
     },
     {
-      "name": "buckler-icon"
-    },
-    {
-      "name": "buckler-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "buckler-inhand-left",
-      "directions": 4
-    },
-    {
       "name": "metal-icon"
     },
     {
@@ -168,6 +113,17 @@
     {
       "name": "teleriot-inhand-left-on",
       "directions": 4
-    }
+    },
+	{
+      "name": "force-icon"
+    },
+    {
+      "name": "force-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "force-inhand-right",
+      "directions": 4
+  }
   ]
 }

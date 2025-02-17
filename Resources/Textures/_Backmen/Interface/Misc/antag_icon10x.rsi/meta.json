@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA 3.0",
+  "copyright": "taken from goonstation aat commit https://github.com/goonstation/goonstation/blob/f139aa50bab5efc4d78f9d3e738a47db0057e0b1/icons/mob/antag_overlays.dmi",
+  "size": {
+    "x": 10,
+    "y": 10
+  },
+  "states": [
+    {
+      "name": "vampire"
+    }
+  ]
+}

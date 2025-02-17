@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: ADTCombatHypo
+  name: боевой гипоспрей
+  description: Модель гипоспрея, разработанная NT для использования в боевых ситуациях - с повышенным объемом в ущерб скорости применения.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Specific/Medical/adt_combathypo.rsi
+    state: icon
+  - type: Item
+    sprite: _ADT/Objects/Specific/Medical/adt_combathypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 45
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 1.0

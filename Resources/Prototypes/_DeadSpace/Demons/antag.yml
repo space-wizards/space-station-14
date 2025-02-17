@@ -1,0 +1,10 @@
+- type: factionIcon
+  id: DemonFaction
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - Demon
+  icon:
+    sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
+    state: Demon

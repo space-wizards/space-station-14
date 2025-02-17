@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ADTImpmonk
+  name: роба инквизитора
+  description: Создано из самой технологичной ткани.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Armor/impmonk.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Armor/impmonk.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6

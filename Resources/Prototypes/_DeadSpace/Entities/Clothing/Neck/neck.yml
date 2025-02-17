@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleMaid
+  name: мантия горничной
+  description: Это классический элемент гардероба, предназначенный для использования в сфере обслуживания в гостиничном или домашнем хозяйстве.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/neck_maid.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/neck_maid.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPronMaid
+  name: фартук горничной
+  description: Этот фартук горничной – воплощение элегантности и порядка. Изготовленный из легкого материала, он обладает изысканными кружевными вставками, подчеркивающими нежность образа. Фартук идеально дополняет стиль горничной, придавая ей непринужденный и ухоженный вид.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/pron_maid.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/pron_maid.rsi

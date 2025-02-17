@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseTree
+  id: NewYearTree
+  name: рождественская ель
+  description: Установлено центкомом для создания новогоднего настроения на станции.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Objects/Decoration/new-year-tree.rsi
+    drawdepth: Overdoors
+    state: base
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.1,0.35,1.0"
+        density: 1000
+        layer:
+        - WallLayer

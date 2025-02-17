@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatXmas
+  name: шапочка рождественского эльфа
+  description: Этот год был тяжёлый... Но следующий будет лучше, не так ли?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/xmas.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/xmas.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

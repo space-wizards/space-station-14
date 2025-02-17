@@ -1,0 +1,41 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ADTClothingHandsLongRedGloves
+  name: длинные красные перчатки
+  description: Шелковые, мягкие перчатки.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Hands/Gloves/long-red-gloves.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Hands/Gloves/long-red-gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ADTClothingHandsRabbitGloves
+  name: кроличьи перчатки
+  description: Ох. Фурри.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Hands/Gloves/rabbit_gloves.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Hands/Gloves/rabbit_gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ADTClothingHandsSupremeCommanderGloves
+  name: перчатки высшего главнокомандующего
+  description: Эти перчатки стоят как 10 подобных станций, украшены блюспейс шитьем, единственные в своем роде.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Hands/Gloves/supreme-commander-gloves.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Hands/Gloves/supreme-commander-gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+  - type: FingerprintMask

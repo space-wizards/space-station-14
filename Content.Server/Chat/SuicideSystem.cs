@@ -162,6 +162,11 @@ public sealed class SuicideSystem : EntitySystem
             return;
         }
 
+        // DS14-suicide-for-IPS/IPC-start
+        if (!victim.Comp.Damage.DamageDict.ContainsKey("Bloodloss"))
+            args.DamageType ??= "Heat";
+        // DS14-suicide-for-IPS/IPC-end
+
         args.DamageType ??= "Bloodloss";
         _suicide.ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;

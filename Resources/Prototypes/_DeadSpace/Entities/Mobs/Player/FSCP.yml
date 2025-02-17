@@ -1,0 +1,386 @@
+# # DS14 КПСК gear and prototypes for Cnnr event
+
+# Сommon equipment
+- type: entity
+  parent: ADTAstraKnife
+  id: FSCPKnife
+  name: армейский нож КПСК
+  description: Подходит для приготовления капиталистов.
+
+- type: entity
+  parent: BookBase
+  id: BookFSCP
+  name: устав штурмовой армии КПСК
+  description: Пропитана любовью к партии.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_base
+        color: "#ab1515"
+      - state: decor_wingette
+        color: "#e05334"
+      - state: icon_text
+    - type: Paper
+      content: book-text-FSCP
+
+- type: entity
+  parent: ClothingOuterArmorUSSPjuggernaut
+  id: ClothingOuterArmorFSCP
+  name: штурмовой бронежилет "Богдан"
+  description: Тяжёлый штурмовой бронежилет "Богдан" в полном комплекте, представляет собой облегчённый вариант бронежилета серии «Шторм».
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.6
+        Caustic: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: GroupExamine
+
+#head hat armored
+- type: entity
+  parent: ADTClothingHeadUSSPjuggernautHelmetArmored
+  id: ClothingHeadFSCPHelmetArmored
+  name: бронешлем "БЗ-6"
+  description: Стандартный тяжелый штурмовой защитный шлем сержанта КПСК.
+  components:
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.8
+        Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: GroupExamine
+
+# Humanoid presets
+## Recruit (Soldier)
+- type: entity
+  id: RandomHumanoidSpawnerFSCPRecruit
+  name: КПСК рядовой боец
+  suffix: Спавнер, Призрачная роль
+  components:
+    - type: Sprite
+      sprite: _Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+      state: icon
+    - type: RandomMetadata
+    - type: RandomHumanoidSpawner
+      settings: FSCPRecruitPreset
+
+- type: randomHumanoidSettings
+  id: FSCPRecruitPreset
+  speciesBlacklist:
+    - Arachnid
+    - Diona
+    # - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+    - IPC
+    - IPS
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-fscp-recruit-name
+      description: ghost-role-information-fscp-recruit-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hours
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ FSCPRecruitGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstFSCPRecruit
+      - names_last_male
+
+- type: startingGear
+  id: FSCPRecruitGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFSCPRecruit
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetFreelance
+    gloves: ClothingHandsGlovesFingerless
+    outerClothing: ClothingOuterArmorFSCP
+    suitstorage: WeaponRifleAk
+    shoes: ClothingShoesSwat
+    head: ClothingHeadHelmetRiot
+    mask: ClothingMaskGasSwat
+    neck: ADTClothingNeckJeton
+    belt: ClothingBeltFSCPRecruit
+    pocket1: FSCPKnife
+    pocket2: ADTDrinkArmyFlask
+    back: ClothingBackpackFSCPRecruitFilled
+  #   underwearb: ClothingUnderwearBottomBoxersWhite # DS14-Underwear
+  # underweart: ClothingUnderwearTopBraSportsAlternative # DS14-Underwear
+  # underwearb: ClothingUnderwearBottomPantiesWhite # DS14-Underwear
+  # innerClothingSkirt: ClothingUniformJumpsuitFSCPRecruit
+  # satchel: ClothingBackpackFSCPRecruitFilled
+  # duffelbag: ClothingBackpackFSCPRecruitFilled
+
+- type: entity
+  parent: ADTClothingUniformJumpsuitMaugly
+  id: ClothingUniformJumpsuitFSCPRecruit
+  name: стандартный штурмовой костюм КПСК
+  description: Удобный и прочный современный штурмовой костюм из плотной ткани, который хорошо показал себя на космической войне с капиталистами.
+
+- type: entity
+  parent: ClothingBeltSalvageWebbing
+  id: ClothingBeltFSCPRecruit
+  name: РПС рядового бойца КПСК
+  description: Универсальный разгрузочный жилет для убийства капиталистов в космосе.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CombatMedipen
+      - id: MagazineLightRifle
+        amount: 2
+      - id: Handcuffs
+        amount: 2
+      - id: ExGrenade
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackMilitarySatchel
+  id: ClothingBackpackFSCPRecruitFilled
+  name: сумка рядового бойца КПСК
+  description: Вместительная сумка с множеством карманов, который носят рядовые бойцы КПСК. Пропитан кровью капиталистов.
+  suffix: Заполненный
+  components:
+    - type: StorageFill
+      contents:
+        - id: EmergencyMedipen
+          amount: 2
+        - id: MagazineLightRifle
+          amount: 4
+        - id: MedkitCombatFilled
+        - id: BookFSCP
+
+## Corporal (Medic)
+- type: entity
+  id: RandomHumanoidSpawnerFSCPCorporal
+  name: КПСК ефрейтор медик
+  suffix: Спавнер, Призрачная роль
+  components:
+    - type: Sprite
+      sprite: _Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+      state: icon
+    - type: RandomMetadata
+    - type: RandomHumanoidSpawner
+      settings: FSCPCorporalPreset
+
+- type: randomHumanoidSettings
+  id: FSCPCorporalPreset
+  speciesBlacklist:
+    - Arachnid
+    - Diona
+    # - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+    - IPC
+    - IPS
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-fscp-corporal-name
+      description: ghost-role-information-fscp-corporal-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 72000 # 20 hours
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 # 10 hours
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ FSCPCorporalGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstFSCPCorporal
+      - names_last_male
+
+- type: startingGear
+  id: FSCPCorporalGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFSCPCorporal
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetFreelance
+    gloves: ClothingHandsGlovesColorWhite
+    outerClothing: ClothingOuterCoatAMG
+    shoes: ClothingShoesSwat
+    head: ClothingHeadHatBeretBrigmedic
+    mask: ClothingMaskBreathMedicalSecurity
+    neck: ClothingNeckUSSPPin
+    belt: ClothingBeltFSCPCorporal
+    pocket1: ScalpelAdvanced
+    pocket2: ADTDrinkArmyFlask
+    back: ClothingBackpackFSCPCorporalFilled
+  #   underwearb: ClothingUnderwearBottomBoxersWhite # DS14-Underwear
+  # underweart: ClothingUnderwearTopBraSportsAlternative # DS14-Underwear
+  # underwearb: ClothingUnderwearBottomPantiesWhite # DS14-Underwear
+  # innerClothingSkirt: ClothingUniformJumpsuitFSCPCorporal
+  # satchel: ClothingBackpackFSCPCorporalFilled
+  # duffelbag: ClothingBackpackFSCPCorporalFilled
+
+- type: entity
+  parent: ADTClothingUniformTurleneckWhite
+  id: ClothingUniformJumpsuitFSCPCorporal
+  name: стандартный костюм медика КПСК
+  description: Удобный и прочный современный штурмовой костюм из плотной ткани, который хорошо показал себя на космической войне с капиталистами.
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingBeltFSCPCorporal
+  name: РПС ефрейтора КПСК
+  description: Универсальный разгрузочный жилет для убийства капиталистов в космосе.
+
+- type: entity
+  parent: ClothingBackpackMilitarySatchel
+  id: ClothingBackpackFSCPCorporalFilled
+  name: сумка ефрейтора КПСК
+  description: Вместительная сумка с множеством карманов, который носят рядовые бойцы КПСК. Пропитан кровью капиталистов.
+  suffix: Заполненный
+  components:
+    - type: StorageFill
+      contents:
+        - id: WeaponRevolverPythonAP
+        - id: SpeedLoaderMagnum
+          amount: 2
+        - id: EmergencyMedipen
+        - id: BookFSCP
+
+## Sergeant (Leader)
+- type: entity
+  id: RandomHumanoidSpawnerFSCPSergeant
+  name: КПСК сержант лидер
+  suffix: Спавнер, Призрачная роль
+  components:
+    - type: Sprite
+      sprite: _Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+      state: icon
+    - type: RandomMetadata
+    - type: RandomHumanoidSpawner
+      settings: FSCPSergeantPreset
+
+- type: randomHumanoidSettings
+  id: FSCPSergeantPreset
+  speciesBlacklist:
+    - Arachnid
+    - Diona
+    # - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+    - IPC
+    - IPS
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-fscp-sergeant-name
+      description: ghost-role-information-fscp-sergeant-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 216000 # 60 hours
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ FSCPSergeantGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstFSCPSergeant
+      - names_last_male
+
+- type: startingGear
+  id: FSCPSergeantGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFSCPSergeant
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetFreelance
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorFSCP
+    suitstorage: WeaponRifleAk
+    shoes: ClothingShoesSwat
+    head: ClothingHeadFSCPHelmetArmored
+    mask: ClothingMaskGasSwat
+    neck: ClothingNeckMantleFSCPSergeant
+    belt: ClothingBeltFSCPSergeant
+    pocket1: FSCPKnife
+    pocket2: ADTDrinkArmyFlask
+    back: ClothingBackpackFSCPSergeantFilled
+  #   underwearb: ClothingUnderwearBottomBoxersWhite # DS14-Underwear
+  # underweart: ClothingUnderwearTopBraSportsAlternative # DS14-Underwear
+  # underwearb: ClothingUnderwearBottomPantiesWhite # DS14-Underwear
+  # innerClothingSkirt: ClothingUniformJumpsuitFSCPSergeant
+  # satchel: ClothingBackpackFSCPSergeantFilled
+  # duffelbag: ClothingBackpackFSCPSergeantFilled
+
+- type: entity
+  parent: ClothingNeckMantleHOS
+  id: ClothingNeckMantleFSCPSergeant
+  name: мантия сержанта КПСК
+  description: Мантия сержанта КПСК. Выдаётся только отличительным товарищам из коммунистической партии свободного космоса.
+
+- type: entity
+  parent: ADTClothingUniformJumpsuitMaugly
+  id: ClothingUniformJumpsuitFSCPSergeant
+  name: стандартный костюм сержанта КПСК
+  description: Удобный и прочный современный штурмовой костюм из плотной ткани, который хорошо показал себя на космической войне с капиталистами.
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbingGrenadeFilled
+  id: ClothingBeltFSCPSergeant
+  name: РПС сержанта КПСК
+  description: Универсальный разгрузочный жилет для убийства капиталистов в космосе.
+
+- type: entity
+  parent: ClothingBackpackMilitarySatchel
+  id: ClothingBackpackFSCPSergeantFilled
+  name: сумка сержанта КПСК
+  description: Вместительная сумка с множеством карманов, который носят сержанты бойцы КПСК. Пропитан кровью капиталистов.
+  suffix: Заполненный
+  components:
+    - type: StorageFill
+      contents:
+        - id: MagazineLightRifle
+          amount: 6
+        - id: MedkitCombatFilled
+        - id: BookFSCP

@@ -6,9 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 36000 #10 hrs
+      time: 72000 # 20 hours
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+      time: 216000 # 60 hours
+    - !type:AgeRequirement
+      requiredAge: 24
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
@@ -21,6 +23,12 @@
   - ResearchDirector
   - Brig
   - Cryogenics
+  #start-backmen: currency
+  minBankBalance: 400
+  maxBankBalance: 600
+  wageDepartment: Command
+  wage: 150
+  #end-backmen: currency
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -32,7 +40,9 @@
   id: ResearchDirectorGear
   equipment:
     id: RnDPDA
+    eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetRD
+    socks: ClothingUnderwearSocksResearchDirector
   storage:
     back:
     - Flash

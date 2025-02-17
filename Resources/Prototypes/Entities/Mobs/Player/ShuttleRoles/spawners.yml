@@ -641,19 +641,19 @@
     prototypes:
     - RandomHumanoidVisitorLawyer
 
-- type: entity
-  name: visiting centcom lawyer spawner
-  id: VisitorLawyerCentcomSpawner
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner
-  - type: RandomSpawner
-    prototypes:
-    - RandomHumanoidVisitorLawyerCentcom
+# - type: entity
+#   name: visiting centcom lawyer spawner
+#   id: VisitorLawyerCentcomSpawner
+#   parent: MarkerBase
+#   components:
+#   - type: Sprite
+#     layers:
+#       - state: red
+#       - sprite: Structures/Decoration/banner.rsi
+#         state: banner
+#   - type: RandomSpawner
+#     prototypes:
+#     - RandomHumanoidVisitorLawyerCentcom
 
 - type: entity
   name: visiting librarian spawner

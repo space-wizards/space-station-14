@@ -1,0 +1,305 @@
+- type: sponsorLoadout
+  id: VjladosBio
+  entity: ClothingBackpackVjladosBio
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackVjladosBio
+  name: блюспейс органический рюкзак
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Состоит из органических компонентов. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  # categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,16,6
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltVjladosBioFilled
+      - id: ClothingNeckCloakVjladosBio
+      - id: ClothingHandsGlovesVjladosBio
+      - id: ClothingOuterHardsuitVjladosBio
+      - id: ClothingUniformJumpsuitVjladosBio
+      - id: ClothingShoesBootsMagVjladosBio
+      - id: ClothingOuterHoodieVjladosBio
+      - id: ClothingUnderwearBottomVjladosBioMan
+      - id: ClothingUnderwearBottomVjladosBio
+      - id: ClothingUnderwearTopVjladosBio
+      - id: ClothingUnderSocksVjladosBio
+      - id: ClothingHeadsetVjlados
+      - id: JetpackVoidVjlados
+      - id: ClothingMaskVjlados
+      - id: PDAVjlados
+      - id: ADTtelescopicBaton
+      - id: ToySwordDoubleVjlados
+      - id: SpaceCash1000
+      - id: PaperLawsvjladosbio
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltVjladosBioFilled
+  name: органический пояс
+  description: Пояс состоящий из биологических компонентов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakVjladosBio
+  name: модифицированный органический плащ
+  description: Накидка тёмного цвета. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesVjladosBio
+  name: модифицированные перчатки
+  description: Перчатки, сконструированные специально для представителей расы ксеноидов. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/gloves.rsi
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitVjladosBio
+  name: модифицированный биологический скафандр
+  description: Скафандр, разработанный специально для представителей расы ксеноидов. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Характеристики идентичны скафандру атмос-техника.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitVjladosBio
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitVjladosBio
+  categories: [ HideSpawnMenu ]
+  name: шлем биологического скафандра
+  description: Шлем изолирующий владельца от страшного вакуума снаружи.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/helmet.rsi
+  - type: PointLight
+    color: "#c6f50a"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVjladosBio
+  name: практичная спортивная форма
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/jumpsuit.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagVjladosBio
+  name: биологические магнитные ботинки
+  description: Магнитные ботинки имеющие продвинутую технологию магнетизма.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/vjlados/bio/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/vjlados/bio/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# ClothingOuter
+- type: entity
+  parent: ClothingOuterCoatSyndieCapArmored
+  id: ClothingOuterHoodieVjladosBio
+  name: органический бронированный тренч
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/coat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/coat.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomVjladosBioMan
+  name: классические боксёры
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/under/man.rsi
+
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopVjladosBio
+  name: классическое бра
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/under/women/bra.rsi
+
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomVjladosBio
+  name: классические стринги
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/under/women/panties.rsi
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksVjladosBio
+  name: полосатые чулки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/socks.rsi
+
+# Other
+- type: entity
+  parent: ToySword
+  id: ToySwordDoubleVjlados
+  name: игрушечный двойной энергетический меч
+  description: Новый пластиковый меч от компании Sandy-Cat! Поставляется с реалистичным звуком и насыщенным цветом! Выглядит почти как настоящий!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/e_sword_double.rsi
+    layers:
+      - state: e_sword_double
+      - state: e_sword_double_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: Small
+    sprite: _DeadSpace/Sponsor/vjlados/bio/e_sword_double-inhands.rsi
+  - type: Wieldable
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawsvjladosbio
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено 
+    content: paper-law-vjladosbio
+
+# Other
+- type: entity
+  id: JetpackVoidVjlados
+  parent: JetpackVoid
+  name: джетпак ксеноида
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/vjlados/bio/jetpack.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/jetpack.rsi
+
+# Gasmask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskVjlados
+  name: противогаз ксеноида
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/bio/gasmask.rsi
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDAVjlados
+  name: кпк ксено-органика
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/vjlados/bio/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/pda.rsi
+  - type: Pda
+    penSlot:
+      startingItem: PenVjlados
+
+# Pen
+- type: entity
+  name: ручка ксено-органика
+  parent: Pen
+  id: PenVjlados
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/pen.rsi
+
+# HeadSet
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetVjlados
+  name: гарнитура ксеноида
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/bio/headset.rsi

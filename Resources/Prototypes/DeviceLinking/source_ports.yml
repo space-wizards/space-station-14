@@ -72,6 +72,14 @@
   description: signal-port-description-artifact-analyzer-sender
   defaultLinks: [ ArtifactAnalyzerReceiver ]
 
+  # DS14-start
+- type: sourcePort
+  id: ShuttleConsoleSender
+  name: signal-port-name-artifact-analyzer-sender
+  description: signal-port-description-artifact-analyzer-sender
+  defaultLinks: [ ShuttleConsoleReceiver ]
+  # DS14-end
+
 - type: sourcePort
   id: Timer
   name: signal-port-name-timer-trigger

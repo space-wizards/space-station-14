@@ -1,0 +1,180 @@
+- type: entity
+  id: BaseIPCOrganUnGibbable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/organs.rsi
+  - type: Organ
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 5
+
+- type: entity
+  id: BaseIPCOrgan
+  parent: BaseIPCOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  id: OrganIPCBrain
+  parent: BaseIPCOrganUnGibbable
+  name: brain
+  description: "The source of incredible, unending intelligence. Honk."
+  components:
+  - type: Sprite
+    state: posibrain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+
+- type: entity
+  id: OrganIPCEyes
+  parent: BaseIPCOrgan
+  name: eyes
+  description: "I see you!"
+  components:
+  - type: Sprite
+    state: cybernetic_eyeballs
+
+- type: entity
+  id: OrganIPCTongue
+  parent: BaseIPCOrgan
+  name: tongue
+  description: "A fleshy muscle mostly used for lying."
+  components:
+  - type: Sprite
+    state: tonguerobot
+
+- type: entity
+  id: OrganIPCEars
+  parent: BaseIPCOrgan
+  name: ears
+  description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
+  components:
+  - type: Sprite
+    state: ears-c-u
+
+- type: entity
+  id: OrganIPCLungs
+  parent: BaseIPCOrgan
+  name: lungs
+  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Sprite
+    state: lungs-c-u2
+  # - type: Lung
+  # - type: Metabolizer
+  #   removeEmpty: true
+  #   solutionOnBody: false
+  #   solution: "Lung"
+  #   metabolizerTypes: [ Human ]
+  #   groups:
+  #   - id: Gas
+  #     rateModifier: 100.0
+  # - type: SolutionContainerManager
+  #   solutions:
+  #     organ:
+  #       reagents:
+  #       - ReagentId: WeldingFuel
+  #         Quantity: 10
+  #     Lung:
+  #       maxVol: 100.0
+  #       canReact: false
+  #     food:
+  #       maxVol: 5
+  #       reagents:
+  #       - ReagentId: WeldingFuel
+  #         Quantity: 5
+
+- type: entity
+  id: OrganIPCHeart
+  parent: BaseIPCOrgan
+  name: heart
+  description: "I feel bad for the heartless bastard who lost this."
+  components:
+  - type: Sprite
+    state: heart-c-u2-on
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  # - type: Metabolizer
+  #   maxReagents: 2
+  #   metabolizerTypes: [Human]
+  #   groups:
+  #   - id: Medicine
+  #   - id: Poison
+  #   - id: Narcotic
+
+- type: entity
+  id: OrganIPCStomach
+  parent: BaseIPCOrgan
+  name: stomach
+  description: "Gross. This is hard to stomach."
+  components:
+  - type: Sprite
+    state: stomach-c-u2
+  # - type: SolutionContainerManager
+  #   solutions:
+  #     stomach:
+  #       maxVol: 50
+  #     food:
+  #       maxVol: 5
+  #       reagents:
+  #       - ReagentId: WeldingFuel
+  #         Quantity: 5
+  # - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  # - type: Metabolizer
+  #   # mm yummy
+  #   maxReagents: 3
+  #   metabolizerTypes: [Human]
+  #   groups:
+  #   - id: Food
+  #   - id: Drink
+
+- type: entity
+  id: OrganIPCLiver
+  parent: BaseIPCOrgan
+  name: liver
+  description: "Pairing suggestion: chianti and fava beans."
+  components:
+  - type: Sprite
+    state: liver-c-u2
+  # - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+  #   maxReagents: 1
+  #   metabolizerTypes: [Human]
+  #   groups:
+  #   - id: Alcohol
+  #     rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganIPCKidneys
+  parent: BaseIPCOrgan
+  name: kidneys
+  description: "Filters toxins from the bloodstream."
+  components:
+  - type: Sprite
+    state: kidneys-c-u2
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  # - type: Metabolizer
+  #   maxReagents: 5
+  #   metabolizerTypes: [Human]
+  #   removeEmpty: true

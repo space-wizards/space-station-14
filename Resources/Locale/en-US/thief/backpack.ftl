@@ -33,7 +33,7 @@ thief-backpack-category-chemistry-name = anatomy kit
 thief-backpack-category-chemistry-description =
     You've reached peak physical performance... with a little help.
     Includes: Storage implanter, DNA scrambler implanter,
-    ephedrine bottle, syringe, empty shaker, and omega soap
+    desoxyephedrine injector, syringe, empty shaker, and omega soap
 
 thief-backpack-category-syndie-name = syndie kit
 thief-backpack-category-syndie-description =

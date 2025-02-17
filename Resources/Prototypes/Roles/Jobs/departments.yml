@@ -2,17 +2,19 @@
   id: Cargo
   name: department-Cargo
   description: department-Cargo-description
-  color: "#A46106"
+  color: "#a46106"
   roles:
   - CargoTechnician
   - Quartermaster
   - SalvageSpecialist
+  - SeniorSalvageSpecialist
+  accountNumber: 1315 #backmen: currency
 
 - type: department
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#9FED58"
+  color: "#6ca729"
   weight: -10
   roles:
   - Bartender
@@ -23,7 +25,6 @@
   - Clown
   - HeadOfPersonnel
   - Janitor
-  - Lawyer
   - Librarian
   - Mime
   - Musician
@@ -32,6 +33,9 @@
   - Visitor
   - Zookeeper
   - ServiceWorker
+  - ClownSponsor
+  - SeniorAdministrator
+  accountNumber: 1316 #backmen: currency
 
 - type: department
   id: CentralCommand
@@ -40,14 +44,31 @@
   color: "#0c344d"
   roles:
   - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
+  - CentralCommandAdministrator
+  - CentralCommandOperator
+  - CentralCommandSpecialOperationsOfficer
+  - CentralCommandOfficer
+  - CBURNLeader
+  - CBURNSierraLeader
+  - CBURNAgent
+  - CBURNSierraAgent
+  - ERTLeaderAmber
+  - ERTLeaderRed
+  - ERTLeaderGamma
+  - ERTSecurityAmber
+  - ERTSecurityRed
+  - ERTSecurityGamma
+  - ERTMedicalAmber
+  - ERTMedicalRed
+  - ERTMedicalGamma
+  - ERTEngineerAmber
+  - ERTEngineerRed
+  - ERTEngineerGamma
+  - ERTJanitorAmber
+  - ERTJanitorRed
+  - ERTJanitorGamma
   - DeathSquad
+  - BlueShieldOfficer
   editorHidden: true
   weight: 120
 
@@ -55,7 +76,7 @@
   id: Command
   name: department-Command
   description: department-Command-description
-  color: "#334E6D"
+  color: "#fcdf03"
   roles:
   - Captain
   - ChiefEngineer
@@ -65,33 +86,54 @@
   - ResearchDirector
   - Quartermaster
   - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
+  - CentralCommandAdministrator
+  - CentralCommandOperator
+  - CentralCommandSpecialOperationsOfficer
+  - CentralCommandOfficer
+  - CBURNLeader
+  - CBURNSierraLeader
+  - CBURNAgent
+  - CBURNSierraAgent
+  - ERTLeaderAmber
+  - ERTLeaderRed
+  - ERTLeaderGamma
+  - ERTSecurityAmber
+  - ERTSecurityRed
+  - ERTSecurityGamma
+  - ERTMedicalAmber
+  - ERTMedicalRed
+  - ERTMedicalGamma
+  - ERTEngineerAmber
+  - ERTEngineerRed
+  - ERTEngineerGamma
+  - ERTJanitorAmber
+  - ERTJanitorRed
+  - ERTJanitorGamma
   - DeathSquad
+  - BlueShieldOfficer
+  - Magistrat
   primary: false
   weight: 100
+  accountNumber: 1317 #backmen: currency
 
 - type: department
   id: Engineering
   name: department-Engineering
   description: department-Engineering-description
-  color: "#EFB341"
+  color: "#f2ac26"
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
   - StationEngineer
   - TechnicalAssistant
+  - SeniorEngineer
+  accountNumber: 1318 #backmen: currency
 
 - type: department
   id: Medical
   name: department-Medical
   description: department-Medical-description
-  color: "#52B4E9"
+  color: "#57b8f0"
   roles:
   - Chemist
   - ChiefMedicalOfficer
@@ -99,12 +141,16 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - SeniorPhysician
+  - Coroner
+  - MedicalSurgeon
+  accountNumber: 1319 #backmen: currency
 
 - type: department
   id: Security
   name: department-Security
   description: department-Security-description
-  color: "#DE3A3A"
+  color: "#1563bd"
   weight: 20
   roles:
   - HeadOfSecurity
@@ -112,31 +158,38 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - SeniorOfficer
+  - SecurityPilot
+  - Brigmedic
+  accountNumber: 1320  #backmen: currency
 
 - type: department
   id: Science
   name: department-Science
   description: department-Science-description
-  color: "#D381C9"
+  color: "#c68cfa"
   roles:
   - ResearchDirector
   - Scientist
   - ResearchAssistant
+  - SeniorResearcher
+  accountNumber: 1321  #backmen: currency
 
 - type: department
   id: Silicon
   name: department-Silicon
   description: department-Silicon-description
-  color: "#D381C9"
+  color: "#191e9e"
   roles:
   - Borg
   - StationAi
+  - BorgSecurity
 
 - type: department
   id: Specific
   name: department-Specific
   description: department-Specific-description
-  color: "#9FED58"
+  color: "#6ca729"
   weight: 10
   roles:
   - Boxer
@@ -144,3 +197,15 @@
   - Zookeeper
   - Psychologist
   primary: false
+  accountNumber: 1322  #backmen: currency
+
+- type: department
+  id: Law
+  name: department-Law
+  description: department-Law-description
+  color: "#d98b71"
+  roles:
+  - Magistrat
+  - IAA
+  - Lawyer
+  accountNumber: 1323  #backmen: currency

@@ -32,3 +32,27 @@
   equipment:
     shoes: ClothingShoesColorBlue
 
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersParamedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersParamedic
+
+- type: loadout
+  id: UnderwearBottomPantiesParamedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesParamedic
+
+- type: loadout
+  id: UnderwearTopBraParamedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraParamedic

@@ -1,0 +1,309 @@
+- type: entity
+  parent: BaseStructure
+  id: StructureObelisk
+  components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MetalBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MetalLaserImpact
+  - type: Tag
+    tags:
+    - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Necromorfs/obelisk.rsi
+    layers:
+    - state: active
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-1,0.45,0.50"
+        density: 85
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ObeliskSplinter:
+            min: 3
+            max: 3
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 100
+    trackAllDamage: true
+    damageOverlay:
+      sprite: _DeadSpace/Structures/obelisk_cracks.rsi
+  - type: Necroobelisk
+
+- type: entity
+  parent: StructureObelisk
+  id: StructureBlackObelisk
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Necromorfs/blackobelisk.rsi
+    layers:
+    - state: active
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Necroobelisk
+    sound: /Audio/_DeadSpace/Necromorfs/marker_black.ogg
+    stoper: false
+
+- type: entity
+  parent: StructureObelisk
+  id: StructureBlackObelisk2
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Necromorfs/blackobelisk.rsi
+    layers:
+    - state: active
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Necroobelisk
+    sound: /Audio/_DeadSpace/Necromorfs/marker_black.ogg
+    stoper: false
+    warn: false
+
+- type: entity
+  parent: StructureObelisk
+  id: StructureObelisk2
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Necromorfs/obelisk.rsi
+    layers:
+    - state: active
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Necroobelisk
+    warn: false
+
+- type: entity
+  parent: StructureObeliskArtifact
+  id: ComplexNecroObeliskArtifact
+  suffix: сложный артефакт
+  components:
+  - type: Necroobelisk
+    warn: false
+    cudzu: false
+  - type: Artifact
+    nodesMin: 9
+    nodesMax: 15
+  - type: GasArtifact
+    possibleGas:
+    - InfectionDeadSpace
+  - type: ChemicalPuddleArtifact
+    chemicalSolution:
+      maxVol: 100
+      canReact: false
+    possibleChemicals:
+    - ExtractInfectorDead
+    - SerumEnslaved
+  - type: FoamArtifact
+    reagents:
+    - ExtractInfectorDead
+    - SerumEnslaved
+  - type: SpawnArtifact
+    maxSpawns: 30
+    range: 15
+    spawns:
+    - id: BruteNecromorfSpawner
+      prob: 0.1
+      maxAmount: 3
+    - id: CorpseCollectorNecromorfSpawner
+      prob: 0.1
+      maxAmount: 2
+    - id: InfectorNecromorfSpawner
+      prob: 0.1
+      maxAmount: 6
+    - id: PukerNecro
+      prob: 0.2
+      maxAmount: 4
+    - id: WeaponTentacleNecro
+      prob: 0.1
+      maxAmount: 10
+    - id: WeaponBoneTentacleNecro
+      prob: 0.1
+      maxAmount: 10
+    - id: NecroKudzu
+      prob: 0.1
+      maxAmount: 15
+    - id: AnomalyNecro
+      prob: 0.2
+      maxAmount: 2
+  - type: TelepathicArtifact
+    messages:
+    - Ты чувствуешь это, да? Мы становимся единым целым.
+    - Нет смысла бороться. Твоя плоть уже не твоя.
+    - Они лгали тебе. Истина здесь, перед тобой.
+    - Ты знаешь, зачем ты здесь. Подчинись.
+    - Все, что ты терял, вернется. В единстве.
+    - Кровь, боль, страх... Они очищают тебя.
+    - Ты - избранный. Приведи их ко мне.
+    - Скоро тишина поглотит все. И ты обретешь покой.
+    - Они противятся. Но ты... ты всегда был частью нас.
+    - Смотри, как мир разрушается. Это начало чего-то великого.
+  - type: TemperatureArtifact
+    targetTemp: 500
+  - type: NecroobeliskArtifact
+
+- type: entity
+  id: CrateArtifactContainerNecroobelisk
+  parent: CrateArtifactContainer
+  name: контейнер c артефактом обелиск
+  description: Используется для безопасного хранения и перемещения артефактов.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ComplexNecroObeliskArtifact
+      amount: 1
+
+- type: cargoProduct
+  id: ArtifactContainerNecroobelisk
+  icon:
+    sprite: Structures/Storage/Crates/artifact.rsi
+    state: artifact_container_icon
+  product: CrateArtifactContainerNecroobelisk
+  cost: 500000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreNecro
+  description: Ядро уничтоженной некроморфной аномалии.
+  suffix: Necro
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/necro_core.rsi
+    layers:
+    - state: core
+    - state: pulse
+      map: ["decay"]
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#2F4F4F"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreNecroInert
+  description: Ядро уничтоженной некроморфной аномалии.
+  suffix: Necro, Inert
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/necro_core.rsi
+    layers:
+    - state: core
+    - state: pulse
+      map: ["decay"]
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#800000"
+    castShadows: false
+
+- type: entity
+  id: AnomalyNecro
+  name: некроморфная аномалия
+  parent: BaseAnomaly
+  suffix: Necro
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreNecro
+    coreInertPrototype: AnomalyCoreNecroInert
+    minPulseLength: 180
+    maxPulseLength: 300
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/anomaly.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#800000"
+    castShadows: false
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 1
+        maxAmount: 4
+        minRange: 1
+        maxRange: 6
+      spawns:
+      - NecroKudzu
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2
+        maxRange: 3
+      spawns:
+      - InfectorNecromorfSpawner
+      - PukerNecro
+      - WeaponTentacleNecro
+      - WeaponBoneTentacleNecro
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 15
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - NecroKudzu
+      - WeaponTentacleNecro
+      - WeaponBoneTentacleNecro
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 5
+        maxAmount: 10
+        maxRange: 8
+      spawns:
+      - InfectorNecromorfSpawner
+      - PukerNecro
+      - WeaponTentacleNecro
+      - WeaponBoneTentacleNecro
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 5
+        maxAmount: 8
+        maxRange: 10
+      spawns:
+      - NecroKudzu
+    - settings:
+        spawnOnShutdown: true
+        maxAmount: 6
+        maxRange: 1
+      spawns:
+      - InfectorNecromorfSpawner
+      - PukerNecro
+      - WeaponTentacleNecro
+      - WeaponBoneTentacleNecro
+      - NecroKudzu

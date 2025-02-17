@@ -72,7 +72,7 @@
         acts: [ "Destruction" ]
   - type: Airtight
   - type: IconSmooth
-    key: windows
+    key: walls  # Corvax-Resprite
     base: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
@@ -259,7 +259,7 @@
     - Diagonal
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls  # Corvax-Resprite
     base: state
   - type: Icon
     sprite: Structures/Windows/window_diagonal.rsi

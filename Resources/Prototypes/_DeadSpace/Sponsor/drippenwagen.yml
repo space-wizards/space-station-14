@@ -1,0 +1,264 @@
+- type: sponsorLoadout
+  id: drippenwagen
+  entity: ClothingBackpackdrippenwagen
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: drippenwagenProtoKinetic
+  entity: WeaponProtoKineticAcceleratordrippenwagen
+  sponsorOnly: true
+  whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackdrippenwagen
+  name: блюспейс рюкзак Банши
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltdrippenwagenFilled
+      - id: ClothingNeckCloakdrippenwagen
+      - id: ClothingHandsGlovesdrippenwagen
+      - id: ClothingOuterHardsuitdrippenwagen
+      - id: ClothingShoesBootsMagdrippenwagen
+      - id: JetpackVoiddrippenwagen
+      - id: DominatorMedkitAdvanced
+      - id: SpaceCash1000
+      - id: ClothingOuterCoatExpensive
+      - id: ClothingMaskBreathMedicalSecuritydrippenwagen
+      - id: ClothingEyesHudMedSec
+      - id: PaperLawdrippenwagen
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltdrippenwagenFilled
+  name: пояс Банши
+  description: Пояс который принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/drippenwagen/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakdrippenwagen
+  name: плащ Банши
+  description: Кровавя накидка. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesdrippenwagen
+  name: белые боевые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitdrippenwagen
+  name: скафандр Банши
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/drippenwagen/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitdrippenwagen
+  - type: Item
+    size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.85
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitdrippenwagen
+  name: шлем скафандра Банши
+  description: Шлем изолирующий владельца от страшного вакуума снаружи.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/drippenwagen/helmet.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagdrippenwagen
+  name: магнитные ботинки Банши
+  description: Магнитные сапоги, используемые во время работы вне корабля, чтобы оставаться надёжно прикреплённым к поверхности.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/drippenwagen/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/drippenwagen/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+# Other
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoiddrippenwagen
+  name: джетпак Банши
+  description: Это реактивный ранец - джетпак. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/drippenwagen/jetpack.rsi
+    size: Huge
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/drippenwagen/jetpack.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 150 minutes of thrust
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 11.315 # oxygen
+        - 11.315 # nitrogen
+
+- type: entity
+  id: WeaponProtoKineticAcceleratordrippenwagen
+  name: протокинетическое копьё
+  description: Аналог протокинетического ускорителя. Стреляет кинетическими зарядами с низким уроном на короткое расстояние.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/gun.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/drippenwagen/gun.rsi
+    size: Normal
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 8
+    maxAngle: 35
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+        #todo: add other 'empty' animations
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.75
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 1
+    count: 1
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/drippenwagen/gun.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+  - type: UseDelay
+    delay: 1
+
+- type: entity
+  parent: ClothingMaskBreathMedical
+  id: ClothingMaskBreathMedicalSecuritydrippenwagen
+  name: медицинская маска Банши
+  description: Плотно прилегающая стерильная маска, которую можно подключить к дыхательному баллону.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/drippenwagen/mask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/drippenwagen/mask.rsi
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawdrippenwagen
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-drippenwagen

@@ -18,11 +18,16 @@
   id: Detective
   name: id-card-access-level-detective
 
+- type: accessLevel
+  id: Brigmedic
+  name: id-card-access-level-brigmedic
+
 - type: accessGroup
   id: Security
   tags:
   - HeadOfSecurity
   - Security
+  - Brigmedic
   - Armory
   - Brig
   - Detective

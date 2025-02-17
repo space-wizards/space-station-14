@@ -1,0 +1,18 @@
+- type: cargoProduct
+  id: CrateKarachnocidGrenadeProduct
+  icon:
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
+  product: CrateKarachnocidGrenade
+  cost: 3000
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: entity
+  id: CrateKarachnocidGrenade
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+    - id: KarachnocidGrenade
+      amount: 10

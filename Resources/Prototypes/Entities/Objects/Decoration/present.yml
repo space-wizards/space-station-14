@@ -41,6 +41,235 @@
       insaneMode: true
 
 - type: entity
+  id: PresentGame
+  parent: [PresentBase, BaseItem]
+  suffix: Game
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrash
+      - id: Bucket
+        orGroup: GiftPool
+      - id: FoamCutlass
+        orGroup: GiftPool
+      - id: ToyMouse
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToyAi
+        orGroup: GiftPool
+      - id: HelicopterInstrument
+        orGroup: GiftPool
+      - id: ToyIan
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: HappyHonkNukieSnacks
+        orGroup: GiftPool
+      - id: HappyHonk
+        orGroup: GiftPool
+      - id: HappyHonkMime
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: WeaponLauncherChinaLakeToy
+        orGroup: GiftPool
+
+- type: entity
+  id: PresentToys
+  parent: [PresentBase, BaseItem]
+  suffix: Toys
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrash
+      - id: Bucket
+        orGroup: GiftPool
+      - id: PlushieRGBee
+        orGroup: GiftPool
+      - id: PlushieNar
+        orGroup: GiftPool
+      - id: PlushieDiona
+        orGroup: GiftPool
+      - id: PlushieSnake
+        orGroup: GiftPool
+      - id: PlushieLamp
+        orGroup: GiftPool
+      - id: PlushieBee
+        orGroup: GiftPool
+      - id: PlushieRatvar
+        orGroup: GiftPool
+      - id: PlushieArachind
+        orGroup: GiftPool
+      - id: PlushieAtmosian
+        orGroup: GiftPool
+      - id: PlushieVox
+        orGroup: GiftPool
+      - id: PlushieHolocarp
+        orGroup: GiftPool
+      - id: PlushieCarp
+        orGroup: GiftPool
+      - id: PlushieSpaceLizard
+        orGroup: GiftPool
+      - id: PlushieXeno
+        orGroup: GiftPool
+      - id: PlushieMagicarp
+        orGroup: GiftPool
+      - id: PlushieHuman
+        orGroup: GiftPool
+      - id: PlushieHampter
+        orGroup: GiftPool
+      - id: PlushieLizardMirrored
+        orGroup: GiftPool
+      - id: PlushieSlime
+        orGroup: GiftPool
+      - id: PlushieSharkPink
+        orGroup: GiftPool
+      - id: PlushieSharkGrey
+        orGroup: GiftPool
+      - id: PlushieSharkBlue
+        orGroup: GiftPool
+      - id: PlushieSpaceLizard
+        orGroup: GiftPool
+      - id: PlushieMoth
+        orGroup: GiftPool
+      - id: PlushiePenguin
+        orGroup: GiftPool
+      - id: PlushieNuke
+        orGroup: GiftPool
+      - id: PlushieRainbowCarp
+        orGroup: GiftPool
+      - id: PlushieRouny
+        orGroup: GiftPool
+      - id: PlushieGhostRevenant
+        orGroup: GiftPool
+      - id: PlushieGhost
+        orGroup: GiftPool
+      - id: PlushieFloran
+        orGroup: GiftPool
+      - id: PlushieJuggernaut
+        orGroup: GiftPool
+      - id: PlushieLieutenant
+        orGroup: GiftPool
+      - id: PlushieIps
+        orGroup: GiftPool
+      - id: PlushieHacksLua
+        orGroup: GiftPool
+      - id: PlushieLilaMarrnes
+        orGroup: GiftPool
+
+- type: entity
+  id: PresentFigurine
+  parent: [PresentBase, BaseItem]
+  suffix: Figurine
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: PresentTrash
+      - id: Bucket
+        orGroup: GiftPool
+      - id: ToyFigurineHamlet
+        orGroup: GiftPool
+      - id: ToyFigurineLawyer
+        orGroup: GiftPool
+      - id: ToyFigurineAtmosTech
+        orGroup: GiftPool
+      - id: ToyFigurineBartender
+        orGroup: GiftPool
+      - id: ToyFigurineLibrarian
+        orGroup: GiftPool
+      - id: ToyFigurineBoxer
+        orGroup: GiftPool
+      - id: ToyFigurineBotanist
+        orGroup: GiftPool
+      - id: ToyFigurineWizard
+        orGroup: GiftPool
+      - id: ToyFigurineThief
+        orGroup: GiftPool
+      - id: ToyFigurineMedicalDoctor
+        orGroup: GiftPool
+      - id: ToyFigurineChiefMedicalOfficer
+        orGroup: GiftPool
+      - id: ToyFigurineHeadOfPersonnel
+        orGroup: GiftPool
+      - id: ToyFigurineHeadOfSecurity
+        orGroup: GiftPool
+      - id: ToyFigurineHoloClown
+        orGroup: GiftPool
+      - id: ToyFigurineGreytider
+        orGroup: GiftPool
+      - id: ToyGriffin
+        orGroup: GiftPool
+      - id: ToyFigurineCargoTech
+        orGroup: GiftPool
+      - id: ToyFigurineDetective
+        orGroup: GiftPool
+      - id: ToyFigurineEngineer
+        orGroup: GiftPool
+      - id: ToyFigurineCaptain
+        orGroup: GiftPool
+      - id: ToyFigurineQuartermaster
+        orGroup: GiftPool
+      - id: ToyFigurineClown
+        orGroup: GiftPool
+      - id: ToyFigurineNukieCommander
+        orGroup: GiftPool
+      - id: ToyFigurineQueen
+        orGroup: GiftPool
+      - id: ToyFigurineSpaceDragon
+        orGroup: GiftPool
+      - id: ToyFigurineRatKing
+        orGroup: GiftPool
+      - id: ToyFigurineRatServant
+        orGroup: GiftPool
+      - id: ToyFigurineMime
+        orGroup: GiftPool
+      - id: ToyFigurineMusician
+        orGroup: GiftPool
+      - id: ToyFigurineMouse
+        orGroup: GiftPool
+      - id: ToyFigurineResearchDirector
+        orGroup: GiftPool
+      - id: ToyFigurineWizardFake
+        orGroup: GiftPool
+      - id: ToyFigurineNukie
+        orGroup: GiftPool
+      - id: ToyFigurineSecurity
+        orGroup: GiftPool
+      - id: ToyFigurineParamedic
+        orGroup: GiftPool
+      - id: ToyFigurinePassenger
+        orGroup: GiftPool
+      - id: ToyFigurineFootsoldier
+        orGroup: GiftPool
+      - id: ToyFigurineChef
+        orGroup: GiftPool
+      - id: ToyFigurineChaplain
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: ToyFigurineSlime
+        orGroup: GiftPool
+      - id: ToyFigurineWarden
+        orGroup: GiftPool
+      - id: ToyOwlman
+        orGroup: GiftPool
+      - id: ToyFigurineChiefEngineer
+        orGroup: GiftPool
+      - id: ToyFigurineJanitor
+        orGroup: GiftPool
+      - id: ToyFigurineSalvage
+        orGroup: GiftPool
+      - id: ToyFigurineScientist
+        orGroup: GiftPool
+      - id: ToyFigurineChemist
+        orGroup: GiftPool
+      - id: ToyFigurineNukieElite
+        orGroup: GiftPool
+
+- type: entity
   id: PresentRandom
   parent: [PresentBase, BaseItem]
   suffix: Filled Safe
@@ -97,6 +326,10 @@
       - id: PlushieDiona
         orGroup: GiftPool
       - id: PlushieArachind
+        orGroup: GiftPool
+      - id: PlushieHacksLua
+        orGroup: GiftPool
+      - id: PlushieLilaMarrnes
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
@@ -281,6 +514,14 @@
       - id: ClothingHandsGlovesColorYellow
         orGroup: GiftPool
       - id: ClothingHandsGlovesColorYellowBudget
+        orGroup: GiftPool
+      - id: LWClothingHeadHatFoxyO
+        orGroup: GiftPool
+      - id: LWClothingHeadHatFoxyW
+        orGroup: GiftPool
+      - id: LWClothingHeadHatFoxyB
+        orGroup: GiftPool
+      - id: LWClothingHeadHatFoxyBl
         orGroup: GiftPool
       - id: ClothingEyesGlassesSunglasses
         orGroup: GiftPool

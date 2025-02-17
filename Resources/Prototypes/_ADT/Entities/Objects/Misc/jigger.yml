@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseItem
+  id: ADTJigger
+  name: джиггер
+  description: Небольшой стаканчик, необходимый для точного разлива жидкостей по метражу.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 5
+  - type: Drink
+  - type: Openable
+    opened: true
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 1
+    maxTransferAmount: 5
+    transferAmount: 1
+    #toggleState: 1 # draw
+  - type: Spillable
+    solution: drink
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Drinks/jigger.rsi
+    state: icon
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10

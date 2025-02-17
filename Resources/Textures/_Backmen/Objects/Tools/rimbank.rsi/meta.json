@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Created by Firefox#9777",
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

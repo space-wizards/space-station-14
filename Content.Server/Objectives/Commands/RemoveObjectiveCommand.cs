@@ -7,14 +7,15 @@ using Robust.Shared.Console;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveObjectiveCommand : IConsoleCommand
+    public sealed class RemoveObjectiveCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public string Command => "rmobjective";
-        public string Description => "Removes an objective from the player's mind.";
-        public string Help => "rmobjective <username> <index>";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "rmobjective";
+        public override string Description => "Removes an objective from the player's mind.";
+        public override string Help => "rmobjective <username> <index>";
+
+        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
@@ -47,6 +48,19 @@ namespace Content.Server.Objectives.Commands
             {
                 shell.WriteLine($"Invalid index {args[1]}!");
             }
+        }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "<username>");
+            }
+
+            if (args.Length == 2)
+                return CompletionResult.FromHint("<index>");
+
+            return CompletionResult.Empty;
         }
     }
 }

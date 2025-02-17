@@ -28,3 +28,13 @@
   # category: cargoproduct-category-name-shuttle
   # group: market
 #  locked: true   # only the QM has permission to order by default
+
+- type: cargoProduct
+  id: GravityGeneratorMini
+  icon:
+    sprite: Structures/Machines/gravity_generator_mini.rsi
+    state: on
+  product: GravityGeneratorMini
+  cost: 4000
+  category: cargoproduct-category-name-shuttle
+  group: market

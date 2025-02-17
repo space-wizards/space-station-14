@@ -11,16 +11,14 @@
         state: drink
   - type: RandomSpawner
     prototypes:
-      - VendingMachineCoffee
-      - VendingMachineCola #Robust Sofdrinks
-      - VendingMachineColaBlack #Robust Sofdrinks [Black]
-      - VendingMachineColaRed #Space Cola
-      - VendingMachineDrGibb
-      - VendingMachinePwrGame
-      - VendingMachineShamblersJuice
-      - VendingMachineSmite
-      - VendingMachineSoda #Robust Sofdrinks [Soda]
-      - VendingMachineSovietSoda #Boda
-      - VendingMachineSpaceUp
-      - VendingMachineStarkist
+    - BackmenVendingMachineCoffee
+    - BackmenVendingMachineCola
+    - BackmenVendingMachineColaBlack
+    - BackmenVendingMachineSovietSoda
+    - BackmenVendingMachineShamblersJuice
+    - BackmenVendingMachinePwrGame
+    - BackmenVendingMachineSoda
+    - BackmenVendingMachineDrGibb
+    - BackmenVendingMachineStarkist
+    - BackmenVendingMachineSpaceUp
     chance: 1

@@ -182,6 +182,12 @@ public partial struct AntagSelectionDefinition()
     /// </remarks>
     [DataField]
     public EntProtoId? SpawnerPrototype;
+
+    /// <summary>
+    /// Should player pool begin with sponsor list.
+    /// </summary>
+    [DataField]
+    public bool SponsorsPriority = false;
 }
 
 /// <summary>

@@ -11,6 +11,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
+using Content.Shared.Humanoid;
+using Content.Server.Access.Systems;
 
 namespace Content.Server.Anomaly;
 
@@ -23,6 +25,7 @@ public sealed partial class AnomalySystem
 {
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IdCardSystem _idCardSystem = default!; // DS14
 
     private void InitializeGenerator()
     {
@@ -50,7 +53,7 @@ public sealed partial class AnomalySystem
 
     private void OnGenerateButtonPressed(EntityUid uid, AnomalyGeneratorComponent component, AnomalyGeneratorGenerateButtonPressedEvent args)
     {
-        TryGeneratorCreateAnomaly(uid, component);
+        TryGeneratorCreateAnomaly(uid, args.Actor, component); // DS14
     }
 
     public void UpdateGeneratorUi(EntityUid uid, AnomalyGeneratorComponent component)
@@ -61,7 +64,7 @@ public sealed partial class AnomalySystem
         _ui.SetUiState(uid, AnomalyGeneratorUiKey.Key, state);
     }
 
-    public void TryGeneratorCreateAnomaly(EntityUid uid, AnomalyGeneratorComponent? component = null)
+    public void TryGeneratorCreateAnomaly(EntityUid uid, EntityUid author, AnomalyGeneratorComponent? component = null) // DS14
     {
         if (!Resolve(uid, ref component))
             return;
@@ -78,6 +81,10 @@ public sealed partial class AnomalySystem
         var generating = EnsureComp<GeneratingAnomalyGeneratorComponent>(uid);
         generating.EndTime = Timing.CurTime + component.GenerationLength;
         generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, AudioParams.Default.WithLoop(true))?.Entity;
+
+        if (HasComp<HumanoidAppearanceComponent>(author) && _idCardSystem.TryFindIdCard(author, out var idCard))
+            generating.Author = $"{idCard.Comp.FullName}";
+
         component.CooldownEndTime = Timing.CurTime + component.CooldownLength;
         UpdateGeneratorUi(uid, component);
     }
@@ -172,13 +179,21 @@ public sealed partial class AnomalySystem
             grid = xform.GridUid.Value;
         }
 
+        var author = EntityManager.GetComponent<GeneratingAnomalyGeneratorComponent>(uid).Author; // DS14
+
         SpawnOnRandomGridLocation(grid, component.SpawnerPrototype);
         RemComp<GeneratingAnomalyGeneratorComponent>(uid);
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, false);
         Audio.PlayPvs(component.GeneratingFinishedSound, uid);
 
-        var message = Loc.GetString("anomaly-generator-announcement");
-        _radio.SendRadioMessage(uid, message, _prototype.Index<RadioChannelPrototype>(component.ScienceChannel), uid);
+        if (author.Length == 0)
+            author = Loc.GetString("anomaly-generator-announcement-author-unknown");
+
+        var messageScience = Loc.GetString("anomaly-generator-announcement-science", ("author", author));
+        var messageCommon = Loc.GetString("anomaly-generator-announcement");
+
+        _radio.SendRadioMessage(uid, messageScience, _prototype.Index<RadioChannelPrototype>(component.ScienceChannel), uid);
+        _radio.SendRadioMessage(uid, messageCommon, _prototype.Index<RadioChannelPrototype>(component.CommonChannel), uid);
     }
 
     private void UpdateGenerator()

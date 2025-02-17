@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckKirasCloak
+  name: мантия рыси
+  description: Необчная накидка с капюшоном и ушками.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/kiras_cloakns.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Neck/Cloaks/kiras_cloakns.rsi

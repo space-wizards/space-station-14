@@ -1,0 +1,18 @@
+- type: entity
+  parent: ReagentContainerBase
+  id: ADTReagentContainerCocoaSolid
+  name: пачка какао-порошка
+  description: Большая пачка порошкового какао. Разбавьте водой перед употреблением!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: CocoaPowder
+          Quantity: 30
+  - type: TrashOnSolutionEmpty
+    solution: food
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Food/cocoa_pack.rsi
+    state: icon

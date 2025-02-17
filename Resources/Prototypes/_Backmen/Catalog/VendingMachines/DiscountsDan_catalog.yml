@@ -1,0 +1,77 @@
+- type: listing
+  id: DiscountDansInventory1
+  productEntity: FoodSnackCheesie
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DiscountDansInventory2
+  productEntity: FoodSnackChips
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DiscountDansInventory3
+  productEntity: FoodSnackBoritos
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DiscountDansInventory4
+  productEntity: DrinkEnergyDrinkCan
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DiscountDansInventory5
+  productEntity: FoodSnackPopcorn
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DiscountDansInventory6
+  productEntity: FoodSnackEnergy
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DiscountDansInventory7
+  productEntity: CigPackMixed
+  cost:
+    SpaceCash: 15
+  categories:
+    - DiscountDansInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+

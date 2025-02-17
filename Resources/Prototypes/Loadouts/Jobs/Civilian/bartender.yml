@@ -25,6 +25,26 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
 
+- type: loadout
+  id: BartenderJumpsuitNew
+  equipment:
+    jumpsuit: ADTClothingUniformNewBarmanSuit
+
+- type: loadout
+  id: BartenderJumpskirtNew
+  equipment:
+    jumpsuit: ADTClothingUniformNewBarmanSkirt
+
+- type: loadout
+  id: ServiceJumpsuitNew
+  equipment:
+    jumpsuit: ADTClothingUniformNewServiceSuit
+
+- type: loadout
+  id: ServiceJumpskirtNew
+  equipment:
+    jumpsuit: ADTClothingUniformNewServiceSuit
+
 # Outer clothing
 - type: loadout
   id: BartenderApron
@@ -40,3 +60,28 @@
   id: BartenderWintercoat
   equipment:
     outerClothing: ClothingOuterWinterBar
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersBartender
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersBartender
+
+- type: loadout
+  id: UnderwearBottomPantiesBartender
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesBartender
+
+- type: loadout
+  id: UnderwearTopBraBartender
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraBartender

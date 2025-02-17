@@ -711,6 +711,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_read_rules");
 
+                    // DS14-start
+                    b.Property<int>("Money")
+                        .HasColumnType("integer")
+                        .HasColumnName("money");
+                    // DS14-end
+
                     b.Property<IPAddress>("LastSeenAddress")
                         .IsRequired()
                         .HasColumnType("inet")

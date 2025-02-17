@@ -1,0 +1,89 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingCorpseCollectorLvl1
+  categories: [ HideSpawnMenu ]
+  name: собиратель трупов
+  description: Собиратель трупов, поглощает поверженных собратьев.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
+    state: lvl1
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: lvl1
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 1.25
+        Piercing: 0.75
+        Shock: 1
+        Cold: 0.25
+        Heat: 0.9
+        Poison: 0.25
+        Radiation: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingCorpseCollectorLvl2
+  categories: [ HideSpawnMenu ]
+  name: собиратель трупов
+  description: Собиратель трупов, поглощает поверженных собратьев.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
+    state: lvl2
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: lvl2
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 1.2
+        Piercing: 0.6
+        Shock: 0.8
+        Cold: 0.1
+        Heat: 0.8
+        Poison: 0
+        Radiation: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingCorpseCollectorLvl3
+  categories: [ HideSpawnMenu ]
+  name: собиратель трупов
+  description: Собиратель трупов, поглощает поверженных собратьев.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
+    state: lvl3
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/corpsecollector.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: lvl3
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 1
+        Piercing: 0.4
+        Shock: 0.6
+        Cold: 0
+        Heat: 0.6
+        Poison: 0
+        Radiation: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.4

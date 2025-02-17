@@ -80,6 +80,8 @@ ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
 ui-options-hud-layout-default = Default
 ui-options-hud-layout-separated = Separated
+ui-options-hud-background-parallax = Параллакс
+ui-options-hud-background-image = Фон
 ui-options-vp-stretch = Stretch viewport to fit game window
 ui-options-vp-scale = Fixed viewport scale:
 ui-options-vp-scale-value = x{ $scale }
@@ -97,6 +99,7 @@ ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
+ui-options-background-hud-layout = Lobby HUD layout:
 
 ## Controls menu
 

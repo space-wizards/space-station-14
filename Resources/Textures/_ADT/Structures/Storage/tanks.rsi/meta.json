@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/44cfb65dece652f7e1b200f5774732d5555ce82f, hightwattertank and highfueltank recolored by Morty",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "watertank-2"
+    },
+    {
+      "name": "watertank-2-1"
+    },
+    {
+      "name": "watertank-2-2"
+    },
+    {
+      "name": "watertank-2-3"
+    },
+    {
+      "name": "watertank-2-4"
+    },
+    {
+      "name": "watertank-2-5"
+    }
+  ]
+}

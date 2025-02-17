@@ -5,6 +5,7 @@
     ClothingUniformJumpskirtJanitor: 2
     ClothingHandsGlovesJanitor: 2
     ClothingShoesColorBlack: 2
+    ClothingShoesGaloshes: 1
     ClothingHeadHatPurplesoft: 2
     ClothingBeltJanitor: 2
     ClothingHeadsetService: 2
@@ -14,4 +15,4 @@
     ToyFigurineJanitor: 1
   emaggedInventory:
     ClothingUniformJumpskirtJanimaid: 2
-    ClothingUniformJumpskirtJanimaidmini: 1
+    ClothingUniformJumpskirtJanimaidmini: 2

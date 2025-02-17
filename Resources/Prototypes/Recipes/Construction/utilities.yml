@@ -870,3 +870,19 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+
+
+# FAN
+- type: construction
+  name: Little fan
+  id: LitleFan
+  description: Fan to hold the air in and space outside.
+  graph: Fan
+  startNode: start
+  targetNode: litleFan
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/tinyfan.rsi
+    state: icon

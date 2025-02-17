@@ -1,0 +1,192 @@
+- type: entity
+  name: лазанья
+  parent: FoodBurgerBase
+  id: Lasanga
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - egg
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/lasagna.rsi
+    state: icon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Egg
+          Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 3
+  - type: Item
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/lasagna.rsi
+
+- type: entity
+  name: точно не сэндвич
+  parent: FoodBurgerBase
+  id: NotSandwich
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    state: icon
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/notsandwich.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 3
+  - type: Item
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/notsandwich.rsi
+
+- type: entity
+  name: яйца на пару
+  parent: FoodBurgerBase
+  id: Chawanmushi
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - egg
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/chawanmushi.rsi
+    state: icon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Egg
+          Quantity: 4
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 3
+  - type: Item
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/chawanmushi.rsi
+
+- type: entity
+  parent: FoodBowlBase
+  id: FoodSoupBone
+  name: суп из костей
+  description: Никогда не спрашивайте как его приготовили.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bitter
+      - terrible
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/bonesoup.rsi
+    layers:
+    - state: bowl
+    - state: bone-soup
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
+
+- type: entity
+  parent: FoodBowlBase
+  id: FoodSoupSawdust
+  name: суп с опилками
+  description: Старый, всеми забытый рецепт из Ебенграда.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sawdust
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/sawdustsoup.rsi
+    layers:
+    - state: bowl
+    - state: sawdust
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 20
+  - type: Tag
+    tags:
+    - Soup
+
+- type: entity
+  parent: FoodMealBase
+  id: FoodCaviar
+  name: карпья икра
+  description: От нее пахнет новогодним вайбом.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - caviar
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/caviar.rsi
+    state: icon
+  
+- type: entity
+  parent: FoodBurgerBase
+  id: FoodCaviarBurger
+  name: бутерброд с карпьей икрой
+  description: Культовая еда для застолья на Новый год.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - caviar
+      - bread
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/caviar.rsi
+    state: on-bread
+
+- type: entity
+  parent: FoodCakePlain
+  id: FoodHoneyCake
+  name: медовик
+  description: Сладкий вкус коржей, которые хорошо пропитаны мёдом.
+  components:
+  - type: SliceableFood
+    slice: FoodHoneyCakeSlice
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/honeycake.rsi
+    state: icon
+
+- type: entity
+  name: кусок медовика
+  parent: FoodCakeSliceBase
+  id: FoodHoneyCakeSlice
+  description: Сладкий вкус коржей, которые хорошо пропитаны мёдом.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/honeycake.rsi
+    state: icon-slice
+  - type: FlavorProfile
+    flavors:
+      - sweetdough
+      

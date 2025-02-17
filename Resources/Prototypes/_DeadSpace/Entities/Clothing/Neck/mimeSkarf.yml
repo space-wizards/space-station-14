@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMimeSexy
+  name: шарф сексуального мима
+  description: ...
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/mimeSkarf.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/mimeSkarf.rsi

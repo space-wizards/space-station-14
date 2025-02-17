@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BaseXenoArtifactItem
   name: alien artifact
@@ -157,7 +157,7 @@
     juiceSolution:
       reagents:
       - ReagentId: Artifexium
-        Quantity: 10
+        Quantity: 20
   - type: StaticPrice
     price: 0
   - type: Stack

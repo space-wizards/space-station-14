@@ -1,0 +1,178 @@
+- type: entity
+  parent: SimpleSpaceMobBase
+  id: BaseMobDemonBoss
+  name: босс демонов
+  description: Монстр!
+  abstract: true
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Demons/demon_boss.rsi
+  - type: MovementAlwaysTouching
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Dead
+  - type: Stamina
+  - type: Appearance
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodMaxVolume: 200
+    bloodlossThreshold: 0.4
+  - type: CombatMode
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 45
+    soundHit:
+        path: /Audio/Effects/demon_attack1.ogg
+        params:
+          volume: -100
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 3
+        Blunt: 3
+        Piercing: 3
+        Heat: 8
+        Structural: 20
+  - type: Demon
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Demon
+      Female: Demon
+      Unsexed: Demon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 15500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: ZombieImmune
+  - type: ImmunitetInfectionDead
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    - Critical
+    damageCap: 0
+    damage:
+      types:
+        Poison: -2
+      groups:
+        Brute: -4
+        Burn: -4
+
+- type: entity
+  parent: BaseMobDemonBoss
+  id: MobDemonHerald
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: herald
+  - type: StatusEffects
+    allowed:
+    - Enraged
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: herald
+      Dead:
+        Base: herald_dying
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 1.5
+  - type: Herald
+  - type: StunAttack
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-herald-name
+    description: ghost-role-information-herald-description
+    rules: ghost-role-information-herald-rules
+  - type: Vocal
+    sounds:
+      Male: Demon
+      Female: Demon
+      Unsexed: Demon
+
+- type: entity
+  parent: BaseMobDemonBoss
+  id: MobDemonBroodmother
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: broodmother
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: broodmother
+      Dead:
+        Base: egg_sac
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Effects/demon_attack1.ogg
+        params:
+          volume: -100
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 40
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/demon_dies.ogg
+          params:
+            volume: 50
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

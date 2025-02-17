@@ -1,0 +1,27 @@
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitPilot
+  categories: [ HideSpawnMenu ]
+  name: pilot hardsuit helmet
+  description: The steering wheel is imprinted in the visor of this helmet.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hardsuits/pilotsuithelm.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hardsuits/pilotsuithelm.rsi
+  - type: PointLight
+    color: white
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitSecurityPilot
+  categories: [ HideSpawnMenu ]
+  name: security pilot hardsuit helmet
+  description: Looks like something that inspires order.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
+  - type: PointLight
+    color: white

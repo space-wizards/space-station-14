@@ -1,0 +1,132 @@
+- type: entity
+  save: false
+  parent:
+  - MobBloodstream
+  - MobFlammable
+  - BaseMobSpecies
+  id: BaseMobSpeciesXenomorph
+  abstract: true
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: full
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.50 #per second, scales with pressure and other constants.
+  - type: Temperature
+    heatDamageThreshold: 325
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 0.5 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 1 #per second, scales with temperature & other constants
+  - type: Fingerprint
+  - type: Blindable
+  - type: TypingIndicator
+    proto: alien
+  - type: Speech
+    speechVerb: LargeMob
+    speechSounds: Lizard
+  - type: EmoteOnDamage
+    withChat: true
+    hiddenFromChatWindow: false
+    emotes:
+    - ScreamOnDamage
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: XenoRace
+  - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
+    bloodlossDamage:
+      types:
+        Bloodloss: 0.0
+    bloodlossHealDamage:
+      types:
+        Bloodloss: -2
+    maxBleedAmount: 5
+    chemicalMaxVolume: 0
+  - type: DrawableSolution
+    solution: bloodstream
+  - type: Vocal
+    sounds:
+      Male: UnisexXenomorph
+      Female: UnisexXenomorph
+      Unsexed: UnisexXenomorph
+  - type: MeleeWeapon
+    soundHit:
+     collection: AlienClaw
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6
+  - type: InteractionPopup
+    successChance: 1.0
+    interactSuccessString: petting-success-bingus
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/_DeadSpace/Sponsor/Sound/meow_xeno.ogg
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatXeno
+        amount: 5
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
+    allowedStates:
+    - Alive
+    - Critical
+    - Dead
+    damage:
+      types:
+        Airloss: -0.5
+        Cellular: -0.5
+      groups:
+        Airloss: -0.5
+  - type: Sanity
+  - type: ZombieImmune
+  - type: ImmunitetInfectionDead
+  - type: LizardAccent
+  - type: EmotePanel # DS14-Emote-panel
+
+- type: damageModifierSet
+  id: XenoRace
+  coefficients:
+    Blunt: 0.85
+    Slash: 0.75
+    Piercing: 1
+    Shock: 1.25
+    Cold: 0.75
+    Heat: 1.5
+    Poison: 0
+    Radiation: 0
+    Caustic: 0
+
+- type: entity
+  parent: BaseMobSpeciesXenomorph
+  id: BaseMobXenomorph
+  name: Ксеноморф
+  abstract: true
+  components:
+  - type: Body
+    prototype: Xenomorph
+    requiredLegs: 2
+  - type: HumanoidAppearance
+    species: Xenomorph
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#9106d1"
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobXenomorphDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Xenomorph

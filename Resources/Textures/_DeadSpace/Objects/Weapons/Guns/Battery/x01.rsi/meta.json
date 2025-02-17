@@ -1,0 +1,94 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/484fcb08e8e2058b81059424fb5aa77034a3fcf1 recolored by foxselian (discord) for Space Station 14 server Мёртвый Космос, resprite by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "icon"
+		},
+		{
+			"name": "base"
+		},
+		{
+			"name": "mag-unshaded-0-0",
+			"delays": [
+				[
+					0.3,
+					0.3
+				]
+			]
+		},
+		{
+			"name": "mag-unshaded-0-1",
+			"delays": [
+				[
+					0.3,
+					0.3
+				]
+			]
+		},
+		{
+			"name": "mag-unshaded-0-2",
+			"delays": [
+				[
+					0.3,
+					0.3
+				]
+			]
+		},
+		{
+			"name": "mag-unshaded-1-0"
+		},
+		{
+			"name": "mag-unshaded-2-0"
+		},
+		{
+			"name": "mag-unshaded-3-0"
+		},
+		{
+			"name": "mag-unshaded-4-0"
+		},
+		{
+			"name": "mag-unshaded-1-1"
+		},
+		{
+			"name": "mag-unshaded-2-1"
+		},
+		{
+			"name": "mag-unshaded-3-1"
+		},
+		{
+			"name": "mag-unshaded-4-1"
+		},
+		{
+			"name": "mag-unshaded-1-2"
+		},
+		{
+			"name": "mag-unshaded-2-2"
+		},
+		{
+			"name": "mag-unshaded-3-2"
+		},
+		{
+			"name": "mag-unshaded-4-2"
+		},
+		{
+			"name": "equipped-BELT",
+			"directions": 4
+		},
+		{
+			"name": "inhand-left",
+			"directions": 4
+
+		},
+		{
+			"name": "inhand-right",
+			"directions": 4
+
+		}
+	]
+}

@@ -66,18 +66,18 @@
       - StealCondition
   - type: DieCondition
 
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseLivingObjective]
-#  id: HijackShuttleObjective
-#  name: Hijack emergency shuttle
-#  description: Leave on the shuttle free and clear of the loyal Nanotrasen crew on board. Use ANY methods available to you. Syndicate agents, Nanotrasen enemies, and handcuffed hostages may remain alive on the shuttle. Ignore assistance from anyone other than a support agent.
-#  components:
-#    - type: Objective
-#      difficulty: 5 # insane, default config max difficulty
-#      icon:
-#        sprite: Objects/Tools/emag.rsi
-#        state: icon
-#    - type: HijackShuttleCondition
+- type: entity
+  parent: [BaseTraitorObjective, BaseLivingObjective]
+  id: HijackShuttleObjective
+  name: Hijack emergency shuttle
+  description: Leave on the shuttle free and clear of the loyal Nanotrasen crew on board. Use ANY methods available to you. Syndicate agents, Nanotrasen enemies, and handcuffed hostages may remain alive on the shuttle. Ignore assistance from anyone other than a support agent.
+  components:
+  - type: Objective
+    difficulty: 5 # insane, default config max difficulty
+    icon:
+      sprite: Objects/Tools/emag.rsi
+      state: icon
+  - type: HijackShuttleCondition
 
 # kill
 
@@ -92,6 +92,16 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
+    ignoredJobs:
+    - Passenger
+    - TypanAtmosTech
+    - TypanBotanist
+    - TypanCargotech
+    - TypanChef
+    - TypanMedic
+    - TypanRD
+    - TypanScience
+    - TypanTelecommunicationsOfficer
 
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
@@ -109,6 +119,23 @@
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
+    requireDead: true
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseKillObjective]
+  id: KillRandomTraitorObjective
+  description: We need this agent gone and you probably know why. Good luck, agent.
+  components:
+  - type: Objective
+    # technically its still possible for KillRandomPersonObjective to roll an agent but this is guaranteed, so higher difficulty
+    difficulty: 3.0
+    # killing 1 agent is enough
+    unique: true
+  - type: TargetObjective
+    title: objective-condition-kill-traitor-title
+  - type: PickRandomTraitor
+  - type: KillPersonCondition
+    # don't count missing evac as killing as agents are higher profile, so you really need to do the dirty work
     requireDead: true
 
 # social
@@ -194,17 +221,17 @@
 
 ## hos
 
-- type: entity
+- type: entity # DS14 objective
   parent: BaseTraitorStealObjective
-  id: EnergyShotgunStealObjective
+  id: WeaponX01StealObjective
   components:
   - type: Objective
     # HoS will have this on them a lot of the time so..
-    difficulty: 3
+    difficulty: 4
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
-    stealGroup: WeaponEnergyShotgun
+    stealGroup: WeaponPistolX01
     owner: job-name-hos
 
 ## ce
@@ -288,7 +315,7 @@
     # high difficulty since the hardest item both to steal, and to not get caught down the road,
     # since anyone with a pinpointer can track you down and kill you
     # it's close to being a stealth loneop
-    difficulty: 4
+    difficulty: 5 # insane, default config max difficulty
   - type: NotCommandRequirement
   - type: StealCondition
     stealGroup: NukeDisk

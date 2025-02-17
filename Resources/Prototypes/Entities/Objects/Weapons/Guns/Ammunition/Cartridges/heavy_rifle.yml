@@ -18,7 +18,7 @@
   - type: Appearance
   - type: SpentAmmoVisuals
   - type: StaticPrice
-    price: 10
+    price: 1
 
 - type: entity
   id: CartridgeMinigun

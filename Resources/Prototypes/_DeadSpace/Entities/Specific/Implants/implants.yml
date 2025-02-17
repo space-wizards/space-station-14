@@ -1,0 +1,40 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: AdrenalImplant
+  name: adrenal implant
+  description: An implant that will inject a dose of stimulants into you.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateAdrenalImplant
+
+- type: entity
+  id: AdrenalImplanter
+  suffix: adrenal
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: AdrenalImplant
+
+- type: entity
+  parent: BaseItem
+  id: AutosurgeonRevive
+  name: revive autosurgeon
+  description: A multi-use auto surgeon for implanting whatever you want into yourself. Rip that station apart and make it part of your.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Specific/Autosurgeon/autosurgeon.rsi
+      layers:
+      - state: iconBefore
+    - type: ReviveImplant
+
+- type: entity
+  parent: BaseItem
+  id: AutosurgeonAfter
+  name: used Autosurgeon
+  description: A multi-use auto surgeon for implanting whatever you want into yourself. Rip that station apart and make it part of your.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Specific/Autosurgeon/autosurgeon.rsi
+      layers:
+      - state: iconAfter

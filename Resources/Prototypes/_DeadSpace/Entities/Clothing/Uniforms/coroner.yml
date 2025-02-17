@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoroner
+  name: комбинезон коронера
+  description: Форма, выдаваемая квалифицированным и прошедшим обучение лицам. Имеется надпись "я не просто работаю с мертвецами, я танцую с ними на их последнем параде!"
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCoroner
+  name: юбка-комбинезон коронера
+  description: Она изготовлена из специального волокна, обеспечивающего слабую защиту от биологических опасностей. Кто сказал, что стиль должен умирать вместе с пациентами?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/coroner.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoronerAlt
+  name: хирургический халат
+  description: Гарантированно сбережет ваш гардероб от кровавых подробностей, но мы не уверены в этом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/coroneralt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/coroneralt.rsi

@@ -1,0 +1,157 @@
+- type: species
+  id: Demon
+  name: species-name-demon
+  roundStart: true
+  prototype: MobDemon
+  sprites: MobDemonSprites
+  defaultSkinTone: "#34a223"
+  markingLimits: MobDemonMarkingLimits
+  dollPrototype: MobDemonDummy
+  skinColoration: Hues
+  maleFirstNames: names_first_male
+  femaleFirstNames: names_first_female
+  maleLastNames: names_last_male
+  femaleLastNames: names_last_female
+  naming: firstlast
+
+- type: speciesBaseSprites
+  id: MobDemonSprites
+  sprites:
+    Head: MobDemonHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: MobDemonTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobDemonTail
+    Eyes: MobHumanoidEyes
+    LArm: MobDemonLArm
+    RArm: MobDemonRArm
+    LHand: MobDemonLHand
+    RHand: MobDemonRHand
+    LLeg: MobDemonLLeg
+    RLeg: MobDemonRLeg
+    LFoot: MobDemonLFoot
+    RFoot: MobDemonRFoot
+
+- type: markingPoints
+  id: MobDemonMarkingLimits
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    HeadTop:
+      points: 1
+      required: false
+    HeadSide:
+      points: 1
+      required: false
+    Chest:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: false
+    Snout:
+      points: 1
+      required: false
+    Legs:
+      points: 2
+      required: false
+    Arms:
+      points: 2
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobDemonHead
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobDemonHeadMale
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobDemonHeadFemale
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobDemonTorso
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobDemonTorsoMale
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobDemonTorsoFemale
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobDemonLLeg
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobDemonLHand
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobDemonLArm
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobDemonLFoot
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobDemonRLeg
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobDemonRHand
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobDemonRArm
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobDemonRFoot
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: r_foot
+
+- type: humanoidBaseSprite
+  id: MobDemonTail
+  baseSprite:
+    sprite: _ADT/Mobs/Demon/parts.rsi
+    state: tail

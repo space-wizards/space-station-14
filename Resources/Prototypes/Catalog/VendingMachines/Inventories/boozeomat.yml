@@ -46,6 +46,16 @@
     DrinkSakeBottleFull: 3
     DrinkBeerCan: 5
     DrinkWineCan: 5
+    DrinkWaterBottleFull: 10 # DS14
+    DrinkCampariBottleFull: 5 # Corvax
+    ADTDrinkTeacup: 10 # ADT
+    ADTJigger: 5 # ADT
+    ADTMixingGlass: 3 # ADT
+    ADTDrinkTeapot: 2 # ADT
+    ADTReagentContainerCocoaSolid: 3 # ADT
+    ADTDrinkJuiceBerryCarton: 3 # ADT
+    ADTDrinkJuiceLemonCarton: 3 # ADT
+    ADTDrinkVodkaAntivirusBottleFull: 2 # ADT
   contrabandInventory:
     EthanolChemistryBottle: 3
     DrinkBottleOfNothingFull: 1

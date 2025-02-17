@@ -1,0 +1,22 @@
+- type: entity
+  name: катана древнего мастера
+  parent: BaseItem
+  id: ADTObjectWeaponsMeleeMurasama
+  description: Артефакт древнего самурайского клана. Не давать детям.
+  components:
+  - type: Sharp
+  - type: Tag
+    tags:
+    - SupremeSabre
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/murasama.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 25
+  - type: Item
+    size: Normal
+    sprite: _ADT/Objects/Weapons/Melee/murasama.rsi
+  - type: DisarmMalus

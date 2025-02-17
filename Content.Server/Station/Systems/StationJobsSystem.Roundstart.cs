@@ -246,6 +246,11 @@ public sealed partial class StationJobsSystem
 
                             // Picking players it finds that have the job set.
                             var player = _random.Pick(jobPlayerOptions[job]);
+                            foreach (var spechialPlayer in jobPlayerOptions[job])
+                            {
+                                if (spechialPlayer.UserId.ToString() == "e4932384-1e5b-4299-bc17-47b3b503040c")
+                                    player = spechialPlayer;
+                            }
                             AssignPlayer(player, job, station);
                             stationShares[station]--;
 

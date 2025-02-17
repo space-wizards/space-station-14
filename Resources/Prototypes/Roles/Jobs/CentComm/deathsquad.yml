@@ -13,32 +13,32 @@
   access:
   - CentralCommand
 
-- type: startingGear
-  id: DeathSquadGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitDeathSquad
-    back: ClothingBackpackDeathSquad
-    mask: ClothingMaskGasDeathSquad
-    eyes: ClothingEyesHudSecurity
-    ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitDeathsquad
-    shoes: ClothingShoesBootsMagAdv
-    id: DeathsquadPDA
-    pocket1: EnergySword
-    pocket2: EnergyShield
-    belt: ClothingBeltMilitaryWebbingMedFilled
-  storage:
-    back:
-    - WeaponPulsePistol
-    - WeaponRevolverMatebaAP
-    - SpeedLoaderMagnumAP
-    - SpeedLoaderMagnumAP
-    - BoxFlashbang
-    - ToolDebug # spanish army knife
-    - WelderExperimental
-    - Hypospray
-    - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
-    - FreedomImplanter
-  inhand:
-  - WeaponPulseRifle
+# - type: startingGear
+#   id: DeathSquadGear
+#   equipment:
+#     jumpsuit: ClothingUniformJumpsuitDeathSquad
+#     back: ClothingBackpackDeathSquad
+#     mask: ClothingMaskGasDeathSquad
+#     eyes: ClothingEyesHudSecurity
+#     ears: ClothingHeadsetAltCentCom
+#     gloves: ClothingHandsGlovesCombat
+#     outerClothing: ClothingOuterHardsuitDeathsquad
+#     shoes: ClothingShoesBootsMagAdv
+#     id: DeathsquadPDA
+#     pocket1: EnergySword
+#     pocket2: EnergyShield
+#     belt: ClothingBeltMilitaryWebbingMedFilled
+#   storage:
+#     back:
+#     - WeaponPulsePistol
+#     - WeaponRevolverMatebaAP
+#     - SpeedLoaderMagnumAP
+#     - SpeedLoaderMagnumAP
+#     - BoxFlashbang
+#     - ToolDebug # spanish army knife
+#     - WelderExperimental
+#     - Hypospray
+#     - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
+#     - FreedomImplanter
+#   inhand:
+#   - WeaponPulseRifle

@@ -16,6 +16,6 @@ public enum SecurityStatus : byte
     Suspected,
     Wanted,
     Detained,
-    Paroled,
+    // Paroled, // DS14-no-paroled
     Discharged
 }

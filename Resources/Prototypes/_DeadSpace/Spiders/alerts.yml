@@ -1,0 +1,56 @@
+- type: alert
+  id: BloodAmount
+  category: Hunger
+  icons:
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood0
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood5
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood10
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood15
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood20
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood25
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood30
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood35
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood40
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood45
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood50
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood55
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood60
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood65
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood70
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood75
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood80
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood85
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood90
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood95
+  - sprite: /Textures/_DeadSpace/Spiders/vampire_hunger.rsi
+    state: blood100
+  name: Кровь
+  description: Показывает процент крови. Если вы не будете поглощать кровь, вы не сможете использовать свои способности.
+  minSeverity: 0
+  maxSeverity: 20
+
+- type: alert
+  id: SpiderGuard
+  icons: [ /Textures/_DeadSpace/Spiders/guardian/guard.png ]
+  name: На защите!
+  description: Вы охраняете королевскую особу.

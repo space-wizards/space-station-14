@@ -2,7 +2,7 @@
   id: JobIcon
   abstract: true
   priority: 1
-  locationPreference: Right
+  locationPreference: Left # Corvax-TypingIndicator
   isShaded: true
 
 - type: jobIcon
@@ -52,6 +52,14 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Boxer
   jobName: job-name-boxer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMedicalSurgeon
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Surgeon
+  jobName: job-name-surgeon
 
 - type: jobIcon
   parent: JobIcon
@@ -436,6 +444,69 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SeniorResearcher
   allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconIAA
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: IAA
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBlueShieldOfficer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: BlueShieldOfficer
+
+# - type: jobIcon
+#   parent: JobIcon
+#   id: JobIconADTInvestigator
+#   icon:
+#     sprite: /Textures/Interface/Misc/job_icons.rsi
+#     state: ADTInvestigator
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMagistrat
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Magistrat
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNanotrasenRed
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: NanotrasenRed
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCoroner
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Coroner
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSecurityPilot
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SecurityPilot
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorSalvageSpecialist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorCargo
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorAdministrator
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorService
 
 - type: jobIcon
   parent: JobIcon

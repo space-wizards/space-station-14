@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: AutopsyBloodAnalyzer
+  name: анализатор крови # TODO
+  description: Используется для получения подробного отчета об образце крови.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/autopsy_blood_analyzer.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: _DeadSpace/Structures/Machines/autopsy_blood_analyzer.rsi
+    state: icon
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 25
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: ApcPowerReceiver
+    powerLoad: 250

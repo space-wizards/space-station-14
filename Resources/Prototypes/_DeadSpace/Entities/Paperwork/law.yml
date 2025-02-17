@@ -1,0 +1,55 @@
+- type: paperworkForm
+  id: Law0
+  category: law
+  name: paperwork-form-title-law-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law1
+  category: law
+  name: paperwork-form-title-law-1
+  text: "/Paperwork/Law/1.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law2
+  category: law
+  name: paperwork-form-title-law-2
+  text: "/Paperwork/Law/2.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law3
+  category: law
+  name: paperwork-form-title-law-3
+  text: "/Paperwork/Law/3.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law4
+  category: law
+  name: paperwork-form-title-law-4
+  text: "/Paperwork/Law/4.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law8
+  category: law
+  name: paperwork-form-title-law-8
+  text: "/Paperwork/Law/8.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law9
+  category: law
+  name: paperwork-form-title-law-9
+  text: "/Paperwork/Law/9.xml"
+  paperPrototype: PaperPrintedLaw
+
+- type: paperworkForm
+  id: Law10
+  category: law
+  name: paperwork-form-title-law-10
+  text: "/Paperwork/Law/10.xml"
+  paperPrototype: PaperPrintedLaw

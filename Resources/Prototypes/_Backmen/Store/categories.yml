@@ -1,0 +1,123 @@
+﻿- type: storeCategory
+  id: ChangInventory
+  name: store-category-vendingchang
+
+- type: storeCategory
+  id: CigaretteMachineInventory
+  name: store-category-vendingcigs
+
+- type: storeCategory
+  id: VendingClothing
+  name: store-category-vendingclothing
+
+- type: storeCategory
+  id: HotDrinksMachineInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: RobustSoftdrinksInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: DiscountDansInventory
+  name: store-category-vendingdiscount
+
+- type: storeCategory
+  id: DonutInventory
+  name: store-category-vendingdonut
+
+- type: storeCategory
+  id: VendingGames
+  name: store-category-vendinggames
+
+- type: storeCategory
+  id: GetmoreChocolateCorpInventory
+  name: store-category-vendingsnack
+
+- type: storeCategory
+  id: BodaInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: VendingYouTool
+  name: store-category-vendingyoutool
+
+- type: storeCategory
+  id: ToysInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: SpaceUpInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: ColaRedInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: ShamblersJuiceInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: PwrGameInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: DrGibbInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: StarkistInventory
+  name: store-category-vending-drinks
+
+- type: storeCategory
+  id: HappyHonkInventory
+  name: store-category-HappyHonk
+
+- type: storeCategory
+  id: DrinkVendInventoryEmag
+  name: store-category-emag
+
+- type: storeCategory
+  id: HappyHonkInventoryEmag
+  name: store-category-emag
+
+- type: storeCategory
+  id: CigaretteMachineInventoryEmag
+  name: store-category-emag
+
+- type: storeCategory
+  id: HotDrinksMachineInventoryEmag
+  name: store-category-emag
+
+   #withard
+
+- type: storeCategory
+  id: WizardBooks
+  name: store-category-books
+  priority: 0
+
+- type: storeCategory
+  id: WizardArmor
+  name: store-category-armor
+  priority: 2
+
+- type: storeCategory
+  id: WizardUtility
+  name: store-category-utility
+  priority: 3
+
+- type: storeCategory
+  id: WizardBundles
+  name: store-category-bundles
+  priority: 6
+
+- type: storeCategory
+  id: WizardMisc
+  name: store-category-misc
+  priority: 7
+
+- type: storeCategory
+  id: WizardPointless
+  name: store-category-pointless
+  priority: 8

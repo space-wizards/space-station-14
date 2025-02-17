@@ -1,0 +1,21 @@
+﻿- type: body
+  id: XenoMaid
+  name: "xenoMaid"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - right_arm
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    right_arm:
+      part: RightArmHuman
+      connections:
+      - right_hand
+    right_hand:
+      part: RightHandHuman

@@ -1,0 +1,77 @@
+﻿- type: listing
+  id: SpaceUpInventory1
+  productEntity: DrinkSpaceUpCan
+  cost:
+    SpaceCash: 15
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: SpaceUpInventory2
+  productEntity: DrinkSpaceMountainWindCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: SpaceUpInventory3
+  productEntity: DrinkGrapeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: SpaceUpInventory4
+  productEntity: DrinkRootBeerCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: SpaceUpInventory5
+  productEntity:  DrinkIcedTeaCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: SpaceUpInventory6
+  productEntity: DrinkLemonLimeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: SpaceUpInventory7
+  productEntity: DrinkFourteenLokoCan
+  cost:
+    SpaceCash: 5
+  categories:
+    - SpaceUpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+

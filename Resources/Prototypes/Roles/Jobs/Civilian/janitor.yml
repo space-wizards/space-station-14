@@ -3,6 +3,9 @@
   name: job-name-janitor
   description: job-description-janitor
   playTimeTracker: JobJanitor
+  requirements:
+    - !type:OverallPlaytimeRequirement
+        time: 3600 # 1 hour
   startingGear: JanitorGear
   icon: "JobIconJanitor"
   supervisors: job-supervisors-hop
@@ -10,10 +13,12 @@
   - Service
   - Janitor
   - Maintenance
-  special:
-  - !type:GiveItemOnHolidaySpecial
-    holiday: GarbageDay
-    prototype: WeaponRevolverInspector
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 45
+  #end-backmen: currency
 
 - type: startingGear
   id: JanitorGear
@@ -22,9 +27,6 @@
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
-  #storage:
-    #back:
-    #- Stuff
 
 - type: startingGear
   id: JanitorMaidGear
@@ -35,3 +37,4 @@
     head: ClothingHeadHatCatEars
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
+    socks: ClothingUnderwearSocksJanitor

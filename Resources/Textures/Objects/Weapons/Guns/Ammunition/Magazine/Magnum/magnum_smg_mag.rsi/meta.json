@@ -11,6 +11,12 @@
             "name": "base"
         },
         {
+            "name": "high_velocity"
+        },
+        {
+            "name": "high_velocity_tranqvilizer"
+        },
+        {
             "name": "practice"
         },
         {

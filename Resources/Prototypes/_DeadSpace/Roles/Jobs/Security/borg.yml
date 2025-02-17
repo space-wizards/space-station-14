@@ -1,0 +1,16 @@
+- type: job
+  id: BorgSecurity
+  name: job-name-borg-security
+  description: job-description-borg-security
+  playTimeTracker: JobBorgSecurity
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 216000 # 60 hours
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 54000 # 15 hours
+  canBeAntag: false
+  icon: JobIconBorg
+  supervisors: job-supervisors-security-borg
+  jobEntity: PlayerBorgChassisSecurity
+  applyTraits: false

@@ -86,14 +86,16 @@
     #Species that do not work with nukies should be included in this list.
     #Once the issues are fixed the species should be removed from this list to be enabled.
     #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
-    #- Vox
+    - Vox
+    - IPS
+    - IPC
 
 - type: entity
   parent: BaseNukeopsRule
   id: Nukeops
   components:
   - type: GameRule
-    minPlayers: 20
+    minPlayers: 40
   - type: LoadMapRule
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
@@ -116,6 +118,7 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeopsCommander
+      sponsorsPriority: true
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
@@ -133,10 +136,11 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeopsMedic
+      sponsorsPriority: true
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
-      max: 3
+      max: 4
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
       roleLoadout:
@@ -152,6 +156,7 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+      sponsorsPriority: true
 
 - type: entity
   abstract: true
@@ -188,6 +193,7 @@
       lateJoinAdditional: true
       mindRoles:
       - MindRoleTraitor
+      sponsorsPriority: true
 
 - type: entity
   id: TraitorReinforcement

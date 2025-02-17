@@ -1,0 +1,27 @@
+- type: paperworkForm
+  id: Cargo0
+  category: cargo
+  name: paperwork-form-title-cargo-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedCargo
+
+- type: paperworkForm
+  id: Cargo1
+  category: cargo
+  name: paperwork-form-title-cargo-1
+  text: "/Paperwork/Cargo/1.xml"
+  paperPrototype: PaperPrintedCargo
+
+- type: paperworkForm
+  id: Cargo2
+  category: cargo
+  name: paperwork-form-title-cargo-2
+  text: "/Paperwork/Cargo/2.xml"
+  paperPrototype: PaperPrintedCargo
+
+- type: paperworkForm
+  id: Cargo3
+  category: cargo
+  name: paperwork-form-title-cargo-3
+  text: "/Paperwork/Cargo/3.xml"
+  paperPrototype: PaperPrintedCargo

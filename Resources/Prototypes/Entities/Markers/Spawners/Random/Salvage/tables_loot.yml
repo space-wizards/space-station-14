@@ -207,7 +207,7 @@
       weight: 0.5
     - id: OxygenTankFilled
     - id: WelderIndustrial
-    - id: WeaponGrapplingGun
+    # - id: WeaponGrapplingGun # DS14
     - !type:GroupSelector
       children:
       - id: ClothingHeadHatWelding

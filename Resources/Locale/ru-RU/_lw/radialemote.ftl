@@ -1,0 +1,1 @@
+ui-radials-close = Закрыть

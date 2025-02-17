@@ -1,0 +1,15 @@
+ent-LedLightTubeGreen = { ent-BaseLightTube }
+    .suffix = Зелёный
+    .desc = { ent-BaseLightTube.desc }
+ent-LedLightTubeRed = { ent-BaseLightTube }
+    .suffix = Красный
+    .desc = { ent-BaseLightTube.desc }
+ent-LedLightTubeBlue = { ent-BaseLightTube }
+    .suffix = Синий
+    .desc = { ent-BaseLightTube.desc }
+ent-LedLightTubeYellow = { ent-BaseLightTube }
+    .suffix = Жёлтый
+    .desc = { ent-BaseLightTube.desc }
+ent-LedLightTubeViolet = { ent-BaseLightTube }
+    .suffix = Фиолетовый
+    .desc = { ent-BaseLightTube.desc }

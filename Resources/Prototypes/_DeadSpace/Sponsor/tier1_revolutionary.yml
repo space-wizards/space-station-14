@@ -1,0 +1,35 @@
+- type: sponsorLoadout
+  id: ClothingBackpackTier1SponsorLoadout
+  entity: ClothingBackpackTier1Sponsor
+  sponsorOnly: true
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier1Sponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Революционер
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsWatchDivine
+      - id: ClothingMaskSkull
+      - id: ClothingOuterHoodiePink
+
+# ken41k
+- type: sponsorLoadout
+  id: DivineWatchLoadout
+  entity: ClothingHandsWatchDivine
+  sponsorOnly: true
+
+# Fezory
+- type: sponsorLoadout
+  id: ClothingMaskSkullLoadout
+  entity: ClothingMaskSkull
+  sponsorOnly: true
+
+# choui
+- type: sponsorLoadout
+  id: ClothingOuterHoodiePinkLoadout
+  entity: ClothingOuterHoodiePink
+  sponsorOnly: true

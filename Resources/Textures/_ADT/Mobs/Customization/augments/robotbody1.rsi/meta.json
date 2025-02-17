@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by nope_ingeneer",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "r_roboarm",
+        "directions": 4
+    },
+    {
+        "name": "r_robohand",
+        "directions": 4
+    },
+    {
+        "name": "robotorso_m",
+        "directions": 4
+    },
+    {
+        "name": "l_roboleg",
+        "directions": 4
+    },
+    {
+        "name": "l_robofoot",
+        "directions": 4
+    },
+    {
+        "name": "r_roboleg",
+        "directions": 4
+    },
+    {
+        "name": "r_robofoot",
+        "directions": 4
+    },
+    {
+        "name": "l_roboarm",
+        "directions": 4
+    },
+    {
+        "name": "l_robohand",
+        "directions": 4
+    }
+  ]
+}

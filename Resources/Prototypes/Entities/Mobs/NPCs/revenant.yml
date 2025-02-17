@@ -37,7 +37,7 @@
     makeSentient: true
     name: ghost-role-information-revenant-name
     description: ghost-role-information-revenant-description
-    rules: ghost-role-information-antagonist-rules
+    rules: ghost-role-information-revenant-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
     raffle:
@@ -72,9 +72,9 @@
     - StolenEssence
   - type: RandomMetadata
     nameSegments:
-    - The
+#    - The
     - RevenantType
-    - of
+#    - of
     - RevenantAdjective
     - RevenantTheme
   - type: Speech
@@ -82,3 +82,5 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
+  - type: TTS # Corvax-TTS
+    voice: Kelthuzad

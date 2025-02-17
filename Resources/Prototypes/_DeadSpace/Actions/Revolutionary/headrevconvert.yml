@@ -1,0 +1,17 @@
+- type: entity
+  id: ActionHeadRevConvert
+  name: Convert person to revolutionary
+  description: Attempt to convert person to revolutionar.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 30
+    icon: { sprite : _DeadSpace/Interface/Actions/head_rev_convert.rsi, state: icon }
+    iconOn: { sprite : _DeadSpace/Interface/Actions/head_rev_convert.rsi, state: icon-on }
+    interactOnMiss: false
+    targetingIndicator: true
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    event: !type:HeadRevConvertActionEvent

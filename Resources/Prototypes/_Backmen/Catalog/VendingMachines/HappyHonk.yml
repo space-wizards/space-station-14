@@ -1,0 +1,21 @@
+- type: listing
+  id: HappyHonkInventory1
+  productEntity: HappyHonk
+  cost:
+    SpaceCash: 40
+  categories:
+    - HappyHonkInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 10
+
+- type: listing
+  id: HappyHonkInventory2
+  productEntity: HappyHonkMime
+  cost:
+    SpaceCash: 40
+  categories:
+    - HappyHonkInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 10

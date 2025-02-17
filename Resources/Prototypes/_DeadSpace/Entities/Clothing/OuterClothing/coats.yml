@@ -1,0 +1,62 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatAtmosWorking
+  name: спецовка атмосферного техника
+  description: Эта стильная и практичная рабочая спецовка предназначена для профессионалов, которые работают в экстремальных, но не без атмосферных условиях.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/atmos_overalls.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/atmos_overalls.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Heat: 0.75
+        Cold: 0.75
+        Caustic: 0.8
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLetterman
+  name: кожаный джемпер
+  description: Этот стильный кожаный джемпер является идеальным сочетанием комфорта и стиля. Изготовлен из высококачественной натуральной кожи, он обеспечивает надежную защиту от холода и ветра.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLettermanN
+  name: синий кожаный джемпер NanoTrasen
+  description: Оригинальный и стильный синий кожаный джемпер с яркой вышивкой большой буквы N на спине - идеальный выбор для тех, кто хочет выделиться из толпы. Изготовлен из высококачественной натуральной кожи, он не только защищает от холода, но и придает образу эксклюзивности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_n.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_n.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLettermanRed
+  name: красный кожаный джемпер
+  description: Очаровательный и стильный красный кожаный джемпер - это неотъемлемая часть модного гардероба. Изготовлен из высококачественной натуральной кожи, он обеспечивает комфорт и защиту от холода.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_red.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_red.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLettermanS
+  name: странный красный кожаный джемпер
+  description: Если вы хотите привлечь к себе внимание и подчеркнуть свою индивидуальность, то этот красный кожаный джемпер с яркой вышивкой большой буквы S на спине - ваш идеальный выбор. Изготовленный из высококачественной натуральной кожи, он обеспечивает комфорт и защиту от холода.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_s.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_s.rsi

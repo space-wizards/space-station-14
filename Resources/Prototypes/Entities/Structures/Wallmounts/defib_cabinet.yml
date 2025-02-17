@@ -49,6 +49,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+  - type: Construction
+    graph: DefibrillatorCabinet
+    node: done
 
 - type: entity
   parent: DefibrillatorCabinet

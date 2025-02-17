@@ -1,8 +1,8 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'nuke-user-interface-title'}"
-            MinSize="256 256"
-            SetSize="256 256">
+            MinSize="280 256"
+            SetSize="280 256">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">

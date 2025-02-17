@@ -1,0 +1,50 @@
+- type: entity
+  name: вархмамер
+  description: Легендарное оружие чемпионов древности. С вархамером в одной руке...
+  parent: BaseWeaponCrusher
+  id: ADTWeaponWarhammer
+  components:
+  - type: Tag
+    tags:
+      - Pickaxe
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Melee/warhammer.rsi
+    state: icon
+  - type: AmmoCounter
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 0.8
+  - type: LeechOnMarker
+    leech:
+      groups:
+        Brute: -15
+        Burn: -15
+        Airloss: -15
+  - type: Gun
+    soundGunshot: /Audio/Weapons/plasma_cutter.ogg
+    fireRate: 0.5
+    useKey: false
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ADTBulletChargestrong
+    capacity: 1
+    count: 1
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 20
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 20
+  - type: GunRequiresWield
+  - type: Item
+    size: Ginormous
+  - type: DisarmMalus
+  - type: Tool
+    qualities:
+      - Prying

@@ -18,3 +18,28 @@
   id: CuratorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCurator
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersLibrarian
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersLibrarian
+
+- type: loadout
+  id: UnderwearBottomPantiesLibrarian
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesLibrarian
+
+- type: loadout
+  id: UnderwearTopBraLibrarian
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraLibrarian

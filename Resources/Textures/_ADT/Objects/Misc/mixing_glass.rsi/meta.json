@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Adventure Times MRP",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "mixing_glass"
+        },
+        {
+            "name": "mixing_glass-front"
+        },
+        {
+            "name": "lid_mixing_glass"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "mixing_glass1"
+        },
+        {
+            "name": "mixing_glass2"
+        },
+        {
+            "name": "mixing_glass3"
+        },
+        {
+            "name": "mixing_glass4"
+        },
+        {
+            "name": "mixing_glass5"
+        },
+        {
+            "name": "mixing_glass6"
+        },
+        {
+            "name": "mixing_glass7"
+        },
+        {
+            "name": "mixing_glass8"
+        },
+        {
+            "name": "mixing_glass9"
+        }
+    ]
+}

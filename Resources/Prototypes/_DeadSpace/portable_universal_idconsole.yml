@@ -1,0 +1,99 @@
+- type: entity
+  parent: BaseItem
+  id: PortableUniversalIdConsole
+  name: универсальная портативная консоль ID карт
+  suffix: Админ
+  description: Модифицированная консоль ID карт, используемая только мифическим Администратором.
+  components:
+  - type: IdCardConsole
+    accessLevels:
+      - Captain
+      - HeadOfPersonnel
+      - HeadOfSecurity
+      - ChiefEngineer
+      - ResearchDirector
+      - ChiefMedicalOfficer
+      - Quartermaster
+      - Command
+      - Cryogenics
+      - Lawyer
+      - Armory
+      - Detective
+      - Brigmedic
+      - Security
+      - Brig
+      - Chemistry
+      - Paramedic
+      - Coroner
+      - Medical
+      - Research
+      - Atmospherics
+      - Engineering
+      - SeniorSalvage
+      - Salvage
+      - Cargo
+      - Service
+      - Bar
+      - Chapel
+      - Hydroponics
+      - Janitor
+      - Kitchen
+      - Theatre
+      - Maintenance
+      - External
+      - CentralCommand
+      - NuclearOperative
+      - SyndicateAgent
+      - AccessReserved1
+      - AccessReserved2
+      - AccessReserved3
+    privilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+    requiresComplex: true
+    requireActiveHand: false
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+      enum.IdCardConsoleUiKey.Key:
+        type: IdCardConsoleBoundUserInterface
+  - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Item
+    size: Small
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/multitool_drop.ogg
+  - type: Sprite
+    sprite: Objects/Tools/universal_access_configurator.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Tools/universal_access_configurator.rsi
+    quickEquip: false
+    slots:
+      - Belt
+  - type: Tag
+    tags:
+    - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      IdCardConsole-privilegedId: !type:ContainerSlot
+      IdCardConsole-targetId: !type:ContainerSlot

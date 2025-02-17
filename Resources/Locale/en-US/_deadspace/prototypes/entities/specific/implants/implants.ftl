@@ -1,0 +1,9 @@
+ent-AdrenalImplant = adrenal implant
+    .desc = An implant that will inject a dose of stimulants into you.
+ent-AdrenalImplanter = { ent-BaseImplantOnlyImplanterSyndi }
+    .suffix = adrenal
+    .desc = { ent-BaseImplantOnlyImplanterSyndi.desc }
+ent-AutosurgeonRevive = revive autosurgeon
+    .desc = A multi-use auto surgeon for implanting whatever you want into yourself. Rip that station apart and make it part of your.
+ent-AutosurgeonAfter = used Autosurgeon
+    .desc = A multi-use auto surgeon for implanting whatever you want into yourself. Rip that station apart and make it part of your.

@@ -1,17 +1,17 @@
 # Senior Time
-- type: loadoutEffectGroup
-  id: SeniorOfficer
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobWarden
-      time: 21600 #6 hrs
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 216000 # 60 hrs
+# - type: loadoutEffectGroup
+#   id: SeniorOfficer
+#   effects:
+#   - !type:JobRequirementLoadoutEffect
+#     requirement:
+#       !type:RoleTimeRequirement
+#       role: JobWarden
+#       time: 21600 #6 hrs
+#   - !type:JobRequirementLoadoutEffect
+#     requirement:
+#       !type:DepartmentTimeRequirement
+#       department: Security
+#       time: 216000 # 60 hrs
 
 #Security Star
 - type: loadoutEffectGroup
@@ -70,21 +70,21 @@
   equipment: 
     jumpsuit: ClothingUniformSecurityTrooper
 
-- type: loadout
-  id: SeniorOfficerJumpsuit
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitSeniorOfficer
+# - type: loadout
+#   id: SeniorOfficerJumpsuit
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorOfficer
+#   equipment:
+#     jumpsuit: ClothingUniformJumpsuitSeniorOfficer
 
-- type: loadout
-  id: SeniorOfficerJumpskirt
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtSeniorOfficer
+# - type: loadout
+#   id: SeniorOfficerJumpskirt
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorOfficer
+#   equipment:
+#     jumpsuit: ClothingUniformJumpskirtSeniorOfficer
 
 # Back
 - type: loadout
@@ -151,13 +151,38 @@
   equipment:
     id: SecurityPDA
 
+# - type: loadout
+#   id: SeniorOfficerPDA
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: SeniorOfficer
+#   equipment:
+#     id: SeniorOfficerPDA
+
+# Underwear
 - type: loadout
-  id: SeniorOfficerPDA
+  id: UnderwearBottomBoxersSecurityOfficer
   effects:
   - !type:GroupLoadoutEffect
-    proto: SeniorOfficer
+    proto: MaleUnderwear
   equipment:
-    id: SeniorOfficerPDA
+    underwearb: ClothingUnderwearBottomBoxersSecurityOfficer
+
+- type: loadout
+  id: UnderwearBottomPantiesSecurityOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesSecurityOfficer
+
+- type: loadout
+  id: UnderwearTopBraSecurityOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraSecurityOfficer
 
 # Misc
 - type: loadout

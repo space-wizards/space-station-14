@@ -1,0 +1,23 @@
+- type: damageModifierSet
+  id: SpiderTerror
+  coefficients:
+    Blunt: 1
+    Slash: 1
+    Piercing: 0.75
+    Shock: 0.2
+    Cold: 0.4
+    Heat: 2
+    Poison: 1
+    Radiation: 0
+
+- type: damageModifierSet
+  id: HeadSpiderTerror
+  coefficients:
+    Blunt: 0.6
+    Slash: 0.6
+    Piercing: 0.6
+    Shock: 0.2
+    Cold: 0.4
+    Heat: 2
+    Poison: 1
+    Radiation: 0

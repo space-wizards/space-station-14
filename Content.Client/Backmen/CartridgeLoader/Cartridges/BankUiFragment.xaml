@@ -1,0 +1,14 @@
+﻿<!-- Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT -->
+
+<cartridges:BankUiFragment xmlns:cartridges="clr-namespace:Content.Client.Backmen.CartridgeLoader.Cartridges"
+                           xmlns="https://spacestation14.io">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8">
+        <BoxContainer Name="LinkedAccount" Orientation="Vertical" Visible="False">
+            <RichTextLabel Name="LinkedAccountNumberLabel"/>
+            <RichTextLabel Name="LinkedAccountNameLabel"/>
+            <RichTextLabel Name="LinkedAccountBalanceLabel"/>
+        </BoxContainer>
+        <RichTextLabel Name="NoLinkedAccount" Visible="False"/>
+    </BoxContainer>
+</cartridges:BankUiFragment>

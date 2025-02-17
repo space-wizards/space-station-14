@@ -1,0 +1,15 @@
+- type: gamePreset
+  id: Blob
+  alias:
+    - blob
+  name: blob-title
+  showInVote: true
+  showInAdminVote: true # DS14
+  voteType: rdm # DS14
+  description: blob-description
+  rules:
+    - WageScheduler # backmen: currency
+    - BlobGameMode
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+    - SubGamemodesRule

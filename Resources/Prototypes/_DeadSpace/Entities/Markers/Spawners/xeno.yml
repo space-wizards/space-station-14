@@ -1,0 +1,111 @@
+- type: entity
+  name: спавнер бурильщик
+  id: SpawnMobXeno
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/burrower.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXeno
+
+- type: entity
+  name: спавнер преторианец
+  id: SpawnMobXenoPraetorian
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/praetorian.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoPraetorian
+
+- type: entity
+  name: спавнер дрон
+  id: SpawnMobXenoDrone
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/drone.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoDrone
+
+- type: entity
+  name: спавнер королева
+  id: SpawnMobXenoQueen
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/queen.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoQueen
+
+- type: entity
+  name: спавнер разрушитель
+  id: SpawnMobXenoRavager
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/ravager.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRavager
+
+- type: entity
+  name: спавнер бегун
+  id: SpawnMobXenoRunner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/runner.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRunner
+
+- type: entity
+  name: спавнер руни
+  id: SpawnMobXenoRouny
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/rouny.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRouny
+
+- type: entity
+  name: спавнер плевальщик
+  id: SpawnMobXenoSpitter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/spitter.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoSpitter

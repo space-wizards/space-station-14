@@ -1,0 +1,25 @@
+﻿- type: construction
+  name: терминал безналичной оплаты
+  id: eftpos
+  graph: eftpos
+  startNode: start
+  targetNode: eftpos
+  category: construction-category-tools
+  description: Проведите вашей ID картой чтобы оплатить покупку безналичными.
+  icon: { sprite: _Backmen/Objects/Tools/eftpos.rsi, state: eftpos }
+  objectType: Item
+
+- type: construction
+  name: банкомат
+  id: ATM
+  graph: ATM
+  startNode: start
+  targetNode: ATM
+  category: construction-category-utilities
+  description: Банкомат для работы с наличкой.
+  icon:
+    sprite: _Backmen/Structures/Wallmounts/atm.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true

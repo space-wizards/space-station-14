@@ -84,7 +84,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Heat: 0.15
+            Heat: 1.5
       - !type:PopupMessage
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
@@ -134,6 +134,8 @@
     speechVerb: Slime
     speechSounds: Slime
     allowedEmotes: ['Squish']
+  - type: TTS # Corvax-TTS
+    voice: Baya
   - type: TypingIndicator
     proto: slime
   - type: NpcFactionMember

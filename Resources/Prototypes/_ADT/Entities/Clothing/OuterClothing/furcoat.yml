@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ADTClothingOuterBrownFurCoat
+  name: бурая дорогая шуба
+  description: Это шуба сделана из элитной шкуры бурого медведя, который водится на Земле.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Coats/brown_furcoat.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Coats/brown_furcoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ADTClothingOuterBlackFurCoat
+  name: черная дорогая шуба
+  description: Это шуба из шкуры черного медведя. Не путайте с космическим!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Coats/black_furcoat.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Coats/black_furcoat.rsi

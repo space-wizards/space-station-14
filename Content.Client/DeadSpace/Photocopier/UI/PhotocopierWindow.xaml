@@ -1,0 +1,93 @@
+<!-- Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT -->
+
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'photocopier-ui-title'}"
+    MinSize="800 525"
+    Resizable="False">
+    <BoxContainer Orientation="Vertical">
+        <!-- Toner progress bar -->
+        <BoxContainer Orientation="Vertical" Margin="7 0">
+            <Label Text="{Loc 'photocopier-ui-title-toner'}"/>
+            <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <ProgressBar Name="TonerAmount"
+                             HorizontalExpand="True"
+                             MinValue="0"
+                             MaxValue="1"
+                             SetHeight="25"/>
+                <Control MinWidth="10" />
+                <Label Name="TonerCounter" Text="{Loc 'photocopier-ui-amount-toner-left-label'}" />
+            </BoxContainer>
+            <Control MinSize="0 4" />
+        </BoxContainer>
+        <SplitContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="7 0">
+            <!-- Box container on the left with bureaucracy categories and copy options -->
+            <BoxContainer Orientation="Vertical" >
+                <BoxContainer Orientation="Vertical">
+                    <!-- Copy options -->
+                    <BoxContainer Orientation="Vertical">
+                        <Label Text="{Loc 'photocopier-ui-title-copy-options'}"/>
+                        <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
+                        <Control MinSize="0 2" />
+                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                            <Label Text="{Loc 'photocopier-ui-ammount-label'}" />
+                            <Control MinWidth="4" />
+                            <SpinBox Name="Amount" Access="Public" HorizontalExpand="True" Value="1" />
+                        </BoxContainer>
+                        <Control MinSize="0 4" />
+                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                            <Label Text="{Loc 'photocopier-ui-mode-label'}" />
+                            <Control MinWidth="14" />
+                            <Button Name="CopyModeButton" Text="{Loc 'photocopier-ui-mode-copy-button'}" HorizontalExpand="True" StyleClasses="OpenRight" />
+                            <Button Name="PrintModeButton" Text="{Loc 'photocopier-ui-mode-print-button'}" HorizontalExpand="True" StyleClasses="OpenLeft" />
+                        </BoxContainer>
+                        <Control MinSize="0 4" />
+                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                            <Button Name="PrintButton" Text="{Loc 'photocopier-ui-print-button'}" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </BoxContainer>
+
+                    <Control MinSize="0 10" />
+
+                    <!-- Bureaucracy categories -->
+                    <BoxContainer Orientation="Vertical">
+                        <Label Text="{Loc 'photocopier-ui-title-bureaucracy-categories'}"/>
+                        <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 2"/>
+                        <BoxContainer Name="PaperworkCategories" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+            <!-- Container on the right with bureaucracy forms -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" >
+                <Label Text="{Loc 'photocopier-ui-title-bureaucracy-forms'}"/>
+                <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
+                <Control MinSize="0 2" />
+                <LineEdit Name="SearchBar" PlaceHolder="{Loc 'photocopier-ui-title-search-bar-placeholder'}" HorizontalExpand="True" />
+                <Control MinSize="0 4" />
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                    <BoxContainer Name="PaperworkForms" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                    </BoxContainer>
+                </ScrollContainer>
+            </BoxContainer>
+        </SplitContainer>
+
+        <controls:StripeBack>
+            <Label Text="{Loc 'photocopier-ui-pre-footer-text'}" VerticalAlignment="Center"
+            HorizontalExpand="True" VerticalExpand="True" Margin="7 3" StyleClasses="LabelSubText" />
+        </controls:StripeBack>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider"/>
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="provided by ahahahahha" StyleClasses="WindowFooterText"/>
+                <Label Text="v1.0" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0"/>
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

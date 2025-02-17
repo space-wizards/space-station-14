@@ -1,20 +1,33 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
+  - CorvaxAstra
+  - CorvaxAvrite
+  - CorvaxDelta
+  - CorvaxPaper
+  - CorvaxSilly
+  - CorvaxSpectrum
   - Amber
+  - Aspid
   - Bagel
+  - Barratry
   - Box
-  - Convex
+  - Cog
+  - Cluster
   - Core
-  - Elkridge
   - Fland
-  #- Gate
-  - Loop
+  - Gemini
   - Marathon
   - Meta
   - Oasis
   - Omega
+  - Origin
   - Packed
+  - Saltern
+  - Train
+  - Gate
+  - Loop
+  - Convex
   - Plasma
   - Reach
-  #- Train
+  # - Elkridge # remap in progress

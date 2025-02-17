@@ -1,0 +1,19 @@
+- type: reagent
+  id: ADTVodkaAntivirus
+  name: vodka-antivirus-name
+  parent: BaseAlcohol
+  desc: vodka-antivirus-desc
+  physicalDesc: reagent-physical-desc-overpowering
+  flavor: VodkaAntivirusFlavor
+  color: "#d1d1d155"
+  metamorphicSprite:
+    sprite: _ADT/Objects/Consumable/Drinks/vodka_antivirusglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.9

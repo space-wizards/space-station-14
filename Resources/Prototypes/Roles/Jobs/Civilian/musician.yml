@@ -3,9 +3,13 @@
   name: job-name-musician
   description: job-description-musician
   playTimeTracker: JobMusician
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600 # 1 hour
   startingGear: MusicianGear
   icon: "JobIconMusician"
-  supervisors: job-supervisors-hire
+  supervisors: job-supervisors-hop # Corvax-JobSupervisors
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre
@@ -13,6 +17,12 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
     prototype: BoxPerformer
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 45
+  #end-backmen: currency
 
 - type: startingGear
   id: MusicianGear
@@ -21,6 +31,8 @@
     shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksMusician
+  storage:
+    back:
+    - AcousticGuitarInstrument
+    - SaxophoneInstrument

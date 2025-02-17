@@ -1,0 +1,30 @@
+- type: startingGear
+  id: GearDemonCult
+  equipment:
+    shoes: ClothingShoesColorBlack
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    outerClothing: ClothingOuterRobesCult
+    gloves: ClothingHandsGlovesColorBlack
+    head: ClothingHeadHatHoodCulthood
+    id: AgentIDCard
+
+- type: entity
+  parent: MobHuman
+  name: культист
+  id: BlueSoldier
+  suffix: Призрачная роль
+  components:
+  - type: GhostRole
+    name: Культист
+    description: Член демонического культа.
+    rules: Вы поклоняетесь дьяволу, найдите способ призвать орду хаоса на станцию.
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ GearDemonCult ]
+  - type: RandomHumanoidAppearance
+  - type: RandomMetadata
+    nameSegments: [names_death_commando]
+  - type: Demon
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile

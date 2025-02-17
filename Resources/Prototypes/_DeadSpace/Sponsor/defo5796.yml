@@ -1,0 +1,150 @@
+- type: sponsorLoadout
+  id: defo5796
+  entity: ClothingBackpackdefo5796
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackdefo5796
+  name: сумка киберпсиха
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Окрашен в зелёный цвет. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/defo5796/satchel.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltdefo5796Filled
+      - id: ClothingNeckCloakdefo5796
+      - id: ClothingHandsGlovesdefo5796
+      - id: ClothingOuterHardsuitdefo5796
+      - id: ClothingShoesBootsMagdefo5796
+      - id: JetpackVoidFilled
+      - id: DominatorMedkitAdvanced
+      - id: ADTtelescopicBaton
+      - id: ToySword
+      - id: SpaceCash1000
+      - id: WeaponDisablerToySponsor
+      - id: PaperLawdefo5796
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltdefo5796Filled
+  name: пояс киберпсиха
+  description: Пояс окрашенный в циановый цвет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/defo5796/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/defo5796/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakdefo5796
+  name: плащ киберпсиха
+  description: Накидка в циановом цвете. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/defo5796/cloak.rsi
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesdefo5796
+  name: белые боевые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/vjlados/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-white
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitMaxim
+  id: ClothingOuterHardsuitdefo5796
+  name: скафандр киберпсиха
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Характеристики идентичны максимальному скафандру утилизаторов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/defo5796/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/defo5796/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitdefo5796
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitdefo5796
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра киберпсиха
+  description: Шлем изолирующий владельца от страшного вакуума снаружи.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/defo5796/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/defo5796/helmet.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagdefo5796
+  name: магнитные ботинки киберпсиха
+  description: Магнитные ботинки в фиолетовом цвете.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/defo5796/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/defo5796/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawdefo5796
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-defo5796

@@ -3,3 +3,15 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/ParadiseSS13/Paradise/commit/60d27e07de73f0fe72f4cff78b9c4100fd1d3b19"
   source: "https://github.com/ParadiseSS13/Paradise"
+
+- files:
+  - slime_bubbles.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ParadiseSS13/Paradise/commit/b7f0f60364e94970b0e2d720480551f99fca802c"
+  source: "https://github.com/ParadiseSS13/Paradise"
+
+- files:
+  - slime_pop.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ParadiseSS13/Paradise/commit/b7f0f60364e94970b0e2d720480551f99fca802c"
+  source: "https://github.com/ParadiseSS13/Paradise"

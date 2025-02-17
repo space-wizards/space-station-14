@@ -10,8 +10,8 @@ namespace Content.Shared.Access.Components;
 [Access(typeof(SharedIdCardConsoleSystem))]
 public sealed partial class IdCardConsoleComponent : Component
 {
-    public const int MaxFullNameLength = 30;
-    public const int MaxJobTitleLength = 30;
+    public const int MaxFullNameLength = 28;
+    public const int MaxJobTitleLength = 32;
 
     public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
     public static string TargetIdCardSlotId = "IdCardConsole-targetId";
@@ -42,38 +42,42 @@ public sealed partial class IdCardConsoleComponent : Component
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
     [DataField, AutoNetworkedField]
-    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new()
+    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new() // DS14 access levels sort
     {
-        "Armory",
-        "Atmospherics",
-        "Bar",
-        "Brig",
-        "Detective",
         "Captain",
-        "Cargo",
-        "Chapel",
-        "Chemistry",
-        "ChiefEngineer",
-        "ChiefMedicalOfficer",
-        "Command",
-        "Cryogenics",
-        "Engineering",
-        "External",
         "HeadOfPersonnel",
         "HeadOfSecurity",
+        "ChiefEngineer",
+        "ResearchDirector",
+        "ChiefMedicalOfficer",
+        "Quartermaster",
+        "Command",
+        "Cryogenics",
+        "Lawyer",
+        "Armory",
+        "Detective",
+        "Brigmedic",
+        "Security",
+        "Brig",
+        "Chemistry",
+        "Paramedic",
+        "Coroner",
+        "Medical",
+        "Research",
+        "Atmospherics",
+        "Engineering",
+        "SeniorSalvage",
+        "Salvage",
+        "Cargo",
+        "Service",
+        "Bar",
+        "Chapel",
         "Hydroponics",
         "Janitor",
         "Kitchen",
-        "Lawyer",
-        "Maintenance",
-        "Medical",
-        "Quartermaster",
-        "Research",
-        "ResearchDirector",
-        "Salvage",
-        "Security",
-        "Service",
         "Theatre",
+        "Maintenance",
+        "External",
     };
 
     [Serializable, NetSerializable]

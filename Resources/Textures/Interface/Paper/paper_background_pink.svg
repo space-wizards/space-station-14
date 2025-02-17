@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 132.6 132.7">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #d8a4cc;
+      }
+
+      .cls-2 {
+        fill: #bc79b8;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.1, SVG Export Plug-In . SVG Version: 1.2.0 Build 142)  -->
+  <g>
+    <g id="svg1">
+      <sodipodi:namedview id="namedview1" bordercolor="#ffffff" borderopacity="1" inkscape:deskcolor="#505050" inkscape:pagecheckerboard="1" inkscape:pageopacity="0" inkscape:showpageshadow="0" pagecolor="#505050"/>
+      <g>
+        <rect class="cls-1" width="132.6" height="132.6" rx="19" ry="19"/>
+        <path class="cls-2" d="M113.7,3c8.8,0,16,7.2,16,16v94.7c0,8.8-7.2,16-16,16H19c-8.8,0-16-7.2-16-16V19c0-8.8,7.2-16,16-16h94.7M113.7,0H19C8.5,0,0,8.5,0,19v94.7C0,124.1,8.5,132.6,19,132.6h94.7c10.5,0,19-8.5,19-19V19C132.6,8.5,124.1,0,113.7,0h0Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

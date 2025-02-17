@@ -374,6 +374,21 @@
       "name": "SYNDIE-inhand-right",
       "directions": 4
     },
+    {
+      "name": "CLOWN-icon"
+    },
+    {
+      "name": "CLOWN-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CLOWN-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CLOWN-inhand-right",
+      "directions": 4
+    },
 	{
       "name": "CMO-icon"
     },

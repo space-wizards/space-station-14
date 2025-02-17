@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseThiefStealAnimalObjective
+  id: PolyStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AnimalPoly
+  - type: Objective
+    difficulty: 1.5

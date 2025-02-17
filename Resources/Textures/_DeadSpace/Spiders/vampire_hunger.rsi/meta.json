@@ -1,0 +1,109 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by doner4037 (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+		{
+            "name": "blood0",
+            "directions": 1,
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "blood5",
+            "directions": 1,
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "blood10",
+            "directions": 1,
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "blood15",
+            "directions": 1,
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "blood20",
+            "directions": 1,
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "blood25"
+        },
+        {
+            "name": "blood30"
+        },
+        {
+            "name": "blood35"
+        },
+        {
+            "name": "blood40"
+        },
+        {
+            "name": "blood45"
+        },
+        {
+            "name": "blood50"
+        },
+		{
+            "name": "blood55"
+        },
+        {
+            "name": "blood60"
+        },
+        {
+            "name": "blood65"
+        },
+        {
+            "name": "blood70"
+        },
+        {
+            "name": "blood75"
+        },
+        {
+            "name": "blood80"
+        },
+		{
+            "name": "blood85"
+        },
+        {
+            "name": "blood90"
+        },
+        {
+            "name": "blood95"
+        },
+        {
+            "name": "blood100"
+        }
+    ]
+}

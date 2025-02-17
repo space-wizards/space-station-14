@@ -1,6 +1,6 @@
 - type: gameMap
   id: Packed
-  mapName: 'Packed'
+  mapName: 'Packed Station'
   mapPath: /Maps/packed.yml
   minPlayers: 7
   maxPlayers: 35
@@ -13,8 +13,6 @@
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'VG'
-        - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_crimson.yml
         - type: StationJobs
           availableJobs:
             #service
@@ -23,35 +21,40 @@
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 2 ]
             Chef: [ 1, 1 ]
-            Janitor: [ 1, 2 ]
+            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
+            # MedicalSurgeon: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
+            SeniorResearcher: [ 1, 1 ]
+            Scientist: [ 3, 3 ]
             ResearchAssistant: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 3, 3 ]
+            SeniorOfficer: [ 1, 1 ]
+            SecurityOfficer: [ 4, 4 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 2 ]
+            SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
@@ -61,3 +64,14 @@
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 1, 1 ]
+            # DS14
+            BlueShieldOfficer: [ 1, 1 ]
+            BorgSecurity: [ 1, 1 ]
+            # Magistrat: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            ClownSponsor: [ 0, 2 ]
+            Coroner: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]
+            IAA: [ 1, 1 ]

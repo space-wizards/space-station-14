@@ -16,6 +16,11 @@
       Glass: 100
   - type: StaticPrice
     price: 50
+  - type: Armor # DS14
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon

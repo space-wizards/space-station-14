@@ -24,7 +24,6 @@ entities:
       name: empty flagship
     - type: Transform
       pos: -1.109375,2.5
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -1017,7 +1016,6 @@ entities:
       pos: 35.5,-2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -1077.4529
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7305,10 +7303,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 62.5,-9.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        383: []
-        510: []
 - proto: SinkEmpty
   entities:
   - uid: 554

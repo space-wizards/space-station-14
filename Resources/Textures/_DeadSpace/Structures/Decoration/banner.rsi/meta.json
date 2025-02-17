@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by kabacho4ek_ (discord), resptired all by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "banner-spider",
+        "delays": [
+          [
+            0.3,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
+      }
+    ]
+}

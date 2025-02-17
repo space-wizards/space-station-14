@@ -36,14 +36,6 @@
     {
       "name": "on-equipped-BACKPACK",
       "directions": 4
-    },
-    {
-      "name": "equipped-SUITSTORAGE",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-SUITSTORAGE",
-      "directions": 4
     }
   ]
 }

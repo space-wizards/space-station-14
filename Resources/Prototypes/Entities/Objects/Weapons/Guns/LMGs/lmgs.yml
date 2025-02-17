@@ -22,8 +22,8 @@
     minAngle: -20
     maxAngle: -20
   - type: Gun
-    minAngle: 24
-    maxAngle: 45
+    minAngle: 20
+    maxAngle: 25
     angleIncrease: 4
     angleDecay: 16
     fireRate: 8
@@ -51,11 +51,11 @@
             - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeLightRifle
+        startingItem: CartridgeRifle
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+            - CartridgeRifle
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -64,6 +64,7 @@
     price: 500
   - type: UseDelay
     delay: 1
+  - type: GunRequiresWield
 
 - type: entity
   name: L6 SAW

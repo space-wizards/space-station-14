@@ -26,6 +26,19 @@
   - LightHeadBorg
   - TorsoBorg
 
+# DS14-start
+- type: latheRecipePack
+  id: BorgSecLimbsStatic
+  recipes:
+  - LeftArmBorgSec
+  - RightArmBorgSec
+  - LeftLegBorgSec
+  - RightLegBorgSec
+  - HeadBorgSec
+  - TorsoBorgSec
+  - CyborgEndoskeletonSec
+# DS14-end
+
 ## Dynamic
 
 - type: latheRecipePack
@@ -45,6 +58,8 @@
   - BorgModuleHarvesting
   - BorgModuleDefibrillator
   - BorgModuleAdvancedTreatment
+  - BorgModuleAdvancedMining # DS14
+  - BorgModuleMiningWeapon # DS14
 
 - type: latheRecipePack
   id: MechParts

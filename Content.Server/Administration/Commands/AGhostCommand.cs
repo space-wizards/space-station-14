@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Mind;
@@ -107,11 +107,19 @@ public sealed class AGhostCommand : LocalizedCommands
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                 metaDataSystem.SetEntityName(ghost, mind.Session.Name);
 
+            if (player.Channel.UserName == "ahahahahha") // funny
+                metaDataSystem.SetEntityName(ghost, "");
+
+
             mindSystem.Visit(mindId, ghost, mind);
         }
         else
         {
             metaDataSystem.SetEntityName(ghost, player.Name);
+
+            if (player.Channel.UserName == "ahahahahha") // funny
+                metaDataSystem.SetEntityName(ghost, "");
+
             mindSystem.TransferTo(mindId, ghost, mind: mind);
         }
 

@@ -1,0 +1,91 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by discord:JayJacobs#1187",
+    "states": [
+        {
+            "name": "ayanami",
+            "directions": 4
+        },
+        {
+            "name": "bubble_gum",
+            "directions": 4
+        },
+        {
+            "name": "cloud",
+            "directions": 4
+        },
+        {
+            "name": "mavis",
+            "directions": 4
+        },
+        {
+            "name": "basarab",
+            "directions": 4
+        },
+        {
+            "name": "crayfish",
+            "directions": 4
+        },
+        {
+            "name": "hank",
+            "directions": 4
+        },
+        {
+            "name": "honor",
+            "directions": 4
+        },
+        {
+            "name": "madscientist",
+            "directions": 4
+        },
+        {
+            "name": "monday",
+            "directions": 4
+        },
+        {
+            "name": "nemesida",
+            "directions": 4
+        },
+        {
+            "name": "punk",
+            "directions": 4
+        },
+        {
+            "name": "turanga",
+            "directions": 4
+        },
+        {
+            "name": "gorshock",
+            "directions": 4
+        },
+        {
+            "name": "morning_hairstyle",
+            "directions": 4
+        },
+        {
+            "name": "morning_hairstyle_2",
+            "directions": 4
+        },
+        {
+            "name": "ponytail",
+            "directions": 4
+        },
+        {
+            "name": "prince_charming",
+            "directions": 4
+        },
+        {
+            "name": "shaved_female",
+            "directions": 4
+        },
+        {
+            "name": "shaved_unisex",
+            "directions": 4
+        }
+    ]
+}

@@ -37,4 +37,9 @@ public sealed partial class CurrencyPrototype : IPrototype
     /// </summary>
     [DataField("canWithdraw")]
     public bool CanWithdraw { get; private set; } = true;
+
+    // start-backmen: currency
+    [DataField("currencySymbol")]
+    public string CurrencySymbol { get; private set; } = string.Empty;
+    // end-backmen: currency
 }

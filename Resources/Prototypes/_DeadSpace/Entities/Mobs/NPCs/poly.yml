@@ -1,0 +1,28 @@
+- type: entity
+  name: Поли
+  parent: MobParrot
+  id: MobParrotPoly
+  description: Попугай старшего инженера. Начавший, как спутник опасного космического пирата, Поли сдал своего первоначального владельца получив в замен лёгкую жизнь на борту станций «Nanotrasen».
+  components:
+  - type: StealTarget
+    stealGroup: AnimalPoly
+  - type: Advertise
+    pack: ParrotPoly
+    minimumWait: 30
+    maximumWait: 180
+  - type: TTS
+    voice: Gyro
+
+- type: entity
+  name: спавнер Поли
+  id: SpawnMobParrotPoly
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: parrot
+      sprite: Mobs/Animals/parrot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobParrotPoly

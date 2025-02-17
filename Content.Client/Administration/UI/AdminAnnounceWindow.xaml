@@ -1,7 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     Title="{Loc admin-announce-title}"
-    MinWidth="500">
+    MinWidth="650">
     <GridContainer Columns="1">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <LineEdit Name="Announcer" Access="Public" PlaceHolder="{Loc admin-announce-announcer-placeholder}" Text="{Loc admin-announce-announcer-default}" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
@@ -11,8 +11,21 @@
         <TextEdit Name="Announcement" Access="Public" VerticalExpand="True" MinHeight="100" />
 
         <GridContainer Rows="1">
-            <CheckBox Name="KeepWindowOpen" Access="Public" Text="{Loc 'admin-announce-keep-open'}" />
-            <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc admin-announce-button}" HorizontalAlignment="Center"/>
+            <CheckBox Name="EnableTTS" Access="Public" Text="{Loc 'admin-announce-enable-tts'}" Pressed="True" />
+            <CheckBox Name="CustomTTS" Access="Public" Text="{Loc 'admin-announce-custom-centcomm-tts'}" />
+            <OptionButton Name="VoiceSelector" Access="Public" HorizontalExpand="True" />
         </GridContainer>
+
+        <GridContainer Rows="1">
+            <CheckBox Name="KeepWindowOpen" Access="Public" Text="{Loc 'admin-announce-keep-open'}" />
+            <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc 'admin-announce-button'}" HorizontalExpand="True" />
+        </GridContainer>
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="0 2 0 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'admin-announce-footer'}" StyleClasses="WindowFooterText" />
+            </BoxContainer>
+        </BoxContainer>
     </GridContainer>
 </DefaultWindow>

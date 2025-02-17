@@ -36,3 +36,27 @@
   equipment:
     outerClothing: ClothingOuterWinterChem
 
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersChemist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersChemist
+
+- type: loadout
+  id: UnderwearBottomPantiesChemist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesChemist
+
+- type: loadout
+  id: UnderwearTopBraChemist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraChemist

@@ -29,6 +29,7 @@
   - HoloprojectorField
   - SignallerAdvanced
   - DeviceQuantumSpinInverter
+  - ObeliskStoper # DS14
 
 - type: latheRecipePack
   id: ScienceClothing

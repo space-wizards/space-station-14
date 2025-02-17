@@ -22,6 +22,10 @@ public partial struct StampDisplayInfo
 
     [DataField("stampedColor")]
     public Color StampedColor;
+
+    [DataField("stampTexture")]
+    public string? StampTexture { get; set; } = null;
+
 };
 
 [RegisterComponent]
@@ -50,4 +54,7 @@ public sealed partial class StampComponent : Component
     /// </summary>
     [DataField("sound")]
     public SoundSpecifier? Sound = null;
+
+    [DataField("stampTexture")]
+    public string? StampTexture { get; set; } = null;
 }

@@ -7,6 +7,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.DeadSpace.CCCCVars; // DS14: Connect To Another Server
+using Robust.Shared.Configuration; // DS14: Connect To Another Server
+using Content.Shared.CCVar; // DS14: Connect To Another Server
 
 namespace Content.Client.Launcher
 {
@@ -20,6 +23,7 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClipboardManager _clipboard = default!;
+		[Dependency] private readonly IUriOpener _uri = default!;
 
         private LauncherConnectingGui? _control;
 
@@ -124,6 +128,16 @@ namespace Content.Client.Launcher
             }
             return false;
         }
+		
+		public void ConnectToAnotherServer()
+		{
+			_gameController.Redial($"ss14://{_cfg.GetCVar(CCCCVars.InfoLinksIPs)}");
+		}
+
+		public void ConnectToDiscord()
+		{
+			_uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksDiscord));
+		}
 
         public void Exit()
         {

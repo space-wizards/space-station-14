@@ -1,0 +1,67 @@
+- type: entity
+  id: AutopsyTable
+  parent: BaseStructure
+  name: стол для аутопсии
+  description: Специальный медицинский стол для проведения аутопсии (вскрытия). Не самое привлекательное зрелище когда за ним работают. Не используйте его как место для сна!
+  components:
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - TableMask
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Furniture/Tables/autopsytable.rsi
+    layers:
+    - state: autopsy_table
+      map: [ "enum.AutopsyTableLayers.Base" ]
+    - state: "autopsy_table_device"
+      map: [ "enum.AutopsyTableLayers.WithDevice" ]
+      shader: "unshaded"
+      visible: false
+    - state: "autopsy_table_device1"
+      map: [ "enum.AutopsyTableLayers.WithDevice1" ]
+      shader: "unshaded"
+      visible: false
+    - state: "autopsy_table_device2"
+      map: [ "enum.AutopsyTableLayers.WithDevice2" ]
+      shader: "unshaded"
+      visible: false
+  - type: Icon
+    sprite: _DeadSpace/Structures/Furniture/Tables/autopsytable.rsi
+    state: autopsy_table
+  - type: Strap
+    position: Down
+    rotation: -90
+  # Construction has to be before PlaceableSurface or you'll place things onto the entity instead of deconstructing it.
+  - type: Construction
+    graph: bed
+    node: bed
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Anchorable
+  - type: Pullable
+  - type: AutopsyTable

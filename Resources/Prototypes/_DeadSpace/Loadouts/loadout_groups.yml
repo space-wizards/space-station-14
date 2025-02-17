@@ -1,0 +1,279 @@
+# Miscellaneous
+- type: loadoutGroup
+  id: DefaultWhiteUnderwear
+  name: loadout-group-default-white-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersWhite
+  - UnderwearTopBraWhite
+  - UnderwearBottomPantiesWhite
+
+# Command
+- type: loadoutGroup
+  id: BlueShieldOfficerJumpsuit
+  name: loadout-group-blue-shield-officer-jumpsuit
+  loadouts:
+  - BlueShieldOfficerJumpsuit
+
+# Civilian
+- type: loadoutGroup
+  id: SeniorAdministratorJumpsuit
+  name: loadout-group-senior-administrator-jumpsuit
+  loadouts:
+  - CuratorJumpsuit
+  - CuratorJumpskirt
+  - BartenderJumpsuit
+  - BartenderJumpskirt
+  - BartenderJumpsuitPurple
+  - BartenderJumpsuitNew
+  - BartenderJumpskirtNew
+  - ServiceJumpsuitNew
+  - ServiceJumpskirtNew
+
+# Cargo
+# Law
+- type: loadoutGroup
+  id: MagistratJumpsuit
+  name: loadout-group-magistrat-jumpsuit
+  loadouts:
+  - LawyerJumpsuit
+  - LawyerJumpskirt
+
+- type: loadoutGroup
+  id: MagistratUnderwear
+  name: loadout-group-magistrat-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersMagistrat
+  - UnderwearTopBraMagistrat
+  - UnderwearBottomPantiesMagistrat
+
+- type: loadoutGroup
+  id: IAAJumpsuit
+  name: loadout-group-iaa-jumpsuit
+  loadouts:
+  - LawyerJumpsuit
+  - LawyerJumpskirt
+
+- type: loadoutGroup
+  id: IAAUnderwear
+  name: loadout-group-iaa-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersIAA
+  - UnderwearTopBraIAA
+  - UnderwearBottomPantiesIAA
+
+# Engineering
+- type: loadoutGroup
+  id: SeniorEngineerHead
+  name: loadout-group-senior-engineer-head
+  loadouts:
+  - SeniorEngineerBeret
+  - ChiefEngineerHead
+
+- type: loadoutGroup
+  id: SeniorEngineerJumpsuit
+  name: loadout-group-senior-engineer-jumpsuit
+  loadouts:
+  - SeniorEngineerJumpsuit
+  - SeniorEngineerJumpskirt
+
+- type: loadoutGroup
+  id: SeniorEngineerID
+  name: loadout-group-senior-engineer-id
+  loadouts:
+  - SeniorEngineerPDA
+
+- type: loadoutGroup
+  id: SeniorEngineerUnderwear
+  name: loadout-group-senior-engineer-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersSeniorEngineer
+  - UnderwearTopBraSeniorEngineer
+  - UnderwearBottomPantiesSeniorEngineer
+
+# Science
+- type: loadoutGroup
+  id: SeniorResearcherHead
+  name: loadout-group-senior-researcher-head
+  minLimit: 0
+  loadouts:
+  - ScientificBeret
+
+- type: loadoutGroup
+  id: SeniorResearcherJumpsuit
+  name: loadout-group-senior-researcher-jumpsuit
+  loadouts:
+  - SeniorResearcherJumpsuit
+  - SeniorResearcherJumpskirt
+
+- type: loadoutGroup
+  id: SeniorResearcherOuterClothing
+  name: loadout-group-senior-researcher-outerclothing
+  minLimit: 0
+  loadouts:
+  - SeniorResearcherLabCoat
+
+- type: loadoutGroup
+  id: SeniorResearcherPDA
+  name: loadout-group-senior-researcher-id
+  loadouts:
+  - SeniorResearcherPDA
+
+- type: loadoutGroup
+  id: SeniorResearcherUnderwear
+  name: loadout-group-senior-researcher-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersSeniorResearcher
+  - UnderwearTopBraSeniorResearcher
+  - UnderwearBottomPantiesSeniorResearcher
+
+# Security
+- type: loadoutGroup
+  id: BrigmedicJumpsuit
+  name: loadout-group-brigmedic-jumpsuit
+  loadouts:
+  - BrigmedicJumpsuit
+  - BrigmedicJumpskirt
+
+- type: loadoutGroup
+  id: BrigmedicBackpack
+  name: loadout-group-brigmedic-backpack
+  loadouts:
+  - BrigmedicBackpack
+  - BrigmedicSatchel
+  - BrigmedicDuffel
+
+- type: loadoutGroup
+  id: SeniorOfficerJumpsuit
+  name: loadout-group-senior-officer-jumpsuit
+  loadouts:
+  - SeniorOfficerJumpsuit
+  - SeniorOfficerJumpskirt
+
+- type: loadoutGroup
+  id: SeniorOfficerBackpack
+  name: loadout-group-senior-officer-backpack
+  loadouts:
+  - SeniorOfficerBackpack
+  - SeniorOfficerSatchel
+  - SeniorOfficerDuffel
+
+- type: loadoutGroup
+  id: SeniorOfficerPDA
+  name: loadout-group-security-id
+  loadouts:
+  - SeniorOfficerPDA
+
+- type: loadoutGroup
+  id: SeniorOfficerUnderwear
+  name: loadout-group-senior-officer-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersSeniorOfficer
+  - UnderwearTopBraSeniorOfficer
+  - UnderwearBottomPantiesSeniorOfficer
+
+- type: loadoutGroup
+  id: SurvivalBrigmedic
+  name: loadout-group-survival-security
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenBrigmedic
+  - EmergencyOxygenBrigmedic
+  - EmergencyNonBreather
+  - EmergencyRobotNonBreather
+  - LoadoutSpeciesEVANitrogen
+
+- type: loadoutGroup
+  id: BrigmedicUnderwear
+  name: loadout-group-brigmedic-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersBrigmedic
+  - UnderwearTopBraBrigmedic
+  - UnderwearBottomPantiesBrigmedic
+
+# Medical
+- type: loadoutGroup
+  id: SeniorPhysicianHead
+  name: loadout-group-senior-physician-head
+  minLimit: 0
+  loadouts:
+  - SeniorPhysicianBeret
+  - BlueSurgeryCap
+  - GreenSurgeryCap
+  - PurpleSurgeryCap
+  - NurseHat
+
+- type: loadoutGroup
+  id: SeniorPhysicianJumpsuit
+  name: loadout-group-senior-physician-jumpsuit
+  loadouts:
+  - SeniorPhysicianJumpsuit
+  - SeniorPhysicianJumpskirt
+
+- type: loadoutGroup
+  id: SeniorPhysicianOuterClothing
+  name: loadout-group-senior-physician-outerclothing
+  minLimit: 0
+  loadouts:
+  - SeniorPhysicianLabCoat
+
+- type: loadoutGroup
+  id: SeniorPhysicianPDA
+  name: loadout-group-senior-physician-id
+  loadouts:
+  - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: SeniorPhysicianUnderwear
+  name: loadout-group-senior-physician-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersSeniorPhysician
+  - UnderwearTopBraSeniorPhysician
+  - UnderwearBottomPantiesSeniorPhysician
+
+- type: loadoutGroup
+  id: CoronerJumpsuit
+  name: loadout-group-coroner-jumpsuit
+  loadouts:
+  - CoronerJumpsuit
+  - CoronerJumpskirt
+
+- type: loadoutGroup
+  id: CoronerBackpack
+  name: loadout-group-coroner-backpack
+  loadouts:
+  - CoronerBackpack
+  - CoronerSatchel
+  - CoronerDuffel
+
+- type: loadoutGroup
+  id: CoronerHead
+  name: loadout-group-coroner-head
+  loadouts:
+  - CoronerHead
+
+- type: loadoutGroup
+  id: CoronerUnderwear
+  name: loadout-group-coroner-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersCoroner
+  - UnderwearTopBraCoroner
+  - UnderwearBottomPantiesCoroner

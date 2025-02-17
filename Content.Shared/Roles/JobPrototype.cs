@@ -1,5 +1,6 @@
 using Content.Shared.Access;
 using Content.Shared.Guidebook;
+using Content.Shared.FixedPoint;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
@@ -43,6 +44,9 @@ namespace Content.Shared.Roles
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
+
+        [DataField("sponsorOnly")]
+        public bool SponsorOnly = false;
 
         /// <summary>
         ///     Requirements for the job.
@@ -153,6 +157,20 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField]
         public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+        // start-backmen
+        [DataField("wageDepartment", customTypeSerializer: typeof(PrototypeIdSerializer<DepartmentPrototype>))]
+        public string? WageDepartment { get; private set; }
+
+        [DataField("minBankBalance")]
+        public int MinBankBalance { get; private set; } = 0;
+
+        [DataField("maxBankBalance")]
+        public int MaxBankBalance { get; private set; } = 0;
+
+        [DataField("wage")]
+        public FixedPoint2 Wage { get; private set; } = 0;
+        // end-backmen
     }
 
     /// <summary>

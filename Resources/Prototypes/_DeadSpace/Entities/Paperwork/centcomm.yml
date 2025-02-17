@@ -1,0 +1,232 @@
+- type: paperworkForm
+  id: Centcomm1
+  category: centcomm
+  name: paperwork-form-title-centcomm-1
+  text: "/Paperwork/Centcomm/1.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm2
+  category: centcomm
+  name: paperwork-form-title-centcomm-2
+  text: "/Paperwork/Centcomm/2.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm3
+  category: centcomm
+  name: paperwork-form-title-centcomm-3
+  text: "/Paperwork/Centcomm/3.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm5
+  category: centcomm
+  name: paperwork-form-title-centcomm-5
+  text: "/Paperwork/Centcomm/5.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm6
+  category: centcomm
+  name: paperwork-form-title-centcomm-6
+  text: "/Paperwork/Centcomm/6.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm7
+  category: centcomm
+  name: paperwork-form-title-centcomm-7
+  text: "/Paperwork/Centcomm/7.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm8
+  category: centcomm
+  name: paperwork-form-title-centcomm-8
+  text: "/Paperwork/Centcomm/8.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm9
+  category: centcomm
+  name: paperwork-form-title-centcomm-9
+  text: "/Paperwork/Centcomm/9.xml"
+  paperPrototype: PaperPrintedCommand
+
+#
+
+- type: paperworkForm
+  id: Centcomm10
+  category: centcomm
+  name: paperwork-form-title-centcomm-10
+  text: "/Paperwork/Centcomm/10.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm11
+  category: centcomm
+  name: paperwork-form-title-centcomm-11
+  text: "/Paperwork/Centcomm/11.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm12
+  category: centcomm
+  name: paperwork-form-title-centcomm-12
+  text: "/Paperwork/Centcomm/12.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm13
+  category: centcomm
+  name: paperwork-form-title-centcomm-13
+  text: "/Paperwork/Centcomm/13.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm14
+  category: centcomm
+  name: paperwork-form-title-centcomm-14
+  text: "/Paperwork/Centcomm/14.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm15
+  category: centcomm
+  name: paperwork-form-title-centcomm-15
+  text: "/Paperwork/Centcomm/15.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm16
+  category: centcomm
+  name: paperwork-form-title-centcomm-16
+  text: "/Paperwork/Centcomm/16.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm17
+  category: centcomm
+  name: paperwork-form-title-centcomm-17
+  text: "/Paperwork/Centcomm/17.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm18
+  category: centcomm
+  name: paperwork-form-title-centcomm-18
+  text: "/Paperwork/Centcomm/18.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm19
+  category: centcomm
+  name: paperwork-form-title-centcomm-19
+  text: "/Paperwork/Centcomm/19.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm20
+  category: centcomm
+  name: paperwork-form-title-centcomm-20
+  text: "/Paperwork/Centcomm/20.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm21
+  category: centcomm
+  name: paperwork-form-title-centcomm-21
+  text: "/Paperwork/Centcomm/21.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm22
+  category: centcomm
+  name: paperwork-form-title-centcomm-22
+  text: "/Paperwork/Centcomm/22.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm23
+  category: centcomm
+  name: paperwork-form-title-centcomm-23
+  text: "/Paperwork/Centcomm/23.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm24
+  category: centcomm
+  name: paperwork-form-title-centcomm-24
+  text: "/Paperwork/Centcomm/24.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm25
+  category: centcomm
+  name: paperwork-form-title-centcomm-25
+  text: "/Paperwork/Centcomm/25.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm26
+  category: centcomm
+  name: paperwork-form-title-centcomm-26
+  text: "/Paperwork/Centcomm/26.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm27
+  category: centcomm
+  name: paperwork-form-title-centcomm-27
+  text: "/Paperwork/Centcomm/27.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm28
+  category: centcomm
+  name: paperwork-form-title-centcomm-28
+  text: "/Paperwork/Centcomm/28.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm29
+  category: centcomm
+  name: paperwork-form-title-centcomm-29
+  text: "/Paperwork/Centcomm/29.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm30
+  category: centcomm
+  name: paperwork-form-title-centcomm-30
+  text: "/Paperwork/Centcomm/30.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm31
+  category: centcomm
+  name: paperwork-form-title-centcomm-31
+  text: "/Paperwork/Centcomm/31.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm32
+  category: centcomm
+  name: paperwork-form-title-centcomm-32
+  text: "/Paperwork/Centcomm/32.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm33
+  category: centcomm
+  name: paperwork-form-title-centcomm-33
+  text: "/Paperwork/Centcomm/33.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Centcomm34
+  category: centcomm
+  name: paperwork-form-title-centcomm-34
+  text: "/Paperwork/Centcomm/34.xml"
+  paperPrototype: PaperPrintedCommand

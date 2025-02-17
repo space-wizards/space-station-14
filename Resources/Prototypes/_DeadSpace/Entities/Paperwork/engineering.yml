@@ -1,0 +1,41 @@
+- type: paperworkForm
+  id: Engineering0
+  category: engineering
+  name: paperwork-form-title-engineering-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedEngineering
+
+- type: paperworkForm
+  id: Engineering1
+  category: engineering
+  name: paperwork-form-title-engineering-1
+  text: "/Paperwork/Engineering/1.xml"
+  paperPrototype: PaperPrintedEngineering
+
+- type: paperworkForm
+  id: Engineering2
+  category: engineering
+  name: paperwork-form-title-engineering-2
+  text: "/Paperwork/Engineering/2.xml"
+  paperPrototype: PaperPrintedEngineering
+
+- type: paperworkForm
+  id: Engineering3
+  category: engineering
+  name: paperwork-form-title-engineering-3
+  text: "/Paperwork/Engineering/3.xml"
+  paperPrototype: PaperPrintedEngineering
+
+- type: paperworkForm
+  id: Engineering4
+  category: engineering
+  name: paperwork-form-title-engineering-4
+  text: "/Paperwork/Engineering/4.xml"
+  paperPrototype: PaperPrintedEngineering
+
+- type: paperworkForm
+  id: Engineering5
+  category: engineering
+  name: paperwork-form-title-engineering-5
+  text: "/Paperwork/Engineering/5.xml"
+  paperPrototype: PaperPrintedEngineering

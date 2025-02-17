@@ -26,7 +26,6 @@ entities:
       name: Automated Trade Station
     - type: Transform
       pos: -2.9375,-1.625
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

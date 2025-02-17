@@ -1,5 +1,5 @@
-- type: localizedDataset
+﻿- type: localizedDataset
   id: Tips
   values:
     prefix: tips-dataset-
-    count: 137
+    count: 27

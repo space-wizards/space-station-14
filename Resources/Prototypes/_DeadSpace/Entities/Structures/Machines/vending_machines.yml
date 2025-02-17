@@ -1,0 +1,100 @@
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineClownvend
+  name: ХонкоМат
+  description: Торговый автомат со снаряжением клоуна. На табличке написано "ТОЛЬКО ДЛЯ КЛОУНОВ", разработан компанией «Honk! co.».
+  components:
+  - type: VendingMachine
+    pack: ClownVendDispenserInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectDelay: 1.0
+    soundVend: /Audio/Items/bikehorn.ogg
+    initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/clown.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: Advertise
+    pack: ClownVendAds
+  - type: SpeakOnUIClosed
+    pack: ClownVendGoodbyes
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineToys
+  name: ИгрушкоМат
+  description: Игровой автомат с игрушками, точно не лохотрон!
+  components:
+  - type: VendingMachine
+    pack: ToysInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+    initialStockQuality: 0.33
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/toysmat.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineClothingCapes
+  name: Плащвенд
+  description: Автомат с различными плащами.
+  components:
+  - type: VendingMachine
+    pack: ClothesMateCapeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+  - type: Advertise
+    pack: ClothesMateAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Speech
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/VendingMachines/capes.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.8
+    energy: 1.6
+    color: "#7c3bb8"

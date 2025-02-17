@@ -17,7 +17,6 @@ entities:
       name: Cargo Shuttle
     - type: Transform
       pos: -6.0262413,-2.31304
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

@@ -1,0 +1,21 @@
+- type: construction
+  name: самодельный бронированный шлем
+  id: ClothingCraftHelmet
+  graph: ClothingCraftHelmet
+  startNode: start
+  targetNode: clothingCraftHelmet
+  category: construction-category-clothing
+  description: самодельная каска с защитой для лица.
+  icon: { sprite: _DeadSpace/Clothing/Head/Hats/crafthelmet.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: самодельная броня для тела
+  id: ClothingCraftArmor
+  graph: ClothingCraftArmor
+  startNode: start
+  targetNode: clothingCraftArmor
+  category: construction-category-clothing
+  description: сомедельный бронежилет из кусков стали
+  icon: { sprite: _DeadSpace/Clothing/OuterClothing/Armor/ArmorBasicSlim.rsi, state: icon }
+  objectType: Item

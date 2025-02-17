@@ -240,7 +240,7 @@
     stateDoorOpen: paramed_open
     stateDoorClosed: paramed_door
   - type: AccessReader
-    access: [ [ "Medical" ] ]
+    access: [ [ "Paramedic" ] ]
 
 
 # Chemical
@@ -335,10 +335,10 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: brigmedic
-    stateDoorOpen: armory_open
+    stateDoorOpen: sec_open
     stateDoorClosed: brigmedic_door
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["Brigmedic"]]
 
 # Security Officer
 - type: entity
@@ -481,3 +481,31 @@
     stateBaseClosed: hop
     stateDoorOpen: hop_open
     stateDoorClosed: representative_door
+
+# Blue Shield
+- type: entity
+  id: LockerBlueShield
+  parent: LockerBaseSecure
+  name: blue shield locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: blueshield
+    stateDoorOpen: blueshield_open
+    stateDoorClosed: blueshield_door
+  - type: AccessReader
+    access: [["Captain"]]
+
+# Coroner
+- type: entity
+  id: LockerCoroner
+  parent: LockerBaseSecure
+  name: coroner locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: coroner_secure
+    stateDoorOpen: coroner_secure_open
+    stateDoorClosed: coroner_secure_door
+  - type: AccessReader
+    access: [["Coroner"]]

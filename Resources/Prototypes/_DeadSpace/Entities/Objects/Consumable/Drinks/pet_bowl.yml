@@ -1,0 +1,21 @@
+- type: entity
+  parent: DrinkBaseCup
+  id: PetBowlWater
+  name: миска для питомцев
+  description: Стильная и прочная миска для воды с удобным нескользящим основанием.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Drinks/pet_bowl.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-3
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: icon-
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 40

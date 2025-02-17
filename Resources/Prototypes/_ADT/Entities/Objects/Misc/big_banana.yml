@@ -1,0 +1,116 @@
+- type: entity
+  name: большой банан
+  parent: FoodProduceBase
+  id: BigBanana1
+  description: Это большой банан
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    scale: 1.5, 1.5
+  - type: Food
+    trash: 
+    - TrashBananaPeelBig1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+
+- type: entity
+  name: большая банановая кожура
+  parent: BaseItem
+  id: TrashBananaPeelBig1
+  description: Это большой банан
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+    scale: 1.5, 1.5
+  - type: Slippery
+    launchForwardsMultiplier: 2.8
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        layer:
+        - SlipLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: Tag
+    tags:
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: PulpedBananaPeel
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SpaceGarbage
+
+- type: entity
+  name: большой банан
+  parent: BigBanana1
+  id: BigBanana2
+  description: Это большой банан
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    scale: 2.5, 2.5
+  - type: Food
+    trash:
+    - TrashBananaPeelBig2
+
+- type: entity
+  name: Большая банановая кожура
+  parent: TrashBananaPeelBig1
+  id: TrashBananaPeelBig2
+  description: Это большой банан
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+    scale: 2.5, 2.5
+
+- type: entity
+  name: большой банан
+  parent: BigBanana1
+  id: BigBanana3
+  description: Это большой банан
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    scale: 3.5, 3.5
+  - type: Food
+    trash:
+    - TrashBananaPeelBig3
+
+- type: entity
+  name: большая банановая кожура
+  parent: TrashBananaPeelBig1
+  id: TrashBananaPeelBig3
+  description: Это большой банан
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+    scale: 3.5, 3.5

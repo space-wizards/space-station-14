@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleBankMemory
+  name: Bank Memory
+  # description: mind-role-fugitive-description
+  components:
+  - type: MindRole
+  - type: BankMemory
+
+# Blob
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleBlob
+  name: Blob Role
+#  description: mind-role-blob-description
+  components:
+  - type: MindRole
+    antagPrototype: Blob
+    exclusiveAntag: true
+  - type: BlobRole

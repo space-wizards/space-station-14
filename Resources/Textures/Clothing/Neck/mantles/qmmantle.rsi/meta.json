@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "drawn by Ubaser",
+  "copyright": "Made by timekor (discord) for Space Station 14 server Мёртвый Космос, resprited by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-NECK-vox",
       "directions": 4
     }
   ]

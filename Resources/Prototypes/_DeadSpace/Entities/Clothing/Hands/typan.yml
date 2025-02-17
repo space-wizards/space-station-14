@@ -1,0 +1,28 @@
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsRDTypan
+  name: перчатки директора исследований
+  description: Тактические перчатки, защищающие его обладателя от нежелательных соприкосновений.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsScienceTypan
+  name: перчатки ученого синдиката
+  description: Удобные перчатки для проведения различных экспериментов.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/robohands.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/robohands.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-black
+  - type: FingerprintMask

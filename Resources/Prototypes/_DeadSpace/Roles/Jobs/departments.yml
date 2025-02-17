@@ -1,0 +1,14 @@
+- type: department
+  id: Typan
+  name: department-Typan
+  description: department-Typan-description
+  color: "#D381C9"
+  roles:
+  - TypanAtmosTech
+  - TypanBotanist
+  - TypanCargotech
+  - TypanChef
+  - TypanMedic
+  - TypanRD
+  - TypanScience
+  - TypanTelecommunicationsOfficer

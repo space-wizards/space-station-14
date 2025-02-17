@@ -1,0 +1,33 @@
+﻿<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True">
+            <Label Name="ToName"
+                   Access="Public"
+                   HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 2 0 5">
+            <Label Name="FromName"
+                   Access="Public"
+                   MinSize="32 32"/>
+            <Label Name="Wage"
+                   Access="Public"
+                   HorizontalExpand="True" />
+            <Button Name="EditBtn"
+                    Access="Public"
+                    ToolTip=""
+                    Text="{Loc wageconsole-edit}"
+                    StyleClasses="LabelSubText" />
+            <Button Name="BonusBtn"
+                    Access="Public"
+                    ToolTip="{Loc wageconsole-bonus}"
+                    Text="+"
+                    StyleClasses="LabelSubText" />
+        </BoxContainer>
+    </BoxContainer>
+</PanelContainer>

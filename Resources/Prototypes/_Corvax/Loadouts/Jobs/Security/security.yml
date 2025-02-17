@@ -1,0 +1,4 @@
+- type: loadout
+  id: JackSecBoots
+  equipment:
+    shoes: ClothingShoesBootsJackSecFilled

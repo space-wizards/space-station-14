@@ -1,0 +1,24 @@
+- files: ["carol-of-the-bells.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Carol Of The Bells by Audionautix. Converted from MP3 to OGG."
+  source: "https://youtu.be/QGJEGeAtH_8?si=_IhSce8rEzoPEkaC"
+
+- files: ["dance-of-sugar-plum-fairy.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Dance of the Sugar Plum Fairy by Kevin MacLeod. Converted from MP3 to OGG."
+  source: "http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100270"
+
+- files: ["deck-in-the-halls.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Deck the Halls B by Kevin MacLeod. Converted from MP3 to OGG."
+  source: "http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100368"
+
+- files: ["jingle-bells.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Jingle Bells by Kevin MacLeod. Converted from MP3 to OGG."
+  source: "http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100187"
+
+- files: ["wish-you-a-merry-christmas.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Wish You a Merry Christmas by Twin Musicom. Converted from MP3 to OGG."
+  source: "https://youtu.be/OEMFw6gB_ag"

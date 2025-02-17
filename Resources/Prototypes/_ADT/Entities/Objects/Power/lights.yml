@@ -1,0 +1,64 @@
+- type: entity
+  parent: BaseLightTube
+  id: LedLightTubeGreen
+  suffix: Зелёный
+  components:
+  - type: LightBulb
+    color: "#00FF00"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 12
+
+- type: entity
+  parent: BaseLightTube
+  id: LedLightTubeRed
+  suffix: Красный
+  components:
+  - type: LightBulb
+    color: "#FF0000"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 12
+
+- type: entity
+  parent: BaseLightTube
+  id: LedLightTubeBlue
+  suffix: Синий
+  components:
+  - type: LightBulb
+    color: "#0000FF"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 12
+
+- type: entity
+  parent: BaseLightTube
+  id: LedLightTubeYellow
+  suffix: Жёлтый
+  components:
+  - type: LightBulb
+    color: "#FFE400"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 12
+
+- type: entity
+  parent: BaseLightTube
+  id: LedLightTubeViolet
+  suffix: Фиолетовый
+  components:
+  - type: LightBulb
+    color: "#EE82EE"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 12

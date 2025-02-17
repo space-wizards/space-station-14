@@ -1,0 +1,122 @@
+{
+    "version": 1,
+    "license": "CC-BY-4.0",
+    "copyright": "Сreated by gribgear (discord) for Space Station 14 server Мёртвый Космос",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "based"
+        },
+        {
+            "name": "clubs-6"
+        },
+        {
+            "name": "clubs-7"
+        },
+        {
+            "name": "clubs-8"
+        },
+        {
+            "name": "clubs-9"
+        },
+        {
+            "name": "clubs-10"
+        },
+        {
+            "name": "clubs-j"
+        },
+        {
+            "name": "clubs-q"
+        },
+        {
+            "name": "clubs-k"
+        },
+        {
+            "name": "clubs-a"
+        },
+        {
+            "name": "diamonds-6"
+        },
+        {
+            "name": "diamonds-7"
+        },
+        {
+            "name": "diamonds-8"
+        },
+        {
+            "name": "diamonds-9"
+        },
+        {
+            "name": "diamonds-10"
+        },
+        {
+            "name": "diamonds-j"
+        },
+        {
+            "name": "diamonds-q"
+        },
+        {
+            "name": "diamonds-k"
+        },
+        {
+            "name": "diamonds-a"
+        },
+        {
+            "name": "hearts-6"
+        },
+        {
+            "name": "hearts-7"
+        },
+        {
+            "name": "hearts-8"
+        },
+        {
+            "name": "hearts-9"
+        },
+        {
+            "name": "hearts-10"
+        },
+        {
+            "name": "hearts-j"
+        },
+        {
+            "name": "hearts-q"
+        },
+        {
+            "name": "hearts-k"
+        },
+        {
+            "name": "hearts-a"
+        },
+        {
+            "name": "spades-6"
+        },
+        {
+            "name": "spades-7"
+        },
+        {
+            "name": "spades-8"
+        },
+        {
+            "name": "spades-9"
+        },
+        {
+            "name": "spades-10"
+        },
+        {
+            "name": "spades-j"
+        },
+        {
+            "name": "spades-q"
+        },
+        {
+            "name": "spades-k"
+        },
+        {
+            "name": "spades-a"
+        }
+    ]
+}

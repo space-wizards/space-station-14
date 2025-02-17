@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: ToyDoubleSword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - tag: ToySword
+        name: игрушечный меч
+        icon:
+          sprite: Objects/Fun/toy_sword.rsi
+          state: e_sword
+        doAfter: 3
+      - tag: ToySword
+        name: игрушечный меч
+        icon:
+          sprite: Objects/Fun/toy_sword.rsi
+          state: e_sword
+        doAfter: 3
+      - material: Cable
+        amount: 5
+        doAfter: 4
+  - node: icon
+    entity: ToyEnergySwordDouble

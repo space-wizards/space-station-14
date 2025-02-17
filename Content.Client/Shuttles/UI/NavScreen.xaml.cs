@@ -17,6 +17,9 @@ public sealed partial class NavScreen : BoxContainer
 
     private EntityUid? _consoleEntity; // Entity of controlling console
     private EntityUid? _shuttleEntity;
+    public event Action? OnSignalButtonPressed; // DS14
+
+    public event Action<NetEntity, float, float>? ThrustersRestartRequest;
 
     public NavScreen()
     {
@@ -29,6 +32,24 @@ public sealed partial class NavScreen : BoxContainer
 
         DockToggle.OnToggled += OnDockTogglePressed;
         DockToggle.Pressed = NavRadar.ShowDocks;
+
+        SignalButton.OnPressed += _ => OnSignalButtonPressed?.Invoke(); // DS14
+
+        GyroscopesThrust.OnValueChanged += OnThrustersConfig;
+        ThrustersThrust.OnValueChanged += OnThrustersConfig;
+        // ThrustersRestartButton.OnPressed += OnThrustersConfig;
+    }
+
+    private void OnThrustersConfig(int _)
+    {
+        var netEntityShuttle = _entManager.GetNetEntity(_shuttleEntity);
+        if (netEntityShuttle != null)
+        {
+            ThrustersRestartRequest?.Invoke(
+                netEntityShuttle.Value,
+                (float)GyroscopesThrust.Value,
+                (float)ThrustersThrust.Value);
+        }
     }
 
     public void SetShuttle(EntityUid? shuttle)
@@ -97,3 +118,4 @@ public sealed partial class NavScreen : BoxContainer
             ("angularVelocity", $"{-MathHelper.RadiansToDegrees(gridBody.AngularVelocity) + 10f * float.Epsilon:0.0}"));
     }
 }
+

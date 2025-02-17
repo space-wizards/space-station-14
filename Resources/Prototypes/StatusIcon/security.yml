@@ -3,7 +3,7 @@
   abstract: true
   priority: 3
   offset: 1
-  locationPreference: Right
+  locationPreference: Left # Corvax-TypingIndicator
   isShaded: true
 
 - type: securityIcon
@@ -44,7 +44,7 @@
 - type: securityIcon
   id: MindShieldIcon
   priority: 2
-  locationPreference: Right
+  locationPreference: Left # Corvax-TypingIndicator
   layer: Mod
   isShaded: true
   icon:

@@ -1,0 +1,70 @@
+- type: startingGear
+  id: DeathSquadGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDeathSquad
+    back: ClothingDeathSquadronBackpack
+    mask: ClothingMaskGasDeathSquad
+    eyes: ClothingEyesHudAdvanced
+    ears: ClothingHeadsetDeathSquad
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitDeathsquad
+    suitstorage: JetpackVoidFilled
+    shoes: ClothingShoesBootsMagAdv
+    id: DeathsquadPDA
+    pocket1: EnergySword
+    pocket2: DoubleEmergencyOxygenTankFilled
+    belt: ClothingBeltDeathSquadWebbingFilled
+    underwearb: ClothingUnderwearBottomBoxersDeathSquad # DS14-Underwear
+  storage:
+    back:
+    - CombatMedipen
+    - CombatMedipen
+    - CombatMedipen
+    - CombatMedipen
+    - CombatMedipen
+    - CombatMedipen
+    - C4
+    - C4
+    - C4
+    - C4
+    - WeaponPulseRifle
+    - WeaponRevolverMatebaAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - PinpointerNuclear
+    - EnergyShield
+    - JawsOfLife
+    - NukeCodePaper
+    - ClothingEyesPNVAdv
+
+- type: entity
+  parent: ClothingBeltSecurityWebbing
+  id: ClothingBeltDeathSquadWebbingFilled
+  name: РПС эскадрона смерти
+  description: РПС члена отряда элитной эвакуации.
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetDeathSquad
+  name: мастер гарнитура
+  description: Уникальный образец гарнитуры c доступом во все каналы.
+  suffix: Эскадрон смерти
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeyDeathSquad
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/base.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/base.rsi
+  - type: Headset
+    color: "#CF1CFF"

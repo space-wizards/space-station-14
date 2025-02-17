@@ -1,0 +1,90 @@
+- type: entity
+  parent: BaseItem
+  id: BaseWeaponRevolver357
+  name: питон .357
+  description: Робастный револьвер. Данный вариант использует патрон .357 магнум.
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - Cartridge357
+        - SpeedLoader357
+    proto: Cartridge357
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: BaseWeaponRevolver357
+  id: WeaponRevolverPython357
+  name: питон .357
+  description: Робастный револьвер. Испольует патрон .357 магнум.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
+
+- type: entity
+  parent: BaseWeaponRevolver357
+  id: WeaponRevolverUnica
+  name: уника 6
+  description: Легендарный револьвер. Испольует патрон .357 магнум.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Weapons/Guns/Revolvers/Unica.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2.0
+    availableModes:
+    - SemiAuto
+    - FullAuto
+  - type: RevolverAmmoProvider
+    capacity: 7
+    chambers: [ True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null ]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 15000

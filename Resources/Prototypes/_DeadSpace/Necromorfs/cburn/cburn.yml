@@ -1,0 +1,158 @@
+- type: entity
+  id: ClothingBeltMilitaryWebbingNECROFilled
+  parent: ClothingBeltMilitaryWebbing
+  name: РПС ОПНУ
+  description: Ременно-плечевая система тактических ремней, которую носят представители военных структур.
+  suffix: Заполненный
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,7,1
+  - type: StorageFill
+    contents:
+      - id: MagazineShotgunIncendiary
+        amount: 6
+
+- type: startingGear
+  id: CBURNNECROLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackERTLeader
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNNECROLeader
+    shoes: ADTClothingShoesBootsMagERT
+    id: CBURNPDA
+    pocket1: KukriKnife
+    pocket2: WeaponPulsePistol
+    suitstorage: OxygenTankFilled
+    belt: ClothingBeltMilitaryWebbingNECROFilled
+  storage:
+    back:
+    - BoxSurvivalEngineering
+    - WeaponShotgunBulldog
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - ObeliskStoper
+    - NECROMedipen
+    - NECROMedipen
+    - NECROMedipen
+    - NECROMedipen
+    - NECROMedipen
+    - ZetaTwoMedipen
+    - ZetaTwoMedipen
+    - Crowbar
+
+- type: startingGear
+  id: CBURNNECROSoldierGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackERTMedical
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNNECROSoldier
+    shoes: ADTClothingShoesBootsMagERT
+    id: CBURNPDA
+    pocket1: KukriKnife
+    pocket2: WeaponPulsePistol
+    suitstorage: OxygenTankFilled
+    belt: ClothingBeltMilitaryWebbingNECROFilled
+  storage:
+    back:
+    - BoxSurvivalEngineering
+    - WeaponShotgunBulldog
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - MagazineShotgunIncendiary
+    - NECROMedipen
+    - NECROMedipen
+    - NECROMedipen
+    - NECROMedipen
+    - NECROMedipen
+    - ZetaTwoMedipen
+    - ZetaTwoMedipen
+    - Crowbar
+    
+- type: entity
+  id: RandomHumanoidSpawnerCBURNLeaderNECRO
+  name: лидер отряда ОПНУ
+  suffix: РХБЗ, Некроморфы, Призрачная роль
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cburn
+    - type: RandomHumanoidSpawner
+      settings: CBURNLeaderNECRO
+
+- type: randomHumanoidSettings
+  id: CBURNLeaderNECRO
+  parent: EventHumanoidERTZombieImmune
+  components:
+    - type: Loadout
+      prototypes: [CBURNNECROLeaderGear]
+    - type: GhostRole
+      name: ghost-role-information-cburn-leader-name
+      description: ghost-role-information-cburn-leader-description
+      rules: ghost-role-information-nonantagonist-rules
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 # 10 hours
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 72000 # 20 hours
+        - !type:DepartmentTimeRequirement
+          department: Command
+          time: 36000 # 10 hours
+    - type: GhostTakeoverAvailable
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstERTLeader
+      - NamesLastERT
+
+- type: entity
+  id: RandomHumanoidSpawnerCBURNSoldierNECRO
+  name: боец отряда ОПНУ
+  suffix: РХБЗ, Некроморфы, Призрачная роль
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cburn
+    - type: RandomHumanoidSpawner
+      settings: CBURNSoldierNECRO
+
+- type: randomHumanoidSettings
+  id: CBURNSoldierNECRO
+  parent: EventHumanoidERTZombieImmune
+  components:
+    - type: Loadout
+      prototypes: [CBURNNECROSoldierGear]
+    - type: GhostRole
+      name: ghost-role-information-cburn-agent-name
+      description: ghost-role-information-cburn-agent-description
+      rules: ghost-role-information-nonantagonist-rules
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 # 10 hours
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 72000 # 20 hours
+        - !type:DepartmentTimeRequirement
+          department: Command
+          time: 36000 # 10 hours
+    - type: GhostTakeoverAvailable
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstERT
+      - NamesLastERT

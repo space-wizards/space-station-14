@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ParadiseSS13/Paradise edited by Floofers",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "ruff",
+      "directions": 4
+    },
+    {
+      "name": "elder",
+      "directions": 4
+    },
+    {
+      "name": "elder_chin",
+      "directions": 4
+    },
+    {
+      "name": "kita",
+      "directions": 4
+    }
+  ]
+}

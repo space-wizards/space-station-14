@@ -33,6 +33,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.DeadSpace.Interfaces.Server;
 
 namespace Content.Server.Administration.Systems;
 
@@ -55,6 +56,7 @@ public sealed class AdminSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    private IServerSponsorsManager? _sponsorsManager; // DS14-sponsors
 
     private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -91,6 +93,8 @@ public sealed class AdminSystem : EntitySystem
 
         SubscribeLocalEvent<ActorComponent, EntityRenamedEvent>(OnPlayerRenamed);
         SubscribeLocalEvent<ActorComponent, IdentityChangedEvent>(OnIdentityChanged);
+
+        IoCManager.Instance!.TryResolveType(out _sponsorsManager); // DS14-sponsors
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -252,7 +256,9 @@ public sealed class AdminSystem : EntitySystem
             overallPlaytime = playTime;
         }
 
-        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, GetNetEntity(session?.AttachedEntity), data.UserId,
+        var sponsor = _sponsorsManager?.TryGetInfo(data.UserId, out var sponsorInfo) == true && (sponsorInfo.HavePriorityJoin || sponsorInfo.HavePriorityAntag);
+
+        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, sponsor, GetNetEntity(session?.AttachedEntity), data.UserId,
             connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
     }
 
@@ -308,7 +314,7 @@ public sealed class AdminSystem : EntitySystem
         var hasAdmins = false;
         foreach (var admin in _adminManager.AllAdmins)
         {
-            if (_adminManager.HasAdminFlag(admin, AdminFlags.Admin, includeDeAdmin: PanicBunker.CountDeadminnedAdmins))
+            if (_adminManager.HasAdminFlag(admin, AdminFlags.Ban, includeDeAdmin: PanicBunker.CountDeadminnedAdmins)) // DS14-only-admins-with-ban
             {
                 hasAdmins = true;
                 break;

@@ -1,0 +1,43 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieHacksLua # Люблю Хакс <3 <3 <3
+  name: Плюшевая Хакс
+  description: Это привлекательная игрушка, почему вы её хотите обнять? откуда такое желание гладить? почему вы её хотите? Стоп, что?
+  components:
+  - type: Sprite
+    sprite: _LW/Plushie/toys.rsi
+    state: plushie_hackslua
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLilaMarrnes # Люблю Лилу <3 <3 <3
+  name: Плюшевая Лила
+  description: Это Хакс, просто темненькая. Фрфрфрфрфр.
+  components:
+  - type: Sprite
+    sprite: _LW/Plushie/toys.rsi
+    state: plushie_lilamarrnes
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_LW/Plushie/frfrfr.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_LW/Plushie/frfrfr.ogg

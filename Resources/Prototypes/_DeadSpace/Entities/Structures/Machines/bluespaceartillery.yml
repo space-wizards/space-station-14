@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseStructure
+  id: BluespaceArtillery
+  name: блюспейс артиллерия
+  description: Огромное и устрашающее оружие.
+  suffix: Филлер для маппинга
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/bluespaceartillery.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-6.0,-0.4,6.5,1.55"
+        density: 155
+        mask:
+        - MachineMask
+        layer:
+        - WallLayer

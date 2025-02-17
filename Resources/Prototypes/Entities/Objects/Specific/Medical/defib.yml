@@ -40,6 +40,7 @@
     - type: GuideHelp
       guides:
       - Medical Doctor
+    - type: ToggleCellDraw
 
 - type: entity
   id: Defibrillator
@@ -128,5 +129,5 @@
         volume: -10
     activatedDamage:
       types:
-        Blunt: 8
-        Shock: 16
+        Blunt: 5
+        Shock: 15

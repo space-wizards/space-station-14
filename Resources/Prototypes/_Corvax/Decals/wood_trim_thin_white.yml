@@ -1,0 +1,118 @@
+﻿- type: decal
+  id: WoodTrimThinBoxWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_box
+
+- type: decal
+  id: WoodTrimThinCornerNeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_corner_ne
+
+- type: decal
+  id: WoodTrimThinCornerSeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_corner_se
+
+- type: decal
+  id: WoodTrimThinCornerNwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_corner_nw
+
+- type: decal
+  id: WoodTrimThinCornerSwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_corner_sw
+
+- type: decal
+  id: WoodTrimThinInnerNeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_inner_ne
+
+- type: decal
+  id: WoodTrimThinInnerSeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_inner_se
+
+- type: decal
+  id: WoodTrimThinInnerNwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_inner_nw
+
+- type: decal
+  id: WoodTrimThinInnerSwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_inner_sw
+
+- type: decal
+  id: WoodTrimThinEndNWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_end_n
+
+- type: decal
+  id: WoodTrimThinEndEWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_end_e
+
+- type: decal
+  id: WoodTrimThinEndSWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_end_s
+
+- type: decal
+  id: WoodTrimThinEndWWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_end_w
+
+- type: decal
+  id: WoodTrimThinLineNWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_line_n
+
+- type: decal
+  id: WoodTrimThinLineEWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_line_e
+
+- type: decal
+  id: WoodTrimThinLineSWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_line_s
+
+- type: decal
+  id: WoodTrimThinLineWWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Corvax/Decals/wood_trim_white.rsi
+    state: thin_line_w

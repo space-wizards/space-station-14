@@ -1,0 +1,21 @@
+- type: entity
+  id: ClothingBeltMilitaryWebbingBlueShieldFilled
+  parent: ClothingBeltMilitaryWebbingMed
+  name: РПС офицера "Синий Щит"
+  description: РПС, которую носят офицеры "Синий Щит"
+  suffix: Заполненный
+  components:
+  - type: StorageFill
+    contents:
+      - id: ADTCombatHypo
+      - id: EpinephrineChemistryBottle
+      - id: EphedrineChemistryBottle
+      - id: OmnizineChemistryBottle
+        amount: 2
+      - id: ADTObjectsSpecificBicaridineChemistryBottle
+      - id: ADTObjectsSpecificDexalinPlusChemistryBottle
+      - id: ADTObjectsSpecificDermalineChemistryBottle
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/webbing_blueshield.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/webbing_blueshield.rsi

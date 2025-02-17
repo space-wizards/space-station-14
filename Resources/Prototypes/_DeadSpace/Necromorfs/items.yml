@@ -1,0 +1,200 @@
+- type: entity
+  parent: BaseItem
+  id: ObeliskStoper
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/stoper.rsi
+    layers:
+    - state: ano01
+  - type: Damageable
+  - type: Physics
+    bodyType: Dynamic
+  - type: CollisionWake
+    enabled: false
+  - type: InteractionOutline
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        layer:
+        - Opaque
+        restitution: 0.3
+        friction: 0.2
+  - type: Item
+    size: Normal
+    sprite: _DeadSpace/Items/stoper.rsi
+    heldPrefix: ano01
+  - type: NecroobeliskStoper
+
+- type: latheRecipe
+  id: ObeliskStoper
+  result: ObeliskStoper
+  completetime: 5
+  materials:
+    Plastic: 500
+    Glass: 500
+    Gold: 1000
+    Plasma: 1500
+
+- type: cargoProduct
+  id: ObeliskStoperProduct
+  icon:
+    sprite: _DeadSpace/Items/stoper.rsi
+    state: ano01
+  product: CrateObeliskStoper
+  cost: 10000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: ZetaOneMedipenProduct
+  icon:
+    sprite: Objects/Specific/Medical/medipen.rsi
+    state: medipen
+  product: CrateZetaOneMedipen
+  cost: 2000
+  category: cargoproduct-category-name-medical
+  group: market
+
+- type: entity
+  id: CrateObeliskStoper
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ObeliskStoper
+
+- type: entity
+  parent: CrateMedicalSecure
+  id: CrateZetaOneMedipen
+  components:
+    - type: StorageFill
+      contents:
+        - id: ZetaOneMedipen
+          amount: 5
+
+- type: entity
+  parent: BaseSyringe
+  id: SyringeExtractInfectorDead
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: ExtractInfectorDead
+              Quantity: 15
+
+- type: entity
+  parent: ChemicalMedipen
+  id: ZetaOneMedipen
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: hypovolemic
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: hypovolemic_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+          - ReagentId: ZetaOne
+            Quantity: 15
+          - ReagentId: Phalanximine
+            Quantity: 15
+  - type: Tag
+    tags: []
+
+- type: entity
+  parent: ChemicalMedipen
+  id: ZetaTwoMedipen
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: medipen
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: medipen_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 25
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 25
+        reagents:
+          - ReagentId: ZetaOne
+            Quantity: 15
+          - ReagentId: Impedrezene
+            Quantity: 10
+  - type: Tag
+    tags: []
+
+- type: entity
+  parent: BaseItem
+  id: ObeliskSplinter
+  name: Осколок обелиска
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/splinter.rsi
+    layers:
+    - state: splinter
+  - type: Damageable
+  - type: NecroobeliskSplinter
+    soundHeadaches:
+      collection: SoundsHeadaches
+  - type: LimitedCharges
+    maxCharges: 2
+    charges: 2
+  - type: Physics
+    bodyType: Dynamic
+  - type: CollisionWake
+    enabled: false
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        layer:
+        - Opaque
+        restitution: 0.3
+        friction: 0.2
+  - type: Item
+    size: Normal
+    sprite: _DeadSpace/Necromorfs/splinter.rsi
+    heldPrefix: splinter
+
+- type: entity
+  id: CrateObeliskSplinter
+  name: стальной ящик
+  description: Большой контейнер для предметов.
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ObeliskSplinter

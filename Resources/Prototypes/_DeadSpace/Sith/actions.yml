@@ -1,0 +1,88 @@
+- type: entity
+  id: ActionSithLightning
+  name: Ударить молнией
+  description: Выпускает в цель молнию.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    canTargetSelf: false
+    useDelay: 20
+    range: 5
+    icon: _DeadSpace/Sith/actions/sith_lightning.png
+    event: !type:SithLightningEvent
+
+- type: entity
+  id: ActionSithForceOne
+  name: Поток силы
+  description: Отталкивает или притягивает одну цель.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    canTargetSelf: false
+    useDelay: 8
+    range: 8
+    icon: _DeadSpace/Sith/actions/force_Any.png
+    event: !type:SithForceOneEvent
+
+- type: entity
+  id: ActionSithForce
+  name: Поток силы
+  description: Отталкивает или притягивает всё вокруг.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 20
+    icon: _DeadSpace/Sith/actions/force_all.png
+    event: !type:SithForceEvent
+
+- type: entity
+  id: ActionSithShield
+  name: Щит силы
+  description: Барьер силы который отталкивает или поглощает удары.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    icon: _DeadSpace/Sith/actions/shield.png
+    event: !type:SithShieldEvent
+
+- type: entity
+  id: ActionSithSubmission
+  name: Подчинение силой
+  description: Влияет на разум цели с помощью силы, подчиняя его.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    canTargetSelf: false
+    useDelay: 10
+    range: 8
+    icon: _DeadSpace/Sith/actions/submission.png
+    event: !type:SithSubmissionEvent
+
+- type: entity
+  id: ActionRecallSithEsword
+  name: Телепортировать меч
+  description: Телепортирует ваш энерго меч вам в руки.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+    itemIconStyle: NoItem
+    event: !type:RecallSithEswordEvent {}
+
+- type: entity
+  id: ActionSithEswordTeleport
+  name: Телепортироваться к мечу
+  description: Телепортирует вас к энерго мечу и даёт вам его в руку.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+    itemIconStyle: noItem
+    event: !type:SithEswordTeleport {}

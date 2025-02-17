@@ -22,6 +22,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
+using Robust.Server.Console;
 using Content.Shared.Whitelist;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -34,6 +35,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Corvax.TTS;
+using Content.Shared.Dataset;
+using Content.DeadSpace.Interfaces.Server;
 
 namespace Content.Server.Chat.Systems;
 
@@ -60,16 +64,19 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    private IServerChatFilter? _chatFilter; // DS14-chat-filter
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
-    public const int WhisperMuffledRange = 5; // how far whisper goes at all, in world units
-    public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
+    public const int WhisperMuffledRange = 8; // how far whisper goes at all, in world units
+    public const string DefaultAnnouncementSound = "/Audio/_DeadSpace/Announcements/announce.ogg"; // DS14-Announcements
+    public const string CentComAnnouncementSound = "/Audio/_DeadSpace/Announcements/centcomm.ogg"; // DS14-Announcements
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
     private readonly bool _adminLoocEnabled = true;
+    private string _centcommTTS = "Widowmaker";
 
     public override void Initialize()
     {
@@ -80,6 +87,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         Subs.CVar(_configurationManager, CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
+
+        IoCManager.Instance!.TryResolveType(out _chatFilter); // DS14-chat-filter
     }
 
     private void OnLoocEnabledChanged(bool val)
@@ -112,6 +121,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
     {
+        _centcommTTS = _random.Pick(_prototypeManager.Index<DatasetPrototype>("CentcommAnnouncementVoice").Values);
+
         switch (ev.New)
         {
             case GameRunLevel.InRound:
@@ -221,6 +232,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
             || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
 
+        // DS14-chat-filter-start
+        if (_chatFilter != null && _chatFilter.NotAllowedMessage(source, message))
+            return;
+        // DS14-chat-filter-end
+
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
 
         // Was there an emote in the message? If so, send it.
@@ -278,6 +294,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
             return;
 
+        // DS14-chat-filter-start
+        if (_chatFilter != null && _chatFilter.NotAllowedMessage(source, message))
+            return;
+        // DS14-chat-filter-end
+
         message = SanitizeInGameOOCMessage(message);
 
         var sendType = type;
@@ -319,16 +340,51 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null
+        Color? colorOverride = null,
+        string originalMessage = "",
+        EntityUid? author = null,
+        string? voice = null,
+        bool usePresetTTS = false
         )
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+
+        // DS14-chat-filter-start
+        if (_chatFilter != null && _chatFilter.NotAllowedMessage(wrappedMessage))
+            return;
+        // DS14-chat-filter-end
+
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
+
+        // Fucked up logic ahead... FIX THIS PLEASE.
+
         if (playSound)
         {
-            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
+            if (announcementSound == null)
+            {
+                if (sender == Loc.GetString("chat-manager-sender-announcement")) announcementSound = new SoundPathSpecifier(CentComAnnouncementSound); // Corvax-Announcements: Support custom alert sound from admin panel
+            }
+
+            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, announcementSound?.Params ?? AudioParams.Default.WithVolume(-2f));
+
+            if (author != null && TryComp<TTSComponent>(author.Value, out var tts) && tts.VoicePrototypeId != null) // For comms console announcements
+            {
+                var ev = new AnnounceSpokeEvent(tts.VoicePrototypeId, originalMessage, author.Value);
+                RaiseLocalEvent(ev);
+            }
+            else if (usePresetTTS && sender == Loc.GetString("chat-manager-sender-announcement")) // For admin announcements from Centcomm with preset voices
+            {
+                voice = _centcommTTS;
+                var ev = new AnnounceSpokeEvent(voice, originalMessage, null);
+                RaiseLocalEvent(ev);
+            }
+            else if (voice != null) // For admin announcements
+            {
+                var ev = new AnnounceSpokeEvent(voice, originalMessage, null);
+                RaiseLocalEvent(ev);
+            }
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -454,7 +510,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, range);
 
-        var ev = new EntitySpokeEvent(source, message, null, null);
+        var ev = new EntitySpokeEvent(source, message, originalMessage, null, null);
         RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
@@ -548,7 +604,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
 
-        var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
+        var ev = new EntitySpokeEvent(source, message, originalMessage, channel, obfuscatedMessage);
         RaiseLocalEvent(source, ev, true);
         if (!hideLog)
             if (originalMessage == message)
@@ -753,6 +809,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         // Sanitize it first as it might change the word order
         _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
 
+        // DS14-chat-filter-start
+        if (_chatFilter != null)
+            newMessage = _chatFilter.ReplaceWords(newMessage);
+        // DS14-chat-filter-end
+
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
@@ -944,6 +1005,7 @@ public sealed class EntitySpokeEvent : EntityEventArgs
 {
     public readonly EntityUid Source;
     public readonly string Message;
+    public readonly string OriginalMessage;
     public readonly string? ObfuscatedMessage; // not null if this was a whisper
 
     /// <summary>
@@ -952,12 +1014,66 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     /// </summary>
     public RadioChannelPrototype? Channel;
 
-    public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, string? obfuscatedMessage)
+    public EntitySpokeEvent(EntityUid source, string message, string originalMessage, RadioChannelPrototype? channel, string? obfuscatedMessage)
     {
         Source = source;
         Message = message;
+        OriginalMessage = originalMessage; // Corvax-TTS: Spec symbol sanitize
         Channel = channel;
         ObfuscatedMessage = obfuscatedMessage;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it sends direct message to another entity
+/// </summary>
+public sealed class EntitySpokeToEntityEvent : EntityEventArgs
+{
+    public readonly EntityUid Target;
+    public readonly string Message;
+
+    public EntitySpokeToEntityEvent(EntityUid target, string message)
+    {
+        Target = target;
+        Message = message;
+    }
+}
+
+/// <summary>
+///     Raised on an entity after <see cref="EntitySpokeEvent"/> when it speaks using radio.
+/// </summary>
+public sealed class RadioSpokeEvent : EntityEventArgs
+{
+    public readonly EntityUid Source;
+    public readonly string Message;
+
+    /// <summary>
+    ///     Of course, we can just use <see cref="EntitySpokeEvent"/>, but it's easier to send a message using RadioSystem
+    /// </summary>
+    public readonly EntityUid[] Receivers;
+
+    public RadioSpokeEvent(EntityUid source, string message, EntityUid[] receivers)
+    {
+        Source = source;
+        Message = message;
+        Receivers = receivers;
+    }
+}
+
+/// <summary>
+///     Raised when we don't have direct source
+/// </summary>
+public sealed class AnnounceSpokeEvent : EntityEventArgs
+{
+    public readonly string Voice;
+    public readonly string Message;
+    public readonly EntityUid? Source;
+
+    public AnnounceSpokeEvent(string voice, string message, EntityUid? source)
+    {
+        Voice = voice;
+        Message = message;
+        Source = source;
     }
 }
 

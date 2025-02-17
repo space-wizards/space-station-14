@@ -14,8 +14,10 @@
             <cc:CommandButton Command="permissions" Text="{Loc admin-player-actions-window-permissions}" />
             <cc:CommandButton Command="announceui" Text="{Loc admin-player-actions-window-announce}"/>
             <cc:UICommandButton Command="callshuttle" Text="{Loc admin-player-actions-window-shuttle}" WindowType="{x:Type at:AdminShuttleWindow}"/>
+            <cc:UICommandButton Command="ert_accept" Text="{Loc admin-player-actions-window-ert}" WindowType="{x:Type at:ERTCallWindow}"/>
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
+            <cc:CommandButton Command="votecallui" Text="{Loc administration-ui-round-tab-call-vote}" />
         </GridContainer>
     </BoxContainer>
 </Control>

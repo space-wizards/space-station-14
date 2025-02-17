@@ -149,7 +149,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             // person did something sus
             (_, SecurityStatus.Suspected) => "suspected",
             // released on parole
-            (_, SecurityStatus.Paroled) => "paroled",
+            // (_, SecurityStatus.Paroled) => "paroled", // DS14-no-paroled
             // prisoner did their time
             (_, SecurityStatus.Discharged) => "released",
             // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
@@ -161,7 +161,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             // criminal status removed
             (SecurityStatus.Detained, SecurityStatus.None) => "released",
             // criminal is no longer on parole
-            (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole",
+            // (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole", // DS14-no-paroled
             // this is impossible
             _ => "not-wanted"
         };

@@ -1,0 +1,14 @@
+- type: dataset
+  id: NamesFirstFSCPRecruit
+  values:
+  - Рядовой
+
+- type: dataset
+  id: NamesFirstFSCPCorporal
+  values:
+  - Ефрейтор
+
+- type: dataset
+  id: NamesFirstFSCPSergeant
+  values:
+  - Сержант

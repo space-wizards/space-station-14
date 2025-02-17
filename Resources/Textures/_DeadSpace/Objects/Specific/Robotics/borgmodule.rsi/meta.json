@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Icons made by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос, cargo-module created by EmoGarbage404 (github) for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-mining-adv"
+    },
+    {
+      "name": "icon-pka"
+    },
+    {
+      "name": "cargo"
+    }
+  ]
+}

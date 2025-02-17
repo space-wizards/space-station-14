@@ -1,0 +1,29 @@
+- type: entity
+  id: PortableCameraMonitor
+  parent: [ BaseItem, BaseSecurityCommandContraband ]
+  name: портативный монитор камер
+  description: Монитор камер, позволяющий следить за вашими идиотами.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Devices/portable_camera_monitor.rsi
+    state: icon
+  - type: Item
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: PortableCameraMonitor

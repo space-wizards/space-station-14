@@ -22,7 +22,7 @@ public sealed partial class IdCardComponent : Component
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
     public LocId? JobTitle;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     private string? _jobTitle;
 
@@ -57,4 +57,10 @@ public sealed partial class IdCardComponent : Component
 
     [DataField]
     public bool CanMicrowave = true;
+
+    // start-backmen: currency
+    [DataField("storedBankAccountNumber")]
+    [AutoNetworkedField]
+    public string? StoredBankAccountNumber;
+    // end-backmen: currency
 }

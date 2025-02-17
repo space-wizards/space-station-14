@@ -179,8 +179,8 @@
   id: SciFlash
   components:
     - type: LimitedCharges
-      maxCharges: 2
-      charges: 2
+      maxCharges: 1
+      charges: 1
 
 - type: entity
   name: portable flasher

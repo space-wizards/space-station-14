@@ -43,17 +43,21 @@ namespace Content.Server.RatKing
             if (args.Handled)
                 return;
 
-            if (!TryComp<HungerComponent>(uid, out var hunger))
-                return;
-
-            //make sure the hunger doesn't go into the negatives
-            if (_hunger.GetHunger(hunger) < component.HungerPerArmyUse)
+            // DS14-necro-start
+            if (component.NeedHunger && TryComp<HungerComponent>(uid, out var hunger))
             {
-                _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
-                return;
+                //make sure the hunger doesn't go into the negatives
+                if (_hunger.GetHunger(hunger) < component.HungerPerArmyUse)
+                {
+                    _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
+                    return;
+                }
+
+                _hunger.ModifyHunger(uid, -component.HungerPerArmyUse, hunger);
             }
+            // DS14-necro-end
+
             args.Handled = true;
-            _hunger.ModifyHunger(uid, -component.HungerPerArmyUse, hunger);
             var servant = Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
             var comp = EnsureComp<RatKingServantComponent>(servant);
             comp.King = uid;

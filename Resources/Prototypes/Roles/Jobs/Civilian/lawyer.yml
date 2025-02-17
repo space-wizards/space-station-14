@@ -4,26 +4,44 @@
   description: job-description-lawyer
   playTimeTracker: JobLawyer
   requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
     - !type:OverallPlaytimeRequirement
-      time: 36000 # 10 hrs
+      time: 144000 # 40 hours
   startingGear: LawyerGear
   icon: "JobIconLawyer"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-iaa
+  canBeAntag: false
   access:
   - Service
   - Lawyer
   - Brig
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: LawyerStampProvider
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 65
+  #end-backmen: currency
 
 - type: startingGear
   id: LawyerGear
   equipment:
     shoes: ClothingShoesBootsLaceup
     id: LawyerPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLaw
+    socks: ClothingUnderwearSockLawyer
   inhand:
-    - BriefcaseBrownFilled
+    - BriefcaseLawyerFilled
   storage:
     back:
-    - RubberStampLawyer
-    - BookSpaceLaw
+    - HyperLinkBookCorporateLaw
+    - HyperLinkBookSOPSecurity
+    - HyperLinkBookSOPLaw

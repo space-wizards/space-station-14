@@ -1,0 +1,22 @@
+- type: entity
+  parent: Soap
+  id: SoapHonk
+  name: хонк мыло
+  description: Мыло созданое самой Хонк-Матерью.
+  components:
+  - type: Sprite
+    layers:
+    - state: honk-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: honk-
+  - type: Slippery
+    paralyzeTime: 6
+    launchForwardsMultiplier: 15
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 240 #In the Greek alphabet, Omega is the 24th letter
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 240

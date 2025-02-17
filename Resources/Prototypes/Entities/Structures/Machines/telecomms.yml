@@ -166,3 +166,4 @@
     containers:
       key_slots:
       - EncryptionKeyCommand
+      - EncryptionKeyLaw

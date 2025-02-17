@@ -1,0 +1,12 @@
+ent-BigBanana1 = большой банан
+    .desc = Это большой банан
+ent-TrashBananaPeelBig1 = большая банановая кожура
+    .desc = Это большой банан
+ent-BigBanana2 = большой банан
+    .desc = Это большой банан
+ent-TrashBananaPeelBig2 = Большая банановая кожура
+    .desc = Это большой банан
+ent-BigBanana3 = большой банан
+    .desc = Это большой банан
+ent-TrashBananaPeelBig3 = большая банановая кожура
+    .desc = Это большой банан

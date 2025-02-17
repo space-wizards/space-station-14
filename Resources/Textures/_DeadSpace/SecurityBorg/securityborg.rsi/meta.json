@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation and re-sprite by mally0352",
+  "states": [
+    {
+      "name": "sec",
+      "directions": 4
+    },
+    {
+      "name": "sec_e",
+      "directions": 4
+    },
+    {
+      "name": "sec_l",
+      "directions": 4
+    },
+    {
+      "name": "sec_e_r",
+      "directions": 4
+    }
+  ]
+}

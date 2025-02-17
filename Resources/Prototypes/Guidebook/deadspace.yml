@@ -1,0 +1,19 @@
+# - type: guideEntry
+#   id: DeadSpace
+#   name: guide-entry-deadspace
+#   text: "/ServerInfo/Guidebook/SpaceStation14.xml" # TODO
+#   children:
+#   - NewFoodDS14
+#   - NewDrinkDS14
+
+- type: guideEntry
+  id: NewFoodDS14
+  name: guide-service-newfood-ds14
+  text: "/ServerInfo/Guidebook/DeadSpace/NewFood.xml"
+  priority: 10
+
+- type: guideEntry
+  id: NewDrinkDS14
+  name: guide-service-newdrink-ds14
+  text: "/ServerInfo/Guidebook/DeadSpace/NewDrink.xml"
+  priority: 10

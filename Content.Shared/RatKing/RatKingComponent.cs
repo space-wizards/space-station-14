@@ -99,6 +99,11 @@ public sealed partial class RatKingComponent : Component
         { RatKingOrderType.CheeseEm, "RatKingCommandCheeseEm" },
         { RatKingOrderType.Loose, "RatKingCommandLoose" }
     };
+
+    // DS14-necro-start
+    [DataField][ViewVariables(VVAccess.ReadOnly)]
+    public bool NeedHunger = true;
+    // DS14-necro-end
 }
 
 [Serializable, NetSerializable]

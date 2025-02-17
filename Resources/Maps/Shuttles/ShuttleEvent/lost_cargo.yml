@@ -17,7 +17,6 @@ entities:
       name: Cargo shuttle
     - type: Transform
       pos: 2.2710133,-2.4148211
-      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:
@@ -750,14 +749,32 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-1.5
       parent: 1
-- proto: GasPipeStraight
-  entities:
-  - uid: 102
+  - uid: 187
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: -2.5,0.5
+      pos: -3.5,0.5
       parent: 1
+  - uid: 199
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,6.5
+      parent: 1
+  - uid: 200
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,6.5
+      parent: 1
+  - uid: 201
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,7.5
+      parent: 1
+- proto: GasPipeStraight
+  entities:
   - uid: 103
     components:
     - type: Transform
@@ -769,6 +786,44 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-0.5
+      parent: 1
+  - uid: 194
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,1.5
+      parent: 1
+  - uid: 195
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,2.5
+      parent: 1
+  - uid: 196
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,3.5
+      parent: 1
+  - uid: 197
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,4.5
+      parent: 1
+  - uid: 198
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,5.5
+      parent: 1
+- proto: GasPipeTJunction
+  entities:
+  - uid: 102
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,0.5
       parent: 1
 - proto: GasPort
   entities:
@@ -784,6 +839,12 @@ entities:
     components:
     - type: Transform
       pos: -2.5,2.5
+      parent: 1
+  - uid: 202
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,7.5
       parent: 1
 - proto: GeneratorBasic15kW
   entities:
@@ -841,10 +902,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 1
-  - uid: 187
+  - uid: 203
     components:
     - type: Transform
-      pos: -2.5,7.5
+      pos: -1.5,3.5
       parent: 1
 - proto: PlasticFlapsAirtightClear
   entities:
@@ -876,6 +937,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 1
+    - type: PointLight
+      enabled: False
     - type: ApcPowerReceiver
       powerLoad: 0
   - uid: 121
@@ -884,6 +947,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,2.5
       parent: 1
+    - type: PointLight
+      enabled: False
     - type: ApcPowerReceiver
       powerLoad: 0
   - uid: 122
@@ -892,6 +957,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,7.5
       parent: 1
+    - type: PointLight
+      enabled: False
     - type: ApcPowerReceiver
       powerLoad: 0
   - uid: 123
@@ -900,6 +967,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,7.5
       parent: 1
+    - type: PointLight
+      enabled: False
     - type: ApcPowerReceiver
       powerLoad: 0
 - proto: RandomPosterAny

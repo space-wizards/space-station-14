@@ -1,0 +1,53 @@
+# Head
+- type: loadout
+  id: SeniorPhysicianBeret
+  equipment:
+    head: ClothingHeadHatBeretSeniorPhysician
+
+# Jumpsuit
+- type: loadout
+  id: SeniorPhysicianJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorPhysician
+
+- type: loadout
+  id: SeniorPhysicianJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorPhysician
+
+# OuterClothing
+- type: loadout
+  id: SeniorPhysicianLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatLabSeniorPhysician
+
+# ID
+- type: loadout
+  id: SeniorPhysicianPDA
+  equipment:
+    id: SeniorPhysicianPDA
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersSeniorPhysician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersSeniorPhysician
+
+- type: loadout
+  id: UnderwearBottomPantiesSeniorPhysician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesSeniorPhysician
+
+- type: loadout
+  id: UnderwearTopBraSeniorPhysician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraSeniorPhysician

@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatBlackOrientalEars
+  name: чёрные ушки ориентала
+  description: НЯ!!!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/orientalears.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/orientalears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent

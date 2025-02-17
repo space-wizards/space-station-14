@@ -1,0 +1,33 @@
+- type: entity
+  parent: ChemicalMedipen
+  id: NECROMedipen
+  name: медипен ОПНУ
+  description: Разработка Нанотресен. Содержит вещества для лечения повреждений наносимых некроморфами.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: microstimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: microstimpen_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+          - ReagentId: Omnizine
+            Quantity: 10
+          - ReagentId: Bicaridine
+            Quantity: 10
+          - ReagentId: DexalinPlus
+            Quantity: 10
+  - type: StaticPrice
+    price: 300
+  - type: Tag
+    tags: []

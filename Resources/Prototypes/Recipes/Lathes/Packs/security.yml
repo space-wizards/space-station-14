@@ -58,6 +58,14 @@
   - CombatKnife
   - RiotShield
 
+# DS14-start
+- type: latheRecipePack
+  id: SecurityBorgModulesStatic
+  recipes:
+  - BorgModuleArrestSecurity
+  - BorgModulEnergySecurity
+# DS14-end
+
 ## Dynamic recipes
 
 - type: latheRecipePack
@@ -118,6 +126,7 @@
   - MagazineShotgunIncendiary
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
+  - MagazineBox357Incendiary # ADT
 
 - type: latheRecipePack
   id: SecurityWeapons
@@ -129,3 +138,4 @@
   - WeaponLaserCannon
   - WeaponLaserCarbine
   - WeaponXrayCannon
+  - WeaponLaserRifle # DS14

@@ -1,6 +1,6 @@
 - type: gameMap
   id: Convex
-  mapName: 'Convex'
+  mapName: 'Convex Station'
   mapPath: /Maps/convex.yml
   minPlayers: 75
   stations:
@@ -38,6 +38,7 @@
             MedicalDoctor: [ 6, 6 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
+            # MedicalSurgeon: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
@@ -48,7 +49,6 @@
             SecurityOfficer: [ 8, 8 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 2, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
@@ -62,3 +62,21 @@
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 3, 3 ]
+            BorgSecurity: [ 1, 1 ]
+            # law
+            # Magistrat: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            # seniors
+            SeniorEngineer: [1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            # DS14
+            BlueShieldOfficer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            ClownSponsor: [ 0, 2 ]
+            Coroner: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]

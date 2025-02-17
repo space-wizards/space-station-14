@@ -18,10 +18,20 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnAirlockInit);
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
 
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
+    }
+
+    private void OnAirlockInit(EntityUid uid, AirlockComponent component, ComponentInit args)
+    {
+        if (TryComp<ApcPowerReceiverComponent>(uid, out var receiverComponent))
+        {
+            Appearance.SetData(uid, DoorVisuals.Powered, receiverComponent.Powered);
+            Appearance.SetData(uid, DoorVisuals.ClosedLights, true); // Corvax-Resprite-Airlocks
+        }
     }
 
     private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
@@ -37,6 +47,11 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         component.Powered = args.Powered;
         Dirty(uid, component);
+
+        if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
+        {
+            Appearance.SetData(uid, DoorVisuals.Powered, args.Powered, appearanceComponent);
+        }
 
         if (!TryComp(uid, out DoorComponent? door))
             return;

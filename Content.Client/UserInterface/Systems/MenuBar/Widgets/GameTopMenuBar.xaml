@@ -43,7 +43,7 @@
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
-    <ui:MenuButton
+    <!-- <ui:MenuButton
         Name="EmotesButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/emotes.svg.192dpi.png'}"
@@ -52,7 +52,7 @@
         MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
-        />
+        /> -->
     <ui:MenuButton
         Name="CraftingButton"
         Access="Internal"

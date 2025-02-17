@@ -50,6 +50,18 @@
                                     VerticalAlignment="Bottom"
                                     StyleClasses="OpenLeft"/>
                         </BoxContainer>
+                        <BoxContainer Orientation="Horizontal" Align="Center" VerticalAlignment="Bottom">
+                            <Button Name="JoinToAnotherServerButton" 
+                                    Text="{Loc 'connecting-connecttoanotherserver'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenRight"/>
+                            <Button Name="JoinToDiscordButton" 
+                                    Text="{Loc 'connecting-join-to-discord'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenLeft"/>
+                        </BoxContainer>
                     </BoxContainer>
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
@@ -61,9 +73,7 @@
             </PanelContainer>
 
             <BoxContainer Orientation="Horizontal" Margin="12 0 4 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'connecting-tip'}" StyleClasses="LabelSubText" />
-                <Label Text="{Loc 'connecting-version'}" StyleClasses="LabelSubText"
-                       HorizontalAlignment="Right" HorizontalExpand="True" />
+                <Label Text="{Loc 'connecting-version'}" StyleClasses="LabelSubText" HorizontalExpand="True"/>
             </BoxContainer>
         </BoxContainer>
     </Control>

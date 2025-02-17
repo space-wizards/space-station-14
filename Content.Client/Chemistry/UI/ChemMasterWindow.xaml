@@ -37,6 +37,12 @@
                 <Button MinSize="80 0" Name="BufferDiscardButton" Access="Public" Text="{Loc 'chem-master-window-discard-button'}" ToggleMode="True" StyleClasses="OpenLeft" />
             </BoxContainer>
 
+            <!-- Buffer search -->
+            <BoxContainer Orientation="Horizontal">
+                <LineEdit Name="SearchBar" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'chem-master-window-buffer-search-bar-placeholder'}"/>
+                <Button Name="ClearSearchButton" Access="Public" Text="{Loc 'chem-master-window-buffer-clear-search-bar-button'}"/>
+            </BoxContainer>
+
             <!-- Buffer info -->
             <PanelContainer VerticalExpand="True" MinSize="0 200">
                 <PanelContainer.PanelOverride>

@@ -1,0 +1,21 @@
+- type: marking
+  id: XenoTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Xenomorph]
+  sprites:
+    - sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/tail_markings.rsi
+      state: tail_wight
+    - sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/tail_markings.rsi
+      state: tail_wight
+
+- type: marking
+  id: XenoTailTip
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Xenomorph]
+  sprites:
+    - sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/tail_markings.rsi
+      state: tail_small
+    - sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/tail_markings.rsi
+      state: tail_small

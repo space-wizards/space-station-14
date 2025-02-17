@@ -7,22 +7,26 @@
     ClothingUniformJumpskirtLawyerPurple: 1
     ClothingUniformJumpsuitLawyerRed: 1
     ClothingUniformJumpskirtLawyerRed: 1
-    ClothingUniformJumpsuitLawyerBlack: 1
-    ClothingUniformJumpskirtLawyerBlack: 1
+    # ClothingUniformJumpsuitLawyerBlack: 1
+    # ClothingUniformJumpskirtLawyerBlack: 1
     ClothingUniformJumpsuitLawyerGood: 1
     ClothingUniformJumpskirtLawyerGood: 1
-    ClothingShoesBootsLaceup: 2
-    ClothingHeadsetService: 2
-    ClothingNeckLawyerbadge: 2
-    BriefcaseBrown: 2
-    BookSpaceLaw: 3
+    ClothingShoesBootsLaceup: 4
+    # Corvax-LawyerDrip-Start
+    ClothingHandsGlovesColorWhite: 2
+    ClothingHandsGlovesColorGray: 2
+    ClothingHandsGlovesColorBlack: 2
+    ClothingHandsGlovesColorRed: 2
+    ClothingHandsGlovesColorBlue: 2
+    ClothingHeadHatBowlerHat: 2
+    ClothingHeadHatOutlawHat: 2
+    ClothingHeadHatTophat: 2
+    # Corvax-LawyerDrip-End
+    EncryptionKeyLaw: 2 # DS14
     LuxuryPen: 2
     HandLabeler: 2
-  contrabandInventory:
-    ClothingOuterRobesJudge: 1
-    ClothingHeadHatPwig: 1
-    # "Legally" obtained currency
-    SpaceCash100: 2
-    ToyFigurineLawyer: 1
+    HyperLinkBookCorporateLaw: 2 # DS14
+    HyperLinkBookSOPSecurity: 2 # DS14
+    HyperLinkBookSOPLaw: 2 # DS14
   emaggedInventory:
     CyberPen: 1

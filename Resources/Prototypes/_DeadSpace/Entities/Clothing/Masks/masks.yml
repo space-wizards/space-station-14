@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskRedNeckGaiter
+  name: красный шейный гетр
+  description: Стильный гетр, который поможет скрыть вашу личность.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Mask/redneckgaiter.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Mask/redneckgaiter.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: IngestionBlocker

@@ -1,0 +1,15 @@
+ent-ClothingNeckCloakHangler = плащ семьи ханглер
+    .desc = Торжественно-выходной плащ семьи Ханглер.
+ent-ClothingNeckCloakNanotrasenVip = плащ Фронтира
+    .desc = Выдается легендам осваивавшим сектор Фронтира
+ent-ClothingNeckCloakFoxyorg = плащ организации "лиса"
+    .desc = Плащ экипажа Промышленно-Научной Организации "Лиса". Чем они занимаются на самом деле?
+ent-ClothingNeckCloakSunset = плащ "закат"
+    .desc = Стильный фиолетовый плащ в тонах заката
+ent-ClothingNeckCloakSr = плащ главы персонала фронтира
+    .desc = Зелёный плащ с белым воротником с золотой выкройкой, свидетельствующий что вы являетесь хранителем каждого шлюза на станции.
+ent-ClothingNeckCloakJanitor = плащ уборщика
+    .desc = Как ты вообще это достал? ты сам его сделал?
+ent-ClothingNeckCloakJanitorFilled = { ent-ClothingNeckCloakJanitor }
+    .suffix = Filled
+    .desc = { ent-ClothingNeckCloakJanitor.desc }

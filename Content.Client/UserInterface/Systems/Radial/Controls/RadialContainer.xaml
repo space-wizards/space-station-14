@@ -1,0 +1,17 @@
+<controls:RadialContainer
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Radial.Controls"
+    Visible="False"
+    MaxSize="0 0">
+    <BoxContainer>
+        <controls:RadialItem
+            Name="CloseButton"
+            Access="Public"
+            VerticalExpand="True"
+            HorizontalExpand="True"
+            Content="{Loc 'ui-radials-close'}"
+            Texture="/Textures/Interface/Default/blocked.png"/>
+        <LayoutContainer Access="Public" Name="Layout" HorizontalExpand="True" VerticalExpand="True"></LayoutContainer>
+        <RichTextLabel Access="Public" Name="ActionLabel" HorizontalExpand="True" Visible="False"/>
+    </BoxContainer>
+</controls:RadialContainer>

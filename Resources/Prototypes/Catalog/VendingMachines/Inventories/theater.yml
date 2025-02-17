@@ -7,6 +7,7 @@
     ClothingUniformJumpsuitJesterAlt: 1
     ClothingShoesJester: 2
     ClothingOuterWinterClown: 1
+    ClothingOuterWinterClownDownjacket: 1
     ClothingOuterWinterMime: 1
     ClothingOuterWinterMusician: 1
     ClothingMaskJoy: 2
@@ -19,6 +20,9 @@
     ClothingOuterPoncho: 2
     ClothingHeadHatSantahat: 2
     ClothingOuterSanta: 2
+    ClothingHeadHatXmas: 2 # DS14
+    ClothingUniformJumpskirtXmas: 2 # DS14
+    ClothingUnderwearSocksThighXmas: 2 # DS14
     ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
     ClothingHeadHatBeretFrench: 2

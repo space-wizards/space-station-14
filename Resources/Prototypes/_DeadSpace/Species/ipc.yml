@@ -1,0 +1,153 @@
+- type: species
+  id: IPC
+  name: species-name-ipc
+  roundStart: true
+  prototype: MobIPC
+  sprites: MobIPCSprites
+  markingLimits: MobIPCMarkingLimits
+  dollPrototype: MobIPCDummy
+  skinColoration: Hues
+  sexes:
+  - Unsexed
+  naming: FirstLast
+  maleFirstNames: names_kpb_first_male
+  femaleFirstNames: names_kpb_first_famale
+  maleLastNames: names_kpb_last_male
+  femaleLastNames: names_kpb_last_famale
+
+- type: speciesBaseSprites
+  id: MobIPCSprites
+  sprites:
+    Head: MobIPCHead
+    Chest: MobIPCTorso
+    Eyes: MobIPCEyes
+    LArm: MobIPCLArm
+    RArm: MobIPCRArm
+    LHand: MobIPCLHand
+    RHand: MobIPCRHand
+    LLeg: MobIPCLLeg
+    RLeg: MobIPCRLeg
+    LFoot: MobIPCLFoot
+    RFoot: MobIPCRFoot
+
+- type: markingPoints
+  id: MobIPCMarkingLimits
+  points:
+    Hair:
+      points: 0
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Tail: # the cat tail joke
+      points: 0
+      required: false
+    HeadTop: # the cat ear joke
+      points: 0
+      required: false
+    Chest:
+      points: 0
+      required: false
+    Legs:
+      points: 0
+      required: false
+    Arms:
+      points: 0
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobIPCEyes
+  baseSprite:
+    sprite: Redspace/Mobs/Customization/eyes.rsi
+    state: IPC
+
+- type: humanoidBaseSprite
+  id: MobIPCAnyMarking
+
+- type: humanoidBaseSprite
+  id: MobIPCMarkingMatchSkin
+  markingsMatchSkin: true
+
+- type: humanoidBaseSprite
+  id: MobIPCHead
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobIPCHeadMale
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobIPCHeadFemale
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobIPCTorso
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobIPCTorsoMale
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobIPCTorsoFemale
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobIPCLLeg
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobIPCLArm
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobIPCLHand
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobIPCLFoot
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobIPCRLeg
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobIPCRArm
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobIPCRHand
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobIPCRFoot
+  baseSprite:
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: r_foot

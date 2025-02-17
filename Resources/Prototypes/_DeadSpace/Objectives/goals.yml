@@ -1,0 +1,75 @@
+- type: stationGoal
+  id: Shuttle
+  text: "/Paperwork/StationGoal/Shuttle.xml"
+
+- type: stationGoal
+  id: SolarPanels
+  text: "/Paperwork/StationGoal/SolarPanels.xml"
+
+- type: stationGoal
+  id: Artifacts
+  text: "/Paperwork/StationGoal/Artifacts.xml"
+
+- type: stationGoal
+  id: Bank
+  text: "/Paperwork/StationGoal/Bank.xml"
+
+- type: stationGoal
+  id: Zoo
+  text: "/Paperwork/StationGoal/Zoo.xml"
+
+- type: stationGoal
+  id: BiggerDorms
+  text: "/Paperwork/StationGoal/BiggerDorms.xml"
+
+- type: stationGoal
+  id: Fight
+  text: "/Paperwork/StationGoal/Fight.xml"
+
+- type: stationGoal
+  id: ObservationPoint
+  text: "/Paperwork/StationGoal/ObservationPoint.xml"
+
+- type: stationGoal
+  id: BornToKill
+  text: "/Paperwork/StationGoal/BornToKill.xml"
+
+- type: stationGoal
+  id: Chill
+  text: "/Paperwork/StationGoal/Chill.xml"
+  modifyStationBalance: -7500
+
+- type: stationGoal
+  id: Borgs
+  text: "/Paperwork/StationGoal/Borgs.xml"
+
+- type: stationGoal
+  id: Bar
+  text: "/Paperwork/StationGoal/Bar.xml"
+
+- type: stationGoal
+  id: MiningOutpost
+  text: "/Paperwork/StationGoal/MiningOutpost.xml"
+
+- type: stationGoal
+  id: MilitaryShuttle
+  text: "/Paperwork/StationGoal/MilitaryShuttle.xml"
+  modifyStationBalance: 30000
+
+- type: stationGoal
+  id: OrbitalBunker
+  text: "/Paperwork/StationGoal/OrbitalBunker.xml"
+  modifyStationBalance: 30000
+
+- type: stationGoal
+  id: Anomalies
+  text: "/Paperwork/StationGoal/Anomalies.xml"
+
+- type: stationGoal
+  id: SmartAnimals
+  text: "/Paperwork/StationGoal/SmartAnimals.xml"
+  modifyStationBalance: -7500
+
+- type: stationGoal
+  id: HydroponicsInVacuum
+  text: "/Paperwork/StationGoal/HydroponicsInVacuum.xml"

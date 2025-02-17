@@ -1,1 +1,46 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/vgstation-coders/vgstation13/raw/99cc2ab62d65a3a7b554dc7b21ff5f57c835f973/icons/turf/walls.dmi", "states": [{"name": "brick0", "directions": 4}, {"name": "brick1", "directions": 4}, {"name": "brick2", "directions": 4}, {"name": "brick3", "directions": 4}, {"name": "brick4", "directions": 4}, {"name": "brick5", "directions": 4}, {"name": "brick6", "directions": 4}, {"name": "brick7", "directions": 4}, {"name": "full"}]}
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "By ko4erga (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "brick0",
+      "directions": 4
+    },
+    {
+      "name": "brick1",
+      "directions": 4
+    },
+    {
+      "name": "brick2",
+      "directions": 4
+    },
+    {
+      "name": "brick3",
+      "directions": 4
+    },
+    {
+      "name": "brick4",
+      "directions": 4
+    },
+    {
+      "name": "brick5",
+      "directions": 4
+    },
+    {
+      "name": "brick6",
+      "directions": 4
+    },
+    {
+      "name": "brick7",
+      "directions": 4
+    }
+  ]
+}

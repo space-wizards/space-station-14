@@ -218,9 +218,9 @@
     layers:
     - state: paper
     - state: cover_base
-      color: "#ab1515"
+      color: "#1f4251"
     - state: decor_wingette
-      color: "#e05334"
+      color: "#3fc5e7"
     - state: icon_stunbaton
   - type: MeleeWeapon
     wideAnimationRotation: 180
@@ -342,9 +342,9 @@
       color: "#87011c"
     - state: icon_law
       color: "#f7d61a"
-  - type: GuideHelp
-    guides:
-    - SpaceLaw
+  # - type: GuideHelp
+  #   guides:
+  #   - SpaceLaw
 
 - type: entity
   parent: BookBase
@@ -493,3 +493,43 @@
       color: gold
   - type: Paper
     content: book-text-atmos-vents
+
+- type: entity
+  id: BookNewFood # DS
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#3ec78e"
+    - state: decor_wingette
+      color: "#28a15a"
+    - state: icon_banana
+    - state: icon_corner
+      color: gold
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - NewFoodDS14
+
+- type: entity
+  id: BookNewDrink # DS
+  parent: BookBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#3ec78e"
+    - state: decor_wingette
+      color: "#28a15a"
+    - state: icon_bar
+    - state: icon_corner
+      color: gold
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - NewDrinkDS14

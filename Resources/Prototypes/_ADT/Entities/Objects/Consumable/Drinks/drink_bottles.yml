@@ -1,0 +1,17 @@
+- type: entity
+  parent: DrinkBase
+  id: ADTDrinkVodkaAntivirusBottleFull
+  name: водка "Антивирус"
+  description: Очень крепкое дешёвое пойло, больше годящееся для производства огненных бомб, чем питья.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: ADTVodkaAntivirus
+          Quantity: 100
+  - type: Drink
+  - type: Sprite
+    sprite: _ADT/Objects/Consumable/Drinks/vodka_antivirusbottle.rsi
+    state: icon

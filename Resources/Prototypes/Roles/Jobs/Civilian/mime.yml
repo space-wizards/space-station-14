@@ -5,7 +5,7 @@
   playTimeTracker: JobMime
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 14400 #4 hrs
+        time: 144000 # 40 hrs
   startingGear: MimeGear
   icon: "JobIconMime"
   supervisors: job-supervisors-hop
@@ -15,8 +15,15 @@
   special:
   - !type:AddComponentSpecial
     components:
+    # - type: CustomNameOnSpawn
     - type: MimePowers
     - type: FrenchAccent
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 45
+  #end-backmen: currency
 
 - type: startingGear
   id: MimeGear
@@ -27,6 +34,7 @@
     pocket2: Paper
     id: MimePDA
     ears: ClothingHeadsetService
+    socks: ClothingUnderwearSocksMime
   storage:
     back:
     - RubberStampMime
@@ -38,7 +46,7 @@
   components:
   - type: InstantAction
     priority: -1
-    useDelay: 30
+    useDelay: 20 # DS14-value
     icon:
       sprite: Structures/Walls/solid.rsi
       state: full

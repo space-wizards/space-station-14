@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by timekor (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_alt"
+    },
+    {
+      "name": "equipped-EARS",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EARS-vox",
+      "directions": 4
+    },
+    {
+      "name": "alt-equipped-EARS",
+      "directions": 4
+    },
+    {
+      "name": "alt-equipped-EARS-vox",
+      "directions": 4
+    }
+  ]
+}

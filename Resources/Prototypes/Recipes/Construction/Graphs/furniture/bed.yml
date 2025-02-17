@@ -33,6 +33,33 @@
             - material: Durathread
               amount: 2
               doAfter: 1
+        - to: adtdeckchair
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 1
+        - to: adtdoublebedtop
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+        - to: adtdoublebedbottom
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
     - node: bed
       entity: Bed
       edges:
@@ -68,6 +95,45 @@
               amount: 2
             - !type:SpawnPrototype
               prototype: MaterialDurathread1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: adtdeckchair
+      entity: ADTDeckChair
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 5
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: adtdoublebedtop
+      entity: ADTDoubleBedTop
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: adtdoublebedbottom
+      entity: ADTDoubleBedBottom
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
               amount: 2
           steps:
             - tool: Screwing

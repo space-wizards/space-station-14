@@ -1,0 +1,36 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Backmen.Reinforcement.UI"
+                      MinWidth="450" MinHeight="200" Title="{Loc wageconsole-edit-title}">
+    <BoxContainer Orientation="Vertical">
+        <!-- Main display -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+            <!-- Station name -->
+            <controls:StripeBack>
+                <PanelContainer>
+                    <RichTextLabel Name="StationName" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Margin="0 5 0 3" />
+                </PanelContainer>
+            </controls:StripeBack>
+        </BoxContainer>
+        <!-- Data -->
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="True">
+            <Label Name="FromName"
+                   Access="Public"
+                   MinSize="32 32"/>
+            <Label Name="ToName"
+                   Access="Public"
+                   HorizontalExpand="True" />
+            <LineEdit Name="Wage"
+                      Access="Public"
+                      HorizontalExpand="True" />
+            <Button Name="SaveBtn"
+                    Access="Public"
+                    ToolTip=""
+                    Text="{Loc wageconsole-save}"
+                    StyleClasses="LabelSubText"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

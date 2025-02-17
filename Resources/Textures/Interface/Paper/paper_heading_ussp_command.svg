@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.8.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 255.9 48.3" style="enable-background:new 0 0 255.9 48.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#E30F1B;}
+	.st1{fill:#FFED00;stroke:#E30F1B;stroke-width:3;stroke-miterlimit:10;}
+	.st2{fill:#E30F1B;stroke:#E30F1B;stroke-miterlimit:10;}
+	.st3{fill:#FFED00;stroke:#E30F1B;stroke-width:1.25;stroke-miterlimit:10;}
+	.st4{fill:#FFED00;stroke:#E30F1B;stroke-width:0.75;stroke-miterlimit:10;}
+	.st5{font-family:'Arial-BoldMT';}
+	.st6{font-size:13.1803px;}
+</style>
+<path class="st0" d="M89.4,0H2.4C1.1,0,0,1.1,0,2.3V46c0,1.3,1.1,2.3,2.4,2.3h86.8c1.3,0,2.4-1.1,2.4-2.3V2.3
+	C91.8,1.1,90.7,0,89.4,0z"/>
+<circle class="st1" cx="45.9" cy="23.5" r="20.8"/>
+<path class="st2" d="M47.9,6.8c2,0.6,4.2,1.5,6.5,3.1c3.6,2.4,5.9,5.4,7.1,7.7l0.5-0.5c-2.2-6.3-7.8-10.9-14.7-11.4L47.9,6.8z"/>
+<path class="st3" d="M48.9,32.3c-21.6,7.8-40.4,10.5-42,6c-1.1-3,5.9-8.5,17-14.2l-0.1,3.5c-4.5,2.7-7,5.1-6.5,6.6
+	c1.1,3.1,15,0.8,30.9-5s28.1-12.9,26.9-16c-0.5-1.5-4.3-1.7-9.9-0.8L63,9.9C75.1,7.2,83.9,7,85,10C86.6,14.5,70.4,24.5,48.9,32.3z"
+	/>
+<polygon class="st4" points="77.7,2.7 74.9,7.7 87.1,15.8 85.3,19.2 73.1,11.1 71.4,14.2 67.3,11.4 71.2,4.2 "/>
+<path class="st4" d="M22.7,39c-2.3,1.6-5.2,2-7.9,1.2l-4.1,6.1l-2.9-1.9l3.8-5.8l0,0c0.9,0.4,1.9,0.5,2.9,0.6c1.7,0,3.4-0.5,5-1.5
+	c3.6-2.5,4.5-7.4,2-10.8c-2.3-3.2-6.9-4.1-10.5-2c0.2-0.2,0.4-0.4,0.6-0.5c4-2.8,9.6-1.8,12.6,2.2C27.5,30.8,26.7,36.2,22.7,39z"/>
+<text transform="matrix(0.8812 0 0 1 96.5698 12.9258)" class="st0 st5 st6">БЛАНК ДОКУМЕНТА </text>
+<text transform="matrix(0.8812 0 0 1 96.5698 28.7402)" class="st0 st5 st6">КОМАНДОВАНИЕ СТАНЦИИ </text>
+<text transform="matrix(0.8812 0 0 1 96.5698 44.5576)" class="st0 st5 st6">USSP</text>
+</svg>

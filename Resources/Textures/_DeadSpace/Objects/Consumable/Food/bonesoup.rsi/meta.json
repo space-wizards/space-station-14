@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "made by rumitiger (discord) https://discord.com/channels/1030160796401016883/1196807376506994758/1196831190523580530",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bone-soup"
+    },
+    {
+      "name": "bowl"
+    }
+  ]
+}

@@ -11,6 +11,13 @@
   - type: RandomSpawner
     offset: 0
     prototypes:
+      # Corvax-Resprite-Start
+      - PottedPlantAlt0
+      - PottedPlantAlt1
+      - PottedPlantAlt2
+      - PottedPlantAlt3
+      - PottedPlantAlt4
+      # Corvax-Resprite-End
       - PottedPlant0
       - PottedPlant1
       - PottedPlant2

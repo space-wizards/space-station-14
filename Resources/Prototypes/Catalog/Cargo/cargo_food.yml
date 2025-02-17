@@ -24,7 +24,7 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
   product: CrateFoodMRE
-  cost: 1000
+  cost: 1750
   category: cargoproduct-category-name-food
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: flour-big
   product: CrateFoodCooking
-  cost: 750
+  cost: 1250
   category: cargoproduct-category-name-food
   group: market
 

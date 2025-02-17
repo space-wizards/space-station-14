@@ -1,0 +1,101 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartXeno
+  parent: [BaseItem, BasePart]
+  name: "xeno body part"
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: torso_m
+
+- type: entity
+  id: TorsoXeno
+  name: "торс ксеноморфа"
+  parent: [PartXeno, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: torso_m
+
+- type: entity
+  id: HeadXeno
+  name: "голова ксеноморфа"
+  parent: [PartXeno, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: head_m
+
+- type: entity
+  id: LeftArmXeno
+  name: "левая рука ксеноморфа"
+  parent: [PartXeno, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_arm
+
+- type: entity
+  id: RightArmXeno
+  name: "правая рука ксеноморфа"
+  parent: [PartXeno, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_arm
+
+- type: entity
+  id: LeftHandXeno
+  name: "левая рука ксеноморфа"
+  parent: [PartXeno, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_hand
+
+- type: entity
+  id: RightHandXeno
+  name: "правая рука ксеноморфа"
+  parent: [PartXeno, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_hand
+
+- type: entity
+  id: LeftLegXeno
+  name: "левая нога ксеноморфа"
+  parent: [PartXeno, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_leg
+
+- type: entity
+  id: RightLegXeno
+  name: "правая нога ксеноморфа"
+  parent: [PartXeno, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_leg
+
+- type: entity
+  id: LeftFootXeno
+  name: "левая ступня ксеноморфа"
+  parent: [PartXeno, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: l_foot
+
+- type: entity
+  id: RightFootXeno
+  name: "правая ступня ксеноморфа"
+  parent: [PartXeno, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Mobs/Species/Xenomorph/parts.rsi
+    state: r_foot

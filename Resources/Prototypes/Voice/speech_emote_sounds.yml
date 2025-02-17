@@ -6,6 +6,8 @@
   sounds:
     Scream:
       collection: MaleScreams
+    ScreamOnDamage:
+      collection: MaleScreams
     Laugh:
       collection: MaleLaugh
     Sneeze:
@@ -48,6 +50,8 @@
   sounds:
     Scream:
       collection: FemaleScreams
+    ScreamOnDamage:
+      collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
     Sneeze:
@@ -89,6 +93,8 @@
     variation: 0.125
   sounds:
     Scream:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    ScreamOnDamage:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
@@ -138,6 +144,8 @@
       collection: Squishes
     Scream:
       collection: MaleScreams
+    ScreamOnDamage:
+      collection: MaleScreams
     Laugh:
       collection: MaleLaugh
     Sneeze:
@@ -172,6 +180,10 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Bubbling:
+      path: /Audio/Voice/Slime/slime_bubbles.ogg
+    Pop:
+      path: /Audio/Voice/Slime/slime_pop.ogg
   params:
     variation: 0.125
 
@@ -181,6 +193,8 @@
     Squish:
       collection: Squishes
     Scream:
+      collection: FemaleScreams
+    ScreamOnDamage:
       collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
@@ -216,6 +230,10 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Bubbling:
+      path: /Audio/Voice/Slime/slime_bubbles.ogg
+    Pop:
+      path: /Audio/Voice/Slime/slime_pop.ogg
   params:
     variation: 0.125
 
@@ -241,6 +259,8 @@
   sounds:
     Scream:
       path: /Audio/Voice/Diona/diona_scream.ogg
+    ScreamOnDamage:
+      path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
     Chirp:
@@ -265,6 +285,8 @@
   sounds:
     Scream:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+    ScreamOnDamage:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
     Laugh:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
     Chitter:
@@ -286,6 +308,8 @@
   id: UnisexDwarf
   sounds:
     Scream:
+      collection: MaleScreams
+    ScreamOnDamage:
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
@@ -329,6 +353,8 @@
   id: FemaleDwarf
   sounds:
     Scream:
+      collection: FemaleScreams
+    ScreamOnDamage:
       collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
@@ -376,6 +402,8 @@
     Buzz:
       path: /Audio/Voice/Moth/moth_scream.ogg
     Scream:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+    ScreamOnDamage:
       path: /Audio/Voice/Moth/moth_scream.ogg
     Laugh:
       path: /Audio/Voice/Moth/moth_laugh.ogg

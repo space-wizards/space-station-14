@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackMilitarySatchel
+  name: army satchel
+  description: A tactical satchel for army related needs.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Back/Satchels/military.rsi
+  - type: Storage
+    grid:
+    - 0,0,9,5
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelCE
+  name: chief engineer satchel
+  description: A white satchel for best engineers.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Back/Satchels/ce.rsi

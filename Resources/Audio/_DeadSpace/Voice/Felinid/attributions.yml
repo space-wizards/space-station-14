@@ -1,0 +1,24 @@
+﻿- files: ["cat_hiss1.ogg", "cat_hiss2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Original sound by https://freesound.org/people/secondbody/ - cut out two clips of cat hissing, cleaned up, and converted to ogg."
+  source: "https://freesound.org/people/secondbody/sounds/50357/"
+
+- files: ["cat_meow1.ogg", "cat_meow2.ogg", "cat_meow3.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Original sound by https://freesound.org/people/ignotus/ - cut out three clips of cat meowing, cleaned up, and converted to ogg."
+  source: "https://freesound.org/people/ignotus/sounds/26104/"
+
+- files: ["cat_mew1.ogg", "cat_mew2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by https://freesound.org/people/videog/ - cut out two clips of kittens mewing, cleaned up, and converted to ogg."
+  source: "https://freesound.org/people/videog/sounds/149191/"
+
+- files: ["cat_purr1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Original sound by https://freesound.org/people/klangstrand/ - cut out short clip, fade in and out, converted to ogg."
+  source: "https://freesound.org/people/klangstrand/sounds/213951/"
+
+- files: ["cat_growl1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by https://freesound.org/people/Zabuhailo/ - fade in and out, converted to ogg."
+  source: "https://freesound.org/people/Zabuhailo/sounds/146968/"

@@ -1,0 +1,113 @@
+# Jumpskirt
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtGothic
+  name: готическое платье
+  description: Готическое платье - элегантное и загадочное облачение, которое выделяется своим темным и интригующим стилем. Насыщенные темные оттенки, такие как черный, бордовый или темно-синий, придают платью таинственность и аристократическую привлекательность. Тонкие кружевные вставки, роскошные драпировки и воланы создают атмосферу древней романтики. Вырезы в виде капельки или платочной горловины придают готическому платью неповторимость и роскошь. Это платье идеально подходит для тех, кто желает выделиться из толпы и подчеркнуть свою уникальность и загадочность. В нем каждая женщина ощущает себя утонченной и притягательной, готовой влюбить в себя окружающих с первого взгляда.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_gothic.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_gothic.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMaid
+  name: вечернее платье горничной
+  description: Это утонченное вечернее платье, вдохновленное элегантным стилем горничных, сочетает в себе изысканность и нотки игривой женственности. Созданное из качественного черного атласа, оно призвано подчеркнуть изысканный вкус и стиль своей обладательницы.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_maid.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_maid.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtDressRed
+  name: вечернее красное платье
+  description: Это великолепное вечернее платье олицетворяет страсть и смелость, смешанные с элегантностью и изысканностью. Созданное из глубокого красного шелка, оно приковывает взгляды и воплощает в себе дух роскоши и чувственности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_red.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_red.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtTango
+  name: платье танго
+  description: Это платье предназначено для танго и воплощает в себе страсть и изысканность. Силуэт облегающий, с вырезом на спине и декоративными драпировками, подчеркивает женственные линии, обеспечивая свободу движения и красоту танца.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_tango.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_tango.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVictorianBlack
+  name: викторианское Черное Платье
+  description: Это черное викторианское платье воплощает в себе дух эпохи. Вырезы, кружева и манжеты придают ему загадочность, а корсет создает изысканный силуэт. Это платье подходит для вечерних мероприятий, где нужно проявить таинственность и элегантность.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_victorian_black.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_victorian_black.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVictorianrRed
+  name: викторианское Красное Платье
+  description: Вдохновленное стилем викторианской эпохи, это красное платье олицетворяет страсть и роскошь. Сложные детали, такие как кружева, объемные рукава и объемная юбка, делают его идеальным выбором для особых событий, где нужно выделиться и произвести впечатление.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_victorian_red.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/dress_victorian_red.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSuitNurse
+  name: костюм медицинской сестры
+  description: Этот костюм для медицинской сестры сочетает в себе функциональность и стиль. Прочные и удобные брюки в сочетании с блузой и узнаваемой фирменной шапочкой создают профессиональный и аккуратный образ. Идеальный выбор для медицинского персонала.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/suit_nurse.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/suit_nurse.rsi
+
+# Jumpsuits
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSuitCheckered
+  name: вечерний клетчатый костюм
+  description: Этот клетчатый костюм сочетает в себе строгость и стиль. Превосходно сшитый пиджак и прямые брюки создают современный силуэт, а клетчатый узор добавляет модный шарм. Подходит для офисных заседаний и повседневных деловых встреч.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/suit_checkered.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/suit_checkered.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSuitTan
+  name: вечерный бежевый костюм
+  description: Этот вечерний костюм в шоколадном цвете олицетворяет роскошь и элегантность. Обтягивающий пиджак и расклешенные брюки создают изысканный силуэт, а насыщенный шоколадный оттенок придает образу теплоту и изысканность. Подходит для особых вечерних событий.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/suit_tan.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/suit_tan.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSuitWaiter
+  name: костюм официанта
+  description: Этот костюм официанта сочетает в себе стиль и удобство. Блуза с отложным воротником и брюки с манжетами создают формальный, но легкий образ. Дополнительные детали, такие как фартук и бабочка, добавляют игривости и завершают стильный вид официанта, обслуживающего с грацией и профессионализмом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/suit_waiter.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/suit_waiter.rsi

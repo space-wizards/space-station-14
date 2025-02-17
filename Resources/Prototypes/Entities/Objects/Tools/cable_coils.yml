@@ -200,6 +200,14 @@
           Quantity: 3
         - ReagentId: Copper
           Quantity: 2
+  - type: Healing
+    damageContainers:
+      - StructuralInorganic
+    damage:
+      types:
+        Slash: -5
+    healingEndSound:
+      path: "/Audio/Items/wirecutter.ogg"
 
 - type: entity
   parent: CableApcStack
@@ -229,3 +237,15 @@
     state: coillv-10
   - type: Stack
     count: 1
+
+# DS14-start
+- type: entity
+  parent: CableApcStack
+  id: CableApcStack5
+  suffix: 5
+  components:
+  - type: Sprite
+    state: coillv-10
+  - type: Stack
+    count: 5
+# DS14-end

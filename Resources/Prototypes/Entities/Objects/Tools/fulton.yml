@@ -104,3 +104,13 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
+
+- type: entity
+  parent: Fulton
+  id: Fulton0
+  suffix: Не исчезают закончившись, 0
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stack
+    lingering: true
+    count: 0

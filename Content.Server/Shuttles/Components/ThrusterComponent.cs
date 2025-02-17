@@ -7,7 +7,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent, NetworkedComponent]
-    [Access(typeof(ThrusterSystem))]
     public sealed partial class ThrusterComponent : Component
     {
         /// <summary>

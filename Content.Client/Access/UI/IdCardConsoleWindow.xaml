@@ -27,8 +27,13 @@
         </GridContainer>
         <Control MinSize="0 8" />
         <GridContainer Columns="2">
-            <Label Text="{Loc 'id-card-console-window-job-selection-label'}" />
-            <OptionButton Name="JobPresetOptionButton" />
+            <GridContainer Columns="2" HorizontalExpand="True">
+                <Label Text="{Loc 'id-card-console-window-job-selection-label'}" />
+                <OptionButton Name="JobPresetOptionButton" />
+            </GridContainer>
+            <BoxContainer Orientation="Vertical">
+                <Button Name="SelectAllAccessesButton" Access="Public" Text="{Loc 'id-card-console-window-select-all-accesses-button'}" />
+            </BoxContainer>
         </GridContainer>
         <Control Name="AccessLevelControlContainer" />
     </BoxContainer>

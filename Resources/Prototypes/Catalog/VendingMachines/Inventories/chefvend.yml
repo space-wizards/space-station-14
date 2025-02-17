@@ -12,7 +12,7 @@
     FoodCondimentBottleBBQ: 1
     FoodCondimentBottleVinegar: 2
     ReagentContainerOliveoil: 2
-    ReagentContainerMayo: 1
+    ReagentContainerMayo: 4 # DS14-value
     VariantCubeBox: 1
     FoodContainerEgg: 1
     DrinkMilkCarton: 2
@@ -20,6 +20,8 @@
     FoodButter: 3
     FoodCheese: 1
     FoodMeat: 6
+    ADTReagentContainerCocoaSolid: 4 # ADT
+    ADTFoodSausageRaw: 12 # ADT
   contrabandInventory:
     EggBoxBroken: 1
     FoodBoxDonkpocket: 1

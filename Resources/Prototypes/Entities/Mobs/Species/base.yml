@@ -19,9 +19,14 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "underwearb" ] # Sirena-slots
+    - map: [ "underweart" ] # Sirena-slots
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # Sirena-slots
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ] # Sirena-slots
+    - map: [ "socks" ] # Sirena-slots
     - map: ["jumpsuit"]
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    # - map: ["enum.HumanoidVisualLayers.LFoot"] # Sirena-slots
+    # - map: ["enum.HumanoidVisualLayers.RFoot"] # Sirena-slots
     - map: ["enum.HumanoidVisualLayers.LHand"]
     - map: ["enum.HumanoidVisualLayers.RHand"]
     - map: [ "gloves" ]
@@ -165,6 +170,7 @@
         Blunt: 5
   - type: SleepEmitSound
   - type: SSDIndicator
+  # - type: SleepOnSSD # DS14
   - type: StandingState
   - type: Dna
   - type: MindContainer
@@ -211,6 +217,9 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  - type: EmoteAnimation # ADT-Emotes
+  - type: EmotePanel # DS14-Emote-panel
+  - type: LieDown # DS14
 
 - type: entity
   save: false
@@ -253,9 +262,9 @@
         Heat: 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      293: 0.8
-      280: 0.6
-      260: 0.4
+      293: 0.9 # DS14-value
+      280: 0.7 # DS14-value
+      260: 0.5 # DS14-value
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -277,8 +286,15 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
+  - type: EmoteOnDamage # DS14: scream on damage
+    withChat: true
+    hiddenFromChatWindow: false
+    emotes:
+    - ScreamOnDamage
   - type: FireVisuals
     alternateState: Standing
+  - type: ExamineBlood # DS14
+  - type: HumanoidDamageSequence # DS14: for coroner job
 
 - type: entity
   save: false
@@ -305,9 +321,12 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: ["jumpsuit"]
+    - map: ["underwearb"] # Sirena-slots
+    - map: ["underweart"] # Sirena-slots
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: ["socks"] # Sirena-slots
+    - map: ["jumpsuit"] # Sirena-slots
     - map: ["enum.HumanoidVisualLayers.LHand"]
     - map: ["enum.HumanoidVisualLayers.RHand"]
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]

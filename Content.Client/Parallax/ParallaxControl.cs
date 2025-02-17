@@ -4,13 +4,9 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Parallax;
 
-/// <summary>
-///     Renders the parallax background as a UI control.
-/// </summary>
 public sealed class ParallaxControl : Control
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -18,19 +14,22 @@ public sealed class ParallaxControl : Control
     [Dependency] private readonly IRobustRandom _random = default!;
 
     [ViewVariables(VVAccess.ReadWrite)] public Vector2 Offset { get; set; }
-
+    [ViewVariables(VVAccess.ReadWrite)] public string ParallaxId { get; set; } = "FastSpace";
     public ParallaxControl()
     {
         IoCManager.InjectDependencies(this);
 
         Offset = new Vector2(_random.Next(0, 1000), _random.Next(0, 1000));
         RectClipContent = true;
-        _parallaxManager.LoadParallaxByName("FastSpace");
+        _parallaxManager.LoadParallaxByName(ParallaxId);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        foreach (var layer in _parallaxManager.GetParallaxLayers("FastSpace"))
+        if (!_parallaxManager.IsLoaded(ParallaxId))
+            _parallaxManager.LoadParallaxByName(ParallaxId);
+
+        foreach (var layer in _parallaxManager.GetParallaxLayers(ParallaxId))
         {
             var tex = layer.Texture;
             var texSize = (tex.Size.X * (int) Size.X, tex.Size.Y * (int) Size.X) * layer.Config.Scale.Floored() / 1920;

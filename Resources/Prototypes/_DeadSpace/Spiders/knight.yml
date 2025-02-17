@@ -1,0 +1,133 @@
+- type: entity
+  name: паук воин
+  parent: BaseMobSpiderTerror
+  id: MobSpiderTerrorWarrior
+  description: Прочный, выглядит пугающе.
+  components:
+  - type: Sprite
+    scale: 1, 1
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/varrior_terror.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 2
+        Poison: 2
+      groups:
+        Brute: 8
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      250: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Reflect
+    reflectProb: 0.2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 200
+    bloodlossThreshold: 0.4
+  - type: Puller
+    needsHands: false
+  - type: Bloodsucker
+    maxCountReagent: 200 # Емкость
+    countReagent: 0 # Сколько реагента при спавне
+    duration: 2 # Длительность сосания
+    howMuchWillItSuck: 20 # Сколько высосет за один укус
+    injectSound:
+      collection: SpiderHatches # Звуки после высасывания
+  - type: Evolution
+    duration: 360 # Время до получения возможности эволюционировать
+    spawnedEntities: # В кого можно эволюционировать
+      - MobSpiderTerrorKnight
+      - MobSpiderTerrorVdova
+      - MobSpiderTerrorReaper
+      - MobSpiderTerrorInfector
+  - type: NeededBloodForEvolution # Пример
+    defaultCost: 200 # Стандартная цена на не заданный результат
+    bloodCosts:
+      MobSpiderTerrorKnight: 150
+      MobSpiderTerrorVdova: 150
+      MobSpiderTerrorReaper: 200
+      MobSpiderTerrorInfector: 200
+
+- type: entity
+  name: паук рыцарь
+  parent: BaseMobSpiderTerror
+  id: MobSpiderTerrorKnight
+  description: Прочный, выглядит пугающе.
+  components:
+  - type: Sprite
+    scale: 1, 1
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/knight_terror.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 2
+        Poison: 1
+      groups:
+        Brute: 12
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Reflect
+    reflectProb: 0.3
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 150
+    bloodlossThreshold: 0.2
+  - type: Puller
+    needsHands: false
+  - type: Bloodsucker
+    maxCountReagent: 100 # Ёмкость
+    countReagent: 30 # Сколько реагента при спавне
+    duration: 2 # Длительность сосания
+    howMuchWillItSuck: 20 # Сколько высосет за один укус
+    injectSound:
+      collection: SpiderHatches # Звуки после высасывания
+  - type: SpiderKnight

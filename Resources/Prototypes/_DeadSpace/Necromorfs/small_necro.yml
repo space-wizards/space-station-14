@@ -1,0 +1,149 @@
+- type: entity
+  name: заражённое мясо
+  parent: FoodMeatRawBase
+  id: FoodMeatNecro
+  description: Мясо заражённое некроинфекцией.
+  components:
+  - type: Sprite
+    state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: ExtractInfectorDead
+          Quantity: 4
+
+- type: entity
+  name: некроморф
+  parent:
+  - SimpleSpaceMobBase
+  id: MobSmallNecro
+  description: Маленький.
+  components:
+  - type: Damageable
+    damageModifierSet: Necromorf
+  - type: Necromorf
+  - type: NightVision
+  - type: ImmunNecroobelisk
+  - type: ZombieImmune
+  - type: IgnoreKudzu
+  - type: Body
+    prototype: Mouse
+  - type: Muted
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: _DeadSpace/Necromorfs/small_necro.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+  - type: Item
+    size: Tiny
+    heldPrefix: 0
+  - type: NpcFactionMember
+    factions:
+      - Necromorfs
+  - type: HTN
+    rootTask:
+      task: XenoCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: running
+      Dead:
+        Base: dead
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: ExtractInfectorDead
+          Quantity: 4
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatNecro
+      amount: 1
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
+    - ChefPilot
+    - Mouse
+    - Meat
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      groups:
+        Brute: 4
+  - type: Bloodstream
+    bloodReagent: NecromorfBlood
+    bloodMaxVolume: 20
+    bloodlossThreshold: 0
+  - type: CanEscapeInventory
+  - type: MobPrice
+    price: 200
+  - type: BadFood
+  - type: NonSpreaderZombie
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
+
+- type: entity
+  name: некроморф
+  parent:
+  - MobSmallNecro
+  id: MobSmallNecroHive
+  description: Маленький.
+  components:
+  - type: HTN
+    rootTask:
+      task: RatServantCompound
+    blackboard:
+      IdleRange: !type:Single
+        3.5
+      FollowCloseRange: !type:Single
+        2.0
+      FollowRange: !type:Single
+        3.0

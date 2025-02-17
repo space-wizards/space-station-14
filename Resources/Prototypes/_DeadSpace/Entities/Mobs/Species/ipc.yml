@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseMobSpeciesComputer
+  id: BaseMobIPC
+  abstract: true
+  components:
+  - type: Icon
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: full
+  - type: Body
+    prototype: IPC
+    requiredLegs: 2
+  - type: HumanoidAppearance
+    species: IPC
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#525252"
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobIPCDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: IPC

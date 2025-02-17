@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingMaskGas
+  id: ADTClothingMaskGasDarkRavenFriskis
+  name: противогаз ворона
+  description: Личные вещи бывают странные, да?
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Mask/raven.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Mask/raven.rsi
+    clothingVisuals:
+      mask:
+      - state: equipped-MASK
+      - state: equipped-MASK-unshaded
+        shader: unshaded
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.80

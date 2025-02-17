@@ -207,6 +207,11 @@
   license: CC0-1.0
   source: https://freesound.org/people/martian/sounds/19261/
 
+- files: ["jackboot1.ogg", "jackboot2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Paradise"
+  source: "https://github.com/ParadiseSS13/Paradise"
+
 - files: ["explosion_small1.ogg", "explosion_small2.ogg", "explosion_small3.ogg", "explosion1.ogg", "explosion2.ogg", "explosion3.ogg", "explosion4.ogg", "explosion5.ogg", "explosion6.ogg", "explosionfar.ogg", "explosionsmallfar.ogg"]
   copyright: "vgstation at c5edbfd7179288080f081e2b8ac2496b7e4455db"
   license: CC-BY-SA-3.0

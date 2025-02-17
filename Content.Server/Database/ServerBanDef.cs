@@ -76,7 +76,7 @@ namespace Content.Server.Database
             }
             else
             {
-                var appeal = cfg.GetCVar(CCVars.InfoLinksAppeal);
+                var appeal = cfg.GetCVar(CCVars.InfoLinksDiscord);
                 expires = !string.IsNullOrWhiteSpace(appeal)
                     ? loc.GetString("ban-banned-permanent-appeal", ("link", appeal))
                     : loc.GetString("ban-banned-permanent");

@@ -647,9 +647,9 @@
   - type: Explosive
     deleteAfterExplosion: false
     explosionType: Default
-    totalIntensity: 500
-    intensitySlope: 2.5
-    maxIntensity: 50
+    totalIntensity: 75
+    intensitySlope: 0.5
+    maxIntensity: 40
 
 - type: artifactEffect
   id: EffectPortal

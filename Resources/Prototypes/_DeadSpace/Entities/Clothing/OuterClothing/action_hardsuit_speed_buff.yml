@@ -1,0 +1,11 @@
+- type: entity
+  id: ActionHardsuitSpeedBuff
+  name: Переключить ускорение
+  description: Это действие включает или выключает сервоприводы ускоряющие владельца, при этом тратиться заряд внутренней батареи.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/actions_mecha.rsi/mech_overload_off.png
+    priority: -20
+    useDelay: 10
+    event: !type:ActivateSpeedBuffActionEvent

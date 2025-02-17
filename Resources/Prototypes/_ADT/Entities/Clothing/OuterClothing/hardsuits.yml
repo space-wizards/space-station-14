@@ -1,0 +1,203 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTClothingOuterHardsuitCybersunBodyGuard
+  name: скафандр телохранителя Cybersun
+  description: Тяжелобронированный скафандр элитного подразделения телохранителей Cybersun
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/cybersunbodyguard.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/cybersunbodyguard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+        Stun: 0.65 # 5 stunbaton hits for stun
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ADTClothingHeadHelmetHardsuitCybersunBodyGuard
+  - type: HardsuitIdentification
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTClothingOuterHardsuitCybersunCrysis
+  name: скафандр суперсолдата Cybersun
+  description: Самая передовая, секретная технология CyberSun в сфере защиты. Кажется эта разработка ведёт к созданию супер солдат. Пахнет пластитаном и бесчестным боем.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/cybersun_crysis_hardsuit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/cybersun_crysis_hardsuit.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.2
+        Heat: 0.2
+        Radiation: 0.1
+        Caustic: 0.2
+        Stun: 0.05 # what is stun?
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ADTClothingHeadHelmetHardsuitCybersunCrysis
+  - type: HardsuitIdentification
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTClothingOuterHardsuitCerber
+  name: скафандр броне отряда "Церберы"
+  description: Специализированный черный скафандр, который использовался в азиатских странах 19 века, центральной полицией.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/cerber.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/cerber.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.65
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.4
+        Piercing: 0.3
+        Heat: 0.1
+        Radiation: 0.35
+        Caustic: 0.7
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ADTClothingHeadHelmetHardsuitCerber
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTClothingOuterHardsuitSaibaSain
+  name: элитный скафандр самурая
+  description: Разработка из плазматических волокн, наномашин и кремния. Пахнет как цветение сакуры.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/saiba_sain_hardsuit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/saiba_sain_hardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+        Stun: 0.65 # 5 stunbaton hits for stun
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ADTClothingHeadHelmetHardsuitSaibaSain
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTClothingOuterHardsuitIlisium
+  name: скафандр Ilisium
+  description: Ilisium...
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/hardsuit_ili.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/hardsuit_ili.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Heat: 0.35
+        Radiation: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ADTClothingHeadHelmetIlisium
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTSpaceMarinne
+  name: скафандр чемпиона
+  description: Скафандр принадлежащий лучшими из лучших воинов древности. Не очерните его имя.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/marinne.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/marinne.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+        Stun: 0.65 # 5 stunbaton hits for stun
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ADTSpaceMarinneHead
+  - type: Item
+    size: Huge

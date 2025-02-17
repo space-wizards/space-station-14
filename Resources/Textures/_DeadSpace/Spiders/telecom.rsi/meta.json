@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
+  "copyright": "Made by kloopre (discord) for Space station 14 server Мёртвый Космос",
+  "size": {
+    "x": 64,
+    "y": 38
+  },
+  "states": [
+    {
+      "name": "norka"
+    }
+  ]
+}

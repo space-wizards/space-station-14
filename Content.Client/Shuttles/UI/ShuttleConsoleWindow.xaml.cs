@@ -22,6 +22,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     public event Action<NetEntity, NetEntity>? DockRequest;
     public event Action<NetEntity>? UndockRequest;
+    public event Action<NetEntity, float, float>? ThrustersRestartRequest;
 
     public ShuttleConsoleWindow()
     {
@@ -61,6 +62,11 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockContainer.UndockRequest += entity =>
         {
             UndockRequest?.Invoke(entity);
+        };
+
+        NavContainer.ThrustersRestartRequest += (entity, gyroscopeThrust, thrusterThrust) =>
+        {
+            ThrustersRestartRequest?.Invoke(entity, gyroscopeThrust, thrusterThrust);
         };
     }
 

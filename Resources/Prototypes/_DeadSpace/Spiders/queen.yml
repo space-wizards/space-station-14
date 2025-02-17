@@ -1,0 +1,215 @@
+- type: entity
+  name: королева пауков
+  parent: BaseMobSpiderTerror
+  id: MobSpiderTerrorQueen
+  suffix: уровень 1
+  description: Выглядит величественно.
+  components:
+  - type: Sprite
+    scale: 0.65, 0.65
+    drawdepth: SmallMobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/terror_queen.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 1
+        Poison: 8
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 130
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 5
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 250
+    bloodlossThreshold: 0.4
+  - type: Evolution
+    duration: 60 # Время до получения возможности эволюционировать
+    spawnedEntities: # В кого можно эволюционировать
+      - MobSpiderTerrorQueenLvl2
+  - type: SpiderKing
+
+- type: entity
+  name: королева пауков
+  parent: BaseMobSpiderTerror
+  id: MobSpiderTerrorQueenLvl2
+  suffix: уровень 2
+  description: Выглядит величественно.
+  components:
+  - type: Sprite
+    scale: 1, 1
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/terror_queen.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 5
+        Poison: 12
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Critical
+      350: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 250
+    bloodlossThreshold: 0.4
+  - type: Evolution
+    duration: 300 # Время до получения возможности эволюционировать
+    spawnedEntities: # В кого можно эволюционировать
+      - MobSpiderTerrorQueenLvl3
+  - type: SpawnAgainst
+    duration: 20
+    spawnAgainstAction: ActionSpawnAgainst
+    spawnedEntities:
+      - CocoonSpider # Что спавнить
+    spawnSound:
+      collection: SpiderHatches # Звуки спавна
+  - type: Puller
+    needsHands: false
+  - type: Bloodsucker
+    maxCountReagent: 300 # Ёмкость
+    countReagent: 300 # Сколько реагента при спавне
+    duration: 2 # Длительность сосания
+    howMuchWillItSuck: 20 # Сколько высосет за один укус
+    injectSound:
+      collection: SpiderHatches # Звуки после высасывания
+  - type: NeededBloodForSpawnAgainst # Пример
+    defaultCost: 50 # Стандартная цена на не заданный результат
+  - type: SpiderKing
+  - type: Damageable
+    damageModifierSet: HeadSpiderTerror
+
+- type: entity
+  name: королева пауков
+  parent: BaseMobSpiderTerror
+  suffix: уровень 3
+  id: MobSpiderTerrorQueenLvl3
+  description: Выглядит величественно.
+  components:
+  - type: Sprite
+    scale: 1.5, 1.5
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: running
+      sprite: _DeadSpace/Spiders/terror_queen.rsi
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 15
+        Poison: 15
+        Structural: 40
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Critical
+      450: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+    bloodMaxVolume: 250
+    bloodlossThreshold: 0.4
+  - type: SpawnAgainst
+    duration: 15
+    spawnAgainstAction: ActionSpawnAgainst
+    spawnedEntities:
+      - SpiderTomb
+      - TelecomServerSpiderTerror
+      - CocoonSpider # Что спавнить
+      - CocoonKingBloodSpider
+    spawnSound:
+      collection: SpiderHatches # Звуки спавна
+  - type: StunRadius
+    actionStunRadius: ActionStunRadiusSpider
+    paralyzeTime: 3 # Время стана
+    launchForwardsMultiplier: 1 # Длинна слодьжения после стана
+    rangeStun: 5 # Радиус способности
+    ignorAlien: true # Не трогать союзников
+    stunRadiusSound:
+      path: /Audio/Animals/space_dragon_roar.ogg #Звуки способности
+  - type: Puller
+    needsHands: false
+  - type: Bloodsucker
+    maxCountReagent: 500 # Емкость
+    countReagent: 500 # Сколько реагента при спавне
+    duration: 2 # Длительность сосания
+    howMuchWillItSuck: 20 # Сколько высосет за один укус
+    injectSound:
+      collection: SpiderHatches # Звуки после высасывания
+  - type: NeededBloodForSpawnAgainst # Пример
+    defaultCost: 50 # Стандартная цена на не заданный результат
+    bloodCosts: # Цены
+      SpiderTomb: 100
+      TelecomServerSpiderTerror: 200
+      CocoonKingBloodSpider: 250
+      CocoonSpider: 10
+  - type: SpiderKing
+  - type: Damageable
+    damageModifierSet: HeadSpiderTerror
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      250: 0.7
+      300: 0.5

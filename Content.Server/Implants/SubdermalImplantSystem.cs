@@ -27,6 +27,9 @@ using Content.Server.DetailExaminable;
 using Content.Shared.Store.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using Content.Shared.FixedPoint;
+using Content.Shared.Damage.Components;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Implants;
 
@@ -45,6 +48,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!; // DS14-implants
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -60,6 +64,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
         SubscribeLocalEvent<SubdermalImplantComponent, UseScramImplantEvent>(OnScramImplant);
         SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+        SubscribeLocalEvent<SubdermalImplantComponent, UseAdrenalImplantEvent>(OnAdrenalActivated); // DS14-implants
 
     }
 
@@ -235,4 +240,43 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         args.Handled = true;
         QueueDel(uid);
     }
+
+    // DS14-implants-start 
+    private void OnAdrenalActivated(EntityUid uid, SubdermalImplantComponent component, UseAdrenalImplantEvent args)
+    {
+        if (component.ImplantedEntity is not { } target)
+            return;
+
+        var reagents = new List<(string, FixedPoint2)>()
+        {
+            ("Stimulants", 50f)
+        };
+
+        if (TryInjectReagents(target, reagents))
+        {
+            _popup.PopupEntity(Loc.GetString("adrenal-implant-activated"), target, target);
+        }
+        else
+            return;
+
+        args.Handled = true;
+    }
+
+    public bool TryInjectReagents(EntityUid uid, List<(string, FixedPoint2)> reagents)
+    {
+        var solution = new Shared.Chemistry.Components.Solution();
+        foreach (var reagent in reagents)
+        {
+            solution.AddReagent(reagent.Item1, reagent.Item2);
+        }
+
+        if (!_solution.TryGetInjectableSolution(uid, out var targetSolution, out var _))
+            return false;
+
+        if (!_solution.TryAddSolution(targetSolution.Value, solution))
+            return false;
+
+        return true;
+    }
+    // DS14-implants-end 
 }

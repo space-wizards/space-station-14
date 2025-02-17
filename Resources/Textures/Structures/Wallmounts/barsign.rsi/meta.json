@@ -7,6 +7,7 @@
   "license": "CC-BY-SA-3.0",
   "copyright": "https://github.com/vgstation-coders/vgstation13/commit/1fbb5e417d0200fe60c6b628656a371093d2d715",
   "copyright": "https://github.com/tgstation/tgstation/commit/68aade356cf53032f206cb5a887581ac7d166cae",
+  "copyright": "corvax_alcoholic made by discord:DenLemp#2965",
   "copyright": "https://github.com/space-wizards/space-station-14/commit/b301d3ac26cb2301048eda4535667c28e2283d41 - Made by ProPandaBear for SS14",
   "states": [
     {
@@ -494,6 +495,24 @@
           0.2,
           0.2,
           2.2
+        ]
+      ]
+    },
+    {
+      "name": "corvax_alcoholic",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
         ]
       ]
     }

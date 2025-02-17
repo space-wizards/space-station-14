@@ -1,0 +1,35 @@
+- type: entity
+  name: MGL
+  parent: [BaseWeaponLauncher, BaseGunWieldable]
+  id: WeaponLauncherMGL
+  description: Ручной многозарядный полуавтоматический гранатомет, разработанный NanoTrasen для бойцов КСО.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Launchers/mgl.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Launchers/mgl.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: RevolverAmmoProvider
+    proto: GrenadeFrag
+    whitelist:
+      tags:
+      - Grenade
+    capacity: 3
+    chambers: [ True, True, True ]
+    ammoSlots: [ null, null, null ]
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container

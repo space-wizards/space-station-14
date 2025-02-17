@@ -1,0 +1,14 @@
+ent-ActionSithLightning = Ударить молнией
+    .desc = Выпускает в цель молнию.
+ent-ActionSithForceOne = Поток силы
+    .desc = Отталкивает или притягивает одну цель.
+ent-ActionSithForce = Поток силы
+    .desc = Отталкивает или притягивает всё вокруг.
+ent-ActionSithShield = Щит силы
+    .desc = Барьет из силы который отталкивает или поглощает удары.
+ent-ActionSithSubmission = Подчинение силой
+    .desc = Влияет на разум цели с помощью силы, подчиняя её пользователю.
+ent-ActionRecallSithEsword = Телепортировать меч
+    .desc = Телепортирует ваш энерго меч вам в руки.
+ent-ActionSithEswordTeleport = Телепортироваться к мечу
+    .desc = Телепортирует вас к энерго мечу и даёт вам его в руку.

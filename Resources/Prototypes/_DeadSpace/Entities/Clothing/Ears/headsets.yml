@@ -1,0 +1,52 @@
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetLaw
+  name: гарнитура юридического отдела
+  description: Гарнитура, используемая членами юридического отдела.
+  components:
+    - type: ContainerFill
+      containers:
+        key_slots:
+        - EncryptionKeyLaw
+        - EncryptionKeySecurity
+        - EncryptionKeyCommon
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/servicesecurity.rsi
+    - type: Headset
+      color: "#d98b71"
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMerc
+  name: гарнитура наёмника
+  description: Гарнитура, используемая наёмниками.
+  components:
+    - type: ContainerFill
+      containers:
+        key_slots:
+        - EncryptionKeyMerc
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/freelance.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/freelance.rsi
+    - type: Headset
+      color: "#ff144b"
+
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltTypan
+  name: полноразмерная кроваво - красная гарнитура 
+  description: Модифицированный модульный интерком синдиката.
+  components:
+  - type: Headset
+    color: "#8f4a4b"
+  - type: EncryptionKeyHolder
+    keySlots: 5
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyTypan
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/syndicate.rsi

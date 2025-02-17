@@ -1,0 +1,36 @@
+- type: entity
+  id: SpaceCleanerTank
+  parent: StorageTank
+  name: резервуар с космическим очистителем
+  description: Резервуар для космического очистителя. Используется для хранения большого количества космического очистителя.
+  suffix: Пустой
+  components:
+  - type: StaticPrice
+    price: 500
+  - type: Sprite
+    sprite: _ADT/Structures/Storage/tanks.rsi
+    layers:
+      - state: watertank-2
+      - state: watertank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: watertank-2-
+  - type: ExaminableSolution
+    solution: tank
+
+- type: entity
+  parent: SpaceCleanerTank
+  id: SpaceCleanerTankFull
+  name: резервуар с космическим очистителем
+  description: Резервуар для космического очистителя. Используется для хранения большого количества космического очистителя.
+  suffix: Заполненный
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 1500

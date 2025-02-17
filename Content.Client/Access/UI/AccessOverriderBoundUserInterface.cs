@@ -51,7 +51,7 @@ namespace Content.Client.Access.UI
             if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
             {
                 accessLevels = accessOverrider.AccessLevels;
-                accessLevels.Sort();
+                // accessLevels.Sort(); // DS14-access-levels-sort
             }
             else
             {

@@ -97,11 +97,11 @@
         types:
           Blunt: 20
           Structural: 20
-    - type: MeleeSpeech
-    - type: UserInterface
-      interfaces:
-        enum.MeleeSpeechUiKey.Key:
-          type: MeleeSpeechBoundUserInterface
+    # - type: MeleeSpeech
+    # - type: UserInterface
+    #   interfaces:
+    #     enum.MeleeSpeechUiKey.Key:
+    #       type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
     - type: InteractionPopup

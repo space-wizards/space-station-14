@@ -1,0 +1,532 @@
+- type: marking
+  id: Belly1
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
+      state: belly1
+
+- type: marking
+  id: Belly2
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
+      state: belly2
+
+- type: marking
+  id: Belly3
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
+      state: belly3
+
+- type: marking
+  id: Belly4
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_chest.rsi
+      state: chest
+
+- type: marking
+  id: BodyStripes
+  bodyPart: [ Chest, RArm, LArm, RLeg, LLeg ]
+  markingCategory: Overlay
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_overlay.rsi
+      state: stripes_body
+
+- type: marking
+  id: BodyBlots
+  bodyPart: [ Chest, RArm, LArm, RLeg, LLeg ]
+  markingCategory: Overlay
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_overlay.rsi
+      state: blots_body
+
+- type: marking
+  id: patch2
+  bodyPart: [ Chest, RLeg, LLeg ]
+  markingCategory: Overlay
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_overlay.rsi
+      state: patch
+
+- type: marking
+  id: BodySkeleton
+  bodyPart: [ Chest, RArm, LArm, RLeg, LLeg ]
+  markingCategory: Overlay
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_overlay.rsi
+      state: skeleton_body
+
+- type: marking
+  id: arm1
+  bodyPart: LLeg
+  markingCategory: Overlay
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_overlay.rsi
+      state: points
+
+- type: marking
+  id: LHandGradient
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_parts.rsi
+      state: gradient_LHand
+
+- type: marking
+  id: RHandGradient
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_parts.rsi
+      state: gradient_RHand
+
+- type: marking
+  id: LArmGradient
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_parts.rsi
+      state: gradient_LArm
+
+- type: marking
+  id: RArmGradient
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_parts.rsi
+      state: gradient_RArm
+
+- type: marking
+  id: LLegGradient
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_parts.rsi
+      state: gradient_LLeg
+
+- type: marking
+  id: RLegGradient
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_parts.rsi
+      state: gradient_RLeg
+
+- type: marking
+  id: TailWingler3
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: wingler_3
+
+- type: marking
+  id: TailWingler2
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: wingler_2
+
+- type: marking
+  id: TailWingler1
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: wingler_1
+
+- type: marking
+  id: TailTip
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: tail_tip
+
+- type: marking
+  id: TailRing
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: tail_ring
+
+- type: marking
+  id: TailSkeleton
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: tail_skeleton
+
+- type: marking
+  id: TailFluffy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_tail.rsi
+      state: tail_fluffy
+
+- type: marking
+  id: TailColor
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Species/CatSkin/parts.rsi
+      state: tail_m
+
+- type: marking
+  id: Head1
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: outears
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: inears
+
+- type: marking
+  id: Head5
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: nose
+
+- type: marking
+  id: Head7
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: patch_2
+
+- type: marking
+  id: Head8
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: tiger_face
+
+- type: marking
+  id: Head9
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: tiger_head
+
+- type: marking
+  id: HeadEyesStripes
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: eye_stripes_head
+
+- type: marking
+  id: HeadStar
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: star_head
+
+- type: marking
+  id: HeadRacoon
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: raccoon-head
+
+- type: marking
+  id: HeadMane
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: mane_head
+
+- type: marking
+  id: HairEyebrows
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: eyebrows
+
+- type: marking
+  id: Head4
+  bodyPart: Head
+  markingCategory: Snout
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: muzzleinears
+
+- type: marking
+  id: Head2
+  bodyPart: Head
+  markingCategory: Snout
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_head.rsi
+      state: muzzle
+
+- type: marking
+  id: Hair1
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: bangs
+
+- type: marking
+  id: Hair2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: bedhead
+
+- type: marking
+  id: Hair3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: bob
+
+- type: marking
+  id: Hair4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: braid
+
+- type: marking
+  id: Hair5
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: clean
+
+- type: marking
+  id: Hair6
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: curly
+
+- type: marking
+  id: Hair7
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: fingerwave
+
+- type: marking
+  id: Hair8
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: ladiesretro
+
+- type: marking
+  id: Hair9
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: long
+
+- type: marking
+  id: Hair10
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: messy
+
+- type: marking
+  id: Hair11
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: mohawk
+
+- type: marking
+  id: Hair12
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: plait
+
+- type: marking
+  id: Hair13
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: rattail
+
+- type: marking
+  id: Hair14
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: shaggy
+
+- type: marking
+  id: Hair15
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: spikey
+
+- type: marking
+  id: Hair16
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: straight
+
+- type: marking
+  id: Hair17
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: victory
+
+- type: marking
+  id: HairPigtail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: pigtail
+
+- type: marking
+  id: HairPonytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_hairs.rsi
+      state: ponytail
+
+- type: marking
+  id: FacialHairBeard
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_facial_hairs.rsi
+      state: beard
+
+- type: marking
+  id: FacialHairCheeks
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_facial_hairs.rsi
+      state: cheeks
+
+- type: marking
+  id: FacialHairMustache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_facial_hairs.rsi
+      state: mustache
+
+- type: marking
+  id: FacialHairMustache2
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_facial_hairs.rsi
+      state: mustache_2
+
+- type: marking
+  id: FacialHairMustache3
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Tajaran]
+  sprites:
+    - sprite: Mobs/Customization/Tajaran/tajaran_facial_hairs.rsi
+      state: mustache_3

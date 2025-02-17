@@ -1,4 +1,4 @@
-﻿using Content.Client.Chat.UI;
+using Content.Client.Chat.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chat;
@@ -21,7 +21,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IClyde _displayManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
 
-    private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
+    // private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private EmotesMenu? _menu;
 
     public void OnStateEntered(GameplayState state)
@@ -39,55 +39,55 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     private void ToggleEmotesMenu(bool centered)
     {
-        if (_menu == null)
-        {
-            // setup window
-            _menu = UIManager.CreateWindow<EmotesMenu>();
-            _menu.OnClose += OnWindowClosed;
-            _menu.OnOpen += OnWindowOpen;
-            _menu.OnPlayEmote += OnPlayEmote;
+        // if (_menu == null)
+        // {
+        //     // setup window
+        //     _menu = UIManager.CreateWindow<EmotesMenu>();
+        //     _menu.OnClose += OnWindowClosed;
+        //     _menu.OnOpen += OnWindowOpen;
+        //     _menu.OnPlayEmote += OnPlayEmote;
 
-            if (EmotesButton != null)
-                EmotesButton.SetClickPressed(true);
+        //     if (EmotesButton != null)
+        //         EmotesButton.SetClickPressed(true);
 
-            if (centered)
-            {
-                _menu.OpenCentered();
-            }
-            else
-            {
-                // Open the menu, centered on the mouse
-                var vpSize = _displayManager.ScreenSize;
-                _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
-            }
-        }
-        else
-        {
-            _menu.OnClose -= OnWindowClosed;
-            _menu.OnOpen -= OnWindowOpen;
-            _menu.OnPlayEmote -= OnPlayEmote;
+        //     if (centered)
+        //     {
+        //         _menu.OpenCentered();
+        //     }
+        //     else
+        //     {
+        //         // Open the menu, centered on the mouse
+        //         var vpSize = _displayManager.ScreenSize;
+        //         _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
+        //     }
+        // }
+        // else
+        // {
+        //     _menu.OnClose -= OnWindowClosed;
+        //     _menu.OnOpen -= OnWindowOpen;
+        //     _menu.OnPlayEmote -= OnPlayEmote;
 
-            if (EmotesButton != null)
-                EmotesButton.SetClickPressed(false);
+        //     if (EmotesButton != null)
+        //         EmotesButton.SetClickPressed(false);
 
-            CloseMenu();
-        }
+        //     CloseMenu();
+        // }
     }
 
     public void UnloadButton()
     {
-        if (EmotesButton == null)
-            return;
+        // if (EmotesButton == null)
+        //     return;
 
-        EmotesButton.OnPressed -= ActionButtonPressed;
+        // EmotesButton.OnPressed -= ActionButtonPressed;
     }
 
     public void LoadButton()
     {
-        if (EmotesButton == null)
-            return;
+        // if (EmotesButton == null)
+        //     return;
 
-        EmotesButton.OnPressed += ActionButtonPressed;
+        // EmotesButton.OnPressed += ActionButtonPressed;
     }
 
     private void ActionButtonPressed(BaseButton.ButtonEventArgs args)
@@ -97,16 +97,16 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnWindowClosed()
     {
-        if (EmotesButton != null)
-            EmotesButton.Pressed = false;
+        // if (EmotesButton != null)
+        //     EmotesButton.Pressed = false;
 
-        CloseMenu();
+        // CloseMenu();
     }
 
     private void OnWindowOpen()
     {
-        if (EmotesButton != null)
-            EmotesButton.Pressed = true;
+        // if (EmotesButton != null)
+        //     EmotesButton.Pressed = true;
     }
 
     private void CloseMenu()

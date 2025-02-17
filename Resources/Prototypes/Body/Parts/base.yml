@@ -125,3 +125,14 @@
   - type: BodyPart
     partType: Foot
     symmetry: Right
+
+# DS14
+
+- type: entity
+  id: BaseTail
+  name: "tail"
+  parent: BasePart
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Tail

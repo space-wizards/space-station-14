@@ -1,0 +1,151 @@
+- type: marking
+  id: ADTAllbasarab
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: basarab
+
+- type: marking
+  id: ADTAllcrayfish
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: crayfish
+
+- type: marking
+  id: ADTAllhank
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: hank
+
+- type: marking
+  id: ADTAllhonor
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: honor
+
+- type: marking
+  id: ADTAllmadscientist
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: madscientist
+
+- type: marking
+  id: ADTAllmonday
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: monday
+
+- type: marking
+  id: ADTAllnemesida
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: nemesida
+
+- type: marking
+  id: ADTAllpunk
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: punk
+
+- type: marking
+  id: ADTAllturanga
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: turanga
+
+- type: marking
+  id: ADTAllAyanami
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: ayanami
+
+- type: marking
+  id: ADTAllBubbleGum
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: bubble_gum
+
+- type: marking
+  id: ADTAllMavis
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: mavis
+
+- type: marking
+  id: ADTAllCloud
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: cloud
+
+- type: marking
+  id: ADTAllMorningHairstyle
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: morning_hairstyle
+
+- type: marking
+  id: ADTAllMorningHairstyle2
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: morning_hairstyle_2
+
+- type: marking
+  id: ADTAllPonytail
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: ponytail
+
+- type: marking
+  id: ADTAllPrinceCharming
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: prince_charming
+
+- type: marking
+  id: ADTAllShavedFemale
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: shaved_female
+
+- type: marking
+  id: ADTAllShavedFemaleUnisex
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _ADT/Customization/Markings/hair.rsi
+      state: shaved_unisex

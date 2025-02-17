@@ -1,0 +1,62 @@
+- type: paperworkForm
+  id: Medical0
+  category: medical
+  name: paperwork-form-title-medical-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical1
+  category: medical
+  name: paperwork-form-title-medical-1
+  text: "/Paperwork/Medical/1.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical2
+  category: medical
+  name: paperwork-form-title-medical-2
+  text: "/Paperwork/Medical/2.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical3
+  category: medical
+  name: paperwork-form-title-medical-3
+  text: "/Paperwork/Medical/3.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical4
+  category: medical
+  name: paperwork-form-title-medical-4
+  text: "/Paperwork/Medical/4.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical5
+  category: medical
+  name: paperwork-form-title-medical-5
+  text: "/Paperwork/Medical/5.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical6
+  category: medical
+  name: paperwork-form-title-medical-6
+  text: "/Paperwork/Medical/6.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical7
+  category: medical
+  name: paperwork-form-title-medical-7
+  text: "/Paperwork/Medical/7.xml"
+  paperPrototype: PaperPrintedMedical
+
+- type: paperworkForm
+  id: Medical8
+  category: medical
+  name: paperwork-form-title-medical-8
+  text: "/Paperwork/Medical/8.xml"
+  paperPrototype: PaperPrintedMedical

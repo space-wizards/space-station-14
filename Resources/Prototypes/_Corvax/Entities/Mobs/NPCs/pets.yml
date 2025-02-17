@@ -1,0 +1,50 @@
+﻿- type: entity
+  name: Largo
+  parent: SimpleMobBase
+  id: MobGorillaLargo
+  description: Cargo's pet, participated in the first revolution. He seems to have an 'I love Mom' tattoo.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: crawling
+          sprite: _Corvax/Mobs/Pets/largo.rsi
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.48
+          density: 200
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: crawling
+        Dead:
+          Base: dead
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 4
+        - id: ClothingHeadHatCargosoft
+          amount: 1
+    - type: Bloodstream
+      bloodMaxVolume: 300
+    - type: Puller
+      needsHands: false
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: petting-success-gorilla
+      interactFailureString: petting-failure-gorilla
+      interactSuccessSpawn: EffectHearts
+      interactSuccessSound:
+        path: /Audio/Animals/ferret_happy.ogg
+    - type: Tag
+      tags:
+        - CannotSuicide

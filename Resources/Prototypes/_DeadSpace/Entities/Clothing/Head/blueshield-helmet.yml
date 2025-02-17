@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurityRed
+  id: ClothingHeadHelmetHardsuitBlueShield
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра офицера "Синий Щит"
+  description: Предназначен для защитника командования.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/blueshield.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/blueshield.rsi
+  - type: PointLight
+    color: '#4ac4ff'
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide

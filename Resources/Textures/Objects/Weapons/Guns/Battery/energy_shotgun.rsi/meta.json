@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Icon sprite made by Papermaker48 for SS14, other sprites made by Boaz1111 with that sprite as reference.",
+    "copyright": "Icon sprite made by Papermaker48 for SS14, other sprites made by Boaz1111 with that sprite as reference, resprite by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
     "size": {
         "x": 32,
         "y": 32
@@ -14,7 +14,13 @@
 			"name": "base"
 		},
 		{
-			"name": "mag-unshaded-1"
+			"name": "mag-unshaded-1",
+			"delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
 		},
 		{
 			"name": "mag-unshaded-2"

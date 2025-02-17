@@ -31,8 +31,8 @@
       replacement: IronRock
       entity: IronRockIron
       count: 50
-      minGroupSize: 10
-      maxGroupSize: 15
+      minGroupSize: 20
+      maxGroupSize: 30
     - !type:OreDunGen
       replacement: IronRock
       entity: IronRockCoal
@@ -54,21 +54,21 @@
     - !type:OreDunGen
       replacement: IronRock
       entity: IronRockGold
-      count: 40
-      minGroupSize: 8
-      maxGroupSize: 12
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
     - !type:OreDunGen
       replacement: IronRock
       entity: IronRockSilver
-      count: 40
-      minGroupSize: 8
-      maxGroupSize: 12
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
     - !type:OreDunGen
       replacement: IronRock
       entity: IronRockPlasma
-      count: 35
-      minGroupSize: 4
-      maxGroupSize: 8
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 20
     - !type:OreDunGen
       replacement: IronRock
       entity: IronRockUranium
@@ -113,7 +113,7 @@
   maxOffset: 60
   layers:
   - !type:NoiseDistanceDunGen
-    size: 150, 150
+    size: 50, 50
     distanceConfig: !type:DunGenEuclideanSquaredDistance
     layers:
     - tile: FloorAsteroidSand

@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: Urist McFelinid
+  parent: MobFelinidBase
+  id: MobFelinid

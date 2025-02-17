@@ -22,7 +22,6 @@ entities:
       name: SRV-Gymnasium
     - type: Transform
       pos: -0.5416667,-0.47916666
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

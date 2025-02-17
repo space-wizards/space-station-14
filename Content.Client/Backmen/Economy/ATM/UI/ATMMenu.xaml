@@ -1,0 +1,41 @@
+﻿<!-- Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT -->
+
+<DefaultWindow xmlns="https://spacestation14.io"
+               MinSize="380 195"
+               SetSize="380 195"
+               Resizable="False">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+        <Label
+            HorizontalAlignment="Center"
+            Name="WelcomeLabel"
+            Access="Public" />
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button
+                Name="IdCardButton"
+                Access="Public"
+                MinWidth="64" />
+        </BoxContainer>
+        <Label
+            HorizontalAlignment="Center"
+            Name="ErrorLabel"
+            Access="Public"
+            Text="{Loc 'atm-ui-default-error-text'}" />
+        <BoxContainer Name="ShowInteractions" Orientation="Vertical" Visible="False">
+            <Label
+                Name="AccountBalance"
+                Access="Public"
+                HorizontalAlignment="Center"/>
+            <BoxContainer Name="ShowWithdraw" Orientation="Vertical" Visible="False">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <SliderIntInput Name="WithdrawSlider" HorizontalExpand="True" />
+                </BoxContainer>
+                <Button
+                    Name="WithdrawButton"
+                    MinWidth="64"
+                    HorizontalAlignment="Right"
+                    Margin="0 5 0 0"
+                    Text="{Loc 'atm-ui-default-withdraw-text'}" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

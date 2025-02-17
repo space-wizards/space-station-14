@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.DeadSpace.Interfaces.Server;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
@@ -26,6 +27,7 @@ namespace Content.Server.Preferences.Managers
         [Dependency] private readonly IDependencyCollection _dependencies = default!;
         [Dependency] private readonly ILogManager _log = default!;
         [Dependency] private readonly UserDbDataManager _userDb = default!;
+        private IServerSponsorsManager? _sponsorsManager; // DS14-sponsors
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
@@ -33,7 +35,7 @@ namespace Content.Server.Preferences.Managers
 
         private ISawmill _sawmill = default!;
 
-        private int MaxCharacterSlots => _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
+        // private int MaxCharacterSlots => _cfg.GetCVar(CCVars.GameMaxCharacterSlots); // DS14-sponsors
 
         public void Init()
         {
@@ -42,6 +44,8 @@ namespace Content.Server.Preferences.Managers
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(HandleUpdateCharacterMessage);
             _netManager.RegisterNetMessage<MsgDeleteCharacter>(HandleDeleteCharacterMessage);
             _sawmill = _log.GetSawmill("prefs");
+
+            IoCManager.Instance!.TryResolveType(out _sponsorsManager); // DS14-sponsors
         }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
@@ -55,7 +59,7 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            if (index < 0 || index >= MaxCharacterSlots)
+            if (index < 0 || index >= GetMaxUserCharacterSlots(userId)) // DS14-sponsors
             {
                 return;
             }
@@ -95,13 +99,16 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            if (slot < 0 || slot >= MaxCharacterSlots)
+            if (slot < 0 || slot >= GetMaxUserCharacterSlots(userId)) // DS14-sponsors
                 return;
 
             var curPrefs = prefsData.Prefs!;
             var session = _playerManager.GetSessionById(userId);
 
-            profile.EnsureValid(session, _dependencies);
+            // DS14-sponsors-start: ensure removing sponsor markings if client somehow bypassed client filtering
+            var allowedMarkings = _sponsorsManager?.TryGetInfo(session.Channel.UserId, out var sponsor) == true ? sponsor.AllowedMarkings.ToArray() : [];
+            profile.EnsureValid(session, _dependencies, allowedMarkings);
+            // DS14-sponsors-end
 
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
@@ -125,7 +132,7 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            if (slot < 0 || slot >= MaxCharacterSlots)
+            if (slot < 0 || slot >= GetMaxUserCharacterSlots(userId)) // DS14-sponsors
             {
                 return;
             }
@@ -193,6 +200,14 @@ namespace Content.Server.Preferences.Managers
                 async Task LoadPrefs()
                 {
                     var prefs = await GetOrCreatePreferencesAsync(session.UserId, cancel);
+                    var collection = IoCManager.Instance!;
+                    // DS14-sponsors-start: remove sponsor markings from expired sponsors
+                    foreach (var (_, profile) in prefs.Characters)
+                    {
+                        var allowedMarkings = _sponsorsManager?.TryGetInfo(session.UserId, out var sponsor) == true ? sponsor.AllowedMarkings.ToArray() : [];
+                        profile.EnsureValid(session, collection, allowedMarkings);
+                    }
+                    // DS14-sponsors-end
                     prefsData.Prefs = prefs;
                 }
             }
@@ -213,7 +228,7 @@ namespace Content.Server.Preferences.Managers
             msg.Preferences = prefsData.Prefs;
             msg.Settings = new GameSettings
             {
-                MaxCharacterSlots = MaxCharacterSlots
+                MaxCharacterSlots = GetMaxUserCharacterSlots(session.UserId) // DS14-sponsors
             };
             _netManager.ServerSendMessage(msg, session.Channel);
         }
@@ -228,6 +243,14 @@ namespace Content.Server.Preferences.Managers
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
         }
 
+        // DS14-sponsors-start: calculate total available users slots with sponsors
+        private int GetMaxUserCharacterSlots(NetUserId userId)
+        {
+            var maxSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
+            var extraSlots = _sponsorsManager?.TryGetInfo(userId, out var sponsor) == true ? sponsor.ExtraSlots : 0;
+            return maxSlots + extraSlots;
+        }
+        // DS14-sponsors-end
 
         /// <summary>
         /// Tries to get the preferences from the cache
@@ -291,9 +314,11 @@ namespace Content.Server.Preferences.Managers
             // Clean up preferences in case of changes to the game,
             // such as removed jobs still being selected.
 
+            var allowedMarkings = _sponsorsManager?.TryGetInfo(session.UserId, out var sponsor) == true ? sponsor.AllowedMarkings.ToArray() : []; // DS14-sponsors
+
             return new PlayerPreferences(prefs.Characters.Select(p =>
             {
-                return new KeyValuePair<int, ICharacterProfile>(p.Key, p.Value.Validated(session, collection));
+                return new KeyValuePair<int, ICharacterProfile>(p.Key, p.Value.Validated(session, collection, allowedMarkings)); // DS14-sponsors
             }), prefs.SelectedCharacterIndex, prefs.AdminOOCColor);
         }
 

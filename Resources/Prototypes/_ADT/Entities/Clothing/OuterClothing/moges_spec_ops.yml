@@ -1,0 +1,70 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ADTClothingOuterHardsuitNanoScale
+  name: нано-чешуйчатая броня
+  description: Рептилии не настолько примитивны, как вы считали.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/nano_scale_armor.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/nano_scale_armor.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.3
+    sprintModifier: 1.3
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.2
+        Radiation: 0.20
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ADTClothingClothingHeadHelmetHardsuitNanoScale
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ADTClothingOuterHardsuitNanoScaleChameleon
+  name: нано-чешуйчатая броня Хамелеон
+  description: Очень скрытная и очень пахнет сахаром.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/nano_scale_armor_chameleon.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Hardsuits/nano_scale_armor_chameleon.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.01
+    coolingCoefficient: 0.01
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    # throwing in a recharger would bypass glove charging mechanic
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
+  # delay for when attacked while cloaked
+  - type: UseDelay
+    delay: 5

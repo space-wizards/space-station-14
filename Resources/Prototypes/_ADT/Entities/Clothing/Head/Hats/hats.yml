@@ -1,0 +1,57 @@
+#Luna
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatsGreatDruidWreath
+  name: большой венок друидов
+  description: Он такой тяжелый, но это стоит того что бы с гордостью его носить.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/great_druid_wreath.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/great_druid_wreath.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatsDungeonMasterHat
+  name: фуражка Мастера
+  description: Для настоящих Dungeon Masters.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/dungeon_master.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/dungeon_master.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadMarineBeret
+  name: берет лейтенанта морской пехоты
+  description: Этот берет содержит эмблему Морской Пехоты ТСФ, 417-го полка, 2-го батальона, отряда «Браво».
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/marineberet.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/marineberet.rsi
+
+#Conjurer
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatsJohanCap
+  name: фуражка Йохана
+  description: Выглядит странно, но круто!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/johan_cap.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/johan_cap.rsi
+
+#Фуражка следователя
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatsInvestigatorCap
+  name: фуражка следователя службы безопасности
+  description: Слава NanoTrasen!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/investigator_cap.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/investigator_cap.rsi

@@ -1,0 +1,111 @@
+- type: paperworkForm
+  id: Command0
+  category: command
+  name: paperwork-form-title-command-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command1
+  category: command
+  name: paperwork-form-title-command-1
+  text: "/Paperwork/Command/1.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command2
+  category: command
+  name: paperwork-form-title-command-2
+  text: "/Paperwork/Command/2.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command3
+  category: command
+  name: paperwork-form-title-command-3
+  text: "/Paperwork/Command/3.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command4
+  category: command
+  name: paperwork-form-title-command-4
+  text: "/Paperwork/Command/4.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command5
+  category: command
+  name: paperwork-form-title-command-5
+  text: "/Paperwork/Command/5.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command6
+  category: command
+  name: paperwork-form-title-command-6
+  text: "/Paperwork/Command/6.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command7
+  category: command
+  name: paperwork-form-title-command-7
+  text: "/Paperwork/Command/7.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command8
+  category: command
+  name: paperwork-form-title-command-8
+  text: "/Paperwork/Command/8.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command9
+  category: command
+  name: paperwork-form-title-command-9
+  text: "/Paperwork/Command/9.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command10
+  category: command
+  name: paperwork-form-title-command-10
+  text: "/Paperwork/Command/10.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command11
+  category: command
+  name: paperwork-form-title-command-11
+  text: "/Paperwork/Command/11.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command12
+  category: command
+  name: paperwork-form-title-command-12
+  text: "/Paperwork/Command/12.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command13
+  category: command
+  name: paperwork-form-title-command-13
+  text: "/Paperwork/Command/13.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command15
+  category: command
+  name: paperwork-form-title-command-15
+  text: "/Paperwork/Command/15.xml"
+  paperPrototype: PaperPrintedCommand
+
+- type: paperworkForm
+  id: Command17
+  category: command
+  name: paperwork-form-title-command-17
+  text: "/Paperwork/Command/17.xml"
+  paperPrototype: PaperPrintedCommand

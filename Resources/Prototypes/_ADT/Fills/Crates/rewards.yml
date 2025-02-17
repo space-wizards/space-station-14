@@ -1,0 +1,20 @@
+- type: entity
+  id: CrateScienceTopDisk
+  parent: CrateScienceSecure
+  name: ящик высоких технологий
+  description: Внутри содержиться набор дисков передовых технологий. Требуется доступ научного сотрудника что бы его открыть.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TechnologyDiskSuperRare
+        amount: 4
+
+- type: entity
+  id: CrateBerserk
+  parent: LavalandChest
+  name: древний сундук чемпиона
+  description: Сундук истощяющий зловещую энергию вокруг. Вам кажется его глаз следить за вами.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ADTSpaceMarinne

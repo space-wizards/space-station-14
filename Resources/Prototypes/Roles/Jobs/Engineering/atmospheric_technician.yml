@@ -19,6 +19,12 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: FirefighterDay
     prototype: FireAxe
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Engineering
+  wage: 60
+  #end-backmen: currency
 
 - type: startingGear
   id: AtmosphericTechnicianGear
@@ -27,6 +33,4 @@
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksAtmos

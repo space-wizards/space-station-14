@@ -1,0 +1,15 @@
+marking-DemomTail1 = острый конец, хвост
+marking-DemomTailLong = длинный и пушистый, хвост
+marking-DemomTailUp = длинный и пушистый, хвост (приподнят)
+marking-DemonCowEars = коровьи ушки, уши
+marking-DemonEars = демонические ушки, уши
+marking-DemonCowHorns = коровьи рожки, рога
+marking-DemonHornsDeer = оленьи рожки, рога
+marking-DemonHornsSmall = небольшие рожки, рога
+marking-DemonChestCowSpots = коровьи пятна, грудь
+marking-DemonChestGuard = пятна защитника, грудь
+marking-DemonChestLinesEmperos = императорские линии, грудь
+marking-DemonChestQueenLines = королевские линии, грудь
+marking-DemonChestTreeLines = древесные линии, грудь
+marking-DemonChestTrinitySpots = метки суккуба, грудь
+marking-DemonGoatee = Козья бородка

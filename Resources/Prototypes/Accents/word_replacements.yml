@@ -22,6 +22,36 @@
     accent-mobster-words-15: accent-mobster-words-replace-15
     accent-mobster-words-16: accent-mobster-words-replace-16
     accent-mobster-words-17: accent-mobster-words-replace-17
+    accent-mobster-words-18: accent-mobster-words-replace-18
+    accent-mobster-words-19: accent-mobster-words-replace-19
+    accent-mobster-words-20: accent-mobster-words-replace-20
+    accent-mobster-words-21: accent-mobster-words-replace-21
+    accent-mobster-words-22: accent-mobster-words-replace-22
+    accent-mobster-words-23: accent-mobster-words-replace-23
+    accent-mobster-words-24: accent-mobster-words-replace-24
+    accent-mobster-words-25: accent-mobster-words-replace-25
+    accent-mobster-words-26: accent-mobster-words-replace-26
+    accent-mobster-words-27: accent-mobster-words-replace-27
+    accent-mobster-words-28: accent-mobster-words-replace-28
+    accent-mobster-words-29: accent-mobster-words-replace-29
+    accent-mobster-words-30: accent-mobster-words-replace-30
+    accent-mobster-words-31: accent-mobster-words-replace-31
+    accent-mobster-words-32: accent-mobster-words-replace-32
+    accent-mobster-words-33: accent-mobster-words-replace-33
+    accent-mobster-words-34: accent-mobster-words-replace-34
+    accent-mobster-words-35: accent-mobster-words-replace-35
+    accent-mobster-words-36: accent-mobster-words-replace-36
+    accent-mobster-words-37: accent-mobster-words-replace-37
+    accent-mobster-words-38: accent-mobster-words-replace-38
+    accent-mobster-words-39: accent-mobster-words-replace-39
+    accent-mobster-words-40: accent-mobster-words-replace-40
+    accent-mobster-words-41: accent-mobster-words-replace-41
+    accent-mobster-words-42: accent-mobster-words-replace-42
+    accent-mobster-words-43: accent-mobster-words-replace-43
+    accent-mobster-words-44: accent-mobster-words-replace-44
+    accent-mobster-words-45: accent-mobster-words-replace-45
+    accent-mobster-words-46: accent-mobster-words-replace-46
+    accent-mobster-words-47: accent-mobster-words-replace-47
 
 - type: accent
   id: italian
@@ -75,6 +105,51 @@
     accent-italian-words-47: accent-italian-words-replace-47
     accent-italian-words-48: accent-italian-words-replace-48
     accent-italian-words-49: accent-italian-words-replace-49
+# Corvax accent start
+    accent-italian-words-301: accent-italian-words-replace-301
+    accent-italian-words-401: accent-italian-words-replace-401
+    accent-italian-words-402: accent-italian-words-replace-402
+    accent-italian-words-403: accent-italian-words-replace-403
+    accent-italian-words-501: accent-italian-words-replace-501
+    accent-italian-words-502: accent-italian-words-replace-502
+    accent-italian-words-601: accent-italian-words-replace-601
+    accent-italian-words-701: accent-italian-words-replace-701
+    accent-italian-words-702: accent-italian-words-replace-702
+    accent-italian-words-801: accent-italian-words-replace-801
+    accent-italian-words-802: accent-italian-words-replace-802
+    accent-italian-words-803: accent-italian-words-replace-803
+    accent-italian-words-804: accent-italian-words-replace-804
+    accent-italian-words-805: accent-italian-words-replace-805
+    accent-italian-words-901: accent-italian-words-replace-901
+    accent-italian-words-1001: accent-italian-words-replace-1001
+    accent-italian-words-1101: accent-italian-words-replace-1101
+    accent-italian-words-1102: accent-italian-words-replace-1102
+    accent-italian-words-1103: accent-italian-words-replace-1103
+    accent-italian-words-1501: accent-italian-words-replace-1501
+    accent-italian-words-1701: accent-italian-words-replace-1701
+    accent-italian-words-1702: accent-italian-words-replace-1702
+    accent-italian-words-1703: accent-italian-words-replace-1703
+    accent-italian-words-1801: accent-italian-words-replace-1801
+    accent-italian-words-1901: accent-italian-words-replace-1901
+    accent-italian-words-2001: accent-italian-words-replace-2001
+    accent-italian-words-2002: accent-italian-words-replace-2002
+    accent-italian-words-2003: accent-italian-words-replace-2003
+    accent-italian-words-2101: accent-italian-words-replace-2101
+    accent-italian-words-2301: accent-italian-words-replace-2301
+    accent-italian-words-2801: accent-italian-words-replace-2801
+    accent-italian-words-3001: accent-italian-words-replace-3001
+    accent-italian-words-3002: accent-italian-words-replace-3002
+    accent-italian-words-3101: accent-italian-words-replace-3101
+    accent-italian-words-3102: accent-italian-words-replace-3102
+    accent-italian-words-3201: accent-italian-words-replace-3201
+    accent-italian-words-3202: accent-italian-words-replace-3202
+    accent-italian-words-3203: accent-italian-words-replace-3203
+    accent-italian-words-3401: accent-italian-words-replace-3401
+    accent-italian-words-3402: accent-italian-words-replace-3402
+    accent-italian-words-3701: accent-italian-words-replace-3701
+    accent-italian-words-3801: accent-italian-words-replace-3801
+    accent-italian-words-4301: accent-italian-words-replace-4301
+# Corvax accent end
 
 - type: accent
   id: dwarf
@@ -366,6 +441,83 @@
     accent-cowboy-words-97: accent-cowboy-replacement-97
     accent-cowboy-words-98: accent-cowboy-replacement-98
     accent-cowboy-words-99: accent-cowboy-replacement-99
+    # Corvax-accent-start
+    corvax-accent-cowboy-words-1: corvax-accent-cowboy-replacement-1
+    corvax-accent-cowboy-words-2: corvax-accent-cowboy-replacement-2
+    corvax-accent-cowboy-words-301: corvax-accent-cowboy-replacement-3
+    corvax-accent-cowboy-words-302: corvax-accent-cowboy-replacement-3
+    corvax-accent-cowboy-words-4: corvax-accent-cowboy-replacement-4
+    corvax-accent-cowboy-words-501: corvax-accent-cowboy-replacement-5
+    corvax-accent-cowboy-words-502: corvax-accent-cowboy-replacement-5
+    corvax-accent-cowboy-words-601: corvax-accent-cowboy-replacement-6
+    corvax-accent-cowboy-words-602: corvax-accent-cowboy-replacement-6
+    corvax-accent-cowboy-words-7: corvax-accent-cowboy-replacement-7
+    corvax-accent-cowboy-words-8: corvax-accent-cowboy-replacement-8
+    corvax-accent-cowboy-words-9: corvax-accent-cowboy-replacement-9
+    corvax-accent-cowboy-words-1001: corvax-accent-cowboy-replacement-10
+    corvax-accent-cowboy-words-1002: corvax-accent-cowboy-replacement-10
+    corvax-accent-cowboy-words-1101: corvax-accent-cowboy-replacement-11
+    corvax-accent-cowboy-words-1102: corvax-accent-cowboy-replacement-11
+    corvax-accent-cowboy-words-1201: corvax-accent-cowboy-replacement-12
+    corvax-accent-cowboy-words-1202: corvax-accent-cowboy-replacement-12
+    corvax-accent-cowboy-words-13: corvax-accent-cowboy-replacement-13
+    corvax-accent-cowboy-words-1401: corvax-accent-cowboy-replacement-14
+    corvax-accent-cowboy-words-1402: corvax-accent-cowboy-replacement-14
+    corvax-accent-cowboy-words-15: corvax-accent-cowboy-replacement-15
+    corvax-accent-cowboy-words-16: corvax-accent-cowboy-replacement-16
+    corvax-accent-cowboy-words-1701: corvax-accent-cowboy-replacement-17
+    corvax-accent-cowboy-words-1702: corvax-accent-cowboy-replacement-17
+    corvax-accent-cowboy-words-1801: corvax-accent-cowboy-replacement-18
+    corvax-accent-cowboy-words-1802: corvax-accent-cowboy-replacement-18
+    corvax-accent-cowboy-words-1803: corvax-accent-cowboy-replacement-18
+    corvax-accent-cowboy-words-1901: corvax-accent-cowboy-replacement-19
+    corvax-accent-cowboy-words-1902: corvax-accent-cowboy-replacement-19
+    corvax-accent-cowboy-words-20: corvax-accent-cowboy-replacement-20
+    corvax-accent-cowboy-words-21: corvax-accent-cowboy-replacement-21
+    corvax-accent-cowboy-words-22: corvax-accent-cowboy-replacement-22
+    corvax-accent-cowboy-words-23: corvax-accent-cowboy-replacement-23
+    corvax-accent-cowboy-words-2401: corvax-accent-cowboy-replacement-24
+    corvax-accent-cowboy-words-2402: corvax-accent-cowboy-replacement-24
+    corvax-accent-cowboy-words-2403: corvax-accent-cowboy-replacement-24
+    corvax-accent-cowboy-words-2404: corvax-accent-cowboy-replacement-24
+    corvax-accent-cowboy-words-2501: corvax-accent-cowboy-replacement-25
+    corvax-accent-cowboy-words-2502: corvax-accent-cowboy-replacement-25
+    corvax-accent-cowboy-words-2503: corvax-accent-cowboy-replacement-25
+    corvax-accent-cowboy-words-26: corvax-accent-cowboy-replacement-26
+    corvax-accent-cowboy-words-27: corvax-accent-cowboy-replacement-27
+    corvax-accent-cowboy-words-28: corvax-accent-cowboy-replacement-28
+    corvax-accent-cowboy-words-29: corvax-accent-cowboy-replacement-29
+    corvax-accent-cowboy-words-30: corvax-accent-cowboy-replacement-30
+    corvax-accent-cowboy-words-31: corvax-accent-cowboy-replacement-31
+    corvax-accent-cowboy-words-32: corvax-accent-cowboy-replacement-32
+    corvax-accent-cowboy-words-33: corvax-accent-cowboy-replacement-33
+    corvax-accent-cowboy-words-34: corvax-accent-cowboy-replacement-34
+    corvax-accent-cowboy-words-35: corvax-accent-cowboy-replacement-35
+    corvax-accent-cowboy-words-36: corvax-accent-cowboy-replacement-36
+    corvax-accent-cowboy-words-3701: corvax-accent-cowboy-replacement-37
+    corvax-accent-cowboy-words-3702: corvax-accent-cowboy-replacement-37
+    corvax-accent-cowboy-words-38: corvax-accent-cowboy-replacement-38
+    corvax-accent-cowboy-words-39: corvax-accent-cowboy-replacement-39
+    corvax-accent-cowboy-words-40: corvax-accent-cowboy-replacement-40
+    corvax-accent-cowboy-words-41: corvax-accent-cowboy-replacement-41
+    corvax-accent-cowboy-words-42: corvax-accent-cowboy-replacement-42
+    corvax-accent-cowboy-words-43: corvax-accent-cowboy-replacement-43
+    corvax-accent-cowboy-words-44: corvax-accent-cowboy-replacement-44
+    corvax-accent-cowboy-words-45: corvax-accent-cowboy-replacement-45
+    corvax-accent-cowboy-words-46: corvax-accent-cowboy-replacement-46
+    corvax-accent-cowboy-words-47: corvax-accent-cowboy-replacement-47
+    corvax-accent-cowboy-words-48: corvax-accent-cowboy-replacement-48
+    corvax-accent-cowboy-words-49: corvax-accent-cowboy-replacement-49
+    corvax-accent-cowboy-words-50: corvax-accent-cowboy-replacement-50
+    corvax-accent-cowboy-words-51: corvax-accent-cowboy-replacement-51
+    corvax-accent-cowboy-words-52: corvax-accent-cowboy-replacement-52
+    corvax-accent-cowboy-words-53: corvax-accent-cowboy-replacement-53
+    corvax-accent-cowboy-words-54: corvax-accent-cowboy-replacement-54
+    corvax-accent-cowboy-words-5501: corvax-accent-cowboy-replacement-55
+    corvax-accent-cowboy-words-5502: corvax-accent-cowboy-replacement-55
+    corvax-accent-cowboy-words-56: corvax-accent-cowboy-replacement-56
+    corvax-accent-cowboy-words-57: corvax-accent-cowboy-replacement-57
+    # Corvax-accent-end
 
 - type: accent
   id: southern

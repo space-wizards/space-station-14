@@ -36,8 +36,38 @@
   equipment:
     outerClothing: ClothingOuterWinterAtmos
 
+- type: loadout
+  id: AtmosphericTechnicianCoatWorking
+  equipment:
+    outerClothing: ClothingOuterCoatAtmosWorking
+
 # Shoes
 - type: loadout
   id: WhiteShoes
   equipment:
     shoes: ClothingShoesColorWhite
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersAtmosphericTechnician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersAtmosphericTechnician
+
+- type: loadout
+  id: UnderwearBottomPantiesAtmosphericTechnician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesAtmosphericTechnician
+
+- type: loadout
+  id: UnderwearTopBraAtmosphericTechnician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraAtmosphericTechnician

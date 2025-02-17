@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "copyright": "@Vordenburg",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "basic_tail_tip",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+ent-ClothingNeckCapeCrystal = плащ Кристалл
+    .desc = Нежно-розовый плащ с голубым кристаллом на спине.
+ent-ClothingNeckCapeNeon = плащ Неон
+    .desc = Плащ в неоновой расцветке.
+ent-ClothingNeckCapeViolet = плащ Вайолет
+    .desc = Плащ в лиловых тонах с сердцем на спине.
+ent-ClothingNeckCapeGalaxy = плащ Галакси
+    .desc = На этом плаще изображена далёкая галактика.
+ent-ClothingNeckCapeSirius = плащ Сириус
+    .desc = На этом плаще изображена ярчайшая звезда ночного неба, видимая с Марса.
+ent-ClothingNeckCapeLua = плащ Луа
+    .desc = Пахнет сладкой фыркалкой.
+ent-ClothingNeckCapeFlame = пламенный плащ
+    .desc = На этом плаще изображено плазменное пламя.

@@ -234,3 +234,25 @@
       shader: unshaded
   - type: StealTarget
     stealGroup: FlippoEngravedLighter
+
+- type: entity
+  name: flippo engraved lighter
+  parent: FlippoLighter
+  id: FlippoSyndicateLighter
+  description: "A rugged golden lighter, lasts quite a while. Engravings serve no tactical advantage whatsoever."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_syndicate_icon_base
+      map: ["base"]
+    - state: zippo_top
+      map: ["top"]
+      visible: false
+    - state: zippo_syndicate_open
+      map: ["open"]
+      visible: false
+    - state: syndicate_lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded

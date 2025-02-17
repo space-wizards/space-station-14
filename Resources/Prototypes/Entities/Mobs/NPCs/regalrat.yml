@@ -124,6 +124,9 @@
     attributes:
       gender: male
   - type: Sharp
+  - type: TTS
+    voice: DrSezavo
+  - type: NightVision # DS14
 
 - type: entity
   id: MobRatKingBuff
@@ -201,7 +204,7 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-
+  - type: NightVision # DS14
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -281,6 +284,7 @@
     tags:
       - CannotSuicide
       - FootstepSound
+      - FelinidFood
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
@@ -294,6 +298,8 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: NecromorfAfterInfection
+    necroPrototype: NecroSmall
 
 - type: weightedRandomEntity
   id: RatKingLoot

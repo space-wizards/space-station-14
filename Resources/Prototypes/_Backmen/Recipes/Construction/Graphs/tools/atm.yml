@@ -1,0 +1,57 @@
+﻿- type: constructionGraph
+  id: ATM
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: parts
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+
+    - node: parts
+      entity: ATMFrame
+      edges:
+        - to: wired
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 5
+            - material: Cable
+              amount: 1
+              doAfter: 2
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: wired
+      entity: ATMFrameWired
+      edges:
+        - to: ATM
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 2
+        - to: parts
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: ATM
+      entity: ATM
+      edges:
+        - to: wired
+          steps:
+            - tool: Prying
+              doAfter: 60

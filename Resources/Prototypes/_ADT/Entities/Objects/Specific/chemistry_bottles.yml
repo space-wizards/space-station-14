@@ -1,0 +1,101 @@
+- type: entity
+  id: ADTObjectsSpecificArithrazineChemistryBottle
+  name: бутылочка аритразина
+  description: Маленькая бутылочка.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Arithrazine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: ADTObjectsSpecificBicaridineChemistryBottle
+  name: бутылочка бикардина
+  description: Маленькая бутылочка.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: ADTObjectsSpecificDexalinPlusChemistryBottle
+  name: бутылочка дексалина плюс
+  description: Маленькая бутылочка.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: ADTObjectsSpecificDermalineChemistryBottle
+  name: бутылочка дермалина
+  description: Маленькая бутылочка.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: ADTObjectsSpecificDexalinChemistryBottle
+  name: бутылочка дексалина
+  description: Маленькая бутылочка.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Dexalin
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id:  ADTObjectsSpecificLeporazineChemistryBottle
+  name: бутылочка лепоразина
+  description: Маленькая бутылочка.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Leporazine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

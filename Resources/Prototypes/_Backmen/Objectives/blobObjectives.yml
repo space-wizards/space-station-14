@@ -1,0 +1,24 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseBlobObjective
+  components:
+    - type: Objective
+      issuer: objective-issuer-blob
+      unique: true
+      difficulty: 1
+      icon:
+        sprite: _Backmen/Mobs/Aliens/blob.rsi
+        state: blob_nuke_overlay
+    - type: RoleRequirement
+      roles:
+        mindRoles:
+          - BlobRole
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseBlobObjective
+  id: BlobCaptureObjective
+  components:
+    - type: BlobCaptureCondition
+      target: 400

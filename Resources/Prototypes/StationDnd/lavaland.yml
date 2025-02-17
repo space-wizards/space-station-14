@@ -1,0 +1,13 @@
+﻿- type: dndPlanet
+  id: lavaland
+  biome: Lava
+  spawnBase: Experiment
+  lightColor: "#A34931" #LavaLight
+  structures:
+    Mineshaft: 8
+  atmosphere:
+    volume: 2300
+    temperature: 320
+    moles:
+    - 21.94724
+    - 77.05276

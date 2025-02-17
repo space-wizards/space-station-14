@@ -1,0 +1,16 @@
+- type: entity
+  parent: SmokeGrenade
+  id: KarachnocidGrenade
+  name: кара арахнида
+  description: Специальная пенная граната против пауков ужаса.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: Karachnocid
+        Quantity: 2

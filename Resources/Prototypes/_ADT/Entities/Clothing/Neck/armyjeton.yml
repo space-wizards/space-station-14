@@ -1,0 +1,8 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckJeton
+  name: армейский Жетон
+  description: Жетон без имени владельца.
+  components:
+    - type: Sprite
+      sprite: _ADT/Clothing/Neck/armytoken.rsi

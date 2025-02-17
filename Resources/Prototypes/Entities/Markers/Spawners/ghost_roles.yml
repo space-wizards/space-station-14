@@ -18,9 +18,12 @@
   - type: GhostRole
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-rat-king-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgent
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hours
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -89,6 +92,13 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -111,6 +121,13 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -129,6 +146,16 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 108000 # 30 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 72000 # 20 hours
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -141,6 +168,16 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 144000 # 40 hours
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -165,6 +202,9 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10h overall
   - type: Sprite
     layers:
     - state: green
@@ -179,9 +219,12 @@
   - type: GhostRole
     name: ghost-role-information-space-ninja-name
     description: ghost-role-information-space-ninja-description
-    rules: ghost-role-information-antagonist-rules
+    rules: ghost-role-information-space-ninja-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 144000 # 40h overall
     raffle:
       settings: default
   - type: Sprite

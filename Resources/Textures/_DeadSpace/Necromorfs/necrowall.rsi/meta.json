@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
+  "copyright": "Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stage1"
+    },
+	{
+      "name": "stage2"
+    },
+	{
+      "name": "stage3"
+    },
+	{
+      "name": "stage4"
+    }
+  ]
+}

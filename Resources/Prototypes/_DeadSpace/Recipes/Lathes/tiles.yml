@@ -1,0 +1,421 @@
+# Деревянные плитки
+- type: latheRecipe
+  id: FloorTileItemWoodParquet
+  result: FloorTileItemWoodParquet
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodBlack
+  result: FloorTileItemWoodBlack
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodDark
+  result: FloorTileItemWoodDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodLight
+  result: FloorTileItemWoodLight
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodRed
+  result: FloorTileItemWoodRed
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodLargeBlack
+  result: FloorTileItemWoodLargeBlack
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodLargeDark
+  result: FloorTileItemWoodLargeDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodLargeLight
+  result: FloorTileItemWoodLargeLight
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodLargeRed
+  result: FloorTileItemWoodLargeRed
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodParquetBlack
+  result: FloorTileItemWoodParquetBlack
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodParquetDark
+  result: FloorTileItemWoodParquetDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodParquetLight
+  result: FloorTileItemWoodParquetLight
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodParquetRed
+  result: FloorTileItemWoodParquetRed
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodChess
+  result: FloorTileItemWoodChess
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodChessBlack
+  result: FloorTileItemWoodChessBlack
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodChessDark
+  result: FloorTileItemWoodChessDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodChessLight
+  result: FloorTileItemWoodChessLight
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodChessRed
+  result: FloorTileItemWoodChessRed
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+# Прочие стальные плитки
+- type: latheRecipe
+  id: FloorTileItemDirty
+  result: FloorTileItemDirty
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemElevatorShaft
+  result: FloorTileItemElevatorShaft
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemRockVault
+  result: FloorTileItemRockVault
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemBlue
+  result: FloorTileItemBlue
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemLime
+  result: FloorTileItemLime
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemMining
+  result: FloorTileItemMining
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemMiningDark
+  result: FloorTileItemMiningDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemMiningLight
+  result: FloorTileItemMiningLight
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemFreezer
+  result: FloorTileItemFreezer
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemShowroom
+  result: FloorTileItemShowroom
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemHydro
+  result: FloorTileItemHydro
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemBar
+  result: FloorTileItemBar
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemClown
+  result: FloorTileItemClown
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemMime
+  result: FloorTileItemMime
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemKitchen
+  result: FloorTileItemKitchen
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemLaundry
+  result: FloorTileItemLaundry
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+# Пластиковые плитки
+- type: latheRecipe
+  id: FloorTileItemLino
+  result: FloorTileItemLino
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Plastic: 25
+
+# Плитки шаттла
+- type: latheRecipe
+  id: FloorTileItemShuttleWhite
+  result: FloorTileItemShuttleWhite
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FloorTileItemShuttleBlue
+  result: FloorTileItemShuttleBlue
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FloorTileItemShuttleOrange
+  result: FloorTileItemShuttleOrange
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FloorTileItemShuttlePurple
+  result: FloorTileItemShuttlePurple
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FloorTileItemShuttleRed
+  result: FloorTileItemShuttleRed
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FloorTileItemShuttleGrey
+  result: FloorTileItemShuttleGrey
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: FloorTileItemShuttleBlack
+  result: FloorTileItemShuttleBlack
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 50
+
+# Ковры
+- type: latheRecipe
+  id: FloorTileItemArcadeBlue
+  result: FloorTileItemArcadeBlue
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemArcadeBlue2
+  result: FloorTileItemArcadeBlue2
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemArcadeRed
+  result: FloorTileItemArcadeRed
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemEighties
+  result: FloorTileItemEighties
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemCarpetClown
+  result: FloorTileItemCarpetClown
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemCarpetOffice
+  result: FloorTileItemCarpetOffice
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemBoxing
+  result: FloorTileItemBoxing
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+- type: latheRecipe
+  id: FloorTileItemGym
+  result: FloorTileItemGym
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Cloth: 25
+
+# Драгоценные плитки
+- type: latheRecipe
+  id: FloorTileItemGold
+  result: FloorTileItemGold
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Gold: 50
+
+- type: latheRecipe
+  id: FloorTileItemSilver
+  result: FloorTileItemSilver
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Silver: 50

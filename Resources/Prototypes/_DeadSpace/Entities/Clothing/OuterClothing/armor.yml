@@ -1,0 +1,22 @@
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBasicCraft
+  name: самодельная броня
+  description: Пара кусков стали, которые скрепили стяжками.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Armor/ArmorBasicSlim.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Armor/ArmorBasicSlim.rsi
+  - type: Construction
+    graph: ClothingCraftArmor
+    node: clothingCraftArmor
+  - type: Armor # 0.1 less than basic armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.90
+  - type: ExplosionResistance
+    damageCoefficient: 0.95

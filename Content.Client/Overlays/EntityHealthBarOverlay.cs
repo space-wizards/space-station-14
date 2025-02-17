@@ -13,6 +13,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using static Robust.Shared.Maths.Color;
+using Content.Shared.Stealth.Components;
 
 namespace Content.Client.Overlays;
 
@@ -74,6 +75,11 @@ public sealed class EntityHealthBarOverlay : Overlay
 
             if (damageableComponent.DamageContainerID == null || !DamageContainers.Contains(damageableComponent.DamageContainerID))
                 continue;
+
+            if (_entManager.HasComponent<StealthComponent>(uid))
+            {
+                continue;
+            }
 
             // we use the status icon component bounds if specified otherwise use sprite
             var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? spriteComponent.Bounds;

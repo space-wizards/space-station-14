@@ -1,0 +1,116 @@
+- type: entity
+  parent: BaseStructure
+  id: WeaponTurretBaseLaser
+  abstract: true
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Actions
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 60
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Sprite
+      sprite: _Backmen/Objects/Weapons/Guns/Turrets/turrets.rsi
+      drawdepth: Mobs
+      noRot: true
+      layers:
+        - state: stand
+        - state: onestar
+    - type: InteractionPopup
+      interactDelay: 0.2
+      successChance: 0.8
+      interactSuccessString: petting-success-generic
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Effects/double_beep.ogg
+    - type: CombatMode
+      toggleMouseRotator: false
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          # TODO: Construction graph
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalGlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 3
+                  max: 5
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 80
+    - type: Gun
+      fireRate: 1
+      selectedMode: FullAuto
+      availableModes:
+        - FullAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    - type: HitscanBatteryAmmoProvider
+      proto: RedHeavyLaser
+      fireCost: 200
+    - type: Battery
+      maxCharge: 2000
+      startingCharge: 2000
+    - type: HTN
+      rootTask:
+        task: TurretCompound
+      blackboard:
+        RotateSpeed: !type:Single
+          3.141
+        SoundTargetInLOS: !type:SoundPathSpecifier
+          path: /Audio/Effects/double_beep.ogg
+    - type: MouseRotator
+      angleTolerance: 6
+      rotationSpeed: 300
+      simple4DirMode: false
+    - type: NoRotateOnInteract
+    - type: NoRotateOnMove
+    - type: Input
+      context: "human"
+    - type: StaticPrice
+      price: 750
+      
+- type: entity
+  parent: WeaponTurretBaseLaser
+  id: WeaponTurretLaserNanoTrasen
+  suffix: NanoTrasen
+  components:
+  - type: Sprite
+    sprite: _Backmen/Objects/Weapons/Guns/Turrets/turrets.rsi
+    layers:
+      - state: stand
+      - state: nanotrasen
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+    
+- type: entity
+  parent: WeaponTurretBaseLaser
+  id: WeaponTurretLaserHostile
+  suffix: Hostile
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile

@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseMobSpeciesComputer
+  id: BaseMobIPS
+  abstract: true
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Mobs/Species/IPC/parts.rsi
+    state: full
+  - type: Body
+    prototype: IPS
+    requiredLegs: 2
+  - type: HumanoidAppearance
+    species: IPS
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#525252"
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobIPSDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: IPS

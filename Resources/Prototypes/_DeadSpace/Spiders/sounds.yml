@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: SpiderHatches
+  files:
+  - /Audio/_DeadSpace/Spiders/Eggs/gib1.ogg
+  - /Audio/_DeadSpace/Spiders/Eggs/gib2.ogg
+  - /Audio/_DeadSpace/Spiders/Eggs/gib3.ogg

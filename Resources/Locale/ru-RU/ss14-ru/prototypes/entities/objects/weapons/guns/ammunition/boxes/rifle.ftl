@@ -1,0 +1,17 @@
+ent-BaseMagazineBoxRifle = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-MagazineBoxRifleBig = ящик патронов (6.5х39 мм TSF)
+    .desc = { ent-BaseMagazineBoxRifle.desc }
+    .suffix = Big
+ent-MagazineBoxRifleBigRubber = ящик патронов (6.5х39 мм TSF резиновые)
+    .desc = { ent-BaseMagazineBoxRifle.desc }
+ent-MagazineBoxRifle = коробка патронов (6.5х39 мм TSF)
+    .desc = { ent-BaseMagazineBoxRifle.desc }
+ent-MagazineBoxRiflePractice = коробка патронов (6.5х39 мм TSF учебные)
+    .desc = { ent-BaseMagazineBoxRifle.desc }
+ent-MagazineBoxRifleRubber = коробка патронов (6.5х39 мм TSF резиновые)
+    .desc = { ent-BaseMagazineBoxRifle.desc }
+ent-MagazineBoxRifleIncendiary = коробка патронов (6.5х39 мм TSF зажигательные)
+    .desc = { ent-BaseMagazineBoxRifle.desc }
+ent-MagazineBoxRifleUranium = коробка патронов (6.5х39 мм TSF урановые)
+    .desc = { ent-BaseMagazineBoxRifle.desc }

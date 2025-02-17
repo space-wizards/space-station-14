@@ -1,0 +1,12 @@
+ent-ADTObjectsSpecificArithrazineChemistryBottle = бутылочка аритразина
+    .desc = Маленькая бутылочка.
+ent-ADTObjectsSpecificBicaridineChemistryBottle = бутылочка бикардина
+    .desc = Маленькая бутылочка.
+ent-ADTObjectsSpecificDexalinPlusChemistryBottle = бутылочка дексалина плюс
+    .desc = Маленькая бутылочка.
+ent-ADTObjectsSpecificDermalineChemistryBottle = бутылочка дермалина
+    .desc = Маленькая бутылочка.
+ent-ADTObjectsSpecificDexalinChemistryBottle = бутылочка дексалина
+    .desc = Маленькая бутылочка.
+ent-ADTObjectsSpecificLeporazineChemistryBottle = бутылочка лепоразина
+    .desc = Маленькая бутылочка.

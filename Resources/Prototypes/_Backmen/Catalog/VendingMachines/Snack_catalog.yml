@@ -1,0 +1,66 @@
+﻿- type: listing
+  id: GetmoreChocolateCorpInventory1
+  productEntity: FoodSnackRaisins
+  cost:
+    SpaceCash: 15
+  categories:
+    - GetmoreChocolateCorpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: GetmoreChocolateCorpInventory2
+  productEntity: FoodSnackChocolate
+  cost:
+    SpaceCash: 10
+  categories:
+    - GetmoreChocolateCorpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 25
+
+- type: listing
+  id: GetmoreChocolateCorpInventory3
+  productEntity: FoodSnackPopcorn
+  cost:
+    SpaceCash: 15
+  categories:
+    - GetmoreChocolateCorpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: GetmoreChocolateCorpInventory4
+  productEntity: FoodSnackSyndi
+  cost:
+    SpaceCash: 15
+  categories:
+    - GetmoreChocolateCorpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: GetmoreChocolateCorpInventory5
+  productEntity: DrinkRamen
+  cost:
+    SpaceCash: 10
+  categories:
+    - GetmoreChocolateCorpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: GetmoreChocolateCorpInventory6
+  productEntity: DrinkHellRamen
+  cost:
+    SpaceCash: 10
+  categories:
+    - GetmoreChocolateCorpInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+

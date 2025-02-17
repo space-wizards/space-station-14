@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: ClownVendAds
+  values:
+    prefix: advertisement-clownvend-
+    count: 10

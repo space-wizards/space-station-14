@@ -18,22 +18,22 @@
                                         <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
                                         <LineEdit Name="NameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
                                         <Button Name="NameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
+                                        <Button Name="RandomizeEverythingButton" Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
                                     </BoxContainer>
-                                    <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
+                                    <!-- <Button Name="RandomizeEverythingButton" HorizontalAlignment="Center"
                                             HorizontalExpand="False" MaxWidth="256"
-                                            Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
+                                            Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" /> -->
                                     <RichTextLabel Name="WarningLabel" HorizontalExpand="False"
-                                                   VerticalExpand="True" MaxWidth="425"
+                                                   VerticalExpand="True" MaxWidth="650"
                                                    HorizontalAlignment="Left" />
                                 </BoxContainer>
                             </ui:HighlightedContainer>
                         </BoxContainer>
                     </ui:HighlightedContainer>
-                </BoxContainer>
-                <!-- Import/Export -->
-                <BoxContainer Orientation="Vertical" MinSize="60 0" HorizontalExpand="True" HorizontalAlignment="Right">
-                    <ui:HighlightedContainer Name="ProfileHighlight">
-                        <BoxContainer Orientation="Vertical">
+                    <!-- Import/Export -->
+                    <BoxContainer Orientation="Vertical" MinSize="60 0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                        <!-- <ui:HighlightedContainer Name="ProfileHighlight"> -->
+                        <BoxContainer Orientation="Vertical" MaxWidth="300">
                             <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
                             <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
                             <Button Name="ImportButton" Text="{Loc 'humanoid-profile-editor-import-button'}"/>
@@ -41,7 +41,17 @@
                             <Button Name="ExportImageButton" Text="{Loc 'humanoid-profile-editor-export-image-button'}"/>
                             <Button Name="OpenImagesButton" Text="{Loc 'humanoid-profile-editor-open-image-button'}"/>
                         </BoxContainer>
-                    </ui:HighlightedContainer>
+                        <!-- </ui:HighlightedContainer> -->
+                    </BoxContainer>
+                </BoxContainer>
+                <!-- Right side -->
+                <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+                    <SpriteView Name="SpriteView" Scale="8 8" SizeFlagsStretchRatio="1" />
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
+                        <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
+                        <cc:VSeparator Margin="2 0 3 0" />
+                        <Button Name="SpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
+                    </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
             <Control MinHeight="10" />
@@ -91,6 +101,14 @@
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="SpawnPriorityButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
+                                <!-- Corvax-TTS-Start -->
+                                <BoxContainer HorizontalExpand="True" Visible="False" Name="TTSContainer">
+                                    <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <OptionButton Name="VoiceButton" HorizontalAlignment="Right" />
+									<Button Name="VoicePlayButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
+                                </BoxContainer>
+                                <!-- Corvax-TTS-End -->
                             </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
@@ -139,12 +157,12 @@
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+        <!-- <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
             <SpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" />
             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
                 <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
                 <cc:VSeparator Margin="2 0 3 0" />
                 <Button Name="SpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
             </BoxContainer>
-        </BoxContainer>
+        </BoxContainer> -->
 </BoxContainer>

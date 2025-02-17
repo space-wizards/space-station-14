@@ -1,0 +1,52 @@
+- type: soundCollection
+  id: XenoScream
+  files:
+  - /Audio/_DeadSpace/Sponsor/Sound/scream-1.ogg
+  - /Audio/_DeadSpace/Sponsor/Sound/scream-2.ogg
+  - /Audio/_DeadSpace/Sponsor/Sound/scream-3.ogg
+  - /Audio/_DeadSpace/Sponsor/Sound/scream-4.ogg
+  - /Audio/_DeadSpace/Sponsor/Sound/scream-5.ogg
+
+- type: emoteSounds
+  id: UnisexXenomorph
+  sounds:
+    Scream:
+      collection: XenoScream
+    ScreamOnDamage:
+      collection: XenoScream
+    Laugh:
+      collection: XenoScream
+    Sneeze:
+      collection: XenoScream
+    Cough:
+      collection: XenoScream
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: XenoScream
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: XenoScream
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: XenoScream
+    Crying:
+      collection: XenoScream
+    Whistle:
+      collection: XenoScream
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Meow:
+      path: /Audio/_DeadSpace/Sponsor/Sound/meow_xeno.ogg
+    Hiss:
+      path: /Audio/_DeadSpace/Sponsor/Sound/hissed_xeno.ogg
+  params:
+    variation: 0.125

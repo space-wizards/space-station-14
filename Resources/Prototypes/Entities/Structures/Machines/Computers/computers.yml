@@ -152,6 +152,15 @@
       board: !type:Container
         ents: []
       disk_slot: !type:ContainerSlot {}
+  # DS14-start
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceList
+  - type: DeviceLinkSource
+    range: 30
+    ports:
+      - ShuttleConsoleSender
+  # DS14-end
   - type: GuideHelp
     guides:
     - ShuttleCraft
@@ -503,7 +512,7 @@
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
-    access: [["Research"]]
+    access: [["ResearchDirector"], ["Captain"]] # DS14
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -662,6 +671,28 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+    announcementSound:
+      path: /Audio/_DeadSpace/Announcements/announce.ogg # DS14-Announcements
+      params:
+        volume: -2
+    firstPrivilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    secondPrivilegedIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
   - type: DeviceNetwork
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
@@ -681,6 +712,12 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      CommunicationsConsole-firstId: !type:ContainerSlot {}
+      CommunicationsConsole-secondId: !type:ContainerSlot {}
 
 - type: entity
   parent: ComputerComms
@@ -705,9 +742,10 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
-    canShuttle: false
+    canCallShuttle: false
+    canCallERT: false
     global: true #announce to everyone they're about to fuck shit up
-    sound: /Audio/Announcements/war.ogg
+    announcementSound: /Audio/Announcements/war.ogg
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
@@ -738,9 +776,9 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
-    canShuttle: false
+    # canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
-    sound: /Audio/Announcements/war.ogg
+    # sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: WizardCommsComputerCircuitboard
   - type: PointLight
@@ -897,7 +935,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [["Quartermaster"]]
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

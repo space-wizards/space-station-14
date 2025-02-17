@@ -1,0 +1,74 @@
+- type: entity
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobVulpkanin
+  abstract: true
+  components:
+  - type: Icon
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: vulpkanin_m
+  - type: HumanoidAppearance
+    species: Vulpkanin
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+    - Tail
+  - type: Body
+    prototype: VulpkaninBody
+    requiredLegs: 2
+  - type: RoarAccent
+  - type: Hunger
+  - type: Thirst
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Fur
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Piercing: 5
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 200
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.2 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.1 #per second, scales with temperature & other constants
+  - type: Perishable
+  - type: Sanity # DS14
+  - type: Inventory
+    speciesId: reptilian # for reptilian masks
+  - type: Vocal
+    wilhelm: "/Audio/_DeadSpace/Voice/Felinid/cat_wilhelm.ogg"
+    sounds:
+      Male: MaleVulpkanin
+      Female: FemaleVulpkanin
+      Unsexed: MaleVulpkanin
+  - type: Speech
+    speechSounds: Vulpkanin
+  - type: Vulpkanin # DS14: For emote panel
+  - type: TypingIndicator
+    proto: vulpkanin
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobVulpkaninDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Vulpkanin
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+    - Tail

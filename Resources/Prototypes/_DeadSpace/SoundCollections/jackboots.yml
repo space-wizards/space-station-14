@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: FootstepJackboots
+  files:
+  - /Audio/Effects/jackboot1.ogg
+  - /Audio/Effects/jackboot2.ogg

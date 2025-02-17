@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseItem
+  id: ChainswordDragonFox
+  name: цепной меч
+  description: Представляет собой ничто иное, как меч, оснащённый зубчатой цепью.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Melee/chainsword.rsi
+    state: icon
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -135
+    attackRate: 4
+    damage:
+      types:
+        Slash: 3
+        Blunt: 3
+        Structural: 5
+    soundHit:
+      path: /Audio/Weapons/chainsaw.ogg
+      params:
+        volume: -3
+  - type: Item
+    size: Normal
+    sprite: _DeadSpace/Objects/Weapons/Melee/chainsword.rsi
+  - type: DisarmMalus
+  - type: RefillableSolution
+    solution: Welder
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 300
+        maxVol: 300
+  - type: UseDelay
+    delay: 1

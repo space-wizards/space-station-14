@@ -12,6 +12,9 @@
       - id: BookBartendersManual
       - id: BookChemicalCompendium
       - id: BookEngineersHandbook
+      - id: HyperLinkBookCorporateLaw # Corvax-HyperLink
+      - id: HyperLinkBookSOPSecurity # Corvax-HyperLink
+      - id: HyperLinkBookSOPLaw # Corvax-HyperLink
       - id: BookHowToCookForFortySpaceman
       - id: BookHowToKeepStationClean
       - id: BookHowToRockAndStone

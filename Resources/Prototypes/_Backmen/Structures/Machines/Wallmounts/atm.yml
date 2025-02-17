@@ -1,0 +1,131 @@
+﻿# Construction Frame
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: ATMFrame
+  name: atm frame
+  description: A construction frame for a atm.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      drawdepth: WallMountedItems
+      netsync: false
+      sprite: _Backmen/Structures/Wallmounts/atm.rsi
+      state: frame
+    - type: Construction
+      graph: ATM
+      node: parts
+    - type: WallMount
+      arc: 360
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: ATMFrameWired
+  name: atm frame
+  description: A construction frame for a atm.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      drawdepth: WallMountedItems
+      netsync: false
+      sprite: _Backmen/Structures/Wallmounts/atm.rsi
+      state: framewired
+    - type: Construction
+      graph: ATM
+      node: wired
+    - type: WallMount
+      arc: 360
+
+- type: entity
+  id: ATM
+  name: ATM
+  description: For all your monetary needs!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wallmount
+  components:
+    - type: WallMount
+      arc: 360
+    - type: Transform
+      anchored: true
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: _Backmen/Structures/Wallmounts/atm.rsi
+      netsync: false
+      snapCardinals: true
+      state:
+      layers:
+        - state: "off"
+          map: ["enum.ATMVisualLayers.Base"]
+        - state: "off"
+          map: ["enum.ATMVisualLayers.BaseUnshaded"]
+          shader: unshaded
+    - type: Construction
+      graph: ATM
+      node: ATM
+    - type: Atm
+      offState: off
+      normalState: normal-unshaded
+      currencyWhitelist:
+        - SpaceCash
+      idCardSlot:
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+            - IdCard
+    - type: ItemSlots
+    - containers:
+        IdCardSlot: !type:ContainerSlot
+      type: ContainerContainer
+    - type: Appearance
+    - type: AmbientOnPowered
+    - type: AmbientSound
+      volume: -9
+      range: 3
+      enabled: false
+      sound:
+        path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+    # - type: Destructible
+    #   thresholds:
+    #   - trigger:
+    #       !type:DamageTrigger
+    #       damage: 100
+    #     behaviors:
+    #     - !type:DoActsBehavior
+    #       acts: ["Breakage"]
+    #     - !type:EjectVendorItems
+
+    - type: ActivatableUI
+      key: enum.ATMUiKey.Key
+      singleUser: true
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        enum.ATMUiKey.Key:
+          type: ATMBoundUserInterface
+    - type: PointLight
+      enabled: false
+      castShadows: false
+      radius: 1.5
+    - type: LitOnPowered
+    - type: ApcPowerReceiver
+      powerLoad: 200
+    - type: ExtensionCableReceiver
+    - type: EmitSoundOnUIOpen
+      sound:
+        collection: Keyboard

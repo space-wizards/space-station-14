@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseStructure
+  id: Sleeper
+  name: капсула криогенного сна
+  description: Супер-охлаждаемый контейнер, обеспечивающий сохранность членов экипажа во время космических путешествий.
+  suffix: Филлер для маппинга
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Structures/Machines/sleeper.rsi
+    state: icon
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/sleeper.rsi
+    noRot: true
+    state: sleeper
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.15,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

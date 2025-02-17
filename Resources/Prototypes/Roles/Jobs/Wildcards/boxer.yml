@@ -3,6 +3,10 @@
   name: job-name-boxer
   description: job-description-boxer
   playTimeTracker: JobBoxer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600 # 1 hour
   startingGear: BoxerGear
   icon: "JobIconBoxer"
   supervisors: job-supervisors-hop
@@ -13,6 +17,12 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay
     prototype: ClothingHandsGlovesBoxingRigged
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Civilian
+  wage: 50
+  #end-backmen: currency
 
 - type: startingGear
   id: BoxerGear
@@ -21,6 +31,4 @@
     ears: ClothingHeadsetService
     shoes: ClothingShoesColorRed
     belt: ClothingBeltChampion
-  #storage:
-    #back:
-    #- Stuff
+    socks: ClothingUnderwearSocksBoxer

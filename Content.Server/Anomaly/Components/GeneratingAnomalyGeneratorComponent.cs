@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly;
+using Content.Shared.Anomaly;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -15,4 +15,7 @@ public sealed partial class GeneratingAnomalyGeneratorComponent : Component
     public TimeSpan EndTime = TimeSpan.Zero;
 
     public EntityUid? AudioStream;
+
+    [DataField]
+    public string Author = String.Empty;
 }

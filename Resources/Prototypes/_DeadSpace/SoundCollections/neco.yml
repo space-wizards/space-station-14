@@ -1,0 +1,27 @@
+- type: soundCollection
+  id: NecoScreams
+  files:
+  - /Audio/_DeadSpace/Voice/Neco/neco_scream1.ogg
+  - /Audio/_DeadSpace/Voice/Neco/neco_scream2.ogg
+  - /Audio/_DeadSpace/Voice/Neco/neco_scream3.ogg
+
+- type: soundCollection
+  id: NecoLaugh
+  files:
+  - /Audio/_DeadSpace/Voice/Neco/neco_laugh1.ogg
+  - /Audio/_DeadSpace/Voice/Neco/neco_laugh2.ogg
+
+- type: soundCollection
+  id: NecoSneezes
+  files:
+  - /Audio/_DeadSpace/Voice/Neco/neco_sneeze1.ogg
+
+- type: soundCollection
+  id: NecoCoughs
+  files:
+  - /Audio/_DeadSpace/Voice/Neco/neco_cough1.ogg
+
+- type: soundCollection
+  id: NecoCry
+  files:
+  - /Audio/_DeadSpace/Voice/Neco/neco_cry1.ogg

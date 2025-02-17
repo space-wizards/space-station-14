@@ -1,0 +1,92 @@
+- type: entity
+  name: трёхглавый змей
+  parent: MobSnake
+  id: MobSnakeSyndicate
+  description: Целых три головы чтобы их гладить!
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+          state: snake
+          sprite: _DeadSpace/Mobs/Pets/rouge.rsi
+    - type: SpriteMovement
+      movementLayers:
+        movement:
+          state: snake-moving
+      noMovementLayers:
+        movement:
+          state: snake
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: snake
+        Critical:
+          Base: snake-critical
+        Dead:
+          Base: dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        40: Critical
+        60: Dead
+    - type: ReplacementAccent
+      accent: xeno
+    - type: TypingIndicator
+      proto: lizard
+    - type: Speech
+      speechVerb: Arachnid
+      speechSounds: Arachnid
+    - type: InteractionPopup
+      successChance: 0.6
+      interactSuccessString: petting-success-reptile
+      interactFailureString: petting-failure-generic
+      interactSuccessSpawn: EffectHearts
+      interactSuccessSound:
+        path: /Audio/Animals/snake_hiss.ogg
+
+- type: entity
+  name: Руж
+  parent: MobSnakeSyndicate
+  id: MobSnakeSyndicateRouge
+  description: Целых три головы чтобы их гладить!
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Tag
+      tags:
+        - CannotSuicide
+    - type: GhostTakeoverAvailable
+    - type: GhostRole
+      name: ghost-role-information-rouge-name
+      description: ghost-role-information-rouge-description
+      rules: ghost-role-information-nonantagonist-rules
+
+- type: entity
+  name: спавнер трёхглавый змей
+  id: SpawnMobSnakeSyndicate
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: snake
+          sprite: _DeadSpace/Mobs/Pets/rouge.rsi
+    - type: ConditionalSpawner
+      prototypes:
+        - MobSnakeSyndicate
+
+- type: entity
+  name: спавнер трёхглавый змей Руж
+  id: SpawnMobSnakeSyndicateRouge
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: snake
+          sprite: _DeadSpace/Mobs/Pets/rouge.rsi
+    - type: ConditionalSpawner
+      prototypes:
+        - MobSnakeSyndicateRouge

@@ -154,6 +154,7 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
+  - type: NightVision # DS14 
 
 - type: entity
   parent: BaseMobDragon
@@ -196,6 +197,9 @@
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
     rules: ghost-role-information-space-dragon-dungeon-rules
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10h overall
     raffle:
       settings: default
   - type: SlowOnDamage
@@ -209,7 +213,7 @@
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon
-      amount: 1
+      amount: 3
   - type: MeleeWeapon
     damage:
       groups:

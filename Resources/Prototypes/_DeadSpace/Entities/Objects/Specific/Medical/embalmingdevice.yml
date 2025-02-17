@@ -1,0 +1,61 @@
+- type: entity
+  parent: BaseItem
+  id: EmbalmingDevice
+  name: устройство для бальзамирования
+  description: Компактное устройство для бальзамирования наполняемое бальзамирующим раствором в состав которой входит формальдегид и метанол. Для работы необходимо подключить к столу для аутопсии.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 100
+    - type: MixableSolution
+      solution: tank
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Specific/Chemistry/embalmingdevice.rsi
+      layers:
+        - state: embalmingdevice
+        - state: embalmingdevice1
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+          visible: false
+    - type: Item
+      size: Large # DS
+      sprite: _DeadSpace/Objects/Specific/Chemistry/embalmingdevice.rsi
+    - type: RefillableSolution
+      solution: beaker
+    - type: DrainableSolution
+      solution: beaker
+    - type: ExaminableSolution
+      solution: beaker
+    - type: DrawableSolution
+      solution: beaker
+    - type: InjectableSolution
+      solution: beaker
+    - type: SolutionTransfer
+      canChangeTransferAmount: true
+    - type: UserInterface
+      interfaces:
+        enum.TransferAmountUiKey.Key:
+          type: TransferAmountBoundUserInterface
+    - type: Spillable
+      solution: beaker
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: embalmingdevice
+    - type: StaticPrice
+      price: 100
+    - type: Label
+
+- type: entity
+  parent: EmbalmingDevice
+  id: EmbalmingDeviceFull
+  suffix: Полное
+  components:
+    - type: Label
+      currentLabel: carbon
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Carbon
+              Quantity: 100

@@ -1,0 +1,44 @@
+﻿- type: listing
+  id: DonutInventory1
+  productEntity: FoodDonutChocolate
+  cost:
+    SpaceCash: 5
+  categories:
+    - DonutInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DonutInventory2
+  productEntity: FoodDonutApple
+  cost:
+    SpaceCash: 5
+  categories:
+    - DonutInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DonutInventory3
+  productEntity: FoodDonutPink
+  cost:
+    SpaceCash: 5
+  categories:
+    - DonutInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: DonutInventory4
+  productEntity: FoodDonutBungo
+  cost:
+    SpaceCash: 5
+  categories:
+    - DonutInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+

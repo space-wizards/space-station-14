@@ -11,7 +11,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobMedibot
-
+      
 - type: entity
   name: cleanbot spawner
   id: SpawnMobCleanBot

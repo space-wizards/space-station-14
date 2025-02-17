@@ -55,3 +55,28 @@
   storage:
     back:
     - GoldenPlunger
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersJanitor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersJanitor
+
+- type: loadout
+  id: UnderwearBottomPantiesJanitor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesJanitor
+
+- type: loadout
+  id: UnderwearTopBraJanitor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraJanitor

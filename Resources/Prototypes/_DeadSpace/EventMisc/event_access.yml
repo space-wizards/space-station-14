@@ -1,0 +1,11 @@
+- type: accessLevel
+  id: AccessReserved1
+  name: Reserved-Access-Level-1
+
+- type: accessLevel
+  id: AccessReserved2
+  name: Reserved-Access-Level-2
+
+- type: accessLevel
+  id: AccessReserved3
+  name: Reserved-Access-Level-3

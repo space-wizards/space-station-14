@@ -1,0 +1,48 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: LWClothingHeadHatFoxyO
+  name: лисьи ушки
+  description: Frrrr!
+  suffix: Оранжевые
+  components:
+  - type: Sprite
+    sprite: _LW/Clothing/Head/Hats/foxyears_orange.rsi
+  - type: Clothing
+    sprite: _LW/Clothing/Head/Hats/foxyears_orange.rsi
+  # - type: AddAccentClothing
+  #   accent: GrowlingAccent
+  # - type: InteractionPopup
+  #   successChance: 1
+  #   interactSuccessSpawn: EffectHearts
+  #   interactSuccessString: hugging-success-generic
+  #   interactSuccessSound: /Audio/_LW/Plushie/frfrfr.ogg
+
+- type: entity
+  parent: LWClothingHeadHatFoxyO
+  id: LWClothingHeadHatFoxyW
+  suffix: Белые
+  components:
+  - type: Sprite
+    sprite: _LW/Clothing/Head/Hats/foxyears_white.rsi
+  - type: Clothing
+    sprite: _LW/Clothing/Head/Hats/foxyears_white.rsi
+
+- type: entity
+  parent: LWClothingHeadHatFoxyO
+  id: LWClothingHeadHatFoxyB
+  suffix: Чёрные
+  components:
+  - type: Sprite
+    sprite: _LW/Clothing/Head/Hats/foxyears_black.rsi
+  - type: Clothing
+    sprite: _LW/Clothing/Head/Hats/foxyears_black.rsi
+
+- type: entity
+  parent: LWClothingHeadHatFoxyO
+  id: LWClothingHeadHatFoxyBl
+  suffix: Синие
+  components:
+  - type: Sprite
+    sprite: _LW/Clothing/Head/Hats/foxyears_blue.rsi
+  - type: Clothing
+    sprite: _LW/Clothing/Head/Hats/foxyears_blue.rsi

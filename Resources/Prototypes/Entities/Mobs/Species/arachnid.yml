@@ -81,9 +81,14 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - map: [ "underwearb" ] # Sirena
+      - map: [ "underweart" ] # Sirena
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      - map: [ "socks" ] # Sirena
       - map: ["jumpsuit"]
-      - map: ["enum.HumanoidVisualLayers.LFoot"]
-      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      # - map: ["enum.HumanoidVisualLayers.LFoot"]
+      # - map: ["enum.HumanoidVisualLayers.RFoot"]
       - map: ["enum.HumanoidVisualLayers.LHand"]
       - map: ["enum.HumanoidVisualLayers.RHand"]
       - map: [ "gloves" ]
@@ -115,7 +120,7 @@
         visible: false
   - type: Inventory
     templateId: arachnid
-
+  - type: Sanity # DS14
 
 - type: entity
   parent: BaseSpeciesDummy

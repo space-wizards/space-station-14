@@ -108,7 +108,7 @@ public sealed class TraitorRuleTest
         // Make sure the player is a traitor.
         var mind = mindSys.GetMind(player)!.Value;
         Assert.That(roleSys.MindIsAntagonist(mind));
-        Assert.That(factionSys.IsMember(player, "Syndicate"), Is.True);
+        Assert.That(factionSys.IsMember(player, "SyndicateAgent"), Is.True); // DS14
         Assert.That(factionSys.IsMember(player, "NanoTrasen"), Is.False);
         Assert.That(traitorRule.TotalTraitors, Is.EqualTo(1));
         Assert.That(traitorRule.TraitorMinds[0], Is.EqualTo(mind));

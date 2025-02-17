@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: ParrotPoly
+  values:
+    prefix: poly-speech-
+    count: 130

@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: Hairball
+  name: комок волос
+  description: Чувак, фелиниды... они отвратительны.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Species/felinid.rsi
+    state: icon
+  - type: Hairball
+  - type: SolutionContainerManager
+    solutions:
+      hairball:
+        maxVol: 25
+        reagents:
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Extractable
+    grindableSolutionName: hairball
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash

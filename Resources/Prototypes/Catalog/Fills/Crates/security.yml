@@ -81,6 +81,26 @@
         amount: 2
 
 - type: entity
+  id: CrateSecurityHardsuit
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSecurity
+        amount: 2
+
+- type: entity
+  id: CrateSecurityUSSPjuggernaut
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorUSSPjuggernaut
+      - id: ADTClothingHeadUSSPjuggernautHelmetArmored
+      - id: ClothingUniformJumpsuitUSSPBlack
+      - id: ClothingHandsGlovesLeatherUSSPBlack
+
+- type: entity
   id: CrateSecurityTrackingMindshieldImplants
   name: implanter crate
   description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
@@ -91,6 +111,4 @@
       - id: MindShieldImplanter
         amount: 4
       - id: TrackingImplanter
-        amount: 4
-
-# Cosmetic Crates
+        amount: 2

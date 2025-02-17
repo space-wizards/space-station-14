@@ -1,0 +1,64 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckSupremeCommanderCloak
+  name: плащ высшего главнокомандующего
+  description: Не дайте ему запачкаться, сделан из супер-технологичного блюспейс шитья, такой носит только один человек, и это - вы.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/supreme_commander_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckKnightCloak
+  name: плащ рыцаря
+  description: Шёлковый и внушительный рыцарский плащ. За честь короны!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/knight_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckHoPAltCloak
+  name: торжественный плащ главы персонала
+  description: Плащ главы персонала для особых случаев.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/HoP_alt_cloak.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckDarkGreyCloak
+  name: темно-серый плащ
+  description: Даже грейтайд заслуживает иметь свой плащ.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/darkgrey_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckGothicCloak
+  name: готический плащ
+  description: Для классических вампиров, ценящих старый стиль.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/gothic_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckSyndicateCloak
+  name: плащ Синдиката
+  description: Антагонизируй со стилем!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/syndicate_cloak.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ADTClothingNeckNukeOpsCloak
+  name: плащ ядерных оперативников
+  description: Согреет вас холодными вечерами на аванпосте ядерных оперативников.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Neck/Cloaks/nukeops_cloak.rsi

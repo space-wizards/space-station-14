@@ -1,0 +1,179 @@
+# SlimePerson emotes
+
+- type: emote
+  id: Bubbling
+  name: chat-emote-name-bubbling
+  category: Vocal
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - SlimePerson
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-bubbling"]
+  chatTriggers:
+    - громко пузыриться
+    - пузыриться
+    - булькает
+
+- type: emote
+  id: Pop
+  name: chat-emote-name-pop
+  category: Vocal
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - SlimePerson
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-pop"]
+  chatTriggers:
+    - издаёт хлопок
+    - издает хлопок
+
+# Felinid emotes
+
+- type: emote
+  id: Hiss
+  name: chat-emote-name-hiss
+  category: Vocal
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - CatVocal
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-hiss"]
+  chatTriggers:
+    - шипит
+    - шипит.
+    - шипит!
+    - hiss
+    - hisses
+    - hisses.
+    - hisses!
+    - hissing
+    - hissed
+
+- type: emote
+  id: Meow
+  name: chat-emote-name-meow
+  category: Vocal
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - CatVocal
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-meow"]
+  chatTriggers:
+    - meow
+    - meows
+    - meowing
+    - meowed
+    - miau
+    - miaus
+    - nya
+    - nyas
+    - мяучет
+
+- type: emote
+  id: Mew
+  name: chat-emote-name-mew
+  category: Vocal
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - Felinid
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-mew"]
+  chatTriggers:
+    - mew
+    - mews
+    - mewing
+    - mewed
+
+- type: emote
+  id: Purr
+  name: chat-emote-name-purr
+  category: Vocal
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - Felinid
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-purr"]
+  chatTriggers:
+    - purr
+    - purrs
+    - purring
+    - purred
+    - мурлыкает
+
+# Vulpkanin emotes
+
+- type: emote
+  id: Growl
+  name: chat-emote-name-growl
+  category: Vocal
+  icon: Interface/Emotes/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - Vulpkanin
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-growl"]
+  chatTriggers:
+    - growl
+    - growls
+    - growling
+    - growled
+
+- type: emote
+  id: Howl
+  name: chat-emote-name-howl
+  category: Vocal
+  icon: Interface/Emotes/scream.png
+  whitelist:
+    requireAll: true
+    components:
+    - Vocal
+    - Vulpkanin
+  blacklist:
+    components:
+    - BorgChassis
+    - ComputerEmotes
+  chatMessages: ["chat-emote-msg-howl"]
+  chatTriggers:
+    - воет на луну
+
+# Remnants of ADT
+
+- type: emote
+  id: WorkOut
+  name: chat-emote-name-workout
+  chatMessages: ["chat-emote-msg-workout"]

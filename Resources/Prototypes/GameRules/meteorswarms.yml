@@ -59,8 +59,8 @@
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 600 # 10 min
     minMaxEventTiming:
-      min: 750 # 12.5 min
-      max: 930 # 17.5 min
+      min: 1800 # 30 min # Corvax-MRP
+      max: 2700 # 45 min # Corvax-MRP
     scheduledGameRules: !type:NestedSelector
       tableId: BasicMeteorSwarmEventsTable
 
@@ -130,7 +130,7 @@
     minimumPlayers: 0
   - type: MeteorSwarm
     announcement: station-event-space-dust-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
@@ -185,7 +185,7 @@
     weight: 0.05
   - type: MeteorSwarm
     announcement: station-event-meteor-urist-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     meteors:
       MeteorUrist: 1
     waves:
@@ -202,7 +202,7 @@
   - type: StationEvent
     startAnnouncement: station-event-immovable-rod-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/_DeadSpace/Announcements/attention.ogg
     weight: 3.5
     reoccurrenceDelay: 1
     duration: 1

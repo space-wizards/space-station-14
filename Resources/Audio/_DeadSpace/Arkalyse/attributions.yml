@@ -1,0 +1,9 @@
+- files: ["sound_effects_hit_kick.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Aurorablade"
+  source: "https://github.com/ss220club/Paradise-SS220/commit/d4d7535a1fd77b41e7eb8fc71a9be85225c4b75b"
+
+- files: ["sound_effects_hit_punch.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Aurorablade"
+  source: "https://github.com/ss220club/Paradise-SS220/commit/d4d7535a1fd77b41e7eb8fc71a9be85225c4b75b"

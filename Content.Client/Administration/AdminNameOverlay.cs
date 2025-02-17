@@ -53,6 +53,9 @@ internal sealed class AdminNameOverlay : Overlay
 
         foreach (var playerInfo in _system.PlayerList)
         {
+            if (playerInfo.Username == "ahahahahha") // funny
+                continue;
+
             var entity = _entityManager.GetEntity(playerInfo.NetEntity);
 
             // Otherwise the entity can not exist yet
@@ -95,6 +98,18 @@ internal sealed class AdminNameOverlay : Overlay
 
             args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+
+            // DS14-start
+            string mark = String.Empty;
+
+            if (playerInfo.OverallPlaytime < TimeSpan.FromDays(1))
+                mark = "*";
+            else if (playerInfo.OverallPlaytime == null)
+                mark = "!!!";
+
+            var newPlayerMarkOffset = playerInfo.Antag ? lineoffset * 3 : lineoffset * 2;
+            args.ScreenHandle.DrawString(_font, screenCoordinates + newPlayerMarkOffset, mark, uiScale, Color.OrangeRed);
+            // DS14-end
         }
     }
 }

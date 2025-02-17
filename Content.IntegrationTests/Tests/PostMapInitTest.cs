@@ -46,27 +46,46 @@ namespace Content.IntegrationTests.Tests
         {
             "Dev",
             "TestTeg",
-            "Fland",
-            "Meta",
-            "Packed",
-            "Omega",
-            "Bagel",
             "CentComm",
-            "Box",
-            "Core",
-            "Marathon",
             "MeteorArena",
-            "Saltern",
-            "Reach",
-            "Train",
+            "CorvaxAstra",
+            "CorvaxAvrite",
+            "CorvaxDelta",
+            "CorvaxPaper",
+            "CorvaxSilly",
+            "CorvaxSpectrum",
+            "Aspid",
+            "Bagel",
+            "Barratry",
+            "Box",
+            "Cluster",
+            "Core",
+            "Fland",
+            "Gemini",
+            "Marathon",
+            "Meta",
             "Oasis",
+            "Omega",
+            "Origin",
+            "Packed",
+            "Saltern",
+            "Train",
+            "Cog",
+            // "DSTypan",
+            "Amber",
             "Gate",
             "Amber",
             "Loop",
             "Plasma",
-            "Elkridge",
             "Convex",
-            "Relic"
+            "Loop",
+            "Reach"
+        };
+
+        private static readonly string[] GameMapsExcludedFromTests =
+        {
+            "DSTypan", //remap in progress
+            "Elkridge" //remap in progress
         };
 
         /// <summary>
@@ -250,7 +269,15 @@ namespace Content.IntegrationTests.Tests
                     // Test all availableJobs have spawnPoints
                     // This is done inside gamemap test because loading the map takes ages and we already have it.
                     var comp = entManager.GetComponent<StationJobsComponent>(station);
-                    var jobs = new HashSet<ProtoId<JobPrototype>>(comp.SetupAvailableJobs.Keys);
+
+                    // DS14-start
+                    // Filter out not round-start jobs (mainly for ClownSponsor)
+                    var jobs = new HashSet<ProtoId<JobPrototype>>(
+                        comp.SetupAvailableJobs
+                            .Where(job => job.Value[0] != 0)
+                            .Select(job => job.Key)
+                    );
+                    // DS14-end
 
                     var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()
                         .Where(x => x.SpawnType == SpawnPointType.Job && x.Job != null)
@@ -315,7 +342,7 @@ namespace Content.IntegrationTests.Tests
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
             var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
-                .Where(x => !pair.IsTestPrototype(x))
+                .Where(x => !pair.IsTestPrototype(x) && !GameMapsExcludedFromTests.Contains(x.ID)) // DS14: temp exclude broken Typan map file
                 .Select(x => x.ID)
                 .ToHashSet();
 

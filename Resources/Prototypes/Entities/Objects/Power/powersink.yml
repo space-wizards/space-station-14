@@ -36,7 +36,7 @@
           acts: [ "Destruction" ]
     - type: PowerSink
     - type: Battery
-      maxCharge: 7500000
+      maxCharge: 750000
       pricePerJoule: 0.0003
     - type: ExaminableBattery
     - type: PowerConsumer

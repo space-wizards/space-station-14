@@ -166,4 +166,26 @@ public sealed class BinSystem : EntitySystem
         Dirty(uid, component);
         return true;
     }
+
+    public void RefreshContainer(List<EntityUid> newItems, BinComponent component)
+    {
+        var items = component.ItemContainer.ContainedEntities.ToList();
+
+        if (items != null)
+        {
+
+            foreach (var item in items)
+            {
+                _container.Remove(item, component.ItemContainer);
+            }
+            component.Items.Clear();
+
+            foreach (var item in newItems)
+            {
+                _container.Insert(item, component.ItemContainer);
+                component.Items.Add(item);
+            }
+        }
+
+    }
 }

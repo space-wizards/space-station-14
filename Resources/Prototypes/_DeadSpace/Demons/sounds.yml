@@ -1,0 +1,31 @@
+- type: soundCollection
+  id: HonkDemonLaugh
+  files:
+  - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
+  - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
+  - /Audio/Voice/Cluwne/cluwnelaugh3.ogg
+
+- type: emoteSounds
+  id: Demon
+  params:
+    variation: 0.125
+    volume: 2
+  sounds:
+    Scream:
+      collection: DemonScreams
+    Laugh:
+      collection: DemonLaughs
+
+- type: soundCollection
+  id: DemonScreams
+  files:
+    - /Audio/_DeadSpace/Demons/scream_01.ogg
+    - /Audio/_DeadSpace/Demons/scream_02.ogg
+    - /Audio/_DeadSpace/Demons/scream_03.ogg
+
+- type: soundCollection
+  id: DemonLaughs
+  files:
+    - /Audio/_DeadSpace/Demons/laugh_01.ogg
+    - /Audio/_DeadSpace/Demons/laugh_01.ogg
+    - /Audio/_DeadSpace/Demons/laugh_01.ogg

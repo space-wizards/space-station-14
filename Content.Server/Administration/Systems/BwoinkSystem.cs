@@ -25,6 +25,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.Preferences.Managers;
 
 namespace Content.Server.Administration.Systems
 {
@@ -652,24 +653,17 @@ namespace Content.Server.Administration.Systems
 
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
+            // DS14-color-depends-on-the-admin-color
+            var prefManager = IoCManager.Resolve<IServerPreferencesManager>();
+            var adminColor = prefManager.GetPreferences(senderSession.UserId).AdminOOCColor;
+            var adminMgr = IoCManager.Resolve<IAdminManager>();
+            var adminData = adminMgr.GetAdminData(senderSession)!;
+
             string bwoinkText;
-            string adminPrefix = "";
 
-            //Getting an administrator position
-            if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Title is not null)
+            if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
             {
-                adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
-            }
-
-            if (senderAdmin is not null &&
-                senderAdmin.Flags ==
-                AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
-            {
-                bwoinkText = $"[color=purple]{adminPrefix}{senderSession.Name}[/color]";
-            }
-            else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
-            {
-                bwoinkText = $"[color=red]{adminPrefix}{senderSession.Name}[/color]";
+                bwoinkText = $"[color={adminColor.ToHex()}]{adminData.Title} | {senderSession.Name}[/color]";
             }
             else
             {
@@ -692,13 +686,6 @@ namespace Content.Server.Administration.Systems
                 RaiseNetworkEvent(msg, channel);
             }
 
-            string adminPrefixWebhook = "";
-
-            if (_config.GetCVar(CCVars.AhelpAdminPrefixWebhook) && senderAdmin is not null && senderAdmin.Title is not null)
-            {
-                adminPrefixWebhook = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
-            }
-
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
@@ -709,15 +696,9 @@ namespace Content.Server.Administration.Systems
                     {
                         string overrideMsgText;
                         // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
-                        if (senderAdmin is not null &&
-                            senderAdmin.Flags ==
-                            AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
+                        if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
                         {
-                            overrideMsgText = $"[color=purple]{adminPrefixWebhook}{_overrideClientName}[/color]";
-                        }
-                        else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
-                        {
-                            overrideMsgText = $"[color=red]{adminPrefixWebhook}{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=red]{adminData.Title} | {_overrideClientName}[/color]";
                         }
                         else
                         {
@@ -744,7 +725,17 @@ namespace Content.Server.Administration.Systems
                     _messageQueues[msg.UserId] = new Queue<DiscordRelayedData>();
 
                 var str = message.Text;
-                var unameLength = senderSession.Name.Length;
+
+                // DS14-start
+                var nameForWebhook = senderSession.Name;
+
+                if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
+                {
+                    nameForWebhook = $"{adminData.Title} | {senderSession.Name}";
+                }
+
+                var unameLength = nameForWebhook.Length;
+                // DS14-end
 
                 if (unameLength + str.Length + _maxAdditionalChars > DescriptionMax)
                 {
@@ -753,7 +744,7 @@ namespace Content.Server.Administration.Systems
 
                 var nonAfkAdmins = GetNonAfkAdmins();
                 var messageParams = new AHelpMessageParams(
-                    senderSession.Name,
+                    nameForWebhook, // DS14
                     str,
                     !personalChannel,
                     _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"),

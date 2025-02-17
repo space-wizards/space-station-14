@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseGameRule
+  id: DemonsInvasion
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 10
+    earliestStart: 45
+    reoccurrenceDelay: 60
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: MobGhostHerald
+
+- type: entity
+  parent: BaseGameRule
+  id: ShadowDemonInvasion
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 10
+    earliestStart: 45
+    reoccurrenceDelay: 60
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: MobDemonShadow

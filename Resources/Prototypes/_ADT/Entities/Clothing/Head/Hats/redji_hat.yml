@@ -1,0 +1,11 @@
+ #nope_ingeneer
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHatRedji
+  name: шляпа старика Рэджи
+  description: Слегка потёртая, стильная шляпа.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/old_stylish_hat.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/old_stylish_hat.rsi

@@ -1,0 +1,12 @@
+ent-BaseFigurineDS14 = { ent-BaseFigurine }
+    .desc = { ent-BaseFigurine.desc }
+ent-ToyFigurineERTCAP = фигурка Командира ОБР
+    .desc = Минифигурка командира ОБР.
+ent-ToyFigurineERTEngi = фигурка инженера ОБР
+    .desc = Минифигурка инженера ОБР.
+ent-ToyFigurineERTJunitor = фигурка уборщика ОБР
+    .desc = Минифигурка уборщика ОБР.
+ent-ToyFigurineERTOfficer = фигурка офицера ОБР
+    .desc = Минифигурка офицера ОБР.
+ent-ToyFigurineERTMedic = фигурка медика ОБР
+    .desc = Минифигурка медика ОБР.

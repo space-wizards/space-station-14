@@ -1,0 +1,32 @@
+﻿- type: entity
+  name: pelmeni
+  parent: FoodBowlBase
+  id: FoodPelmeniBowl
+  description: Lots of meat, little dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+  - type: Food
+    trash: 
+      - FoodBowlBig
+    utensil:
+      - Spoon
+      - Fork
+  - type: Sprite
+    sprite: _Corvax/Objects/Consumable/Food/bowl.rsi
+    layers:
+      - state: bowl
+      - state: pelmeni
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
+          - ReagentId: Protein
+            Quantity: 20
+  - type: Tag
+    tags:
+    - Meat

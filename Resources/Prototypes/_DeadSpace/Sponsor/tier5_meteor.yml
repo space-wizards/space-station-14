@@ -1,0 +1,82 @@
+- type: sponsorLoadout
+  id: ClothingBackpackTier5SponsorLoadout
+  entity: ClothingBackpackTier5Sponsor
+  sponsorOnly: true
+
+- type: entity
+  parent: ClothingBackpackDuffelMilitary
+  id: ClothingBackpackTier5Sponsor
+  name: расширенный вещмешок
+  description: Вещмешок использующий технологию микро блюспейс карманов для увеличения общего объёма.
+  suffix: Набор вещей спонсора, Метеор
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,9,5
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsWatchDivine
+      - id: ClothingMaskSkull
+      - id: ClothingOuterHoodiePink
+      - id: ClothingNeckWingsBlackVampire
+      - id: ClothingNeckWingsPegas
+      - id: ClothingNeckWingsSkeletonRed
+      - id: ClothingOuterWizard
+      - id: ClothingHeadHatWizardFake
+      - id: BedsheetWiz
+      - id: ClothingUniformJumpsuitSkeleton
+      - id: ClothingNeckWingsMagic
+      - id: ClothingOuterAtmosianBomberJacket
+      - id: ClothingMaskGasAtmosian
+      - id: ClothingCloakAtmosian
+      - id: ClothingHeadHatFancyCrown
+      - id: ClothingCloakGamer
+      - id: ClothingNeckWingsViolet
+      - id: ClothingOuterWinterKirasCloak
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier5HOSIAASponsorLoadout
+  entity: ClothingBackpackTier5HOSIAASponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier5HOSIAASponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Метеор, ГСБ АВД
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLeatherUSSPBlack
+      - id: ClothingHeadHatCapUSSPBlack
+      - id: ClothingOuterCoatUSSPOvercoatBlack
+      - id: ClothingShoesUSSPBlack
+      - id: ClothingUniformJumpsuitUSSPBlack
+
+- type: sponsorLoadout
+  id: ClothingBackpackTier5HOSSponsorLoadout
+  entity: ClothingBackpackTier5HOSSponsor
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackTier5HOSSponsor
+  name: вещмешок
+  description: Вещмешок в необычной расцветке. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  suffix: Набор вещей спонсора, Метеор, ГСБ
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitHoSOld
+      - id: ClothingOuterCoatHoSOvercoat
+      - id: ClothingHeadHatCapHoS
+      - id: CigarGoldCase
+
+# - type: sponsorLoadout
+#   id: VehicleATVLoadout
+#   entity: VehicleATV
+#   sponsorOnly: true

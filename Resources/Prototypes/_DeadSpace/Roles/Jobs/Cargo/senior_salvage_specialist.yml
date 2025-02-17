@@ -1,0 +1,34 @@
+- type: job
+  id: SeniorSalvageSpecialist
+  name: job-name-senior-salvagespec
+  description: job-description-senior-salvagespec
+  playTimeTracker: JobSeniorSalvageSpecialist
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 216000 # 60 hours
+    - !type:AgeRequirement
+      requiredAge: 24
+  startingGear: SeniorSalvageSpecialistGear
+  icon: "JobIconSeniorSalvageSpecialist"
+  supervisors: job-supervisors-qm
+  access:
+  - Cargo
+  - Salvage
+  - Maintenance
+  - External
+  - SeniorSalvage
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Cargo
+  wage: 65
+  #end-backmen: currency
+
+- type: startingGear
+  id: SeniorSalvageSpecialistGear
+  equipment:
+    id: SeniorSalvagePDA
+    ears: ClothingHeadsetMining
+    neck: ClothingNeckCloakMiner
+    socks: ClothingUnderwearSocksSeniorSalvage

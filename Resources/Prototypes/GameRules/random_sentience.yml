@@ -7,7 +7,9 @@
     duration: 1
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/_DeadSpace/Announcements/sentience.ogg # DS14-Announcements
+      params:
+        volume: -2
   - type: RandomSentienceRule
     minSentiences: 2
     maxSentiences: 5

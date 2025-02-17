@@ -1,0 +1,15 @@
+- type: entity
+  name: carp chair
+  id: ChairCarp
+  parent: SeatBase
+  description: A luxurious chair, the many purple scales reflect the light in a most pleasing manner.
+  components:
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Anchorable
+    - type: Rotatable
+    - type: Sprite
+      sprite: _Corvax/Structures/Furniture/chairs.rsi
+      state: carp

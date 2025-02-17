@@ -1,12 +1,12 @@
-- type: cargoProduct
-  id: EngineAmeJar
-  icon:
-    sprite: Objects/Power/AME/ame_jar.rsi
-    state: jar
-  product: CrateEngineeringAMEJar
-  cost: 2000
-  category: cargoproduct-category-name-engineering
-  group: market
+# - type: cargoProduct
+#   id: EngineAmeJar # DS14 disable due to the balance
+#   icon:
+#     sprite: Objects/Power/AME/ame_jar.rsi
+#     state: jar
+#   product: CrateEngineeringAMEJar
+#   cost: 2000
+#   category: cargoproduct-category-name-engineering
+#   group: market
 
 - type: cargoProduct
   id: EngineSingularityGenerator
@@ -34,7 +34,7 @@
   description: "Contains an emitter. Used only for dangerous applications."
   icon:
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    state: emitter2
+    state: emitter
   product: CrateEngineeringSingularityEmitter
   cost: 3000
   category: cargoproduct-category-name-engineering

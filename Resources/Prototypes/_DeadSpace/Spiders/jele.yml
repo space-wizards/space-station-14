@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: JeleSpider
+  name: паучье желе
+  description: Склизкое желе которое содержит экстракт пауков ужаса излечивающий их.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Spiders/jelespider.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Food
+  - type: StaticPrice
+    price: 500
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: SpiderExtract
+          Quantity: 10

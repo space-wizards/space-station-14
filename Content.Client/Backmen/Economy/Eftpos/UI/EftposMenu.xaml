@@ -1,0 +1,50 @@
+﻿<!-- Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT -->
+
+<DefaultWindow xmlns="https://spacestation14.io"
+               MinSize="365 145"
+               SetSize="365 145"
+               Resizable="False">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+        <BoxContainer Orientation="Horizontal">
+            <Label
+                Name="ValueLabel"
+                Access="Public"
+                Text="{Loc 'eftpos-ui-value-label-text'}"/>
+            <LineEdit
+                Name="ValueLineEdit"
+                PlaceHolder="0"
+                MinWidth="60"
+                Access="Public"/>
+            <Button
+                Name="ValueButton"
+                Access="Public"/>
+            <Label
+                Name="SymbolLabel"
+                Access="Public"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label
+                Name="LinkedAccountLabel"
+                Access="Public"
+                Text="{Loc 'eftpos-ui-linked-account-label-text'}"/>
+            <LineEdit
+                Name="LinkedAccountLineEdit"
+                PlaceHolder="{Loc 'eftpos-ui-no-linked-account-text'}"
+                HorizontalExpand="True"
+                Access="Public"/>
+            <Button
+                Name="LinkedAccountButton"
+                Access="Public"/>
+        </BoxContainer>
+        <Button
+            Name="SwipeCardButton"
+            Access="Public"
+            HorizontalAlignment="Center"
+            Text="{Loc 'eftpos-ui-swipe-card-button-text'}"/>
+        <Button
+            Name="LockButton"
+            Access="Public"
+            HorizontalAlignment="Center"
+            Text="{Loc 'eftpos-ui-lock-button-text'}"/>
+    </BoxContainer>
+</DefaultWindow>

@@ -86,14 +86,16 @@
   - accent-words-zombie-moth-4
   - accent-words-zombie-moth-5
   - accent-words-zombie-moth-6
-  - accent-words-zombie-1
-  - accent-words-zombie-2
-  - accent-words-zombie-4
-  - accent-words-zombie-5
-  - accent-words-zombie-6
-  - accent-words-zombie-8
-  - accent-words-zombie-9
-  - accent-words-zombie-10
+  - accent-words-zombie-moth-7
+  - accent-words-zombie-moth-8
+  # - accent-words-zombie-1
+  # - accent-words-zombie-2
+  # - accent-words-zombie-4
+  # - accent-words-zombie-5
+  # - accent-words-zombie-6
+  # - accent-words-zombie-8
+  # - accent-words-zombie-9
+  # - accent-words-zombie-10
 
 - type: accent
   id: genericAggressive
@@ -143,6 +145,13 @@
   - accent-words-slimes-3
   - accent-words-slimes-4
   - accent-words-slimes-5
+
+- type: accent
+  id: cow
+  fullReplacements:
+  - accent-words-cow-1
+  - accent-words-cow-2
+  - accent-words-cow-3
 
 - type: accent
   id: crab

@@ -1,0 +1,15 @@
+- type: entity
+  id: ActionActivateAdrenalImplant
+  name: Активировать имплант
+  description: Повышает ваш пульс, скорость и все побочки, не используйте все заряды разом.
+  components:
+  - type: InstantAction
+    charges: 3
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: _DeadSpace/Actions/implants_actions.rsi
+      state: adrenal
+    event: !type:UseAdrenalImplantEvent
+    useDelay: 3
+    checkCanInteract: false

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/2456d1ba6ff2a506d0a5073c882ed89b7b67695b,",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "autopsy_table"
+        },
+        {
+            "name": "autopsy_table_device"
+        },
+        {
+            "name": "autopsy_table_device1"
+        },
+        {
+            "name": "autopsy_table_device2"
+        }
+    ]
+}

@@ -82,6 +82,7 @@ public sealed partial class HolopadWindow : FancyWindow
         EmergencyBroadcastText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-emergency-broadcast-in-progress")));
         SubtitleText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-subtitle")));
         OptionsText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-options")));
+        HolopadContactListText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-select-contact-from-list")));
     }
 
     #region: Button actions

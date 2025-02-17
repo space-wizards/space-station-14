@@ -6,15 +6,17 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobCargoTechnician
-      time: 21600 #6 hrs
+      time: 18000 # 5 hours
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 10800 #3 hrs
+      time: 36000 # 10 hours
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours
+      time: 36000 # 10 hours
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+      time: 144000 # 40 hours
+    - !type:AgeRequirement
+      requiredAge: 24
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
@@ -23,12 +25,20 @@
   access:
   - Cargo
   - Salvage
+  - SeniorSalvage
   - Quartermaster
   - Maintenance
   - External
   - Command
   - Brig
   - Cryogenics
+  - External
+  #start-backmen: currency
+  minBankBalance: 150
+  maxBankBalance: 250
+  wageDepartment: Cargo
+  wage: 110
+  #end-backmen: currency
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -40,8 +50,10 @@
   id: QuartermasterGear
   equipment:
     id: QuartermasterPDA
+    eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetQM
     belt: BoxFolderClipboard
+    socks: ClothingUnderwearSocksQuartermaster
     pocket1: AppraisalTool
   storage:
     back:

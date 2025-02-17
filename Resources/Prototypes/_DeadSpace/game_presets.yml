@@ -1,0 +1,63 @@
+- type: gamePreset
+  id: Unitology
+  alias:
+    - uni
+  name: uni-title
+  description: uni-description
+  showInVote: true
+  showInAdminVote: true # DS14
+  voteType: rdm # DS14
+  rules:
+    - WageScheduler # backmen: currency
+    - Unitology
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+    - SubGamemodesRule
+
+- type: gamePreset
+  id: SecretUnitology
+  alias:
+    - uniSecret
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+    - WageScheduler # backmen: currency
+    - Unitology
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+    - SubGamemodesRule
+
+- type: gamePreset
+  id: SpiderTerror
+  alias:
+    - ST
+  name: spider-terror-title
+  description: spider-terror-description
+  showInVote: true
+  showInAdminVote: true # DS14
+  voteType: rdm # DS14
+  rules:
+    - WageScheduler # backmen: currency
+    - SpiderTerror
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+    - SubGamemodesRule
+
+- type: gamePreset
+  id: SecretSpiderTerror
+  alias:
+    - SpiderTerrorSecret
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+    - WageScheduler # backmen: currency
+    - SpiderTerror
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+    - SubGamemodesRule

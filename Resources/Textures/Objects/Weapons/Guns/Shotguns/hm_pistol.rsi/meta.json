@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from desertrose at https://github.com/DesertRose2/desertrose/commit/2c35951649b1ec59874e9f61822376853ec4c90d, https://github.com/DesertRose2/desertrose/blob/master/icons/obj/guns/projectile.dmi, sprite modification by Jaсkal 298",
+    "copyright": "Taken from desertrose at https://github.com/DesertRose2/desertrose/commit/2c35951649b1ec59874e9f61822376853ec4c90d, https://github.com/DesertRose2/desertrose/blob/master/icons/obj/guns/projectile.dmi, sprite modification by Jaсkal 298, resprite by semkagamez (discord) for Space Station 14 server Мёртвый Космос",
     "size": {
         "x": 32,
         "y": 32

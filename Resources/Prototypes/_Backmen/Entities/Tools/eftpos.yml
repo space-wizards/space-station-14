@@ -1,0 +1,125 @@
+﻿- type: entity
+  parent: BaseItem
+  id: Eftpos
+  name: EFTPOS
+  description: Swipe your ID card to make purchases electronically.
+  components:
+  - type: Sprite
+    sprite: _Backmen/Objects/Tools/eftpos.rsi
+    state: eftpos
+    netsync: false
+  - type: Eftpos
+  - type: ActivatableUI
+    key: enum.EftposUiKey.Key
+    singleUser: true
+    requireActiveHand: false
+  - type: Construction
+    graph: eftpos
+    node: eftpos
+  - type: UserInterface
+    interfaces:
+      enum.EftposUiKey.Key:
+        type: EftposBoundUserInterface
+  - type: Clothing
+    quickEquip: false
+    slots:
+      - Belt
+
+- type: entity
+  parent: Eftpos
+  id: EftposCargo
+  suffix: Cargo
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1315
+    presetAccountName: Cargo
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposCivilian
+  suffix: Civilian
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1316
+    presetAccountName: Civilian
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposCommand
+  suffix: Command
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1317
+    presetAccountName: Command
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposEngineering
+  suffix: Engineering
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1318
+    presetAccountName: Engineering
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposMedical
+  suffix: Medical
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1319
+    presetAccountName: Medical
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposSecurity
+  suffix: Security
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1320
+    presetAccountName: Security
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposScience
+  suffix: Science
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1321
+    presetAccountName: Science
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposSpecific
+  suffix: Specific
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1322
+    presetAccountName: Specific
+    canChangeAccountNumber: false
+    currencyType: SpaceCash
+
+- type: entity
+  parent: Eftpos
+  id: EftposLaw
+  suffix: Law
+  components:
+  - type: Eftpos
+    presetAccountNumber: 1323
+    presetAccountName: Law
+    canChangeAccountNumber: false
+    currencyType: SpaceCash

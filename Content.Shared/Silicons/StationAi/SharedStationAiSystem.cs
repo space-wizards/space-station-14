@@ -567,6 +567,11 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 
 }
 
+public sealed partial class AIEyeCamerasActionEvent : InstantActionEvent
+{
+
+}
+
 [Serializable, NetSerializable]
 public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
@@ -583,4 +588,10 @@ public enum StationAiState : byte
     Empty,
     Occupied,
     Dead,
+}
+
+[Serializable, NetSerializable]
+public sealed class EyeMoveToCam : BoundUserInterfaceMessage
+{
+    public NetEntity Uid;
 }

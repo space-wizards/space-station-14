@@ -1,0 +1,38 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingMilitaryBackpack
+  name: army backpack
+  description: A spacious backpack with lots of pockets, worn by military structures.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Back/Backpacks/military.rsi
+  - type: Storage
+    grid:
+    - 0,0,9,5
+  - type: ExplosionResistance # DS14
+    damageCoefficient: 0.1
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingDeathSquadronBackpack
+  name: death squadron backpack
+  description: A spacious backpack using bluespace technology.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Back/Backpacks/deathsquad-backpack.rsi
+  - type: Storage
+    grid:
+    - 0,0,13,5
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: ExplosionResistance # DS14
+    damageCoefficient: 0.1
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackCE
+  name: chief engineer backpack
+  description: Technicially progressive backpack.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Back/Backpacks/ce.rsi

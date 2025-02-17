@@ -1,0 +1,65 @@
+- type: listing
+  id: StarkistInventory1
+  productEntity: DrinkStarkistCan
+  cost:
+    SpaceCash: 15
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: StarkistInventory2
+  productEntity: DrinkGrapeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: StarkistInventory3
+  productEntity: DrinkRootBeerCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: StarkistInventory4
+  productEntity: DrinkIcedTeaCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: StarkistInventory5
+  productEntity: DrinkLemonLimeCan
+  cost:
+    SpaceCash: 10
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15
+
+- type: listing
+  id: StarkistInventory6
+  productEntity: DrinkFourteenLokoCan
+  cost:
+    SpaceCash: 5
+  categories:
+    - StarkistInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 15

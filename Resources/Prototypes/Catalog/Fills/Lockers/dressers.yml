@@ -7,11 +7,19 @@
     contents:
       - id: ClothingHeadHatCaptain
       - id: ClothingHeadHatCapcap
+      - id: ClothingNeckCloakCap
+      - id: ClothingNeckCloakCapFormal
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingHandsGlovesCaptain
+      - id: ClothingHeadCaptainHat # Corvax-Resprite
+      - id: ClothingOuterCoatCaptain # Corvax-Resprite
+      - id: ClothingUnderwearSocksCaptain # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersCaptain # DS14-Underwear
+      - id: ClothingUnderwearTopBraCaptain # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesCaptain # DS14-Underwear
+      - id: ClothingNeckMantleCap
       - id: ClothingOuterWinterCap
-      - id: ClothingNeckCloakCap
 
 - type: entity
   id: DresserChiefEngineerFilled
@@ -20,11 +28,16 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleCE
       - id: ClothingUniformJumpsuitChiefEngineerTurtle
       - id: ClothingUniformJumpskirtChiefEngineerTurtle
-      - id: ClothingHeadHatBeretEngineering
-      - id: ClothingOuterWinterCE
       - id: ClothingNeckCloakCe
+      - id: ClothingHeadHatBeretEngineering
+      - id: ClothingUnderwearSocksChiefEngineer # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersChiefEngineer # DS14-Underwear
+      - id: ClothingUnderwearTopBraChiefEngineer # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesChiefEngineer # DS14-Underwear
+      - id: ClothingOuterWinterCE
 
 - type: entity
   id: DresserChiefMedicalOfficerFilled
@@ -33,14 +46,19 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleCMO
+      - id: ClothingCloakCmo
       - id: ClothingOuterCoatLabCmo
       - id: ClothingUniformJumpsuitCMOTurtle
       - id: ClothingUniformJumpskirtCMOTurtle
       - id: ClothingHeadHatBeretCmo
+      - id: ClothingUnderwearSocksCMO # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersCMO # DS14-Underwear
+      - id: ClothingUnderwearTopBraCMO # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesCMO # DS14-Underwear
       - id: ClothingHeadMirror
       - id: ClothingEyesGlasses
       - id: ClothingOuterWinterCMO
-      - id: ClothingCloakCmo
 
 - type: entity
   id: DresserHeadOfPersonnelFilled
@@ -49,10 +67,17 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleHOP
+      - id: ClothingNeckCloakHop
       - id: ClothingHeadHatHopcap
       - id: ClothingOuterWinterHoP
+      - id: ClothingOuterCoatHOP # Corvax-Resprite
+      - id: ADTClothingNeckHoPAltCloak # ADT-Resprite
+      - id: ClothingUnderwearSocksHeadofPersonnel # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersHeadofPersonnel # DS14-Underwear
+      - id: ClothingUnderwearTopBraHeadofPersonnel # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesHeadofPersonnel # DS14-Underwear
       - id: ClothingEyesGlasses
-      - id: ClothingNeckCloakHop
 
 - type: entity
   id: DresserHeadOfSecurityFilled
@@ -61,14 +86,29 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleHOS
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
+      - id: ClothingNeckCloakHos
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
+      - id: ClothingMaskNeckGaiter
+      - id: ClothingHeadHatCapHoS # Corvax-SecFashion
+      - id: ClothingUniformJumpsuitHoSBlue # Wizards
+        prob: 0.5
+      - id: ClothingUniformJumpsuitHoSGrey # Wizards
+        prob: 0.5
+      - id: ClothingUniformJumpsuitHoSParadeMale # Wizards
+        prob: 0.5
+      - id: ClothingUniformJumpskirtHoSParadeMale # Wizards
+        prob: 0.5
+      - id: ClothingUnderwearSocksHeadOfSecurity # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersHeadofSecurity # DS14-Underwear
+      - id: ClothingUnderwearTopBraHeadofSecurity # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesHeadofSecurity # DS14-Underwear
       - id: ClothingOuterWinterHoS
-      - id: ClothingNeckCloakHos
 
 - type: entity
   id: DresserQuarterMasterFilled
@@ -77,13 +117,18 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckCloakQm
       - id: ClothingHeadHatBeretQM
       - id: ClothingUniformJumpsuitQMFormal
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
+      - id: ClothingUnderwearSocksQuartermaster # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersQuartermaster # DS14-Underwear
+      - id: ClothingUnderwearTopBraQuartermaster # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesQuartermaster # DS14-Underwear
+      - id: ClothingNeckMantleQM
       - id: ClothingOuterWinterQM
-      - id: ClothingNeckCloakQm
 
 - type: entity
   id: DresserResearchDirectorFilled
@@ -92,12 +137,18 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingNeckMantleRD
+      - id: ClothingNeckCloakRd
       - id: ClothingHeadHatBeretRND
       - id: ClothingHandsGlovesColorPurple
+      - id: ClothingHeadsetAltScience
+      - id: ClothingUnderwearSocksResearchDirector # DS14-Socks
+      - id: ClothingUnderwearBottomBoxersResearchDirector # DS14-Underwear
+      - id: ClothingUnderwearTopBraResearchDirector # DS14-Underwear
+      - id: ClothingUnderwearBottomPantiesResearchDirector # DS14-Underwear
       - id: ClothingEyesGlasses
       - id: ClothingOuterWinterRD
       - id: ClothingOuterCoatRD
-      - id: ClothingNeckCloakRd
 
 - type: entity
   id: DresserWardenFilled

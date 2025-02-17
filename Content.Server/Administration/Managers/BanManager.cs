@@ -21,6 +21,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.DeadSpace.Interfaces.Server;
 
 namespace Content.Server.Administration.Managers;
 
@@ -39,6 +40,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
+    private IServerBanWebhooksManager? _banWebhooksManager; // DS14-bans-weebhook
 
     private ISawmill _sawmill = default!;
 
@@ -62,6 +64,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         _userDbData.AddOnLoadPlayer(CachePlayerData);
         _userDbData.AddOnPlayerDisconnect(ClearPlayerData);
+
+        IoCManager.Instance!.TryResolveType(out _banWebhooksManager); // DS14-bans-weebhook
     }
 
     private async Task CachePlayerData(ICommonSession player, CancellationToken cancel)
@@ -192,6 +196,11 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
+        // DS14-bans-weebhook-start
+        if (_banWebhooksManager != null)
+            await _banWebhooksManager.SendBan(targetUsername, adminName, minutes, reason, expires, null, 0xff0000, "Серверный бан", roundId);
+        // DS14-bans-weebhook-end
+
         KickMatchingConnectedPlayers(banDef, "newly placed ban");
     }
 
@@ -281,6 +290,16 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         {
             SendRoleBans(session);
         }
+
+        // DS14-bans-weebhook-start
+        if (_banWebhooksManager != null)
+        {
+            var adminName = banningAdmin == null
+                ? Loc.GetString("system-user")
+                : (await _db.GetPlayerRecordByUserId(banningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
+            await _banWebhooksManager.SendBan(targetUsername, adminName, minutes, reason, expires, role, 0x002fff, "Бан роли", roundId);
+        }
+        // DS14-bans-weebhook-end
     }
 
     public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)

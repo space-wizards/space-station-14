@@ -35,6 +35,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: FootstepModifier # Corvax-Sounds
+    footstepSoundCollection:
+      collection: FootstepBoots
 
 # stuff common to all military boots
 - type: entity
@@ -51,6 +54,11 @@
           tags:
           - Knife
           - Sidearm
+  - type: FootstepModifier # DS-Sounds
+    footstepSoundCollection:
+      collection: FootstepJackboots
+      params:
+        volume: -1
 
 - type: entity
   abstract: true

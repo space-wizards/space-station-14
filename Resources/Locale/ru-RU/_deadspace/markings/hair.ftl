@@ -1,0 +1,11 @@
+marking-ADTAllAyanami = Аянами
+marking-ADTAllBubbleGum = Бабл Гам
+marking-ADTAllMavis = Мейвис
+marking-ADTAllCloud = Облачная
+marking-ADTAllMorningHairstyle = Стиль "доброе утро"
+marking-ADTAllMorningHairstyle2 = Стиль "доброе утро" 2
+marking-ADTAllPonytail = Пышная с хвостом
+marking-ADTAllPrinceCharming = Принц
+marking-ADTAllShavedFemale = Женская с выбритым боком
+marking-ADTAllShavedFemaleUnisex = Унисекс с пучком
+marking-HumanFacialHairCorrectedman = исправленный человек

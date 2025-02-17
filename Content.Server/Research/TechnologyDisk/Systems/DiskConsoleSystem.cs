@@ -1,8 +1,12 @@
+using Content.Server.Popups;
 using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
-using Content.Shared.UserInterface;
+using Content.Server.UserInterface;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
+using Content.Shared.UserInterface;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
@@ -15,6 +19,8 @@ public sealed class DiskConsoleSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -52,6 +58,16 @@ public sealed class DiskConsoleSystem : EntitySystem
 
         if (serverComp.Points < component.PricePerDisk)
             return;
+
+        // DS14-start
+        var act = args.Actor;
+
+        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
+        {
+            _popup.PopupEntity(Loc.GetString("particle-accelerator-control-menu-permission-denied"), act);
+            return;
+        }
+        // DS14-end
 
         _research.ModifyServerPoints(server.Value, -component.PricePerDisk, serverComp);
         _audio.PlayPvs(component.PrintSound, uid);

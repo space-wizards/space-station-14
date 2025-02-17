@@ -1,0 +1,12 @@
+- type: entity
+  parent: Bed
+  id: ADTDeckChair
+  name: деревянный шезлонг
+  description: Шезлонг для приобретения ровного загара под светом ближайшей звезды
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/deckchair.rsi
+    state: deckchair
+  - type: Construction
+    graph: bed
+    node: adtdeckchair

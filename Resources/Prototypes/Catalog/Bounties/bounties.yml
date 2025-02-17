@@ -155,6 +155,18 @@
       - Figurine
 
 - type: cargoBounty
+  id: BountyFleshMonster
+  reward: 15000
+  description: bounty-description-flesh-monster
+  idPrefix: CC
+  entries:
+  - name: bounty-item-flesh-monster
+    amount: 3
+    whitelist:
+      tags:
+      - Flesh
+
+- type: cargoBounty
   id: BountyFlower
   reward: 2000
   description: bounty-description-flower
@@ -341,6 +353,18 @@
       - RadioMicrophone
       tags:
       - Radio
+
+- type: cargoBounty
+  id: BountyResearchDisk
+  reward: 12000
+  description: bounty-description-research-disk
+  idPrefix: CC
+  entries:
+  - name: bounty-item-research-disk
+    amount: 1
+    whitelist:
+      components:
+      - ResearchDisk
 
 - type: cargoBounty
   id: BountyShiv

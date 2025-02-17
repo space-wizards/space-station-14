@@ -1,0 +1,108 @@
+- type: job
+  id: Magistrat
+  name: job-name-magistrat
+  description: job-description-magistrat
+  playTimeTracker: JobMagistrat
+  setPreference: false # Removed from station
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 108000 # 30 hours
+    - !type:OverallPlaytimeRequirement
+      time: 504000 # 140 hours
+    - !type:AgeRequirement
+      requiredAge: 26
+  startingGear: MagistratGear
+  icon: "JobIconMagistrat"
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+    - Command
+    - Security
+    - Service
+    - Lawyer
+    - Brig
+    - Maintenance
+  #start-backmen: currency
+  minBankBalance: 800
+  maxBankBalance: 1200
+  wageDepartment: Specific
+  wage: 400
+  #end-backmen: currency
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: MagistratGear
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    outerClothing: ClothingOuterRobesJudge
+    eyes: ClothingEyesGlassesSunglasses
+    head: ClothingHeadHatPwig
+    id: MagistratPDA
+    ears: ClothingHeadsetMagistrat
+    socks: ClothingUnderwearSockMagistrat
+  inhand:
+    - BriefcaseMagistratFilled
+  storage:
+    back:
+    - HyperLinkBookCorporateLaw
+    - HyperLinkBookSOPSecurity
+    - HyperLinkBookSOPLaw
+    - ADTtelescopicBaton
+
+- type: entity
+  parent: BasePDA
+  id: MagistratPDA
+  name: magistrat PDA
+  description: magistrat PDA
+  components:
+  - type: Pda
+    id: MagistratIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-lawyer
+  - type: Icon
+    state: pda-lawyer
+
+- type: entity
+  parent: IDCardStandard
+  id: MagistratIDCard
+  name: magistrat ID card
+  description: magistrat ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idlawyer
+    - type: PresetIdCard
+      job: Magistrat
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMagistrat
+  name: magistrat headset
+  description: magistrat's headset.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyLaw
+      - EncryptionKeyCommand
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/servicesecurity.rsi
+  - type: Headset
+    color: "#d98b71"

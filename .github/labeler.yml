@@ -20,6 +20,10 @@
 - changed-files:
   - any-glob-to-any-file: '**/*.ogg'
 
+"Changes: Localization":
+- changed-files:
+  - any-glob-to-any-file: '**/*.ftl'
+
 "Changes: No C#":
 - changed-files:
   # Equiv to any-glob-to-all as long as this has one matcher. If ALL changed files are not C# files, then apply label.

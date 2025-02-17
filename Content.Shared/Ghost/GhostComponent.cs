@@ -44,10 +44,10 @@ public sealed partial class GhostComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
-    [DataField("booRadius"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("booRadius"), ViewVariables]
     public float BooRadius = 3;
 
-    [DataField("booMaxTargets"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("booMaxTargets"), ViewVariables]
     public int BooMaxTargets = 3;
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed

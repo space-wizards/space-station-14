@@ -1,0 +1,69 @@
+- type: paperworkForm
+  id: CentcommOperator0
+  category: operator
+  name: paperwork-form-title-centcomm-operator-0
+  text: "/Paperwork/default.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator1
+  category: operator
+  name: paperwork-form-title-centcomm-operator-1
+  text: "/Paperwork/CentcommOperator/1.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator2
+  category: operator
+  name: paperwork-form-title-centcomm-operator-2
+  text: "/Paperwork/CentcommOperator/2.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator3
+  category: operator
+  name: paperwork-form-title-centcomm-operator-3
+  text: "/Paperwork/CentcommOperator/3.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator4
+  category: operator
+  name: paperwork-form-title-centcomm-operator-4
+  text: "/Paperwork/CentcommOperator/4.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator5
+  category: operator
+  name: paperwork-form-title-centcomm-operator-5
+  text: "/Paperwork/CentcommOperator/5.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator6
+  category: operator
+  name: paperwork-form-title-centcomm-operator-6
+  text: "/Paperwork/CentcommOperator/6.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator7
+  category: operator
+  name: paperwork-form-title-centcomm-operator-7
+  text: "/Paperwork/CentcommOperator/7.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator8
+  category: operator
+  name: paperwork-form-title-centcomm-operator-8
+  text: "/Paperwork/CentcommOperator/8.xml"
+  paperPrototype: PaperPrintedCentcomm
+
+- type: paperworkForm
+  id: CentcommOperator9
+  category: operator
+  name: paperwork-form-title-centcomm-operator-9
+  text: "/Paperwork/CentcommOperator/9.xml"
+  paperPrototype: PaperPrintedCentcomm

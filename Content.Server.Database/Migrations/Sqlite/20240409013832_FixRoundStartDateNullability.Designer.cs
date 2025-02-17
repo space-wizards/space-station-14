@@ -776,6 +776,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("species");
 
+                    // Corvax-TTS-Start
+                    b.Property<string>("Voice")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("voice");
+                    // Corvax-TTS-End
+
                     b.HasKey("Id")
                         .HasName("PK_profile");
 

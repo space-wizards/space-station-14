@@ -1,0 +1,143 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNecroClaws
+  categories: [ HideSpawnMenu ]
+  name: клешни некроморфа
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/claws.rsi
+  - type: Unremoveable
+
+- type: entity
+  parent: ClothingOuterBaseMedium
+  id: ClothingNecroRibs
+  categories: [ HideSpawnMenu ]
+  name: рёбра
+  description: Мутировавшие рёбра
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/tors.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/tors.rsi
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+- type: entity
+  parent: ClothingOuterBaseMedium
+  id: ClothingNecroPregnantTors
+  categories: [ HideSpawnMenu ]
+  name: живот
+  description: Живот беременного некроморфа
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/torsPregnant.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/torsPregnant.rsi
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingDevaOpen
+  categories: [ HideSpawnMenu ]
+  name: дева
+  description: Торс некроморфа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/tors_deva.rsi
+    state: deva_open
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/tors_deva.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: deva_open
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 1.25
+        Piercing: 0.75
+        Shock: 1
+        Cold: 0.25
+        Heat: 0.9
+        Poison: 0.25
+        Radiation: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingDevaClose
+  categories: [ HideSpawnMenu ]
+  name: дева
+  description: Торс некроморфа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/tors_deva.rsi
+    state: deva_close
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/tors_deva.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: deva_close
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.5
+        Piercing: 0.5
+        Shock: 0.5
+        Cold: 0.25
+        Heat: 0.5
+        Poison: 0.25
+        Radiation: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingHive
+  categories: [ HideSpawnMenu ]
+  name: дева
+  description: Торс некроморфа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/tors_hive.rsi
+    state: hive
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/tors_hive.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: hive
+  - type: Unremoveable
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Shock: 0.75
+        Cold: 0.25
+        Heat: 0.75
+        Poison: 0.25
+        Radiation: 0.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.7

@@ -1,0 +1,226 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformSupremeCommanderJumpsuit
+  name: форма высшего главнокомандующего
+  description: Подходит для встреч галактического масштаба.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/supreme-commander-uniform.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/supreme-commander-uniform.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlackWeddingSuit
+  name: чёрный свадебный костюм
+  description: Сделано в СССП.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_wedding_suit_male.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_wedding_suit_male.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlueWeddingSuit
+  name: синий свадебный костюм
+  description: Сделано в СССП.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/blue_wedding_suit_male.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/blue_wedding_suit_male.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBrownWeddingSuit
+  name: коричневый свадебный костюм
+  description: Сделано в СССП.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/brown_wedding_suit_male.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/brown_wedding_suit_male.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformPriestPrimalSuit
+  name: традиционный наряд жрицы
+  description: Традиционный наряд для проведения традиционных обрядов.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/priest_primal_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/priest_primal_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformCyberSun
+  name: костюм Cybersun
+  description: Костюм Cybersun, стильно и практично!
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Coats/suitcyber.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Coats/suitcyber.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformDungeonMasterSuit
+  name: костюм Мастера
+  description: Для настоящих Dungeon Masters.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/dungeon_master_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/dungeon_master_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformJumpsuitMaugly
+  name: штурмовой костюм "Маугли"
+  description: Удобный и прочный современный штурмовой костюм из плотной палаточной хлопчатобумажной ткани, который хорошо показал себя на войне в джунглях.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/stormer_maugly.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/stormer_maugly.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.9
+        Piercing: 0.85
+        Heat: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformRedgiSuit
+  name: костюм заведующего отелем
+  description: Потёртый, но от того не менее стильный, костюм.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/redji_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/redji_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformNewBarmanSuit
+  name: обновлённый костюм бармена
+  description: Обновлённый комплект одежды для более изысканого разлития напитков.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/new_barman_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/new_barman_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformNewServiceSuit
+  name: обновлённый костюм сервисного работника
+  description: Унисекс комбинезон для разноса еды и напитков.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/new_service_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/new_service_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformAbibasBlackSuit
+  name: черный спортивный костюм
+  description: Спортивка для четких пацанов.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_abibas.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_abibas.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformAbibasWhiteSuit
+  name: белый спортивный костюм
+  description: Спортивка для блатных пацанов.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_abibas.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_abibas.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformAbibasRedSuit
+  name: красный спортивный костюм
+  description: Спортивка для четких пацанов.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/red_abibas.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/red_abibas.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformAbibasBlueSuit
+  name: синий спортивный костюм
+  description: Спортивка для блатных пацанов.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/blue_abibas.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/blue_abibas.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformInvestigatorSuit
+  name: форма следователя службы безопасности
+  description: Одежда для того, кто намерен докопаться до сути всех тайн.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/investigator_suit.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/investigator_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformWhiteShorts
+  name: белые шорты
+  description: Белые шорты для отдыха. Пожалуйста, не пролейте на них ничего.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_shorts.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_shorts.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlackShorts
+  name: черные шорты
+  description: Черные шорты для отдыха.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_shorts.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_shorts.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformWhiteBreeches
+  name: белые бриджи
+  description: Белые бриджи для отдыха. Пожалуйста, не пролейте на них ничего.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_breeches.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_breeches.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformBlackBreeches
+  name: черные бриджи
+  description: Черные бриджи для отдыха.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_breeches.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_breeches.rsi

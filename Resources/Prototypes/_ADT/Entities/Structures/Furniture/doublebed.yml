@@ -1,0 +1,27 @@
+- type: entity
+  parent: Bed
+  id: ADTDoubleBedTop
+  name: двухспальная кровать
+  description: Ты знаешь, как это использовать.
+  suffix: Верх
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/doublebed.rsi
+    state: top
+  - type: Construction
+    graph: bed
+    node: adtdoublebedtop
+
+- type: entity
+  parent: Bed
+  id: ADTDoubleBedBottom
+  name: двухспальная кровать
+  description: Ты знаешь, как это использовать.
+  suffix: Низ
+  components:
+  - type: Sprite
+    sprite: _ADT/Structures/Furniture/doublebed.rsi
+    state: bottom
+  - type: Construction
+    graph: bed
+    node: adtdoublebedbottom

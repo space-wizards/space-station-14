@@ -1,0 +1,126 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHoSGreatcoat
+  name: armored greatcoat
+  description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Coats/hos_greatcoat.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Coats/hos_greatcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.4
+          Heat: 0.6
+          Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatDetectiveDark
+  name: noir trenchcoat
+  description: A hard-boiled private investigator's dark trenchcoat.
+  components:
+    - type: Sprite
+      sprite: _Corvax/Clothing/OuterClothing/Coats/noirdet.rsi
+    - type: Clothing
+      sprite: _Corvax/Clothing/OuterClothing/Coats/noirdet.rsi
+    - type: StorageFill
+      contents:
+        - id: SmokingPipeFilledTobacco
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.6
+          Heat: 0.9
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatWardenAlt
+  name: warden's jacket
+  description: A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets.
+  components:
+    - type: Sprite
+      sprite: _Corvax/Clothing/OuterClothing/Coats/warden_alt.rsi
+    - type: Clothing
+      sprite: _Corvax/Clothing/OuterClothing/Coats/warden_alt.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.4
+          Heat: 0.8
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSecurityOvercoat
+  name: security overcoat
+  description: Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security.
+  components:
+    - type: Sprite
+      sprite: _Corvax/Clothing/OuterClothing/Coats/sec_leather.rsi
+    - type: Clothing
+      sprite: _Corvax/Clothing/OuterClothing/Coats/sec_leather.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.6
+          Heat: 0.9
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabSecurityMedic
+  name: security medic labcoat
+  description: A suit that protects against minor chemical spills.
+  components:
+    - type: Sprite
+      sprite: _Corvax/Clothing/OuterClothing/Coats/labcoat_security_medic.rsi
+    - type: Clothing
+      sprite: _Corvax/Clothing/OuterClothing/Coats/labcoat_security_medic.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatCaptain
+  name: captain's jacket
+  description: Captain's formal jacket, inlaid with gold.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/OuterClothing/Coats/captain.rsi
+  - type: Clothing
+    sprite: _Corvax/Clothing/OuterClothing/Coats/captain.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+        Caustic: 0.9
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHOP
+  name: head of personnel's jacket
+  description: Business jacket of the HOP for a professional look.
+  components:
+  - type: Sprite
+    sprite: _Corvax/Clothing/OuterClothing/Coats/hop.rsi
+  - type: Clothing
+    sprite: _Corvax/Clothing/OuterClothing/Coats/hop.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8

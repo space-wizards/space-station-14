@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Standing
 {
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    [Access(typeof(StandingStateSystem))]
     public sealed partial class StandingStateComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

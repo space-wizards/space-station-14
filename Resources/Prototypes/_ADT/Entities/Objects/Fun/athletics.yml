@@ -1,0 +1,203 @@
+- type: entity
+  parent: BaseItem
+  id: ADTDumbbell2
+  name: гантеля
+  description: Гантеля 2 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    state: dumbbell2kg
+  - type: Item
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 10
+
+- type: entity
+  parent: BaseItem
+  id: ADTDumbbell5
+  name: гантеля
+  description: Гантеля 5 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    state: dumbbell5kg
+  - type: Item
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 10
+
+- type: entity
+  parent: BaseItem
+  id: ADTDumbbell8
+  name: гантеля
+  description: Гантеля 8 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    state: dumbbell8kg
+  - type: Item
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 10
+
+- type: entity
+  parent: BaseItem
+  id: ADTDumbbell10
+  name: гантеля
+  description: Гантеля 10 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    state: dumbbell10kg
+  - type: Item
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 10
+
+- type: entity
+  parent: BaseItem
+  id: ADTDumbbell15
+  name: гантеля
+  description: Гантеля 15 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    state: dumbbell15kg
+  - type: Item
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 20
+
+- type: entity
+  parent: BaseItem
+  id: ADTDumbbell20
+  name: гантеля
+  description: Гантеля 20 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    state: dumbbell20kg
+  - type: Item
+    sprite: _ADT/Objects/Fun/dumbbell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 20
+
+- type: entity
+  parent: BaseItem
+  id: ADTKettlebell5
+  name: гиря
+  description: Гиря 5 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    state: icon5
+  - type: Item
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 10
+
+- type: entity
+  parent: BaseItem
+  id: ADTKettlebell10
+  name: гиря
+  description: Гиря 10 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    state: icon10
+  - type: Item
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    size: Normal
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 10
+
+- type: entity
+  parent: BaseItem
+  id: ADTKettlebell15
+  name: гиря
+  description: Гиря 15 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    state: icon15
+  - type: Item
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    size: Large
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 20
+
+- type: entity
+  parent: BaseItem
+  id: ADTKettlebell20
+  name: гиря
+  description: Гиря 20 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    state: icon20
+  - type: Item
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    size: Large
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 20
+
+- type: entity
+  parent: BaseItem
+  id: ADTKettlebell25
+  name: гиря
+  description: Гиря 25 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    state: icon25
+  - type: Item
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    size: Large
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 20
+
+- type: entity
+  parent: BaseItem
+  id: ADTKettlebell30
+  name: гиря
+  description: Гиря 30 кг. Кажется, пахнет потом.
+  components:
+  - type: Sprite
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    state: icon30
+  - type: Item
+    sprite: _ADT/Objects/Fun/kettlebell.rsi
+    size: Large
+  - type: EmitEmoteOnUse
+    emote: WorkOut
+  - type: UseDelay
+    delay: 20

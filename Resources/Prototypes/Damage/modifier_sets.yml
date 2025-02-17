@@ -203,11 +203,12 @@
   id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned
   coefficients:
     Blunt: 0.6
-    Piercing: 0.8
+    Piercing: 0.75 # DS14-value
     Cold: 0.3
-    Heat: 1.25
+    Heat: 0.9 # DS14-value
     Poison: 0.0
     Radiation: 0.0
+    Stun: 0.75 # DS14-value
 
 # immune to everything except physical and heat damage
 - type: damageModifierSet
@@ -312,3 +313,13 @@
   id: ManifestedSpirit
   coefficients:
     Holy: 2
+
+- type: damageModifierSet
+  id: Fur
+  coefficients:
+    Blunt: 1
+    Piercing: 1
+    Slash: 1
+    Cold: 0.5
+    Heat: 1.5
+    Poison: 1

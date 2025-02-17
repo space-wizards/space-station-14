@@ -1,0 +1,97 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartIPC
+  parent: [BaseItem, BasePart]
+  name: "IPC body part"
+  abstract: true
+
+- type: entity
+  id: TorsoIPC
+  name: "IPC torso"
+  parent: [PartIPC, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "torso_m"
+
+- type: entity
+  id: HeadIPC
+  name: "IPC head"
+  parent: [PartIPC, BaseHead]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "head_m"
+
+- type: entity
+  id: LeftArmIPC
+  name: "left IPC arm"
+  parent: [PartIPC, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmIPC
+  name: "right IPC arm"
+  parent: [PartIPC, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandIPC
+  name: "left IPC hand"
+  parent: [PartIPC, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandIPC
+  name: "right IPC hand"
+  parent: [PartIPC, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegIPC
+  name: "left IPC leg"
+  parent: [PartIPC, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegIPC
+  name: "right IPC leg"
+  parent: [PartIPC, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootIPC
+  name: "left IPC foot"
+  parent: [PartIPC, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootIPC
+  name: "right IPC foot"
+  parent: [PartIPC, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: Redspace/Mobs/Species/IPC/parts.rsi
+    state: "r_foot"

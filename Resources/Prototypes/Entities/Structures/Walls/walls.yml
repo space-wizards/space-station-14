@@ -638,6 +638,7 @@
 - type: entity
   parent: WallReinforced
   id: WallReinforcedRust
+  name: reinforced wall
   suffix: rusted
   components:
   - type: Sprite
@@ -651,29 +652,6 @@
   - type: IconSmooth
     key: walls
     base: reinf_over
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
-        damage: 350
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-
 
 - type: entity
   parent: WallShuttleDiagonal
@@ -848,7 +826,7 @@
   - type: Physics
     bodyType: Static
   - type: Reflect
-    reflectProb: 1
+    reflectProb: 0.25
   - type: Pullable
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -953,7 +931,7 @@
           4: { state: shuttle_construct-4, visible: true}
           5: { state: shuttle_construct-5, visible: true}
   - type: Reflect
-    reflectProb: 1
+    reflectProb: 0.25
 
 - type: entity
   parent: BaseWall
@@ -998,7 +976,7 @@
     key: walls
     base: state
   - type: Reflect
-    reflectProb: 1
+    reflectProb: 0.25
 
 - type: entity
   parent: BaseWall
@@ -1071,6 +1049,7 @@
 - type: entity
   parent: WallSolid
   id: WallSolidRust
+  name: solid wall
   suffix: rusted
   components:
   - type: Sprite
@@ -1084,28 +1063,6 @@
   - type: IconSmooth
     key: walls
     base: solid
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
   parent: BaseWall
@@ -1231,7 +1188,7 @@
     node: wall
 
 
-# Lavalend Walls
+# Lavaland Walls
 
 - type: entity
   parent: BaseWall
@@ -1363,7 +1320,7 @@
   name: invisible wall
   components:
   - type: TimedDespawn
-    lifetime: 15
+    lifetime: 20
   - type: Tag
     tags:
       - Wall

@@ -29,6 +29,22 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtChiefEngineerTurtle
 
+# Backpack
+- type: loadout
+  id: ChiefEngineerBackpack
+  equipment:
+    back: ClothingBackpackCE
+
+- type: loadout
+  id: ChiefEngineerSatchel
+  equipment:
+    back: ClothingBackpackSatchelCE
+
+- type: loadout
+  id: ChiefEngineerDuffel
+  equipment:
+    back: ClothingBackpackDuffelCE
+
 # Head
 - type: loadout
   id: ChiefEngineerHead
@@ -69,3 +85,28 @@
   id: BrownShoes
   equipment:
     shoes: ClothingShoesColorBrown
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersChiefEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersChiefEngineer
+
+- type: loadout
+  id: UnderwearBottomPantiesChiefEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesChiefEngineer
+
+- type: loadout
+  id: UnderwearTopBraChiefEngineer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraChiefEngineer

@@ -59,6 +59,12 @@
   id: FloorRGlassAlt
   target: FloorRGlass
 
+# 2024-10-26 - DS14
+
+- type: tileAlias
+  id: NecroFlesh
+  target: Plating
+
 # 2024-11-15
 # Burnt tiles now exist, but they don't use the tiles system. They're decals.
 # There's presently no way to add decals over existing tiles, so this will have to suffice for now.

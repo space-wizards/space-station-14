@@ -24,7 +24,6 @@ entities:
       name: NT Evac Wode
     - type: Transform
       pos: -0.70836353,-1.958334
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:

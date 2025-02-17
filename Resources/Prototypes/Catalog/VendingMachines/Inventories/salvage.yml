@@ -8,7 +8,7 @@
     FlashlightLantern: 2
     HandheldGPSBasic: 2
     RadioHandheld: 2
-    WeaponGrapplingGun: 4
+    # WeaponGrapplingGun: 4 # DS14
     WeaponProtoKineticAccelerator: 4
   contrabandInventory:
     PlushieCarp: 1

@@ -1,0 +1,139 @@
+﻿- type: entity
+  id: ActionCreateBlobFactory
+  name: blob-create-factory-action-name
+  description: blob-create-factory-action-desc
+  components:
+  - type: WorldTargetAction
+    priority: -7
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobFactory
+    event: !type:BlobCreateFactoryActionEvent
+    itemIconStyle: BigAction
+    range: 200
+    useDelay: 0.5
+
+- type: entity
+  id: ActionCreateBlobResource
+  name: blob-create-resource-action-name
+  description: blob-create-resource-action-desc
+  components:
+  - type: WorldTargetAction
+    priority: -8
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobResource
+    event: !type:BlobCreateResourceActionEvent
+    itemIconStyle: BigAction
+    range: 200
+    useDelay: 0.5
+
+- type: entity
+  id: ActionCreateBlobNode
+  name: blob-create-node-action-name
+  description: blob-create-node-action-desc
+  components:
+  - type: WorldTargetAction
+    priority: -9
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobNode
+    event: !type:BlobCreateNodeActionEvent
+    itemIconStyle: BigAction
+    range: 200
+    useDelay: 0.5
+
+- type: entity
+  id: ActionCreateBlobbernaut
+  name: blob-produce-blobbernaut-action-name
+  description: blob-produce-blobbernaut-action-desc
+  components:
+  - type: WorldTargetAction
+    priority: -6
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobBlobbernaut
+    event: !type:BlobCreateBlobbernautActionEvent
+    itemIconStyle: BigAction
+    range: 200
+    useDelay: 0.5
+
+- type: entity
+  id: ActionSplitBlobCore
+  name: blob-split-core-action-name
+  description: blob-split-core-action-desc
+  components:
+  - type: WorldTargetAction
+    priority: -3
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobSplit
+    event: !type:BlobSplitCoreActionEvent
+    itemIconStyle: BigAction
+    range: 200
+    useDelay: 0.5
+
+- type: entity
+  id: ActionSwapBlobCore
+  name: blob-swap-core-action-name
+  description: blob-swap-core-action-desc
+  components:
+  - type: WorldTargetAction
+    priority: -2
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobSwap
+    event: !type:BlobSwapCoreActionEvent
+    itemIconStyle: BigAction
+    range: 200
+    useDelay: 0.5
+
+- type: entity
+  id: ActionTeleportBlobToCore
+  name: blob-teleport-to-core-action-name
+  description: blob-teleport-to-core-action-desc
+  components:
+  - type: InstantAction
+    priority: -10
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobToCore
+    event: !type:BlobToCoreActionEvent
+    itemIconStyle: BigAction
+    useDelay: 0.5
+
+- type: entity
+  id: ActionTeleportBlobToNode
+  name: blob-teleport-to-node-action-name
+  description: blob-teleport-to-node-action-desc
+  components:
+  - type: InstantAction
+    priority: -5
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobToNode
+    event: !type:BlobToNodeActionEvent
+    useDelay: 0.5
+
+- type: entity
+  id: ActionSwapBlobChem
+  name: blob-swap-chem-action-name
+  description: blob-swap-chem-action-desc
+  components:
+  - type: InstantAction
+    priority: -4
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobChemSwap
+    event: !type:BlobSwapChemActionEvent
+
+- type: entity
+  id: ActionTransformToBlob
+  name: blob-carrier-transform-to-blob-action-name
+  description: blob-carrier-transform-to-blob-action-desc
+  components:
+  - type: InstantAction
+    icon:
+      sprite: _Backmen/Interface/Actions/blob.rsi
+      state: blobToCore
+    event: !type:TransformToBlobActionEvent

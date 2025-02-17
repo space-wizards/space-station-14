@@ -15,7 +15,6 @@ entities:
     - type: MetaData
       name: Evacuation pod
     - type: Transform
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -104,7 +103,7 @@ entities:
     - type: NavMap
 - proto: AirlockShuttle
   entities:
-  - uid: 2
+  - uid: 33
     components:
     - type: Transform
       pos: 0.5,-2.5
@@ -119,10 +118,9 @@ entities:
       parent: 1
 - proto: AtmosDeviceFanTiny
   entities:
-  - uid: 4
+  - uid: 2
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 0.5,-2.5
       parent: 1
 - proto: BoxMRE
@@ -221,9 +219,9 @@ entities:
           occludes: True
           ents:
           - 7
+          - 9
           - 6
           - 8
-          - 9
 - proto: ClothingOuterSuitEmergency
   entities:
   - uid: 7
@@ -240,6 +238,13 @@ entities:
     - type: Transform
       pos: 0.5,-0.5
       parent: 1
+- proto: DisasterVictimSpawner
+  entities:
+  - uid: 20
+    components:
+    - type: Transform
+      pos: 0.5,-1.5
+      parent: 1
 - proto: GeneratorWallmountAPU
   entities:
   - uid: 21
@@ -249,7 +254,7 @@ entities:
       parent: 1
 - proto: Grille
   entities:
-  - uid: 34
+  - uid: 4
     components:
     - type: Transform
       pos: 0.5,0.5
@@ -270,18 +275,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: NTVisitorSpawner
-  entities:
-  - uid: 20
-    components:
-    - type: Transform
-      pos: 0.5,-1.5
-      parent: 1
-  - uid: 33
-    components:
-    - type: Transform
-      pos: 0.5,-1.5
-      parent: 1
 - proto: Poweredlight
   entities:
   - uid: 22
@@ -290,6 +283,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-1.5
       parent: 1
+    - type: PointLight
+      enabled: False
+    - type: ApcPowerReceiver
+      powerLoad: 0
 - proto: ShuttleWindow
   entities:
   - uid: 23

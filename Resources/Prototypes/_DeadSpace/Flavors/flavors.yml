@@ -1,0 +1,9 @@
+- type: flavor 
+  id: sawdust
+  flavorType: Base
+  description: flavor-complex-sawdust
+
+- type: flavor 
+  id: caviar
+  flavorType: Base
+  description: flavor-complex-caviar

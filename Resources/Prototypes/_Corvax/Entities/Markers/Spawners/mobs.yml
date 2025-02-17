@@ -1,0 +1,12 @@
+﻿- type: entity
+  name: Gorilla Largo Spawner
+  id: SpawnMobGorillaLargo
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobGorillaLargo

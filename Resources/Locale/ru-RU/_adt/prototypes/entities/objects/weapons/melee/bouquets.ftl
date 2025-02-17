@@ -1,0 +1,12 @@
+ent-ADTObjectWeaponsMeleeWhiteBouquet = белый букет
+    .desc = Букет из белых роз. Классика.
+ent-ADTObjectWeaponsMeleeRoseBouquet = розовый букет
+    .desc = Нежный букет из розовых цветов гибискуса. Специально для нее.
+ent-ADTObjectWeaponsMeleeYellowBouquet = жёлтый букет
+    .desc = Это букет из желтых пионов. Специально для ценителей пионов.
+ent-ADTObjectWeaponsMeleeBlackBouquet = чёрный букет
+    .desc = Эти розы точно не окрашены. Они такие были всегда.
+ent-ADTObjectWeaponsMeleeLiliacBouquet = сиреневый букет
+    .desc = Маленький шедевр генетики - розы сорта "Флидефарбен Розен". Приобрели не только цвет, но и запах сирени.
+ent-ADTObjectWeaponsMeleeBouquetWithBeer = пивной букет
+    .desc = Будьте уникальным! Подарите букет который можно съесть, заодно опрокинув по бутылочке пивасика.

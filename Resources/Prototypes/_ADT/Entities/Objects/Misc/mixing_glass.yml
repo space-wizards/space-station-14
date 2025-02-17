@@ -1,0 +1,37 @@
+- type: entity
+  name: смесительный стакан
+  parent: BaseBeaker
+  description: Вместительный стакан для точного смешивания напитко
+  id: ADTMixingGlass
+  components:
+  - type: Spillable
+    solution: beaker
+  - type: Sprite
+    sprite: _ADT/Objects/Misc/mixing_glass.rsi
+    layers:
+      - state: mixing_glass
+      - state: mixing_glass1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: mixing_glass-front
+  - type: Item
+    size: Small
+    sprite: _ADT/Objects/Misc/mixing_glass.rsi
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 90
+  - type: MixableSolution
+    solution: tank
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 9
+    fillBaseName: mixing_glass
+  - type: StaticPrice
+    price: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 1
+    maxTransferAmount: 50
+    transferAmount: 1
+    #toggleState: 1 # draw

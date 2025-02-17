@@ -1,0 +1,61 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHuraskaIlisium
+  name: фуражка Ilisium
+  description: Ilisium...
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/hurashka.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/hurashka.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ADTClothingHeadHelmetSolderIlisium
+  name: шлем Ilisium
+  description: Ilisium...
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/helmetSolder.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/helmetSolder.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ADTClothingMaskGasIlisium
+  name: противогаз Ilisium
+  description: Закрывающая лицо маска, которую можно подключить к дыхательному баллону.
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Head/Hats/gasmask_ili.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Head/Hats/gasmask_ili.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ADTClothingOuterCoatIlisium
+  name: куртка Ilisium
+  description: Ilisium...
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/OuterClothing/Armor/plash_ili.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/OuterClothing/Armor/plash_ili.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ADTClothingUniformIlisium
+  name: комбинезон Ilisium
+  description: Ilisium...
+  components:
+  - type: Sprite
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/uniform_ili.rsi
+  - type: Clothing
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/uniform_ili.rsi

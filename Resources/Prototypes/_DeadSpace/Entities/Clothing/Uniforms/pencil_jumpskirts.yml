@@ -1,0 +1,80 @@
+# by chuiomoio
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilBlack
+  name: черный костюм в стиле "карандаш"
+  description: Черный костюм в стиле "карандаш" представляет собой сочетание строгой элегантности и современного стиля. Облегающий пиджак и прямая юбка создают идеальный силуэт, а черный цвет придает нотку классики. Подходит для деловых встреч и официальных мероприятий.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_black.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_black.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilBurgandy
+  name: элегантный костюм в стиле "карандаш"
+  description: Элегантный костюм в стиле "карандаш" в бургундском цвете придает образу изысканности и индивидуальности. Обтягивающий пиджак и стройная юбка создают стильный силуэт, делая этот костюм подходящим для особых случаев и вечерних мероприятий.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_burgandy.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_burgandy.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilCheckered
+  name: костюм в клетку в стиле "карандаш"
+  description: Костюм в клетку в стиле "карандаш" придает образу современный и модный вид. Элегантный пиджак и прямая юбка с интересным узором создают стильный и необычный образ. Подходит для креативных встреч и мероприятий.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_checkered.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_checkered.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilNavy
+  name: темно-синий костюм в стиле "карандаш"
+  description: Темно-синий костюм в стиле "карандаш" представляет собой классическую элегантность. Обтягивающий пиджак и прямая юбка создают строгий, но стильный силуэт. Подходит как для офисных встреч, так и для особых случаев.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_navy.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_navy.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilTan
+  name: бежевый костюм в стиле "карандаш"
+  description: Бежевый костюм в стиле "карандаш" придает образу нежность и элегантность. Облегающий пиджак и прямая юбка создают изысканный силуэт, подходящий для различных событий, от деловых встреч до вечерних ужинов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_tan.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_tan.rsi
+
+# by inspector_jeleshka
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilCentcomOfficial
+  name: костюм-карандаш офицера Центкома
+  description: Строгий зелёный костюм в стиле "карандаш" придает образу строгость. Облегающий пиджак и прямая юбка создают изысканный силуэт, подходящий для различных событий, от деловых встреч до увольнения капитана.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_centcom_official.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_centcom_official.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
+  name: костюм-карандаш офицера КСО
+  description: Строгий чёрный костюм офицера корпуса специальный операций в стиле "карандаш" придает образу строгость. Облегающий пиджак и прямая юбка создают изысканный силуэт, подходящий для различных событий, от деловых встреч до геноцида членов экипажа ненавистной станции номер 14.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_special_operations_officer.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpskirt/pencil_special_operations_officer.rsi
