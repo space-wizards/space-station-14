@@ -20,6 +20,23 @@
 
   A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. These can only be done with permission or, ideally, a warrant signed by the department head or highest-ranking command staff, which is the captain in most cases.
 
+  ## Contraband
+  There are three types of contraband:
+  - Minor
+  - Major
+  - Syndicate
+
+  By default items restriced to [italic]command or security[/italic] is considered Major contraband. All other department restricted contraband is considered Minor. All syndicate items are considered Syndicate contraband.
+  
+  Some items are an exception to these default rules however. The contraband level of any particular item can be seen when examining it.
+
+  There are also certain chemicals that are illegal under [textlink="Controlled Substances" link="SLControlledSubstances"] Law. They are divided into Minor and Major Controlled Substances and have the same sentencing as for items of the same restriction tier.
+
+  ## Contraband Permitting
+  - Individual permission for Minor contraband can be given by either [bold]The Captain or The Head of Security[/bold].
+  - Individual permission for Major contraband can be given [bold]ONLY by The Captain.[/bold]
+  - Nobody can give permission for Syndicate contraband. Syndicate contraband is highly illegal and may only be used in emergencies, and only to prevent death or gross bodily harm.
+
   ## Implantation
   Any prisoner in custody can be subjected to implantation or implant removal procedures, so long as it's within reason. The process of adding an implant should not prolong the detainees sentence, meaning you can not hold them longer to administer the implant, unless stated otherwise. A former inmate can be requested to undergo implantation at a later point in time if they fit the circumstances during their confinement, they must comply. The following have been listed out with special circumstances, anything not in this list can still be applied, given proper legal context. A prisoner can still receive implantation procedures without meeting the circumstances if they give their clear permission.
 
@@ -55,6 +72,7 @@
   [color=#a4885c]Permanent Confinement:[/color] Being held in the permanent brig for the entire duration of the shift. A person is eligible for permanent confinement if their timed sentence would exceed 15 minutes. Any persons subject to this punishment are required to be transported in cuffs to CentComm at the end of the shift. A permanent prisoner can not be deprived of anything covered by the section "Treatment Of Prisoners".
   [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed, common methods are firing line, lethal injection, exile, and high voltage electrocution. Another alternate method of "execution" is the process of placing a staff's mind into a borg, this is allowed so long as it is lawful. Execution can only be issued with the captain's or acting captain's approval; if the HoS is acting captain or there is no acting captain, all heads of staff are to hold a vote on the matter.
 
-  ## Crime Listing
+  ## See Also
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
+  - [textlink="Controlled Substances" link="SLControlledSubstances"]
 </Document>
