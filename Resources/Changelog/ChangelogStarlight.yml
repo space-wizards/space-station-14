@@ -3497,4 +3497,17 @@ Entries:
   id: 484
   time: '2025-02-17T09:46:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/336
-
+- author: Rinary
+  changes:
+  - message: Removed objective "Die A Glorious Death".
+    type: Remove
+  id: 485
+  time: '2025-02-17T10:43:24.445429+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed Juggernaut suit from AGENT Uplink.
+    type: Remove
+  id: 486
+  time: '2025-02-17T10:43:43.217051+00:00'
+  url: 'null'

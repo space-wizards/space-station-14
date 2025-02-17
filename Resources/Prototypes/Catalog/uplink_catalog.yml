@@ -1716,6 +1716,11 @@
     Telecrystal: 12
   categories:
   - UplinkWearables
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkEnergyDomeSyndie

@@ -33,7 +33,7 @@
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
-    DieObjective: 0.05
+    #DieObjective: 0.05 Starlight
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
