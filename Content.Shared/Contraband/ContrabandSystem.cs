@@ -86,7 +86,7 @@ public sealed class ContrabandSystem : EntitySystem
         String carryingMessage;
         // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
         if (departments.Intersect(component.AllowedDepartments).Any()
-            || localizedJobs.Contains(jobId))
+            || component.AllowedJobs.Select(p => _proto.Index(p).LocalizedName).Contains(jobId))
         {
             carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
         }
