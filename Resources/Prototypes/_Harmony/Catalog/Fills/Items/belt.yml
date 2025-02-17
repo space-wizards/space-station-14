@@ -1,0 +1,22 @@
+- type: entityTable
+  id: BeltBrigmedHarmonyEntityTable
+  table: !type:AllSelector
+    children:
+    - id: Stunbaton
+    - id: Zipties
+    - id: Zipties
+    - id: BicaridineChemistryBottleHarmony
+    - id: BicaridineChemistryBottleHarmony
+    - id: DermalineChemistryBottleHarmony
+    - id: EpinephrineChemistryBottle
+    - id: RadioHandheldSecurity
+
+- type: entity
+  id: ClothingBeltBrigmedFilledHarmony
+  parent: ClothingBeltBrigmedHarmony
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: BeltBrigmedHarmonyEntityTable

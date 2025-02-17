@@ -330,6 +330,13 @@ public sealed partial class ShuttleSystem
         {
             hyperspace.TargetCoordinates = config.Coordinates;
             hyperspace.TargetAngle = config.Angle;
+            // Harmony - Mark the docks as queued for a docking
+            config.Docks.ForEach(x =>
+            {
+                x.DockA.QueuedDocked = true;
+                x.DockB.QueuedDocked = true;
+            });
+            // End harmony
         }
         else if (TryGetFTLProximity(shuttleUid, new EntityCoordinates(target, Vector2.Zero), out var coords, out var targAngle))
         {
@@ -513,6 +520,13 @@ public sealed partial class ShuttleSystem
             else
             {
                 FTLDock((uid, xform), config);
+                // Harmony - Mark the docks as unqueued
+                config.Docks.ForEach(x =>
+                {
+                    x.DockA.QueuedDocked = false;
+                    x.DockB.QueuedDocked = false;
+                });
+                // End Harmony
             }
 
             mapId = mapCoordinates.MapId;

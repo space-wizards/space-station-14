@@ -337,8 +337,10 @@
     stateBaseClosed: brigmedic
     stateDoorOpen: armory_open
     stateDoorClosed: brigmedic_door
-  - type: AccessReader
-    access: [["Medical"]]
+# Start of Harmony Change: Removes Access Reader
+#  - type: AccessReader
+#    access: [["Medical"]]
+# End of Change
 
 # Security Officer
 - type: entity

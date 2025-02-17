@@ -1114,3 +1114,25 @@ Entries:
     changes:
     - type: Tweak
       message: Ninja Stun Reduced to fit Flash stun time.
+  - id: 357
+    author: OrnamentalFreak
+    time: '2025-02-06T04:49:55.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/357
+    changes:
+    - type: Add
+      message: Added Blatantly Nuclear by mrjajkes
+  - id: 341
+    author: Jajsha
+    time: '2025-02-08T07:09:14.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/341
+    changes:
+    - type: Add
+      message: Added the workaday suit and various other clothing items to the
+        medical doctor loadout.
+  - id: 339
+    author: whythelettuce
+    time: '2025-02-08T08:07:24.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/339
+    changes:
+    - type: Add
+      message: Added new clothing for the cargo technician.
