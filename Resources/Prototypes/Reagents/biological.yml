@@ -1,4 +1,16 @@
 - type: reagent
+  parent: Blood
+  id: AmmoniaBlood
+  name: reagent-name-ammonia-blood # Anaerobic blood
+  group: Biological
+  desc: reagent-desc-ammonia-blood
+  flavor: bitter
+  color: "#7a8bf2"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-pungent
+  slippery: false
+
+- type: reagent
   id: Blood
   name: reagent-name-blood
   group: Biological
@@ -20,14 +32,14 @@
       - !type:SatiateThirst
         factor: 1.0
         conditions:
-          - !type:OrganType
-            type: Human
-            shouldHave: false
+        - !type:OrganType
+          type: Human
+          shouldHave: false
     Food:
       effects:
-        - !type:AdjustReagent
-          reagent: UncookedAnimalProteins
-          amount: 0.1
+      - !type:AdjustReagent
+        reagent: UncookedAnimalProteins
+        amount: 0.1
     Medicine:
       effects:
       - !type:HealthChange
@@ -39,70 +51,8 @@
             Brute: -3
             Burn: -1.25
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: 0.5
-  footstepSound:
-    collection: FootstepBlood
-    params:
-      volume: 6
-
-- type: reagent
-  parent: Blood
-  id: InsectBlood
-  name: reagent-name-insect-blood
-  group: Biological
-  desc: reagent-desc-insect-blood
-  flavor: horrible
-  color: "#808A51"
-  recognizable: true
-  physicalDesc: reagent-physical-desc-slimy
-  slippery: false
-
-- type: reagent
-  id: Slime
-  name: reagent-name-slime
-  group: Biological
-  desc: reagent-desc-slime
-  flavor: slimy
-  color: "#2cf274"
-  recognizable: true
-  physicalDesc: reagent-physical-desc-viscous
-  slippery: false
-  viscosity: 0.25
-  tileReactions:
-    - !type:SpillTileReaction
-  metabolisms:
-    Food:
-      # Delicious!
-      effects:
-      - !type:SatiateHunger
-        factor: 1
-  footstepSound:
-    collection: FootstepBlood
-    params:
-      volume: 6
-
-- type: reagent
-  id: Sap
-  name: reagent-name-sap
-  group: Biological
-  desc: reagent-desc-sap
-  flavor: sweet
-  color: "#cd7314"
-  recognizable: true
-  physicalDesc: reagent-physical-desc-sticky
-  slippery: false
-  viscosity: 0.10
-  tileReactions:
-    - !type:SpillTileReaction
-  metabolisms:
-    Food:
-      # Sweet!
-      effects:
-      - !type:SatiateHunger
-        factor: 1
-      - !type:SatiateThirst
-        factor: 1
+  - !type:PlantAdjustWater
+    amount: 0.5
   footstepSound:
     collection: FootstepBlood
     params:
@@ -111,7 +61,7 @@
 - type: reagent
   parent: Blood
   id: CopperBlood
-  name: reagent-name-hemocyanin-blood
+  name: reagent-name-hemocyanin-blood # Copper blood
   group: Biological
   desc: reagent-desc-hemocyanin-blood
   flavor: metallic
@@ -121,45 +71,44 @@
   slippery: false
 
 - type: reagent
-  parent: Blood
-  id: AmmoniaBlood
-  name: reagent-name-ammonia-blood
+  id: Fat
+  name: reagent-name-fat
   group: Biological
-  desc: reagent-desc-ammonia-blood
-  flavor: bitter
-  color: "#7a8bf2"
-  recognizable: true
-  physicalDesc: reagent-physical-desc-pungent
+  desc: reagent-desc-fat
+  flavor: terrible
+  color: "#d8d8b0"
+  physicalDesc: reagent-physical-desc-exotic-smelling
   slippery: false
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
 
 - type: reagent
-  id: ZombieBlood
-  name: reagent-name-zombie-blood
-  group: Biological
-  desc: reagent-desc-zombie-blood
-  physicalDesc: reagent-physical-desc-necrotic
-  flavor: bitter
-  color: "#2b0700"
+  id: GreyMatter
+  name: reagent-name-grey-matter
+  group: Biological # Also a Toxin
+  desc: reagent-desc-grey-matter
+  physicalDesc: reagent-physical-desc-neural
+  flavor: mindful
+  color: "#C584B8"
   slippery: false
   metabolisms:
     Drink:
-      # Disgusting!
       effects:
-      - !type:SatiateThirst
-        factor: -0.5
+      - !type:SatiateHunger
+        factor: 1.5
     Poison:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 4
-      - !type:ChemVomit
-        probability: 0.25
+            Cellular: 2
 
 - type: reagent
   id: Ichor
   name: reagent-name-ichor
-  group: Biological
+  group: Biological # Also technically a Medicine
   desc: reagent-desc-ichor
   physicalDesc: reagent-physical-desc-roaring
   flavor: metallic
@@ -195,14 +144,62 @@
       volume: 6
 
 - type: reagent
-  id: Fat
-  name: reagent-name-fat
+  parent: Blood
+  id: InsectBlood
+  name: reagent-name-insect-blood
   group: Biological
-  desc: reagent-desc-fat
-  flavor: terrible
-  color: "#d8d8b0"
-  physicalDesc: reagent-physical-desc-exotic-smelling
+  desc: reagent-desc-insect-blood
+  flavor: horrible
+  color: "#808A51"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-slimy
   slippery: false
+
+- type: reagent
+  id: Sap
+  name: reagent-name-sap
+  group: Biological
+  desc: reagent-desc-sap
+  flavor: sweet
+  color: "#cd7314"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-sticky
+  slippery: false
+  viscosity: 0.10
+  tileReactions:
+  - !type:SpillTileReaction
+  metabolisms:
+    Food:
+      # Sweet!
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+      - !type:SatiateThirst
+        factor: 1
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
+
+- type: reagent
+  id: Slime
+  name: reagent-name-slime
+  group: Biological
+  desc: reagent-desc-slime
+  flavor: slimy
+  color: "#2cf274"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-viscous
+  slippery: false
+  viscosity: 0.25
+  tileReactions:
+  - !type:SpillTileReaction
+  metabolisms:
+    Food:
+      # Delicious!
+      effects:
+      - !type:SatiateHunger
+        factor: 1
   footstepSound:
     collection: FootstepBlood
     params:
@@ -231,22 +228,25 @@
       volume: 6
 
 - type: reagent
-  id: GreyMatter
-  name: reagent-name-grey-matter
-  group: Biological
-  desc: reagent-desc-grey-matter
-  physicalDesc: reagent-physical-desc-neural
-  flavor: mindful
-  color: "#C584B8"
+  id: ZombieBlood
+  name: reagent-name-zombie-blood
+  group: Biological # Also a Toxin
+  desc: reagent-desc-zombie-blood
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: bitter
+  color: "#2b0700"
   slippery: false
   metabolisms:
     Drink:
+      # Disgusting!
       effects:
-      - !type:SatiateHunger
-        factor: 1.5
+      - !type:SatiateThirst
+        factor: -0.5
     Poison:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Cellular: 2
+            Poison: 4
+      - !type:ChemVomit
+        probability: 0.25

@@ -30,6 +30,7 @@
 - type: reagent
   id: Fiber
   name: reagent-name-fiber
+  group: Domestic
   desc: reagent-desc-fiber
   physicalDesc: reagent-physical-desc-fibrous
   flavor: fiber
@@ -84,11 +85,11 @@
         type: Local
         visualType: Medium
         messages:
-          - "buzzochloricbees-effect-histamine-bee-allergy"
-          - "buzzochloricbees-effect-histamine-swells"
-          - "buzzochloricbees-effect-histamine-numb-to-the-bees"
-          - "buzzochloricbees-effect-histamine-cannot-be-one-with-the-bees"
-          - "buzzochloricbees-effect-squeaky-clean"
+        - "buzzochloricbees-effect-histamine-bee-allergy"
+        - "buzzochloricbees-effect-histamine-swells"
+        - "buzzochloricbees-effect-histamine-numb-to-the-bees"
+        - "buzzochloricbees-effect-histamine-cannot-be-one-with-the-bees"
+        - "buzzochloricbees-effect-squeaky-clean"
         probability: 0.05
         conditions:
         - !type:ReagentThreshold
@@ -101,10 +102,10 @@
         type: Local
         visualType: Medium
         messages:
-          - "buzzochloricbees-effect-licoxide-electrifying"
-          - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
-          - "buzzochloricbees-effect-licoxide-buzzed"
-          - "buzzochloricbees-effect-licoxide-buzzes"
+        - "buzzochloricbees-effect-licoxide-electrifying"
+        - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
+        - "buzzochloricbees-effect-licoxide-buzzed"
+        - "buzzochloricbees-effect-licoxide-buzzes"
         probability: 0.05
         conditions:
         - !type:HasTag
@@ -116,8 +117,8 @@
       - !type:PopupMessage
         type: Local
         messages:
-          - "buzzochloricbees-effect-fiber-hairy"
-          - "buzzochloricbees-effect-fiber-soft"
+        - "buzzochloricbees-effect-fiber-hairy"
+        - "buzzochloricbees-effect-fiber-soft"
         probability: 0.05
         conditions:
         - !type:HasTag
@@ -139,14 +140,16 @@
 - type: reagent
   id: GroundBee
   name: reagent-name-ground-bee
+  group: Special
   desc: reagent-desc-ground-bee
   physicalDesc: reagent-physical-desc-bee-guts
-  flavor: bee
+  flavor: bee # Fibrous would make more technical sense as this is from bee plushies
   color: "#86530E"
 
 - type: reagent
   id: Saxoite
   name: reagent-name-saxoite
+  group: Special
   desc: reagent-desc-saxoite
   physicalDesc: reagent-physical-desc-ground-brass
   flavor: sax
@@ -321,7 +324,7 @@
 - type: reagent
   id: JuiceThatMakesYouWeh
   name: reagent-name-weh
-  group: Toxins
+  group: Special # Metabolism type is poison, but not damage type.
   desc: reagent-desc-weh
   physicalDesc: reagent-physical-desc-vibrant
   flavor: weh
@@ -353,7 +356,7 @@
 - type: reagent
   id: JuiceThatMakesYouHew
   name: reagent-name-hew
-  group: Toxins
+  group: Special # Metabolism type is poison, but not damage type.
   desc: reagent-desc-hew
   physicalDesc: reagent-physical-desc-inversed
   flavor: hew
