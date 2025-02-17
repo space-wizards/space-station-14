@@ -10,39 +10,85 @@
 - type: entity
   id: ActionRevenantDefile
   name: Defile
-  description: Costs 30 Essence.
+  description: Damages the nearby tiles and windows. Costs 30 Essence.
   components:
   - type: InstantAction
     icon: Interface/Actions/defile.png
     event: !type:RevenantDefileActionEvent
     useDelay: 15
+  - type: RevenantAction
+    cost: 30
+    stunTime: 1
+    corporealTime: 4
+  - type: DefileAction
 
 - type: entity
   id: ActionRevenantOverloadLights
   name: Overload Lights
-  description: Costs 40 Essence.
+  description: Overloads the lights around you. Costs 40 Essence.
   components:
   - type: InstantAction
     icon: Interface/Actions/overloadlight.png
     event: !type:RevenantOverloadLightsActionEvent
     useDelay: 20
+  - type: RevenantAction
+    cost: 40
+    stunTime: 3
+    corporealTime: 8
+  - type: OverloadLightsAction
 
-#- type: entity
-#  id: ActionRevenantBlight
-#  name: Blight
-#  description: Costs 50 Essence.
-#  components:
-#  - type: InstantAction
-#    icon: Interface/Actions/blight.png
-#    event: !type:RevenantBlightActionEvent
-#    useDelay: 20
+- type: entity
+  id: ActionRevenantColdSnap
+  name: Cold Snap
+  description: Lowers the temperature of ambient air around you. Costs 45 Essence.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/overloadlight.png
+    event: !type:RevenantColdSnapActionEvent
+    useDelay: 20
+  - type: RevenantAction
+    cost: 45
+    stunTime: 1
+    corporealTime: 5
+  - type: ColdSnapAction
+
+- type: entity
+  id: ActionRevenantEnergyDrain
+  name: Energy Drain
+  description: Drains nearby batteries. Costs 50 Essence.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/overloadlight.png
+    event: !type:RevenantEnergyDrainActionEvent
+    useDelay: 20
+  - type: RevenantAction
+    cost: 50
+    stunTime: 2
+    corporealTime: 6
+  - type: EnergyDrainAction
 
 - type: entity
   id: ActionRevenantMalfunction
   name: Malfunction
-  description: Costs 60 Essence.
+  description: Emags nearby machines. Costs 60 Essence.
   components:
   - type: InstantAction
     icon: Interface/Actions/malfunction.png
     event: !type:RevenantMalfunctionActionEvent
     useDelay: 20
+  - type: RevenantAction
+    cost: 60
+    stunTime: 2
+    corporealTime: 8
+  - type: MalfunctionAction
+    malfunctionWhitelist:
+      components:
+      # emag lockers open
+      - EntityStorage
+      # emag doors open
+      - Airlock
+      # troll medical to help get kills
+      - StasisBed
+      - EmaggableMedibot
+      # borg become killer
+      - EmagSiliconLaw
