@@ -1,25 +1,19 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chat;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Serialization;
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Humanoid;
-using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
-using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Wagging;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.Manager;
 
 
@@ -166,8 +160,9 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         currentDna.DNA = targetConsumedDna.DNA;
 
-        CopyComps(targetIdentity, ent, null,  typeof(VocalComponent), typeof(SpeechComponent));
-
+//        CopyComps(targetIdentity, ent, null,  (IComponent) typeof(VocalComponent), (IComponent) typeof(SpeechComponent));
+        CopyComp<VocalComponent>(targetIdentity, ent, out _);
+        CopyComp<SpeechComponent>(targetIdentity, ent, out _);
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
         EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
         CopyComp<TypingIndicatorComponent>(targetIdentity, ent, out _);
