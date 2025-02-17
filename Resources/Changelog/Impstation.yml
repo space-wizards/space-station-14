@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added the service techfab, which can be used to produce a number of useful
-      items for the service staff. The machine board for it can be produced on the
-      circuit imprinter on roundstart.
-    type: Add
-  - message: Cleanades can now be crafted at protolathes and service techfabs once
-      Advanced Cleaning has been researched.
-    type: Add
-  id: 650
-  time: '2024-12-04T13:25:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/893
 - author: widgetbeck
   changes:
   - message: Made Slime People's damage from water vapor scale with quantity, which
@@ -4172,3 +4160,13 @@
   id: 1149
   time: '2025-02-17T15:17:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1719
+- author: Pinkbat5
+  changes:
+  - message: Added two zero-point accents that automatically correct your capitalization
+      and/or punctuation.
+    type: Add
+  - message: Added stilted speech, an accent that Makes You Talk Like This.
+    type: Add
+  id: 1150
+  time: '2025-02-17T15:19:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1717
