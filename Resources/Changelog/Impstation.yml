@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: The spray painter can now paint airlocks to use the new civilian door
-      sprites.
-    type: Add
-  - message: Spray painter pipe color options have been adjusted to be more distinct
-      and more color options have been added.
-    type: Tweak
-  id: 649
-  time: '2024-12-04T13:26:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/894
-- author: DinnerCalzone
-  changes:
   - message: Added the service techfab, which can be used to produce a number of useful
       items for the service staff. The machine board for it can be produced on the
       circuit imprinter on roundstart.
@@ -4174,3 +4163,12 @@
   id: 1148
   time: '2025-02-17T14:54:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1676
+- author: kipdotnet
+  changes:
+  - message: Added the spacepresso machine for mapping.
+    type: Add
+  - message: The service techfab can now print disposable coffee cups.
+    type: Add
+  id: 1149
+  time: '2025-02-17T15:17:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1719
