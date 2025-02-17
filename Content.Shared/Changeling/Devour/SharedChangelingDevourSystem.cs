@@ -84,7 +84,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
     private bool TargetIsProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
     {
-        var ev = new CoeffientQueryEvent(SlotFlags.OUTERCLOTHING);
+        var ev = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
 
         RaiseLocalEvent(target, ev, true);
 

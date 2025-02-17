@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
