@@ -147,6 +147,11 @@
   license: "CC-BY-SA-3.0"
   source: "https://github.com/Baystation12/Baystation12"
 
+- files: ["glass_clink.ogg"]
+  copyright: 'Created and released in a soundpack by wasserbjorn on Freesound.org. Cut and exported to mono .ogg by joshepvodka (github)'
+  license: "CC0-1.0"
+  source: "https://freesound.org/people/wasserbjorn/sounds/761133/"
+
 - files: ["wood_destroy2.ogg", "wood_destroy3.ogg", "wood_destroy_heavy1.ogg", "metal_slam1.ogg", "metal_slam2.ogg", "metal_slam3.ogg"]
   copyright: "Based on sounds from OpenSourceWeb at edb003dc8ff5009476a9bcb74e79206039fb3390, edited and reworked by mirrorcult"
   license: "CC-BY-SA-3.0"
