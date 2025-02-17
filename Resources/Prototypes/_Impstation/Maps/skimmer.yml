@@ -17,20 +17,27 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml
         - type: StationJobs
-          availableJobs:
+          availableJobs: # Total of 15 jobs roundstart, max of 16 inc. latejoins and trainees.
+            # command - 1
             Captain: [ 1, 1 ]
-            SecurityOfficer: [ 1, 1 ]
-            CargoTechnician: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 3 ]
+            # service - 4
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
-            MedicalDoctor: [ 1, 1 ]
-            Chemist: [ 1, 1 ]
             Janitor: [ 1, 1 ]
+            # engineering - 2
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 1 ]
+            # medical - 2
+            Chemist: [ 1, 1 ]
+            MedicalDoctor: [ 1, 1 ]
+            # science - 2
             Scientist: [ 1, 1 ]
-            Passenger: [ -1, -1 ]
             Borg: [ 1, 1 ]
-
+            # security - 1
+            SecurityOfficer: [ 1, 1 ]
+            # supply - 3-4. wolfie...
+            CargoTechnician: [ 1, 1 ]
+            SalvageSpecialist: [ 2, 3 ]
+            # civilian
+            Passenger: [ -1, -1 ]
