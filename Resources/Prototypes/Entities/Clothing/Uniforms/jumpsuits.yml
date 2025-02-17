@@ -971,6 +971,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitEasternRobe
+  name: eastern robe
+  description:  It's a yellow robe with a red sash, often worn by religious folk.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/robe_eastern.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/robe_eastern.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMusician
   name: musician's tuxedo
   description: A fancy tuxedo for the musically inclined.  Perfect for any lounge act!
