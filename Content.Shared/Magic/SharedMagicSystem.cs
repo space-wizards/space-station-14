@@ -546,7 +546,7 @@ public abstract class SharedMagicSystem : EntitySystem
         var xform = Transform(ev.Target);
         var fixture = fixtures.Fixtures.First();
 
-        _transform.Unanchor(ev.Target);
+        _transform.Unanchor((ev.Target, xform));
         _physics.SetCanCollide(ev.Target, true, true, false, fixtures, physics);
         _physics.SetCollisionMask(ev.Target, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
         _physics.SetCollisionLayer(ev.Target, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);

@@ -195,7 +195,7 @@ public sealed partial class DungeonSystem
             if (anchored && !childXform.Anchored)
                 _transform.AnchorEntity((ent, childXform), (gridUid, grid));
             else if (!anchored && childXform.Anchored)
-                _transform.Unanchor(ent, childXform);
+                _transform.Unanchor((ent, childXform));
         }
 
         // Load decals
