@@ -92,7 +92,7 @@ namespace Content.Server.Destructible
                             var childEnumerator = Transform(uid).ChildEnumerator;
                             while (childEnumerator.MoveNext(out var child))
                             {
-                                if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable))
+                                if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable) && embeddable.EmbeddedIntoUid != null)
                                     ProjectileSystem.RemoveEmbed(child, embeddable);
                             }
                             break;
