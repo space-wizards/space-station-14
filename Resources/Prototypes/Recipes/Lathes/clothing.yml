@@ -3,6 +3,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseJumpsuitRecipe
+  categories:
+  - Jumpsuits
   completetime: 4
   materials:
     Cloth: 300
@@ -11,6 +13,9 @@
   abstract: true
   parent: BaseJumpsuitRecipe
   id: BaseCommandJumpsuitRecipe
+  categories:
+  - Jumpsuits
+  - Command
   materials:
     Cloth: 300
     Durathread: 100
@@ -18,6 +23,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseCoatRecipe
+  categories:
+  - Coats
   completetime: 3.2 # don't ask why its faster than a jumpsuit??
   materials:
     Cloth: 500
@@ -27,6 +34,9 @@
   abstract: true
   parent: BaseCoatRecipe
   id: BaseCommandCoatRecipe
+  categories:
+  - Coats
+  - Command
   materials:
     Cloth: 500
     Durathread: 300
@@ -34,6 +44,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseHatRecipe
+  categories:
+  - Hats
   completetime: 2
   materials:
     Cloth: 100
@@ -42,6 +54,9 @@
   abstract: true
   parent: BaseHatRecipe
   id: BaseCommandHatRecipe
+  categories:
+  - Hats
+  - Command
   materials:
     Cloth: 100
     Durathread: 50
@@ -49,11 +64,13 @@
 - type: latheRecipe
   abstract: true
   id: BaseNeckClothingRecipe
+  categories:
+  - Neck
   completetime: 2
   materials:
     Cloth: 200
 
-# Recipes
+## Recipes
 
 # Jumpsuits/skirts
 - type: latheRecipe
