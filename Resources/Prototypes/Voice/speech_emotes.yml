@@ -39,7 +39,8 @@
     - Vocal
   blacklist:
     components:
-    - BorgChassis
+    - BorgSwitchableType
+    - StartIonStormed
   chatMessages: ["chat-emote-msg-laugh"]
   chatTriggers:
     - laugh
