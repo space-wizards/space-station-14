@@ -178,7 +178,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             {
                 _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
-                AfterInsert(uid, component, args.Using.Value, args.User);
+                DoInsertDisposalUnit(uid, args.Using.Value, args.User);
             }
         };
 
@@ -190,21 +190,23 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);
+        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component);
 
         args.Handled = true;
     }
 
-    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid? user, SharedDisposalUnitComponent? disposal = null, bool doContainerInsert = false, bool doAfterInsert = true)
     {
         if (!ResolveDisposals(uid, ref disposal))
             return;
 
-        if (!_containerSystem.Insert(toInsert, disposal.Container))
+        if (!DoInsert(uid, disposal, toInsert, user, doContainerInsert))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, disposal, toInsert, user);
+
+        if (doAfterInsert)
+            AfterInsert(uid, disposal, toInsert, user);
     }
 
     public override void Update(float frameTime)
@@ -293,7 +295,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, component, args.Used, args.User);
+        DoInsertDisposalUnit(uid, args.Used, args.User, component);
         args.Handled = true;
     }
 
@@ -481,7 +483,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (delay <= 0 || userId == null)
         {
-            AfterInsert(unitId, unit, toInsertId, userId, doInsert: true);
+            DoInsertDisposalUnit(unitId, toInsertId, userId, doContainerInsert: true, doAfterInsert: true);
             return true;
         }
 
@@ -764,19 +766,35 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         Dirty(uid, component);
     }
 
-    public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
+    /// <summary>
+    /// Called for each thing that is inserted
+    /// </summary>
+    public bool DoInsert(EntityUid uid,
+        SharedDisposalUnitComponent component,
+        EntityUid inserted,
+        EntityUid? user = null,
+        bool doContainerInsert = false)
     {
-        _audioSystem.PlayPvs(component.InsertSound, uid);
-
-        if (doInsert && !_containerSystem.Insert(inserted, component.Container))
-            return;
+        if (doContainerInsert && !_containerSystem.Insert(inserted, component.Container))
+            return false;
 
         if (user != inserted && user != null)
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} inserted {ToPrettyString(inserted)} into {ToPrettyString(uid)}");
 
-        QueueAutomaticEngage(uid, component);
-
         _ui.CloseUi(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, inserted);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Called after insertion is finished. This should be fired once after an entire insertion action is done.
+    /// Even if multiple items are inserted (dumpables like trash bags)
+    /// </summary>
+    public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
+    {
+        _audioSystem.PlayPvs(component.InsertSound, uid);
+
+        QueueAutomaticEngage(uid, component);
 
         // Maybe do pullable instead? Eh still fine.
         Joints.RecursiveClearJoints(inserted);
