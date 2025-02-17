@@ -4,6 +4,7 @@ using Content.Client.GameTicking.Managers;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Light.EntitySystems;
 
@@ -35,24 +36,42 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
     [Pure]
     public (Vector2 Direction, float Alpha) GetShadow(Entity<SunShadowCycleComponent> entity, float time)
     {
-        for (var i = 0; i < entity.Comp.Directions.Count; i++)
+        var ratio = (float) (time / entity.Comp.Duration.TotalSeconds);
+
+        for (var i = entity.Comp.Directions.Count - 1; i >= 0; i--)
         {
             var dir = entity.Comp.Directions[i];
 
-            if (time < dir.Time.TotalSeconds)
+            if (ratio > dir.Ratio)
             {
-                var last = entity.Comp.Directions[(i + entity.Comp.Directions.Count - 1) % entity.Comp.Directions.Count];
-                var diff = (float) ((time - last.Time.TotalSeconds) / (dir.Time.TotalSeconds - last.Time.TotalSeconds));
+                var next = entity.Comp.Directions[(i + 1) % entity.Comp.Directions.Count];
+                float nextRatio;
+
+                // Last entry
+                if (i == entity.Comp.Directions.Count - 1)
+                {
+                    nextRatio = next.Ratio + 1f;
+                }
+                else
+                {
+                    nextRatio = next.Ratio;
+                }
+
+                var range = nextRatio - dir.Ratio;
+                var diff = (ratio - dir.Ratio) / range;
+                DebugTools.Assert(diff is >= 0f and <= 1f);
 
                 // We lerp angle + length separately as we don't want a straight-line lerp and want the rotation to be consistent.
                 var currentAngle = dir.Direction.ToAngle();
-                var lastAngle = last.Direction.ToAngle();
+                var nextAngle = next.Direction.ToAngle();
 
-                var angle = Angle.Lerp(lastAngle, currentAngle, diff);
-                var length = float.Lerp(last.Direction.Length(), dir.Direction.Length(), diff);
+                var angle = Angle.Lerp(currentAngle, nextAngle, diff);
+                // This is to avoid getting weird issues where the angle gets pretty close but length still noticeable catches up.
+                var lengthDiff = MathF.Pow(diff, 1f / 2f);
+                var length = float.Lerp(dir.Direction.Length(), next.Direction.Length(), lengthDiff);
 
                 var vector = angle.ToVec() * length;
-                var alpha = float.Lerp(last.Alpha, dir.Alpha, diff);
+                var alpha = float.Lerp(dir.Alpha, next.Alpha, diff);
                 return (vector, alpha);
             }
         }

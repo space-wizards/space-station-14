@@ -25,12 +25,11 @@ public sealed partial class SunShadowCycleComponent : Component
     /// Time to have each direction applied. Will lerp from the current value to the next one.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<(TimeSpan Time, Vector2 Direction, float Alpha)> Directions = new()
+    public List<(float Ratio, Vector2 Direction, float Alpha)> Directions = new()
     {
-        (TimeSpan.FromMinutes(0), new Vector2(0f, 0.8f), 0f),
-        (TimeSpan.FromMinutes(6), new Vector2(1f, 0.2f), 0.8f),
-        (TimeSpan.FromMinutes(12), new Vector2(0f, -0.8f), 0.8f),
-        (TimeSpan.FromMinutes(24), new Vector2(-1f, -0.2f), 0.8f),
-        (TimeSpan.FromMinutes(30), new Vector2(0f, 0.8f), 0f),
+        (0f, new Vector2(0f, 3f), 0f),
+        (0.25f, new Vector2(3f, -0.1f), 0.5f),
+        (0.5f, new Vector2(0f, -3f), 0.8f),
+        (0.75f, new Vector2(-3f, -0.1f), 0.5f),
     };
 }
