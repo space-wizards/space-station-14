@@ -13,8 +13,8 @@ namespace Content.Shared.Nutrition.EntitySystems;
 [Serializable, NetSerializable]
 public sealed partial class Satiation
 {
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<SatiationPrototype> Prototype { get; private set; }
+    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
+    public ProtoId<SatiationPrototype> Prototype = "";
 
 
     /// <summary>

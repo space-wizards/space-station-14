@@ -229,7 +229,9 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExamineableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -666,7 +668,9 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExamineableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -832,7 +836,9 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-  - type: ExamineableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -989,7 +995,9 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExamineableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: Wooly
   - type: Food
     solution: wool

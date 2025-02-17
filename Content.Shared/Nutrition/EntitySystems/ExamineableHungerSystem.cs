@@ -1,41 +1,45 @@
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-/// <inheritdoc cref="ExamineableHungerComponent"/>
-public sealed class ExamineableHungerSystem : EntitySystem
+/// <summary>
+/// Makes descriptions specified in <see cref="ExaminableSatiationComponent"/> show up in response to
+/// <see cref="ExaminedEvent"/>s.
+/// </summary>
+/// <seealso cref="ExaminableSatiationComponent"/>
+public sealed class ExaminableSatiationSystem : EntitySystem
 {
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    private EntityQuery<HungerComponent> _hungerQuery;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
+
+    private EntityQuery<SatiationComponent> _satiationQuery;
 
     public override void Initialize()
     {
-        base.Initialize();
+        _satiationQuery = GetEntityQuery<SatiationComponent>();
 
-        _hungerQuery = GetEntityQuery<HungerComponent>();
-
-        SubscribeLocalEvent<ExamineableHungerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<ExaminableSatiationComponent, ExaminedEvent>(OnExamine);
     }
 
-    /// <summary>
-    ///     Defines the text provided on examine.
-    ///     Changes depending on the amount of hunger the target has.
-    /// </summary>
-    private void OnExamine(Entity<ExamineableHungerComponent> entity, ref ExaminedEvent args)
+    private void OnExamine(Entity<ExaminableSatiationComponent> entity, ref ExaminedEvent args)
     {
         var identity = Identity.Entity(entity, EntityManager);
+        _satiationQuery.TryComp(entity, out var satiationComp);
 
-        if (!_hungerQuery.TryComp(entity, out var hungerComp)
-            || !entity.Comp.Descriptions.TryGetValue(_hunger.GetHungerThreshold(hungerComp), out var locId))
+        foreach (var (satType, exSatProto) in entity.Comp.Satiations)
         {
-            // Use a fallback message if the entity has no HungerComponent
-            // or is missing a description for the current threshold
-            locId = entity.Comp.NoHungerDescription;
-        }
+            if (!_prototype.TryIndex(exSatProto, out var exSatiation))
+                continue;
 
-        var msg = Loc.GetString(locId, ("entity", identity));
-        args.PushMarkup(msg);
+            var thresholdOrNull = satiationComp is not null
+                ? _satiation.GetThresholdOrNull((entity.Owner, satiationComp), satType)
+                : null;
+            var msg = Loc.GetString(exSatiation.GetDescriptionOrDefault(thresholdOrNull),
+                ("entity", identity));
+            args.PushMarkup(msg);
+        }
     }
 }

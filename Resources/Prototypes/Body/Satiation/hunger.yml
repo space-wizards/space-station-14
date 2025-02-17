@@ -89,3 +89,24 @@
   id: DionaHunger
   parent: NormalSatiationHunger
   baseDecayRate: 0.0083
+
+
+- type: satiationExamination
+  id: HungerExamination
+  descriptions:
+    Full: "examinable-satiation-component-examine-hunger-full"
+    Okay: "examinable-satiation-component-examine-hunger-okay"
+    Concerned: "examinable-satiation-component-examine-hunger-concerned"
+    Desperate: "examinable-satiation-component-examine-hunger-desperate"
+    Dead: "examinable-satiation-component-examine-hunger-desperate"
+  notApplicable: "examinable-satiation-component-examine-hunger-none"
+
+- type: satiationExamination
+  id: ThirstExamination
+  descriptions:
+    Full: "examinable-satiation-component-examine-thirst-full"
+    Okay: "examinable-satiation-component-examine-thirst-okay"
+    Concerned: "examinable-satiation-component-examine-thirst-concerned"
+    Desperate: "examinable-satiation-component-examine-thirst-desperate"
+    Dead: "examinable-satiation-component-examine-thirst-desperate"
+  notApplicable: "examinable-satiation-component-examine-thirst-none"
