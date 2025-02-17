@@ -11,7 +11,6 @@
       - hand 3
       - hand 4
       - hand 5
-      - hand 6
     hand 1:
       part: LeftArmBorg
     hand 2:
@@ -19,8 +18,6 @@
     hand 3:
       part: LeftArmBorg
     hand 4:
-      part: LeftArmBorg
-    hand 5:
       part: RightArmBorg
-    hand 6:
+    hand 5:
       part: RightArmBorg
