@@ -21,13 +21,13 @@ public sealed partial class AiInteractWireAction : ComponentWireAction<StationAi
 
     public override bool Cut(EntityUid user, Wire wire, StationAiWhitelistComponent component)
     {
-        return EntityManager.System<SharedStationAiSystem>()
+        return EntityManager.System<StationAiSystem>()
             .SetWhitelistEnabled((component.Owner, component), false, announce: true);
     }
 
     public override bool Mend(EntityUid user, Wire wire, StationAiWhitelistComponent component)
     {
-        return EntityManager.System<SharedStationAiSystem>()
+        return EntityManager.System<StationAiSystem>()
             .SetWhitelistEnabled((component.Owner, component), true);
     }
 

@@ -10,6 +10,7 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Polymorph;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -31,6 +32,8 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ISharedAdminManager _adminManager = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
+    [Dependency] private readonly StationAiVisionSystem _stationAiVisionSystem = default!;
 
     public override void Initialize()
     {
@@ -58,7 +61,9 @@ public sealed class FollowerSystem : EntitySystem
         var playerEnt = args.Player?.AttachedEntity;
 
         if (playerEnt == null ||
-            !ent.Comp.Following.Contains(playerEnt.Value) && !HasComp<GhostComponent>(playerEnt.Value))
+            !ent.Comp.Following.Contains(playerEnt.Value) && 
+            (!HasComp<GhostComponent>(playerEnt.Value) || !HasComp<StationAiCoreComponent>(playerEnt.Value))
+        )
         {
             args.Cancelled = true;
         }
@@ -90,10 +95,18 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
     {
+        bool isAI = HasComp<StationAiHeldComponent>(ev.User);
+        if (isAI)
+        {
+            // Because AI user is not an AI eye, should do separate check for eye to prevent self-following
+            if (_stationAiSystem.TryGetEye(ev.User, out var aiEye) && aiEye != null && aiEye.Value == ev.Target)
+                return;
+        }
+
         if (ev.User == ev.Target || IsClientSide(ev.Target))
             return;
 
-        if (HasComp<GhostComponent>(ev.User))
+        if (HasComp<GhostComponent>(ev.User) || isAI)
         {
             var verb = new AlternativeVerb()
             {
@@ -173,6 +186,16 @@ public sealed class FollowerSystem : EntitySystem
     /// <param name="entity">The entity to be followed</param>
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
+        bool excludeOrbiting = false;
+
+        // If the follower is AI and has eye, we set follower = eye
+        if (_stationAiSystem.TryGetEye(follower, out var eye) && eye != null)
+        {
+            follower = eye.Value;
+            // AI eye should not orbit around the followed entity, right?
+            excludeOrbiting = true; 
+        }
+
         // No recursion for you
         var targetXform = Transform(entity);
         while (targetXform.ParentUid.IsValid())
@@ -218,7 +241,10 @@ public sealed class FollowerSystem : EntitySystem
 
         _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
-        EnsureComp<OrbitVisualsComponent>(follower);
+        if (!excludeOrbiting)
+        {
+            EnsureComp<OrbitVisualsComponent>(follower);
+        }
 
         var followerEv = new StartedFollowingEntityEvent(entity, follower);
         var entityEv = new EntityStartedFollowingEvent(entity, follower);
@@ -235,6 +261,15 @@ public sealed class FollowerSystem : EntitySystem
     /// <param name="deparent">Should the entity deparent itself</param>
     public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true, bool removeComp = true)
     {
+        bool excludeOrbiting = false;
+
+        if (_stationAiSystem.TryGetEye(uid, out var eye) && eye != null)
+        {
+            uid = eye.Value;
+            // AI eye should not orbit around the followed entity, right?
+            excludeOrbiting = true; 
+        }
+
         if (!Resolve(target, ref followed, false))
             return;
 
@@ -248,7 +283,10 @@ public sealed class FollowerSystem : EntitySystem
         if (removeComp)
         {
             RemComp<FollowerComponent>(uid);
-            RemComp<OrbitVisualsComponent>(uid);
+            if (!excludeOrbiting)
+            {
+                RemComp<OrbitVisualsComponent>(uid);
+            }
         }
 
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
