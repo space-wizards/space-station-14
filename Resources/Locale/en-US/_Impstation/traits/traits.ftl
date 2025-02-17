@@ -47,5 +47,11 @@ trait-basicfrench-desc = You speak with the cadence of someone who has cast off 
 trait-basicrussian-name = Russian (Basic)
 trait-basicrussian-desc = You speak with a russian accent, with much less word replacements.
 
-trait-stiltedspeech-name = Stilted Speech
-trait-stiltedspeech-desc = You Speak With An Odd Formality To Your Tone.
+trait-stiltedspeech-name = Stilted speech
+trait-stiltedspeech-desc = You Speak Very Properly At All Times.
+
+trait-propercapitalization-name = Proper capitalization
+trait-propercapitalization-desc = You speak with proper capitalization, somehow. Whenever you end a sentence with punctuation, the following word always begins with a capital letter.
+
+trait-properpunctuation-name = Proper punctuation
+trait-properpunctuation-desc = Your sentences end with periods or other punctuation, always.

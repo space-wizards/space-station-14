@@ -19,7 +19,7 @@ public sealed class StiltedSpeechSystem : EntitySystem
     {
         var message = args.Message;
 
-        // Capitalize the first letter of each word
+        // Capitalize the first letter of every word
         message = RegexStartOfWord.Replace(message, match => match.Value.ToUpper());
 
         args.Message = message;
