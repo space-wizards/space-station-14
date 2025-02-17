@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Space wind has been disabled.
-    type: Remove
-  id: 648
-  time: '2024-12-04T13:20:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/899
 - author: DinnerCalzone
   changes:
   - message: The spray painter can now paint airlocks to use the new civilian door
@@ -4170,3 +4163,14 @@
   id: 1147
   time: '2025-02-17T04:22:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1715
+- author: nowaitstop
+  changes:
+  - message: BATTERY GRUMBA VAPES! pib cartridges..!
+    type: Add
+  - message: disposable vape bars! pib deni vape pens!
+    type: Add
+  - message: thusd vendor beeg new vapes! old vapes zazz GLURM!
+    type: Tweak
+  id: 1148
+  time: '2025-02-17T14:54:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1676
