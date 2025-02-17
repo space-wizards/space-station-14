@@ -1,3 +1,4 @@
+using Robust.Shared.Audio.Mixers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -31,6 +32,12 @@ public sealed partial class JukeboxComponent : Component
     /// </summary>
     [DataField]
     public string? SelectState;
+
+    /// <summary>
+    /// Audio mixer to play song with.
+    /// </summary>
+    [DataField]
+    public ProtoId<AudioMixerPrototype>? AudioMixer;
 
     [ViewVariables]
     public bool Selecting;
