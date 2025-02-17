@@ -1345,7 +1345,7 @@
         volume: -10
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   id: PonderingOrb
   name: pondering orb
   description: Ponderous, man... Really ponderous.
@@ -1365,7 +1365,7 @@
     modifier: 0.001
 
 - type: entity
-  parent: [ PonderingOrb, BaseMagicalContraband ]
+  parent: PonderingOrb
   id: PonderingOrbWizard
   name: pondering orb
   description: Ponderous, man... Really ponderous. Magically shows the station's camera network.
