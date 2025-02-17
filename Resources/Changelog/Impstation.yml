@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Adjusted player count range of a number of maps to better reflect what
-      they can accommodate.
-    type: Tweak
-  id: 657
-  time: '2024-12-05T06:10:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/911
 - author: honeyed-lemons
   changes:
   - message: Updated Hydroponics Jumpsuit, Jumpskirt, and backpack colors.
@@ -4156,3 +4148,12 @@
   id: 1156
   time: '2025-02-17T18:30:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1702
+- author: hivehum
+  changes:
+  - message: Added courier slots to Plasma, and a security cadet slot to Banana.
+    type: Add
+  - message: Removed Aspid, which you may not have been aware was even a map.
+    type: Remove
+  id: 1157
+  time: '2025-02-17T21:56:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1716
