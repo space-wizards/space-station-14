@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_amber.yml
         - type: StationJobs
-          availableJobs: # total of 51 jobs roundstart, max of 68 inc. latejoins and trainees.
+          availableJobs: # total of 52 jobs roundstart, max of 69 (nice) inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -48,7 +48,7 @@
             MedicalIntern: [ 1, 2 ]
             Paramedic: [ 2, 2 ]
             Psychologist: [ 1, 1 ]
-            # science - 6-8
+            # science - 7-9
             Borg: [ 2, 2 ]
             ResearchAssistant: [ 1, 2 ]
             Scientist: [ 4, 4 ]

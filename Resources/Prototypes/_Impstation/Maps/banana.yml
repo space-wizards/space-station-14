@@ -48,7 +48,8 @@
             Borg: [ 1, 1 ]
             ResearchAssistant: [ 1, 1 ]
             Scientist: [ 1, 1 ]
-            # security - 1
+            # security - 1-2
+            SecurityCadet: [ 1, 1 ]
             SecurityOfficer: [ 1, 1 ]
             # cargo - 3-4
             CargoTechnician: [ 1, 1 ]

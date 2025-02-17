@@ -40,27 +40,27 @@
             Musician: [ 1, 1 ]
             Reporter: [ 1, 1 ]
             ServiceWorker: [ 1, 1 ]
-            #engineering - 3-4
+            # engineering - 3-4
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 2, 2 ]
             TechnicalAssistant: [ 1, 1 ]
-            #medical - 5-6
+            # medical - 5-6
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 1, 1 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
-            #science - 4-5
+            # science - 4-5
             Borg: [ 2, 2 ]
             Scientist: [ 2, 2 ]
             ResearchAssistant: [ 1, 1 ]
-            #security - 3-4
+            # security - 3-4
             SecurityCadet: [ 1, 1 ]
             SecurityOfficer: [ 2, 2 ]
             Warden: [ 1, 1 ]
-            #supply - 5
+            # supply - 5
             CargoTechnician: [ 2, 2 ]
             Courier: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
-            #civilian
+            # civilian
             Passenger: [ -1, -1 ]

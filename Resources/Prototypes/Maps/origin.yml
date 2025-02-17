@@ -15,7 +15,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Impstation/Shuttles/emergency_courser_hummingbird.yml
         - type: StationJobs
-          availableJobs: # Total of 88 jobs roundstart, max of 106 inc. latejoins and trainees.
+          availableJobs: # Total of 87 jobs roundstart, max of 104 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -60,10 +60,10 @@
             SecurityCadet: [ 2, 4 ]
             SecurityOfficer: [ 7, 7 ]
             Warden: [ 1, 1 ]
-            # supply - 12-16
+            # supply - 11-14
             CargoTechnician: [ 5, 5 ]
             Courier: [ 3, 3 ] # imp
             SalvageSpecialist: [ 3, 3 ]
             SupplyAssistant: [ 3, 3 ] # imp
-            #civillian
+            # civilian
             Passenger: [ -1, -1 ]

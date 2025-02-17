@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/_Harmony/Shuttles/cargo_barratry.yml
         - type: StationJobs
-          availableJobs: # Total of 61 jobs roundstart, max of 81 inc. latejoins and trainees.
+          availableJobs: # Total of 62 jobs roundstart, max of 81 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -49,9 +49,9 @@
             MedicalDoctor: [ 4, 4 ]
             MedicalIntern: [ 2, 4 ]
             Paramedic: [ 1, 1 ]
-            # science - 6-11
+            # science - 7-11
             Borg: [ 1, 1 ]
-            ResearchAssistant: [2, 4]
+            ResearchAssistant: [ 2, 4]
             Scientist: [ 5, 5 ]
             StationAi: [ 1, 1 ]
             # security - 10-14
@@ -66,5 +66,5 @@
             Courier: [ 2, 2 ] # imp
             SalvageSpecialist: [ 3, 3 ]
             SupplyAssistant: [ 2, 2 ] # imp
-            #civilian
+            # civilian
             Passenger: [ -1, -1 ]

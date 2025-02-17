@@ -62,5 +62,5 @@
             Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 2, 2 ]
-            # civillian
+            # civilian
             Passenger: [ -1, -1 ]
