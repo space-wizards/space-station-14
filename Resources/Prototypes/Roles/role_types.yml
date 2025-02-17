@@ -35,3 +35,8 @@
   id: SiliconAntagonist
   name: role-type-silicon-antagonist-name
   color: '#c832e6'
+
+- type: roleType
+  id: SurvivorAntagonist
+  name: role-type-survivor-antagonist-name
+  color: '#d82000'
