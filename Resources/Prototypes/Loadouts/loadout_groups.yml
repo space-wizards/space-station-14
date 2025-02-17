@@ -78,6 +78,14 @@
   loadouts:
   - Glasses
   - GlassesCheapSunglasses
+  # imp edit start - its in the middle for alphabetizing reasons sorry
+  - GlassesColorfulPink
+  - GlassesColorfulRed
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPurple
+  - GlassesColorfulYellow
+  # imp edit end
   - GlassesJamjar
   - GlassesJensen
 
@@ -336,14 +344,6 @@
   - BartenderCuteApron
 
 - type: loadoutGroup
-  id: BartenderShoes
-  name: loadout-group-bartender-shoes
-  loadouts:
-  - BlackShoes
-  - LacedShoes
-  - ClownShoesExpert
-
-- type: loadoutGroup
   id: BartenderPDA
   name: loadout-group-bartender-id
   loadouts:
@@ -427,9 +427,10 @@
   id: LibrarianShoes
   name: loadout-group-librarian-shoes
   loadouts:
-  - LeatherShoes
-  - LacedShoes
   - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: LawyerJumpsuit
@@ -461,6 +462,7 @@
   loadouts:
   - LacedShoes
   - LeatherShoes
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -517,7 +519,9 @@
   loadouts:
   - BlackShoes
   - LacedShoes
-  - ClownShoesExpert
+  - LeatherShoes #imp
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: loadoutGroup
   id: JanitorHead
@@ -808,8 +812,9 @@
   id: MusicianShoes
   name: loadout-group-musician-shoes
   loadouts:
-  - LacedShoes
   - BlackShoes
+  - LacedShoes
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: Instruments
@@ -882,6 +887,7 @@
   minLimit: 0
   loadouts:
   - QuartermasterWintercoat
+  - QuartermasterWintercoatXXXL #imp
 
 - type: loadoutGroup
   id: QuartermasterShoes
@@ -955,7 +961,7 @@
   minLimit: 0
   loadouts:
   - MinerCloak
-  - DrillerCape
+  - DrillerCape # imp
   - SaMantle
   - ScarfBrown
 
@@ -974,12 +980,20 @@
   loadouts:
   - Glasses
   - GlassesCheapSunglasses
-  - GlassesJamjar
-  - GlassesJensen
+  # imp edit start - in the middle for alphabetizing purposes
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPink
+  - GlassesColorfulPurple
+  - GlassesColorfulRed
+  - GlassesColorfulYellow
+  - GlassesGarBlack
   - GlassesGarGreen
   - GlassesGarOrange
   - GlassesGarRed
-  - GlassesGarBlack
+  # imp edit end
+  - GlassesJamjar
+  - GlassesJensen
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing
@@ -1216,8 +1230,10 @@
   name: loadout-group-research-director-shoes
   loadouts:
   - BrownShoes
-  - LeatherShoes
   - WhiteShoes
+  - LacedShoes #imp
+  - LeatherShoes
+  - WhiteDressShoes #imp
   - ScienceWinterBoots
   - RoboticistWinterBoots
 
@@ -1906,8 +1922,10 @@
   name: loadout-group-reporter-shoes
   loadouts:
   - WhiteShoes
+  - LacedShoes #imp
   - LeatherShoes
-  - ClownShoesExpert
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: loadoutGroup
   id: PsychologistJumpsuit
@@ -1927,10 +1945,12 @@
   id: PsychologistShoes
   name: loadout-group-psychologist-shoes
   loadouts:
-  - LeatherShoes
   - BlackShoes
   - WhiteShoes
-  - ClownShoesExpert # imp
+  - LacedShoes #imp
+  - LeatherShoes
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: loadoutGroup
   id: BoxerJumpsuit

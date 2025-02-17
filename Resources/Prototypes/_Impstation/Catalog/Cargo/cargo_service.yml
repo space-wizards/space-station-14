@@ -19,6 +19,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceBarKit
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: service
+  product: CrateServiceMaintBarKit
+  cost: 3000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   name: romantic crate
   id: CrateValentines
   icon:

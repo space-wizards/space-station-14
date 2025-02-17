@@ -31,4 +31,22 @@ public sealed partial class MailTeleporterComponent : Component
     /// </summary>
     [DataField]
     public string MailPool = "RandomDeltaVMailDeliveryPool"; // Frontier / DeltaV: Mail rework
+
+    /// <summary>
+    /// Imp. Whether or not the telepad should output a message upon recieving mail.
+    /// </summary>
+    [DataField]
+    public bool RadioNotification = false;
+    [DataField]
+    public LocId ShipmentRecievedMessage = "mail-recieved-message";
+    [DataField]
+    public string RadioChannel = "Supply";
+
+    [DataField]
+    public TimeSpan MaxInterval = TimeSpan.FromMinutes(7);
+    [DataField]
+    public TimeSpan MinInterval = TimeSpan.FromMinutes(3);
+    [DataField]
+    public TimeSpan AverageInterval = TimeSpan.FromMinutes(5);
+    public TimeSpan NextDelivery = TimeSpan.Zero;
 }

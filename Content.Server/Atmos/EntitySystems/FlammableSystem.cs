@@ -333,6 +333,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (flammable.ToggleAmbientSound && TryComp<AmbientSoundComponent>(uid, out var ambient))
                 _ambient.SetAmbience(uid, false, ambient);
 
+
             UpdateAppearance(uid, flammable);
         }
 
@@ -491,3 +492,5 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 }
+
+

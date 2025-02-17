@@ -226,9 +226,9 @@
   description: Magic is all about the spell power, ZE!
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Suits/witchrobe.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Suits/witchrobe.rsi
 
 - type: entity
   parent: ClothingOuterBase

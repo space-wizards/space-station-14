@@ -50,6 +50,11 @@
   equipment:
     shoes: ClothingShoesHeelsCommandBlue
 
+- type: loadout
+  id: WhiteDressShoes
+  equipment:
+    shoes: ClothingShoesDameDane
+
 # Headset
 - type: loadout
   id: CommandVeteranHeadset

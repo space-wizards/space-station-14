@@ -1,6 +1,8 @@
 using Content.Shared.Guidebook;
+using Content.Shared.Players.PlayTimeTracking; // imp
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype; // imp. iirc this is outdated but i dont care
 
 namespace Content.Shared.Roles;
 
@@ -11,6 +13,9 @@ namespace Content.Shared.Roles;
 [Serializable, NetSerializable]
 public sealed partial class AntagPrototype : IPrototype
 {
+    [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
+    public string PlayTimeTracker { get; private set; } = string.Empty; // imp
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;

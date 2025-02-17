@@ -4,6 +4,7 @@
   id: FishingRodBase
   components:
     - type: FishingRod #The component that handles all the joint stuff
+      ropeSprite: _Impstation/Objects/Fishing/fishingrod.rsi/rope.png
     - type: Gun #The component that handles the firing
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5

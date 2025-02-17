@@ -2,6 +2,7 @@
   id: Fugitive
   name: roles-antag-fugitive-name
   antagonist: true
+  playTimeTracker: AntagFugitive
   objective: roles-antag-fugitive-objective
   # keep these in sync with the spawner
   requirements:

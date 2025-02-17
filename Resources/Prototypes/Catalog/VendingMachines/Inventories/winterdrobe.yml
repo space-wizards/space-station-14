@@ -1,17 +1,37 @@
 - type: vendingMachineInventory
   id: WinterDrobeInventory
   startingInventory:
-    ClothingNeckScarfStripedRed: 3
-    ClothingNeckScarfStripedGreen: 3
-    ClothingNeckScarfStripedBlue: 3
     ClothingNeckScarfStripedBlack: 3
     ClothingNeckScarfStripedBrown: 3
-    ClothingNeckScarfStripedLightBlue: 3
+    ClothingNeckScarfStripedRed: 3
     ClothingNeckScarfStripedOrange: 3
+    ClothingNeckScarfStripedGreen: 3
+    ClothingNeckScarfStripedLightBlue: 3
+    ClothingNeckScarfStripedBlue: 3
     ClothingNeckScarfStripedPurple: 3
     ClothingOuterCoatTrench: 6
-    ClothingOuterWinterCoat: 6
-    ClothingShoesBootsWinter: 6
+    ClothingOuterWinterColorBlack: 3 #imp
+    ClothingOuterWinterColorGray: 3 #imp
+    ClothingOuterWinterColorWhite: 3 #imp
+    ClothingOuterWinterColorLightBrown: 3 #imp
+    ClothingOuterWinterColorBrown: 3 #imp
+    ClothingOuterWinterColorRed: 3 #imp
+    ClothingOuterWinterColorOrange: 3 #imp
+    ClothingOuterWinterColorYellow: 3 #imp
+    ClothingOuterWinterColorGreen: 3 #imp
+    ClothingOuterWinterColorBlue: 3 #imp
+    ClothingOuterWinterColorPurple: 3 #imp
+    ClothingShoesBootsWinterColorBlack: 3 #imp
+    ClothingShoesBootsWinterColorGray: 3 #imp
+    ClothingShoesBootsWinterColorWhite: 3 #imp
+    ClothingShoesBootsWinterColorLightBrown: 3 #imp
+    ClothingShoesBootsWinterColorBrown: 3 #imp
+    ClothingShoesBootsWinterColorRed: 3 #imp
+    ClothingShoesBootsWinterColorOrange: 3 #imp
+    ClothingShoesBootsWinterColorYellow: 3 #imp
+    ClothingShoesBootsWinterColorGreen: 3 #imp
+    ClothingShoesBootsWinterColorBlue: 3 #imp
+    ClothingShoesBootsWinterColorPurple: 3 #imp
     ClothingOuterFlannelRed: 2
     ClothingOuterFlannelBlue: 2
     ClothingOuterFlannelGreen: 2
@@ -19,7 +39,14 @@
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
 
+  contrabandInventory:
+    DrinkMilkCarton: 1
+    FoodBakedCookieSugar: 3
+
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 3
     ClothingNeckScarfStripedSyndieRed: 3
+    ClothingOuterWinterSyndieCap: 3
+    ClothingOuterWinterSyndie: 3
     ClothingNeckScarfStripedCentcom: 3
+    ClothingOuterWinterCentcom: 3
