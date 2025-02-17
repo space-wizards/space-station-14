@@ -394,7 +394,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
 
-        //Utilize the defaults from their relevant systems... this sucks, and is a bandaid
+        // Utilize the defaults from their relevant systems... this sucks, and is a bandaid
         var launchForwardsMultiplier = SlipperyComponent.DefaultLaunchForwardsMultiplier;
         var paralyzeTime = SlipperyComponent.DefaultParalyzeTime;
         var requiredSlipSpeed = StepTriggerComponent.DefaultRequiredTriggeredSpeed;
