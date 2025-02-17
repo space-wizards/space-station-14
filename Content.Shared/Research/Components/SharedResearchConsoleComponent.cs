@@ -24,9 +24,8 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class ResearchConsoleBoundInterfaceState(int points, int rediscoverCost) : BoundUserInterfaceState
+    public sealed class ResearchConsoleBoundInterfaceState(int points) : BoundUserInterfaceState
     {
         public int Points = points;
-        public int RediscoverCost = rediscoverCost;
     }
 }

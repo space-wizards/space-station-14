@@ -10,21 +10,21 @@ public sealed partial class ResearchServerComponent : Component
     /// The name of the server
     /// </summary>
     [AutoNetworkedField]
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string ServerName = "RDSERVER";
 
     /// <summary>
     /// The amount of points on the server.
     /// </summary>
     [AutoNetworkedField]
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Points;
 
     /// <summary>
     /// Cost of technology research options reroll.
     /// </summary>
     [AutoNetworkedField]
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int RediscoverCost = 2000;
 
     /// <summary>
@@ -46,24 +46,19 @@ public sealed partial class ResearchServerComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdateTime = TimeSpan.Zero;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
 }
 
 /// <summary>
 /// Event raised on a server's clients when the point value of the server is changed.
 /// </summary>
-/// <param name="Server"></param>
-/// <param name="Total"></param>
-/// <param name="Delta"></param>
 [ByRefEvent]
 public readonly record struct ResearchServerPointsChangedEvent(EntityUid Server, int Total, int Delta);
 
 /// <summary>
 /// Event raised every second to calculate the amount of points added to the server.
 /// </summary>
-/// <param name="Server"></param>
-/// <param name="Points"></param>
 [ByRefEvent]
 public record struct ResearchServerGetPointsPerSecondEvent(EntityUid Server, int Points);
 

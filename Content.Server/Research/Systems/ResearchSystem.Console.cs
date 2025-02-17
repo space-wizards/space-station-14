@@ -103,17 +103,15 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref component, ref clientComponent, false))
             return;
 
-        ResearchConsoleBoundInterfaceState state;
-
+        
+        var points = 0;
         if (TryGetClientServer(uid, out _, out var serverComponent, clientComponent))
         {
-            var points = clientComponent.ConnectedToServer ? serverComponent.Points : 0;
-            state = new ResearchConsoleBoundInterfaceState(points, serverComponent.RediscoverCost);
+            points = clientComponent.ConnectedToServer
+                ? serverComponent.Points
+                : 0;
         }
-        else
-        {
-            state = new ResearchConsoleBoundInterfaceState(default, default);
-        }
+        var state = new ResearchConsoleBoundInterfaceState(points);
 
         _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);
     }
