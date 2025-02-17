@@ -205,7 +205,7 @@ namespace Content.Client.Construction
             ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
-            EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
+            _transformSystem.SetLocalRotationNoLerp(ghost.Value, dir.ToAngle());
             _ghosts.Add(ghost.GetHashCode(), ghost.Value);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
