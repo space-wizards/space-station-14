@@ -18,6 +18,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.Interaction;
@@ -57,6 +58,7 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _link = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -101,6 +103,10 @@ public sealed partial class SupermatterSystem : EntitySystem
         var mix = _atmosphere.GetContainingMixture(uid, true, true);
         mix?.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard - mix.GetMoles(Gas.Oxygen));
         mix?.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard - mix.GetMoles(Gas.Nitrogen));
+
+        // Send the inactive port for any linked devices
+        if (HasComp<DeviceLinkSourceComponent>(uid))
+            _link.InvokePort(uid, sm.PortInactive);
     }
 
     public void OnSupermatterUpdated(EntityUid uid, SupermatterComponent sm, AtmosDeviceUpdateEvent args)
@@ -170,10 +176,10 @@ public sealed partial class SupermatterSystem : EntitySystem
         var item = args.Used;
         var othersFilter = Filter.Pvs(uid).RemovePlayerByAttachedEntity(target);
 
-        if (args.Handled)
-            return;
-
-        if (HasComp<SupermatterImmuneComponent>(item) || HasComp<GodmodeComponent>(item))
+        if (args.Handled ||
+            HasComp<GhostComponent>(target) ||
+            HasComp<SupermatterImmuneComponent>(item) ||
+            HasComp<GodmodeComponent>(item))
             return;
 
         // TODO: supermatter scalpel

@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: The "No Accent" trait, which removes _all_ accents from your character
-    type: Add
-  - message: The "Accentless" trait is now called "No Species Accent" for clarity
-    type: Tweak
-  - message: The patronizing forced accents on various hats, masks, and coats are
-      now removed
-    type: Remove
-  id: 642
-  time: '2024-12-03T16:46:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/882
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: A fun toy that can be found in a grand lottery crate.
-    type: Add
-  - message: A Very Fun Toy that admins can play with and if you are astronomically
-      lucky can find in a grand lottery crate.
-    type: Add
-  id: 643
-  time: '2024-12-03T16:53:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/847
-- author: suyo
-  changes:
-  - message: Added a spare expedition console board to the QM's locker. If they both
-      get stolen then... good luck!
-    type: Add
-  id: 644
-  time: '2024-12-04T02:59:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/890
-- author: Pinkbat5
-  changes:
-  - message: Fixed some duplicate and missing items in the Head of Security loadout.
-    type: Fix
-  id: 645
-  time: '2024-12-04T13:18:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/892
-- author: starlighthowls
-  changes:
-  - message: changed and fixed lots of whale map things!
-    type: Tweak
-  id: 646
-  time: '2024-12-04T13:17:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/891
-- author: Darkmajia
-  changes:
-  - message: Impstation changelogs now let you know when they've been updated - just
-      like this one!
-    type: Add
-  id: 647
-  time: '2024-12-04T13:19:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/897
 - author: Darkmajia
   changes:
   - message: Space wind has been disabled.
@@ -4173,3 +4121,52 @@
   id: 1141
   time: '2025-02-16T12:31:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1690
+- author: DinnerCalzone
+  changes:
+  - message: Brigmedic support has been added to Plasma Station.
+    type: Add
+  id: 1142
+  time: '2025-02-16T23:18:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1709
+- author: LandsharkRAWR
+  changes:
+  - message: Changed Witch Robe and Witch Hat to a new design and sprite.
+    type: Tweak
+  id: 1143
+  time: '2025-02-17T01:19:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1660
+- author: AvianMaiden
+  changes:
+  - message: Replacement lines for a few vendors pertaining to Security, removing
+      too on-the-nose references to real life while keeping tone.
+    type: Add
+  id: 1144
+  time: '2025-02-17T01:22:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1689
+- author: FlippenPage
+  changes:
+  - message: Fixed wooden tables not counting for the Heretic Armorer Ritual
+    type: Fix
+  id: 1145
+  time: '2025-02-17T01:25:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1707
+- author: Sha-Seng
+  changes:
+  - message: More shoes for RD, AA, bartender, psychologist, reporter, chaplain, lawyer,
+      librarian, and musician
+    type: Add
+  - message: Admin assistant can select the nightclub suits now
+    type: Add
+  - message: Admin assistant doesn't have to select outerwear anymore
+    type: Tweak
+  id: 1146
+  time: '2025-02-17T01:45:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1683
+- author: widgetbeck
+  changes:
+  - message: NT's mail telepads no longer exponentially increase the time between
+      deliveries.
+    type: Fix
+  id: 1147
+  time: '2025-02-17T04:22:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1715

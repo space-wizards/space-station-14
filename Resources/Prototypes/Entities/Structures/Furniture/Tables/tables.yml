@@ -250,6 +250,9 @@
       types:
         Blunt: 8
     bonkTime: 3
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableGlass
@@ -304,6 +307,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableReinforcedGlass
@@ -361,6 +367,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TablePlasmaGlass
@@ -418,6 +427,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableBrass
@@ -461,6 +473,9 @@
   - type: Construction
     graph: Table
     node: TableBrass
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableWood
@@ -506,6 +521,7 @@
     node: TableWood
   - type: Tag
     tags:
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -549,6 +565,7 @@
     node: TableCarpet
   - type: Tag
     tags:
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -580,6 +597,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableWeb
@@ -614,6 +634,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCarpet
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 # Fancy tables
 
@@ -649,6 +672,7 @@
     key: fancytable
   - type: Tag
     tags:
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -668,6 +692,9 @@
     node: TableFancyBlue
   - type: IconSmooth
     key: fancytableblue
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyCyan
@@ -683,6 +710,9 @@
     node: TableFancyCyan
   - type: IconSmooth
     key: fancytablecyan
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyBlack
@@ -698,6 +728,9 @@
     node: TableFancyBlack
   - type: IconSmooth
     key: fancytableblack
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyRed
@@ -713,6 +746,9 @@
     node: TableFancyRed
   - type: IconSmooth
     key: fancytablered
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyPurple
@@ -728,6 +764,9 @@
     node: TableFancyPurple
   - type: IconSmooth
     key: fancytablepurple
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyPink
@@ -743,6 +782,9 @@
     node: TableFancyPink
   - type: IconSmooth
     key: fancytablepink
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyGreen
@@ -758,6 +800,9 @@
     node: TableFancyGreen
   - type: IconSmooth
     key: fancytablegreen
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyOrange
@@ -773,6 +818,9 @@
     node: TableFancyOrange
   - type: IconSmooth
     key: fancytableorange
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyWhite
@@ -788,6 +836,9 @@
     node: TableFancyWhite
   - type: IconSmooth
     key: fancytablewhite
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 #Debug
 
@@ -800,6 +851,7 @@
   components:
   - type: Tag
     tags:
+      - Table # imp edit
       - Debug
   - type: Sprite
     sprite: Structures/Furniture/Tables/debug.rsi
