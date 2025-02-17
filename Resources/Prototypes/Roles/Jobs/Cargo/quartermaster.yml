@@ -40,7 +40,7 @@
   id: QuartermasterGear
   equipment:
     id: QuartermasterPDA
-    ears: ClothingHeadsetQM
+    ears: ClothingHeadsetAltCargo
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
   storage:
