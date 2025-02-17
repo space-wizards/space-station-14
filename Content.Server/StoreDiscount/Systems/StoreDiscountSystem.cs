@@ -36,13 +36,10 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// </summary>
     private void OnStoreStartup(Entity<StoreComponent> entity, ref StoreAddedEvent args)
     {
-        if (!TryComp<StoreComponent>(entity, out var storeComponent))
-            return;
-
         if (!TryComp<StoreDiscountComponent>(entity, out var discountComponent))
             return;
 
-        ActivateDiscounts(storeComponent, discountComponent);
+        ActivateDiscounts(entity, discountComponent);
     }
 
     /// <summary>
@@ -53,13 +50,10 @@ public sealed class StoreDiscountSystem : EntitySystem
         if (!TryComp<StoreComponent>(entity, out var storeComponent))
             return;
 
-        if (!TryComp<StoreDiscountComponent>(entity, out var discountComponent))
-            return;
-
         // should only happen once if this components startup event fires but has not yet been initialized
-        if (discountComponent.Discounts.Count == 0 && discountComponent.TotalDiscounts > 0)
+        if (entity.Comp.Discounts.Count == 0 && entity.Comp.TotalDiscounts > 0)
         {
-            ActivateDiscounts(storeComponent, discountComponent);
+            ActivateDiscounts(storeComponent, entity);
         }
     }
 
