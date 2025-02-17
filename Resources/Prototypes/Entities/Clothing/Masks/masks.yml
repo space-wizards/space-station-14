@@ -15,6 +15,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - CorgiWearable
   - type: HideLayerClothing
     slots:
     - Snout
@@ -39,6 +40,9 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -74,6 +78,9 @@
     modifiers:
       coefficients:
         Heat: 0.80
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: [ClothingMaskGasAtmos, BaseCommandContraband]
@@ -87,6 +94,9 @@
     sprite: Clothing/Mask/gascaptain.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: [ ClothingMaskGasAtmos, BaseCentcommContraband ]
@@ -100,6 +110,9 @@
     sprite: Clothing/Mask/gascentcom.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: [ClothingMaskGas, BaseCargoContraband]
@@ -118,6 +131,9 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -200,6 +216,7 @@
     tags:
     - ClownMask
     - WhitelistChameleon
+    - CorgiWearable
   - type: HideLayerClothing
     slots:
     - Snout
@@ -213,6 +230,7 @@
     - ClownMask
     - HamsterWearable
     - WhitelistChameleon
+    - CorgiWearable
   - type: HideLayerClothing
     slots:
     - Snout
@@ -341,6 +359,9 @@
     slots:
     - Snout
     hideOnToggle: true
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingMaskClownBase
@@ -370,6 +391,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - CorgiWearable
   - type: HideLayerClothing
     slots:
     - Hair
@@ -414,6 +436,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - CorgiWearable
   - type: HideLayerClothing
     slots:
     - Hair
@@ -621,6 +644,9 @@
     sprite: Clothing/Mask/sadmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/sadmime.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingMaskMime
@@ -632,6 +658,9 @@
     sprite: Clothing/Mask/scaredmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/scaredmime.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingMaskBase
