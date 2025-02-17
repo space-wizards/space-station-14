@@ -939,6 +939,7 @@
   minLimit: 0
   loadouts:
   - CargoTechnicianWintercoat
+  - ClothingOuterCoatCargoBomber
 
 - type: loadoutGroup
   id: CargoTechnicianShoes
@@ -1001,6 +1002,7 @@
   minLimit: 0
   loadouts:
   - SalvageSpecialistWintercoat
+  - ClothingOuterCoatCargoBomber
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes
@@ -1115,6 +1117,7 @@
   loadouts:
   - StationEngineerOuterVest
   - StationEngineerWintercoat
+  - ClothingOuterCoatEngineerBomber
 
 - type: loadoutGroup
   id: StationEngineerShoes
@@ -1152,6 +1155,7 @@
   minLimit: 0
   loadouts:
   - AtmosphericTechnicianWintercoat
+  - ClothingOuterCoatEngineerBomber
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack
@@ -1421,7 +1425,7 @@
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
   - WardenWinterCoatUnarmored
-  - ClothingOuterCoatFieldBomber #imp
+  - BomberSecurity #imp
 
 - type: loadoutGroup
   id: WardenPDA
@@ -1490,7 +1494,7 @@
   - ArmorVestSlim
   - ArmorVestCompact #imp
   - SecurityOfficerWintercoat
-  - ClothingOuterCoatFieldBomber #imp
+  - BomberSecurity #imp
 
 - type: loadoutGroup
   id: SecurityShoes

@@ -471,14 +471,14 @@
 
 - type: entity
   parent: ClothingOuterArmorBasic
-  id: ClothingOuterCoatFieldBomber
+  id: ClothingOuterCoatBomberSecurity
   name: field bomber
   description: A red bomber jacket, worn open with the sleeves pushed up. The Nanotrasen logo on the front and the shield on the back are sewn with special high-vis thread.
   components:
   - type: Sprite
-    sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_sec.rsi
   - type: Clothing
-    sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi #imp
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_sec.rsi
 
 - type: entity
   parent: ClothingOuterCoatDetective
@@ -487,6 +487,6 @@
   description: A soft black suit jacket with loose cuffs. The white logos mark the wearer as Nanotrasen security.
   components:
   - type: Sprite
-    sprite: _NF/Clothing/OuterClothing/Coats/field_jacket.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi
   - type: Clothing
-    sprite: _NF/Clothing/OuterClothing/Coats/field_jacket.rsi #imp
+    sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi

@@ -391,6 +391,7 @@
   minLimit: 0
   loadouts:
   - CourierWintercoat
+  - ClothingOuterCoatCargoBomber
 
 - type: loadoutGroup
   id: CourierShoes
