@@ -15,7 +15,7 @@ public sealed partial class HotbarGui : UIWidget
         StatusPanelLeft.SetSide(HandUILocation.Left);
         var hotbarController = UserInterfaceManager.GetUIController<HotbarUIController>();
 
-        hotbarController.Setup(HandContainer, StoragePanel);
+        hotbarController.Setup(HandContainer);
         LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.Begin);
     }
 
