@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: BackeTako
   changes:
-  - message: Gay Pin
-    type: Add
-  id: 7466
-  time: '2024-10-01T21:07:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32584
-- author: BackeTako
-  changes:
   - message: Reinforced walls sprite see throu top
     type: Fix
   id: 7467
@@ -3899,3 +3892,10 @@
   id: 7965
   time: '2025-02-16T22:30:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34945
+- author: psykana
+  changes:
+  - message: DNA Scrambler implant now requires confirmation to activate
+    type: Add
+  id: 7966
+  time: '2025-02-17T06:16:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35232
