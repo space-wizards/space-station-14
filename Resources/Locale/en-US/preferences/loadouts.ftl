@@ -1,5 +1,6 @@
 # Name
-loadout-name-edit-label = Custom name
+loadout-name-edit-label = Sets a custom name to be used if you play this role. If empty, your character's name will be used instead.
+loadout-name-edit-label-dataset = Sets a custom name to be used if you play this role. If empty, a random name will be selected instead.
 loadout-name-edit-tooltip = {$max} characters max. If no name is specified a random one may be chosen for you.
 
 # Restrictions
