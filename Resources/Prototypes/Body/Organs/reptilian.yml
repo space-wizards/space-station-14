@@ -12,6 +12,7 @@
       - Pill
       - Crayon
       - Paper
+      - Omnivorous
   - type: SolutionContainerManager
     solutions:
       stomach:
