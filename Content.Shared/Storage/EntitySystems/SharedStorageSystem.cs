@@ -318,11 +318,33 @@ public abstract class SharedStorageSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    public void OpenStorageUI(EntityUid uid, EntityUid actor, StorageComponent? storageComp = null, bool silent = true)
+    {
+        // Handle recursively opening nested storages.
+        if (ContainerSystem.TryGetContainingContainer(uid, out var container) &&
+            UI.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, actor))
+        {
+            _nestedCheck = true;
+            HideStorageWindow(container.Owner, actor);
+            OpenStorageUIInternal(uid, actor, storageComp, silent: true);
+            _nestedCheck = false;
+        }
+        else
+        {
+            // If you need something more sophisticated for multi-UI you'll need to code some smarter
+            // interactions.
+            if (_openStorageLimit == 1)
+                UI.CloseUserUis<StorageComponent.StorageUiKey>(actor);
+
+            OpenStorageUIInternal(uid, actor, storageComp, silent: silent);
+        }
+    }
+
     /// <summary>
     ///     Opens the storage UI for an entity
     /// </summary>
     /// <param name="entity">The entity to open the UI for</param>
-    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = true)
+    private void OpenStorageUIInternal(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = true)
     {
         if (!Resolve(uid, ref storageComp, false))
             return;
@@ -407,24 +429,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            // Handle recursively opening nested storages.
-            if (ContainerSystem.TryGetContainingContainer((args.Target, null, null), out var container) &&
-                UI.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, args.User))
-            {
-                _nestedCheck = true;
-                HideStorageWindow(container.Owner, args.User);
-                OpenStorageUI(uid, args.User, storageComp, silent: true);
-                _nestedCheck = false;
-            }
-            else
-            {
-                // If you need something more sophisticated for multi-UI you'll need to code some smarter
-                // interactions.
-                if (_openStorageLimit == 1)
-                    UI.CloseUserUis<StorageComponent.StorageUiKey>(args.User);
-
-                OpenStorageUI(uid, args.User, storageComp, silent: false);
-            }
+            OpenStorageUI(uid, args.User, storageComp);
         }
 
         args.Handled = true;
