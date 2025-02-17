@@ -269,6 +269,29 @@
       mindRoles:
       - MindRoleInitialInfected
 
+- type: entity
+  parent: Thief
+  id: OopsAllThieves
+  components:
+  - type: GameRule
+    minPlayers: 30
+  - type: AntagSelection
+    agentName: thief-round-end-agent-name
+    definitions:
+    - prefRoles: [ Thief ]
+      max: 10
+      playerRatio: 10
+      lateJoinAdditional: true
+      allowNonHumans: true
+      multiAntagSetting: NotExclusive
+      startingGear: ThiefGear
+      components:
+      - type: Pacified
+      mindRoles:
+      - MindRoleThief
+      briefing:
+        sound: "/Audio/Misc/thief_greeting.ogg"
+
 # event schedulers
 
 - type: entityTable
