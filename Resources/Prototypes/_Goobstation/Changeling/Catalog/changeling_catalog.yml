@@ -15,20 +15,6 @@
     stock: 1
 
 - type: listing
-  id: EvolutionMenuCombatTentacle
-  name: evolutionmenu-combat-Tentacle-name
-  description: evolutionmenu-combat-tentacle-desc
-  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: tentacle }
-  productAction: ActionToggleTentacle
-  cost:
-    EvolutionPoint: 1
-  categories:
-  - ChangelingAbilityCombat
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-
-- type: listing
   id: EvolutionMenuCombatBoneShard
   name: evolutionmenu-combat-boneshard-name
   description: evolutionmenu-combat-boneshard-desc
@@ -347,6 +333,20 @@
   description: evolutionmenu-utility-mindshield-desc
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: mindshield }
   productAction: ActionToggleMindshieldFake
+  cost:
+    EvolutionPoint: 1
+  categories:
+  - ChangelingAbilityUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: EvolutionMenuCombatTentacle
+  name: evolutionmenu-combat-Tentacle-name
+  description: evolutionmenu-combat-tentacle-desc
+  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: tentacle }
+  productAction: ActionToggleTentacle
   cost:
     EvolutionPoint: 1
   categories:

@@ -54,9 +54,9 @@
   parent: [FishingRodBase,TierXContraband]
   id: FishingRodLing
   suffix: Unremoveable
-  description: GET OVER HERE!!!!.
+  description: GET OVER HERE!!! # dont remove this :) [you can]
   components:
-    #- type: fixture
+    #- type: fixture im leaving this here since if possible replace this with a way to make the changeling NOT MOVE WHEN REELING!!!
     #  friction: 20
     - type: Item
       size: Ginormous
@@ -68,13 +68,13 @@
       soundGunshot: /Audio/Effects/demon_attack1.ogg #scorpion-get_over_here.ogg
     - type: RechargeBasicEntityAmmo
       rechargeCooldown: 7.5
-      rechargeSound: /Audio/Effects/Fluids/glug.ogg
+      rechargeSound: /Audio/Effects/Fluids/blood1.ogg
     - type: BasicEntityAmmoProvider #The component that handles whats being fired
       proto: FishingHookLing
       capacity: 1
       count: 1
     - type: UseDelay #The component that prevents the server from being spammed too much
-      delay: 5
+      delay: 3.5
     - type: Appearance #The component that gives the item a visual
       appearance: _Impstation/Objects/Fishing/fishingrod_Ling.rsi
     - type: Sprite #The component that contains the visual itself

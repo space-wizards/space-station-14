@@ -216,7 +216,7 @@ public abstract class SharedFishingRodSystem : EntitySystem
         var joint = _joints.CreateDistanceJoint(args.Weapon, args.Embedded, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
-        joint.MinLength = 2f;
+        joint.MinLength = component.JointLength;
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
         Dirty(args.Weapon, jointComp);

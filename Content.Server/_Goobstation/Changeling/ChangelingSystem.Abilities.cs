@@ -21,7 +21,6 @@ using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared._Impstation.Fishing;
 using Content.Shared.Mindshield.Components;
 
 
@@ -45,7 +44,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ExitStasisEvent>(OnExitStasis);
 
         SubscribeLocalEvent<ChangelingComponent, ToggleArmbladeEvent>(OnToggleArmblade);
-        SubscribeLocalEvent<ChangelingComponent, ToggleTentacleEvent>(OnToggleTentacle);
         SubscribeLocalEvent<ChangelingComponent, CreateBoneShardEvent>(OnCreateBoneShard);
         SubscribeLocalEvent<ChangelingComponent, ToggleChitinousArmorEvent>(OnToggleArmor);
         SubscribeLocalEvent<ChangelingComponent, ToggleOrganicShieldEvent>(OnToggleShield);
@@ -70,6 +68,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionLastResortEvent>(OnLastResort);
         SubscribeLocalEvent<ChangelingComponent, ActionLesserFormEvent>(OnLesserForm);
         SubscribeLocalEvent<ChangelingComponent, ActionMindshieldFakeEvent>(OnMindshieldFake);
+        SubscribeLocalEvent<ChangelingComponent, ToggleTentacleEvent>(OnToggleTentacle);
         SubscribeLocalEvent<ChangelingComponent, ActionSpacesuitEvent>(OnSpacesuit);
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
     }
@@ -319,16 +318,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         if (!TryToggleItem(uid, ArmbladePrototype, comp))
-            return;
-
-        PlayMeatySound(uid, comp);
-    }
-    private void OnToggleTentacle(EntityUid uid, ChangelingComponent comp, ref ToggleTentacleEvent args)
-    {
-        if (!TryUseAbility(uid, comp, args))
-            return;
-
-        if (!TryToggleItem(uid, TentaclePrototype, comp))
             return;
 
         PlayMeatySound(uid, comp);
@@ -736,7 +725,16 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("changeling-mindshield-start"), ent, ent);
     }
+    private void OnToggleTentacle(EntityUid uid, ChangelingComponent comp, ref ToggleTentacleEvent args) //imp edit
+    {
+        if (!TryUseAbility(uid, comp, args))
+            return;
 
+        if (!TryToggleItem(uid, TentaclePrototype, comp))
+            return;
+
+        PlayMeatySound(uid, comp);
+    }
     public void OnSpacesuit(EntityUid uid, ChangelingComponent comp, ref ActionSpacesuitEvent args)
     {
         if (!TryUseAbility(uid, comp, args))

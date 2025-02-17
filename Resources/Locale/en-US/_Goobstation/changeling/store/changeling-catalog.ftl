@@ -5,11 +5,6 @@ evolutionmenu-combat-armblade-desc =
     We shape one of our arms into a grotesque blade, capable of prying open airlocks and maiming our enemies. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
-evolutionmenu-combat-Tentacle-name = Flesh Tentacle
-evolutionmenu-combat-tentacle-desc =
-    We shape one of our arms into a grotesque Fishing Rod, capable of grabbing our enemies from afar to brings us together. Cannot be used in our lesser form.
-    Costs a small amount of chemicals.
-
 evolutionmenu-combat-boneshard-name = Bone Shard
 evolutionmenu-combat-boneshard-desc =
     We break off shards of sharp bone to use as projectiles. Cannot be used in our lesser form.
@@ -128,6 +123,12 @@ evolutionmenu-utility-mindshield-name = Mindshield Patterns
 evolutionmenu-utility-mindshield-desc =
     We shape our mental patterns to imitate a mindshield implantation.
     Costs no chemicals.
+
+evolutionmenu-combat-Tentacle-name = Flesh Tentacle
+evolutionmenu-combat-tentacle-desc =
+    We shape one of our arms into a grotesque Fishing Rod, capable of grabbing our enemies or bodies from afar to brings us together. Cannot be used in our lesser form.
+    WARNING: Requires you to absorb at least 1 organic to use the ability.
+    Costs a small amount of chemicals.
 
 evolutionmenu-utility-spacesuit-name = Space Adaptation
 evolutionmenu-utility-spacesuit-desc =
