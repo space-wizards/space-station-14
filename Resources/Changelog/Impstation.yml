@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: changed and fixed lots of whale map things!
-    type: Tweak
-  id: 646
-  time: '2024-12-04T13:17:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/891
 - author: Darkmajia
   changes:
   - message: Impstation changelogs now let you know when they've been updated - just
@@ -4165,3 +4158,15 @@
   id: 1145
   time: '2025-02-17T01:25:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1707
+- author: Sha-Seng
+  changes:
+  - message: More shoes for RD, AA, bartender, psychologist, reporter, chaplain, lawyer,
+      librarian, and musician
+    type: Add
+  - message: Admin assistant can select the nightclub suits now
+    type: Add
+  - message: Admin assistant doesn't have to select outerwear anymore
+    type: Tweak
+  id: 1146
+  time: '2025-02-17T01:45:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1683
