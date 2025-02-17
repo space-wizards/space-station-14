@@ -17,6 +17,24 @@
     currentLabel: reagent-name-caramexinin
 
 - type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: JugCocoa
+  name: cocoa powder jug
+  suffix: For Drinks, Full
+  description: A jug of cocoa powder.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: CocoaPowder
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-cocoapowder
+
+- type: entity
   parent: DrinkBase
   id: DrinkDisposableCup
   name: disposable cup
