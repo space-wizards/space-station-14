@@ -46,6 +46,11 @@
             <ContainerButton Name="StationAlertLevelInstructionsButton">
                 <RichTextLabel Name="StationAlertLevelInstructions" Access="Public"/>
             </ContainerButton>
+
+            <!--Footer-->
+            <BoxContainer Orientation="Horizontal" SetHeight="28">
+                <Label Text="{Loc 'comp-pda-ui-footer-home'}" StyleClasses="PdaContentFooterText"/>
+            </BoxContainer>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"
