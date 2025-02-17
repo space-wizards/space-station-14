@@ -1,17 +1,18 @@
 - type: npcFaction
   id: Dragon
   hostile:
-    - NanoTrasen
-    - Syndicate
-    - Xeno
-    - PetsNT
-    - Zombie
-    - Revolutionary
-    - AllHostile
-    - Necromorfs # DS14
-    - SpiderTerror # DS14
-    - Blob # DS14
-    - SyndicateAgent # DS14-agents-faction
+  - NanoTrasen
+  - Syndicate
+  - Xeno
+  - PetsNT
+  - Zombie
+  - Revolutionary
+  - AllHostile
+  - Wizard
+  - Necromorfs # DS14
+  - SpiderTerror # DS14
+  - Blob # DS14
+  - SyndicateAgent # DS14-agents-faction
 
 - type: npcFaction
   id: NanoTrasen
@@ -23,6 +24,7 @@
   - Revolutionary
   - Dragon
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -30,8 +32,8 @@
 - type: npcFaction
   id: Mouse
   hostile:
-    - PetsNT
-    - AllHostile
+  - PetsNT
+  - AllHostile
 
 - type: npcFaction
   id: Passive
@@ -55,6 +57,7 @@
   - Zombie
   - Revolutionary
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - SyndicateAgent # DS14-agents-faction
@@ -72,6 +75,7 @@
   - Zombie
   - Dragon
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -85,6 +89,7 @@
   - Zombie
   - Dragon
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
 # DS14-agents-faction-end
@@ -99,6 +104,7 @@
   - Zombie
   - Revolutionary
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -115,6 +121,7 @@
   - PetsNT
   - Revolutionary
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -128,6 +135,7 @@
   - SimpleHostile
   - Dragon
   - AllHostile
+  - Wizard
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -146,6 +154,23 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - Wizard
+  - Necromorfs # DS14
+  - SpiderTerror # DS14
+  - SyndicateAgent # DS14-agents-faction
+  - Blob # DS14
+
+- type: npcFaction
+  id: Wizard
+  hostile:
+  - NanoTrasen
+  - Dragon
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - AllHostile
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - SyndicateAgent # DS14-agents-faction

@@ -71,6 +71,11 @@
     sprite: Clothing/Shoes/Boots/highheelboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/highheelboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighHeels
+      params:
+        variation: 0.09
 
 - type: entity
   parent: [ ClothingShoesMilitaryBase, BaseRestrictedContraband ]

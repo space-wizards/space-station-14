@@ -81,7 +81,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             return;
 
         if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
-            _proj.UnEmbed(ent, projectile, actionOwner.Value);
+            _proj.EmbedDetach(ent, projectile, actionOwner.Value);
 
         _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
 
