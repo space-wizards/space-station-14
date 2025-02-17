@@ -193,7 +193,7 @@ namespace Content.Server.Hands.Systems
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
+                var splitStack = _stackSystem.Split((throwEnt, stack), 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates);
 
                 if (splitStack is not {Valid: true})
                     return false;
