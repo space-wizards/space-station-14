@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: widgetbeck
   changes:
-  - message: Made Slime People's damage from water vapor scale with quantity, which
-      should make it more dangerous.
-    type: Tweak
-  id: 651
-  time: '2024-12-04T13:29:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/898
-- author: widgetbeck
-  changes:
   - message: Fixed some Urists not spawning with emote sounds. Have fun with that,
       Admins.
     type: Fix
@@ -4170,3 +4162,10 @@
   id: 1150
   time: '2025-02-17T15:19:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1717
+- author: widgetbeck
+  changes:
+  - message: Thieving gloves can now only initiate one stripping doafter at a time.
+    type: Tweak
+  id: 1151
+  time: '2025-02-17T15:22:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1711
