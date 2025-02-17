@@ -41,7 +41,7 @@
   equipment:
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
-    ears: ClothingHeadsetCE
+    ears: ClothingHeadsetAltEngineering
     belt: ClothingBeltUtilityEngineering
   storage:
     back:
