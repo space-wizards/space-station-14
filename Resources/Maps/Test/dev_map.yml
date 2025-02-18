@@ -13642,10 +13642,10 @@ entities:
       parent: 1
 - proto: SpawnMobCorgiMouse
   entities:
-  - uid: 577
+  - uid: 2213
     components:
     - type: Transform
-      pos: 31.5,19.5
+      pos: 39.5,11.5
       parent: 1
 - proto: SpawnMobHuman
   entities:
@@ -13678,6 +13678,13 @@ entities:
     components:
     - type: Transform
       pos: 73.5,44.5
+      parent: 1
+- proto: SpawnMobMouse
+  entities:
+  - uid: 577
+    components:
+    - type: Transform
+      pos: 30.5,16.5
       parent: 1
 - proto: SpawnPointCaptain
   entities:
