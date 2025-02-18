@@ -52,6 +52,27 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            "/Maps/corvax_astra.yml", // Contains LSE-400c "Пулемёт Свалинн"
+            "/Maps/amber.yml", // Contains LSE-400c "Пулемёт Свалинн"
+            "/Maps/barratry.yml", // Contains печать клоуна, печать мима
+            "/Maps/cluster.yml", // Contains печать мима
+            "/Maps/corvax_avrit.yml", // Contains кошачьи ушки, собачьи ушки, элитный шахтёрский скафандр, EXP-320g "Дружба", PTK-800 "Дематериализатор материи", PTK-800 "Дематериализатор материи" (машинная плата), LSE-1200c "Перфоратор" (машинная плата), LSE-400c "Пулемёт Свалинн"
+            "/Maps/corvax_paper.yml", // Contains кошачьи ушки
+            "/Maps/corvax_spectrum.yml", // Contains печать священника, LSE-400c "Пулемёт Свалинн"
+            "/Maps/ds_box.yml", // Contains печать Синдиката
+            "/Maps/ds_silly.yml", // Contains печать клоуна, печать мима и PTK-800 "Дематериализатор материи" (машинная плата)
+            "/Maps/ds_silly_snow.yml", // Contains печать клоуна, печать мима и PTK-800 "Дематериализатор материи" (машинная плата)
+            "/Maps/gemini.yml", // Contains печать клоуна и печать Синдиката
+            "/Maps/Shuttles/ERT/amber.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/cburn_scnt.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/cburn_scst.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/cburn.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/deathsquad.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/engineers.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/gamma.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/janitors.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/red.yml", // ERT shuttle
+            "/Maps/Shuttles/ERT/sierra.yml", // ERT shuttle
             "/Maps/ds_typan.yml",
         };
 

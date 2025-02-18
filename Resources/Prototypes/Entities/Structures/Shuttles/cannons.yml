@@ -115,7 +115,7 @@
   parent: [ ShuttleGunBase, ConstructibleMachine]
   name: LSE-1200c "Perforator"
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
-  categories: [ DoNotMap ]
+  # categories: [ DoNotMap ] # DS14-disabled: due to having sec pilot shuttle on every map
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shuttles/laser.rsi
