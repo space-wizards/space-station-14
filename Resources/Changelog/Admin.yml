@@ -790,5 +790,13 @@ Entries:
   id: 98
   time: '2025-02-18T09:04:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35248
+- author: Simyon
+  changes:
+  - message: Admins with the Server and Mapping AdminFlag can now change the CVars
+      "events.enabled" and "shuttle.auto_call_time" for parity in the "mapping" command.
+    type: Tweak
+  id: 99
+  time: '2025-02-18T10:26:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35239
 Name: Admin
 Order: 1
