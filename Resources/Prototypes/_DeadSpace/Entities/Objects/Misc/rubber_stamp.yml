@@ -86,7 +86,7 @@
   - type: Stamp
     stampedName: мяу
     stampedColor: "#323232"
-    stampState: "paper_stamp-mime"
+    stampState: "paper_stamp-iaa"
     stampTexture: "/Textures/Interface/Stamps/meow.png"
   - type: Sprite
     state: stamp-greytide
