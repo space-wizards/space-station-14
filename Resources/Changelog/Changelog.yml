@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now quick-swap uneven stacks of items into your inventory without
-      it getting "stuck" in your hands.
-    type: Fix
-  id: 7471
-  time: '2024-10-02T05:27:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32560
 - author: BackeTako
   changes:
   - message: New hydroponics doors
@@ -3899,3 +3891,10 @@
   id: 7970
   time: '2025-02-17T21:59:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31510
+- author: Killerqu00
+  changes:
+  - message: Contraband examines now correctly tell you if you can possess the object.
+    type: Fix
+  id: 7971
+  time: '2025-02-18T11:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35228
