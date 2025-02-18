@@ -21,7 +21,6 @@ using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Survivor;
-using Content.Shared.Survivor.Components;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;

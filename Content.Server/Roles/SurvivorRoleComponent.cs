@@ -6,7 +6,4 @@ namespace Content.Server.Roles;
 ///     Adds to a mind role ent to tag they're a Survivor
 /// </summary>
 [RegisterComponent]
-public sealed partial class SurvivorRoleComponent : BaseMindRoleComponent
-{
-
-}
+public sealed partial class SurvivorRoleComponent : BaseMindRoleComponent;
