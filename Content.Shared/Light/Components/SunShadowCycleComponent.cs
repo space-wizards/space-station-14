@@ -28,8 +28,8 @@ public sealed partial class SunShadowCycleComponent : Component
     public List<(float Ratio, Vector2 Direction, float Alpha)> Directions = new()
     {
         (0f, new Vector2(0f, 3f), 0f),
-        (0.25f, new Vector2(3f, -0.1f), 0.5f),
+        (0.25f, new Vector2(-3f, -0.1f), 0.5f),
         (0.5f, new Vector2(0f, -3f), 0.8f),
-        (0.75f, new Vector2(-3f, -0.1f), 0.5f),
+        (0.75f, new Vector2(3f, -0.1f), 0.5f),
     };
 }
