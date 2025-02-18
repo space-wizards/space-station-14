@@ -1,0 +1,29 @@
+- type: constructionGraph
+  id: GasPipeSensor
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sensor
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+  - node: sensor   
+    entity: GasPipeSensor
+    actions:
+    - !type:SetAnchor
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      steps:
+      - tool: Welding
+        doAfter: 1

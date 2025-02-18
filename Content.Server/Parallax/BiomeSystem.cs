@@ -10,7 +10,9 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Decals;
+using Content.Shared.Ghost;
 using Content.Shared.Gravity;
+using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
@@ -51,6 +53,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private EntityQuery<BiomeComponent> _biomeQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
+    private EntityQuery<GhostComponent> _ghostQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
@@ -81,6 +84,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Log.Level = LogLevel.Debug;
         _biomeQuery = GetEntityQuery<BiomeComponent>();
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
+        _ghostQuery = GetEntityQuery<GhostComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
@@ -315,6 +319,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    private bool CanLoad(EntityUid uid)
+    {
+        return !_ghostQuery.HasComp(uid);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -322,6 +331,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         while (biomes.MoveNext(out var biome))
         {
+            if (biome.LifeStage < ComponentLifeStage.Running)
+                continue;
+
             _activeChunks.Add(biome, _tilePool.Get());
             _markerChunks.GetOrNew(biome);
         }
@@ -332,7 +344,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             if (_xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform) &&
                 _handledEntities.Add(pSession.AttachedEntity.Value) &&
                  _biomeQuery.TryGetComponent(xform.MapUid, out var biome) &&
-                biome.Enabled)
+                biome.Enabled &&
+                CanLoad(pSession.AttachedEntity.Value))
             {
                 var worldPos = _transform.GetWorldPosition(xform);
                 AddChunksInRange(biome, worldPos);
@@ -349,7 +362,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (!_handledEntities.Add(viewer) ||
                     !_xformQuery.TryGetComponent(viewer, out xform) ||
                     !_biomeQuery.TryGetComponent(xform.MapUid, out biome) ||
-                    !biome.Enabled)
+                    !biome.Enabled ||
+                    !CanLoad(viewer))
                 {
                     continue;
                 }
@@ -369,6 +383,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var gridUid, out var biome, out var grid))
         {
+            // If not MapInit don't run it.
+            if (biome.LifeStage < ComponentLifeStage.Running)
+                continue;
+
             if (!biome.Enabled)
                 continue;
 
@@ -735,7 +753,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         if (modified.Count == 0)
+        {
+            component.ModifiedTiles.Remove(chunk);
             _tilePool.Return(modified);
+        }
 
         component.PendingMarkers.Remove(chunk);
     }
@@ -1004,10 +1025,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Midday: #E6CB8B
         // Moonlight: #2b3143
         // Lava: #A34931
-
         var light = EnsureComp<MapLightComponent>(mapUid);
         light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
+
+        EnsureComp<RoofComponent>(mapUid);
+
+        EnsureComp<LightCycleComponent>(mapUid);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;

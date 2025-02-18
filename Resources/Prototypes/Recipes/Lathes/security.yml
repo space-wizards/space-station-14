@@ -246,6 +246,23 @@
     Steel: 300
 
 - type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunUranium
+  result: MagazinePistolSubMachineGunUranium
+  materials:
+    Steel: 25
+    Plastic: 250
+    Uranium: 250
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunIncendiary
+  result: MagazinePistolSubMachineGunIncendiary
+  materials:
+    Steel: 25
+    Plastic: 275
+
+- type: latheRecipe
   parent: BaseEmptyAmmoRecipe
   id: MagazinePistolSubMachineGunTopMountedEmpty
   result: MagazinePistolSubMachineGunTopMountedEmpty
@@ -602,6 +619,15 @@
   materials:
     Plastic: 320
     Uranium: 240
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponFlareGunSecurity
+  result: WeaponFlareGunSecurity
+  completetime: 6
+  materials:
+    Plastic: 100
+    Steel: 400
 
 - type: latheRecipe
   parent: BaseWeaponRecipe
