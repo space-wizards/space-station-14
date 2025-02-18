@@ -51,8 +51,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         });
     }
 
-    private void OnVendingGetState(EntityUid uid, VendingMachineComponent component, ref ComponentGetState args)
+    private void OnVendingGetState(Entity<VendingMachineComponent> entity, ref ComponentGetState args)
     {
+        var component = entity.Comp;
+
         var inventory = new Dictionary<string, VendingMachineInventoryEntry>();
         var emaggedInventory = new Dictionary<string, VendingMachineInventoryEntry>();
         var contrabandInventory = new Dictionary<string, VendingMachineInventoryEntry>();
@@ -127,15 +129,15 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
     }
 
-    private void OnInventoryEjectMessage(EntityUid uid, VendingMachineComponent component, VendingMachineEjectMessage args)
+    private void OnInventoryEjectMessage(Entity<VendingMachineComponent> entity, ref VendingMachineEjectMessage args)
     {
-        if (!_receiver.IsPowered(uid))
+        if (!_receiver.IsPowered(entity.Owner) || Deleted(entity))
             return;
 
-        if (args.Actor is not { Valid: true } entity || Deleted(entity))
+        if (args.Actor is not { Valid: true } actor)
             return;
 
-        AuthorizedVend(uid, entity, args.Type, args.ID, component);
+        AuthorizedVend(entity.Owner, actor, args.Type, args.ID, entity.Comp);
     }
 
     protected virtual void OnMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)

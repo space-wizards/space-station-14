@@ -20,10 +20,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         SubscribeLocalEvent<VendingMachineComponent, ComponentHandleState>(OnVendingHandleState);
     }
 
-    private void OnVendingHandleState(EntityUid uid, VendingMachineComponent component, ref ComponentHandleState args)
+    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref ComponentHandleState args)
     {
         if (args.Current is not VendingMachineComponentState state)
             return;
+
+        var uid = entity.Owner;
+        var component = entity.Comp;
 
         component.Contraband = state.Contraband;
         component.EjectEnd = state.EjectEnd;

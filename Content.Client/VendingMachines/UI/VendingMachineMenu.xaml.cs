@@ -10,7 +10,6 @@ using Robust.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
-using Robust.Shared.Timing;
 
 namespace Content.Client.VendingMachines.UI
 {
@@ -159,7 +158,7 @@ namespace Content.Client.VendingMachines.UI
         {
             _enabled = enabled;
 
-            foreach (var (proto, uid) in _dummies)
+            foreach (var proto in _dummies.Keys)
             {
                 if (!_listItems.TryGetValue(proto, out var button))
                     continue;
@@ -186,9 +185,9 @@ namespace Content.Client.VendingMachines.UI
                 Math.Clamp(contentCount * 50, 150, 350));
         }
     }
-}
 
-public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex) : ListData
-{
-    public string ItemText = string.Empty;
+    public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex) : ListData
+    {
+        public string ItemText = string.Empty;
+    }
 }

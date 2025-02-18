@@ -1,15 +1,13 @@
 using Content.Shared.Actions;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.VendingMachines
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
     public sealed partial class VendingMachineComponent : Component
     {
         /// <summary>
@@ -58,10 +56,10 @@ namespace Content.Shared.VendingMachines
         [ViewVariables]
         public bool DispenseOnHitCoolingDown => DispenseOnHitEnd != null;
 
-        [DataField]
+        [DataField, AutoPausedField]
         public TimeSpan? EjectEnd;
 
-        [DataField]
+        [DataField, AutoPausedField]
         public TimeSpan? DenyEnd;
 
         [DataField]
@@ -74,7 +72,7 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         /// When true, will forcefully throw any object it dispenses
         /// </summary>
-        [DataField("speedLimiter")]
+        [DataField]
         public bool CanShoot = false;
 
         public bool ThrowNextItem = false;
