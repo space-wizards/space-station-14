@@ -1,5 +1,6 @@
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Storage.Components;
 
@@ -12,4 +13,11 @@ public sealed partial class InternalAirComponent : Component, IGasMixtureHolder
     /// </summary>
     [DataField]
     public GasMixture Air { get; set; } = new (100);
+
+    #region GuidebookData
+
+    [GuidebookData]
+    public float Volume => Air.Volume;
+
+    #endregion
 }

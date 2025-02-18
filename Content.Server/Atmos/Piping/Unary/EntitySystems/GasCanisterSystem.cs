@@ -68,7 +68,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (environment is not null)
             _atmos.Merge(environment, internalAir.Air);
 
-        _adminLogger.Add(LogType.CanisterPurged, LogImpact.Medium, $"Canister {ToPrettyString(uid):canister} purged its contents of {internalAir.Air:gas} into the environment.");
+        _adminLogger.Add(LogType.CanisterPurged, LogImpact.Medium, $"Canister {ToPrettyString(uid):canister} purged its contents of [{GetContainedGasesString((uid, internalAir))}] into the environment.");
         internalAir.Air.Clear();
     }
 
@@ -114,12 +114,15 @@ public sealed class GasCanisterSystem : EntitySystem
         if (canister.GasTankSlot.Item == null)
             return;
 
+        if (!TryComp<InternalAirComponent>(uid, out var internalAir))
+            return;
+
         var item = canister.GasTankSlot.Item;
         _slots.TryEjectToHands(uid, canister.GasTankSlot, args.Actor);
 
         if (canister.ReleaseValve)
         {
-            _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.High, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister} while the valve was open, releasing [{GetContainedGasesString((uid, canister))}] to atmosphere");
+            _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.High, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister} while the valve was open, releasing [{GetContainedGasesString((uid, internalAir))}] to atmosphere");
         }
         else
         {
@@ -144,15 +147,15 @@ public sealed class GasCanisterSystem : EntitySystem
         var impact = hasItem ? LogImpact.Medium : LogImpact.High;
 
         if (TryComp<InternalAirComponent>(uid, out var internalAir))
-            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{internalAir.Air:gas}]");
+            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{GetContainedGasesString((uid, internalAir))}]");
 
         canister.ReleaseValve = args.Valve;
         DirtyUI(uid, canister);
     }
 
-    private static string GetContainedGasesString(Entity<GasCanisterComponent> canister)
+    private static string GetContainedGasesString(Entity<InternalAirComponent> internalAir)
     {
-        return string.Join(", ", canister.Comp.Air);
+        return string.Join(", ", internalAir.Comp.Air);
     }
 
     private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, ref AtmosDeviceUpdateEvent args)
