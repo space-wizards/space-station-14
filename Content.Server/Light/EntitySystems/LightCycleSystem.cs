@@ -16,8 +16,7 @@ public sealed class LightCycleSystem : SharedLightCycleSystem
 
         if (ent.Comp.InitialOffset)
         {
-            ent.Comp.Offset = _random.Next(ent.Comp.Duration);
-            Dirty(ent);
+            SetOffset(ent, _random.Next(ent.Comp.Duration));
         }
     }
 }

@@ -12,19 +12,27 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
 {
     [Dependency] private readonly ClientGameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         var mapQuery = AllEntityQuery<SunShadowCycleComponent, SunShadowComponent>();
         while (mapQuery.MoveNext(out var uid,  out var cycle, out var shadow))
         {
             if (!cycle.Running || cycle.Directions.Count == 0)
                 continue;
 
+            var pausedTime = _metadata.GetPauseTime(uid);
+
             var time = (float)(_timing.CurTime
                 .Add(cycle.Offset)
                 .Subtract(_ticker.RoundStartTimeSpan)
+                .Subtract(pausedTime)
                 .TotalSeconds % cycle.Duration.TotalSeconds);
 
             var (direction, alpha) = GetShadow((uid, cycle), time);
@@ -36,6 +44,9 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
     [Pure]
     public (Vector2 Direction, float Alpha) GetShadow(Entity<SunShadowCycleComponent> entity, float time)
     {
+        // So essentially the values are stored as the percentages of the total duration just so it adjusts the speed
+        // dynamically and we don't have to manually handle it.
+        // It will lerp from each value to the next one with angle and length handled separately
         var ratio = (float) (time / entity.Comp.Duration.TotalSeconds);
 
         for (var i = entity.Comp.Directions.Count - 1; i >= 0; i--)
@@ -66,7 +77,7 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
                 var nextAngle = next.Direction.ToAngle();
 
                 var angle = Angle.Lerp(currentAngle, nextAngle, diff);
-                // This is to avoid getting weird issues where the angle gets pretty close but length still noticeable catches up.
+                // This is to avoid getting weird issues where the angle gets pretty close but length still noticeably catches up.
                 var lengthDiff = MathF.Pow(diff, 1f / 2f);
                 var length = float.Lerp(dir.Direction.Length(), next.Direction.Length(), lengthDiff);
 
