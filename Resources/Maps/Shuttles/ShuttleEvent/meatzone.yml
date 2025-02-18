@@ -21,7 +21,6 @@ entities:
       name: SRV-Meatzone
     - type: Transform
       pos: -0.5104167,-0.46875
-      parent: 139
     - type: MapGrid
       chunks:
         0,0:
@@ -208,173 +207,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-  - uid: 139
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-- proto: ADTFoodHotDog
-  entities:
-  - uid: 144
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 151
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 152
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 153
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 162
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 164
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ADTShawermaCheese
-  entities:
-  - uid: 148
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 154
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 158
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 159
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 161
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ADTShawermaDefault
-  entities:
-  - uid: 155
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 156
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 157
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 160
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 165
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ADTShawermaMeat
-  entities:
-  - uid: 140
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 141
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 142
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 143
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 145
-    components:
-    - type: Transform
-      parent: 138
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: AirCanister
   entities:
   - uid: 440
@@ -454,14 +286,6 @@ entities:
     components:
     - type: Transform
       pos: 9.262002,3.6997778
-      parent: 1
-- proto: ATM
-  entities:
-  - uid: 542
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -1.5,8.5
       parent: 1
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -901,11 +725,6 @@ entities:
       parent: 1
 - proto: CableHV
   entities:
-  - uid: 167
-    components:
-    - type: Transform
-      pos: 9.5,4.5
-      parent: 1
   - uid: 318
     components:
     - type: Transform
@@ -925,76 +744,6 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-3.5
-      parent: 1
-  - uid: 431
-    components:
-    - type: Transform
-      pos: 2.5,-2.5
-      parent: 1
-  - uid: 544
-    components:
-    - type: Transform
-      pos: 4.5,-1.5
-      parent: 1
-  - uid: 545
-    components:
-    - type: Transform
-      pos: 3.5,-1.5
-      parent: 1
-  - uid: 546
-    components:
-    - type: Transform
-      pos: 8.5,3.5
-      parent: 1
-  - uid: 547
-    components:
-    - type: Transform
-      pos: 8.5,-0.5
-      parent: 1
-  - uid: 548
-    components:
-    - type: Transform
-      pos: 8.5,2.5
-      parent: 1
-  - uid: 549
-    components:
-    - type: Transform
-      pos: 5.5,-1.5
-      parent: 1
-  - uid: 550
-    components:
-    - type: Transform
-      pos: 7.5,-1.5
-      parent: 1
-  - uid: 551
-    components:
-    - type: Transform
-      pos: 8.5,-1.5
-      parent: 1
-  - uid: 552
-    components:
-    - type: Transform
-      pos: 6.5,-1.5
-      parent: 1
-  - uid: 553
-    components:
-    - type: Transform
-      pos: 8.5,4.5
-      parent: 1
-  - uid: 554
-    components:
-    - type: Transform
-      pos: 8.5,0.5
-      parent: 1
-  - uid: 555
-    components:
-    - type: Transform
-      pos: 8.5,1.5
-      parent: 1
-  - uid: 556
-    components:
-    - type: Transform
-      pos: 2.5,-1.5
       parent: 1
 - proto: CableMV
   entities:
@@ -1361,8 +1110,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.8856695
-        - 7.0937095
+        - 1.7459903
+        - 6.568249
         - 0
         - 0
         - 0
@@ -1379,17 +1128,17 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 403
-          - 402
-          - 401
-          - 400
-          - 399
-          - 398
-          - 397
-          - 396
-          - 395
-          - 394
           - 393
+          - 394
+          - 395
+          - 396
+          - 397
+          - 398
+          - 399
+          - 400
+          - 401
+          - 402
+          - 403
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1505,56 +1254,42 @@ entities:
     - type: Transform
       pos: 2.5,-0.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 154
-          - 164
-          - 153
-          - 152
-          - 151
-          - 144
-          - 143
+          - 168
+          - 167
+          - 166
           - 142
           - 141
           - 140
-          - 146
+          - 139
+          - 154
+          - 155
+          - 156
+          - 143
+          - 144
           - 145
-          - 163
+          - 146
+          - 147
+          - 148
           - 149
           - 150
-          - 147
-          - 155
-          - 165
-          - 156
+          - 151
+          - 152
+          - 153
           - 157
           - 158
           - 159
           - 160
-          - 148
           - 161
           - 162
+          - 163
+          - 164
+          - 165
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1581,13 +1316,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.709918,3.064361
       parent: 1
-- proto: Eftpos
-  entities:
-  - uid: 540
-    components:
-    - type: Transform
-      pos: 9.600056,-3.2549465
-      parent: 1
 - proto: FloorDrain
   entities:
   - uid: 525
@@ -1598,6 +1326,43 @@ entities:
       parent: 1
     - type: Fixtures
       fixtures: {}
+- proto: FoodBreadBun
+  entities:
+  - uid: 141
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 142
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 166
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 167
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 168
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: FoodBurgerMcrib
   entities:
   - uid: 487
@@ -1607,10 +1372,20 @@ entities:
       parent: 1
 - proto: FoodCondimentBottleBBQ
   entities:
+  - uid: 190
+    components:
+    - type: Transform
+      pos: 1.9895566,0.6009581
+      parent: 1
   - uid: 195
     components:
     - type: Transform
       pos: 2.2499733,8.059292
+      parent: 1
+  - uid: 196
+    components:
+    - type: Transform
+      pos: 0.031223089,0.6322081
       parent: 1
   - uid: 197
     components:
@@ -1706,6 +1481,11 @@ entities:
     - type: Transform
       pos: 2.7291398,8.090542
       parent: 1
+  - uid: 200
+    components:
+    - type: Transform
+      pos: 1.124973,0.6530415
+      parent: 1
   - uid: 201
     components:
     - type: Transform
@@ -1742,11 +1522,62 @@ entities:
       parent: 1
 - proto: FoodKebabSkewer
   entities:
-  - uid: 166
+  - uid: 139
     components:
     - type: Transform
-      pos: 9.633013,-3.545074
-      parent: 1
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 140
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 143
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 151
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 155
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 156
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 157
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 158
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 261
     components:
     - type: Transform
@@ -1757,13 +1588,45 @@ entities:
     - type: Transform
       pos: 9.646811,-3.2640774
       parent: 1
-  - uid: 543
-    components:
-    - type: Transform
-      pos: 9.570513,-3.3922963
-      parent: 1
 - proto: FoodMealRibs
   entities:
+  - uid: 160
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 161
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 162
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 164
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: FoodMeat
+  entities:
+  - uid: 144
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 146
     components:
     - type: Transform
@@ -1772,6 +1635,13 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
   - uid: 147
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 148
     components:
     - type: Transform
       parent: 138
@@ -1792,47 +1662,31 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 163
+  - uid: 152
     components:
     - type: Transform
       parent: 138
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: FoodMeat
-  entities:
-  - uid: 168
+  - uid: 153
     components:
     - type: Transform
-      parent: 447
+      parent: 138
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 190
+  - uid: 154
     components:
     - type: Transform
-      parent: 447
+      parent: 138
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 196
+  - uid: 159
     components:
     - type: Transform
-      parent: 447
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 200
-    components:
-    - type: Transform
-      parent: 447
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 242
-    components:
-    - type: Transform
-      parent: 447
+      parent: 138
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -1939,6 +1793,22 @@ entities:
     components:
     - type: Transform
       parent: 447
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: FoodOnion
+  entities:
+  - uid: 163
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 165
+    components:
+    - type: Transform
+      parent: 138
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -2922,6 +2792,13 @@ entities:
       parent: 1
 - proto: KitchenKnife
   entities:
+  - uid: 145
+    components:
+    - type: Transform
+      parent: 138
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 189
     components:
     - type: Transform
@@ -2971,54 +2848,31 @@ entities:
     - type: Transform
       pos: 9.5,-0.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 200
-          - 196
-          - 190
-          - 465
-          - 464
-          - 463
-          - 462
-          - 461
-          - 460
-          - 459
-          - 458
-          - 457
-          - 456
-          - 455
-          - 454
-          - 453
-          - 452
-          - 451
-          - 450
-          - 449
           - 448
-          - 168
+          - 449
+          - 450
+          - 451
+          - 452
+          - 453
+          - 454
+          - 455
+          - 456
+          - 457
+          - 458
+          - 459
+          - 460
+          - 461
+          - 462
+          - 463
+          - 464
+          - 465
           - 466
-          - 242
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -3068,21 +2922,38 @@ entities:
       parent: 1
 - proto: Paper
   entities:
-  - uid: 541
+  - uid: 242
     components:
+    - type: MetaData
+      name: recipes
     - type: Transform
-      pos: 9.02658,-0.94630015
+      pos: 0.15453678,-0.2413783
       parent: 1
     - type: Paper
-      content: '   Брат, я забыл положить рецепт, но думаю того что я уже сделал тебе хватит. Ахча!!'
+      content: >+
+        Ribs:
+
+        [bullet] 5u BBQ sauce
+
+        [bullet] 2x raw meat
+
+        [bullet] 1x skewer
+
+        [bullet] Microwave 15s
+
+
+        McRib:
+
+        [bullet] 1x bun
+
+        [bullet] 1x ribs
+
+        [bullet] 1x sliced onion
+
+        [bullet] Microwave 10s
+
 - proto: Poweredlight
   entities:
-  - uid: 432
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,-1.5
-      parent: 1
   - uid: 436
     components:
     - type: Transform
@@ -3094,12 +2965,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-2.5
-      parent: 1
-  - uid: 539
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -3.5,-1.5
       parent: 1
 - proto: PoweredlightOrange
   entities:
@@ -3120,6 +2985,18 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,5.5
+      parent: 1
+  - uid: 431
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,-1.5
+      parent: 1
+  - uid: 432
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-1.5
       parent: 1
   - uid: 435
     components:
