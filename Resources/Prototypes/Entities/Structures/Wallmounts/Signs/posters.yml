@@ -359,8 +359,8 @@
 - type: entity
   parent: PosterBase
   id: PosterContrabandRouny
-  name: "Have you seen him?"
-  description: "An old poster for a missing alien. Where has he run off to?"
+  name: "Have You Seen Him?"
+  description: "An old poster for a missing alien. Where did he run off to?"
   components:
   - type: Sprite
     state: poster36_contraband
