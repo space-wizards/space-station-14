@@ -12,7 +12,7 @@
   - BaseStationExpeditions
   - BaseStationSiliconLawCrewsimov
   # - BaseStationAllEventsEligible
-  - BaseStationSyndicate
+  - BaseStationTypan
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform

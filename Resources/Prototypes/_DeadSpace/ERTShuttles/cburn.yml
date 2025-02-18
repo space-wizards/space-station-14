@@ -1,15 +1,15 @@
 - type: ertShuttle
   id: Cburn
-  path: Maps/Shuttles/ERT/cburn.yml
+  path: /Maps/Shuttles/ERT/cburn.yml
 
 - type: ertShuttle
   id: Sierra
-  path: Maps/Shuttles/ERT/sierra.yml
+  path: /Maps/Shuttles/ERT/sierra.yml
 
 - type: ertShuttle
   id: CburnNecro
-  path: Maps/Shuttles/ERT/cburn_scnt.yml
+  path: /Maps/Shuttles/ERT/cburn_scnt.yml
 
 - type: ertShuttle
   id: CburnSpiders
-  path: Maps/Shuttles/ERT/cburn_scst.yml
+  path: /Maps/Shuttles/ERT/cburn_scst.yml

@@ -14,3 +14,11 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
+
+- type: entity
+  id: BaseStationTypan
+  parent:
+  - BaseStationSyndicate
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationTypan

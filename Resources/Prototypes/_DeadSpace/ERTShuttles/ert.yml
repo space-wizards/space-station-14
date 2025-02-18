@@ -1,19 +1,19 @@
 - type: ertShuttle
   id: Amber
-  path: Maps/Shuttles/ERT/amber.yml
+  path: /Maps/Shuttles/ERT/amber.yml
 
 - type: ertShuttle
   id: Red
-  path: Maps/Shuttles/ERT/red.yml
+  path: /Maps/Shuttles/ERT/red.yml
 
 - type: ertShuttle
   id: Gamma
-  path: Maps/Shuttles/ERT/gamma.yml
+  path: /Maps/Shuttles/ERT/gamma.yml
 
 - type: ertShuttle
   id: Engineers
-  path: Maps/Shuttles/ERT/engineers.yml
+  path: /Maps/Shuttles/ERT/engineers.yml
 
 - type: ertShuttle
   id: Janitors
-  path: Maps/Shuttles/ERT/janitors.yml
+  path: /Maps/Shuttles/ERT/janitors.yml

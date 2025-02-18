@@ -7,6 +7,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -19,8 +20,8 @@ public sealed class ERTCallSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -153,39 +154,15 @@ public sealed class ERTCallSystem : EntitySystem
     private bool TryAddShuttle(ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleGrid)
     {
         shuttleGrid = null;
-        var shuttleMap = _mapManager.CreateMap();
+        var shuttleMap = _map.CreateMap(out var shuttleMapId);
 
-        if (!_map.TryLoad(shuttleMap, shuttlePath.ToString(), out var gridList))
+        if (!_loader.TryLoadGrid(shuttleMapId, shuttlePath, out var grid))
         {
             _sawmill.Error($"Unable to spawn shuttle {shuttlePath}");
             return false;
         }
 
-        // Only dealing with 1 grid at a time for now, until more is known about multi-grid drifting
-        if (gridList.Count != 1)
-        {
-            switch (gridList.Count)
-            {
-                case < 1:
-                    _sawmill.Error($"Unable to spawn shuttle {shuttlePath}, no grid found in file");
-                    break;
-                case > 1:
-                    {
-                        _sawmill.Error($"Unable to spawn shuttle {shuttlePath}, too many grids present in file");
-
-                        foreach (var grid in gridList)
-                        {
-                            _mapManager.DeleteGrid(grid);
-                        }
-
-                        break;
-                    }
-            }
-
-            return false;
-        }
-
-        shuttleGrid = gridList[0];
+        shuttleGrid = grid;
         return true;
     }
 
