@@ -79,12 +79,12 @@
 - type: entity
   name: lawyer's rubber stamp
   parent: RubberStampBase
-  id: RubberStampLawyer
-  categories: [ DoNotMap ]
+  id: RubberStampLawyer # DS14: has a unique spawn mechanic and should be spawn only through code, see LawyerStampProviderComponent
+  categories: [ DoNotMap, HideSpawnMenu ] # DS14: they actually can't map, ha-ha
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-lawyer
-    stampedColor: "#233D57"
+    stampedColor: "#2F0069" # DS14-color
     stampState: "paper_stamp-lawyer"
   - type: Sprite
     state: stamp-lawyer

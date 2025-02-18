@@ -1,8 +1,8 @@
 - type: entity
   name: law office's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampIAA
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
     - type: Stamp
       stampedName: stamp-component-stamped-name-iaa
