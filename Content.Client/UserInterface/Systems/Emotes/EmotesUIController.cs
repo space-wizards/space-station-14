@@ -43,12 +43,19 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         {
             // setup window
             _menu = UIManager.CreateWindow<EmotesMenu>();
+
+            if (_menu.IsEmpty)
+            {
+                _menu.Dispose();
+                _menu = null;
+                return;
+            }
+
             _menu.OnClose += OnWindowClosed;
             _menu.OnOpen += OnWindowOpen;
             _menu.OnPlayEmote += OnPlayEmote;
 
-            if (EmotesButton != null)
-                EmotesButton.SetClickPressed(true);
+            EmotesButton?.SetClickPressed(true);
 
             if (centered)
             {
@@ -67,8 +74,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             _menu.OnOpen -= OnWindowOpen;
             _menu.OnPlayEmote -= OnPlayEmote;
 
-            if (EmotesButton != null)
-                EmotesButton.SetClickPressed(false);
+            EmotesButton?.SetClickPressed(false);
 
             CloseMenu();
         }

@@ -20,6 +20,7 @@ public sealed partial class EmotesMenu : RadialMenu
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     public event Action<ProtoId<EmotePrototype>>? OnPlayEmote;
+    public readonly bool IsEmpty = true;
 
     public EmotesMenu()
     {
@@ -65,6 +66,7 @@ public sealed partial class EmotesMenu : RadialMenu
 
             button.AddChild(tex);
             parent.AddChild(button);
+            IsEmpty = false;
             foreach (var child in main.Children)
             {
                 if (child is not RadialMenuTextureButton castChild)
@@ -103,7 +105,6 @@ public sealed partial class EmotesMenu : RadialMenu
         }
     }
 }
-
 
 public sealed class EmoteMenuButton : RadialMenuTextureButtonWithSector
 {
