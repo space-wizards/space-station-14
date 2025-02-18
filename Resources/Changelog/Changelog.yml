@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: BackeTako
   changes:
-  - message: New hydroponics doors
-    type: Add
-  id: 7472
-  time: '2024-10-02T05:33:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32575
-- author: BackeTako
-  changes:
   - message: Red circuit tile
     type: Add
   id: 7473
@@ -3898,3 +3891,10 @@
   id: 7971
   time: '2025-02-18T11:33:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35228
+- author: Ian321
+  changes:
+  - message: Magazines that started out empty now visually fill.
+    type: Fix
+  id: 7972
+  time: '2025-02-18T12:32:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34491
