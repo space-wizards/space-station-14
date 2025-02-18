@@ -87,6 +87,8 @@ public sealed class PayloadSystem : EntitySystem
             return;
 
         // ANY payload trigger that gets inserted can grant components. It is up to the construction graphs to determine trigger capacity.
+        // Create a list of components to grant before adding them
+        var componentsToAdd = new List<(ComponentRegistration, object?)>();
         foreach (var (name, data) in trigger.Components)
         {
             if (!_componentFactory.TryGetRegistration(name, out var registration))
@@ -100,9 +102,20 @@ public sealed class PayloadSystem : EntitySystem
 
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(uid, (Component) temp!);
-
+            componentsToAdd.Add((registration, temp));
+        }
+        // Some components (like TriggerOnSignalComponent) will automatically add other components
+        // (DeviceLinkSignalSink for the previous example). We still need to track them to "GrantedComponents" even if
+        // they have been automatically added
+        // NOTE: This is still not a perfect solution, perhaps saving a set of components before any add operations and
+        //       then placing the set difference into GrantedComponents is the better solution.
+        foreach (var (registration, obj) in componentsToAdd)
+        {
             trigger.GrantedComponents.Add(registration.Type);
+            if (!HasComp(uid, registration.Type))
+            {
+                EntityManager.AddComponent(uid, (Component)obj!);
+            }
         }
     }
 
