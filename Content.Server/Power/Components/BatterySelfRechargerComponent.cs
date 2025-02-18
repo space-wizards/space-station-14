@@ -34,7 +34,7 @@ namespace Content.Server.Power.Components
         [DataField] public TimeSpan NextAutoRecharge = TimeSpan.FromSeconds(0f);
 
         /// <summary>
-        /// This device is recharged by an external APC network.
+        /// Does this device require an external APC network connection to charge?
         /// </summary>
         [DataField] public bool RequiresApcNetwork = false;
     }

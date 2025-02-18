@@ -22,7 +22,7 @@
     sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
     drawdepth: Mobs
     layers:
-       - state: syndie_lethal
+    - state: syndie_lethal
   - type: InteractionPopup
     interactDelay: 0.2
     successChance: 0.8
@@ -92,7 +92,8 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 500
@@ -113,7 +114,7 @@
       renderingStrategy: NoRotation
     - state: base
     - state: lethal
-      shader: "unshaded"
+      shader: unshaded
   - type: Gun
     projectileSpeed: 15
     fireRate: 1.5
