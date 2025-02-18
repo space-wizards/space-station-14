@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Server.DeadSpace.ThrustersConfig;
 
 namespace Content.Server.Shuttles.Components
 {
