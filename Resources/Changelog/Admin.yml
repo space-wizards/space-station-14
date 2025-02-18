@@ -766,5 +766,12 @@ Entries:
   id: 95
   time: '2025-02-16T21:51:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35229
+- author: Winkarst-cpu
+  changes:
+  - message: Votekick bans now distinguish themselves as votekicks in the "ban reason".
+    type: Tweak
+  id: 96
+  time: '2025-02-17T20:39:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35258
 Name: Admin
 Order: 1
