@@ -21,4 +21,4 @@
 - type: loadout
   id: BomberScience
   equipment:
-    outerClothing: ClothingOuterCoatScienceBomber
+    outerClothing: ClothingOuterCoatBomberScience

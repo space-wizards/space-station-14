@@ -20,4 +20,4 @@
 - type: loadout
   id: BomberMedical
   equipment:
-    outerClothing: ClothingOuterCoatMedicalBomber
+    outerClothing: ClothingOuterCoatBomberMedical

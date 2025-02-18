@@ -2,4 +2,4 @@
 - type: loadout
   id: BomberCargo
   equipment:
-    outerClothing: ClothingOuterCoatCargoBomber
+    outerClothing: ClothingOuterCoatBomberCargo

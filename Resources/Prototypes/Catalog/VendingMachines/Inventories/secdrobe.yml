@@ -21,7 +21,8 @@
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
     ClothingNeckScarfStripedRed: 3
-    ClothingOuterArmorBasic: 2
+    ClothingOuterCoatBomberSecurity: 1
+    ClothingOuterArmorBasic: 1 #imp
     ClothingOuterArmorBasicSlim: 1 #imp
     ClothingOuterArmorBasicCompact: 1 #imp
     ClothingEyesBlindfold: 1
