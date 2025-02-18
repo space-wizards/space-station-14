@@ -52,6 +52,7 @@
             - type: TradeStation
           paths:
             - /Maps/Shuttles/trading_outpost.yml
+          nameDataset: NamesTradingOutpost # DS14
         # Spawn last
         ruins: !type:GridSpawnGroup
           hide: true
