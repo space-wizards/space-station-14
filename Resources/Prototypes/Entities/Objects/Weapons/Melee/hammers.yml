@@ -26,7 +26,7 @@
 
 - type: entity
   id: Mjollnir
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   name: Mjollnir
   description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
@@ -69,7 +69,7 @@
 
 - type: entity
   id: SingularityHammer
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   name: Singularity Hammer
   description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
   components:
