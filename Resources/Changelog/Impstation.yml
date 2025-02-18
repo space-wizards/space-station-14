@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Space Engineer Jumpsuit for you silly engineers
-    type: Add
-  - message: Greytider space jumpsuit Works Now
-    type: Fix
-  id: 663
-  time: '2024-12-05T22:25:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/915
 - author: starlighthowls
   changes:
   - message: more cruise changes
@@ -4158,3 +4149,10 @@
   id: 1162
   time: '2025-02-18T02:34:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1728
+- author: hivehum, arimah
+  changes:
+  - message: The Chief Engineer has adopted a new macaw. Everyone say hello to Poly!
+    type: Add
+  id: 1163
+  time: '2025-02-18T06:28:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1700
