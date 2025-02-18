@@ -42,12 +42,12 @@
                     <Control HorizontalExpand="True" VerticalExpand="True">
                         <TextureRect Name="BellIcon"
                                      StyleClasses="ButtonSquare"
-                                     TexturePath="/Textures/_DV//Interface/VerbIcons/bell.svg.png"
+                                     TexturePath="/Textures/_DV/Interface/VerbIcons/bell.svg.png"
                                      Stretch="KeepAspectCentered"
                                      MinSize="18 18" />
                         <TextureRect Name="BellMutedIcon"
                                      StyleClasses="ButtonSquare"
-                                     TexturePath="/Textures/_DV//Interface/VerbIcons/bell_muted.png"
+                                     TexturePath="/Textures/_DV/Interface/VerbIcons/bell_muted.png"
                                      Stretch="KeepAspectCentered"
                                      Visible="False"
                                      MinSize="18 18" />
