@@ -15,3 +15,9 @@
     proto: Medical10hr
   equipment:
     jumpsuit: ClothingUniformSpaceJumpsuitMedical
+
+# Outer Clothing
+- type: loadout
+  id: BomberMedical
+  equipment:
+    outerClothing: ClothingOuterCoatBomberMedical
