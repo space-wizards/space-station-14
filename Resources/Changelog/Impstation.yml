@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Fixed capitalization on some traits
-    type: Tweak
-  id: 661
-  time: '2024-12-05T12:16:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/909
 - author: kipdotnet, Starlighthowls
   changes:
   - message: Added Banana station for playtesting, a new lowpop map!
@@ -4154,3 +4147,14 @@
   id: 1160
   time: '2025-02-18T02:31:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1725
+- author: Sha-Seng
+  changes:
+  - message: Bomber jackets for all departments, plus a black and gray one for passenger
+    type: Add
+  - message: Departmental bomber jackets are now in their respective wardrobe vendors
+    type: Add
+  - message: These bomber jackets can now be zipped up
+    type: Tweak
+  id: 1161
+  time: '2025-02-18T02:32:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1727
