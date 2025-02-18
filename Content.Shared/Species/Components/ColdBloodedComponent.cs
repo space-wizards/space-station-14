@@ -1,33 +1,39 @@
 using Content.Shared.Alert;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Species.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class ColdBloodedComponent : Component
 {
     /// <summary>
-    /// Maximum temperature that will be force entity to sleep. Than less temperature, than more chance to fall sleep.
+    ///     Maximum temperature that will be force entity to sleep.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float SleepTemperature = 280f;
 
-    [DataField, AutoNetworkedField]
-    public float TemperatureCooficient = 0.5f;
-
     /// <summary>
-    /// Minimum duration of the sleep.
+    ///     ProtoId of alert that will be used.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float MinDuration = 1f;
-
-    /// <summary>
-    /// Maximum of the sleep in seconds.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float MaxDuration = 5f;
-
     [DataField]
     public ProtoId<AlertPrototype> Alert = "ColdBlooded";
+
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 ColdCoof = 0;
+
+    [ViewVariables]
+    public float Accumulator = 0;
+
+    [DataField]
+    public FixedPoint2 ColdCoofPerSecond = 1;
+
+    [DataField]
+    [AutoNetworkedField]
+    public FixedPoint2 ColdCoofReqAmount = 100;
+
+    [ViewVariables]
+    public bool HasColdTemperature = false;
 }
