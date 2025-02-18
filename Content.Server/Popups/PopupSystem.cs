@@ -70,6 +70,26 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), actor.PlayerSession);
         }
 
+        public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (message == null)
+                return;
+
+            var mapPos = coordinates.ToMap(EntityManager, _xform);
+            if (recipient != null)
+            {
+                // Don't send to recipient, since they predicted it locally
+                var filter = Filter.PvsExcept(recipient.Value, entityManager: EntityManager);
+                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
+            }
+            else
+            {
+                // No prediction, send to everyone including recipient.
+                var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
+                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
+            }
+        }
+
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
         {
             if (message == null)
