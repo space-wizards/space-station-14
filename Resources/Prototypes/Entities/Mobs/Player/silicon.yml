@@ -1063,9 +1063,6 @@
     blackboard:
       NavSmash: !type:Bool
         true
-  - type: Explosive
-    totalIntensity: 1000
-    explosionType: default
   - type: Destructible
     thresholds:
     - trigger:
@@ -1075,6 +1072,5 @@
       - !type:PlaySoundBehavior
         sound:
           collection: OnestarDeath
-      - !type:ExplodeBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
