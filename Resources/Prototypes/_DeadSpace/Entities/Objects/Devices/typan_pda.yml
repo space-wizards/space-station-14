@@ -2,8 +2,6 @@
   abstract: true
   parent: BasePDA
   id: BaseTypanPDA
-  name: PDA
-  description: Personal Data Assistant.
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Devices/typan_pda.rsi
