@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BackeTako
-  changes:
-  - message: Red circuit tile
-    type: Add
-  id: 7473
-  time: '2024-10-02T05:35:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32557
 - author: ArchRBX
   changes:
   - message: The MedTek PDA cartridge has now been added, providing health analyzer
@@ -3898,3 +3891,11 @@
   id: 7972
   time: '2025-02-18T12:32:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34491
+- author: WarPigeon
+  changes:
+  - message: Steel crates now have some radiation shielding for safe storage and transport
+      of radioactive materials.
+    type: Add
+  id: 7973
+  time: '2025-02-18T12:56:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35168
