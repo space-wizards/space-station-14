@@ -1,5 +1,6 @@
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusIcon;
 
@@ -13,18 +14,21 @@ public sealed partial class JobIconGroupPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// Set of ids that make up the group.
+    ///     Set of ids that make up the group.
     /// </summary>
     [DataField(required: true)]
-    public HashSet<ProtoId<JobIconPrototype>> Icons = default!;
+    public List<ProtoId<JobIconPrototype>> Icons = new();
 
     /// <summary>
-    /// Name of the group used for menu tooltips.
-    /// TODO
+    ///     Name of the group used for menu tooltips.
+    ///     TODO remove nullable
     /// </summary>
+    [DataField]
+    public LocId? GroupName;
 
     /// <summary>
-    /// Sprite used to represent the group.
-    /// TODO
+    ///     Sprite used to represent the group.
     /// </summary>
+    [DataField]
+    public SpriteSpecifier? Sprite;
 }

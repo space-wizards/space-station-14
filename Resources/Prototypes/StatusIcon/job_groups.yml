@@ -1,5 +1,9 @@
 - type: jobIconGroup
   id: CargoIconGroup
+  groupName: job-icon-group-cargo
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: CargoTechnician
   icons:
   - JobIconQuarterMaster
   - JobIconCargoTechnician
@@ -7,6 +11,10 @@
 
 - type: jobIconGroup
   id: CommandIconGroup
+  groupName: job-icon-group-command
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Captain
   icons:
   - JobIconCaptain
   - JobIconChiefEngineer
@@ -18,6 +26,10 @@
 
 - type: jobIconGroup
   id: EngineeringIconGroup
+  groupName: job-icon-group-engineering
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: StationEngineer
   icons:
   - JobIconChiefEngineer
   - JobIconStationEngineer
@@ -26,6 +38,10 @@
 
 - type: jobIconGroup
   id: MedicalIconGroup
+  groupName: job-icon-group-medical
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: MedicalDoctor
   icons:
   - JobIconChiefMedicalOfficer
   - JobIconMedicalDoctor
@@ -38,6 +54,10 @@
 
 - type: jobIconGroup
   id: ResearchIconGroup
+  groupName: job-icon-group-research
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Scientist
   icons:
   - JobIconResearchDirector
   - JobIconScientist
@@ -46,6 +66,10 @@
 
 - type: jobIconGroup
   id: SecurityIconGroup
+  groupName: job-icon-group-security
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SecurityOfficer
   icons:
   - JobIconHeadOfSecurity
   - JobIconSecurityOfficer
@@ -57,6 +81,10 @@
 
 - type: jobIconGroup
   id: ServiceIconGroup
+  groupName: job-icon-group-service
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ServiceWorker
   icons:
   - JobIconHeadOfPersonnel
   - JobIconServiceWorker
@@ -68,6 +96,10 @@
 
 - type: jobIconGroup
   id: EntertainerIconGroup
+  groupName: job-icon-group-entertainer
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Clown
   icons:
   - JobIconClown
   - JobIconMime
@@ -76,6 +108,10 @@
 
 - type: jobIconGroup
   id: CivilianIconGroup
+  groupName: job-icon-group-civilian
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Passenger
   icons:
   - JobIconPassenger
   - JobIconChaplain
@@ -86,19 +122,39 @@
 
 - type: jobIconGroup
   id: SiliconIconGroup
+  groupName: job-icon-group-silicon
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: StationAi
   icons:
   - JobIconStationAi
   - JobIconBorg
 
 - type: jobIconGroup
-  id: MiscIconGroup
+  id: CentcomIconGroup
+  groupName: job-icon-group-centcom
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Nanotrasen
   icons:
   - JobIconNanotrasen
-  - JobIconNoId
-  - JobIconUnknown
 
 - type: jobIconGroup
-  id: AntagonistIconGroup
+  id: BlankIconGroup
+  groupName: job-icon-group-blank
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Unknown
+  icons:
+  - JobIconUnknown
+  - JobIconNoId
+
+- type: jobIconGroup
+  id: ThreatIconGroup
+  groupName: job-icon-group-threat
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Syndicate
   icons:
   - JobIconSyndicate
   - JobIconZombie
