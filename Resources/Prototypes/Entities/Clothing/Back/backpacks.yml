@@ -110,7 +110,7 @@
     sprite: Clothing/Back/Backpacks/atmospherics.rsi
   - type: MicroFiber
     microFiberMaterial: micro-fibers-rubber
-    microFiberColor: micro-fibers-blue
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBackpack
@@ -242,7 +242,7 @@
       sprite: Clothing/Back/Backpacks/merc.rsi
     - type: MicroFiber
       microFiberMaterial: micro-fibers-reinforced-textile
-      microFiberColor: micro-fibers-green
+      microFiberColor: micro-fibers-moss
 
 #ERT
 - type: entity
@@ -384,7 +384,6 @@
     - 0,0,19,9
   - type: MicroFiber
     microFiberMaterial: micro-fibers-plasma
-    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: ClothingBackpackClown

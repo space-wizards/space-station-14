@@ -90,14 +90,6 @@ namespace Content.Server.Forensics
             if (HasComp<ForensicScannerComponent>(args.Target))
                 return;
 
-            if (!HasComp<FingerprintComponent>(args.Target))
-                return;
-
-            if (!HasComp<FiberComponent>(args.Target))
-                return;
-
-            if (!HasComp<MicroFiberComponent>(args.Target))
-                return;
             // These need to be set outside for the anonymous method!
             var user = args.User;
             var target = args.Target;
@@ -162,7 +154,7 @@ namespace Content.Server.Forensics
                 return true;
             }
 
-             _popupSystem.PopupEntity(Loc.GetString("forensic-pad-gloves"));
+            _popupSystem.PopupEntity(Loc.GetString("forensic-pad-verb-no-sapmles"), ent, user);
             return false;
         }
 

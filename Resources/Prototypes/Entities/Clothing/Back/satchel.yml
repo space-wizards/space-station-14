@@ -49,7 +49,7 @@
     sprite: Clothing/Back/Satchels/atmospherics.rsi
   - type: MicroFiber
     microFiberMaterial: micro-fibers-rubber
-    microFiberColor: micro-fibers-blue
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -75,8 +75,8 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/mime.rsi
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-leather
-    microFiberColor: micro-fibers-brown
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingBackpackSatchel

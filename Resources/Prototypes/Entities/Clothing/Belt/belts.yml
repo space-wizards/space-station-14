@@ -82,7 +82,7 @@
   - type: Appearance
   - type: MicroFiber
     microFiberMaterial: micro-fibers-textile
-    microFiberColor: micro-fibers-light-brown
+    microFiberColor: micro-fibers-brown
 
 
 - type: entity
@@ -326,7 +326,7 @@
   - type: Appearance
   - type: MicroFiber
     microFiberMaterial: micro-fibers-synthetic
-    microFiberColor: micro-fibers-white
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBeltMedical
@@ -609,9 +609,6 @@
   - type: Tag
     tags:
     - Kangaroo
-  - type: MicroFiber
-    microFiberMaterial: micro-fibers-leather
-    microFiberColor: micro-fibers-gold
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -740,9 +737,6 @@
   - type: Clothing
     sprite: Clothing/Belt/suspenders_red.rsi
     quickEquip: true
-  - type: MicroFiber
-    microFiberMaterial: micro-fibers-leather
-    microFiberColor: micro-fibers-red
 
 - type: entity
   parent: ClothingBeltSuspendersRed
@@ -753,9 +747,6 @@
     sprite: Clothing/Belt/suspenders_black.rsi
   - type: Clothing
     sprite: Clothing/Belt/suspenders_black.rsi
-  - type: MicroFiber
-    microFiberMaterial: micro-fibers-leather
-    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBeltStorageBase

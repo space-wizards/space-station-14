@@ -16,12 +16,14 @@ micro-fibers-cotton = cotton
 micro-fibers-reinforced-cotton = reinforced cotton
 micro-fibers-fur = fur
 micro-fibers-flax = flax
+micro-fibers-spunbond = spunbond
+micro-fibers-demron = demron
+micro-fibers-wool = wool
 
 micro-fibers-black = black
 micro-fibers-blue = blue
 micro-fibers-brown = brown
 micro-fibers-dark-purple = dark purple
-micro-fibers-gold = gold
 micro-fibers-green = green
 micro-fibers-grey = grey
 micro-fibers-light-blue = light blue

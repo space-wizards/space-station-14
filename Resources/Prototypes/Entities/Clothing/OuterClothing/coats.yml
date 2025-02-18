@@ -169,7 +169,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -191,6 +191,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabChem]
@@ -212,7 +215,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -235,7 +238,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -260,8 +263,8 @@
         Heat: 0.95
         Caustic: 0.65
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
-    microFiberColor: micro-fibers-light-blue
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabCmo]
@@ -283,7 +286,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -306,7 +309,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -330,7 +333,7 @@
         Caustic: 0.75
         Radiation: 0.9
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-demron
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -493,7 +496,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -511,7 +514,7 @@
       coefficients:
         Caustic: 0.75
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-cotton
+    microFiberMaterial: micro-fibers-spunbond
     microFiberColor: micro-fibers-white
 
 - type: entity
@@ -526,7 +529,7 @@
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
   - type: MicroFiber
     microFiberMaterial: micro-fibers-cotton
-    microFiberColor: micro-fibers-brown
+    microFiberColor: micro-fibers-light-brown
 
 - type: entity
   parent: ClothingOuterStorageBase

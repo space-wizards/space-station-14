@@ -27,8 +27,8 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
   - type: MicroFiber
-    microFiberMaterial: micro-fibers-textile
-    microFiberColor: micro-fibers-grey
+    microFiberMaterial: micro-fibers-rubber
+    microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -40,7 +40,7 @@
     sprite: Clothing/Back/Duffels/atmospherics.rsi
   - type: MicroFiber
     microFiberMaterial: micro-fibers-rubber
-    microFiberColor: micro-fibers-blue
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -296,7 +296,6 @@
   - type: HeldSpeedModifier
   - type: MicroFiber
     microFiberMaterial: micro-fibers-plasma
-    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
