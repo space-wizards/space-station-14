@@ -678,7 +678,7 @@ namespace Content.Server.Administration.Systems
 
             bwoinkText = $"{(message.AdminOnly ? "(Admin Only) " : !message.PlaySound ? "(S) " : "")}{bwoinkText}: {escapedText}";
 
-            // If it's not an admin / admin chooses to keep the sound then play it.
+            // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
             var playSound = (!senderAHelpAdmin || message.PlaySound) && !message.AdminOnly;
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound, adminOnly: message.AdminOnly);
 
