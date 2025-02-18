@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: more cruise changes
-    type: Tweak
-  id: 664
-  time: '2024-12-05T22:26:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/918
 - author: suyo
   changes:
   - message: Added Burning Men's Soul to the lobby
@@ -4156,3 +4149,10 @@
   id: 1163
   time: '2025-02-18T06:28:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1700
+- author: kipdotnet
+  changes:
+  - message: The Tck'tck now has proper access for cargo and maintenance.
+    type: Fix
+  id: 1164
+  time: '2025-02-18T17:41:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1733
