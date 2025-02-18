@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the chameleon settings menu not showing up for the voice mask.
-    type: Fix
-  id: 7469
-  time: '2024-10-02T03:22:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32546
-- author: metalgearsloth
-  changes:
-  - message: Fix physics sensors (e.g. proximity triggers) being able to block doors.
-    type: Fix
-  id: 7470
-  time: '2024-10-02T05:00:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32591
 - author: Plykiya
   changes:
   - message: You can now quick-swap uneven stacks of items into your inventory without
@@ -3899,3 +3885,17 @@
   id: 7968
   time: '2025-02-17T12:56:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34795
+- author: Kickguy223
+  changes:
+  - message: Cleaning up a puddle properly changes its slippery properties.
+    type: Fix
+  id: 7969
+  time: '2025-02-17T20:53:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34525
+- author: lzk228
+  changes:
+  - message: Syndicate cyborgs can laugh again.
+    type: Fix
+  id: 7970
+  time: '2025-02-17T21:59:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31510
