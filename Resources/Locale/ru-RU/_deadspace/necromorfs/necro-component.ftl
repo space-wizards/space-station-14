@@ -104,7 +104,7 @@ reagent-effect-guidebook-cause-infection-dead =
 
 ent-SyringeSerumEnslaved = шприц
     .desc = { ent-BaseSyringe.desc }
-    .suffix = Сыворотка порабощения, Не маппить
+    .suffix = Сыворотка порабощения
 entity-name-serum-enslaved = сыворотка порабощения
 reagent-desc-serum-enslaved = Густой и чёрный, пахнет ужасно.
 reagent-effect-guidebook-cause-enslave =

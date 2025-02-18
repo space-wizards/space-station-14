@@ -1,8 +1,9 @@
 ﻿- type: entity
   id: SpawnPointGhostBlob
   name: Blob
-  suffix: DONTMAP, spawner
+  suffix: Spawner
   parent: MarkerBase
+  categories: [ DoNotMap ]
   components:
   - type: BlobSpawner
   - type: GhostRole

@@ -1,5 +1,5 @@
 ent-SpawnPointGhostBlob = Блоб
-    .suffix = НЕ МАППИТЬ, НЕ СПАВНИТЬ
+    .suffix = НЕ СПАВНИТЬ
     .desc = { ent-MarkerBase.desc }
 ent-MobBlobPod = капля Блоба
     .desc = Рядовой Блоб для борьбы с врагами. Зомбирует трупы.

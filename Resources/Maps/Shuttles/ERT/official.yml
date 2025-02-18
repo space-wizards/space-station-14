@@ -716,13 +716,6 @@ entities:
     - type: Transform
       pos: 2.537659,10.751229
       parent: 1
-- proto: BoxFolderBlueFilled
-  entities:
-  - uid: 40
-    components:
-    - type: Transform
-      pos: 2.350159,11.063729
-      parent: 1
 - proto: BriefcaseBrownFilled
   entities:
   - uid: 41
