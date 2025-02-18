@@ -117,8 +117,8 @@ namespace Content.Server.Mapping
             }
 
             // don't interrupt mapping with events or auto-shuttle
-            shell.ExecuteCommand("sudo cvar events.enabled false");
-            shell.ExecuteCommand("sudo cvar shuttle.auto_call_time 0");
+            shell.ExecuteCommand("changecvar events.enabled false");
+            shell.ExecuteCommand("changecvar shuttle.auto_call_time 0");
 
             if (_cfg.GetCVar(CCVars.AutosaveEnabled))
                 shell.ExecuteCommand($"toggleautosave {mapId} {toLoad ?? "NEWMAP"}");
