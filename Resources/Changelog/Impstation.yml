@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Fixed male dwarves using the incorrect vocal emotes.
-    type: Fix
-  id: 659
-  time: '2024-12-05T12:15:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/907
 - author: Sha-Seng
   changes:
   - message: Low Pigtails hairstyle for humans and species that use their hair (by
@@ -4155,3 +4148,10 @@
   id: 1158
   time: '2025-02-18T01:13:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1726
+- author: 12rabbits
+  changes:
+  - message: Fixed cyborg modules losing certain items at low health.
+    type: Fix
+  id: 1159
+  time: '2025-02-18T02:30:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1724
