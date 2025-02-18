@@ -88,7 +88,6 @@ namespace Content.IntegrationTests.Tests
             "CorvaxPaper",
             "CorvaxSilly",
             "CorvaxSpectrum",
-            "Aspid",
             "Bagel",
             "Barratry",
             "Box",
