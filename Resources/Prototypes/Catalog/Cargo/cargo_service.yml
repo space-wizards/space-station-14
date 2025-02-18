@@ -74,7 +74,7 @@
     sprite: Objects/Misc/pens.rsi
     state: pen
   product: CrateServiceBureaucracy
-  cost: 1000
+  cost: 1500
   category: cargoproduct-category-name-service
   group: market
 
