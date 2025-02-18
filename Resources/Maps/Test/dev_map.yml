@@ -13779,7 +13779,7 @@ entities:
     - type: Transform
       pos: 1.5,1.5
       parent: 2709
-- proto: SupermatterGrenade
+- proto: SingularityGrenade
   entities:
   - uid: 2184
     components:
