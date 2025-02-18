@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
-using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
@@ -34,7 +33,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly INetManager _net = default!;
     [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private   readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedContainerSystem _container = default!;
@@ -342,6 +340,14 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         CloseStorage(target);
         return true;
+    }
+
+    public bool IsOpen(EntityUid target, SharedEntityStorageComponent? component = null)
+    {
+        if (!ResolveStorage(target, ref component))
+            return false;
+
+        return component.Open;
     }
 
     public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, SharedEntityStorageComponent? component = null)

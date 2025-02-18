@@ -35,6 +35,9 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
+        [Dependency] private readonly SharedPointLightSystem _light = default!;
+        [Dependency] private readonly EmagSystem _emag = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -44,7 +47,6 @@ namespace Content.Server.VendingMachines
 
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
-            SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamageChanged);
             SubscribeLocalEvent<VendingMachineComponent, PriceCalculationEvent>(OnVendingPrice);
             SubscribeLocalEvent<VendingMachineComponent, EmpPulseEvent>(OnEmpPulse);
@@ -101,12 +103,6 @@ namespace Content.Server.VendingMachines
         {
             vendComponent.Broken = true;
             TryUpdateVisualState((uid, vendComponent));
-        }
-
-        private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
-        {
-            // only emag if there are emag-only items
-            args.Handled = component.EmaggedInventory.Count > 0;
         }
 
         private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
