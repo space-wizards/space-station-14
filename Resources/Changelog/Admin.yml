@@ -781,5 +781,14 @@ Entries:
   id: 97
   time: '2025-02-18T07:28:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35255
+- author: ScarKy0
+  changes:
+  - message: Aghost's intrinsic comms console now uses a new color, announces globally
+      and has significantly lowered delays. Announce command and admin menu option
+      remain unchanged.
+    type: Tweak
+  id: 98
+  time: '2025-02-18T09:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35248
 Name: Admin
 Order: 1
