@@ -91,7 +91,7 @@
     sprite: Clothing/Back/Duffels/security.rsi
   - type: MicroFiber
     microFiberMaterial: micro-fibers-reinforced-textile
-    microFiberColor: micro-fibers-orange
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: [ClothingBackpackDuffel, BaseRestrictedContraband]

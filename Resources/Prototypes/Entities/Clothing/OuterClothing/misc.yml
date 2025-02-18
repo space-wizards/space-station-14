@@ -8,6 +8,9 @@
     sprite: Clothing/OuterClothing/Misc/apron.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apron.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-flax
+    microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -20,6 +23,9 @@
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-flax
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -32,6 +38,9 @@
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-flax
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -44,6 +53,9 @@
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-flax
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -55,6 +67,9 @@
     sprite: Clothing/OuterClothing/Misc/chef.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/chef.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingOuterBase
