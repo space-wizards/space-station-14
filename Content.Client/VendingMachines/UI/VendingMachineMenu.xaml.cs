@@ -25,7 +25,7 @@ namespace Content.Client.VendingMachines.UI
         private readonly Dictionary<EntProtoId, uint> _amounts = new();
 
         /// <summary>
-        /// Where the vending machine is able to be interacted with or not.
+        /// Whether the vending machine is able to be interacted with or not.
         /// </summary>
         private bool _enabled;
 

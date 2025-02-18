@@ -1,23 +1,21 @@
 using Content.Shared.Emag.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Advertise.Components;
 using Content.Shared.Advertise.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Wall;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using SpeakOnUIClosedComponent = Content.Shared.Advertise.Components.SpeakOnUIClosedComponent;
 
 namespace Content.Shared.VendingMachines;
 
@@ -30,7 +28,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] protected readonly SharedPointLightSystem _light = default!;
+    [Dependency] protected readonly SharedPointLightSystem Light = default!;
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private   readonly SharedSpeakOnUIClosedSystem _speakOn = default!;
@@ -145,7 +143,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         RestockInventoryFromPrototype(uid, component, component.InitialStockQuality);
     }
 
-    protected virtual void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false) {}
+    protected virtual void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false) { }
 
     /// <summary>
     /// Checks if the user is authorized to use this vending machine
@@ -164,7 +162,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         if (_accessReader.IsAllowed(sender, uid, accessReader) || HasComp<EmaggedComponent>(uid))
             return true;
 
-        Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid);
+        Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, sender);
         Deny((uid, vendComponent), sender);
         return false;
     }
@@ -276,10 +274,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
 
         // TODO: You know this should really live on the client with netsync off because client knows the state.
-        if (_light.TryGetLight(entity.Owner, out var pointlight))
+        if (Light.TryGetLight(entity.Owner, out var pointlight))
         {
             var lightEnabled = finalState != VendingMachineVisualState.Broken && finalState != VendingMachineVisualState.Off;
-            _light.SetEnabled(entity.Owner, lightEnabled, pointlight);
+            Light.SetEnabled(entity.Owner, lightEnabled, pointlight);
         }
 
         _appearanceSystem.SetData(entity.Owner, VendingMachineVisuals.VisualState, finalState);

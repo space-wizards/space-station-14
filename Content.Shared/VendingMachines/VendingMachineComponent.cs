@@ -43,6 +43,9 @@ namespace Content.Shared.VendingMachines
         [DataField]
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
+        /// <summary>
+        /// If true then unlocks the <see cref="ContrabandInventory"/>
+        /// </summary>
         [DataField]
         public bool Contraband;
 
