@@ -159,7 +159,7 @@
     enabled: false
     radius: 2
     energy: 2
-    color: blue
+    color: red
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
     speed: 360
