@@ -847,6 +847,37 @@
 
 - type: entity
   name: pill
+  suffix: diphenylmethylamine 10u
+  parent: Pill
+  id: PillDiphenylmethylamine
+  components:
+    - type: Pill
+      pillType: 17
+    - type: Sprite
+      state: pill18
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: Diphenylmethylamine
+              Quantity: 10
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterDiphenylmethylamine
+  suffix: Diphenylmethylamine 10u, 5
+  components:
+  - type: Label
+    currentLabel: diphenylmethylamine 10u
+  - type: StorageFill
+    contents:
+    - id: PillDiphenylmethylamine
+      amount: 5
+
+- type: entity
+  name: pill
   suffix: space mirage 10u
   parent: Pill
   id: PillSpaceDrugs
@@ -955,7 +986,7 @@
 - type: entity
   name: pill canister
   parent: PillCanister
-  id: PillCanisterTHC
+  id: PillCanisterMindbreakerToxin
   suffix: Mindbreaker Toxin 10u, 3
   components:
   - type: Label
