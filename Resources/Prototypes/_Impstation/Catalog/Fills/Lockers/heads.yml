@@ -1,0 +1,21 @@
+- type: entityTable
+  id: LockerFillHospitalityDirector
+  table: !type:AllSelector
+    children:
+    - id: AccessConfigurator
+    - id: AdvMopItem
+    - id: BoxEncryptionKeyService
+    - id: DoorRemoteService
+    - id: RubberStampHop #todo rubberstampHd
+    - id: ServiceTechFabCircuitboard
+    - id: WeaponLauncherCleanerLake
+
+- type: entity
+  id: LockerLockerHospitalityDirectorFilled
+  suffix: Filled
+  parent: LockerLockerHospitalityDirector
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: LockerFillHospitalityDirector

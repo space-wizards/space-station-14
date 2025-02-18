@@ -85,7 +85,6 @@
         amount: 2
       - id: Plunger
         amount: 2
-      - id: WeaponLauncherCleanerLake
 
 - type: entity
   id: ClosetLegalFilled

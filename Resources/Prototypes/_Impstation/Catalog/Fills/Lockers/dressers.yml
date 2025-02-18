@@ -1,0 +1,12 @@
+- type: entity
+  id: DresserHospitalityDirectorFilled
+  parent: Dresser
+  suffix: Filled, Hospitality Director
+  components:
+  - type: StorageFill #TODO
+    contents:
+      - id: ClothingHeadHatHopcap
+      - id: ClothingOuterWinterHoP
+      - id: ClothingEyesGlasses
+      - id: ClothingNeckCloakHop
+

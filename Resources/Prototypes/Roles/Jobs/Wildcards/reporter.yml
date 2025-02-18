@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Reporter #Imp
 
 - type: startingGear
   id: ReporterGear

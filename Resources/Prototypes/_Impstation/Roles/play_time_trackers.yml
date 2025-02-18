@@ -1,2 +1,5 @@
 - type: playTimeTracker
   id: JobCourier
+  
+- type: playTimeTracker
+  id: JobHospitalityDirector

@@ -12,6 +12,7 @@
   access:
   - Theatre
   - Maintenance
+  - Mime #Imp
   special:
   - !type:AddComponentSpecial
     components:

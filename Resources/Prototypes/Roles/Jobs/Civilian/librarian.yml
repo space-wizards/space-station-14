@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Librarian #Imp
 
 - type: startingGear
   id: LibrarianGear

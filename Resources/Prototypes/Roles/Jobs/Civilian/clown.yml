@@ -9,6 +9,7 @@
   access:
   - Theatre
   - Maintenance
+  - Clown #Imp
   special:
   - !type:AddComponentSpecial
     components:

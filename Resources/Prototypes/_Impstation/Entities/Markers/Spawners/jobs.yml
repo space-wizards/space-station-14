@@ -12,3 +12,18 @@
     layers:
     - state: green
     - state: courier
+
+# Service
+
+- type: entity
+  id: SpawnPointCourier
+  parent: SpawnPointJobBase
+  name: courier
+  components:
+  - type: SpawnPoint
+    job_id: JobHospitalityDirector
+  - type: Sprite
+    sprite: _Impstation/Markers/jobs.rsi
+    layers:
+    - state: green
+    - state: hd

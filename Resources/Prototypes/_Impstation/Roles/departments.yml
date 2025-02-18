@@ -1,0 +1,12 @@
+#Used for HD playtime requirments
+- type: department
+  id: Dining
+  name: department-Dining
+  description: department-Dining-description
+  color: "#FFFFFF"
+  roles:
+  - Bartender
+  - Chef
+  - ServiceWorker
+  primary: false
+  editorHidden: true

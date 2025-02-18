@@ -17,6 +17,7 @@
   color: "#9FED58"
   weight: -10
   roles:
+  - HospitalityDirector
   - Bartender
   - Botanist
   - Boxer
