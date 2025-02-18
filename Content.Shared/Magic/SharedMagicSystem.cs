@@ -487,6 +487,9 @@ public abstract class SharedMagicSystem : EntitySystem
 
             var ent = human.Comp.OwnedEntity.Value;
 
+            if (_tag.HasTag(ent, "InvalidForGlobalSpawnSpell"))
+                continue;
+
             var mapCoords = _transform.GetMapCoordinates(ent);
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
             {
