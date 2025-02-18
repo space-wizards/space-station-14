@@ -1,0 +1,1 @@
+﻿station-event-holopad-malfunction-start-announcement = Attention. The station's holopads have malfunctioned, leading to the appearance of holographic entities. Please eliminate the threat before productivity is affected.
