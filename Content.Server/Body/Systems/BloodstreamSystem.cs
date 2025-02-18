@@ -3,6 +3,7 @@ using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Popups;
+using Content.Shared._Impstation.Traits.Assorted;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -407,6 +408,9 @@ public sealed class BloodstreamSystem : EntitySystem
         if (!Resolve(uid, ref component, logMissing: false))
             return false;
 
+        // imp edit - applies the multiplier from the trait if bleeding is being reduced
+        if (amount < 0 && TryComp<HemophiliaComponent>(uid, out var trait))
+            amount *= trait.BleedReductionMultiplier;
         component.BleedAmount += amount;
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 

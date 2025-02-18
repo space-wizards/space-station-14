@@ -34,17 +34,6 @@
                        StyleClasses="LabelSubText"
                        VerticalAlignment="Center"
                        Margin="0 0 8 0" />
-                <Button Name="DeleteChatButton"
-                        MaxSize="32 32"
-                        Visible="False"
-                        StyleClasses="OpenBoth"
-                        Margin="0 0 4 0"
-                        ToolTip="{Loc nano-chat-delete}">
-                    <TextureRect StyleClasses="ButtonSquare"
-                                 TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"
-                                 Stretch="KeepAspectCentered"
-                                 MinSize="18 18" />
-                </Button>
                 <Button Name="MuteButton"
                         MaxSize="32 32"
                         StyleClasses="OpenBoth"
@@ -53,12 +42,12 @@
                     <Control HorizontalExpand="True" VerticalExpand="True">
                         <TextureRect Name="BellIcon"
                                      StyleClasses="ButtonSquare"
-                                     TexturePath="/Textures/_DV//Interface/VerbIcons/bell.svg.png"
+                                     TexturePath="/Textures/_DV/Interface/VerbIcons/bell.svg.png"
                                      Stretch="KeepAspectCentered"
                                      MinSize="18 18" />
                         <TextureRect Name="BellMutedIcon"
                                      StyleClasses="ButtonSquare"
-                                     TexturePath="/Textures/_DV//Interface/VerbIcons/bell_muted.png"
+                                     TexturePath="/Textures/_DV/Interface/VerbIcons/bell_muted.png"
                                      Stretch="KeepAspectCentered"
                                      Visible="False"
                                      MinSize="18 18" />
@@ -71,11 +60,33 @@
                         Margin="0 0 4 0"
                         StyleClasses="OpenBoth"
                         ToolTip="{Loc nano-chat-new-chat}" />
+                <Button Name="LookupButton"
+                        MaxSize="32 32"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 4 0"
+                        ToolTip="{Loc nano-chat-look-up}">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
+                <Button Name="ListNumberButton"
+                        MaxSize="32 32"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 4 0"
+                        ToolTip="{Loc nano-chat-list-number}"
+                        ToggleMode="True">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/_DV/Interface/VerbIcons/hamburger_icon.svg.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
             </BoxContainer>
         </controls:StripeBack>
 
         <!-- Main content split -->
-        <BoxContainer Orientation="Horizontal"
+        <BoxContainer Name="ChatView"
+                      Orientation="Horizontal"
                       VerticalExpand="True"
                       HorizontalExpand="True"
                       Margin="0 5 0 0">
@@ -133,18 +144,59 @@
                         </ScrollContainer>
                     </BoxContainer>
 
+                    <!-- Character count -->
+                    <Label Name="CharacterCount"
+                           HorizontalAlignment="Center"
+                           StyleClasses="LabelSubText"
+                           Margin="0 0 4 2"
+                           Visible="False" />
                     <!-- Message input -->
                     <BoxContainer Name="MessageInputContainer"
                                   Orientation="Horizontal"
                                   HorizontalExpand="True"
                                   Margin="0 4 0 0"
                                   Visible="False">
-                        <!-- Character count -->
-                        <Label Name="CharacterCount"
-                               HorizontalAlignment="Right"
-                               StyleClasses="LabelSubText"
-                               Margin="0 0 4 2"
-                               Visible="False" />
+                        <Button Name="EditChatButton"
+                                MaxSize="32 32"
+                                Visible="False"
+                                StyleClasses="OpenBoth"
+                                Margin="0 0 4 0"
+                                ToolTip="{Loc nano-chat-edit}">
+                            <TextureRect StyleClasses="ButtonSquare"
+                                        TexturePath="/Textures/_DV/Interface/VerbIcons/edit.svg.png"
+                                        Stretch="KeepAspectCentered"
+                                        MinSize="18 18" />
+                        </Button>
+                        <Button Name="DeleteChatButton"
+                                MaxSize="32 32"
+                                Visible="False"
+                                StyleClasses="OpenBoth"
+                                Margin="0 0 4 0"
+                                ToolTip="{Loc nano-chat-delete}">
+                            <TextureRect StyleClasses="ButtonSquare"
+                                        TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"
+                                        Stretch="KeepAspectCentered"
+                                        MinSize="18 18" />
+                        </Button>
+                        <Button Name="MuteChatButton"
+                                MaxSize="32 32"
+                                StyleClasses="OpenBoth"
+                                Margin="0 0 4 0"
+                                ToolTip="{Loc nano-chat-toggle-mute-chat}">
+                            <Control HorizontalExpand="True" VerticalExpand="True">
+                                <TextureRect Name="BellIconContact"
+                                             StyleClasses="ButtonSquare"
+                                             TexturePath="/Textures/_DV/Interface/VerbIcons/bell.svg.png"
+                                             Stretch="KeepAspectCentered"
+                                             MinSize="18 18" />
+                                <TextureRect Name="BellMutedIconContact"
+                                             StyleClasses="ButtonSquare"
+                                             TexturePath="/Textures/_DV/Interface/VerbIcons/bell_muted.png"
+                                             Stretch="KeepAspectCentered"
+                                             Visible="False"
+                                             MinSize="18 18" />
+                            </Control>
+                        </Button>
                         <!-- Input row -->
                         <LineEdit Name="MessageInput"
                                   PlaceHolder="{Loc nano-chat-message-placeholder}"
@@ -163,5 +215,7 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
+        <cartridges:NanoChatLookupView Name="LookupView"
+                                       Visible="False" />
     </BoxContainer>
 </cartridges:NanoChatUiFragment>

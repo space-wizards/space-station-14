@@ -25,3 +25,8 @@
   parent: BaseCircuitboardRecipe
   id: ServiceTechFabCircuitboard
   result: ServiceTechFabCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ImpCoffeeMachineCircuitboard
+  result: ImpCoffeeMachineCircuitboard

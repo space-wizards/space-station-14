@@ -29,10 +29,23 @@
   components:
   - type: Unremoveable
 
+- type: entity
+  parent: PinpointerStation
+  id: PinpointerStationUnremoveable
+  description: You are the station. Find yourself. Press E to activate.
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable
+  - type: Pinpointer
+    component: ResearchServer
+    targetName: the station
+
 # StartingGear
 
 - type: startingGear
   id: StartingGearDroneTools
+  equipment:
+    pocket1: PinpointerStationUnremoveable
   inhand:
     - DroneSatchelUnremovable
     - trayScannerUnremoveable

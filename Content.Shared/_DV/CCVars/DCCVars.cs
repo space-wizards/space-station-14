@@ -16,12 +16,6 @@ public sealed class DCCVars
         CVarDef.Create("shuttle.shipyard", true, CVar.SERVERONLY);
 
     /// <summary>
-    /// How often mail is delivered in minutes
-    /// </summary>
-    public static readonly CVarDef<double> MailTeleportIntervalInMinutes =
-        CVarDef.Create("mail.teleportinterval", 5.0d, CVar.SERVERONLY);
-
-    /// <summary>
     /// How many mail candidates do we need per actual delivery sent when
     /// the mail goes out? The number of candidates is divided by this number
     /// to determine how many deliveries will be teleported in.
@@ -117,4 +111,9 @@ public sealed class DCCVars
     public static readonly CVarDef<int> MailLargeMalus =
         CVarDef.Create("mail.largemalus", -250, CVar.SERVERONLY);
 
+    /// <summary>
+    /// Disables all vision filters for species like Vulpkanin or Harpies. There are good reasons someone might want to disable these.
+    /// </summary>
+    public static readonly CVarDef<bool> NoVisionFilters =
+        CVarDef.Create("accessibility.no_vision_filters", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

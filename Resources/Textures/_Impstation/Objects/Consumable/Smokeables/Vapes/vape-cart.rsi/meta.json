@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by nowaitstop",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "box"
+    },
+    {
+        "name": "cart"
+    },
+    {
+        "name": "cart-front"
+    },
+    {
+        "name": "fill1"
+    },
+    {
+        "name": "fill2"
+    },
+    {
+        "name": "fill3"
+    },
+    {
+        "name": "custom-package"
+    },
+    {
+        "name": "trash"
+    }
+  ]
+}

@@ -25,3 +25,17 @@
     sprite: _Impstation/Clothing/OuterClothing/Coats/clown_jokestercoat.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Coats/clown_jokestercoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatQmHuge
+  name: quartermaster's XXXL winter coat
+  description: An oversized, exorbitantly fluffy winter coat for quartermasters.
+  components:
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/qm_hugecoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/qm_hugecoat.rsi

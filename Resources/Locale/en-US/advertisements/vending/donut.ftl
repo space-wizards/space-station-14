@@ -1,4 +1,4 @@
-﻿advertisement-donut-1 = Each of us is a little cop!
+﻿advertisement-donut-1 = Everyone has a little hole inside us!
 advertisement-donut-2 = Hope you're hungry!
 advertisement-donut-3 = Over 1 million donuts sold!
 advertisement-donut-4 = We pride ourselves in the consistency of our products!
@@ -6,5 +6,5 @@ advertisement-donut-5 = Sweet, sugary and delicious!
 advertisement-donut-6 = Donut worry, be happy!
 thankyou-donut-1 = Enjoy your donut!
 thankyou-donut-2 = Another donut sold!
-thankyou-donut-3 = Have a nice day, officer!
-thankyou-donut-4 = I hope you get addicted!
+thankyou-donut-3 = Another day, another donut!
+thankyou-donut-4 = See you again soon!

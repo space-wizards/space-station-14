@@ -248,9 +248,28 @@
   - BrownShoes
   - LacedShoes
   - LeatherShoes
-  - HoPShoesWhite
+  - WhiteDressShoes
   - BlackCommandHeels
   - BlueCommandHeels
+
+- type: loadoutGroup
+  id: AdminAssistantBackpack
+  name: loadout-group-admin-assistant-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - LeatherSatchel #imp
+
+- type: loadoutGroup
+  id: BartenderShoes
+  name: loadout-group-bartender-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes #imp
+  - LeatherShoes #imp
+  - BlackHeels #imp
+  - ClownShoesExpert #imp
 
 - type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
   id: StartingGearApidBotanist
