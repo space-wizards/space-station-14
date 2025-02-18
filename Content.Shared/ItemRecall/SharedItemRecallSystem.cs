@@ -85,6 +85,8 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
         _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
 
+        _popups.PopupPredictedCoordinates(Loc.GetString("item-recall-item-disappear", ("item", ent)), Transform(ent).Coordinates, actionOwner.Value);
+
         _hands.TryForcePickupAnyHand(actionOwner.Value, ent);
     }
 
