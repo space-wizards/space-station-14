@@ -258,11 +258,6 @@ public sealed partial class DoorComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanPry = true;
 
-    // DS14-airlocks-closing-fix-start
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public bool IsBeingPried;
-    // DS14-airlocks-closing-fix-end
-
     [DataField]
     public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 

@@ -231,15 +231,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         if (door.State == DoorState.Closed)
         {
-            door.IsBeingPried = true; // DS14-airlocks-closing-fix
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open");
-            TryOpen(uid, door, args.User, true); // DS14-airlocks-closing-fix
+            StartOpening(uid, door, args.User, true);
         }
         else if (door.State == DoorState.Open)
         {
-            door.IsBeingPried = true; // DS14-airlocks-closing-fix
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
-            TryClose(uid, door, args.User, true); // DS14-airlocks-closing-fix
+            StartClosing(uid, door, args.User, true);
         }
     }
 
@@ -384,7 +382,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SetCollidable(uid, false, door);
         door.Partial = true;
-        door.IsBeingPried = false; // DS14-airlocks-closing-fix
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add((uid, door));
         Dirty(uid, door);
@@ -480,13 +477,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Open;
             AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Open);
-            door.IsBeingPried = false; // DS14-airlocks-closing-fix
             Dirty(uid, door);
             return false;
         }
 
         door.Partial = true;
-        door.IsBeingPried = false; // DS14-airlocks-closing-fix
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         Dirty(uid, door);
