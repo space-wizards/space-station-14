@@ -16,6 +16,7 @@ fibers-red = красные
 fibers-black = чёрные
 fibers-blue = синие
 fibers-teal = аквамариновые
+fibers-light-brown = light brown
 fibers-brown = коричневые
 fibers-grey = серые
 fibers-green = зелёные

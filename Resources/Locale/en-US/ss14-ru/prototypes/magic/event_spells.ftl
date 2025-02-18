@@ -1,5 +1,5 @@
 ent-ActionSummonGhosts = Summon Ghosts
-    .desc = Makes all current ghosts permanently invisible
+    .desc = Makes all current ghosts permanently visible
 ent-ActionSummonGuns = Summon Guns
     .desc = AK47s for everyone! Places a random gun in front of everybody.
 ent-ActionSummonMagic = Summon Magic
