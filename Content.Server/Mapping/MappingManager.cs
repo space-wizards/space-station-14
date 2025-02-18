@@ -31,6 +31,7 @@ public sealed class MappingManager : IPostInjectInit
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly IResourceManager _resourceMan = default!;
+    [Dependency] private readonly IEntityManager _ent = default!;
 
     private ISawmill _sawmill = default!;
     private ZStdCompressionContext _zstd = default!;
