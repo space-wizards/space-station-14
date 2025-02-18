@@ -7,10 +7,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
-using JetBrains.FormatRipper.Elf;
-using Robust.Shared.GameObjects;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Forensics
 {
