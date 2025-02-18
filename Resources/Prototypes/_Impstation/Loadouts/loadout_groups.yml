@@ -259,17 +259,17 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
-  - LeatherSatchel #imp
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: BartenderShoes
   name: loadout-group-bartender-shoes
   loadouts:
   - BlackShoes
-  - LacedShoes #imp
-  - LeatherShoes #imp
-  - BlackHeels #imp
-  - ClownShoesExpert #imp
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - ClownShoesExpert
 
 - type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
   id: StartingGearApidBotanist
@@ -391,7 +391,7 @@
   minLimit: 0
   loadouts:
   - CourierWintercoat
-  - BomberCargo #imp
+  - BomberCargo
 
 - type: loadoutGroup
   id: CourierShoes
