@@ -17,14 +17,13 @@
   color: "#9FED58"
   weight: -10
   roles:
-  - HospitalityDirector
+  - HospitalityDirector #Imp
   - Bartender
   - Botanist
   - Boxer
   - Chaplain
   - Chef
   - Clown
-  - HeadOfPersonnel
   - Janitor
   - Lawyer
   - Librarian
@@ -76,6 +75,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - HospitalityDirector #Imp
   - AdministrativeAssistant # Delta V
   primary: false
   weight: 100
