@@ -28,12 +28,14 @@ namespace Content.Shared.Access.Systems
         public string CurrentName { get; }
         public string CurrentJob { get; }
         public string CurrentJobIconId { get; }
+        public List<ProtoId<JobIconGroupPrototype>> IconGroups { get; }
 
-        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId)
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> iconGroups)
         {
             CurrentName = currentName;
             CurrentJob = currentJob;
             CurrentJobIconId = currentJobIconId;
+            IconGroups = iconGroups;
         }
     }
 

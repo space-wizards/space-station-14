@@ -39,23 +39,25 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
-        public void SetAllowedIcons(string currentJobIconId)
+        public void SetAllowedIcons(string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> iconGroups)
         {
             IconGrid.DisposeAllChildren();
 
             var jobIconButtonGroup = new ButtonGroup();
             var i = 0;
             // TEMP
-            var iconGroups = _prototypeManager.EnumeratePrototypes<JobIconGroupPrototype>().ToList();
             List<JobIconPrototype> icons = new();
             foreach (var group in iconGroups)
             {
-                foreach (var iconID in group.Icons)
+                if (!_prototypeManager.TryIndex<JobIconGroupPrototype>(group, out var groupProto))
+                    continue;
+
+                foreach (var iconID in groupProto.Icons)
                 {
-                    if (!_prototypeManager.TryIndex<JobIconPrototype>(iconID, out var proto))
+                    if (!_prototypeManager.TryIndex<JobIconPrototype>(iconID, out var iconProto))
                         continue;
 
-                    icons.Add(proto);
+                    icons.Add(iconProto);
                 }
             }
             // var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection).ToList();

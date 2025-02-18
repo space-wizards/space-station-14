@@ -595,6 +595,20 @@
     - state: default
     - state: idpassenger
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ResearchIconGroup
+    - ServiceIconGroup
+    - EntertainerIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - CentcomIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
