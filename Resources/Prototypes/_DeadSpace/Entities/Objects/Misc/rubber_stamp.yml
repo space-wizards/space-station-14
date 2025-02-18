@@ -1,8 +1,8 @@
 - type: entity
   name: magistrat's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampMagistrat
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-magistrat
@@ -14,9 +14,9 @@
 
 - type: entity
   name: brigmedic's rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampBrigmedic
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-brigmedic
@@ -28,9 +28,9 @@
 
 - type: entity
   name: meme deny rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampMemeDeny
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-meme-deny
@@ -41,9 +41,9 @@
 
 - type: entity
   name: coroner rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampCoroner
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-coroner
@@ -53,24 +53,10 @@
     state: stamp-chaplain
 
 - type: entity
-  name: lawyer rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
-  id: RubberStampLawyer
-  suffix: DO NOT MAP
-  categories: [ HideSpawnMenu ] # they actually can't map, ha-ha
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-lawyer
-    stampedColor: "#2F0069"
-    stampState: "paper_stamp-lawyer"
-  - type: Sprite
-    state: stamp-rd
-
-- type: entity
   name: blue shield rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampBlueShield
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-blueshield
@@ -81,9 +67,9 @@
 
 - type: entity
   name: senior administrator rubber stamp
-  parent: [RubberStampBase, BaseCommandContraband]
+  parent: RubberStampBase
   id: RubberStampSeniorAdministrator
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-senior-administrator
@@ -100,7 +86,7 @@
   - type: Stamp
     stampedName: мяу
     stampedColor: "#323232"
-    stampState: "paper_stamp-mime"
+    stampState: "paper_stamp-iaa"
     stampTexture: "/Textures/Interface/Stamps/meow.png"
   - type: Sprite
     state: stamp-greytide

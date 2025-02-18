@@ -26,7 +26,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Egida-76
+      name: NT-Egida 76
     - type: Transform
       pos: -0.46875,-0.0625
     - type: MapGrid

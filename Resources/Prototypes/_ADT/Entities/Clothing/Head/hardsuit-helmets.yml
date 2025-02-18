@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingHeadHelmetHardsuitCybersunBodyGuard
   categories: [ HideSpawnMenu ]
   name: шлем телохранителя Cybersun
@@ -26,7 +26,7 @@
         Radiation: 0.5
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingHeadHelmetHardsuitCybersunCrysis
   categories: [ HideSpawnMenu ]
   name: шлем суперсолдата Cybersun
@@ -55,7 +55,7 @@
         Radiation: 0
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingHeadHelmetHardsuitCerber
   categories: [ HideSpawnMenu ]
   name: шлем скафандра "Цербера"
@@ -79,7 +79,7 @@
         Radiation: 0.7
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingHeadHelmetHardsuitSaibaSain
   categories: [ HideSpawnMenu ]
   name: шлем элитного скафандра самурая
@@ -108,7 +108,7 @@
         Radiation: 0
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingHeadHelmetIlisium
   categories: [ HideSpawnMenu ]
   name: шлем Ilisium
@@ -131,7 +131,7 @@
         Radiation: 0.95
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTSpaceMarinneHead
   categories: [ HideSpawnMenu ]
   name: шлем скафандра чемпиона

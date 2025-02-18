@@ -67,3 +67,5 @@ ent-FoodBakedCroissant = круассан
     .desc = Маслянистое, слоистое лакомство.
 ent-FoodBakedCroissantCotton = хлопковый круассан
     .desc = Маслянистое, слоистое, волокнистое лакомство.
+ent-FoodBakedGrilledCheeseSandwich = grilled cheese sandwich
+    .desc = Bread and cheese toasted with butter, perfect for a chilly day in space.

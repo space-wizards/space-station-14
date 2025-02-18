@@ -16,7 +16,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Repit
+      name: NT-Repit
     - type: Transform
       pos: -0.43756104,-3.627046
     - type: MapGrid

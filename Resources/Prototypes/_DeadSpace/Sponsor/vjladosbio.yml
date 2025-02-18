@@ -102,7 +102,7 @@
     size: Huge
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitVjladosBio
   categories: [ HideSpawnMenu ]
   name: шлем биологического скафандра

@@ -98,7 +98,7 @@
     size: Huge
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitdefo5796
   categories: [ HideSpawnMenu ]
   name: шлем скафандра киберпсиха

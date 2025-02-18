@@ -19,8 +19,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      desc: NT - Catny
-      name: NT - Catny
+      name: NT-Catny
     - type: Transform
       pos: -0.37500024,-0.6250001
     - type: MapGrid

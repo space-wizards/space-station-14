@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetCBURNNECROLeader
   name: шлем лидера ОПНУ
   description: Устойчивый к давлению и ударостойкий шлем ОПНУ.
@@ -77,7 +77,7 @@
       Omnizine: 5
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetCBURNNECROSoldier
   name: шлем солдата ОПНУ
   description: Устойчивый к давлению и ударостойкий шлем ОПНУ.

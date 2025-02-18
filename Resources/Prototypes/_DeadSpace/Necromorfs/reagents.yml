@@ -50,6 +50,7 @@
 - type: entity
   parent: BaseSyringe
   id: SyringeSerumEnslaved
+  categories: [ DoNotMap ]
   components:
     - type: SolutionContainerManager
       solutions:

@@ -16,7 +16,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT-DS-665 - Rescue Shuttle
+      name: NT-DS 665
     - type: Transform
       rot: -1.8999460735358298E-05 rad
     - type: MapGrid

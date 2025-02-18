@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitKloopRe
   name: ударопрочный шлем
   description: Устойчивый к давлению и ударостойкий шлем ОПНУ. Создано NanoTrasen.

@@ -1,7 +1,8 @@
 - type: entity
   id: BriefcaseIAAFilled
   parent: BriefcaseBrown
-  suffix: IAA, DO NOT MAP
+  suffix: IAA
+  categories: [ DoNotMap ]
   components:
     - type: StorageFill
       contents:
@@ -12,7 +13,8 @@
 - type: entity
   id: BriefcaseMagistratFilled
   parent: BriefcaseBrown
-  suffix: Magistrat, DO NOT MAP
+  suffix: Magistrat
+  categories: [ DoNotMap ]
   components:
     - type: StorageFill
       contents:
@@ -23,7 +25,8 @@
 - type: entity
   id: BriefcaseLawyerFilled
   parent: BriefcaseBrown
-  suffix: Lawyer, DO NOT MAP
+  suffix: Lawyer
+  categories: [ DoNotMap ]
   components:
     - type: StorageFill
       contents:

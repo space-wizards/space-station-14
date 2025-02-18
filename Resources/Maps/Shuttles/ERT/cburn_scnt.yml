@@ -22,7 +22,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Suppression
+      name: NT-Suppression
     - type: Transform
       pos: -0.47248116,0.68331015
     - type: MapGrid

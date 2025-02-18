@@ -121,7 +121,7 @@
     sprintModifier: 0.85
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitdrippenwagen
   name: шлем скафандра Банши
   description: Шлем изолирующий владельца от страшного вакуума снаружи.

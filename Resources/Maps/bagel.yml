@@ -19291,13 +19291,6 @@ entities:
     - type: Transform
       pos: 5.5318065,-6.13377
       parent: 2
-- proto: BoxFolderBlueFilled
-  entities:
-  - uid: 1163
-    components:
-    - type: Transform
-      pos: 10.42313,2.6351461
-      parent: 2
 - proto: BoxFolderGreen
   entities:
   - uid: 1164

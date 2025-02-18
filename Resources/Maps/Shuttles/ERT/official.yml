@@ -79,7 +79,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Kalanchi - 28
+      name: NT-Kalanchi 28
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.923604,0.39184356
@@ -715,13 +715,6 @@ entities:
     components:
     - type: Transform
       pos: 2.537659,10.751229
-      parent: 1
-- proto: BoxFolderBlueFilled
-  entities:
-  - uid: 40
-    components:
-    - type: Transform
-      pos: 2.350159,11.063729
       parent: 1
 - proto: BriefcaseBrownFilled
   entities:

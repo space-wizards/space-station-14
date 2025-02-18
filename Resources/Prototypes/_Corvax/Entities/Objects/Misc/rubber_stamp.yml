@@ -1,0 +1,12 @@
+- type: entity
+  name: law office's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampIAA
+  categories: [ DoNotMap ]
+  components:
+    - type: Stamp
+      stampedName: stamp-component-stamped-name-iaa
+      stampedColor: "#6B6B6B"
+      stampState: "paper_stamp-iaa"
+    - type: Sprite
+      state: stamp-chaplain

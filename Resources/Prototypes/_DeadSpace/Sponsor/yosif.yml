@@ -194,7 +194,7 @@
     size: Huge
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitYosif
   categories: [ HideSpawnMenu ]
   name: шлем скафандра "Орион"

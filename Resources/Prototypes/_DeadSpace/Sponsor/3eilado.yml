@@ -158,7 +158,7 @@
     size: Huge
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuit3eilado
   name: шлем скафандра модификации "モモンガ"
   description: Кажется, этот шлем кого-то напоминает.

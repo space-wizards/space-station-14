@@ -94,7 +94,7 @@
   - type: HeldSpeedModifier
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitmeowsp
   categories: [ HideSpawnMenu ]
   name: шлем няно скафанда

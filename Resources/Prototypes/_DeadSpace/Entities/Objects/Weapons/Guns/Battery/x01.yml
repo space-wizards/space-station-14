@@ -3,7 +3,8 @@
   id: WeaponPistolX01
   name: X-01 мультифазовый энергетический пистолет
   description: Это дорогая, современная версия антикварного лазерного пистолета. У этого оружия есть несколько уникальных режимов огня, но нет возможности самостоятельно перезаряжаться с течением времени.
-  suffix: Пистолет, НЕ МАППИТЬ
+  suffix: Пистолет
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Battery/x01.rsi

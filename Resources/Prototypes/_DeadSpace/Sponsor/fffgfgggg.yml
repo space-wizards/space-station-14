@@ -74,7 +74,7 @@
     sprintModifier: 0.9
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitfffgfgggg
   categories: [ HideSpawnMenu ]
   name: шлем смерти

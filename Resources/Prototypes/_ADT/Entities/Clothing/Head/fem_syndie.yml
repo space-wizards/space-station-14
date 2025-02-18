@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingHeadFemHelmetHardsuitSyndieCommander
   categories: [ HideSpawnMenu ]
   name: женский шлем командира синдиката
@@ -24,7 +24,7 @@
         Radiation: 0.5
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingFemHeadHelmetHardsuitSyndieElite
   categories: [ HideSpawnMenu ]
   name: женский элитный шлем
@@ -52,7 +52,7 @@
         Radiation: 0.5
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTClothingFemHeadHelmetHardsuitSyndie
   categories: [ HideSpawnMenu ]
   name: кроваво-красный женский шлем синдиката

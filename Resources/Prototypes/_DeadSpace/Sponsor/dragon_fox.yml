@@ -107,7 +107,7 @@
     sprintModifier: 0.9
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitDragonFox
   categories: [ HideSpawnMenu ]
   name: королевский шлем
@@ -163,7 +163,7 @@
     sprintModifier: 0.9
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitDragonFoxEvent
   name: шлем эгида
   description: Это имперский шлем типа «Аэгис», предназначенный для защиты владельца от психических атак. 
@@ -432,7 +432,7 @@
     size: Huge
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitDragonFoxAlt
   name: шлем Адепта Сороритас
   description: Шлем оснащён системами фильтрации которые обеспечивают сёстрам чистый воздух. Дизайн шлема отражает его функциональность и эстетику, сочетая в себе элементы футуризма и религиозного символизма.
@@ -526,7 +526,7 @@
             - PowerCell
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitDragonFoxMedTech
   name: шлем скафандра Боевого Прототипа Медика
   description: 

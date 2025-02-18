@@ -11,6 +11,7 @@ using Content.Server.RoundEnd;
 using Robust.Shared.Map.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+using Robust.Shared.EntitySerialization.Systems;
 
 namespace Content.Server.DeadSpace.SpawnERTShuttleCommand;
 
@@ -46,7 +47,7 @@ public sealed class SpawnERTShuttleCommand : LocalizedCommands
             return;
         }
 
-        var shuttle = _entityManager.System<MapLoaderSystem>().LoadGrid(mapComponent.MapId, shuttlePrototype.Path);
+        _entityManager.System<MapLoaderSystem>().TryLoadGrid(mapComponent.MapId, shuttlePrototype.Path, out var shuttle);
 
         if (_entityManager.Deleted(shuttle))
         {
