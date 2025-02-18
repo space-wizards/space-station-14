@@ -1,5 +1,5 @@
-forensic-micro-fibers = {LOC($material)} fibers
-forensic-micro-fibers-colored = {LOC($color)} {LOC($material)} fibers
+forensic-micro-fibers = {LOC($material)} microfibers
+forensic-micro-fibers-colored = {LOC($color)} {LOC($material)} microfibers
 
 micro-fibers-textile = textile
 micro-fibers-reinforced-textile = reinforced textile

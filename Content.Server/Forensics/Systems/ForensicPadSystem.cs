@@ -90,6 +90,14 @@ namespace Content.Server.Forensics
             if (HasComp<ForensicScannerComponent>(args.Target))
                 return;
 
+            if (!HasComp<FingerprintComponent>(args.Target))
+                return;
+
+            if (!HasComp<FiberComponent>(args.Target))
+                return;
+
+            if (!HasComp<MicroFiberComponent>(args.Target))
+                return;
             // These need to be set outside for the anonymous method!
             var user = args.User;
             var target = args.Target;
@@ -150,10 +158,11 @@ namespace Content.Server.Forensics
 
             if (TryComp<MicroFiberComponent>(ent, out var microFiber))
             {
-                sample = string.IsNullOrEmpty(microFiber.MicroFiberColor) ? Loc.GetString("forensic-fibers", ("material", microFiber.MicroFiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", microFiber.MicroFiberColor), ("material", microFiber.MicroFiberMaterial));
+                sample = string.IsNullOrEmpty(microFiber.MicroFiberColor) ? Loc.GetString("forensic-micro-fibers", ("material", microFiber.MicroFiberMaterial)) : Loc.GetString("forensic-micro-fibers-colored", ("color", microFiber.MicroFiberColor), ("material", microFiber.MicroFiberMaterial));
                 return true;
             }
 
+             _popupSystem.PopupEntity(Loc.GetString("forensic-pad-gloves"));
             return false;
         }
 

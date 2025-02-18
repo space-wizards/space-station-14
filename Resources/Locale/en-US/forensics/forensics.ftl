@@ -16,6 +16,7 @@ forensic-pad-start-scan-user = You start taking a sample of {CAPITALIZE($target)
 forensic-pad-already-used = This pad has already been used.
 forensic-pad-verb-text = Get samples
 forensic-pad-verb-message = Perform a samples extraction
+forensic-pad-verb-no-sapmles = Object don't have any samples to take
 forensic-scanner-match-fiber = Match in fiber found!
 forensic-scanner-match-micro-fiber = Match in microfiber found!
 forensic-scanner-match-fingerprint = Match in fingerprint found!

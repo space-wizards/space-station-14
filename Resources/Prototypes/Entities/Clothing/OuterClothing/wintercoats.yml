@@ -973,9 +973,6 @@
   - type: MicroFiber
     microFiberMaterial: micro-fibers-spiderweb
     microFiberColor: micro-fibers-black
-  - type: MicroFiber
-    microFiberMaterial: micro-fibers-synthetic-fur
-    microFiberColor: micro-fibers-purple
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
