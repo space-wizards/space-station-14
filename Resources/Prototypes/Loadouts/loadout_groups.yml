@@ -289,6 +289,7 @@
   minLimit: 0
   loadouts:
   - PassengerWintercoat
+  - BomberLightweight #imp
 
 - type: loadoutGroup
   id: PassengerShoes
@@ -939,6 +940,7 @@
   minLimit: 0
   loadouts:
   - CargoTechnicianWintercoat
+  - BomberCargo #imp
 
 - type: loadoutGroup
   id: CargoTechnicianShoes
@@ -1001,6 +1003,7 @@
   minLimit: 0
   loadouts:
   - SalvageSpecialistWintercoat
+  - BomberCargo #imp
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes
@@ -1115,6 +1118,7 @@
   loadouts:
   - StationEngineerOuterVest
   - StationEngineerWintercoat
+  - BomberEngineering #imp
 
 - type: loadoutGroup
   id: StationEngineerShoes
@@ -1152,6 +1156,7 @@
   minLimit: 0
   loadouts:
   - AtmosphericTechnicianWintercoat
+  - BomberEngineering #imp
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack
@@ -1295,6 +1300,7 @@
   - RoboticistLabCoat
   - RoboticistWintercoat
   - SeniorResearcherLabCoat
+  - BomberScience #imp
 
 - type: loadoutGroup
   id: ScientistShoes
@@ -1421,7 +1427,7 @@
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
   - WardenWinterCoatUnarmored
-  - ClothingOuterCoatFieldBomber #imp
+  - BomberSecurity #imp
 
 - type: loadoutGroup
   id: WardenPDA
@@ -1490,7 +1496,7 @@
   - ArmorVestSlim
   - ArmorVestCompact #imp
   - SecurityOfficerWintercoat
-  - ClothingOuterCoatFieldBomber #imp
+  - BomberSecurity #imp
 
 - type: loadoutGroup
   id: SecurityShoes
@@ -1553,6 +1559,7 @@
   - ArmorVest #imp
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
+  - BomberSecurity #imp
   - ClothingOuterCoatFieldJacket #imp
 
 - type: loadoutGroup
@@ -1604,6 +1611,7 @@
   - ArmorVest #imp
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
+  - BomberSecurity #imp
 
 - type: loadoutGroup
   id: BrigmedicShoes
@@ -1741,6 +1749,7 @@
   - RegularLabCoat
   - MedicalDoctorWintercoat
   - SeniorPhysicianLabCoat
+  - BomberMedical #imp
 
 - type: loadoutGroup
   id: MedicalBackpack
@@ -1815,6 +1824,7 @@
   - SeniorPhysicianLabCoat # imp
   - ChemistWintercoat
   - ChemistryApron # imp
+  - BomberMedical #imp
 
 - type: loadoutGroup
   id: ChemistBackpack
@@ -1867,6 +1877,7 @@
   loadouts:
   - ParamedicWindbreaker
   - ParamedicWintercoat
+  - BomberMedical #imp
 
 - type: loadoutGroup
   id: ParamedicShoes

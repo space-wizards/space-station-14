@@ -30,3 +30,9 @@
   id: GreyCloak
   equipment:
     neck: ClothingNeckCloakPassenger
+
+# Outer Clothing
+- type: loadout
+  id: BomberLightweight
+  equipment:
+    outerClothing: ClothingOuterCoatBomberLightweight

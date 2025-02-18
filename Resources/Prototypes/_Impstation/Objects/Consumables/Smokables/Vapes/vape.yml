@@ -1,0 +1,303 @@
+## Vape Body Types ##
+
+- type: entity
+  parent: BaseVapeSwappable
+  id: VapeSwappable
+  name: vape box mod
+  description: Reconstructed smoking tech imported from a group of Terra enthusiasts in Andromeda.
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,0,1
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-swappable.rsi
+    layers:
+    - state: base
+      map: [ "base" ]
+    - state: cart-base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+      visible: false
+    - state: fill2
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: cart-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+      visible: false
+    - state: led
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      visible: false
+
+- type: entity
+  parent: BaseVapeDisposable
+  id: VapeDisposableBar
+  name: disposable vape bar
+  description: Kinda trash but gets the job done.
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,0,0
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-disposable.rsi
+    layers:
+    - state: base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill5
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill
+    changeColor: false
+
+- type: entity
+  parent: BaseVapeDisposable
+  id: VapeDisposablePen
+  name: disposable vape pen
+  description: This is worse than what they got on Galpatrica 7.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-disposable.rsi
+    layers:
+    - state: pen
+      map: [ "color" ]
+  - type: RandomSprite
+    available:
+      - color:
+          pen: Rainbow
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: VapePen
+    damage:
+      types:
+        Burn: 2
+    chargeUse: 72
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        locked: true
+      cart_slot:
+        name: vapepen-component-vape-cart-slot-name-default
+        startingItem: GalpatricaVapeCart
+        locked: true
+        whitelist:
+          tags:
+          - VapeCart
+
+
+## Cartridge Prefill Containers ##
+
+- type: entity
+  parent: BaseStorageItem
+  id: BaseVapeCartContainer
+  name: vape cart pack
+  abstract: true
+  components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,1
+  - type: Storage
+    grid:
+    - 0,0,1,1
+  - type: Tag
+    tags:
+    - CigPack
+    - Trash
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
+    state: box
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
+
+- type: entity
+  parent: BaseVapeCartContainer
+  id: VapeCartContainerBasic
+  name: vape cart variety pack
+  description: A pack of the best sellers.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WaterVapeCart
+      amount: 2
+    - id: SugarVapeCart
+      prob: 0.9
+      orGroup: cloud9-1
+    - id: HorsepussyVapeCart
+      prob: 0.1
+      orGroup: cloud9-1
+    - id: NicotineVapeCart
+      prob: 0.6
+      orGroup: cloud9-2
+    - id: THCVapeCart
+      prob: 0.4
+      orGroup: cloud9-2
+  - type: Appearance
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
+    state: box
+
+
+## Cartridge Prefill Packaging ##
+
+- type: entity
+  parent: BaseItem
+  id: BaseVapeCartPackaging
+  name: vape cartridge packaging
+  description: The discarded wrapper of an individually packaged vape cartridge. How wasteful!
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,0,1
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
+    state: trash
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseVapeCartPackaging
+  id: CustomVapeCartPackage
+  name: DIY cart
+  description: A vape cartridge you can fill with anything!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Vapes/vape-cart.rsi
+    state: custom-package
+  - type: SpawnItemsOnUse
+    items:
+      - id: BaseVapeCartPackaging
+      - id: CustomVapeCart
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+
+## Cartridge Prefills ##
+
+- type: entity
+  parent: BaseVapeCart
+  id: CustomVapeCart
+  name: DIY cart
+  description: A vape cartridge you can fill with anything!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 30
+  - type: DrawableSolution
+    solution: smokable
+  - type: InjectableSolution
+    solution: smokable
+  - type: VapeCart
+    flavorMultiplicationFactor: 1.0  # don't want flavor multiplication to run rampant... prefills only!
+
+- type: entity
+  parent: BaseVapeCart
+  id: SugarVapeCart
+  name: Cloud 9
+  description: A vape cartridge containing nothing but pure cotton.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 15
+
+- type: entity
+  parent: BaseVapeCart
+  id: WaterVapeCart
+  name: Vape World No Mercy
+  description: A vape cartridge containing nothing but pure water.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Water
+            Quantity: 15
+    - type: VapeCart
+      gasReductionFactor: 0.5
+      ignoreDamage: true  # for mass vaping events
+
+- type: entity
+  parent: BaseVapeCart
+  id: GalpatricaVapeCart
+  name: Icky-Ew
+  description: This is just as bad as the shit they got on Galpatrica 7.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 10
+          - ReagentId: TheDrink
+            Quantity: 1
+          - ReagentId: Ammonia
+            Quantity: 4
+    - type: VapeCart
+      gasReductionFactor: 0.25
+
+- type: entity
+  parent: BaseVapeCart
+  id: HorsepussyVapeCart
+  name: The Holy Prefill
+  description: Legend has it that if you chainsmoke these rare carts, you'll get into heaven.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 10
+          - ReagentId: TheeHorsepussy
+            Quantity: 5
+    - type: VapeCart
+      gasReductionFactor: 0.5
+      flavorMultiplicationFactor: 2.25  # even with perfect inputs, it's REALLY hard to proc the main effect
+
+- type: entity
+  parent: BaseVapeCart
+  id: NicotineVapeCart
+  name: Paleonicotinoids
+  description: Your new old nic fix.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 10
+          - ReagentId: Nicotine
+            Quantity: 5
+
+- type: entity
+  parent: BaseVapeCart
+  id: THCVapeCart
+  name: Cloud 10
+  description: this shit is strong bro be careful
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        smokable:
+          maxVol: 15
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 10
+          - ReagentId: THC
+            Quantity: 5

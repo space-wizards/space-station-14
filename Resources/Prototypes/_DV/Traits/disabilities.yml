@@ -1,0 +1,15 @@
+- type: trait
+  id: UltraVision
+  name: trait-ultravision-name
+  description: trait-ultravision-desc
+  category: Disabilities
+  components:
+    - type: UltraVision
+
+- type: trait
+  id: DogVision
+  name: trait-deuteranopia-name
+  description: trait-deuteranopia-desc
+  category: Disabilities
+  components:
+    - type: DogVision

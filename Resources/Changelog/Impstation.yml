@@ -1,146 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Impstation changelogs now let you know when they've been updated - just
-      like this one!
-    type: Add
-  id: 647
-  time: '2024-12-04T13:19:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/897
-- author: Darkmajia
-  changes:
-  - message: Space wind has been disabled.
-    type: Remove
-  id: 648
-  time: '2024-12-04T13:20:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/899
-- author: DinnerCalzone
-  changes:
-  - message: The spray painter can now paint airlocks to use the new civilian door
-      sprites.
-    type: Add
-  - message: Spray painter pipe color options have been adjusted to be more distinct
-      and more color options have been added.
-    type: Tweak
-  id: 649
-  time: '2024-12-04T13:26:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/894
-- author: DinnerCalzone
-  changes:
-  - message: Added the service techfab, which can be used to produce a number of useful
-      items for the service staff. The machine board for it can be produced on the
-      circuit imprinter on roundstart.
-    type: Add
-  - message: Cleanades can now be crafted at protolathes and service techfabs once
-      Advanced Cleaning has been researched.
-    type: Add
-  id: 650
-  time: '2024-12-04T13:25:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/893
-- author: widgetbeck
-  changes:
-  - message: Made Slime People's damage from water vapor scale with quantity, which
-      should make it more dangerous.
-    type: Tweak
-  id: 651
-  time: '2024-12-04T13:29:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/898
-- author: widgetbeck
-  changes:
-  - message: Fixed some Urists not spawning with emote sounds. Have fun with that,
-      Admins.
-    type: Fix
-  id: 652
-  time: '2024-12-04T13:29:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/896
-- author: Widgetbeck, TGRCDev
-  changes:
-  - message: Courtesy of @TGRCdev, the Blocking action will now deactivate when the
-      entity blocking is crit or stunned.
-    type: Fix
-  - message: Decapoid claws have reduced Piercing damage and increased Structural
-      damage.
-    type: Tweak
-  - message: Decapoid claws can now be used as a shield, blocking 20% of incoming
-      damage when active.
-    type: Tweak
-  - message: Decapoids now have greater friction while weightless and near structures.
-    type: Tweak
-  - message: Decapoid guidebook entry update.
-    type: Tweak
-  id: 653
-  time: '2024-12-04T15:27:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/895
-- author: Sha-Seng
-  changes:
-  - message: Stun Enforcers now come from nonlethals research to make advanced riot
-      control less cracked
-    type: Tweak
-  - message: Fixed capitalization on the stun shotgun item names
-    type: Tweak
-  id: 654
-  time: '2024-12-04T15:56:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/900
-- author: honeyed-lemons
-  changes:
-  - message: Chem master now displays reagent colors and sorts alphabetically.
-    type: Tweak
-  id: 655
-  time: '2024-12-04T18:51:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/903
-- author: hivehum
-  changes:
-  - message: The medsec hud now takes sunglasses to craft, instead of security glasses.
-    type: Tweak
-  id: 656
-  time: '2024-12-04T20:39:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/904
-- author: DinnerCalzone
-  changes:
-  - message: Adjusted player count range of a number of maps to better reflect what
-      they can accommodate.
-    type: Tweak
-  id: 657
-  time: '2024-12-05T06:10:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/911
-- author: honeyed-lemons
-  changes:
-  - message: Updated Hydroponics Jumpsuit, Jumpskirt, and backpack colors.
-    type: Tweak
-  - message: Updated Engineering Jumpsuit and Jumpskirt colors.
-    type: Tweak
-  id: 658
-  time: '2024-12-05T06:13:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/910
-- author: DinnerCalzone
-  changes:
-  - message: Fixed male dwarves using the incorrect vocal emotes.
-    type: Fix
-  id: 659
-  time: '2024-12-05T12:15:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/907
-- author: Sha-Seng
-  changes:
-  - message: Low Pigtails hairstyle for humans and species that use their hair (by
-      Skel)
-    type: Add
-  id: 660
-  time: '2024-12-05T12:15:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/906
-- author: Sha-Seng
-  changes:
-  - message: Fixed capitalization on some traits
-    type: Tweak
-  id: 661
-  time: '2024-12-05T12:16:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/909
-- author: kipdotnet, Starlighthowls
-  changes:
-  - message: Added Banana station for playtesting, a new lowpop map!
-    type: Add
-  id: 662
-  time: '2024-12-05T12:19:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/913
 - author: honeyed-lemons
   changes:
   - message: Space Engineer Jumpsuit for you silly engineers
@@ -4170,3 +4028,133 @@
   id: 1146
   time: '2025-02-17T01:45:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1683
+- author: widgetbeck
+  changes:
+  - message: NT's mail telepads no longer exponentially increase the time between
+      deliveries.
+    type: Fix
+  id: 1147
+  time: '2025-02-17T04:22:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1715
+- author: nowaitstop
+  changes:
+  - message: BATTERY GRUMBA VAPES! pib cartridges..!
+    type: Add
+  - message: disposable vape bars! pib deni vape pens!
+    type: Add
+  - message: thusd vendor beeg new vapes! old vapes zazz GLURM!
+    type: Tweak
+  id: 1148
+  time: '2025-02-17T14:54:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1676
+- author: kipdotnet
+  changes:
+  - message: Added the spacepresso machine for mapping.
+    type: Add
+  - message: The service techfab can now print disposable coffee cups.
+    type: Add
+  id: 1149
+  time: '2025-02-17T15:17:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1719
+- author: Pinkbat5
+  changes:
+  - message: Added two zero-point accents that automatically correct your capitalization
+      and/or punctuation.
+    type: Add
+  - message: Added stilted speech, an accent that Makes You Talk Like This.
+    type: Add
+  id: 1150
+  time: '2025-02-17T15:19:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1717
+- author: widgetbeck
+  changes:
+  - message: Thieving gloves can now only initiate one stripping doafter at a time.
+    type: Tweak
+  id: 1151
+  time: '2025-02-17T15:22:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1711
+- author: 12rabbits
+  changes:
+  - message: Added the Hemophilia trait to character customization.
+    type: Add
+  id: 1152
+  time: '2025-02-17T15:24:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1682
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added 14 New "Gimmick" Traitor Objectives.
+    type: Add
+  id: 1153
+  time: '2025-02-17T15:36:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1686
+- author: FlippenPage
+  changes:
+  - message: secret reinforced walls
+    type: Add
+  id: 1154
+  time: '2025-02-17T16:24:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1167
+- author: Toby222, Honeyed_Lemons_
+  changes:
+  - message: Adds Nanochat Lookup! Look up your friends in your Nanochat app today!
+    type: Add
+  - message: The Nanochat ui has been spruced up a lot, look at keybinds too!
+    type: Tweak
+  id: 1155
+  time: '2025-02-17T18:30:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1692
+- author: hivehum, flippenpage
+  changes:
+  - message: You can now be colorblind.
+    type: Add
+  id: 1156
+  time: '2025-02-17T18:30:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1702
+- author: hivehum
+  changes:
+  - message: Added courier slots to Plasma, and a security cadet slot to Banana.
+    type: Add
+  - message: Removed Aspid, which you may not have been aware was even a map.
+    type: Remove
+  id: 1157
+  time: '2025-02-17T21:56:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1716
+- author: honeyed-lemons
+  changes:
+  - message: fixed the Nanochat notification button
+    type: Fix
+  id: 1158
+  time: '2025-02-18T01:13:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1726
+- author: 12rabbits
+  changes:
+  - message: Fixed cyborg modules losing certain items at low health.
+    type: Fix
+  id: 1159
+  time: '2025-02-18T02:30:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1724
+- author: hivehum
+  changes:
+  - message: headslug go on head
+    type: Tweak
+  id: 1160
+  time: '2025-02-18T02:31:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1725
+- author: Sha-Seng
+  changes:
+  - message: Bomber jackets for all departments, plus a black and gray one for passenger
+    type: Add
+  - message: Departmental bomber jackets are now in their respective wardrobe vendors
+    type: Add
+  - message: These bomber jackets can now be zipped up
+    type: Tweak
+  id: 1161
+  time: '2025-02-18T02:32:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1727
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Fixed Gimmick traitor objective rarity.
+    type: Fix
+  id: 1162
+  time: '2025-02-18T02:34:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1728

@@ -56,8 +56,16 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCourier ]
-      
- 
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockLogisticsLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
+
 # Glass Airlocks
 
 # Command
@@ -116,6 +124,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCourier ]
+      
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockLogisticsGlassLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
 
 # Misc.  
 - type: entity

@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DoAfter;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
@@ -373,6 +374,31 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField]
     public bool HasBeenPowered;
+
+    #endregion
+
+    #region Signal Ports
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortInactive = "SupermatterInactive";
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortNormal = "SupermatterNormal";
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortCaution = "SupermatterCaution";
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortWarning = "SupermatterWarning";
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortDanger = "SupermatterDanger";
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortEmergency = "SupermatterEmergency";
+
+    [DataField]
+    public ProtoId<SourcePortPrototype> PortDelaminating = "SupermatterDelaminating";
 
     #endregion
 

@@ -1,0 +1,18 @@
+# Imp Gimmick Objectives
+- type: weightedRandom
+  id: TraitorGimmickObjectives
+  weights:
+    KidnapGimmickObjective: 1
+    TrapsGimmickObjective: 1
+    EliminatePrisonersGimmickObjective: 1
+    RescuePrisonersGimmickObjective: 1
+    MedbayInjuryGimmickObjective: 1
+    HitmanGimmickObjective: 1
+    DisruptTrafficGimmickObjective: 1
+    AccessibilityGimmickObjective: 1
+    RecoverGimmickObjective: 1
+    WitnessGimmickObjective: 1
+    UndermineGimmickObjective: 1
+    UnseenGimmickObjective: 1
+    TrustedGimmickObjective: 1
+    SupervillainGimmickObjective: 1
