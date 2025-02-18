@@ -28,7 +28,7 @@
     clothingPrototype: ADTVeteranSecHardsuitHelm
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTVeteranSecHardsuitHelm
   categories: [ HideSpawnMenu ]
   name: шлем скафандра ветерана СБ

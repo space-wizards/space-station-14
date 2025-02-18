@@ -28,7 +28,7 @@
     clothingPrototype: ADTInquisitoryHead
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ADTInquisitoryHead
   name: шлем скафандра ОБР инквизици
   description: Шлем скафандра ОБР инкизиции.
