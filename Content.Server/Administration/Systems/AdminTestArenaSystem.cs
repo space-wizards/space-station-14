@@ -2,6 +2,7 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Robust.Shared.EntitySerialization;
 
 namespace Content.Server.Administration.Systems;
 
@@ -33,7 +34,8 @@ public sealed class AdminTestArenaSystem : EntitySystem
         }
 
         var path = new ResPath(ArenaMapPath);
-        if (!_loader.TryLoadMap(path, out var map, out var grids))
+        var opts = DeserializationOptions.Default with { InitializeMaps = true }; // DS14-fix-admin-arena-loading
+        if (!_loader.TryLoadMap(path, out var map, out var grids, opts)) // DS14-fix-admin-arena-loading
             throw new Exception($"Failed to load admin arena");
 
         ArenaMap[admin.UserId] = map.Value.Owner;
