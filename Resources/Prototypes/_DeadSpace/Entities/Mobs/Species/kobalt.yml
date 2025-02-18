@@ -81,7 +81,7 @@
   - type: Stamina
     critThreshold: 85
   - type: Sanity # DS14
-  - type: Wagging
+  # - type: Wagging
   - type: Inventory
     speciesId: reptilian # for reptilian masks
 
