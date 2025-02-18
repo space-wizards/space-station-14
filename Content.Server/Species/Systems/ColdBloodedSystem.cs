@@ -6,7 +6,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Temperature;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Species.Systems;
+namespace Content.Server.Species.Systems;
 
 public sealed partial class ColdBloodedSystem : EntitySystem
 {
