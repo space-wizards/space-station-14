@@ -18,9 +18,13 @@
     #begin imp edit
     bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
     chapel:      _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
+    clown:       _Impstation/Structures/Doors/Airlocks/Standard/clown.rsi
     janitor:     _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
     kitchen:     _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
     lawyer:      _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    librarian:   _Impstation/Structures/Doors/Airlocks/Standard/librarian.rsi
+    mime:        _Impstation/Structures/Doors/Airlocks/Standard/mime.rsi
+    reporter:    _Impstation/Structures/Doors/Airlocks/Standard/reporter.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
     salvage:     _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
@@ -47,9 +51,13 @@
     #begin imp edit
     bar:         _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
     chapel:      _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
+    clown:      _Impstation/Structures/Doors/Airlocks/Glass/clown.rsi
     janitor:     _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
     kitchen:     _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
     lawyer:      _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+    librarian:   _Impstation/Structures/Doors/Airlocks/Glass/librarian.rsi
+    mime:        _Impstation/Structures/Doors/Airlocks/Glass/mime.rsi
+    reporter:    _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
     salvage:     _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
@@ -106,9 +114,13 @@
     #begin imp edit
     bar: Civilian
     chapel: Civilian
+    clown: Civilian
     janitor: Civilian
     kitchen: Civilian
     lawyer: Civilian
+    librarian: Civilian
+    mime: Civilian
+    reporter: Civilian
     theatre: Civilian
     salvage: Cargo
     courier: Cargo

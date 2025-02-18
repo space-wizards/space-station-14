@@ -84,3 +84,12 @@
   components:
   - type: AccessReader
     access: [["Reporter"]]
+
+# Hospitality Director
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsHospitalityDirector
+  suffix: HospitalityDirector, Locked
+  components:
+  - type: AccessReader
+    access: [["HospitalityDirector"]]

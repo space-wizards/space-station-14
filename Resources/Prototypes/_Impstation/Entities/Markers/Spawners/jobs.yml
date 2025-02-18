@@ -16,9 +16,9 @@
 # Service
 
 - type: entity
-  id: SpawnPointCourier
+  id: SpawnPointHospitalityDirector
   parent: SpawnPointJobBase
-  name: courier
+  name: hospitalitydirector
   components:
   - type: SpawnPoint
     job_id: JobHospitalityDirector

@@ -16,9 +16,9 @@
     - id: WeaponLauncherCleanerLake
 
 - type: entity
-  id: LockerLockerHospitalityDirectorFilled
+  id: LockerHospitalityDirectorFilled
   suffix: Filled
-  parent: LockerLockerHospitalityDirector
+  parent: LockerHospitalityDirector
   components:
   - type: EntityTableContainerFill
     containers:
