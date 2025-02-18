@@ -160,6 +160,7 @@
     TropicoStealObjective: 1
     #imp
     FinFinStealObjective: 1
+    PolyStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape
