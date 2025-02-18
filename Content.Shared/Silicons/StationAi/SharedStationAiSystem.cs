@@ -494,7 +494,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
     }
 
-    public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, EntityUid wireOwner, bool enabled, bool announce = false)
+    public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
         if (entity.Comp.Enabled == enabled)
             return false;
@@ -505,7 +505,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return true;
     }
 
-    public virtual bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, EntityUid wireOwner, bool value, bool announce = false)
+    public virtual bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, bool value, bool announce = false)
     {
         if (entity.Comp.Enabled == value)
             return false;

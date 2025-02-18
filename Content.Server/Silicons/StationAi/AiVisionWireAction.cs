@@ -23,13 +23,13 @@ public sealed partial class AiVisionWireAction : ComponentWireAction<StationAiVi
     public override bool Cut(EntityUid user, Wire wire, StationAiVisionComponent component)
     {
         return EntityManager.System<SharedStationAiSystem>()
-            .SetVisionEnabled((component.Owner, component), wire.Owner, false, announce: true);
+            .SetVisionEnabled((component.Owner, component), false, announce: true);
     }
 
     public override bool Mend(EntityUid user, Wire wire, StationAiVisionComponent component)
     {
         return EntityManager.System<SharedStationAiSystem>()
-            .SetVisionEnabled((component.Owner, component), wire.Owner, true);
+            .SetVisionEnabled((component.Owner, component), true);
     }
 
     public override void Pulse(EntityUid user, Wire wire, StationAiVisionComponent component)

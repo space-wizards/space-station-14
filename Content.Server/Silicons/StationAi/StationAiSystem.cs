@@ -77,29 +77,29 @@ public sealed class StationAiSystem : SharedStationAiSystem
         }
     }
 
-    public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, EntityUid wireOwner, bool enabled, bool announce = false)
+    public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
-        if (!base.SetVisionEnabled(entity, wireOwner, enabled, announce))
+        if (!base.SetVisionEnabled(entity, enabled, announce))
             return false;
 
         if (announce)
-            AnnounceSnip(entity.Owner, wireOwner);
+            AnnounceSnip(entity.Owner);
 
         return true;
     }
 
-    public override bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, EntityUid wireOwner, bool enabled, bool announce = false)
+    public override bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, bool enabled, bool announce = false)
     {
-        if (!base.SetWhitelistEnabled(entity, wireOwner, enabled, announce))
+        if (!base.SetWhitelistEnabled(entity, enabled, announce))
             return false;
 
         if (announce)
-            AnnounceSnip(entity.Owner, wireOwner);
+            AnnounceSnip(entity.Owner);
 
         return true;
     }
 
-    private void AnnounceSnip(EntityUid uid, EntityUid wireOwner)
+    private void AnnounceSnip(EntityUid uid)
     {
         var xform = Transform(uid);
 
@@ -113,7 +113,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             if (!StationAiCanDetectWireSnipping(ai))
                 continue;
 
-            var ev = new ChatNotificationEvent("AiWireSnipped", wireOwner);
+            var ev = new ChatNotificationEvent("AiWireSnipped", uid);
 
             var tile = Maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
             ev.SourceNameOverride = tile.ToString();
