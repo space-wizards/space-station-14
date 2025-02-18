@@ -18,7 +18,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
-using Content.Shared.Storage;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Forensics
