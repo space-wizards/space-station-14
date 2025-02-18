@@ -90,7 +90,7 @@
     sound:
       collection: CluwneHorn
       params:
-        variation: 0.246
+        variation: 0.125
   - type: EmitSoundOnActivate
     sound:
       collection: CluwneHorn
