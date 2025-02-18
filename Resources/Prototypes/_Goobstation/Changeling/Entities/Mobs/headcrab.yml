@@ -58,7 +58,6 @@
   - type: Item
     size: Normal
     sprite: _Goobstation/Changeling/headcrab.rsi
-    state: icon
     inhandVisuals:
       left:
       - state: inhand-left
