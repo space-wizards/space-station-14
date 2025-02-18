@@ -863,10 +863,10 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterSpaceDrugs
-  suffix: Space Mirage 10u, 3
+  suffix: Space Mirage 15u, 3
   components:
   - type: Label
-    currentLabel: space mirage 10u
+    currentLabel: space mirage 15u
   - type: StorageFill
     contents:
     - id: PillSpaceDrugs
