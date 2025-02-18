@@ -23,7 +23,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Chronos-518
+      name: NT-Chronos 518
     - type: Transform
       pos: -0.421875,0.59375
     - type: MapGrid

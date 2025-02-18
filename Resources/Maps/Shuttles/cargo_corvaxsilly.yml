@@ -11,7 +11,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Cargo shuttle
+      name: NT-Dinero MK2
     - type: Transform
       pos: 2.450875,-4.8300505
     - type: MapGrid

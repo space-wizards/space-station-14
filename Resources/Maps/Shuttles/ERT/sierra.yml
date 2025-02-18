@@ -29,7 +29,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Nordwest-350
+      name: NT-Nordwest 350
     - type: Transform
       pos: -0.34375,0.453125
     - type: MapGrid

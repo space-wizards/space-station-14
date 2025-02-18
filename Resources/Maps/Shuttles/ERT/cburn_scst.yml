@@ -25,7 +25,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT-Rook-1
+      name: NT-Rook
     - type: Transform
       pos: -0.5,-0.5
     - type: MapGrid

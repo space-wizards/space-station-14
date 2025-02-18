@@ -79,7 +79,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT - Kalanchi - 28
+      name: NT-Kalanchi 28
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.923604,0.39184356
