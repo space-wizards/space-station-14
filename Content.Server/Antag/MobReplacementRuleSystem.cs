@@ -32,6 +32,11 @@ public sealed class MobReplacementRuleSystem : GameRuleSystem<MobReplacementRule
             var coordinates = entity.Coordinates;
             Del(entity.Entity);
 
+            // DS14-test-fix-start
+            if (!coordinates.IsValid(EntityManager))
+                continue;
+            // DS14-test-fix-end
+
             Spawn(component.Proto, coordinates);
         }
     }
