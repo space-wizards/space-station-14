@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Star sticker can be used in chameleon menu.
-    type: Fix
-  id: 7476
-  time: '2024-10-02T10:53:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32594
 - author: deltanedas
   changes:
   - message: Fixed the Instigator shuttle event never happening.
@@ -3893,3 +3886,10 @@
   id: 7975
   time: '2025-02-18T15:16:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35259
+- author: lizelive
+  changes:
+  - message: AI can now see job icons while inside of an intellicard.
+    type: Fix
+  id: 7976
+  time: '2025-02-18T22:23:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35282
