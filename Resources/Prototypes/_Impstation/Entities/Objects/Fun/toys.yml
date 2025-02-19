@@ -5,6 +5,7 @@
   description: A highly marketable plushie of the adorable dolphin-bird recently discovered on the distant planet Teo. Made artificially rare on purpose.
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_finfin
   - type: EmitSoundOnUse
     sound:
@@ -41,6 +42,7 @@
   description: Whose clothes are these?
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: fabric-scrap-salad
   - type: Construction
     graph: FabricScrapSalad
@@ -53,6 +55,7 @@
   description: Looks like someone's failed knitting project.
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: yarn-noodles
   - type: Construction
     graph: YarnNoodles
@@ -65,6 +68,7 @@
   description: Manufactured recently to commemorate the gray exchange program becoming a booming success. It feels plasticky and seems easy to chew on. Thui love keb piskun plushie!!
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_gray
   - type: EmitSoundOnUse
     sound:
@@ -93,6 +97,7 @@
   description: You get the feeling that this plushie is higher ranked than you.
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: minor
   - type: Food
     requiresSpecialDigestion: true
@@ -107,6 +112,7 @@
   description: What the hell is this ugly thing? Better throw it away.
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_bug
   - type: EmitSoundOnUse
     sound:
@@ -153,6 +159,85 @@
         reagents:
         - ReagentId: CopperBlood
           Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    equippedPrefix: bug
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: bug-equipped-HELMET
+        offset: "0, 0.06"
+
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieEvilBug
+  name: evil bug plushie
+  description: Heh...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_evilbug
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 2
+    damage:
+      types:
+        Slash: 1
+    soundHit:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_evilbug-inhand-left
+      right:
+        - state: plushie_evilbug-inhand-right
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    ignoreResistances: true
+    damage:
+      types:
+        Slash: 2
+        Piercing: 2
+  - type: Food
+    requiresSpecialDigestion: false
+    useSound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: FlavorProfile
+    flavors:
+      - evil
+  - type: Extractable
+    grindableSolutionName: bugblood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 10
+      bugblood:
+        maxVol: 10
+        reagents:
+        - ReagentId: CopperBlood
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    equippedPrefix: evilbug
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: evilbug-equipped-HELMET
+        offset: "0, 0.06"
 
 - type: entity
   parent: BasePlushie
@@ -161,6 +246,7 @@
   description: The claw on this thing looks ominously sharp. Didn't you hear something about these getting recalled?
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_decapoid
   - type: EmitSoundOnUse
     sound:
@@ -191,6 +277,7 @@
   description: It's a little slimy...
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_snail
   - type: EmitSoundOnUse
     sound:
@@ -214,6 +301,7 @@
   description: Huh? Who's this stoner?
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_imp
   - type: EmitSoundOnUse
     sound:
@@ -312,7 +400,7 @@
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/toys.rsi
-    state: plushie1
+    state: plushie_cap
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Human/manlaugh1.ogg
@@ -337,7 +425,7 @@
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/toys.rsi
-    state: plushie2
+    state: plushie_hop
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/toy_rustle.ogg
@@ -354,3 +442,70 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/toy_rustle.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieThaven
+  name: thaven plushie
+  description: It is rude to not give this plushie hugs and kisses.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_thaven
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieThavenWeird
+  name: normal thaven plushie
+  description: It looks a bit odds.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_thavenweird
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Thaven/moods_changed.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Thaven/moods_changed.ogg
+  - type: UseDelay
+    delay: 15.0
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Milk
+          Quantity: 10
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGoblin
+  name: goblin plushie
+  description: It's life-size!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_goblin
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_NF/Voice/Goblin/goblin-scream-01.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_NF/Voice/Goblin/goblin-cry-02.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_NF/Voice/Goblin/goblin-cry-02.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieApid
+  name: apid plushie
+  description: Stinger not included.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_apid
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/mouse_squeak.ogg
