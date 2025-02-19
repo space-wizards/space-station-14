@@ -35,7 +35,7 @@ liar-word-12 = will
 liar-word-replacement-12 = wont
 
 liar-word-13 = dont
-liar-word-replacement-13 = ""
+liar-word-replacement-13 = {""}
 
 liar-word-14 = can
 liar-word-replacement-14 = cant
@@ -59,7 +59,7 @@ liar-word-20 = did
 liar-word-replacement-20 = didnt
 
 liar-word-21 = didnt
-liar-word-replacement-21 = ""
+liar-word-replacement-21 = {""}
 
 liar-word-22 = nothing
 liar-word-replacement-22 = something
@@ -86,7 +86,7 @@ liar-word-29 = do
 liar-word-replacement-29 = "don't"
 
 liar-word-30 = "don't"
-liar-word-replacement-30 = ""
+liar-word-replacement-30 = {""}
 
 liar-word-31 = does
 liar-word-replacement-31 = "doesn't"
@@ -129,4 +129,4 @@ liar-word-43 = want
 liar-word-replacement-43 = "don't want"
 
 liar-word-44 = not
-liar-word-replacement-44 = ""
+liar-word-replacement-44 = {""}
