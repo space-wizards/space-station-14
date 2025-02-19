@@ -96,9 +96,6 @@ namespace Content.Server.Power.EntitySystems
                         continue;
                 }
 
-                if (comp.RequiresApcNetwork && !this.IsPowered(uid, EntityManager))
-                    continue;
-
                 SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
@@ -121,7 +118,7 @@ namespace Content.Server.Power.EntitySystems
 
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
         {
-            if (value <= 0 || !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
+            if (value <= 0 ||  !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
                 return 0;
 
             var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery.MaxCharge);
