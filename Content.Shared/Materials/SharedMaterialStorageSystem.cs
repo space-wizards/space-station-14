@@ -318,23 +318,18 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (HasComp<UnremoveableComponent>(toInsert))
             return false;
 
+
+        if (storage.StorageLimit is null || !HasComp<StackComponent>(toInsert))
+            return false;
+
         int multiplier;
-        var partialStack = false;
-        if (storage.StorageLimit is not null && HasComp<StackComponent>(toInsert))
+        var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
+        var volumePerSheet = 0;
+        foreach (var (_, vol) in composition.MaterialComposition)
         {
-            var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
-            var volumePerSheet = 0;
-            foreach (var (_, vol) in composition.MaterialComposition)
-            {
-                volumePerSheet += vol;
-            }
-            multiplier = availableVolume / volumePerSheet;
-            partialStack = true;
+            volumePerSheet += vol;
         }
-        else
-        {
-            multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
-        }
+        multiplier = availableVolume / volumePerSheet;
 
         if (multiplier <= 0)
             return false; // 0 sheets fit, don't do anything
@@ -367,13 +362,10 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
         Dirty(receiver, insertingComp);
 
-        if (partialStack)
-        {
-            _sharedStackSystem.Use(toInsert, multiplier);
-        }
+        _sharedStackSystem.Use(toInsert, multiplier);
 
-//        _popupSystem.PopupCursor(Loc.GetString("machine-insert-item-amount", ("user", user), ("machine", receiver),
-//            ("item", toInsert), ("amount",multiplier)), user);
+        //        _popupSystem.PopupCursor(Loc.GetString("machine-insert-item-amount", ("user", user), ("machine", receiver),
+        //            ("item", toInsert), ("amount",multiplier)), user);
 
         var ev = new MaterialEntityInsertedEvent(material);
         RaiseLocalEvent(receiver, ref ev);
