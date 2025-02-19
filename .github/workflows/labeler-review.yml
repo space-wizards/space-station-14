@@ -5,7 +5,7 @@ on:
 jobs:
   add_label:
     # Change the repository name after you've made sure the team name is correct for your fork!
-    if: ${{ (github.repository == 'space-wizards/space-station-14') && (github.event.review.state == 'APPROVED') }}
+    if: ${{ (github.repository == 'dead-space-server/space-station-14-fobos') && (github.event.review.state == 'APPROVED') }}
     permissions:
       contents: read
       pull-requests: write
