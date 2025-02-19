@@ -8,8 +8,9 @@
     ResearchDirector: 130
     ChiefMedicalOfficer: 135
     Quartermaster: 120
-    BlueShield: 180 #Sent straight from NT, has better wages than station-side employees
-    NanoTrasenRepresentative: 200 #Technically the most important "job" on station.
+
+    BlueShield: 180
+    NanoTrasenRepresentative: 200
 
     Chemist: 90
     Paramedic: 50
