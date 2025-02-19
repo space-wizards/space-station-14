@@ -1,4 +1,12 @@
-﻿# non-stealth syndicate stuff
+﻿# any type of magical items used by wizards and similiar
+- type: entity
+  id: BaseMagicalContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Magical
+
+# non-stealth syndicate stuff
 - type: entity
   id: BaseSyndicateContraband
   abstract: true
@@ -22,14 +30,15 @@
   - type: Contraband
     severity: Major
 
-# minor contraband by default restricted to security only
+# base department restricted contraband, this should only be used as a parent for other contraband prototypes, not the restricted items themselves.
 - type: entity
   id: BaseRestrictedContraband
   abstract: true
   components:
   - type: Contraband
     severity: Restricted
-    allowedDepartments: [ Security ]
+    allowedDepartments: [  ]
+    allowedJobs: [  ]
 
 # one department restricted contraband
 - type: entity

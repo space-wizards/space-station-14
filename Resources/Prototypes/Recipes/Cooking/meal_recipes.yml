@@ -660,8 +660,7 @@
   reagents:
     Flour: 15
     Egg: 6
-  solids:
-    FoodButter: 1
+    OilOlive: 5
 
 - type: microwaveMealRecipe
   id: RecipePastaTomato
@@ -2138,3 +2137,14 @@
   time: 5
   solids:
     FoodMeatAnomaly: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrilledCheeseSandwich
+  name: grilled cheese sandwich recipe
+  result: FoodBakedGrilledCheeseSandwich
+  time: 10
+  solids:
+    FoodBreadPlainSlice: 2
+    FoodCheeseSlice: 1
+    FoodButterSlice: 1
+
