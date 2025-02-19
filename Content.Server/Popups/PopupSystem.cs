@@ -75,18 +75,13 @@ namespace Content.Server.Popups
                 return;
 
             var mapPos = _transform.ToMapCoordinates(coordinates);
+            var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
             if (recipient != null)
             {
                 // Don't send to recipient, since they predicted it locally
-                var filter = Filter.PvsExcept(recipient.Value, entityManager: EntityManager);
-                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
+                filter = filter.RemovePlayerByAttachedEntity(recipient.Value);
             }
-            else
-            {
-                // No prediction, send to everyone including recipient.
-                var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
-                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
-            }
+            RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
         }
 
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
