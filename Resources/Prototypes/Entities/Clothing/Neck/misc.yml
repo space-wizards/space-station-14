@@ -35,6 +35,7 @@
   description: Toggles the headphones on and off.
   components:
   - type: InstantAction
+    useDelay: 1
     itemIconStyle: BigItem
     event: !type:ToggleActionEvent
 
