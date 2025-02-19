@@ -1,0 +1,82 @@
+﻿# a crazy hamburger for every color
+
+- type: entity
+  name: berserk hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyBlack
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_black
+
+- type: entity
+  name: wacky hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyBlackAndWhite
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_black_and_white
+
+- type: entity
+  name: barmy hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyBlue
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_blue
+
+- type: entity
+  name: mental hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyOrange
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_orange
+
+- type: entity
+  name: daft hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyPurple
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_purple
+
+- type: entity
+  name: insane hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyRainbow
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_rainbow
+
+- type: entity
+  name: deranged hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyRed
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_red
+
+- type: entity
+  name: cuckoo hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyWhite
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_white
+
+- type: entity
+  name: mad hamburger
+  parent: FoodBurgerCrazy
+  id: FoodBurgerCrazyYellow
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
+      state: crazy_yellow
