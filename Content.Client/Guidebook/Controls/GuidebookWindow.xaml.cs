@@ -34,6 +34,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         _sawmill = Logger.GetSawmill("guidebook");
 
         Tree.OnSelectedItemChanged += OnSelectionChanged;
+        TableOfContents.OnSelectedItemChanged += OnTableOfContentsSelectionChanged;
 
         SearchBar.OnTextChanged += _ =>
         {
@@ -101,6 +102,21 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             ClearSelectedGuide();
     }
 
+    private void OnTableOfContentsSelectionChanged(TreeItem? item)
+    {
+        if (item is null || item.Metadata is not Label entry)
+            return;
+
+        UserInterfaceManager.DeferAction(() =>
+        {
+            if (entry.GetControlScrollPosition() is not {} position)
+                return;
+
+            Scroll.HScrollTarget = position.X;
+            Scroll.VScrollTarget = position.Y;
+        });
+    }
+
     public void ClearSelectedGuide()
     {
         Placeholder.Visible = true;
@@ -145,6 +161,47 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             if (prototype != null && availablePrototypeLinks.Contains(prototype))
                 linkControl.EnablePrototypeLink();
         }
+
+        RepopulateTableOfContents();
+    }
+
+    private int? HeadingDepth(Label control)
+    {
+        if (control.StyleClasses.Contains("LabelHeadingBigger")) {
+            return 1;
+        } else if (control.StyleClasses.Contains("LabelHeading")) {
+            return 2;
+        } else if (control.StyleClasses.Contains("LabelKeyText")) {
+            return 3;
+        }
+        return null;
+    }
+
+    private void RepopulateTableOfContents()
+    {
+        TableOfContents.Clear();
+
+        var labels = EntryContainer.GetControlOfType<Label>(true);
+        var stack = new Stack<(TreeItem Item, int Depth)>();
+
+        foreach (var label in labels)
+        {
+            if (HeadingDepth(label) is not {} depth)
+                continue;
+
+            while (stack.TryPeek(out var previous) && previous.Depth >= depth)
+            {
+                stack.Pop();
+            }
+
+            var item = stack.TryPeek(out var parent) ? TableOfContents.AddItem(parent.Item) : TableOfContents.AddItem(null);
+            item.Label.Text = label.Text;
+            item.Metadata = label;
+
+            stack.Push((item, depth));
+        }
+
+        TableOfContents.SetAllExpanded(true);
     }
 
     public void UpdateGuides(
