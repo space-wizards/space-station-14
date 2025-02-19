@@ -119,7 +119,7 @@
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCommandContraband]
   id: ClothingOuterArmorCaptainCarapace
-  name: command carapace
+  name: captain's carapace
   description: An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest.
   components:
   - type: Sprite
