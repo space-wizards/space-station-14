@@ -1,75 +1,4 @@
 ﻿Entries:
-- author: Zylo
-  changes:
-  - message: Seismic charges being uncraftable
-    type: Fix
-  id: 7468
-  time: '2024-10-02T02:56:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32459
-- author: slarticodefast
-  changes:
-  - message: Fixed the chameleon settings menu not showing up for the voice mask.
-    type: Fix
-  id: 7469
-  time: '2024-10-02T03:22:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32546
-- author: metalgearsloth
-  changes:
-  - message: Fix physics sensors (e.g. proximity triggers) being able to block doors.
-    type: Fix
-  id: 7470
-  time: '2024-10-02T05:00:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32591
-- author: Plykiya
-  changes:
-  - message: You can now quick-swap uneven stacks of items into your inventory without
-      it getting "stuck" in your hands.
-    type: Fix
-  id: 7471
-  time: '2024-10-02T05:27:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32560
-- author: BackeTako
-  changes:
-  - message: New hydroponics doors
-    type: Add
-  id: 7472
-  time: '2024-10-02T05:33:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32575
-- author: BackeTako
-  changes:
-  - message: Red circuit tile
-    type: Add
-  id: 7473
-  time: '2024-10-02T05:35:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32557
-- author: ArchRBX
-  changes:
-  - message: The MedTek PDA cartridge has now been added, providing health analyzer
-      functionality to PDA's
-    type: Add
-  - message: The MedTek cartridge has been added to the CMO locker, and comes preinstalled
-      on medical PDA's, replacing the built-in analyzer functionality on these PDA's
-    type: Add
-  id: 7474
-  time: '2024-10-02T06:17:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32450
-- author: Toly65
-  changes:
-  - message: fixed slippery and bioluminescent effects persisting on planters after
-      the plant has been harvested
-    type: Fix
-  - message: removed the slippery and bioluminescent visuals from planters temporararily
-    type: Remove
-  id: 7475
-  time: '2024-10-02T09:37:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32576
-- author: lzk228
-  changes:
-  - message: Star sticker can be used in chameleon menu.
-    type: Fix
-  id: 7476
-  time: '2024-10-02T10:53:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32594
 - author: deltanedas
   changes:
   - message: Fixed the Instigator shuttle event never happening.
@@ -3899,3 +3828,68 @@
   id: 7967
   time: '2025-02-17T08:51:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35240
+- author: Sparlight
+  changes:
+  - message: Space debris has returned to Wizden servers.
+    type: Add
+  id: 7968
+  time: '2025-02-17T12:56:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34795
+- author: Kickguy223
+  changes:
+  - message: Cleaning up a puddle properly changes its slippery properties.
+    type: Fix
+  id: 7969
+  time: '2025-02-17T20:53:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34525
+- author: lzk228
+  changes:
+  - message: Syndicate cyborgs can laugh again.
+    type: Fix
+  id: 7970
+  time: '2025-02-17T21:59:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31510
+- author: Killerqu00
+  changes:
+  - message: Contraband examines now correctly tell you if you can possess the object.
+    type: Fix
+  id: 7971
+  time: '2025-02-18T11:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35228
+- author: Ian321
+  changes:
+  - message: Magazines that started out empty now visually fill.
+    type: Fix
+  id: 7972
+  time: '2025-02-18T12:32:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34491
+- author: WarPigeon
+  changes:
+  - message: Steel crates now have some radiation shielding for safe storage and transport
+      of radioactive materials.
+    type: Add
+  id: 7973
+  time: '2025-02-18T12:56:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35168
+- author: BramvanZijp
+  changes:
+  - message: Fixed Janitor-Restricted contraband unintentionally stating Security
+      may use it too.
+    type: Fix
+  id: 7974
+  time: '2025-02-18T13:07:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35281
+- author: Pronana
+  changes:
+  - message: the crusher dagger now does everything a knife can and can be thrown.
+    type: Tweak
+  id: 7975
+  time: '2025-02-18T15:16:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35259
+- author: lizelive
+  changes:
+  - message: AI can now see job icons while inside of an intellicard.
+    type: Fix
+  id: 7976
+  time: '2025-02-18T22:23:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35282
