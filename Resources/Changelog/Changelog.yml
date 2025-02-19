@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: ArchRBX
-  changes:
-  - message: The MedTek PDA cartridge has now been added, providing health analyzer
-      functionality to PDA's
-    type: Add
-  - message: The MedTek cartridge has been added to the CMO locker, and comes preinstalled
-      on medical PDA's, replacing the built-in analyzer functionality on these PDA's
-    type: Add
-  id: 7474
-  time: '2024-10-02T06:17:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32450
-- author: Toly65
-  changes:
-  - message: fixed slippery and bioluminescent effects persisting on planters after
-      the plant has been harvested
-    type: Fix
-  - message: removed the slippery and bioluminescent visuals from planters temporararily
-    type: Remove
-  id: 7475
-  time: '2024-10-02T09:37:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32576
-- author: lzk228
-  changes:
-  - message: Star sticker can be used in chameleon menu.
-    type: Fix
-  id: 7476
-  time: '2024-10-02T10:53:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32594
-- author: deltanedas
-  changes:
-  - message: Fixed the Instigator shuttle event never happening.
-    type: Fix
-  id: 7477
-  time: '2024-10-02T11:44:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32597
-- author: FluffMe
-  changes:
-  - message: Fixed accidental erase of paper contents by spamming save action.
-    type: Fix
-  id: 7478
-  time: '2024-10-02T12:00:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32598
-- author: PJB3005
-  changes:
-  - message: Removed bioluminescence plant mutations due to it breaking the rendering
-      engine.
-    type: Remove
-  id: 7479
-  time: '2024-10-02T13:52:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32561
 - author: PJB3005
   changes:
   - message: Fixed borg "hands" showing up in their stripping menu.
@@ -3899,3 +3849,51 @@
   id: 7973
   time: '2025-02-18T12:56:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35168
+- author: BramvanZijp
+  changes:
+  - message: Fixed Janitor-Restricted contraband unintentionally stating Security
+      may use it too.
+    type: Fix
+  id: 7974
+  time: '2025-02-18T13:07:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35281
+- author: Pronana
+  changes:
+  - message: the crusher dagger now does everything a knife can and can be thrown.
+    type: Tweak
+  id: 7975
+  time: '2025-02-18T15:16:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35259
+- author: lizelive
+  changes:
+  - message: AI can now see job icons while inside of an intellicard.
+    type: Fix
+  id: 7976
+  time: '2025-02-18T22:23:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35282
+- author: CooperWallace
+  changes:
+  - message: A popup is now displayed at the item's previous location when it is recalled
+      by the recall wizard spell.
+    type: Add
+  id: 7977
+  time: '2025-02-19T01:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35272
+- author: SpaceLizard24
+  changes:
+  - message: Moved saxophones from the Brass Ensemble crate to the Woodwind Ensemble
+      crate.
+    type: Tweak
+  - message: Adjusted the prices of Woodwind Ensemble and Brass Ensemble crates.
+    type: Tweak
+  id: 7978
+  time: '2025-02-19T06:05:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35257
+- author: K-Dynamic
+  changes:
+  - message: Returned Explosive Technology recipes (triggers, payloads, signaller)
+      back to the Protolathe following undocumented removal.
+    type: Fix
+  id: 7979
+  time: '2025-02-19T11:34:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35303

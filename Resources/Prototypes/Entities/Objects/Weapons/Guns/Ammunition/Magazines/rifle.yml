@@ -2,7 +2,7 @@
 - type: entity
   id: BaseMagazineRifle
   name: "magazine (.20 rifle)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag

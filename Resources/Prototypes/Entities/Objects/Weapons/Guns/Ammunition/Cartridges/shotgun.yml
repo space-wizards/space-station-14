@@ -1,7 +1,7 @@
 - type: entity
   id: BaseShellShotgun
   name: shell (.50)
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
