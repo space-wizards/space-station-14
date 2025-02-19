@@ -8,6 +8,8 @@
   "copyright": "https://github.com/vgstation-coders/vgstation13/commit/1fbb5e417d0200fe60c6b628656a371093d2d715",
   "copyright": "https://github.com/tgstation/tgstation/commit/68aade356cf53032f206cb5a887581ac7d166cae",
   "copyright": "https://github.com/space-wizards/space-station-14/commit/b301d3ac26cb2301048eda4535667c28e2283d41 - Made by ProPandaBear for SS14",
+  "copyright": "maltroach made by robinthedragon for SS14, based on maltroach by MoffNyan for tgstation",
+  "copyright": "whiskeyechoes by cerebralerror (Discord)",
   "states": [
     {
       "name": "combocafe",
@@ -494,6 +496,41 @@
           0.2,
           0.2,
           2.2
+        ]
+      ]
+    },
+    {
+      "name": "maltroach",
+      "delays": [
+        [
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whiskeyechoes",
+      "delays": [
+        [
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1
         ]
       ]
     }
