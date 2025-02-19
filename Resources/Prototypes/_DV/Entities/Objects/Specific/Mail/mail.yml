@@ -639,6 +639,9 @@
     - id: PlushieBug
       prob: 0.1
       orGroup: Plushie
+    - id: PlushieEvilBug
+      prob: 0.01
+      orGroup: Plushie
     - id: PlushieGray
       orGroup: Plushie
     - id: PlushieUrsaMinor
