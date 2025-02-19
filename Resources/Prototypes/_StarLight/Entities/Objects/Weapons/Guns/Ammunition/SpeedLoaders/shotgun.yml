@@ -55,7 +55,7 @@
         
 - type: entity
   id: SpeedLoaderMagnumBasic
-  name: "speed loader (.50)"
+  name: "speed loader (.50 pellet)"
   parent: BaseSpeedLoaderShotgun
   components:
   - type: BallisticAmmoProvider
@@ -72,7 +72,7 @@
         color: "#F4001F"
         
 - type: entity
-  id: SpeedLoaderMagnumBeanbag
+  id: SpeedLoaderShotgunBeanbag
   name: "speed loader (.50 beanbag)"
   parent: BaseSpeedLoaderShotgun
   components:
@@ -90,7 +90,7 @@
         color: "#149A1E"
 
 - type: entity
-  id: 50SpeedLoaderMagnumSlug
+  id: SpeedLoaderShotgunSlug
   name: "speed loader (.50 slug)"
   parent: BaseSpeedLoaderShotgun
   components:
@@ -108,7 +108,7 @@
         color: "#232323"
 
 - type: entity
-  id: 50SpeedLoaderMagnumUranium
+  id: SpeedLoaderShotgunUranium
   name: "speed loader (.50 uranium)"
   parent: BaseSpeedLoaderShotgun
   components:
@@ -126,7 +126,7 @@
         color: "#3bd22d"
 
 - type: entity
-  id: 50SpeedLoaderMagnumIncendiary
+  id: SpeedLoaderShotgunIncendiary
   name: "speed loader (.50 incendiary)"
   parent: BaseSpeedLoaderShotgun
   components:

@@ -54,32 +54,32 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: SpeedLoaderMagnumBeanbag
-  result: SpeedLoaderMagnumBeanbag
+  id: SpeedLoaderShotgunBeanbag
+  result: SpeedLoaderShotgunBeanbag
   materials:
     Steel: 95
     Plastic: 80
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: 50SpeedLoaderMagnumSlug
-  result: 50SpeedLoaderMagnumSlug
+  id: SpeedLoaderShotgunSlug
+  result: SpeedLoaderShotgunSlug
   materials:
     Steel: 110
     Plastic: 60
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: 50SpeedLoaderMagnumIncendiary
-  result: 50SpeedLoaderMagnumIncendiary
+  id: SpeedLoaderShotgunIncendiary
+  result: SpeedLoaderShotgunIncendiary
   materials:
     Steel: 60
     Plastic: 110
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: 50SpeedLoaderMagnumUranium
-  result: 50SpeedLoaderMagnumUranium
+  id: SpeedLoaderShotgunUranium
+  result: SpeedLoaderShotgunUranium
   materials:
     Plastic: 140
     Uranium: 100

@@ -893,7 +893,8 @@
       - MagazineShotgunSlug
       - SpeedLoaderMagnumBasic
       - SpeedLoaderShotgunEmpty
-      - 50SpeedLoaderMagnumSlug
+      - SpeedLoaderShotgunSlug
+      - SpeedLoaderShotgunBeanbag
 ####################################################
       - RiotShield
       - Stunbaton
@@ -961,8 +962,8 @@
 # Shotgun
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
-      - 50SpeedLoaderMagnumIncendiary
-      - 50SpeedLoaderMagnumUranium
+      - SpeedLoaderShotgunIncendiary
+      - SpeedLoaderShotgunUranium
 # Grenade
       - MagazineGrenadeEmpty
 ####################################################
