@@ -752,5 +752,51 @@ Entries:
   id: 93
   time: '2025-02-06T05:10:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33426
+- author: nikthechampiongr
+  changes:
+  - message: Vote kicks now also ban the ip of the person that gets votekicked.
+    type: Tweak
+  id: 94
+  time: '2025-02-13T22:03:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35131
+- author: ScarKy0
+  changes:
+  - message: universal access config has additional accesses added
+    type: Add
+  id: 95
+  time: '2025-02-16T21:51:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35229
+- author: Winkarst-cpu
+  changes:
+  - message: Votekick bans now distinguish themselves as votekicks in the "ban reason".
+    type: Tweak
+  id: 96
+  time: '2025-02-17T20:39:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35258
+- author: SlamBamActionman
+  changes:
+  - message: Users with +VVEDIT perms can now use `changecvar playtest.[modifier]
+      [float]` to modify damage/healing scaling live.
+    type: Add
+  id: 97
+  time: '2025-02-18T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35255
+- author: ScarKy0
+  changes:
+  - message: Aghost's intrinsic comms console now uses a new color, announces globally
+      and has significantly lowered delays. Announce command and admin menu option
+      remain unchanged.
+    type: Tweak
+  id: 98
+  time: '2025-02-18T09:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35248
+- author: Simyon
+  changes:
+  - message: Admins with the Server and Mapping AdminFlag can now change the CVars
+      "events.enabled" and "shuttle.auto_call_time" for parity in the "mapping" command.
+    type: Tweak
+  id: 99
+  time: '2025-02-18T10:26:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35239
 Name: Admin
 Order: 1

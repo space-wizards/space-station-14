@@ -48,6 +48,9 @@ allow_multi_server_play = false
 [atmos]
 max_explosion_range = 5
 
+[worldgen]
+enabled = true
+
 [status]
 privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
 privacy_policy_identifier = "wizden"
