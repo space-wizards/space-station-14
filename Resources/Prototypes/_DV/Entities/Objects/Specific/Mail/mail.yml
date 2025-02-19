@@ -647,8 +647,25 @@
       orGroup: Plushie
     - id: PlushieSnail
       orGroup: Plushie
-    - id: PlushieImp
+    - id: PlushieThaven
+      orGroup: Plushie
+    - id: PlushieThavenWeird
       prob: 0.1
+      orGroup: Plushie
+    - id: PlushieDwarf
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieApid
+      prob: 0.5
+      orGroup: Plushie
+    - id: PlushieGoblin
+      prob: 0.5
+      orGroup: Plushie
+    - id: PlushieGollylad
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieImp
+      weight: 0.1
       orGroup: Plushie
     - id: PlushieHeadofPersonnel
       orGroup: Plushie

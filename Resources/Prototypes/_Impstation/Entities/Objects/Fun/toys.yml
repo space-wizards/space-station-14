@@ -581,7 +581,7 @@
   parent: [ BasePlushie, BaseHandheldInstrument ]
   id: PlushieDwarf
   name: dwarf plushie?
-  description: You can hear a faint whistling from the inside. #alternate description: It's a stone, Luigi, you didn't make it.
+  description: You can hear a faint whistling from the inside. #alternate description: It's a stone plushie. You didn't make it.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/toys.rsi
@@ -595,12 +595,6 @@
   - type: Instrument
     program: 75
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Effects/break_stone.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Effects/break_stone.ogg
-  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Effects/break_stone.ogg
   - type: EmitSoundOnCollide
