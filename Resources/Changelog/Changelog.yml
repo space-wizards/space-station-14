@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: PJB3005
   changes:
-  - message: Removed bioluminescence plant mutations due to it breaking the rendering
-      engine.
-    type: Remove
-  id: 7479
-  time: '2024-10-02T13:52:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32561
-- author: PJB3005
-  changes:
   - message: Fixed borg "hands" showing up in their stripping menu.
     type: Fix
   id: 7480
@@ -3897,3 +3889,11 @@
   id: 7978
   time: '2025-02-19T06:05:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35257
+- author: K-Dynamic
+  changes:
+  - message: Returned Explosive Technology recipes (triggers, payloads, signaller)
+      back to the Protolathe following undocumented removal.
+    type: Fix
+  id: 7979
+  time: '2025-02-19T11:34:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35303
