@@ -175,6 +175,7 @@
   parent: BasePlushie
   id: PlushieEvilBug
   name: evil bug plushie
+  suffix: DO NOT MAP
   description: Heh...
   components:
   - type: Sprite
@@ -188,7 +189,7 @@
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    attackRate: 2
+    attackRate: 1
     damage:
       types:
         Slash: 1
@@ -207,6 +208,10 @@
       types:
         Slash: 2
         Piercing: 2
+    staminaCost: 5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
   - type: Food
     requiresSpecialDigestion: false
     useSound:
@@ -470,13 +475,17 @@
       path: /Audio/_Impstation/Thaven/moods_changed.ogg
   - type: UseDelay
     delay: 15.0
+  - type: Spillable
+    solution: absorbed
+  - type: Absorbent
+    pickupAmount: 15
   - type: SolutionContainerManager
     solutions:
-      food:
-        maxVol: 10
+      absorbed:
+        maxVol: 15
         reagents:
         - ReagentId: Milk
-          Quantity: 10
+          Quantity: 15
 
 - type: entity
   parent: BasePlushie
@@ -499,6 +508,27 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieGollylad
+  name: gollylad plushie
+  description: This one isn't very soft at all.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_gollylad
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_NF/Voice/Goblin/goblin-throat-singing-01.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_NF/Voice/Goblin/goblin-deathgasp-01.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_NF/Voice/Goblin/goblin-deathgasp-01.ogg
+  - type: UseDelay
+    delay: 15.0
+
+- type: entity
+  parent: BasePlushie
   id: PlushieApid
   name: apid plushie
   description: Stinger not included.
@@ -509,3 +539,34 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Animals/mouse_squeak.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieDoll
+  name: sentimental ragdoll
+  description: A cute little ragdoll! Aw, it even has buttons for eyes...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: doll_base
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: doll_base-inhand-left
+      right:
+        - state: doll_base-inhand-right
+- type: entity
+  parent: BasePlushie
+  id: PlushieDollHair
+  name: sentimental doll
+  description: Make sure to brush its hair and tuck it into bed every night.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: doll_hair
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: doll_hair-inhand-left
+      right:
+        - state: doll_hair-inhand-right

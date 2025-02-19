@@ -142,3 +142,15 @@
   storage:
     back:
     - SilverRingTrinket
+
+- type: loadout
+  id: PlushieDoll
+  storage:
+    back:
+    - PlushieDoll
+
+- type: loadout
+  id: PlushieDollHair
+  storage:
+    back:
+    - PlushieDollHair
