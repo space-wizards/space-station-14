@@ -133,6 +133,7 @@
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
   - type: Item
+    sprite: _Impstation/Objects/Fun/toys.rsi
     inhandVisuals:
       left:
         - state: plushie_bug-inhand-left
@@ -196,6 +197,7 @@
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: Item
+    sprite: _Impstation/Objects/Fun/toys.rsi
     inhandVisuals:
       left:
         - state: plushie_evilbug-inhand-left
@@ -531,7 +533,7 @@
     sound:
       path: /Audio/_NF/Voice/Goblin/goblin-deathgasp-01.ogg
   - type: UseDelay
-    delay: 15.0
+    delay: 5.0
 
 - type: entity
   parent: BasePlushie
@@ -561,6 +563,7 @@
         - state: doll_base-inhand-left
       right:
         - state: doll_base-inhand-right
+
 - type: entity
   parent: BasePlushie
   id: PlushieDollHair
