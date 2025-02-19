@@ -76,7 +76,7 @@
     spawn_type: LateJoin
 
 - type: entity
-  name: офицер телекомуникаций Синдиката
+  name: офицер телекоммуникаций Синдиката
   id: SpawnPointLatejoinTypanOfficer
   parent: SpawnPointJobBase
   components:

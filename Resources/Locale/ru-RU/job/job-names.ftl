@@ -100,7 +100,7 @@ job-name-typan-chef = Повар Синдиката
 job-name-typan-medic = Медик Синдиката
 job-name-typan-rd = Директор исследований Синдиката
 job-name-typan-science = Учёный Синдиката
-job-name-typan-telecommunications-officer = Офицер телекомуникаций Синдиката
+job-name-typan-telecommunications-officer = Офицер телекоммуникаций Синдиката
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Атмосферный техник
 JobBartender = Бармен
@@ -187,4 +187,4 @@ JobTypanChef = Повар Синдиката
 JobTypanMedic = Медик Синдиката
 JobTypanRD = Директор исследований Синдиката
 JobTypanScience = Учёный Синдиката
-JobTypanTelecommunicationsOfficer = Офицер телекомуникаций Синдиката
+JobTypanTelecommunicationsOfficer = Офицер телекоммуникаций Синдиката

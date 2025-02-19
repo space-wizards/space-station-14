@@ -2,7 +2,7 @@
   id: TypanTelecommunicationsOfficer
   name: job-name-typan-telecommunications-officer
   playTimeTracker: TypanTelecommunicationsOfficer
-  description: Офицер телекомуникаций из далёкого космоса.
+  description: Офицер телекоммуникаций из далёкого космоса.
   startingGear: SyndicateFormal
   icon: "JobIconSyndicateFormal"
   supervisors: job-supervisors-typan-syndicate

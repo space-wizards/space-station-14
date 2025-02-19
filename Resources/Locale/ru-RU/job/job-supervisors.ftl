@@ -19,5 +19,5 @@ job-supervisors-security-borg = своим законам, офицерам, и�
 job-supervisors-centcom-administrator = администратору станции центрального командования
 job-supervisors-no-one = никому
 job-supervisors-typan-syndicate = командованию Синдиката
-job-supervisors-typan-telecommunications-officer = офицеру телекомуникаций Синдиката
+job-supervisors-typan-telecommunications-officer = офицеру телекоммуникаций Синдиката
 job-supervisors-typan-rd = директору исследований Синдиката

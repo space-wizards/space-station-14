@@ -12,5 +12,5 @@ ent-SpawnPointLatejoinTypanRD = директор исследований Син
     .desc = { ent-SpawnPointJobBase.desc }
 ent-SpawnPointLatejoinTypanScience = учёный Синдиката
     .desc = { ent-SpawnPointJobBase.desc }
-ent-SpawnPointLatejoinTypanOfficer = офицер телекомуникаций Синдиката
+ent-SpawnPointLatejoinTypanOfficer = офицер телекоммуникаций Синдиката
     .desc = { ent-SpawnPointJobBase.desc }
