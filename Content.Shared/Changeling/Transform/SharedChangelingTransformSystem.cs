@@ -14,7 +14,6 @@ using Content.Shared.Wagging;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.Serialization.Manager;
 
 
 namespace Content.Shared.Changeling.Transform;
@@ -28,7 +27,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -52,8 +51,10 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     {
         if (!HasComp<UserInterfaceComponent>(ent))
             return;
-        if(!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
+
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
             return;
+
         Dirty(ent, userIdentity);
 
         if (!_uiSystem.IsUiOpen(ent.Owner, TransformUi.Key, args.Performer))
@@ -78,10 +79,12 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
     private void TransformPreviousConsumed(Entity<ChangelingTransformComponent> ent)
     {
-        if(!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
+
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
         StartSound(ent, ent.Comp.TransformAttemptNoise);
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.TransformWindup,
@@ -99,10 +102,13 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
        ref ChangelingTransformIdentitySelectMessage args)
     {
         _uiSystem.CloseUi(ent.Owner, TransformUi.Key, ent);
+
         var selectedIdentity = args.TargetIdentity;
+
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
         StartSound(ent, ent.Comp.TransformAttemptNoise);
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.TransformWindup,
@@ -132,13 +138,14 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             return;
 
         var targetIdentity = GetEntity(args.TargetIdentity);
-        if(!TryComp<DnaComponent>(ent, out var targetConsumedDna)
+
+        if (!TryComp<DnaComponent>(ent, out var targetConsumedDna)
            || !TryComp<HumanoidAppearanceComponent>(targetIdentity, out var targetConsumedHumanoid)
            || !TryComp<VocalComponent>(targetIdentity, out var targetConsumedVocals)
            || !TryComp<SpeechComponent>(targetIdentity, out var targetConsumedSpeech))
             return;
 
-        //Handle species with the ability to wag their tail
+        // Handle species with the ability to wag their tail
         // Why is wagging like this, i can't query the prototype because what if there's things we don't want
         // wagging isn't special, it's just a component, i can't check for special things like this... it's not an emote
         //
@@ -182,11 +189,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     protected virtual void StopSound(Entity<ChangelingTransformComponent> ent) { }
 }
 
+public sealed partial class ChangelingTransformActionEvent : InstantActionEvent;
 
-public sealed partial class ChangelingTransformActionEvent : InstantActionEvent
-{
-
-}
 [Serializable, NetSerializable]
 public sealed partial class ChangelingTransformWindupDoAfterEvent : SimpleDoAfterEvent
 {
@@ -215,22 +219,24 @@ public sealed class ChangelingIdentityData
     public readonly NetEntity Identity;
     public string Name;
 
-
     public ChangelingIdentityData(NetEntity identity, string name)
     {
         Identity = identity;
         Name = name;
     }
 }
+
 [Serializable, NetSerializable]
 public sealed class ChangelingTransformBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly List<ChangelingIdentityData> Identites;
+
     public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities)
     {
         Identites = identities;
     }
 }
+
 [Serializable, NetSerializable]
 public enum TransformUi : byte
 {

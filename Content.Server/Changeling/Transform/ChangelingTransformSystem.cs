@@ -1,5 +1,4 @@
 using Content.Server.Emoting.Components;
-using Content.Server.Emoting.Systems;
 using Content.Server.IdentityManagement;
 using Content.Shared.Changeling.Transform;
 using Content.Shared.IdentityManagement.Components;
@@ -21,11 +20,14 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
         //How to stop quantum gender, a bug where the Examine pronoun will mispredict 100% of the time. Need to SPECIFICALLY
         // also modify the Identities grammar component, before Queuing the identityUpdate
         if(!TryComp<GrammarComponent>(uid, out var currentGrammar)
-            || !TryComp<IdentityComponent>(uid, out var currentIdentity))
+           || !TryComp<IdentityComponent>(uid, out var currentIdentity))
             return;
+
         var identityContainedUid = currentIdentity!.IdentityEntitySlot.ContainedEntities[0]; // get the IdentityComponent so we can modify that too
+
         if(!TryComp<GrammarComponent>(identityContainedUid, out var identityGrammar))
             return;
+
         var grammar = new Entity<GrammarComponent>(uid, currentGrammar);
         var identityGrammarEntity = new Entity<GrammarComponent>(identityContainedUid, identityGrammar!);
 
@@ -38,6 +40,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     {
         CopyComp<BodyEmotesComponent>(target, uid, out var bodyEmotes);
     }
+
     protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
     {
         if(sound is not null)
@@ -48,6 +51,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     {
         if (ent.Comp.CurrentTransformSound is not null)
             _audioSystem.Stop(ent.Comp.CurrentTransformSound);
+
         ent.Comp.CurrentTransformSound = null;
     }
 }

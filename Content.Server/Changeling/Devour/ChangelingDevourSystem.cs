@@ -16,7 +16,7 @@ public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
 
     protected override void StartSound(Entity<ChangelingDevourComponent> ent, SoundSpecifier? sound)
     {
-        if(sound is not null)
+        if (sound is not null)
             ent.Comp.CurrentDevourSound = _audioSystem.PlayPvs(sound, ent)!.Value.Entity;
     }
 
@@ -24,6 +24,7 @@ public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
     {
         if (ent.Comp.CurrentDevourSound is not null)
             _audioSystem.Stop(ent.Comp.CurrentDevourSound);
+
         ent.Comp.CurrentDevourSound = null;
     }
 
@@ -31,10 +32,12 @@ public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
     {
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
         var coords = _transform.GetMapCoordinates(uid);
+
         foreach (var proto in spawnEntities)
         {
             Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
         }
+
         QueueDel(item);
     }
 }

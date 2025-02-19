@@ -15,12 +15,21 @@ public sealed partial class ChangelingTransformComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ChangelingTransformActionEntity;
 
+    /// <summary>
+    /// Time it takes to Transform
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan TransformWindup = TimeSpan.FromSeconds(5);
 
+    /// <summary>
+    /// The noise used when attempting to transform
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? TransformAttemptNoise = new SoundCollectionSpecifier("ChangelingTransformAttempt");
 
+    /// <summary>
+    /// The currently active transform in the world
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentTransformSound;
 }

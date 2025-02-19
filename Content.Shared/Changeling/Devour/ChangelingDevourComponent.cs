@@ -19,6 +19,9 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ChangelingDevourActionEntity;
 
+    /// <summary>
+    /// The whitelist of targets for devouring
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist = new()
     {
@@ -29,9 +32,15 @@ public sealed partial class ChangelingDevourComponent : Component
         ],
     };
 
+    /// <summary>
+    /// The Sound to use during consumption of a victim
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? ConsumeNoise = new SoundCollectionSpecifier("ChangelingDevourConsume");
 
+    /// <summary>
+    /// The Sound to use during the windup before consuming a victim
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup");
 
@@ -58,9 +67,15 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public float DevourConsumeDamageCap = 350f;
 
+    /// <summary>
+    /// The Currently active devour sound in the world
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentDevourSound;
 
+    /// <summary>
+    /// The damage profile for a single tick of devour damage
+    /// </summary>
     [DataField, AutoNetworkedField]
     public DamageSpecifier DamagePerTick = new()
     {
@@ -72,8 +87,12 @@ public sealed partial class ChangelingDevourComponent : Component
         },
     };
 
+
+    /// <summary>
+    /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan NextTick;
+    public TimeSpan NextTick = TimeSpan.Zero;
 
     /// <summary>
     /// The percentage of ANY brute damage resistance that will prevent devouring

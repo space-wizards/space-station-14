@@ -4,8 +4,5 @@ namespace Content.Shared.Changeling.Devour;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedChangelingDevourSystem))]
-public sealed partial class ChangelingHuskedCorpseComponent : Component
-{
-
-}
+public sealed partial class ChangelingHuskedCorpseComponent : Component;
 

@@ -10,7 +10,7 @@
 - type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
-  description: Consume the essence of your victims and subsume their identity and mind into your own
+  description: Consume the essence of your victims and subsume their identity and mind into your own.
   components:
   - type: EntityTargetAction
     icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
@@ -21,7 +21,7 @@
 - type: entity
   id: ActionChangelingTransform
   name: "[color=red]Transform[/color]"
-  description: Transform and assume the identities of those you have devoured
+  description: Transform and assume the identities of those you have devoured.
   components:
   - type: InstantAction
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }

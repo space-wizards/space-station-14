@@ -2,6 +2,4 @@
 
 namespace Content.Client.Changeling;
 
-public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
-{
-}
+public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem;

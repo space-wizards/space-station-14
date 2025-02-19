@@ -2,7 +2,4 @@
 
 namespace Content.Client.Changeling.Transform;
 
-public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
-{
-
-}
+public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem;

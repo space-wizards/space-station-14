@@ -162,7 +162,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<ThiefRuleComponent>(targetPlayer, DefaultChangelingRule);
+                _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-changeling"),

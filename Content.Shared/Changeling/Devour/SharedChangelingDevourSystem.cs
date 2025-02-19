@@ -23,7 +23,6 @@ namespace Content.Shared.Changeling.Devour;
 
 public abstract partial class SharedChangelingDevourSystem : EntitySystem
 {
-
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -37,7 +36,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
 
     public override void Initialize()
     {
@@ -95,7 +93,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         return  slash || blunt || pierce;
     }
 
-
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
     {
 
@@ -127,8 +124,10 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-husk"), args.Performer, args.Performer);
             return;
         }
+
         StartSound(ent, new SoundPathSpecifier(_audio.GetSound(ent.Comp.DevourWindupNoise!)));
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), ent, target: target, used: ent)
         {
             BreakOnMove = true,
@@ -139,6 +138,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"), args.Performer, null, PopupType.MediumCaution);
 
     }
+
     private void OnDevourWindup(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourWindupDoAfterEvent args)
     {
         var curTime = _timing.CurTime;
@@ -157,7 +157,9 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         StartSound(ent, new SoundPathSpecifier(_audio.GetSound(ent.Comp.ConsumeNoise!)));
 
         ent.Comp.NextTick = curTime + TimeSpan.FromSeconds(1);
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} began to devour {ToPrettyString(args.Target):player} identity");
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.DevourConsumeTime,
@@ -172,6 +174,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.None,
         });
     }
+
     private void OnDevourConsume(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourConsumeDoAfterEvent args)
     {
         args.Handled = true;
@@ -214,33 +217,26 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
                 && TryComp<ButcherableComponent>(item, out var butcherable))
-            {
                 RipClothing(target.Value, item.Value, butcherable);
-            }
         }
         Dirty(ent);
     }
 
-    protected virtual void StartSound(Entity<ChangelingDevourComponent> ent, SoundSpecifier? sound){ }
+    protected virtual void StartSound(Entity<ChangelingDevourComponent> ent, SoundSpecifier? sound) { }
+
     protected virtual void StopSound(Entity<ChangelingDevourComponent> ent) { }
 
     protected virtual void RipClothing(EntityUid uid, EntityUid item, ButcherableComponent butcherable) { }
 
 }
 
-public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent
-{
-}
+public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent;
 
 
 

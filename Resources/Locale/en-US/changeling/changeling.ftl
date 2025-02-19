@@ -1,5 +1,5 @@
 ﻿roles-antag-changeling-name = Changeling
-roles-antag-changeling-objective = A intelligent predator that assumes the identities of its victims
+roles-antag-changeling-objective = A intelligent predator that assumes the identities of its victims.
 
 changeling-role-greeting = You are a Changeling, a highly intelligent predator. Your only goal is to escape the station alive via assuming the identities of the denizens of this station. You are hungry and will not make it long without sustenance... kill, consume, hide, survive.
 changeling-briefing = You are a changeling, your goal is to survive. Consume humanoids to gain biomass and utilize it to evade termination. You are able to utilize and assume the identities of those you consume to evade a grim fate.
@@ -17,5 +17,5 @@ changeling-devour-consume-complete = Our uncanny mouth retreats, biomass consume
 changeling-transform-attempt = Bones snap, muscles tear, one flesh becomes another.
 changeling-husked-corpse = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } corpse looks to have had all of { POSS-ADJ($target) } organs forcibly and violently removed. [/color]
 
-changeling-defibrillator-failure = This patient is too internally mangled to be able to be revived
+changeling-defibrillator-failure = This patient is too internally mangled to be revived.
 changeling-unidentified-husked-corpse = Mangled Corpse
