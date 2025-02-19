@@ -20,7 +20,11 @@ public sealed partial class DungeonJob
         }
 
         var tileDef = _prototype.Index(tileProto);
-        data.SpawnGroups.TryGetValue(DungeonDataKey.WallMounts, out var spawnProto);
+        if (!data.SpawnGroups.TryGetValue(DungeonDataKey.WallMounts, out var spawnProto))
+        {
+            // caves can have no walls
+            return;
+        }
 
         var checkedTiles = new HashSet<Vector2i>();
         var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);

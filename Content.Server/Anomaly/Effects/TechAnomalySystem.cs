@@ -22,9 +22,15 @@ public sealed class TechAnomalySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TechAnomalyComponent, MapInitEvent>(OnTechMapInit);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
+    }
+
+    private void OnTechMapInit(Entity<TechAnomalyComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextTimer = _timing.CurTime;
     }
 
     public override void Update(float frameTime)
@@ -110,8 +116,11 @@ public sealed class TechAnomalySystem : EntitySystem
 
             if (_random.Prob(tech.Comp.EmagSupercritProbability))
             {
-                _emag.DoEmagEffect(tech, source);
-                _emag.DoEmagEffect(tech, sink);
+                var sourceEv = new GotEmaggedEvent(tech, EmagType.Access | EmagType.Interaction);
+                RaiseLocalEvent(source, ref sourceEv);
+
+                var sinkEv = new GotEmaggedEvent(tech, EmagType.Access | EmagType.Interaction);
+                RaiseLocalEvent(sink, ref sinkEv);
             }
 
             CreateNewLink(tech, source, sink);

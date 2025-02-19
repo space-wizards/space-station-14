@@ -20,8 +20,6 @@
         density: 15
         mask:
           - MachineMask
-  - type: CargoPallet
-    palletType: All
   - type: StaticPrice
     price: 100
   - type: Sprite

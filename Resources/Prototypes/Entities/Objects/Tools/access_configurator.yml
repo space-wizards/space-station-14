@@ -99,6 +99,8 @@
     - ChiefEngineer
     - ChiefMedicalOfficer
     - Command
+    - Cryogenics
+    - EmergencyShuttleRepealAll
     - Engineering
     - External
     - HeadOfPersonnel
@@ -119,6 +121,7 @@
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard
     privilegedIdSlot:
       name: id-card-console-privileged-id
       ejectSound: /Audio/Machines/id_swipe.ogg

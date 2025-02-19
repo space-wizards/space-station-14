@@ -690,8 +690,13 @@
 ##########################################################
 
 - type: entity
+<<<<<<< HEAD
   parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
   id: ClothingOuterWinterSecUnarmored
+=======
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  id: ClothingOuterWinterSec
+>>>>>>> master
   name: security winter coat
   description: An unarmored yet sturdy warm coat.
   components:
@@ -745,7 +750,7 @@
 
 ################################################################
 - type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
+  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterWarden
   name: warden's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
@@ -759,7 +764,7 @@
 ################################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterWardenUnarmored
   name: warden's winter coat
   description: An unarmored yet sturdy warm coat.
@@ -880,6 +885,10 @@
   - type: Construction
     graph: WebObjects
     node: coat
+  - type: Butcherable
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 5
   - type: FlavorProfile
     flavors:
       - cobwebs
