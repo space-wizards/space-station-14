@@ -10,6 +10,10 @@
   - Service
   - Maintenance
   - Zookeeper # DeltaV - Add Zookeeper access
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: MonkeyDay
+    prototype: MonkeyCubeBox
 
 - type: startingGear
   id: ZookeeperGear

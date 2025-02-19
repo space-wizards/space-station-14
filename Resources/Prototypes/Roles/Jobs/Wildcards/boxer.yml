@@ -11,6 +11,10 @@
   - Maintenance
   - Theatre # DeltaV - Add Theatre access
   - Boxer # DeltaV - Add Boxer access
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: BoxingDay
+    prototype: ClothingHandsGlovesBoxingRigged
 
 - type: startingGear
   id: BoxerGear

@@ -453,7 +453,7 @@
   id: BoxFolderCentCom
   name: CentComm folder
   parent: BoxFolderBase
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   description: CentComm's miserable little pile of secrets!
   components:
   - type: Sprite
@@ -615,7 +615,7 @@
   id: TraitorCodePaper
   name: syndicate codeword
   description: A leaked codeword to possibly get in touch with the Syndicate.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: TraitorCodePaper
 
