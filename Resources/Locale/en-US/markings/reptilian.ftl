@@ -111,3 +111,9 @@ marking-LizardChestBackspikes = Lizard Back spikes (Four)
 marking-LizardSnoutSplotch = Lizard Snout (Splotch)
 marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
 marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot
+
+marking-LizardSnoutVisageSharp = Lizard Visage (Sharp)
+marking-LizardSnoutVisageSharp-visage_sharp = Lizard Visage (Sharp)
+
+marking-LizardSnoutVisageRound = Lizard Visage (Round)
+marking-LizardSnoutVisageRound-visage_round = Lizard Visage (Round)
