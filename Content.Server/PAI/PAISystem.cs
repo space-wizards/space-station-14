@@ -37,6 +37,8 @@ public sealed class PAISystem : SharedPAISystem
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
     {
+        // Not checking for Handled because ToggleableGhostRoleSystem already marks it as such.
+
         if (!TryComp<MindContainerComponent>(uid, out var mind) || !mind.HasMind)
             component.LastUser = args.User;
     }
