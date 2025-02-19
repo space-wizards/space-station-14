@@ -51,13 +51,16 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         Dirty(ent);
         HandlePvsOverride(ent, mob);
     }
-
+    /// <summary>
+    /// Simple helper to add a PVS override to a
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="target"></param>
     protected void HandlePvsOverride(EntityUid uid, EntityUid target)
     {
         if(!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        HandlePvsOverride(uid, target);
         _pvsOverrideSystem.AddSessionOverride(target, actor.PlayerSession);
     }
 
