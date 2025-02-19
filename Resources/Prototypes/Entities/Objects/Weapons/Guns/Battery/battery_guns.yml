@@ -231,21 +231,50 @@
 
 - type: entity
   name: laser rifle
-  parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: red-unshaded
+      map: ["enum.FireModesLayers.FireMode"]
+      shader: unshaded
+    - state: red-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
   - type: StaticPrice
     price: 420
-  - type: Item
-    heldPrefix: mag4
   - type: MagazineVisuals
-    magState: mag
+    magState: red
     steps: 5
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
-    fireCost: 62.5
+    proto: WeakRedLaser
+    fireCost: 15.6
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: WeakRedLaser
+      fireCost: 15.6
+      magState: red
+      visualState: red-unshaded
+    - proto: OrangeLaser
+      fireCost: 31.2
+      magState: orange
+      visualState: orange-unshaded
+    - proto: YellowLaser
+      fireCost: 62.5
+      magState: yellow
+      visualState: yellow-unshaded
 
 #- type: entity
 #  name: pulse pistol

@@ -1,0 +1,13 @@
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsGlovesBlackNitrile
+  name: Black Nitrile Gloves
+  description: High-quality nitrile gloves. Expensive medical PPE, now in black!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Hands/Gloves/blacknitrile.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Hands/Gloves/blacknitrile.rsi
+  - type: Fiber
+    fiberMaterial: black nitrile
+  - type: FingerprintMask

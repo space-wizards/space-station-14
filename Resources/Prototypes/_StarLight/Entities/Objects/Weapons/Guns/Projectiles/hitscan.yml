@@ -855,3 +855,51 @@
   damage:
     types:
       Poison: 10
+
+- type: hitscan
+  id: WeakRedLaser
+  name: Low Intensity
+  damage:
+    types:
+      Heat: 7 #15 shots to down
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+
+- type: hitscan
+  id: OrangeLaser
+  name: Medium Intensity
+  damage:
+    types:
+      Heat: 10 #10 shots to down
+  muzzleFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+
+- type: hitscan
+  id: YellowLaser
+  name: High Intensity
+  damage:
+    types:
+      Heat: 14 #8 shots to down
+  muzzleFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_yellow_laser
+  travelFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_yellow_laser
+  impactFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_beam_yellow_laser

@@ -60,8 +60,8 @@
   result: MagazineRifleIncendiary
   materials:
     Steel: 50
-    Plastic: 100
-    Plasma: 250
+    Plastic: 375
+#Incendiary bullets take plastic to make, not plasma. You can check the code yourself below this, the box takes plastic to make, not plasma. So why would the magazine take plasma to make?
 
 - type: latheRecipe
   parent: BaseAmmoRecipe

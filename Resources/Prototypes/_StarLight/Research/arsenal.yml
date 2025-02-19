@@ -19,7 +19,8 @@
   - MagazineBoxRifleAP
   - MagazineBoxLightRifleAP
   - LightRifleHeavyMagazineAP
-
+  - MagazinePistolSubMachineGunAP
+  
 - type: technology
   id: IonWeaponry
   name: research-technology-ion-weaponry
