@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed borg "hands" showing up in their stripping menu.
-    type: Fix
-  id: 7480
-  time: '2024-10-03T00:11:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32606
 - author: ArtisticRoomba
   changes:
   - message: X-ray cannons and stinger grenades are now security restricted. HoS's
@@ -3897,3 +3890,10 @@
   id: 7979
   time: '2025-02-19T11:34:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35303
+- author: Winkarst-cpu
+  changes:
+  - message: Now outer clothing hides PDA and belt sprites under it.
+    type: Tweak
+  id: 7980
+  time: '2025-02-19T13:13:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33448
