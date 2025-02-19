@@ -45,14 +45,14 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
     public string CorruptPower(string message, float chargeLevel)
     {
         // The first idxMin characters are SAFE
-        const int idxMin = 10;
+        const int idxMin = 8;
         // Probability will max at idxMax
         const int idxMax = 40;
         // With no/empty battery, probability to drop will be this value at idxMax
-        const float maxDropProbWithEmptyBattery = 0.6f;
+        const float maxDropProbWithEmptyBattery = 0.5f;
         // This will have no effect when charge level is greater than chargeThreshold
         const float chargeThreshold = 0.15f;
-        const float probToReplaceWithDot = 0.4f;
+        const float probToReplaceWithDot = 0.6f;
 
         // Fast bails, would not have an effect
         if (chargeLevel > chargeThreshold || message.Length < idxMin)
