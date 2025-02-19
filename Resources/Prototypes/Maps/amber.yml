@@ -2,7 +2,7 @@
   id: Amber
   mapName: 'Amber'
   mapPath: /Maps/amber.yml
-  minPlayers: 7
+  minPlayers: 15
   maxPlayers: 60
   stations:
     Amber:
