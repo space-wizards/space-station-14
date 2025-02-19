@@ -1,5 +1,5 @@
 ent-SpawnPointGhostBlob = Blob
-    .suffix = DO NOT SPAWN
+    .suffix = Spawner
     .desc = { ent-MarkerBase.desc }
 ent-MobBlobPod = Blob pod
     .desc = An ordinary person fighting opponents, not like a thing attached to a tile, zombifies corpses.

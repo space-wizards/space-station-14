@@ -30,9 +30,9 @@ ent-ActionMorphGeras = Превратиться в Герас
     .desc = Превращает вас в герас - уменьшенную версию вас, позволяющую быстро передвигаться ценой потери инвентаря.
 ent-ActionToggleSuitPiece = Переключить элементы костюма
     .desc = Не забудьте экипировать важные части костюма, прежде чем приступать к действиям.
-ent-ActionCombatModeToggle =  [color=red]Боевой режим[/color]
+ent-ActionCombatModeToggle = [color=red]Боевой режим[/color]
     .desc = Войти в боевой режим
-ent-ActionCombatModeToggleOff =  [color=red]Боевой режим[/color]
+ent-ActionCombatModeToggleOff = [color=red]Боевой режим[/color]
     .desc = Войти в боевой режим
 ent-ActionChangeVoiceMask = Изменить имя
     .desc = Измените имя, которое все слышат, на другое.
@@ -56,7 +56,7 @@ ent-ActionFireStarter = Поджечь
     .desc = Поджигает противников в радиусе вокруг вас.
 ent-ActionToggleEyes = Открыть/закрыть глаза
     .desc = Закройте глаза, чтобы защитить их, или откройте, чтобы насладиться яркими цветами.
-ent-FakeMindShieldToggleAction =  [color=green]Toggle Fake Mindshield[/color]
+ent-FakeMindShieldToggleAction = [color=green]Toggle Fake Mindshield[/color]
     .desc = Turn the Fake Mindshield implant's transmission on/off
 ent-ActionToggleParamedicSiren = Toggle Paramedic Siren
     .desc = Toggles the paramedic siren on and off.
