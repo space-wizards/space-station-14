@@ -13,7 +13,6 @@ public sealed class MasskickCommand : LocalizedCommands
     [Dependency] private readonly IServerNetManager _netManager = default!;
 
     public override string Command => "masskick";
-    public override string Description => LocalizationManager.TryGetString($"cmd-masskick-desc", out var val) ? val : "";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
