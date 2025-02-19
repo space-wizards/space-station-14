@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseToggleClothing]
   id: ClothingNeckHeadphones
   name: headphones
   description: Quality headphones from Drunk Masters, with good sound insulation.
@@ -10,14 +10,12 @@
     - state: icon
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
-    equippedPrefix: off
     sprite: Clothing/Neck/Misc/headphones.rsi
-  - type: ToggleableLightVisuals
-    spriteLayer: enum.ToggleVisuals.Layer
-    clothingVisuals:
-      neck:
-      - state: on-equipped-NECK
+  - type: ToggleClothing
+    action: ActionToggleHeadphones
+    mustEquip: false
   - type: Appearance
+  - type: Headphones
   - type: GenericVisualizer
     visuals:
       enum.ToggleVisuals.Toggled:
@@ -30,6 +28,15 @@
       path: /Audio/Items/flashlight_on.ogg
     soundDeactivate:
       path: /Audio/Items/flashlight_off.ogg
+
+- type: entity
+  id: ActionToggleHeadphones
+  name: Toggle Headphones
+  description: Toggles the headphones on and off.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    event: !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingNeckBase
