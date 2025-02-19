@@ -27,6 +27,7 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 4, 4 ]
             Zookeeper: [ 1, 1 ]
+            Reporter: [ 2, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
