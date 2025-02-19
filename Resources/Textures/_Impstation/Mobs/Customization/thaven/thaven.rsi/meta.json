@@ -42,6 +42,14 @@
     {
       "name": "rarmtat1",
       "directions": 4
+    },
+    {
+      "name": "reyeglow",
+      "directions": 4
+    },
+    {
+      "name": "leyeglow",
+      "directions": 4
     }
   ]
 }
