@@ -496,6 +496,8 @@
     liar-word-40: liar-word-replacement-40
     liar-word-41: liar-word-replacement-41
     liar-word-42: liar-word-replacement-42
+    liar-word-43: liar-word-replacement-43
+    liar-word-44: liar-word-replacement-44
 
 - type: accent
   id: german
