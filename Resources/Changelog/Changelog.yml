@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed the Instigator shuttle event never happening.
-    type: Fix
-  id: 7477
-  time: '2024-10-02T11:44:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32597
 - author: FluffMe
   changes:
   - message: Fixed accidental erase of paper contents by spamming save action.
@@ -3893,3 +3886,11 @@
   id: 7976
   time: '2025-02-18T22:23:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35282
+- author: CooperWallace
+  changes:
+  - message: A popup is now displayed at the item's previous location when it is recalled
+      by the recall wizard spell.
+    type: Add
+  id: 7977
+  time: '2025-02-19T01:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35272
