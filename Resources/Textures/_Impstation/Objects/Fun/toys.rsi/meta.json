@@ -98,6 +98,20 @@
             "name": "plushie_apid"
         },
         {
+            "name": "plushie_dwarf"
+        },
+        {
+            "name": "plushie_dwarf_unshaded",
+            "delays": [
+                [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+                ]
+            ]
+        },
+        {
             "name": "doll_base"
         },
         {

@@ -473,6 +473,12 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/_Impstation/Thaven/moods_changed.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/desecration-03.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/desecration-03.ogg
   - type: UseDelay
     delay: 15.0
   - type: Spillable
@@ -570,3 +576,39 @@
         - state: doll_hair-inhand-left
       right:
         - state: doll_hair-inhand-right
+
+- type: entity
+  parent: [ BasePlushie, BaseHandheldInstrument ]
+  id: PlushieDwarf
+  name: dwarf plushie?
+  description: You can hear a faint whistling from the inside. #alternate description: It's a stone, Luigi, you didn't make it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    layers:
+    - state: plushie_dwarf
+    - state: plushie_dwarf_unshaded
+      shader: unshaded
+  - type: PointLight
+    radius: 1.2
+    color: "#00CCFF"
+  - type: Instrument
+    program: 75
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/break_stone.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/break_stone.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/break_stone.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/break_stone.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/break_stone.ogg
+  - type: Tag
+    tags:
+    - WoodwindInstrument
