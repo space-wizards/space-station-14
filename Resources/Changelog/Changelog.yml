@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: X-ray cannons and stinger grenades are now security restricted. HoS's
-      armored trench coat and its variants are security and command restricted.
-    type: Fix
-  id: 7481
-  time: '2024-10-03T10:01:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32614
 - author: Myra
   changes:
   - message: Medibots and Janibots can no longer become sentient via the sentience
@@ -3897,3 +3889,11 @@
   id: 7980
   time: '2025-02-19T13:13:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33448
+- author: Booblesnoot42
+  changes:
+  - message: When removing encryption keys from an intercom, excess keys will now
+      be dropped at the remover's feet instead of dropping inside the wall.
+    type: Fix
+  id: 7981
+  time: '2025-02-19T13:46:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34582
