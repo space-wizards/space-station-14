@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Myra
-  changes:
-  - message: Medibots and Janibots can no longer become sentient via the sentience
-      event.
-    type: Remove
-  id: 7482
-  time: '2024-10-03T10:32:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32383
 - author: eoineoineoin
   changes:
   - message: Action bar can be reconfigured again
@@ -3897,3 +3889,11 @@
   id: 7981
   time: '2025-02-19T13:46:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34582
+- author: cerebralerror, robinthedragon
+  changes:
+  - message: 'New barsigns: Maltroach (based on sign by MoffNyan, from tgstation)
+      and Whiskey Echoes (by cerebralerror, from frontier station)'
+    type: Add
+  id: 7982
+  time: '2025-02-19T19:25:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35296
