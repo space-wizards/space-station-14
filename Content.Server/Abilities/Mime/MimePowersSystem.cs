@@ -58,7 +58,7 @@ namespace Content.Server.Abilities.Mime
             EnsureComp<MutedComponent>(uid);
             if (component.PreventWriting)
             {
-                EnsureComp<IlliterateComponent>(uid, out var illiterateComponent);
+                EnsureComp<BlockWritingComponent>(uid, out var illiterateComponent);
                 illiterateComponent.FailWriteMessage = component.FailWriteMessage;
                 Dirty(uid, illiterateComponent);
             }
@@ -132,7 +132,7 @@ namespace Content.Server.Abilities.Mime
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
             RemComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
-                RemComp<IlliterateComponent>(uid);
+                RemComp<BlockWritingComponent>(uid);
             _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
             _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);
@@ -158,7 +158,7 @@ namespace Content.Server.Abilities.Mime
             AddComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
             {
-                EnsureComp<IlliterateComponent>(uid, out var illiterateComponent);
+                EnsureComp<BlockWritingComponent>(uid, out var illiterateComponent);
                 illiterateComponent.FailWriteMessage = mimePowers.FailWriteMessage;
                 Dirty(uid, illiterateComponent);
             }

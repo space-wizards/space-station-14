@@ -6,7 +6,7 @@ namespace Content.Shared.Paper;
 /// An entity with this component cannot write on paper.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class IlliterateComponent : Component
+public sealed partial class BlockWritingComponent : Component
 {
     /// <summary>
     /// What message is displayed when the entity fails to write?
