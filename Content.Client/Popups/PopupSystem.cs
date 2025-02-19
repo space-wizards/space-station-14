@@ -125,8 +125,8 @@ namespace Content.Client.Popups
 
         public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalEntity == recipient && _timing.IsFirstTimePredicted)
-                PopupCoordinates(message, coordinates, type);
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
         }
 
         private void PopupCursorInternal(string? message, PopupType type, bool recordReplay)
