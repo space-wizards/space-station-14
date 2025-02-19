@@ -1,7 +1,8 @@
-using Content.Shared.Species.Components;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.FixedPoint;
+using Content.Shared.Popups;
+using Content.Shared.Species.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Temperature;
 using Robust.Shared.Random;
@@ -19,6 +20,7 @@ public sealed partial class ColdBloodedSystem : EntitySystem
 
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
@@ -36,6 +38,38 @@ public sealed partial class ColdBloodedSystem : EntitySystem
             comp.HasColdTemperature = true;
         else
             comp.HasColdTemperature = false;
+    }
+
+    public bool ChangeColdCoofAmount(EntityUid uid, FixedPoint2 amount, bool negative, ColdBloodedComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return false;
+
+        if (negative)
+            comp.ColdCoof -= amount;
+        else
+        {
+            comp.ColdCoof += amount;
+            PopupEntity(uid, comp);
+        }
+
+        if (comp.ColdCoof >= comp.ColdCoofReqAmount)
+        {
+            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10), false);
+            ChangeColdCoofAmount(uid, comp.ColdCoof, true);
+        }
+
+        OnAlertChange(uid, comp);
+
+        return true;
+    }
+
+    private void PopupEntity(EntityUid uid, ColdBloodedComponent comp)
+    {
+        var popupChance = _random.Next(10);
+
+        if (popupChance <= 2)
+            _popupSystem.PopupEntity(Loc.GetString(comp.PopupId), uid, uid, PopupType.Medium);
     }
 
     private void OnAlertChange(EntityUid uid, ColdBloodedComponent comp)
@@ -67,27 +101,6 @@ public sealed partial class ColdBloodedSystem : EntitySystem
         }
     }
 
-    public bool ChangeColdCoofAmount(EntityUid uid, FixedPoint2 amount, bool negative, ColdBloodedComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return false;
-
-        if (negative)
-            comp.ColdCoof -= amount;
-        else
-            comp.ColdCoof += amount;
-
-        if (comp.ColdCoof >= comp.ColdCoofReqAmount)
-        {
-            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10), false);
-            ChangeColdCoofAmount(uid, comp.ColdCoof, true);
-        }
-
-        OnAlertChange(uid, comp);
-
-        return true;
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -106,7 +119,7 @@ public sealed partial class ColdBloodedSystem : EntitySystem
                 ChangeColdCoofAmount(uid, cold.ColdCoofPerSecond, false, cold);
             }
 
-            if (cold.ColdCoof >= 0 && !cold.HasColdTemperature)
+            if (cold.ColdCoof >= 1 && !cold.HasColdTemperature)
             {
                 ChangeColdCoofAmount(uid, cold.ColdCoofPerSecond, true, cold);
             }
