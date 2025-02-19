@@ -59,14 +59,14 @@ public sealed partial class DoAfter
     /// <summary>
     ///     Whether or not the user was in storage when the do after was started.
     /// </summary>
-    [DataField]
-    public bool UserInStorage = false;
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool UserInStorage;
 
     /// <summary>
     ///      Whether or not the target was in storage when the do after was started.
     /// </summary>
-    [DataField]
-    public bool TargetInStorage = false;
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool TargetInStorage;
 
     /// <summary>
     ///     If <see cref="DoAfterArgs.NeedHand"/> is true, this is the hand that was selected when the doafter started.
