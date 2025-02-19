@@ -151,7 +151,7 @@
     state: red
   - type: ThiefUndeterminedBackpack
     possibleSets:
-    - MatebaSet
+    - N1984Set
     - LaserGunSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
@@ -193,7 +193,7 @@
     state: gamma
   - type: ThiefUndeterminedBackpack
     possibleSets:
-    - N1984Set
+    - MatebaSet
     - PulsePistolSet
     - AdvancedLaserSet
   - type: ActivatableUI
@@ -445,6 +445,7 @@
   - SpeedLoaderMagnum
   - SpeedLoaderMagnum
   - MagazineBoxMagnum
+  - MagazineBoxMagnum
 
 - type: thiefBackpackSet
   id: N1984Set
@@ -458,7 +459,6 @@
   - MagazineMagnum
   - MagazineMagnum
   - MagazineMagnum
-  - MagazineBoxMagnum
   - MagazineBoxMagnum
 
 - type: thiefBackpackSet
