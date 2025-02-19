@@ -160,8 +160,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         Dirty(target, targetHumanoid);
     }
 
-
-
     /// <summary>
     ///     Sets the visibility for multiple layers at once on a humanoid's sprite.
     /// </summary>
