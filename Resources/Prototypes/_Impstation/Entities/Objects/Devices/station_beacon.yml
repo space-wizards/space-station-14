@@ -43,6 +43,22 @@
   - type: NavMapBeacon
     defaultText: station-beacon-news
 
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconHD
+  suffix: HD's Room
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-hd
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconServiceStoreroom
+  suffix: Service Storeroom
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-service-storeroom
+
 #Portals
 - type: entity
   parent: DefaultStationBeaconEngineering

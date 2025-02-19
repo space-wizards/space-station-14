@@ -12,6 +12,8 @@ station-beacon-smengine = Supermatter
 
 # Service
 station-beacon-news = News
+station-beacon-hd = HD
+station-beacon-service-storeroom = Storeroom
 
 # Portals
 station-beacon-portal-engineering = Engineering Portal

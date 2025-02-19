@@ -6,7 +6,25 @@
   components:
   - type: Label
     currentLabel: holopad-general-docking
-
+    
+# Command
+- type: entity
+  parent: Holopad
+  id: HolopadCommandHd
+  suffix: HD
+  components:
+  - type: Label
+    currentLabel: holopad-command-hd
+    
+# Service
+- type: entity
+  parent: Holopad
+  id: HolopadServiceStoreroom
+  suffix: Service Storeroom
+  components:
+  - type: Label
+    currentLabel: holopad-command-service-storeroom
+    
 # Science
 - type: entity
   parent: Holopad
