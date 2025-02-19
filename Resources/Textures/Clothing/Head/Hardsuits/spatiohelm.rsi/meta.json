@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14",
+  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14. Bump maps by notquitehadouken for SS14.",
 
   "size": {
     "x": 32,
@@ -22,7 +22,8 @@
     },
     {
       "name": "equipped-head",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "equipped-head-light",
@@ -34,7 +35,8 @@
     },
     {
       "name": "equipped-head-vox",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump-vox"
     },
     {
       "name": "equipped-head-light-vox",
