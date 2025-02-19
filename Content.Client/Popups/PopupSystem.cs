@@ -125,7 +125,7 @@ namespace Content.Client.Popups
 
         public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
         {
-            if (_playerManager.LocalSession == recipient & _timing.IsFirstTimePredicted)
+            if (_playerManager.LocalEntity == recipient && _timing.IsFirstTimePredicted)
                 PopupCoordinates(message, coordinates, type);
         }
 
