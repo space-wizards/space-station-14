@@ -131,7 +131,7 @@
   parent: PlushieGhost
   id: PlushieGhostRevenant
   name: revenant soft toy
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   description: So soft it almost makes you want to take a nap...
   components:
     - type: Item
@@ -1345,7 +1345,7 @@
         volume: -10
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   id: PonderingOrb
   name: pondering orb
   description: Ponderous, man... Really ponderous.
