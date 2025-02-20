@@ -87,8 +87,8 @@ internal sealed class AdminNameOverlay : Overlay
             }
             else if (!classic && _filter.Contains(playerInfo.RoleProto.ID))
             {
-               var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper(); //TODO:ERRANT
-               var color = playerInfo.RoleProto.Color;
+               var label = Loc.GetString(playerInfo.RoleProto.Name ?? "").ToUpper(); //TODO:ERRANT update antag overlay too
+               var color = playerInfo.RoleProto.Color ?? Color.White;
 
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
             }

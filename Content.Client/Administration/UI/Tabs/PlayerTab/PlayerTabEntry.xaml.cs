@@ -23,10 +23,14 @@ public sealed partial class PlayerTabEntry : PanelContainer
         if (player.IdentityName != player.CharacterName)
             CharacterLabel.Text += $" [{player.IdentityName}]";
         AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no");
-        RoleTypeLabel.Text = Loc.GetString(player.RoleProto.Name);
+        RoleTypeLabel.Text = Loc.GetString(player.RoleProto.Name ?? "role-type-crew-aligned-name");
         if (!string.IsNullOrEmpty(player.RoleProto.Subtype))
-            RoleTypeLabel.Text = RoleTypeLabel.Text + " - " + Loc.GetString(player.RoleProto.Subtype.Value) ; //TODO:ERRANT unhardcode
-        RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
+        {
+            var subtype = Loc.GetString(player.RoleProto.Subtype.Value);
+            var newText = Loc.GetString("role-with-subtype-format", ("type", RoleTypeLabel.Text), ("subtype", subtype));
+            RoleTypeLabel.Text = newText ;
+        }
+        RoleTypeLabel.FontColorOverride = player.RoleProto.Color ?? Color.White;
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
         PlayerEntity = player.NetEntity;

@@ -22,7 +22,8 @@ public sealed class RoleTypePrototype : IPrototype, IInheritingPrototype
     ///     The role's name, displayed to players and admins.
     /// </summary>
     [DataField]
-    public LocId Name; //{ get; set; } //= "role-type-crew-aligned-name"; TODO:ERRANT
+    public LocId? Name;
+    // Can't assign the default here because I want it to be inheritable
 
     /// <summary>
     ///     The role's subtype, shown only to admins to help with antag categorization
@@ -34,5 +35,6 @@ public sealed class RoleTypePrototype : IPrototype, IInheritingPrototype
     ///     Font color.
     /// </summary>
     [DataField]
-    public Color Color; // { get; private set; } = Color.FromHex("#eeeeee"); TODO:ERRANT
+    public Color? Color;
+    // Can't assign the default here because I want it to be inheritable
 }

@@ -6,6 +6,9 @@ role-type-familiar-name = Familiar
 role-type-silicon-name = Silicon
 role-type-silicon-antagonist-name = Altered Silicon
 
+role-with-subtype-format = {$type} - {$subtype}
+
+# Ideally, subtype names should be short
 role-subtype-solo-antagonist-traitor = Traitor
 role-subtype-solo-antagonist-thief = Thief
 role-subtype-solo-antagonist-ninja = Ninja
