@@ -1,0 +1,32 @@
+- type: entity
+  parent: BaseTowel
+  id: TowelStripedOrange
+  name: striped orange towel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#FF8300"
+    - state: iconstripe
+      color: "#000000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#FF8300"
+      right:
+      - state: inhand-right
+        color: "#FF8300"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#FF8300"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#FF8300"
+      belt:
+      - state: equipped-BELT
+        color: "#FF8300"
+  - type: Fiber
+    fiberColor: fibers-striped-orange
