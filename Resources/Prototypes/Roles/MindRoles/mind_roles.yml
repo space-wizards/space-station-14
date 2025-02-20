@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: MindRole
+    roleType: Neutral
 
 - type: entity
   parent: BaseMindRole
@@ -139,7 +140,7 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
-    roleType: SoloAntagonist
+    roleType: SoloAntagonistNinja
     exclusiveAntag: true
   - type: NinjaRole
 
@@ -151,7 +152,7 @@
 #  description: mind-role-nukeops-description
   components:
   - type: MindRole
-    roleType: TeamAntagonist
+    roleType: TeamAntagonistNukie
     exclusiveAntag: true
     antagPrototype: Nukeops
   - type: NukeopsRole
@@ -184,7 +185,7 @@
   - type: MindRole
     antagPrototype: HeadRev
     exclusiveAntag: true
-    roleType: TeamAntagonist
+    roleType: TeamAntagonistHeadRevolutionary
   - type: RevolutionaryRole
 
 - type: entity
@@ -195,6 +196,7 @@
   components:
   - type: MindRole
     antagPrototype: Rev
+    roleType: TeamAntagonistRevolutionary
 
 # Thief
 - type: entity
@@ -205,7 +207,7 @@
   components:
   - type: MindRole
     antagPrototype: Thief
-    roleType: SoloAntagonist
+    roleType: SoloAntagonistThief
   - type: ThiefRole
 
 # Traitors
@@ -218,7 +220,7 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
-    roleType: SoloAntagonist
+    roleType: SoloAntagonistTraitor
   - type: TraitorRole
 
 - type: entity
@@ -237,7 +239,7 @@
   #  description: mind-role-syndicate-reinforcement-description
   components:
     - type: MindRole
-      roleType: TeamAntagonist
+      roleType: TeamAntagonistTraitorReinforcement
 
 # Zombie Squad
 - type: entity
@@ -249,7 +251,7 @@
   - type: MindRole
     antagPrototype: InitialInfected
     exclusiveAntag: true
-    roleType: TeamAntagonist
+    roleType: TeamAntagonistInfected
   - type: InitialInfectedRole
 
 - type: entity
