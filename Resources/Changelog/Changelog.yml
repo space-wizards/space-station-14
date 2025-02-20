@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SoulFN
-  changes:
-  - message: Dragon can now pull things using tail.
-    type: Add
-  id: 7486
-  time: '2024-10-04T05:39:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32568
 - author: SaphireLattice
   changes:
   - message: Explosives throw a container they are in
@@ -3897,3 +3890,10 @@
   id: 7985
   time: '2025-02-20T16:12:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33727
+- author: metalgearsloth
+  changes:
+  - message: Fix storage windows being duplicated when reconnecting.
+    type: Fix
+  id: 7986
+  time: '2025-02-20T16:51:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35054
