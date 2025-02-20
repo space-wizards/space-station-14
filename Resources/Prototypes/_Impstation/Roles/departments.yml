@@ -3,7 +3,7 @@
   id: Dining
   name: department-Dining
   description: department-Dining-description
-  color: "#FFFFFF"
+  color: "#9FED58"
   roles:
   - Bartender
   - Chef
