@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Box station's recycler has been properly connected.
-    type: Fix
-  - message: Box station's singlo substation has been rewired to the station-wide
-      HV network.
-    type: Tweak
-  - message: Box station now has AI law boards in the upload room.
-    type: Add
-  id: 7484
-  time: '2024-10-04T01:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32608
 - author: Plykiya
   changes:
   - message: You can no longer FTL the station.
@@ -3897,3 +3885,10 @@
   id: 7983
   time: '2025-02-20T00:27:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34705
+- author: Winkarst-cpu
+  changes:
+  - message: Now all toys and bike horns make an appropriate sound.
+    type: Tweak
+  id: 7984
+  time: '2025-02-20T01:12:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33449
