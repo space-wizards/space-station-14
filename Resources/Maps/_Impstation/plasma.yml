@@ -67895,6 +67895,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -108.5,20.5
       parent: 2
+  - uid: 4700
+    components:
+    - type: Transform
+      pos: -93.5,12.5
+      parent: 2
   - uid: 5101
     components:
     - type: Transform
@@ -68817,12 +68822,6 @@ entities:
     components:
     - type: Transform
       pos: -94.5,12.5
-      parent: 2
-  - uid: 4700
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -93.5,12.5
       parent: 2
   - uid: 5100
     components:
@@ -76176,12 +76175,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -124.5,-48.5
       parent: 2
-  - uid: 9550
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -92.5,12.5
-      parent: 2
   - uid: 10667
     components:
     - type: Transform
@@ -76509,11 +76502,6 @@ entities:
     components:
     - type: Transform
       pos: -26.5,-9.5
-      parent: 2
-  - uid: 9505
-    components:
-    - type: Transform
-      pos: -92.5,12.5
       parent: 2
   - uid: 9543
     components:
@@ -127269,6 +127257,13 @@ entities:
     - type: Transform
       pos: -93.5,-25.5
       parent: 2
+- proto: MailTeleporter
+  entities:
+  - uid: 9505
+    components:
+    - type: Transform
+      pos: -92.5,12.5
+      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 20643
@@ -130677,6 +130672,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -28.5,-5.5
       parent: 2
+  - uid: 9550
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -92.5,10.5
+      parent: 2
   - uid: 10544
     components:
     - type: Transform
@@ -131447,12 +131448,6 @@ entities:
     components:
     - type: Transform
       pos: -114.5,-2.5
-      parent: 2
-  - uid: 15976
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -92.5,10.5
       parent: 2
   - uid: 16174
     components:
@@ -142856,6 +142851,13 @@ entities:
     - type: Transform
       pos: -32.5,-42.5
       parent: 2
+- proto: SpawnMobChemDog
+  entities:
+  - uid: 26310
+    components:
+    - type: Transform
+      pos: -36.5,-23.5
+      parent: 2
 - proto: SpawnMobCleanBot
   entities:
   - uid: 2419
@@ -142935,13 +142937,6 @@ entities:
     components:
     - type: Transform
       pos: -125.5,-45.5
-      parent: 2
-- proto: SpawnMobChemDog
-  entities:
-  - uid: 26310
-    components:
-    - type: Transform
-      pos: -36.5,-23.5
       parent: 2
 - proto: SpawnPointAdminAssistant
   entities:
