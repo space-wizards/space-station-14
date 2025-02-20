@@ -53,6 +53,7 @@
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
+  - HolopadMachineCircuitboard
 
 - type: technology
   id: AdvancedEntertainment
@@ -113,6 +114,7 @@
   - FauxTileJungleAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
 
 - type: technology
   id: BiochemicalStasis

@@ -29,7 +29,7 @@
                     <Label Name="CallStatusText" Margin="10 5 10 0" ReservesSpace="False"/>
                     <BoxContainer Name="CallerIdContainer" Orientation="Vertical" ReservesSpace="False">
                         <RichTextLabel Name="CallerIdText" HorizontalAlignment="Center" Margin="0 0 0 0"/>
-                        <Label Text="{Loc 'holopad-window-relay-label'}" Margin="10 5 10 0" ReservesSpace="False"/>
+                        <Label Text="{Loc 'holopad-window-relay-label'}" Margin="10 10 10 0" ReservesSpace="False"/>
                         <RichTextLabel Name="HolopadIdText" HorizontalAlignment="Center" Margin="0 0 0 10"/>
                     </BoxContainer>
                 </BoxContainer>
