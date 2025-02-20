@@ -21,6 +21,11 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip3 install --ignore-installed --user pillow jsonschema
+      # DS14-custom-rsi-schema-start
+      - name: Replace schema file
+        run: |
+          cp .github/rsi-schema.json RobustToolbox/Schemas/rsi.json
+      # DS14-custom-rsi-schema-end
       - name: Validate RSIs
         run: |
           python3 RobustToolbox/Schemas/validate_rsis.py Resources/
