@@ -7,8 +7,13 @@
         <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
         <LineEdit Name="JobLineEdit" />
         <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
-        <GridContainer Name="IconGrid" Columns="10">
-            <!-- Job icon buttons are generated in the code -->
-        </GridContainer>
+        <BoxContainer Orientation="Horizontal"> <!-- TODO margins -->
+            <GridContainer Name="JobGroupGrid" Columns="2">
+                <!-- Group buttons are generated in code -->
+            </GridContainer>
+            <GridContainer Name="IconGrid" Columns="3">
+                <!-- Job icon buttons are generated in code -->
+            </GridContainer>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

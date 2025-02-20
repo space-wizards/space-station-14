@@ -21,10 +21,9 @@ public sealed partial class JobIconGroupPrototype : IPrototype
 
     /// <summary>
     ///     Name of the group used for menu tooltips.
-    ///     TODO remove nullable
     /// </summary>
     [DataField]
-    public LocId? GroupName;
+    public LocId GroupName;
 
     /// <summary>
     ///     Sprite used to represent the group.

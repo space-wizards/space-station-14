@@ -19,7 +19,7 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem;
 
-        private const int JobIconColumnCount = 10;
+        private const int JobGroupColumnCount = 2;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
@@ -39,62 +39,87 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
-        public void SetAllowedIcons(string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> iconGroups)
+        //TODO rename, remove currentJobIconId, summary
+        public void SetAllowedIcons(string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> jobGroups)
         {
+            JobGroupGrid.DisposeAllChildren();
             IconGrid.DisposeAllChildren();
 
-            var jobIconButtonGroup = new ButtonGroup();
+            var jobGroupButtonGroup = new ButtonGroup();
             var i = 0;
-            // TEMP
-            List<JobIconPrototype> icons = new();
-            foreach (var group in iconGroups)
+
+            foreach (var group in jobGroups)
             {
                 if (!_prototypeManager.TryIndex<JobIconGroupPrototype>(group, out var groupProto))
                     continue;
 
-                foreach (var iconID in groupProto.Icons)
-                {
-                    if (!_prototypeManager.TryIndex<JobIconPrototype>(iconID, out var iconProto))
-                        continue;
-
-                    icons.Add(iconProto);
-                }
-            }
-            // var icons = _prototypeManager.EnumeratePrototypes<JobIconPrototype>().Where(icon => icon.AllowSelection).ToList();
-            // icons.Sort((x, y) => string.Compare(x.LocalizedJobName, y.LocalizedJobName, StringComparison.CurrentCulture));
-            foreach (var jobIcon in icons)
-            {
-                String styleBase = StyleBase.ButtonOpenBoth;
-                var modulo = i % JobIconColumnCount;
+                // Alternate button styles
+                var styleBase = StyleBase.ButtonOpenBoth;
+                var modulo = i % JobGroupColumnCount;
                 if (modulo == 0)
                     styleBase = StyleBase.ButtonOpenRight;
-                else if (modulo == JobIconColumnCount - 1)
+                else if (modulo == JobGroupColumnCount - 1)
                     styleBase = StyleBase.ButtonOpenLeft;
 
-                // Generate buttons
-                var jobIconButton = new Button
+                // Create new button
+                var groupButton = new Button
                 {
                     Access = AccessLevel.Public,
+                    ToolTip = Loc.GetString(groupProto.GroupName),
                     StyleClasses = { styleBase },
-                    MaxSize = new Vector2(42, 28),
-                    Group = jobIconButtonGroup,
-                    Pressed = currentJobIconId == jobIcon.ID,
-                    ToolTip = jobIcon.LocalizedJobName
+                    SetSize = new Vector2(150, 28),
+                    Group = jobGroupButtonGroup
                 };
 
-                // Generate buttons textures
-                var jobIconTexture = new TextureRect
+                // Add button texture
+                if (groupProto.Sprite != null)
                 {
-                    Texture = _spriteSystem.Frame0(jobIcon.Icon),
-                    TextureScale = new Vector2(2.5f, 2.5f),
-                    Stretch = TextureRect.StretchMode.KeepCentered,
+                    var groupTexture = new TextureRect
+                    {
+                        Texture = _spriteSystem.Frame0(groupProto.Sprite),
+                        Stretch = TextureRect.StretchMode.KeepAspect
+                    };
+                    groupButton.AddChild(groupTexture);
+                }
+
+                // Add button label
+                var groupLabel = new Label
+                {
+                    Text = Loc.GetString(groupProto.GroupName),
+                    Margin = new Thickness(27, 0, 0, 0),
+                    Align = Label.AlignMode.Center
+                };
+                groupButton.AddChild(groupLabel);
+
+                // Finish button and add to UI
+                groupButton.OnPressed += _ => SetJobIcons(groupProto.Icons);
+                JobGroupGrid.AddChild(groupButton);
+                i++;
+            }
+        }
+
+        // TODO summary
+        private void SetJobIcons(List<ProtoId<JobIconPrototype>> jobIcons)
+        {
+            IconGrid.DisposeAllChildren();
+
+            foreach (var icon in jobIcons)
+            {
+                if (!_prototypeManager.TryIndex<JobIconPrototype>(icon, out var iconProto))
+                    continue;
+
+                // Create new button
+                var jobIconButton = new TextureButton
+                {
+                    TextureNormal = _spriteSystem.Frame0(iconProto.Icon),
+                    Access = AccessLevel.Public,
+                    SetSize = new Vector2(28, 28),
+                    ToolTip = iconProto.LocalizedJobName
                 };
 
-                jobIconButton.AddChild(jobIconTexture);
-                jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(jobIcon.ID);
+                // Finish button and add to UI
+                jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(iconProto.ID);
                 IconGrid.AddChild(jobIconButton);
-
-                i++;
             }
         }
 
