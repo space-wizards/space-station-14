@@ -34,5 +34,5 @@ public sealed partial class RepulseAttractComponent : Component
     ///     The default excludes ghost mobs, revenants, the AI camera etc.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public CollisionGroup CollisionLayer = CollisionGroup.GhostImpassable;
+    public CollisionGroup CollisionMask = CollisionGroup.GhostImpassable;
 }

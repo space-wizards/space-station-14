@@ -40,7 +40,7 @@ public sealed class RepulseAttractSystem : EntitySystem
     public bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid user)
     {
         var position = _xForm.GetMapCoordinates(ent.Owner);
-        return TryRepulseAttract(position, user, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionLayer);
+        return TryRepulseAttract(position, user, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionMask);
     }
 
     public bool TryRepulseAttract(MapCoordinates position, EntityUid? user, float speed, float range, EntityWhitelist? whitelist = null, CollisionGroup layer = CollisionGroup.SingularityLayer)
