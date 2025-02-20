@@ -107,7 +107,9 @@
         },
         "size": {
             "$id": "#/properties/size",
-            "default": {},
+            "default": {
+
+            },
             "description": "The dimensions of the sprites inside the RSI.  This is not the size of the PNG files that store the sprite sheet.",
             "examples": [
                 {
@@ -146,7 +148,9 @@
             "type": "array",
             "title": "Icon States",
             "description": "Metadata for icon states. Includes name, directions, delays, etc.",
-            "default": [],
+            "default": [
+
+            ],
             "examples": [
                 [
                     {
