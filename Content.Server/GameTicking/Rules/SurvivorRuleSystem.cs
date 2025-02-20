@@ -6,10 +6,8 @@ using Content.Server.Roles;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Storage;
-using Content.Shared.Survivor;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Survivor.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -25,6 +23,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -75,35 +74,35 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
         // Using this instead of alive antagonists to make checking for shuttle & if the ent is alive easier
-        var existingSurvivors = EntityQuery<SurvivorComponent, TransformComponent, MobStateComponent>();
+        var existingSurvivors = AllEntityQuery<SurvivorComponent, TransformComponent, MobStateComponent>();
 
-        var alive = 0;
+        var aliveMarooned = 0;
         var aliveOnShuttle = 0;
         var eShuttle = _eShuttle.GetShuttle();
 
         if (eShuttle is null)
             return;
 
+        if (!eShuttle.Value.IsValid())
+            return;
+
         var eShuttleMapPos = _xform.GetMapCoordinates(Transform(eShuttle.Value));
 
-        foreach (var (_, xform, mobStateComp) in existingSurvivors)
+        while (existingSurvivors.MoveNext(out var survivor, out _, out var xform, out var mobState))
         {
-            // Checking this instead of the system since we're already going through a query
-            //  Can't get .Owner so there'd have to be an entire different way to get a UID
-            //   Which is a lot more messy than just doing this
-            if (mobStateComp.CurrentState != MobState.Alive)
+            if (!_mobState.IsAlive(survivor, mobState))
                 continue;
 
-            if (eShuttleMapPos.MapId != _xform.GetMapCoordinates(xform).MapId)
+            if (eShuttleMapPos.MapId != _xform.GetMapCoordinates(survivor, xform).MapId)
             {
-                alive++;
+                aliveMarooned++;
                 continue;
             }
 
             aliveOnShuttle++;
         }
 
-        args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", alive)));
+        args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", aliveMarooned)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-on-shuttle-count", ("aliveCount", aliveOnShuttle)));
 
         // Player manifest at EOR shows who's a survivor so no need for extra info here.
