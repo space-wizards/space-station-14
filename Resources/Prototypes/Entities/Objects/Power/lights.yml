@@ -423,3 +423,125 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalGreen
+
+- type: entity
+  parent: BaseLightbulb
+  name: cyan crystal light bulb
+  description: A high power high energy bulb which has a small colored crystal inside.
+  id: LightBulbCrystalCyan
+  components:
+  - type: LightBulb
+    color: "#47f8ff"
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+    bulb: Bulb
+  - type: Construction
+    graph: CyanLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalCyan
+
+- type: entity
+  parent: LightBulbCrystalCyan
+  name: blue crystal light bulb
+  id: LightBulbCrystalBlue
+  components:
+  - type: LightBulb
+    color: "#39a1ff"
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: BlueLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalBlue
+
+- type: entity
+  parent: LightBulbCrystalCyan
+  name: pink crystal light bulb
+  id: LightBulbCrystalPink
+  components:
+  - type: LightBulb
+    color: "#ff66cc"
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: PinkLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalPink
+
+- type: entity
+  parent: LightBulbCrystalCyan
+  name: orange crystal light bulb
+  id: LightBulbCrystalOrange
+  components:
+  - type: LightBulb
+    color: "#ff8227"
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: OrangeLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalOrange
+
+- type: entity
+  parent: LightBulbCrystalCyan
+  name: red crystal light bulb
+  id: LightBulbCrystalRed
+  components:
+  - type: LightBulb
+    color: "#fb4747"
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: RedLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalRed
+
+- type: entity
+  parent: LightBulbCrystalCyan
+  name: green crystal light bulb
+  id: LightBulbCrystalGreen
+  components:
+  - type: LightBulb
+    color: "#52ff39"
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: GreenLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalGreen
