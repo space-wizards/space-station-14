@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: You can now throw the Mosin. Go ahead. Throw it. (LEGAL DO NOT READ)
-    type: Add
-  - message: Adjusted many firearm flavortexts! How flavorful! Still in-line with
-      originals, but much more love in them.
-    type: Fix
-  - message: Adjusted a few Security cargo buys for grammar and description.
-    type: Fix
-  - message: Spear now makes an impact noise when thrown. Whoosh!
-    type: Fix
-  id: 672
-  time: '2024-12-06T10:45:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/921
 - author: widgetbeck
   changes:
   - message: Decapoid claws now function as a crowbar and wirecutters, to alleviate
@@ -4150,3 +4136,10 @@
   id: 1171
   time: '2025-02-20T03:06:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1731
+- author: hivehum
+  changes:
+  - message: Removed 64 songs from the jukebox, lobby music and nuke music selections.
+    type: Remove
+  id: 1172
+  time: '2025-02-20T03:08:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1744
