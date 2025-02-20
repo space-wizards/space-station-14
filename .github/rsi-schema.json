@@ -194,6 +194,12 @@
                             4,
                             8
                         ]
+                    },
+                    "delays": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
                     }
                 }
             }
