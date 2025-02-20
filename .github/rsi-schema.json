@@ -16,15 +16,18 @@
             "states": [
                 {
                     "name": "basic",
+                    "license": "CC-BY-SA-3.0",
                     "copyright": "Taken from CODEBASE at COMMIT LINK"
                 },
                 {
                     "name": "basic-directions",
+                    "license": "CC-BY-SA-3.0",
                     "copyright": "Taken from CODEBASE at COMMIT LINK",
                     "directions": 4
                 },
                 {
                     "name": "basic-delays",
+                    "license": "CC-BY-SA-3.0",
                     "copyright": "Taken from CODEBASE at COMMIT LINK",
                     "delays": [
                         [
@@ -35,6 +38,7 @@
                 },
                 {
                     "name": "basic-delays-directions",
+                    "license": "CC-BY-SA-3.0",
                     "copyright": "Taken from CODEBASE at COMMIT LINK",
                     "directions": 4,
                     "delays": [
@@ -155,10 +159,12 @@
                 [
                     {
                         "name": "basic",
+                        "license": "CC-BY-SA-3.0",
                         "copyright": "Taken from CODEBASE at COMMIT LINK"
                     },
                     {
                         "name": "basic-directions",
+                        "license": "CC-BY-SA-3.0",
                         "copyright": "Taken from CODEBASE at COMMIT LINK",
                         "directions": 4
                     }
@@ -173,6 +179,9 @@
                 ],
                 "properties": {
                     "name": {
+                        "type": "string"
+                    },
+                    "license": {
                         "type": "string"
                     },
                     "copyright": {
