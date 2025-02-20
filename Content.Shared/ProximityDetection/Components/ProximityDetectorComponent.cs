@@ -22,13 +22,13 @@ public sealed partial class ProximityDetectorComponent : Component
     /// <summary>
     /// The entity that was found.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? Target;
 
     /// <summary>
     /// The distance to <see cref="Target"/>.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public float Distance = float.PositiveInfinity;
 
     /// <summary>
