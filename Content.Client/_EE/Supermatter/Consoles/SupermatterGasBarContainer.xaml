@@ -1,0 +1,45 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         Orientation="Vertical" HorizontalExpand ="True">
+
+    <BoxContainer Orientation="Vertical" Margin="0 1">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="GasLabel" Text="{Loc 'supermatter-console-window-label-gas'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+            <BoxContainer SetWidth="180" SetHeight="24" Orientation="Horizontal">
+                <PanelContainer Name="GasBarBorder" HorizontalExpand="True" Margin="0 0 4 0">
+                    <ProgressBar Name="GasBar" MinValue="0" MaxValue="100" Margin="1">
+                        <Label Name="GasBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                    </ProgressBar>
+                </PanelContainer>
+                <Button Name="GasButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1 -1 0 -1">
+                    <TextureRect Name="GasButtonArrow" TexturePath="/Textures/_EE/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                </Button>
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Name="DetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="HeaderLabel" Text="{Loc 'supermatter-console-window-label-details'}" />
+            </BoxContainer>
+            <BoxContainer Name="TransmitContainer" Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="TransmitLabel" Text="{Loc 'supermatter-console-window-label-gas-transmit'}" HorizontalExpand="True" />
+                <Label Name="TransmitInfoLabel" HorizontalAlignment="Right" />
+            </BoxContainer>
+            <BoxContainer Name="WasteContainer" Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="WasteLabel" Text="{Loc 'supermatter-console-window-label-gas-waste'}" HorizontalExpand="True" />
+                <Label Name="WasteInfoLabel" HorizontalAlignment="Right" />
+            </BoxContainer>
+            <BoxContainer Name="PowerContainer" Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="PowerLabel" Text="{Loc 'supermatter-console-window-label-gas-power'}" HorizontalExpand="True" />
+                <Label Name="PowerInfoLabel" HorizontalAlignment="Right" />
+            </BoxContainer>
+            <BoxContainer Name="HeatContainer" Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="HeatLabel" Text="{Loc 'supermatter-console-window-label-gas-heat'}" HorizontalExpand="True" />
+                <Label Name="HeatInfoLabel" HorizontalAlignment="Right" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+
+</BoxContainer>
