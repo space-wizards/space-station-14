@@ -797,3 +797,36 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: MozanPlush
+  name: Mozan Plushie
+  description: Just like the real thing, it squeaks if you poke it.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: mozan_plush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
