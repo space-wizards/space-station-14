@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -117,7 +118,15 @@ public sealed partial class StoreSystem
 
             if (listing.Conditions != null)
             {
-                var args = new ListingConditionArgs(buyer, storeEntity, listing, EntityManager);
+                var argBuyer = buyer;
+
+                // If a mind isn't provided, check for one. If neither hits, it's probably an object (e.g. surplus) doing the listing.
+                if (!HasComp<MindComponent>(argBuyer) && _mind.TryGetMind(buyer, out var buyerMind, out var _))
+                {
+                    argBuyer = buyerMind;
+                }
+
+                var args = new ListingConditionArgs(argBuyer, storeEntity, listing, EntityManager);
                 var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)
