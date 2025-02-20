@@ -32,12 +32,12 @@ public sealed class ContainerHeldSystem : EntitySystem
         if (_storage.GetCumulativeItemAreas(uid) >= comp.Threshold)
         {
             _item.SetHeldPrefix(uid, "full", component: item);
-            _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
+            _appearance.SetData(uid, ToggleableVisuals.Enabled, true, appearance);
         }
         else
         {
             _item.SetHeldPrefix(uid, "empty", component: item);
-            _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
+            _appearance.SetData(uid, ToggleableVisuals.Enabled, false, appearance);
         }
     }
 }

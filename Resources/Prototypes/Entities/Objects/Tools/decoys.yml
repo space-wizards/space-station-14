@@ -35,7 +35,9 @@
     - SyndicateNamesNormal
   - type: Damageable
     damageContainer: Inorganic
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
   - type: Foldable
     folded: true
   - type: PowerCellSlot

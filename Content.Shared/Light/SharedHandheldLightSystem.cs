@@ -80,7 +80,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (component.ToggleActionEntity != null)
             _actionSystem.SetToggled(component.ToggleActionEntity, component.Activated);
 
-        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearance);
+        _appearance.SetData(uid, ToggleableVisuals.Enabled, component.Activated, appearance);
     }
 
     private void AddToggleLightVerb(Entity<HandheldLightComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
