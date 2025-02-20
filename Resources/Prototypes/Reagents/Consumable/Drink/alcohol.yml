@@ -1985,6 +1985,9 @@
   physicalDesc: reagent-physical-desc-overpowering
   flavor: hooch # TODO: Make Flavor
   color: "#331303"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
+    state: icon_empty
   metabolisms:
     Drink:
       effects:

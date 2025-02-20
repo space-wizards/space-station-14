@@ -2363,5 +2363,5 @@
         - ReagentId: BacchusBlessing
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/glass_brown2.rsi # TODO: Get Sprites
+    sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
     state: icon
