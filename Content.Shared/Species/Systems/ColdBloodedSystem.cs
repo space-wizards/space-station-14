@@ -40,23 +40,23 @@ public sealed partial class ColdBloodedSystem : EntitySystem
             comp.HasColdTemperature = false;
     }
 
-    public bool ChangeColdCoofAmount(EntityUid uid, FixedPoint2 amount, bool negative, ColdBloodedComponent? comp = null)
+    public bool ChangeSleepCoefficientAmount(EntityUid uid, FixedPoint2 amount, bool negative, ColdBloodedComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return false;
 
         if (negative)
-            comp.ColdCoof -= amount;
+            comp.CurrentSleepCoefficient -= amount;
         else
         {
-            comp.ColdCoof += amount;
+            comp.CurrentSleepCoefficient += amount;
             PopupEntity(uid, comp);
         }
 
-        if (comp.ColdCoof >= comp.ColdCoofReqAmount)
+        if (comp.CurrentSleepCoefficient >= comp.SleepCoefficientReqAmount)
         {
             _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10), false);
-            ChangeColdCoofAmount(uid, comp.ColdCoof, true);
+            ChangeColdCoofAmount(uid, comp.CurrentSleepCoefficient, true);
         }
 
         OnAlertChange(uid, comp);
@@ -75,7 +75,7 @@ public sealed partial class ColdBloodedSystem : EntitySystem
     private void OnAlertChange(EntityUid uid, ColdBloodedComponent comp)
     {
         var type = comp.Alert;
-        var alertCoof = comp.ColdCoof.Value / 100;
+        var alertCoof = comp.CurrentSleepCoefficient.Value / 100;
 
         switch (alertCoof)
         {
@@ -114,14 +114,14 @@ public sealed partial class ColdBloodedSystem : EntitySystem
                 continue;
             cold.Accumulator -= 1;
 
-            if (cold.ColdCoof <= cold.ColdCoofReqAmount && cold.HasColdTemperature)
+            if (cold.CurrentSleepCoefficient <= cold.ColdCoofReqAmount && cold.HasColdTemperature)
             {
-                ChangeColdCoofAmount(uid, cold.ColdCoofPerSecond, false, cold);
+                ChangeColdCoofAmount(uid, cold.SleepCoefficientPerSecond, false, cold);
             }
 
-            if (cold.ColdCoof >= 1 && !cold.HasColdTemperature)
+            if (cold.CurrentSleepCoefficient >= 1 && !cold.HasColdTemperature)
             {
-                ChangeColdCoofAmount(uid, cold.ColdCoofPerSecond, true, cold);
+                ChangeColdCoofAmount(uid, cold.SleepCoefficientPerSecond, true, cold);
             }
         }
     }

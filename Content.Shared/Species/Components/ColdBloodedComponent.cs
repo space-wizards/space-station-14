@@ -17,17 +17,17 @@ public sealed partial class ColdBloodedComponent : Component
     public float SleepTemperature;
 
     /// <summary>
-    ///     Required ColdCoofAmount for forced sleep.
+    ///     Required SleepCoefficient for forced sleep.
     /// </summary>
     [DataField(required: true)]
     [AutoNetworkedField]
-    public FixedPoint2 ColdCoofReqAmount;
+    public FixedPoint2 SleepCoefficientReqAmount;
 
     /// <summary>
-    ///     Cold amount that entity will be get every second.
+    ///     SleepCoefficient that entity will be get every second.
     /// </summary>
     [DataField(required: true)]
-    public FixedPoint2 ColdCoofPerSecond;
+    public FixedPoint2 SleepCoefficientPerSecond;
 
     /// <summary>
     ///     ProtoId of alert that will be used.
@@ -48,10 +48,10 @@ public sealed partial class ColdBloodedComponent : Component
     public bool HasColdTemperature = false;
 
     /// <summary>
-    ///     Current ColdCoof.
+    ///     Current SleepCoefficient.
     /// </summary>
     [ViewVariables]
-    public FixedPoint2 ColdCoof = 0;
+    public FixedPoint2 CurrentSleepCoefficient = 0;
 
     [ViewVariables]
     public float Accumulator = 0;
