@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Atlas Station) Added support for brigmedic.
-    type: Add
-  - message: (Atlas Station) Fixed missing LV cables in robotics.
-    type: Fix
-  id: 671
-  time: '2024-12-06T10:19:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/924
 - author: AvianMaiden
   changes:
   - message: You can now throw the Mosin. Go ahead. Throw it. (LEGAL DO NOT READ)
@@ -4152,3 +4143,10 @@
   id: 1170
   time: '2025-02-20T03:01:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1752
+- author: Pinkbat5
+  changes:
+  - message: Suspicious beacons are no longer contraband.
+    type: Tweak
+  id: 1171
+  time: '2025-02-20T03:06:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1731
