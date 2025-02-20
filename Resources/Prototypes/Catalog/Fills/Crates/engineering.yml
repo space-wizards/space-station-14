@@ -199,12 +199,12 @@
   id: CrateParticleDecelerators
   parent: CrateEngineeringSecure
   name: particle decelerators crate
-  description: A crate containing 3 Particle Decelerators.
+  description: A crate containing two Particle Decelerators.
   components:
   - type: StorageFill
     contents:
     - id: WeaponParticleDecelerator
-      amount: 3
+      amount: 2
 
 - type: entity
   id: CrateEngineeringSpaceHeater
