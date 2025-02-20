@@ -222,7 +222,7 @@ namespace Content.Server.Connection
 
             if (modernHwid.Length == 0 && e.AuthType == LoginType.LoggedIn && _cfg.GetCVar(CCVars.RequireModernHardwareId))
             {
-                return (ConnectionDenyReason.NoHwId, Loc.GetString("hwid-required"), null);
+                return (ConnectionDenyReason.NoHwid, Loc.GetString("hwid-required"), null);
             }
 
             var bans = await _db.GetServerBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
