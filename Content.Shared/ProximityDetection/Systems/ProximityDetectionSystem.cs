@@ -27,7 +27,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
     private void OnMapInit(Entity<ProximityDetectorComponent> ent, ref MapInitEvent args)
     {
-        var (_, component) = ent;
+        var component = ent.Comp;
 
         component.NextUpdate = _timing.CurTime + component.UpdateCooldown;
         Dirty(ent);
@@ -62,22 +62,22 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
     private void ClearTarget(Entity<ProximityDetectorComponent> ent)
     {
-        var (uid, comp) = ent;
+        var component = ent.Comp;
 
         // Don't do anything if we have no target.
-        if (comp.Target == null)
+        if (component.Target == null)
             return;
 
-        comp.Distance = float.PositiveInfinity;
-        comp.Target = null;
+        component.Distance = float.PositiveInfinity;
+        component.Target = null;
 
-        var updatedEv = new ProximityTargetUpdatedEvent(comp.Distance, ent);
-        RaiseLocalEvent(uid, ref updatedEv);
+        var updatedEv = new ProximityTargetUpdatedEvent(component.Distance, ent);
+        RaiseLocalEvent(ent, ref updatedEv);
 
-        var newTargetEv = new NewProximityTargetEvent(comp.Distance, ent);
-        RaiseLocalEvent(uid, ref newTargetEv);
+        var newTargetEv = new NewProximityTargetEvent(component.Distance, ent);
+        RaiseLocalEvent(ent, ref newTargetEv);
 
-        Dirty(uid, comp);
+        Dirty(ent);
     }
 
     private void UpdateTarget(Entity<ProximityDetectorComponent> detector)
