@@ -523,12 +523,6 @@
       collection: Paracusia
 
 - type: entity
-  id: Survivor
-  parent: BaseGameRule
-  components:
-  - type: SurvivorRule
-
-- type: entity
   parent: BaseGameRule
   id: IonStorm
   components:
