@@ -8,11 +8,6 @@
   - type: Sprite
   - type: Item
     size: Ginormous
-  - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.85
-  - type: HeldSpeedModifier
-  - type: MultiHandedItem
   - type: Gun
     fireRate: 20
     selectedMode: FullAuto
