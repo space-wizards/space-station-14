@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: suyo
-  changes:
-  - message: Added Burning Men's Soul to the lobby
-    type: Add
-  - message: Adjusted the volume for some of the expedition tracks
-    type: Tweak
-  id: 665
-  time: '2024-12-05T23:50:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/919
 - author: widgetbeck
   changes:
   - message: ADDED DECAPOIDS, a new playable species that you should probably read
@@ -4156,3 +4147,11 @@
   id: 1164
   time: '2025-02-18T17:41:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1733
+- author: hivehum
+  changes:
+  - message: Supply Assistant and Administrative Assistant now have automatic text
+      highlighting options.
+    type: Add
+  id: 1165
+  time: '2025-02-20T02:38:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1736
