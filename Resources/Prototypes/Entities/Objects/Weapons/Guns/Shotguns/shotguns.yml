@@ -139,7 +139,7 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: A premium semi-automatic combat shotgun, featuring a pistol grip and full-length magazine tube for those nasty close-quarters engagements. Uses .50 shotgun shells. #imp
+  description: A premium semi-automatic combat shotgun, featuring a pistol grip and sleek profile for those nasty close-quarters engagements. Uses .50 shotgun shells. #imp
   components: # intend for Enforcer to have wider choke for semi-auto function
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -161,7 +161,7 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: Even centuries after his time, the legacy of John Moses Browning lives on. This pump-action shotgun is a favorite of hunters and militia forces throughout many worlds. Uses .50 shotgun shells. #imp
+  description: Even centuries after his time, the legacy of John Moses Browning lives on. This pump-action shotgun is a favorite of hunters and militia forces across many worlds. Uses .50 shotgun shells. #imp
   components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
   - type: Item
     size: Normal
