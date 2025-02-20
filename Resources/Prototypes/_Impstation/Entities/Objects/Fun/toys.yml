@@ -604,8 +604,19 @@
     sound:
       path: /Audio/Effects/break_stone.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 3
     soundHit:
       path: /Audio/Effects/break_stone.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 6
+    soundHit:
+      collection: Ronck
   - type: Tag
     tags:
     - WoodwindInstrument
