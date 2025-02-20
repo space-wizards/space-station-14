@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken and modified from cev-eris at https://github.com/discordia-space/CEV-Eris/tree/7ff8f28ea4de734f3cc3cb70f2d4e4b4263a988d modified by darkrell",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "declone"
+    },
+    {
+      "name": "cbbolt",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sniperlaser"
+    },
+    {
+      "name": "impact",
+      "delays": [
+        [
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002
+        ]
+      ]
+    },
+    {
+      "name": "trace",
+      "delays": [
+        [
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002
+        ]
+      ]
+    },
+    {
+      "name": "muzzle",
+      "delays": [
+        [
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002,
+          0.006250002
+        ]
+      ]
+    }
+  ]
+}
