@@ -1,7 +1,28 @@
+## Base stash
+- type: entity
+  id: BaseStash
+  abstract: true
+  components:
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
+      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
+      tags:
+      - QuantumSpinInverter # It will cause issues with the grinder...
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
+    name: secret-stash-plushie
+
 ## Plushies
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseStash]
   id: BasePlushie
   abstract: true
   components:
@@ -56,21 +77,6 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-  - type: Speech
-    speechVerb: Default # for pais (In the secret stash)
-  - type: SecretStash
-    secretStashName: secret-stash-plushie
-    blacklist:
-      components:
-      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
-      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
-      tags:
-      - QuantumSpinInverter # It will cause issues with the grinder...
-      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
-    name: secret-stash-plushie
 
 - type: entity
   parent: BasePlushie
@@ -922,6 +928,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 - type: entity
   parent: BasePlushie
   id: PlushiePenguin
@@ -996,7 +1003,7 @@
 ## Rubber
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseStash]
   id: BaseRubberToy
   abstract: true
   components:
@@ -1023,21 +1030,6 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-  - type: Speech
-    speechVerb: Default # for pais (In the secret stash)
-  - type: SecretStash
-    secretStashName: secret-stash-plushie
-    blacklist:
-      components:
-      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
-      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
-      tags:
-      - QuantumSpinInverter # It will cause issues with the grinder...
-      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
-    name: secret-stash-plushie
 
 - type: entity
   parent: BaseRubberToy
