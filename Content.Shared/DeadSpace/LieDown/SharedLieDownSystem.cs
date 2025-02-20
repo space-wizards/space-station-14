@@ -105,6 +105,7 @@ public abstract class SharedLieDownSystem : EntitySystem
             _buckleSystem.TryUnbuckle(entity, entity);
 
         comp.IsLieDown = true;
+        comp.DrawDowned = true;
         _standing.Down(entity, dropHeldItems: false);
 
         if (TryComp(entity, out FixturesComponent? fixtureComponent))
@@ -128,6 +129,7 @@ public abstract class SharedLieDownSystem : EntitySystem
             return;
 
         comp.IsLieDown = false;
+        comp.DrawDowned = false;
         _standing.Stand(entity);
         EnsureAfter(entity, comp);
     }

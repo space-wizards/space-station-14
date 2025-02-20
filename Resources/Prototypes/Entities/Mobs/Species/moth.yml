@@ -128,6 +128,7 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: Sanity # DS14
+  - type: FootPrints # Backmen-footsteps
 
 - type: entity
   parent: BaseSpeciesDummy

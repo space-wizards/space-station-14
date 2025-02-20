@@ -21,5 +21,10 @@ namespace Content.Shared.Fluids.Components
 
         [ViewVariables]
         public Entity<SolutionComponent>? Solution;
+
+        // Backmen-footsteps-start
+        [DataField]
+        public bool ViscosityAffectsMovement = true;
+        // Backmen-footsteps-end
     }
 }

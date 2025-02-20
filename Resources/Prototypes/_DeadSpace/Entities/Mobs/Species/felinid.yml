@@ -66,6 +66,7 @@
       Unsexed: MaleFelinid
   - type: Felinid # For felinid stuff like hairballs
   - type: CatVocal # For cat emotes
+  - type: FootPrints
 
 - type: entity
   parent: MobHumanDummy

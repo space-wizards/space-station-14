@@ -165,3 +165,46 @@
   - type: Tag
     tags:
     - DNASolutionScannable
+  - type: PuddleFootPrints # Backmen-footsteps
+
+# Backmen-footsteps-start
+- type: entity
+  name: след
+  id: Footstep
+  save: false
+  description: След жидкости
+  components:
+    - type: Clickable
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepWater
+        params:
+          volume: 3
+    - type: Transform
+      noRot: false
+    - type: Sprite
+      drawdepth: FloorObjects
+      color: "#FFFFFF80"
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        slipFixture:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          mask:
+            - ItemMask
+          layer:
+            - SlipLayer
+          hard: false
+    - type: SolutionContainerManager
+      solutions:
+        step: { maxVol: 2 }
+    - type: FootPrint
+      solution: step
+    - type: Puddle
+      solution: step
+      viscosityAffectsMovement: false
+    - type: Appearance
+# Backmen-footsteps-end

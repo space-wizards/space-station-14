@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "IMPERIAL SPACE",
+    "states": [
+        {
+            "name": "footprint-left-bare-diona"
+        },
+        {
+            "name": "footprint-left-bare-dwarf"
+        },
+        {
+            "name": "footprint-left-bare-human"
+        },
+        {
+            "name": "footprint-left-bare-lizard"
+        },
+        {
+            "name": "footprint-left-bare-slime"
+        },
+        {
+            "name": "footprint-left-bare-spider"
+        },
+        {
+            "name": "footprint-right-bare-diona"
+        },
+        {
+            "name": "footprint-right-bare-dwarf"
+        },
+        {
+            "name": "footprint-right-bare-human"
+        },
+        {
+            "name": "footprint-right-bare-lizard"
+        },
+        {
+            "name": "footprint-right-bare-slime"
+        },
+        {
+            "name": "footprint-right-bare-spider"
+        },
+        {
+            "name": "footprint-shoes"
+        },
+        {
+            "name": "footprint-suit"
+        },
+        {
+            "name": "dragging-1"
+        },
+        {
+            "name": "dragging-2"
+        },
+        {
+            "name": "dragging-3"
+        },
+        {
+            "name": "dragging-4"
+        },
+        {
+            "name": "dragging-5"
+        },
+        {
+            "name": "dragging-test"
+        }
+    ]
+}

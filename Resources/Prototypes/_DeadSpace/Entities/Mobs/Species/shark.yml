@@ -46,7 +46,11 @@
   - type: Perishable
   - type: Sanity # DS14
   - type: TypingIndicator
-    proto: plafeim 
+    proto: plafeim
+  - type: FootPrints
+    leftBarePrint: "footprint-left-bare-lizard"
+    rightBarePrint: "footprint-right-bare-lizard"
+
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -54,6 +54,7 @@
         Heat : 0.3 #per second, scales with temperature & other constants
   - type: Perishable
   - type: Sanity # DS14
+  - type: FootPrints
 
 - type: entity
   parent: BaseSpeciesDummy

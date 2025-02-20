@@ -111,6 +111,9 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: ImmunitetInfectionDead # DS14
+  - type: FootPrints # Backmen-footsteps
+    leftBarePrint: "footprint-left-bare-diona"
+    rightBarePrint: "footprint-right-bare-diona"
 
 - type: entity
   parent: BaseSpeciesDummy

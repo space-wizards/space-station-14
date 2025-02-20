@@ -110,6 +110,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: FootPrints # Backmen-footsteps
 
 - type: entity
   parent: BaseSpeciesDummy

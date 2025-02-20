@@ -13,6 +13,9 @@ public sealed partial class LieDownComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan UpDelay = TimeSpan.FromSeconds(1.5f);
 
+    [ViewVariables, AutoNetworkedField]
+    public bool DrawDowned { get; set; } = false;
+
     [DataField, AutoNetworkedField]
     public float WalkSpeedModifier = 0.2f;
 
