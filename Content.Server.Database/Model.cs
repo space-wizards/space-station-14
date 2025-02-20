@@ -987,6 +987,7 @@ namespace Content.Server.Database
         BabyJail = 4,
         /// Results from rejected connections with external API checking tools
         IPChecks = 5,
+        NoHwId = 6
     }
 
     public class ServerBanHit
