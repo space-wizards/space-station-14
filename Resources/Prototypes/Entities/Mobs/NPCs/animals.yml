@@ -868,7 +868,6 @@
   - type: ExaminableSatiation
     satiations:
       Hunger: HungerExamination
-  - type: ExaminableHunger
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1028,7 +1027,6 @@
   - type: ExaminableSatiation
     satiations:
       Hunger: HungerExamination
-  - type: ExaminableHunger
   - type: Wooly
   - type: Food
     solution: wool
