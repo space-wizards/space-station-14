@@ -3525,3 +3525,11 @@ Entries:
   id: 488
   time: '2025-02-17T15:34:07.337923+00:00'
   url: 'null'
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed the Elite Suit so its not awful anymore
+    type: Tweak
+  id: 489
+  time: '2025-02-20T06:49:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/339
+
