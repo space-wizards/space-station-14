@@ -76,6 +76,10 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ColdBlooded
+    sleepTemperature: 301
+    coldCoofReqAmount: 100
+    coldCoofPerSecond: 1
 
 
 - type: entity

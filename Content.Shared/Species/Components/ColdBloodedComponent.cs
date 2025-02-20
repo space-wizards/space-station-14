@@ -12,8 +12,22 @@ public sealed partial class ColdBloodedComponent : Component
     /// <summary>
     ///     Maximum temperature that will be force entity to sleep.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float SleepTemperature = 280f;
+    [DataField(required: true)]
+    [AutoNetworkedField]
+    public float SleepTemperature;
+
+    /// <summary>
+    ///     Required ColdCoofAmount for forced sleep.
+    /// </summary>
+    [DataField(required: true)]
+    [AutoNetworkedField]
+    public FixedPoint2 ColdCoofReqAmount;
+
+    /// <summary>
+    ///     Cold amount that entity will be get every second.
+    /// </summary>
+    [DataField(required: true)]
+    public FixedPoint2 ColdCoofPerSecond;
 
     /// <summary>
     ///     ProtoId of alert that will be used.
@@ -21,21 +35,24 @@ public sealed partial class ColdBloodedComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> Alert = "ColdBlooded";
 
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 ColdCoof = 0;
-
-    [DataField]
-    public FixedPoint2 ColdCoofPerSecond = 1;
-
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 ColdCoofReqAmount = 100;
-
+    /// <summary>
+    ///     LocId for popup.
+    /// </summary>
     [DataField]
     public LocId PopupId = "reptilian-on-being-cold-popup";
 
-    [ViewVariables]
-    public float Accumulator = 0;
-
+    /// <summary>
+    ///     Bool that will be true, if entity has lower temperature than SleepTemperature.
+    /// </summary>
     [ViewVariables]
     public bool HasColdTemperature = false;
+
+    /// <summary>
+    ///     Current ColdCoof.
+    /// </summary>
+    [ViewVariables]
+    public FixedPoint2 ColdCoof = 0;
+
+    [ViewVariables]
+    public float Accumulator = 0;
 }
