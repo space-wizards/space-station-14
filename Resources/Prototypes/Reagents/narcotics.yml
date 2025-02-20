@@ -48,6 +48,11 @@
         key: Drowsiness
         time: 10
         type: Remove
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.4
+        toleranceEffect: 0.07
+        drugStrenght: 3
     Medicine:
       effects:
       - !type:ResetNarcolepsy
@@ -101,6 +106,11 @@
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
         type: Local
         probability: 0.05
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.4
+        toleranceEffect: 0.07
+        drugStrenght: 3
     Medicine:
       effects:
       - !type:ResetNarcolepsy
@@ -164,6 +174,11 @@
         key: Drowsiness
         time: 10
         type: Remove
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.1
+        toleranceEffect: 0.05
+        drugStrenght: 2
     Medicine:
       metabolismRate: 1.0
       effects:
@@ -204,6 +219,11 @@
         type: Add
         time: 16
         refresh: false
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.1
+        toleranceEffect: 0.07
+        drugStrenght: 3
 
 - type: reagent
   id: Nicotine
@@ -216,6 +236,14 @@
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
+  metabolisms:
+    Narcotic:
+      effects:
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.05
+        toleranceEffect: 0.02
+        drugStrenght: 1
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
@@ -250,6 +278,12 @@
         conditions:
         - !type:ReagentThreshold
           min: 8
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.07
+        toleranceEffect: 0.02
+        drugStrenght: 3
+
 
 - type: reagent
   id: SpaceDrugs
@@ -268,6 +302,11 @@
         type: Add
         time: 5
         refresh: false
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.5
+        toleranceEffect: 0.01
+        drugStrenght: 3
 
 - type: reagent
   id: Bananadine
@@ -286,6 +325,11 @@
         type: Add
         time: 5
         refresh: false
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.2
+        toleranceEffect: 0.1
+        drugStrenght: 2
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
@@ -309,6 +353,11 @@
         component: ForcedSleeping
         refresh: false
         type: Add
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.2
+        toleranceEffect: 0.01
+        drugStrenght: 1
 
 - type: reagent
   id: MuteToxin
@@ -328,6 +377,11 @@
         type: Add
         time: 10
         refresh: false
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.04
+        toleranceEffect: 0.01
+        drugStrenght: 1
 
 - type: reagent
   id: NorepinephricAcid
@@ -372,6 +426,11 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.04
+        toleranceEffect: 0.01
+        drugStrenght: 2
 
 - type: reagent
   id: TearGas
@@ -421,6 +480,11 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.1
+        toleranceEffect: 0.03
+        drugStrenght: 2
 
 - type: reagent
   id: Happiness
@@ -471,3 +535,8 @@
         type: Add
         time: 5
         refresh: false
+      # DeadSpace
+      - !type:DrugIntoxication
+        addictionEffect: 0.08
+        toleranceEffect: 0.03
+        drugStrenght: 2
