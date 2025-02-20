@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -22,12 +23,13 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
+    private readonly Font _fontBold;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
         ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
-    private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
-    private readonly Color _antagColorClassic = Color.OrangeRed;
+
+    SharedRoleSystem _roles = EntitySystem.Get<SharedRoleSystem>(); //TODO:ERRANT this is obsolete!!!
 
     public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
@@ -40,6 +42,7 @@ internal sealed class AdminNameOverlay : Overlay
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
+        _fontBold = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -49,7 +52,7 @@ internal sealed class AdminNameOverlay : Overlay
         var viewport = args.WorldAABB;
 
         //TODO make this adjustable via GUI
-        var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
+        // var classic = _config.GetCVar(CCVars.AdminOverlayClassic); TODO:ERRANT does this really need to be read every draw?
 
         foreach (var playerInfo in _system.PlayerList)
         {
@@ -81,16 +84,16 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            if (classic && playerInfo.Antag)
+            if (_filter.Contains(playerInfo.RoleProto.ID)
+                || playerInfo.RoleProto.Parents is not null
+                && _filter.Contains(playerInfo.RoleProto.Parents[0])) // Look upon my works and despair! TODO:ERRANT fix this shit
             {
-               args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), _antagLabelClassic, uiScale, _antagColorClassic);
-            }
-            else if (!classic && _filter.Contains(playerInfo.RoleProto.ID))
-            {
-               var label = Loc.GetString(playerInfo.RoleProto.Name ?? "").ToUpper(); //TODO:ERRANT update antag overlay too
-               var color = playerInfo.RoleProto.Color ?? Color.White;
+                var both = false; // TODO:ERRANT read this from cvar
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+                var str = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, playerInfo.RoleProto.Subtype, both);
+                var color = playerInfo.RoleProto.Color ?? Color.White;
+
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + (lineoffset * 2), str.ToUpper(), uiScale, color);
             }
 
             args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
