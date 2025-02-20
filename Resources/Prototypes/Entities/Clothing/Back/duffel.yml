@@ -64,7 +64,7 @@
       collection: BikeHorn
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseRestrictedContraband]
+  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
   id: ClothingBackpackDuffelSecurity
   name: security duffel bag
   description: A large duffel bag for holding extra security related goods.
@@ -73,7 +73,7 @@
     sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseRestrictedContraband]
+  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
   id: ClothingBackpackDuffelBrigmedic
   name: brigmedic duffel bag
   description: A large duffel bag for holding extra medical related goods.

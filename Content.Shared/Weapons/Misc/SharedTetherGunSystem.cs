@@ -207,7 +207,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _appearance.SetData(gunUid, ToggleableLightVisuals.Enabled, true, appearance);
 
         // Target updates
-        TransformSystem.Unanchor(target, targetXform);
+        TransformSystem.Unanchor((target, targetXform));
         component.Tethered = target;
         var tethered = EnsureComp<TetheredComponent>(target);
         _physics.SetBodyStatus(target, targetPhysics, BodyStatus.InAir, false);

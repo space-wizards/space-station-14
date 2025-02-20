@@ -146,7 +146,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         var xform = Transform(uid);
         if (xform.Anchored)
-            _xform.Unanchor(uid, xform);
+            _xform.Unanchor((uid, xform));
         else
             _xform.AnchorEntity((uid, xform));
 
@@ -241,7 +241,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         var xform = Transform(ent);
         xform.NoLocalRotation = false;
-        _xform.Unanchor(ent, xform);
+        _xform.Unanchor((ent, xform));
 
         Del(ent.Comp.Disguise);
         RemComp<ChameleonDisguisedComponent>(ent);
