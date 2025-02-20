@@ -812,13 +812,12 @@
     soundHit:
       path: /Audio/Items/Toys/rattle.ogg
   - type: Clothing
+    quickEquip: false
+    equippedPrefix: plushiesnake
     slots:
     - NECK
-    quickEquip: false
-    clothingVisuals:
-      neck:
-      - state: plushiesnake-equipped-NECK
-        offset: "0, 0"
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
 
 - type: entity
   parent: BasePlushie
