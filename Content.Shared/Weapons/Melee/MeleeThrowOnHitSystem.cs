@@ -47,7 +47,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
 
             if (comp.UnanchorOnHit && HasComp<AnchorableComponent>(hit))
             {
-                _transform.Unanchor((hit, Transform(hit)));
+                _transform.Unanchor(hit, Transform(hit));
             }
 
             RemComp<MeleeThrownComponent>(hit);
