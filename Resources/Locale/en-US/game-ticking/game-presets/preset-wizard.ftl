@@ -10,6 +10,13 @@ survivor-role-greeting =
     Collect as much firepower as needed to guarantee your survival.
     Trust no one.
 
+survivor-round-end-dead-count =
+{
+    $deadCount ->
+        [one] [color=red]{$deadCount}[/color] survivor died.
+        *[other] [color=red]{$deadCount}[/color] survivors died.
+}
+
 survivor-round-end-alive-count =
 {
     $aliveCount ->

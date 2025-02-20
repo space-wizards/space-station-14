@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
+using Content.Shared.Mind;
 using Content.Shared.Tag;
 
 namespace Content.Server.Magic;
@@ -12,6 +13,7 @@ public sealed class MagicSystem : SharedMagicSystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -45,8 +47,8 @@ public sealed class MagicSystem : SharedMagicSystem
         if (!ev.MakeSurvivorAntagonist)
             return;
 
-        if (!_tag.HasTag(ev.Performer, "InvalidForSurvivorAntag"))
-            _tag.AddTag(ev.Performer, "InvalidForSurvivorAntag");
+        if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, "InvalidForSurvivorAntag"))
+            _tag.AddTag(mind, "InvalidForSurvivorAntag");
 
         const string survivorRule = "Survivor";
 

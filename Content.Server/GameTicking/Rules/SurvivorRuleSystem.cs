@@ -6,6 +6,7 @@ using Content.Server.Roles;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Survivor.Components;
@@ -46,15 +47,15 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 
             var ent = human.Comp.OwnedEntity.Value;
 
-            if (_tag.HasTag(ent, "InvalidForSurvivorAntag"))
-                continue;
-
             // Alive Humans does get the mindcomp, however this has better logic to get the mindId
             // No need to repeat the same code
             if (!_mind.TryGetMind(ent, out var mind, out _) || HasComp<SurvivorComponent>(ent))
                 continue;
 
-            EnsureComp<SurvivorComponent>(ent);
+            if (_tag.HasTag(mind, "InvalidForSurvivorAntag"))
+                continue;
+
+            EnsureComp<SurvivorComponent>(mind);
             _adminLog.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ent)} has become a Survivor!");
             _role.MindAddRole(mind, "MindRoleSurvivor");
             _antag.SendBriefing(ent, Loc.GetString("survivor-role-greeting"), Color.Olive, null);
@@ -74,8 +75,9 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
         // Using this instead of alive antagonists to make checking for shuttle & if the ent is alive easier
-        var existingSurvivors = AllEntityQuery<SurvivorComponent, TransformComponent, MobStateComponent>();
+        var existingSurvivors = AllEntityQuery<SurvivorComponent, MindComponent>();
 
+        var deadSurvivors = 0;
         var aliveMarooned = 0;
         var aliveOnShuttle = 0;
         var eShuttle = _eShuttle.GetShuttle();
@@ -88,12 +90,20 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 
         var eShuttleMapPos = _xform.GetMapCoordinates(Transform(eShuttle.Value));
 
-        while (existingSurvivors.MoveNext(out var survivor, out _, out var xform, out var mobState))
+        while (existingSurvivors.MoveNext(out _, out _, out var mindComp))
         {
-            if (!_mobState.IsAlive(survivor, mobState))
+            if (mindComp.CurrentEntity is null)
                 continue;
 
-            if (eShuttleMapPos.MapId != _xform.GetMapCoordinates(survivor, xform).MapId)
+            var survivor = mindComp.CurrentEntity.Value;
+
+            if (!_mobState.IsAlive(survivor))
+            {
+                deadSurvivors++;
+                continue;
+            }
+
+            if (eShuttleMapPos.MapId != _xform.GetMapCoordinates(survivor).MapId)
             {
                 aliveMarooned++;
                 continue;
@@ -102,6 +112,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
             aliveOnShuttle++;
         }
 
+        args.AddLine(Loc.GetString("survivor-round-end-dead-count", ("deadCount", deadSurvivors)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", aliveMarooned)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-on-shuttle-count", ("aliveCount", aliveOnShuttle)));
 
