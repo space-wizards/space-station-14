@@ -8,8 +8,10 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Storage;
 using Content.Shared.Survivor;
 using Content.Shared.Survivor.Components;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.GameTicking.Rules;
@@ -22,29 +24,42 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AddSurvivorRoleEvent>(OnAddSurvivorRole);
         SubscribeLocalEvent<SurvivorRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
-    private void OnAddSurvivorRole(ref AddSurvivorRoleEvent args)
+    // TODO: Planned rework post wizard release when RandomGlobalSpawnSpell becomes a gamerule
+    protected override void Started(EntityUid uid, SurvivorRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        const string survivorRule = "Survivor";
+        base.Started(uid, component, gameRule, args);
 
-        if (!_mind.TryGetMind(args.ToBeSurvivor, out var mind, out var mindComp) || HasComp<SurvivorComponent>(args.ToBeSurvivor))
-            return;
+        var allHumans = _mind.GetAliveHumans();
 
-        EnsureComp<SurvivorComponent>(args.ToBeSurvivor);
-        _adminLog.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(args.ToBeSurvivor)} has become a Survivor!");
-        _role.MindAddRole(mind, "MindRoleSurvivor");
-        _antag.SendBriefing(args.ToBeSurvivor, Loc.GetString("survivor-role-greeting"), Color.Olive, null);
+        foreach (var human in allHumans)
+        {
+            if (!human.Comp.OwnedEntity.HasValue)
+                continue;
 
-        if (!GameTicker.IsGameRuleActive<SurvivorRuleComponent>())
-            GameTicker.StartGameRule(survivorRule);
+            var ent = human.Comp.OwnedEntity.Value;
+
+            if (_tag.HasTag(ent, "InvalidForSurvivorAntag"))
+                continue;
+
+            // Alive Humans does get the mindcomp, however this has better logic to get the mindId
+            // No need to repeat the same code
+            if (!_mind.TryGetMind(ent, out var mind, out _) || HasComp<SurvivorComponent>(ent))
+                continue;
+
+            EnsureComp<SurvivorComponent>(ent);
+            _adminLog.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ent)} has become a Survivor!");
+            _role.MindAddRole(mind, "MindRoleSurvivor");
+            _antag.SendBriefing(ent, Loc.GetString("survivor-role-greeting"), Color.Olive, null);
+        }
     }
 
     private void OnGetBriefing(Entity<SurvivorRoleComponent> ent, ref GetBriefingEvent args)

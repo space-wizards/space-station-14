@@ -20,7 +20,6 @@ using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
-using Content.Shared.Survivor;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -470,7 +469,8 @@ public abstract class SharedMagicSystem : EntitySystem
     #endregion
     #region Global Spells
 
-    private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
+    // TODO: Change this into a "StartRuleAction" when actions with multiple events are supported
+    protected virtual void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
         if (!_net.IsServer || ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || ev.Spawns is not { } spawns)
             return;
@@ -495,16 +495,6 @@ public abstract class SharedMagicSystem : EntitySystem
             {
                 var spawned = Spawn(spawn, mapCoords);
                 _hands.PickupOrDrop(ent, spawned);
-            }
-
-            if (ev.MakeSurvivorAntagonist)
-            {
-                // The performer shouldn't become a survivor
-                if (ent == ev.Performer)
-                    continue;
-
-                var survivorEv = new AddSurvivorRoleEvent(ent);
-                RaiseLocalEvent(ent, ref survivorEv, broadcast: true);
             }
         }
 

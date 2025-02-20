@@ -1,12 +1,17 @@
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
+using Content.Shared.Tag;
 
 namespace Content.Server.Magic;
 
 public sealed class MagicSystem : SharedMagicSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -31,5 +36,21 @@ public sealed class MagicSystem : SharedMagicSystem
 
         Spawn(ev.Effect, perfXForm.Coordinates);
         Spawn(ev.Effect, targetXForm.Coordinates);
+    }
+
+    protected override void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
+    {
+        base.OnRandomGlobalSpawnSpell(ev);
+
+        if (!ev.MakeSurvivorAntagonist)
+            return;
+
+        if (!_tag.HasTag(ev.Performer, "InvalidForSurvivorAntag"))
+            _tag.AddTag(ev.Performer, "InvalidForSurvivorAntag");
+
+        const string survivorRule = "Survivor";
+
+        if (!_gameTicker.IsGameRuleActive<SurvivorRuleComponent>())
+            _gameTicker.StartGameRule(survivorRule);
     }
 }

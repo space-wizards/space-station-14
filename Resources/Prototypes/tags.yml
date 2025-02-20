@@ -753,6 +753,9 @@
   id: InvalidForGlobalSpawnSpell
 
 - type: Tag
+  id: InvalidForSurvivorAntag
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag
