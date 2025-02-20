@@ -226,7 +226,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
