@@ -143,9 +143,7 @@ public sealed class NewsSystem : SharedNewsSystem
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();
 
-        AddNews(ent, title, content, authorName, out var article);
-
-        if (article.HasValue)
+        if (TryAddNews(ent, title, content, authorName, out var article))
         {
             _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
 
@@ -163,12 +161,13 @@ public sealed class NewsSystem : SharedNewsSystem
         }
     }
 
-    public void AddNews(EntityUid uid, string title, string content, string? author, out NewsArticle? article)
+    public bool TryAddNews(EntityUid uid, string title, string content, string? author, [NotNullWhen(true)] out NewsArticle? article)
     {
-        article = null;
-
         if (!TryGetArticles(uid, out var articles))
-            return;
+        {
+            article = default;
+            return false;
+        }
 
         article = new NewsArticle
         {
@@ -189,6 +188,8 @@ public sealed class NewsSystem : SharedNewsSystem
         }
 
         UpdateWriterDevices();
+
+        return true;
     }
     #endregion
 
