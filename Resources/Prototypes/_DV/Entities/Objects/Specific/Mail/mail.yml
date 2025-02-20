@@ -668,7 +668,7 @@
       prob: 0.1
       orGroup: Plushie
     - id: PlushieImp
-      weight: 0.1
+      prob: 0.1
       orGroup: Plushie
     - id: PlushieHeadofPersonnel
       orGroup: Plushie
