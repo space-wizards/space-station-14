@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Reverted the service techfab to its original sprite present in the game
-      files.
-    type: Tweak
-  id: 667
-  time: '2024-12-06T01:43:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/920
 - author: Darkmajia
   changes:
   - message: Sofas and reinforced wood tables can now be built in the construction
@@ -4154,3 +4146,10 @@
   id: 1166
   time: '2025-02-20T02:41:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1738
+- author: Sha-Seng
+  changes:
+  - message: Engineer bomber jacket has a new wrench from Landshark
+    type: Tweak
+  id: 1167
+  time: '2025-02-20T02:43:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1729
