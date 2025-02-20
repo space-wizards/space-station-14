@@ -325,7 +325,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         int multiplier;
         var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
         var volumePerSheet = 0;
-        foreach (var (_, vol) in composition.MaterialComposition)
+        foreach (var vol in composition.MaterialComposition.Values)
         {
             volumePerSheet += vol;
         }
@@ -363,9 +363,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         Dirty(receiver, insertingComp);
 
         _sharedStackSystem.Use(toInsert, multiplier);
-
-        //        _popupSystem.PopupCursor(Loc.GetString("machine-insert-item-amount", ("user", user), ("machine", receiver),
-        //            ("item", toInsert), ("amount",multiplier)), user);
 
         var ev = new MaterialEntityInsertedEvent(material);
         RaiseLocalEvent(receiver, ref ev);
