@@ -202,6 +202,14 @@
       "directions": 4
     },
     {
+      "name": "spacelizard-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spacelizard-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "spbox"
     },
     {
