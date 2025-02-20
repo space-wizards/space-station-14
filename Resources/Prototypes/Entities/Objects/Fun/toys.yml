@@ -747,6 +747,8 @@
   components:
   - type: Sprite
     state: plushie_snake
+  - type: Item
+    heldPrefix: plushiesnake
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
@@ -761,6 +763,14 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: Clothing
+    slots:
+    - NECK
+    quickEquip: false
+    clothingVisuals:
+      neck:
+      - state: plushiesnake-equipped-NECK
+        offset: "0, 0"
 
 - type: entity
   parent: BasePlushie
