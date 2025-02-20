@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Decapoid claws now function as a crowbar and wirecutters, to alleviate
-      the downside of having one hand.
-    type: Add
-  - message: Increased the range of the Decapoid claw to match its sprite, and reduced
-      its wideswing radius.
-    type: Tweak
-  - message: New Decapoid footstep sounds.
-    type: Tweak
-  - message: Decapoid claws appearing to not have mouse1 attacks.
-    type: Fix
-  - message: Decapoids now spawn with an oxygen emergency survival box. Piskun NT.
-      At least it has water...
-    type: Fix
-  - message: Decapoids now have stomachs.
-    type: Fix
-  id: 673
-  time: '2024-12-06T12:03:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/925
 - author: starlighthowls
   changes:
   - message: cruise fixes
@@ -4143,3 +4123,10 @@
   id: 1172
   time: '2025-02-20T03:08:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1744
+- author: bigsantino1
+  changes:
+  - message: .22 auto ammo boxes, SMG magazines, and WT magazines to the ammo techfab.
+    type: Add
+  id: 1173
+  time: '2025-02-20T03:14:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1746
