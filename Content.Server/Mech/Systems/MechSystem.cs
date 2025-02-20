@@ -402,6 +402,13 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         if (!args.CanAccess || !args.CanInteract || component.Broken)
             return;
+        
+        var openUiVerb = new AlternativeVerb
+        {
+            Act = () => ToggleMechUi(uid, component, args.User),
+            Text = Loc.GetString("mech-ui-open-verb")
+         };
+         args.Verbs.Add(openUiVerb);
 
         if (CanInsert(uid, args.User, component))
         {
@@ -418,13 +425,7 @@ public sealed partial class MechSystem : SharedMechSystem
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
             };
-            var openUiVerb = new AlternativeVerb //can't hijack someone else's mech
-            {
-                Act = () => ToggleMechUi(uid, component, args.User),
-                Text = Loc.GetString("mech-ui-open-verb")
-            };
             args.Verbs.Add(enterVerb);
-            args.Verbs.Add(openUiVerb);
         }
         else if (!IsEmpty(component))
         {
