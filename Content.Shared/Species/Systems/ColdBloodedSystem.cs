@@ -56,7 +56,7 @@ public sealed partial class ColdBloodedSystem : EntitySystem
         if (comp.CurrentSleepCoefficient >= comp.SleepCoefficientReqAmount)
         {
             _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10), false);
-            ChangeColdCoofAmount(uid, comp.CurrentSleepCoefficient, true);
+            ChangeSleepCoefficientAmount(uid, comp.CurrentSleepCoefficient, true);
         }
 
         OnAlertChange(uid, comp);
@@ -114,14 +114,14 @@ public sealed partial class ColdBloodedSystem : EntitySystem
                 continue;
             cold.Accumulator -= 1;
 
-            if (cold.CurrentSleepCoefficient <= cold.ColdCoofReqAmount && cold.HasColdTemperature)
+            if (cold.CurrentSleepCoefficient <= cold.SleepCoefficientReqAmount && cold.HasColdTemperature)
             {
-                ChangeColdCoofAmount(uid, cold.SleepCoefficientPerSecond, false, cold);
+                ChangeSleepCoefficientAmount(uid, cold.SleepCoefficientPerSecond, false, cold);
             }
 
             if (cold.CurrentSleepCoefficient >= 1 && !cold.HasColdTemperature)
             {
-                ChangeColdCoofAmount(uid, cold.SleepCoefficientPerSecond, true, cold);
+                ChangeSleepCoefficientAmount(uid, cold.SleepCoefficientPerSecond, true, cold);
             }
         }
     }
