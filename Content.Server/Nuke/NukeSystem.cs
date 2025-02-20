@@ -181,7 +181,7 @@ public sealed class NukeSystem : EntitySystem
         var xform = Transform(uid);
         if (xform.Anchored)
         {
-            _transform.Unanchor(uid, xform);
+            _transform.Unanchor((uid, xform));
             _itemSlots.SetLock(uid, component.DiskSlot, true);
         }
         else
@@ -203,7 +203,7 @@ public sealed class NukeSystem : EntitySystem
             }
 
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
-            _transform.AnchorEntity(uid, xform);
+            _transform.AnchorEntity((uid, xform));
             _itemSlots.SetLock(uid, component.DiskSlot, false);
         }
 
@@ -490,7 +490,7 @@ public sealed class NukeSystem : EntitySystem
         if (!nukeXform.Anchored)
         {
             // Admin command shenanigans, just make sure.
-            _transform.AnchorEntity(uid, nukeXform);
+            _transform.AnchorEntity((uid, nukeXform));
         }
 
         component.Status = NukeStatus.ARMED;

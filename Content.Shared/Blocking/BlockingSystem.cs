@@ -189,7 +189,7 @@ public sealed partial class BlockingSystem : EntitySystem
             }
 
             //Don't allow someone to block if they're somehow not anchored.
-            _transformSystem.AnchorEntity(user, xform);
+            _transformSystem.AnchorEntity((user, xform));
             if (!xform.Anchored)
             {
                 CantBlockError(user);
@@ -259,7 +259,7 @@ public sealed partial class BlockingSystem : EntitySystem
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             if (xform.Anchored)
-                _transformSystem.Unanchor(user, xform);
+                _transformSystem.Unanchor((user, xform));
 
             _actionsSystem.SetToggled(component.BlockingToggleActionEntity, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);

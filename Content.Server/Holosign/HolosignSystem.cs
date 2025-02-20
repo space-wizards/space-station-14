@@ -54,7 +54,7 @@ public sealed class HolosignSystem : EntitySystem
         var holoUid = EntityManager.SpawnEntity(component.SignProto, args.ClickLocation.SnapToGrid(EntityManager));
         var xform = Transform(holoUid);
         if (!xform.Anchored)
-            _transform.AnchorEntity(holoUid, xform); // anchor to prevent any tempering with (don't know what could even interact with it)
+            _transform.AnchorEntity((holoUid, xform)); // anchor to prevent any tempering with (don't know what could even interact with it)
 
         args.Handled = true;
     }
