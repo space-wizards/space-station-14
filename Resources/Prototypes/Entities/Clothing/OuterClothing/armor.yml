@@ -25,7 +25,7 @@
 
 #Standard armor vest, allowed for security and bartenders
 - type: entity
-  parent: [ BaseSecurityBartenderContraband, ClothingOuterArmorBase]
+  parent: [ ClothingOuterArmorBase, BaseSecurityBartenderContraband]
   id: ClothingOuterArmorBasic
 
 #Alternate / slim basic armor vest
