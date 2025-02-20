@@ -51,6 +51,37 @@
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi
 
+# Not parented to the lightweight bomber because it has armor, so it must be armor-sized and not have pockets (only the detective gets that!)
+# If any changes are made to the lightweight bomber below, those changes must be applied to the security bomber manually
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseFoldable]
+  id: ClothingOuterCoatBomberSecurity
+  name: security bomber jacket
+  description: A red bomber jacket with a badge, worn with the sleeves pushed up. The shield on the back is sewn with special high-vis thread. Due to the kevlar lining, it's bulky and lacks pockets.
+  components:
+  - type: Item
+    size: Huge
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_security.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-open
+      map: ["foldedLayer"]
+      visible: false
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_security.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 1 #its a coat. it doesnt do shit
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-unzip-verb
+    foldVerbText: fold-zip-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: open
+    foldedHeldPrefix: open
+
 - type: entity
   parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatBomberLightweight
@@ -65,19 +96,6 @@
     canFoldInsideContainer: true
     unfoldVerbText: fold-unzip-verb
     foldVerbText: fold-zip-verb
-
-- type: entity
-  parent: [ClothingOuterCoatBomberLightweight, ClothingOuterArmorBase]
-  id: ClothingOuterCoatBomberSecurity
-  name: security bomber jacket
-  description: A red bomber jacket with a badge, worn with the sleeves pushed up. The shield on the back is sewn with special high-vis thread.
-  components:
-  - type: Sprite
-    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_security.rsi
-  - type: Clothing
-    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_security.rsi
-  - type: ExplosionResistance
-    damageCoefficient: 1 #its a coat. it doesnt do shit
 
 - type: entity
   parent: ClothingOuterCoatBomberLightweight
