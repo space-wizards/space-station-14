@@ -1,110 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Space Engineer Jumpsuit for you silly engineers
-    type: Add
-  - message: Greytider space jumpsuit Works Now
-    type: Fix
-  id: 663
-  time: '2024-12-05T22:25:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/915
-- author: starlighthowls
-  changes:
-  - message: more cruise changes
-    type: Tweak
-  id: 664
-  time: '2024-12-05T22:26:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/918
-- author: suyo
-  changes:
-  - message: Added Burning Men's Soul to the lobby
-    type: Add
-  - message: Adjusted the volume for some of the expedition tracks
-    type: Tweak
-  id: 665
-  time: '2024-12-05T23:50:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/919
-- author: widgetbeck
-  changes:
-  - message: ADDED DECAPOIDS, a new playable species that you should probably read
-      the guidebook entry for.
-    type: Add
-  id: 666
-  time: '2024-12-06T00:48:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/914
-- author: DinnerCalzone
-  changes:
-  - message: Reverted the service techfab to its original sprite present in the game
-      files.
-    type: Tweak
-  id: 667
-  time: '2024-12-06T01:43:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/920
-- author: Darkmajia
-  changes:
-  - message: Sofas and reinforced wood tables can now be built in the construction
-      menu.
-    type: Add
-  id: 668
-  time: '2024-12-06T02:26:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/916
-- author: kipdotnet
-  changes:
-  - message: Fixed a bunch of missing stuff in the playtest map "Banana"
-    type: Tweak
-  id: 669
-  time: '2024-12-06T10:17:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/922
-- author: DinnerCalzone
-  changes:
-  - message: Origin Station has been updated and added back to the map rotation.
-    type: Add
-  id: 670
-  time: '2024-12-06T10:18:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/923
-- author: DinnerCalzone
-  changes:
-  - message: (Atlas Station) Added support for brigmedic.
-    type: Add
-  - message: (Atlas Station) Fixed missing LV cables in robotics.
-    type: Fix
-  id: 671
-  time: '2024-12-06T10:19:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/924
-- author: AvianMaiden
-  changes:
-  - message: You can now throw the Mosin. Go ahead. Throw it. (LEGAL DO NOT READ)
-    type: Add
-  - message: Adjusted many firearm flavortexts! How flavorful! Still in-line with
-      originals, but much more love in them.
-    type: Fix
-  - message: Adjusted a few Security cargo buys for grammar and description.
-    type: Fix
-  - message: Spear now makes an impact noise when thrown. Whoosh!
-    type: Fix
-  id: 672
-  time: '2024-12-06T10:45:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/921
-- author: widgetbeck
-  changes:
-  - message: Decapoid claws now function as a crowbar and wirecutters, to alleviate
-      the downside of having one hand.
-    type: Add
-  - message: Increased the range of the Decapoid claw to match its sprite, and reduced
-      its wideswing radius.
-    type: Tweak
-  - message: New Decapoid footstep sounds.
-    type: Tweak
-  - message: Decapoid claws appearing to not have mouse1 attacks.
-    type: Fix
-  - message: Decapoids now spawn with an oxygen emergency survival box. Piskun NT.
-      At least it has water...
-    type: Fix
-  - message: Decapoids now have stomachs.
-    type: Fix
-  id: 673
-  time: '2024-12-06T12:03:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/925
 - author: starlighthowls
   changes:
   - message: cruise fixes
@@ -4158,3 +4052,81 @@
   id: 1162
   time: '2025-02-18T02:34:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1728
+- author: hivehum, arimah
+  changes:
+  - message: The Chief Engineer has adopted a new macaw. Everyone say hello to Poly!
+    type: Add
+  id: 1163
+  time: '2025-02-18T06:28:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1700
+- author: kipdotnet
+  changes:
+  - message: The Tck'tck now has proper access for cargo and maintenance.
+    type: Fix
+  id: 1164
+  time: '2025-02-18T17:41:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1733
+- author: hivehum
+  changes:
+  - message: Supply Assistant and Administrative Assistant now have automatic text
+      highlighting options.
+    type: Add
+  id: 1165
+  time: '2025-02-20T02:38:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1736
+- author: Sha-Seng
+  changes:
+  - message: Sec bomber is now the correct size and lacks pockets
+    type: Fix
+  id: 1166
+  time: '2025-02-20T02:41:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1738
+- author: Sha-Seng
+  changes:
+  - message: Engineer bomber jacket has a new wrench from Landshark
+    type: Tweak
+  id: 1167
+  time: '2025-02-20T02:43:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1729
+- author: Toby222
+  changes:
+  - message: Envelopes go in mail bags
+    type: Add
+  id: 1168
+  time: '2025-02-20T02:48:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1742
+- author: DinnerCalzone
+  changes:
+  - message: Mail support has been added to Plasma for real this time I promise.
+    type: Add
+  id: 1169
+  time: '2025-02-20T02:50:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1750
+- author: mqole
+  changes:
+  - message: Supply Assistants will now properly spawn in Cargo.
+    type: Fix
+  id: 1170
+  time: '2025-02-20T03:01:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1752
+- author: Pinkbat5
+  changes:
+  - message: Suspicious beacons are no longer contraband.
+    type: Tweak
+  id: 1171
+  time: '2025-02-20T03:06:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1731
+- author: hivehum
+  changes:
+  - message: Removed 64 songs from the jukebox, lobby music and nuke music selections.
+    type: Remove
+  id: 1172
+  time: '2025-02-20T03:08:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1744
+- author: bigsantino1
+  changes:
+  - message: .22 auto ammo boxes, SMG magazines, and WT magazines to the ammo techfab.
+    type: Add
+  id: 1173
+  time: '2025-02-20T03:14:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1746

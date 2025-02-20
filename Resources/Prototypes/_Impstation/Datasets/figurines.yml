@@ -56,7 +56,7 @@
   id: FigurinesERTSecurity
   values:
     prefix: figurines-ertsecurity-
-    count: 7
+    count: 5
 
 - type: localizedDataset
   id: FigurinesBrigmedic

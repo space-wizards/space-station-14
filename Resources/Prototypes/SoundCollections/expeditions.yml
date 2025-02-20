@@ -3,6 +3,7 @@
   files:
   - /Audio/Expedition/tension_session.ogg
   - /Audio/Expedition/deadline.ogg
-  - /Audio/_Impstation/Expedition/fzero_fire.ogg
-  - /Audio/_Impstation/Expedition/ilun_kinem.ogg
-  - /Audio/_Impstation/Expedition/mh_jungle.ogg
+  # imp edits below
+  - /Audio/_Impstation/Music/fzero_fire.ogg
+  - /Audio/_Impstation/Music/ilun_kinem.ogg
+  - /Audio/_Impstation/Music/mh_jungle.ogg

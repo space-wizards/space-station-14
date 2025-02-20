@@ -1,8 +1,8 @@
 - type: entity
-  parent: BaseMinorContraband
+  #parent: BaseMinorContraband # imp edit
   id: ThiefBeacon
   name: suspicious beacon
-  description: A device that will teleport everything around it... elsewhere... at the end of the shift.
+  description: A device that will teleport everything around it... elsewhere... at the end of the shift. # imp
   components:
     - type: ThiefBeacon
     - type: StealArea

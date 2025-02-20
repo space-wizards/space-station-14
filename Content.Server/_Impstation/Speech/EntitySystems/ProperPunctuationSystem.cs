@@ -6,7 +6,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class ProperPunctuationSystem : EntitySystem
 {
     // @formatter:off
-    private static readonly Regex RegexEndsWithAnyPunctuation = new(@"[!?\.]+$");
+    private static readonly Regex RegexEndsWithAnyPunctuation = new(@"[,!?\.-]+$");
     // @formatter:on
 
     public override void Initialize()

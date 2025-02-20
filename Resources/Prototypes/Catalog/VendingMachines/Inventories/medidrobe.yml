@@ -14,6 +14,7 @@
     ClothingHandsGlovesLatex: 4
     ClothingHandsGlovesNitrile: 2
     ClothingHeadsetMedical: 4
+    ClothingOuterWinterMed: 2
     ClothingOuterHospitalGown: 5
     UniformScrubsColorGreen: 4
     UniformScrubsColorBlue: 4
@@ -21,10 +22,9 @@
     ClothingHeadHatSurgcapGreen: 4
     ClothingHeadHatSurgcapBlue: 4
     ClothingHeadHatSurgcapPurple: 4
-    ClothingOuterWinterMed: 2
-    ClothingOuterCoatBomberMedical: 2
-    ClothingNeckScarfStripedLightBlue: 2
+    ClothingOuterCoatBomberMedical: 2 # imp
+    ClothingNeckScarfStripedLightBlue: 2 # imp
     ClothingShoesBootsWinterMed: 2
   contrabandInventory:
     ClothingUniformJumpskirtOfLife: 1
-    ClothingMaskClownMedical: 1
+    ClothingMaskClownMedical: 1 # imp
