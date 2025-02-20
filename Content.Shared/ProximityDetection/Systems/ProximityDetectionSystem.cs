@@ -1,8 +1,6 @@
 ﻿using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.ProximityDetection.Components;
-using Content.Shared.Tag;
-using Content.Shared.Whitelist;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.ProximityDetection.Systems;
@@ -13,11 +11,7 @@ namespace Content.Shared.ProximityDetection.Systems;
 public sealed class ProximityDetectionSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -74,13 +68,13 @@ public sealed class ProximityDetectionSystem : EntitySystem
         if (comp.Target == null)
             return;
 
-        comp.Distance = -1;
+        comp.Distance = float.PositiveInfinity;
         comp.Target = null;
 
-        var updatedEv = new ProximityTargetUpdatedEvent(-1, ent);
+        var updatedEv = new ProximityTargetUpdatedEvent(comp.Distance, ent);
         RaiseLocalEvent(uid, ref updatedEv);
 
-        var newTargetEv = new NewProximityTargetEvent(-1, ent);
+        var newTargetEv = new NewProximityTargetEvent(comp.Distance, ent);
         RaiseLocalEvent(uid, ref newTargetEv);
 
         Dirty(uid, comp);
@@ -88,58 +82,55 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
     private void UpdateTarget(Entity<ProximityDetectorComponent> detector)
     {
-        var (uid, component) = detector;
+        var component = detector.Comp;
 
-        if (!_xformQuery.TryGetComponent(uid, out var transform))
+        if (!_xformQuery.TryGetComponent(detector, out var transform))
             return;
 
         if (Deleted(component.Target))
             ClearTarget(detector);
 
-        var worldPos = _transform.GetWorldPosition(transform);
-        var closestDistance = -1f;
-        EntityUid? closestEnt = null;
+        var closestDistance = float.PositiveInfinity;
+        EntityUid? closestUid = null;
 
-        foreach (var ent in _entityLookup.GetEntitiesInRange(uid, component.Range))
+        var query = EntityManager.CompRegistryQueryEnumerator(component.Components);
+
+        while (query.MoveNext(out var uid))
         {
-            if (_whitelistSystem.IsWhitelistFail(component.Criteria, ent))
+            if (!_xformQuery.TryGetComponent(uid, out var xForm))
                 continue;
 
-            if (!_xformQuery.TryGetComponent(ent, out var xForm))
+            if (!transform.Coordinates.TryDistance(EntityManager, xForm.Coordinates, out var distance) ||
+                distance > component.Range || distance >= closestDistance)
                 continue;
 
-            var dist = (_transform.GetWorldPosition(xForm) - worldPos).Length();
-
-            if (dist < closestDistance)
-                continue;
-
-            var detectAttempt = new ProximityDetectionAttemptEvent(dist, detector, ent);
-            RaiseLocalEvent(ent, ref detectAttempt);
+            var detectAttempt = new ProximityDetectionAttemptEvent(distance, detector, uid);
+            RaiseLocalEvent(detector, ref detectAttempt);
 
             if (detectAttempt.Cancelled)
                 continue;
 
-            closestDistance = dist;
-            closestEnt = ent;
+            closestDistance = distance;
+            closestUid = uid;
         }
 
         var newDistance = component.Distance != closestDistance;
-        var newTarget = component.Target != closestEnt;
+        var newTarget = component.Target != closestUid;
 
         if (newDistance)
         {
-            var updatedEv = new ProximityTargetUpdatedEvent(closestDistance, detector, closestEnt);
-            RaiseLocalEvent(uid, ref updatedEv);
+            var updatedEv = new ProximityTargetUpdatedEvent(closestDistance, detector, closestUid);
+            RaiseLocalEvent(detector, ref updatedEv);
 
             component.Distance = closestDistance;
         }
 
         if (newTarget)
         {
-            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestEnt);
-            RaiseLocalEvent(uid, ref newTargetEv);
+            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestUid);
+            RaiseLocalEvent(detector, ref newTargetEv);
 
-            component.Target = closestEnt;
+            component.Target = closestUid;
         }
 
         if (newDistance || newTarget)

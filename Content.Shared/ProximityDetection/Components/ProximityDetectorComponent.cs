@@ -1,6 +1,6 @@
 ﻿using Content.Shared.ProximityDetection.Systems;
-using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.ProximityDetection.Components;
@@ -8,14 +8,16 @@ namespace Content.Shared.ProximityDetection.Components;
 /// <summary>
 /// Used to search for the closest entity with a range that matches specified requirements (tags and/or components).
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(ProximityDetectionSystem))]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(ProximityDetectionSystem))]
 public sealed partial class ProximityDetectorComponent : Component
 {
     /// <summary>
-    /// The criteria used to filter entities.
+    /// Entities that detector will search for.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public EntityWhitelist Criteria = new();
+    [DataField(required: true)]
+    public ComponentRegistry Components;
 
     /// <summary>
     /// The entity that was found.
@@ -27,7 +29,7 @@ public sealed partial class ProximityDetectorComponent : Component
     /// The distance to <see cref="Target"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Distance = -1;
+    public float Distance = float.PositiveInfinity;
 
     /// <summary>
     /// The farthest distance to search for targets.
