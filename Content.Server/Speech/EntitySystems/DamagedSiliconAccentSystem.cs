@@ -21,7 +21,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent);
+        SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
     }
 
     private void OnAccent(EntityUid uid, DamagedSiliconAccentComponent component, ref AccentGetEvent args)
