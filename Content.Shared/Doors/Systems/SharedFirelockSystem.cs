@@ -55,9 +55,13 @@ public abstract class SharedFirelockSystem : EntitySystem
         // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
         var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
 
-        if (!component.Powered || (!overrideAccess && component.IsLocked))
+        // DS14-airlocks-closing-fix-start
+        if (!TryComp(uid, out DoorComponent? door))
+            return;
+        // DS14-airlocks-closing-fix-end
+        if (!door.IsBeingPried && (!component.Powered || (!overrideAccess && component.IsLocked))) // DS14-airlocks-closing-fix
             args.Cancel();
-        else if (args.User != null)
+        else if (component.IsLocked && args.User != null) // DS14-airlocks-closing-fix
             WarnPlayer((uid, component), args.User.Value);
     }
 

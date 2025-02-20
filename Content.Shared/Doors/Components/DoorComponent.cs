@@ -258,6 +258,21 @@ public sealed partial class DoorComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanPry = true;
 
+    // DS14-airlocks-closing-fix-start
+    /// <summary>
+    /// Indicates whether the door is currently being pried (either open or closed).
+    /// </summary>
+    /// <remarks>
+    /// This flag is set to <c>true</c> after successful prying (here <see cref="SharedDoorSystem.OnAfterPry"/>) (e.g., using a crowbar) to temporarily bypass
+    /// normal access checks and modify collision behavior. When pried, the door system enforces collision checks
+    /// for safety and allows the door to transition between open and closed states regardless of standard access
+    /// restrictions. Once the prying operation is complete—typically when the door reaches a partially open or
+    /// closed state—the flag is reset to <c>false</c>, restoring the door's normal behavior.
+    /// </remarks>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public bool IsBeingPried;
+    // DS14-airlocks-closing-fix-end
+
     [DataField]
     public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
