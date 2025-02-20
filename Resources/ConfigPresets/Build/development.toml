@@ -31,4 +31,3 @@ preload_grids = false
 
 [admin]
 see_own_notes = true
-require_modern_hwid = false

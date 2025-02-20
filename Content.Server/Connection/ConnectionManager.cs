@@ -220,7 +220,7 @@ namespace Content.Server.Connection
 
             var modernHwid = e.UserData.ModernHWIds;
 
-            if (modernHwid.Length == 0 && _cfg.GetCVar(CCVars.RequireModernHardwareId))
+            if (modernHwid.Length == 0 && e.AuthType == LoginType.LoggedIn && _cfg.GetCVar(CCVars.RequireModernHardwareId))
             {
                 return (ConnectionDenyReason.NoHwId, Loc.GetString("hwid-required"), null);
             }
