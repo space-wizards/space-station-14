@@ -219,11 +219,10 @@ namespace Content.Client.Gameplay
                 {
                     entityToClick = GetClickedEntity(mousePosWorld);
                 }
-                var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
 
                 coordinates = _mapManager.TryFindGridAt(mousePosWorld, out _, out var grid) ?
                     grid.MapToGrid(mousePosWorld) :
-                    transformSystem.ToCoordinates(mousePosWorld);
+                    EntityCoordinates.FromMap(_mapManager, mousePosWorld);
             }
             else
             {
