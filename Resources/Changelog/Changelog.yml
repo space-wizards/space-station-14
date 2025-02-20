@@ -1,68 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed the Instigator shuttle event never happening.
-    type: Fix
-  id: 7477
-  time: '2024-10-02T11:44:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32597
-- author: FluffMe
-  changes:
-  - message: Fixed accidental erase of paper contents by spamming save action.
-    type: Fix
-  id: 7478
-  time: '2024-10-02T12:00:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32598
-- author: PJB3005
-  changes:
-  - message: Removed bioluminescence plant mutations due to it breaking the rendering
-      engine.
-    type: Remove
-  id: 7479
-  time: '2024-10-02T13:52:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32561
-- author: PJB3005
-  changes:
-  - message: Fixed borg "hands" showing up in their stripping menu.
-    type: Fix
-  id: 7480
-  time: '2024-10-03T00:11:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32606
-- author: ArtisticRoomba
-  changes:
-  - message: X-ray cannons and stinger grenades are now security restricted. HoS's
-      armored trench coat and its variants are security and command restricted.
-    type: Fix
-  id: 7481
-  time: '2024-10-03T10:01:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32614
-- author: Myra
-  changes:
-  - message: Medibots and Janibots can no longer become sentient via the sentience
-      event.
-    type: Remove
-  id: 7482
-  time: '2024-10-03T10:32:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32383
-- author: eoineoineoin
-  changes:
-  - message: Action bar can be reconfigured again
-    type: Fix
-  id: 7483
-  time: '2024-10-03T14:01:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32552
-- author: Southbridge
-  changes:
-  - message: Box station's recycler has been properly connected.
-    type: Fix
-  - message: Box station's singlo substation has been rewired to the station-wide
-      HV network.
-    type: Tweak
-  - message: Box station now has AI law boards in the upload room.
-    type: Add
-  id: 7484
-  time: '2024-10-04T01:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32608
 - author: Plykiya
   changes:
   - message: You can no longer FTL the station.
@@ -3893,3 +3829,66 @@
   id: 7976
   time: '2025-02-18T22:23:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35282
+- author: CooperWallace
+  changes:
+  - message: A popup is now displayed at the item's previous location when it is recalled
+      by the recall wizard spell.
+    type: Add
+  id: 7977
+  time: '2025-02-19T01:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35272
+- author: SpaceLizard24
+  changes:
+  - message: Moved saxophones from the Brass Ensemble crate to the Woodwind Ensemble
+      crate.
+    type: Tweak
+  - message: Adjusted the prices of Woodwind Ensemble and Brass Ensemble crates.
+    type: Tweak
+  id: 7978
+  time: '2025-02-19T06:05:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35257
+- author: K-Dynamic
+  changes:
+  - message: Returned Explosive Technology recipes (triggers, payloads, signaller)
+      back to the Protolathe following undocumented removal.
+    type: Fix
+  id: 7979
+  time: '2025-02-19T11:34:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35303
+- author: Winkarst-cpu
+  changes:
+  - message: Now outer clothing hides PDA and belt sprites under it.
+    type: Tweak
+  id: 7980
+  time: '2025-02-19T13:13:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33448
+- author: Booblesnoot42
+  changes:
+  - message: When removing encryption keys from an intercom, excess keys will now
+      be dropped at the remover's feet instead of dropping inside the wall.
+    type: Fix
+  id: 7981
+  time: '2025-02-19T13:46:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34582
+- author: cerebralerror, robinthedragon
+  changes:
+  - message: 'New barsigns: Maltroach (based on sign by MoffNyan, from tgstation)
+      and Whiskey Echoes (by cerebralerror, from frontier station)'
+    type: Add
+  id: 7982
+  time: '2025-02-19T19:25:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35296
+- author: FungiFellow
+  changes:
+  - message: Flare Shells no longer restricted contraband
+    type: Tweak
+  id: 7983
+  time: '2025-02-20T00:27:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34705
+- author: Winkarst-cpu
+  changes:
+  - message: Now all toys and bike horns make an appropriate sound.
+    type: Tweak
+  id: 7984
+  time: '2025-02-20T01:12:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33449
