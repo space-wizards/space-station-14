@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Origin Station has been updated and added back to the map rotation.
-    type: Add
-  id: 670
-  time: '2024-12-06T10:18:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/923
-- author: DinnerCalzone
-  changes:
   - message: (Atlas Station) Added support for brigmedic.
     type: Add
   - message: (Atlas Station) Fixed missing LV cables in robotics.
@@ -4152,3 +4145,10 @@
   id: 1169
   time: '2025-02-20T02:50:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1750
+- author: mqole
+  changes:
+  - message: Supply Assistants will now properly spawn in Cargo.
+    type: Fix
+  id: 1170
+  time: '2025-02-20T03:01:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1752
