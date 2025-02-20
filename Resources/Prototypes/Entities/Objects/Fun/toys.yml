@@ -1,4 +1,5 @@
 ## Base stash
+
 - type: entity
   id: BaseStash
   abstract: true
@@ -18,6 +19,9 @@
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
     name: secret-stash-plushie
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
 
 ## Plushies
 
@@ -74,9 +78,7 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
+
 
 - type: entity
   parent: BasePlushie
