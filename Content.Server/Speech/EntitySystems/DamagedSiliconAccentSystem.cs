@@ -138,14 +138,30 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
 
     private string CorruptRepeat(char letter)
     {
-        // If we got here that means we're at least repeating it once
-        var res = new StringBuilder($"{letter}{letter}");
         // 25% chance to add another character in the streak
         // (kind of like "exploding dice")
-        while (_random.Prob(0.25f))
+        // Solved numerically in closed form for streaks of bernoulli variables with p = 0.25
+        // Can calculate for different p using python function:
+        /*
+         *     def prob(streak, p):
+         *         if streak == 0:
+         *             return scipy.stats.binom(streak+1, p).pmf(streak)
+         *         return prob(streak-1) * p
+         *     def prob_cum(streak, p=.25):
+         *         return np.sum([prob(i, p) for i in range(streak+1)])
+         */
+        var numRepeats = _random.NextDouble() switch
         {
-            res.Append(letter);
-        }
-        return res.ToString();
+            < 0.75000000 => 2,
+            < 0.93750000 => 3,
+            < 0.98437500 => 4,
+            < 0.99609375 => 5,
+            < 0.99902344 => 6,
+            < 0.99975586 => 7,
+            < 0.99993896 => 8,
+            < 0.99998474 => 9,
+            _ => 10,
+        };
+        return new string(letter, numRepeats);
     }
 }
