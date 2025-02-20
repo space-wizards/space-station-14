@@ -262,6 +262,15 @@
   - type: Sprite
     sprite: _DeadSpace/Clothing/Underwear/Command/captain/socks.rsi
 
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksBlueShieldOfficer
+  name: носки ОСЩ
+  description: Стандартные носки ОСЩ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Underwear/Command/blueshield/socks.rsi
+
 ## Engineering
 - type: entity
   parent: ClothingUnderwearSocksBase

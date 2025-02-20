@@ -3,3 +3,28 @@
   id: BlueShieldOfficerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueShield
+
+# Underwear
+- type: loadout
+  id: UnderwearBottomBoxersBlueShield
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomBoxersBlueShieldOfficer
+
+- type: loadout
+  id: UnderwearBottomPantiesBlueShield
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underwearb: ClothingUnderwearBottomPantiesBlueShieldOfficer
+
+- type: loadout
+  id: UnderwearTopBraBlueShield
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: FemaleUnderwear
+  equipment:
+    underweart: ClothingUnderwearTopBraBlueShieldOfficer

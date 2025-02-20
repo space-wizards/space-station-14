@@ -16,6 +16,16 @@
   loadouts:
   - BlueShieldOfficerJumpsuit
 
+- type: loadoutGroup
+  id: BlueShieldOfficerUnderwear
+  name: loadout-group-blue-shield-officer-underwear
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - UnderwearBottomBoxersBlueShield
+  - UnderwearBottomPantiesBlueShield
+  - UnderwearTopBraBlueShield
+
 # Civilian
 - type: loadoutGroup
   id: SeniorAdministratorJumpsuit
