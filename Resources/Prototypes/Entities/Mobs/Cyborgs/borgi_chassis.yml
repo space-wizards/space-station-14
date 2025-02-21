@@ -131,6 +131,11 @@
   - type: Inventory
     speciesId: dog
     templateId: Sparlightsmartpetborgi
+    showInHands: true
+    disableExplosionRecursion: true
+    canBeStripped: false
+    doAfterDelay: 10
+    allowSelfRepair: false
     # Borg chassis, to accept MMI and posibrain
   - type: BorgChassis
     maxModules: 4
@@ -139,8 +144,10 @@
         - BorgModuleGeneric
         - BorgModuleCargo
         - BorgModuleMedical
+    bodyState: corgi
     hasMindState: corgitag
     noMindState: corgitag
+    toggleLightState: corgitag
   - type: LockingWhitelist
     blacklist:
       components:
@@ -333,6 +340,8 @@
 
 - type: entity
   name: Syndi Borgi
+  antagonist: true
+  objective: Assist the syndicate while being the best borgi you can be.
   parent: SparlightBaseBorgiChassis
   id: SparlightSyndiCorgi
   description: An unusually smart dog, but hell bent on MURDER.
@@ -388,6 +397,8 @@
 
 - type: entity
   name: Syndi Borgi
+  antagonist: true
+  objective: Assist the syndicate while being the best borgi you can be.
   parent: SparlightBaseBorgiChassis
   id: SparlightSyndiCorgiKit1
   description: An unusually smart dog, but hell bent on MURDER.
@@ -447,6 +458,8 @@
 
 - type: entity
   name: Syndi Borgi
+  antagonist: true
+  objective: Assist the syndicate while being the best borgi you can be.
   parent: SparlightBaseBorgiChassis
   id: SparlightSyndiCorgiKit2
   description: An unusually smart dog, but hell bent on MURDER.
@@ -507,6 +520,8 @@
 
 - type: entity
   name: Shadow Borgi
+  antagonist: true
+  objective: Convert all living things into borgis.
   parent: SparlightBaseBorgiChassis
   id: SparlightShadowBorgi
   description: A contributor to a menacing plot to convert the station.
@@ -589,6 +604,8 @@
 
 - type: entity
   name: Shadow Borgi
+  antagonist: true
+  objective: Convert all living things into borgis.
   parent: SparlightShadowBorgi
   id: SparlightStarterShadowBorgi
   description: A leader of a menacing plot to convert the station.

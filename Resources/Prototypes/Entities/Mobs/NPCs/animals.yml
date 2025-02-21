@@ -3679,5 +3679,3 @@
     grid:
       - 0,0,3,3
     maxItemSize: Huge
-  - type: StatusIcon
-    bounds: -0.5,-0.5,0.5,0.5
