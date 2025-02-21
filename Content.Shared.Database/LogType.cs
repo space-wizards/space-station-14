@@ -451,7 +451,12 @@ public enum LogType
     AtmosDeviceSetting = 97,
 
     /// <summary>
+    /// Commands related to admemes. Stuff like config changes, etc.
+    /// </summary>
+    AdminCommands = 98,
+
+    /// <summary>
     ///     For anything relating to bug reports.
     /// </summary>
-    BugReport = 98,
+    BugReport = 99,
 }
