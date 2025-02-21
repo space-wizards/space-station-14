@@ -528,7 +528,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
+    mapPath: /Maps/Shuttles/ShuttleEvent/guerrilla-truck.yml
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointSpaceAsshole
