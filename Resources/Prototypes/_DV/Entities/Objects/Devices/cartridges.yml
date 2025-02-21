@@ -5,7 +5,7 @@
   description: Lets you message other people!
   components:
   - type: Sprite
-    sprite: _DV/Objects/Devices/cartridge.rsi
+    sprite: _Impstation/Objects/Devices/cartridge.rsi
     state: cart-chat
   - type: UIFragment
     ui: !type:NanoChatUi
@@ -13,7 +13,7 @@
   - type: Cartridge
     programName: nano-chat-program-name
     icon:
-      sprite: _DV/Misc/program_icons.rsi
+      sprite: _Impstation/Misc/program_icons.rsi
       state: nanochat
   - type: ActiveRadio
     channels:
@@ -41,7 +41,7 @@
     access: [["Cargo"]]
   - type: StealTarget
     stealGroup: StockTradingCartridge
-    
+
 - type: entity
   parent: BaseItem
   id: MailMetricsCartridge
