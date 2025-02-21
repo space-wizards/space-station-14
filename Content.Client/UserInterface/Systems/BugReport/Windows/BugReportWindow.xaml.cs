@@ -59,10 +59,9 @@ public sealed partial class BugReportWindow : DefaultWindow
         HandleInputChange();
     }
 
-    /// <summary>
-    ///     Deals with the user changing their input. Ensures that things that depend on what the user has inputted get updated
-    ///     (E.g. the amount of characters they have typed)
-    /// </summary>
+
+    // Deals with the user changing their input. Ensures that things that depend on what the user has inputted get updated
+    // (E.g. the amount of characters they have typed)
     private void HandleInputChange()
     {
         var titleMaxLen = _cfg.GetCVar(CCVars.MaximumBugReportTitleLength);
@@ -85,11 +84,7 @@ public sealed partial class BugReportWindow : DefaultWindow
         SubmitButton.Disabled = invalidTitleLen || invalidDescriptionLen;
     }
 
-    /// <summary>
-    ///     Checks if the bug report window should be enabled for this client.
-    /// </summary>
-    /// <param name="errorMessage">Outputs the already localized error message to display.</param>
-    /// <returns>True if the window should be available, false otherwise!</returns>
+    // Checks if the bug report window should be enabled for this client.
     private bool IsEnabled([NotNullWhen(false)] out string? errorMessage)
     {
         errorMessage = null;

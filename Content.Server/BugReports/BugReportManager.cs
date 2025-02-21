@@ -145,5 +145,4 @@ public sealed class BugReportManager : IBugReportManager
 
         return new ValidPlayerBugReportReceivedEvent(message.ReportInformation.BugReportTitle, message.ReportInformation.BugReportDescription, metaData);
     }
-
 }

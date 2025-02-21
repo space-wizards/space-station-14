@@ -13,14 +13,14 @@ using Robust.Shared.Network;
 namespace Content.Client.UserInterface.Systems.BugReport;
 
 [UsedImplicitly]
-public sealed class BugReportUIController : UIController, IOnStateEntered<GameplayState>
+public sealed class BugReportUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [Dependency] private readonly IClientNetManager _net = default!;
 
     // This is the link to the hotbar button
     private MenuButton? BugReportButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.ReportBugButton;
 
-    // Don't clear this window. It needs to be saved so the input doesn't get errased when its closed!
+    // Don't clear this window. It needs to be saved so the input doesn't get erased when it's closed!
     private BugReportWindow _bugReportWindow = default!;
 
     public void OnStateEntered(GameplayState state)
@@ -33,6 +33,13 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
             .Bind(ContentKeyFunctions.BugReportMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
             .Register<BugReportUIController>();
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        _bugReportWindow.Close();
+
+        CommandBinds.Unregister<BugReportUIController>();
     }
 
     public override void Initialize(){}
@@ -50,9 +57,13 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     private void ToggleWindow()
     {
         if (_bugReportWindow.IsOpen)
+        {
             _bugReportWindow.Close();
-        else
-            _bugReportWindow.OpenCentered();
+
+            return;
+        }
+
+        _bugReportWindow.OpenCentered();
     }
 
     private void OnBugReportSubmitted(PlayerBugReportInformation report)
@@ -80,6 +91,4 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     {
         ToggleWindow();
     }
-
-
 }
