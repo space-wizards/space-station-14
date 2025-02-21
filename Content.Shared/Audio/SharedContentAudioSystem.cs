@@ -1,13 +1,17 @@
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
+using Robust.Shared.Audio.Mixers;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Audio;
 
 public abstract class SharedContentAudioSystem : EntitySystem
 {
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
+
+    private static readonly ProtoId<AudioMixerPrototype> DefaultMixer = "WorldOtherSounds";
 
     /// <summary>
     /// Standard variation to use for sounds.
@@ -18,6 +22,7 @@ public abstract class SharedContentAudioSystem : EntitySystem
     {
         base.Initialize();
         Audio.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
+        Audio.DefaultMixer = DefaultMixer;
     }
 
     protected void SilenceAudio()
