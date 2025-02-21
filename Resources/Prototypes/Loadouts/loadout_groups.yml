@@ -1006,6 +1006,7 @@
   loadouts:
   - HeadofSecurityHead
   - HeadofSecurityBeret
+  - HeadofSecurityRanger
 
 - type: loadoutGroup
   id: HeadofSecurityEars
