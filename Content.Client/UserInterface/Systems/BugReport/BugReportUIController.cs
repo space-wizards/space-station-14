@@ -31,7 +31,7 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.BugReportMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Register<CharacterUIController>();
+            .Register<BugReportUIController>();
     }
 
     public override void Initialize(){}
