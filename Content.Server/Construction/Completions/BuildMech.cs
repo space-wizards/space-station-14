@@ -56,7 +56,6 @@ public sealed partial class BuildMech : IGraphAction
         }
 
         var cell = container.ContainedEntities[0];
-        var gasTank = gasTankContainer.ContainedEntities[0];
 
         if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
         {
@@ -73,8 +72,11 @@ public sealed partial class BuildMech : IGraphAction
         {
             mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
             containerSystem.Insert(cell, mechComp.BatterySlot);
-            if (mechComp.GasTankSlot.ContainedEntity == null && gasTank != null)
+            if (mechComp.GasTankSlot.ContainedEntity == null && gasTankContainer.ContainedEntities.Count > 0)
+            {
+                var gasTank = gasTankContainer.ContainedEntities[0];
                 containerSystem.Insert(gasTank, mechComp.GasTankSlot);
+            }
         }
 
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);

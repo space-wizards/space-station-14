@@ -63,8 +63,6 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
-    - type: Parallax
-      parallax: PlasmaStation
   - uid: 2
     components:
     - type: MetaData

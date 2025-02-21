@@ -9222,8 +9222,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: Parallax
-      parallax: BagelStation
     - type: LoadedMap
   - uid: 7536
     components:
