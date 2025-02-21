@@ -17,8 +17,8 @@
     - id: RadioHandheld
     - id: AppraisalTool
     - id: FireExtinguisher
-    - id: Flare
     - id: SalvageShuttle
+    - id: Flare
       prob: 0.3
       rolls: !type:ConstantNumberSelector
         value: 3
