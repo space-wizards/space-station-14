@@ -141,6 +141,7 @@
       - !type:GroupSelector
         children:
         - id: ClothingNeckLGBTPin
+        - id: ClothingNeckAllyPin
         - id: ClothingNeckAromanticPin
         - id: ClothingNeckAsexualPin
         - id: ClothingNeckBisexualPin
@@ -150,6 +151,7 @@
         - id: ClothingNeckNonBinaryPin
         - id: ClothingNeckPansexualPin
         - id: ClothingNeckOmnisexualPin
+        - id: ClothingNeckGenderqueerPin
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin

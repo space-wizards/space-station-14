@@ -16,6 +16,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowGhostShownByEvent
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag
@@ -1194,6 +1197,9 @@
 
 - type: Tag
   id: Spray
+
+- type: Tag
+  id: SprayNozzle
 
 - type: Tag
   id: SpreaderIgnore
