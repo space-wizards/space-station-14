@@ -45,7 +45,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      collection: InternAlert
     weight: 10 # 10 default
     reoccurrenceDelay: 30
     duration: 1

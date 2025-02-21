@@ -4,3 +4,38 @@
   - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
   - /Audio/Announcements/RoundEnd/disappointed.ogg
   - /Audio/Announcements/RoundEnd/notevenpaidforthis.ogg
+  - /Audio/Announcements/Intern/animes.ogg
+
+- type: soundCollection
+  id: RoundStart
+  files:
+  - /Audio/Announcements/Intern/welcome1.ogg
+  - /Audio/Announcements/Intern/welcome2.ogg
+  - /Audio/Announcements/Intern/welcome3.ogg
+  - /Audio/Announcements/Intern/welcome4.ogg
+  - /Audio/Announcements/Intern/welcome5.ogg
+  - /Audio/Announcements/Intern/welcome6.ogg
+
+- type: soundCollection
+  id: InternAlert
+  files:
+  - /Audio/Announcements/Intern/alert1.ogg
+  - /Audio/Announcements/Intern/alert2.ogg
+  - /Audio/Announcements/Intern/alert3.ogg
+  - /Audio/Announcements/Intern/alert4.ogg
+  - /Audio/Announcements/Intern/alert5.ogg
+  - /Audio/Announcements/Intern/alert6.ogg
+  - /Audio/Announcements/Intern/alert7.ogg
+  - /Audio/Announcements/Intern/alert8.ogg
+  - /Audio/Announcements/Intern/alert9.ogg
+  - /Audio/Announcements/Intern/alert10.ogg
+  - /Audio/Announcements/Intern/alert11.ogg
+  - /Audio/Announcements/Intern/alert12.ogg
+  - /Audio/Announcements/Intern/alert13.ogg
+  - /Audio/Announcements/Intern/outbreak5.ogg # not virus specific, so we can use it here
+
+- type: soundCollection
+  id: InternAnomaly
+  files:
+  - /Audio/Announcements/Intern/spanomalies.ogg
+  - /Audio/Announcements/Intern/granomalies.ogg
