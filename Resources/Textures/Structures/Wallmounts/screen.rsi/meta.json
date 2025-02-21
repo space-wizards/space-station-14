@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "From vgstation: https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe#diff-20395160138bed693d15eee6f16d671531b5fa533ec52c50e8df6d52370dbecd",
+    "copyright": "From vgstation: https://github.com/vgstation-coders/vgstation13/commit/a7290010020e541ed6b57817a07023ca6bef26fe#diff-20395160138bed693d15eee6f16d671531b5fa533ec52c50e8df6d52370dbecd. Screen frames are modifications of screen made by VerinSenpai for SS14.",
     "size": {
       "x": 32,
       "y": 32
@@ -9,6 +9,15 @@
     "states": [
       {
         "name": "screen"
+      },
+      {
+        "name": "screen_frame0"
+      },
+      {
+        "name": "screen_frame1"
+      },
+      {
+        "name": "screen_frame2"
       }
     ]
 }
