@@ -58,6 +58,13 @@
     beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
+  name: explosive grenade
+  suffix: NT
+  description: Grenade that creates a small but devastating explosion. Nanotrasen brand.
+  parent: [BaseCentcommContraband, ExGrenade]
+  id: ExGrenadeNT
+
+- type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee.
   parent: [ GrenadeBase, BaseSecurityContraband ]
