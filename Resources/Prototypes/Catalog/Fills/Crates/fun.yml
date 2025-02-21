@@ -156,7 +156,6 @@
       - id: AccordionInstrument
         amount: 2
       - id: KalimbaInstrument
-        amount: 2
       - id: WoodblockInstrument
       - id: GlockenspielInstrument
         amount: 2
