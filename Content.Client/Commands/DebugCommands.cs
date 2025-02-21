@@ -1,6 +1,7 @@
 using Content.Client.Markers;
 using Content.Client.Popups;
 using Content.Client.SubFloor;
+using Content.Shared.Administration;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
@@ -38,6 +39,7 @@ internal sealed class ShowSubFloor : LocalizedCommands
 
 internal sealed class ShowSubFloorForever : LocalizedCommands
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public const string CommandName = "showsubfloorforever";
@@ -49,8 +51,7 @@ internal sealed class ShowSubFloorForever : LocalizedCommands
     {
         _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll = true;
 
-        var entMan = IoCManager.Resolve<IEntityManager>();
-        var components = entMan.EntityQuery<SubFloorHideComponent, SpriteComponent>(true);
+        var components = _entManager.EntityQuery<SubFloorHideComponent, SpriteComponent>(true);
 
         foreach (var (_, sprite) in components)
         {
