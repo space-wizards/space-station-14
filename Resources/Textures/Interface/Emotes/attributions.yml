@@ -56,6 +56,11 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: ["flip.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by ps3moira for Space Station 14"
+  source: "https://github.com/ps3moira"
+
 - files: ["hew.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing weh emote image (weh.png) by ArtisticRoomba"
