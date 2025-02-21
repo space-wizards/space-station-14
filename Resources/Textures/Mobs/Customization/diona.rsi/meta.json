@@ -8,11 +8,19 @@
   },
   "states": [
     {
-      "name": "flowers_body",
+      "name": "flowers_body_primary",
       "directions": 4
     },
     {
-      "name": "flowers_head",
+      "name": "flowers_body_secondary",
+      "directions": 4
+    },
+    {
+      "name": "flowers_head_primary",
+      "directions": 4
+    },
+    {
+      "name": "flowers_head_secondary",
       "directions": 4
     },
     {
@@ -28,7 +36,11 @@
       "directions": 4
     },
     {
-      "name": "bloom",
+      "name": "bloom_primary",
+      "directions": 4
+    },
+    {
+      "name": "bloom_secondary",
       "directions": 4
     },
     {
@@ -40,7 +52,11 @@
       "directions": 4
     },
     {
-      "name": "cornflower",
+      "name": "cornflower_primary",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_secondary",
       "directions": 4
     },
     {
@@ -48,11 +64,19 @@
       "directions": 4
     },
     {
-      "name": "garland",
+      "name": "garland_primary",
       "directions": 4
     },
     {
-      "name": "king",
+      "name": "garland_secondary",
+      "directions": 4
+    },
+    {
+      "name": "king_primary",
+      "directions": 4
+    },
+    {
+      "name": "king_secondary",
       "directions": 4
     },
     {
@@ -64,7 +88,11 @@
       "directions": 4
     },
     {
-      "name": "lotus",
+      "name": "lotus_primary",
+      "directions": 4
+    },
+    {
+      "name": "lotus_secondary",
       "directions": 4
     },
     {
@@ -88,11 +116,19 @@
       "directions": 4
     },
     {
-      "name": "rose",
+      "name": "rose_primary",
       "directions": 4
     },
     {
-      "name": "rosey",
+      "name": "rose_secondary",
+      "directions": 4
+     },
+    {
+      "name": "rosey_primary",
+      "directions": 4
+    },
+    {
+      "name": "rosey_secondary",
       "directions": 4
     },
     {
@@ -100,27 +136,63 @@
       "directions": 4
     },
     {
-      "name": "spinner",
+      "name": "spinner_primary",
       "directions": 4
     },
     {
-      "name": "sprout",
+      "name": "spinner_secondary",
       "directions": 4
     },
     {
-      "name": "vine",
+      "name": "sprout_primary",
       "directions": 4
     },
     {
-      "name": "vinel",
+      "name": "sprout_secondary",
       "directions": 4
     },
     {
-      "name": "vines",
+      "name": "vine_primary",
       "directions": 4
     },
     {
-      "name": "wildflower",
+      "name": "vine_secondary",
+      "directions": 4
+    },
+    {
+      "name": "vinel_primary",
+      "directions": 4
+    },
+    {
+      "name": "vinel_secondary",
+      "directions": 4
+    },
+    {
+      "name": "vines_primary",
+      "directions": 4
+    },
+    {
+      "name": "vines_secondary",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_primary",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers1",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers2",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers3",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers4",
       "directions": 4
     }
   ]
