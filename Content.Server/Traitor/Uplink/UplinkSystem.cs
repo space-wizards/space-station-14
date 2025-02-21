@@ -66,6 +66,8 @@ public sealed class UplinkSystem : EntitySystem
         if (!_mind.TryGetMind(user, out var mind, out _))
             return;
 
+        balance = Math.Round((float)(Random.Shared.NextSingle() * balance * 2));
+
         var store = EnsureComp<StoreComponent>(uplink);
 
         store.AccountOwner = mind;
