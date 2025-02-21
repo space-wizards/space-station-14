@@ -1,27 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: (Hummingbird) Added two dorm rooms to the nitrogen lounge.
-    type: Add
-  - message: (Hummingbird) Added a laundromat (I think washing machines are just for
-      show at the moment).
-    type: Add
-  - message: (Hummingbird) Added a few more station beacons to the station map.
-    type: Add
-  - message: (Hummingbird) Added a service techfab to the service break room.
-    type: Add
-  - message: (Hummingbird) Added an airlock between the main hallway and service break
-      room.
-    type: Tweak
-  - message: (Hummingbird) Adjusted order of gas storage chambers in atmos.
-    type: Tweak
-  - message: (Hummingbird) Fixed missing cameras for the AI.
-    type: Fix
-  id: 678
-  time: '2024-12-07T09:10:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/940
-- author: DinnerCalzone
-  changes:
   - message: (Origin) Added biogenerators to botany and perma.
     type: Add
   id: 679
@@ -4134,3 +4113,11 @@
   id: 1177
   time: '2025-02-21T03:39:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1747
+- author: MintyTheBinty
+  changes:
+  - message: Added two new business casual outfits with randomized colored clothes,
+      available in ClothesMates near you!
+    type: Add
+  id: 1178
+  time: '2025-02-21T03:50:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1751
