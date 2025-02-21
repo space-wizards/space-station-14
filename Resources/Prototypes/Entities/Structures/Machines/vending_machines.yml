@@ -1374,7 +1374,7 @@
   parent: VendingMachine
   id: VendingMachineSalvage
   name: Salvage Vendor
-  description: A dwarf's best friend!
+  description: A elf's best friend!
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
