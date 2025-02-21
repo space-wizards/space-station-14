@@ -1,0 +1,140 @@
+#Magazines
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineShotgunEmpty
+  result: MagazineShotgunEmpty
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineShotgun
+  result: MagazineShotgun
+  materials:
+    Steel: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineShotgunBeanbag
+  result: MagazineShotgunBeanbag
+  materials:
+    Steel: 150
+    Plastic: 140
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineShotgunSlug
+  result: MagazineShotgunSlug
+  materials:
+    Steel: 190
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineShotgunIncendiary
+  result: MagazineShotgunIncendiary
+  materials:
+    Steel: 100
+    Plastic: 190
+
+#Speedloaders
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: SpeedLoaderShotgunEmpty
+  result: SpeedLoaderShotgunEmpty
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderMagnumBasic
+  result: SpeedLoaderMagnumBasic
+  materials:
+    Steel: 140
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderShotgunBeanbag
+  result: SpeedLoaderShotgunBeanbag
+  materials:
+    Steel: 95
+    Plastic: 80
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderShotgunSlug
+  result: SpeedLoaderShotgunSlug
+  materials:
+    Steel: 110
+    Plastic: 60
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderShotgunIncendiary
+  result: SpeedLoaderShotgunIncendiary
+  materials:
+    Steel: 60
+    Plastic: 110
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderShotgunUranium
+  result: SpeedLoaderShotgunUranium
+  materials:
+    Plastic: 140
+    Uranium: 100
+
+#Boxes
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxLethalshot
+  result: BoxLethalshot
+  materials:
+    Steel: 320
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxBeanbag
+  result: BoxBeanbag
+  materials:
+    Steel: 160
+    Plastic: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxShotgunSlug
+  result: BoxShotgunSlug
+  materials:
+    Steel: 240
+    Plastic: 160
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxShotgunIncendiary
+  result: BoxShotgunIncendiary
+  materials:
+    Steel: 80
+    Plastic: 320
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxShotgunPractice
+  result: BoxShotgunPractice
+  materials:
+    Steel: 80
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxShotgunUranium
+  result: BoxShotgunUranium
+  materials:
+    Plastic: 320
+    Uranium: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxShotgunFlare
+  result: BoxShotgunFlare
+  materials:
+    Steel: 80
+    Plastic: 80

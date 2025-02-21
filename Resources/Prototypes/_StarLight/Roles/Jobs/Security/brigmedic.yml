@@ -36,7 +36,6 @@
     pocket2: HandheldBrigmedicCrewMonitor
     mask: ClothingMaskBreathMedicalSecurity
     id: BrigmedicPDA
-    gloves: ClothingHandsGlovesNitrile
   storage:
     back:
     - Flash

@@ -9,6 +9,9 @@
     ChiefMedicalOfficer: 135
     Quartermaster: 120
 
+    BlueShield: 110
+    NanoTrasenRepresentative: 165
+
     Chemist: 90
     Paramedic: 50
     MedicalDoctor: 58

@@ -877,6 +877,8 @@
       - MagazinePistolEmpty
 # SMG
       - MagazinePistolSubMachineGunSP
+      - MagazinePistolSubMachineGunHP
+      - MagazinePistolSubMachineGunFMJ
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
@@ -889,6 +891,10 @@
       - MagazineShotgun
       - MagazineShotgunEmpty
       - MagazineShotgunSlug
+      - SpeedLoaderMagnumBasic
+      - SpeedLoaderShotgunEmpty
+      - SpeedLoaderShotgunSlug
+      - SpeedLoaderShotgunBeanbag
 ####################################################
       - RiotShield
       - Stunbaton
@@ -945,6 +951,10 @@
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazinePistolAP
+# SMG
+      - MagazinePistolSubMachineGunIncendiary
+      - MagazinePistolSubMachineGunUranium
+      - MagazinePistolSubMachineGunAP
 # Rifle
       - MagazineRifleIncendiary
       - MagazineRifleUranium
@@ -952,7 +962,8 @@
 # Shotgun
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
-      - MagazineShotgunIncendiary
+      - SpeedLoaderShotgunIncendiary
+      - SpeedLoaderShotgunUranium
 # Grenade
       - MagazineGrenadeEmpty
 ####################################################
