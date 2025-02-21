@@ -1,0 +1,51 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                Title="{Loc 'space-villain-title'}"
+                Resizable="False">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Margin="10 10" HorizontalAlignment="Center">
+            <!-- Player -->
+            <BoxContainer Orientation="Vertical" MinWidth="290" HorizontalAlignment="Left">
+                <Label Text="You" />
+                <Label Name="PlayerHPLabel" Text="HP: 0" />
+                <Label Name="PlayerMPLabel" Text="MP: 0" />
+            </BoxContainer>
+
+            <PanelContainer StyleClasses="LowDivider" />
+
+            <!-- Villain -->
+            <BoxContainer Orientation="Vertical" MinWidth="290">
+                <Label Name="VillainNameLabel" HorizontalAlignment="Right" Text="Villain" />
+                <Label Name="VillainHPLabel" HorizontalAlignment="Right" Text="HP: 0" />
+                <Label Name="VillainMPLabel" HorizontalAlignment="Right" Text="MP: 0" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Margin="10 10" Orientation="Vertical">
+            <BoxContainer>
+                <Button Name="AttackButton" HorizontalExpand="True" Text="{Loc 'space-villain-button-attack'}" />
+                <Button Name="HealButton" Margin="10 0" HorizontalExpand="True" Text="{Loc 'space-villain-button-heal'}" />
+                <Button Name="RechargeButton" HorizontalExpand="True" Text="{Loc 'space-villain-button-recharge'}" />
+            </BoxContainer>
+
+            <Button Margin="0 10" Name="NewGameButton" Text="{Loc 'space-villain-button-new-game'}" />
+
+            <BoxContainer Orientation="Vertical" MinWidth="580" MinHeight="50">
+                <Label Name="PlayerStatusLabel" HorizontalAlignment="Center" />
+                <Label Name="VillainStatusLabel" Margin="10 0" HorizontalAlignment="Center" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'space-villain-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'space-villain-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
