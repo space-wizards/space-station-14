@@ -3540,4 +3540,53 @@ Entries:
   id: 490
   time: '2025-02-21T06:13:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/342
+- author: Killer Tamashi
+  changes:
+  - message: .35 Magazines and .50 speedloader to Security Techfab.
+    type: Add
+  id: 491
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
+- author: Killer Tamashi
+  changes:
+  - message: BSO and NT Rep Wages.
+    type: Add
+  id: 492
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
+- author: Killer Tamashi
+  changes:
+  - message: Changed .30 Magazine sprite to have "30mm" instead of "9mm"
+    type: Tweak
+  id: 493
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
+- author: Killer Tamashi
+  changes:
+  - message: Recolored Enforcer tip to not be a nerf gun
+    type: Tweak
+  id: 494
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
+- author: Killer Tamashi
+  changes:
+  - message: Fixed .20 Incendiary magazines using plasma to make.
+    type: Fix
+  id: 495
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
+- author: Killer Tamashi
+  changes:
+  - message: Fixed .20 Incendiary magazines not having bullet sprite when full
+    type: Fix
+  id: 496
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
+- author: Killer Tamashi
+  changes:
+  - message: Fixed Brigmedic belt spawning on floor issue.
+    type: Fix
+  id: 497
+  time: '2025-02-21T19:20:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/340
 
