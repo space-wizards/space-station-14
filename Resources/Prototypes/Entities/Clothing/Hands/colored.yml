@@ -319,20 +319,6 @@
   - type: Fiber
     fiberColor: fibers-black
 
-- type: entity
-  parent: ClothingHandsButcherable
-  id: ClothingHandsGlovesBlackNitrile
-  name: Black Nitrile Gloves
-  description: High-quality nitrile gloves. Expensive medical PPE, now in black!
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Hands/Gloves/blacknitrile.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Hands/Gloves/blacknitrile.rsi
-  - type: Fiber
-    fiberMaterial: fibers-black-nitrile
-  - type: FingerprintMask
-
 # Insulated Gloves (Yellow Gloves)
 # Currently can not be greyscaled without looking like shit.
 - type: entity

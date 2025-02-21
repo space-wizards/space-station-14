@@ -8,6 +8,7 @@ fibers-leather = leather
 fibers-durathread = durathread
 fibers-latex = latex
 fibers-nitrile = nitrile
+fibers-black-nitrile = black nitrile
 fibers-nanomachines = insulative nanomachine
 fibers-chameleon = holographic chameleon
 fibers-rubber = rubber
