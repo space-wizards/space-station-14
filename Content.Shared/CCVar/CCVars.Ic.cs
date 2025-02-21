@@ -45,4 +45,17 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ICShowSSDIndicator =
         CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
+
+    /// <summary>
+    ///     Forces SSD characters to sleep after ICSSDSleepTime seconds
+    /// </summary>
+    public static readonly CVarDef<bool> ICSSDSleep =
+        CVarDef.Create("ic.ssd_sleep", true, CVar.SERVER);
+
+    /// <summary>
+    ///     Time between character getting SSD status and falling asleep
+    ///     Won't work without ICSSDSleep
+    /// </summary>
+    public static readonly CVarDef<float> ICSSDSleepTime =
+        CVarDef.Create("ic.ssd_sleep_time", 600f, CVar.SERVER);
 }
