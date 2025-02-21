@@ -36,6 +36,8 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    soundRack:
+      path: /Audio/_Impstation/Weapons/Guns/Cock/shotgun_cock.ogg #imp
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
