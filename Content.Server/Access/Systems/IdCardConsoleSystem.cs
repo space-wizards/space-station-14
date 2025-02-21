@@ -13,6 +13,13 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 using Content.Shared.Access;
+using Content.Shared.Construction;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Throwing;
+using Robust.Shared.Random;
+using Content.Server.Containers;
+using Content.Shared.Damage;
+using Content.Server.Chat.Systems;
 
 namespace Content.Server.Access.Systems;
 
@@ -26,6 +33,10 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly AccessSystem _access = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -37,6 +48,11 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
+
+        SubscribeLocalEvent<IdCardConsoleComponent, DamageChangedEvent>(OnDamageChanged);
+
+        // Intercept the event before anyone can do anything with it!
+        SubscribeLocalEvent<IdCardConsoleComponent, MachineDeconstructedEvent>(OnMachineDeconstructed, before: [typeof(EmptyOnMachineDeconstructSystem), typeof(ItemSlotsSystem)]);
     }
 
     private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
@@ -210,4 +226,44 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         _record.Synchronize(key);
     }
+
+    private void OnMachineDeconstructed(Entity<IdCardConsoleComponent> entity, ref MachineDeconstructedEvent args)
+    {
+        TryDropAndThrowIds(entity.Owner, entity.Comp, null);
+    }
+
+    private void OnDamageChanged(Entity<IdCardConsoleComponent> entity, ref DamageChangedEvent args)
+    {
+        if (TryDropAndThrowIds(entity.Owner, entity.Comp, null))
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("id-console-system-eject-on-damage"), InGameICChatType.Speak, true);
+    }
+
+    #region Public functions
+    /// <summary>
+    ///     Tries to drop any IDs stored in the console, and then tries to throw them away.
+    ///     Returns true if anything was ejected and false otherwise.
+    /// </summary>
+    public bool TryDropAndThrowIds(EntityUid uid, IdCardConsoleComponent? idCardConsoleComp, ItemSlotsComponent? itemSlotsComp)
+    {
+        if (!Resolve(uid, ref idCardConsoleComp, ref itemSlotsComp))
+            return false;
+
+        var didEject = false;
+
+        foreach (var slot in itemSlotsComp.Slots.Values)
+        {
+            if (slot.Item == null || slot.ContainerSlot == null)
+                continue;
+
+            var item = slot.Item.Value;
+            if (_container.Remove(item, slot.ContainerSlot))
+            {
+                _throwing.TryThrow(item, _random.NextVector2(), baseThrowSpeed: 5f);
+                didEject = true;
+            }
+        }
+
+        return didEject;
+    }
+    #endregion
 }
