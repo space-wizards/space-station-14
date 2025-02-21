@@ -10,8 +10,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Research.Components;
-using Content.Shared.Construction.Steps;
-
 
 namespace Content.Shared.Materials;
 
@@ -332,7 +330,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         RaiseLocalEvent(receiver, ref ev);
         return true;
     }
-
 
     /// <summary>
     /// Broadcasts an event that will collect a list of which materials
