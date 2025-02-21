@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Stun Prod now requires makeshift cuffs instead of any cuffs so it won't
-      eat your security cuffs
-    type: Tweak
-  id: 675
-  time: '2024-12-06T23:03:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/908
 - author: widgetbeck
   changes:
   - message: Fixed Decapoids being able to pry powered doors.
@@ -4130,3 +4122,11 @@
   id: 1174
   time: '2025-02-21T02:15:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1754
+- author: TheGrimbeeper
+  changes:
+  - message: artifacts now listen for all types of @ emotes instead of only the special
+      ones on the quick wheel
+    type: Tweak
+  id: 1175
+  time: '2025-02-21T02:50:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1704
