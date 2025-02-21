@@ -63,7 +63,6 @@
     - type: FishingRod #The component that handles all the joint stuff
       cycleSound: /Audio/Effects/Fluids/glug.ogg
       ropeSprite: _Impstation/Objects/Fishing/fishingrod_Ling.rsi/rope.png
-      ReelSound: _Impstation/Effects/Emotes/knuckles.ogg
       reelRate: 5
     - type: Gun #The component that handles the firing
       soundGunshot: /Audio/Effects/demon_attack1.ogg #scorpion-get_over_here.ogg
