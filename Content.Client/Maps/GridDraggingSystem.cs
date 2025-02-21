@@ -102,7 +102,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out var grid))
                 return;
 
-            StartDragging(gridUid, Vector2.Transform(mousePos.Position, Transform(gridUid).InvWorldMatrix));
+            StartDragging(gridUid, Vector2.Transform(mousePos.Position, _transformSystem.GetInvWorldMatrix(gridUid)));
         }
 
         if (!TryComp(_dragging, out TransformComponent? xform))
@@ -117,7 +117,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             return;
         }
 
-        var localToWorld = Vector2.Transform(_localPosition, xform.WorldMatrix);
+        var localToWorld = Vector2.Transform(_localPosition, _transformSystem.GetWorldMatrix(xform));
 
         if (localToWorld.EqualsApprox(mousePos.Position, 0.01f)) return;
 

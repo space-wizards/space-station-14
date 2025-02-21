@@ -141,6 +141,11 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     {
         return _reagentSources.GetValueOrDefault(id) ?? new List<ReagentSourceData>();
     }
+
+    // Is handled on server and updated on client via ReagentGuideRegistryChangedEvent
+    public override void ReloadAllReagentPrototypes()
+    {
+    }
 }
 
 /// <summary>
