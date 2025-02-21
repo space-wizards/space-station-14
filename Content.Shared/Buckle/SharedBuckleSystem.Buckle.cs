@@ -92,7 +92,7 @@ public abstract partial class SharedBuckleSystem
     {
         if (args.Handled)
             return;
-        args.Handled = TryUnbuckle(ent, ent, ent);
+        args.Handled = TryUnbuckle(ent, args.User, ent.Comp);
     }
 
     #endregion
