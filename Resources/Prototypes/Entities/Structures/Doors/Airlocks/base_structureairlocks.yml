@@ -179,6 +179,12 @@
     - Airlocks
     - WirePanels
     - Networking
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Vending
+  - type: SpeakOnDoorOpened
   placement:
     mode: SnapgridCenter
 
