@@ -9,12 +9,24 @@ public abstract partial class SharedPuddleSystem
 {
     public string[] GetEvaporatingReagents(Solution solution)
     {
-        return solution.GetReagentPrototypes(_prototypeManager).Keys.Where(x => x.Evaporates).Select(x => x.ID).ToArray();
+        var evaporatingReagents = new List<string>();
+        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        {
+            if (solProto.EvaporationSpeed > 0)
+                evaporatingReagents.Add(solProto.ID);
+        }
+        return evaporatingReagents.ToArray();
     }
 
-    public string[] GetMoppableReagents(Solution solution)
+    public string[] GetAbsorbentReagents(Solution solution)
     {
-        return solution.GetReagentPrototypes(_prototypeManager).Keys.Where(x => x.Moppable).Select(x => x.ID).ToArray();
+        var absorbentReagents = new List<string>();
+        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        {
+            if (solProto.Absorbent)
+                absorbentReagents.Add(solProto.ID);
+        }
+        return absorbentReagents.ToArray();
     }
 
     public bool CanFullyEvaporate(Solution solution)

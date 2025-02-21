@@ -106,16 +106,16 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         /// <summary>
-        /// If this reagent evaporates on its own over time.
+        /// The speed at which the reagent evaporates over time.
         /// </summary>
         [DataField]
-        public bool Evaporates = false;
+        public float EvaporationSpeed = 0f;
 
         /// <summary>
         /// If this reagent can be used to mop up other reagents.
         /// </summary>
         [DataField]
-        public bool Moppable = false;
+        public bool Absorbent = false;
 
         /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
