@@ -320,3 +320,6 @@ ghost-role-information-gingerbread-description = A being of pure holiday spirit.
 
 ghost-role-information-wizard-name = Wizard
 ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
+
+ghost-role-information-spaceasshole-name = Space Asshole
+ghost-role-information-spaceasshole-description = It's April 1st, 2125.

@@ -126,7 +126,7 @@
   - type: GhostRole
     name: ghost-role-information-spaceasshole-name
     description: ghost-role-information-spaceasshole-description
-    rules: ghost-role-information-spaceasshole-rules
+    rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
   - type: Sprite

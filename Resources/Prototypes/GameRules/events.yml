@@ -529,8 +529,6 @@
   - type: RuleGrids
   - type: LoadMapRule
     mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
-  - type: NukeopsRule
-    roundEndBehavior: Nothing
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointSpaceAsshole
@@ -545,11 +543,13 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
+      - type: AutoImplant
+        implants:
+        - MacroBombImplant
+        - MicroBombImplant #todo curious if the game will detonate both
       mindRoles:
       - MindRoleSpaceAsshole
       briefing:
-        text: zombie-patientzero-role-greeting
-        color: Plum
         sound: "/Audio/Lobby/space_asshole.ogg"
 
 - type: entity

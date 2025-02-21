@@ -1,0 +1,42 @@
+- type: entity
+  parent: [BaseKillObjective]
+  id: SpaceAssholeKillRandomHeadObjective
+  description: Smash a boss right through their face.
+  components:
+  - type: Objective
+    # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
+    difficulty: 3.0
+    # killing 1 head is enough
+    unique: true
+    issuer: objective-issuer-syndicate
+  - type: TargetObjective
+    title: objective-condition-kill-head-title
+  - type: PickRandomHead
+  - type: KillPersonCondition
+    # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
+    # if ce flies a shittle to centcom you better find a way onto it
+    requireDead: true
+
+- type: entity
+  parent: [BaseSurviveObjective]
+  id: SpaceAssholeSurviveObjective
+  name: Prevail
+  description: You must prevail.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-syndicate
+
+- type: entity
+  parent: [BaseLivingObjective]
+  id: SpaceAssholeHijackShuttleObjective
+  name: Ensure all the rest are dead
+  description: Have only 1 person left to tell the tale.
+  components:
+  - type: Objective
+    difficulty: 5 # insane, default config max difficulty
+    icon:
+      sprite: Objects/Tools/emag.rsi
+      state: icon
+    issuer: objective-issuer-syndicate
+  - type: WantonCarnageCondition
