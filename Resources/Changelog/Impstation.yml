@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: 'Added a new trinket: a walking cane!'
-    type: Add
-  id: 682
-  time: '2024-12-07T17:06:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/946
 - author: Darkmajia
   changes:
   - message: Decapoid claws can now etch transmutation runes into the ground. Be careful
@@ -4122,3 +4115,12 @@
   id: 1181
   time: '2025-02-21T05:13:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1723
+- author: Sha-Seng
+  changes:
+  - message: Glowing eyes markings for thaven in the Head category
+    type: Add
+  - message: +1 Head (Top) marking slot so you can have two piercings and eyeliner
+    type: Tweak
+  id: 1182
+  time: '2025-02-21T05:17:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1740
