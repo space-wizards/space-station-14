@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet, Darkmajia
-  changes:
-  - message: Iterated on the playtest map "Banana" again.
-    type: Fix
-  id: 677
-  time: '2024-12-07T04:53:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/936
 - author: DinnerCalzone
   changes:
   - message: (Hummingbird) Added two dorm rooms to the nitrogen lounge.
@@ -4130,3 +4123,14 @@
   id: 1176
   time: '2025-02-21T03:25:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1737
+- author: ATDoop
+  changes:
+  - message: Added 8 new plushies! Find them in a plushie crate today!!
+    type: Add
+  - message: Added 2 new trinkets, sentimental dolls!
+    type: Add
+  - message: You can now wear the bug plush on your head.
+    type: Tweak
+  id: 1177
+  time: '2025-02-21T03:39:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1747
