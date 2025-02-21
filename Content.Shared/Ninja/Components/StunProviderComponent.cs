@@ -28,10 +28,10 @@ public sealed partial class StunProviderComponent : Component
     public SoundSpecifier Sound = new SoundCollectionSpecifier("sparks");
 
     /// <summary>
-    /// Joules required in the battery to stun someone. Defaults to 10 uses on a small battery.
+    /// Joules required in the battery to stun someone.  Equals 6 uses on a small-capacity power cell, 12, on medium, and 18 on high.
     /// </summary>
     [DataField]
-    public float StunCharge = 36f;
+    public float StunCharge = 60f;
 
     /// <summary>
     /// Damage dealt when stunning someone
@@ -49,13 +49,13 @@ public sealed partial class StunProviderComponent : Component
     /// Time that someone is stunned for, stacks if done multiple times.
     /// </summary>
     [DataField]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(5);
+    public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// How long stunning is disabled after stunning something.
     /// </summary>
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(2);
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(2.8);
 
     /// <summary>
     /// ID of the cooldown use delay.
