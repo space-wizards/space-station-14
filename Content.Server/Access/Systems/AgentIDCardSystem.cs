@@ -32,9 +32,11 @@ namespace Content.Server.Access.Systems
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
         {
+            // Is target an id?
             if (args.Target == null || !args.CanReach || !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
                 return;
 
+            // Am I an id?
             if (!TryComp<AccessComponent>(uid, out var access) || !HasComp<IdCardComponent>(uid))
                 return;
 

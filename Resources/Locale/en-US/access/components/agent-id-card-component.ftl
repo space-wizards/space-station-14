@@ -9,5 +9,5 @@ agent-id-card-current-job = Job:
 agent-id-card-job-icon-label = Job icon:
 agent-id-menu-title = Agent ID Card
 
-agent-id-card-flavor-left = Nothing to see here, just a regular ID
+agent-id-card-flavor-left = Just a regular ID, nothing to see here
 agent-id-card-flavor-right = v2.0

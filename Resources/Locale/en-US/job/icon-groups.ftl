@@ -11,3 +11,4 @@ job-icon-group-silicon = Silicon
 job-icon-group-centcom = Centcom
 job-icon-group-blank = Blank
 job-icon-group-threat = Threat
+job-icon-group-admin = Admin

@@ -47,10 +47,10 @@
   - JobIconMedicalDoctor
   - JobIconMedicalIntern
   - JobIconChemist
+  - JobIconGeneticist
   - JobIconParamedic
   - JobIconPsychologist
   - JobIconVirologist
-  - JobIconGeneticist
 
 - type: jobIconGroup
   id: ResearchIconGroup
@@ -74,10 +74,10 @@
   - JobIconHeadOfSecurity
   - JobIconSecurityOfficer
   - JobIconSecurityCadet
-  - JobIconWarden
-  - JobIconDetective
   - JobIconBrigmedic
+  - JobIconDetective
   - JobIconPrisoner
+  - JobIconWarden
 
 - type: jobIconGroup
   id: ServiceIconGroup
@@ -101,10 +101,10 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Clown
   icons:
+  - JobIconBoxer
   - JobIconClown
   - JobIconMime
   - JobIconMusician
-  - JobIconBoxer
 
 - type: jobIconGroup
   id: CivilianIconGroup
@@ -115,9 +115,9 @@
   icons:
   - JobIconPassenger
   - JobIconChaplain
+  - JobIconJanitor
   - JobIconLawyer
   - JobIconLibrarian
-  - JobIconJanitor
   - JobIconVisitor
 
 - type: jobIconGroup
@@ -158,3 +158,16 @@
   icons:
   - JobIconSyndicate
   - JobIconZombie
+
+- type: jobIconGroup
+  id: AdminIconGroup
+  groupName: job-icon-group-admin
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Admin
+  icons:
+  - JobIconAdmin
+  - JobIconSeniorEngineer
+  - JobIconSeniorPhysician
+  - JobIconSeniorResearcher
+  - JobIconSeniorOfficer

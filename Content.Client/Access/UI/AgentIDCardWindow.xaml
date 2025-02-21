@@ -1,27 +1,40 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
-            Title="{Loc agent-id-menu-title}"> <!-- TODO make a FancyWindow-->
-    <BoxContainer Name="MainContainer" Orientation="Vertical" SeparationOverride="4" MinWidth="150" DefaultCursorShape="Hand" >
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            Title="{Loc agent-id-menu-title}">
+    <BoxContainer Orientation="Vertical" Margin="12 0" SeparationOverride="4" MinWidth="150" >
         <!-- Id current status header -->
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Horizontal" Margin="0 12 0 4">
                 <TextureRect Name="CurrentJobIcon" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="60 60" />
-            <BoxContainer Margin="8 0 0 0" Orientation="Vertical">
-                <Label Name="CurrentName" SetHeight="25" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig" />
-                <Label Name="CurrentJob" />
+                        VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="60 60" />
+            <BoxContainer Margin="8 4 0 0" Orientation="Vertical">
+                <Label Name="CurrentName" SetHeight="24" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig" />
+                <Label Name="CurrentJob" Margin="8 4 0 0" />
             </BoxContainer>
         </BoxContainer>
-        <Label Name="Name" Text="{Loc 'agent-id-card-current-name'}" />
-        <LineEdit Name="NameLineEdit" SelectAllOnFocus="True" />
-        <Label Name="Job" Text="{Loc 'agent-id-card-current-job'}" />
-        <LineEdit Name="JobLineEdit" SelectAllOnFocus="True" />
+        <!-- TODO Tabs -->
+        <!-- Settings box -->
+        <BoxContainer Orientation="Vertical">
+            <Label Name="Name" Text="{Loc 'agent-id-card-current-name'}" />
+            <LineEdit Name="NameLineEdit" SelectAllOnFocus="True" />
+            <Label Name="Job" Text="{Loc 'agent-id-card-current-job'}" />
+            <LineEdit Name="JobLineEdit" SelectAllOnFocus="True" />
+            <CheckBox Name="CheckCopyAll" Margin="0 12 0 0" Text="Copy scanned IDs" />
+            <BoxContainer Orientation="Vertical" Margin="24 4 0 0">
+                <CheckBox Name="CheckCopyName" Text="Name" Pressed="True" />
+                <CheckBox Name="CheckCopyJob" Text="Job" Pressed="True" />
+                <CheckBox Name="CheckCopyJobIcon" Text="Job icon" Pressed="True" />
+                <CheckBox Name="CheckCopyAccess" Text="Exact access" />
+            </BoxContainer>
+        </BoxContainer>
+        <!-- Job icon box -->
         <Label Text="{Loc 'agent-id-card-job-icon-label'}" />
-        <BoxContainer Orientation="Horizontal"> <!-- TODO margins -->
+        <BoxContainer Orientation="Horizontal">
             <GridContainer Name="JobGroupGrid" Columns="2">
                 <!-- Group buttons are generated in code -->
             </GridContainer>
-            <BoxContainer Margin="5 0 0 5" MinWidth="100">
+            <BoxContainer Margin="4 0 0 0" MinWidth="98">
                 <GridContainer Name="IconGrid" Columns="3">
                     <!-- Job icon buttons are generated in code -->
                 </GridContainer>
@@ -39,4 +52,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
