@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Storage;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
@@ -66,11 +67,22 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
     {
-        public readonly string SlotId;
+        public readonly ItemStorageLocation StorageLocation;
 
-        public ReagentDispenserDispenseReagentMessage(string slotId)
+        public ReagentDispenserDispenseReagentMessage(ItemStorageLocation storageLocation)
         {
-            SlotId = slotId;
+            StorageLocation = storageLocation;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserEjectContainerMessage : BoundUserInterfaceMessage
+    {
+        public readonly ItemStorageLocation StorageLocation;
+
+        public ReagentDispenserEjectContainerMessage(ItemStorageLocation storageLocation)
+        {
+            StorageLocation = storageLocation;
         }
     }
 
@@ -94,9 +106,9 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ReagentInventoryItem(string storageSlotId, string reagentLabel, FixedPoint2 quantity, Color reagentColor)
+    public sealed class ReagentInventoryItem(ItemStorageLocation storageLocation, string reagentLabel, FixedPoint2 quantity, Color reagentColor)
     {
-        public string StorageSlotId = storageSlotId;
+        public ItemStorageLocation StorageLocation = storageLocation;
         public string ReagentLabel = reagentLabel;
         public FixedPoint2 Quantity = quantity;
         public Color ReagentColor = reagentColor;
