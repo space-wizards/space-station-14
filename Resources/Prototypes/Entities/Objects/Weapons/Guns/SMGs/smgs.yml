@@ -113,6 +113,8 @@
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
     autoEject: true
+    soundAutoEject:
+      path: /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg #imp
   - type: MagazineVisuals
     magState: mag
     steps: 6
