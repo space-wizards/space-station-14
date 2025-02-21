@@ -18,6 +18,7 @@
     - id: AppraisalTool
     - id: FireExtinguisher
     - id: Flare
+    - id: SalvageShuttle
       prob: 0.3
       rolls: !type:ConstantNumberSelector
         value: 3
