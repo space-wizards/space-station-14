@@ -1,7 +1,7 @@
-reagent-name-astrotame = Astrotame
+reagent-name-astrotame = juice that is fake sweet
 reagent-desc-astrotame = The sweetness of a thousand sugars but none of the calories.
 
-reagent-name-bbq-sauce = BBQ sauce
+reagent-name-bbq-sauce = juice that you put on steak
 reagent-desc-bbq-sauce = Hand wipes not included.
 
 reagent-name-cornoil = corn oil
