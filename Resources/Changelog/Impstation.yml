@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added more chem possibilities to strange pills and space shrooms, for
-      clowns to eat
-    type: Tweak
-  id: 680
-  time: '2024-12-07T17:08:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/939
 - author: kipdotnet
   changes:
   - message: Banana.
@@ -4122,3 +4114,10 @@
   id: 1179
   time: '2025-02-21T04:09:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1757
+- author: AvianMaiden
+  changes:
+  - message: Unique C-20R empty magazine beeps
+    type: Add
+  id: 1180
+  time: '2025-02-21T04:22:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1758
