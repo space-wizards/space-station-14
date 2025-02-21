@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can no longer FTL the station.
-    type: Fix
-  id: 7485
-  time: '2024-10-04T02:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32558
-- author: SoulFN
-  changes:
-  - message: Dragon can now pull things using tail.
-    type: Add
-  id: 7486
-  time: '2024-10-04T05:39:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32568
 - author: SaphireLattice
   changes:
   - message: Explosives throw a container they are in
@@ -3892,3 +3878,22 @@
   id: 7984
   time: '2025-02-20T01:12:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33449
+- author: Zokkie
+  changes:
+  - message: Argocytes, Mimics, Butterflies, Bees, Space Kangaroos, Laser Raptors
+      and Watchers their corpses can now be butchered.
+    type: Fix
+  - message: Butterflies can now be picked up and can also be put into trash bags.
+    type: Fix
+  - message: You can now grind Butterflies and Bees in the reagent grinder.
+    type: Fix
+  id: 7985
+  time: '2025-02-20T16:12:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33727
+- author: metalgearsloth
+  changes:
+  - message: Fix storage windows being duplicated when reconnecting.
+    type: Fix
+  id: 7986
+  time: '2025-02-20T16:51:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35054
