@@ -2382,7 +2382,11 @@
     interactSuccessSound:
       path: /Audio/Animals/snake_hiss.ogg
   - type: NoSlip
-  - type: Spider
+  - type: WebPlacer
+    webPrototype: SpiderWeb
+    destinationBlacklist:
+      components:
+      - SpiderWebObject
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
@@ -2514,8 +2518,15 @@
       thresholds:
         0: Alive
         180: Dead
-    - type: Spider
+    - type: WebPlacer
       webPrototype: SpiderWebClown
+      webSound:
+        collection: BikeHorn
+        params:
+          variation: 0.125
+      destinationBlacklist:
+        components:
+        - SpiderWebObject
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
