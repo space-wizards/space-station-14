@@ -8,13 +8,16 @@ namespace Content.Server.Doors;
 
 public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltComponent>
 {
+
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-door-bolt";
 
     public override StatusLightState? GetLightState(Wire wire, DoorBoltComponent comp)
-        => comp.BoltsDown ? StatusLightState.On : StatusLightState.Off;
+    {
+        return comp.BoltsDown ? StatusLightState.On : StatusLightState.Off;
+    }
 
-    public override object StatusKey { get; } = AirlockWireStatus.BoltIndicator;
+    public override object StatusKey => AirlockWireStatus.BoltIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DoorBoltComponent airlock)
     {
@@ -28,6 +31,7 @@ public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltCom
     public override bool Mend(EntityUid user, Wire wire, DoorBoltComponent door)
     {
         EntityManager.System<DoorSystem>().SetBoltWireCut((wire.Owner, door), false);
+
         return true;
     }
 
@@ -38,4 +42,5 @@ public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltCom
         else if (!door.BoltsDown)
             EntityManager.System<DoorSystem>().SetBoltsDown((wire.Owner, door), true);
     }
+
 }
