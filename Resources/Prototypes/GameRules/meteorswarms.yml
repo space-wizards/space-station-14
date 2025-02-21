@@ -70,7 +70,7 @@
   components:
   - type: GameRule
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 600 # 10 min 
+    minimumTimeUntilFirstEvent: 600 # 10 min
     minMaxEventTiming:
       min: 750 # 12.5 min
       max: 930 # 17.5 min
@@ -130,7 +130,7 @@
     minimumPlayers: 0
   - type: MeteorSwarm
     announcement: station-event-space-dust-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    announcementSound: /Audio/Announcements/Intern/meteors.ogg
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
@@ -185,7 +185,6 @@
     weight: 0.05
   - type: MeteorSwarm
     announcement: station-event-meteor-urist-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
     meteors:
       MeteorUrist: 1
     waves:
@@ -202,7 +201,7 @@
   - type: StationEvent
     startAnnouncement: station-event-immovable-rod-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/meteors.ogg
     weight: 3.5
     reoccurrenceDelay: 1
     duration: 1
