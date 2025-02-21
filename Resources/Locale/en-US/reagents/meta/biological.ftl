@@ -13,7 +13,7 @@ reagent-desc-sap = Sticky, sweet tree blood.
 reagent-name-hemocyanin-blood = juice that makes you live but blue
 reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives it a distinct blue color.
 
-reagent-name-ammonia-blood = juice that makes the vox live
+reagent-name-ammonia-blood = juice that makes vox live
 reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so appalling.
 
 reagent-name-zombie-blood = juice that stops the plague
