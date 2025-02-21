@@ -2482,8 +2482,8 @@
 
 - type: entity
   parent:
-  - MobSpiderAngryBase
   - MobGiantSpider
+  - MobSpiderAngryBase
   id: MobGiantSpiderAngry
 
 - type: entity
