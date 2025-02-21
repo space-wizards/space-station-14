@@ -135,6 +135,8 @@
     - state: green
     - sprite: Structures/Wallmounts/signs.rsi
       state: radiation
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSpaceAsshole
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]

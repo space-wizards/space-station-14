@@ -4,12 +4,12 @@
     pocket2: RemoteSignallerAdvanced
     outerClothing: ClothingOuterCoatSpaceAsshole # It's his coat!
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicate
+    back: ClothingBackpackSatchelHolding
     mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudSyndicate
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombatFilled
-    id: SyndiPDA
+    id: SpaceAssholePDA
     belt: ClothingBeltMilitaryWebbing
   inhand:
   # Needed for causing wanton carnage
@@ -20,13 +20,14 @@
     - C4
     - FireBomb
     - HotPotato
-    - TrashBananaPeelExplosiveUnarmed
+    - TrashBananaPeelExplosive
     - PipeBomb
     - SyndieMiniBomb
     - ExGrenade
     - SupermatterGrenade
     - NuclearGrenade # april fools!
     - HolyHandGrenade
+    - NetworkConfigurator # Linking things
 
 - type: antag
   id: SpaceAsshole

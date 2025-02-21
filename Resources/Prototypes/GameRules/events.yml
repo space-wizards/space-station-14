@@ -551,6 +551,11 @@
       - MindRoleSpaceAsshole
       briefing:
         sound: "/Audio/Lobby/space_asshole.ogg"
+  - type: AntagObjectives
+    objectives:
+    - SpaceAssholeKillRandomHeadObjective
+    - SpaceAssholeSurviveObjective
+    - SpaceAssholeHijackShuttleObjective
 
 - type: entity
   parent: BaseTraitorRule
