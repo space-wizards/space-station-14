@@ -409,12 +409,19 @@
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
   children:
   - SpaceLawCrimeList
+  - SLControlledSubstances
 
 - type: guideEntry
   id: SpaceLawCrimeList
   name: guide-entry-rules-sl-crime-list
   priority: 5
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
+
+- type: guideEntry
+  id: SLControlledSubstances
+  name: guide-entry-rules-sl-controlled-substances
+  priority: 5
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLControlledSubstances.xml"
 
 - type: guideEntry
   id: BanTypes
