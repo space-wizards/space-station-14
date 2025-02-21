@@ -60,6 +60,10 @@
       "directions": 4
     },
     {
+      "name": "cornflower_flowers",
+      "directions": 4
+    },
+    {
       "name": "ficus",
       "directions": 4
     },
@@ -69,6 +73,18 @@
     },
     {
       "name": "garland_secondary",
+      "directions": 4
+    },
+    {
+      "name": "garland_flowers1",
+      "directions": 4
+    },
+    {
+      "name": "garland_flowers2",
+      "directions": 4
+    },
+    {
+      "name": "garland_flowers3",
       "directions": 4
     },
     {
@@ -132,6 +148,10 @@
       "directions": 4
     },
     {
+      "name": "rosey_flowers",
+      "directions": 4
+    },
+    {
       "name": "shrub",
       "directions": 4
     },
@@ -177,6 +197,10 @@
     },
     {
       "name": "wildflower_primary",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_secondary",
       "directions": 4
     },
     {

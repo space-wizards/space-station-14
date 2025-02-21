@@ -98,6 +98,8 @@
     state: cornflower_primary #imp
   - sprite: Mobs/Customization/diona.rsi
     state: cornflower_secondary #imp
+  - sprite: Mobs/Customization/diona.rsi
+    state: cornflower_flowers #imp
 
 - type: marking
   id: DionaFicusHead
@@ -118,6 +120,12 @@
     state: garland_primary #imp
   - sprite: Mobs/Customization/diona.rsi
     state: garland_secondary #imp
+  - sprite: Mobs/Customization/diona.rsi
+    state: garland_flowers1 #imp
+  - sprite: Mobs/Customization/diona.rsi
+    state: garland_flowers2 #imp
+  - sprite: Mobs/Customization/diona.rsi
+    state: garland_flowers3 #imp
 
 - type: marking
   id: DionaKingHead
@@ -216,6 +224,8 @@
     state: rosey_primary #imp
   - sprite: Mobs/Customization/diona.rsi
     state: rosey_secondary #imp
+  - sprite: Mobs/Customization/diona.rsi
+    state: rosey_flowers #imp
 
 - type: marking
   id: DionaShrubHeadTop
@@ -290,6 +300,8 @@
   - sprite: Mobs/Customization/diona.rsi
     state: wildflower_primary #imp
   - sprite: Mobs/Customization/diona.rsi
+    state: wildflower_secondary #imp
+  - sprite: Mobs/Customization/diona.rsi
     state: wildflower_flowers1 #imp
   - sprite: Mobs/Customization/diona.rsi
     state: wildflower_flowers2 #imp
@@ -303,11 +315,11 @@
   bodyPart: LLeg
   markingCategory: Overlay
   speciesRestriction: [Diona]
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-        color: "#5f7039"
+#  coloring:
+#    default:
+#      type:
+#        !type:SimpleColoring
+#        color: "#5f7039"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: overlay
