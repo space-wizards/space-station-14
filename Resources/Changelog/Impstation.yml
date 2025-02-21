@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Banana.
-    type: Fix
-  id: 681
-  time: '2024-12-07T17:06:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/945
 - author: ATDoop
   changes:
   - message: 'Added a new trinket: a walking cane!'
@@ -4121,3 +4114,11 @@
   id: 1180
   time: '2025-02-21T04:22:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1758
+- author: theqwat
+  changes:
+  - message: 'Changeling tentacle: a new utility arm for changelings... get your "friends"
+      from across the bar! (remember to eat before stretching your limbs)'
+    type: Add
+  id: 1181
+  time: '2025-02-21T05:13:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1723
