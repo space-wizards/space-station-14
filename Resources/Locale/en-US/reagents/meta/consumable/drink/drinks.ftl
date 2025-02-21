@@ -70,7 +70,7 @@ reagent-desc-soy-latte = A coffee drink made with espresso and steamed soy milk.
 reagent-name-tea = juice that makes you space british
 reagent-desc-tea = A drink made by boiling leaves of the tea tree, Camellia sinensis.
 
-reagent-name-tonic-water = juice that juice that is juice that makes you hydrated but angry but special
+reagent-name-tonic-water = juice that is juice that makes you hydrated but angry but special
 reagent-desc-tonic-water = It tastes strange but at least the quinine keeps the Space Malaria at bay.
 
 reagent-name-water = juice that makes you hydrated
