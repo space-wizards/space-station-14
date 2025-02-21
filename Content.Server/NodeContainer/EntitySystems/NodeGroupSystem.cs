@@ -26,6 +26,8 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
+        private SharedMapSystem MapSystem => EntityManager.System<SharedMapSystem>();
+
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
 
@@ -354,7 +356,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             if (!node.Connectable(EntityManager, xform))
                 yield break;
 
-            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
+            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager, MapSystem))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
