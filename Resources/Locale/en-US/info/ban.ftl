@@ -85,3 +85,16 @@ server-ban-string-never = never
 
 # Kick on ban
 ban-kick-reason = You have been banned
+
+# ASN ban panel
+cmd-asnbanpanel-invalid-arguments = This command takes no arguments
+cmd-asnbanpanel-desc = Opens the ASN ban panel
+cmd-asnbanpanel-help = Usage: asnbanpanel
+cmd-asnbanpanel-server = This can not be used from the server console
+cmd-asnbanpanel-player-err = The specified player could not be found
+asn-ban-panel-title = ASN banning panel
+asn-ban-panel-asn = ASN
+asn-ban-panel-placeholder = 32-bit ASN
+asn-ban-panel-severity = Severity:
+asn-ban-panel-submit = Ban
+asn-ban-panel-tabs-info = Info
