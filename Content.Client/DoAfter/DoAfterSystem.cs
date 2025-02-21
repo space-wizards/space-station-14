@@ -30,7 +30,9 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
         _overlay.RemoveOverlay<DoAfterOverlay>();
     }
 
+#pragma warning disable RA0028 // No base call in overriden function
     public override void Update(float frameTime)
+#pragma warning restore RA0028 // No base call in overriden function
     {
         // Currently this only predicts do afters initiated by the player.
 

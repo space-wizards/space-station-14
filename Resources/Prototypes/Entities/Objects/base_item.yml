@@ -5,6 +5,7 @@
   components:
   - type: Item
     size: Small
+  - type: Animateable
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure

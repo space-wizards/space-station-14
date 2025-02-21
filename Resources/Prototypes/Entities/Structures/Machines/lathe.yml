@@ -133,7 +133,6 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SecurityAmmoStatic
-    - SecurityWeaponsStatic
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -196,6 +195,7 @@
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
+    - ScienceExplosives
     - ScienceClothing
     - PowerCells
     - ScienceWeapons
