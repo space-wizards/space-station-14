@@ -126,7 +126,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleShockTrigger(Entity<ShockOnTriggerComponent> shockOnTrigger, ref TriggerEvent args)
         {
-            if (!_container.TryGetContainingContainer(shockOnTrigger, out var container))
+            if (!_container.TryGetContainingContainer(shockOnTrigger.Owner, out var container))
                 return;
 
             var containerEnt = container.Owner;
