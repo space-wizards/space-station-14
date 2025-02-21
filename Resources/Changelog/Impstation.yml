@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Origin) Added biogenerators to botany and perma.
-    type: Add
-  id: 679
-  time: '2024-12-07T17:07:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/941
 - author: honeyed-lemons
   changes:
   - message: Added more chem possibilities to strange pills and space shrooms, for
@@ -4121,3 +4114,11 @@
   id: 1178
   time: '2025-02-21T03:50:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1751
+- author: hivehum
+  changes:
+  - message: Added an echolalia trait. Stop repeating yourself. Stop repeating yourself.
+      Stop repeating yourself.
+    type: Add
+  id: 1179
+  time: '2025-02-21T04:09:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1757
