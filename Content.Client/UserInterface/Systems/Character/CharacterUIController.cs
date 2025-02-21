@@ -224,8 +224,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         if (!_prototypeManager.TryIndex(mind.RoleType, out var proto))
             _sawmill.Error($"{_player.LocalEntity} has invalid Role Type '{mind.RoleType}'. Displaying default instead");
 
-        var roleText = Loc.GetString(proto?.Name ?? "role-type-crew-aligned-name");
-        _window.RoleType.Text = roleText;
+        _window.RoleType.Text = Loc.GetString(proto?.Name ?? "role-type-crew-aligned-name");
         _window.RoleType.FontColorOverride = proto?.Color ?? Color.White;
     }
 

@@ -637,9 +637,9 @@ public abstract class SharedRoleSystem : EntitySystem
     /// If subtype is supplied and returnBoth is true, returns both localized values as one string.
     /// If returnBoth is false, returns only the localized subtype.
     /// </returns>
-    public string GetRoleSubtypeLabel(string? type, string? subtype, bool returnBoth = true)
+    public string GetRoleSubtypeLabel(string type, string? subtype, bool returnBoth = true)
     {
-        var typeLoc = Loc.GetString(type ?? "role-type-crew-aligned-name");
+        var typeLoc = Loc.GetString(type);
 
         if (string.IsNullOrEmpty(subtype))
             return typeLoc;

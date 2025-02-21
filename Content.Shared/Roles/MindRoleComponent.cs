@@ -24,6 +24,12 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public ProtoId<RoleTypePrototype>? RoleType;
 
     /// <summary>
+    ///     The role's subtype, shown only to admins to help with antag categorization
+    /// </summary>
+    [DataField]
+    public LocId? Subtype;
+
+    /// <summary>
     ///     True if this mindrole is an exclusive antagonist. Antag setting is not checked if this is True.
     /// </summary>
     [DataField]

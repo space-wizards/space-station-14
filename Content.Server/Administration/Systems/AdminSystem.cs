@@ -231,15 +231,13 @@ public sealed class AdminSystem : EntitySystem
         var antag = false;
 
         RoleTypePrototype roleType = new();
-        roleType.Name = "role-type-crew-aligned-name";
-        roleType.Color = Color.White;
         var startingRole = string.Empty;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
             if (_proto.TryIndex(mindComp.RoleType, out var role))
                 roleType = role;
             else
-                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name ?? "")}' instead");
+                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
 
             antag = _role.MindIsAntagonist(mindId);
             startingRole = _jobs.MindTryGetJobName(mindId);

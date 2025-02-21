@@ -5,7 +5,6 @@
   abstract: true
   components:
   - type: MindRole
-    roleType: Neutral
 
 - type: entity
   parent: BaseMindRole
@@ -125,6 +124,7 @@
   - type: MindRole
     antagPrototype: Dragon
     roleType: TeamAntagonist
+    subtype: "role-subtype- dragon"
     exclusiveAntag: true
   - type: DragonRole
   - type: RoleBriefing
@@ -138,7 +138,8 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
-    roleType: SoloAntagonistNinja
+    roleType: SoloAntagonist
+    subtype: "role-subtype-ninja"
     exclusiveAntag: true
   - type: NinjaRole
 
@@ -149,7 +150,8 @@
   name: Nukeops Operative Role
   components:
   - type: MindRole
-    roleType: TeamAntagonistNukie
+    roleType: TeamAntagonist
+    subtype: "role-subtype-nukie"
     exclusiveAntag: true
     antagPrototype: Nukeops
   - type: NukeopsRole
@@ -179,7 +181,8 @@
   - type: MindRole
     antagPrototype: HeadRev
     exclusiveAntag: true
-    roleType: TeamAntagonistHeadRevolutionary
+    roleType: TeamAntagonist
+    subtype: "role-subtype-head-revolutionary"
   - type: RevolutionaryRole
 
 - type: entity
@@ -189,7 +192,7 @@
   components:
   - type: MindRole
     antagPrototype: Rev
-    roleType: TeamAntagonistRevolutionary
+    subtype: "role-subtype-revolutionary"
 
 # Thief
 - type: entity
@@ -199,7 +202,8 @@
   components:
   - type: MindRole
     antagPrototype: Thief
-    roleType: SoloAntagonistThief
+    roleType: SoloAntagonist
+    subtype: "role-subtype-thief"
   - type: ThiefRole
 
 # Traitors
@@ -211,7 +215,8 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
-    roleType: SoloAntagonistTraitor
+    roleType: SoloAntagonist
+    subtype: "role-subtype-traitor"
   - type: TraitorRole
 
 - type: entity
@@ -228,7 +233,8 @@
   name: Syndicate Reinforcement Role
   components:
     - type: MindRole
-      roleType: TeamAntagonistTraitorReinforcement
+      roleType: TeamAntagonist
+      subtype: "role-subtype-traitor-reinforcement"
 
 # Zombie Squad
 - type: entity
@@ -239,7 +245,8 @@
   - type: MindRole
     antagPrototype: InitialInfected
     exclusiveAntag: true
-    roleType: TeamAntagonistInfected
+    roleType: TeamAntagonist
+    subtype: "role-subtype-initial-infected"
   - type: InitialInfectedRole
 
 - type: entity
@@ -250,5 +257,6 @@
   - type: MindRole
     antagPrototype: Zombie
     exclusiveAntag: true
-    roleType: TeamAntagonistZombie
+    roleType: TeamAntagonist
+    subtype: "role-subtype-zombie"
   - type: ZombieRole

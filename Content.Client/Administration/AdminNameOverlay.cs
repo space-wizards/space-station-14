@@ -84,16 +84,15 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            if (_filter.Contains(playerInfo.RoleProto.ID)
-                || playerInfo.RoleProto.Parents is not null
-                && _filter.Contains(playerInfo.RoleProto.Parents[0])) // Look upon my works and despair! TODO:ERRANT fix this shit
+            if (_filter.Contains(playerInfo.RoleProto.ID))
             {
                 var both = false; // TODO:ERRANT read this from cvar
+                var subtype = ""; // TODO:ERRANT get this from playerInfo, I guess?
 
-                var str = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, playerInfo.RoleProto.Subtype, both);
-                var color = playerInfo.RoleProto.Color ?? Color.White;
+                var label = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, subtype, both);
+                var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + (lineoffset * 2), str.ToUpper(), uiScale, color);
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + (lineoffset * 2), label.ToUpper(), uiScale, color);
             }
 
             args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);

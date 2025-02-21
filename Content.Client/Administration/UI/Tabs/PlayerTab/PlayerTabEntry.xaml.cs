@@ -10,7 +10,6 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 [GenerateTypedNameReferences]
 public sealed partial class PlayerTabEntry : PanelContainer
 {
-
     public NetEntity? PlayerEntity;
 
     public PlayerTabEntry(PlayerInfo player, StyleBoxFlat styleBoxFlat)
@@ -30,10 +29,11 @@ public sealed partial class PlayerTabEntry : PanelContainer
         if (player.IdentityName != player.CharacterName)
             CharacterLabel.Text += $" [{player.IdentityName}]";
 
+        var subtype = ""; //TODO:ERRANT get this from player I guess?
         AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no");
-        RoleTypeLabel.Text = roles.GetRoleSubtypeLabel(player.RoleProto.Name, player.RoleProto.Subtype);
+        RoleTypeLabel.Text = roles.GetRoleSubtypeLabel(player.RoleProto.Name, subtype);
 
-        RoleTypeLabel.FontColorOverride = player.RoleProto.Color ?? Color.White;
+        RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
         PlayerEntity = player.NetEntity;
