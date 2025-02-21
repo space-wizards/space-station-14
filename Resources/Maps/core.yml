@@ -11763,8 +11763,6 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
-    - type: Parallax
-      parallax: CoreStation
   - uid: 21128
     components:
     - type: MetaData

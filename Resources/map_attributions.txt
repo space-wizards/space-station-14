@@ -60,3 +60,6 @@
 
 - files: ["convex.yml"]
   authors: Spacemann
+
+- files: ["crescent.yml"]
+  authors: Bequin
