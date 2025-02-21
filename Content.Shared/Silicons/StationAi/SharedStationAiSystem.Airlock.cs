@@ -44,7 +44,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        _airlocks.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
+        _doors.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
     }
 
     /// <summary>

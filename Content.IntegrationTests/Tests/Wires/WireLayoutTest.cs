@@ -76,17 +76,17 @@ public sealed class WireLayoutTest
                 Assert.That(ent1.Comp.WiresList, Has.Count.EqualTo(4));
                 Assert.That(ent1.Comp.WiresList, Has.Exactly(2).With.Property("Action").Null, "2 dummy wires");
                 Assert.That(ent1.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<PowerWireAction>(), "1 power wire");
-                Assert.That(ent1.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
+                Assert.That(ent1.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<Server.Doors.WireActions.DoorBoltWireAction>(), "1 door bolt wire");
 
                 Assert.That(ent2.Comp.WiresList, Has.Count.EqualTo(5));
                 Assert.That(ent2.Comp.WiresList, Has.Exactly(2).With.Property("Action").Null, "2 dummy wires");
                 Assert.That(ent2.Comp.WiresList, Has.Exactly(2).With.Property("Action").InstanceOf<PowerWireAction>(), "2 power wire");
-                Assert.That(ent2.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
+                Assert.That(ent2.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<Server.Doors.WireActions.DoorBoltWireAction>(), "1 door bolt wire");
 
                 Assert.That(ent3.Comp.WiresList, Has.Count.EqualTo(4));
                 Assert.That(ent3.Comp.WiresList, Has.Exactly(2).With.Property("Action").Null, "2 dummy wires");
                 Assert.That(ent3.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<PowerWireAction>(), "1 power wire");
-                Assert.That(ent3.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
+                Assert.That(ent3.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<Server.Doors.WireActions.DoorBoltWireAction>(), "1 door bolt wire");
             });
         });
 
