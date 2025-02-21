@@ -6,6 +6,7 @@ using Content.Shared.BugReport;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 
@@ -65,6 +66,20 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
         if (BugReportButton == null)
             return;
 
-        BugReportButton.OnPressed += _ => ToggleWindow();
+        BugReportButton.OnPressed += ButtonToggleWindow;
     }
+    public void UnloadButton()
+    {
+        if (BugReportButton == null)
+            return;
+
+        BugReportButton.OnPressed -= ButtonToggleWindow;
+    }
+
+    private void ButtonToggleWindow(BaseButton.ButtonEventArgs obj)
+    {
+        ToggleWindow();
+    }
+
+
 }
