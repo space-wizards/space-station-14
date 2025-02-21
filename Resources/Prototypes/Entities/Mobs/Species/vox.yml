@@ -53,14 +53,19 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Bloodstream
     bloodReagent: AmmoniaBlood
+# April Fools: Vox box, even bare-handed.
   - type: MeleeWeapon
+    attackRate: 2
     soundHit:
-      collection: AlienClaw
+      collection: BoxingHit
     angle: 30
-    animation: WeaponArcClaw
+    animation: WeaponArcBox
     damage:
       types:
-        Slash: 5 # Reduce?
+        Blunt: 3 # This is technically 20% more than other species but it's not a huge deal.
+# April Fools: Vox make a boxing bell sound effect when falling over
+  - type: Boxing
+    sound: /Audio/Weapons/boxingbell.ogg
   - type: Sprite # Need to redefine the whole order to draw the tail over their gas tank
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
