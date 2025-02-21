@@ -1,4 +1,5 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -44,6 +45,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
     {
+        if (!HasComp<HandsComponent>(args.User))
+            return;
+
         SharedInteract(uid, component, args, args.Target, args.User);
     }
 
