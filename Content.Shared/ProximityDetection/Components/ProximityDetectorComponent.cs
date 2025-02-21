@@ -7,14 +7,16 @@ namespace Content.Shared.ProximityDetection.Components;
 /// <summary>
 /// This is used to search for the closest entity with a range that matches specified requirements (tags and/or components)
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState ,Access(typeof(ProximityDetectionSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(ProximityDetectionSystem))]
 public sealed partial class ProximityDetectorComponent : Component
 {
     /// <summary>
     /// The criteria used to filter entities
-    /// Note: RequireAll is only supported for tags, all components are required to count as a match!
+    /// If both components and tags are used for criteria, entities will
+    /// need to pass both components and tags check, while RequireAll
+    /// is considered separately for both of checks.
     /// </summary>
-    [DataField( required: true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityWhitelist Criteria = new();
 
     /// <summary>
