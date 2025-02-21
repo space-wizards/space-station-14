@@ -5,6 +5,7 @@ using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 using Content.Shared.Mind;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
 
@@ -50,7 +51,7 @@ public sealed class MagicSystem : SharedMagicSystem
         if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, "InvalidForSurvivorAntag"))
             _tag.AddTag(mind, "InvalidForSurvivorAntag");
 
-        const string survivorRule = "Survivor";
+        EntProtoId survivorRule = "Survivor";
 
         if (!_gameTicker.IsGameRuleActive<SurvivorRuleComponent>())
             _gameTicker.StartGameRule(survivorRule);
