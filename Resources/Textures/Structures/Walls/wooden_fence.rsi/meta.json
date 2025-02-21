@@ -1,6 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
+  "flatNormal": true,
   "copyright": "by Ko4erga (discord)",
   "size": {
     "x": 32,
