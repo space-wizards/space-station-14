@@ -166,6 +166,9 @@
   id: BrimFlatcapGrey
 
 - type: Tag
+  id: BrokenGlasses
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
