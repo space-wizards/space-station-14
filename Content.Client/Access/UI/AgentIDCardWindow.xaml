@@ -1,19 +1,42 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Title="{Loc agent-id-menu-title}">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
-        <Label Name="CurrentName" Text="{Loc 'agent-id-card-current-name'}" />
-        <LineEdit Name="NameLineEdit" />
-        <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
-        <LineEdit Name="JobLineEdit" />
-        <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            Title="{Loc agent-id-menu-title}"> <!-- TODO make a FancyWindow-->
+    <BoxContainer Name="MainContainer" Orientation="Vertical" SeparationOverride="4" MinWidth="150" DefaultCursorShape="Hand" >
+        <!-- Id current status header -->
+        <BoxContainer Orientation="Horizontal">
+                <TextureRect Name="CurrentJobIcon" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="60 60" />
+            <BoxContainer Margin="8 0 0 0" Orientation="Vertical">
+                <Label Name="CurrentName" SetHeight="25" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig" />
+                <Label Name="CurrentJob" />
+            </BoxContainer>
+        </BoxContainer>
+        <Label Name="Name" Text="{Loc 'agent-id-card-current-name'}" />
+        <LineEdit Name="NameLineEdit" SelectAllOnFocus="True" />
+        <Label Name="Job" Text="{Loc 'agent-id-card-current-job'}" />
+        <LineEdit Name="JobLineEdit" SelectAllOnFocus="True" />
+        <Label Text="{Loc 'agent-id-card-job-icon-label'}" />
         <BoxContainer Orientation="Horizontal"> <!-- TODO margins -->
             <GridContainer Name="JobGroupGrid" Columns="2">
                 <!-- Group buttons are generated in code -->
             </GridContainer>
-            <GridContainer Name="IconGrid" Columns="3">
-                <!-- Job icon buttons are generated in code -->
-            </GridContainer>
+            <BoxContainer Margin="5 0 0 5" MinWidth="100">
+                <GridContainer Name="IconGrid" Columns="3">
+                    <!-- Job icon buttons are generated in code -->
+                </GridContainer>
+            </BoxContainer>
+        </BoxContainer>
+         <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'agent-id-card-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'agent-id-card-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

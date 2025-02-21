@@ -20,6 +20,8 @@ namespace Content.Client.Access.UI
         private readonly SpriteSystem _spriteSystem;
 
         private const int JobGroupColumnCount = 2;
+        private const int NameMaxLength = 32;
+        private const int JobMaxLength = 30;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
@@ -32,16 +34,36 @@ namespace Content.Client.Access.UI
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
-            NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
-            NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
+            NameLineEdit.OnTextEntered += e =>
+            {
+                OnNameChanged?.Invoke(e.Text);
+                CurrentName.Text = e.Text;
+            };
+            NameLineEdit.OnFocusExit += e =>
+            {
+                OnNameChanged?.Invoke(e.Text);
+                CurrentName.Text = e.Text;
+            };
 
-            JobLineEdit.OnTextEntered += e => OnJobChanged?.Invoke(e.Text);
-            JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
+            JobLineEdit.OnTextEntered += e =>
+            {
+                OnJobChanged?.Invoke(e.Text);
+                CurrentJob.Text = e.Text;
+            };
+            JobLineEdit.OnFocusExit += e =>
+            {
+                OnJobChanged?.Invoke(e.Text);
+                CurrentJob.Text = e.Text;
+            };
+
+            NameLineEdit.IsValid = s => s.Length <= NameMaxLength;
+            JobLineEdit.IsValid = s => s.Length <= JobMaxLength;
         }
 
         //TODO rename, remove currentJobIconId, summary
         public void SetAllowedIcons(string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> jobGroups)
         {
+            CurrentJobIcon.Texture = _spriteSystem.Frame0(_prototypeManager.Index<JobIconPrototype>(currentJobIconId).Icon);
             JobGroupGrid.DisposeAllChildren();
             IconGrid.DisposeAllChildren();
 
@@ -108,10 +130,12 @@ namespace Content.Client.Access.UI
                 if (!_prototypeManager.TryIndex<JobIconPrototype>(icon, out var iconProto))
                     continue;
 
+                var texture = _spriteSystem.Frame0(iconProto.Icon);
+
                 // Create new button
                 var jobIconButton = new TextureButton
                 {
-                    TextureNormal = _spriteSystem.Frame0(iconProto.Icon),
+                    TextureNormal = texture,
                     Access = AccessLevel.Public,
                     SetSize = new Vector2(28, 28),
                     ToolTip = iconProto.LocalizedJobName
@@ -119,6 +143,7 @@ namespace Content.Client.Access.UI
 
                 // Finish button and add to UI
                 jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(iconProto.ID);
+                jobIconButton.OnPressed += _ => CurrentJobIcon.Texture = texture;
                 IconGrid.AddChild(jobIconButton);
             }
         }
@@ -126,11 +151,13 @@ namespace Content.Client.Access.UI
         public void SetCurrentName(string name)
         {
             NameLineEdit.Text = name;
+            CurrentName.Text = name;
         }
 
         public void SetCurrentJob(string job)
         {
             JobLineEdit.Text = job;
+            CurrentJob.Text = job;
         }
     }
 }
