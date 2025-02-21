@@ -142,16 +142,16 @@
       "name": "plushie_snake"
     },
     {
-       "name": "plushiesnake-equipped-NECK",
-       "directions": 4
+      "name": "plushiesnake-equipped-NECK",
+      "directions": 4
     },
     {
-        "name": "plushiesnake-inhand-left",
-        "directions": 4
+      "name": "plushiesnake-inhand-left",
+      "directions": 4
     },
     {
-        "name": "plushiesnake-inhand-right",
-        "directions": 4
+      "name": "plushiesnake-inhand-right",
+      "directions": 4
     },
     {
       "name": "plushie_vox"
