@@ -109,7 +109,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// The speed at which the reagent evaporates over time.
         /// </summary>
         [DataField]
-        public FixedPoint2 EvaporationSpeed = FixedPoint2.New(0f);
+        public FixedPoint2 EvaporationSpeed = FixedPoint2.Zero;
 
         /// <summary>
         /// If this reagent can be used to mop up other reagents.

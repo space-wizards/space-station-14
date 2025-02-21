@@ -436,7 +436,7 @@
   parent: BaseDrink
   desc: reagent-desc-water
   slippery: true
-  evaporatingSpeed: 1.0
+  evaporationSpeed: 1.0
   absorbent: true
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
