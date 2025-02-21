@@ -15,6 +15,8 @@
             prefixCreator: '14'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_relic.yml
+        - type: StationArrivals
+          shuttlePath: /Maps/Shuttles/arrivals_relic.yml
         - type: StationJobs
           availableJobs:
             #command
