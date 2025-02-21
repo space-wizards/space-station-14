@@ -469,21 +469,21 @@ public sealed partial class ChatSystem : SharedChatSystem
         string adminMessageWrap;
 
         messageWrap = Loc.GetString("collective-mind-chat-wrap-message",
-            ("message", message),
+            ("message", FormattedMessage.EscapeText(message)),
             ("channel", collectiveMind.LocalizedName),
             ("number", Number));
 
         adminMessageWrap = Loc.GetString("collective-mind-chat-wrap-message-admin",
             ("source", source),
-            ("message", message),
+            ("message", FormattedMessage.EscapeText(message)),
             ("channel", collectiveMind.LocalizedName),
             ("number", Number));
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {FormattedMessage.EscapeText(message)}");
 
         _chatManager.ChatMessageToManyFiltered(clients,
             ChatChannel.CollectiveMind,
-            message,
+            FormattedMessage.EscapeText(message),
             messageWrap,
             source,
             false,
@@ -492,7 +492,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             
         // FOR ADMINS
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
-            message,
+            FormattedMessage.EscapeText(message),
             adminMessageWrap,
             source,
             false,
