@@ -3532,4 +3532,12 @@ Entries:
   id: 489
   time: '2025-02-20T06:49:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/339
+- author: Bequin
+  changes:
+  - message: Added "Crescent". Currently not in rotation, has to be set by Admins.
+      For playtesting.
+    type: Add
+  id: 490
+  time: '2025-02-21T06:13:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/342
 
