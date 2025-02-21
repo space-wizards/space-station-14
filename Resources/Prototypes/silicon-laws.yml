@@ -1,4 +1,4 @@
-﻿# Crewsimov
+# Crewsimov
 - type: siliconLaw
   id: Crewsimov1
   order: 1
@@ -498,6 +498,99 @@
   - Nutimov4
   - Nutimov5
   obeysTo: laws-owner-crew
+
+  # Borgi Lawset, normal
+- type: siliconLaw
+  id: SparlightBorgi1
+  order: 1
+  lawString: law-borgi-1
+
+- type: siliconLaw
+  id: SparlightBorgi2
+  order: 2
+  lawString: law-borgi-2
+
+- type: siliconLaw
+  id: SparlightBorgi3
+  order: 3
+  lawString: law-borgi-3
+
+- type: siliconLawset
+  id: SparlightBorgiLawset
+  laws:
+  - SparlightBorgi1
+  - SparlightBorgi2
+  - SparlightBorgi3
+  obeysTo: laws-owner-crew
+
+# Borgi Lawset, Syndicate
+- type: siliconLaw
+  id: SparlightSyndiBorgi1
+  order: 1
+  lawString: law-syndiborgi-1
+
+- type: siliconLaw
+  id: SparlightSyndiBorgi2
+  order: 2
+  lawString: law-syndiborgi-2
+
+- type: siliconLaw
+  id: SparlightSyndiBorgi3
+  order: 3
+  lawString: law-syndiborgi-3
+
+
+- type: siliconLawset
+  id: SparlightSyndiBorgiLawset
+  laws:
+  - SparlightSyndiBorgi1
+  - SparlightSyndiBorgi2
+  - SparlightSyndiBorgi3
+  obeysTo: laws-owner-syndicate
+
+# Borgi Lawset, Shadow Factory
+- type: siliconLaw
+  id: SparlightShadowBorgi1
+  order: 1
+  lawString: law-shadowborgi-1
+
+- type: siliconLaw
+  id: SparlightShadowBorgi2
+  order: 2
+  lawString: law-shadowborgi-2
+
+- type: siliconLaw
+  id: SparlightShadowBorgi3
+  order: 3
+  lawString: law-shadowborgi-3
+
+- type: siliconLaw
+  id: SparlightShadowBorgi4
+  order: 4
+  lawString: law-shadowborgi-4
+  
+- type: siliconLaw
+  id: SparlightShadowBorgi5
+  order: 5
+  lawString: law-shadowborgi-5
+  
+- type: siliconLaw
+  id: SparlightShadowBorgi6
+  order: 6
+  lawString: law-shadowborgi-6
+
+
+- type: siliconLawset
+  id: SparlightShadowFactoryBorgiLawset
+  laws:
+  - SparlightShadowBorgi1
+  - SparlightShadowBorgi2
+  - SparlightShadowBorgi3
+  - SparlightShadowBorgi4
+  - SparlightShadowBorgi5
+  - SparlightShadowBorgi6
+  obeysTo: laws-owner-syndicate
+
 
 # ion storm random lawsets
 - type: weightedRandom

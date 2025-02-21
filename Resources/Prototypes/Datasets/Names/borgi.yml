@@ -1,0 +1,57 @@
+- type: dataset
+  id: Sparlightnames_borgi
+  values:
+  - Subwoofer
+  - Borgi
+  - Corginator
+  - Receiver of Pets
+  - Woofer Mk II
+  - Bjork
+  - YipYap
+  - Head of Corgis
+  - Definitely Not Robodog
+  - Head of Dogurity
+  - Corgi-Worgi
+  - Ian but Smarter
+  - Braindog
+  - Speaks-In-Bork
+  - Head of Pets
+  - Hop's Best Friend
+  - Super Corgi
+  - Paws
+  - Golden Rebeeper
+  - D-0-G
+  - Core-Gi
+
+- type: dataset
+  id: Sparlightnames_corgi
+  values:
+  - Ian but Smarter
+  - Braindog
+  - Speaks-In-Bork
+  - Head of Pets
+  - Hop's Best Friend
+  - Super Corgi
+  - Paws
+  - Bingus
+  - Bongus
+
+- type: dataset
+  id: Sparlightnames_syndiborgi
+  values:
+  - Red Rover
+  - Bites-The-Ankles
+  - Anklebiter
+  - Ferocious
+  - K-9 Attack Borg
+  - Bullet Borker
+
+- type: dataset
+  id: Sparlightnames_shadowborgi
+  values:
+  - Red Rover
+  - Bites-The-Ankles
+  - Anklebiter
+  - Ferocious
+  - K-9 Attack Borg
+  - Bullet Borker

@@ -416,3 +416,24 @@
         reagents:
           - ReagentId: Toxin
             Quantity: 30
+
+- type: entity
+  id: CorgiJuiceChemistryBottle
+  suffix: essence of corgi
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: "Endless Corgi Essence"
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CorgiJuice
+          Quantity: 30
+  - type: SolutionRegeneration
+    solution: drink
+    generated:
+      reagents:
+      - ReagentId: CorgiJuice
+        Quantity: 0.075

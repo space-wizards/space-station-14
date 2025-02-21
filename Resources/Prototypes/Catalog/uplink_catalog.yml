@@ -1264,6 +1264,56 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SparlightUplinkSyndicateBorgi0
+  name: Syndicate Borgi
+  description: A syndicate borgi, with no modules
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  productEntity: SparlightSyndiCorgi
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: SparlightUplinkSyndicateBorgi1
+  name: Kitted Syndicate Borgi
+  description: A syndicate borgi, with Assault modules
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  productEntity: SparlightSyndiCorgiKit1
+  cost:
+    Telecrystal: 60
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: SparlightUplinkSyndicateBorgi2
+  name: Speed Syndicate Borgi
+  description: A syndicate borgi, with dagger modules and additional speed
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  productEntity: SparlightSyndiCorgiKit2
+  cost:
+    Telecrystal: 50
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
 # Implants
 
 - type: listing
