@@ -211,7 +211,8 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
-
+  - type: Crawler
+ 
 - type: entity
   save: false
   parent:
