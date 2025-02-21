@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "by Widgetbeck",
+  "copyright": "by Widgetbeck, eyeglow by Sha-Seng",
   "size": {
     "x": 32,
     "y": 32
@@ -41,6 +41,14 @@
     },
     {
       "name": "rarmtat1",
+      "directions": 4
+    },
+    {
+      "name": "reyeglow",
+      "directions": 4
+    },
+    {
+      "name": "leyeglow",
       "directions": 4
     }
   ]
