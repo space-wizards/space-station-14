@@ -1,7 +1,7 @@
 {
     "version": 2,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee, ReamNox, Miracula",
+    "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee, ReamNox, Miracula, Puddleboat",
     "size": {
         "x": 32,
         "y": 32
@@ -68,19 +68,22 @@
             "name": "vika_plush"
         },
         {
-            "name":  "stinky_plush"
+            "name": "stinky_plush"
         },
         {
-            "name":  "jess_plushie"
+            "name": "jess_plushie"
         },
         {
-            "name":  "siffy_plush"
+            "name": "siffy_plush"
         },
         {
-            "name":  "saltho_plush"
+            "name": "saltho_plush"
         },
         {
-            "name":  "ignis_plush"
+            "name": "ignis_plush"
+        },
+        {
+            "name": "mozan_plush"
         }
     ]
 }
