@@ -49,17 +49,12 @@ public sealed class RespiratorSystem : EntitySystem
         SubscribeLocalEvent<RespiratorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<RespiratorComponent, ToggleBreathingAlertEvent>(OnToggleBreathingAlert);
-        SubscribeLocalEvent<RespiratorComponent, ComponentStartup>(OnRepiratorStartup);
         SubscribeLocalEvent<RespiratorComponent, ComponentShutdown>(OnRepiratorShutdown);
     }
 
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
-    }
-
-    private void OnRepiratorStartup(Entity<RespiratorComponent> ent, ref ComponentStartup args)
-    {
         _alertsSystem.ShowAlert(ent, ent.Comp.BreathingAlert, (short)0, showCooldown: false, autoRemove: false);
     }
 
@@ -80,8 +75,7 @@ public sealed class RespiratorSystem : EntitySystem
         var query = EntityQueryEnumerator<RespiratorComponent, BodyComponent>();
         while (query.MoveNext(out var uid, out var respirator, out var body))
         {
-            if (respirator.Breathing &&
-                _gameTiming.CurTime < respirator.NextUpdate)
+            if(_gameTiming.CurTime < respirator.NextUpdate)
                 continue;
 
             respirator.NextUpdate += respirator.UpdateInterval;
@@ -91,7 +85,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
 
-            if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+            if (!_mobState.IsIncapacitated(uid) && respirator.Breathing) // cannot breathe in crit or if you don't want to.
             {
                 switch (respirator.Status)
                 {
