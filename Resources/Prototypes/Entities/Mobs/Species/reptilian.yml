@@ -78,8 +78,8 @@
             state: jumpsuit-female
   - type: ColdBlooded
     sleepTemperature: 301
-    coldCoofReqAmount: 100
-    coldCoofPerSecond: 1
+    SleepCoefficientReqAmount: 100
+    SleepCoefficientPerSecond: 1
 
 
 - type: entity
