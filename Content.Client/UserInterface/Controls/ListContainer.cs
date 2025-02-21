@@ -384,6 +384,7 @@ public sealed class ListContainerButton : ContainerButton, IEntityControl
 
     public ListContainerButton(ListData data, int index)
     {
+        AddStyleClass(StyleClassButton);
         Data = data;
         Index = index;
         // AddChild(Background = new PanelContainer
