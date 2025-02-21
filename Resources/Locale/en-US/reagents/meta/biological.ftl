@@ -16,7 +16,7 @@ reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives i
 reagent-name-ammonia-blood = juice that makes vox live
 reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so appalling.
 
-reagent-name-zombie-blood = juice that stops the plague
+reagent-name-zombie-blood = juice that makes you live but can be used to stop the plague.
 reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
 
 reagent-name-ichor = juice that powers the dragon
