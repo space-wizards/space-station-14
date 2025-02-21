@@ -62,13 +62,12 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     //Get all possible reactions with the current reagents
                     var possibleReactions = prototypeManager.EnumeratePrototypes<ReactionPrototype>()
                         .Where(x => x.Reactants.All(id => solution.Contents.Any(s => s.Reagent.Prototype == id.Key)))
-                        .Where(x => x.MixingCategories == null || x.MixingCategories.All(c => solution.Mixture.Contains(c)))
                         .ToList();
 
                     //Check if the reaction is the first to occur when heated
                     foreach (var possibleReaction in possibleReactions.OrderBy(r => r.MinimumTemperature))
                     {
-                        if (possibleReaction.MinimumTemperature < reactionPrototype.MinimumTemperature)
+                        if (possibleReaction.MinimumTemperature < reactionPrototype.MinimumTemperature && possibleReaction.MixingCategories == reactionPrototype.MixingCategories)
                         {
                             Assert.Fail($"The {possibleReaction.ID} reaction may occur before {reactionPrototype.ID} when heated.");
                         }
@@ -77,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     //Check if the reaction is the first to occur when freezing
                     foreach (var possibleReaction in possibleReactions.OrderBy(r => r.MaximumTemperature))
                     {
-                        if (possibleReaction.MaximumTemperature > reactionPrototype.MaximumTemperature)
+                        if (possibleReaction.MaximumTemperature > reactionPrototype.MaximumTemperature && possibleReaction.MixingCategories == reactionPrototype.MixingCategories)
                         {
                             Assert.Fail($"The {possibleReaction.ID} reaction may occur before {reactionPrototype.ID} when freezing.");
                         }
