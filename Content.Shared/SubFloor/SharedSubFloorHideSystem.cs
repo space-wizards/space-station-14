@@ -1,5 +1,6 @@
 using Content.Shared.Audio;
 using Content.Shared.Explosion;
+using Content.Shared.Eye;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -105,11 +106,22 @@ namespace Content.Shared.SubFloor
                 return;
 
             if (xform.Anchored && TryComp<MapGridComponent>(xform.GridUid, out var grid))
-                component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates));
+                SetUnderCover((uid, component), HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)));
             else
-                component.IsUnderCover = false;
+                SetUnderCover((uid, component), false);
 
             UpdateAppearance(uid, component);
+        }
+
+        private void SetUnderCover(Entity<SubFloorHideComponent> entity, bool value)
+        {
+            if (entity.Comp.IsUnderCover == value)
+                return;
+
+            entity.Comp.IsUnderCover = value;
+            var visSystem = EntityManager.System<SharedVisibilitySystem>();
+
+            visSystem.SetLayer(entity.Owner, value ? (ushort) VisibilityFlags.Subfloor : (ushort) VisibilityFlags.Normal);
         }
 
         public bool HasFloorCover(EntityUid gridUid, MapGridComponent grid, Vector2i position)

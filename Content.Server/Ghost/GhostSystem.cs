@@ -177,7 +177,7 @@ namespace Content.Server.Ghost
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            var visibility = EnsureComp<VisibilityComponent>(uid);
+            var visibility = EnsureComp<Robust.Shared.GameObjects.VisibilityComponent>(uid);
 
             if (_gameTicker.RunLevel != GameRunLevel.PostRound)
             {
@@ -199,7 +199,7 @@ namespace Content.Server.Ghost
                 return;
 
             // Entity can't be seen by ghosts anymore.
-            if (TryComp(uid, out VisibilityComponent? visibility))
+            if (TryComp(uid, out Robust.Shared.GameObjects.VisibilityComponent? visibility))
             {
                 _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
                 _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
@@ -399,7 +399,7 @@ namespace Content.Server.Ghost
         /// </summary>
         public void MakeVisible(bool visible)
         {
-            var entityQuery = EntityQueryEnumerator<GhostComponent, VisibilityComponent>();
+            var entityQuery = EntityQueryEnumerator<GhostComponent, Robust.Shared.GameObjects.VisibilityComponent>();
             while (entityQuery.MoveNext(out var uid, out var _, out var vis))
             {
                 if (!_tag.HasTag(uid, "AllowGhostShownByEvent"))

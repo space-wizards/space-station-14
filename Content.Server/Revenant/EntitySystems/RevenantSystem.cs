@@ -76,7 +76,7 @@ public sealed partial class RevenantSystem : EntitySystem
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
         _appearance.SetData(uid, RevenantVisuals.Stunned, false);
 
-        if (_ticker.RunLevel == GameRunLevel.PostRound && TryComp<VisibilityComponent>(uid, out var visibility))
+        if (_ticker.RunLevel == GameRunLevel.PostRound && TryComp<Robust.Shared.GameObjects.VisibilityComponent>(uid, out var visibility))
         {
             _visibility.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
             _visibility.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
@@ -187,7 +187,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     public void MakeVisible(bool visible)
     {
-        var query = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
+        var query = EntityQueryEnumerator<RevenantComponent, Robust.Shared.GameObjects.VisibilityComponent>();
         while (query.MoveNext(out var uid, out _, out var vis))
         {
             if (visible)
