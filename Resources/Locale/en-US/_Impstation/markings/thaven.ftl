@@ -26,7 +26,7 @@ marking-ThavenRArmTattoo1-larmtat1 = Arm Band (Right)
 marking-ThavenRArmTattoo1 =  Arm Band (Right)
 
 marking-ThavenREyeGlow = Glowing Eye (Right)
-marking-ThavenREyeGlow-thaveneyeglow = Glowing Eye (Right)
+marking-ThavenREyeGlow-thavenreyeglow = Glowing Eye (Right)
 
 marking-ThavenLEyeGlow = Glowing Eye (Left)
-marking-ThavenLEyeGlow-thaveneyeglow = Glowing Eye (Left)
+marking-ThavenLEyeGlow-thavenleyeglow = Glowing Eye (Left)
