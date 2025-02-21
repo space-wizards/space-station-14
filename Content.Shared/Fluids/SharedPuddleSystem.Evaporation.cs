@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids;
@@ -12,7 +13,7 @@ public abstract partial class SharedPuddleSystem
         var evaporatingReagents = new List<string>();
         foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
-            if (solProto.EvaporationSpeed > 0)
+            if (solProto.EvaporationSpeed > FixedPoint2.Zero)
                 evaporatingReagents.Add(solProto.ID);
         }
         return evaporatingReagents.ToArray();

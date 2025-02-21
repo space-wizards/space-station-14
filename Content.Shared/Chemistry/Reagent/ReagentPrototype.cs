@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Linq;
+using Content.Shared.FixedPoint;
 using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -7,7 +8,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -109,7 +109,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// The speed at which the reagent evaporates over time.
         /// </summary>
         [DataField]
-        public float EvaporationSpeed = 0f;
+        public FixedPoint2 EvaporationSpeed = FixedPoint2.New(0f);
 
         /// <summary>
         /// If this reagent can be used to mop up other reagents.
