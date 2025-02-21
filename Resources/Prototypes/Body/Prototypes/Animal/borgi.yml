@@ -1,0 +1,27 @@
+- type: body
+  id: SparlightBodySmartCorgi
+  name: "corgi"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - righthand
+      - lefthand
+      - legs
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    lefthand:
+      part: SparlightLeftHandAdmemeCorgi
+    righthand:
+      part: SparlightRightHandAdmemeCorgi
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

@@ -364,6 +364,25 @@
     - HostileCubesStatic
 
 - type: entity
+  id: SparlightShadowBorgifabricator
+  parent: Biofabricator
+  name: shadow borgi cube fabricator
+  description: Produces creatures of evil.
+  components:
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - SparlightShadowBorgiCubeRecipePack
+  - type: MaterialStorage
+    ignoreColor: true
+    whitelist:
+      tags: 
+        - Sheet
+        - Ingot
+        - RawMaterial
+
+- type: entity
   id: SecurityTechFab
   parent: BaseLatheLube
   name: security techfab

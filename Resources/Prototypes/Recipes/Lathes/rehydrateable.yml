@@ -81,3 +81,20 @@
   materials: # abominations are slow and essentially worse than even carp
     Biomass: 28
     Plasma: 500 # more biomass but less plasma
+
+- type: latheRecipe
+  parent: BaseCubeRecipe
+  id: SparlightBorgiCube
+  result: SparlightBorgiCube
+  materials:
+    Biomass: 20
+    Steel: 1000
+
+- type: latheRecipe
+  parent: BaseCubeRecipe
+  id: SparlightShadowBorgiCube
+  result: SparlightShadowBorgiCube
+  completetime: 3
+  materials:
+    Biomass: 20
+    Steel: 1000

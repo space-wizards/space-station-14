@@ -10,6 +10,7 @@
   - MothroachCube
   - MouseCube
   - CockroachCube
+  - SparlightBorgiCube
 
 - type: latheRecipePack
   id: HostileCubesStatic
@@ -17,3 +18,8 @@
   - AbominationCube
   - SpaceCarpCube
   - SpaceTickCube
+
+- type: latheRecipePack
+  id: SparlightShadowBorgiCubeRecipePack
+  recipes:
+  - SparlightShadowBorgiCube
