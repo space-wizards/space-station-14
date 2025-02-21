@@ -166,19 +166,18 @@ public abstract partial class SharedStationAiSystem
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () => 
             {
-                // no need to show menu if device is not powered.
-                if (!PowerReceiver.IsPowered(ent.Owner))
-                {
-                    ShowDeviceNotRespondingPopup(user);
-                    return;
-                }
-
                 if (isOpen)
                 {
                     _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);
                 }
                 else
                 {
+                    // no need to show menu if device is not powered.
+                    if (!PowerReceiver.IsPowered(ent.Owner))
+                    {
+                        ShowDeviceNotRespondingPopup(user);
+                        return;
+                    }
                     _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
                 }
             }
