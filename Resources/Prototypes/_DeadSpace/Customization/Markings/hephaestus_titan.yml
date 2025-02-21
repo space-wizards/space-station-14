@@ -1,0 +1,71 @@
+- type: marking
+  id: AugmentsHephaestusTitanArmRight
+  bodyPart: RArm
+  markingCategory: Arms
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: r_arm
+
+- type: marking
+  id: AugmentsHephaestusTitanHandRight
+  bodyPart: RHand
+  markingCategory: Arms
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: r_hand
+
+- type: marking
+  id: AugmentsHephaestusTitanArmLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: l_arm
+
+- type: marking
+  id: AugmentsHephaestusTitanHandLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: l_hand
+
+- type: marking
+  id: AugmentsHephaestusTitanTorso
+  bodyPart: Chest
+  markingCategory: Chest
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: torso
+
+- type: marking
+  id: AugmentsHephaestusTitanLegRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: r_leg
+
+- type: marking
+  id: AugmentsHephaestusTitanFootRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: r_foot
+
+- type: marking
+  id: AugmentsHephaestusTitanLegLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: l_leg
+
+- type: marking
+  id: AugmentsHephaestusTitanFootLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  sprites:
+    - sprite: _DeadSpace/Mobs/Customization/augments/hephaestus_titan.rsi
+      state: l_foot
