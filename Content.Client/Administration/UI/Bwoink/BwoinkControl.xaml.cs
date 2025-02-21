@@ -45,6 +45,8 @@ namespace Content.Client.Administration.UI.Bwoink
             _adminManager.AdminStatusUpdated += UpdateButtons;
             UpdateButtons();
 
+            AdminOnly.OnToggled += args => PlaySound.Disabled = args.Pressed;
+
             ChannelSelector.OnSelectionChanged += sel =>
             {
                 _currentPlayer = sel;

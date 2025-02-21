@@ -17,6 +17,10 @@ bwoink-system-typing-indicator = {$players} {$count ->
 *[other] are
 } typing...
 
+admin-ahelp-admin-only = Admin Only
+admin-ahelp-admin-only-tooltip = If checked, then the message won't be visible for the player,
+    but will be visible for other admins and still will be discord relayed.
+
 admin-bwoink-play-sound = Bwoink?
 
 bwoink-title-none-selected = None selected
