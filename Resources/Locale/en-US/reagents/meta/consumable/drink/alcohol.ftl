@@ -199,7 +199,7 @@ reagent-desc-mojito = If it's good enough for Spesscuba, it's good enough for yo
 reagent-name-moonshine = juice that is made in the forest
 reagent-desc-moonshine = Artisanal homemade liquor. What could go wrong?
 
-reagent-name-neurotoxin = juice that makes you feel like a lab rat
+reagent-name-neurotoxin = juice that an angry robot would fill the vents with
 reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death-like state.
 
 reagent-name-painkiller = juice that takes your pain away
