@@ -121,3 +121,112 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "r_foot"
+#reaper
+- type: entity
+  id: LeftArmCyberReaper
+  name: "left reaper arm"
+  parent: [PartCyber, BaseLeftArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberLArmSilver
+    - type: BaseLayerIdToggled
+      layer: CyberLArmSilverReaper
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_silver_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_silver_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandLeft
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - ScalpelCyber
+        - RetractorCyber
+        - CauteryCyber
+        - DrillCyber
+        - SawCyber
+        - HemostatCyber
+        - BoneSetterCyber
+
+- type: entity
+  id: RightArmCyberReaper
+  name: "right reaper arm"
+  parent: [PartCyber, BaseRightArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberRArmSilver
+    - type: BaseLayerIdToggled
+      layer: CyberRArmSilverReaper
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_silver_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_silver_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandRight
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - ScalpelCyber
+        - RetractorCyber
+        - CauteryCyber
+        - DrillCyber
+        - SawCyber
+        - HemostatCyber
+        - BoneSetterCyber
+
+#Mechwright
+- type: entity
+  id: LeftArmCyberMechwright
+  name: "left mechwright arm"
+  parent: [PartCyber, BaseLeftArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberLArmSteel
+    - type: BaseLayerIdToggled
+      layer: CyberLArmSteelMechwright
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_steel_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_steel_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandLeft
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - WrenchCyber
+        - ScrewdriverCyber
+        - CrowbarCyber
+        - WirecutterCyber
+        - WelderCyber
+
+- type: entity
+  id: RightArmCyberMechwright
+  name: "right mechwright arm"
+  parent: [PartCyber, BaseRightArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberRArmSteel
+    - type: BaseLayerIdToggled
+      layer: CyberRArmSteelMechwright
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_steel_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_steel_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandRight
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - WrenchCyber
+        - ScrewdriverCyber
+        - CrowbarCyber
+        - WirecutterCyber
+        - WelderCyber

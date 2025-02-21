@@ -1162,6 +1162,7 @@
       - SawAdvanced
       - Hemostat
       - HemostatAdvanced
+      #cyberlimbs
       - LeftArmCyber
       - RightArmCyber
       - LeftHandCyber
@@ -1170,6 +1171,12 @@
       - RightLegCyber
       - LeftFootCyber
       - RightFootCyber
+
+      - LeftArmCyberReaper
+      - RightArmCyberReaper
+      
+      - LeftArmCyberMechwright
+      - RightArmCyberMechwright
       # Implants
       - EyeImplantWelding
       - EyeImplantMedical
