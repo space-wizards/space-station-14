@@ -32,6 +32,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         _sawmill = Logger.GetSawmill("Guidebook");
 
         Tree.OnSelectedItemChanged += OnSelectionChanged;
+        TableOfContents.OnSelectedItemChanged += OnTableOfContentsSelectionChanged;
 
         SearchBar.OnTextChanged += _ =>
         {
@@ -51,6 +52,47 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         }
         else
             ShowGuide(entry);
+    }
+
+    private void OnTableOfContentsSelectionChanged(TreeItem? item)
+    {
+        if (item is null || item.Metadata is not Label entry)
+            return;
+
+        if (TryGetVerticalScrollbar(Scroll) is not {} bar)
+            return;
+
+        if (TryGetLabelScrollPosition(entry) is not {} position)
+            return;
+
+        bar.ValueTarget = position;
+    }
+
+    // TODO replace this shitcode with https://github.com/space-wizards/RobustToolbox/pull/5685
+    private VScrollBar? TryGetVerticalScrollbar(ScrollContainer scroll)
+    {
+        foreach (var control in scroll.Children)
+        {
+            if (control is VScrollBar bar)
+                return bar;
+        }
+
+        return null;
+    }
+
+    private float? TryGetLabelScrollPosition(Label label)
+    {
+        var nextScrollPosition = 0f;
+
+        foreach (var child in EntryContainer.Children.First().Children)
+        {
+            if (child == label)
+                return nextScrollPosition;
+
+            nextScrollPosition += child.Height;
+        }
+
+        return null;
     }
 
     private void OnSelectionChanged(TreeItem? item)
@@ -94,6 +136,46 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         }
 
         LastEntry = entry.Id;
+        RepopulateTableOfContents();
+    }
+
+    private int? HeadingDepth(Label control)
+    {
+        if (control.StyleClasses.Contains("LabelHeadingBigger")) {
+            return 1;
+        } else if (control.StyleClasses.Contains("LabelHeading")) {
+            return 2;
+        } else if (control.StyleClasses.Contains("LabelKeyText")) {
+            return 3;
+        }
+        return null;
+    }
+
+    private void RepopulateTableOfContents()
+    {
+        TableOfContents.Clear();
+
+        var labels = EntryContainer.GetControlOfType<Label>(true);
+        var stack = new Stack<(TreeItem Item, int Depth)>();
+
+        foreach (var label in labels)
+        {
+            if (HeadingDepth(label) is not {} depth)
+                continue;
+
+            while (stack.TryPeek(out var previous) && previous.Depth >= depth)
+            {
+                stack.Pop();
+            }
+
+            var item = stack.TryPeek(out var parent) ? TableOfContents.AddItem(parent.Item) : TableOfContents.AddItem(null);
+            item.Label.Text = label.Text;
+            item.Metadata = label;
+
+            stack.Push((item, depth));
+        }
+
+        TableOfContents.SetAllExpanded(true);
     }
 
     public void UpdateGuides(
