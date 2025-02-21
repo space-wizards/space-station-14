@@ -4,13 +4,13 @@ reagent-desc-astrotame = The sweetness of a thousand sugars but none of the calo
 reagent-name-bbq-sauce = juice that you put on steak
 reagent-desc-bbq-sauce = Hand wipes not included.
 
-reagent-name-cornoil = corn oil
+reagent-name-cornoil = juice that starts wars but corn
 reagent-desc-cornoil = Corn oil, A delicious oil used in cooking. Made from corn.
 
 reagent-name-coldsauce = juice that is just mint
 reagent-desc-coldsauce = Leaves the tongue numb in its passage.
 
-reagent-name-horseradish-sauce = horseradish sauce
+reagent-name-horseradish-sauce = juice that is horse
 reagent-desc-horseradish-sauce = Smelly horseradish sauce.
 
 reagent-name-hotsauce = juice that burns your tongue
