@@ -256,7 +256,7 @@ reagent-desc-vodka-martini = Vodka instead of Gin. Not quite how 007 enjoyed it,
 reagent-name-vodka-tonic = juice that makes you space slavic but juice that is very mild
 reagent-desc-vodka-tonic = For when a gin and tonic isn't russian enough.
 
-reagent-name-whiskey-cola = juice that juice that makes you hydrated but sweet but alcoholic
+reagent-name-whiskey-cola = juice that makes you hydrated but sweet but alcoholic
 reagent-desc-whiskey-cola = Whiskey, mixed with cola. Surprisingly refreshing.
 
 reagent-name-whiskey-soda = juice that makes you hydrated but angry but space scottish
