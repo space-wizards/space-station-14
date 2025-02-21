@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Modified from existing sprites.",
+    "copyright": "Modified from existing sprites. Inhands modified from Objects/Storage/boxes.rsi/inhand-(left/right) by SeamLesss (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,14 @@
     "states": [
         {
         "name": "folded"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
         },
         {
         "name": "jballoon",
