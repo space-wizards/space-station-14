@@ -166,6 +166,7 @@ loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
 
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
+loadout-group-security-badge = Security Badge
 loadout-group-security-star = Security Star
 
 # Medical
