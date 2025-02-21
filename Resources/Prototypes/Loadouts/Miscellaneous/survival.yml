@@ -18,6 +18,7 @@
     - Human
     - Moth
     - Reptilian
+    - HumanoidFoxes
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox

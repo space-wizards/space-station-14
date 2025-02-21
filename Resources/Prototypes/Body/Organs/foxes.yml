@@ -1,7 +1,14 @@
 ﻿- type: entity
   id: OrganHumanoidFoxStomach
   parent: OrganAnimalStomach
-  noSpawn: true
+  suffix: "fox"
   components:
-  - type: Stomach
-    maxVolume: 50
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5

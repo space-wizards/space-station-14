@@ -7,6 +7,11 @@
   components:
   - type: HumanoidAppearance
     species: HumanoidFoxes
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
   - type: Hunger
   - type: Thirst
   - type: Butcherable
