@@ -6,7 +6,7 @@
   <Box>
   <GuideEntityEmbed Entity="MobArachnid" Caption="Arachnid"/>
   <GuideEntityEmbed Entity="MobDiona" Caption="Diona"/>
-  <GuideEntityEmbed Entity="MobDwarf" Caption="Dwarf"/>
+  <GuideEntityEmbed Entity="MobDwarf" Caption="Elf"/>
   <GuideEntityEmbed Entity="MobHuman" Caption="Human"/>
   </Box>
   <Box>

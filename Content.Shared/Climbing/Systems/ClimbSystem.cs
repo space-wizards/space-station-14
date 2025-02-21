@@ -151,6 +151,10 @@ public sealed partial class ClimbSystem : VirtualController
         if (args.Handled)
             return;
 
+        // If already climbing then don't show outlines.
+        if (TryComp(args.Dragged, out ClimbingComponent? climbing) && climbing.IsClimbing)
+            return;
+
         var canVault = args.User == args.Dragged
             ? CanVault(component, args.User, uid, out _)
             : CanVault(component, args.User, args.Dragged, uid, out _);

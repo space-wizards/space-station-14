@@ -19,4 +19,17 @@ public sealed class MagicSystem : SharedMagicSystem
     {
         _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(args.Speech), InGameICChatType.Speak, false);
     }
+
+    public override void OnVoidApplause(VoidApplauseSpellEvent ev)
+    {
+        base.OnVoidApplause(ev);
+
+        _chat.TryEmoteWithChat(ev.Performer, ev.Emote);
+
+        var perfXForm = Transform(ev.Performer);
+        var targetXForm = Transform(ev.Target);
+
+        Spawn(ev.Effect, perfXForm.Coordinates);
+        Spawn(ev.Effect, targetXForm.Coordinates);
+    }
 }
