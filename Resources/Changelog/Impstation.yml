@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: cruise fixes
-    type: Fix
-  id: 674
-  time: '2024-12-06T23:02:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/927
 - author: Sha-Seng
   changes:
   - message: Stun Prod now requires makeshift cuffs instead of any cuffs so it won't
@@ -4130,3 +4123,10 @@
   id: 1173
   time: '2025-02-20T03:14:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1746
+- author: honeyed-lemons
+  changes:
+  - message: Adjust nanochat textures to have more contrast
+    type: Tweak
+  id: 1174
+  time: '2025-02-21T02:15:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1754
