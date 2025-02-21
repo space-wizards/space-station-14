@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: eoineoineoin
-  changes:
-  - message: Action bar can be reconfigured again
-    type: Fix
-  id: 7483
-  time: '2024-10-03T14:01:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32552
-- author: Southbridge
-  changes:
-  - message: Box station's recycler has been properly connected.
-    type: Fix
-  - message: Box station's singlo substation has been rewired to the station-wide
-      HV network.
-    type: Tweak
-  - message: Box station now has AI law boards in the upload room.
-    type: Add
-  id: 7484
-  time: '2024-10-04T01:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32608
-- author: Plykiya
-  changes:
-  - message: You can no longer FTL the station.
-    type: Fix
-  id: 7485
-  time: '2024-10-04T02:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32558
-- author: SoulFN
-  changes:
-  - message: Dragon can now pull things using tail.
-    type: Add
-  id: 7486
-  time: '2024-10-04T05:39:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32568
 - author: SaphireLattice
   changes:
   - message: Explosives throw a container they are in
@@ -3897,3 +3864,36 @@
   id: 7982
   time: '2025-02-19T19:25:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35296
+- author: FungiFellow
+  changes:
+  - message: Flare Shells no longer restricted contraband
+    type: Tweak
+  id: 7983
+  time: '2025-02-20T00:27:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34705
+- author: Winkarst-cpu
+  changes:
+  - message: Now all toys and bike horns make an appropriate sound.
+    type: Tweak
+  id: 7984
+  time: '2025-02-20T01:12:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33449
+- author: Zokkie
+  changes:
+  - message: Argocytes, Mimics, Butterflies, Bees, Space Kangaroos, Laser Raptors
+      and Watchers their corpses can now be butchered.
+    type: Fix
+  - message: Butterflies can now be picked up and can also be put into trash bags.
+    type: Fix
+  - message: You can now grind Butterflies and Bees in the reagent grinder.
+    type: Fix
+  id: 7985
+  time: '2025-02-20T16:12:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33727
+- author: metalgearsloth
+  changes:
+  - message: Fix storage windows being duplicated when reconnecting.
+    type: Fix
+  id: 7986
+  time: '2025-02-20T16:51:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35054
