@@ -285,7 +285,7 @@
 - type: emote
   id: Flip
   name: chat-emote-name-flip
-  icon: Interface/Emotes/tailslap.png
+  icon: Interface/Emotes/flip.png
   whitelist:
     components:
     - FlipAnimation
