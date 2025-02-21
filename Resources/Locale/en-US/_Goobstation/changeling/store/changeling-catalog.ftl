@@ -123,7 +123,7 @@ evolutionmenu-utility-mindshield-name = Mindshield Patterns
 evolutionmenu-utility-mindshield-desc =
     We shape our mental patterns to imitate a mindshield implantation.
     Costs no chemicals.
-
+# imp edit ↓
 evolutionmenu-combat-Tentacle-name = Flesh Tentacle
 evolutionmenu-combat-tentacle-desc =
     We shape one of our arms into a grotesque Fishing Rod, capable of grabbing our enemies or bodies from afar to brings us together. Cannot be used in our lesser form.
