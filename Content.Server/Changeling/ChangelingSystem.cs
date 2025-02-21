@@ -517,7 +517,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             Comp<DnaComponent>(newEnt).DNA = data.DNA;
             _humanoid.CloneAppearance(data.Appearance.Owner, newEnt);
             _metaData.SetEntityName(newEnt, data.Name);
-            _factionSystem.Up(uid, newEnt);
             var message = Loc.GetString("changeling-transform-finish", ("target", data.Name));
             _popup.PopupEntity(message, newEnt, newEnt);
         }
@@ -546,6 +545,8 @@ public sealed partial class ChangelingSystem : EntitySystem
             EnsureComp<HeadRevolutionaryComponent>(newEnt);
         if (HasComp<RevolutionaryComponent>(uid))
             EnsureComp<RevolutionaryComponent>(newEnt);
+        
+        _factionSystem.Up(uid, newEnt);
 
         QueueDel(uid);
 
