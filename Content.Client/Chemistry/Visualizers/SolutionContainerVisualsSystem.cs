@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
@@ -16,6 +17,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -44,7 +46,20 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             }
         }
 
-        if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, args.Component))
+        EntityUid? insertedUid = null;
+        float fraction = 0;
+        if (component.InsertedItemSlotID != null)
+        {
+            if (!_entityManager.TryGetComponent(uid, out ItemSlotsComponent? itemSlotsComponent))
+                return;
+            var slot = itemSlotsComponent.Slots[component.InsertedItemSlotID];
+            insertedUid = slot.Item;
+
+            if (insertedUid != null && !AppearanceSystem.TryGetData<float>(insertedUid.Value, SolutionContainerVisuals.FillFraction, out fraction))
+                return;
+
+        }
+        else if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out fraction, args.Component))
             return;
 
         if (args.Sprite == null)
@@ -123,7 +138,13 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                 args.Sprite.LayerSetSprite(fillLayer, fillSprite);
             args.Sprite.LayerSetState(fillLayer, stateName);
 
-            if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
+            if (changeColor &&
+                insertedUid != null &&
+                AppearanceSystem.TryGetData<Color>(insertedUid.Value, SolutionContainerVisuals.Color, out var color))
+            {
+                args.Sprite.LayerSetColor(fillLayer, color);
+            }
+            else if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out color, args.Component))
                 args.Sprite.LayerSetColor(fillLayer, color);
             else
                 args.Sprite.LayerSetColor(fillLayer, Color.White);

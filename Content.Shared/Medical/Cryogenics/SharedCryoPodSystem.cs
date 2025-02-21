@@ -56,11 +56,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
         var cryoPodEnabled = HasComp<ActiveCryoPodComponent>(uid);
 
-        if (_light.TryGetLight(uid, out var light))
-        {
-            _light.SetEnabled(uid, cryoPodEnabled && cryoPod.BodyContainer.ContainedEntity != null, light);
-        }
-
         if (!Resolve(uid, ref appearance))
             return;
 
