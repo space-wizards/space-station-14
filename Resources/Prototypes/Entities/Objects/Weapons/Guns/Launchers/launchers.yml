@@ -24,7 +24,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLauncherChinaLake
-  description: PLOOP.
+  description: PLOOP PLOOP PLOOP.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -39,9 +39,12 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
-    selectedMode: SemiAuto
+    selectedMode: Burst
+    shotsPerBurst: 3
+    burstCooldown: 0.2
+    burstFireRate: 7
     availableModes:
-      - SemiAuto
+      - Burst
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: BallisticAmmoProvider
