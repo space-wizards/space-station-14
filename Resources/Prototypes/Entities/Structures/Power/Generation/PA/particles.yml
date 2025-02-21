@@ -75,8 +75,19 @@
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damage:
       types:
-        Radiation: 10
+        Radiation: 4
   - type: TimedDespawn
     lifetime: 0.6
   - type: SinguloFood
-    energy: -10
+    energy: -8
+
+- type: entity
+  name: anti particles barrage
+  id: AntiParticlesProjectileSpread
+  categories: [ HideSpawnMenu ]
+  parent: AntiParticlesProjectile
+  components:
+  - type: ProjectileSpread
+    proto: AntiParticlesProjectile
+    count: 3
+    spread: 15
