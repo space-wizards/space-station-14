@@ -1,5 +1,5 @@
 ﻿using Content.Server.Ghost;
-using Content.Server.Revenant.EntitySystems;
+using Content.Server.Revenant.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
