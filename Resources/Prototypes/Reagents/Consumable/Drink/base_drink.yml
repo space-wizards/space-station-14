@@ -43,7 +43,28 @@
   fizziness: 0.5
 
 - type: reagent
-  id: BaseAlcohol
+  id: BaseAlcohol # Distilled alcohol, flammable and highly intoxicating
+  group: Drinks
+  abstract: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1 # In reality this should dehydrate you
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.18 # A bottle of Rum (20 drinks) has about a 50/50 chance of killing a human
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 1.35
+
+- type: reagent
+  id: BaseBooze # Fermented alcohol, not flammable, less intoxicating
   group: Drinks
   abstract: true
   metabolisms:
@@ -53,20 +74,20 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.06
+        amount: 0.03 # If approx. level for strong beer, wine would be about 0.08 to 0.09
   reactiveEffects:
-    Flammable:
+    Extinguish: # Beer puts out fires
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.35
+      - !type:ExtinguishReaction
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: 0.25
   - !type:PlantAdjustWater
     amount: 0.7
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+  - !type:SpillIfPuddlePresentTileReaction { }
 
 - type: reagent
   id: BaseJuice
