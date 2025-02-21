@@ -18,9 +18,10 @@ offering-window-claim = Claim
 
 salvage-expedition-window-next = Next offer
 
-salvage-expedition-difficulty-Moderate = Moderate
-salvage-expedition-difficulty-Hazardous = Hazardous
-salvage-expedition-difficulty-Extreme = Extreme
+salvage-expedition-difficulty-low = Low
+salvage-expedition-difficulty-moderate = Moderate
+salvage-expedition-difficulty-hazardous = Hazardous
+salvage-expedition-difficulty-extreme = Extreme
 
 salvage-expedition-difficulty-players = Recommended salvagers:
 
