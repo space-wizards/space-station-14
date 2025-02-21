@@ -625,6 +625,30 @@ public abstract class SharedRoleSystem : EntitySystem
 
         return antag.Requirements;
     }
+
+    /// <summary>
+    /// Returns the localized name of a role type's subtype and/or role type.
+    /// </summary>
+    /// <param name="type">The locale string of the role type</param>
+    /// <param name="subtype">The locale string of the subtype</param>
+    /// <param name="returnBoth">If true, subtype will be returned along with type. If false, subtype will be returned by itself</param>
+    /// <returns>
+    /// If subtype is not supplied, returns localized role type (or the default role, if role type is not supplied).
+    /// If subtype is supplied and returnBoth is true, returns both localized values as one string.
+    /// If returnBoth is false, returns only the localized subtype.
+    /// </returns>
+    public string GetRoleSubtypeLabel(string? type, string? subtype, bool returnBoth = true)
+    {
+        var typeLoc = Loc.GetString(type ?? "role-type-crew-aligned-name");
+
+        if (string.IsNullOrEmpty(subtype))
+            return typeLoc;
+
+        var subLoc = Loc.GetString(subtype);
+        var combined = Loc.GetString("role-with-subtype-format", ("type", typeLoc), ("subtype", subLoc));
+
+        return returnBoth ? combined : subLoc;
+    }
 }
 
 /// <summary>

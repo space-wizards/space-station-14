@@ -1,5 +1,8 @@
-# For use by Role Types
-# Do not touch these
+# The primary role types are referenced by RP Rules, and were specified based on head admin input.
+# Do not create new ones without discussion.
+# You probably want a Subtype instead, anyway.
+
+# Any new primary role types must be listed in RoleTypes.xml
 
 - type: roleType
   id: Neutral
@@ -35,3 +38,77 @@
   id: SiliconAntagonist
   name: role-type-silicon-antagonist-name
   color: '#c832e6'
+
+# Subtypes
+# These should not alter any properties of the primary roles apart from adding subtype LocId
+
+# Solo Antagonists
+- type: roleType
+  parent: SoloAntagonist
+  id: SoloAntagonistTraitor
+  subtype: role-subtype-solo-antagonist-traitor
+
+- type: roleType
+  parent: SoloAntagonist
+  id: SoloAntagonistThief
+  subtype: role-subtype-solo-antagonist-thief
+
+- type: roleType
+  parent: SoloAntagonist
+  id: SoloAntagonistNinja
+  subtype: role-subtype-solo-antagonist-ninja
+
+# Team Antagonists
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistNukie
+  subtype: role-subtype-team-antagonist-nukie
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistTraitorReinforcement
+  subtype: role-subtype-team-antagonist-traitor-reinforcement
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistRevolutionary
+  subtype: role-subtype-team-antagonist-revolutionary
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistHeadRevolutionary
+  subtype: role-subtype-team-antagonist-head-revolutionary
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistInfected
+  subtype: role-subtype-team-antagonist-infected
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistZombie
+  subtype: role-subtype-team-antagonist-zombie
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistDragon
+  subtype: role-subtype-team-antagonist-dragon
+
+- type: roleType
+  parent: TeamAntagonist
+  id: TeamAntagonistDragonCarp
+  subtype: role-subtype-team-antagonist-dragon-carp
+
+# Free Agents
+- type: roleType
+  parent: FreeAgent
+  id: FreeAgentSurvivor
+  subtype: role-subtype-free-agent-survivor
+
+- type: roleType
+  parent: FreeAgent
+  id: FreeAgentSkeleton
+  subtype: role-subtype-free-agent-skeleton
+
+# Silicon
+# TODO:ERRANT

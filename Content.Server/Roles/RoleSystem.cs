@@ -52,8 +52,8 @@ public sealed class RoleSystem : SharedRoleSystem
         if (!_proto.TryIndex(mind.RoleType, out var proto))
             return;
 
-        var roleText = Loc.GetString(proto.Name);
-        var color = proto.Color;
+        var roleText = Loc.GetString(proto.Name ?? "role-type-crew-aligned-name");
+        var color = proto.Color ?? Color.White;
 
         var session = mind.Session;
 
