@@ -94,6 +94,11 @@
   description: flavor-base-whimsy
 
 - type: flavor
+  id: evil
+  flavorType: Base
+  description: flavor-base-evil
+
+- type: flavor
   id: secticket
   flavorType: Complex
   description: flavor-complex-secticket

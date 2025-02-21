@@ -303,5 +303,5 @@
   id: Plushie
   name: steal-target-groups-plushie
   sprite:
-    sprite: Objects/Fun/toys.rsi
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_bug
