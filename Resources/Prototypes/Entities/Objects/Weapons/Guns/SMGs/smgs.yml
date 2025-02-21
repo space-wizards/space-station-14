@@ -104,13 +104,16 @@
   - type: Gun
     minAngle: 21
     maxAngle: 32
-    shotsPerBurst: 5
+    shotsPerBurst: 2 #imp
+    burstCooldown: 0.6 #imp
+    burstFireRate: 20 #imp
     availableModes:
     - Burst
     - FullAuto
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+    selectedMode: Burst #imp
   - type: ChamberMagazineAmmoProvider
     autoEject: true
     soundAutoEject:
@@ -257,8 +260,8 @@
     angleIncrease: 1.5
     angleDecay: 6
     selectedMode: FullAuto
-    shotsPerBurst: 5
-    burstCooldown: 0.2
+    shotsPerBurst: 3 #imp
+    burstCooldown: 0.7 #imp
     burstFireRate: 7
     availableModes:
     - Burst
