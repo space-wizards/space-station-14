@@ -62,6 +62,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     //Get all possible reactions with the current reagents
                     var possibleReactions = prototypeManager.EnumeratePrototypes<ReactionPrototype>()
                         .Where(x => x.Reactants.All(id => solution.Contents.Any(s => s.Reagent.Prototype == id.Key)))
+                        .Where(x => x.MixingCategories == null || x.MixingCategories.All(c => solution.Mixture.Contains(c)))
                         .ToList();
 
                     //Check if the reaction is the first to occur when heated
