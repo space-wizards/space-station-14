@@ -34,12 +34,12 @@ public sealed class SolutionTests : ContentUnitTest
 
         // Test integer scaling
         {
-            var tmp = solution.CloneSolution();
+            var tmp = solution.Clone();
             tmp.ScaleSolution(0);
             Assert.That(tmp.Contents.Count, Is.EqualTo(0));
             Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.Zero));
 
-            tmp = solution.CloneSolution();
+            tmp = solution.Clone();
             tmp.ScaleSolution(2);
             Assert.That(tmp.Contents.Count, Is.EqualTo(2));
             Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.New(100)));
@@ -49,19 +49,19 @@ public sealed class SolutionTests : ContentUnitTest
 
         // Test float scaling
         {
-            var tmp = solution.CloneSolution();
+            var tmp = solution.Clone();
             tmp.ScaleSolution(0f);
             Assert.That(tmp.Contents.Count, Is.EqualTo(0));
             Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.Zero));
 
-            tmp = solution.CloneSolution();
+            tmp = solution.Clone();
             tmp.ScaleSolution(2f);
             Assert.That(tmp.Contents.Count, Is.EqualTo(2));
             Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.New(100)));
             Assert.That(tmp.GetTotalPrototypeQuantity("water"), Is.EqualTo(FixedPoint2.New(40)));
             Assert.That(tmp.GetTotalPrototypeQuantity("fire"), Is.EqualTo(FixedPoint2.New(60)));
 
-            tmp = solution.CloneSolution();
+            tmp = solution.Clone();
             tmp.ScaleSolution(0.3f);
             Assert.That(tmp.Contents.Count, Is.EqualTo(2));
             Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.New(15)));
@@ -138,7 +138,7 @@ public sealed class SolutionTests : ContentUnitTest
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
-        var newSolution = solution.CloneSolution();
+        var newSolution = solution.Clone();
 
         Assert.That(newSolution.GetTotalPrototypeQuantity("water").Int(), Is.EqualTo(1000));
         Assert.That(newSolution.GetTotalPrototypeQuantity("fire").Int(), Is.EqualTo(2000));
