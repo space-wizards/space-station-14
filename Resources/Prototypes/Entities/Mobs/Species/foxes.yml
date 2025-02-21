@@ -1,0 +1,46 @@
+- type: entity
+  save: false
+  name: Urist McFox
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobHumanoidFoxes
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: HumanoidFoxes
+  - type: Hunger
+  - type: Thirst
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: Icon
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: full
+  - type: Body
+    prototype: HumanoidFoxes
+    requiredLegs: 2
+  - type: MeleeWeapon
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 5
+  - type: Speech
+    speechVerb: SmallMob
+    allowedEmotes: ['Yip']
+  - type: Vocal
+    sounds:
+      Male: MaleFox
+      Female: FemaleFox
+      Unsexed: MaleFox
+  - type: Wagging
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobHumanoidFoxDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: HumanoidFoxes

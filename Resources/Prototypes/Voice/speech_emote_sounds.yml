@@ -432,6 +432,86 @@
     Ping:
       path: /Audio/Effects/Cargo/ping.ogg
 
+- type: emoteSounds
+  id: MaleFox
+  params:
+    variation: 0.125
+  sounds:
+    Yip:
+      collection: Fox
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Cough:
+      collection: MaleCoughs
+    Crying:
+      collection: MaleCry
+    Sigh:
+      collection: MaleSigh
+    Sneeze:
+      collection: MaleSneezes
+    Snore:
+      collection: Snores
+    Yawn:
+      collection: MaleYawn
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+
+- type: emoteSounds
+  id: FemaleFox
+  params:
+    variation: 0.125
+  sounds:
+    Yip:
+      collection: Fox
+    Scream:
+      collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Cough:
+      collection: FemaleCoughs
+    Crying:
+      collection: FemaleCry
+    Sigh:
+      collection: FemaleSigh
+    Sneeze:
+      collection: FemaleSneezes
+    Snore:
+      collection: Snores
+    Yawn:
+      collection: FemaleYawn
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes

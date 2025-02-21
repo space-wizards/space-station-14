@@ -1,0 +1,90 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartHumanoidFox
+  parent: [BaseItem, BasePart]
+  name: "fox body part"
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+
+- type: entity
+  id: TorsoHumanoidFox
+  name: "fox torso"
+  parent: [PartHumanoidFox, BaseTorso]
+  components:
+  - type: Sprite
+    state: "torso_m"
+
+- type: entity
+  id: HeadHumanoidFox
+  name: "fox head"
+  parent: [PartHumanoidFox, BaseHead]
+  components:
+  - type: Sprite
+    state: "head_m"
+
+- type: entity
+  id: LeftArmHumanoidFox
+  name: "left fox arm"
+  parent: [PartHumanoidFox, BaseLeftArm]
+  components:
+  - type: Sprite
+    state: "l_arm"
+
+- type: entity
+  id: RightArmHumanoidFox
+  name: "right fox arm"
+  parent: [PartHumanoidFox, BaseRightArm]
+  components:
+  - type: Sprite
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandHumanoidFox
+  name: "left fox hand"
+  parent: [PartHumanoidFox, BaseLeftHand]
+  components:
+  - type: Sprite
+    state: "l_hand"
+
+- type: entity
+  id: RightHandHumanoidFox
+  name: "right fox hand"
+  parent: [PartHumanoidFox, BaseRightHand]
+  components:
+  - type: Sprite
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegHumanoidFox
+  name: "left fox leg"
+  parent: [PartHumanoidFox, BaseLeftLeg]
+  components:
+  - type: Sprite
+    state: "l_leg"
+
+- type: entity
+  id: RightLegHumanoidFox
+  name: "right fox leg"
+  parent: [PartHumanoidFox, BaseRightLeg]
+  components:
+  - type: Sprite
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootHumanoidFox
+  name: "left fox foot"
+  parent: [PartHumanoidFox, BaseLeftFoot]
+  components:
+  - type: Sprite
+    state: "l_foot"
+
+- type: entity
+  id: RightFootHumanoidFox
+  name: "right fox foot"
+  parent: [PartHumanoidFox, BaseRightFoot]
+  components:
+  - type: Sprite
+    state: "r_foot"

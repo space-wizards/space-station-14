@@ -378,6 +378,23 @@
     - chirped
     - chirping
 
+- type: emote
+  id: Yip
+  name: chat-emote-name-yip
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/yip.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-yip"]
+  chatTriggers:
+    - yip
+    - yips
+
 # Machine Emotes
 - type: emote
   id: Beep
