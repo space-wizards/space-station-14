@@ -1,14 +1,20 @@
 ﻿using System.IO;
+using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Mapping;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Utility;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
@@ -23,19 +29,28 @@ public sealed class MappingManager : IPostInjectInit
     [Dependency] private readonly IServerNetManager _net = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly IResourceManager _resourceMan = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
 
     private ISawmill _sawmill = default!;
     private ZStdCompressionContext _zstd = default!;
 
+    private const string FavoritesPath = "/mapping_editor_favorites.yml";
+
     public void PostInject()
     {
+        _net.RegisterNetMessage<MappingFavoritesSaveMessage>(OnMappingFavoritesSave);
+        _net.RegisterNetMessage<MappingFavoritesLoadMessage>(OnMappingFavoritesLoad);
+        _net.RegisterNetMessage<MappingFavoritesDataMessage>();
+
+        _sawmill = _log.GetSawmill("mapping");
+
 #if !FULL_RELEASE
         _net.RegisterNetMessage<MappingSaveMapMessage>(OnMappingSaveMap);
         _net.RegisterNetMessage<MappingSaveMapErrorMessage>();
         _net.RegisterNetMessage<MappingMapDataMessage>();
 
-        _sawmill = _log.GetSawmill("mapping");
         _zstd = new ZStdCompressionContext();
 #endif
     }
@@ -75,5 +90,46 @@ public sealed class MappingManager : IPostInjectInit
             _net.ServerSendMessage(msg, message.MsgChannel);
         }
 #endif
+    }
+
+    private void OnMappingFavoritesSave(MappingFavoritesSaveMessage message)
+    {
+        var mapping = new MappingDataNode();
+        mapping.Add("prototypes", _serialization.WriteValue(message.PrototypeIDs, notNullableOverride: true));
+
+        var path = new ResPath(FavoritesPath);
+        using var writer = _resourceMan.UserData.OpenWriteText(path);
+        var stream = new YamlStream {new(mapping.ToYaml())};
+        stream.Save(new YamlMappingFix(new Emitter(writer)), false);
+    }
+
+    private void OnMappingFavoritesLoad(MappingFavoritesLoadMessage message)
+    {
+        var path = new ResPath(FavoritesPath);
+
+        if (!_resourceMan.UserData.Exists(path))
+            return;
+
+        try
+        {
+            var reader = _resourceMan.UserData.OpenText(path);
+            var documents = DataNodeParser.ParseYamlStream(reader).First();
+            var mapping = (MappingDataNode) documents.Root;
+
+            if (!mapping.TryGet("prototypes", out var prototypesNode))
+                return;
+
+            var ids = _serialization.Read<string[]>(prototypesNode, notNullableOverride: true).ToList();
+
+            var msg = new MappingFavoritesDataMessage()
+            {
+                PrototypeIDs = ids,
+            };
+            _net.ServerSendMessage(msg, message.MsgChannel);
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error("Failed to load user favorite objects: " + e);
+        }
     }
 }
