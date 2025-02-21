@@ -170,15 +170,15 @@
       "directions": 4
     },
     {
-        "name": "salami-icon"
-      },
-      {
-        "name": "salami-inhand-right",
-        "directions": 4
-      },
-      {
-        "name": "salami-inhand-left",
-        "directions": 4
-      }
+      "name": "salami-icon"
+    },
+    {
+      "name": "salami-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "salami-inhand-left",
+      "directions": 4
+    }
   ]
 }
