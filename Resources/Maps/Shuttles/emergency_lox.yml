@@ -909,6 +909,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-2.5
       parent: 1
+- proto: BackmenVendingMachineCigs
+  entities:
+  - uid: 552
+    components:
+    - type: Transform
+      pos: -1.5,8.5
+      parent: 1
 - proto: BedsheetMedical
   entities:
   - uid: 31
@@ -4008,13 +4015,6 @@ entities:
     components:
     - type: Transform
       pos: 0.5,14.5
-      parent: 1
-- proto: VendingMachineCigs
-  entities:
-  - uid: 552
-    components:
-    - type: Transform
-      pos: -1.5,8.5
       parent: 1
 - proto: VendingMachineMedical
   entities:

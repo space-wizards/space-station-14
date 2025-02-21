@@ -16,7 +16,6 @@ entities:
       name: NT-Dinero MK2
     - type: Transform
       pos: -0.453125,-0.53125
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
