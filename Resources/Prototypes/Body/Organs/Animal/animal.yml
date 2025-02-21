@@ -164,3 +164,31 @@
   - type: Item
     size: Small
     heldPrefix: kidneys
+
+# Borgi Animal Body
+
+- type: entity
+  id: SparlightLeftHandAdmemeCorgi
+  name: corgi hand
+  parent: PartAnimal
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: l_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  id: SparlightRightHandAdmemeCorgi
+  name: corgi hand
+  parent: PartAnimal
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: r_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
