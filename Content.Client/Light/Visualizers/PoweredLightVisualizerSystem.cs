@@ -122,7 +122,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
 
         if (comp.BlinkingSound != null)
         {
-            var sound = _audio.GetSound(comp.BlinkingSound);
+            var sound = _audio.ResolveSound(comp.BlinkingSound);
             blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
             {
                 KeyFrames =
