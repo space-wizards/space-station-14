@@ -1116,7 +1116,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkIrishSlammer
-  suffix: irish slammer
+  suffix: grenade penguin
   components:
   - type: SolutionContainerManager
     solutions:
