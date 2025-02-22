@@ -42,7 +42,7 @@
   - type: ConfirmableAction
     popup: cosmicability-monument-spawn-confirm
   - type: InstantAction
-    usedelay: 999
+    useDelay: 999
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -57,6 +57,7 @@
   components:
   - type: InstantAction
     itemIconStyle: NoItem
+    useDelay: 0
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: return
