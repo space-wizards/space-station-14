@@ -95,7 +95,7 @@
 # Utility
 - type: listing
   id: SpellbookPolymorphSpider
-  name: spellbook-polymoprh-spider-name
+  name: spellbook-polymorph-spider-name
   description: spellbook-polymorph-spider-desc
   productAction: ActionPolymorphWizardSpider
   cost:

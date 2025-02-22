@@ -14,7 +14,7 @@ spellbook-force-wall-desc = Make three walls of pure force that you can pass thr
 spellbook-repulse-name = Repulse
 spellbook-repulse-desc = Tell people to GITTAH`WEIGH and push 'em away from you.
 
-spellbook-polymoprh-spider-name = Spider Polymorph
+spellbook-polymorph-spider-name = Spider Polymorph
 spellbook-polymorph-spider-desc = Transforms you into a spider, man!
 
 spellbook-polymorph-rod-name = Rod Polymorph
