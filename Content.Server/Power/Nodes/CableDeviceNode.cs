@@ -34,14 +34,17 @@ namespace Content.Server.Power.Nodes
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             MapGridComponent? grid,
-            IEntityManager entMan)
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Anchored
+                || xform.GridUid == null
+                || grid == null)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, gridIndex, mapSystem))
             {
                 if (node is CableNode)
                     yield return node;
