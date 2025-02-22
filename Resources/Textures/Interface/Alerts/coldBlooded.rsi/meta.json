@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by kosticia (github)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+      "states": [
+          {
+              "name": "Sleep_0"
+          },
+          {
+              "name": "Sleep_1"
+          },
+          {
+              "name": "Sleep_2"
+          },
+          {
+              "name": "Sleep_3"
+          }
+      ]
+  }
