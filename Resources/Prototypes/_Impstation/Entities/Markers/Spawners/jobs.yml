@@ -21,7 +21,7 @@
   name: hospitalitydirector
   components:
   - type: SpawnPoint
-    job_id: JobHospitalityDirector
+    job_id: HospitalityDirector
   - type: Sprite
     sprite: _Impstation/Markers/jobs.rsi
     layers:
