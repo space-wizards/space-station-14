@@ -10,7 +10,6 @@
 - type: guideEntry
   id: Controls
   name: guide-entry-controls
-  priority: 0
   text: "/ServerInfo/Guidebook/NewPlayer/Controls/Controls.xml"
   children:
   - Radio
@@ -22,7 +21,6 @@
 
 - type: guideEntry
   id: CharacterCreation
-  priority: 10
   name: guide-entry-charactercreation
   text: "/ServerInfo/Guidebook/NewPlayer/CharacterCreation.xml"
   children:

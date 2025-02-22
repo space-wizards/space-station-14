@@ -143,7 +143,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         // Roots are sorted by priority. If there is no defined priority for a root then it is by definition sorted undefined.
         return rootEntries
             .Select(rootEntryId => _entries[rootEntryId])
-            .OrderBy(rootEntry => rootEntry.Priority);
+            .OrderBy(rootEntry => rootEntry.Priority)
+            .ThenBy(rootEntry => Loc.GetString(rootEntry.Name));
     }
 
     private void RepopulateTree(List<ProtoId<GuideEntryPrototype>>? roots = null,
