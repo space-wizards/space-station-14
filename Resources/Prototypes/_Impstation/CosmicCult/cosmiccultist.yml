@@ -4,7 +4,10 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-cosmiccult-description
-  guides: [ NuclearOperatives ]
+  guides: [ CosmicCult ]
+  playTimeTracker: AntagCosmicCultist
+  - !type:OverallPlaytimeRequirement
+    time: 18000 # 5h
 
 - type: antag
   id: CosmicAntagLeader
@@ -12,17 +15,18 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-cosmiccultlead-description
+  guides: [ CosmicCult ]
+  playTimeTracker: AntagCosmicCultLead
   requirements:
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 36000 # 10h
-  - !type:DepartmentTimeRequirement
-    department: Command
-    time: 36000 # 10h
   - !type:DepartmentTimeRequirement
       department: Engineering
       time: 27000 # 7.5 hours
   - !type:DepartmentTimeRequirement
       department: Medical
       time: 27000 # 7.5 hours
-  guides: [ NuclearOperatives ]
+  - !type:DepartmentTimeRequirement
+      department: Security
+      time: 27000 # 7.5 hours
+  - !type:DepartmentTimeRequirement
+      department: Command
+      time: 27000 # 7.5 hours

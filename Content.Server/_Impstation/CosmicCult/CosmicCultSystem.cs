@@ -45,10 +45,14 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly AlertLevelSystem _alert = default!;
+
+    private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
     public int CultistCount;
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
 
         SubscribeLocalEvent<CosmicCultComponent, ComponentInit>(OnStartCultist);
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentInit>(OnStartCultLead);
@@ -73,6 +77,16 @@ public sealed partial class CosmicCultSystem : EntitySystem
     }
     #region Housekeeping
 
+    /// <summary>
+    /// Creates the Cosmic Void pocket dimension map.
+    /// </summary>
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
+        _map.CreateMap(out var mapId);
+        var options = new MapLoadOptions { LoadMap = true };
+        if (_mapLoader.TryLoad(mapId, MapPath, out _, options))
+            _map.SetPaused(mapId, false);
+    }
     public override void Update(float frameTime) // This Update() can fit so much functionality in it
     {
         base.Update(frameTime);
