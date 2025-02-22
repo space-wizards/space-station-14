@@ -1,0 +1,42 @@
+- type: audioMixer
+  id: Music
+
+- type: audioMixer
+  id: Ambience
+  out: Music
+  gainCVar: ambience.volume
+
+- type: audioMixer
+  id: AmbienceMusic
+  out: Music
+  gainCVar: ambience.music_volume
+
+- type: audioMixer
+  id: LobbyMusic
+  out: Music
+  gainCVar: ambience.lobby_music_volume
+
+
+- type: audioMixer
+  id: Interface
+  gainCVar: audio.interface_volume
+
+
+- type: audioMixer
+  id: WorldSounds
+  gainCVar: audio.world_sounds_volume
+
+- type: audioMixer
+  id: WorldOtherSounds
+  out: WorldSounds
+  gainCVar: audio.world_other_sounds_volume
+
+- type: audioMixer
+  id: Midi
+  out: WorldSounds
+  gainCVar: midi.volume
+
+- type: audioMixer
+  id: Jukebox
+  out: WorldSounds
+  gainCVar: audio.jukebox_volume
