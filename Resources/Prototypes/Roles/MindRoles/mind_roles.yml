@@ -124,7 +124,7 @@
   - type: MindRole
     antagPrototype: Dragon
     roleType: TeamAntagonist
-    subtype: "role-subtype- dragon"
+    subtype: "role-subtype-dragon"
     exclusiveAntag: tru
   - type: DragonRole
   - type: RoleBriefing
