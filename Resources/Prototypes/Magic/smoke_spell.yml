@@ -1,0 +1,14 @@
+﻿- type: entity
+  id: ActionSmoke
+  name: Smoke
+  description: Summons smoke around the user.
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: BigAction
+    icon:
+      sprite: Effects/chemsmoke.rsi
+      state: chemsmoke
+    event: !type:InstantSpawnSpellEvent
+      prototype: WizardSmoke
+      posData: !type:TargetInFront
