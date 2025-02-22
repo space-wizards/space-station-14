@@ -38,12 +38,12 @@ public sealed partial class PlasmaFireReaction : IGasReactionEffect
             {
                 var initialThermalEnergy = temperature * atmosphereSystem.GetHeatCapacity(mixture, true);
 
-                var pxygenPerPlasmaBurned = Atmospherics.OxygenBurnRateBase - temperatureReactionScale;
+                var oxygenPerPlasmaBurned = Atmospherics.OxygenBurnRateBase - temperatureReactionScale;
                 // Don't try to use more of the reactants than are actually present.
                 var reactantLimitedReactionRate = MathF.Min(reactionRate,
-                    MathF.Min(initialPlasmaMoles, initialOxygenMoles / pxygenPerPlasmaBurned));
+                    MathF.Min(initialPlasmaMoles, initialOxygenMoles / oxygenPerPlasmaBurned));
                 mixture.SetMoles(Gas.Plasma, initialPlasmaMoles - reactantLimitedReactionRate);
-                mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - reactantLimitedReactionRate * pxygenPerPlasmaBurned);
+                mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - reactantLimitedReactionRate * oxygenPerPlasmaBurned);
 
                 // Mixes supersaturated with oxygen relative to plasma create some tritium rather than CO2.
                 var supersaturation = ProportionOfRange(initialOxygenMoles / initialPlasmaMoles,
@@ -54,7 +54,7 @@ public sealed partial class PlasmaFireReaction : IGasReactionEffect
 
                 // adjust energy by `heatScale` to make sure speedup doesn't cause mega temperature rise
                 var energyReleased = Atmospherics.FirePlasmaEnergyReleased * reactionRate / heatScale;
-                mixture.ReactionResults[(byte)GasReaction.Fire] = reactionRate * (1 + pxygenPerPlasmaBurned);
+                mixture.ReactionResults[(byte)GasReaction.Fire] = reactionRate * (1 + oxygenPerPlasmaBurned);
 
                 if (energyReleased > 0)
                 {
