@@ -95,7 +95,7 @@ namespace Content.Shared.Throwing
                 _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
                 if (physics.Awake)
-                    _broadphase.RegenerateContacts(uid, physics);
+                    _broadphase.RegenerateContacts((uid, physics));
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
@@ -123,7 +123,7 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(uid):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
-            _broadphase.RegenerateContacts(uid, physics);
+            _broadphase.RegenerateContacts((uid, physics));
             var landEvent = new LandEvent(thrownItem.Thrower, playSound);
             RaiseLocalEvent(uid, ref landEvent);
         }
