@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -48,6 +49,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         SubscribeLocalEvent<VirtualItemComponent, GettingInteractedWithAttemptEvent>(OnGettingInteractedWithAttemptEvent);
 
         SubscribeLocalEvent<VirtualItemComponent, GetUsedEntityEvent>(OnGetUsedEntity);
+        SubscribeLocalEvent<VirtualItemComponent, HeldRelayedEvent<EnterCryostorageEvent>>(HandleEnterCryostorageEvent);
     }
 
     /// <summary>
@@ -275,5 +277,10 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         _transformSystem.DetachEntity(item, Transform(item));
         if (_netManager.IsServer)
             QueueDel(item);
+    }
+
+    private void HandleEnterCryostorageEvent(Entity<VirtualItemComponent> ent, ref HeldRelayedEvent<EnterCryostorageEvent> args)
+    {
+        DeleteVirtualItem((ent, ent.Comp), ent.Owner);
     }
 }
