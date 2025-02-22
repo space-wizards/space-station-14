@@ -7,8 +7,8 @@
     useDelay: 10
     itemIconStyle: BigAction
     icon:
-      sprite: Effects/chemsmoke.rsi
-      state: chemsmoke
+      sprite: Actions/smokeaction.rsi
+      state: smokeaction
     event: !type:InstantSpawnSpellEvent
       prototype: WizardSmoke
       posData: !type:TargetInFront
