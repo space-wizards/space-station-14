@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Shared.Abilities.Resomi;
 using Content.Shared.Throwing;
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Map;
 
@@ -32,8 +33,9 @@ public sealed class ResomiSkillSystem : EntitySystem
             return;
         
         var userTransform = Transform(uid);
+        var userPosition = _transform.GetMapCoordinates(userTransform);
         
-        if (!_mapMan.TryFindGridAt(vampirePosition, out _, out var grid))
+        if (!_mapMan.TryFindGridAt(userPosition, out _, out var grid))
             return;
         
         if (!_mapSystem.TryGetTileRef(uid, grid, userTransform.Coordinates, out var tileRef))
