@@ -5,24 +5,25 @@
   components:
   - type: StorageFill
     contents:
-      - id: FlashlightSeclite
-      - id: WeaponDisabler
-      - id: ClothingBeltSecurityFilled
-      - id: Flash
-      - id: ClothingEyesGlassesSecurity
-      - id: ClothingHandsGlovesCombat
-      - id: ClothingShoesBootsJack
-      - id: ClothingOuterCoatWarden
-      - id: ClothingOuterWinterWarden
-      - id: RubberStampWarden
-      - id: DoorRemoteArmory
-      - id: ClothingOuterHardsuitWarden
-      - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: BoxPrisonerPDA
       - id: ClothingBackpackElectropack
         amount: 2
+      - id: ClothingBeltSecurityFilled
+      - id: ClothingEyesGlassesSecurity
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingOuterCoatWarden
+      - id: ClothingOuterHardsuitWarden
+      - id: ClothingOuterWinterWarden
+      - id: ClothingShoesBootsJack
+      - id: DoorRemoteArmory
+      - id: Flash
+      - id: FlashlightSeclite
+      - id: HoloprojectorSecurity
       - id: RemoteSignaller
         amount: 2
+      - id: RubberStampWarden
+      - id: WeaponDisabler
 
 - type: entity
   id: LockerWardenFilled
@@ -31,24 +32,25 @@
   components:
   - type: StorageFill
     contents:
-      - id: FlashlightSeclite
-      - id: WeaponDisabler
-      - id: ClothingBeltSecurityFilled
-      - id: Flash
-      - id: ClothingEyesGlassesSecurity
-      - id: ClothingHandsGlovesCombat
-      - id: ClothingShoesBootsJack
-      - id: ClothingOuterCoatWarden
-      - id: ClothingOuterWinterWarden
-      - id: RubberStampWarden
-      - id: DoorRemoteArmory
-      - id: HoloprojectorSecurity
+      - id: Binoculars
       - id: BookSpaceLaw
+      - id: BoxPrisonerPDA
       - id: ClothingBackpackElectropack
         amount: 2
+      - id: ClothingBeltSecurityFilled
+      - id: ClothingEyesGlassesSecurity
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingOuterCoatWarden
+      - id: ClothingOuterWinterWarden
+      - id: ClothingShoesBootsJack
+      - id: DoorRemoteArmory
+      - id: Flash
+      - id: FlashlightSeclite
+      - id: HoloprojectorSecurity
+      - id: RubberStampWarden
       - id: RemoteSignaller
         amount: 2
-      - id: Binoculars
+      - id: WeaponDisabler
 
 - type: entity
   id: LockerSecurityFilled
