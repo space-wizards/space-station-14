@@ -198,6 +198,32 @@
     stock: 1
 
 - type: listing
+  id: SpellbookHammerMjollnir
+  name: spellbook-hammer-mjollnir-name
+  description: spellbook-hammer-mjollnir-description
+  productEntity: Mjollnir
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookHammerSingularity
+  name: spellbook-hammer-singularity-name
+  description: spellbook-hammer-singularity-description
+  productEntity: SingularityHammer
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: SpellbookStaffAnimation
   name: spellbook-staff-animation-name
   description: spellbook-staff-animation-description
