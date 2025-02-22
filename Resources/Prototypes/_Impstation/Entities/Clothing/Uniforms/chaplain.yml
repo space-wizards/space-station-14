@@ -54,7 +54,7 @@
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Other/techbrosuit.rsi
     clothingVisuals:
-      Uniform: # why is outer the clothing not inner clothing the eat the hot food
+      jumpsuit: # why is outer the clothing not inner clothing the eat the hot food
       - state: equipped-INNERCLOTHING
       - state: equipped-INNERCLOTHING-unshaded
         shader: unshaded
