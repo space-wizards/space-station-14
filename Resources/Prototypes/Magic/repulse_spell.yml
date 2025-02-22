@@ -11,7 +11,7 @@
       - MobMover
       - Item
   - type: InstantAction
-    useDelay: 10
+    useDelay: 40 #higher than hammers because there's no risk of losing this spell
     raiseOnAction: true
     itemIconStyle: BigAction
     icon:
