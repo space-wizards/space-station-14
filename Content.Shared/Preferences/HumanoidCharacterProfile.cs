@@ -87,6 +87,9 @@ namespace Content.Shared.Preferences
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
 
+        [DataField]
+        public StationAIData SAIData { get; set; } = new();
+
         /// <summary>
         /// <see cref="Appearance"/>
         /// </summary>
@@ -139,7 +142,8 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
-            Dictionary<string, RoleLoadout> loadouts)
+            Dictionary<string, RoleLoadout> loadouts,
+            StationAIData saiData)
         {
             Name = name;
             FlavorText = flavortext;
@@ -154,6 +158,7 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
+            SAIData = saiData;
 
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
@@ -184,7 +189,8 @@ namespace Content.Shared.Preferences
                 other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
-                new Dictionary<string, RoleLoadout>(other.Loadouts))
+                new Dictionary<string, RoleLoadout>(other.Loadouts),
+                new(other.SAIData))
         {
         }
 
@@ -447,6 +453,30 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile WithAIName(string name)
+        {
+            return new(this)
+            {
+                SAIData = SAIData.WithName(name)
+            };
+        }
+
+        public HumanoidCharacterProfile WithAIScreen(string id)
+        {
+            return new(this)
+            {
+                SAIData = SAIData.WithScreen(id)
+            };
+        }
+
+        public HumanoidCharacterProfile WithAILawset(string id)
+        {
+            return new(this)
+            {
+                SAIData = SAIData.WithLawset(id)
+            };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -470,6 +500,7 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (!SAIData.MemberwiseEquals(other.SAIData)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
