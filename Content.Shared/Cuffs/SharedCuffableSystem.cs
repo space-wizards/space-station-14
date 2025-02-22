@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -55,8 +56,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
-        [Dependency] private readonly StaminaSystem _stamina = default!;
-        [Dependency] private readonly SharedBuckleSystem _buckle = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
         public override void Initialize()
         {
@@ -696,14 +696,6 @@ namespace Content.Shared.Cuffs
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 
-            // If someone uncuffs an entity while it's buckled, it gets stamcrit
-            if (_buckle.IsBuckled(target) && target != user)
-            {
-                _stamina.TakeStaminaDamage(target, 100);
-                // TODO add a popup here when there is support for non-overlapping popups
-                //_popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-buckled-stamina"), target, user, PopupType.MediumCaution);
-            }
-
             if (_net.IsServer)
             {
                 // Handles spawning broken cuffs on server to avoid client misprediction
@@ -719,10 +711,31 @@ namespace Content.Shared.Cuffs
                 }
             }
 
+            var shoved = false;
+            // if combat mode is on, shove the person.
+            if (_combatMode.IsInCombatMode(user) && target != user && user != null)
+            {
+                var eventArgs = new DisarmedEvent { Target = target, Source = user.Value, PushProbability = 1};
+                RaiseLocalEvent(target, eventArgs);
+                shoved = true;
+            }
+
             if (cuffable.CuffedHandCount == 0)
             {
                 if (user != null)
-                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+                {
+                    if (shoved)
+                    {
+                        _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-push-success-message",
+                            ("otherName", Identity.Name(user.Value, EntityManager, user))),
+                            user.Value,
+                            user.Value);
+                    }
+                    else
+                    {
+                        _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+                    }
+                }
 
                 if (target != user && user != null)
                 {
