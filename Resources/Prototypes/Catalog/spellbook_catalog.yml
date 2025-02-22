@@ -76,6 +76,16 @@
   categories:
   - SpellbookDefensive
 
+- type: listing
+  id: SpellbookRepulse
+  name: spellbook-repulse-name
+  description: spellbook-repulse-desc
+  productAction: ActionRepulse
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookDefensive
+
 # Utility
 - type: listing
   id: SpellbookPolymorphSpider

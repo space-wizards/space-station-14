@@ -1,0 +1,22 @@
+﻿- type: entity
+  id: ActionRepulse
+  name: Repulse
+  description: Pushes entities away from the user.
+  components:
+  - type: RepulseAttract
+    speed: 10
+    range: 5
+    whitelist:
+      components:
+      - MobMover
+      - Item
+  - type: InstantAction
+    useDelay: 10
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+    #sound: !type:SoundPathSpecifier
+      #path: /Audio/Magic/knock.ogg
+    event: !type:RepulseAttractActionEvent
