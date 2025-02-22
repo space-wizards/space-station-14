@@ -113,7 +113,6 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
-    selectedMode: Burst #imp
   - type: ChamberMagazineAmmoProvider
     autoEject: true
     soundAutoEject:
@@ -157,6 +156,7 @@
       - SemiAuto
       shotsPerBurst: 3
       burstCooldown: 0.25
+      selectedMode: Burst #imp
     - type: ItemSlots
       slots:
         gun_magazine:
