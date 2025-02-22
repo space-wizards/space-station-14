@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Wieldable;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -137,5 +138,30 @@ public abstract partial class SharedGunSystem
 
         component.NextFire = minimum;
         Dirty(uid, component);
+    }
+
+    private void OnGunWielded(Entity<GunComponent> ent, ref ItemWieldedEvent args)
+    {
+        if (TryComp<GunRequiresWieldComponent>(ent, out var gunReqWield))
+        {
+            if (Timing.ApplyingState)
+                return;
+
+            if (ent.Comp.FireRateModified <= 0)
+                return;
+
+            if (Paused(ent.Owner))
+                return;
+
+            // If someone swaps to this weapon then reset its cd.
+            var curTime = Timing.CurTime;
+            var minimum = curTime + TimeSpan.FromSeconds(gunReqWield.WieldDelay);
+
+            if (minimum < ent.Comp.NextFire)
+                return;
+
+            ent.Comp.NextFire = minimum;
+            Dirty(ent);
+        }
     }
 }
