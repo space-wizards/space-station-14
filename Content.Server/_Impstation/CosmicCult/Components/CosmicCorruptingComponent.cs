@@ -1,5 +1,4 @@
-using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
 [RegisterComponent]
@@ -60,13 +59,13 @@ public sealed partial class CosmicCorruptingComponent : Component
     /// <summary>
     /// The tile we spawn when replacing a normal tile.
     /// </summary>
-    [DataField] public string ConversionTile = "FloorCosmicCorruption";
+    [DataField] public ProtoId<ContentTileDefinition> ConversionTile = "FloorCosmicCorruption";
 
     /// <summary>
     /// The wall we spawn when replacing a normal wall.
     /// </summary>
-    [DataField]
-    public EntProtoId ConversionWall = "WallCosmicCult";
+    [DataField] public EntProtoId ConversionWall = "WallCosmicCult";
+
     /// <summary>
     /// The VFX entity we spawn when corruption occurs.
     /// </summary>

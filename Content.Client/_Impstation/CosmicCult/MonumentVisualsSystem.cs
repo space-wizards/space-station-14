@@ -1,7 +1,5 @@
 using Robust.Client.GameObjects;
-using Robust.Client.Animations;
 using Content.Shared._Impstation.CosmicCult.Components;
-using Content.Shared._Impstation.CosmicCult;
 
 namespace Content.Client._Impstation.CosmicCult;
 
@@ -29,7 +27,7 @@ public sealed class MonumentVisualizerSystem : EntitySystem
         _appearance.TryGetData<bool>(uid, MonumentVisuals.Tier3, out var tier3, args.Component);
         if (!tier3)
             args.Sprite.LayerSetState(transformLayer, "transform-stage2");
-        if (tier3)
+        else
             args.Sprite.LayerSetState(transformLayer, "transform-stage3");
         if (transforming && HasComp<MonumentTransformingComponent>(uid))
         {

@@ -2,8 +2,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Impstation.CosmicCult.Prototypes;
+
 [Prototype]
-public sealed partial class GlyphPrototype: IPrototype
+public sealed partial class GlyphPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

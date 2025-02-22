@@ -1,13 +1,7 @@
-using Content.Shared.IdentityManagement;
-using Content.Shared.Mindshield.Components;
-using Content.Shared.Popups;
 using Content.Shared._Impstation.CosmicCult.Components;
-using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared._Impstation.CosmicCult;
 
@@ -42,12 +36,11 @@ public abstract class SharedCosmicCultSystem : EntitySystem
     /// <summary>
     /// The criteria that determine whether a Cult Member component should be sent to a client.
     /// </summary>
-    /// <param name="player"> The Player the component will be sent to.</param>
-    /// <returns></returns>
+    /// <param name="player">The Player the component will be sent to.</param>
     private bool CanGetState(ICommonSession? player)
     {
         //Apparently this can be null in replays so I am just returning true.
-        if (player?.AttachedEntity is not {} uid)
+        if (player?.AttachedEntity is not { } uid)
             return true;
 
         if (HasComp<CosmicCultComponent>(uid) || HasComp<CosmicCultLeadComponent>(uid))

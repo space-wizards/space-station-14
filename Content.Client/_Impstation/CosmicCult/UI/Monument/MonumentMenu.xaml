@@ -1,4 +1,3 @@
-<!-- Content.Client/_Impstation/CosmicCult/UI/Monument/MonumentMenu.xaml -->
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"

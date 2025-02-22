@@ -1,4 +1,3 @@
-# Resources/Prototypes/_Impstation/CosmicCult/MonumentPowers/glyphs.yml
 - type: glyph
   id: ccGlyphKnowledge
   name: cult-glyph-name-knowledge

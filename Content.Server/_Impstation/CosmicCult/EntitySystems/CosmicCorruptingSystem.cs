@@ -44,14 +44,14 @@ public sealed class CosmicCorruptingSystem : EntitySystem
     private void ConvertTilesInRange(Entity<CosmicCorruptingComponent> uid)
     {
         var tgtPos = Transform(uid);
-        if (tgtPos.GridUid is not { } gridUid || !TryComp(tgtPos.GridUid, out MapGridComponent? mapGrid))
+        if (tgtPos.GridUid is not { } gridUid || !TryComp(gridUid, out MapGridComponent? mapGrid))
             return;
 
         var radius = uid.Comp.CorruptionRadius;
-        var tileList = _map.GetLocalTilesEnumerator(gridUid, mapGrid, new Box2(tgtPos.Coordinates.Position + new Vector2(-radius, -radius), tgtPos.Coordinates.Position + new Vector2(radius, radius)));
-        var entityList = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, radius);
+        var tileEnumerator = _map.GetLocalTilesEnumerator(gridUid, mapGrid, new Box2(tgtPos.Coordinates.Position + new Vector2(-radius, -radius), tgtPos.Coordinates.Position + new Vector2(radius, radius)));
+        var entityHash = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, radius);
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
-        foreach (var entity in entityList)
+        foreach (var entity in entityHash)
         {
             if (TryComp<TagComponent>(entity, out var tag))
             {
@@ -65,7 +65,7 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                 }
             }
         }
-        while (tileList.MoveNext(out var tile))
+        while (tileEnumerator.MoveNext(out var tile))
         {
             var tilePos = _turfs.GetTileCenter(tile);
             if (tile.Tile.TypeId == convertTile.TileId)

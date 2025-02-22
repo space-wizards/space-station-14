@@ -1,25 +1,19 @@
-
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 
 namespace Content.Server._Impstation.CosmicCult;
 
 public sealed partial class CosmicCultSystem : EntitySystem
 {
-
     /// <summary>
     ///     Used to calculate when the finale song should start playing
     /// </summary>
-
     public void SubscribeFinale()
     {
-
         SubscribeLocalEvent<CosmicFinaleComponent, InteractHandEvent>(OnInteract);
         SubscribeLocalEvent<CosmicFinaleComponent, StartFinaleDoAfterEvent>(OnFinaleStartDoAfter);
         SubscribeLocalEvent<CosmicFinaleComponent, CancelFinaleDoAfterEvent>(OnFinaleCancelDoAfter);
@@ -47,7 +41,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cosmiccult-finale-beckon-begin"), args.User, args.User);
             _doAfter.TryStartDoAfter(doargs);
         }
-        else return;
+        else
+            return;
         args.Handled = true;
     }
 
@@ -83,6 +78,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.FinaleActive = true;
         monument.Enabled = true;
     }
+
     private void OnFinaleCancelDoAfter(Entity<CosmicFinaleComponent> uid, ref CancelFinaleDoAfterEvent args)
     {
         var comp = uid.Comp;
@@ -98,8 +94,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(comp.CancelEventSound));
         _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
-        if (!comp.BufferComplete) comp.BufferRemainingTime = comp.BufferTimer - _timing.CurTime + TimeSpan.FromSeconds(15);
-        else comp.FinaleRemainingTime = comp.FinaleTimer - _timing.CurTime;
+        if (!comp.BufferComplete)
+            comp.BufferRemainingTime = comp.BufferTimer - _timing.CurTime + TimeSpan.FromSeconds(15);
+        else
+            comp.FinaleRemainingTime = comp.FinaleTimer - _timing.CurTime;
         comp.PlayedFinaleSong = false;
         comp.PlayedBufferSong = false;
         comp.FinaleActive = false;

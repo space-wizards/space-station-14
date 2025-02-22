@@ -14,15 +14,12 @@ using Robust.Shared.Timing;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Interaction;
-using Content.Server.Announcements.Systems;
 using Content.Server.Audio;
 using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
-using Content.Shared.Prying.Systems;
 using Content.Server.AlertLevel;
-using Content.Server.Atmos.Piping.Components;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -48,6 +45,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
     private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
     public int CultistCount;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -87,6 +85,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (_mapLoader.TryLoad(mapId, MapPath, out _, options))
             _map.SetPaused(mapId, false);
     }
+
     public override void Update(float frameTime) // This Update() can fit so much functionality in it
     {
         base.Update(frameTime);
@@ -160,8 +159,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             {
                 comp.CultistsCheckTimer = _timing.CurTime + comp.CheckWait;
                 var cultistsPresent = CultistCount = _cosmicGlyphs.GatherCultists(uid, 5).Count; //Let's use the cultist collecting hashset from Cosmic Glyphs to see how many folks are around!
-                if (cultistsPresent <= 10) CultistCount = cultistsPresent;
-                if (cultistsPresent > 10) CultistCount = 10;
+                CultistCount = int.Clamp(cultistsPresent, 0, 10);
                 _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-cultist-count", ("COUNT", CultistCount)), Transform(uid).Coordinates);
                 var modifyTime = TimeSpan.FromSeconds(420 * 5 / (420 - 36 * CultistCount) - 5);
                 comp.BufferTimer -= modifyTime;
@@ -183,6 +181,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         });
     }
     #endregion
+
     #region Init Cult
     /// <summary>
     /// Add the starting powers to the cultist.
@@ -197,6 +196,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (TryComp<EyeComponent>(uid, out var eye))
             _eye.SetVisibilityMask(uid, eye.VisibilityMask | MonumentComponent.LayerMask);
     }
+
     /// <summary>
     /// Add the Monument summon action to the cult lead.
     /// </summary>
@@ -204,10 +204,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         _actions.AddAction(uid, ref uid.Comp.CosmicMonumentActionEntity, uid.Comp.CosmicMonumentAction, uid);
     }
+
     /// <summary>
     /// Called by Cosmic Siphon. Increments the Cult's global objective tracker.
     /// </summary>
     #endregion
+
     #region Entropy
     private void OnStartMonument(Entity<MonumentComponent> uid, ref ComponentInit args)
     {
@@ -236,24 +238,27 @@ public sealed partial class CosmicCultSystem : EntitySystem
     }
     #endregion
 
-
     #region Movespeed
     private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args)
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
     private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args)
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
     private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args)
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
     private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args)
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
+
     private void OnRefreshMoveSpeed(EntityUid uid, InfluenceStrideComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         if (HasComp<InfluenceStrideComponent>(uid))
@@ -261,6 +266,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         else
             args.ModifySpeed(1f, 1f);
     }
+
     private void OnImpositionMoveSpeed(EntityUid uid, CosmicImposingComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         if (HasComp<CosmicImposingComponent>(uid))

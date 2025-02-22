@@ -1,31 +1,17 @@
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Server.Bible.Components;
-using Content.Server.Body.Components;
-using Content.Server.Medical.Components;
-using Content.Server.PowerCell;
-using Content.Server.Radio.Components;
-using Content.Server.Temperature.Components;
-using Content.Server.Traits.Assorted;
 using Content.Shared._Impstation.CosmicCult;
 using Content.Shared._Impstation.CosmicCult.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Item.ItemToggle;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Jittering;
-using Content.Shared.MedicalScanner;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Impstation.CosmicCult;
@@ -33,7 +19,7 @@ namespace Content.Server._Impstation.CosmicCult;
 public sealed class DeconversionSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -47,9 +33,10 @@ public sealed class DeconversionSystem : EntitySystem
         SubscribeLocalEvent<CleanseOnUseComponent, CleanseOnDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<CleanseCultComponent, ComponentInit>(OnCompInit);
     }
+
     private void OnCompInit(Entity<CleanseCultComponent> uid, ref ComponentInit args)
     {
-        _entMan.System<SharedJitteringSystem>().DoJitter(uid.Owner, uid.Comp.CleanseDuration, true, 5, 20);
+        _entityManager.System<SharedJitteringSystem>().DoJitter(uid.Owner, uid.Comp.CleanseDuration, true, 5, 20);
         uid.Comp.CleanseTime = _timing.CurTime + uid.Comp.CleanseDuration;
     }
 
@@ -87,8 +74,7 @@ public sealed class DeconversionSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-begin", ("target", Identity.Entity(args.User, EntityManager))), args.User, args.Target.Value);
         _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-begin-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.User, args.User);
-
-        var doAfterCancelled = !_doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.UseTime, new CleanseOnDoAfterEvent(), uid, target: args.Target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.UseTime, new CleanseOnDoAfterEvent(), uid, args.Target, uid)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -98,9 +84,6 @@ public sealed class DeconversionSystem : EntitySystem
             CancelDuplicate = true,
             NeedHand = true,
         });
-
-        if (args.Target == args.User || doAfterCancelled)
-            return;
     }
 
     private void OnDoAfter(Entity<CleanseOnUseComponent> uid, ref CleanseOnDoAfterEvent args)
@@ -108,26 +91,25 @@ public sealed class DeconversionSystem : EntitySystem
         var target = args.Args.Target;
         if (!TryComp(uid, out UseDelayComponent? useDelay) || args.Cancelled || args.Handled || target == null || !_mobState.IsAlive(target.Value))
             return;
+        var targetPosition = Transform(target.Value).Coordinates;
         //TODO: This could be made more agnostic, but there's only one cult for now, and frankly, i'm so tired. This is easy to read and easy to modify code. Expand it at thine leisure.
         if (TryComp<CosmicCultComponent>(args.Target, out var comp) && comp.CosmicEmpowered)
         {
-            var tgtpos = Transform(target.Value).Coordinates;
-            Spawn(uid.Comp.MalignVFX, tgtpos);
+
+            Spawn(uid.Comp.MalignVFX, targetPosition);
             Spawn(uid.Comp.MalignVFX, Transform(args.User).Coordinates);
             DeconvertCultist(target.Value);
-            _audio.PlayPvs(uid.Comp.MalignSound, tgtpos, AudioParams.Default.WithVolume(+2f));
+            _audio.PlayPvs(uid.Comp.MalignSound, targetPosition, AudioParams.Default.WithVolume(2f));
             _damageable.TryChangeDamage(args.User, uid.Comp.SelfDamage, true);
             _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-success-empowered", ("target", Identity.Entity(target.Value, EntityManager))), args.User, args.User);
         }
-        else if (TryComp<CosmicCultComponent>(args.Target, out var coscomp) && !coscomp.CosmicEmpowered)
+        else if (TryComp<CosmicCultComponent>(args.Target, out var cultComponent) && !cultComponent.CosmicEmpowered)
         {
-            var tgtpos = Transform(target.Value).Coordinates;
-            Spawn(uid.Comp.CleanseVFX, tgtpos);
+            Spawn(uid.Comp.CleanseVFX, targetPosition);
             DeconvertCultist(target.Value);
-            _audio.PlayPvs(uid.Comp.CleanseSound, tgtpos, AudioParams.Default.WithVolume(+4f));
+            _audio.PlayPvs(uid.Comp.CleanseSound, targetPosition, AudioParams.Default.WithVolume(4f));
             _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-success", ("target", Identity.Entity(target.Value, EntityManager))), args.User, args.User);
         }
-
         else
         {
             _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-notcult", ("target", Identity.Entity(target.Value, EntityManager))), args.User, args.User);
@@ -136,9 +118,8 @@ public sealed class DeconversionSystem : EntitySystem
         args.Handled = true;
     }
 
-    public void DeconvertCultist(EntityUid uid)
+    private void DeconvertCultist(EntityUid uid)
     {
-        if (HasComp<CosmicCultComponent>(uid))
-            RemCompDeferred<CosmicCultComponent>(uid);
+        RemCompDeferred<CosmicCultComponent>(uid);
     }
 }

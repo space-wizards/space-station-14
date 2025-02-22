@@ -22,32 +22,22 @@ using Content.Server._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Prying.Systems;
-using Content.Shared.Doors.Components;
-using Content.Shared.Lock;
 using Content.Server.Doors.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
-using Content.Shared.Flash;
 using Content.Shared.Camera;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Content.Server.Flash;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Tag;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
-using Content.Shared.Atmos;
 
 namespace Content.Server._Impstation.CosmicCult;
 
 public sealed partial class CosmicCultSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
+    [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -58,9 +48,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly FlashSystem _flash = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerMan = default!;
-    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
     public void SubscribeAbilities()
     {
         SubscribeLocalEvent<CosmicImposingComponent, BeforeDamageChangedEvent>(OnImpositionDamaged);
@@ -85,34 +76,19 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (args.Handled)
             return;
         args.Handled = true;
-        if (!uid.Comp.CosmicEmpowered)
+        var seconds = uid.Comp.CosmicEmpowered ? 4 : 6;
+        var doArgs = new DoAfterArgs(EntityManager, uid, seconds, new EventForceIngressDoAfter(), uid, args.Target)
         {
-            var doargs = new DoAfterArgs(EntityManager, uid, 6, new EventForceIngressDoAfter(), uid, args.Target)
-            {
-                DistanceThreshold = 1.5f,
-                Hidden = true,
-                BreakOnHandChange = true,
-                BreakOnDamage = true,
-                BreakOnMove = true,
-                BreakOnDropItem = true,
-            };
-            _doAfter.TryStartDoAfter(doargs);
-        }
-        else
-        {
-            var doargs = new DoAfterArgs(EntityManager, uid, 4, new EventForceIngressDoAfter(), uid, args.Target)
-            {
-                DistanceThreshold = 1.5f,
-                Hidden = true,
-                BreakOnHandChange = true,
-                BreakOnDamage = true,
-                BreakOnMove = true,
-                BreakOnDropItem = true,
-            };
-            _doAfter.TryStartDoAfter(doargs);
-        }
-
+            DistanceThreshold = 1.5f,
+            Hidden = true,
+            BreakOnHandChange = true,
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            BreakOnDropItem = true,
+        };
+        _doAfter.TryStartDoAfter(doArgs);
     }
+
     private void OnCosmicIngressDoAfter(Entity<CosmicCultComponent> uid, ref EventForceIngressDoAfter args)
     {
         if (args.Args.Target == null)
@@ -129,8 +105,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     }
     #endregion
 
-
-
     #region Null Glare
     private void OnCosmicGlare(Entity<CosmicCultComponent> uid, ref EventCosmicGlare args)
     {
@@ -139,7 +113,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         args.Handled = true;
         var mapPos = _transform.GetMapCoordinates(args.Performer);
         var targets = Filter.Empty();
-        targets.AddInRange(mapPos, 10, _playerMan, EntityManager);
+        targets.AddInRange(mapPos, 10, _playerManager, EntityManager);
         foreach (var target in targets.Recipients)
         {
             if (target.AttachedEntity is { } entity)
@@ -147,16 +121,17 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 if (HasComp<CosmicCultComponent>(entity) || HasComp<BibleUserComponent>(entity))
                     return;
                 var hitPos = _transform.GetMapCoordinates(entity).Position;
-                var angle = hitPos - mapPos.Position;
-                if (angle == Vector2.Zero)
+                var delta = hitPos - mapPos.Position;
+                if (delta == Vector2.Zero)
                     continue;
-                if (angle.EqualsApprox(Vector2.Zero))
-                    angle = new(.01f, 0);
+                if (delta.EqualsApprox(Vector2.Zero))
+                    delta = new(.01f, 0);
 
-                _recoil.KickCamera(entity, -angle.Normalized());
+                _recoil.KickCamera(entity, -delta.Normalized());
                 if (!uid.Comp.CosmicEmpowered)
                     _flash.Flash(entity, uid, args.Action, 6 * 1000f, 0.5f);
-                else _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
+                else
+                    _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
             }
         }
 
@@ -167,22 +142,23 @@ public sealed partial class CosmicCultSystem : EntitySystem
     }
     #endregion
 
-
-
     #region Astral Nova
-    private void OnCosmicNova(Entity<CosmicCultComponent> uid, ref EventCosmicNova args) // This is the basic spell projectile code but updated to use non-obsolete functions, all so i can change the default projectile speed. Fuck.
+    /// <summary>
+    /// This is the basic spell projectile code but updated to use non-obsolete functions, all so i can change the default projectile speed. Fuck.
+    /// </summary>
+    private void OnCosmicNova(Entity<CosmicCultComponent> uid, ref EventCosmicNova args)
     {
         var startPos = _transform.GetMapCoordinates(args.Performer);
         var targetPos = _transform.ToMapCoordinates(args.Target);
         var userVelocity = _physics.GetMapLinearVelocity(args.Performer);
 
-        var angle = targetPos.Position - startPos.Position;
-        if (angle.EqualsApprox(Vector2.Zero))
-            angle = new(.01f, 0);
+        var delta = targetPos.Position - startPos.Position;
+        if (delta.EqualsApprox(Vector2.Zero))
+            delta = new(.01f, 0);
 
         args.Handled = true;
         var ent = Spawn("ProjectileCosmicNova", startPos);
-        _gunSystem.ShootProjectile(ent, angle, userVelocity, args.Performer, args.Performer, 5f);
+        _gun.ShootProjectile(ent, delta, userVelocity, args.Performer, args.Performer, 5f);
         _audio.PlayPvs(uid.Comp.NovaCastSFX, uid, AudioParams.Default.WithVariation(0.1f));
     }
 
@@ -196,24 +172,24 @@ public sealed partial class CosmicCultSystem : EntitySystem
     }
     #endregion
 
-
-
     #region Vacuous Imposition
     private void OnCosmicImposition(Entity<CosmicCultComponent> uid, ref EventCosmicImposition args)
     {
         EnsureComp<CosmicImposingComponent>(uid, out var comp);
-        if (!uid.Comp.CosmicEmpowered) comp.ImposeCheckTimer = _timing.CurTime + comp.CheckWait;
-        else comp.ImposeCheckTimer = _timing.CurTime + comp.EmpoweredCheckWait;
+        if (!uid.Comp.CosmicEmpowered)
+            comp.ImposeCheckTimer = _timing.CurTime + comp.CheckWait;
+        else
+            comp.ImposeCheckTimer = _timing.CurTime + comp.EmpoweredCheckWait;
         Spawn(uid.Comp.ImpositionVFX, Transform(uid).Coordinates);
         args.Handled = true;
         _audio.PlayPvs(uid.Comp.ImpositionSFX, uid, AudioParams.Default.WithVariation(0.05f));
     }
+
     private void OnImpositionDamaged(Entity<CosmicImposingComponent> uid, ref BeforeDamageChangedEvent args)
     {
         args.Cancelled = true;
     }
     #endregion
-
 
     #region Siphon Entropy
     private void OnCosmicSiphon(Entity<CosmicCultComponent> uid, ref EventCosmicSiphon args)
@@ -224,7 +200,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             return;
         args.Handled = true;
 
-        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicSiphonSpeed, new EventCosmicSiphonDoAfter(), uid, args.Target)
+        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicSiphonDelay, new EventCosmicSiphonDoAfter(), uid, args.Target)
         {
             DistanceThreshold = 1.5f,
             Hidden = true,
@@ -235,6 +211,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         };
         _doAfter.TryStartDoAfter(doargs);
     }
+
     private void OnCosmicSiphonDoAfter(Entity<CosmicCultComponent> uid, ref EventCosmicSiphonDoAfter args)
     {
         if (args.Args.Target == null)
@@ -248,13 +225,11 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _damageable.TryChangeDamage(args.Target, uid.Comp.CosmicSiphonDamage, origin: uid);
         _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
 
-        var entropymote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
-        _hands.TryForcePickupAnyHand(uid, entropymote1);
+        var entropyMote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
+        _hands.TryForcePickupAnyHand(uid, entropyMote1);
         _cultRule.IncrementCultObjectiveEntropy(uid);
     }
     #endregion
-
-
 
     #region "Shunt" Stun
     private void OnCosmicBlank(Entity<CosmicCultComponent> uid, ref EventCosmicBlank args)
@@ -264,9 +239,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var tgtpos = Transform(args.Target).Coordinates;
-
-        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicBlankSpeed, new EventCosmicBlankDoAfter(), uid, args.Target)
+        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicBlankDelay, new EventCosmicBlankDoAfter(), uid, args.Target)
         {
             DistanceThreshold = 1.5f,
             Hidden = false,
@@ -309,7 +282,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             Log.Warning("Couldn't find any cosmic void spawners! Failed to send.");
             return;
         }
-        _audio.PlayPvs(comp.BlankSFX, uid, AudioParams.Default.WithVolume(+6f));
+        _audio.PlayPvs(comp.BlankSFX, uid, AudioParams.Default.WithVolume(6f));
         Spawn(comp.BlankVFX, tgtpos);
         var newSpawn = _random.Pick(spawnPoints);
         var spawnTgt = Transform(newSpawn.Uid).Coordinates;
@@ -321,14 +294,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _mind.TransferTo(mindEnt, mobUid);
         _stun.TryKnockdown(target, comp.CosmicBlankDuration, true);
         _popup.PopupEntity(Loc.GetString("cosmicability-blank-transfer"), mobUid, mobUid);
-        _audio.PlayPvs(comp.BlankSFX, spawnTgt, AudioParams.Default.WithVolume(+6f));
+        _audio.PlayPvs(comp.BlankSFX, spawnTgt, AudioParams.Default.WithVolume(6f));
         Spawn(comp.BlankVFX, spawnTgt);
 
         Log.Debug($"Created wisp entity {mobUid}");
     }
     #endregion
-
-
 
     #region "Lapse" Polymorph
     private void OnCosmicLapse(Entity<CosmicCultComponent> uid, ref EventCosmicLapse action)
@@ -343,28 +314,28 @@ public sealed partial class CosmicCultSystem : EntitySystem
         switch (species!.Species) // We use a switch case for all the species polymorphs. Why? It uses wizden code, leans on YML, and it could be worse.
         {
             case "Human":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobHuman");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobHuman");
                 break;
             case "Arachnid":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobArachnid");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobArachnid");
                 break;
             case "Diona":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobDiona");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobDiona");
                 break;
             case "Moth":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobMoth");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobMoth");
                 break;
             case "Vox":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobVox");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobVox");
                 break;
-            case "Snail":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobSnail");
+            case "Gastropoid":
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobSnail");
                 break;
             case "Decapoid":
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobDecapoid");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobDecapoid");
                 break;
             default:
-                _polymorphSystem.PolymorphEntity(action.Target, "CosmicLapseMobHuman");
+                _polymorph.PolymorphEntity(action.Target, "CosmicLapseMobHuman");
                 break;
         }
     }

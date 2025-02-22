@@ -1,5 +1,3 @@
-using Content.Shared.Damage;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Impstation.CosmicCult.Components;
@@ -16,9 +14,9 @@ public sealed partial class CosmicGlyphTransmuteWeaponComponent : Component
     ///     A pool of weapons that we pick from when transmuting.
     /// </summary>
     [DataField]
-    public List<ProtoId<EntityPrototype>> TransmuteWeapon = new()
-    {
+    public List<ProtoId<EntityPrototype>> TransmuteWeapon =
+    [
         "SwordCosmicCult",
         "SpearCosmicCult",
-    };
+    ];
 }

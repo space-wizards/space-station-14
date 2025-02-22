@@ -7,6 +7,7 @@ using Content.Shared.Item;
 using Content.Shared.Damage;
 using System.Threading;
 using Content.Shared._Impstation.CosmicCult.Prototypes;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Shared._Impstation.CosmicCult.Components;
 
@@ -30,34 +31,31 @@ public sealed partial class CosmicCultComponent : Component
     #endregion
 
     #region Ability Data
-    [DataField] public List<ProtoId<InfluencePrototype>> UnlockedInfluences = new()
-    {
+    [DataField] public List<ProtoId<InfluencePrototype>> UnlockedInfluences =
+    [
         "InfluenceAberrantLapse",
         "InfluenceNullGlare",
-        "InfluenceEschewMetabolism"
-    };
+        "InfluenceEschewMetabolism",
+    ];
 
-    [DataField] public List<ProtoId<EntityPrototype>> CosmicCultActions = new()
-    {
+    [DataField] public List<ProtoId<EntityPrototype>> CosmicCultActions =
+    [
         "ActionCosmicSiphon",
-        "ActionCosmicBlank"
-    };
-    public List<EntityUid?> ActionEntities = new();
+        "ActionCosmicBlank",
+    ];
+    public List<EntityUid?> ActionEntities = [];
 
-    public List<ProtoId<InfluencePrototype>> OwnedInfluences = new()
-    {
-
-    };
+    public List<ProtoId<InfluencePrototype>> OwnedInfluences = [];
 
     /// <summary>
     /// The duration of the doAfter for Siphon Entropy
     /// </summary>
-    [DataField, AutoNetworkedField] public TimeSpan CosmicSiphonSpeed = TimeSpan.FromSeconds(4);
+    [DataField, AutoNetworkedField] public TimeSpan CosmicSiphonDelay = TimeSpan.FromSeconds(4);
 
     /// <summary>
     /// The duration of the doAfter for Shunt Subjectivity
     /// </summary>
-    [DataField, AutoNetworkedField] public TimeSpan CosmicBlankSpeed = TimeSpan.FromSeconds(0.6f);
+    [DataField, AutoNetworkedField] public TimeSpan CosmicBlankDelay = TimeSpan.FromSeconds(0.6f);
 
     /// <summary>
     /// The duration of Shunt Subjectivity's trip to the cosmic void
@@ -86,7 +84,7 @@ public sealed partial class CosmicCultComponent : Component
     /// <summary>
     /// A string for storing what damage container this cultist had upon conversion.
     /// </summary>
-    [DataField] public string StoredDamageContainer = "Biological";
+    [DataField] public ProtoId<DamageContainerPrototype> StoredDamageContainer = "Biological";
 
     /// <summary>
     /// The damage to apply upon a successful Siphon Entropy

@@ -10,8 +10,6 @@ namespace Content.Client._Impstation.CosmicCult.UI.Monument;
 [UsedImplicitly]
 public sealed class MonumentBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     [ViewVariables]
     private MonumentMenu? _menu;
 
@@ -21,12 +19,11 @@ public sealed class MonumentBoundUserInterface(EntityUid owner, Enum uiKey) : Bo
 
         _menu = this.CreateWindow<MonumentMenu>();
 
-        _menu.OnSelectGlyphButtonPressed += OnGlyphButtonPressed;
+        _menu.OnSelectGlyphButtonPressed += (ProtoId<GlyphPrototype> protoId) => { SendMessage(new GlyphSelectedMessage(protoId)); };
         _menu.OnRemoveGlyphButtonPressed += () => { SendMessage(new GlyphRemovedMessage());};
 
         _menu.OnGainButtonPressed += OnIdSelected;
     }
-
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
@@ -35,11 +32,6 @@ public sealed class MonumentBoundUserInterface(EntityUid owner, Enum uiKey) : Bo
 
         _menu?.UpdateState(buiState);
     }
-    private void OnGlyphButtonPressed(ProtoId<GlyphPrototype> protoId)
-    {
-        SendMessage(new GlyphSelectedMessage(protoId));
-    }
-
     private void OnIdSelected(ProtoId<InfluencePrototype> selectedInfluence)
     {
         SendMessage(new InfluenceSelectedMessage(selectedInfluence));

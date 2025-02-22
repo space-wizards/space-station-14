@@ -1,6 +1,4 @@
 using Content.Shared.Damage;
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Impstation.CosmicCult.Components;
 
@@ -14,7 +12,7 @@ public sealed partial class CosmicGlyphConversionComponent : Component
     public float ConversionRange = 0.5f;
 
     /// <summary>
-    ///     Wether or not we ignore mindshields.
+    ///     Whether or not we ignore mindshields.
     /// </summary>
     [DataField]
     public bool NegateProtection = false;

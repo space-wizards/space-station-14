@@ -12,7 +12,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._Impstation.CosmicCult.UI.Monument;
-// Content.Client/_Impstation/CosmicCult/UI/Monument/MonumentMenu.xaml.cs
 [GenerateTypedNameReferences]
 public sealed partial class MonumentMenu : FancyWindow
 {
@@ -27,8 +26,8 @@ public sealed partial class MonumentMenu : FancyWindow
     private readonly IEnumerable<InfluencePrototype> _influencePrototypes;
     private readonly ButtonGroup _glyphButtonGroup;
     private ProtoId<GlyphPrototype> _selectedGlyphProtoId = string.Empty;
-    private List<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
-    private List<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
+    private HashSet<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
+    private HashSet<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
     public Action<ProtoId<GlyphPrototype>>? OnSelectGlyphButtonPressed;
     public Action? OnRemoveGlyphButtonPressed;
 
@@ -58,13 +57,11 @@ public sealed partial class MonumentMenu : FancyWindow
         _unlockedInfluenceProtoIds = state.UnlockedInfluences;
         _unlockedGlyphProtoIds = state.UnlockedGlyphs;
 
-        // TODO: Fix this nonsense!!
         CultProgressBar.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = new Color(15, 17, 30) };
         CultProgressBar.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = new Color(91, 62, 124) };
 
         SelectGlyphButton.StyleClasses.Add("ButtonColorPurpleAndCool");
         RemoveGlyphButton.StyleClasses.Add("ButtonColorPurpleAndCool");
-        // End
 
         UpdateBar(state);
         UpdateEntropy(state);
@@ -109,9 +106,7 @@ public sealed partial class MonumentMenu : FancyWindow
                 Disabled = !unlocked,
                 Modulate = !unlocked ? Color.Gray : Color.White,
             };
-
-            button.OnPressed +=  _ => UpdateSelectedGlyph(glyph.ID);
-
+            button.OnPressed +=  _ => _selectedGlyphProtoId = glyph.ID;
             var glyphIcon = new TextureRect
             {
                 Texture = _sprite.Frame0(glyph.Icon),
@@ -127,31 +122,15 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the influence thingies
     private void UpdateInfluences()
     {
-        var influences = _influencePrototypes.ToList();
-        influences.Sort((x, y) =>
-            string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
-
+        var influences = _influencePrototypes
+            .OrderBy(influence => _unlockedGlyphProtoIds.Contains(influence.ID))
+            .ThenBy<InfluencePrototype, string>(influence => influence.Name, StringComparer.CurrentCultureIgnoreCase);
         InfluencesContainer.RemoveAllChildren();
         foreach (var influence in influences)
         {
             var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
             var influenceBox = new InfluenceUIBox(influence, unlocked);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            if (unlocked)
-                InfluencesContainer.AddChild(influenceBox);
         }
-        foreach (var influence in influences) // I'm sure there's a better way to order them by being Unlocked / Locked, but i've been told to just loop through 'em twice. So we're going with that
-        {
-            var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
-            var influenceBox = new InfluenceUIBox(influence, unlocked);
-            influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            if (!unlocked)
-                InfluencesContainer.AddChild(influenceBox);
-        }
-    }
-    // This might not be the best way of doing it, but It makes sense...
-    private void UpdateSelectedGlyph(ProtoId<GlyphPrototype> glyph)
-    {
-        _selectedGlyphProtoId = glyph;
     }
 }

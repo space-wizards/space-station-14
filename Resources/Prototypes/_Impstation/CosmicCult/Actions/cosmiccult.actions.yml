@@ -36,7 +36,7 @@
 - type: entity
   id: ActionCosmicPlaceMonument
   name: Beckon The Monument
-  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists - make sure to place it wisely!
+  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists!
   categories: [ HideSpawnMenu ]
   components:
   - type: ConfirmableAction
@@ -98,7 +98,7 @@
 - type: entity
   id: ActionCosmicIngress
   name: Force Ingress
-  description: Use a concentrated effort of power to wrench a secure doorway open.
+  description: Use a concentrated blast of power to force a secure doorway open.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -115,7 +115,7 @@
 - type: entity
   id: ActionCosmicImposition
   name: Vacuous Imposition
-  description: For a short time, you negate any incoming damage.
+  description: You negate any incoming damage for a short time.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction

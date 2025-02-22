@@ -140,7 +140,7 @@
       emergencyLightColor: PaleVioletRed
       forceEnableEmergencyLights: true
       shuttleTime: 600
-    octarine: # cosmic cult
+    octarine:
       announcement: alert-level-octarine-announcement
       selectable: false
       sound:

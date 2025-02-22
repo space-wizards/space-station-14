@@ -1,4 +1,3 @@
-
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Portable;
@@ -122,7 +121,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
             args.Cancel();
             return;
         }
-        if (possibleTargets.Count >= 2)
+        if (possibleTargets.Count > 1)
         {
             _popup.PopupEntity(Loc.GetString("cult-glyph-too-many-targets"), uid, args.User);
             args.Cancel();
@@ -135,19 +134,16 @@ public sealed class CosmicGlyphSystem : EntitySystem
             {
                 _popup.PopupEntity(Loc.GetString("cult-glyph-target-dead"), uid, args.User);
                 args.Cancel();
-                return;
             }
-            if (uid.Comp.NegateProtection == false && HasComp<BibleUserComponent>(target))
+            else if (uid.Comp.NegateProtection == false && HasComp<BibleUserComponent>(target))
             {
                 _popup.PopupEntity(Loc.GetString("cult-glyph-target-chaplain"), uid, args.User);
                 args.Cancel();
-                return;
             }
-            if (uid.Comp.NegateProtection == false && HasComp<MindShieldComponent>(target))
+            else if (uid.Comp.NegateProtection == false && HasComp<MindShieldComponent>(target))
             {
                 _popup.PopupEntity(Loc.GetString("cult-glyph-target-mindshield"), uid, args.User);
                 args.Cancel();
-                return;
             }
             else
             {
@@ -185,13 +181,13 @@ public sealed class CosmicGlyphSystem : EntitySystem
             args.Cancel();
             return;
         }
-        if (possibleTargets.Count >= 2)
+        if (possibleTargets.Count > 1)
         {
             _popup.PopupEntity(Loc.GetString("cult-glyph-too-many-targets"), uid, args.User);
             args.Cancel();
             return;
         }
-        foreach (var target in possibleTargets) // FIVE GODDAMN if-statements? Yep. I know. Why? My brain doesn't have enough juice to write something more succinct.
+        foreach (var target in possibleTargets)
         {
             Spawn(_random.Pick(uid.Comp.TransmuteWeapon), tgtpos);
             QueueDel(target);
@@ -210,7 +206,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
             args.Cancel();
             return;
         }
-        if (possibleTargets.Count >= 2)
+        if (possibleTargets.Count > 1)
         {
             _popup.PopupEntity(Loc.GetString("cult-glyph-too-many-targets"), uid, args.User);
             args.Cancel();
@@ -228,14 +224,14 @@ public sealed class CosmicGlyphSystem : EntitySystem
     private void OnTransmuteSpireGlyph(Entity<CosmicGlyphTransmuteSpireComponent> uid, ref TryActivateGlyphEvent args)
     {
         var tgtpos = Transform(uid).Coordinates;
-        var possibleTargets = GatherPortaScrubbers(uid, uid.Comp.TransmuteRange);
+        var possibleTargets = GatherPortableScrubbers(uid, uid.Comp.TransmuteRange);
         if (possibleTargets.Count == 0)
         {
             _popup.PopupEntity(Loc.GetString("cult-glyph-conditions-not-met"), uid, args.User);
             args.Cancel();
             return;
         }
-        if (possibleTargets.Count >= 2)
+        if (possibleTargets.Count > 1)
         {
             _popup.PopupEntity(Loc.GetString("cult-glyph-too-many-targets"), uid, args.User);
             args.Cancel();
@@ -266,41 +262,37 @@ public sealed class CosmicGlyphSystem : EntitySystem
     public HashSet<EntityUid> GatherCultists(EntityUid uid, float range)
     {
         var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, range);
-        entities.RemoveWhere(entity => !HasComp<CosmicCultComponent>(entity));
-        entities.RemoveWhere(entity => _container.IsEntityInContainer(entity));
+        entities.RemoveWhere(entity => !HasComp<CosmicCultComponent>(entity) || _container.IsEntityInContainer(entity));
         return entities;
     }
 
     /// <summary>
     ///     Gets all sharp items near a glyph.
     /// </summary>
-    public HashSet<EntityUid> GatherSharpItems(EntityUid uid, float range)
+    private HashSet<EntityUid> GatherSharpItems(EntityUid uid, float range)
     {
         var items = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, range);
-        items.RemoveWhere(item => !HasComp<SharpComponent>(item));
-        items.RemoveWhere(item => _container.IsEntityInContainer(item));
+        items.RemoveWhere(item => !HasComp<SharpComponent>(item) || _container.IsEntityInContainer(item));
         return items;
     }
 
     /// <summary>
-    ///     Gets all portascrubbers near a glyph.
+    ///     Gets all portablescrubbers near a glyph.
     /// </summary>
-    public HashSet<EntityUid> GatherPortaScrubbers(EntityUid uid, float range)
+    private HashSet<EntityUid> GatherPortableScrubbers(EntityUid uid, float range)
     {
         var items = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, range);
-        items.RemoveWhere(item => !HasComp<PortableScrubberComponent>(item));
-        items.RemoveWhere(item => _container.IsEntityInContainer(item));
+        items.RemoveWhere(item => !HasComp<PortableScrubberComponent>(item) || _container.IsEntityInContainer(item));
         return items;
     }
 
     /// <summary>
     ///     Gets all items with clothing movespeed modifier and pressure protection near a glyph.
     /// </summary>
-    public HashSet<EntityUid> GatherPressureSuitItems(EntityUid uid, float range)
+    private HashSet<EntityUid> GatherPressureSuitItems(EntityUid uid, float range)
     {
         var items = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, range);
-        items.RemoveWhere(item => !HasComp<ClothingSpeedModifierComponent>(item) || !HasComp<PressureProtectionComponent>(item));
-        items.RemoveWhere(item => _container.IsEntityInContainer(item));
+        items.RemoveWhere(item => !HasComp<ClothingSpeedModifierComponent>(item) || !HasComp<PressureProtectionComponent>(item) || _container.IsEntityInContainer(item));
         return items;
     }
 
@@ -310,7 +302,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
     /// <param name="uid">The glyph.</param>
     /// <param name="range">Radius for a lookup.</param>
     /// <param name="exclude">Filter to exclude from return.</param>
-    public HashSet<Entity<HumanoidAppearanceComponent>> GetTargetsNearGlyph(EntityUid uid, float range, Predicate<Entity<HumanoidAppearanceComponent>>? exclude = null)
+    private HashSet<Entity<HumanoidAppearanceComponent>> GetTargetsNearGlyph(EntityUid uid, float range, Predicate<Entity<HumanoidAppearanceComponent>>? exclude = null)
     {
         var possibleTargets = _lookup.GetEntitiesInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, range);
         if (exclude != null)

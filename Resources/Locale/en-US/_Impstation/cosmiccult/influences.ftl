@@ -1,4 +1,3 @@
-
 influence-type-active = Active
 influence-type-passive = Passive
 
@@ -27,7 +26,7 @@ influence-name-step = Unbound Step
 influence-description-step = You move relative only to the starless black - your movement is no longer affected by gravity.
 
 influence-name-stride = Astral Stride
-influence-description-stride = Astral energy envigorates your every move, subtly hastening your speed.
+influence-description-stride = Astral energy invigorates your every move, subtly hastening your speed.
 
 influence-name-vitality = Vacuous Vitality
-influence-description-vitality = The starless emptiness of The Monument fills you in both mind and body. Your corporeal form slowly regenerates while in its presence.
+influence-description-vitality = The starless emptiness of The Monument overwhelms your mind and body. Your corporeal form slowly regenerates while in its presence.

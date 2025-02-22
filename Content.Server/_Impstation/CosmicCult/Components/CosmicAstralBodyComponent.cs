@@ -1,5 +1,3 @@
-using Robust.Shared.Prototypes;
-
 namespace Content.Server._Impstation.CosmicCult.Components;
 
 [RegisterComponent]

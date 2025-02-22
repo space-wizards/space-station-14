@@ -20,16 +20,18 @@ public sealed class CosmicCultObjectiveSystem : EntitySystem
     {
         args.Progress = Progress(ent.Comp.Siphoned, _number.GetTarget(ent.Owner));
     }
+
     private void OnGetTierProgress(Entity<CosmicTierConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = Progress(ent.Comp.Tier, _number.GetTarget(ent.Owner));
     }
+
     private void OnGetVictoryProgress(Entity<CosmicVictoryConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = Progress(ent.Comp.Victory, _number.GetTarget(ent.Owner));
     }
 
-    private float Progress(int recruited, int target)
+    private static float Progress(int recruited, int target)
     {
         // prevent divide-by-zero
         if (target == 0)

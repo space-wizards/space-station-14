@@ -15,8 +15,7 @@ cult-glyph-description-warding = Transmutes pressure-resistant clothing into ent
 cult-glyph-name-blades = Communion of Blades
 cult-glyph-description-blades = Transmutes and extrudes sharp objects into more lethal weaponry.
 
-cult-glyph-name-cessation = Concord  of Cessation
+cult-glyph-name-cessation = Concord of Cessation
 cult-glyph-description-cessation = Transmutes a portable atmospherics scrubber into a Vacuous Spire for our use.
 cult-glyph-name-truth = Concord of Truth
-cult-glyph-description-truth = Instills the pure, indelible truth. Able to converts absolutely anyone to join our ranks.
-
+cult-glyph-description-truth = Instills the pure, indelible truth. Able to convert absolutely anyone to join our ranks.

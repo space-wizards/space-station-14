@@ -19,10 +19,6 @@
       params:
         variation: 0.1
         volume: +14
-    # damage:       #commented out the damage because we're applying damage elsewhere for now
-    #   types:
-    #     Cold: 20
-    #     Asphyxiation: 20
   - type: CosmicAstralNova
   - type: Sprite
     sprite: _Impstation/CosmicCult/Effects/ability_novavfx.rsi

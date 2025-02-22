@@ -1,7 +1,6 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server._Impstation.CosmicCult.Components;
 
@@ -26,7 +25,8 @@ public sealed partial class CleanseOnUseComponent : Component
     /// When True allows an item to cleanse the Cosmic Cult's Malign Rifts onInteractInHand, utilized exclusively by the CosmicRiftSystem.
     /// </summary>
     [DataField] public bool MiscFlag = false;
-    [DataField, AutoNetworkedField] public DamageSpecifier SelfDamage = new()
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier SelfDamage = new()
     {
         DamageDict = new() {
             { "Caustic", 15 }

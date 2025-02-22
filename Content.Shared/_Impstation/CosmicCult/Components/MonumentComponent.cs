@@ -9,7 +9,7 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 [AutoGenerateComponentPause]
 public sealed partial class MonumentComponent : Component
 {
-    [NonSerialized] public static int LayerMask = 777;
+    [NonSerialized] public const int LayerMask = 777;
     [DataField] public List<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
     [DataField] public List<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
     [DataField] public ProtoId<GlyphPrototype> SelectedGlyph;
@@ -19,11 +19,11 @@ public sealed partial class MonumentComponent : Component
     [DataField] public int CrewToConvertNextStage;
     [DataField] public float PercentageComplete;
     /// <summary>
-    /// A bool we use to set wether or not The Monument's UI is available or not.
+    /// A bool we use to set whether The Monument's UI is available or not.
     /// </summary>
     [DataField] public bool Enabled = true;
     /// <summary>
-    /// A bool that determines wether or not the monument is tangible to non-cultists.
+    /// A bool that determines whether The Monument is tangible to non-cultists.
     /// </summary>
     [DataField] public bool HasCollision = false;
     [DataField, AutoNetworkedField] public TimeSpan TransformTime = TimeSpan.FromSeconds(2.8);
@@ -47,11 +47,13 @@ public sealed partial class MonumentComponent : Component
     };
 
 }
+
 [Serializable, NetSerializable]
 public sealed class InfluenceSelectedMessage(ProtoId<InfluencePrototype> influenceProtoId) : BoundUserInterfaceMessage
 {
     public ProtoId<InfluencePrototype> InfluenceProtoId = influenceProtoId;
 }
+
 [Serializable, NetSerializable]
 public sealed class GlyphSelectedMessage(ProtoId<GlyphPrototype> glyphProtoId) : BoundUserInterfaceMessage
 {
@@ -70,7 +72,7 @@ public enum MonumentVisuals : byte
     Transforming,
     FinaleReached,
     FinaleActive,
-    Tier3
+    Tier3,
 }
 
 [Serializable, NetSerializable]
@@ -78,5 +80,5 @@ public enum MonumentVisualLayers : byte
 {
     MonumentLayer,
     TransformLayer,
-    FinaleLayer
+    FinaleLayer,
 }

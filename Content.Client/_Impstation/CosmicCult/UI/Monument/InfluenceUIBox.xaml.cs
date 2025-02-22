@@ -49,9 +49,5 @@ public sealed partial class InfluenceUIBox : BoxContainer
         Type.Text = Loc.GetString(influenceProto.InfluenceType);
         Cost.Text = influenceProto.Cost.ToString();
         Description.SetMarkup(Loc.GetString(influenceProto.Description));
-
-        // This basically does nothing, but it allows the actual menu to "subscribe" to this getting pressed.
-        // Elements are private so you have to do it this way.
-        GainButton.OnPressed += _ => OnGainButtonPressed?.Invoke();
     }
 }

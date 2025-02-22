@@ -75,7 +75,7 @@
   name: gildgrail
   id: NullRodGrail
   parent: NullRodBase
-  description:  Looks so expensive, it's almost concerning. Can hold a deceptively large volume of liquid. Said to ward off evil.
+  description: Looks so expensive, it's almost concerning. Can hold a deceptively large volume of liquid. Said to ward off evil.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Misc/nullrod_grail.rsi

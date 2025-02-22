@@ -5,9 +5,9 @@
   - type: CosmicCultRule
   - type: GameRule
     minPlayers: 25
-    # delay:
-    #   min: 60 #TODO: UNCOMMENT THIS OR I KILL YOU SO HELP ME GOD
-    #   max: 120
+    delay:
+      min: 60
+      max: 120
   - type: AntagObjectives
     objectives:
     - CosmicFinalityObjective

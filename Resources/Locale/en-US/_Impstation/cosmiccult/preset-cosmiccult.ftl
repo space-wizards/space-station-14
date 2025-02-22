@@ -35,7 +35,7 @@ cosmiccult-finale-beckon-success = You beckon for the final curtain call.
 
 
 cosmiccult-roundend-cultist-count = {$initialCount ->
-    [one] There was {$initialCount} [color=#4cabb3]Cosmic Cultist[/color].
+    [1] There was {$initialCount} [color=#4cabb3]Cosmic Cultist[/color].
     *[other] There were {$initialCount} [color=#4cabb3]Cosmic Cultists[/color].
 }
 cosmiccult-roundend-entropy-count = The cult siphoned {$count} Entropy.

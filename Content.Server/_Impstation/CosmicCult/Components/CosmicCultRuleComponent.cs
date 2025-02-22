@@ -1,11 +1,3 @@
-using Content.Shared._Impstation.CosmicCult.Components;
-using Content.Shared.NPC.Prototypes;
-using Content.Shared.Roles;
-using Content.Shared.Store;
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-
 namespace Content.Server._Impstation.CosmicCult.Components;
 
 /// <summary>
@@ -15,7 +7,7 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 public sealed partial class CosmicCultRuleComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField] public List<EntityUid> Cultists = new();
+    [DataField] public HashSet<EntityUid> Cultists = new();
     [DataField] public bool WinLocked = false;
     [DataField] public WinType WinType = WinType.CrewMinor;
 }

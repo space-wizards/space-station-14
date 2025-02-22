@@ -9,7 +9,8 @@ using Content.Server.Audio;
 using Content.Server.Popups;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
-public sealed class CosmiSpireSystem : EntitySystem
+
+public sealed class CosmicSpireSystem : EntitySystem
 {
     [Dependency] private readonly GasVentScrubberSystem _scrub = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -19,6 +20,7 @@ public sealed class CosmiSpireSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly CosmicCultRuleSystem _cosmicRule = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -42,11 +44,12 @@ public sealed class CosmiSpireSystem : EntitySystem
         _ambient.SetAmbience(uid, comp.Enabled);
         _lights.SetEnabled(uid, comp.Enabled);
     }
+
     private void OnDeviceUpdated(EntityUid uid, CosmicSpireComponent comp, ref AtmosDeviceUpdateEvent args)
     {
         if (!comp.Enabled)
             return;
-        if (args.Grid is not {} grid)
+        if (args.Grid is not { } grid)
             return;
         var timeDelta = args.dt;
         var position = _transform.GetGridTilePositionOrDefault(uid);
@@ -68,6 +71,7 @@ public sealed class CosmiSpireSystem : EntitySystem
             _cosmicRule.EntropySiphoned++;
         }
     }
+
     private bool Drain(float timeDelta, CosmicSpireComponent comp, GasMixture? tile)
     {
         return _scrub.Scrub(timeDelta, comp.DrainRate * _atmos.PumpSpeedup(), ScrubberPumpDirection.Scrubbing, comp.DrainGases, tile, comp.Storage);
@@ -75,7 +79,7 @@ public sealed class CosmiSpireSystem : EntitySystem
 
     private void OnSpireAnalyzed(EntityUid uid, CosmicSpireComponent comp, GasAnalyzerScanEvent args)
     {
-        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures ??= [];
         args.GasMixtures.Add((Name(uid), comp.Storage));
     }
 
