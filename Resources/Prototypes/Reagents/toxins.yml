@@ -403,7 +403,7 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Animal # Applying damage to the mobs with lower metabolism capabilities
+          type: TheobromineIntolerance # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -411,7 +411,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:OrganType
-            type: Animal
+            type: TheobromineIntolerance
 
 - type: reagent
   id: Amatoxin
