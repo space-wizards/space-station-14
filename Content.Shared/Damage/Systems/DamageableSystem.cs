@@ -224,12 +224,12 @@ namespace Content.Shared.Damage
             Dirty(uid, comp);
         }
 
-        public void SetDamageContainerID(EntityUid uid, string damageContainerId, DamageableComponent? comp = null) // IMP EDIT BEGIN || we need to be able to change DamageContainer to make cultists vulnerable to Holy Damage.
+        public void SetDamageContainerID(EntityUid uid, string damageContainerId, DamageableComponent? comp = null) // IMP EDIT BEGIN
         {
             if (!_damageableQuery.Resolve(uid, ref comp))
                 return;
 
-            comp.DamageContainerID = damageContainerId;
+            comp.DamageContainerID = damageContainerId; // we need to be able to change DamageContainer to make cultists vulnerable to Holy Damage.
             Dirty(uid, comp);
         } // IMP EDIT END
 

@@ -71,7 +71,7 @@
   components:
   - type: EntityTargetAction
     canTargetSelf: true
-    useDelay: 60
+    useDelay: 45
     whitelist:
       components:
         - HumanoidAppearance

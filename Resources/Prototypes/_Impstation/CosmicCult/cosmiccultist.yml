@@ -7,7 +7,7 @@
   playTimeTracker: AntagCosmicCultist
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
+    time: 43200 # 12h
   guides: [ CosmicCult ]
 
 - type: antag
@@ -19,5 +19,5 @@
   playTimeTracker: AntagCosmicCultLead
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
+    time: 144000 # 40h
   guides: [ CosmicCult ]

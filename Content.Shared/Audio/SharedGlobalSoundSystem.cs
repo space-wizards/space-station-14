@@ -44,7 +44,7 @@ public sealed class GameGlobalSoundEvent : GlobalSoundEvent
 public enum StationEventMusicType : byte
 {
     Nuke,
-    CosmicCult
+    CosmicCult // Imp edit
 }
 
 /// <summary>
