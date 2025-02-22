@@ -41,6 +41,12 @@ namespace Content.Shared.Atmos
         public const float T20C = 293.15f;
 
         /// <summary>
+        ///     -38.15ºC in K.
+        ///     This is used to initialize roundstart freezer rooms.
+        /// </summary>
+        public const float FreezerTemp = 235f;
+
+        /// <summary>
         ///     Do not allow any gas mixture temperatures to exceed this number. It is occasionally possible
         ///     to have very small heat capacity (e.g. room that was just unspaced) and for large amounts of
         ///     energy to be transferred to it, even for a brief moment. However, this messes up subsequent
@@ -66,6 +72,12 @@ namespace Content.Shared.Atmos
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
 
         /// <summary>
+        ///     Moles in a 2.5 m^3 cell at 101.325 kPa and -38.15ºC.
+        ///     This is used in fix atmos freezer markers to ensure the air is at the correct atmospheric pressure while still being cold.
+        /// </summary>
+        public const float MolesCellFreezer = (OneAtmosphere * CellVolume / (FreezerTemp * R));
+
+        /// <summary>
         ///     Moles in a 2.5 m^3 cell at GasMinerDefaultMaxExternalPressure kPa and 20ºC
         /// </summary>
         public const float MolesCellGasMiner = (GasMinerDefaultMaxExternalPressure * CellVolume / (T20C * R));
@@ -80,6 +92,9 @@ namespace Content.Shared.Atmos
 
         public const float OxygenMolesStandard = MolesCellStandard * OxygenStandard;
         public const float NitrogenMolesStandard = MolesCellStandard * NitrogenStandard;
+
+        public const float OxygenMolesFreezer = MolesCellFreezer * OxygenStandard;
+        public const float NitrogenMolesFreezer = MolesCellFreezer * NitrogenStandard;
 
         #endregion
 
@@ -144,6 +159,22 @@ namespace Content.Shared.Atmos
         ///     For the purposes of making space "colder"
         /// </summary>
         public const float SpaceHeatCapacity = 7000f;
+
+        /// <summary>
+        ///     Dictionary of chemical abbreviations for <see cref="Gas"/>
+        /// </summary>
+        public static Dictionary<Gas, string> GasAbbreviations = new Dictionary<Gas, string>()
+        {
+            [Gas.Ammonia] = Loc.GetString("gas-ammonia-abbreviation"),
+            [Gas.CarbonDioxide] = Loc.GetString("gas-carbon-dioxide-abbreviation"),
+            [Gas.Frezon] = Loc.GetString("gas-frezon-abbreviation"),
+            [Gas.Nitrogen] = Loc.GetString("gas-nitrogen-abbreviation"),
+            [Gas.NitrousOxide] = Loc.GetString("gas-nitrous-oxide-abbreviation"),
+            [Gas.Oxygen] = Loc.GetString("gas-oxygen-abbreviation"),
+            [Gas.Plasma] = Loc.GetString("gas-plasma-abbreviation"),
+            [Gas.Tritium] = Loc.GetString("gas-tritium-abbreviation"),
+            [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
+        };
 
         #region Excited Groups
 

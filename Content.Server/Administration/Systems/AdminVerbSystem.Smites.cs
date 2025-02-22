@@ -136,8 +136,8 @@ public sealed partial class AdminVerbSystem
                     Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
-                xform.Coordinates = EntityCoordinates.FromMap(_mapManager, session.Position);
-                xform.WorldRotation = Angle.Zero;
+                xform.Coordinates = _transformSystem.ToCoordinates(session.Position);
+                _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", chessName, Loc.GetString("admin-smite-chess-dimension-description"))
@@ -892,5 +892,36 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", superslipName, Loc.GetString("admin-smite-super-slip-description"))
         };
         args.Verbs.Add(superslip);
+
+        var omniaccentName = Loc.GetString("admin-smite-omni-accent-name").ToLowerInvariant();
+        Verb omniaccent = new()
+        {
+            Text = omniaccentName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Interface/Actions/voice-mask.rsi"), "icon"),
+            Act = () =>
+            {
+                EnsureComp<BarkAccentComponent>(args.Target);
+                EnsureComp<BleatingAccentComponent>(args.Target);
+                EnsureComp<FrenchAccentComponent>(args.Target);
+                EnsureComp<GermanAccentComponent>(args.Target);
+                EnsureComp<LizardAccentComponent>(args.Target);
+                EnsureComp<MobsterAccentComponent>(args.Target);
+                EnsureComp<MothAccentComponent>(args.Target);
+                EnsureComp<OwOAccentComponent>(args.Target);
+                EnsureComp<SkeletonAccentComponent>(args.Target);
+                EnsureComp<SouthernAccentComponent>(args.Target);
+                EnsureComp<SpanishAccentComponent>(args.Target);
+                EnsureComp<StutteringAccentComponent>(args.Target);
+
+                if (_random.Next(0, 8) == 0)
+                {
+                    EnsureComp<BackwardsAccentComponent>(args.Target); // was asked to make this at a low chance idk
+                }
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", omniaccentName, Loc.GetString("admin-smite-omni-accent-description"))
+        };
+        args.Verbs.Add(omniaccent);
     }
 }
