@@ -870,3 +870,22 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+
+# DEFENSES
+- type: construction
+  name: sentry turret control panel
+  id: WeaponEnergyTurretControlPanel
+  graph: WeaponEnergyTurretControlPanel
+  startNode: start
+  targetNode: finish
+  category: construction-category-utilities
+  description: "A wall-mounted interface for remotely configuring the operational parameters of linked sentry turrets."
+  icon:
+    sprite: Structures/Wallmounts/turret_controls.rsi
+    state: base
+  objectType: Structure
+  canRotate: true
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
