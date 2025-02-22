@@ -1,0 +1,198 @@
+- type: entity
+  name: Custodian
+  parent: [ BaseSimpleMob, FlyingMobBase ]
+  id: MobCosmicConstructCustodian
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Impstation/CosmicCult/Mobs/custodian.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+    - state: custodian
+    - state: custodian_unshaded
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: Body
+  - type: CombatMode
+  - type: NoSlip
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: UnblockableSpeech
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: custodian
+      Critical:
+        Base: custodian
+      Dead:
+        Base: custodian
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: CosmicCult
+    isConstruct: true
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - CosmicRadio
+  - type: ActiveRadio
+    channels:
+    - CosmicRadio
+  - type: ZombieImmune
+  - type: PointLight
+    enabled: true
+    color: "#42a4ae"
+    radius: 5
+    energy: 3.4
+    mask: /Textures/_Impstation/CosmicCult/LightMasks/cosmic.png
+    autoRot: true
+    netsync: false
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg # TODO: Cult construct polish
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Access
+    enabled: false
+  - type: AccessReader
+    access: [["Maintenance"], ["Service"], ["External"]]
+    breakOnEmag: false
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+    weightlessAcceleration: 1.5 # Move around more easily in space.
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+
+
+- type: entity
+  name: Oracle
+  parent: [ BaseSimpleMob, FlyingMobBase ]
+  id: MobCosmicConstructOracle
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Impstation/CosmicCult/Mobs/oracle.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+    - state: oracle
+    - state: oracle_unshaded
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: Body
+  # - type: CombatMode
+  - type: NoSlip
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: UnblockableSpeech
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: oracle
+      Critical:
+        Base: oracle
+      Dead:
+        Base: oracle
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: CosmicCult
+    isConstruct: true
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - CosmicRadio
+  - type: ActiveRadio
+    channels:
+    - CosmicRadio
+  - type: ZombieImmune
+  - type: PointLight
+    enabled: true
+    color: "#42a4ae"
+    radius: 1.75
+    energy: 2.1
+    netsync: false
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg # TODO: Cult construct polish
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Access
+    enabled: false
+  - type: AccessReader
+    access: [["Maintenance"], ["Service"], ["External"]]
+    breakOnEmag: false
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 2
+    weightlessAcceleration: 1.5 # Move around more easily in space.
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5

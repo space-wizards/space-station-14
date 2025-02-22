@@ -25,10 +25,27 @@ public sealed class SharedTemperatureSystem : EntitySystem
 
         SubscribeLocalEvent<TemperatureSpeedComponent, OnTemperatureChangeEvent>(OnTemperatureChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
+
+        SubscribeLocalEvent<TemperatureImmunityComponent, ComponentInit>(OnTemperatureImmuneInit);
+        SubscribeLocalEvent<TemperatureImmunityComponent, ComponentRemove>(OnTemperatureImmuneRemove);
+    }
+    private void OnTemperatureImmuneInit(EntityUid uid, TemperatureImmunityComponent temperatureImmunity, ComponentInit args)
+    {
+        if (TryComp<TemperatureSpeedComponent>(uid, out var comp)) comp.HasImmunity = true;
     }
 
+    private void OnTemperatureImmuneRemove(EntityUid uid, TemperatureImmunityComponent temperatureImmunity, ComponentRemove args)
+    {
+        if (TryComp<TemperatureSpeedComponent>(uid, out var comp)) comp.HasImmunity = false;
+    }
     private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref OnTemperatureChangeEvent args)
     {
+        if (ent.Comp.HasImmunity) // IMP EDIT BEGIN | This allows us to easily make things immune. Temperature changes? What are those?
+        {
+            ent.Comp.CurrentSpeedModifier = null;
+            Dirty(ent);
+            return;
+        } // IMP EDIT END
         foreach (var (threshold, modifier) in ent.Comp.Thresholds)
         {
             if (args.CurrentTemperature < threshold && args.LastTemperature > threshold ||

@@ -1,0 +1,28 @@
+- type: antag
+  id: CosmicAntagCultist
+  name: roles-antag-cosmiccult-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-cosmiccult-description
+  guides: [ NuclearOperatives ]
+
+- type: antag
+  id: CosmicAntagLeader
+  name: roles-antag-cosmiccultlead-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-cosmiccultlead-description
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 36000 # 10h
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 36000 # 10h
+  - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 27000 # 7.5 hours
+  - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 27000 # 7.5 hours
+  guides: [ NuclearOperatives ]

@@ -4,7 +4,7 @@
   name: malign wall
   description: A strange-looking wall. Staring at it for too long instills a sense of discomfort.
   components:
-  # - type: CosmicItem
+  - type: CosmicMarkStructure
   - type: Tag
     tags:
       - Wall
@@ -126,7 +126,7 @@
   components:
   - type: RCDDeconstructable
     deconstructable: false
-  # - type: CosmicItem
+  - type: CosmicMarkStructure
   - type: Sprite
     drawdepth: WallTops
     sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_diagonal.rsi
@@ -157,7 +157,7 @@
     snap:
     - Wall
   components:
-  # - type: CosmicItem
+  - type: CosmicMarkStructure
   - type: Sprite
     drawdepth: WallTops
     sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark_diagonal.rsi

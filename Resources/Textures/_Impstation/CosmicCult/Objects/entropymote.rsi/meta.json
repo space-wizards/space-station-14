@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "A custom item by AftrLite (Github).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mote"
+    },
+    {
+      "name": "mote_2"
+    },
+    {
+      "name": "mote_3"
+    }
+  ]
+}

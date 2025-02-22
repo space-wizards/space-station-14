@@ -377,7 +377,19 @@ public abstract class SharedMindSystem : EntitySystem
         objective = default;
         return false;
     }
+    public void ClearObjectives(EntityUid mind, MindComponent? comp = null) // #IMP | currently loadbearing for Cosmic Cult's deconversion function. Used in CleanseCorruption.
+    {
+        if (!Resolve(mind, ref comp))
+            return;
 
+        foreach (var obj in comp.Objectives)
+        {
+            QueueDel(obj);
+        }
+        comp.Objectives.Clear();
+        comp.ObjectiveTargets.Clear();
+        Dirty(mind, comp);
+    }
     public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null) where T : IComponent
     {
         if (Resolve(mindId, ref mind))

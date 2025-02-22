@@ -1,0 +1,13 @@
+# This is clearly cult contraband is illegal to own ICly.
+- type: contrabandSeverity
+  id: CosmicCultContrabandSeverity
+  examineText: cosmic-examine-text-contraband
+
+- type: entity
+  id: BaseCosmicCultContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: CosmicCultContrabandSeverity
+    # no one should be carrying this around visibly!
+    allowedDepartments: null
