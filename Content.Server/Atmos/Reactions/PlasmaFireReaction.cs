@@ -1,86 +1,88 @@
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 
-namespace Content.Server.Atmos.Reactions
+namespace Content.Server.Atmos.Reactions;
+
+[UsedImplicitly]
+[DataDefinition]
+public sealed partial class PlasmaFireReaction : IGasReactionEffect
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public sealed partial class PlasmaFireReaction : IGasReactionEffect
+    public ReactionResult React(GasMixture mixture,
+        IGasMixtureHolder? holder,
+        AtmosphereSystem atmosphereSystem,
+        float heatScale)
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
+        var temperature = mixture.Temperature;
+        mixture.ReactionResults[(byte)GasReaction.Fire] = 0;
+
+        // React faster and with less oxygen per plasma at higher temperatures, up to a maximum.
+        var temperatureReactionScale = ProportionOfRange(temperature,
+            Atmospherics.PlasmaMinimumBurnTemperature,
+            Atmospherics.PlasmaUpperTemperature);
+        if (temperatureReactionScale > 0)
         {
-            var energyReleased = 0f;
-            var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
-            var temperature = mixture.Temperature;
-            var location = holder as TileAtmosphere;
-            mixture.ReactionResults[(byte)GasReaction.Fire] = 0;
+            var initialOxygenMoles = mixture.GetMoles(Gas.Oxygen);
+            var initialPlasmaMoles = mixture.GetMoles(Gas.Plasma);
 
-            // More plasma released at higher temperatures.
-            var temperatureScale = 0f;
+            // The maximum rate based on the relative proportions of reactants, expressed as moles of plasma burned.
+            var maximumReactionRate =
+                Math.Min(initialPlasmaMoles, initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn);
+            var reactionRate = maximumReactionRate * temperatureReactionScale / Atmospherics.PlasmaBurnRateDelta;
 
-            if (temperature > Atmospherics.PlasmaUpperTemperature)
-                temperatureScale = 1f;
-            else
+            // TODO I have no fucking idea why the rate is compared against a heat capacity here.
+            // ... but it has the effect of not doing little finicky adjustments, I guess.
+            if (reactionRate > Atmospherics.MinimumHeatCapacity)
             {
-                temperatureScale = (temperature - Atmospherics.PlasmaMinimumBurnTemperature) /
-                                   (Atmospherics.PlasmaUpperTemperature - Atmospherics.PlasmaMinimumBurnTemperature);
-            }
+                var initialThermalEnergy = temperature * atmosphereSystem.GetHeatCapacity(mixture, true);
 
-            if (temperatureScale > 0)
-            {
-                var oxygenBurnRate = Atmospherics.OxygenBurnRateBase - temperatureScale;
-                var plasmaBurnRate = 0f;
+                var oxygenPerPlasmaBurned = Atmospherics.OxygenBurnRateBase - temperatureReactionScale;
+                // Don't try to use more of the reactants than are actually present.
+                var reactantLimitedReactionRate = MathF.Min(reactionRate,
+                    MathF.Min(initialPlasmaMoles, initialOxygenMoles / oxygenPerPlasmaBurned));
+                mixture.SetMoles(Gas.Plasma, initialPlasmaMoles - reactantLimitedReactionRate);
+                mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - reactantLimitedReactionRate * oxygenPerPlasmaBurned);
 
-                var initialOxygenMoles = mixture.GetMoles(Gas.Oxygen);
-                var initialPlasmaMoles = mixture.GetMoles(Gas.Plasma);
+                // Mixes supersaturated with oxygen relative to plasma create some tritium rather than CO2.
+                var supersaturation = ProportionOfRange(initialOxygenMoles / initialPlasmaMoles,
+                    Atmospherics.SuperSaturationThreshold,
+                    Atmospherics.SuperSaturationEnds);
+                mixture.AdjustMoles(Gas.Tritium, reactantLimitedReactionRate * supersaturation);
+                mixture.AdjustMoles(Gas.CarbonDioxide, reactantLimitedReactionRate * (1.0f - supersaturation));
 
-                // Supersaturation makes tritium.
-                var oxyRatio = initialOxygenMoles / initialPlasmaMoles;
-                // Efficiency of reaction decreases from 1% Plasma to 3% plasma:
-                var supersaturation = Math.Clamp((oxyRatio - Atmospherics.SuperSaturationEnds) /
-                                                 (Atmospherics.SuperSaturationThreshold -
-                                                  Atmospherics.SuperSaturationEnds), 0.0f, 1.0f);
+                // adjust energy by `heatScale` to make sure speedup doesn't cause mega temperature rise
+                var energyReleased = Atmospherics.FirePlasmaEnergyReleased * reactionRate / heatScale;
+                mixture.ReactionResults[(byte)GasReaction.Fire] = reactionRate * (1 + oxygenPerPlasmaBurned);
 
-                if (initialOxygenMoles > initialPlasmaMoles * Atmospherics.PlasmaOxygenFullburn)
-                    plasmaBurnRate = initialPlasmaMoles * temperatureScale / Atmospherics.PlasmaBurnRateDelta;
-                else
-                    plasmaBurnRate = temperatureScale * (initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn) / Atmospherics.PlasmaBurnRateDelta;
-
-                if (plasmaBurnRate > Atmospherics.MinimumHeatCapacity)
+                if (energyReleased > 0)
                 {
-                    plasmaBurnRate = MathF.Min(plasmaBurnRate, MathF.Min(initialPlasmaMoles, initialOxygenMoles / oxygenBurnRate));
-                    mixture.SetMoles(Gas.Plasma, initialPlasmaMoles - plasmaBurnRate);
-                    mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - plasmaBurnRate * oxygenBurnRate);
-
-                    // supersaturation adjusts the ratio of produced tritium to unwanted CO2
-                    mixture.AdjustMoles(Gas.Tritium, plasmaBurnRate * supersaturation);
-                    mixture.AdjustMoles(Gas.CarbonDioxide, plasmaBurnRate * (1.0f - supersaturation));
-
-                    energyReleased += Atmospherics.FirePlasmaEnergyReleased * plasmaBurnRate;
-                    energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise
-                    mixture.ReactionResults[(byte)GasReaction.Fire] += plasmaBurnRate * (1 + oxygenBurnRate);
+                    var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
+                    if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
+                        mixture.Temperature = (initialThermalEnergy + energyReleased) / newHeatCapacity;
                 }
             }
-
-            if (energyReleased > 0)
-            {
-                var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
-                if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
-                    mixture.Temperature = (temperature * oldHeatCapacity + energyReleased) / newHeatCapacity;
-            }
-
-            if (location != null)
-            {
-                var mixTemperature = mixture.Temperature;
-                if (mixTemperature > Atmospherics.FireMinimumTemperatureToExist)
-                {
-                    atmosphereSystem.HotspotExpose(location, mixTemperature, mixture.Volume);
-                }
-            }
-
-            return mixture.ReactionResults[(byte)GasReaction.Fire] != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
         }
+
+        if (holder is TileAtmosphere location && mixture.Temperature > Atmospherics.FireMinimumTemperatureToExist)
+        {
+            atmosphereSystem.HotspotExpose(location, mixture.Temperature, mixture.Volume);
+        }
+
+        return mixture.ReactionResults[(byte)GasReaction.Fire] != 0
+            ? ReactionResult.Reacting
+            : ReactionResult.NoReaction;
+    }
+
+    /// <summary>
+    /// Normalizes <paramref name="value"/> as a number in the range of <paramref name="min"/> to <paramref name="max"/>,
+    /// returning a value from 0.0, when <paramref name="value"/> is <paramref name="min"/>, to 1.0, when
+    /// <paramref name="value"/> is <paramref name="max"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static float ProportionOfRange(float value, float min, float max)
+    {
+        return Math.Clamp((value - min) / (max - min), 0.0f, 1.0f);
     }
 }
