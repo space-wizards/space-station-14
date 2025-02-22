@@ -133,6 +133,31 @@ public sealed class HTNSystem : EntitySystem
         component.PlanningJob = null;
     }
 
+    public void SetHTNEnabled(Entity<HTNComponent> ent, bool state, float planCooldown = 0f)
+    {
+        if (ent.Comp.Enabled = state)
+            return;
+
+        ent.Comp.Enabled = state;
+        ent.Comp.PlanAccumulator = planCooldown;
+
+        ent.Comp.PlanningToken?.Cancel();
+        ent.Comp.PlanningToken = null;
+
+        if (ent.Comp.Plan != null)
+        {
+            var currentOperator = ent.Comp.Plan.CurrentOperator;
+
+            ShutdownTask(currentOperator, ent.Comp.Blackboard, HTNOperatorStatus.Failed);
+            ShutdownPlan(ent.Comp);
+
+            ent.Comp.Plan = null;
+        }
+
+        if (ent.Comp.Enabled && ent.Comp.PlanAccumulator <= 0)
+            RequestPlan(ent.Comp);
+    }
+
     /// <summary>
     /// Forces the NPC to replan.
     /// </summary>
@@ -147,11 +172,14 @@ public sealed class HTNSystem : EntitySystem
         _planQueue.Process();
         var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
-        while(query.MoveNext(out var uid, out _, out var comp))
+        while (query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
             if (count >= maxUpdates)
                 break;
+
+            if (!comp.Enabled)
+                continue;
 
             if (comp.PlanningJob != null)
             {
