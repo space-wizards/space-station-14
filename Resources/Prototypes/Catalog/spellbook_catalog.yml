@@ -75,6 +75,9 @@
     WizCoin: 3
   categories:
   - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 - type: listing
   id: SpellbookRepulse
@@ -85,6 +88,9 @@
     WizCoin: 2
   categories:
   - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 # Utility
 - type: listing
