@@ -68,7 +68,7 @@ public sealed class UplinkSystem : EntitySystem
         
         try
         {
-            balance *= Math.Sqrt(-Math.Log2(1f - Random.Shared.NextSingle()));
+            balance *= -Math.Log2(1f - Random.Shared.NextSingle());
             balance = Math.Round((float)balance);
         }
         catch { }
