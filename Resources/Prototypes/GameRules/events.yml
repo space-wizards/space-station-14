@@ -467,6 +467,9 @@
       max: 1
       pickPlayer: false
       startingGear: SyndicateLoneOperativeGearFull
+      blacklist:
+        tags:
+          - Resomi
       roleLoadout:
       - RoleSurvivalNukie
       components:

@@ -1,0 +1,11 @@
+- type: entity
+  id: OrganResomiEyes
+  parent: OrganHumanEyes
+  name: eye
+  description: "I see you!"
+  components:
+  - type: FunctionalOrgan
+    comps: 
+    - type: NightVision
+    - type: FlashModifier
+      modifier: 2

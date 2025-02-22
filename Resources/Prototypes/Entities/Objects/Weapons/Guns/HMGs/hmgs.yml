@@ -5,6 +5,12 @@
   description: Spray and pray.
   abstract: true
   components:
+  - type: RestrictByUserTag
+    doestContain:
+    - Abductor
+    - Resomi
+    messages:
+    - abductor-gun-restricted-1
   - type: Sprite
   - type: Item
     size: Ginormous
