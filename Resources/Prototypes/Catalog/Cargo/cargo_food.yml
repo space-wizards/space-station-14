@@ -84,7 +84,7 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     state: raisins
   product: CrateFoodGetMore
-  cost: 720
+  cost: 750
   category: cargoproduct-category-name-food
   group: market
 
