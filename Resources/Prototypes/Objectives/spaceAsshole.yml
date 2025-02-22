@@ -6,9 +6,10 @@
   - type: Objective
     # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
     difficulty: 3.0
-    # killing 1 head is enough
-    unique: true
     issuer: objective-issuer-syndicate
+    icon:
+      sprite: Objects/Weapons/Melee/sledgehammer.rsi
+      state: icon
   - type: TargetObjective
     title: objective-condition-kill-head-title
   - type: PickRandomHead
@@ -26,6 +27,9 @@
   - type: Objective
     difficulty: 1.5
     issuer: objective-issuer-syndicate
+    icon:
+      sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+      state: icon
 
 - type: entity
   parent: [BaseLivingObjective]
@@ -36,7 +40,7 @@
   - type: Objective
     difficulty: 5 # insane, default config max difficulty
     icon:
-      sprite: Objects/Tools/emag.rsi
-      state: icon
+      sprite: Structures/Machines/bomb.rsi
+      state: syndicate-bomb
     issuer: objective-issuer-syndicate
   - type: WantonCarnageCondition

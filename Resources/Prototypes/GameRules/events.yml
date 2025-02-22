@@ -39,6 +39,7 @@
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: WizardSpawn
+    - id: SpaceAssholeSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -529,6 +530,13 @@
   - type: RuleGrids
   - type: LoadMapRule
     mapPath: /Maps/Shuttles/ShuttleEvent/guerrilla-truck.yml
+  - type: AntagLoadProfileRule
+  - type: AntagObjectives
+    agentName: Space Asshole
+    objectives:
+    - SpaceAssholeKillRandomHeadObjective
+    - SpaceAssholeSurviveObjective
+    - SpaceAssholeHijackShuttleObjective
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointSpaceAsshole
@@ -546,16 +554,14 @@
       - type: AutoImplant
         implants:
         - MacroBombImplant
-        - MicroBombImplant #todo curious if the game will detonate both
+        - MicroBombImplant
       mindRoles:
       - MindRoleSpaceAsshole
       briefing:
+        text: "Wanton carnage is all you can enjoy."
+        color: Green
         sound: "/Audio/Lobby/space_asshole.ogg"
-  - type: AntagObjectives
-    objectives:
-    - SpaceAssholeKillRandomHeadObjective
-    - SpaceAssholeSurviveObjective
-    - SpaceAssholeHijackShuttleObjective
+      allowNonHumans: True
 
 - type: entity
   parent: BaseTraitorRule
