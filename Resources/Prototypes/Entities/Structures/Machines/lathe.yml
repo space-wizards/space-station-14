@@ -394,6 +394,9 @@
     - SecurityAmmoStatic
     - SecurityWeaponsStatic
     dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
+    - ScienceSecurityClothing
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
