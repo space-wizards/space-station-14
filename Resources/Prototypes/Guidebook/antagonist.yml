@@ -4,12 +4,12 @@
   text: "/ServerInfo/Guidebook/Antagonist/Antagonists.xml"
   children:
   - Traitors
-  - NuclearOperatives
-  - Zombies
-  - Revolutionaries
-  - MinorAntagonists
-  - SpaceNinja
   - Thieves
+  - Revolutionaries
+  - NuclearOperatives
+  - SpaceNinja
+  - Zombies
+  - MinorAntagonists
 
 - type: guideEntry
   id: Traitors
