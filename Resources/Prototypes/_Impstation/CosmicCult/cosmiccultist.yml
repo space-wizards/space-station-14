@@ -4,8 +4,11 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-cosmiccult-description
-  guides: [ CosmicCult ]
   playTimeTracker: AntagCosmicCultist
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 18000 # 5h
+  guides: [ CosmicCult ]
 
 - type: antag
   id: CosmicAntagLeader
@@ -13,5 +16,8 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-cosmiccultlead-description
-  guides: [ CosmicCult ]
   playTimeTracker: AntagCosmicCultLead
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 18000 # 5h
+  guides: [ CosmicCult ]

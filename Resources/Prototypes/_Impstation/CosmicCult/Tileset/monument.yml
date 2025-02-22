@@ -92,9 +92,9 @@
     unlockedGlyphs:
     - ccGlyphKnowledge
     - ccGlyphProjection
-    selectedGlyph: CosmicGlyphKnowledge
+    selectedGlyph: ccGlyphKnowledge
     availableEntropy: 0
-    infusedEntropy: 0
+    totalEntropy: 0
     entropyUntilNextStage: 777
     crewToConvertNextStage:  777
     percentageComplete: 0

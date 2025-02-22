@@ -84,7 +84,6 @@
     context: "ghost"
   - type: MovementIgnoreGravity
   - type: GhostHearing
-    globalReceive: true
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
@@ -102,7 +101,6 @@
     enabled: true
     volume: 0
     range: 25
-    variation: 0.1
     sound:
       path: /Audio/_Impstation/CosmicCult/god_ambient.ogg
   - type: EmitSoundOnSpawn

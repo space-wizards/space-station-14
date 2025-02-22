@@ -119,9 +119,6 @@
   components:
   - type: InstantAction
     useDelay: 160
-    whitelist:
-      components:
-        - HumanoidAppearance
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi

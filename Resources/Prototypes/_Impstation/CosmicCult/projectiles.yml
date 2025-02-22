@@ -41,7 +41,6 @@
     enabled: true
     volume: 0
     range: 10
-    variation: 0.05
     sound:
       path: /Audio/_Impstation/CosmicCult/ability_nova_ambient.ogg
   - type: CosmicCorrupting
