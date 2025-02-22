@@ -4,8 +4,8 @@ using Content.Shared.Nutrition.Components;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-/// <inheritdoc cref="ExamineableHungerComponent"/>
-public sealed class ExamineableHungerSystem : EntitySystem
+/// <inheritdoc cref="ExaminableHungerComponent"/>
+public sealed class ExaminableHungerSystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     private EntityQuery<HungerComponent> _hungerQuery;
@@ -16,14 +16,14 @@ public sealed class ExamineableHungerSystem : EntitySystem
 
         _hungerQuery = GetEntityQuery<HungerComponent>();
 
-        SubscribeLocalEvent<ExamineableHungerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<ExaminableHungerComponent, ExaminedEvent>(OnExamine);
     }
 
     /// <summary>
     ///     Defines the text provided on examine.
     ///     Changes depending on the amount of hunger the target has.
     /// </summary>
-    private void OnExamine(Entity<ExamineableHungerComponent> entity, ref ExaminedEvent args)
+    private void OnExamine(Entity<ExaminableHungerComponent> entity, ref ExaminedEvent args)
     {
         var identity = Identity.Entity(entity, EntityManager);
 
