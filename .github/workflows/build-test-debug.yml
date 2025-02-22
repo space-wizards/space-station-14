@@ -2,11 +2,11 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master, staging, stable, april-fools-2025 ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ master, staging, stable ]
+    branches: [ master, staging, stable, april-fools-2025 ]
 
 jobs:
   build:
