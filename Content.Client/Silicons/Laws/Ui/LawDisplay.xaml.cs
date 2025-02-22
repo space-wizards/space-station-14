@@ -26,7 +26,7 @@ public sealed partial class LawDisplay : Control
 
     private readonly Dictionary<Button, TimeSpan> _nextAllowedPress = new();
 
-    public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
+    public LawDisplay(EntityUid? uid, SiliconLaw law, HashSet<string>? radioChannels)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -42,7 +42,10 @@ public sealed partial class LawDisplay : Control
 
         // If you can't talk, you can't state your laws...
         if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
+        {
+            LawAnnouncementButtons.Visible = false;
             return;
+        }
 
         var localButton = new Button
         {
