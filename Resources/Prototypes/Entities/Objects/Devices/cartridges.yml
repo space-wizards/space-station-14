@@ -154,3 +154,22 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+
+- type: entity
+  parent: BaseItem
+  id: ReadytoneCartridge
+  name: Readytone cartridge
+  description: A program that grants your PDA the ability to play music.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-mus
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-mus
+    - type: Cartridge
+      programName: ready-tone-program-name
+      icon:
+        sprite: Objects/Fun/Instruments/structureinstruments.rsi
+        state: daw-base
+    - type: ReadytoneCartridge

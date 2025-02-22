@@ -969,11 +969,13 @@
     borderColor: "#333333"
   - type: Icon
     state: pda-musician
-  - type: Instrument
-    allowPercussion: false
-    handheld: true
-    bank: 1
-    program: 2
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - ReadytoneCartridge
 
 - type: entity
   parent: MusicianPDA
