@@ -540,6 +540,7 @@
           tags:
           - CaptainSabre
   - type: Appearance
+  - type: SmartEquipItemSlot
 
 # Belts without visualizers
 
