@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Light bulbs now fit into the trash bag again.
-    type: Fix
-  id: 7489
-  time: '2024-10-05T18:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32452
 - author: Just_Art
   changes:
   - message: Added a flower wreath and hairflower to loadout!
@@ -3897,3 +3890,10 @@
   id: 7988
   time: '2025-02-22T09:20:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34173
+- author: Sparlight
+  changes:
+  - message: All dogs now make dog noises when speaking.
+    type: Tweak
+  id: 7989
+  time: '2025-02-22T21:34:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35383
