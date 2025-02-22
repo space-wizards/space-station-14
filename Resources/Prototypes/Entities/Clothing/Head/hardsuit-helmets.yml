@@ -401,6 +401,9 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: Tag
+    tags:
+      - CorgiWearable
 
 #Blood-red Medic Hardsuit
 - type: entity
@@ -454,6 +457,9 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: Tag
+    tags:
+      - CorgiWearable
 
 #Syndicate Commander Hardsuit
 - type: entity

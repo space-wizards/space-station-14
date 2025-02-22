@@ -552,6 +552,7 @@
     - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
+    - CorgiWearable
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -609,6 +610,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+  - type: Tag
+    tags:
+      - CorgiWearable
 
 #Syndicate Commander Hardsuit
 - type: entity
