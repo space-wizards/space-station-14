@@ -20,6 +20,14 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
   - type: HTN
     rootTask:
       task: XenoCompound
