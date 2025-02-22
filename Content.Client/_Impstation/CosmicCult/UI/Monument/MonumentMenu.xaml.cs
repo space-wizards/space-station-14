@@ -137,7 +137,7 @@ public sealed partial class MonumentMenu : FancyWindow
             var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
             var influenceBox = new InfluenceUIBox(influence, unlocked);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            if (unlocked == true)
+            if (unlocked)
                 InfluencesContainer.AddChild(influenceBox);
         }
         foreach (var influence in influences) // I'm sure there's a better way to order them by being Unlocked / Locked, but i've been told to just loop through 'em twice. So we're going with that
@@ -145,7 +145,7 @@ public sealed partial class MonumentMenu : FancyWindow
             var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
             var influenceBox = new InfluenceUIBox(influence, unlocked);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            if (unlocked == false)
+            if (!unlocked)
                 InfluencesContainer.AddChild(influenceBox);
         }
     }

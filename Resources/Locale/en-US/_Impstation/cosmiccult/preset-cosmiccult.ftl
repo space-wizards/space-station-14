@@ -6,7 +6,7 @@ cosmiccult-title = Cosmic Cult
 cosmiccult-description = Cultists lurk amongst the crew.
 
 roles-antag-cosmiccult-name = Cosmic Cultist
-roles-antag-cosmiccult-description = Usher in the end of all things through subterfuge and sabotage, brainwashing those that would oppose you.
+roles-antag-cosmiccult-description = Usher in the end of all things through subterfuge and sabotage, brainwashing those who would oppose you.
 
 roles-antag-cosmiccultlead-name = Cosmic Cult Leader
 roles-antag-cosmiccultlead-description = Organize the cult into a force to be reckoned, so that you may usher in the end of all things.
@@ -98,10 +98,10 @@ cosmiccult-role-deconverted-briefing =
 
 ## MALIGN RIFTS
 
-cosmiccult-rift-inuse = I can't do this right now.
-cosmiccult-rift-invaliduser = I lack the tools to deal with this.
-cosmiccult-rift-chaplainoops = I should probably use a bible or gildgrail.
-cosmiccult-rift-alreadyempowered = I don't need to absorb another one.
+cosmiccult-rift-inuse = You can't do this right now.
+cosmiccult-rift-invaliduser = You lack the tools to deal with this.
+cosmiccult-rift-chaplainoops = You should probably use a bible or gildgrail.
+cosmiccult-rift-alreadyempowered = You don't need to absorb another one.
 cosmiccult-rift-beginabsorb = You begin absorbing the malign rift..
 cosmiccult-rift-beginpurge = You begin purging the malign rift..
 
