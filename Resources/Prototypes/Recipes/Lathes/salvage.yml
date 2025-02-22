@@ -21,7 +21,8 @@
 - type: latheRecipe
   id: Fulton
   result: Fulton1
-  category: Tools
+  categories:
+  - Tools
   completetime: 1
   materials:
     Steel: 200
@@ -30,7 +31,8 @@
 - type: latheRecipe
   id: FultonBeacon
   result: FultonBeacon
-  category: Tools
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 1000
@@ -40,7 +42,8 @@
 - type: latheRecipe
   id: SeismicCharge
   result: SeismicCharge
-  category: Tools
+  categories:
+  - Tools
   completetime: 1
   materials:
     Plastic: 1500
