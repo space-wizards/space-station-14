@@ -109,6 +109,12 @@ public sealed partial class MindComponent : Component
     public ProtoId<RoleTypePrototype> RoleType = "Neutral";
 
     /// <summary>
+    ///     The role's subtype, shown only to admins to help with antag categorization
+    /// </summary>
+    [DataField]
+    public LocId? Subtype;
+
+    /// <summary>
     ///     The session of the player owning this mind.
     ///     Can be null, in which case the player is currently not logged in.
     /// </summary>

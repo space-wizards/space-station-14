@@ -204,12 +204,12 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var roleType = GetCurrentRole(ent.Comp).Item1;
+        var role = GetCurrentRole(ent.Comp);
 
-        if (ent.Comp.RoleType == roleType)
+        if (ent.Comp.RoleType == role.Item1 &&  ent.Comp.Subtype == role.Item2)
             return false;
 
-        SetRoleType(ent.Owner, roleType);
+        SetRoleType(ent.Owner, role.Item1, role.Item2);
         return true;
     }
 
@@ -235,21 +235,22 @@ public abstract class SharedRoleSystem : EntitySystem
         return (result);
     }
 
-    private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId)
+    private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype)
     {
         if (!TryComp<MindComponent>(mind, out var comp))
         {
-            Log.Error($"Failed to update Role Type of mind entity {ToPrettyString(mind)} to {roleTypeId}. MindComponent not found.");
+            Log.Error($"Failed to update Role Type of mind entity {ToPrettyString(mind)} to {roleTypeId}, {subtype}. MindComponent not found.");
             return;
         }
 
         if (!_prototypes.HasIndex(roleTypeId))
         {
-            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}. Invalid role");
+            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}, {subtype}. Invalid role");
             return;
         }
 
         comp.RoleType = roleTypeId;
+        comp.Subtype = subtype;
         Dirty(mind, comp);
 
         // Update player character window
@@ -266,13 +267,13 @@ public abstract class SharedRoleSystem : EntitySystem
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.High,
-                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}");
+                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}, {subtype}");
             return;
         }
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.High,
-            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}");
+            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
     }
 
     /// <summary>
