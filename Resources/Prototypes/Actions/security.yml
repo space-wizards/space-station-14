@@ -1,0 +1,24 @@
+# gloves
+- type: entity
+  id: ActionToggleKnuckleDustersStun
+  name: Toggle stun knucle dusters
+  description: Toggles the duster's built in stun baton.
+  components:
+  - type: InstantAction
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+        volume: 5
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+        volume: 5
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+        volume: 5
+    event: !type:ToggleActionEvent

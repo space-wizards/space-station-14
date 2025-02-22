@@ -195,3 +195,14 @@
   description: Bones and silk combined together.
   icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
   objectType: Item
+
+- type: construction
+  name: brass knuckle dusters
+  id: ClothingHandsKnuckleDustersBrass
+  graph: ClothingHandsKnuckleDustersBrass
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  description: Brass knuckle dusters; a classic in the field of beating people to death.
+  icon: { sprite: Clothing/Hands/Gloves/KnuckleDusters/brassknuckleduster.rsi, state: brassknuckleduster }
+  objectType: Item
