@@ -125,7 +125,7 @@
     antagPrototype: Dragon
     roleType: TeamAntagonist
     subtype: "role-subtype- dragon"
-    exclusiveAntag: true
+    exclusiveAntag: tru
   - type: DragonRole
   - type: RoleBriefing
     briefing: dragon-role-briefing

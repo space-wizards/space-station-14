@@ -232,10 +232,20 @@ public sealed class AdminSystem : EntitySystem
 
         RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
+        var subtype = string.Empty;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
-            if (_proto.TryIndex(mindComp.RoleType, out var role))
-                roleType = role;
+            var role = _role.GetCurrentRole(mindComp);
+
+            if (role.Item1 != mindComp.RoleType)
+                Log.Error($"GetCurrentRole() reports '{role.Item1}' vs mindComponent's '{mindComp.RoleType}' for {ToPrettyString(mindId)}");
+
+            // I COULD get the protoId from mindComp, but since I need to call GetCurrentRole for the subtype anyway, would feel weird to read them from two different code paths
+            if (_proto.TryIndex(role.Item1, out var indexed))
+            {
+                roleType = indexed;
+                subtype = role.Item2;
+            }
             else
                 Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
 
@@ -252,7 +262,7 @@ public sealed class AdminSystem : EntitySystem
             overallPlaytime = playTime;
         }
 
-        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, GetNetEntity(session?.AttachedEntity), data.UserId,
+        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, subtype, GetNetEntity(session?.AttachedEntity), data.UserId,
             connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
     }
 

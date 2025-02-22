@@ -204,7 +204,7 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var roleType = GetRoleTypeByTime(ent.Comp);
+        var roleType = GetCurrentRole(ent.Comp).Item1;
 
         if (ent.Comp.RoleType == roleType)
             return false;
@@ -213,20 +213,25 @@ public abstract class SharedRoleSystem : EntitySystem
         return true;
     }
 
-    private ProtoId<RoleTypePrototype> GetRoleTypeByTime(MindComponent mind)
+    public (ProtoId<RoleTypePrototype>, LocId?) GetCurrentRole(MindComponent mind)
     {
-        // If any Mind Roles specify a Role Type, return the most recent. Otherwise return Neutral
+        return GetRoleTypeByTime(mind);
+    }
 
-        var roles = new List<ProtoId<RoleTypePrototype>>();
+    private (ProtoId<RoleTypePrototype>, LocId?) GetRoleTypeByTime(MindComponent mind)
+    {
+        // If any Mind Roles specify a Role Type, return the most recent one along with the subtype. Otherwise return Neutral
+
+        var roles = new List<(ProtoId<RoleTypePrototype>, LocId?)>();
 
         foreach (var role in mind.MindRoles)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
-                roles.Add(comp.RoleType.Value);
+                roles.Add((comp.RoleType.Value, comp.Subtype));
         }
 
-        ProtoId<RoleTypePrototype> result = (roles.Count > 0) ? roles.LastOrDefault() : "Neutral";
+        var result = (roles.Count > 0) ? roles.LastOrDefault() : ("Neutral", null);
         return (result);
     }
 

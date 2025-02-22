@@ -87,9 +87,8 @@ internal sealed class AdminNameOverlay : Overlay
             if (_filter.Contains(playerInfo.RoleProto.ID))
             {
                 var both = false; // TODO:ERRANT read this from cvar
-                var subtype = ""; // TODO:ERRANT get this from playerInfo, I guess?
 
-                var label = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, subtype, both);
+                var label = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, playerInfo.Subtype, both);
                 var color = playerInfo.RoleProto.Color;
 
                 args.ScreenHandle.DrawString(_fontBold, screenCoordinates + (lineoffset * 2), label.ToUpper(), uiScale, color);
