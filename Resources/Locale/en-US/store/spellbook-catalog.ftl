@@ -12,7 +12,7 @@ spellbook-force-wall-name = Force Wall
 spellbook-force-wall-desc = Make three walls of pure force that you can pass through, but other's can't.
 
 spellbook-repulse-name = Repulse
-spellbook-repulse-desc = Tell people to GIT A-WAYH and push 'em away from you.
+spellbook-repulse-desc = Tell people to GITTAH`WEIGH and push 'em away from you.
 
 spellbook-polymoprh-spider-name = Spider Polymoprh
 spellbook-polymorph-spider-desc = Transforms you into a spider, man!
