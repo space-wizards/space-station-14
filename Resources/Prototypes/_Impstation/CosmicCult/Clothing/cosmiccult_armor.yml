@@ -3,7 +3,7 @@
 
 # COSMIC CULT HARDSUIT BODY
 - type: entity
-  parent: [ ClothingOuterHardsuitBase ]
+  parent: [ ClothingOuterHardsuitBase, TierXContraband ]
   id: ClothingOuterHardsuitCosmicCult
   name: entropic armor
   description: An unsettling hardsuit, numbing to the touch. It pulses with a glow that makes you feel like you've forgotten something..

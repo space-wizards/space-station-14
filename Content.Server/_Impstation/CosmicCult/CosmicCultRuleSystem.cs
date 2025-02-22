@@ -418,7 +418,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _euiMan.OpenEui(new CosmicRoundStartEui(), session);
         }
         TotalCult++;
-        cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value;
+        cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value; //todo: nullable
         rule.Comp.Cultists.Add(uid);
     }
 
