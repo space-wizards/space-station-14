@@ -1878,7 +1878,7 @@
 - type: tile
   id: FloorAstroGrass
   name: tiles-astro-grass
-  sprite: /Textures/Tiles/Asteroid/grass.png
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
   placementVariants:
   - 1.0
@@ -1887,14 +1887,14 @@
   - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Asteroid/single_edge.png
-    NorthEast: /Textures/Tiles/Asteroid/single_edge.png
-    NorthWest: /Textures/Tiles/Asteroid/single_edge.png
-    SouthWest: /Textures/Tiles/Asteroid/single_edge.png
-    South: /Textures/Tiles/Asteroid/double_edge.png
-    East: /Textures/Tiles/Asteroid/double_edge.png
-    North: /Textures/Tiles/Asteroid/double_edge.png
-    West: /Textures/Tiles/Asteroid/double_edge.png
+    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    South: /Textures/Tiles/Planet/Grass/double_edge.png
+    East: /Textures/Tiles/Planet/Grass/double_edge.png
+    North: /Textures/Tiles/Planet/Grass/double_edge.png
+    West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Cutting ]
