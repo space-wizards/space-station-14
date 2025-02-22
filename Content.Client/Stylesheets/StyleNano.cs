@@ -67,6 +67,10 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
 
+        public const string StyleClassConsoleHeading = "ConsoleHeading";
+        public const string StyleClassConsoleSubHeading = "ConsoleSubHeading";
+        public const string StyleClassConsoleText = "ConsoleText";
+
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
         public const string StyleClassSliderBlue = "Blue";
@@ -179,6 +183,10 @@ namespace Content.Client.Stylesheets
             var notoSansBold18 = resCache.NotoStack(variation: "Bold", size: 18);
             var notoSansBold20 = resCache.NotoStack(variation: "Bold", size: 20);
             var notoSansMono = resCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", size: 12);
+            var robotoMonoBold11 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 11);
+            var robotoMonoBold12 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 12);
+            var robotoMonoBold14 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 14);
+
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -406,6 +414,8 @@ namespace Content.Client.Stylesheets
             // CheckBox
             var checkBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png");
             var checkBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png");
+            var monotoneCheckBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png");
+            var monotoneCheckBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png");
 
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
@@ -935,6 +945,21 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassCheckBox }, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureUnchecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassCheckBox, MonotoneCheckBox.StyleClassCheckBoxChecked }, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { MonotoneCheckBox.StyleClassCheckBox }, null, null), new[]
+                {
+                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
+                }),
+
                 // Tooltip
                 new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
                 {
@@ -1132,6 +1157,22 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(Label.StylePropertyFont, notoSans12),
                         new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
                     }),
+
+                // Console text
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassConsoleText}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, robotoMonoBold11)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassConsoleSubHeading}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, robotoMonoBold12)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassConsoleHeading}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, robotoMonoBold14)
+                }),
 
                 // Big Button
                 new StyleRule(new SelectorChild(
