@@ -315,3 +315,5 @@ ghost-role-information-gingerbread-name = Gingerbread Man
 ghost-role-information-gingerbread-description = A being of pure holiday spirit.
                                      Spread molassesy goodness and to all good cheer.
 
+ghost-role-information-spaceasshole-name = Space Asshole
+ghost-role-information-spaceasshole-description = It's April 1st, 2125.
