@@ -30,43 +30,27 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, PowerCellChangedEvent>(OnPowerCellChanged);
     }
 
-    private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
+    private void OnBatteryStartup<T>(Entity<T> entity, ref ComponentStartup args) where T : BatteryAmmoProviderComponent
     {
-        UpdateShots(uid, component);
+        UpdateShots(entity, entity.Comp);
     }
 
-    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ref ChargeChangedEvent args)
+    private void OnBatteryChargeChange<T>(Entity<T> entity, ref ChargeChangedEvent args) where T : BatteryAmmoProviderComponent
     {
-        UpdateShots(uid, component, args.Charge, args.MaxCharge);
+        UpdateShots(entity, entity.Comp, args.Charge, args.MaxCharge);
     }
 
-    private void OnPowerCellChanged(EntityUid uid, BatteryAmmoProviderComponent component, ref PowerCellChangedEvent args)
+    private void OnPowerCellChanged<T>(Entity<T> entity, ref PowerCellChangedEvent args) where T : BatteryAmmoProviderComponent
     {
-        UpdateShots(uid, component);
-    }
-
-    private void UpdateShots(Entity<BatteryAmmoProviderComponent> entity)
-    {
-        UpdateShots(entity.Owner, entity.Comp);
+        UpdateShots(entity, entity.Comp);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        var currentCharge = 0f;
-        var maxCharge = 0f;
-        if (TryComp<BatteryComponent>(uid, out var battery))
-        {
-            currentCharge = battery.CurrentCharge;
-            maxCharge = battery.MaxCharge;
-        }
-        else if (TryComp<PowerCellSlotComponent>(uid, out var powerCellSlot) &&
-            _powerCell.TryGetBatteryFromSlot(uid, out var powerCell, powerCellSlot))
-        {
-            currentCharge = powerCell.CurrentCharge;
-            maxCharge = powerCell.MaxCharge;
-        }
+        var ev = new GetChargeEvent();
+        RaiseLocalEvent(uid, ref ev);
 
-        UpdateShots(uid, component, currentCharge, maxCharge);
+        UpdateShots(uid, component, ev.CurrentCharge, ev.MaxCharge);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, float charge, float maxCharge)
@@ -90,14 +74,14 @@ public sealed partial class GunSystem
         RaiseLocalEvent(uid, ref updateAmmoEv);
     }
 
-    private void OnBatteryDamageExamine(EntityUid uid, BatteryAmmoProviderComponent component, ref DamageExamineEvent args)
+    private void OnBatteryDamageExamine<T>(Entity<T> entity, ref DamageExamineEvent args) where T : BatteryAmmoProviderComponent
     {
-        var damageSpec = GetDamage(component);
+        var damageSpec = GetDamage(entity.Comp);
 
         if (damageSpec == null)
             return;
 
-        var damageType = component switch
+        var damageType = entity.Comp switch
         {
             HitscanBatteryAmmoProviderComponent => Loc.GetString("damage-hitscan"),
             ProjectileBatteryAmmoProviderComponent => Loc.GetString("damage-projectile"),
@@ -136,9 +120,7 @@ public sealed partial class GunSystem
 
     protected override void TakeCharge(Entity<BatteryAmmoProviderComponent> entity)
     {
-        if (TryComp<BatteryComponent>(entity, out var battery))
-            _battery.UseCharge(entity, entity.Comp.FireCost, battery);
-        else if (TryComp<PowerCellSlotComponent>(entity, out var powerCellSlot))
-            _powerCell.TryUseCharge(entity, entity.Comp.FireCost, powerCellSlot);
+        var ev = new ChangeChargeEvent(-entity.Comp.FireCost);
+        RaiseLocalEvent(entity, ref ev);
     }
 }
