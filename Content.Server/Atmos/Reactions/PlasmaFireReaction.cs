@@ -83,6 +83,6 @@ public sealed partial class PlasmaFireReaction : IGasReactionEffect
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static float ProportionOfRange(float value, float min, float max)
     {
-        return Math.Clamp((value - min) / (max - min), 0.0f, 0.1f);
+        return Math.Clamp((value - min) / (max - min), 0.0f, 1.0f);
     }
 }
