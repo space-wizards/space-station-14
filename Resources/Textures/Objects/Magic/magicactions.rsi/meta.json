@@ -35,6 +35,9 @@
       "name": "item_recall"
     },
     {
+      "name": "repulse"
+    },
+    {
         "name": "spell_emp"
     }
   ]
