@@ -99,7 +99,7 @@ public sealed class NewsSystem : SharedNewsSystem
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
                 $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
-                );
+            );
 
             articles.RemoveAt(msg.ArticleNum);
             _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
@@ -130,9 +130,6 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!ent.Comp.PublishEnabled)
             return;
 
-        if (!TryGetArticles(ent, out var articles))
-            return;
-
         if (!CanUse(msg.Actor, ent.Owner))
             return;
 
@@ -146,38 +143,53 @@ public sealed class NewsSystem : SharedNewsSystem
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();
 
-        var article = new NewsArticle
+        if (TryAddNews(ent, title, content, authorName, out var article))
+        {
+            _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"{ToPrettyString(msg.Actor):actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}"
+            );
+
+            _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
+                                                             ("actor", msg.Actor),
+                                                             ("title", article.Value.Title),
+                                                             ("author", article.Value.Author ?? Loc.GetString("news-read-ui-no-author"))
+            ));
+        }
+    }
+
+    public bool TryAddNews(EntityUid uid, string title, string content, string? author, [NotNullWhen(true)] out NewsArticle? article)
+    {
+        if (!TryGetArticles(uid, out var articles))
+        {
+            article = default;
+            return false;
+        }
+
+        article = new NewsArticle
         {
             Title = title.Length <= MaxTitleLength ? title : $"{title[..MaxTitleLength]}...",
             Content = content.Length <= MaxContentLength ? content : $"{content[..MaxContentLength]}...",
-            Author = authorName,
+            Author = author,
             ShareTime = _ticker.RoundDuration()
         };
 
-        _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+        articles.Add(article.Value);
 
-        _adminLogger.Add(
-            LogType.Chat,
-            LogImpact.Medium,
-            $"{ToPrettyString(msg.Actor):actor} created news article {article.Title} by {article.Author}: {article.Content}"
-            );
-
-        _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
-            ("actor", msg.Actor),
-            ("title", article.Title),
-            ("author", article.Author ?? Loc.GetString("news-read-ui-no-author"))
-            ));
-
-        articles.Add(article);
-
-        var args = new NewsArticlePublishedEvent(article);
+        var args = new NewsArticlePublishedEvent(article.Value);
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+
         while (query.MoveNext(out var readerUid, out _))
         {
             RaiseLocalEvent(readerUid, ref args);
         }
 
         UpdateWriterDevices();
+
+        return true;
     }
     #endregion
 
