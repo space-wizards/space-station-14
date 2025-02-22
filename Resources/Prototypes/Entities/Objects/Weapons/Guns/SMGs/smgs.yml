@@ -105,7 +105,7 @@
     minAngle: 21
     maxAngle: 32
     shotsPerBurst: 2 #imp
-    burstCooldown: 0.35 #imp
+    burstCooldown: 0.15 #imp
     burstFireRate: 20 #imp
     availableModes:
     - Burst
