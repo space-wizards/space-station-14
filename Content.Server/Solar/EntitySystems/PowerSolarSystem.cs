@@ -14,7 +14,7 @@ namespace Content.Server.Solar.EntitySystems
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.
     /// </summary>
     [UsedImplicitly]
-    internal sealed class PowerSolarSystem : EntitySystem
+    internal sealed class PowerSolarSystem : SingletonEntitySystem<PowerSolarDataComponent>
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
@@ -26,38 +26,78 @@ namespace Content.Server.Solar.EntitySystems
         public const float MaxPanelVelocityDegrees = 1f;
 
         /// <summary>
+        /// The distance before the sun is considered to have been 'visible anyway'.
+        /// This value, like the occlusion semantics, is borrowed from all the other SS13 stations with solars.
+        /// </summary>
+        public const float SunOcclusionCheckDistance = 20;
+
+        /// <summary>
         /// The current sun angle.
         /// </summary>
-        public Angle TowardsSun = Angle.Zero;
+        public Angle TowardsSun
+        {
+            get => TryGetInstance(out var instance) ? instance.Value.Comp.TowardsSun : Angle.Zero;
+            set
+            {
+                if (TryGetInstance(out var instance))
+                    instance.Value.Comp.TowardsSun = value;
+            }
+        }
 
         /// <summary>
         /// The current sun angular velocity. (This is changed in Initialize)
         /// </summary>
-        public Angle SunAngularVelocity = Angle.Zero;
-
-        /// <summary>
-        /// The distance before the sun is considered to have been 'visible anyway'.
-        /// This value, like the occlusion semantics, is borrowed from all the other SS13 stations with solars.
-        /// </summary>
-        public float SunOcclusionCheckDistance = 20;
+        public Angle SunAngularVelocity
+        {
+            get => TryGetInstance(out var instance) ? instance.Value.Comp.SunAngularVelocity : Angle.Zero;
+            set
+            {
+                if (TryGetInstance(out var instance))
+                    instance.Value.Comp.SunAngularVelocity = value;
+            }
+        }
 
         /// <summary>
         /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
         /// The current target panel rotation.
         /// </summary>
-        public Angle TargetPanelRotation = Angle.Zero;
+        public Angle TargetPanelRotation
+        {
+            get => TryGetInstance(out var instance) ? instance.Value.Comp.TargetPanelRotation : Angle.Zero;
+            set
+            {
+                if (TryGetInstance(out var instance))
+                    instance.Value.Comp.TargetPanelRotation = value;
+            }
+        }
 
         /// <summary>
         /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
         /// The current target panel velocity.
         /// </summary>
-        public Angle TargetPanelVelocity = Angle.Zero;
+        public Angle TargetPanelVelocity
+        {
+            get => TryGetInstance(out var instance) ? instance.Value.Comp.TargetPanelVelocity : Angle.Zero;
+            set
+            {
+                if (TryGetInstance(out var instance))
+                    instance.Value.Comp.TargetPanelVelocity = value;
+            }
+        }
 
         /// <summary>
         /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
         /// Last update of total panel power.
         /// </summary>
-        public float TotalPanelPower = 0;
+        public float TotalPanelPower
+        {
+            get => TryGetInstance(out var instance) ? instance.Value.Comp.TotalPanelPower : 0;
+            set
+            {
+                if (TryGetInstance(out var instance))
+                    instance.Value.Comp.TotalPanelPower = value;
+            }
+        }
 
         /// <summary>
         /// Queue of panels to update each cycle.
@@ -66,9 +106,11 @@ namespace Content.Server.Solar.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
+            base.Initialize();
+
+            SubscribeLocalEvent<PowerSolarDataComponent, MapInitEvent>(OnDataMapInit);
+            SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnPanelMapInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            RandomizeSun();
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -86,7 +128,12 @@ namespace Content.Server.Solar.EntitySystems
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
         }
 
-        private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
+        private void OnDataMapInit(Entity<PowerSolarDataComponent> entity, ref MapInitEvent args)
+        {
+            RandomizeSun();
+        }
+
+        private void OnPanelMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
         {
             UpdateSupply(uid, component);
         }
