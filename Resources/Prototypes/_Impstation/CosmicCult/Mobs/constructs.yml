@@ -184,7 +184,6 @@
     enabled: false
   - type: AccessReader
     access: [["Maintenance"], ["Service"], ["External"]]
-    breakOnEmag: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 2

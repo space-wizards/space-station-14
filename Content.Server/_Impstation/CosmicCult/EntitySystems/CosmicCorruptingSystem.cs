@@ -48,9 +48,9 @@ public sealed class CosmicCorruptingSystem : EntitySystem
             return;
 
         var radius = uid.Comp.CorruptionRadius;
-
         var tileList = _map.GetLocalTilesEnumerator(gridUid, mapGrid, new Box2(tgtPos.Coordinates.Position + new Vector2(-radius, -radius), tgtPos.Coordinates.Position + new Vector2(radius, radius)));
         var entityList = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, radius);
+        var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
         foreach (var entity in entityList)
         {
             if (TryComp<TagComponent>(entity, out var tag))
@@ -68,13 +68,12 @@ public sealed class CosmicCorruptingSystem : EntitySystem
         while (tileList.MoveNext(out var tile))
         {
             var tilePos = _turfs.GetTileCenter(tile);
-            var cultTileDefinition = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
-            if (tile.Tile.TypeId == cultTileDefinition.TileId)
+            if (tile.Tile.TypeId == convertTile.TileId)
                 continue;
-            if (tile.GetContentTileDefinition().Name != cultTileDefinition.Name && _rand.Prob(uid.Comp.CorruptionChance))
+            if (tile.GetContentTileDefinition().Name != convertTile.Name && _rand.Prob(uid.Comp.CorruptionChance))
             {
-                _tile.ReplaceTile(tile, cultTileDefinition);
-                _tile.PickVariant(cultTileDefinition);
+                _tile.ReplaceTile(tile, convertTile);
+                _tile.PickVariant(convertTile);
                 if (uid.Comp.UseVFX)
                     Spawn(uid.Comp.TileConvertVFX, tilePos);
             }

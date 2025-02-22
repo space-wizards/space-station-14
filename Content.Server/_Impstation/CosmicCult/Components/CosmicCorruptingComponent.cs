@@ -60,7 +60,7 @@ public sealed partial class CosmicCorruptingComponent : Component
     /// <summary>
     /// The tile we spawn when replacing a normal tile.
     /// </summary>
-    [DataField] public EntProtoId ConversionTile = "FloorCosmicCorruption";
+    [DataField] public string ConversionTile = "FloorCosmicCorruption";
 
     /// <summary>
     /// The wall we spawn when replacing a normal wall.
