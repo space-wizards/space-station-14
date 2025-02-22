@@ -21,7 +21,7 @@
     sprite: _Impstation/Clothing/Neck/Cloaks/clayshapermantle.rsi
   - type: EmitSoundOnPickup
     sound:
-      path: /Audio/Voice/Diona/diona_rustle3
+      path: /Audio/Voice/Diona/diona_rustle3.ogg
 
 - type: entity
   parent: ClothingNeckBase

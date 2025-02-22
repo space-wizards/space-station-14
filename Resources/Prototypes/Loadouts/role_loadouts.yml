@@ -83,7 +83,7 @@
 - type: roleLoadout
   id: JobServiceWorker
   groups:
-  - BartenderMask # imp
+  - ServiceMask # imp
   - BartenderJumpsuit
   - BartenderShoes # imp
   - Glasses
