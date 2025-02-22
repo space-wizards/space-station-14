@@ -14,7 +14,7 @@ entities:
       name: NT-Arrivals 01
     - type: Transform
       pos: -2.203125,-0.5625
-      parent: 1
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
