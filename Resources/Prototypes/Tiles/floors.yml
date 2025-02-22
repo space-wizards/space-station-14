@@ -1537,6 +1537,16 @@
   - 0.0166
   - 0.0116
   - 0.0116
+  edgeSpritePriority: 0
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/single_edge.png
+    South: /Textures/Tiles/Asteroid/double_edge.png
+    East: /Textures/Tiles/Asteroid/double_edge.png
+    North: /Textures/Tiles/Asteroid/double_edge.png
+    West: /Textures/Tiles/Asteroid/double_edge.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -1548,6 +1558,16 @@
   id: FloorAsteroidSandDug
   name: tiles-asteroid-sand
   sprite: /Textures/Tiles/Asteroid/asteroid_dug.png
+  edgeSpritePriority: 0
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/single_edge.png
+    South: /Textures/Tiles/Asteroid/double_edge.png
+    East: /Textures/Tiles/Asteroid/double_edge.png
+    North: /Textures/Tiles/Asteroid/double_edge.png
+    West: /Textures/Tiles/Asteroid/double_edge.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -1625,6 +1645,16 @@
   id: FloorAsteroidSandUnvariantized
   name: tiles-asteroid-sand
   sprite: /Textures/Tiles/Asteroid/asteroid0.png
+  edgeSpritePriority: 0
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/single_edge.png
+    South: /Textures/Tiles/Asteroid/double_edge.png
+    East: /Textures/Tiles/Asteroid/double_edge.png
+    North: /Textures/Tiles/Asteroid/double_edge.png
+    West: /Textures/Tiles/Asteroid/double_edge.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
