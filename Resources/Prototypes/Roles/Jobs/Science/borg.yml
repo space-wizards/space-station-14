@@ -6,7 +6,7 @@
   playTimeTracker: JobStationAi
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 10800  # 3 hrs
+    time: 28800  # 8 hrs
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
@@ -21,7 +21,7 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 0 # 60 hrs
+      time: 14400 # 4 hrs
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd

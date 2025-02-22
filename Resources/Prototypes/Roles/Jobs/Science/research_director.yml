@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 10800 #3 hrs
+      time: 28800 #8 hrs
     - !type:OverallPlaytimeRequirement
-      time: 10800 #3hrs
+      time: 43200 #12hrs
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"

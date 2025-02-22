@@ -14,8 +14,11 @@
       department: Security
       time: 0 # 0 hrs
     - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 14400 # 4 hrs
+    - !type:DepartmentTimeRequirement
       department: Command
-      time: 10800 # 3 hours
+      time: 14400 # 4 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
