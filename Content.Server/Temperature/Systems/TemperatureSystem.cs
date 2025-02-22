@@ -8,12 +8,13 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Projectiles;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -23,7 +24,7 @@ public sealed class TemperatureSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
@@ -50,6 +51,9 @@ public sealed class TemperatureSystem : EntitySystem
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
+        SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassDataChanged);
+        SubscribeLocalEvent<PhysicsComponent, RecalculateHeatCapacityEvent>(OnRecalculateHeatCapacity);
+
         SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, ProjectileHitEvent>(ChangeTemperatureOnCollide);
 
         // Allows overriding thresholds based on the parent's thresholds.
@@ -58,6 +62,21 @@ public sealed class TemperatureSystem : EntitySystem
             OnParentThresholdStartup);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(
             OnParentThresholdShutdown);
+
+        var vvHandle = _vvManager.GetTypeHandler<TemperatureComponent>();
+        vvHandle.AddPath(nameof(TemperatureComponent.TotalHeatCapacity), (uid, comp) => GetHeatCapacity(uid, comp));
+        vvHandle.AddPath(nameof(TemperatureComponent.BaseHeatCapacity), (_, comp) => comp.BaseHeatCapacity, (uid, value, comp) => SetBaseHeatCapacity((uid, comp), value));
+        vvHandle.AddPath(nameof(TemperatureComponent.SpecificHeat), (_, comp) => comp.SpecificHeat, (uid, value, comp) => SetSpecificHeat((uid, comp), value));
+    }
+
+    public override void Shutdown()
+    {
+        var vvHandle = _vvManager.GetTypeHandler<TemperatureComponent>();
+        vvHandle.RemovePath(nameof(TemperatureComponent.TotalHeatCapacity));
+        vvHandle.RemovePath(nameof(TemperatureComponent.BaseHeatCapacity));
+        vvHandle.RemovePath(nameof(TemperatureComponent.SpecificHeat));
+
+        base.Shutdown();
     }
 
     public override void Update(float frameTime)
@@ -163,14 +182,109 @@ public sealed class TemperatureSystem : EntitySystem
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
     }
 
+    /// <summary>
+    /// Fetches the total heat capacity for an entity.
+    /// Will recalculate the value as necessary to reflect any changes to the sources of heat capacity.
+    /// </summary>
+    /// <param name="uid">The entity that is having its heat capacity recalculated.</param>
+    /// <param name="comp">The thermal data (temperature and heat capacity) for the entity.</param>
+    /// <param name="physics">[Obsolete]</param>
+    /// <returns>The total heat capacity of the entity.</returns>
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
     {
-        if (!Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
-        {
+        if (!Resolve(uid, ref comp))
             return Atmospherics.MinimumHeatCapacity;
-        }
 
-        return comp.SpecificHeat * physics.FixturesMass;
+        if (comp.HeatCapacityDirty)
+            RecalculateHeatCapacity((uid, comp));
+
+        return comp.TotalHeatCapacity;
+    }
+
+    /// <summary>
+    /// Recalculates the total heat capacity for an entity based on all contributing sources.
+    /// </summary>
+    private void RecalculateHeatCapacity(Entity<TemperatureComponent> ent)
+    {
+        DebugTools.Assert(ent.Comp.HeatCapacityDirty, $"The heat capacity for {ToPrettyString(ent)} was recalculated without being dirtied.");
+        ent.Comp.HeatCapacityDirty = false;
+
+        var ev = new RecalculateHeatCapacityEvent(ent, ent.Comp.BaseHeatCapacity);
+        RaiseLocalEvent(ent, ref ev);
+
+        ent.Comp.TotalHeatCapacity = ev.HeatCapacity;
+
+        DebugTools.Assert(!ent.Comp.HeatCapacityDirty, $"The heat capacity for {ToPrettyString(ent)} was dirtied while it was being recalculated.");
+    }
+
+    /// <summary>
+    /// Adjusts the total heat capacity of an entity by some amount.
+    /// May dirty the total heat capacity of the entity if called enough times between recalculations.
+    /// </summary>
+    /// <remarks>
+    /// Should only be used in response to changes to a source of heat capacity for the entity.
+    /// </remarks>
+    /// <param name="ent">The entity that will have its total heat capacity modified.</param>
+    /// <param name="delta">The amount by which to increase or decrease the entities heat capacity.</param>
+    public void AdjustTotalHeatCapacity(Entity<TemperatureComponent?> ent, float delta)
+    {
+        if (!Resolve(ent, ref ent.Comp) || delta == 0f)
+            return;
+
+        ent.Comp.TotalHeatCapacity += delta;
+
+        if (++ent.Comp.HeatCapacityTouched >= TemperatureComponent.HeatCapacityUpdateInterval)
+            ent.Comp.HeatCapacityDirty = true;
+    }
+
+    /// <summary>
+    /// Marks the total heat capacity of an entity as out of date.
+    /// </summary>
+    /// <remarks>
+    /// Should be used every time a source of heat capacity for the entity changes.
+    /// Prefer <see cref="AdjustTotalHeatCapacity"/> if you know the amount by which the heat capacity has changed.
+    /// </remarks>
+    public void DirtyHeatCapacity(Entity<TemperatureComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.HeatCapacityDirty = true;
+    }
+
+    /// <summary>
+    /// Sets the base heat capacity of an entity.
+    /// </summary>
+    /// <param name="ent">The entity to modify the base heat capacity of.</param>
+    /// <param name="value">The new base heat capacity for the entity.</param>
+    public void SetBaseHeatCapacity(Entity<TemperatureComponent?> ent, float value)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var oldHeatCapacity = ent.Comp.BaseHeatCapacity;
+        if (value == oldHeatCapacity)
+            return;
+
+        ent.Comp.BaseHeatCapacity = value;
+        AdjustTotalHeatCapacity(ent, value - oldHeatCapacity);
+    }
+
+    /// <summary>
+    /// Sets how much additional heat capacity an entity gets from each kg of mass it has.
+    /// </summary>
+    /// <param name="ent">The entity to modify the specific heat of.</param>
+    /// <param name="value">The new specific heat for the entity.</param>
+    public void SetSpecificHeat(Entity<TemperatureComponent?> ent, float value)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (value == ent.Comp.SpecificHeat)
+            return;
+
+        ent.Comp.SpecificHeat = value;
+        DirtyHeatCapacity(ent); // Assume the entity has PhysicsComponent and nonzero mass.
     }
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
@@ -179,6 +293,28 @@ public sealed class TemperatureSystem : EntitySystem
             return;
 
         comp.Temperature = temp.CurrentTemperature;
+    }
+
+    /// <summary>
+    /// Marks the heat capacity of the entity as having changed when the mass of the entity changes if its heat capacity is dependent on that.
+    /// </summary>
+    private void OnMassDataChanged(Entity<TemperatureComponent> ent, ref MassDataChangedEvent args)
+    {
+        if (!args.MassChanged || ent.Comp.SpecificHeat == 0f)
+            return;
+
+        AdjustTotalHeatCapacity((ent, ent.Comp), ent.Comp.SpecificHeat * (args.NewMass - args.OldMass));
+    }
+
+    /// <summary>
+    /// Accumulates additional heat capacity for the entity based on its specific heat and mass.
+    /// </summary>
+    private void OnRecalculateHeatCapacity(Entity<PhysicsComponent> ent, ref RecalculateHeatCapacityEvent args)
+    {
+        if (args.Entity.Comp.SpecificHeat == 0f || ent.Comp.FixturesMass == 0f)
+            return;
+
+        args.HeatCapacity += args.Entity.Comp.SpecificHeat * ent.Comp.FixturesMass;
     }
 
     private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
@@ -311,7 +447,7 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)
     {
-        _temperature.ChangeHeat(args.Target, ent.Comp.Heat, ent.Comp.IgnoreHeatResistance);// adjust the temperature
+        ChangeHeat(args.Target, ent.Comp.Heat, ent.Comp.IgnoreHeatResistance);// adjust the temperature
     }
 
     private void OnParentChange(EntityUid uid, TemperatureComponent component,
@@ -425,4 +561,15 @@ public sealed class TemperatureSystem : EntitySystem
 
         return (newHeatThreshold, newColdThreshold);
     }
+}
+
+/// <summary>
+/// A directed event raised when the total heat capacity of an entity is recalculated.
+/// </summary>
+/// <param name="Entity">The entity that is having its heat capacity recalculated.</param>
+/// <param name="HeatCapacity">An accumulator used to aggregate heat capacity from sources.</param>
+[ByRefEvent]
+public record struct RecalculateHeatCapacityEvent(Entity<TemperatureComponent> Entity, float HeatCapacity = 0f)
+{
+    public readonly Entity<TemperatureComponent> Entity = Entity;
 }
