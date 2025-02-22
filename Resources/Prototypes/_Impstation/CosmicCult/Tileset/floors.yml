@@ -161,9 +161,6 @@
     - Wall
   components:
   - type: FloorOccluder
-  - type: SpeedModifierContacts
-    walkSpeedModifier: 0.5
-    sprintSpeedModifier: 0.5
   - type: Physics
     bodyType: Static
   - type: Transform
