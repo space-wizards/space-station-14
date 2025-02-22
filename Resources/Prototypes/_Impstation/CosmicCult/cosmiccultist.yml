@@ -6,8 +6,6 @@
   objective: roles-antag-cosmiccult-description
   guides: [ CosmicCult ]
   playTimeTracker: AntagCosmicCultist
-  - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
 
 - type: antag
   id: CosmicAntagLeader
@@ -17,16 +15,3 @@
   objective: roles-antag-cosmiccultlead-description
   guides: [ CosmicCult ]
   playTimeTracker: AntagCosmicCultLead
-  requirements:
-  - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 27000 # 7.5 hours
-  - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 27000 # 7.5 hours
-  - !type:DepartmentTimeRequirement
-      department: Security
-      time: 27000 # 7.5 hours
-  - !type:DepartmentTimeRequirement
-      department: Command
-      time: 27000 # 7.5 hours
