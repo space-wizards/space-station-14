@@ -42,6 +42,10 @@ public sealed class RepulseAttractSystem : EntitySystem
 
     private void OnRepulseAttractAction(Entity<RepulseAttractComponent> ent, ref RepulseAttractActionEvent args)
     {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
         var position = _xForm.GetMapCoordinates(args.Performer);
         TryRepulseAttract(position, args.Performer, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionMask);
     }
