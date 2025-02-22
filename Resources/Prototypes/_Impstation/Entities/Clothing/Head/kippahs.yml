@@ -10,9 +10,6 @@
     sprite: _Impstation/Clothing/Head/Hats/kippahs/simpleblack.rsi
     slots:
     - HEAD
-  - type: Tag
-    tags:
-    - ClothMade
 
 - type: entity
   parent: ClothingHeadBase
@@ -26,9 +23,6 @@
     sprite: _Impstation/Clothing/Head/Hats/kippahs/whiteandblue.rsi
     slots:
     - HEAD
-  - type: Tag
-    tags:
-    - ClothMade
 
 - type: entity
   parent: ClothingHeadBase
@@ -42,6 +36,3 @@
     sprite: _Impstation/Clothing/Head/Hats/kippahs/blueandgold.rsi
     slots:
     - HEAD
-  - type: Tag
-    tags:
-    - ClothMade

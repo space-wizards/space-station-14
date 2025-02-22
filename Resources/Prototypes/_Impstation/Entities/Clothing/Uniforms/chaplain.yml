@@ -1,0 +1,71 @@
+﻿
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformSkirtClayshaper
+  name: clayshaper's garb
+  description: Free from our hunger for dominion.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/clayshaperdress.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/clayshaperdress.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformSkirtDruid
+  name: druid's garb
+  description: Patient and generous.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/druidrobe.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/druidrobe.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformSkirtMoon
+  name: moon drape
+  description: Silvered and weightless.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/moondress.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/moondress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSun
+  name: sun suit
+  description: The material is thick and stiff and catches the light warmly.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/sunoraclesuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/sunoraclesuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTech
+  name: brother of technology suit
+  description: There's this great new investment opportunity you can't wait to tell everyone about.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/techbrosuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/techbrosuit.rsi
+    clothingVisuals:
+      Uniform: # why is outer the clothing not inner clothing the eat the hot food
+      - state: equipped-INNERCLOTHING
+      - state: equipped-INNERCLOTHING-unshaded
+        shader: unshaded
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformSkirtTidal
+  name: tidal robes
+  description: It's very comfortable, for just being a square of cloth.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/tidalrobe.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/tidalrobe.rsi

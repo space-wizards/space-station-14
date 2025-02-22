@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: ClothingEyesBlindfold
+  id: ClothingEyesChaplainBlindfold
+  name: sightless seer blindfold
+  description: See beyond.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/chaplainblindfold.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/chaplainblindfold.rsi
