@@ -1,25 +1,36 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
+using Content.Server.Silicons.Laws;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
+using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
 
-public sealed class StationAiSystem : SharedStationAiSystem
+public sealed partial class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SiliconLawSystem _law = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
 
@@ -129,5 +140,21 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, entity, false, true, filter.Recipients.Select(o => o.Channel));
         // Apparently there's no sound for this.
+    }
+
+    public override void SetProfileData(EntityUid ent, EntityUid brain)
+    {
+        base.SetProfileData(ent, brain);
+        if (!_mind.TryGetMind(brain, out _, out var mind) || mind.Session == null)
+            return;
+
+        var profile = _ticker.GetPlayerProfile(mind.Session);
+        _appearance.SetData(ent, StationAiCustomVisualState.Key, (string)profile.SAIData.Screen);
+        _law.SetLaws(profile.SAIData.Lawset, brain);
+
+        if (profile.SAIData.Name == string.Empty)
+            return;
+        _metadata.SetEntityName(ent, profile.SAIData.Name);
+        _metadata.SetEntityName(brain, profile.SAIData.Name);
     }
 }

@@ -29,6 +29,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameTicking;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -122,8 +123,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             Category = VerbCategory.Debug,
             Act = () =>
             {
-                var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
+                var brain = Spawn(DefaultAi, Transform(ent).Coordinates);
                 _mind.ControlMob(user, brain);
+                _containers.InsertOrDrop(brain, _containers.GetContainer(ent.Owner, StationAiCoreComponent.Container));
             },
             Impact = LogImpact.High,
         });
@@ -491,8 +493,17 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
+        var brain = container.ContainedEntities[0];
+        if (_mind.TryGetMind(brain, out _, out var mind) && mind.Session != null)
+        {
+            SetProfileData(entity, brain);
+            return;
+        }
+
+        //_appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
     }
+
+    public virtual void SetProfileData(EntityUid ent, EntityUid brain) { }
 
     public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
 
@@ -583,4 +594,10 @@ public enum StationAiState : byte
     Empty,
     Occupied,
     Dead,
+}
+
+[Serializable, NetSerializable]
+public enum StationAiCustomVisualState : byte
+{
+    Key,
 }
