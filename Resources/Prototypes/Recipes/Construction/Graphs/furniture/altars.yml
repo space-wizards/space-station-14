@@ -25,3 +25,164 @@
           steps:
             - tool: Welding
               doAfter: 5
+
+- type: constructionGraph
+  id: ConvertibleAltarGraph
+  start: undevoted
+  graph: 
+  - node: undevoted
+    entity: AltarUndevoted
+    edges:
+    - to: nanotrasen
+      steps:
+      - tag: DevoterNanotrasen
+        doAfter: 1
+        store: devoter-slot
+
+    - to: chaos
+      steps:
+      - tag: DevoterChaos
+        doAfter: 1
+        store: devoter-slot
+
+    - to: druid
+      steps:
+      - tag: DevoterDruid
+        doAfter: 1
+        store: devoter-slot
+
+    - to: toolbox
+      steps:
+      - tag: DevoterToolbox
+        doAfter: 1
+        store: devoter-slot
+
+    - to: spaceChristian
+      steps:
+      - tag: DevoterSpaceChristian
+        doAfter: 1
+        store: devoter-slot
+
+    - to: satana
+      steps:
+      - tag: DevoterSatana
+        doAfter: 1
+        store: devoter-slot
+
+    - to: technology
+      steps:
+      - tag: DevoterTechnology
+        doAfter: 1
+        store: devoter-slot
+
+  - node: nanotrasen
+    entity: AltarNanotrasen
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying #So chaplain can't hide stuff in toolboxes/plants/etc without anyone else being able to get them. Prying first so it appears in deconstruction text.
+        doAfter: 1
+    - to: undevoted #Is this okay? It doesn't cause any errors and the deconstruction text doesn't break, but it feels weird...
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
+
+  - node: chaos
+    entity: AltarChaos
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: undevoted
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
+        
+  - node: druid
+    entity: AltarDruid
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: undevoted
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
+
+  - node: toolbox
+    entity: AltarToolbox
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: undevoted
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
+
+  - node: spaceChristian
+    entity: AltarSpaceChristian
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: undevoted
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
+
+  - node: satana
+    entity: AltarSatana
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: undevoted
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
+
+  - node: technology
+    entity: AltarTechnology
+    edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: undevoted
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
