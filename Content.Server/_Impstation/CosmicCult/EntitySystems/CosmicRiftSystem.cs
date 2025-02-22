@@ -8,6 +8,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Bible.Components;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicRiftSystem : EntitySystem
