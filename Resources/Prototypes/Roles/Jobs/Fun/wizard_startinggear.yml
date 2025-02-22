@@ -11,6 +11,8 @@
   storage:
     back:
     - BoxSurvival
+    - WizardsGrimoire
+    # TODO: Include Wizard Teleport scroll
 
 - type: startingGear
   id: WizardRedGear

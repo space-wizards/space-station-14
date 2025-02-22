@@ -239,6 +239,34 @@
   - type: SecretRule
 
 - type: entity
+  parent: BaseGameRule
+  id: WizardGameRule
+  components:
+  - type: WizardRule
+  - type: GameRule
+    minPlayers: 10
+  - type: LoadMapRule
+    mapPath: /Maps/Shuttles/wizard.yml
+  - type: AntagSelection
+    agentName: wizard-round-end-name
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ Wizard ]
+      max: 1
+      playerRatio: 1
+      briefing:
+        text: wizard-role-greeting
+        color: Turquoise
+        # TODO: Need Wizard Start sound
+        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+      startingGear: WizardBlueGear
+      # TODO: WizardComp as needed
+      #components:
+      #- type:
+      mindRoles:
+      - MindRoleWizard
+
+- type: entity
   id: Zombie
   parent: BaseGameRule
   components:
