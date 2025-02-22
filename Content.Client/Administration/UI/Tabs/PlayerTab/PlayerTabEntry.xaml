@@ -19,6 +19,7 @@
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>
+        <!-- TODO Kill the antagonist column? It is largely superficial after Role Types-->
         <Label Name="AntagonistLabel"
                SizeFlagsStretchRatio="1"
                HorizontalExpand="True"
