@@ -783,6 +783,9 @@
   id: LightBulb
 
 - type: Tag
+  id: Lighter
+
+- type: Tag
   id: Lime
 
 - type: Tag
