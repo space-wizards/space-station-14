@@ -191,6 +191,34 @@
           Quantity: 50
 
 - type: entity
+  suffix: dexalin+
+  parent: Beaker
+  id: BeakerSmallDex
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 50
+
+- type: entity
+  suffix: saline
+  parent: Beaker
+  id: BeakerSmallSaline
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Saline
+          Quantity: 50
+
+- type: entity
   name: large beaker
   parent: BaseBeaker
   description: Used to contain a large amount of chemicals or solutions.
@@ -590,7 +618,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist: 
+    whitelist:
       tags:
       - Pill
   - type: Dumpable
