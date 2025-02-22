@@ -1,0 +1,42 @@
+# Prototype for a map's grid entity
+# The parent should be the Map entity
+# For the station's main grid you add BecomesStation with the station ID.
+# You must set GridAtmosphere yourself, it doesn't like composition.
+- type: entity
+  parent: BaseMapEntity
+  id: MapGrid
+  name: grid
+  components:
+  - type: MapGrid
+  - type: Physics
+    bodyStatus: InAir
+    angularDamping: 0.05
+    linearDamping: 0.05
+    fixedRotation: False
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures: {}
+  - type: Shuttle
+    angularDamping: 0.05
+    linearDamping: 0.05
+  - type: SpreaderGrid
+  - type: Gravity
+    gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+  - type: DecalGrid
+  - type: GasTileOverlay
+  - type: RadiationGridResistance
+  - type: GridPathfinding
+  - type: NavMap # Required for nav maps to work on this grid, even for mapped shuttles you shouldn't prevent players building navmaps just because
+
+# A grid that has extremely high dampening, so it can't be moved
+- type: entity
+  parent: MapGrid
+  id: MapGridAnchored
+  components:
+  - type: Physics
+    angularDamping: 10000
+    linearDamping: 10000
+  - type: Shuttle
+    angularDamping: 10000
+    linearDamping: 10000
