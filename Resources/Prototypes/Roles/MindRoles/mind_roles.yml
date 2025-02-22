@@ -113,6 +113,7 @@
   - type: MindRole
     antagPrototype: SubvertedSilicon
     roleType: SiliconAntagonist
+    subtype: "rule-subtype-subverted"
   - type: SubvertedSiliconRole
 
 # Dragon
@@ -125,7 +126,7 @@
     antagPrototype: Dragon
     roleType: TeamAntagonist
     subtype: "role-subtype-dragon"
-    exclusiveAntag: tru
+    exclusiveAntag: true
   - type: DragonRole
   - type: RoleBriefing
     briefing: dragon-role-briefing

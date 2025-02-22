@@ -21,3 +21,4 @@ role-subtype-initial-infected = Infected
 role-subtype-zombie = Zombie
 role-subtype-dragon = Dragon
 role-subtype-survivor = Survivor
+rule-subtype-subverted = Subverted
