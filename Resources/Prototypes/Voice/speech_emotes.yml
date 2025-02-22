@@ -394,6 +394,8 @@
   chatTriggers:
     - yip
     - yips
+    - yap
+    - yaps
 
 # Machine Emotes
 - type: emote
