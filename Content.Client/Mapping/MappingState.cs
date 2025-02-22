@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Decals;
@@ -21,17 +20,17 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static System.StringComparison;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using static Robust.Client.UserInterface.Controls.LineEdit;
 using static Robust.Client.UserInterface.Controls.OptionButton;
 using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Content.Client.Mapping;
 
@@ -49,6 +48,7 @@ public sealed class MappingState : GameplayStateBase
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resources = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ILocalizationManager _localization = default!;
 
     private EntityMenuUIController _entityMenuController = default!;
 
@@ -56,23 +56,27 @@ public sealed class MappingState : GameplayStateBase
     private SpriteSystem _sprite = default!;
     private TransformSystem _transform = default!;
     private VerbSystem _verbs = default!;
+    private MapSystem _map = default!;
+
+    // 1 off in case something else uses these colors since we use them to compare
+    private static readonly Color PickColor = new(1, 255, 0);
+    private static readonly Color DeleteColor = new(255, 1, 0);
+    private static readonly Color EraseDecalColor = Color.Red.WithAlpha(0.2f);
 
     private readonly ISawmill _sawmill;
     private readonly GameplayStateLoadController _loadController;
     private bool _setup;
-    private readonly List<MappingPrototype> _allPrototypes = new();
+    private readonly Dictionary<Type, List<MappingPrototype>> _allPrototypes = new();
     private readonly Dictionary<IPrototype, MappingPrototype> _allPrototypesDict = new();
     private readonly Dictionary<Type, Dictionary<string, MappingPrototype>> _idDict = new();
-    private readonly List<MappingPrototype> _prototypes = new();
     private (TimeSpan At, MappingSpawnButton Button)? _lastClicked;
-    private Control? _scrollTo;
-    private bool _updatePlacement;
-    private bool _updateEraseDecal;
+    private (Control, MappingPrototypeList)? _scrollTo;
+    private bool _tileErase;
 
     private MappingScreen Screen => (MappingScreen) UserInterfaceManager.ActiveScreen!;
     private MainViewport Viewport => UserInterfaceManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
-    public CursorState State { get; set; }
+    public CursorMeta Meta { get; }
 
     public MappingState()
     {
@@ -80,6 +84,8 @@ public sealed class MappingState : GameplayStateBase
 
         _sawmill = _log.GetSawmill("mapping");
         _loadController = UserInterfaceManager.GetUIController<GameplayStateLoadController>();
+
+        Meta = new CursorMeta();
     }
 
     protected override void Startup()
@@ -99,21 +105,25 @@ public sealed class MappingState : GameplayStateBase
         context.AddFunction(ContentKeyFunctions.MappingRemoveDecal);
         context.AddFunction(ContentKeyFunctions.MappingCancelEraseDecal);
         context.AddFunction(ContentKeyFunctions.MappingOpenContextMenu);
+        context.AddFunction(ContentKeyFunctions.MouseMiddle);
 
         Screen.DecalSystem = _decal;
-        Screen.Prototypes.SearchBar.OnTextChanged += OnSearch;
-        Screen.Prototypes.CollapseAllButton.OnPressed += OnCollapseAll;
-        Screen.Prototypes.ClearSearchButton.OnPressed += OnClearSearch;
-        Screen.Prototypes.GetPrototypeData += OnGetData;
-        Screen.Prototypes.SelectionChanged += OnSelected;
-        Screen.Prototypes.CollapseToggled += OnCollapseToggled;
+
+        Screen.Entities.GetPrototypeData += OnGetData;
+        Screen.Entities.SelectionChanged += OnSelected;
+        Screen.Tiles.GetPrototypeData += OnGetData;
+        Screen.Tiles.SelectionChanged += OnSelected;
+        Screen.Decals.GetPrototypeData += OnGetData;
+        Screen.Decals.SelectionChanged += OnSelected;
+
         Screen.Pick.OnPressed += OnPickPressed;
-        Screen.Delete.OnPressed += OnDeletePressed;
         Screen.EntityReplaceButton.OnToggled += OnEntityReplacePressed;
         Screen.EntityPlacementMode.OnItemSelected += OnEntityPlacementSelected;
         Screen.EraseEntityButton.OnToggled += OnEraseEntityPressed;
+        Screen.EraseTileButton.OnToggled += OnEraseTilePressed;
         Screen.EraseDecalButton.OnToggled += OnEraseDecalPressed;
         _placement.PlacementChanged += OnPlacementChanged;
+        _mapping.OnFavoritePrototypesLoaded += OnFavoritesLoaded;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.MappingUnselect, new PointerInputCmdHandler(HandleMappingUnselect, outsidePrediction: true))
@@ -124,56 +134,39 @@ public sealed class MappingState : GameplayStateBase
             .Bind(ContentKeyFunctions.MappingRemoveDecal, new PointerInputCmdHandler(HandleEditorCancelPlace, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MouseMiddle, new PointerInputCmdHandler(HandleMouseMiddle, outsidePrediction: true))
             .Register<MappingState>();
 
         _overlays.AddOverlay(new MappingOverlay(this));
 
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
-        Screen.Prototypes.UpdateVisible(_prototypes);
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
-    {
-        if (!obj.WasModified<EntityPrototype>() &&
-            !obj.WasModified<ContentTileDefinition>() &&
-            !obj.WasModified<DecalPrototype>())
-        {
-            return;
-        }
-
+        _mapping.LoadFavorites();
         ReloadPrototypes();
-    }
-
-    private bool HandleOpenContextMenu(in PointerInputCmdArgs args)
-    {
-        Deselect();
-
-        var coords = args.Coordinates.ToMap(_entityManager, _transform);
-        if (_verbs.TryGetEntityMenuEntities(coords, out var entities))
-            _entityMenuController.OpenRootMenu(entities);
-
-        return true;
+        UpdateLocale();
     }
 
     protected override void Shutdown()
     {
+        SaveFavorites();
         CommandBinds.Unregister<MappingState>();
 
-        Screen.Prototypes.SearchBar.OnTextChanged -= OnSearch;
-        Screen.Prototypes.CollapseAllButton.OnPressed -= OnCollapseAll;
-        Screen.Prototypes.ClearSearchButton.OnPressed -= OnClearSearch;
-        Screen.Prototypes.GetPrototypeData -= OnGetData;
-        Screen.Prototypes.SelectionChanged -= OnSelected;
-        Screen.Prototypes.CollapseToggled -= OnCollapseToggled;
+        Screen.Entities.GetPrototypeData -= OnGetData;
+        Screen.Entities.SelectionChanged -= OnSelected;
+        Screen.Tiles.GetPrototypeData -= OnGetData;
+        Screen.Tiles.SelectionChanged -= OnSelected;
+        Screen.Decals.GetPrototypeData -= OnGetData;
+        Screen.Decals.SelectionChanged -= OnSelected;
+
         Screen.Pick.OnPressed -= OnPickPressed;
-        Screen.Delete.OnPressed -= OnDeletePressed;
         Screen.EntityReplaceButton.OnToggled -= OnEntityReplacePressed;
         Screen.EntityPlacementMode.OnItemSelected -= OnEntityPlacementSelected;
         Screen.EraseEntityButton.OnToggled -= OnEraseEntityPressed;
+        Screen.EraseTileButton.OnToggled -= OnEraseTilePressed;
         Screen.EraseDecalButton.OnToggled -= OnEraseDecalPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
+        _mapping.OnFavoritePrototypesLoaded -= OnFavoritesLoaded;
 
         UserInterfaceManager.ClearWindows();
         _loadController.UnloadScreen();
@@ -207,26 +200,46 @@ public sealed class MappingState : GameplayStateBase
         _sprite = _entityManager.System<SpriteSystem>();
         _transform = _entityManager.System<TransformSystem>();
         _verbs = _entityManager.System<VerbSystem>();
-        ReloadPrototypes();
+        _map = _entityManager.System<MapSystem>();
+    }
+
+    private void UpdateLocale()
+    {
+        if (_input.TryGetKeyBinding(ContentKeyFunctions.MappingEnablePick, out var enablePickBinding))
+            Screen.Pick.ToolTip = Loc.GetString("mapping-pick-tooltip", ("key", enablePickBinding.GetKeyString()));
+
+        if (_input.TryGetKeyBinding(ContentKeyFunctions.MappingEnableDelete, out var enableDeleteBinding))
+            Screen.EraseEntityButton.ToolTip = Loc.GetString("mapping-erase-entity-tooltip", ("key", enableDeleteBinding.GetKeyString()));
+    }
+
+    private void SaveFavorites()
+    {
+        Screen.Entities.FavoritesPrototype.Children ??= new List<MappingPrototype>();
+        Screen.Tiles.FavoritesPrototype.Children ??= new List<MappingPrototype>();
+        Screen.Decals.FavoritesPrototype.Children ??= new List<MappingPrototype>();
+
+        var children = Screen.Entities.FavoritesPrototype.Children
+            .Union(Screen.Tiles.FavoritesPrototype.Children)
+            .Union(Screen.Decals.FavoritesPrototype.Children)
+            .ToList();
+
+        _mapping.SaveFavorites(children);
     }
 
     private void ReloadPrototypes()
     {
-        var entities = new MappingPrototype(null, Loc.GetString("mapping-entities")) { Children = new List<MappingPrototype>() };
-        _prototypes.Add(entities);
-
         var mappings = new Dictionary<string, MappingPrototype>();
+        var entities = new MappingPrototype(null, Loc.GetString("mapping-entities")) { Children = new List<MappingPrototype>() };
         foreach (var entity in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
-            Register(entity, entity.ID, entities);
+            if (!entity.HideSpawnMenu)
+                Register(entity, entity.ID, entities);
         }
 
         Sort(mappings, entities);
         mappings.Clear();
 
         var tiles = new MappingPrototype(null, Loc.GetString("mapping-tiles")) { Children = new List<MappingPrototype>() };
-        _prototypes.Add(tiles);
-
         foreach (var tile in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
         {
             Register(tile, tile.ID, tiles);
@@ -236,39 +249,26 @@ public sealed class MappingState : GameplayStateBase
         mappings.Clear();
 
         var decals = new MappingPrototype(null, Loc.GetString("mapping-decals")) { Children = new List<MappingPrototype>() };
-        _prototypes.Add(decals);
-
         foreach (var decal in _prototypeManager.EnumeratePrototypes<DecalPrototype>())
         {
-            Register(decal, decal.ID, decals);
+            if (decal.ShowMenu)
+                Register(decal, decal.ID, decals);
         }
 
         Sort(mappings, decals);
         mappings.Clear();
-    }
 
-    private void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
-    {
-        static int Compare(MappingPrototype a, MappingPrototype b)
-        {
-            return string.Compare(a.Name, b.Name, OrdinalIgnoreCase);
-        }
+        Screen.Entities.UpdateVisible(
+            new List<MappingPrototype> { entities },
+            _allPrototypes.GetOrNew(typeof(EntityPrototype)));
 
-        topLevel.Children ??= new List<MappingPrototype>();
+        Screen.Tiles.UpdateVisible(
+            new List<MappingPrototype> { tiles },
+            _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
 
-        foreach (var prototype in prototypes.Values)
-        {
-            if (prototype.Parents == null && prototype != topLevel)
-            {
-                prototype.Parents = new List<MappingPrototype> { topLevel };
-                topLevel.Children.Add(prototype);
-            }
-
-            prototype.Parents?.Sort(Compare);
-            prototype.Children?.Sort(Compare);
-        }
-
-        topLevel.Children.Sort(Compare);
+        Screen.Decals.UpdateVisible(
+            new List<MappingPrototype> { decals },
+            _allPrototypes.GetOrNew(typeof(DecalPrototype)));
     }
 
     private MappingPrototype? Register<T>(T? prototype, string id, MappingPrototype topLevel) where T : class, IPrototype, IInheritingPrototype
@@ -306,7 +306,7 @@ public sealed class MappingState : GameplayStateBase
                     name = $"{name} [{suffix.Value}]";
 
                 mapping = new MappingPrototype(prototype, name);
-                _allPrototypes.Add(mapping);
+                _allPrototypes.GetOrNew(typeof(T)).Add(mapping);
                 ids.Add(id, mapping);
 
                 if (node.TryGet("parent", out ValueDataNode? parentValue))
@@ -357,13 +357,17 @@ public sealed class MappingState : GameplayStateBase
             else
             {
                 var entity = prototype as EntityPrototype;
-                var name = entity?.Name ?? prototype.ID;
+                var tile = prototype as ContentTileDefinition;
+                var name = entity?.Name ?? tile?.Name ?? prototype.ID;
+
+                if (tile != null && _localization.TryGetString(tile.Name, out var locName))
+                    name = locName;
 
                 if (!string.IsNullOrWhiteSpace(entity?.EditorSuffix))
                     name = $"{name} [{entity.EditorSuffix}]";
 
                 mapping = new MappingPrototype(prototype, name);
-                _allPrototypes.Add(mapping);
+                _allPrototypes.GetOrNew(typeof(T)).Add(mapping);
                 _allPrototypesDict.Add(prototype, mapping);
                 ids.Add(prototype.ID, mapping);
             }
@@ -394,9 +398,154 @@ public sealed class MappingState : GameplayStateBase
         }
     }
 
+    private void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
+    {
+        static int Compare(MappingPrototype a, MappingPrototype b)
+        {
+            return string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase);
+        }
+
+        topLevel.Children ??= new List<MappingPrototype>();
+
+        foreach (var prototype in prototypes.Values)
+        {
+            if (prototype.Parents == null && prototype != topLevel)
+            {
+                prototype.Parents = new List<MappingPrototype> { topLevel };
+                topLevel.Children.Add(prototype);
+            }
+
+            prototype.Parents?.Sort(Compare);
+            prototype.Children?.Sort(Compare);
+        }
+
+        topLevel.Children.Sort(Compare);
+    }
+
+    private void Deselect()
+    {
+        if (Screen.Entities.Selected is { } entitySelected)
+        {
+            entitySelected.Button.Pressed = false;
+            Screen.Entities.Selected = null;
+
+            if (entitySelected.Prototype?.Prototype is EntityPrototype)
+                _placement.Clear();
+        }
+
+        if (Screen.Tiles.Selected is { } tileSelected)
+        {
+            tileSelected.Button.Pressed = false;
+            Screen.Tiles.Selected = null;
+
+            if (tileSelected.Prototype?.Prototype is ContentTileDefinition)
+                _placement.Clear();
+        }
+
+        if (Screen.Decals.Selected is { } decalSelected)
+        {
+            decalSelected.Button.Pressed = false;
+            Screen.Decals.Selected = null;
+
+            if (decalSelected.Prototype?.Prototype is DecalPrototype)
+                _decal.SetActive(false);
+        }
+    }
+
+    private void EnableEntityEraser()
+    {
+        if (_placement.Eraser)
+            return;
+
+        Deselect();
+        _placement.Clear();
+        _placement.ToggleEraser();
+
+        Screen.UnPressActionsExcept(Screen.EraseEntityButton);
+        Screen.EntityPlacementMode.Disabled = true;
+
+        Meta.State = CursorState.Entity;
+        Meta.Color = DeleteColor;
+    }
+
+    private void DisableEntityEraser()
+    {
+        if (!_placement.Eraser)
+            return;
+
+        _placement.ToggleEraser();
+        Meta.State = CursorState.None;
+        Screen.EntityPlacementMode.Disabled = false;
+    }
+
+    #region On Event
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.WasModified<EntityPrototype>() &&
+            !obj.WasModified<ContentTileDefinition>() &&
+            !obj.WasModified<DecalPrototype>())
+        {
+            return;
+        }
+
+        SaveFavorites();
+        ReloadPrototypes();
+    }
+
     private void OnPlacementChanged(object? sender, EventArgs e)
     {
-        _updatePlacement = true;
+        if (!_placement.IsActive && _decal.GetActiveDecal().Decal == null)
+            Deselect();
+
+        Screen.EraseEntityButton.Pressed = _placement.Eraser;
+        Screen.EntityPlacementMode.Disabled = _placement.Eraser;
+    }
+
+    private void OnFavoritesLoaded(List<IPrototype> prototypes)
+    {
+        Screen.Entities.FavoritesPrototype.Children = new List<MappingPrototype>();
+        Screen.Decals.FavoritesPrototype.Children = new List<MappingPrototype>();
+        Screen.Tiles.FavoritesPrototype.Children = new List<MappingPrototype>();
+
+        foreach (var prototype in prototypes)
+        {
+            switch (prototype)
+            {
+                case EntityPrototype entityPrototype:
+                {
+                    if (_idDict.GetOrNew(typeof(EntityPrototype)).TryGetValue(entityPrototype.ID, out var entity))
+                    {
+                        Screen.Entities.FavoritesPrototype.Children.Add(entity);
+                        entity.Parents ??= new List<MappingPrototype>();
+                        entity.Parents.Add(Screen.Entities.FavoritesPrototype);
+                        entity.Favorite = true;
+                    }
+                    break;
+                }
+                case DecalPrototype decalPrototype:
+                {
+                    if (_idDict.GetOrNew(typeof(DecalPrototype)).TryGetValue(decalPrototype.ID, out var decal))
+                    {
+                        Screen.Decals.FavoritesPrototype.Children.Add(decal);
+                        decal.Parents ??= new List<MappingPrototype>();
+                        decal.Parents.Add(Screen.Decals.FavoritesPrototype);
+                        decal.Favorite = true;
+                    }
+                    break;
+                }
+                case ContentTileDefinition tileDefinition:
+                {
+                    if (_idDict.GetOrNew(typeof(ContentTileDefinition)).TryGetValue(tileDefinition.ID, out var tile))
+                    {
+                        Screen.Tiles.FavoritesPrototype.Children.Add(tile);
+                        tile.Parents ??= new List<MappingPrototype>();
+                        tile.Parents.Add(Screen.Tiles.FavoritesPrototype);
+                        tile.Favorite = true;
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
@@ -405,48 +554,8 @@ public sealed class MappingState : GameplayStateBase
             base.OnKeyBindStateChanged(new ViewportBoundKeyEventArgs(args.KeyEventArgs, Viewport.Viewport));
         else
             base.OnKeyBindStateChanged(args);
-    }
 
-    private void OnSearch(LineEditEventArgs args)
-    {
-        if (string.IsNullOrEmpty(args.Text))
-        {
-            Screen.Prototypes.PrototypeList.Visible = true;
-            Screen.Prototypes.SearchList.Visible = false;
-            return;
-        }
-
-        var matches = new List<MappingPrototype>();
-        foreach (var prototype in _allPrototypes)
-        {
-            if (prototype.Name.Contains(args.Text, OrdinalIgnoreCase))
-                matches.Add(prototype);
-        }
-
-        matches.Sort(static (a, b) => string.Compare(a.Name, b.Name, OrdinalIgnoreCase));
-
-        Screen.Prototypes.PrototypeList.Visible = false;
-        Screen.Prototypes.SearchList.Visible = true;
-        Screen.Prototypes.Search(matches);
-    }
-
-    private void OnCollapseAll(ButtonEventArgs args)
-    {
-        foreach (var child in Screen.Prototypes.PrototypeList.Children)
-        {
-            if (child is not MappingSpawnButton button)
-                continue;
-
-            Collapse(button);
-        }
-
-        Screen.Prototypes.ScrollContainer.SetScrollValue(new Vector2(0, 0));
-    }
-
-    private void OnClearSearch(ButtonEventArgs obj)
-    {
-        Screen.Prototypes.SearchBar.Text = string.Empty;
-        OnSearch(new LineEditEventArgs(Screen.Prototypes.SearchBar, string.Empty));
+        UpdateLocale();
     }
 
     private void OnGetData(IPrototype prototype, List<Texture> textures)
@@ -466,7 +575,7 @@ public sealed class MappingState : GameplayStateBase
         }
     }
 
-    private void OnSelected(MappingPrototype mapping)
+    private void OnSelected(MappingPrototypeList list, MappingPrototype mapping)
     {
         if (mapping.Prototype == null)
             return;
@@ -484,7 +593,7 @@ public sealed class MappingState : GameplayStateBase
         _lastClicked = null;
 
         Control? last = null;
-        var children = Screen.Prototypes.PrototypeList.Children;
+        var children = list.PrototypeList.Children.ToList();
         foreach (var prototype in chain)
         {
             foreach (var child in children)
@@ -492,20 +601,22 @@ public sealed class MappingState : GameplayStateBase
                 if (child is MappingSpawnButton button &&
                     button.Prototype == prototype)
                 {
-                    UnCollapse(button);
-                    OnSelected(button, prototype.Prototype);
-                    children = button.ChildrenPrototypes.Children;
+                    button.CollapseButton.Pressed = true;
+                    list.ToggleCollapse(button);
+                    OnSelected(list, button, prototype.Prototype);
+                    children = button.ChildrenPrototypes.Children.ToList();
+                    children.AddRange(button.ChildrenPrototypesGallery.Children);
                     last = child;
                     break;
                 }
             }
         }
 
-        if (last != null && Screen.Prototypes.PrototypeList.Visible)
-            _scrollTo = last;
+        if (last != null && list.PrototypeList.Visible)
+            _scrollTo = (last, list);
     }
 
-    private void OnSelected(MappingSpawnButton button, IPrototype? prototype)
+    private void OnSelected(MappingPrototypeList list, MappingSpawnButton button, IPrototype? prototype)
     {
         var time = _timing.CurTime;
         if (prototype is DecalPrototype)
@@ -514,16 +625,25 @@ public sealed class MappingState : GameplayStateBase
         // Double-click functionality if it's collapsible.
         if (_lastClicked is { } lastClicked &&
             lastClicked.Button == button &&
-            lastClicked.At > time - TimeSpan.FromSeconds(0.333) &&
-            string.IsNullOrEmpty(Screen.Prototypes.SearchBar.Text) &&
-            button.CollapseButton.Visible)
+            lastClicked.At > time - TimeSpan.FromSeconds(0.333))
         {
-            button.CollapseButton.Pressed = !button.CollapseButton.Pressed;
-            ToggleCollapse(button);
-            button.Button.Pressed = true;
-            Screen.Prototypes.Selected = button;
-            _lastClicked = null;
-            return;
+            if (button.CollapseButton.Visible && string.IsNullOrEmpty(list.SearchBar.Text))
+            {
+                button.CollapseButton.Pressed = !button.CollapseButton.Pressed;
+                list.ToggleCollapse(button);
+                button.Button.Pressed = true;
+                list.Selected = button;
+                _lastClicked = null;
+                return;
+            }
+
+            if (button.Parent == list.SearchList && button.Prototype != null)
+            {
+                list.SearchBar.SetText(string.Empty, true);
+                OnSelected(list, button.Prototype);
+                _lastClicked = null;
+                return;
+            }
         }
 
         // Toggle if it's the same button (at least if we just unclicked it).
@@ -539,14 +659,14 @@ public sealed class MappingState : GameplayStateBase
         if (button.Prototype == null)
             return;
 
-        if (Screen.Prototypes.Selected is { } oldButton &&
+        if (list.Selected is { } oldButton &&
             oldButton != button)
         {
             Deselect();
         }
 
-        Screen.EntityContainer.Visible = false;
-        Screen.DecalContainer.Visible = false;
+        Meta.State = CursorState.None;
+        Screen.UnPressActionsExcept(new Control());
 
         switch (prototype)
         {
@@ -561,7 +681,6 @@ public sealed class MappingState : GameplayStateBase
                     IsTile = false
                 };
 
-                Screen.EntityContainer.Visible = true;
                 _decal.SetActive(false);
                 _placement.BeginPlacing(placement);
                 break;
@@ -570,8 +689,7 @@ public sealed class MappingState : GameplayStateBase
                 _placement.Clear();
 
                 _decal.SetActive(true);
-                _decal.UpdateDecalInfo(decal.ID, Color.White, 0, true, 0, false);
-                Screen.DecalContainer.Visible = true;
+                Screen.SelectDecal(decal.ID);
                 break;
             case ContentTileDefinition tile:
             {
@@ -591,55 +709,9 @@ public sealed class MappingState : GameplayStateBase
                 break;
         }
 
-        Screen.Prototypes.Selected = button;
+        list.Selected = button;
 
         button.Button.Pressed = true;
-    }
-
-    private void Deselect()
-    {
-        if (Screen.Prototypes.Selected is { } selected)
-        {
-            selected.Button.Pressed = false;
-            Screen.Prototypes.Selected = null;
-
-            if (selected.Prototype?.Prototype is DecalPrototype)
-            {
-                _decal.SetActive(false);
-                Screen.DecalContainer.Visible = false;
-            }
-
-            if (selected.Prototype?.Prototype is EntityPrototype)
-            {
-                _placement.Clear();
-            }
-
-            if (selected.Prototype?.Prototype is ContentTileDefinition)
-            {
-                _placement.Clear();
-            }
-        }
-    }
-
-    private void OnCollapseToggled(MappingSpawnButton button, ButtonToggledEventArgs args)
-    {
-        ToggleCollapse(button);
-    }
-
-    private void OnPickPressed(ButtonEventArgs args)
-    {
-        if (args.Button.Pressed)
-            EnablePick();
-        else
-            DisablePick();
-    }
-
-    private void OnDeletePressed(ButtonEventArgs obj)
-    {
-        if (obj.Button.Pressed)
-            EnableDelete();
-        else
-            DisableDelete();
     }
 
     private void OnEntityReplacePressed(ButtonToggledEventArgs args)
@@ -672,70 +744,101 @@ public sealed class MappingState : GameplayStateBase
             return;
 
         if (args.Button.Pressed)
-            EnableEraser();
+            EnableEntityEraser();
         else
-            DisableEraser();
+            DisableEntityEraser();
+    }
+
+    private void OnEraseTilePressed(ButtonEventArgs args)
+    {
+        Meta.State = CursorState.None;
+        _placement.Clear();
+        Deselect();
+
+        if (!args.Button.Pressed)
+        {
+            Screen.EntityPlacementMode.Disabled = false;
+            _tileErase = false;
+            return;
+        }
+
+        _placement.BeginPlacing(new PlacementInformation
+        {
+            PlacementOption = "AlignTileAny",
+            TileType = 0,
+            Range = 400,
+            IsTile = true,
+        });
+
+        Screen.UnPressActionsExcept(Screen.EraseTileButton);
+        _tileErase = true;
+        Screen.EntityPlacementMode.Disabled = true;
     }
 
     private void OnEraseDecalPressed(ButtonToggledEventArgs args)
     {
-        _placement.Clear();
-        Deselect();
-        Screen.EraseEntityButton.Pressed = false;
-        _updatePlacement = true;
-        _updateEraseDecal = args.Pressed;
+        if (args.Button.Pressed)
+        {
+            Meta.State = CursorState.Tile;
+            Meta.Color = EraseDecalColor;
+
+            Screen.UnPressActionsExcept(Screen.EraseDecalButton);
+            _placement.Clear();
+            Deselect();
+        }
+        else
+        {
+            Meta.State = CursorState.None;
+        }
     }
+    #endregion
 
-    private void EnableEraser()
+    #region Mapping Actions
+    private void OnPickPressed(ButtonEventArgs args)
     {
-        if (_placement.Eraser)
-            return;
-
-        _placement.Clear();
-        _placement.ToggleEraser();
-        Screen.EntityPlacementMode.Disabled = true;
-        Screen.EraseDecalButton.Pressed = false;
-        Deselect();
-    }
-
-    private void DisableEraser()
-    {
-        if (!_placement.Eraser)
-            return;
-
-        _placement.ToggleEraser();
-        Screen.EntityPlacementMode.Disabled = false;
+        if (args.Button.Pressed)
+            EnablePick();
+        else
+            DisablePick();
     }
 
     private void EnablePick()
     {
+        Deselect();
         Screen.UnPressActionsExcept(Screen.Pick);
-        State = CursorState.Pick;
+        Meta.State = CursorState.EntityOrTile;
+        Meta.Color = PickColor;
+        Meta.SecondColor = PickColor.WithAlpha(0.2f);
     }
 
     private void DisablePick()
     {
         Screen.Pick.Pressed = false;
-        State = CursorState.None;
+        Meta.State = CursorState.None;
     }
+    #endregion
 
-    private void EnableDelete()
+    #region Handle Bindings
+    private bool HandleOpenContextMenu(in PointerInputCmdArgs args)
     {
-        Screen.UnPressActionsExcept(Screen.Delete);
-        State = CursorState.Delete;
-        EnableEraser();
-    }
+        Deselect();
 
-    private void DisableDelete()
-    {
-        Screen.Delete.Pressed = false;
-        State = CursorState.None;
-        DisableEraser();
+        var coords = _transform.ToMapCoordinates(args.Coordinates);
+        if (_verbs.TryGetEntityMenuEntities(coords, out var entities))
+            _entityMenuController.OpenRootMenu(entities);
+
+        return true;
     }
 
     private bool HandleMappingUnselect(in PointerInputCmdArgs args)
     {
-        if (Screen.Prototypes.Selected is not { Prototype.Prototype: DecalPrototype })
+        if (_placement.Eraser)
+            _placement.ToggleEraser();
+
+        Screen.UnPressActionsExcept(new Control());
+        Meta.State = CursorState.None;
+
+        if (Screen.Decals.Selected is not { Prototype.Prototype: DecalPrototype })
             return false;
 
         Deselect();
@@ -768,56 +871,74 @@ public sealed class MappingState : GameplayStateBase
 
     private bool HandleEnableDelete(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        EnableDelete();
+        Screen.EraseEntityButton.Pressed = true;
+        EnableEntityEraser();
         return true;
     }
 
     private bool HandleDisableDelete(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        DisableDelete();
+        Screen.EraseEntityButton.Pressed = false;
+        DisableEntityEraser();
         return true;
     }
 
     private bool HandlePick(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        if (State != CursorState.Pick)
-            return false;
-
         MappingPrototype? button = null;
 
-        // Try and get tile under it
-        // TODO: Separate mode for decals.
-        if (!uid.IsValid())
+        if (Screen.Pick.Pressed)
         {
-            var mapPos = _transform.ToMapCoordinates(coords);
-
-            if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid) &&
-                _entityManager.System<SharedMapSystem>().TryGetTileRef(gridUid, grid, coords, out var tileRef) &&
-                _allPrototypesDict.TryGetValue(tileRef.GetContentTileDefinition(), out button))
+            if (!uid.IsValid())
             {
-                OnSelected(button);
-                return true;
+                var mapPos = _transform.ToMapCoordinates(coords);
+
+                if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid) &&
+                    _entityManager.System<SharedMapSystem>().TryGetTileRef(gridUid, grid, coords, out var tileRef) &&
+                    _allPrototypesDict.TryGetValue(tileRef.GetContentTileDefinition(), out button))
+                {
+                    switch (button.Prototype)
+                    {
+                        case EntityPrototype:
+                        {
+                            OnSelected(Screen.Entities, button);
+                            break;
+                        }
+                        case ContentTileDefinition:
+                        {
+                            OnSelected(Screen.Tiles, button);
+                            break;
+                        }
+                    }
+
+                    return true;
+                }
             }
         }
-
-        if (button == null)
+        else
         {
-            if (uid == EntityUid.Invalid ||
-                _entityManager.GetComponentOrNull<MetaDataComponent>(uid) is not { EntityPrototype: { } prototype } ||
-                !_allPrototypesDict.TryGetValue(prototype, out button))
-            {
-                // we always block other input handlers if pick mode is enabled
-                // this makes you not accidentally place something in space because you
-                // miss-clicked while holding down the pick hotkey
-                return true;
-            }
-
-            // Selected an entity
-            OnSelected(button);
-
-            // Match rotation
-            _placement.Direction = _entityManager.GetComponent<TransformComponent>(uid).LocalRotation.GetDir();
+            return false;
         }
+
+        if (button != null)
+            return false;
+
+        if (uid == EntityUid.Invalid ||
+            _entityManager.GetComponentOrNull<MetaDataComponent>(uid) is not
+                { EntityPrototype: { } prototype } ||
+            !_allPrototypesDict.TryGetValue(prototype, out button))
+        {
+            // we always block other input handlers if pick mode is enabled
+            // this makes you not accidentally place something in space because you
+            // miss-clicked while holding down the pick hotkey
+            return true;
+        }
+
+        // Selected an entity
+        OnSelected(Screen.Entities, button);
+
+        // Match rotation
+        _placement.Direction = _entityManager.GetComponent<TransformComponent>(uid).LocalRotation.GetDir();
 
         return true;
     }
@@ -840,49 +961,21 @@ public sealed class MappingState : GameplayStateBase
         return true;
     }
 
+    private bool HandleMouseMiddle(in PointerInputCmdArgs args)
+    {
+        if (_decal.GetActiveDecal() is { Decal: not null })
+        {
+            Screen.ChangeDecalRotation(90f);
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
     private async void SaveMap()
     {
         await _mapping.SaveMap();
-    }
-
-    private void ToggleCollapse(MappingSpawnButton button)
-    {
-        if (button.CollapseButton.Pressed)
-        {
-            if (button.Prototype?.Children != null)
-            {
-                foreach (var child in button.Prototype.Children)
-                {
-                    Screen.Prototypes.Insert(button.ChildrenPrototypes, child, true);
-                }
-            }
-
-            button.CollapseButton.Label.Text = "▼";
-        }
-        else
-        {
-            button.ChildrenPrototypes.DisposeAllChildren();
-            button.CollapseButton.Label.Text = "▶";
-        }
-    }
-
-    private void Collapse(MappingSpawnButton button)
-    {
-        if (!button.CollapseButton.Pressed)
-            return;
-
-        button.CollapseButton.Pressed = false;
-        ToggleCollapse(button);
-    }
-
-
-    private void UnCollapse(MappingSpawnButton button)
-    {
-        if (button.CollapseButton.Pressed)
-            return;
-
-        button.CollapseButton.Pressed = true;
-        ToggleCollapse(button);
     }
 
     public EntityUid? GetHoveredEntity()
@@ -897,40 +990,92 @@ public sealed class MappingState : GameplayStateBase
         return GetClickedEntity(mapPos);
     }
 
+    public Entity<MapGridComponent>? GetHoveredGrid()
+    {
+        if (UserInterfaceManager.CurrentlyHovered is not IViewportControl viewport ||
+            _input.MouseScreenPosition is not { IsValid: true } position)
+        {
+            return null;
+        }
+
+        var mapPos = viewport.PixelToMap(position.Position);
+        if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid))
+        {
+            return new Entity<MapGridComponent>(gridUid, grid);
+        }
+
+        return null;
+    }
+
+    public Box2Rotated? GetHoveredTileBox2()
+    {
+        if (UserInterfaceManager.CurrentlyHovered is not IViewportControl viewport ||
+            _input.MouseScreenPosition is not { IsValid: true } coords)
+        {
+            return null;
+        }
+
+        if (GetHoveredGrid() is not { } grid)
+            return null;
+
+        if (!_entityManager.TryGetComponent<TransformComponent>(grid, out var xform))
+            return null;
+
+        var mapCoords = viewport.PixelToMap(coords.Position);
+        var tileSize = grid.Comp.TileSize;
+        var tileDimensions = new Vector2(tileSize, tileSize);
+        var tileRef = _map.GetTileRef(grid, mapCoords);
+        var worldCoord = _map.LocalToWorld(grid.Owner, grid.Comp, tileRef.GridIndices);
+        var box = Box2.FromDimensions(worldCoord, tileDimensions);
+
+        return new Box2Rotated(box, xform.LocalRotation, box.BottomLeft);
+    }
+
     public override void FrameUpdate(FrameEventArgs e)
     {
-        if (_updatePlacement)
+        if (!Screen.EraseTileButton.Pressed && _tileErase)
         {
-            _updatePlacement = false;
-
-            if (!_placement.IsActive && _decal.GetActiveDecal().Decal == null)
-                Deselect();
-
-            Screen.EraseEntityButton.Pressed = _placement.Eraser;
-            Screen.EraseDecalButton.Pressed = _updateEraseDecal;
-            Screen.EntityPlacementMode.Disabled = _placement.Eraser;
+            _placement.Clear();
+            _tileErase = false;
         }
 
         if (_scrollTo is not { } scrollTo)
             return;
 
+        var (control, list) = scrollTo;
+
         // this is not ideal but we wait until the control's height is computed to use
         // its position to scroll to
-        if (scrollTo.Height > 0 && Screen.Prototypes.PrototypeList.Visible)
+        if (control.Height > 0 && list.PrototypeList.Visible)
         {
-            var y = scrollTo.GlobalPosition.Y - Screen.Prototypes.ScrollContainer.Height / 2 + scrollTo.Height;
-            var scroll = Screen.Prototypes.ScrollContainer;
+            var y = control.GlobalPosition.Y - list.ScrollContainer.Height / 2 + control.Height - list.GlobalPosition.Y;
+            var scroll = list.ScrollContainer;
             scroll.SetScrollValue(scroll.GetScrollValue() + new Vector2(0, y));
             _scrollTo = null;
         }
     }
 
 
-    // TODO this doesn't handle pressing down multiple state hotkeys at the moment
     public enum CursorState
     {
         None,
-        Pick,
-        Delete
+        Tile,
+        Entity,
+        EntityOrTile,
+    }
+
+    public sealed class CursorMeta
+    {
+        /// <summary>
+        ///     Defines how the overlay will be rendered
+        /// </summary>
+        public CursorState State = CursorState.None;
+
+        /// <summary>
+        ///     Color with which the mapping overlay will be drawn
+        /// </summary>
+        public Color Color = Color.White;
+
+        public Color? SecondColor;
     }
 }
