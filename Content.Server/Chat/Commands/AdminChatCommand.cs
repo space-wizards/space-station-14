@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
 
 namespace Content.Server.Chat.Commands
@@ -8,6 +9,8 @@ namespace Content.Server.Chat.Commands
     [AdminCommand(AdminFlags.Adminchat)]
     internal sealed class AdminChatCommand : IConsoleCommand
     {
+        [Dependency] private readonly IChatManager _chat = default!;
+
         public string Command => "asay";
         public string Description => "Send chat messages to the private admin chat channel.";
         public string Help => "asay <text>";
@@ -26,10 +29,7 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.Admin);
+            _chat.RequestChat(player, message, ChatSelectChannel.Admin);
         }
     }
 }
