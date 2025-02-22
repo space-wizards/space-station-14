@@ -798,5 +798,12 @@ Entries:
   id: 99
   time: '2025-02-18T10:26:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35239
+- author: Winkarst-cpu
+  changes:
+  - message: Added admin only messages in AHelp.
+    type: Add
+  id: 100
+  time: '2025-02-22T17:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35283
 Name: Admin
 Order: 1
