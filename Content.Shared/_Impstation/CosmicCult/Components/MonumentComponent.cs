@@ -10,8 +10,8 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 public sealed partial class MonumentComponent : Component
 {
     [NonSerialized] public const int LayerMask = 777;
-    [DataField] public List<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
-    [DataField] public List<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
+    [DataField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
+    [DataField] public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
     [DataField] public ProtoId<GlyphPrototype> SelectedGlyph;
     [DataField] public int AvailableEntropy;
     [DataField] public int TotalEntropy;

@@ -31,14 +31,14 @@ public sealed partial class CosmicCultComponent : Component
     #endregion
 
     #region Ability Data
-    [DataField] public List<ProtoId<InfluencePrototype>> UnlockedInfluences =
+    [DataField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences =
     [
         "InfluenceAberrantLapse",
         "InfluenceNullGlare",
         "InfluenceEschewMetabolism",
     ];
 
-    [DataField] public List<ProtoId<EntityPrototype>> CosmicCultActions =
+    [DataField] public HashSet<ProtoId<EntityPrototype>> CosmicCultActions =
     [
         "ActionCosmicSiphon",
         "ActionCosmicBlank",

@@ -418,7 +418,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _euiMan.OpenEui(new CosmicRoundStartEui(), session);
         }
         TotalCult++;
-        cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!;
+        cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value;
         rule.Comp.Cultists.Add(uid);
     }
 
@@ -440,7 +440,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-short-briefing"), Color.FromHex("#cae8e8"), null);
 
             var cultComp = EnsureComp<CosmicCultComponent>(uid);
-            cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!;
+            cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value;
             EnsureComp<IntrinsicRadioReceiverComponent>(uid);
 
             if (CurrentTier == 3)
