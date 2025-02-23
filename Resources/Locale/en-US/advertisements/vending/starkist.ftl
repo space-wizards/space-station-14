@@ -1,0 +1,12 @@
+﻿advertisement-starkist-1 = Good pulsations!
+advertisement-starkist-2 = It's orange flavored!
+advertisement-starkist-3 = Over 1 million drinks sold!
+advertisement-starkist-4 = Head for the stars!
+advertisement-starkist-5 = Taste the stars!
+advertisement-starkist-6 = Fun, radiation and Starkist!
+advertisement-starkist-7 = There's nothing fishy about Starkist!
+advertisement-starkist-8 = Kiss the stars, buy Starkist!
+thankyou-starkist-1 = Drinkin' the stars!
+thankyou-starkist-2 = Kiss your thirst goodbye!
+thankyou-starkist-3 = The fish is just in your head.
+thankyou-starkist-4 = Bask in the flavor!

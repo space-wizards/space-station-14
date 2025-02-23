@@ -1,0 +1,12 @@
+﻿advertisement-spaceup-1 = Invigorating!
+advertisement-spaceup-2 = Fresh and lean, no caffeine!
+advertisement-spaceup-3 = Over 1 million drinks sold!
+advertisement-spaceup-4 = Like a hull-breach in your mouth!
+advertisement-spaceup-5 = Decompress, have a Space-Up!
+advertisement-spaceup-6 = Send your taste buds to outer space!
+advertisement-spaceup-7 = Way more nicer than cola, it's Space-Up!
+advertisement-spaceup-8 = Crisp invigorating Space-Up!
+thankyou-spaceup-1 = Breach that can and enjoy!
+thankyou-spaceup-2 = Blow that thirst into space!
+thankyou-spaceup-3 = You've Space-Upped!
+thankyou-spaceup-4 = Enjoy the singular flavor!
