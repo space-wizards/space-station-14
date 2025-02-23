@@ -130,3 +130,21 @@
           damage:
             groups:
               Toxin: 1
+
+- type: reagent
+  id: Spaceacillin
+  name: reagent-name-spaceacillin
+  group: Medicine
+  desc: reagent-desc-spaceacillin
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#E1F2E6"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+        - !type:HealthChange
+          damage:
+            groups:
+              Toxin: -0.6
+              Burn: -0.3

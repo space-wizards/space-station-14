@@ -1,7 +1,7 @@
 - type: reaction
   id: Rezadone
   reactants:
-    Carpotoxin:
+    CarpoToxin:
       amount: 1
     Spaceacillin:
       amount: 1
