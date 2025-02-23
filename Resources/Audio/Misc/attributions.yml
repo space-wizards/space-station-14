@@ -52,3 +52,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Citadel Station 13"
   source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["yellow.ogg"]
+  license: "CC0-1.0"
+  copyright: "Audio taken from the Montgomery County Fire/Rescue Service training website"
+  source: "https://www.mcfrsit.com/e-learning/p1/sa/story_html5.html"
