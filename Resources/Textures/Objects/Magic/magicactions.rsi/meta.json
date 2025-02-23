@@ -36,6 +36,9 @@
     },
     {
       "name": "repulse"
+    },
+    {
+        "name": "spell_emp"
     }
   ]
 }

@@ -4,6 +4,7 @@ using Content.Server.Radio;
 using Content.Server.SurveillanceCamera;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
+using Content.Shared.Magic.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
@@ -21,6 +22,7 @@ public sealed class EmpSystem : SharedEmpSystem
         base.Initialize();
         SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
+        SubscribeLocalEvent<EmpOnTriggerComponent, EMPSpellActionEvent>(HandleEmpSpellAction);
 
         SubscribeLocalEvent<EmpDisabledComponent, RadioSendAttemptEvent>(OnRadioSendAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
@@ -105,6 +107,15 @@ public sealed class EmpSystem : SharedEmpSystem
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
         EmpPulse(_transform.GetMapCoordinates(uid), comp.Range, comp.EnergyConsumption, comp.DisableDuration);
+        args.Handled = true;
+    }
+
+    private void HandleEmpSpellAction(Entity<EmpOnTriggerComponent> ent, ref EMPSpellActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        EmpPulse(_transform.GetMapCoordinates(args.Performer), ent.Comp.Range, ent.Comp.EnergyConsumption, ent.Comp.DisableDuration);
         args.Handled = true;
     }
 
