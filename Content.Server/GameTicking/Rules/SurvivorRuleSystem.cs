@@ -75,8 +75,12 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 
         while (existingSurvivors.MoveNext(out _, out _, out var mindComp))
         {
+            // If their brain is gone or they respawned/became a ghost role
             if (mindComp.CurrentEntity is null)
+            {
+                deadSurvivors++;
                 continue;
+            }
 
             var survivor = mindComp.CurrentEntity.Value;
 
@@ -86,13 +90,13 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
                 continue;
             }
 
-            if (eShuttle is null || !eShuttle.Value.IsValid() || (Transform(eShuttle.Value).MapID != _xform.GetMapCoordinates(survivor).MapId))
+            if (eShuttle != null && eShuttle.Value.IsValid() && (Transform(eShuttle.Value).MapID == _xform.GetMapCoordinates(survivor).MapId))
             {
-                aliveMarooned++;
+                aliveOnShuttle++;
                 continue;
             }
 
-            aliveOnShuttle++;
+            aliveMarooned++;
         }
 
         args.AddLine(Loc.GetString("survivor-round-end-dead-count", ("deadCount", deadSurvivors)));
