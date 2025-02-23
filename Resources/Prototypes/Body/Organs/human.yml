@@ -74,7 +74,7 @@
   - type: Item
     size: Small
     heldPrefix: brain
-  
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
@@ -136,7 +136,9 @@
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
-    metabolizerTypes: [ Human ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Human
     groups:
     - id: Gas
       rateModifier: 100.0
@@ -168,7 +170,9 @@
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
     maxReagents: 2
-    metabolizerTypes: [Human]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Human
     groups:
     - id: Medicine
     - id: Poison
@@ -204,7 +208,9 @@
   - type: Metabolizer
     # mm yummy
     maxReagents: 3
-    metabolizerTypes: [Human]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Human
     groups:
     - id: Food
     - id: Drink
@@ -222,7 +228,9 @@
     heldPrefix: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
-    metabolizerTypes: [Human]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Human
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
@@ -243,5 +251,7 @@
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5
-    metabolizerTypes: [Human]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Human
     removeEmpty: true

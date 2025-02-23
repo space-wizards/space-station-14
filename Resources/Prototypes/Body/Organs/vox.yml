@@ -7,7 +7,11 @@
   - type: Sprite
     sprite: Mobs/Species/Vox/organs.rsi
   - type: Metabolizer
-    metabolizerTypes: [ Vox ]
+    metabolizerTypes:
+    - N2Oxygenate
+    - O2Toxic
+    - CarbonDioxideTolerance
+    - Vox
   - type: Lung
     alert: LowNitrogen
   - type: Item
