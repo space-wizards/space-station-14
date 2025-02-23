@@ -26,8 +26,6 @@ public sealed class MoverController : SharedMoverController
         base.Initialize();
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
-        SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
     }
 
     private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref PlayerAttachedEvent args)
@@ -42,16 +40,6 @@ public sealed class MoverController : SharedMoverController
             SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
     }
 
-    private void OnPlayerAttached(Entity<InputMoverComponent> entity, ref PlayerAttachedEvent args)
-    {
-        SetMoveInput(entity, MoveButtons.None);
-    }
-
-    private void OnPlayerDetached(Entity<InputMoverComponent> entity, ref PlayerDetachedEvent args)
-    {
-        SetMoveInput(entity, MoveButtons.None);
-    }
-
     protected override bool CanSound()
     {
         return true;
@@ -61,9 +49,9 @@ public sealed class MoverController : SharedMoverController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
+        var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
 
-        while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
+        while (inputQueryEnumerator.MoveNext(out var uid, out _, out var mover))
         {
             var physicsUid = uid;
 
