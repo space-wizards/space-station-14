@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: shampunj
-  changes:
-  - message: When curtains are destroyed, only 1 cloth drops out
-    type: Tweak
-  id: 7493
-  time: '2024-10-08T09:51:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32685
 - author: Plykiya
   changes:
   - message: Librarians now start with a D20.
@@ -3898,3 +3891,10 @@
   id: 7992
   time: '2025-02-23T11:43:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35421
+- author: metalgearsloth
+  changes:
+  - message: Fix several interface window positions not saving.
+    type: Fix
+  id: 7993
+  time: '2025-02-23T12:57:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35055
