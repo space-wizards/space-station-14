@@ -991,6 +991,9 @@
   id: Pizza
 
 - type: Tag
+  id: Plates
+
+- type: Tag
   id: PlantAnalyzer
 
 - type: Tag
@@ -1062,6 +1065,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: Remains
 
 - type: Tag
   id: ReptilianFood
