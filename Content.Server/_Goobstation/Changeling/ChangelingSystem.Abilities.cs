@@ -123,8 +123,8 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.MediumCaution);
 
         PlayMeatySound(uid, comp);
-        var absorbTime = TimeSpan.FromSeconds(absorbComp is not null ? 15 * absorbComp.BiomassRestored: 15);
-        var dargs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(15), new AbsorbDNADoAfterEvent(), uid, target)
+        var absorbTime = TimeSpan.FromSeconds(absorbComp is not null ? 15 * absorbComp.BiomassRestored : 15);
+        var dargs = new DoAfterArgs(EntityManager, uid, absorbTime, new AbsorbDNADoAfterEvent(), uid, target)
         {
             DistanceThreshold = 1.5f,
             BreakOnDamage = true,
@@ -147,14 +147,17 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         var biomassPercentRestored = 1f;
+        var lesserAbsorb = false;
         TryComp<AbsorbableComponent>(target, out var absorbComp);
         if (absorbComp != null)
             biomassPercentRestored = absorbComp.BiomassRestored;
 
-        if (biomassPercentRestored < 1f && comp.MinorAbsorbs > 0) // Check if baseline entity should restore less than 100% of biomass
+        if (biomassPercentRestored < 1f) // Check if baseline entity should restore less than 100% of biomass
         {
-            biomassPercentRestored /= comp.MinorAbsorbs; // If so, divide by # of minor absorbtions performed and increase the count
+            if (comp.MinorAbsorbs > 0)
+                biomassPercentRestored /= comp.MinorAbsorbs; // If so, divide by # of minor absorbtions performed and increase the count
             comp.MinorAbsorbs += 1;
+            lesserAbsorb = true;
         }
         else
             comp.MinorAbsorbs = 0; // Reset minor absorbtions if we're consuming something that restores the full value
@@ -203,9 +206,12 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.LargeCaution);
 
         TryStealDNA(uid, target, comp, true);
-        comp.TotalAbsorbedEntities++;
-        comp.MaxChemicals += bonusChemicals;
-        comp.MaxEvolutionPoints += bonusEvolutionPoints;
+        if (!lesserAbsorb) // lesser absorbtions don't grant bonuses or count toward stats
+        {
+            comp.TotalAbsorbedEntities++;
+            comp.MaxChemicals += bonusChemicals;
+            comp.MaxEvolutionPoints += bonusEvolutionPoints;
+        }
 
         if (TryComp<StoreComponent>(args.User, out var store))
         {
@@ -337,7 +343,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(uid, comp);
     }
-    
+
     private void OnCreateBoneShard(EntityUid uid, ChangelingComponent comp, ref CreateBoneShardEvent args)
     {
         if (!TryUseAbility(uid, comp, args))

@@ -15,6 +15,6 @@ public sealed partial class AbsorbableComponent : Component
     /// Percentage of biomass restored on consumption.
     /// Smallest animals have the lowest percentages, etc. A lower percentage will also have a faster absorb time.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float BiomassRestored = 1f;
 }
