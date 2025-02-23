@@ -1,0 +1,132 @@
+- type: reagent
+  id: PenteticAcid
+  name: reagent-name-pentetic-acid
+  group: Medicine
+  desc: reagent-desc-pentetic-acid
+  physicalDesc: reagent-physical-desc-powdery
+  color: "#E6FFF0"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.6
+      effects:
+      - !type:HealthChange
+        probability: 0.70
+        damage:
+          groups:
+            Toxin: -4
+      - !type:HealthChange
+        probability: 0.30
+        damage:
+          groups:
+            Burn: 0.5
+            Brute: 0.5
+      - !type:ChemCleanBloodstream
+        cleanseRate: 5
+
+- type: reagent
+  id: Rezadone
+  name: reagent-name-rezadone
+  group: Medicine
+  desc: reagent-desc-rezadone
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: fishy
+  color: "#669900"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.4
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -1
+            Burn: -1
+          types:
+            Cellular: -0.10
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          groups:
+            Toxin: 1
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.3
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+
+- type: reagent
+  id: Cordrazine
+  name: reagent-name-cordrazine
+  group: Medicine
+  desc: reagent-desc-cordrazine
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#942222"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.6
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:MobStateCondition
+            mobstate: Critical
+          damage:
+            groups:
+              Brute: -0.5
+            types:
+              Asphyxiation: -1
+              Poison: -0.5
+        - !type:HealthChange
+          conditions:
+          - !type:MobStateCondition
+            mobstate: Alive
+          damage:
+            groups:
+              Brute: -0.1
+              Burn: -0.1
+        - !type:HealthChange
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+          damage:
+            types:
+              Cellular: 0.5
+
+- type: reagent
+  id: SalicylicAcid
+  name: reagent-name-salicylic-acid
+  group: Medicine
+  desc: reagent-desc-salicylic-acid
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: medicine
+  color: "#D2D2D2"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+        - !type:HealthChange
+          probability: 0.55
+          damage:
+            groups:
+              Brute: -3
+        - !type:HealthChange
+          conditions:
+          - !type:ReagentThreshold
+            min: 30
+          damage:
+            groups:
+              Toxin: 1

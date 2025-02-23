@@ -1,0 +1,69 @@
+- type: reaction
+  id: Cyanide
+  reactants:
+    Oil:
+      amount: 1
+    Ammonia:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Cyanide: 3
+
+- type: reaction
+  id: Formaldehyde
+  reactants:
+    Ethanol:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Silver:
+      amount: 1
+  products:
+    Formaldehyde: 3
+
+- type: reaction
+  id: Chloroform
+  reactants:
+    Acetone:
+      amount: 1
+    Bleach:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: Oxygen
+  products:
+    Chloroform: 1
+
+- type: reaction
+  id: Caffeine
+  reactants:
+    Chloroform:
+      amount: 0.1
+      catalyst: true
+    Coffee:
+      amount: 1
+  products:
+    Caffeine: 1
+
+- type: reaction
+  id: CaffeineLatte
+  reactants:
+    Chloroform:
+      amount: 0.1
+      catalyst: true
+    CafeLatte:
+      amount: 2 # not pure
+  products:
+    Caffeine: 0.5
+
+- type: reaction
+  id: CaffeineIced
+  reactants:
+    Chloroform:
+      amount: 0.1
+      catalyst: true
+    IcedCoffee:
+      amount: 2 # not pure
+  products:
+    Caffeine: 0.5

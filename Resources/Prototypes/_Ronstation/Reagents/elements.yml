@@ -1,0 +1,26 @@
+- type: reagent
+  id: Bromine
+  name: reagent-name-bromine
+  group: Elements
+  desc: reagent-desc-bromine
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#752817"
+  meltingPoint: 266.3
+  boilingPoint: 332.6
+  plantMetabolism:
+    - !type:PlantAdjustWater
+      amount: -0.5
+    - !type:PlantAdjustToxins
+      amount: 15
+    - !type:PlantAdjustWeeds
+      amount: -1.5
+    - !type:PlantAdjustHealth
+      amount: -1.5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
