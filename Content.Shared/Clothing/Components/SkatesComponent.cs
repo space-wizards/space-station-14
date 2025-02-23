@@ -1,7 +1,7 @@
 using Robust.Shared.GameStates;
 using Content.Shared.Clothing.EntitySystems;
 
-namespace Content.Shared.Clothing;
+namespace Content.Shared.Clothing.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
