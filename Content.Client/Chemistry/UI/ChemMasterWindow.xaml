@@ -100,7 +100,7 @@
                     </BoxContainer>
 
                     <!-- Pills Type Buttons -->
-                    <BoxContainer Orientation="Horizontal">
+                    <BoxContainer Orientation="Horizontal" Name = "PillTypeButtonGroup">
                         <Label Text="{Loc 'chem-master-window-pill-type-label'}"/>
                         <Control HorizontalExpand="True" MinSize="50 0"/>
                         <GridContainer Name="Grid" Columns="10">
@@ -108,7 +108,7 @@
                         </GridContainer>
                     </BoxContainer>
 
-                    <BoxContainer Orientation="Horizontal">
+                    <BoxContainer Orientation="Horizontal" Name = "PillLabelGroup">
                         <Label Text="{Loc 'chem-master-window-pills-label'}" />
                         <Control HorizontalExpand="True" MinSize="50 0" />
                         <Label Text="{Loc 'chem-master-window-pills-number-label'}" Margin="5 0 0 0" StyleClasses="LabelSecondaryColor" />
@@ -118,7 +118,7 @@
                         <Button MinSize="80 0" Name="CreatePillButton" Access="Public" Text="{Loc 'chem-master-window-create-button'}" />
                     </BoxContainer>
 
-                    <BoxContainer Orientation="Horizontal">
+                    <BoxContainer Orientation="Horizontal" Name = "BottleLabelGroup">
                         <Label Text="{Loc 'chem-master-window-bottles-label'}" />
                         <Control HorizontalExpand="True" MinSize="50 0" />
                         <Label Text="{Loc 'chem-master-window-dose-label'}" Margin="5 0 0 0" StyleClasses="LabelSecondaryColor" />
