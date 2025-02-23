@@ -124,6 +124,7 @@
       - id: ClothingMaskSterile
       - id: HandLabeler
         prob: 0.5
+      - id: BoxReagentPad
 
 - type: entity
   id: LockerParamedicFilled
