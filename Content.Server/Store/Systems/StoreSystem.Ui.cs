@@ -146,13 +146,7 @@ public sealed partial class StoreSystem
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var argBuyer = buyer;
-
-            // If a mind isn't provided, check for one. If neither hits, it's probably an object (e.g. surplus) doing the listing.
-            if (!HasComp<MindComponent>(argBuyer) && _mind.TryGetMind(buyer, out var buyerMind, out var _))
-                argBuyer = buyerMind;
-
-            var args = new ListingConditionArgs(component.AccountOwner ?? argBuyer, uid, listing, EntityManager);
+            var args = new ListingConditionArgs(component.AccountOwner ?? GetBuyerMind(buyer), uid, listing, EntityManager);
             var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
 
             if (!conditionsMet)
