@@ -32,7 +32,11 @@
     listenRange: 0
   - type: ActiveListener
     range: 0
-  - type: ItemSlotVoiceControl
+  - type: StorageVoiceControl
+  - type: Storage
+    grid:
+    - 0,0,6,3
+    maxItemSize: Huge
   - type: ItemSlots
     slots:
       body_bag:
