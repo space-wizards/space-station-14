@@ -124,7 +124,7 @@ public sealed partial class MonumentMenu : FancyWindow
     {
         var influences = _influencePrototypes
             .OrderBy(influence => _unlockedGlyphProtoIds.Contains(influence.ID))
-            .ThenBy<InfluencePrototype, string>(influence => influence.Name, StringComparer.CurrentCultureIgnoreCase);
+            .ThenBy<InfluencePrototype, string>(influence => influence.Name);
         InfluencesContainer.RemoveAllChildren();
         foreach (var influence in influences)
         {
