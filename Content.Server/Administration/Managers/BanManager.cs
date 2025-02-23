@@ -239,7 +239,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         if (!_prototypeManager.HasIndex<JobPrototype>(role))
         {
-            _chat.SendAdminAlert(Loc.GetString("cmd-roleban-unknown-role", ("role", role)));
+            _chat.SendAdminAlert(Loc.GetString("cmd-roleban-job-parse", ("job", role)));
             return;
         }
 
