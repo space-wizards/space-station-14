@@ -10,13 +10,15 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 [GenerateTypedNameReferences]
 public sealed partial class PlayerTabEntry : PanelContainer
 {
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     public NetEntity? PlayerEntity;
 
     public PlayerTabEntry(PlayerInfo player, StyleBoxFlat styleBoxFlat)
     {
+        IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
-
-        var roles = EntitySystem.Get<SharedRoleSystem>(); //TODO:ERRANT this is obsolete!!!
+        var roles = _entMan.System<SharedRoleSystem>();
 
         UsernameLabel.Text = player.Username;
 
