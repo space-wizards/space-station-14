@@ -1,13 +1,10 @@
-﻿using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Survivor.Components;
 using Content.Shared.Tag;
@@ -19,7 +16,6 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 {
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
@@ -38,25 +34,20 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
-        var allHumans = _mind.GetAliveHumans();
+        var allAliveHumanMinds = _mind.GetAliveHumans();
 
-        foreach (var human in allHumans)
+        foreach (var humanMind in allAliveHumanMinds)
         {
-            if (!human.Comp.OwnedEntity.HasValue)
+            if (!humanMind.Comp.OwnedEntity.HasValue)
                 continue;
 
-            var ent = human.Comp.OwnedEntity.Value;
+            var mind = humanMind.Owner;
+            var ent = humanMind.Comp.OwnedEntity.Value;
 
-            // Alive Humans does get the mindcomp, however this has better logic to get the mindId
-            // No need to repeat the same code
-            if (!_mind.TryGetMind(ent, out var mind, out _) || HasComp<SurvivorComponent>(ent))
-                continue;
-
-            if (_tag.HasTag(mind, "InvalidForSurvivorAntag"))
+            if (HasComp<SurvivorComponent>(mind) || _tag.HasTag(mind, "InvalidForSurvivorAntag"))
                 continue;
 
             EnsureComp<SurvivorComponent>(mind);
-            _adminLog.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ent)} has become a Survivor!");
             _role.MindAddRole(mind, "MindRoleSurvivor");
             _antag.SendBriefing(ent, Loc.GetString("survivor-role-greeting"), Color.Olive, null);
         }
@@ -82,18 +73,14 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
         var aliveOnShuttle = 0;
         var eShuttle = _eShuttle.GetShuttle();
 
-        if (eShuttle is null)
-            return;
-
-        if (!eShuttle.Value.IsValid())
-            return;
-
-        var eShuttleMapPos = Transform(eShuttle.Value).MapID;
-
         while (existingSurvivors.MoveNext(out _, out _, out var mindComp))
         {
+            // If their brain is gone or they respawned/became a ghost role
             if (mindComp.CurrentEntity is null)
+            {
+                deadSurvivors++;
                 continue;
+            }
 
             var survivor = mindComp.CurrentEntity.Value;
 
@@ -103,13 +90,13 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
                 continue;
             }
 
-            if (eShuttleMapPos != _xform.GetMapCoordinates(survivor).MapId)
+            if (eShuttle != null && eShuttle.Value.IsValid() && (Transform(eShuttle.Value).MapID == _xform.GetMapCoordinates(survivor).MapId))
             {
-                aliveMarooned++;
+                aliveOnShuttle++;
                 continue;
             }
 
-            aliveOnShuttle++;
+            aliveMarooned++;
         }
 
         args.AddLine(Loc.GetString("survivor-round-end-dead-count", ("deadCount", deadSurvivors)));
