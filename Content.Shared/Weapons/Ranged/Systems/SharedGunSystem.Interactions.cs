@@ -3,7 +3,6 @@ using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Wieldable;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
