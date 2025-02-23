@@ -1,0 +1,27 @@
+- type: entity
+  name: package
+  parent: BaseItem
+  id: PackageDelivery
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+  - type: Delivery
+    spesoReward: 1000
+  - type: SpawnItemsOnUse
+    items:
+    - id: PresentTrash
+
+- type: entity
+  name: letter
+  parent: BaseItem
+  id: LetterDelivery
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: envelope_closed
+  - type: Delivery
+    spesoReward: 500
+  - type: SpawnItemsOnUse
+    items:
+    - id: PresentTrash

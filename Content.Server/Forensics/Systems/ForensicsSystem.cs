@@ -66,6 +66,7 @@ namespace Content.Server.Forensics
         private void OnFingerprintInit(EntityUid uid, FingerprintComponent component, MapInitEvent args)
         {
             component.Fingerprint = GenerateFingerprint();
+            Dirty(uid, component);
         }
 
         private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
@@ -294,8 +295,12 @@ namespace Content.Server.Forensics
                 if (HasComp<FingerprintMaskComponent>(gloves))
                     return;
             }
+
             if (TryComp<FingerprintComponent>(user, out var fingerprint))
+            {
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+                Dirty(user, fingerprint);
+            }
         }
 
         private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)

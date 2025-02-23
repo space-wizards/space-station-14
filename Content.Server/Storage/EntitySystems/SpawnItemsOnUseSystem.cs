@@ -4,6 +4,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Storage.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -67,6 +68,12 @@ namespace Content.Server.Storage.EntitySystems
 
             // If starting with zero or less uses, this component is a no-op
             if (component.Uses <= 0)
+                return;
+
+            var ev = new ItemSpawnAttemptEvent();
+            RaiseLocalEvent(uid, ref ev);
+
+            if (ev.Cancelled)
                 return;
 
             var coords = Transform(args.User).Coordinates;
