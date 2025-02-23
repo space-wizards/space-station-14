@@ -189,4 +189,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// If true, the antag overlay will show role subtype.
+    /// If false, it will show both role type and subtype.
+    /// If subtype is not set for a mob's mind then role type will be shown regardless of setting.
+    /// </summary>
+    public static readonly CVarDef<bool> OverlaySubtypesOnly =
+        CVarDef.Create("admin.overlay_subtypes_only", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

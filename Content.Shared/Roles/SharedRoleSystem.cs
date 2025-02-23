@@ -635,17 +635,17 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <summary>
     /// Returns the localized name of a role type's subtype and/or role type.
     /// </summary>
-    /// <param name="type">The locale string of the role type</param>
+    /// <param name="roleType">The locale string of the role type</param>
     /// <param name="subtype">The locale string of the subtype</param>
-    /// <param name="returnBoth">If true, subtype will be returned along with type. If false, subtype will be returned by itself</param>
+    /// <param name="subtypeOnly">If true, role type will not be returned along with the subtype</param>
     /// <returns>
-    /// If subtype is not supplied, returns localized role type (or the default role, if role type is not supplied).
-    /// If subtype is supplied and returnBoth is true, returns both localized values as one string.
-    /// If returnBoth is false, returns only the localized subtype.
+    /// If subtypeOnly is true, returns localized subtype.
+    /// If subtypeOnly is false, returns localized role and subtype.
+    /// If subtype is not provided, returns localized role type regardless of subtypeOnly setting.
     /// </returns>
-    public string GetRoleSubtypeLabel(string type, string? subtype, bool returnBoth = true)
+    public string GetRoleSubtypeLabel(string roleType, string? subtype, bool subtypeOnly = true)
     {
-        var typeLoc = Loc.GetString(type);
+        var typeLoc = Loc.GetString(roleType);
 
         if (string.IsNullOrEmpty(subtype))
             return typeLoc;
@@ -653,7 +653,7 @@ public abstract class SharedRoleSystem : EntitySystem
         var subLoc = Loc.GetString(subtype);
         var combined = Loc.GetString("role-with-subtype-format", ("type", typeLoc), ("subtype", subLoc));
 
-        return returnBoth ? combined : subLoc;
+        return subtypeOnly ? subLoc : combined;
     }
 }
 
