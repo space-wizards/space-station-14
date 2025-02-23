@@ -1,7 +1,7 @@
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Roles;
+namespace Content.Client.Lobby.UI.Loadouts;
 
 public interface ILoadoutOverride
 {
