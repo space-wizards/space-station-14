@@ -511,6 +511,12 @@ namespace Content.Server.GameTicking
             //Tell every client the round has ended.
             var gamemodeTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
 
+            // Special shit for statistics tab
+            var stats = new RoundStatisticsAppendEvent();
+            RaiseLocalEvent(stats);
+
+            var roundStats = stats.Text;
+
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
             RaiseLocalEvent(textEv);
@@ -590,6 +596,7 @@ namespace Content.Server.GameTicking
             var roundEndMessageEvent = new RoundEndMessageEvent(
                 gamemodeTitle,
                 roundEndText,
+                roundStats,
                 roundDuration,
                 RoundId,
                 listOfPlayerInfoFinal.Length,
@@ -981,6 +988,32 @@ namespace Content.Server.GameTicking
 
         /// <summary>
         ///     Invoke this method to add text to the round end summary screen.
+        /// </summary>
+        /// <param name="text"></param>
+        public void AddLine(string text)
+        {
+            if (_doNewLine)
+                Text += "\n";
+
+            Text += text;
+            _doNewLine = true;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised to allow subscribers to add text to the round statistics screen.
+    /// </summary>
+    public sealed class RoundStatisticsAppendEvent
+    {
+        private bool _doNewLine;
+
+        /// <summary>
+        ///     Text to display in the round statistics screen.
+        /// </summary>
+        public string Text { get; private set; } = string.Empty;
+
+        /// <summary>
+        ///     Invoke this method to add text to the round statistics screen.
         /// </summary>
         /// <param name="text"></param>
         public void AddLine(string text)
