@@ -211,7 +211,7 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  id: SpawnPointWizard
+  id: SpawnPointGhostWizard
   name: ghost role spawn point
   suffix: wizard
   parent: MarkerBase
