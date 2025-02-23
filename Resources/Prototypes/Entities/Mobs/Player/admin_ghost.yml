@@ -49,6 +49,14 @@
       enum.GeneralStationRecordConsoleKey.Key:
       # who the fuck named this bruh
         type: GeneralStationRecordConsoleBoundUserInterface
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+      enum.StationMapUiKey.Key:
+        type: StationMapBoundUserInterface
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.SolarControlConsoleUiKey.Key:
@@ -63,6 +71,12 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
+      enum.AtmosAlertsComputerUiKey.Key:
+        toggleAction: ActionAGhostShowAtmosAlerts
+      enum.StationMapUiKey.Key:
+        toggleAction: ActionAGhostShowStationMap
+      enum.PowerMonitoringConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowPowerMonitor
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
@@ -77,6 +91,10 @@
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
     canDeleteEntries: true
+  - type: AtmosAlertsComputer
+  - type: StationMap
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -168,3 +186,39 @@
     keywords: [ "AI", "console", "interface" ]
     priority: -7
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
+
+- type: entity
+  id: ActionAGhostShowAtmosAlerts
+  name: Atmos Alerts Interface
+  description: View a Atmos Alerts Interface.
+  components:
+  - type: InstantAction
+    icon: { sprite: Structures/Wallmounts/air_monitors.rsi, state: alarm1 }
+    iconOn: Structures/Wallmounts/air_monitors.rsi/alarm1.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -11
+    event: !type:ToggleIntrinsicUIEvent { key: enum.AtmosAlertsComputerUiKey.Key }
+    
+- type: entity
+  id: ActionAGhostShowStationMap
+  name: Station Map Interface
+  description: View a Station Map.
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+    iconOn: Interface/Actions/pai-map.rsi/icon.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -12
+    event: !type:ToggleIntrinsicUIEvent { key: enum.StationMapUiKey.Key }
+
+- type: entity
+  id: ActionAGhostShowPowerMonitor
+  name: Power Monitoring Interface
+  description: View a Power Monitor Interface.
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
+    iconOn: Interface/Actions/actions_borg.rsi/wire-module.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -12
+    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
