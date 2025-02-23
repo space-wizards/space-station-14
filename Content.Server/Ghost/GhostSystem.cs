@@ -7,6 +7,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -355,7 +356,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true, null, warp.Color);
             }
         }
 
@@ -368,13 +369,46 @@ namespace Content.Server.Ghost
 
                 if (attached == except) continue;
 
+                TryComp<GhostRoleComponent>(attached, out var ghostRole);
                 TryComp<MindContainerComponent>(attached, out var mind);
+                TryComp<GhostComponent>(attached, out var ghost);
 
-                var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
+                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached) && ghost == null && ghostRole == null) continue;
 
-                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+                var entityName = Name(attached);
+                if (ghost != null)
+                {
+                    if (ghost.HideGhostWarp == true) continue;
+                    var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
+                    ("entityName", entityName),
+                    ("jobName", Loc.GetString("ghost-target-warp-role")));
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString("ghost-target-warp-role"), Color.Gray);
+                }
+                else if (_jobs.MindTryGetJob(mind?.Mind, out var jobProto))
+                {
+                    var jobName = _jobs.MindTryGetJobName(mind?.Mind);
+
+                    var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
+                    ("entityName", entityName),
+                    ("jobName", jobName));
+
+                    if (_jobs.TryGetDepartment(jobProto.ID, out var departmentProto))
+                    {
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString(departmentProto.Name), departmentProto.Color);
+                    }
+                    else
+                    {
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, null, null); // there exists some job without a department.
+                    }
+                }
+                else if (ghostRole != null)
+                {
+                    var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
+                    ("entityName", entityName),
+                    ("jobName", ghostRole.RoleName));
+
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString("ghost-target-category-ghost-role"), Color.Gray);
+                }
             }
         }
 
