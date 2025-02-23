@@ -294,6 +294,7 @@
 
 - type: reaction
   id: DemonsBlood
+  preserveDNA: true
   requiredMixerCategories:
   - Stir
   reactants:
@@ -310,6 +311,7 @@
 
 - type: reaction
   id: DevilsKiss
+  preserveDNA: true
   requiredMixerCategories:
   - Stir
   reactants:
@@ -838,6 +840,7 @@
 
 - type: reaction
   id: RedMead
+  preserveDNA: true
   reactants:
     Mead:
       amount: 1
