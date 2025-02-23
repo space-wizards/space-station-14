@@ -79,6 +79,6 @@ public sealed class AirlockPryingTest : InteractionTest
 
         await InteractUsing(Pry);
 
-        Assert.That(doorComp.State, Is.EqualTo(DoorState.Closing), "Unpowerd airlock failed to pry closed.");
+        Assert.That(doorComp.State, Is.EqualTo(DoorState.Closing), "Unpowered airlock failed to pry closed.");
     }
 }
