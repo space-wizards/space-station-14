@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Nukies now have role briefing on their character screen.
-    type: Tweak
-  - message: Animals who are made Thief no longer get told in their briefing about
-      the thief gear that they don't actually have and couldn't possibly use.
-    type: Fix
-  id: 7499
-  time: '2024-10-10T08:48:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31318
 - author: nikthechampiongr
   changes:
   - message: It is no longer impossible to do bounties other than the first one if
@@ -3896,3 +3886,10 @@
   id: 7998
   time: '2025-02-23T20:03:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35418
+- author: TiniestShark
+  changes:
+  - message: Scarves, pins and other neckwear now render above the backpack.
+    type: Tweak
+  id: 7999
+  time: '2025-02-23T23:29:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35322
