@@ -99,6 +99,11 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-unabsorbable", ("target", Identity.Entity(target, EntityManager))), uid, uid);
             return;
         }
+        if (absorbComp != null && absorbComp.BiomassRestored < 1 && comp.MinorAbsorbs > 3)
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-diminishing-returns", ("target", Identity.Entity(target, EntityManager))), uid, uid);
+            return;
+        }
         if (TryComp<RottingComponent>(target, out var rotComp) && _rotting.RotStage(target, rotComp) >= 2)
         {
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-extremely-bloated", ("target", Identity.Entity(target, EntityManager))), uid, uid);
@@ -117,6 +122,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.MediumCaution);
 
         PlayMeatySound(uid, comp);
+        var absorbTime = TimeSpan.FromSeconds(absorbComp is not null ? 15 * absorbComp.BiomassRestored: 15);
         var dargs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(15), new AbsorbDNADoAfterEvent(), uid, target)
         {
             DistanceThreshold = 1.5f,
@@ -139,17 +145,28 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (args.Cancelled || !IsIncapacitated(target) || HasComp<AbsorbedComponent>(target))
             return;
 
-        PlayMeatySound(args.User, comp);
+        var biomassPercentRestored = 1f;
+        TryComp<AbsorbableComponent>(target, out var absorbComp);
+        if (absorbComp != null)
+            biomassPercentRestored = absorbComp.BiomassRestored;
+
+        if (biomassPercentRestored < 1f && comp.MinorAbsorbs > 0) // Check if baseline entity should restore less than 100% of biomass
+        {
+            biomassPercentRestored /= comp.MinorAbsorbs; // If so, divide by # of minor absorbtions performed and increase the count
+            comp.MinorAbsorbs += 1;
+        }
+        else
+            comp.MinorAbsorbs = 0; // Reset minor absorbtions if we're consuming something that restores the full value
 
         var reducedBiomass = false;
-        if (HasComp<RottingComponent>(target) || (TryComp<AbsorbableComponent>(target, out var absorbComp) && absorbComp.ReducedBiomass))
+        if (HasComp<RottingComponent>(target))
             reducedBiomass = true;
 
-        float biomassModifier = 1f;
         if (reducedBiomass)
-            biomassModifier = 0.5f;
+            biomassPercentRestored /= 2;
 
-        UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
+        PlayMeatySound(args.User, comp);
+        UpdateBiomass(uid, comp, comp.MaxBiomass * biomassPercentRestored - comp.TotalAbsorbedEntities);
 
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
         _damage.TryChangeDamage(target, dmg, true, false);
