@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Removed some chemicals from the maintenance pill and spaceshroom pool.
-    type: Remove
-  id: 689
-  time: '2024-12-08T15:04:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/958
 - author: kipdotnet
   changes:
   - message: Banana.
@@ -4124,3 +4117,11 @@
   id: 1188
   time: '2025-02-23T01:47:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1769
+- author: AvianMaiden
+  changes:
+  - message: Many new sounds for weapon racking that used the default! Enjoy shotgun
+      pump kerchunks and SMGs actually having a charging handle!
+    type: Add
+  id: 1189
+  time: '2025-02-23T01:54:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1761
