@@ -5,6 +5,8 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.CCVar;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -16,7 +18,7 @@ namespace Content.Server.Power.EntitySystems
     ///     Manages power networks, power state, and all power components.
     /// </summary>
     [UsedImplicitly]
-    public sealed class PowerNetSystem : EntitySystem
+    public sealed class PowerNetSystem : SharedPowerNetSystem
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
@@ -28,11 +30,19 @@ namespace Content.Server.Power.EntitySystems
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
+        private EntityQuery<ApcPowerReceiverBatteryComponent> _apcBatteryQuery;
+        private EntityQuery<AppearanceComponent> _appearanceQuery;
+        private EntityQuery<BatteryComponent> _batteryQuery;
+
         private BatteryRampPegSolver _solver = new();
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _apcBatteryQuery = GetEntityQuery<ApcPowerReceiverBatteryComponent>();
+            _appearanceQuery = GetEntityQuery<AppearanceComponent>();
+            _batteryQuery = GetEntityQuery<BatteryComponent>();
 
             UpdatesAfter.Add(typeof(NodeGroupSystem));
             _solver = new(_cfg.GetCVar(CCVars.DebugPow3rDisableParallel));
@@ -309,10 +319,6 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateApcPowerReceiver(float frameTime)
         {
-            var appearanceQuery = GetEntityQuery<AppearanceComponent>();
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-            var apcBatteryQuery = GetEntityQuery<ApcPowerReceiverBatteryComponent>();
-
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
@@ -321,8 +327,11 @@ namespace Content.Server.Power.EntitySystems
                                   || MathHelper.CloseToPercent(apcReceiver.NetworkLoad.ReceivingPower,
                                       apcReceiver.Load));
 
+                MetaDataComponent? metadata = null;
+
+                // TODO: If we get archetypes would be better to split this out.
                 // Check if the entity has an internal battery
-                if (apcBatteryQuery.TryComp(uid, out var apcBattery) && TryComp<BatteryComponent>(uid, out var battery))
+                if (_apcBatteryQuery.TryComp(uid, out var apcBattery) && _batteryQuery.TryComp(uid, out var battery))
                 {
                     apcReceiver.Load = apcBattery.IdleLoad;
 
@@ -333,7 +342,6 @@ namespace Content.Server.Power.EntitySystems
                     {
                         _battery.SetCharge(uid, battery.CurrentCharge - apcBattery.IdleLoad * frameTime, battery);
                     }
-
                     // Otherwise try to charge the battery
                     else if (powered && !_battery.IsFull(uid, battery))
                     {
@@ -347,6 +355,8 @@ namespace Content.Server.Power.EntitySystems
                     if (apcBattery.Enabled != enableBattery)
                     {
                         apcBattery.Enabled = enableBattery;
+                        metadata = MetaData(uid);
+                        Dirty(uid, apcBattery, metadata);
 
                         var apcBatteryEv = new ApcPowerReceiverBatteryChangedEvent(enableBattery);
                         RaiseLocalEvent(uid, ref apcBatteryEv);
@@ -361,8 +371,8 @@ namespace Content.Server.Power.EntitySystems
                 if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
                     continue;
 
-                var metadata = metaQuery.Comp(uid);
-                if (metadata.EntityPaused)
+                metadata ??= MetaData(uid);
+                if (Paused(uid, metadata))
                     continue;
 
                 apcReceiver.Recalculate = false;
@@ -372,23 +382,19 @@ namespace Content.Server.Power.EntitySystems
                 var ev = new PowerChangedEvent(powered, apcReceiver.NetworkLoad.ReceivingPower);
                 RaiseLocalEvent(uid, ref ev);
 
-                if (appearanceQuery.TryComp(uid, out var appearance))
+                if (_appearanceQuery.TryComp(uid, out var appearance))
                     _appearance.SetData(uid, PowerDeviceVisuals.Powered, powered, appearance);
             }
         }
 
         private void UpdatePowerConsumer()
         {
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-            var enumerator = AllEntityQuery<PowerConsumerComponent>();
+            var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
             while (enumerator.MoveNext(out var uid, out var consumer))
             {
                 var newRecv = consumer.NetworkLoad.ReceivingPower;
                 ref var lastRecv = ref consumer.LastReceived;
                 if (MathHelper.CloseToPercent(lastRecv, newRecv))
-                    continue;
-
-                if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
                 lastRecv = newRecv;
