@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Just_Art
-  changes:
-  - message: Added a flower wreath and hairflower to loadout!
-    type: Add
-  id: 7490
-  time: '2024-10-06T12:48:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32097
 - author: Golinth
   changes:
   - message: Removed clown waddling until implemented properly
@@ -3897,3 +3890,12 @@
   id: 7989
   time: '2025-02-22T21:34:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35383
+- author: GrownSamoyedDog
+  changes:
+  - message: Fixed Guidebook Entry Ordering / Sorting
+    type: Fix
+  - message: Rearranged Guidebook Contents
+    type: Tweak
+  id: 7990
+  time: '2025-02-23T01:00:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34960
