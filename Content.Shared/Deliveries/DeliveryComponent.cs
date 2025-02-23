@@ -1,7 +1,7 @@
+using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-
 
 namespace Content.Shared.Deliveries;
 
@@ -18,7 +18,7 @@ public sealed partial class DeliveryComponent : Component
     public string RecipientName = string.Empty;
 
     [DataField, AutoNetworkedField]
-    public string RecipientJob = string.Empty;
+    public ProtoId<JobPrototype> RecipientJob;
 
     [DataField, AutoNetworkedField]
     public EntityUid RecipientStation;

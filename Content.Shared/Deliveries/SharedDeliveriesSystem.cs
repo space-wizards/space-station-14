@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Deliveries;
 
@@ -7,6 +8,8 @@ namespace Content.Shared.Deliveries;
 /// </summary>
 public abstract class SharedDeliveriesSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -16,6 +19,11 @@ public abstract class SharedDeliveriesSystem : EntitySystem
 
     private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
     {
-        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", ent.Comp.RecipientName), ("job", ent.Comp.RecipientJob)));
+        if (!_prototype.TryIndex(ent.Comp.RecipientJob, out var proto))
+            return;
+        // TODO: if we can't get a valid recipient, change the popup
+
+        var job = Loc.GetString(proto.LocalizedName);
+        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", ent.Comp.RecipientName), ("job", job)));
     }
 }

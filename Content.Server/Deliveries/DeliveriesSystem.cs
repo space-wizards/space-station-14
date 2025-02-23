@@ -52,10 +52,7 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
 
     private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<TransformComponent>(ent, out var transform))
-            return;
-
-        var stationId = _station.GetStationInMap(transform.MapID);
+        var stationId = _station.GetStationInMap(Transform(ent).MapID);
 
         if (stationId == null)
             return;
