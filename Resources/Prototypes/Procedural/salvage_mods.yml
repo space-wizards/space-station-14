@@ -87,14 +87,6 @@
     - Lava
 
 - type: salvageTemperatureMod
-  id: Melting
-  desc: salvage-temperature-mod-extreme-heat
-  cost: 4
-  temperature: 1273.15 # 1000C hot hot hot
-  biomes:
-    - Lava
-
-- type: salvageTemperatureMod
   id: Cold
   desc: salvage-temperature-mod-cold
   cost: 1
@@ -190,7 +182,7 @@
 
 - type: salvageAirMod
   id: Plasma
-  cost: 4
+  cost: 5
   desc: salvage-air-mod-toxic-atmosphere
   gases:
     - 0
@@ -203,7 +195,7 @@
 
 - type: salvageAirMod
   id: Burnable
-  cost: 5
+  cost: 7
   desc: salvage-air-mod-volatile-atmosphere
   gases:
     - 21.824779 # oxygen
