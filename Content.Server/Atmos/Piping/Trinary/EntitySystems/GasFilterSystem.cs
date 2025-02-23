@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 var limitMolesFilter = (pressureDeltaFilter * filterNode.Air.Volume) / (removed.Temperature * Atmospherics.R);
 
                 var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
-                var filteredMoles = Math.Min(limitMolesFilter, availableMoles);
+                var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);
 
                 filterNode.Air.AdjustMoles(filter.FilteredGas.Value, filteredMoles);
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
@@ -95,6 +95,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // derivation can be found at: https://github.com/space-wizards/space-station-14/pull/35211/files/a0ae787fe07a4e792570f55b49d9dd8038eb6e4d#r1961183456
             var pressureDeltaOutlet = Atmospherics.MaxOutputPressure - outletNode.Air.Pressure;
             var limitMolesOutlet = (pressureDeltaOutlet * outletNode.Air.Volume) / (removed.Temperature * Atmospherics.R);
+            // This might end up negative, but such cases are handled correctly by the `RemoveRatio` method
             var limitRatioOutlet = limitMolesOutlet / removed.TotalMoles;
 
             var passthrough = removed.RemoveRatio(limitRatioOutlet);

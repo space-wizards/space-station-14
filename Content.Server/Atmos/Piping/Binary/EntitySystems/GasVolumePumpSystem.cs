@@ -122,6 +122,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var limitMoles = (pressureDelta * outlet.Air.Volume) / (inlet.Air.Temperature * Atmospherics.R);
             var limitRatio = limitMoles / inlet.Air.TotalMoles;
 
+
+            // This might end up negative under overclock conditions, but such cases are handled correctly by the
+            // `RemoveRatio` method
             var removedRatio = Math.Min(transferRatio, limitRatio);
             var removed = inlet.Air.RemoveRatio(removedRatio);
 
