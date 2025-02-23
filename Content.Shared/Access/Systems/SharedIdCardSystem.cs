@@ -128,8 +128,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             jobTitle = jobTitle.Trim();
 
-            if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
-                jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];
+            if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength) // TODO
+                jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength]; // TODO
         }
         else
         {
@@ -206,8 +206,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(fullName))
         {
             fullName = fullName.Trim();
-            if (fullName.Length > IdCardConsoleComponent.MaxFullNameLength)
-                fullName = fullName[..IdCardConsoleComponent.MaxFullNameLength];
+            if (fullName.Length > IdCardConsoleComponent.MaxFullNameLength) // TODO
+                fullName = fullName[..IdCardConsoleComponent.MaxFullNameLength]; // TODO
         }
         else
         {

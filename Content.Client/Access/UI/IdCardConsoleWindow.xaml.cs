@@ -40,6 +40,7 @@ namespace Content.Client.Access.UI
             _owner = owner;
 
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
+            // FullNameLineEdit.IsValid = s => s.Length <= 32; // TODO
             FullNameLineEdit.OnTextChanged += _ =>
             {
                 FullNameSaveButton.Disabled = FullNameSaveButton.Text == _lastFullName;
@@ -47,6 +48,7 @@ namespace Content.Client.Access.UI
             FullNameSaveButton.OnPressed += _ => SubmitData();
 
             JobTitleLineEdit.OnTextEntered += _ => SubmitData();
+            // JobTitleLineEdit.IsValid = s => s.Length <= 32; // TODO
             JobTitleLineEdit.OnTextChanged += _ =>
             {
                 JobTitleSaveButton.Disabled = JobTitleLineEdit.Text == _lastJobTitle;

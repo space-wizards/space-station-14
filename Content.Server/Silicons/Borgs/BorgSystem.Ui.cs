@@ -53,7 +53,7 @@ public sealed partial class BorgSystem
 
     private void OnSetNameBuiMessage(EntityUid uid, BorgChassisComponent component, BorgSetNameBuiMessage args)
     {
-        if (args.Name.Length > HumanoidCharacterProfile.MaxNameLength ||
+        if (args.Name.Length > HumanoidCharacterProfile.MaxNameLength || // TODO
             args.Name.Length == 0 ||
             string.IsNullOrWhiteSpace(args.Name) ||
             string.IsNullOrEmpty(args.Name))

@@ -52,7 +52,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnChangeName(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeNameMessage message)
     {
-        if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0)
+        if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0) // TODO
         {
             _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-failure"), entity, message.Actor, PopupType.SmallCaution);
             return;

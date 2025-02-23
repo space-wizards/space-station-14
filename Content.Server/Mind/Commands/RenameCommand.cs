@@ -25,7 +25,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
         }
 
         var name = args[1];
-        if (name.Length > IdCardConsoleComponent.MaxFullNameLength)
+        if (name.Length > IdCardConsoleComponent.MaxFullNameLength) // TODO
         {
             shell.WriteLine(Loc.GetString("cmd-rename-too-long"));
             return;
