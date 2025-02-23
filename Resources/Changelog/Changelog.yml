@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Librarians now start with a D20.
-    type: Tweak
-  id: 7494
-  time: '2024-10-08T09:53:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32648
 - author: K-Dynamic
   changes:
   - message: CHIMP and APE particles should be almost as fast as before
@@ -3898,3 +3891,14 @@
   id: 7993
   time: '2025-02-23T12:57:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35055
+- author: ScarKy0
+  changes:
+  - message: Increased the price of the EMAG to 5TC. It is also now part of the "very
+      rare discounts" instead of "rare discounts".
+    type: Tweak
+  - message: Decreased the price of the Access Breaker to 4TC. It is also now part
+      of the "rare discounts" instead of "very rare discounts".
+    type: Tweak
+  id: 7994
+  time: '2025-02-23T13:01:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35354
