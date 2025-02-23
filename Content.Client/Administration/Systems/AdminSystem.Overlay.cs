@@ -41,7 +41,8 @@ namespace Content.Client.Administration.Systems
 
         public void AdminOverlayOn()
         {
-            if (_overlayManager.HasOverlay<AdminNameOverlay>()) return;
+            if (_overlayManager.HasOverlay<AdminNameOverlay>())
+                return;
             _overlayManager.AddOverlay(_adminNameOverlay);
             OverlayEnabled?.Invoke();
         }
