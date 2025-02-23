@@ -2011,6 +2011,16 @@
   weather: false
 
 - type: tile
+  id: FloorAstroAsteroidSandBorderless
+  name: tiles-astro-asteroid-sand-borderless
+  parent: FloorAsteroidSandBorderless
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false
+
+- type: tile
   id: FloorWoodLarge
   name: tiles-wood-large
   sprite: /Textures/Tiles/wood_large.png
