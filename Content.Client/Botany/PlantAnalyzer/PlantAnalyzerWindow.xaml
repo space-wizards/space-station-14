@@ -1,0 +1,121 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    MinWidth="320"
+    MaxWidth="320">
+    <ScrollContainer
+        Margin="5 5 5 5"
+        ReturnMeasure="True"
+        VerticalExpand="True"
+        HorizontalExpand="False">
+        <BoxContainer
+            Name="RootContainer"
+            VerticalExpand="True"
+            Orientation="Vertical">
+            <BoxContainer
+                Name="DataContainer"
+                Margin="0 0 0 5"
+                Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
+                    <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64" />
+                    <TextureRect Name="NoDataIcon" Access="Public" SetSize="64 64" Visible="false" Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"/>
+                    <BoxContainer Margin="5 0 0 0" Orientation="Vertical" VerticalAlignment="Top">
+                        <RichTextLabel Name="SeedLabel" SetWidth="150"
+                             Text="{Loc 'generic-unknown'}"/>
+                        <Label Name="ContainerLabel" VerticalAlignment="Top" StyleClasses="LabelSubText"
+                             Text="{Loc 'generic-unknown'}"/>
+                    </BoxContainer>
+                    <Label Margin="0 0 5 0" HorizontalExpand="True" HorizontalAlignment="Right" VerticalExpand="True"
+                           VerticalAlignment="Top" Name="ScanModeLabel"
+                           Text="{Loc 'health-analyzer-window-entity-unknown-text'}" />
+                </BoxContainer>
+                <PanelContainer StyleClasses="LowDivider" />
+                <BoxContainer Name="PlantDataTags" Margin="5 5 0 0" Orientation="Horizontal" Visible="false">
+                    <RichTextLabel Margin="0 0 8 0" Name="Alive" Visible="false" Text="{Loc 'plant-analyzer-component-alive'}" />
+                    <RichTextLabel Margin="0 0 8 0" Name="Dead" Visible="false" Text="{Loc 'plant-analyzer-component-dead'}" />
+                    <RichTextLabel Margin="0 0 8 0" Name="Unviable" Visible="false" Text="{Loc 'plant-analyzer-component-unviable'}" />
+                    <RichTextLabel Margin="0 0 8 0" Name="Kudzu" Visible="false" Text="{Loc 'plant-analyzer-component-kudzu'}" />
+                    <RichTextLabel Margin="0 0 8 0" Name="Mutating" Visible="false" Text="{Loc 'plant-analyzer-component-mutating'}" />
+                </BoxContainer>
+                <GridContainer Name="PlantDataGrid" Margin="0 0 0 5" Columns="6" Visible="false">
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-health'}" />
+                    <Label SetWidth="8" />
+                    <Label HorizontalAlignment="Right" Name="Health" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Name="Endurance" />
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-age'}" />
+                    <Label SetWidth="8" />
+                    <Label HorizontalAlignment="Right" Name="Age" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Name="Lifespan" />
+                </GridContainer>
+                <PanelContainer Name="PlantDataDivider" Visible="false" StyleClasses="LowDivider" />
+                <GridContainer Name="ContainerGrid" Margin="0 5" Columns="8" Visible="false">
+                    <!-- Max values from `PlantHolderSystem.CheckLevelSanity` -->
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-water'}" />
+                    <Label SetWidth="8" />
+                    <Label FontColorOverride="cyan" HorizontalAlignment="Right" Name="WaterLevelLabel" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Text="100.00" />
+                    <Label Margin="12 0 0 0" Name="GtFieldIfTolerances1" />
+                    <Label HorizontalAlignment="Right" Name="WaterConsumptionLabel" />
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-nutrition'}" />
+                    <Label SetWidth="8" />
+                    <Label FontColorOverride="orange" HorizontalAlignment="Right" Name="NutritionLevelLabel" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Text="100.00" />
+                    <Label Margin="12 0 0 0" Name="GtFieldIfTolerances2" />
+                    <Label HorizontalAlignment="Right" Name="NutritionConsumptionLabel" />
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-toxins'}" />
+                    <Label SetWidth="8" />
+                    <Label FontColorOverride="yellowgreen" HorizontalAlignment="Right" Name="ToxinsLabel" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Text="100.00" />
+                    <Label Margin="12 0 0 0" Name="LtFieldIfTolerances1" />
+                    <Label HorizontalAlignment="Right" Name="ToxinsResistanceLabel" />
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-pests'}" />
+                    <Label SetWidth="8" />
+                    <Label FontColorOverride="magenta" HorizontalAlignment="Right" Name="PestLevelLabel" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Text="10.00" />
+                    <Label Margin="12 0 0 0" Name="LtFieldIfTolerances2" />
+                    <Label HorizontalAlignment="Right" Name="PestResistanceLabel" />
+                    <Label Text=" · " />
+                    <Label Text="{Loc 'plant-analyzer-component-weeds'}" />
+                    <Label SetWidth="8" />
+                    <Label FontColorOverride="red" HorizontalAlignment="Right" Name="WeedLevelLabel" />
+                    <Label Text=" / " />
+                    <Label HorizontalAlignment="Right" Text="10.00" />
+                    <Label Margin="12 0 0 0" Name="LtFieldIfTolerances3" />
+                    <Label HorizontalAlignment="Right" Name="WeedResistanceLabel" />
+                </GridContainer>
+                <PanelContainer Name="ContainerDivider" Visible="false" StyleClasses="LowDivider" />
+                <BoxContainer Name="ChemicalsInWaterBox" Visible="false" Orientation="Horizontal" Margin="5">
+                    <RichTextLabel Name="ChemicalsInWaterLabel" SetWidth="290" />
+                </BoxContainer>
+                <PanelContainer Name="ChemicalsInWaterDivider" Visible="false" StyleClasses="LowDivider" />
+                <BoxContainer Name="EnvironmentBox" Visible="false" Orientation="Horizontal" Margin="5">
+                    <RichTextLabel Name="EnvironmentLabel" SetWidth="290" />
+                </BoxContainer>
+                <PanelContainer Name="EnvironmentDivider" Visible="false" StyleClasses="LowDivider" />
+                <BoxContainer Name="ProduceBox" Visible="false" Orientation="Horizontal" Margin="5">
+                    <RichTextLabel Name="ProduceLabel" SetWidth="290" />
+                </BoxContainer>
+                <PanelContainer Name="ProduceDivider" Visible="false" StyleClasses="LowDivider" />
+                <Button Name="Print"
+                    TextAlign="Center"
+                    HorizontalExpand="True"
+                    Access="Public"
+                    Disabled="True"
+                    Margin="0 5 0 0"
+                    Text="{Loc 'plant-analyzer-print'}" />
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
+</controls:FancyWindow>
