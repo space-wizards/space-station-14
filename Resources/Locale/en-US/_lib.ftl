@@ -35,14 +35,17 @@ zzzz-fmt-power-joules = { TOSTRING($divided, "F1") } { $places ->
 # Used internally by the PLAYTIME() function.
 zzzz-fmt-playtime = {$hours}H {$minutes}M
 
-zzz-list-format =
+# Used internally by the FormatList function.
+zzzz-fmt-list =
     { $count ->
         [1] { $item1 }
         [2] { $item1 } and { $item2 }
        *[other] { $items }, and { $last }
     }
 
-zzz-list-format-or =
+
+# Used internally by the FormatListToOr function.
+zzzz-fmt-list-or =
     { $count ->
         [1] { $item1 }
         [2] { $item1 } or { $item2 }
