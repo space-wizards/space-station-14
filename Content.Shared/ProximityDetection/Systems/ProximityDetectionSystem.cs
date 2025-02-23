@@ -30,7 +30,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         var component = ent.Comp;
 
         component.NextUpdate = _timing.CurTime + component.UpdateCooldown;
-        Dirty(ent);
+        DirtyField(ent, component, nameof(ProximityDetectorComponent.NextUpdate));
     }
 
     private void OnToggled(Entity<ProximityDetectorComponent> ent, ref ItemToggledEvent args)
@@ -51,7 +51,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
                 continue;
 
             component.NextUpdate += component.UpdateCooldown;
-            Dirty(uid, component);
+            DirtyField(uid, component, nameof(ProximityDetectorComponent.NextUpdate));
 
             if (!_toggle.IsActivated(uid))
                 continue;
@@ -69,15 +69,16 @@ public sealed class ProximityDetectionSystem : EntitySystem
             return;
 
         component.Distance = float.PositiveInfinity;
+        DirtyField(ent, component, nameof(ProximityDetectorComponent.Distance));
+
         component.Target = null;
+        DirtyField(ent, component, nameof(ProximityDetectorComponent.Target));
 
         var updatedEv = new ProximityTargetUpdatedEvent(component.Distance, ent);
         RaiseLocalEvent(ent, ref updatedEv);
 
         var newTargetEv = new NewProximityTargetEvent(component.Distance, ent);
         RaiseLocalEvent(ent, ref newTargetEv);
-
-        Dirty(ent);
     }
 
     private void UpdateTarget(Entity<ProximityDetectorComponent> detector)
@@ -123,6 +124,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
             RaiseLocalEvent(detector, ref updatedEv);
 
             component.Distance = closestDistance;
+            DirtyField(detector, component, nameof(ProximityDetectorComponent.Distance));
         }
 
         if (newTarget)
@@ -131,9 +133,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
             RaiseLocalEvent(detector, ref newTargetEv);
 
             component.Target = closestUid;
+            DirtyField(detector, component, nameof(ProximityDetectorComponent.Target));
         }
-
-        if (newDistance || newTarget)
-            Dirty(detector);
     }
 }
