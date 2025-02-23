@@ -97,7 +97,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
-        SubscribeLocalEvent<GunComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -522,6 +521,29 @@ public abstract partial class SharedGunSystem : EntitySystem
         const float impulseStrength = 25.0f;
         var impulseVector =  shotDirection * impulseStrength;
         Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
+    }
+
+    public void AddFireDelay(Entity<GunComponent?> ent, TimeSpan addedDelay)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (Timing.ApplyingState)
+            return;
+
+        if (ent.Comp.FireRateModified <= 0)
+            return;
+
+        if (Paused(ent.Owner))
+            return;
+
+        var minimum = Timing.CurTime + addedDelay;
+
+        if (minimum < ent.Comp.NextFire)
+            return;
+
+        ent.Comp.NextFire = minimum;
+        Dirty(ent);
     }
 
     public void RefreshModifiers(Entity<GunComponent?> gun)

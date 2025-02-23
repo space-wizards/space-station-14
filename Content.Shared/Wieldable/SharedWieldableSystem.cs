@@ -56,6 +56,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, ExaminedEvent>(OnExamineRequires);
         SubscribeLocalEvent<GunRequiresWieldComponent, ShotAttemptedEvent>(OnShootAttempt);
+        SubscribeLocalEvent<GunRequiresWieldComponent, ItemWieldedEvent>(OnRequiresGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
         SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
@@ -104,6 +105,11 @@ public abstract class SharedWieldableSystem : EntitySystem
     private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
     {
         _gun.RefreshModifiers(uid);
+    }
+
+    private void OnRequiresGunWielded(EntityUid uid, GunRequiresWieldComponent component, ref ItemWieldedEvent args)
+    {
+        _gun.AddFireDelay(uid, component.WieldDelay);
     }
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
