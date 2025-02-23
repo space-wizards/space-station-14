@@ -158,7 +158,11 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        ///     Applies damage specified via a <see cref="DamageSpecifier"/>.
+        ///     Applies damage specified via a <see cref="DamageSpecifier"/> accounting for resistances. Resistances can
+        ///     come from a DamageModifierSet (e.g. for species resistances) or be added as part of a DamageModifyEvent.
+        ///
+        ///     ignoreResistances ignores all resistances except when alwaysApplyBaseDamageModifier is true, in which
+        ///     case only base damage modifiers are applied.
         /// </summary>
         /// <remarks>
         ///     <see cref="DamageSpecifier"/> is effectively just a dictionary of damage types and damage values. This
@@ -170,7 +174,7 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null, bool alwaysApplyBaseDamageModifier = false)
         {
             if (!uid.HasValue || !_damageableQuery.Resolve(uid.Value, ref damageable, false))
             {
@@ -189,8 +193,11 @@ namespace Content.Shared.Damage
             if (before.Cancelled)
                 return null;
 
+            bool applyBaseResistances = alwaysApplyBaseDamageModifier || !ignoreResistances;
+            bool applyDamageModifiers = !ignoreResistances;
+
             // Apply resistances
-            if (!ignoreResistances)
+            if (applyBaseResistances)
             {
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
@@ -199,15 +206,18 @@ namespace Content.Shared.Damage
                     // use a local private field instead of creating a new dictionary here..
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
+            }
 
+            if (applyDamageModifiers)
+            {
                 var ev = new DamageModifyEvent(damage, origin);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
+            }
 
-                if (damage.Empty)
-                {
-                    return damage;
-                }
+            if (damage.Empty)
+            {
+                return damage;
             }
 
             damage = ApplyUniversalAllModifiers(damage);
