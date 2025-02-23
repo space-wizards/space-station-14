@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Gathered Low hairstyle has more body from the side now
-    type: Tweak
-  id: 691
-  time: '2024-12-08T15:11:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/951
 - author: EpicToast
   changes:
   - message: (Union Station) Added a shipyard console to the QM's office.
@@ -4131,3 +4124,10 @@
   id: 1190
   time: '2025-02-23T02:13:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1768
+- author: rainyatrium
+  changes:
+  - message: dragon beard, flat head, and tall snout markings for reptilians
+    type: Add
+  id: 1191
+  time: '2025-02-23T02:22:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1770
