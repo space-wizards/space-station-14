@@ -56,8 +56,8 @@ public sealed partial class NavMapBeaconWindow : FancyWindow
 
     private void OnTextChanged(LineEdit.LineEditEventArgs obj)
     {
-        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength)) // TODO done
-            obj.Control.Text = obj.Text.Substring(0, _cfgManager.GetCVar(CCVars.MaxNameLength)); // TODO done
+        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+            obj.Control.Text = obj.Text.Substring(0, _cfgManager.GetCVar(CCVars.MaxNameLength));
 
         TryEnableApplyButton();
     }

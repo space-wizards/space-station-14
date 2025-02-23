@@ -55,7 +55,7 @@ public sealed partial class BorgSystem
 
     private void OnSetNameBuiMessage(EntityUid uid, BorgChassisComponent component, BorgSetNameBuiMessage args)
     {
-        if (args.Name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) || // TODO done
+        if (args.Name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) ||
             args.Name.Length == 0 ||
             string.IsNullOrWhiteSpace(args.Name) ||
             string.IsNullOrEmpty(args.Name))

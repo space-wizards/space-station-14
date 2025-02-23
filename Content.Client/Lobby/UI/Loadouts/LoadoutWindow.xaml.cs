@@ -31,7 +31,7 @@ public sealed partial class LoadoutWindow : FancyWindow
         Profile = profile;
         var protoManager = collection.Resolve<IPrototypeManager>();
         var configManager = collection.Resolve<IConfigurationManager>();
-        RoleNameEdit.IsValid = text => text.Length <= configManager.GetCVar(CCVars.MaxLoadoutNameLength); // TODO done
+        RoleNameEdit.IsValid = text => text.Length <= configManager.GetCVar(CCVars.MaxLoadoutNameLength);
 
         // Hide if we can't edit the name.
         if (!proto.CanCustomizeName)
@@ -48,7 +48,7 @@ public sealed partial class LoadoutWindow : FancyWindow
 
             RoleNameEdit.ToolTip = Loc.GetString(
                 "loadout-name-edit-tooltip",
-                ("max", configManager.GetCVar(CCVars.MaxLoadoutNameLength))); // TODO done
+                ("max", configManager.GetCVar(CCVars.MaxLoadoutNameLength)));
             RoleNameEdit.Text = name ?? string.Empty;
             RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
         }

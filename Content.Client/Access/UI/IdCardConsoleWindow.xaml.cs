@@ -43,7 +43,7 @@ namespace Content.Client.Access.UI
             _owner = owner;
 
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
-            FullNameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdNameLength); // TODO done
+            FullNameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdNameLength);
             FullNameLineEdit.OnTextChanged += _ =>
             {
                 FullNameSaveButton.Disabled = FullNameSaveButton.Text == _lastFullName;
@@ -51,7 +51,7 @@ namespace Content.Client.Access.UI
             FullNameSaveButton.OnPressed += _ => SubmitData();
 
             JobTitleLineEdit.OnTextEntered += _ => SubmitData();
-            JobTitleLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength); // TODO done
+            JobTitleLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
             JobTitleLineEdit.OnTextChanged += _ =>
             {
                 JobTitleSaveButton.Disabled = JobTitleLineEdit.Text == _lastJobTitle;

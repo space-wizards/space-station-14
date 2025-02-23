@@ -55,7 +55,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnChangeName(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeNameMessage message)
     {
-        if (message.Name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) || message.Name.Length <= 0) // TODO DONE
+        if (message.Name.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) || message.Name.Length <= 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-failure"), entity, message.Actor, PopupType.SmallCaution);
             return;

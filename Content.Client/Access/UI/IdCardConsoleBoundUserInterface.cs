@@ -69,11 +69,11 @@ namespace Content.Client.Access.UI
 
         public void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, string newJobPrototype)
         {
-            if (newFullName.Length > _cfgManager.GetCVar(CCVars.MaxIdNameLength)) // TODO DONE
-                newFullName = newFullName[.._cfgManager.GetCVar(CCVars.MaxIdNameLength)]; // TODO DONE
+            if (newFullName.Length > _cfgManager.GetCVar(CCVars.MaxIdNameLength))
+                newFullName = newFullName[.._cfgManager.GetCVar(CCVars.MaxIdNameLength)];
 
-            if (newJobTitle.Length > _cfgManager.GetCVar(CCVars.MaxIdJobLength)) // TODO DPNME
-                newJobTitle = newJobTitle[.._cfgManager.GetCVar(CCVars.MaxIdJobLength)]; // TODO done
+            if (newJobTitle.Length > _cfgManager.GetCVar(CCVars.MaxIdJobLength))
+                newJobTitle = newJobTitle[.._cfgManager.GetCVar(CCVars.MaxIdJobLength)];
 
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,

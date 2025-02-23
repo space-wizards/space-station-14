@@ -154,9 +154,9 @@ public sealed partial class BorgMenu : FancyWindow
             return;
         }
 
-        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength)) // TODO done
+        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
         {
-            obj.Control.Text = obj.Text.Substring(0, _cfgManager.GetCVar(CCVars.MaxNameLength)); // TODO done
+            obj.Control.Text = obj.Text.Substring(0, _cfgManager.GetCVar(CCVars.MaxNameLength));
         }
 
         _lastValidName = obj.Control.Text;
@@ -170,7 +170,7 @@ public sealed partial class BorgMenu : FancyWindow
 
     private void OnNameFocusExit(LineEdit.LineEditEventArgs obj)
     {
-        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) || // TODO done
+        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) ||
             obj.Text.Length == 0 ||
             string.IsNullOrWhiteSpace(obj.Text) ||
             string.IsNullOrEmpty(obj.Text))
