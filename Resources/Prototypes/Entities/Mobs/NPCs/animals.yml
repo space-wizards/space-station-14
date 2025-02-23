@@ -800,6 +800,7 @@
     tags:
     - Trash
   - type: Bloodstream
+    bloodReagent: InsectBlood
     bloodReferenceVolume: 0.1
   - type: MobPrice
     price: 50
