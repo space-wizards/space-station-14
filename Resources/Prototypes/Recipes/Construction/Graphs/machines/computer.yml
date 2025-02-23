@@ -123,6 +123,9 @@
       entity: !type:BoardNodeEntity { container: board }
       edges:
         - to: monitorUnsecured
+          completed:
+            - !type:RaiseEvent
+                event: !type:MachineDeconstructedEvent
           steps:
             - tool: Prying
               doAfter: 1
