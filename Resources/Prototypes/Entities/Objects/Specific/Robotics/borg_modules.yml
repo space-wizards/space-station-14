@@ -191,6 +191,23 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
+- type: entity
+  id: BorgModuleInflatable
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: inflatable cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-inflatable
+  - type: ItemBorgModule
+    items:
+    - InflatableDoorStackLingering4
+    - InflatableWallStackLingering10
+    - BalloonPopper
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: inflatable-module }
+    
 # cargo modules
 - type: entity
   id: BorgModuleAppraisal
