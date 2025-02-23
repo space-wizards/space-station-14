@@ -15,12 +15,10 @@
   reactants:
     Ethanol:
       amount: 1
-    Oxygen:
-      amount: 1
     Silver:
       amount: 1
   products:
-    Formaldehyde: 3
+    Formaldehyde: 2
 
 - type: reaction
   id: Chloroform
