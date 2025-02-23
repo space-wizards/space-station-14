@@ -142,6 +142,17 @@
   objectType: Item
 
 - type: construction
+  name: salami shield
+  id: SalamiShield
+  graph: SalamiShield
+  startNode: start
+  targetNode: salamiShield
+  category: construction-category-weapons
+  description: "You're pretty sure this ain't gonna fit."
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: salami-icon }
+  objectType: Item
+
+- type: construction
   name: glass shard arrow
   id: ImprovisedArrow
   graph: ImprovisedArrow

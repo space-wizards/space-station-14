@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/84223c65f5caf667a84f3c0f49bc2a41cdc6c4e3",
+  "copyright": "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/84223c65f5caf667a84f3c0f49bc2a41cdc6c4e3, salami icon and inhands modified from riot icon and inhands",
   "size": {
     "x": 32,
     "y": 32
@@ -167,6 +167,17 @@
     },
     {
       "name": "teleriot-inhand-left-on",
+      "directions": 4
+    },
+    {
+      "name": "salami-icon"
+    },
+    {
+      "name": "salami-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "salami-inhand-left",
       "directions": 4
     }
   ]
