@@ -247,6 +247,10 @@
     minPlayers: 10
   - type: LoadMapRule
     mapPath: /Maps/Shuttles/wizard.yml
+  - type: RandomMetadata
+    nameSegments:
+    - names_wizard_first
+    - names_wizard_last
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
@@ -261,6 +265,7 @@
         #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
       startingGear: WizardBlueGear
       # TODO: WizardComp as needed
+      # TODO: Renamecomp
       #components:
       #- type:
       mindRoles:
