@@ -1,0 +1,14 @@
+# Command
+
+- type: entity
+  id: SpawnPointBlueshieldOfficer
+  parent: SpawnPointJobBase
+  name: blueshieldofficer
+  components:
+  - type: SpawnPoint
+    job_id: BlueshieldOfficer
+  - type: Sprite
+    sprite: Ronstation/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: blueshield_officer

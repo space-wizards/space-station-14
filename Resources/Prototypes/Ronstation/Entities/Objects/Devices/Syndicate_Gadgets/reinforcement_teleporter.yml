@@ -1,0 +1,16 @@
+- type: entity
+  parent: ReinforcementRadioSyndicate
+  id: ReinforcementRadioSyndicateSyndiMothroach
+  name: syndimothroach reinforcement radio
+  description: Calls in a faithfully trained mothroach to assist you.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-SyndiMothroach-name
+    description: ghost-role-information-SyndiMothroach-description
+    rules: ghost-role-information-SyndiMothroach-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobMothroachSyndy
+  - type: EmitSoundOnUse
+    sound: /Audio/Animals/cat_meow.ogg

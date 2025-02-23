@@ -48,6 +48,8 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - BlueshieldOfficer
+  - CentralCommandBlueshieldOfficer
   editorHidden: true
   weight: 120
 
@@ -73,6 +75,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - BlueshieldOfficer
   primary: false
   weight: 100
 

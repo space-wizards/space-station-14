@@ -1,0 +1,13 @@
+- type: latheRecipe
+  abstract: true
+  id: BaseElectronicsRecipeBasic
+  category: Circuitry
+  completetime: 1
+  materials:
+    Steel: 50
+    Plastic: 150
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: OreProcessorBasicMachineCircuitboard
+  result: OreProcessorBasicMachineCircuitboard

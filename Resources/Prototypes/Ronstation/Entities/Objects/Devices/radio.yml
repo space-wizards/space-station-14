@@ -1,0 +1,11 @@
+- type: entity
+  name: terragov radio
+  description: A handy terragov radio.
+  parent: [ RadioHandheld, BaseTerragovContraband ]
+  id: RadioHandheldTerragov
+  components:
+  - type: Sprite
+    sprite: Ronstation/Objects/Devices/terragovhandy.rsi
+  - type: Item
+    sprite: Ronstation/Objects/Devices/terragovhandy.rsi
+    heldPrefix: walkietalkie
