@@ -415,7 +415,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _alertsSystem.ClearAlert(uid, component.BleedingAlert);
         else
         {
-            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 4);
             _alertsSystem.ShowAlert(uid, component.BleedingAlert, severity);
         }
 
