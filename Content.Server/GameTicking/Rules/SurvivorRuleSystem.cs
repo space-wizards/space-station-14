@@ -1,13 +1,10 @@
-﻿using Content.Server.Administration.Logs;
-using Content.Server.Antag;
+﻿using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Survivor.Components;
 using Content.Shared.Tag;
@@ -19,7 +16,6 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 {
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
@@ -52,7 +48,6 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
                 continue;
 
             EnsureComp<SurvivorComponent>(mind);
-            _adminLog.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ent)} has become a Survivor!");
             _role.MindAddRole(mind, "MindRoleSurvivor");
             _antag.SendBriefing(ent, Loc.GetString("survivor-role-greeting"), Color.Olive, null);
         }
