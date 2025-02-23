@@ -659,6 +659,13 @@
     damageCoefficient: 0.5
 
 - type: entity
+  parent: [ BaseCentcommContraband, ClothingBeltMilitaryWebbing ]
+  id: ClothingBeltMilitaryWebbingNT
+  name: chest rig
+  suffix: NT
+  description: A set of tactical webbing worn by ERT marines.
+
+- type: entity
   parent: ClothingBeltMilitaryWebbing
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
