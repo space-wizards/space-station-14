@@ -20,7 +20,7 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
-    private readonly IConfigurationManager _config; //TODO:ERRANT warning?
+    private readonly IConfigurationManager _config;
     private readonly SharedRoleSystem _roles;
     private readonly Font _font;
     private readonly Font _fontBold;

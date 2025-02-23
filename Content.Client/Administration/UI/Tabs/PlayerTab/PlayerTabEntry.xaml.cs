@@ -32,7 +32,7 @@ public sealed partial class PlayerTabEntry : PanelContainer
             CharacterLabel.Text += $" [{player.IdentityName}]";
 
         AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no");
-        RoleTypeLabel.Text = roles.GetRoleSubtypeLabel(player.RoleProto.Name, player.Subtype, false); //TODO:ERRANT should subtypeOnly be a cvar?
+        RoleTypeLabel.Text = roles.GetRoleSubtypeLabel(player.RoleProto.Name, player.Subtype, false);
 
         RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
