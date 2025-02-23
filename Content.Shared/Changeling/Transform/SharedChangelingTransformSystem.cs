@@ -168,11 +168,10 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         currentDna.DNA = targetConsumedDna.DNA;
 
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
-        if (!TryComp<VocalComponent>(targetIdentity, out var targetVocal)
-            || !TryComp<SpeechComponent>(targetIdentity, out var targetSpeech)
-            || !EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator))
+        if (!EnsureComp<TypingIndicatorComponent>(targetIdentity, out _))
             return;
-        CopyComps(targetIdentity, ent, MetaData(ent), targetVocal, targetSpeech, targetTypingIndicator);
+
+        TryCopyComponents(targetIdentity, ent, MetaData(ent), typeof(VocalComponent), typeof(SpeechComponent), typeof(TypingIndicatorComponent));
 
         //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");
