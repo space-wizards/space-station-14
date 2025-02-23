@@ -44,7 +44,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
             var mind = humanMind.Owner;
             var ent = humanMind.Comp.OwnedEntity.Value;
 
-            if (_tag.HasTag(mind, "InvalidForSurvivorAntag"))
+            if (HasComp<SurvivorComponent>(mind) || _tag.HasTag(mind, "InvalidForSurvivorAntag"))
                 continue;
 
             EnsureComp<SurvivorComponent>(mind);
