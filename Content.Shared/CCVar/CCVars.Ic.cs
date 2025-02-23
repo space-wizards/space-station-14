@@ -23,18 +23,6 @@ public sealed partial class CCVars
         CVarDef.Create("ic.loadout_name_length", 32, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     Sets the maximum character length of a name on an ID.
-    /// </summary>
-    public static readonly CVarDef<int> MaxIdNameLength =
-        CVarDef.Create("ic.id_name_length", 32, CVar.SERVER | CVar.REPLICATED);
-
-    /// <summary>
-    ///     Sets the maximum character length of a job on an ID.
-    /// </summary>
-    public static readonly CVarDef<int> MaxIdJobLength =
-        CVarDef.Create("ic.id_job_length", 30, CVar.SERVER | CVar.REPLICATED);
-
-    /// <summary>
     ///     Allows flavor text (character descriptions).
     /// </summary>
     public static readonly CVarDef<bool> FlavorText =
@@ -75,4 +63,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ICShowSSDIndicator =
         CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
+
+    /// <summary>
+    ///     Sets the maximum character length of a job on an ID.
+    /// </summary>
+    public static readonly CVarDef<int> MaxIdJobLength =
+        CVarDef.Create("ic.id_job_length", 30, CVar.SERVER | CVar.REPLICATED);
 }

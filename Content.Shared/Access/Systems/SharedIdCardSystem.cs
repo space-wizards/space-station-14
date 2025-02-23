@@ -209,8 +209,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(fullName))
         {
             fullName = fullName.Trim();
-            if (fullName.Length > _cfgManager.GetCVar(CCVars.MaxIdNameLength))
-                fullName = fullName[.._cfgManager.GetCVar(CCVars.MaxIdNameLength)];
+            if (fullName.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+                fullName = fullName[.._cfgManager.GetCVar(CCVars.MaxNameLength)];
         }
         else
         {

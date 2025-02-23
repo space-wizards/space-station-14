@@ -69,8 +69,8 @@ namespace Content.Client.Access.UI
 
         public void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, string newJobPrototype)
         {
-            if (newFullName.Length > _cfgManager.GetCVar(CCVars.MaxIdNameLength))
-                newFullName = newFullName[.._cfgManager.GetCVar(CCVars.MaxIdNameLength)];
+            if (newFullName.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+                newFullName = newFullName[.._cfgManager.GetCVar(CCVars.MaxNameLength)];
 
             if (newJobTitle.Length > _cfgManager.GetCVar(CCVars.MaxIdJobLength))
                 newJobTitle = newJobTitle[.._cfgManager.GetCVar(CCVars.MaxIdJobLength)];
