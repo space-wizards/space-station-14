@@ -8,3 +8,15 @@
     priority: -20
     useDelay: 1
     event: !type:MeleeSpeechConfigureActionEvent
+
+- type: entity
+  id: ActionToggleIlleism
+  name: Adjust Illeism
+  description: Alternate between splitting on hyphens, spaces, or saying your full name.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/illeismtoggle.png # Potentially changed?
+    event: !type:ToggleActionEvent
+    useDelay: 0.2
+    checkCanInteract: false
+    checkConsciousness: false
