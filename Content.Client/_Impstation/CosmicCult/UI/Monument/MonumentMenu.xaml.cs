@@ -26,8 +26,8 @@ public sealed partial class MonumentMenu : FancyWindow
     private readonly IEnumerable<InfluencePrototype> _influencePrototypes;
     private readonly ButtonGroup _glyphButtonGroup;
     private ProtoId<GlyphPrototype> _selectedGlyphProtoId = string.Empty;
-    private List<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
-    private List<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
+    private HashSet<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
+    private HashSet<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
     public Action<ProtoId<GlyphPrototype>>? OnSelectGlyphButtonPressed;
     public Action? OnRemoveGlyphButtonPressed;
 
@@ -122,15 +122,27 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the influence thingies
     private void UpdateInfluences()
     {
-        var influences = _influencePrototypes
-            .OrderBy(influence => _unlockedGlyphProtoIds.Contains(influence.ID))
-            .ThenBy<InfluencePrototype, string>(influence => influence.Name);
+        var influences = _influencePrototypes.ToList();
+        influences.Sort((x, y) =>
+            string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
+
         InfluencesContainer.RemoveAllChildren();
         foreach (var influence in influences)
         {
             var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
             var influenceBox = new InfluenceUIBox(influence, unlocked);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
+            if (unlocked == true)
+                InfluencesContainer.AddChild(influenceBox);
+        }
+        foreach (var influence in influences) // I'm sure there's a better way to order them by being Unlocked / Locked, but i've been told to just loop through 'em twice. So we're going with that
+        {
+            var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
+            var influenceBox = new InfluenceUIBox(influence, unlocked);
+            influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
+            if (unlocked == false)
+                InfluencesContainer.AddChild(influenceBox);
         }
     }
+    // This might not be the best way of doing it, but It makes sense...
 }
