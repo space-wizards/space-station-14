@@ -916,6 +916,8 @@
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Item
+    sprite: Clothing/Head/Hats/comcap.rsi
   - type: Tag
     tags:
     - ClothMade
