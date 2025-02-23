@@ -16,6 +16,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -33,6 +34,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -83,7 +85,17 @@ namespace Content.Server.Bible
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)), uid, PopupType.Medium);
+                // Only play the popup if the entity is the person holding the book,
+                // if the person is in the same container as the book,
+                // or if the book isn't in a container
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)),
+                    uid,
+                    Filter.PvsExcept(uid, entityManager: EntityManager)
+                        .RemoveWhere(e =>
+                            e.AttachedEntity != null && _container.IsEntityInContainer(uid) && !_container.IsInSameOrParentContainer((uid, Transform(uid)),
+                                (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))),
+                    true,
+                    PopupType.Medium);
                 _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", uid, AudioParams.Default.WithVolume(-4f));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
