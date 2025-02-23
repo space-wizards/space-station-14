@@ -7,6 +7,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+///     How an emote will show up, in chat with a popup, only as a popup, or neither
+/// </summary>
 public enum EmoteVisiblity : byte
 {
     ChatAndPopup,
