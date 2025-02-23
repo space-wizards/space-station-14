@@ -14,6 +14,9 @@
     walkModifier: 1
     sprintModifier: 0.9
   - type: HeldSpeedModifier
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-grey
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -23,6 +26,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-rubber
+    microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -32,6 +38,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/atmospherics.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-rubber
+    microFiberColor: micro-fibers-light-blue
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -41,6 +50,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/medical.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingBackpackDuffel, BaseCommandContraband]
@@ -50,6 +62,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/captain.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -62,6 +77,9 @@
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-green
 
 - type: entity
   parent: [ClothingBackpackDuffel, BaseSecurityContraband]
@@ -71,6 +89,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/security.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: [ClothingBackpackDuffel, BaseSecurityContraband]
@@ -80,6 +101,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/brigmedic.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -89,6 +113,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-orange
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -98,6 +125,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-green
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -107,6 +137,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/genetics.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -120,6 +153,9 @@
       collection: null
     storageInsertSound:
       collection: null
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-textile
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -129,6 +165,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/science.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-synthetic
+    microFiberColor: micro-fibers-purple
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -138,6 +177,9 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Duffels/hydroponics.rsi
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-floral
+      microFiberColor: micro-fibers-green
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -147,6 +189,9 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Duffels/cargo.rsi
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-textile
+      microFiberColor: micro-fibers-yellow
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -156,6 +201,9 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Duffels/salvage.rsi
+    - type: MicroFiber
+      microFiberMaterial: micro-fibers-leather
+      microFiberColor: micro-fibers-brown
 
 - type: entity
   parent: [ClothingBackpackDuffel, BaseSyndicateContraband]
@@ -170,6 +218,9 @@
   - type: Storage
     grid:
     - 0,0,8,4
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-textile
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -243,6 +294,8 @@
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
   - type: HeldSpeedModifier
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-plasma
 
 - type: entity
   parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
