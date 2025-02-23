@@ -10,7 +10,7 @@ using Robust.Server.Containers;
 namespace Content.Server.VoiceTrigger;
 
 /// <summary>
-/// Allows storages to be manipulated using voice commands
+/// Allows storages to be manipulated using voice commands.
 /// </summary>
 public sealed class StorageVoiceControlSystem : EntitySystem
 {
@@ -40,27 +40,31 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             return;
 
         // If the player has something in their hands, try to insert it into the storage
-        if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue && _storage.CanInsert(storage.Container.ID, hands.ActiveHand.HeldEntity.Value, out _))
+        if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue &&
+            _storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out _))
         {
-            _storage.Insert(storage.Container.ID, hands.ActiveHand.HeldEntity.Value, out _);
+            _storage.Insert(ent, hands.ActiveHand.HeldEntity.Value, out _);
+            return;
         }
 
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
+            // Get the metadata component so we can check for the item name, we do this because the name on the entity is private
+            TryComp<MetaDataComponent>(item, out var metaData);
+
             // The message doesn't match the item name the requestor requested, skip and move on to the next item
-            if (!args.Message.Contains(item.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            if (metaData != null && !args.Message.Contains(metaData.EntityName.ToString(),
+                    StringComparison.InvariantCultureIgnoreCase))
                 continue;
 
             // We found the item we want, so draw it from storage and place it into the player's hands
             if (storage.Container.ContainedEntities.Count != 0)
             {
-                var removing = storage.Container.ContainedEntities[^1];
-                _container.RemoveEntity(item, removing);
-                _hands.TryPickup(args.Source, removing, handsComp: hands);
+                _container.RemoveEntity(ent, item);
+                _hands.TryPickup(args.Source, item, handsComp: hands);
                 break;
             }
-
         }
     }
 }
