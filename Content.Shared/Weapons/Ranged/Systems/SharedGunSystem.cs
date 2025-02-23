@@ -531,9 +531,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (Timing.ApplyingState)
             return;
 
-        if (ent.Comp.FireRateModified <= 0)
-            return;
-
         if (Paused(ent.Owner))
             return;
 

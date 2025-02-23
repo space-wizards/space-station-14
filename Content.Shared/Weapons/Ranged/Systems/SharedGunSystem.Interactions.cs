@@ -115,6 +115,9 @@ public abstract partial class SharedGunSystem
         if (!component.ResetOnHandSelected)
             return;
 
+        if (component.FireRateModified <= 0)
+            return;
+
         AddFireDelay(uid, TimeSpan.FromSeconds(1f / component.FireRateModified));
     }
 }
