@@ -1,0 +1,39 @@
+
+- type: listing
+  id: PAIMassScanner
+  name: pai-mass-scanner-name
+  description: pai-mass-scanner-desc
+  productAction: ActionPAIMassScanner
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIMIDIPlayer
+  name: pai-midi-player-name
+  description: pai-midi-player-desc
+  productAction: ActionPAIPlayMidi
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIStationMap
+  name: pai-station-map-name
+  description: pai-station-map-desc
+  productAction: ActionPAIOpenMap
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
