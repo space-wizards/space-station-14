@@ -78,14 +78,6 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
         var aliveOnShuttle = 0;
         var eShuttle = _eShuttle.GetShuttle();
 
-        if (eShuttle is null)
-            return;
-
-        if (!eShuttle.Value.IsValid())
-            return;
-
-        var eShuttleMapPos = Transform(eShuttle.Value).MapID;
-
         while (existingSurvivors.MoveNext(out _, out _, out var mindComp))
         {
             if (mindComp.CurrentEntity is null)
@@ -99,7 +91,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
                 continue;
             }
 
-            if (eShuttleMapPos != _xform.GetMapCoordinates(survivor).MapId)
+            if (eShuttle is null || !eShuttle.Value.IsValid() || (Transform(eShuttle.Value).MapID != _xform.GetMapCoordinates(survivor).MapId))
             {
                 aliveMarooned++;
                 continue;
