@@ -7,6 +7,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -23,6 +24,7 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
@@ -376,6 +378,23 @@ public abstract class SharedRoleSystem : EntitySystem
 
             role = (roleEnt, roleComp, tcomp);
             return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true if the mind has any role that matches a whitelist.
+    /// </summary>
+    public bool MindHasMatchingRole(Entity<MindComponent?> mind, EntityWhitelist whitelist)
+    {
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return false;
+
+        foreach (var role in mind.Comp.MindRoles)
+        {
+            if (_whitelist.IsValid(whitelist, role))
+                return true;
         }
 
         return false;
