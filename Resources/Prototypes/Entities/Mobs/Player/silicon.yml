@@ -554,9 +554,12 @@
       borg_brain:
         - PositronicBrain
       borg_module:
-        - BorgModuleTool
+        - BorgModuleAdvancedTool
         - BorgModuleOperative
         - BorgModuleSyndicateWeapon
+        - BorgModuleConstruction
+        - BorgModuleRCD
+        - BorgModuleCable
   - type: ItemSlots
     slots:
       cell_slot:
