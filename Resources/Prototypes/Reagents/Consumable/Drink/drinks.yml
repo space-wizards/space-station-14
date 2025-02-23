@@ -19,7 +19,7 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
-       - !type:AdjustReagent
+      - !type:AdjustReagent
         reagent: Caffeine
         amount: 0.03
   metamorphicSprite:
@@ -112,7 +112,7 @@
         key: Drowsiness
         time: 2.0
         type: Remove
-       - !type:AdjustReagent
+      - !type:AdjustReagent
         reagent: Caffeine
         amount: 0.02
 
