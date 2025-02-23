@@ -27,13 +27,13 @@ public sealed partial class EyeClosingComponent : Component
     /// Path to sound to play when opening eyes
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public SoundSpecifier EyeOpenSound = new SoundPathSpecifier("/Audio/Effects/eye_open.ogg");
+    public SoundSpecifier EyeOpenSound = new SoundCollectionSpecifier("EyeOpen");
 
     /// <summary>
     /// Path to sound to play when closing eyes
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public SoundSpecifier EyeCloseSound = new SoundPathSpecifier("/Audio/Effects/eye_close.ogg");
+    public SoundSpecifier EyeCloseSound = new SoundCollectionSpecifier("EyeClose");
 
     /// <summary>
     /// Toggles whether the eyes are open or closed. This is really just exactly what it says on the tin. Honest.
