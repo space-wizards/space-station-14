@@ -1,0 +1,51 @@
+- type: startingGear
+  id: SpaceAssholeGearFull
+  equipment:
+    pocket1: NetworkConfigurator # Linking things
+    pocket2: RemoteSignallerAdvanced
+    outerClothing: ClothingOuterCoatSpaceAsshole # It's his coat!
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicate
+    mask: ClothingMaskGasMerc
+    eyes: ClothingEyesGlassesHiddenSecurity
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsMercFilled
+    id: SpaceAssholePDA
+    belt: ClothingBeltMilitaryWebbingMedFilled
+    head: ClothingHeadHelmetBombSuit
+  inhand:
+  # Needed for causing wanton carnage
+  - Sledgehammer
+  storage:
+    back:
+    # Planting charges left and right…
+    - C4
+    - HotPotato
+    - TrashBananaPeelExplosive
+    - SyndieMiniBomb
+    - SyndieMiniBomb
+    - ExGrenade
+    - ExGrenade
+    - ExGrenade
+    - ExGrenade
+    - SupermatterGrenade
+    - NuclearGrenade # april fools!
+    - HolyHandGrenade
+    - C4
+    - C4
+    - C4
+    belt:
+    # Deal with the coat not having great protection
+    - SyndiHypo
+    - AirlossAutoInjector
+    - PunctAutoInjector
+    - AntiPoisonMedipen
+    - SpaceMedipen
+    - CombatMedipen
+
+
+- type: antag
+  id: SpaceAsshole
+  name: roles-antag-spaceasshole-name
+  antagonist: true
+  objective: roles-antag-spaceasshole-objective

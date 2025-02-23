@@ -36,3 +36,6 @@ roles-antag-thief-objective = Add some NT property to your personal collection w
 
 roles-antag-dragon-name = Space Dragon
 roles-antag-dragon-objective = Create a carp army to take over this quadrant.
+
+roles-antag-spaceasshole-name = Space Asshole
+roles-antag-spaceasshole-objective = Lay waste to this entire town.
