@@ -27,9 +27,6 @@
     sprite: Structures/Machines/arcade.rsi
     state: arcade
   - type: WiresPanel
-  - type: Wires
-    layoutId: Arcade
-    boardName: wires-board-name-arcade
   - type: WiresVisuals
   - type: TypingIndicator
     proto: robot
@@ -71,92 +68,15 @@
       visible: false
   - type: PointLight
     color: "#e3a136"
+  - type: Arcade
+  - type: ArcadeRewards
+    rewards: !type:NestedSelector
+      tableId: SpaceVillainArcadeRewards
   - type: SpaceVillainArcade
-    rewardMinAmount: 0
-    rewardMaxAmount: 0
-    possibleRewards:
-    - Basketball
-    - BalloonNT
-    - BalloonCorgi
-    - BoxDonkSoftBox
-    - BoxCartridgeCap
-    - BeachBall
-    - CandyBucket
-    - CrayonBox
-    - ClothingHeadHatCowboyRed
-    - FoamCrossbow
-    - FoamBlade
-    - FoamCutlass
-    - Football
-    - GlowstickBase #green
-    - GlowstickBlue
-    - GlowstickYellow
-    - GlowstickPurple
-    - GlowstickRed
-    - HarmonicaInstrument
-    - OcarinaInstrument
-    - RecorderInstrument
-    - GunpetInstrument
-    - BirdToyInstrument
-    - MysteryFigureBox
-    - PlushieHampter
-    - PlushieLizard
-    - PlushieRainbowLizard
-    - PlushieAtmosian
-    - PlushieSpaceLizard
-    - PlushieNuke
-    - PlushieCarp
-    - PlushieMagicarp
-    - PlushieHolocarp
-    - PlushieRainbowCarp
-    - PlushieRatvar
-    - PlushieNar
-    - PlushieSnake
-    - PlushieArachind
-    - PlushieMoth
-    - PlushieHampter
-    - PlushiePenguin
-    - PlushieHuman
-    - PlushieRouny
-    - PlushieBee
-    - PlushieSlime
-    - PlushieGhost
-    - PlushieDiona
-    - PlushieSharkBlue
-    - PlushieVox
-    - PlushieXeno
-    - PlasticBanana
-    - RevolverCapGun
-    - SnapPopBox
-    - ToyMouse
-    - ToyAi
-    - ToyNuke
-    - ToyGriffin
-    - ToyHonk
-    - ToyIan
-    - ToyMarauder
-    - ToyMauler
-    - ToyGygax
-    - ToyOdysseus
-    - ToyOwlman
-    - ToyDeathRipley
-    - ToyPhazon
-    - ToyFireRipley
-    - ToyReticence
-    - ToyRipley
-    - ToySeraph
-    - ToyDurand
-    - ToySkeleton
-    - ToySword
-    - ToyAmongPequeno
-    - ToyRubberDuck
-    - ToyHammer
-    - WeaponWaterPistol
-    - WhoopieCushion
-    - Whistle
-  - type: WiresPanel
+    villainFirstNames: SpaceVillainFirstNamesDataset
+    villainLastNames: SpaceVillainLastNamesDataset
   - type: Wires
-    layoutId: Arcade
+    layoutId: SpaceVillainArcade
     boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
@@ -182,9 +102,9 @@
   parent: SpaceVillainArcade
   suffix: Filled
   components:
-  - type: SpaceVillainArcade
-    rewardMinAmount: 5
-    rewardMaxAmount: 8
+  - type: ArcadeRewards
+    minAmount: 5
+    maxAmount: 8
 
 - type: entity
   id: BlockGameArcade
@@ -204,13 +124,13 @@
       visible: false
   - type: BlockGameArcade
   - type: ActivatableUI
-    key: enum.BlockGameUiKey.Key
+    key: enum.BlockGameArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      enum.BlockGameUiKey.Key:
-        type: BlockGameBoundUserInterface
+      enum.BlockGameArcadeUiKey.Key:
+        type: BlockGameArcadeBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
@@ -221,3 +141,96 @@
     maximumWait: 240
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes
+
+# Toys table
+- type: entityTable
+  id: SpaceVillainArcadeRewards
+  table: !type:AllSelector
+    children:
+    #Common
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - id: Basketball
+      - id: BalloonNT
+      - id: BalloonCorgi
+      - id: BoxDonkSoftBox
+      - id: BeachBall
+      - id: CandyBucket
+      - id: CrayonBox
+      - id: ClothingHeadHatCowboyRed
+      - id: FoamCutlass
+      - id: Football
+      - id: GlowstickBase #green
+      - id: GlowstickBlue
+      - id: GlowstickYellow
+      - id: GlowstickPurple
+      - id: GlowstickRed
+      - id: HarmonicaInstrument
+      - id: OcarinaInstrument
+      - id: RecorderInstrument
+      - id: GunpetInstrument
+      - id: BirdToyInstrument
+      - id: MysteryFigureBox
+      - id: PlushieHampter
+      - id: PlushieLizard
+      - id: PlushieRainbowLizard
+      - id: PlushieAtmosian
+      - id: PlushieSpaceLizard
+      - id: PlushieNuke
+      - id: PlushieCarp
+      - id: PlushieMagicarp
+      - id: PlushieHolocarp
+      - id: PlushieRainbowCarp
+      - id: PlushieRatvar
+      - id: PlushieNar
+      - id: PlushieSnake
+      - id: PlushieArachind
+      - id: PlushieMoth
+      - id: PlushieHampter
+      - id: PlushiePenguin
+      - id: PlushieHuman
+      - id: PlushieRouny
+      - id: PlushieBee
+      - id: PlushieSlime
+      - id: PlushieGhost
+      - id: PlushieDiona
+      - id: PlushieSharkBlue
+      - id: PlushieVox
+      - id: PlushieXeno
+      - id: PlasticBanana
+      - id: SnapPopBox
+      - id: ToyMouse
+      - id: ToyAi
+      - id: ToyGriffin
+      - id: ToyHonk
+      - id: ToyIan
+      - id: ToyMarauder
+      - id: ToyMauler
+      - id: ToyGygax
+      - id: ToyOdysseus
+      - id: ToyOwlman
+      - id: ToyDeathRipley
+      - id: ToyPhazon
+      - id: ToyFireRipley
+      - id: ToyReticence
+      - id: ToyRipley
+      - id: ToySeraph
+      - id: ToyDurand
+      - id: ToySkeleton
+      - id: ToySword
+      - id: ToyAmongPequeno
+      - id: ToyRubberDuck
+      - id: WhoopieCushion
+    #Rare
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - id: ToySword
+      - id: WeaponWaterPistol
+      - id: ToyNuke
+      - id: ToyHammer
+      - id: RevolverCapGun
+      - id: FoamCrossbow
+      - id: FoamBlade
+      - id: BoxCartridgeCap
