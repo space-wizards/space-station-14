@@ -1,15 +1,16 @@
 - type: entity
-  name: nuclear authentication disk
+  name: Hamlet
   parent: [BaseItem, BaseGrandTheftContraband]
   id: NukeDisk
-  description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
+  description: A grumpy, cute and fluffy hamster.
   components:
   - type: NukeDisk
   - type: SpecialRespawn
     prototype: NukeDisk
   - type: Sprite
-    sprite: Objects/Misc/nukedisk.rsi
-    state: icon
+    drawdepth: SmallMobs
+    sprite: Mobs/Pets/hamlet.rsi
+    state: hamster-0
   - type: StaticPrice
     price: 2000
   - type: CargoSellBlacklist
@@ -24,15 +25,16 @@
     stealGroup: NukeDisk
 
 - type: entity
-  name: nuclear authentication disk
+  name: Hamlet
   parent: [BaseItem, BaseGrandTheftContraband]
   id: NukeDiskFake
   suffix: Fake
-  description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
+  description: A grumpy, cute and fluffy hamster.
   components:
   - type: Sprite
-    sprite: Objects/Misc/nukedisk.rsi
-    state: icon
+    drawdepth: SmallMobs
+    sprite: Mobs/Pets/hamlet.rsi
+    state: hamster-0
   - type: StaticPrice
     price: 1 # it's worth even less than normal items. Perfection.
   - type: Tag
