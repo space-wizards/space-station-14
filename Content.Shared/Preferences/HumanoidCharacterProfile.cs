@@ -28,9 +28,9 @@ namespace Content.Shared.Preferences
         private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-]");
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
-        public const int MaxNameLength = 32; // TODO
-        public const int MaxLoadoutNameLength = 32; // TODO
-        public const int MaxDescLength = 512; // TODO
+        //public const int MaxNameLength = 32; // TODO DONE
+        //public const int MaxLoadoutNameLength = 32; // TODO DONE
+        //public const int MaxDescLength = 512; // TODO DONE
 
         /// <summary>
         /// Job preferences for initial spawn.
@@ -512,9 +512,9 @@ namespace Content.Shared.Preferences
             {
                 name = GetName(Species, gender);
             }
-            else if (Name.Length > MaxNameLength) // TODO
+            else if (Name.Length > configManager.GetCVar(CCVars.MaxNameLength)) // TODO DONE
             {
-                name = Name[..MaxNameLength]; // TODO
+                name = Name[..configManager.GetCVar(CCVars.MaxNameLength)]; // TODO DONE
             }
             else
             {
@@ -540,9 +540,9 @@ namespace Content.Shared.Preferences
             }
 
             string flavortext;
-            if (FlavorText.Length > MaxDescLength) // TODO
+            if (FlavorText.Length > configManager.GetCVar(CCVars.MaxDescLength)) // TODO DOME
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..MaxDescLength]; // TODO
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..configManager.GetCVar(CCVars.MaxDescLength)]; // TODO DONE
             }
             else
             {
