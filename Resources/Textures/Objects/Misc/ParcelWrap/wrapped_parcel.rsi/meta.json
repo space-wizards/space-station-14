@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "wrapped_parcel © 2025 by Centronias (https://github.com/centronias) is licensed under CC BY 4.0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "parcel-large",
+      "directions": 1
+    },
+    {
+      "name": "parcel-medium",
+      "directions": 1
+    },
+    {
+      "name": "parcel-small",
+      "directions": 1
+    },
+    {
+      "name": "parcel-tiny",
+      "directions": 1
+    }
+  ]
+}

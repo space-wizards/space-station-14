@@ -9,6 +9,17 @@
     - id: ClothingOuterHardsuitLuxury
 
 - type: entity
+  id: CrateCargoParcelWrap
+  parent: CrateGenericSteel
+  name: parcel wrap crate
+  description: All your parcel wrapping needs in one crate, containing three rolls of parcel wrap.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ParcelWrap
+      amount: 3
+
+- type: entity
   id: CrateCargoGambling
   name: the grand lottery $$$
   description: A box containing treasure beyond your greatest imaginations!
