@@ -8,17 +8,16 @@
       - id: FlashlightSeclite
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
-      - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
-      - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
-      - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: HandLabeler
+      - id: Multitool
       - id: ClothingBackpackElectropack
         amount: 2
       - id: RemoteSignaller
@@ -34,16 +33,15 @@
       - id: FlashlightSeclite
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
-      - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
-      - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
-      - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: HandLabeler
+      - id: Multitool
       - id: ClothingBackpackElectropack
         amount: 2
       - id: RemoteSignaller
@@ -58,23 +56,18 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
-        prob: 0.8
       - id: WeaponDisabler
-      - id: ClothingUniformJumpsuitSecGrey
-        prob: 0.3
       - id: ClothingHeadHelmetBasic
       - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
       - id: Flash
-        prob: 0.5
+      - id: Tourniquet
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
       - id: WeaponMeleeNeedle
         prob: 0.1
-      - id: HoloprojectorSecurity
-        prob: 0.6
       - id: BookSpaceLaw
         prob: 0.5
 
@@ -120,20 +113,16 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
-        prob: 0.3
-      - id: ClothingHeadHatFedoraBrown
-      - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
-      - id: ClothingOuterCoatDetective
+      - id: ClothingEyesGlassesSecurity
       - id: FlashlightSeclite
+      - id: ClothingHeadsetSecurity
       - id: ForensicScanner
       - id: LogProbeCartridge
+      - id: HoloprojectorSecurity
       - id: BoxForensicPad
       - id: DrinkDetFlask
-      - id: ClothingHandsGlovesForensic
       - id: RubberStampDetective
-      - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
 
@@ -149,7 +138,9 @@
       - id: Wirecutter
       - id: Screwdriver
       - id: Multitool
-        prob: 0.5
+      - id: d10Dice
+        prob: 0.2
+
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -207,7 +198,7 @@
     - id: WeaponShotgunEnforcer
       amount: 2
     - id: BoxLethalshot
-      amount: 4
+      amount: 2
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
