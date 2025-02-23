@@ -43,8 +43,8 @@ public sealed partial class CCVars
     /// <summary>
     ///     Sets the maximum length for flavor text (character descriptions).
     /// </summary>
-    public static readonly CVarDef<int> MaxDescLength =
-        CVarDef.Create("ic.loadout_name_length", 512, CVar.SERVER | CVar.REPLICATED);
+    public static readonly CVarDef<int> MaxFlavorTextLength =
+        CVarDef.Create("ic.flavor_text_length", 512, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Adds a period at the end of a sentence if the sentence ends in a letter.

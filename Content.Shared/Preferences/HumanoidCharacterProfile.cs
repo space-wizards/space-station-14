@@ -536,9 +536,9 @@ namespace Content.Shared.Preferences
             }
 
             string flavortext;
-            if (FlavorText.Length > configManager.GetCVar(CCVars.MaxDescLength))
+            if (FlavorText.Length > configManager.GetCVar(CCVars.MaxFlavorTextLength))
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..configManager.GetCVar(CCVars.MaxDescLength)];
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..configManager.GetCVar(CCVars.MaxFlavorTextLength)];
             }
             else
             {
