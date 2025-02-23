@@ -8,3 +8,8 @@ comp-repairable-repair = You repair {PROPER($target) ->
   [true] {""}
   *[false] the{" "}
 }{$tool}
+
+comp-repairable-replacement-repair = You repair {PROPER($target) ->
+  [true] {""}
+  *[false] the{" "}
+}{$target} with {$amountUsed} {$material}
