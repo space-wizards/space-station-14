@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: beck-thompson, Moomoobeef
-  changes:
-  - message: Plushies now can have small items stuffed inside of them! To open, click
-      on the plush with a sharp item. You can then insert a small item into the plush.
-      To close, just click on it again with any sharp item!
-    type: Add
-  - message: When pAIs are inserted into plushies, their names will be updated to
-      the plushies name. E.g when inside a lizard plushie the pAI's name will appear
-      as "lizard plushie" when speaking.
-    type: Add
-  id: 7498
-  time: '2024-10-09T18:01:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30805
 - author: Errant
   changes:
   - message: Nukies now have role briefing on their character screen.
@@ -3902,3 +3889,10 @@
   id: 7997
   time: '2025-02-23T19:29:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35070
+- author: NoElkaTheGod
+  changes:
+  - message: Hitting a holoparasite will now ignore the host's armor.
+    type: Tweak
+  id: 7998
+  time: '2025-02-23T20:03:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35418
