@@ -26,8 +26,8 @@ public sealed partial class MonumentMenu : FancyWindow
     private readonly IEnumerable<InfluencePrototype> _influencePrototypes;
     private readonly ButtonGroup _glyphButtonGroup;
     private ProtoId<GlyphPrototype> _selectedGlyphProtoId = string.Empty;
-    private HashSet<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
-    private HashSet<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
+    private List<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
+    private List<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
     public Action<ProtoId<GlyphPrototype>>? OnSelectGlyphButtonPressed;
     public Action? OnRemoveGlyphButtonPressed;
 

@@ -377,7 +377,7 @@ public abstract class SharedMindSystem : EntitySystem
         objective = default;
         return false;
     }
-    
+
     // #IMP EDIT BEGIN | currently loadbearing for Cosmic Cult's deconversion function. Used in CleanseCorruption.
     public void ClearObjectives(EntityUid mind, MindComponent? comp = null)
     {
