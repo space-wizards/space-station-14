@@ -11,6 +11,7 @@ using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationRecords.Systems;
 
@@ -39,6 +40,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     [Dependency] private readonly StationRecordKeyStorageSystem _keyStorage = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -230,6 +232,18 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             return false;
 
         return records.Records.TryGetRecordEntry(key.Id, out entry);
+    }
+
+    public bool TryGetRandomRecord<T>(EntityUid stationId, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
+    {
+        entry = default;
+
+        if (!Resolve(stationId, ref records))
+            return false;
+
+        var key = _random.Pick(records.Records.Keys);
+
+        return records.Records.TryGetRecordEntry(key, out entry);
     }
 
     /// <summary>
