@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Banana.
-    type: Fix
-  id: 690
-  time: '2024-12-08T15:12:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/950
 - author: Sha-Seng
   changes:
   - message: Gathered Low hairstyle has more body from the side now
@@ -4125,3 +4118,16 @@
   id: 1189
   time: '2025-02-23T01:54:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1761
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Chaplains have been given a huge new selection of outfits to better suit
+      their religious beliefs.
+    type: Add
+  - message: Drones are now Mensch.
+    type: Tweak
+  - message: The Head of Security may now select the security clown mask. As they
+      deserve.
+    type: Tweak
+  id: 1190
+  time: '2025-02-23T02:13:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1768
