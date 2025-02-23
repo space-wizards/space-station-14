@@ -1,0 +1,679 @@
+- type: entity
+  parent: SparlightMobAdmemeCorgi
+  id: SparlightBaseBorgiChassis
+  name: Borgi
+  description: A corgi-machine hybrid that assists in station activity. It loves being asked to state its laws and to chase its tail.
+  save: false
+  abstract: true
+  components:
+  - type: ShowJobIcons
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: MetalThud
+  - type: CombatMode
+  - type: Instrument # All borgi have an instrument, however only a few can access it
+    allowPercussion: false
+    handheld: false
+    bank: 0
+    program: 33
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    # Additional layers required for borg states
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+    - map: ["enum.BorgVisualLayers.Body"]
+      state: corgi
+      visible: false
+    - state: corgitag
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: corgitag
+      map: ["enum.BorgVisualLayers.LightStatus"]
+      shader: unshaded
+      visible: false
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 180
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Critical
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+    showOverlays: false
+    allowRevives: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 750
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:GibBehavior
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
+  - type: UserInterface
+    interfaces:
+    # Borg UIs
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+  - type: Tag
+    tags:
+    - VimPilot
+    - CanPilot
+    - AnomalyHost
+    - DoorBumpOpener
+  - type: Storage
+    clickInsert: false
+    openOnActivate: false
+    grid:
+      - 0,0,3,3
+    maxItemSize: Huge
+  - type: Body
+    prototype: SparlightBodySmartCorgi
+  - type: ActivatableUI
+    key: enum.BorgUiKey.Key
+  - type: SiliconLawBound
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Inventory
+    speciesId: dog
+    templateId: Sparlightsmartpetborgi
+    # Borg chassis, to accept MMI and posibrain
+  - type: BorgChassis
+    maxModules: 4
+    moduleWhitelist:
+      tags:
+        - BorgModuleGeneric
+        - BorgModuleCargo
+        - BorgModuleMedical
+    hasMindState: corgitag
+    noMindState: corgitag
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
+  - type: WiresPanel
+  - type: ActivatableUIRequiresPanel
+  - type: NameIdentifier
+    group: Silicon
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: true
+  - type: ItemToggle
+    onActivate: false
+    activated: false
+    onUse: false
+  - type: AccessToggle
+  - type: PowerCellDraw
+    drawRate: 0.3
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Flashed
+  - type: TypingIndicator
+    proto: robot
+  - type: UnblockableSpeech
+  - type: Construction
+    graph: Cyborg
+    node: cyborg
+    containers:
+    - cell_slot
+  - type: Lock
+    locked: true
+    unlockOnClick: false
+  - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
+  - type: Pullable
+  - type: StandingState
+  - type: Emoting
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+  # Borgis by-and-large can't wear space suits so this helps mitigate that trouble somewhat where needed
+  - type: Barotrauma
+    maxDamage: 25
+    damage:
+      types:
+        Blunt: 0.15 
+  - type: Temperature
+    coldDamage:
+      types:
+        Cold: 0.03 
+
+# Custom action for later modification for borgi.
+- type: entity
+  id: SparlightActionBorgiPlayMidi
+  name: Play Guitar
+  description: Open your internal BASS GUITAR MIDI interface to soothe the station.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: Interface/Actions/pai-midi.png
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key
+
+- type: entity
+  name: Smart Corgi
+  parent: SparlightMobAdmemeCorgi
+  id: SparlightSmartCorgi
+  description: An unusually smart dog.
+  suffix: Default
+  components:
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_corgi
+  # Custom inventory template
+  - type: Inventory
+    speciesId: dog
+    templateId: Sparlightsmartpetborgi
+
+- type: entity
+  name: Borgi
+  parent: SparlightBaseBorgiChassis
+  id: SparlightBorgiVulnerable
+  components:
+  - type: SiliconLawProvider
+    laws: SparlightBorgiLawset
+  - type: EmagSiliconLaw
+    stunTime: 5
+  - type: ReplacementAccent
+    accent: dog
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_borgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+
+- type: entity
+  name: Smart Borgi
+  parent: SparlightBaseBorgiChassis
+  id: SparlightSmartBorgiVulnerable
+  components:
+  - type: SiliconLawProvider
+    laws: SparlightBorgiLawset
+  - type: EmagSiliconLaw
+    stunTime: 5
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_borgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+
+- type: entity
+  name: SubWoofer
+  parent: SparlightBaseBorgiChassis
+  id: SparlightSubWooferVulnerable
+  description: A smart dog, with an obsession for sick bass beats.
+  components:
+  - type: SiliconLawProvider
+    laws: SparlightBorgiLawset
+  - type: EmagSiliconLaw
+    stunTime: 5
+  - type: ReplacementAccent
+    accent: dog
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_borgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+    - SparlightActionBorgiPlayMidi
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+
+- type: entity
+  name: Smart SubWoofer
+  parent: SparlightBaseBorgiChassis
+  id: SparlightSmartSubWooferVulnerable
+  description: An unusually smart dog, with an obsession for sick bass beats.
+  components:
+  - type: SiliconLawProvider
+    laws: SparlightBorgiLawset
+  - type: EmagSiliconLaw
+    stunTime: 5
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_borgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+    - SparlightActionBorgiPlayMidi
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+
+# Syndicate Borgi
+
+- type: entity
+  name: Syndi Borgi
+  parent: SparlightBaseBorgiChassis
+  id: SparlightSyndiCorgi
+  description: An unusually smart dog, but hell bent on MURDER.
+  suffix: Antag
+  components:
+  - type: GhostRole
+    name: A Syndicate Borgi.
+    description: The Syndicate needs reinforcements. You, a cold, BUT LOVINGLY ADORABLE, silicon killing machine, will help them... And bork.  An unusual choice, but it was made nonetheless.
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+        - BorgModuleGeneric 
+  - type: SiliconLawProvider
+    laws: SparlightSyndiBorgiLawset
+    subverted: true
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_syndiborgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Barotrauma
+    maxDamage: 10
+    damage:
+      types:
+        Blunt: 0.15
+  - type: Temperature
+    coldDamage:
+      types:
+        Cold: 0.01 
+
+- type: entity
+  name: Syndi Borgi
+  parent: SparlightBaseBorgiChassis
+  id: SparlightSyndiCorgiKit1
+  description: An unusually smart dog, but hell bent on MURDER.
+  suffix: Antag, L6 Esword
+  components:
+  - type: GhostRole
+    name: A Syndicate Borgi.
+    description: The Syndicate needs reinforcements. You, a cold, BUT LOVINGLY ADORABLE, silicon killing machine, will help them... And bork.  An unusual choice, but it was made nonetheless.
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+        - BorgModuleGeneric 
+  - type: SiliconLawProvider
+    laws: SparlightSyndiBorgiLawset
+    subverted: true
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_syndiborgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleOperative
+        - BorgModuleL6C
+        - BorgModuleEsword
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Barotrauma
+    maxDamage: 10
+    damage:
+      types:
+        Blunt: 0.15 
+  - type: Temperature
+    coldDamage:
+      types:
+        Cold: 0.01 
+
+- type: entity
+  name: Syndi Borgi
+  parent: SparlightBaseBorgiChassis
+  id: SparlightSyndiCorgiKit2
+  description: An unusually smart dog, but hell bent on MURDER.
+  suffix: Antag, Quick Dagger
+  components:
+  - type: GhostRole
+    name: A Syndicate Borgi.
+    description: The Syndicate needs reinforcements. You, a cold, BUT LOVINGLY ADORABLE, silicon killing machine, will help them... And bork.  An unusual choice, but it was made nonetheless.
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed: 6
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric 
+  - type: SiliconLawProvider
+    laws: SparlightSyndiBorgiLawset
+    subverted: true
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_syndiborgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleOperative
+        - BorgModuleSyndicateWeapon
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Barotrauma
+    maxDamage: 10
+    damage:
+      types:
+        Blunt: 0.15 
+  - type: Temperature
+    coldDamage:
+      types:
+        Cold: 0.01 
+
+- type: entity
+  name: Shadow Borgi
+  parent: SparlightBaseBorgiChassis
+  id: SparlightShadowBorgi
+  description: A contributor to a menacing plot to convert the station.
+  suffix: Shadow Factory
+  components:
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric 
+        - BorgModuleMedical
+        - BorgModuleEngineering
+  - type: SiliconLawProvider
+    laws: SparlightShadowFactoryBorgiLawset
+    subverted: true
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_shadowborgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: ContainerFill
+    containers:
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleAdvancedTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTreatment
+        - BorgModuleFireExtinguisher
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: ShowSyndicateIcons
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+    - Binary
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 750
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+      - !type:GibBehavior
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+    - Binary
+  - type: Lock
+    locked: false
+    unlockOnClick: false
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - RoboticsConsole
+    whitelist:
+      components:
+      - BorgChassis
+  - type: Barotrauma # Shadow borgis largely do not have access to hardsuits so nerf the space damage they take
+    maxDamage: 1
+    damage:
+      types:
+        Blunt: 0.01 
+  - type: Temperature
+    coldDamage:
+      types:
+        Cold: 0.01 
+
+- type: entity
+  name: Shadow Borgi
+  parent: SparlightShadowBorgi
+  id: SparlightStarterShadowBorgi
+  description: A leader of a menacing plot to convert the station.
+  suffix: InitialSpawn; ShadowFactory
+  components:
+  - type: GhostRole
+    name: Shadow Borgi
+    description: Your job is to run a shadow factory and forcibly convert the station into borgis!
+    rules: Check your laws upon being fitted to your chassis.  You are a team antagonist, and your goal is to kill everyone you can on the station, bring them back to your ship, gib them, and borg them.  Exercise prudence about your targetting as you are made of flesh, and therefore feeble.
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric 
+        - BorgModuleMedical
+        - BorgModuleEngineering
+  - type: SiliconLawProvider
+    laws: SparlightShadowFactoryBorgiLawset
+    subverted: true
+  - type: RandomMetadata
+    nameSegments:
+      - Sparlightnames_shadowborgi
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleAdvancedTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTreatment
+        - BorgModuleFireExtinguisher
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: ShowSyndicateIcons
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+    - Binary
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 750
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+      - !type:GibBehavior
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+    - Binary
+  - type: Lock
+    locked: false
+    unlockOnClick: false
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - RoboticsConsole
+    whitelist:
+      components:
+      - BorgChassis
+  - type: Barotrauma # Shadow borgis largely do not have access to hardsuits so nerf the space damage they take
+    maxDamage: 1
+    damage:
+      types:
+        Blunt: 0.01 
+  - type: Temperature
+    coldDamage:
+      types:
+        Cold: 0.01 

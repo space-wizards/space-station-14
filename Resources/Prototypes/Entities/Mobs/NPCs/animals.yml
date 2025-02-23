@@ -3599,3 +3599,85 @@
         Base: reindeer_doe_dead
       Dead:
         Base: reindeer_doe_dead
+
+- type: entity
+  name: admemeCorgi
+  abstract: true
+  parent: [SimpleMobBase, StripableInventoryBase]
+  id: SparlightMobAdmemeCorgi
+  description: Finally, a space corgi!
+  components:
+  # Use corgi sprite
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+  - type: Physics
+  # Apply canine dog speech
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  # Custom inventory template
+  - type: Inventory
+    speciesId: dog
+    templateId: Sparlightsmartpetborgi
+  - type: Hands # HANDS!
+  - type: Puller
+  - type: Stripping
+  - type: ComplexInteraction
+  # Implement custom borgi body type
+  - type: Body
+    prototype: SparlightBodySmartCorgi
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 180
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene # Gender neutral
+      proper: true
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-corgi
+  - type: MobPrice
+    price: 200
+  - type: Tag
+    tags:
+    - VimPilot
+    - CanPilot
+    - AnomalyHost
+    - DoorBumpOpener
+  - type: Storage #Slime-type storage
+    clickInsert: false
+    openOnActivate: false
+    grid:
+      - 0,0,3,3
+    maxItemSize: Huge
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5
