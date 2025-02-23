@@ -17,7 +17,6 @@ entities:
       name: grid
     - type: Transform
       pos: -0.5833333,-0.26546288
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -445,7 +444,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 349
-      attachedEntity: invalid
   - uid: 352
     components:
     - type: Transform
@@ -453,7 +451,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 351
-      attachedEntity: invalid
   - uid: 355
     components:
     - type: Transform
@@ -461,7 +458,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 354
-      attachedEntity: invalid
   - uid: 357
     components:
     - type: Transform
@@ -469,7 +465,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 356
-      attachedEntity: invalid
 - proto: AirAlarm
   entities:
   - uid: 694
@@ -2759,8 +2754,6 @@ entities:
       pos: 10.5,15.5
       parent: 2
     - type: Strap
-      buckledEntities:
-      - invalid
     - type: HealOnBuckle
       sleepAction: 350
     - type: HealOnBuckleHealing
@@ -2776,8 +2769,6 @@ entities:
       pos: 9.5,15.5
       parent: 2
     - type: Strap
-      buckledEntities:
-      - invalid
     - type: HealOnBuckle
       sleepAction: 352
     - type: HealOnBuckleHealing
@@ -2793,8 +2784,6 @@ entities:
       pos: 3.5,15.5
       parent: 2
     - type: Strap
-      buckledEntities:
-      - invalid
     - type: HealOnBuckle
       sleepAction: 355
     - type: HealOnBuckleHealing
@@ -2810,8 +2799,6 @@ entities:
       pos: 4.5,15.5
       parent: 2
     - type: Strap
-      buckledEntities:
-      - invalid
     - type: HealOnBuckle
       sleepAction: 357
     - type: HealOnBuckleHealing
@@ -5105,14 +5092,6 @@ entities:
 
 
         You have a 4x4 internal storage, right-click yourself to use it.
-
-
-        The holopad is unanchored by default.  If you really wish to communicate to the station and reveal yourselves, you may do so by anchoring it and communicating.
-    - type: UserInterface
-      actors:
-        enum.PaperUiKey.Key:
-        - invalid
-    - type: ActiveUserInterface
   - uid: 710
     components:
     - type: Transform
@@ -5158,11 +5137,6 @@ entities:
 
 
         Good luck!
-    - type: UserInterface
-      actors:
-        enum.PaperUiKey.Key:
-        - invalid
-    - type: ActiveUserInterface
 - proto: PlastitaniumWindowDiagonalIndestructible
   entities:
   - uid: 197
