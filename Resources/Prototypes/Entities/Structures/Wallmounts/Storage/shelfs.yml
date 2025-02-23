@@ -1,23 +1,15 @@
 # Parents
 - type: entity
-  abstract: true
+  parent: BaseWallmount
   id: ShelfBase
+  abstract: true
   name: shelf
   description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
-  - type: Clickable
-  - type: Tag
-    tags:
-      - Structure
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
-  - type: Transform
   - type: Damageable
     damageModifierSet: Wood
     damageContainer: StructuralInorganic
@@ -32,7 +24,6 @@
           collection: WoodDestroyHeavy
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: WallMount
   - type: Storage
     grid:
     - 0,0,3,1
@@ -42,7 +33,6 @@
     interfaces:
      enum.StorageUiKey.Key:
       type: StorageBoundUserInterface
-  - type: InteractionOutline
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
