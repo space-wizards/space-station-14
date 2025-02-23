@@ -36,10 +36,4 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> OutlineEnabled =
         CVarDef.Create("outline.enabled", true, CVar.CLIENTONLY);
-
-    /// <summary>
-    /// If true, the admin overlay will be displayed in the old style (showing only "ANTAG")
-    /// </summary>
-    public static readonly CVarDef<bool> AdminOverlayClassic =
-        CVarDef.Create("ui.admin_overlay_classic", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

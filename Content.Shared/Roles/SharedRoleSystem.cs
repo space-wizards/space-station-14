@@ -202,47 +202,53 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var roleType = GetRoleTypeByTime(ent.Comp);
+        var role = GetCurrentRole(ent.Comp);
 
-        if (ent.Comp.RoleType == roleType)
+        if (ent.Comp.RoleType == role.Item1 &&  ent.Comp.Subtype == role.Item2)
             return false;
 
-        SetRoleType(ent.Owner, roleType);
+        SetRoleType(ent.Owner, role.Item1, role.Item2);
         return true;
     }
 
-    private ProtoId<RoleTypePrototype> GetRoleTypeByTime(MindComponent mind)
+    public (ProtoId<RoleTypePrototype>, LocId?) GetCurrentRole(MindComponent mind)
     {
-        // If any Mind Roles specify a Role Type, return the most recent. Otherwise return Neutral
+        return GetRoleTypeByTime(mind);
+    }
 
-        var roles = new List<ProtoId<RoleTypePrototype>>();
+    private (ProtoId<RoleTypePrototype>, LocId?) GetRoleTypeByTime(MindComponent mind)
+    {
+        // If any Mind Roles specify a Role Type, return the most recent one along with the subtype. Otherwise return Neutral
+
+        var roles = new List<(ProtoId<RoleTypePrototype>, LocId?)>();
 
         foreach (var role in mind.MindRoles)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
-                roles.Add(comp.RoleType.Value);
+                roles.Add((comp.RoleType.Value, comp.Subtype));
         }
 
-        ProtoId<RoleTypePrototype> result = (roles.Count > 0) ? roles.LastOrDefault() : "Neutral";
+        var result = (roles.Count > 0) ? roles.LastOrDefault() : ("Neutral", null);
         return (result);
     }
 
-    private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId)
+    private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype)
     {
         if (!TryComp<MindComponent>(mind, out var comp))
         {
-            Log.Error($"Failed to update Role Type of mind entity {ToPrettyString(mind)} to {roleTypeId}. MindComponent not found.");
+            Log.Error($"Failed to update Role Type of mind entity {ToPrettyString(mind)} to {roleTypeId}, {subtype}. MindComponent not found.");
             return;
         }
 
         if (!_prototypes.HasIndex(roleTypeId))
         {
-            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}. Invalid role");
+            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}, {subtype}. Invalid role");
             return;
         }
 
         comp.RoleType = roleTypeId;
+        comp.Subtype = subtype;
         Dirty(mind, comp);
 
         // Update player character window
@@ -259,13 +265,13 @@ public abstract class SharedRoleSystem : EntitySystem
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.High,
-                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}");
+                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}, {subtype}");
             return;
         }
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.High,
-            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}");
+            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
     }
 
     /// <summary>
@@ -619,6 +625,30 @@ public abstract class SharedRoleSystem : EntitySystem
             return req;
 
         return antag.Requirements;
+    }
+
+    /// <summary>
+    /// Returns the localized name of a role type's subtype and/or role type.
+    /// </summary>
+    /// <param name="roleType">The locale string of the role type</param>
+    /// <param name="subtype">The locale string of the subtype</param>
+    /// <param name="subtypeOnly">If true, role type will not be returned along with the subtype</param>
+    /// <returns>
+    /// If subtypeOnly is true, returns localized subtype.
+    /// If subtypeOnly is false, returns localized role and subtype.
+    /// If subtype is not provided, returns localized role type regardless of subtypeOnly setting.
+    /// </returns>
+    public string GetRoleSubtypeLabel(string roleType, string? subtype, bool subtypeOnly = true)
+    {
+        var typeLoc = Loc.GetString(roleType);
+
+        if (string.IsNullOrEmpty(subtype))
+            return typeLoc;
+
+        var subLoc = Loc.GetString(subtype);
+        var combined = Loc.GetString("role-with-subtype-format", ("type", typeLoc), ("subtype", subLoc));
+
+        return subtypeOnly ? subLoc : combined;
     }
 }
 

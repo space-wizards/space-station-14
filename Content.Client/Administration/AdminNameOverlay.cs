@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -14,22 +15,29 @@ namespace Content.Client.Administration;
 
 internal sealed class AdminNameOverlay : Overlay
 {
-    [Dependency] private readonly IConfigurationManager _config = default!;
-
     private readonly AdminSystem _system;
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
+    private readonly IConfigurationManager _config;
+    private readonly SharedRoleSystem _roles;
     private readonly Font _font;
+    private readonly Font _fontBold;
+    private bool _subtypesOnly;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
         ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
-    private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
-    private readonly Color _antagColorClassic = Color.OrangeRed;
 
-    public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
+    public AdminNameOverlay(AdminSystem system,
+        IEntityManager entityManager,
+        IEyeManager eyeManager,
+        IResourceCache resourceCache,
+        EntityLookupSystem entityLookup,
+        IUserInterfaceManager userInterfaceManager,
+        IConfigurationManager config,
+        SharedRoleSystem roles)
     {
         IoCManager.InjectDependencies(this);
 
@@ -38,8 +46,14 @@ internal sealed class AdminNameOverlay : Overlay
         _eyeManager = eyeManager;
         _entityLookup = entityLookup;
         _userInterfaceManager = userInterfaceManager;
+        _config = config;
+        _roles = roles;
         ZIndex = 200;
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
+        _fontBold = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
+
+        _subtypesOnly = _config.GetCVar(CCVars.OverlaySubtypesOnly);
+        _config.OnValueChanged(CCVars.OverlaySubtypesOnly, (show) => { _subtypesOnly = show; });
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -47,9 +61,6 @@ internal sealed class AdminNameOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var viewport = args.WorldAABB;
-
-        //TODO make this adjustable via GUI
-        var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
 
         foreach (var playerInfo in _system.PlayerList)
         {
@@ -81,16 +92,12 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            if (classic && playerInfo.Antag)
+            if (_filter.Contains(playerInfo.RoleProto.ID))
             {
-               args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), _antagLabelClassic, uiScale, _antagColorClassic);
-            }
-            else if (!classic && _filter.Contains(playerInfo.RoleProto.ID))
-            {
-               var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-               var color = playerInfo.RoleProto.Color;
+                var label = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, playerInfo.Subtype, _subtypesOnly);
+                var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + (lineoffset * 2), label.ToUpper(), uiScale, color);
             }
 
             args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
