@@ -281,6 +281,13 @@ ghost-role-information-lost-challenge-cargo-technican-rules = You are not hostil
                                      You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                      You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
+ghost-role-information-syndie-communication-agent-name = Syndicate Communication Agent
+ghost-role-information-syndie-communication-agent-description = Information is king. Bring ruin to NT with nothing but a radio and your wits. 
+ghost-role-information-syndie-communication-agent-rules = You are hostile to the station, but are not allowed to physically interfere.
+                                     You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                     Do not abandon your post or board the station.
+                                     Do not get captured.
+
 ghost-role-information-disaster-victim-name = Disaster Victim
 ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
 
