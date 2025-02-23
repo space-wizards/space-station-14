@@ -1015,6 +1015,9 @@
   id: PlushieGhost
 
 - type: Tag
+  id: PlushieLizard
+
+- type: Tag
   id: PlushieSharkBlue
 
 - type: Tag
