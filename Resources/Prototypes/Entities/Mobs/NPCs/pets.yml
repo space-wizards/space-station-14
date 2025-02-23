@@ -569,7 +569,8 @@
   - type: Sprite
     sprite: Objects/Misc/nukedisk.rsi
     layers:
-    - state: icon
+    - map: ["movement"]
+      state: icon
   - type: SpriteMovement
     movementLayers:
       movement:
