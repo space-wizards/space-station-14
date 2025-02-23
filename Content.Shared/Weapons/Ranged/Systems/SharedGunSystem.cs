@@ -456,8 +456,15 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected void EjectCartridge(
         EntityUid entity,
         Angle? angle = null,
-        bool playSound = true)
+        bool playSound = true,
+        EntityUid? user = null)
     {
+        // This method is shared, so lets ensure random values are consistent for prediction.
+        // We have to use netEntity here because the regular entity id can be different between client and server.
+        TryGetNetEntity(entity, out var netEntity);
+        if (netEntity != null)
+            Random.SetSeed((int) Timing.CurTick.Value + netEntity.Value.Id);
+
         // TODO: Sound limit version.
         var offsetPos = Random.NextVector2(EjectOffset);
         var xform = Transform(entity);
@@ -472,12 +479,20 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (angle != null)
         {
             Angle ejectAngle = angle.Value;
-            ejectAngle += 3.7f; // 212 degrees; casings should eject slightly to the right and behind of a gun
+            ejectAngle += 3.7f; // 212 degrees; casings should eject slightly to the right and behind a gun
             ThrowingSystem.TryThrow(entity, ejectAngle.ToVec().Normalized() / 100, 5f);
         }
+
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-1f));
+            Audio.PlayPredicted(
+                cartridge.EjectSound,
+                entity,
+                user,
+                AudioParams.Default
+                    .WithVariation(SharedContentAudioSystem.DefaultVariation)
+                    .WithVolume(-1f)
+                    .WithPlayOffset(Random.NextFloat(1f)));
         }
     }
 
