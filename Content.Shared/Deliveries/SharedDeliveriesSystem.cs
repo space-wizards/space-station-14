@@ -19,49 +19,19 @@ public abstract class SharedDeliveriesSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
-
         SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<DeliveryComponent, ItemSpawnAttemptEvent>(OnSpawnAttempt);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
-    }
-
-    protected virtual void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
-    {
-        // ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
     }
 
     private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
     {
-        args.PushText("This one is meant for " + ent.Comp.RecipientName + ", " + ent.Comp.RecipientJob + ".");
-    }
-
-    private void OnSpawnAttempt(Entity<DeliveryComponent> ent, ref ItemSpawnAttemptEvent args)
-    {
-        if (!ent.Comp.Delivered)
-            args.Cancel();
+        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", ent.Comp.RecipientName), ("job", ent.Comp.RecipientJob)));
     }
 
     private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
     {
         if (ent.Comp.Delivered)
             return;
-
-        Log.Debug("Checking fingerprint");
-        if (!TryComp<FingerprintComponent>(args.User, out var fingerprint))
-        {
-            _popup.PopupClient("You try to scan your fingerprint but you have no fingers.", args.User, args.User);
-            args.Handled = true;
-            return;
-        }
-
-        Log.Debug("Checking fingerprint validity");
-        if (fingerprint.Fingerprint != ent.Comp.RecipientFingerprint)
-        {
-            _popup.PopupClient("You press your finger against the lock and nothing happens.", args.User, args.User);
-            args.Handled = true;
-            return;
-        }
 
         Log.Debug("Granting reward");
         ent.Comp.Delivered = true;
@@ -76,7 +46,7 @@ public abstract class SharedDeliveriesSystem : EntitySystem
     {
 
     }
-    public override void Update(float frameTime)
+    /*public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
@@ -85,5 +55,5 @@ public abstract class SharedDeliveriesSystem : EntitySystem
         {
 
         }
-    }
+    }*/
 }

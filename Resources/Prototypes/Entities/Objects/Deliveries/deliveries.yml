@@ -1,6 +1,13 @@
 - type: entity
   name: package
   parent: BaseItem
+  id: BaseDelivery
+  components:
+  - type: Biocoded
+
+- type: entity
+  name: package
+  parent: BaseDelivery
   id: PackageDelivery
   components:
   - type: Sprite
@@ -8,13 +15,13 @@
     state: box
   - type: Delivery
     spesoReward: 1000
-  - type: SpawnItemsOnUse
-    items:
-    - id: PresentTrash
+  - type: SpawnTableOnUse
+    table: !type:NestedSelector
+      tableId: RandomTechBoardTable
 
 - type: entity
   name: letter
-  parent: BaseItem
+  parent: BaseDelivery
   id: LetterDelivery
   components:
   - type: Sprite
@@ -22,6 +29,6 @@
     state: envelope_closed
   - type: Delivery
     spesoReward: 500
-  - type: SpawnItemsOnUse
-    items:
-    - id: PresentTrash
+  - type: SpawnTableOnUse
+    table: !type:NestedSelector
+      tableId: RandomTechBoardTable

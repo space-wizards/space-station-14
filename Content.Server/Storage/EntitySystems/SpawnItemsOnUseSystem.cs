@@ -70,12 +70,6 @@ namespace Content.Server.Storage.EntitySystems
             if (component.Uses <= 0)
                 return;
 
-            var ev = new ItemSpawnAttemptEvent();
-            RaiseLocalEvent(uid, ref ev);
-
-            if (ev.Cancelled)
-                return;
-
             var coords = Transform(args.User).Coordinates;
             var spawnEntities = GetSpawns(component.Items, _random);
             EntityUid? entityToPlaceInHands = null;

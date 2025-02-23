@@ -4,6 +4,7 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Biocoded;
 using Content.Shared.Deliveries;
 using Content.Shared.Ghost;
 using Content.Shared.StationRecords;
@@ -25,25 +26,20 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
     }
 
-    protected override void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
     {
-        base.OnMapInit(ent, ref args);
-
         if (!TryComp<TransformComponent>(ent, out var transform))
             return;
 
         var stationId = _station.GetStationInMap(transform.MapID);
 
-        Log.Debug("Getting station");
-
         if (stationId == null)
             return;
 
         _records.TryGetRandomRecord<GeneralStationRecord>(stationId.Value, out var entry);
-
-        Log.Debug("Getting record");
 
         if (entry == null)
             return;
@@ -51,10 +47,14 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
         ent.Comp.RecipientName = entry.Name;
         ent.Comp.RecipientJob = entry.JobTitle;
         ent.Comp.RecipientStation = stationId.Value;
-        if(entry.Fingerprint != null)
-            ent.Comp.RecipientFingerprint = entry.Fingerprint;
 
         Dirty(ent);
+
+        if (TryComp<BiocodedComponent>(ent, out var biocoded))
+        {
+            biocoded.Fingerprint = entry.Fingerprint;
+            Dirty(ent, biocoded);
+        }
     }
 
     protected override void GrantSpesoReward(EntityUid uid, DeliveryComponent? comp = null)

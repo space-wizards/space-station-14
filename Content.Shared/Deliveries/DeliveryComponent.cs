@@ -1,4 +1,6 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared.Deliveries;
@@ -22,8 +24,11 @@ public sealed partial class DeliveryComponent : Component
     public string RecipientJob = string.Empty;
 
     [DataField, AutoNetworkedField]
-    public string RecipientFingerprint = string.Empty;
-
-    [DataField, AutoNetworkedField]
     public EntityUid RecipientStation;
+
+    [DataField(required: true)]
+    public SoundSpecifier? OpenSound;
+
+    [DataField]
+    public string Wrapper = "PresentTrash";
 }
