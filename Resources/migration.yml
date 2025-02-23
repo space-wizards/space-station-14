@@ -556,9 +556,9 @@ MagazineBoxCaselessRifle10x24: null
 MagazineBoxCaselessRifleBig: null
 MagazinePistolHighCapacityRubber: null
 
- #2025-02-22
- TreasureCoinIron: CoinIron
- TreasureCoinSilver: CoinSilver
- TreasureCoinGold: CoinGold
- TreasureCoinAdamantine: CoinAdamantium
- TreasureCoinDiamond: CoinDiamond
+#2025-02-22
+TreasureCoinIron: CoinIron
+TreasureCoinSilver: CoinSilver
+TreasureCoinGold: CoinGold
+TreasureCoinAdamantine: CoinAdamantium
+TreasureCoinDiamond: CoinDiamond
