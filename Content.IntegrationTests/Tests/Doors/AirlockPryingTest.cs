@@ -7,7 +7,7 @@ namespace Content.IntegrationTests.Tests.Doors;
 public sealed class AirlockPryingTest : InteractionTest
 {
     [Test]
-    public async Task PoweredAirlock_PryOpen_DoesNotOpen()
+    public async Task PoweredClosedAirlock_Pry_DoesNotOpen()
     {
         await SpawnTarget(Airlock);
         await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
@@ -26,7 +26,7 @@ public sealed class AirlockPryingTest : InteractionTest
     }
 
     [Test]
-    public async Task PoweredAirlock_PryClosed_DoesNotClosed()
+    public async Task PoweredOpenAirlock_Pry_DoesNotClose()
     {
         await SpawnTarget(Airlock);
         await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
@@ -48,7 +48,7 @@ public sealed class AirlockPryingTest : InteractionTest
     }
 
     [Test]
-    public async Task UnpoweredAirlock_PryOpen_Opens()
+    public async Task UnpoweredClosedAirlock_Pry_Opens()
     {
         await SpawnTarget(Airlock);
 
@@ -64,7 +64,7 @@ public sealed class AirlockPryingTest : InteractionTest
     }
 
     [Test]
-    public async Task UnpoweredAirlock_PryClosed_Closes()
+    public async Task UnpoweredOpenAirlock_Pry_Closes()
     {
         await SpawnTarget(Airlock);
 
