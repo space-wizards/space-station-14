@@ -151,8 +151,8 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
 
-        if (entity.Comp.WieldDelay > 0 && entity.Comp.WieldDelayExamineMessage != null)
-            args.PushMarkup(Loc.GetString(entity.Comp.WieldDelayExamineMessage, ("color", GunWieldDelayExamineColor), ("delay", entity.Comp.WieldDelay)));
+        if (entity.Comp.WieldDelay > TimeSpan.Zero && entity.Comp.WieldDelayExamineMessage != null)
+            args.PushMarkup(Loc.GetString(entity.Comp.WieldDelayExamineMessage, ("color", GunWieldDelayExamineColor), ("delay", entity.Comp.WieldDelay.TotalSeconds)));
     }
 
     private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)

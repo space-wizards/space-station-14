@@ -20,7 +20,7 @@ public sealed partial class GunRequiresWieldComponent : Component
     public LocId? WieldRequiresExamineMessage  = "gunrequireswield-component-examine";
 
     [DataField, AutoNetworkedField]
-    public float WieldDelay;
+    public TimeSpan WieldDelay;
 
     [DataField]
     public LocId? WieldDelayExamineMessage  = "gunrequireswield-component-delay-examine";

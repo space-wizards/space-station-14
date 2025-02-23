@@ -142,26 +142,26 @@ public abstract partial class SharedGunSystem
 
     private void OnGunWielded(Entity<GunComponent> ent, ref ItemWieldedEvent args)
     {
-        if (TryComp<GunRequiresWieldComponent>(ent, out var gunReqWield))
-        {
-            if (Timing.ApplyingState)
-                return;
+        if (!TryComp<GunRequiresWieldComponent>(ent, out var gunReqWield))
+            return;
 
-            if (ent.Comp.FireRateModified <= 0)
-                return;
+        if (Timing.ApplyingState)
+            return;
 
-            if (Paused(ent.Owner))
-                return;
+        if (ent.Comp.FireRateModified <= 0)
+            return;
 
-            // If someone swaps to this weapon then reset its cd.
-            var curTime = Timing.CurTime;
-            var minimum = curTime + TimeSpan.FromSeconds(gunReqWield.WieldDelay);
+        if (Paused(ent.Owner))
+            return;
 
-            if (minimum < ent.Comp.NextFire)
-                return;
+        // If someone swaps to this weapon then reset its cd.
+        var curTime = Timing.CurTime;
+        var minimum = curTime + gunReqWield.WieldDelay;
 
-            ent.Comp.NextFire = minimum;
-            Dirty(ent);
-        }
+        if (minimum < ent.Comp.NextFire)
+            return;
+
+        ent.Comp.NextFire = minimum;
+        Dirty(ent);
     }
 }
