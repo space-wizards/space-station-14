@@ -1,4 +1,4 @@
-﻿# TODO: Actual wizard coming later, this is just for the survival antags
+# TODO: Actual wizard coming later, this is just for the survival antags
 
 - type: antag
   id: Survivor
@@ -6,3 +6,17 @@
   antagonist: true
   objective: roles-antag-survivor-objective
   # guides: [  ]
+
+- type: antag
+  id: Wizard
+  name: roles-antag-wizard-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-wizard-objective # TODO: maybe give random objs and stationary ones from AntagObjectives and AntagRandomObjectives
+  requirements: # I hate time locked roles but this should be enough time for someone to be acclimated
+  - !type:OverallPlaytimeRequirement
+    time: 18000 # 5h
+  # TODO: WizardGuide
+  # guides: [ Wizard ]
+
+# See wizard_startinggear for wiz start gear options

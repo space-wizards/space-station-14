@@ -250,6 +250,19 @@
     - type: MindRole
       roleType: TeamAntagonist
 
+# Wizards
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleWizard
+  name: Wizard Role
+  #  description: these are all commented out
+  components:
+  - type: MindRole
+    antagPrototype: Wizard
+    exclusiveAntag: true
+    roleType: SoloAntagonist
+  - type: WizardRole
+
 # Zombie Squad
 - type: entity
   parent: BaseMindRoleAntag
