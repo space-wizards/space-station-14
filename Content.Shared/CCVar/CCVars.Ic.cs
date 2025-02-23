@@ -13,12 +13,11 @@ public sealed partial class CCVars
     /// <summary>
     ///     Sets the maximum IC name length.
     /// </summary>
-    /// <seealso cref="CCVars.MaxIdNameLength"/>
     public static readonly CVarDef<int> MaxNameLength =
         CVarDef.Create("ic.name_length", 32, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     Sets the maximum name length for a loadout name.
+    ///     Sets the maximum name length for a loadout name (e.g. cyborg name).
     /// </summary>
     public static readonly CVarDef<int> MaxLoadoutNameLength =
         CVarDef.Create("ic.loadout_name_length", 32, CVar.SERVER | CVar.REPLICATED);
@@ -26,7 +25,6 @@ public sealed partial class CCVars
     /// <summary>
     ///     Sets the maximum character length of a name on an ID.
     /// </summary>
-    /// <seealso cref="CCVars.MaxNameLength"/>
     public static readonly CVarDef<int> MaxIdNameLength =
         CVarDef.Create("ic.id_name_length", 32, CVar.SERVER | CVar.REPLICATED);
 
