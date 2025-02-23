@@ -100,6 +100,9 @@ reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
 reagent-name-black-russian = Black Russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.
 
+reagent-name-blood-red-booze = Blood Red Booze
+reagent-desc-blood-red-booze = Throw this drink in the slammer for all I care!
+
 reagent-name-bloody-mary = Bloody Mary
 reagent-desc-bloody-mary = A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
 
