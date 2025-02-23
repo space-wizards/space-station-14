@@ -7,7 +7,7 @@
   boilingPoint: 298.75
   meltingPoint: 259.86
   metabolisms:
-    metabolismRate: 0.125
+    metabolismRate: 0.15
     Poison:
       effects:
       - !type:HealthChange
