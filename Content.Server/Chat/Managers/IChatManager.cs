@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Players.RateLimiting;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Players.RateLimiting;
@@ -34,12 +35,17 @@ namespace Content.Server.Chat.Managers
 
         void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
 
-        bool MessageCharacterLimit(ICommonSession player, string message);
+        bool ExceedsCharacterLimit(ICommonSession player, string message);
 
         void DeleteMessagesBy(NetUserId uid);
 
         [return: NotNullIfNotNull(nameof(author))]
         ChatUser? EnsurePlayer(NetUserId? author);
+
+        /// <summary>
+        /// This method is used by clients via commands and networked messages to attempt to send a chat message.
+        /// </summary>
+        void RequestChat(ICommonSession session, string text, ChatSelectChannel channel);
 
         /// <summary>
         /// Called when a player sends a chat message to handle rate limits.
