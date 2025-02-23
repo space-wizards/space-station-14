@@ -373,7 +373,7 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.4
-        Radiation: 0.0
+        Radiation: 0.4
         Caustic: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.75
@@ -381,6 +381,14 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
+  - type: ComplexArmor
+    modifiers:
+      coefficients:
+        Radiation: 0.0
+    slots:
+    - HEAD
+    clothingTag:
+      RadDefenseHelmet
 
 #Chief Medical Officer's Hardsuit
 - type: entity
