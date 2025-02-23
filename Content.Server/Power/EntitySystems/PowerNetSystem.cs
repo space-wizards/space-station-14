@@ -389,16 +389,12 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdatePowerConsumer()
         {
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-            var enumerator = AllEntityQuery<PowerConsumerComponent>();
+            var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
             while (enumerator.MoveNext(out var uid, out var consumer))
             {
                 var newRecv = consumer.NetworkLoad.ReceivingPower;
                 ref var lastRecv = ref consumer.LastReceived;
                 if (MathHelper.CloseToPercent(lastRecv, newRecv))
-                    continue;
-
-                if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
                 lastRecv = newRecv;
