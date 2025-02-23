@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Thinbug for ss14 :33",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "primed",
+            "delays": [
+                [
+                    0.14,
+                    0.14,
+                    0.14,
+                    0.14
+                ]
+            ]
+        }
+    ]
+}
