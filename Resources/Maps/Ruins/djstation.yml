@@ -1146,7 +1146,7 @@ entities:
     - type: Transform
       pos: -4.5,-2.5
       parent: 2
-- proto: IntercomFreelance
+- proto: IntercomLockedAll
   entities:
   - uid: 316
     components:
