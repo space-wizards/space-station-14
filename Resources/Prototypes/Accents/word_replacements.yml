@@ -243,6 +243,69 @@
     accent-dwarf-words-146: accent-dwarf-words-replace-146
     accent-dwarf-words-147: accent-dwarf-words-replace-147
     accent-dwarf-words-148: accent-dwarf-words-replace-148
+    # begin imp edits
+    accent-dwarf-words-149: accent-dwarf-words-replace-149
+    accent-dwarf-words-150: accent-dwarf-words-replace-150
+    accent-dwarf-words-151: accent-dwarf-words-replace-151
+    accent-dwarf-words-152: accent-dwarf-words-replace-152
+    accent-dwarf-words-153: accent-dwarf-words-replace-153
+    accent-dwarf-words-154: accent-dwarf-words-replace-154
+    accent-dwarf-words-155: accent-dwarf-words-replace-155
+    accent-dwarf-words-156: accent-dwarf-words-replace-156
+    accent-dwarf-words-157: accent-dwarf-words-replace-157
+    accent-dwarf-words-158: accent-dwarf-words-replace-158
+    accent-dwarf-words-159: accent-dwarf-words-replace-159
+    accent-dwarf-words-160: accent-dwarf-words-replace-160
+    accent-dwarf-words-161: accent-dwarf-words-replace-161
+    accent-dwarf-words-162: accent-dwarf-words-replace-162
+    accent-dwarf-words-163: accent-dwarf-words-replace-163
+    accent-dwarf-words-164: accent-dwarf-words-replace-164
+    accent-dwarf-words-165: accent-dwarf-words-replace-165
+    accent-dwarf-words-166: accent-dwarf-words-replace-166
+    accent-dwarf-words-167: accent-dwarf-words-replace-167
+    accent-dwarf-words-168: accent-dwarf-words-replace-168
+    accent-dwarf-words-169: accent-dwarf-words-replace-169
+    accent-dwarf-words-170: accent-dwarf-words-replace-170
+    accent-dwarf-words-171: accent-dwarf-words-replace-171
+    accent-dwarf-words-172: accent-dwarf-words-replace-172
+    accent-dwarf-words-173: accent-dwarf-words-replace-173
+    accent-dwarf-words-174: accent-dwarf-words-replace-174
+    accent-dwarf-words-175: accent-dwarf-words-replace-175
+    accent-dwarf-words-176: accent-dwarf-words-replace-176
+    accent-dwarf-words-177: accent-dwarf-words-replace-177
+    accent-dwarf-words-178: accent-dwarf-words-replace-178
+    accent-dwarf-words-179: accent-dwarf-words-replace-179
+    accent-dwarf-words-180: accent-dwarf-words-replace-180
+    accent-dwarf-words-181: accent-dwarf-words-replace-181
+    accent-dwarf-words-182: accent-dwarf-words-replace-182
+    accent-dwarf-words-183: accent-dwarf-words-replace-183
+    accent-dwarf-words-184: accent-dwarf-words-replace-184
+    accent-dwarf-words-185: accent-dwarf-words-replace-185
+    accent-dwarf-words-186: accent-dwarf-words-replace-186
+    accent-dwarf-words-187: accent-dwarf-words-replace-187
+    accent-dwarf-words-188: accent-dwarf-words-replace-188
+    accent-dwarf-words-189: accent-dwarf-words-replace-189
+    accent-dwarf-words-190: accent-dwarf-words-replace-190
+    accent-dwarf-words-191: accent-dwarf-words-replace-191
+    accent-dwarf-words-192: accent-dwarf-words-replace-192
+    accent-dwarf-words-193: accent-dwarf-words-replace-193
+    accent-dwarf-words-194: accent-dwarf-words-replace-194
+    accent-dwarf-words-195: accent-dwarf-words-replace-195
+    accent-dwarf-words-196: accent-dwarf-words-replace-196
+    accent-dwarf-words-197: accent-dwarf-words-replace-197
+    accent-dwarf-words-198: accent-dwarf-words-replace-198
+    accent-dwarf-words-199: accent-dwarf-words-replace-199
+    accent-dwarf-words-200: accent-dwarf-words-replace-200
+    accent-dwarf-words-201: accent-dwarf-words-replace-201
+    accent-dwarf-words-202: accent-dwarf-words-replace-202
+    accent-dwarf-words-203: accent-dwarf-words-replace-203
+    accent-dwarf-words-204: accent-dwarf-words-replace-204
+    accent-dwarf-words-205: accent-dwarf-words-replace-205
+    accent-dwarf-words-206: accent-dwarf-words-replace-206
+    accent-dwarf-words-207: accent-dwarf-words-replace-207
+    accent-dwarf-words-208: accent-dwarf-words-replace-208
+    accent-dwarf-words-209: accent-dwarf-words-replace-209
+    accent-dwarf-words-210: accent-dwarf-words-replace-210
 
 - type: accent
   id: pirate
@@ -803,7 +866,7 @@
     accent-french-words-61: accent-french-words-replace-61
     accent-french-words-61-2: accent-french-words-replace-61
     accent-french-words-61-3: accent-french-words-replace-61
-    
+
 - type: accent
   id: basicrussian
   wordReplacements:
@@ -814,7 +877,7 @@
     accent-russian-words-3-3: accent-russian-words-replace-3
     accent-russian-words-4: accent-russian-words-replace-4
     accent-russian-words-5: accent-russian-words-replace-5
-    
+
 - type: accent
   id: basicfrench
   wordReplacements:
