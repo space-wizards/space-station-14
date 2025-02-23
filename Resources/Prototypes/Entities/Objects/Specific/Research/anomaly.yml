@@ -142,7 +142,6 @@
   - type: CorePoweredThrower
   - type: MeleeThrowOnHit
     unanchorOnHit: true
-    enabled: false
   - type: ItemSlots
     slots:
       core_slot:
