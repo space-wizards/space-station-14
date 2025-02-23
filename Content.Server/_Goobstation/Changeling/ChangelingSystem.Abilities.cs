@@ -66,6 +66,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionLastResortEvent>(OnLastResort);
         SubscribeLocalEvent<ChangelingComponent, ActionLesserFormEvent>(OnLesserForm);
         SubscribeLocalEvent<ChangelingComponent, ActionMindshieldFakeEvent>(OnMindshieldFake);
+        SubscribeLocalEvent<ChangelingComponent, ToggleTentacleEvent>(OnToggleTentacle); // imp edit
         SubscribeLocalEvent<ChangelingComponent, ActionSpacesuitEvent>(OnSpacesuit);
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
     }
@@ -336,6 +337,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(uid, comp);
     }
+    
     private void OnCreateBoneShard(EntityUid uid, ChangelingComponent comp, ref CreateBoneShardEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -738,7 +740,16 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("changeling-mindshield-start"), ent, ent);
     }
+    private void OnToggleTentacle(EntityUid uid, ChangelingComponent comp, ref ToggleTentacleEvent args) //imp edit
+    {
+        if (!TryUseAbility(uid, comp, args))
+            return;
 
+        if (!TryToggleItem(uid, TentaclePrototype, comp))
+            return;
+
+        PlayMeatySound(uid, comp);
+    }
     public void OnSpacesuit(EntityUid uid, ChangelingComponent comp, ref ActionSpacesuitEvent args)
     {
         if (!TryUseAbility(uid, comp, args))

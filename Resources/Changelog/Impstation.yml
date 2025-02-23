@@ -1,240 +1,4 @@
 ﻿Entries:
-- author: suyo
-  changes:
-  - message: Added Burning Men's Soul to the lobby
-    type: Add
-  - message: Adjusted the volume for some of the expedition tracks
-    type: Tweak
-  id: 665
-  time: '2024-12-05T23:50:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/919
-- author: widgetbeck
-  changes:
-  - message: ADDED DECAPOIDS, a new playable species that you should probably read
-      the guidebook entry for.
-    type: Add
-  id: 666
-  time: '2024-12-06T00:48:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/914
-- author: DinnerCalzone
-  changes:
-  - message: Reverted the service techfab to its original sprite present in the game
-      files.
-    type: Tweak
-  id: 667
-  time: '2024-12-06T01:43:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/920
-- author: Darkmajia
-  changes:
-  - message: Sofas and reinforced wood tables can now be built in the construction
-      menu.
-    type: Add
-  id: 668
-  time: '2024-12-06T02:26:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/916
-- author: kipdotnet
-  changes:
-  - message: Fixed a bunch of missing stuff in the playtest map "Banana"
-    type: Tweak
-  id: 669
-  time: '2024-12-06T10:17:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/922
-- author: DinnerCalzone
-  changes:
-  - message: Origin Station has been updated and added back to the map rotation.
-    type: Add
-  id: 670
-  time: '2024-12-06T10:18:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/923
-- author: DinnerCalzone
-  changes:
-  - message: (Atlas Station) Added support for brigmedic.
-    type: Add
-  - message: (Atlas Station) Fixed missing LV cables in robotics.
-    type: Fix
-  id: 671
-  time: '2024-12-06T10:19:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/924
-- author: AvianMaiden
-  changes:
-  - message: You can now throw the Mosin. Go ahead. Throw it. (LEGAL DO NOT READ)
-    type: Add
-  - message: Adjusted many firearm flavortexts! How flavorful! Still in-line with
-      originals, but much more love in them.
-    type: Fix
-  - message: Adjusted a few Security cargo buys for grammar and description.
-    type: Fix
-  - message: Spear now makes an impact noise when thrown. Whoosh!
-    type: Fix
-  id: 672
-  time: '2024-12-06T10:45:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/921
-- author: widgetbeck
-  changes:
-  - message: Decapoid claws now function as a crowbar and wirecutters, to alleviate
-      the downside of having one hand.
-    type: Add
-  - message: Increased the range of the Decapoid claw to match its sprite, and reduced
-      its wideswing radius.
-    type: Tweak
-  - message: New Decapoid footstep sounds.
-    type: Tweak
-  - message: Decapoid claws appearing to not have mouse1 attacks.
-    type: Fix
-  - message: Decapoids now spawn with an oxygen emergency survival box. Piskun NT.
-      At least it has water...
-    type: Fix
-  - message: Decapoids now have stomachs.
-    type: Fix
-  id: 673
-  time: '2024-12-06T12:03:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/925
-- author: starlighthowls
-  changes:
-  - message: cruise fixes
-    type: Fix
-  id: 674
-  time: '2024-12-06T23:02:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/927
-- author: Sha-Seng
-  changes:
-  - message: Stun Prod now requires makeshift cuffs instead of any cuffs so it won't
-      eat your security cuffs
-    type: Tweak
-  id: 675
-  time: '2024-12-06T23:03:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/908
-- author: widgetbeck
-  changes:
-  - message: Fixed Decapoids being able to pry powered doors.
-    type: Fix
-  id: 676
-  time: '2024-12-07T03:50:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/934
-- author: kipdotnet, Darkmajia
-  changes:
-  - message: Iterated on the playtest map "Banana" again.
-    type: Fix
-  id: 677
-  time: '2024-12-07T04:53:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/936
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Added two dorm rooms to the nitrogen lounge.
-    type: Add
-  - message: (Hummingbird) Added a laundromat (I think washing machines are just for
-      show at the moment).
-    type: Add
-  - message: (Hummingbird) Added a few more station beacons to the station map.
-    type: Add
-  - message: (Hummingbird) Added a service techfab to the service break room.
-    type: Add
-  - message: (Hummingbird) Added an airlock between the main hallway and service break
-      room.
-    type: Tweak
-  - message: (Hummingbird) Adjusted order of gas storage chambers in atmos.
-    type: Tweak
-  - message: (Hummingbird) Fixed missing cameras for the AI.
-    type: Fix
-  id: 678
-  time: '2024-12-07T09:10:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/940
-- author: DinnerCalzone
-  changes:
-  - message: (Origin) Added biogenerators to botany and perma.
-    type: Add
-  id: 679
-  time: '2024-12-07T17:07:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/941
-- author: honeyed-lemons
-  changes:
-  - message: Added more chem possibilities to strange pills and space shrooms, for
-      clowns to eat
-    type: Tweak
-  id: 680
-  time: '2024-12-07T17:08:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/939
-- author: kipdotnet
-  changes:
-  - message: Banana.
-    type: Fix
-  id: 681
-  time: '2024-12-07T17:06:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/945
-- author: ATDoop
-  changes:
-  - message: 'Added a new trinket: a walking cane!'
-    type: Add
-  id: 682
-  time: '2024-12-07T17:06:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/946
-- author: Darkmajia
-  changes:
-  - message: Decapoid claws can now etch transmutation runes into the ground. Be careful
-      not to pry tiles as you do.
-    type: Add
-  - message: Crayons can now sketch transmutation runes on the floor. Clowns and mimes
-      are now a little more evil.
-    type: Add
-  id: 683
-  time: '2024-12-07T17:11:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/935
-- author: TheGrimbeeper
-  changes:
-  - message: Changed hint for a beverage artifact trigger to be clearer.
-    type: Tweak
-  id: 684
-  time: '2024-12-07T23:06:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/926
-- author: starlighthowls
-  changes:
-  - message: NTAS white whale added to map rotation!
-    type: Add
-  id: 685
-  time: '2024-12-07T23:06:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/942
-- author: formlessnameless
-  changes:
-  - message: Space debris is no longer a barren wasteland
-    type: Fix
-  id: 686
-  time: '2024-12-07T23:11:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/949
-- author: formlessnameless
-  changes:
-  - message: Monkeys can scream properly again. Also other emotions.
-    type: Fix
-  id: 687
-  time: '2024-12-08T02:46:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/933
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Fixed missing LV cables in nitrogen lounge.
-    type: Fix
-  id: 688
-  time: '2024-12-08T02:47:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/952
-- author: Darkmajia
-  changes:
-  - message: Removed some chemicals from the maintenance pill and spaceshroom pool.
-    type: Remove
-  id: 689
-  time: '2024-12-08T15:04:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/958
-- author: kipdotnet
-  changes:
-  - message: Banana.
-    type: Fix
-  id: 690
-  time: '2024-12-08T15:12:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/950
-- author: Sha-Seng
-  changes:
-  - message: Gathered Low hairstyle has more body from the side now
-    type: Tweak
-  id: 691
-  time: '2024-12-08T15:11:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/951
 - author: EpicToast
   changes:
   - message: (Union Station) Added a shipyard console to the QM's office.
@@ -4156,3 +3920,214 @@
   id: 1164
   time: '2025-02-18T17:41:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1733
+- author: hivehum
+  changes:
+  - message: Supply Assistant and Administrative Assistant now have automatic text
+      highlighting options.
+    type: Add
+  id: 1165
+  time: '2025-02-20T02:38:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1736
+- author: Sha-Seng
+  changes:
+  - message: Sec bomber is now the correct size and lacks pockets
+    type: Fix
+  id: 1166
+  time: '2025-02-20T02:41:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1738
+- author: Sha-Seng
+  changes:
+  - message: Engineer bomber jacket has a new wrench from Landshark
+    type: Tweak
+  id: 1167
+  time: '2025-02-20T02:43:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1729
+- author: Toby222
+  changes:
+  - message: Envelopes go in mail bags
+    type: Add
+  id: 1168
+  time: '2025-02-20T02:48:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1742
+- author: DinnerCalzone
+  changes:
+  - message: Mail support has been added to Plasma for real this time I promise.
+    type: Add
+  id: 1169
+  time: '2025-02-20T02:50:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1750
+- author: mqole
+  changes:
+  - message: Supply Assistants will now properly spawn in Cargo.
+    type: Fix
+  id: 1170
+  time: '2025-02-20T03:01:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1752
+- author: Pinkbat5
+  changes:
+  - message: Suspicious beacons are no longer contraband.
+    type: Tweak
+  id: 1171
+  time: '2025-02-20T03:06:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1731
+- author: hivehum
+  changes:
+  - message: Removed 64 songs from the jukebox, lobby music and nuke music selections.
+    type: Remove
+  id: 1172
+  time: '2025-02-20T03:08:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1744
+- author: bigsantino1
+  changes:
+  - message: .22 auto ammo boxes, SMG magazines, and WT magazines to the ammo techfab.
+    type: Add
+  id: 1173
+  time: '2025-02-20T03:14:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1746
+- author: honeyed-lemons
+  changes:
+  - message: Adjust nanochat textures to have more contrast
+    type: Tweak
+  id: 1174
+  time: '2025-02-21T02:15:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1754
+- author: TheGrimbeeper
+  changes:
+  - message: artifacts now listen for all types of @ emotes instead of only the special
+      ones on the quick wheel
+    type: Tweak
+  id: 1175
+  time: '2025-02-21T02:50:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1704
+- author: hivehum, devin
+  changes:
+  - message: Added nine new CRAZY HAMBURGERS!!!
+    type: Add
+  id: 1176
+  time: '2025-02-21T03:25:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1737
+- author: ATDoop
+  changes:
+  - message: Added 8 new plushies! Find them in a plushie crate today!!
+    type: Add
+  - message: Added 2 new trinkets, sentimental dolls!
+    type: Add
+  - message: You can now wear the bug plush on your head.
+    type: Tweak
+  id: 1177
+  time: '2025-02-21T03:39:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1747
+- author: MintyTheBinty
+  changes:
+  - message: Added two new business casual outfits with randomized colored clothes,
+      available in ClothesMates near you!
+    type: Add
+  id: 1178
+  time: '2025-02-21T03:50:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1751
+- author: hivehum
+  changes:
+  - message: Added an echolalia trait. Stop repeating yourself. Stop repeating yourself.
+      Stop repeating yourself.
+    type: Add
+  id: 1179
+  time: '2025-02-21T04:09:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1757
+- author: AvianMaiden
+  changes:
+  - message: Unique C-20R empty magazine beeps
+    type: Add
+  id: 1180
+  time: '2025-02-21T04:22:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1758
+- author: theqwat
+  changes:
+  - message: 'Changeling tentacle: a new utility arm for changelings... get your "friends"
+      from across the bar! (remember to eat before stretching your limbs)'
+    type: Add
+  id: 1181
+  time: '2025-02-21T05:13:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1723
+- author: Sha-Seng
+  changes:
+  - message: Glowing eyes markings for thaven in the Head category
+    type: Add
+  - message: +1 Head (Top) marking slot so you can have two piercings and eyeliner
+    type: Tweak
+  id: 1182
+  time: '2025-02-21T05:17:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1740
+- author: Sha-Seng
+  changes:
+  - message: Thavens can now select masculine/feminine voices by changing the 'sex'
+      selection, or unisex to keep the current voices
+    type: Add
+  id: 1183
+  time: '2025-02-21T05:18:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1760
+- author: AvianMaiden
+  changes:
+  - message: Stun Kammerers should now match their lethal counterparts in terms of
+      fire rate and shells
+    type: Tweak
+  - message: Descriptions on shotguns should now match their qualities a bit better
+    type: Tweak
+  id: 1184
+  time: '2025-02-23T01:48:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1756
+- author: honeyed-lemons
+  changes:
+  - message: Both Xeno and Box have received multiple small tweaks :D
+    type: Tweak
+  id: 1185
+  time: '2025-02-23T01:49:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1765
+- author: mqole
+  changes:
+  - message: Tha dorf accent be nou e'en maer dorf-ier.
+    type: Tweak
+  id: 1186
+  time: '2025-02-23T01:48:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1759
+- author: honeyed-lemons
+  changes:
+  - message: Incredibly minor Cowboy accent tweaks
+    type: Tweak
+  id: 1187
+  time: '2025-02-23T01:48:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1766
+- author: hivehum
+  changes:
+  - message: The Clown Costume Duffel Bag no longer contains a headset and PDA.
+    type: Remove
+  id: 1188
+  time: '2025-02-23T01:47:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1769
+- author: AvianMaiden
+  changes:
+  - message: Many new sounds for weapon racking that used the default! Enjoy shotgun
+      pump kerchunks and SMGs actually having a charging handle!
+    type: Add
+  id: 1189
+  time: '2025-02-23T01:54:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1761
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Chaplains have been given a huge new selection of outfits to better suit
+      their religious beliefs.
+    type: Add
+  - message: Drones are now Mensch.
+    type: Tweak
+  - message: The Head of Security may now select the security clown mask. As they
+      deserve.
+    type: Tweak
+  id: 1190
+  time: '2025-02-23T02:13:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1768
+- author: rainyatrium
+  changes:
+  - message: dragon beard, flat head, and tall snout markings for reptilians
+    type: Add
+  id: 1191
+  time: '2025-02-23T02:22:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1770

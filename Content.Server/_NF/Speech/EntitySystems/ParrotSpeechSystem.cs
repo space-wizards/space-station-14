@@ -31,9 +31,9 @@ public sealed class ParrotSpeechSystem : EntitySystem
             if (component.LearnedPhrases.Count == 0)
                 // This parrot has not learned any phrases, so can't say anything interesting.
                 continue;
-            if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
-                // Pause parrot speech when someone is controlling the parrot.
-                continue;
+            // if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+                // Imp edit - need to skip this check for echolalia trait
+                // continue;
             if (_timing.CurTime < component.NextUtterance)
                 continue;
 

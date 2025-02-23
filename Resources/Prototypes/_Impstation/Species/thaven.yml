@@ -44,7 +44,7 @@
       points: 1
       required: false
     HeadTop:
-      points: 2
+      points: 3
       required: false
     HeadSide:
       points: 1

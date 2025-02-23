@@ -58,3 +58,6 @@ trait-propercapitalization-desc = You speak with proper capitalization, somehow.
 
 trait-properpunctuation-name = Proper punctuation
 trait-properpunctuation-desc = Your sentences end with periods or other punctuation, always.
+
+trait-echolalia-name = Echolalia
+trait-echolalia-desc = You can't help yourself from repeating phrases you've heard.
