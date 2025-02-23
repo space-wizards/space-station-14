@@ -1,7 +1,7 @@
 - type: entity
   id: BaseMagazineShotgun
   name: ammo drum (.50 shells)
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
