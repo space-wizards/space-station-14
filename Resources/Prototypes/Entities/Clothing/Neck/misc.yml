@@ -53,6 +53,8 @@
     sprite: Clothing/Neck/Misc/bling.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Item
+    sprite: Clothing/Neck/Misc/bling.rsi
 
 - type: entity
   parent: ClothingNeckBase
