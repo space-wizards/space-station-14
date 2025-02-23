@@ -101,7 +101,7 @@ thaven-mood-item-good-name = Collector
 thaven-mood-item-good-desc = {$item} are endlessly fascinating to you. You must collect as many as you can, and ensure others treat them with appropriate respect.
 
 thaven-mood-smoker-name = Smoker
-thaven-mood-smoker-desc = You are hopelessly addicted to cigarettes. If you're not actively smoking, you experience withdrawal symptoms.
+thaven-mood-smoker-desc = You are hopelessly addicted to nicotine. If you're not actively smoking, you experience withdrawal symptoms.
 
 thaven-mood-eye-for-eye-name = Eye For An Eye
 thaven-mood-eye-for-eye-desc = Retribution should be proportional.

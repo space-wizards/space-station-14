@@ -27,7 +27,6 @@
     - Bookkeeper
     - SacredBlood
     - GiftReciever
-    - NewJob
     - DepartmentTitle
     - Barefoot
     - Hospitable
@@ -41,6 +40,7 @@
     - YesMan
     - Centrist
     - SpeechRestriction
+    #- NewJob (Disabled because changing jobs doesn't open the slot on the manifest)
 
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs.
 - type: thavenMood
