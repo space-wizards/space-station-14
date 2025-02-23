@@ -31,7 +31,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
-        private readonly SoundSpecifier _vomitSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg",
+        private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier("Vomit",
             AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
         /// <summary>
