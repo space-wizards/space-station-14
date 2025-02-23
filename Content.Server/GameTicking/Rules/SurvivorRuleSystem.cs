@@ -38,19 +38,15 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
-        var allHumans = _mind.GetAliveHumans();
+        var allAliveHumanMinds = _mind.GetAliveHumans();
 
-        foreach (var human in allHumans)
+        foreach (var humanMind in allAliveHumanMinds)
         {
-            if (!human.Comp.OwnedEntity.HasValue)
+            if (!humanMind.Comp.OwnedEntity.HasValue)
                 continue;
 
-            var ent = human.Comp.OwnedEntity.Value;
-
-            // Alive Humans does get the mindcomp, however this has better logic to get the mindId
-            // No need to repeat the same code
-            if (!_mind.TryGetMind(ent, out var mind, out _) || HasComp<SurvivorComponent>(ent))
-                continue;
+            var mind = humanMind.Owner;
+            var ent = humanMind.Comp.OwnedEntity.Value;
 
             if (_tag.HasTag(mind, "InvalidForSurvivorAntag"))
                 continue;
