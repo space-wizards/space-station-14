@@ -7,8 +7,8 @@
   boilingPoint: 298.75
   meltingPoint: 259.86
   metabolisms:
-    metabolismRate: 0.15
     Poison:
+      metabolismRate: 0.15
       effects:
       - !type:HealthChange
         damage:
@@ -56,8 +56,8 @@
   boilingPoint: 334.30
   meltingPoint: 209.65
   metabolisms:
-    metabolismRate: 0.4
     Poison:
+      metabolismRate: 0.4
       effects:
       - !type:HealthChange
         conditions:
@@ -109,8 +109,8 @@
   - !type:PlantAdjustPotency
     amount: 2
   metabolisms:
-    metabolismRate: 0.4
     Medicine:
+      metabolismRate: 0.4
       effects:
       - !type:HealthChange
         damage:
