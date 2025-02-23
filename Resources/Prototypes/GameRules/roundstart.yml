@@ -258,6 +258,7 @@
     - prefRoles: [ Wizard ]
       max: 1
       playerRatio: 1
+      spawnerPrototype: SpawnPointWizard
       briefing:
         text: wizard-role-greeting
         color: Turquoise
@@ -266,8 +267,10 @@
       startingGear: WizardBlueGear
       # TODO: WizardComp as needed
       # TODO: Renamecomp
-      #components:
-      #- type:
+      components:
+      - type: NpcFactionMember
+        factions:
+        - Wizard
       mindRoles:
       - MindRoleWizard
 
