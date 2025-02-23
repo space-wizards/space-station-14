@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: CHIMP and APE particles should be almost as fast as before
-    type: Tweak
-  id: 7495
-  time: '2024-10-08T18:29:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32690
 - author: ss14nekow
   changes:
   - message: Added pumpkin pie! Can be made in the microwave with 1 pie tin, 1 pie
@@ -3902,3 +3895,10 @@
   id: 7994
   time: '2025-02-23T13:01:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35354
+- author: sowelipililimute
+  changes:
+  - message: Added microwave cooking recipes to the guidebook
+    type: Add
+  id: 7995
+  time: '2025-02-23T15:24:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34105
