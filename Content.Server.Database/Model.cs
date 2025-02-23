@@ -65,6 +65,10 @@ namespace Content.Server.Database
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
                 .IsUnique();
 
+            modelBuilder.Entity<DbAiData>()
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.Name, p.Screen, p.Lawset })
+                .IsUnique();
+
             modelBuilder.Entity<ProfileRoleLoadout>()
                 .HasOne(e => e.Profile)
                 .WithMany(e => e.Loadouts)
@@ -413,6 +417,7 @@ namespace Content.Server.Database
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
+        public DbAiData AiData { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
@@ -539,6 +544,15 @@ namespace Content.Server.Database
          */
     }
 
+    public class DbAiData
+    {
+        public int Id { get; set; }
+        public int ProfileId { get; set; }
+        public Profile Profile { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
+        public string Screen { get; set; } = string.Empty;
+        public string Lawset { get; set; } = string.Empty;
+    }
     #endregion
 
     public enum DbPreferenceUnavailableMode

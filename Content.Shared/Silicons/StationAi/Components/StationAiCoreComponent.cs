@@ -38,5 +38,7 @@ public sealed partial class StationAiCoreComponent : Component
     [DataField(readOnly: true)]
     public EntProtoId? PhysicalEntityProto = "StationAiHoloLocal";
 
+    [DataField]
+    public ProtoId<StationAIScreenPrototype> Screen = "Default";
     public const string Container = "station_ai_mind_slot";
 }
