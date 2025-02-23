@@ -240,7 +240,7 @@
 
 - type: entity
   parent: BaseGameRule
-  id: WizardGameRule
+  id: Wizard
   components:
   - type: WizardRule
   - type: GameRule
