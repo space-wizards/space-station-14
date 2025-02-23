@@ -1219,6 +1219,144 @@
       amount: 1
   products:
     Cola: 4
+    
+- type: reaction
+  id: Caipirinha
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Rum:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Sugar:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    Caipirinha: 4
+
+- type: reaction
+  id: Daiquiri
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Rum:
+      amount: 4
+    Sugar:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    Daiquiri: 6
+
+- type: reaction
+  id: DeathInTheAfternoon
+  reactants:
+    Absinthe:
+      amount: 2
+    Champagne:
+      amount: 1
+  products:
+    DeathInTheAfternoon: 3
+
+- type: reaction
+  id: Empress75
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Champagne:
+      amount: 2
+    Gin:
+      amount: 2
+    JuiceLime:
+      amount: 1
+    Grenadine:
+      amount: 1
+  products:
+    Empress75: 6
+
+- type: reaction
+  id: EspressoMartini
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    BlackRussian:
+      amount: 1
+    Coffee:
+      amount: 1
+  products:
+    EspressoMartini: 2
+
+- type: reaction
+  id: Mayojito
+  reactants:
+    Mojito:
+      amount: 1
+    Mayo:
+      amount: 1
+  products:
+    Mayojito: 2
+
+- type: reaction
+  id: Mimeosa
+  reactants:
+    Mimosa:
+      amount: 2
+    Nothing:
+      amount: 1
+  products:
+    Mimeosa: 3
+
+- type: reaction
+  id: Mimosa
+  reactants:
+    JuiceOrange:
+      amount: 2
+    Champagne:
+      amount: 1
+  products:
+    Mimosa: 3
+
+- type: reaction
+  id: MoscowMule
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Vodka:
+      amount: 4
+    JuiceLime:
+      amount: 1
+    SolDry:
+      amount: 1
+  products:
+    MoscowMule: 6
+
+- type: reaction
+  id: TheSunAlsoRises
+  reactants:
+    Absinthe:
+      amount: 1
+    Daiquiri:
+      amount: 5
+  products:
+    TheSunAlsoRises: 6
+
+- type: reaction
+  id: WhiskeySour
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Whiskey:
+      amount: 2
+    Sugar:
+      amount: 1
+    JuiceLemon:
+      amount: 2
+    Egg:
+      amount: 1
+  products:
+    WhiskeySour: 6
 
 - type: reaction
   id: ZombieCocktail
