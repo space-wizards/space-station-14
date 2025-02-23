@@ -237,9 +237,10 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.HasIndex<JobPrototype>(role) && !_prototypeManager.HasIndex<AntagPrototype>(role))
+        if (!_prototypeManager.HasIndex<JobPrototype>(role))
         {
-            throw new ArgumentException($"Invalid role '{role}'", nameof(role));
+            _chat.SendAdminAlert(Loc.GetString("cmd-roleban-unknown-role", ("role", role)));
+            return;
         }
 
         role = string.Concat(JobPrefix, role);

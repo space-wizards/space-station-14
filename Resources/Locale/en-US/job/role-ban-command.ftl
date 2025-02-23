@@ -44,6 +44,7 @@ cmd-roleban-job-parse = Job {$job} does not exist.
 cmd-roleban-name-parse = Unable to find a player with that name.
 cmd-roleban-existing = {$target} already has a role ban for {$role}.
 cmd-roleban-success = Role banned {$target} from {$role} with reason {$reason} {$length}.
+cmd-roleban-unknown-role = Role {$role} does not exist.
 
 cmd-roleban-inf = permanently
 cmd-roleban-until =  until {$expires}
