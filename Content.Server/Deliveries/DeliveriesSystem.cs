@@ -7,7 +7,10 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.Biocoded;
 using Content.Shared.Deliveries;
 using Content.Shared.Ghost;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.StationRecords;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Deliveries;
@@ -21,12 +24,30 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
+    }
+
+
+    private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
+    {
+        _audio.PlayEntity(ent.Comp.OpenSound, args.User, args.User);
+
+        if (ent.Comp.Wrapper != null)
+            Spawn(ent.Comp.Wrapper, Transform(args.User).Coordinates);
+
+        GrantSpesoReward(ent);
+        _popup.PopupEntity(Loc.GetString("delivery-success"), args.User, args.User);
+        Dirty(ent);
+
+        args.Handled = true;
     }
 
     private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
@@ -48,16 +69,16 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
         ent.Comp.RecipientJob = entry.JobTitle;
         ent.Comp.RecipientStation = stationId.Value;
 
-        Dirty(ent);
-
         if (TryComp<BiocodedComponent>(ent, out var biocoded))
         {
             biocoded.Fingerprint = entry.Fingerprint;
             Dirty(ent, biocoded);
         }
+
+        Dirty(ent);
     }
 
-    protected override void GrantSpesoReward(EntityUid uid, DeliveryComponent? comp = null)
+    private void GrantSpesoReward(EntityUid uid, DeliveryComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;

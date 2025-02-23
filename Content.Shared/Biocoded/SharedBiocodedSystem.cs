@@ -23,6 +23,9 @@ public sealed class SharedBiocodedSystem : EntitySystem
 
     private void OnGettingUsed(Entity<BiocodedComponent> ent, ref GettingUsedAttemptEvent args)
     {
+        if (ent.Comp.Fingerprint == null)
+            return;
+
         if (_inventory.TryGetSlotEntity(args.User, "gloves", out var gloves) && HasComp<FingerprintMaskComponent>(gloves) && !ent.Comp.IgnoreGloves)
         {
             if (ent.Comp.FailGlovesPopup != null)

@@ -1,9 +1,14 @@
 - type: entity
   name: package
   parent: BaseItem
+  abstract: true
   id: BaseDelivery
   components:
   - type: Biocoded
+    failPopup: delivery-fail-fingerprint
+    failGlovesPopup: delivery-fail-gloves
+  - type: Delivery
+    openSound: /Audio/Effects/unwrap.ogg
 
 - type: entity
   name: package
@@ -15,6 +20,7 @@
     state: box
   - type: Delivery
     spesoReward: 1000
+    wrapper: MaterialCardboard1
   - type: SpawnTableOnUse
     table: !type:NestedSelector
       tableId: RandomTechBoardTable
@@ -29,6 +35,7 @@
     state: envelope_closed
   - type: Delivery
     spesoReward: 500
+    wrapper: PaperScrap
   - type: SpawnTableOnUse
     table: !type:NestedSelector
       tableId: RandomTechBoardTable

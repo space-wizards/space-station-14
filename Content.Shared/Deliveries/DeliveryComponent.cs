@@ -12,9 +12,6 @@ namespace Content.Shared.Deliveries;
 public sealed partial class DeliveryComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public bool Delivered;
-
-    [DataField, AutoNetworkedField]
     public int SpesoReward = 500;
 
     [DataField, AutoNetworkedField]
@@ -30,5 +27,5 @@ public sealed partial class DeliveryComponent : Component
     public SoundSpecifier? OpenSound;
 
     [DataField]
-    public string Wrapper = "PresentTrash";
+    public EntProtoId? Wrapper = "PresentTrash";
 }
