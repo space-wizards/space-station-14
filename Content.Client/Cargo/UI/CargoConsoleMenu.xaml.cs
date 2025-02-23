@@ -23,9 +23,11 @@ namespace Content.Client.Cargo.UI
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
         public event Action<ButtonEventArgs>? OnOrderCanceled;
+        public event Action<ButtonEventArgs>? OnOrderRestricted;
 
         private readonly List<string> _categoryStrings = new();
         private string? _category;
+        private List<CargoRestrictedData> _restrictedData = new();
 
         public CargoConsoleMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoManager, SpriteSystem spriteSystem)
         {
@@ -85,6 +87,8 @@ namespace Content.Client.Cargo.UI
                 string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
 
             var search = SearchBar.Text.Trim().ToLowerInvariant();
+
+            var restrictedIds = GetRestrictedIds();
             foreach (var prototype in products)
             {
                 // if no search or category
@@ -95,6 +99,7 @@ namespace Content.Client.Cargo.UI
                     search.Length != 0 && prototype.Description.ToLowerInvariant().Contains(search) ||
                     search.Length == 0 && _category != null && Loc.GetString(prototype.Category).Equals(_category))
                 {
+
                     var button = new CargoProductRow
                     {
                         Product = prototype,
@@ -102,10 +107,15 @@ namespace Content.Client.Cargo.UI
                         MainButton = { ToolTip = prototype.Description },
                         PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.Cost.ToString())) },
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
+                        Restricted = { Pressed = restrictedIds.Contains(prototype.ID) },
                     };
                     button.MainButton.OnPressed += args =>
                     {
                         OnItemSelected?.Invoke(args);
+                    };
+                    button.Restricted.OnPressed += args =>
+                    {
+                        OnOrderRestricted?.Invoke(args);
                     };
                     Products.AddChild(button);
                 }
@@ -193,6 +203,21 @@ namespace Content.Client.Cargo.UI
         {
             AccountNameLabel.Text = name;
             PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", points.ToString()));
+        }
+
+        public void UpdateRestrictedData(IEnumerable<CargoRestrictedData> restrictedData)
+        {
+            _restrictedData = restrictedData.ToList();
+        }
+
+        public List<string> GetRestrictedIds()
+        {
+            List<string> restrictedIds = new();
+            foreach (var restrictedData in _restrictedData)
+            {
+                restrictedIds.Add(restrictedData.ProductId);
+            }
+            return restrictedIds;
         }
     }
 }
