@@ -1,5 +1,6 @@
 using Content.Shared.Item;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -7,6 +8,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Storage
 {
@@ -140,6 +142,12 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField]
         public bool HideStackVisualsWhenClosed = true;
+
+        /// <summary>
+        /// Entities with this tag won't trigger storage sound.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
+        public string SilentStorageUserTag = "SilentStorageUser";
 
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
