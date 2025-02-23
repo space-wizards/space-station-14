@@ -354,6 +354,10 @@ public abstract partial class SharedGunSystem : EntitySystem
                 {
                     PopupSystem.PopupCursor(ev.Reason);
                 }
+                else
+                {
+                    PopupSystem.PopupCursor(Loc.GetString("gun-magazine-fired-empty"));
+                }
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
