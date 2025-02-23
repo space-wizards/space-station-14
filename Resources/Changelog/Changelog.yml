@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Minibomb is now explosion resistant and will start counting down if damaged
-      by a C4
-    type: Tweak
-  id: 7492
-  time: '2024-10-07T22:42:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32429
 - author: shampunj
   changes:
   - message: When curtains are destroyed, only 1 cloth drops out
@@ -3899,3 +3891,10 @@
   id: 7991
   time: '2025-02-23T02:01:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35413
+- author: K-Dynamic
+  changes:
+  - message: Lattice tiles footsteps now sound like catwalks.
+    type: Tweak
+  id: 7992
+  time: '2025-02-23T11:43:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35421
