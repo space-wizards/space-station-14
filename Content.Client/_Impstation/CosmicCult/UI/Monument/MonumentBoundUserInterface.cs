@@ -6,7 +6,6 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._Impstation.CosmicCult.UI.Monument;
-// Content.Client/_Impstation/CosmicCult/UI/Monument/MonumentBoundUserInterface.cs
 [UsedImplicitly]
 public sealed class MonumentBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {

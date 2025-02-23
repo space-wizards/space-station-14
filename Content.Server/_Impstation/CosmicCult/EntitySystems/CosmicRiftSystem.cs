@@ -100,8 +100,8 @@ public sealed class CosmicRiftSystem : EntitySystem
         Spawn(uid.Comp.AbsorbVFX, tgtpos);
         uid.Comp.CosmicEmpowered = true;
         uid.Comp.CosmicSiphonQuantity = 3;
-        AddComp<PressureImmunityComponent>(args.User);
-        AddComp<TemperatureImmunityComponent>(args.User);
+        EnsureComp<PressureImmunityComponent>(args.User);
+        EnsureComp<TemperatureImmunityComponent>(args.User);
         RemComp<RespiratorComponent>(args.User);
         _popup.PopupEntity(Loc.GetString("cosmiccult-rift-absorb"), uid, uid);
         QueueDel(target);

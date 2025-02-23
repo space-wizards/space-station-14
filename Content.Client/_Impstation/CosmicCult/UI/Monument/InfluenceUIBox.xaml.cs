@@ -49,5 +49,7 @@ public sealed partial class InfluenceUIBox : BoxContainer
         Type.Text = Loc.GetString(influenceProto.InfluenceType);
         Cost.Text = influenceProto.Cost.ToString();
         Description.SetMarkup(Loc.GetString(influenceProto.Description));
+
+        GainButton.OnPressed += _ => OnGainButtonPressed?.Invoke();
     }
 }

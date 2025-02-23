@@ -144,5 +144,4 @@ public sealed partial class MonumentMenu : FancyWindow
                 InfluencesContainer.AddChild(influenceBox);
         }
     }
-    // This might not be the best way of doing it, but It makes sense...
 }
