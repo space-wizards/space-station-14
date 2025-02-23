@@ -141,7 +141,6 @@
         - BorgModuleMedical
     hasMindState: corgitag
     noMindState: corgitag
-    toggleLightState: corgitag
   - type: LockingWhitelist
     blacklist:
       components:
