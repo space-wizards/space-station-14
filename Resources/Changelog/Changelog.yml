@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ss14nekow
-  changes:
-  - message: Added pumpkin pie! Can be made in the microwave with 1 pie tin, 1 pie
-      dough, and 1 pumpkin.
-    type: Add
-  id: 7496
-  time: '2024-10-08T23:29:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32623
 - author: Beck Thompson
   changes:
   - message: The radio jammers price has been decreased from 4 -> 3 TC.
@@ -3902,3 +3894,11 @@
   id: 7995
   time: '2025-02-23T15:24:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34105
+- author: Errant
+  changes:
+  - message: The game version can now be displayed as an optional watermark on the
+      hud. Servers can force this watermark to be displayed.
+    type: Add
+  id: 7996
+  time: '2025-02-23T19:01:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35284
