@@ -33,6 +33,9 @@ survivor-round-end-alive-on-shuttle-count =
 
 ## Wizard
 
+wizard-title = Wizard
+wizard-description = There's a Wizard on the station! You never know what they might do.
+
 roles-antag-wizard-name = Wizard
 roles-antag-wizard-objective = Teach them a lesson they'll never forget.
 
