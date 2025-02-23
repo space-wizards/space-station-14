@@ -26,7 +26,7 @@ public abstract class SharedRoofSystem : EntitySystem
         if (roof.Data.TryGetValue(chunkOrigin, out var bitMask))
         {
             var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
-            var bitFlag = 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+            var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
 
             var isRoof = (bitMask & bitFlag) == bitFlag;
 
@@ -69,7 +69,7 @@ public abstract class SharedRoofSystem : EntitySystem
         }
 
         var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
-        var bitFlag = 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+        var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
 
         if (value)
         {
