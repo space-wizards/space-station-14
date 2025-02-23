@@ -355,7 +355,7 @@ namespace Content.Server.Atmos.EntitySystems
                         continue;
 
                     DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
-                    if (otherTile2.Air != null && CompareExchange(otherTile2.Air, tile.Air) == GasCompareResult.NoExchange)
+                    if (otherTile2.Air != null && CompareExchange(otherTile2, tile) == GasCompareResult.NoExchange)
                         continue;
 
                     AddActiveTile(gridAtmosphere, otherTile2);
@@ -689,7 +689,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var chance = MathHelper.Clamp(0.01f + (sum / SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
 
-            if (sum > 20 && _robustRandom.Prob(chance))
+            if (sum > 20 && _random.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);
         }
 

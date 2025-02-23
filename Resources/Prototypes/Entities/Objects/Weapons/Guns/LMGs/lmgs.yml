@@ -8,11 +8,14 @@
   - type: Sprite
   - type: Item
     size: Huge
+    shape:
+    - 0,0,4,3
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
     slots:
     - Back
+    - suitStorage
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus

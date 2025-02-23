@@ -1,39 +1,39 @@
+# Base prototypes
+
 - type: latheRecipe
-  id: MiniHoe
-  result: HydroponicsToolMiniHoe
-  completetime: 2
+  abstract: true
+  parent: BaseToolRecipe
+  id: BaseHydroToolRecipe
   materials:
     Steel: 200
     Plastic: 100
 
+# Recipes
+
 - type: latheRecipe
+  parent: BaseHydroToolRecipe
+  id: HydroponicsToolMiniHoe
+  result: HydroponicsToolMiniHoe
+
+- type: latheRecipe
+  parent: BaseHydroToolRecipe
   id: HydroponicsToolScythe
   result: HydroponicsToolScythe
-  completetime: 2
   materials:
     Steel: 300
     Plastic: 200
 
 - type: latheRecipe
+  parent: BaseHydroToolRecipe
   id: HydroponicsToolHatchet
   result: HydroponicsToolHatchet
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 100
 
 - type: latheRecipe
-  id: Spade
+  parent: BaseHydroToolRecipe
+  id: HydroponicsToolSpade
   result: HydroponicsToolSpade
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 100
-    
+
 - type: latheRecipe
-  id: Clippers
+  parent: BaseHydroToolRecipe
+  id: HydroponicsToolClippers
   result: HydroponicsToolClippers
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 100

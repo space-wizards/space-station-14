@@ -291,12 +291,13 @@ public partial class SeedData
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
             SplatPrototype = SplatPrototype,
-            Mutations = Mutations,
+            Mutations = new List<RandomPlantMutation>(),
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,
         };
 
+        newSeed.Mutations.AddRange(Mutations);
         return newSeed;
     }
 
