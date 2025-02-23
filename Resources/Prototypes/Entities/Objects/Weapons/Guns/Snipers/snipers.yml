@@ -31,6 +31,8 @@
     whitelist:
       tags:
       - CartridgeRifle
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg #imp
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
