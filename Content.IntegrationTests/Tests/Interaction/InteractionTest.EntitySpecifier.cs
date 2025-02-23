@@ -93,7 +93,8 @@ public abstract partial class InteractionTest
             await Server.WaitPost(() =>
             {
                 uid = SEntMan.SpawnEntity(stackProto.Spawn, coords);
-                Stack.SetCount(uid, spec.Quantity);
+                if (SEntMan.TryGetComponent<StackComponent>(uid, out var stack))
+                    Stack.SetCount((uid, stack), spec.Quantity);
             });
             return uid;
         }
