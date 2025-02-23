@@ -298,7 +298,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
                 else
                 {
-                    OpenStorageUI(uid, args.User, component, silent: false);
+                    OpenStorageUI(uid, args.User, component, false);
                 }
             }
         };
