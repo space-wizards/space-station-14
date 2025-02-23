@@ -239,18 +239,30 @@
   - type: SecretRule
 
 - type: entity
+  abstract: true
   parent: BaseGameRule
+  id: BaseWizardRule
+  components:
+  - type: WizardRule
+  - type: RuleGrids
+  - type: AntagSelection
+  - type: AntagLoadProfileRule
+    speciesOverride: Human
+    speciesOverrideBlacklist:
+    #Species that do not work with nukies should be included in this list.
+    #Once the issues are fixed the species should be removed from this list to be enabled.
+    #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
+    #- Vox
+
+- type: entity
+  parent: BaseWizardRule
   id: Wizard
   components:
   - type: WizardRule
   - type: GameRule
-    minPlayers: 10
+    minPlayers: 20
   - type: LoadMapRule
     mapPath: /Maps/Shuttles/wizard.yml
-  - type: RandomMetadata
-    nameSegments:
-    - names_wizard_first
-    - names_wizard_last
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
@@ -258,7 +270,9 @@
     - prefRoles: [ Wizard ]
       max: 1
       playerRatio: 1
-      spawnerPrototype: SpawnPointWizard
+      spawnerPrototype: SpawnPointGhostWizard
+      roleLoadout:
+       - RoleSurvivalExtended
       briefing:
         text: wizard-role-greeting
         color: Turquoise
@@ -266,11 +280,14 @@
         #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
       startingGear: WizardBlueGear
       # TODO: WizardComp as needed
-      # TODO: Renamecomp
       components:
       - type: NpcFactionMember
         factions:
         - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - names_wizard_first
+        - names_wizard_last
       mindRoles:
       - MindRoleWizard
 
