@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Changed hint for a beverage artifact trigger to be clearer.
-    type: Tweak
-  id: 684
-  time: '2024-12-07T23:06:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/926
-- author: starlighthowls
-  changes:
-  - message: NTAS white whale added to map rotation!
-    type: Add
-  id: 685
-  time: '2024-12-07T23:06:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/942
-- author: formlessnameless
-  changes:
-  - message: Space debris is no longer a barren wasteland
-    type: Fix
-  id: 686
-  time: '2024-12-07T23:11:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/949
-- author: formlessnameless
-  changes:
-  - message: Monkeys can scream properly again. Also other emotions.
-    type: Fix
-  id: 687
-  time: '2024-12-08T02:46:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/933
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Fixed missing LV cables in nitrogen lounge.
-    type: Fix
-  id: 688
-  time: '2024-12-08T02:47:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/952
 - author: Darkmajia
   changes:
   - message: Removed some chemicals from the maintenance pill and spaceshroom pool.
@@ -4121,3 +4086,41 @@
   id: 1183
   time: '2025-02-21T05:18:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1760
+- author: AvianMaiden
+  changes:
+  - message: Stun Kammerers should now match their lethal counterparts in terms of
+      fire rate and shells
+    type: Tweak
+  - message: Descriptions on shotguns should now match their qualities a bit better
+    type: Tweak
+  id: 1184
+  time: '2025-02-23T01:48:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1756
+- author: honeyed-lemons
+  changes:
+  - message: Both Xeno and Box have received multiple small tweaks :D
+    type: Tweak
+  id: 1185
+  time: '2025-02-23T01:49:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1765
+- author: mqole
+  changes:
+  - message: Tha dorf accent be nou e'en maer dorf-ier.
+    type: Tweak
+  id: 1186
+  time: '2025-02-23T01:48:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1759
+- author: honeyed-lemons
+  changes:
+  - message: Incredibly minor Cowboy accent tweaks
+    type: Tweak
+  id: 1187
+  time: '2025-02-23T01:48:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1766
+- author: hivehum
+  changes:
+  - message: The Clown Costume Duffel Bag no longer contains a headset and PDA.
+    type: Remove
+  id: 1188
+  time: '2025-02-23T01:47:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1769
