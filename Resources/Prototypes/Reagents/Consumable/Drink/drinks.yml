@@ -442,6 +442,7 @@
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
+  evaporates: true
   metabolisms:
     Drink:
       effects:
