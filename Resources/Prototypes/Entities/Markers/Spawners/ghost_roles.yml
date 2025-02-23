@@ -75,7 +75,7 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - sprite: Mobs/Pets/corgi.rsi
+      - sprite: Mobs/Pets/corgi/corgi.rsi
         state: narsian
 
 - type: entity
