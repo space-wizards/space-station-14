@@ -9,6 +9,8 @@ crayon-interact-invalid-location = Can't reach there!
 ## UI
 crayon-window-title = Crayon
 crayon-window-placeholder = Search, or queue a comma-separated list of names
+crayon-window-rotation = Rotation
+crayon-window-preview-mode = Preview Mode
 crayon-category-1-brushes = Brushes
 crayon-category-2-alphanum = Numbers and letters
 crayon-category-3-symbols = Symbols
