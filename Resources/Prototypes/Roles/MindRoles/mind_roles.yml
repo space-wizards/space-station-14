@@ -195,6 +195,17 @@
     antagPrototype: Rev
     subtype: "role-subtype-revolutionary"
 
+# Survivors (Wizard)
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSurvivor
+  name: Survivor Role
+  components:
+  - type: MindRole
+    antagPrototype: Survivor
+    roleType: FreeAgent
+  - type: SurvivorRole
+
 # Thief
 - type: entity
   parent: BaseMindRoleAntag

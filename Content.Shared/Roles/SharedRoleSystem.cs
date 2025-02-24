@@ -167,11 +167,9 @@ public abstract class SharedRoleSystem : EntitySystem
         var update = MindRolesUpdate((mindId, mind));
 
         // RoleType refresh, Role time tracking, Update Admin playerlist
-        if (mind.OwnedEntity != null)
-        {
-            var message = new RoleAddedEvent(mindId, mind, update, silent);
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
+
+        var message = new RoleAddedEvent(mindId, mind, update, silent);
+        RaiseLocalEvent(mindId, message, true);
 
         var name = Loc.GetString(protoEnt.Name);
         if (mind.OwnedEntity is not null)
@@ -316,11 +314,8 @@ public abstract class SharedRoleSystem : EntitySystem
 
         var update = MindRolesUpdate(mind);
 
-        if (mind.Comp.OwnedEntity != null)
-        {
-            var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
-            RaiseLocalEvent(mind.Comp.OwnedEntity.Value, message, true);
-        }
+        var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
+        RaiseLocalEvent(mind, message, true);
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,

@@ -92,7 +92,7 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            if (_filter.Contains(playerInfo.RoleProto.ID))
+            if (_filter.Contains(playerInfo.RoleProto))
             {
                 var label = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, playerInfo.Subtype, _subtypesOnly);
                 var color = playerInfo.RoleProto.Color;
