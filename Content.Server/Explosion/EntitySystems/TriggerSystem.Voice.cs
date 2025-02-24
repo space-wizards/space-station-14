@@ -54,7 +54,7 @@ namespace Content.Server.Explosion.EntitySystems
                         $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
                 Trigger(ent, args.Source);
 
-                var voice = new VoiceTriggeredEvent(args.Source ,message);
+                var voice = new VoiceTriggeredEvent(args.Source, message);
                 RaiseLocalEvent(ent, ref voice);
             }
         }
@@ -142,4 +142,4 @@ namespace Content.Server.Explosion.EntitySystems
 }
 
 [ByRefEvent]
-public readonly record struct VoiceTriggeredEvent(EntityUid Source ,string? Message);
+public readonly record struct VoiceTriggeredEvent(EntityUid Source, string? Message);
