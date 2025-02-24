@@ -232,7 +232,7 @@ public sealed class AdminSystem : EntitySystem
 
         RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
-        var subtype = string.Empty;
+        LocId? subtype = null;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
             if (_proto.TryIndex(mindComp.RoleType, out var role))

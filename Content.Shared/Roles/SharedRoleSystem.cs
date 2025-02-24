@@ -629,15 +629,15 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <summary>
     /// Returns the localized name of a role type's subtype and/or role type.
     /// </summary>
-    /// <param name="roleType">The locale string of the role type</param>
-    /// <param name="subtype">The locale string of the subtype</param>
+    /// <param name="roleType">The locale identifier of the role type</param>
+    /// <param name="subtype">The locale identifier of the subtype</param>
     /// <param name="subtypeOnly">If true, role type will not be returned along with the subtype</param>
     /// <returns>
     /// If subtypeOnly is true, returns localized subtype.
     /// If subtypeOnly is false, returns localized role and subtype.
     /// If subtype is not provided, returns localized role type regardless of subtypeOnly setting.
     /// </returns>
-    public string GetRoleSubtypeLabel(string roleType, string? subtype, bool subtypeOnly = true)
+    public string GetRoleSubtypeLabel(LocId roleType, LocId? subtype, bool subtypeOnly = true)
     {
         var typeLoc = Loc.GetString(roleType);
 
