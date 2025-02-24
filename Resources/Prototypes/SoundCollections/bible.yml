@@ -1,5 +1,5 @@
 - type: soundCollection
-  id: FamiliarSummon
+  id: Summon
   files:
   - /Audio/Effects/radpulse9.ogg
 
