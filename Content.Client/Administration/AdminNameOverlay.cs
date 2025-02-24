@@ -51,7 +51,7 @@ internal sealed class AdminNameOverlay : Overlay
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         _fontBold = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
 
-        _config.OnValueChanged(CCVars.OverlaySubtypesOnly, (show) => { _subtypesOnly = show; }, true);
+        _config.OnValueChanged(CCVars.AdminOverlaySubtypesOnly, (show) => { _subtypesOnly = show; }, true);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
