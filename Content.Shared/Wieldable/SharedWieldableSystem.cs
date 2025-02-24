@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Camera;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
@@ -50,6 +51,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
         SubscribeLocalEvent<WieldableComponent, HandDeselectedEvent>(OnDeselectWieldable);
+        SubscribeLocalEvent<WieldableComponent, HeldRelayedEvent<EnterCryostorageEvent>>(HandleEnterCryostorageEvent);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, ExaminedEvent>(OnExamineRequires);
@@ -63,6 +65,15 @@ public abstract class SharedWieldableSystem : EntitySystem
         SubscribeLocalEvent<SpeedModifiedOnWieldComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshSpeedWielded);
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+    }
+
+    private void HandleEnterCryostorageEvent(Entity<WieldableComponent> ent, ref HeldRelayedEvent<EnterCryostorageEvent> args)
+    {
+        if (!ent.Comp.Wielded)
+            return;
+
+        SetWielded((ent.Owner, ent.Comp), false);
+        _virtualItem.DeleteInHandsMatching(args.Args.User, ent.Owner);
     }
 
     private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)

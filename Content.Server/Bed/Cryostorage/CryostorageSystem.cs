@@ -216,7 +216,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             }
         }
 
-        var newEv = new EnterCryostorageEvent();
+        var newEv = new EnterCryostorageEvent(ent);
         RaiseLocalEvent(ent.Owner, ref newEv);
 
         comp.AllowReEnteringBody = false;
