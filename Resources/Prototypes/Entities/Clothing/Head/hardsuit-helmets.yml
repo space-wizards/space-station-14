@@ -365,6 +365,7 @@
   id: ClothingHeadHelmetHardsuitLuxury #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   name: luxury mining hardsuit helmet
   description: A refurbished mining hardsuit helmet, fitted with satin cushioning and an extra (non-functioning) antenna, because you're that extra.
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/luxury.rsi

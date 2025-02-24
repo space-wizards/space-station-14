@@ -70,22 +70,7 @@ namespace Content.Client.Changelog
                 Tabs.SetTabTitle(i++, Loc.GetString($"changelog-tab-title-{changelog.Name}"));
             }
 
-            // Try to get the current version from the build.json file
-            var version = _cfg.GetCVar(CVars.BuildVersion);
-            var forkId = _cfg.GetCVar(CVars.BuildForkId);
-
-            var versionText = Loc.GetString("changelog-version-unknown");
-
-            // Make sure these aren't empty, like in a dev env
-            if (!string.IsNullOrEmpty(version) && !string.IsNullOrEmpty(forkId))
-            {
-                versionText = Loc.GetString("changelog-version-tag",
-                    ("fork", forkId),
-                    ("version", version[..7])); // Only show the first 7 characters
-            }
-
-            // if else statements are ugly, shut up
-            VersionLabel.Text = versionText;
+            VersionLabel.Text = _changelog.GetClientVersion();
 
             TabsUpdated();
         }
