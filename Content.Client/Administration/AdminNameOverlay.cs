@@ -26,10 +26,14 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly Font _font;
     private readonly Font _fontBold;
     private bool _subtypesOnly;
+    private bool _overlayClassic;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
         ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
+
+    private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
+    private readonly Color _antagColorClassic = Color.OrangeRed;
 
     public AdminNameOverlay(AdminSystem system,
         IEntityManager entityManager,
@@ -51,6 +55,7 @@ internal sealed class AdminNameOverlay : Overlay
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         _fontBold = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
 
+        _config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
         _config.OnValueChanged(CCVars.AdminOverlaySubtypesOnly, (show) => { _subtypesOnly = show; }, true);
     }
 
@@ -93,7 +98,11 @@ internal sealed class AdminNameOverlay : Overlay
             var offset = new Vector2(1f, 7f);
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center + rotate) + offset;
 
-            if (_filter.Contains(playerInfo.RoleProto))
+            if (_overlayClassic && playerInfo.Antag)
+            {
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + (lineoffset * 2), _antagLabelClassic, uiScale, _antagColorClassic);
+            }
+            else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
                 var label = _roles.GetRoleSubtypeLabel(playerInfo.RoleProto.Name, playerInfo.Subtype, _subtypesOnly);
                 var color = playerInfo.RoleProto.Color;
