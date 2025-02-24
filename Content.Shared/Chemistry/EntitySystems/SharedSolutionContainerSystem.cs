@@ -145,7 +145,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         [NotNullWhen(true)] out Solution? solution,
         bool errorOnMissing = false)
     {
-        if (!TryGetSolution(container, name, out entity))
+        if (!TryGetSolution(container, name, out entity, errorOnMissing: errorOnMissing))
         {
             solution = null;
             return false;
