@@ -18,25 +18,25 @@ namespace Content.Server.Connection.Whitelist;
 /// If the condition doesn't match, the next condition is checked.
 /// </summary>
 [Prototype("playerConnectionWhitelist")]
-public sealed class PlayerConnectionWhitelistPrototype : IPrototype
+public sealed partial class PlayerConnectionWhitelistPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Minimum number of players required for this whitelist to be active.
     /// If there are less players than this, the whitelist will be ignored and the next one in the list will be used.
     /// </summary>
     [DataField]
-    public int MinimumPlayers { get; } = 0;
+    public int MinimumPlayers = 0;
 
     /// <summary>
     /// Maximum number of players allowed for this whitelist to be active.
     /// If there are more players than this, the whitelist will be ignored and the next one in the list will be used.
     /// </summary>
     [DataField]
-    public int MaximumPlayers { get; } = int.MaxValue;
+    public int MaximumPlayers = int.MaxValue;
 
     [DataField]
-    public WhitelistCondition[] Conditions { get; } = default!;
+    public WhitelistCondition[] Conditions = default!;
 }

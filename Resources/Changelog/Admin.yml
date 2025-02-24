@@ -805,5 +805,19 @@ Entries:
   id: 100
   time: '2025-02-22T17:45:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35283
+- author: sowelipililimute
+  changes:
+  - message: Added the ability to use tertiary headers in the guidebook
+    type: Add
+  id: 101
+  time: '2025-02-23T18:48:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35315
+- author: Schrodinger71
+  changes:
+  - message: Added autocompletion for player usernames in setmind command.
+    type: Add
+  id: 102
+  time: '2025-02-24T21:29:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35477
 Name: Admin
 Order: 1
