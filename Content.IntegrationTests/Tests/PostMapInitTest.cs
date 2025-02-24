@@ -72,7 +72,8 @@ namespace Content.IntegrationTests.Tests
             "Loop",
             "Plasma",
             "Elkridge",
-            "Convex"
+            "Convex",
+            "Mira" // Mira Map Playtesting! ¡Viva!
 
         };
 
