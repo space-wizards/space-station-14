@@ -1,5 +1,5 @@
 - type: entity
-  parent: ReinforcementRadioSyndicate
+  parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateSyndiMothroach
   name: syndimothroach reinforcement radio
   description: Calls in a faithfully trained mothroach to assist you.
@@ -8,6 +8,8 @@
     name: ghost-role-information-SyndiMothroach-name
     description: ghost-role-information-SyndiMothroach-description
     rules: ghost-role-information-SyndiMothroach-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
