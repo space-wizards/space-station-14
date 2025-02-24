@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Toned down the previous increase to water damage against slimes. Water
-      will still deal an appreciable amount of damage, so be careful.
-    type: Tweak
-  id: 693
-  time: '2024-12-08T15:14:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/956
 - author: TheGrimbeeper
   changes:
   - message: Rat Kings can now target someone by pointing vaguely near them (helpful
@@ -4098,3 +4090,10 @@
   id: 1192
   time: '2025-02-23T15:59:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1763
+- author: hivehum
+  changes:
+  - message: You should hear echolalia more often.
+    type: Tweak
+  id: 1193
+  time: '2025-02-24T11:18:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1773
