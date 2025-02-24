@@ -1,9 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Hands.Systems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
@@ -17,16 +14,15 @@ namespace Content.Server.VoiceTrigger;
 /// </summary>
 public sealed class StorageVoiceControlSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlot = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly StorageSystem _storage = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly StorageSystem _storage = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<StorageVoiceControlComponent, VoiceTriggeredEvent>(VoiceTriggered);
     }
 
@@ -57,8 +53,12 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             {
                 // Tell the player the reason why the item couldn't be inserted
                 if (failedReason != null)
+                {
                     _popup.PopupEntity(Loc.GetString(failedReason), ent, args.Source);
-                    _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
+                    _adminLogger.Add(LogType.Action,
+                        LogImpact.Low,
+                        $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
+                }
             }
             return;
         }
@@ -66,12 +66,10 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Get the metadata component so we can check for the item name, we do this because the name on the entity is private
-            TryComp<MetaDataComponent>(item, out var metaData);
-
+            // Get the item's name
+            var itemName = MetaData(item).EntityName;
             // The message doesn't match the item name the requestor requested, skip and move on to the next item
-            var itemName = metaData?.EntityName.ToString();
-            if (itemName == null || !args.Message.Contains(itemName, StringComparison.InvariantCultureIgnoreCase))
+            if (!args.Message.Contains(itemName, StringComparison.InvariantCultureIgnoreCase))
                 continue;
 
             // We found the item we want, so draw it from storage and place it into the player's hands
