@@ -2,40 +2,22 @@
 
 - type: entity
   id: ShuttleGunBase
+  parent: BaseStructure
   name: shittle gun
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Appearance
-  - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
-  - type: Pullable
   - type: Rotatable
-  - type: Physics
-    bodyType: Static
   - type: ContainerContainer
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 450
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Electronic
-  - type: Transform
-    anchored: true
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
