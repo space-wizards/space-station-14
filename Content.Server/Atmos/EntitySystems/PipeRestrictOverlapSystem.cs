@@ -4,7 +4,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
-using Content.Shared.CCVar;
+using Content.Shared._Goobstation.CCVar; // Goobstation - Licensed under AGPL-v3.0.
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
