@@ -9,10 +9,10 @@ public sealed partial class PuddleSystem
 {
     private void InitializeTransfers()
     {
-        SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged);
+        SubscribeLocalEvent<DrainableSolutionComponent, DragDropDraggedEvent>(OnDrainableDragged);
     }
 
-    private void OnRefillableDragged(Entity<RefillableSolutionComponent> entity, ref DragDropDraggedEvent args)
+    private void OnDrainableDragged(Entity<DrainableSolutionComponent> entity, ref DragDropDraggedEvent args)
     {
         if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var solution) || solution.Volume == FixedPoint2.Zero)
         {
