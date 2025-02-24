@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: ATDoop
   changes:
-  - message: 3 new plushies! Decapoid, snail, and a very rare secret plush. Buy some
-      plushie crates and try and find them!!
-    type: Add
-  id: 696
-  time: '2024-12-08T21:09:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/960
-- author: ATDoop
-  changes:
   - message: You can grind the bug and snail plushies.
     type: Add
   id: 697
@@ -4098,3 +4090,14 @@
   id: 1195
   time: '2025-02-24T22:09:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1776
+- author: ultramario1998
+  changes:
+  - message: Removed golden pAIs from the trinket loadout menu, per discussion on
+      discord.
+    type: Remove
+  - message: Golden pAIs may now be obtained through the mail as a very very rare
+      package!
+    type: Add
+  id: 1196
+  time: '2025-02-24T22:20:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1775
