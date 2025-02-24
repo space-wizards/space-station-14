@@ -13,11 +13,13 @@ using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
-using Content.Server.TurretController;
-using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
-using Content.Shared.Access;
-using Robust.Shared.Prototypes;
+
+// The following will be uncommented by the turret control panel PR
+//using Content.Server.TurretController;  
+//using Content.Shared.Weapons.Ranged.Components;
+//using Content.Shared.Access;
+//using Robust.Shared.Prototypes;
 
 namespace Content.Server.Turrets;
 
@@ -40,7 +42,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         SubscribeLocalEvent<DeployableTurretComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<DeployableTurretComponent, BreakageEventArgs>(OnBroken);
         SubscribeLocalEvent<DeployableTurretComponent, RepairedEvent>(OnRepaired);
-        SubscribeLocalEvent<DeployableTurretComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        //SubscribeLocalEvent<DeployableTurretComponent, DeviceNetworkPacketEvent>(OnPacketReceived); // Will be uncommented by the turret control panel PR
         SubscribeLocalEvent<DeployableTurretComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
     }
 
@@ -85,6 +87,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             _appearance.SetData(ent, DeployableTurretVisuals.Broken, false, appearance);
     }
 
+    /* The following Will be uncommented by the turret control panel PR
     private void OnPacketReceived(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
@@ -116,7 +119,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             SendStateUpdateToDeviceNetwork(ent);
             return;
         }
-    }
+    }*/
 
     private void OnBeforeBroadcast(Entity<DeployableTurretComponent> ent, ref BeforeBroadcastAttemptEvent args)
     {
