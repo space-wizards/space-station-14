@@ -17,6 +17,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     [ValidatePrototypeId<MixingCategoryPrototype>]
     private const string DefaultMixingCategory = "DummyMix";
@@ -94,7 +95,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent))
+            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent, _componentFactory))
                 continue;
 
             //these bloat the hell out of blood/fat
@@ -121,7 +122,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 
 
             if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
-                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager) &&
+                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager, _componentFactory) &&
                 _solutionContainer.TryGetSolution(manager, grindableSolutionId, out var grindableSolution))
             {
                 var data = new ReagentEntitySourceData(
