@@ -79,7 +79,7 @@ namespace Content.Server.Administration.Commands
         {
             if (args.Length == 2)
             {
-                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "username");
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-mind-command-hint");
             }
 
             return CompletionResult.Empty;
