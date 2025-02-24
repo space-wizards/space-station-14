@@ -26,11 +26,8 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SiliconLawSystem _law = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
 
@@ -142,19 +139,28 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         // Apparently there's no sound for this.
     }
 
-    public override void SetProfileData(EntityUid ent, EntityUid brain)
+    public override void SetLoadoutExtraLawset(EntityUid brain, Dictionary<string, string> data)
     {
-        base.SetProfileData(ent, brain);
+        base.SetLoadoutExtraLawset(brain, data);
+
+        if (data.TryGetValue(ExtraLoadoutLawsetId, out var lawset))
+            _law.SetLaws((ProtoId<SiliconLawsetPrototype>)lawset, brain);
+    }
+
+    public override void SetLoadoutOnTakeover(EntityUid core, EntityUid brain)
+    {
+        base.SetLoadoutOnTakeover(core, brain);
         if (!_mind.TryGetMind(brain, out _, out var mind) || mind.Session == null)
             return;
-
         var profile = _ticker.GetPlayerProfile(mind.Session);
-        _appearance.SetData(ent, StationAiCustomVisualState.Key, (string)profile.SAIData.Screen);
-        _law.SetLaws(profile.SAIData.Lawset, brain);
 
-        if (profile.SAIData.Name == string.Empty)
+        if (profile == null)
             return;
-        _metadata.SetEntityName(ent, profile.SAIData.Name);
-        _metadata.SetEntityName(brain, profile.SAIData.Name);
+
+        if (!profile.Loadouts.TryGetValue("StationAi", out var loadout))
+            return;
+
+        SetLoadoutExtraLawset(brain, loadout.ExtraData);
+        SetLoadoutExtraVisuals(core, loadout.ExtraData);
     }
 }

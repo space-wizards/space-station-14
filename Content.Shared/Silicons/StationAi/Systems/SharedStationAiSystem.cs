@@ -83,6 +83,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         InitializeAirlock();
         InitializeHeld();
         InitializeLight();
+        InitializeLoadout();
 
         SubscribeLocalEvent<StationAiWhitelistComponent, BoundUserInterfaceCheckRangeEvent>(OnAiBuiCheck);
 
@@ -122,9 +123,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             Category = VerbCategory.Debug,
             Act = () =>
             {
-                var brain = Spawn(DefaultAi, Transform(ent).Coordinates);
+                var brain = SpawnInContainerOrDrop(DefaultAi, ent, StationAiCoreComponent.Container);
                 _mind.ControlMob(user, brain);
-                _containers.InsertOrDrop(brain, _containers.GetContainer(ent.Owner, StationAiCoreComponent.Container));
+                SetLoadoutOnTakeover(ent.Owner, brain);
             },
             Impact = LogImpact.High,
         });
@@ -497,14 +498,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         var brain = container.ContainedEntities[0];
         if (_mind.TryGetMind(brain, out _, out var mind) && mind.Session != null)
         {
-            SetProfileData(entity, brain);
+            // SetProfileData(entity, brain);
             return;
         }
 
         //_appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
     }
 
-    public virtual void SetProfileData(EntityUid ent, EntityUid brain) { }
 
     public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
 
