@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Rat Kings can now target someone by pointing vaguely near them (helpful
-      in intense moments)
-    type: Tweak
-  id: 694
-  time: '2024-12-08T15:35:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/953
 - author: Darkmajia
   changes:
   - message: Slimepeople have had their weakness to water and water vapor reduced.
@@ -4097,3 +4089,14 @@
   id: 1193
   time: '2025-02-24T11:18:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1773
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Auto Disabler's maximum inaccuracy cone has been narrowed by 3 degrees
+      (18 -> 15)
+    type: Tweak
+  - message: Stun Projector's rate of fire reduced from 1.3 to 0.9 shots per second.
+      Was stunning faster than intended prior.
+    type: Tweak
+  id: 1194
+  time: '2025-02-24T11:20:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1772
