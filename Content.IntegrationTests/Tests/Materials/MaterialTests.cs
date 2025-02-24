@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests.Materials
             var server = pair.Server;
             await server.WaitIdleAsync();
 
-            var mapSystem = server.ResolveDependency<SharedMapSystem>();
+            var mapSystem = server.System<SharedMapSystem>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
