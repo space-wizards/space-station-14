@@ -7,12 +7,15 @@
          MinSize="800 128">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4" SizeFlagsStretchRatio="1">
         <BoxContainer Name="RoleNameBox" Orientation="Vertical" Margin="10">
-            <Label Name="LoadoutNameLabel" Margin="2" Text="{Loc 'loadout-name-edit-label'}"/>
-            <PanelContainer HorizontalExpand="True" SetHeight="24">
+            <Label Name="LoadoutNameLabel" Margin="2" Text="{Loc 'sai-loadout-name-label'}"/>
+            <PanelContainer HorizontalExpand="True">
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
-                <LineEdit Name="RoleNameEdit" VerticalExpand="True" HorizontalExpand="True"/>
+                <BoxContainer Orientation="Horizontal">
+                    <LineEdit Name="RoleNameEdit" VerticalExpand="True" HorizontalExpand="True" Margin="4" SizeFlagsStretchRatio="6"/>
+                    <Button Name="SaveNameButton" Text="{Loc 'sai-loadout-save-button'}" VerticalExpand="True" HorizontalExpand="True" Margin="4" SizeFlagsStretchRatio="2"/>
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
         <cc:HSeparator Margin="5"/>
