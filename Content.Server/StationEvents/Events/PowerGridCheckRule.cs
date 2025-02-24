@@ -17,6 +17,11 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
 
+        [ValidatePrototypeId<SoundCollectionPrototype>]
+        private const string PowerOnCollection = "PowerOn";
+
+        private readonly SoundSpecifier _powerOn = new SoundCollectionSpecifier(PowerOnCollection, AudioParams.Default.WithVolume(-4f));
+
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
             base.Started(uid, component, gameRule, args);
@@ -59,7 +64,7 @@ namespace Content.Server.StationEvents.Events
             component.AnnounceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                Audio.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), true, AudioParams.Default.WithVolume(-4f));
+                Audio.PlayGlobal(_powerOn, Filter.Broadcast(), true);
             }, component.AnnounceCancelToken.Token);
             component.Unpowered.Clear();
         }
