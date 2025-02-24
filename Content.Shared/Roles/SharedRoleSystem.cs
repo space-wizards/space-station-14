@@ -201,12 +201,12 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var role = GetCurrentRole(ent.Comp);
+        var (roleType, subtype) = GetCurrentRole(ent.Comp);
 
-        if (ent.Comp.RoleType == role.Item1 &&  ent.Comp.Subtype == role.Item2)
+        if (ent.Comp.RoleType == roleType &&  ent.Comp.Subtype == subtype)
             return false;
 
-        SetRoleType(ent.Owner, role.Item1, role.Item2);
+        SetRoleType(ent.Owner, roleType, subtype);
         return true;
     }
 
@@ -228,8 +228,7 @@ public abstract class SharedRoleSystem : EntitySystem
                 roles.Add((comp.RoleType.Value, comp.Subtype));
         }
 
-        var result = (roles.Count > 0) ? roles.LastOrDefault() : ("Neutral", null);
-        return (result);
+        return (roles.Count > 0) ? roles.LastOrDefault() : ("Neutral", null);
     }
 
     private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype)
