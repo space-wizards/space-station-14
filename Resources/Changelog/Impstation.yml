@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Slimepeople have had their weakness to water and water vapor reduced.
-    type: Tweak
-  - message: Gastropoids have had their weakness to salt and salt-based reagents reduced.
-    type: Tweak
-  id: 695
-  time: '2024-12-08T19:06:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/959
 - author: ATDoop
   changes:
   - message: 3 new plushies! Decapoid, snail, and a very rare secret plush. Buy some
@@ -4100,3 +4091,10 @@
   id: 1194
   time: '2025-02-24T11:20:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1772
+- author: hivehum
+  changes:
+  - message: Supply assistants can no longer be antagonists.
+    type: Tweak
+  id: 1195
+  time: '2025-02-24T22:09:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1776
