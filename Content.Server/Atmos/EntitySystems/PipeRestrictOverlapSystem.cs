@@ -32,7 +32,7 @@ public sealed class PipeRestrictOverlapSystem : EntitySystem
     {
         SubscribeLocalEvent<PipeRestrictOverlapComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
         SubscribeLocalEvent<PipeRestrictOverlapComponent, AnchorAttemptEvent>(OnAnchorAttempt);
-        Subs.CVar(_cfg, CCVars.StrictPipeStacking, (bool val) => {StrictPipeStacking = val;}, false);
+        Subs.CVar(_cfg, GoobCVars.StrictPipeStacking, (bool val) => {StrictPipeStacking = val;}, false);
 
         _nodeContainerQuery = GetEntityQuery<NodeContainerComponent>();
     }
