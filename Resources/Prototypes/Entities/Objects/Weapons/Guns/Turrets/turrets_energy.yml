@@ -169,7 +169,7 @@
   name: AI sentry turret
   description: A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
   components:
-  - type: StationAiTurret
+  #- type: StationAiTurret - To be added in a later PR 
   - type: AccessReader
     access: [["StationAi"]]
   - type: TurretTargetSettings
@@ -178,6 +178,3 @@
     - BasicSilicon
   - type: Machine
     board: WeaponEnergyTurretAIMachineCircuitboard
-  - type: DeviceNetwork
-    receiveFrequencyId: TurretControlAI
-    transmitFrequencyId: TurretAI
