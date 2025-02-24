@@ -576,9 +576,12 @@
     contents:
     - id: PersonalAI
       orGroup: PAI
-      prob: 0.99
+      prob: 0.98
       # Ultra rare
     - id: SyndicatePersonalAI
+      orGroup: PAI
+      prob: 0.01
+    - id: GoldPersonalAI
       orGroup: PAI
       prob: 0.01
 
