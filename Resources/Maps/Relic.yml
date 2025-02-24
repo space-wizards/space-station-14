@@ -30542,8 +30542,6 @@ entities:
       pos: 60.5,49.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 2517
     - type: AtmosPipeColor
