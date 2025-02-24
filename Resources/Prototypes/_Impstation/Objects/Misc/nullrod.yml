@@ -140,7 +140,7 @@
     mixMessage: "null-grail-mix-success"
   - type: CleanseOnUse
     enabled: false
-    miscFlag: true
+    canPurge: : true
 
 - type: entity
   name: divine grasp

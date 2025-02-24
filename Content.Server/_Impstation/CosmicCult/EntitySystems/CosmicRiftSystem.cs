@@ -74,7 +74,7 @@ public sealed class CosmicRiftSystem : EntitySystem
             };
             _doAfter.TryStartDoAfter(doargs);
         }
-        else if (TryComp<CleanseOnUseComponent>(args.Used, out var comp) && comp.MiscFlag == true)
+        else if (TryComp<CleanseOnUseComponent>(args.Used, out var comp) && comp.CanPurge == true)
         {
             uid.Comp.Occupied = true;
             _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginpurge"), args.User, args.User);
