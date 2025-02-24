@@ -14,13 +14,11 @@ public sealed partial class EyeClosingComponent : Component
     /// <summary>
     /// Default eyes opening sound.
     /// </summary>
-    [ValidatePrototypeId<SoundCollectionPrototype>]
     private static readonly ProtoId<SoundCollectionPrototype> DefaultEyeOpen = new("EyeOpen");
 
     /// <summary>
     /// Default eyes closing sound.
     /// </summary>
-    [ValidatePrototypeId<SoundCollectionPrototype>]
     private static readonly ProtoId<SoundCollectionPrototype> DefaultEyeClose = new("EyeClose");
 
     /// <summary>
