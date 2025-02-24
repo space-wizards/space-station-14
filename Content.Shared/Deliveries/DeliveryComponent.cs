@@ -1,4 +1,3 @@
-using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -12,15 +11,18 @@ namespace Content.Shared.Deliveries;
 public sealed partial class DeliveryComponent : Component
 {
     [DataField, AutoNetworkedField]
+    public bool IsLocked = true;
+
+    [DataField, AutoNetworkedField]
     public int SpesoReward = 500;
 
     [DataField, AutoNetworkedField]
     public string RecipientName = string.Empty;
 
     [DataField, AutoNetworkedField]
-    public ProtoId<JobPrototype> RecipientJob;
+    public string RecipientJobTitle = string.Empty;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntityUid RecipientStation;
 
     [DataField(required: true)]
