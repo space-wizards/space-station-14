@@ -1,92 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Light bulbs now fit into the trash bag again.
-    type: Fix
-  id: 7489
-  time: '2024-10-05T18:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32452
-- author: Just_Art
-  changes:
-  - message: Added a flower wreath and hairflower to loadout!
-    type: Add
-  id: 7490
-  time: '2024-10-06T12:48:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32097
-- author: Golinth
-  changes:
-  - message: Removed clown waddling until implemented properly
-    type: Remove
-  id: 7491
-  time: '2024-10-06T13:33:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32652
-- author: SaphireLattice
-  changes:
-  - message: Minibomb is now explosion resistant and will start counting down if damaged
-      by a C4
-    type: Tweak
-  id: 7492
-  time: '2024-10-07T22:42:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32429
-- author: shampunj
-  changes:
-  - message: When curtains are destroyed, only 1 cloth drops out
-    type: Tweak
-  id: 7493
-  time: '2024-10-08T09:51:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32685
-- author: Plykiya
-  changes:
-  - message: Librarians now start with a D20.
-    type: Tweak
-  id: 7494
-  time: '2024-10-08T09:53:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32648
-- author: K-Dynamic
-  changes:
-  - message: CHIMP and APE particles should be almost as fast as before
-    type: Tweak
-  id: 7495
-  time: '2024-10-08T18:29:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32690
-- author: ss14nekow
-  changes:
-  - message: Added pumpkin pie! Can be made in the microwave with 1 pie tin, 1 pie
-      dough, and 1 pumpkin.
-    type: Add
-  id: 7496
-  time: '2024-10-08T23:29:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32623
-- author: Beck Thompson
-  changes:
-  - message: The radio jammers price has been decreased from 4 -> 3 TC.
-    type: Tweak
-  id: 7497
-  time: '2024-10-09T12:44:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32472
-- author: beck-thompson, Moomoobeef
-  changes:
-  - message: Plushies now can have small items stuffed inside of them! To open, click
-      on the plush with a sharp item. You can then insert a small item into the plush.
-      To close, just click on it again with any sharp item!
-    type: Add
-  - message: When pAIs are inserted into plushies, their names will be updated to
-      the plushies name. E.g when inside a lizard plushie the pAI's name will appear
-      as "lizard plushie" when speaking.
-    type: Add
-  id: 7498
-  time: '2024-10-09T18:01:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30805
-- author: Errant
-  changes:
-  - message: Nukies now have role briefing on their character screen.
-    type: Tweak
-  - message: Animals who are made Thief no longer get told in their briefing about
-      the thief gear that they don't actually have and couldn't possibly use.
-    type: Fix
-  id: 7499
-  time: '2024-10-10T08:48:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31318
 - author: nikthechampiongr
   changes:
   - message: It is no longer impossible to do bounties other than the first one if
@@ -3897,3 +3809,87 @@
   id: 7988
   time: '2025-02-22T09:20:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34173
+- author: Sparlight
+  changes:
+  - message: All dogs now make dog noises when speaking.
+    type: Tweak
+  id: 7989
+  time: '2025-02-22T21:34:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35383
+- author: GrownSamoyedDog
+  changes:
+  - message: Fixed Guidebook Entry Ordering / Sorting
+    type: Fix
+  - message: Rearranged Guidebook Contents
+    type: Tweak
+  id: 7990
+  time: '2025-02-23T01:00:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34960
+- author: lzk228
+  changes:
+  - message: Storage now makes sound if you open it on verb or on interact.
+    type: Fix
+  id: 7991
+  time: '2025-02-23T02:01:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35413
+- author: K-Dynamic
+  changes:
+  - message: Lattice tiles footsteps now sound like catwalks.
+    type: Tweak
+  id: 7992
+  time: '2025-02-23T11:43:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35421
+- author: metalgearsloth
+  changes:
+  - message: Fix several interface window positions not saving.
+    type: Fix
+  id: 7993
+  time: '2025-02-23T12:57:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35055
+- author: ScarKy0
+  changes:
+  - message: Increased the price of the EMAG to 5TC. It is also now part of the "very
+      rare discounts" instead of "rare discounts".
+    type: Tweak
+  - message: Decreased the price of the Access Breaker to 4TC. It is also now part
+      of the "rare discounts" instead of "very rare discounts".
+    type: Tweak
+  id: 7994
+  time: '2025-02-23T13:01:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35354
+- author: sowelipililimute
+  changes:
+  - message: Added microwave cooking recipes to the guidebook
+    type: Add
+  id: 7995
+  time: '2025-02-23T15:24:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34105
+- author: Errant
+  changes:
+  - message: The game version can now be displayed as an optional watermark on the
+      hud. Servers can force this watermark to be displayed.
+    type: Add
+  id: 7996
+  time: '2025-02-23T19:01:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35284
+- author: deltanedas
+  changes:
+  - message: Entering a mech or other container now ends chameleon projections.
+    type: Fix
+  id: 7997
+  time: '2025-02-23T19:29:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35070
+- author: NoElkaTheGod
+  changes:
+  - message: Hitting a holoparasite will now ignore the host's armor.
+    type: Tweak
+  id: 7998
+  time: '2025-02-23T20:03:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35418
+- author: TiniestShark
+  changes:
+  - message: Scarves, pins and other neckwear now render above the backpack.
+    type: Tweak
+  id: 7999
+  time: '2025-02-23T23:29:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35322
