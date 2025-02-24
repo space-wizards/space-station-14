@@ -10,6 +10,7 @@ using Content.Shared.PDA;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Traitor.Uplink;
 
@@ -21,6 +22,7 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -65,13 +67,10 @@ public sealed class UplinkSystem : EntitySystem
     {
         if (!_mind.TryGetMind(user, out var mind, out _))
             return;
-        
-        try
-        {
-            balance *= -Math.Log2(1f - Random.Shared.NextSingle());
-            balance = Math.Round((float)balance);
-        }
-        catch { }
+
+        var mult = 1f - Math.Log2(1f - _random.NextFloat());
+        balance *= double.IsNaN(mult) ? mult : 1f;
+        balance = Math.Round((float)balance);
 
         var store = EnsureComp<StoreComponent>(uplink);
 
