@@ -2,8 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Systems;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.Containers;
 
@@ -19,6 +22,8 @@ public sealed class StorageVoiceControlSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly StorageSystem _storage = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -40,10 +45,23 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             return;
 
         // If the player has something in their hands, try to insert it into the storage
-        if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue &&
-            _storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out _))
+        // TODO: The player could have something in their hands like a tool, but they really requested an item from storage, so this logic is flawed
+        if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue)
         {
-            _storage.Insert(ent, hands.ActiveHand.HeldEntity.Value, out _);
+            if (_storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out var failedReason))
+            {
+                // We adminlog before insertion, otherwise the logger will attempt to pull info on an entity that no longer is present and throw an exception
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} inserted {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
+                _storage.Insert(ent, hands.ActiveHand.HeldEntity.Value, out _);
+            }
+            else
+            {
+                // Tell the player the reason why the item couldn't be inserted
+                if (failedReason != null)
+                    _popup.PopupEntity(Loc.GetString(failedReason), ent);
+                    _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
+
+            }
             return;
         }
 
@@ -54,14 +72,15 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             TryComp<MetaDataComponent>(item, out var metaData);
 
             // The message doesn't match the item name the requestor requested, skip and move on to the next item
-            if (metaData != null && !args.Message.Contains(metaData.EntityName.ToString(),
-                    StringComparison.InvariantCultureIgnoreCase))
+            var itemName = metaData?.EntityName.ToString();
+            if (itemName == null || !args.Message.Contains(itemName, StringComparison.InvariantCultureIgnoreCase))
                 continue;
 
             // We found the item we want, so draw it from storage and place it into the player's hands
             if (storage.Container.ContainedEntities.Count != 0)
             {
                 _container.RemoveEntity(ent, item);
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} retrieved {itemName} from {ToPrettyString(ent)} via voice control");
                 _hands.TryPickup(args.Source, item, handsComp: hands);
                 break;
             }
