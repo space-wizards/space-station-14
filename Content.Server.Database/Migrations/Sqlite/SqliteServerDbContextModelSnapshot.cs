@@ -599,6 +599,36 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("connection_log", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ExtraLoadoutData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("extra_loadout_data_id");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("key");
+
+                    b.Property<int>("ProfileRoleLoadoutId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_role_loadout_id");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("PK_extra_loadout_data");
+
+                    b.HasIndex("ProfileRoleLoadoutId")
+                        .IsUnique();
+
+                    b.ToTable("extra_loadout_data", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
                 {
                     b.Property<int>("Id")
@@ -1620,6 +1650,16 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Server");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ExtraLoadoutData", b =>
+                {
+                    b.HasOne("Content.Server.Database.ProfileRoleLoadout", null)
+                        .WithMany("ExtraData")
+                        .HasForeignKey("ProfileRoleLoadoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_extra_loadout_data_profile_role_loadout_profile_role_loadout_id");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2006,6 +2046,8 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.ProfileRoleLoadout", b =>
                 {
+                    b.Navigation("ExtraData");
+
                     b.Navigation("Groups");
                 });
 

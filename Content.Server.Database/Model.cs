@@ -65,8 +65,8 @@ namespace Content.Server.Database
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
                 .IsUnique();
 
-            modelBuilder.Entity<DbAiData>()
-                .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.Name, p.Screen, p.Lawset })
+            modelBuilder.Entity<ExtraLoadoutData>()
+                .HasIndex(p => p.ProfileRoleLoadoutId)
                 .IsUnique();
 
             modelBuilder.Entity<ProfileRoleLoadout>()
@@ -417,7 +417,6 @@ namespace Content.Server.Database
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
-        public DbAiData AiData { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
@@ -495,6 +494,8 @@ namespace Content.Server.Database
         /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
         /// </summary>
         public List<ProfileLoadoutGroup> Groups { get; set; } = new();
+
+        public List<ExtraLoadoutData> ExtraData { get; set; } = new();
     }
 
     /// <summary>
@@ -544,14 +545,12 @@ namespace Content.Server.Database
          */
     }
 
-    public class DbAiData
+    public class ExtraLoadoutData
     {
         public int Id { get; set; }
-        public int ProfileId { get; set; }
-        public Profile Profile { get; set; } = null!;
-        public string Name { get; set; } = string.Empty;
-        public string Screen { get; set; } = string.Empty;
-        public string Lawset { get; set; } = string.Empty;
+        public int ProfileRoleLoadoutId { get; set; }
+        public string Key { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
     #endregion
 

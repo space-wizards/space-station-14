@@ -48,7 +48,9 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
-                .Include(p => p.Profiles).ThenInclude(h => h.AiData)
+                .Include(p => p.Profiles)
+                    .ThenInclude(h => h.Loadouts)
+                    .ThenInclude(l => l.ExtraData)
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
@@ -101,7 +103,8 @@ namespace Content.Server.Database
                 .Include(p => p.Jobs)
                 .Include(p => p.Antags)
                 .Include(p => p.Traits)
-                .Include(p => p.AiData)
+                .Include(p => p.Loadouts)
+                    .ThenInclude(l => l.ExtraData)
                 .Include(p => p.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
@@ -239,6 +242,11 @@ namespace Content.Server.Database
                     }
                 }
 
+                for (var i = 0; i < role.ExtraData.Count; i++)
+                {
+                    loadout.ExtraData.Add(role.ExtraData[i].Key, role.ExtraData[i].Value);
+                }
+
                 loadouts[role.RoleName] = loadout;
             }
 
@@ -264,8 +272,7 @@ namespace Content.Server.Database
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
-                loadouts,
-                new(profile.AiData.Name, profile.AiData.Screen, profile.AiData.Lawset)
+                loadouts
             );
         }
 
@@ -296,7 +303,6 @@ namespace Content.Server.Database
             profile.Markings = markings;
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
-            profile.AiData = new() { Name = humanoid.SAIData.Name, Screen = humanoid.SAIData.Screen, Lawset = humanoid.SAIData.Lawset };
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(
@@ -326,6 +332,11 @@ namespace Content.Server.Database
                     RoleName = role,
                     EntityName = loadouts.EntityName ?? string.Empty,
                 };
+
+                for (var i = 0; i < loadouts.ExtraData.Count; i++)
+                {
+                    dz.ExtraData.Add(new() { Key = loadouts.ExtraData.Keys.ElementAt(i), Value = loadouts.ExtraData.Values.ElementAt(i) });
+                }
 
                 foreach (var (group, groupLoadouts) in loadouts.SelectedLoadouts)
                 {
