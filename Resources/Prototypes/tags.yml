@@ -579,9 +579,6 @@
   id: FreezerElectronics
 
 - type: Tag
-  id: ForensicScanner
-
-- type: Tag
   id: Fruit
 
 - type: Tag
@@ -790,9 +787,6 @@
 
 - type: Tag
   id: LightBulb
-
-- type: Tag
-  id: Lighter
 
 - type: Tag
   id: Lime
