@@ -27,4 +27,4 @@ ai-consciousness-download-warning = Your consciousness is being downloaded.
 sai-loadout-name-label = Custom name:
 sai-loadout-screen-label = Screen:
 sai-loadout-lawset-label = Lawset:
-sai-loadout-save-button = Save
+sai-loadout-save-button = Save AI name
