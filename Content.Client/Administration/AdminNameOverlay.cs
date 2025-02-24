@@ -15,12 +15,13 @@ namespace Content.Client.Administration;
 
 internal sealed class AdminNameOverlay : Overlay
 {
+    [Dependency] private readonly IConfigurationManager _config = default!;
+
     private readonly AdminSystem _system;
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
-    private readonly IConfigurationManager _config;
     private readonly SharedRoleSystem _roles;
     private readonly Font _font;
     private readonly Font _fontBold;
@@ -36,7 +37,6 @@ internal sealed class AdminNameOverlay : Overlay
         IResourceCache resourceCache,
         EntityLookupSystem entityLookup,
         IUserInterfaceManager userInterfaceManager,
-        IConfigurationManager config,
         SharedRoleSystem roles)
     {
         IoCManager.InjectDependencies(this);
@@ -46,14 +46,12 @@ internal sealed class AdminNameOverlay : Overlay
         _eyeManager = eyeManager;
         _entityLookup = entityLookup;
         _userInterfaceManager = userInterfaceManager;
-        _config = config;
         _roles = roles;
         ZIndex = 200;
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         _fontBold = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
 
-        _subtypesOnly = _config.GetCVar(CCVars.OverlaySubtypesOnly);
-        _config.OnValueChanged(CCVars.OverlaySubtypesOnly, (show) => { _subtypesOnly = show; });
+        _config.OnValueChanged(CCVars.OverlaySubtypesOnly, (show) => { _subtypesOnly = show; }, true);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
