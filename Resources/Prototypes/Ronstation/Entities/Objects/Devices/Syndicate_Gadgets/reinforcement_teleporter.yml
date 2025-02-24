@@ -15,4 +15,4 @@
   - type: GhostRoleMobSpawner
     prototype: MobMothroachSyndy
   - type: EmitSoundOnUse
-    sound: /Audio/Animals/cat_meow.ogg
+    sound: /Audio/Voice/Moth/moth_scream.ogg
