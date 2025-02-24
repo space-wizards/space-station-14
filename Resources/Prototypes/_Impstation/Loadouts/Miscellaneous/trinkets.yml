@@ -20,12 +20,6 @@
     - CigPackSpirits
 
 - type: loadout
-  id: PersonalAI
-  storage:
-    back:
-    - PersonalAI
-
-- type: loadout
   id: TutorialAI_Newcomer #imp. <15 hours.
   effects:
   - !type:GroupLoadoutEffect
