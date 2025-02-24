@@ -86,7 +86,7 @@ public sealed partial class GhostComponent : Component
     /// Ghost color
     /// </summary>
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
-    [DataField("color"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Color Color = Color.White;
 
     [DataField("canReturnToBody"), AutoNetworkedField]
