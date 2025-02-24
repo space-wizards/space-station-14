@@ -66,8 +66,10 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<ExtraLoadoutData>()
-                .HasIndex(p => p.ProfileRoleLoadoutId)
-                .IsUnique();
+                .HasOne(x => x.RoleLoadout)
+                .WithMany(l => l.ExtraData)
+                .HasForeignKey(x => x.ProfileRoleLoadoutId)
+                .IsRequired();
 
             modelBuilder.Entity<ProfileRoleLoadout>()
                 .HasOne(e => e.Profile)
@@ -548,6 +550,7 @@ namespace Content.Server.Database
     public class ExtraLoadoutData
     {
         public int Id { get; set; }
+        public ProfileRoleLoadout RoleLoadout { get; set; } = null!;
         public int ProfileRoleLoadoutId { get; set; }
         public string Key { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;

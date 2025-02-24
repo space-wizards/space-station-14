@@ -623,8 +623,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id")
                         .HasName("PK_extra_loadout_data");
 
-                    b.HasIndex("ProfileRoleLoadoutId")
-                        .IsUnique();
+                    b.HasIndex("ProfileRoleLoadoutId");
 
                     b.ToTable("extra_loadout_data", (string)null);
                 });
@@ -1652,12 +1651,14 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.ExtraLoadoutData", b =>
                 {
-                    b.HasOne("Content.Server.Database.ProfileRoleLoadout", null)
+                    b.HasOne("Content.Server.Database.ProfileRoleLoadout", "RoleLoadout")
                         .WithMany("ExtraData")
                         .HasForeignKey("ProfileRoleLoadoutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_extra_loadout_data_profile_role_loadout_profile_role_loadout_id");
+
+                    b.Navigation("RoleLoadout");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
