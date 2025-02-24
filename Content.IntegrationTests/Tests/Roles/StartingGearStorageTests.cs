@@ -18,7 +18,7 @@ public sealed class StartingGearPrototypeStorageTest
         var settings = new PoolSettings { Connected = true, Dirty = true };
         await using var pair = await PoolManager.GetServerClient(settings);
         var server = pair.Server;
-        var mapSystem = server.ResolveDependency<SharedMapSystem>();
+        var mapSystem = server.System<SharedMapSystem>();
         var storageSystem = server.System<StorageSystem>();
 
         var protos = server.ProtoMan
