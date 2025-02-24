@@ -29,9 +29,6 @@
     - Forensics
   - type: StealTarget
     stealGroup: ForensicScanner
-  - type: Tag
-    tags:
-      - ForensicScanner
 
 - type: entity
   name: forensic scanner report

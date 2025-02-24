@@ -83,7 +83,6 @@
   - type: Tag
     tags:
       - SecBeltEquip
-      - Flashlight
   - type: ItemSlots
     slots:
       cell_slot:
