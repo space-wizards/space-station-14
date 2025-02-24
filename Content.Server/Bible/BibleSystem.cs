@@ -46,6 +46,16 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<FamiliarComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
         }
 
+        [ValidatePrototypeId<SoundCollectionPrototype>]
+        private const string FamiliarSummonCollection = "FamiliarSummon";
+
+        [ValidatePrototypeId<SoundCollectionPrototype>]
+        private const string BibleHitCollection = "BibleHit";
+
+        private readonly SoundSpecifier _familiarSummon = new SoundCollectionSpecifier(FamiliarSummonCollection, AudioParams.Default.WithVolume(-4f));
+
+        private readonly SoundSpecifier _bibleHit = new SoundCollectionSpecifier(BibleHitCollection);
+
         private readonly Queue<EntityUid> _addQueue = new();
         private readonly Queue<EntityUid> _remQueue = new();
 
@@ -84,7 +94,7 @@ namespace Content.Server.Bible
                 }
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)), uid, PopupType.Medium);
-                _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", uid, AudioParams.Default.WithVolume(-4f));
+                _audio.PlayPvs(_familiarSummon, uid);
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(uid);
@@ -126,7 +136,7 @@ namespace Content.Server.Bible
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, args.User, PopupType.MediumCaution);
 
-                    _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
+                    _audio.PlayPvs(_bibleHit, args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
                     _delay.TryResetDelay((uid, useDelay));
                     return;
