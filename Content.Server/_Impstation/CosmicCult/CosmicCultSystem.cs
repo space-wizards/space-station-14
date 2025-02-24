@@ -135,7 +135,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 _sound.DispatchStationEventMusic(uid, comp.SelectedBufferSong, StationEventMusicType.CosmicCult);
                 comp.PlayedBufferSong = true;
             }
-            else if (comp.FinaleActive && comp.FinaleTimer <= comp.FinaleSongLength + comp.SummoningTime && !comp.PlayedFinaleSong && !string.IsNullOrEmpty(comp.SelectedFinaleSong) && comp.BufferComplete && !comp.PlayedFinaleSong)
+            else if (comp.FinaleActive && comp.FinaleTimer <= comp.FinaleSongLength && !comp.PlayedFinaleSong && !string.IsNullOrEmpty(comp.SelectedFinaleSong) && comp.BufferComplete && !comp.PlayedFinaleSong)
             {
                 _sound.DispatchStationEventMusic(uid, comp.SelectedFinaleSong, StationEventMusicType.CosmicCult);
                 comp.PlayedFinaleSong = true;

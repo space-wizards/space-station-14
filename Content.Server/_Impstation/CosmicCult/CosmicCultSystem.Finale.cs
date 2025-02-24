@@ -78,7 +78,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.FinaleReady = false;
         comp.FinaleActive = true;
         monument.Enabled = true;
-        Dirty(uid);
     }
 
     private void OnFinaleCancelDoAfter(Entity<CosmicFinaleComponent> uid, ref CancelFinaleDoAfterEvent args)
@@ -105,7 +104,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.FinaleActive = false;
         comp.FinaleReady = true;
         _appearance.SetData(uid, MonumentVisuals.FinaleReached, 1);
-        Dirty(uid);
     }
 }
 
