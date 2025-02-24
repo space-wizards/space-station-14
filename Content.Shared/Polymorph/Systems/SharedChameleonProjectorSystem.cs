@@ -299,7 +299,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         if (TryComp(comp.SourceEntity, out src))
             return true;
 
-        if (comp.SourceProto is not {} protoId)
+        if (comp.SourceProto is not { } protoId)
             return false;
 
         if (!_proto.TryIndex<EntityPrototype>(protoId, out var proto))
