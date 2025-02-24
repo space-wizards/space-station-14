@@ -1,0 +1,1 @@
+cyanide-effect-horrendously-weak = You feel horrendously weak!

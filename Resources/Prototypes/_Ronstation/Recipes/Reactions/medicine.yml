@@ -1,0 +1,55 @@
+- type: reaction
+  id: Rezadone
+  reactants:
+    CarpoToxin:
+      amount: 1
+    Spaceacillin:
+      amount: 1
+    Copper:
+      amount: 1
+  products:
+    Rezadone: 3
+
+- type: reaction
+  id: PenteticAcid
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Ammonia:
+      amount: 1
+    Sodium:
+      amount: 1
+    Cyanide:
+      amount: 1
+    Formaldehyde:
+      amount: 1
+  products:
+    PenteticAcid: 3
+
+- type: reaction
+  id: Cordrazine
+  reactants:
+    Bromine:
+      amount: 1
+    Inaprovaline:
+      amount: 1
+    Lithium:
+      amount: 1
+  products:
+    Cordrazine: 2
+
+- type: reaction
+  id: SalicylicAcid
+  reactants:
+    Oxygen:
+      amount: 2
+    Carbon:
+      amount: 2
+    Phenol:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    SalicylicAcid: 3
