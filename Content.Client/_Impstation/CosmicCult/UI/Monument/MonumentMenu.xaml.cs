@@ -106,7 +106,7 @@ public sealed partial class MonumentMenu : FancyWindow
                 Disabled = !unlocked,
                 Modulate = !unlocked ? Color.Gray : Color.White,
             };
-            button.OnPressed +=  _ => _selectedGlyphProtoId = glyph.ID;
+            button.OnPressed += _ => _selectedGlyphProtoId = glyph.ID;
             var glyphIcon = new TextureRect
             {
                 Texture = _sprite.Frame0(glyph.Icon),
