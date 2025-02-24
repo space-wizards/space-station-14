@@ -234,18 +234,6 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         return records.Records.TryGetRecordEntry(key.Id, out entry);
     }
 
-    public bool TryGetRandomRecord<T>(EntityUid stationId, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
-    {
-        entry = default;
-
-        if (!Resolve(stationId, ref records))
-            return false;
-
-        var key = _random.Pick(records.Records.Keys);
-
-        return records.Records.TryGetRecordEntry(key, out entry);
-    }
-
     /// <summary>
     /// Gets a random record from the station's record entries.
     /// </summary>
