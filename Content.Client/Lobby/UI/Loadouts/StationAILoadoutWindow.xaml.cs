@@ -23,6 +23,7 @@ public sealed partial class StationAILoadoutWindow : BaseLoadoutWindow, ILoadout
     public StationAILoadoutWindow()
     {
         RobustXamlLoader.Load(this);
+        SaveNameButton.OnPressed += args => OnValueChanged?.Invoke(new(SharedStationAiSystem.ExtraLoadoutNameId, RoleNameEdit.Text));
     }
 
     public void Refresh(HumanoidCharacterProfile? profile, RoleLoadout loadout, IPrototypeManager protoMan)
@@ -133,11 +134,5 @@ public sealed partial class StationAILoadoutWindow : BaseLoadoutWindow, ILoadout
         RoleNameEdit.Clear();
         if (loadout.ExtraData.TryGetValue(SharedStationAiSystem.ExtraLoadoutNameId, out var name))
             RoleNameEdit.SetText(name);
-
-        SaveNameButton.OnPressed += args =>
-        {
-            UserInterfaceManager.ClickSound();  // To avoid click spamming
-            OnValueChanged?.Invoke(new(SharedStationAiSystem.ExtraLoadoutNameId, RoleNameEdit.Text));
-        };
     }
 }
