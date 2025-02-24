@@ -1,7 +1,7 @@
 namespace Content.Server.VoiceTrigger;
 
 /// <summary>
-/// entities with this component, ItemSlots, and TriggerOnVoiceComponent will eject the name of the item slot spoken after the TriggerOnVoiceComponent has been activated
+/// Entities with this component, Containers, and TriggerOnVoiceComponent will insert any item or extract the spoken item after the TriggerOnVoiceComponent has been activated
 /// </summary>
 [RegisterComponent]
 public sealed partial class StorageVoiceControlComponent : Component;
