@@ -294,9 +294,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// Try to get a single component from the source entity/prototype.
     /// </summary>
-    private bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T: Component
+    private bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
     {
-        src = null;
         if (TryComp(comp.SourceEntity, out src))
             return true;
 
@@ -306,7 +305,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         if (!_proto.TryIndex<EntityPrototype>(protoId, out var proto))
             return false;
 
-        return proto.TryGetComponent(out src);
+        return proto.TryGetComponent(out src, EntityManager.ComponentFactory);
     }
 }
 
