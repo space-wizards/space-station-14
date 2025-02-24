@@ -16,7 +16,7 @@
     - id: GiftsVendingRestock
 
 # Game Rules
-    
+
 - type: entity
   id: CargoGiftsBase
   parent: BaseGameRule
@@ -192,10 +192,12 @@
     description: cargo-gift-security-guns
     dest: cargo-gift-dest-sec
     gifts:
-      SecurityArmor: 3
+      SecurityArmor: 2
+      SecurityHelmet: 2
       ArmorySmg: 1
       ArmoryShotgun: 1
       ArmoryLaser: 1
+      ArmoryRifle: 1
 
 - type: entity
   id: GiftsSecurityRiot
