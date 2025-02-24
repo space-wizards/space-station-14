@@ -62,3 +62,8 @@
   id: Honks
   files:
   - /Audio/Items/bikehorn.ogg
+
+- type: soundCollection
+  id: Vomit
+  files:
+  - /Audio/Effects/Fluids/splat.ogg
