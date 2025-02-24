@@ -86,9 +86,12 @@ internal sealed class AdminNameOverlay : Overlay
 
             var uiScale = _userInterfaceManager.RootControl.UIScale;
             var lineoffset = new Vector2(0f, 11f) * uiScale;
-            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
-                                                              new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
-                                                                  aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
+
+            // counteracts rotational misalignment to world?
+            var rotate = new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(aabb.TopRight - aabb.Center);
+            // moves the overlay to the right of the character
+            var offset = new Vector2(1f, 7f);
+            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center + rotate) + offset;
 
             if (_filter.Contains(playerInfo.RoleProto))
             {
