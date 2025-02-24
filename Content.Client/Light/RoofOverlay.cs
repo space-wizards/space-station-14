@@ -94,13 +94,15 @@ public sealed class RoofOverlay : Overlay
                     // Due to stencilling we essentially draw on unrooved tiles
                     while (tileEnumerator.MoveNext(out var tileRef))
                     {
-                        if (!_roof.IsRooved(roofEnt, tileRef.GridIndices))
+                        var color = _roof.GetColor(roofEnt, tileRef.GridIndices);
+
+                        if (color == null)
                         {
                             continue;
                         }
 
                         var local = _lookup.GetLocalBounds(tileRef, grid.Comp.TileSize);
-                        worldHandle.DrawRect(local, roof.Color);
+                        worldHandle.DrawRect(local, color.Value);
                     }
                 }
             }, null);
