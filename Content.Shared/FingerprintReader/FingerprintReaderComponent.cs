@@ -30,13 +30,13 @@ public sealed partial class FingerprintReaderComponent : Component
     /// The popup to show when access is denied due to fingerprint mismatch
     /// </summary>
     [DataField]
-    public LocId? FailPopup = "fingerprint-reader-fail";
+    public LocId? FailPopup;
 
     /// <summary>
     /// The popup to show when access is denied due to wearing gloves
     /// </summary>
     [DataField]
-    public LocId? FailGlovesPopup = "fingerprint-reader-fail-gloves";
+    public LocId? FailGlovesPopup;
 }
 
 /// <summary>

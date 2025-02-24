@@ -4,8 +4,11 @@
   id: BaseDelivery
   components:
   - type: FingerprintReader
+    failPopup: fingerprint-reader-fail
+    failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
     openSound: /Audio/Effects/unwrap.ogg
+    unlockSound: /Audio/Effects/Cargo/ping.ogg
 
 - type: entity
   parent: BaseDelivery

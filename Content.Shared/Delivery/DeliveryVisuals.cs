@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Deliveries;
+namespace Content.Shared.Delivery;
 
 [Serializable, NetSerializable]
 public enum DeliveryVisuals : byte

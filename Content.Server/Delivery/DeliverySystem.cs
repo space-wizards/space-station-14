@@ -3,19 +3,19 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Deliveries;
+using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Server.Deliveries;
+namespace Content.Server.Delivery;
 
 /// <summary>
 /// If you're reading this you're gay but server side
 /// </summary>
-public sealed class DeliveriesSystem : SharedDeliveriesSystem
+public sealed class DeliverySystem : SharedDeliverySystem
 {
     [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -59,15 +59,14 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
         if (TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
             return false;
 
-        // TODO: Separate this from the OpenSound into UnlockSound
-        _audio.PlayEntity(ent.Comp.OpenSound, user, user);
+        _audio.PlayEntity(ent.Comp.UnlockSound, user, user);
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, false);
 
         if (rewardMoney)
             GrantSpesoReward(ent.AsNullable());
 
-        _popup.PopupEntity(Loc.GetString("delivery-unlocked"), user, user);
+        _popup.PopupEntity(Loc.GetString("delivery-unlocked", ("delivery", ent)), user, user);
         Dirty(ent);
         return true;
     }
@@ -79,7 +78,7 @@ public sealed class DeliveriesSystem : SharedDeliveriesSystem
         if (ent.Comp.Wrapper != null)
             Spawn(ent.Comp.Wrapper, Transform(user).Coordinates);
 
-        _popup.PopupEntity(Loc.GetString("delivery-opened"), user, user);
+        _popup.PopupEntity(Loc.GetString("delivery-opened", ("delivery", ent)), user, user);
     }
 
     // TODO: generic updateVisuals from component data

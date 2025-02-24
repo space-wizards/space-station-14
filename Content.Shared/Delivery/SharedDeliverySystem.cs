@@ -1,12 +1,11 @@
 using Content.Shared.Examine;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Deliveries;
+namespace Content.Shared.Delivery;
 
 /// <summary>
 /// If you're reading this you're gay
 /// </summary>
-public abstract class SharedDeliveriesSystem : EntitySystem
+public abstract class SharedDeliverySystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -17,6 +16,9 @@ public abstract class SharedDeliveriesSystem : EntitySystem
 
     private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
     {
-        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", ent.Comp.RecipientName), ("job", ent.Comp.RecipientJobTitle)));
+        var jobTitle = ent.Comp.RecipientJobTitle ?? "Unknown";
+        var recipientName = ent.Comp.RecipientName ?? "Unnamed";
+
+        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
     }
 }

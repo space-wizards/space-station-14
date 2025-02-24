@@ -1,9 +1,9 @@
-using Content.Shared.Deliveries;
+using Content.Shared.Delivery;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Deliveries;
+namespace Content.Client.Delivery;
 
 public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponent>
 {

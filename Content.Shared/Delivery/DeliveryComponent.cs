@@ -2,7 +2,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Deliveries;
+namespace Content.Shared.Delivery;
 
 /// <summary>
 /// Component given to deliveries. I will write this eventually.
@@ -17,17 +17,20 @@ public sealed partial class DeliveryComponent : Component
     public int SpesoReward = 500;
 
     [DataField, AutoNetworkedField]
-    public string RecipientName = string.Empty;
+    public string? RecipientName;
 
     [DataField, AutoNetworkedField]
-    public string RecipientJobTitle = string.Empty;
+    public string? RecipientJobTitle;
 
     [DataField]
     public EntityUid RecipientStation;
 
     [DataField(required: true)]
+    public SoundSpecifier? UnlockSound;
+
+    [DataField(required: true)]
     public SoundSpecifier? OpenSound;
 
     [DataField]
-    public EntProtoId? Wrapper = "PresentTrash";
+    public EntProtoId? Wrapper;
 }

@@ -23,24 +23,37 @@ public sealed class FingerprintReaderSystem : EntitySystem
         if (!target.Comp.Enabled)
             return true;
 
+        if (target.Comp.AllowedFingerprints.Count == 0)
+            return true;
+
         // Check for gloves first
-        if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) &&
-            HasComp<FingerprintMaskComponent>(gloves) &&
-            !target.Comp.IgnoreGloves)
+        if (HasBlockingGloves(user) && !target.Comp.IgnoreGloves)
         {
             if (target.Comp.FailGlovesPopup != null)
-                _popup.PopupPredicted(Loc.GetString(target.Comp.FailGlovesPopup), user, user);
+                _popup.PopupEntity(Loc.GetString(target.Comp.FailGlovesPopup), target, user);
             return false;
         }
 
-        // Check fingerprint match
-        if (TryComp<FingerprintComponent>(user, out var fingerprint) &&
-            fingerprint.Fingerprint != null &&
-            target.Comp.AllowedFingerprints.Contains(fingerprint.Fingerprint))
-            return true;
 
-        if (target.Comp.FailPopup != null)
-            _popup.PopupPredicted(Loc.GetString(target.Comp.FailPopup), user, user);
+        // Check fingerprint match
+        if (!TryComp<FingerprintComponent>(user, out var fingerprint) || fingerprint.Fingerprint == null ||
+            !target.Comp.AllowedFingerprints.Contains(fingerprint.Fingerprint))
+        {
+            if (target.Comp.FailPopup != null)
+                _popup.PopupEntity(Loc.GetString(target.Comp.FailPopup), target, user);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks whether the user has gloves that block fingerprints
+    /// </summary>
+    public bool HasBlockingGloves(EntityUid user)
+    {
+        if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<FingerprintMaskComponent>(gloves))
+            return true;
 
         return false;
     }
