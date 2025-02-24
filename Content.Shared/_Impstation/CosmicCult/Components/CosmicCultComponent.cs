@@ -93,7 +93,7 @@ public sealed partial class CosmicCultComponent : Component
     public DamageSpecifier CosmicSiphonDamage = new()
     {
         DamageDict = new() {
-            { "Asphyxiation", 22 }
+            { "Asphyxiation", 15 }
         }
     };
     #endregion

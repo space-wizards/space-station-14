@@ -100,7 +100,7 @@ public sealed partial class MonumentMenu : FancyWindow
             {
                 HorizontalExpand = true,
                 StyleClasses = { StyleBase.ButtonSquare },
-                ToolTip = Loc.GetString(glyph.Name),
+                ToolTip = Loc.GetString(glyph.Tooltip),
                 Group = _glyphButtonGroup,
                 Pressed = glyph.ID == _selectedGlyphProtoId,
                 Disabled = !unlocked,
@@ -122,9 +122,9 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the influence thingies
     private void UpdateInfluences()
     {
-        var influences = _influencePrototypes.ToList();
-        influences.Sort((x, y) =>
-            string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
+        var influences = _influencePrototypes
+            .OrderByDescending(influence => _unlockedInfluenceProtoIds.Contains(influence.ID))
+            .ThenBy<InfluencePrototype, string>(influence => influence.Name);
 
         InfluencesContainer.RemoveAllChildren();
         foreach (var influence in influences)
@@ -132,16 +132,7 @@ public sealed partial class MonumentMenu : FancyWindow
             var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
             var influenceBox = new InfluenceUIBox(influence, unlocked);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            if (unlocked == true)
-                InfluencesContainer.AddChild(influenceBox);
-        }
-        foreach (var influence in influences) // I'm sure there's a better way to order them by being Unlocked / Locked, but i've been told to just loop through 'em twice. So we're going with that
-        {
-            var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
-            var influenceBox = new InfluenceUIBox(influence, unlocked);
-            influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            if (unlocked == false)
-                InfluencesContainer.AddChild(influenceBox);
+            InfluencesContainer.AddChild(influenceBox);
         }
     }
 }

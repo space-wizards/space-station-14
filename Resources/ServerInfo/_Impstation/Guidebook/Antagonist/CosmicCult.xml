@@ -1,5 +1,5 @@
 <Document>
-  # Cosmic Cult
+  # The Cosmic Cult
 
   <Box>
     [color=#999999][italic]"A revelation beyond compare. An end to cyclic, sisyphean suffering."[/italic][/color]
@@ -19,13 +19,14 @@
   - [color=#4cabb3][bold]Siphon Entropy[/bold][/color]  - Collectively siphon a certain amount of Entropy from the crew. The more entropy you siphon, the more you can empower the Monument!
 
   Progress towards objectives is shared by the entire cult.
-  [bold]Crewmembers are your source of power, whole and entire[/bold]. Crewmembers must be alive for you to [color=[#4](#4)cabb3]Siphon Entropy[/color] from them, and converting crewmembers also makes it easier to complete your objectives.
+  [bold]Crewmembers are your source of power, whole and entire[/bold]. Crewmembers must be alive for you to [color=#4cabb3]Siphon Entropy[/color] from them, and converting crewmembers also makes it easier to complete your objectives.
   For this reason, it is often in your best interests to ensure the crew is kept [italic]alive[/italic] - at least for as long as is relevant to your goals.
 
   ## Entropy
 
   All cultists start with two abilities, or [color=#4cabb3][bold]Influences[/bold][/color] - one of which is called [italic][color=#4cabb3]Siphon Entropy[/color][/italic].
   This is your bread and butter as a cosmic cultist, and you'll want to use it as often as possible. Using Siphon Entropy on an unsuspecting crewmember will, after a stealthy interaction, award you a [color=#4cabb3]Mote of Entropy[/color].
+  This will sap a portion of the crewmember's health, so choose your opportunities wisely! Though it may not be obvious you've siphoned them, they'll certainly feel its effects.
   Entropy can be held in stacks of up to six, and is vital to empowering the Monument.
 
   <Box>
@@ -56,7 +57,7 @@
 
   Entropy may be Infused into The Monument to empower it, and afford the cultist doing so a small measure of investiture into the Monument's power. Infuse enough entropy, and you'll be able to gain ever more powerful [color=#4cabb3][bold]Influences[/bold][/color].
 
-  As you infuse the Monument with entropy, the cult will collectively gain access to more[color=#4cabb3][bold]Influences[/bold][/color] and [color=#4cabb3][bold]Glyphs[/bold][/color], which can be attained by interacting with the Monument.
+  As you infuse the Monument with entropy, the cult will collectively gain access to more [color=#4cabb3][bold]Influences[/bold][/color] and [color=#4cabb3][bold]Glyphs[/bold][/color], which can be attained by interacting with the Monument.
 
   Should you succeed in fully empowering the Monument, it will hunger for one last threshold of entropy - fuel to feed the final curtain call. Once enough entropy has been infused, the empowered Monument will become active, signifying the beginning of the end.
   Be prepared to defend the Monument when doing so, as just one waylaid action from a single disruptive soul is all it will take to bring this ritual to a sudden, unceremonious halt.

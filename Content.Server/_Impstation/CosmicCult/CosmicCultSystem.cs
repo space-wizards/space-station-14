@@ -20,6 +20,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Server.AlertLevel;
+using Content.Shared.SSDIndicator;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -101,6 +102,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 var mind = Comp<MindComponent>(mindEnt);
                 mind.PreventGhosting = false;
                 _mind.TransferTo(mindEnt, comp.OriginalBody);
+                EnsureComp<SSDIndicatorComponent>(comp.OriginalBody);
                 RemComp<CosmicMarkBlankComponent>(comp.OriginalBody);
                 _popup.PopupEntity(Loc.GetString("cosmicability-blank-return"), comp.OriginalBody, comp.OriginalBody);
                 QueueDel(uid);

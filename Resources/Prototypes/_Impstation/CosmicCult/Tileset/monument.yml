@@ -5,7 +5,7 @@
   abstract: true
   parent: BaseStructure
   id: MonumentCosmicCultBase
-  name: Cosmic Monument
+  name: The Monument
   description: A great slab of unknowledge, only visible to those aware of it. Built of a thousand little nothings, its surface reflects a starless emptiness...
   components:
   - type: Visibility
@@ -100,9 +100,9 @@
     percentageComplete: 0
   - type: GuideHelp
     guides:
-    - AnomalousResearch
+    - CosmicCult
   - type: WarpPoint
-    location: the monument
+    location: The Monument
   - type: CosmicMarkStructure
   - type: CosmicCorrupting
     corruptionGrowth: true

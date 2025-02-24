@@ -1,0 +1,41 @@
+<Document>
+  # Deconversion
+  <Box>
+    <GuideEntityEmbed Entity="Bible" Caption=""/>
+  </Box>
+
+  When mounting an effort to thwart the [color=#4cabb3]Cosmic Cult[/color], there are several methods the crew might employ to ensure their survival and safety. One of these methods is [color=Yellow]Deconversion[/color].
+
+  To [color=Yellow]Deconvert[/color] a cosmic cultist, two methods can be employed. The first is by having a cultist drink [italic]Holy Water[/italic] — by force, if neccesary. Holy Water can be procured from:
+  - Shipments of Religious Supplies, available from Cargo. These contain two jugs of Holy Water, as well as a Bible.
+  - Usage of a Bible by a Chaplain on most containers of water will bless the water, turning it into Holy Water.
+  - Usage of a Gildgrail by a Chaplain to Swirl its contents will bless any water inside the Gildgrail, turning it into Holy Water.
+  <Box>
+    <GuideEntityEmbed Entity="NullRodRosary" Caption=""/>
+  </Box>
+  Alternatively, Chaplains posessed of a [color=Yellow]Silvered Rosary[/color] may channel their divine spark though it by simply holding it in their hand and interacting with anyone they suspect of being a cultist.
+  On a successful interaction, the target will be instantaneously [color=Yellow]Deconverted[/color].
+
+  ## Suppression Methods
+  <Box>
+    <GuideEntityEmbed Entity="NullRodDefault" Caption=""/>
+    <GuideEntityEmbed Entity="NullRodGrail" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="Bible" Caption=""/>
+    <GuideEntityEmbed Entity="MindShieldImplanter" Caption=""/>
+  </Box>
+
+  Deconversion is but one method for dealing with an encroaching cult. Crew aboard the station, if aware of a cult's presence aboard, may alternatively wish to invest in [color=Green]Mindshield[/color] implanters.
+  These state-of-the-art devices can outright prevent outside influences from brainwashing crewmembers, providing a powerful preventative measure against the cult's influence.
+
+  The [color=Yellow]Chaplain[/color]'s devotion renders them [italic]Immune[/italic] to nearly all of the cosmic cult's powers.
+  The Chaplain's Null Rod and its transformations can be a useful tool - or powerful weapon - against the cosmic cult.
+
+  <Box>
+    <GuideEntityEmbed Entity="CosmicMalignRift" Caption=""/>
+  </Box>
+
+  Should the cult nevertheless grow in power, crewmembers may begin to come across numerous [color=#4cabb3]Malign Rifts[/color] scattered throughout the station.
+  These may be purged through the use of a [color=Yellow]Bible[/color] or a [color=Yellow]Gildgrail[/color], with the latter of the two doing so much faster. Take note that [bold]all crewmembers[/bold] can use a [color=Yellow]Bible[/color] to purge [color=#4cabb3]Malign Rifts[/color].
+</Document>

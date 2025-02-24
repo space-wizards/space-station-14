@@ -31,6 +31,7 @@ using Content.Server.Flash;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Events;
+using Content.Shared.SSDIndicator;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -118,8 +119,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         {
             if (target.AttachedEntity is { } entity)
             {
-                if (HasComp<CosmicCultComponent>(entity) || HasComp<BibleUserComponent>(entity))
-                    return;
                 var hitPos = _transform.GetMapCoordinates(entity).Position;
                 var delta = hitPos - mapPos.Position;
                 if (delta == Vector2.Zero)
@@ -127,11 +126,19 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 if (delta.EqualsApprox(Vector2.Zero))
                     delta = new(.01f, 0);
 
-                _recoil.KickCamera(entity, -delta.Normalized());
-                if (!uid.Comp.CosmicEmpowered)
-                    _flash.Flash(entity, uid, args.Action, 6 * 1000f, 0.5f);
-                else
-                    _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
+                if (!HasComp<CosmicCultComponent>(entity) || !HasComp<BibleUserComponent>(entity))
+                {
+                    if (!uid.Comp.CosmicEmpowered)
+                    {
+                        _recoil.KickCamera(entity, -delta.Normalized());
+                        _flash.Flash(entity, uid, args.Action, 6 * 1000f, 0.5f);
+                    }
+                    else
+                    {
+                        _recoil.KickCamera(entity, -delta.Normalized());
+                        _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
+                    }
+                }
             }
         }
 
@@ -269,6 +276,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         Log.Debug($"Sending {mindContainer.Mind} to the cosmic void!");
         EnsureComp<CosmicMarkBlankComponent>(target);
+        RemComp<SSDIndicatorComponent>(target);
 
         _popup.PopupEntity(Loc.GetString("cosmicability-blank-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
         var tgtpos = Transform(target).Coordinates;
@@ -398,7 +406,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var mind = Comp<MindComponent>(mindId);
         mind.PreventGhosting = false;
         QueueDel(uid);
-        RemComp<CosmicMarkBlankComponent>(args.Performer);
+        RemComp<CosmicMarkBlankComponent>(uid.Comp.OriginalBody);
+        EnsureComp<SSDIndicatorComponent>(uid.Comp.OriginalBody);
     }
     #endregion
 
