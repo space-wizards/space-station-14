@@ -68,3 +68,23 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["clown.ogg"]
+  license: "Custom"
+  copyright: "Originally composed by Jonathan Dunn for Robocop 2 Gameboy published by Ocean Software. Remixed by Eric Shumaker for his video Dilbert 3. As of October 9th, 2008 nobody owns the rights to this song and copyright action has never been taken against anyone using this song in their projects. Remixed at some point again and uploaded to /tg/'s spare assets."
+  source: "https://github.com/tgstation/SS13-assets/blob/961db3b43eb68118e7876bdcced3ffa3d8205aef/sound/lobby_music/clown.ogg"
+
+- files: ["AmazingHonks.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Amazing Honks by Cuboos"
+  source: "https://github.com/tgstation/SS13-assets/tree/961db3b43eb68118e7876bdcced3ffa3d8205aef/sound/music"
+
+- files: ["Baby_its_honk_outside.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Baby it's honk outside by Cuboos"
+  source: "https://github.com/tgstation/SS13-assets/tree/961db3b43eb68118e7876bdcced3ffa3d8205aef/sound/music"
+
+- files: ["JingleHorns.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Jingle Horns by Cuboos"
+  source: "https://github.com/tgstation/SS13-assets/tree/961db3b43eb68118e7876bdcced3ffa3d8205aef/sound/music"
