@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 02/24/2025 20:47:57
-  entityCount: 7589
+  time: 02/24/2025 23:20:20
+  entityCount: 7590
 maps:
 - 1
 grids:
@@ -2518,7 +2518,7 @@ entities:
       pos: 27.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -20747.25
+      secondsUntilStateChange: -20793.352
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2568,7 +2568,7 @@ entities:
       pos: 16.5,25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13727.519
+      secondsUntilStateChange: -13773.619
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2579,7 +2579,7 @@ entities:
       pos: 16.5,24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13725.852
+      secondsUntilStateChange: -13771.952
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2806,7 +2806,7 @@ entities:
       pos: 5.5,26.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -100918.92
+      secondsUntilStateChange: -100965.02
       state: Opening
     - type: DeviceLinkSource
       linkedPorts:
@@ -3230,7 +3230,7 @@ entities:
       pos: 43.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -82196.914
+      secondsUntilStateChange: -82243.016
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3321,7 +3321,7 @@ entities:
       pos: 13.5,28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13724.651
+      secondsUntilStateChange: -13770.752
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14703,6 +14703,13 @@ entities:
     components:
     - type: Transform
       pos: 24.5,9.5
+      parent: 2
+- proto: ChemistryHotplate
+  entities:
+  - uid: 2526
+    components:
+    - type: Transform
+      pos: 26.5,10.5
       parent: 2
 - proto: ChemMaster
   entities:
