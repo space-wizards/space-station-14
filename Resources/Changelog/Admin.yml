@@ -798,5 +798,19 @@ Entries:
   id: 99
   time: '2025-02-18T10:26:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35239
+- author: Winkarst-cpu
+  changes:
+  - message: Added admin only messages in AHelp.
+    type: Add
+  id: 100
+  time: '2025-02-22T17:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35283
+- author: sowelipililimute
+  changes:
+  - message: Added the ability to use tertiary headers in the guidebook
+    type: Add
+  id: 101
+  time: '2025-02-23T18:48:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35315
 Name: Admin
 Order: 1

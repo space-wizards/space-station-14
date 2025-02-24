@@ -298,7 +298,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
                 else
                 {
-                    OpenStorageUI(uid, args.User, component);
+                    OpenStorageUI(uid, args.User, component, false);
                 }
             }
         };
@@ -429,7 +429,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            OpenStorageUI(uid, args.User, storageComp);
+            OpenStorageUI(uid, args.User, storageComp, false);
         }
 
         args.Handled = true;
