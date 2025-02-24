@@ -299,7 +299,6 @@ namespace Content.Server.Forensics
             if (TryComp<FingerprintComponent>(user, out var fingerprint))
             {
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
-                Dirty(user, fingerprint);
             }
         }
 
