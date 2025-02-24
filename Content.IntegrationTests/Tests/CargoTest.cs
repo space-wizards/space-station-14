@@ -65,7 +65,7 @@ public sealed class CargoTest
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapSystem = server.ResolveDependency<SharedMapSystem>();
+        var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
 
@@ -149,7 +149,7 @@ public sealed class CargoTest
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapSystem = server.ResolveDependency<SharedMapSystem>();
+        var mapSystem = server.System<SharedMapSystem>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var componentFactory = server.ResolveDependency<IComponentFactory>();
