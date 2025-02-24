@@ -8,5 +8,4 @@ public sealed class EnterCryostorageEvent(EntityUid user) : EntityEventArgs, IIn
     public SlotFlags TargetSlots { get; } = ~SlotFlags.WITHOUT_POCKET;
 
     public EntityUid User = user;
-
 }
