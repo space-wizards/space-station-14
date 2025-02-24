@@ -23,3 +23,30 @@
   itemDrop: FloorTileItemXeno
   friction: 0.05 #slippy
   heatCapacity: 10000
+
+- type: tile
+  id: RedWater
+  name: tiles-red-water
+  sprite: /Textures/_Harmony/Tiles/redwater.png
+  variants: 16
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  weather: true
+  indestructible: true

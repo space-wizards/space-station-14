@@ -65,8 +65,9 @@ namespace Content.IntegrationTests.Tests
             "Xeno", // Xeno map playtest
             "Barratry", // Update of old map
             "dm01-entryway", // deathmatch PROMOD map
+            "dm02-sandbomb", // deathmatch PROMOD map, Harmony change
             "Aspid", // Pseudo playtest, not merged to upstream yet.
-			"Atlas", // Update of Atlas. Back from the grave!
+            "Atlas", // Update of Atlas. Back from the grave!
             "Gate",
             "Amber",
             "Loop",
