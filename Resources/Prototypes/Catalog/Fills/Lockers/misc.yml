@@ -71,7 +71,7 @@
         - id: ClothingOuterSuitEmergency
         - !type:GroupSelector
           children:
-          - id: EmergencyOxyegnTankFilled
+          - id: EmergencyOxygenTankFilled
           - id: OxygenTankFilled
         - !type:GroupSelector
           children:
