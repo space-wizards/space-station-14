@@ -41,3 +41,7 @@
       tags:
       - HighRiskItem # no hiding objectives or trolling nukies
       - FakeNukeDisk # no disk checking
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
