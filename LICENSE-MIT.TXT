@@ -1,6 +1,7 @@
 MIT License
 
 Copyright (c) 2017-2025 Space Wizards Federation
+Copyright (c) 2023-2025 Ronstation Team and other contributors (Applies to any Ronstation-specific content contributed to this repository before the switch to AGPL. See LEGAL.md for more information.)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
