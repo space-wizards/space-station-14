@@ -30,12 +30,37 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     public List<IChatCondition> PublishChatConditions = new();
 
     /// <summary>
-    /// A collection of consumer conditions and applicable markup tags.
+    /// The conditions required for a session (i.e. client) to be allowed to consume a message from this communication channel.
     /// Clients/entities prioritize the ConsumeCollections in order; if a consumer is a'ctive in a collection it will not be included in any subsequent collections in the list.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    [AlwaysPushInheritance]
+    public List<IChatCondition> ConsumeChatConditions = new();
+
+    /// <summary>
+    /// Contains modifiers that are applied on the server.
+    /// Avoid including text nodes or direct text changes/formatting unless necessary for security reasons.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public List<ConsumeCollection> ConsumeCollections = new();
+    public List<ChatModifier> ServerModifiers = new();
+
+    /// <summary>
+    /// A collection of conditions and applicable modifiers.
+    /// If a condition is met, the corresponding modifier(s) will be applied to the message AFTER the ServerModifiers.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public List<ConsumeCollection> ConditionalModifiers = new();
+
+    /// <summary>
+    /// Contains modifiers that are applied and processed on the client.
+    /// Clientsided ChatModifiers may provide text nodes and include text formatting;
+    /// because of this, attention should be paid to the list order to ensure the correct order of operations.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public List<ChatModifier> ClientModifiers = new();
 
     /// <summary>
     /// The kind of chat filter this channel works under; used to filter chat clientside.
@@ -75,15 +100,6 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     [DataField]
     [AlwaysPushInheritance]
     public List<ProtoId<CommunicationChannelPrototype>>? BackupChildCommunicationChannels;
-
-    /// <summary>
-    /// Contains markup node suppliers that are applied and processed on the client.
-    /// Clientsided ChatModifiers may provide text nodes and include text formatting;
-    /// because of this, attention should be paid to the list order to ensure the correct order of operations.
-    /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public List<ChatModifier> ClientModifiers = new();
 
     /// <summary>
     /// If true, any message published to this channel won't show up in the chatbox.

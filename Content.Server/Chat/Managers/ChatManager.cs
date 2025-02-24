@@ -356,96 +356,122 @@ internal sealed partial class ChatManager : IChatManager
         #region Consumers
 
         // This section handles sending out the message to consumers, whether that be sessions or entities.
-        // This is done via consume collections; a consume collection contains a list of conditions for sessions and entities,
-        // as well as chat modifiers that change the message clientside.
+        // This is done via consume conditions. Conditional modifiers may also be applied here for a subset of consumers.
 
-        // Sessions/Entities are processed via the first consume collection they meet the conditions for;
-        // therefore, they should be exempt from any subsequent consume collections.
-        var exemptSessions = new HashSet<ICommonSession>();
-        var exemptEntities = new HashSet<EntityUid>();
-
-        foreach (var consumeCollection in communicationChannel.ConsumeCollections)
+        // Evaluate what clients should consume this message.
+        var baseConsumerCondition = new AnyChatCondition(communicationChannel.ConsumeChatConditions);
+        var filteredConsumers = new HashSet<ICommonSession>();
+        var commonSessions = targetSessions ?? _playerManager.NetworkedSessions.ToHashSet();
+        foreach (var commonSession in commonSessions)
         {
-            var eligibleConsumerSessions = new HashSet<ICommonSession>();
-
-            if (consumeCollection.Conditions.Count > 0)
+            if (baseConsumerCondition.Check(new ChatMessageConditionSubject(commonSession),
+                    compiledChannelParameters))
             {
-                // The list of chat conditions is made into its own chat condition here to more easily evaluate it iteratively.
-                var baseChatCondition = new AnyChatCondition(consumeCollection.Conditions);
+                filteredConsumers.Add(commonSession);
+            }
+        }
 
-                var filteredConsumers = new HashSet<ICommonSession>();
-                var commonSessions = targetSessions ?? _playerManager.NetworkedSessions.ToHashSet();
-                foreach (var commonSession in commonSessions)
+        // Conditional modifiers
+        // Modifiers necessitate sending different messages to groups of clients. Therefore, if there are any
+        // that need to be applied, the consumers are split off into separate consumer groups which each apply the list of modifiers.
+        Dictionary<HashSet<ICommonSession>, List<ChatModifier>> chatConsumerGroups = new();
+        EvaluateConditionalModifiers(filteredConsumers, 0, new List<ChatModifier>());
+
+        // CHAT-TODO: Figure how to get this no longer be a local function.
+        void EvaluateConditionalModifiers(HashSet<ICommonSession> sessions, int index, List<ChatModifier> inheritedModifiers)
+        {
+            for (var i = index; i < communicationChannel.ConditionalModifiers.Count; i++)
+            {
+                var baseChatCondition =
+                    new AnyChatCondition(communicationChannel.ConditionalModifiers[i].Conditions);
+
+                var filteredModifierConsumers = new HashSet<ICommonSession>();
+
+                foreach (var commonSession in sessions)
                 {
                     if (baseChatCondition.Check(new ChatMessageConditionSubject(commonSession),
                             compiledChannelParameters))
                     {
-                        filteredConsumers.Add(commonSession);
+                        filteredModifierConsumers.Add(commonSession);
                     }
                 }
 
-                if (filteredConsumers.Count > 0)
-                    eligibleConsumerSessions = filteredConsumers;
+                if (filteredConsumers.Count != 0)
+                {
+                    sessions.ExceptWith(filteredModifierConsumers);
+                    var compiledModifiers = new List<ChatModifier>(inheritedModifiers);
+                    compiledModifiers.AddRange(communicationChannel.ConditionalModifiers[i].Modifiers);
+                    EvaluateConditionalModifiers(filteredModifierConsumers, i + 1, compiledModifiers);
+                }
 
-                eligibleConsumerSessions.ExceptWith(exemptSessions);
-                exemptSessions.UnionWith(eligibleConsumerSessions);
+                if (sessions.Count == 0)
+                    return;
             }
+            if (sessions.Count != 0)
+                chatConsumerGroups.Add(sessions, inheritedModifiers);
+        }
 
-            // Next, we apply any ChatModifiers from the collection.
-            var consumerMessage = message;
-            foreach (var chatModifier in consumeCollection.Modifiers)
+        // No one heard a thing CHAT-TODO: Make sure to cover for objects!!
+        if (chatConsumerGroups.Count == 0)
+            return;
+
+        // First, we apply all serverside modifiers that are unconditionally applied.
+        foreach (var chatModifier in communicationChannel.ServerModifiers)
+        {
+            chatModifier.ProcessChatModifier(ref message, compiledChannelParameters);
+        }
+
+        foreach (var chatConsumerGroup in chatConsumerGroups)
+        {
+            // Next, we apply any ConditionalModifiers for the consumer group.
+            var consumerMessage = new FormattedMessage(message);
+            foreach (var chatModifier in chatConsumerGroup.Value)
             {
                 chatModifier.ProcessChatModifier(ref consumerMessage, compiledChannelParameters);
             }
 
-            // Comment: I don't know whether there will ever be a ContentMarkupTag that /needs/ to be done serverside.
-            // Any such behavior could just as well be done via a ChatModifier.
-            // So for now we're commenting it out:
+            // Off the message goes!
+            ChatFormattedMessageToHashset(
+                consumerMessage,
+                communicationChannel,
+                chatConsumerGroup.Key.Select(x => x.Channel),
+                senderEntity ?? EntityUid.Invalid,
+                communicationChannel.HideChat,
+                true //CHAT-TODO: Process properly
+            );
 
-            // consumerMessage = _contentMarkupTagManager.ProcessMessage(consumerMessage);
-
-            if (eligibleConsumerSessions.Count != 0)
-            {
-                // Off the message goes!
-                ChatFormattedMessageToHashset(
-                    consumerMessage,
-                    communicationChannel,
-                    eligibleConsumerSessions.Select(x => x.Channel),
-                    senderEntity ?? EntityUid.Invalid,
-                    communicationChannel.HideChat,
-                    true //CHAT-TODO: Process properly
-                );
-            }
-
-            // Send out the message to any listening entities as well.
-            if (consumeCollection.Conditions.Count > 0)
-            {
-                var getListenerEv = new GetListenerConsumerEvent();
-                _entityManager.EventBus.RaiseEvent(EventSource.Local, ref getListenerEv);
-
-                var baseEntityChatCondition = new AnyChatCondition(consumeCollection.Conditions);
-
-                var filteredEntities = new HashSet<EntityUid>();
-                foreach (var entityUid in getListenerEv.Entities)
-                {
-                    if (baseEntityChatCondition.Check(new ChatMessageConditionSubject(entityUid), compiledChannelParameters))
-                    {
-                        filteredEntities.Add(entityUid);
-                    }
-                }
-
-                filteredEntities.ExceptWith(exemptEntities);
-                exemptEntities.UnionWith(filteredEntities);
-
-                foreach (var consumerEntity in filteredEntities)
-                {
-                    var listenerConsumeEv =
-                        new ListenerConsumeEvent(communicationChannel.ChatMedium, consumerMessage, compiledChannelParameters);
-
-                    _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
-                }
-            }
+            //Logger.Debug(consumerMessage.ToMarkup());
         }
+
+        /* CHAT-TODO: get this part working.
+        // Send out the message to any listening entities as well.
+        if (consumeCollection.Conditions.Count > 0)
+        {
+            var getListenerEv = new GetListenerConsumerEvent();
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, ref getListenerEv);
+
+            var baseEntityChatCondition = new AnyChatCondition(consumeCollection.Conditions);
+
+            var filteredEntities = new HashSet<EntityUid>();
+            foreach (var entityUid in getListenerEv.Entities)
+            {
+                if (baseEntityChatCondition.Check(new ChatMessageConditionSubject(entityUid), compiledChannelParameters))
+                {
+                    filteredEntities.Add(entityUid);
+                }
+            }
+
+            filteredEntities.ExceptWith(exemptEntities);
+            exemptEntities.UnionWith(filteredEntities);
+
+            foreach (var consumerEntity in filteredEntities)
+            {
+                var listenerConsumeEv =
+                    new ListenerConsumeEvent(communicationChannel.ChatMedium, consumerMessage, compiledChannelParameters);
+
+                _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
+            }
+        */
 
         #endregion
     }

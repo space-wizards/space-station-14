@@ -37,7 +37,6 @@ public sealed partial class RangeChatCondition : ChatCondition
                 if (transform.MapID != sourceTransform.MapID)
                     return false;
 
-                Logger.Debug("wph");
                 // If you wanted to do something like a hard-of-hearing trait, our hearing extension component,
                 // this is probably where you'd check for it.
 
@@ -48,13 +47,11 @@ public sealed partial class RangeChatCondition : ChatCondition
                     distance < MaximumRange &&
                     distance >= MinimumRange)
                 {
-                    Logger.Debug("wrh");
                     return true;
                 }
             }
         }
 
-        Logger.Debug("wzh");
         return false;
     }
 

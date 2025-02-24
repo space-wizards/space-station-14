@@ -17,7 +17,6 @@ public sealed partial class IsGhostChatCondition : ChatCondition
     {
         IoCManager.InjectDependencies(this);
 
-        Logger.Debug("weh");
         return _entityManager.HasComponent<GhostComponent>(subjectEntity);
     }
 
@@ -25,7 +24,6 @@ public sealed partial class IsGhostChatCondition : ChatCondition
     {
         IoCManager.InjectDependencies(this);
 
-        Logger.Debug("wah");
         return _entityManager.HasComponent<GhostComponent>(subjectSession.AttachedEntity);
     }
 }
