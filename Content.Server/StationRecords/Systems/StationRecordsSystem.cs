@@ -248,6 +248,9 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
+        if (ent.Comp.Records.Keys.Count == 0)
+            return false;
+
         var key = _random.Pick(ent.Comp.Records.Keys);
 
         return ent.Comp.Records.TryGetRecordEntry(key, out entry);
