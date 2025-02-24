@@ -316,9 +316,12 @@
   - type: Sprite
     sprite: Mobs/Silicon/ai-screen.rsi
     layers:
-    - state: base
-    - state: ai
+    - state: empty
+      map: ["enum.StationAiVisualState.Key"]
       shader: unshaded
+    - state: base
+  - type: StationAiCore
+  - type: Appearance
 
 - type: entity
   id: PlayerStationAiEmpty
