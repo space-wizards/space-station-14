@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
@@ -13,7 +12,6 @@ namespace Content.Server.Administration.Commands
     sealed class SetMindCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public string Command => "setmind";
 
@@ -81,8 +79,7 @@ namespace Content.Server.Administration.Commands
         {
             if (args.Length == 2)
             {
-                var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return CompletionResult.FromHintOptions(options, "username");
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), "username");
             }
 
             return CompletionResult.Empty;
