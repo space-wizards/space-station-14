@@ -63,9 +63,10 @@ namespace Content.Server.Forensics
             ApplyEvidence(uid, args.Other);
         }
 
-        private void OnFingerprintInit(EntityUid uid, FingerprintComponent component, MapInitEvent args)
+        private void OnFingerprintInit(Entity<FingerprintComponent> ent, ref MapInitEvent args)
         {
-            component.Fingerprint = GenerateFingerprint();
+            ent.Comp.Fingerprint = GenerateFingerprint();
+            Dirty(ent);
         }
 
         private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
@@ -294,8 +295,12 @@ namespace Content.Server.Forensics
                 if (HasComp<FingerprintMaskComponent>(gloves))
                     return;
             }
+
             if (TryComp<FingerprintComponent>(user, out var fingerprint))
+            {
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+                Dirty(user, fingerprint);
+            }
         }
 
         private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
