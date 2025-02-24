@@ -1,14 +1,13 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Forensics.Components
+namespace Content.Shared.Forensics.Components;
+
+/// <summary>
+/// This component is for mobs that leave fingerprints.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class FingerprintComponent : Component
 {
-    /// <summary>
-    /// This component is for mobs that leave fingerprints.
-    /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    public sealed partial class FingerprintComponent : Component
-    {
-        [DataField, AutoNetworkedField]
-        public string? Fingerprint;
-    }
+    [DataField, AutoNetworkedField]
+    public string? Fingerprint;
 }

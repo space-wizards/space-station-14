@@ -10,19 +10,19 @@ public sealed partial class ItemSizePrototype : IPrototype, IComparable<ItemSize
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The amount of space in a bag an item of this size takes.
     /// </summary>
     [DataField]
-    public readonly int Weight = 1;
+    public int Weight = 1;
 
     /// <summary>
     /// A player-facing name used to describe this size.
     /// </summary>
     [DataField]
-    public readonly LocId Name;
+    public LocId Name;
 
     /// <summary>
     /// The default inventory shape associated with this item size.

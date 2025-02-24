@@ -10,7 +10,7 @@ public sealed partial class ContrabandSeverityPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Text shown for this severity level when the contraband is examined.
