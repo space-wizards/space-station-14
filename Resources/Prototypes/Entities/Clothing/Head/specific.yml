@@ -40,4 +40,4 @@
     blacklist:
       tags:
       - HighRiskItem # no hiding objectives or trolling nukies
-      - NukeDiskFake # no disk checking
+      - FakeNukeDisk # no disk checking
