@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: It is no longer impossible to do bounties other than the first one if
-      the server has been up for a long period of time.
-    type: Fix
-  id: 7500
-  time: '2024-10-10T14:35:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32700
 - author: pheenty
   changes:
   - message: Quartermaster now has external access
@@ -3893,3 +3885,10 @@
   id: 7999
   time: '2025-02-23T23:29:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35322
+- author: metalgearsloth
+  changes:
+  - message: Fix arrivals.
+    type: Fix
+  id: 8000
+  time: '2025-02-24T09:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35439
