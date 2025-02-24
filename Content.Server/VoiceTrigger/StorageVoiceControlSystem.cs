@@ -32,7 +32,7 @@ public sealed class StorageVoiceControlSystem : EntitySystem
 
     private void VoiceTriggered(Entity<StorageVoiceControlComponent> ent, ref VoiceTriggeredEvent args)
     {
-        // Don't do anything if there is no message.
+        // Don't do anything if there is no message
         if (args.Message == null)
             return;
 
@@ -45,7 +45,6 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             return;
 
         // If the player has something in their hands, try to insert it into the storage
-        // TODO: The player could have something in their hands like a tool, but they really requested an item from storage, so this logic is flawed
         if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue)
         {
             if (_storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out var failedReason))
@@ -58,9 +57,8 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             {
                 // Tell the player the reason why the item couldn't be inserted
                 if (failedReason != null)
-                    _popup.PopupEntity(Loc.GetString(failedReason), ent);
+                    _popup.PopupEntity(Loc.GetString(failedReason), ent, args.Source);
                     _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
-
             }
             return;
         }

@@ -37,3 +37,7 @@
     grid:
     - 0,0,6,3
     maxItemSize: Small
+    blacklist:
+      tags:
+      - HighRiskItem # no hiding objectives or trolling nukies
+      - NukeDiskFake # no disk checking
