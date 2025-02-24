@@ -9,7 +9,7 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class PowerGridCheckRuleComponent : Component
 {
     /// <summary>
-    /// Default power on announcement sound.
+    /// Default sound of the announcement when power is back on.
     /// </summary>
     private static readonly ProtoId<SoundCollectionPrototype> DefaultPowerOn = new("PowerOn");
 
