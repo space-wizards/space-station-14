@@ -612,7 +612,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
-        /// Splits a solution without the specified reagent prototypes.
+        /// Splits a solution with only the specified reagent prototypes.
         /// </summary>
         public Solution SplitSolutionWithOnly(FixedPoint2 toTake, params string[] includedPrototypes)
         {

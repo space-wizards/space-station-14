@@ -230,7 +230,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
-                dungeons.Add(await GenerateFillDunGen(data, reservedTiles));
+                dungeons.Add(await GenerateFillDunGen(fill, data, reservedTiles));
                 break;
             case JunctionDunGen junc:
                 await PostGen(junc, data, dungeons[^1], reservedTiles, random);

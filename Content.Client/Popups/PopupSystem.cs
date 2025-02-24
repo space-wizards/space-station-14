@@ -123,6 +123,12 @@ namespace Content.Client.Popups
                 PopupMessage(message, type, coordinates, null, true);
         }
 
+        public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
+        }
+
         private void PopupCursorInternal(string? message, PopupType type, bool recordReplay)
         {
             if (message == null)
@@ -148,7 +154,12 @@ namespace Content.Client.Popups
         }
 
         public override void PopupCursor(string? message, PopupType type = PopupType.Small)
-            => PopupCursorInternal(message, type, true);
+        {
+            if (!_timing.IsFirstTimePredicted)
+                return;
+
+            PopupCursorInternal(message, type, true);
+        }
 
         public override void PopupCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
         {

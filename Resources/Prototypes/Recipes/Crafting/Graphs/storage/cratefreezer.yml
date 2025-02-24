@@ -1,0 +1,42 @@
+- type: constructionGraph
+  id: CrateFreezer
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 5
+      - material: Cable
+        amount: 2
+        doAfter: 5
+      - tag: FreezerElectronics
+        name: freezer electronics
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+  - node: done
+    entity: CrateFreezer
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: FreezerElectronics
+        amount: 1
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity

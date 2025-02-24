@@ -15,6 +15,9 @@
   - type: Utensil
     types:
       - Knife
+  - type: Tool
+    qualities:
+    - Slicing
 
 - type: entity
   name: captain's sabre

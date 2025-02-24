@@ -1,6 +1,7 @@
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Numerics;
 
 namespace Content.Shared.Nutrition.Prototypes;
 
@@ -19,6 +20,12 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     public List<SpriteSpecifier> Sprites { get; private set; } = new();
 
     /// <summary>
+    /// Relative size of the sprite displayed in the food sequence.
+    /// </summary>
+    [DataField]
+    public Vector2 Scale { get; private set; } = Vector2.One;
+
+    /// <summary>
     /// A localized name piece to build into the item name generator.
     /// </summary>
     [DataField]
@@ -34,5 +41,5 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     /// Tag list of this layer. Used for recipes for food metamorphosis.
     /// </summary>
     [DataField]
-    public List<ProtoId<TagPrototype>> Tags { get; set; }  = new();
+    public List<ProtoId<TagPrototype>> Tags { get; set; } = new();
 }

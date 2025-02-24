@@ -19,6 +19,7 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
@@ -29,11 +30,13 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Shuttles.Systems;
@@ -91,7 +94,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(ContainerSpawnPointSystem), typeof(SpawnPointSystem)});
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem)}, after: new [] { typeof(ContainerSpawnPointSystem)});
 
         SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
@@ -334,6 +337,8 @@ public sealed class ArrivalsSystem : EntitySystem
         if (ev.SpawnResult != null)
             return;
 
+        // We use arrivals as the default spawn so don't check for job prio.
+
         // Only works on latejoin even if enabled.
         if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
             return;
@@ -509,15 +514,13 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void SetupArrivalsStation()
     {
-        var mapUid = _mapSystem.CreateMap(out var mapId, false);
-        _metaData.SetEntityName(mapUid, Loc.GetString("map-name-terminal"));
-
-        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
-        {
+        var path = new ResPath(_cfgManager.GetCVar(CCVars.ArrivalsMap));
+        if (!_loader.TryLoadMap(path, out var map, out var grids))
             return;
-        }
 
-        foreach (var id in uids)
+        _metaData.SetEntityName(map.Value, Loc.GetString("map-name-terminal"));
+
+        foreach (var id in grids)
         {
             EnsureComp<ArrivalsSourceComponent>(id);
             EnsureComp<ProtectedGridComponent>(id);
@@ -528,15 +531,15 @@ public sealed class ArrivalsSystem : EntitySystem
         if (_cfgManager.GetCVar(CCVars.ArrivalsPlanet))
         {
             var template = _random.Pick(_arrivalsBiomeOptions);
-            _biomes.EnsurePlanet(mapUid, _protoManager.Index(template));
+            _biomes.EnsurePlanet(map.Value, _protoManager.Index(template));
             var restricted = new RestrictedRangeComponent
             {
                 Range = 32f
             };
-            AddComp(mapUid, restricted);
+            AddComp(map.Value, restricted);
         }
 
-        _mapSystem.InitializeMap(mapId);
+        _mapSystem.InitializeMap(map.Value.Comp.MapId);
 
         // Handle roundstart stations.
         var query = AllEntityQuery<StationArrivalsComponent>();
@@ -597,9 +600,9 @@ public sealed class ArrivalsSystem : EntitySystem
         var dummpMapEntity = _mapSystem.CreateMap(out var dummyMapId);
 
         if (TryGetArrivals(out var arrivals) &&
-            _loader.TryLoad(dummyMapId, component.ShuttlePath.ToString(), out var shuttleUids))
+            _loader.TryLoadGrid(dummyMapId, component.ShuttlePath, out var shuttle))
         {
-            component.Shuttle = shuttleUids[0];
+            component.Shuttle = shuttle.Value;
             var shuttleComp = Comp<ShuttleComponent>(component.Shuttle);
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;

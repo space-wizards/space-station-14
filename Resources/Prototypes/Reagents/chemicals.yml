@@ -166,3 +166,23 @@
   color: "#E6E6DA"
   physicalDesc: reagent-physical-desc-crystalline
   slippery: false
+
+- type: reagent
+  id: Rororium
+  name: reagent-name-rororium
+  desc: reagent-desc-rororium
+  group: Biological
+  flavor: tingly
+  physicalDesc: reagent-physical-desc-refreshing
+  color: "#bf1365"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -4
+      - !type:GenericStatusEffect
+        key: Adrenaline
+        component: IgnoreSlowOnDamage
+        time: 120

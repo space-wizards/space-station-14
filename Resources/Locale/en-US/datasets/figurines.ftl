@@ -86,7 +86,7 @@ figurines-atmostech-3 = Frezon...
 figurines-atmostech-4 = Tritium...
 figurines-atmostech-5 = Glory to Atmosia!
 
-figurines-rd-1 = Blowing all of the borgs!
+figurines-rd-1 = Blowing up all of the borgs!
 figurines-rd-2 = Tier 3 arsenal? No way.
 
 figurines-scientist-1 = Someone else must have made those bombs!

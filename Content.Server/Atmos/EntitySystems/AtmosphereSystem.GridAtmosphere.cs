@@ -270,7 +270,7 @@ public sealed partial class AtmosphereSystem
     {
         DebugTools.AssertNotNull(tile.Air);
         DebugTools.Assert(tile.Air?.Immutable == false);
-        Array.Clear(tile.MolesArchived);
+        tile.AirArchived = null;
         tile.ArchivedCycle = 0;
 
         var count = 0;

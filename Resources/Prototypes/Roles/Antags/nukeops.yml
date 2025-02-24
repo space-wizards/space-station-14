@@ -50,7 +50,6 @@
     outerClothing: ClothingOuterHardsuitSyndie
     shoes: ClothingShoesBootsCombatFilled
     id: SyndiPDA
-    pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
   storage:
@@ -74,7 +73,7 @@
     neck: SyndicateWhistle
     outerClothing: ClothingOuterHardsuitSyndieCommander
   inhand:
-    - NukeOpsDeclarationOfWar
+  - NukeOpsDeclarationOfWar
 
 #Nuclear Operative Medic Gear
 - type: startingGear

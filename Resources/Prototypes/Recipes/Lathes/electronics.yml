@@ -99,6 +99,11 @@
   result: DoorElectronics
 
 - type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: FreezerElectronics
+  result: FreezerElectronics
+
+- type: latheRecipe
   parent: BaseElectronicsRecipe
   id: AirAlarmElectronics
   result: AirAlarmElectronics
@@ -166,6 +171,7 @@
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: ChemMasterMachineCircuitboard
+  result: ChemMasterMachineCircuitboard
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
@@ -334,6 +340,11 @@
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
+  id: SalvageMagnetMachineCircuitboard
+  result: SalvageMagnetMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
   id: RipleyCentralElectronics
   result: RipleyCentralElectronics
 
@@ -389,6 +400,11 @@
   result: SMESMachineCircuitboard
 
 - type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: SMESAdvancedMachineCircuitboard
+  result: SMESAdvancedMachineCircuitboard
+
+- type: latheRecipe
   parent: BaseCircuitboardRecipe
   id: PortableGeneratorPacmanMachineCircuitboard
   result: PortableGeneratorPacmanMachineCircuitboard
@@ -415,17 +431,13 @@
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
-  id: PowerComputerCircuitboard
-  result: PowerComputerCircuitboard
-
-- type: latheRecipe
-  parent: BaseCircuitboardRecipe
   id: CloningConsoleComputerCircuitboard
   result: CloningConsoleComputerCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
   id: MicrowaveMachineCircuitboard
+  result: MicrowaveMachineCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
@@ -535,6 +547,7 @@
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: MiniGravityGeneratorCircuitboard
+  result: MiniGravityGeneratorCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
@@ -573,12 +586,6 @@
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
-  id: StationAnchorCircuitboard
-  result: StationAnchorCircuitboard
-  completetime: 8
-
-- type: latheRecipe
-  parent: BaseGoldCircuitboardRecipe
   id: ReagentGrinderIndustrialMachineCircuitboard
   result: ReagentGrinderIndustrialMachineCircuitboard
 
@@ -591,3 +598,8 @@
   parent: BaseCircuitboardRecipe
   id: CutterMachineCircuitboard
   result: CutterMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: HolopadMachineCircuitboard
+  result: HolopadMachineCircuitboard

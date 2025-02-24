@@ -126,7 +126,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleShockTrigger(Entity<ShockOnTriggerComponent> shockOnTrigger, ref TriggerEvent args)
         {
-            if (!_container.TryGetContainingContainer(shockOnTrigger, out var container))
+            if (!_container.TryGetContainingContainer(shockOnTrigger.Owner, out var container))
                 return;
 
             var containerEnt = container.Owner;
@@ -202,6 +202,7 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
+
         private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
             if (!TryComp<SubdermalImplantComponent>(uid, out var implanted))
@@ -230,7 +231,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
             if (args.OurFixtureId == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
-                Trigger(uid);
+                Trigger(uid, args.OtherEntity);
         }
 
         private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, MapInitEvent args)

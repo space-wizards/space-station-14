@@ -39,7 +39,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     private void OnInteractUsing(Entity<FoodSequenceStartPointComponent> ent, ref InteractUsingEvent args)
     {
         if (TryComp<FoodSequenceElementComponent>(args.Used, out var sequenceElement))
-            TryAddFoodElement(ent, (args.Used, sequenceElement), args.User);
+            args.Handled = TryAddFoodElement(ent, (args.Used, sequenceElement), args.User);
     }
 
     private void OnIngredientAdded(Entity<FoodMetamorphableByAddingComponent> ent, ref FoodSequenceIngredientAddedEvent args)
@@ -133,7 +133,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         var flip = start.Comp.AllowHorizontalFlip && _random.Prob(0.5f);
         var layer = new FoodSequenceVisualLayer(elementIndexed,
             _random.Pick(elementIndexed.Sprites),
-            new Vector2(flip ? -1 : 1, 1),
+            new Vector2(flip ? -elementIndexed.Scale.X : elementIndexed.Scale.X, elementIndexed.Scale.Y),
             new Vector2(
                 _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
                 _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y))
