@@ -46,7 +46,7 @@
     actions:
     - ActionAnimateSpell
   - type: Item
-    size: Normal
+    size: Ginormous
     inhandVisuals:
       left:
       - state: animation-inhand-left
