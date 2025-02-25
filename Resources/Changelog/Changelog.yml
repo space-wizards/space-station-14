@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Added rainbow lizard plushies, which can be found in arcade machines.
-    type: Add
-  id: 7506
-  time: '2024-10-13T22:51:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32564
 - author: PJB3005
   changes:
   - message: Fixes the client sometimes not being aware of active role bans.
@@ -3890,3 +3883,11 @@
   id: 8005
   time: '2025-02-25T14:43:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35490
+- author: noirogen
+  changes:
+  - message: Added opacity slider for speech bubble backgrounds, text and speaker
+      names in the accessibility options.
+    type: Add
+  id: 8006
+  time: '2025-02-25T16:00:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35346
