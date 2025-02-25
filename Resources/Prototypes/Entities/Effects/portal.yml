@@ -132,7 +132,7 @@
 
 - type: entity
   parent: [ PortalGatewayOrange, BasePortalInterMap ]
-  id: PortalAdminRed
+  id: PortalAdminOrange
 
 - type: entity
   parent: [ PortalGatewayBlue, BasePortalInterMap ]

@@ -30,4 +30,4 @@
   - type: HandTeleporter
     allowPortalsOnDifferentGrids: true
     firstPortalPrototype: PortalAdminBlue
-    secondPortalPrototype: PortalAdminRed
+    secondPortalPrototype: PortalAdminOrange
