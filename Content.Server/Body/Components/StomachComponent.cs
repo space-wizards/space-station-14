@@ -20,7 +20,7 @@ namespace Content.Server.Body.Components
         ///     The interval at which this stomach digests its contents.
         /// </summary>
         [DataField]
-        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.
@@ -29,7 +29,7 @@ namespace Content.Server.Body.Components
         public Entity<SolutionComponent>? StomachSolution;
 
         [ViewVariables]
-        public List<Entity<SolutionComponent>> DigestionSolutions = new List<Entity<SolutionComponent>>();
+        public List<Solution> DigestionSolutions = new List<Solution>();
 
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?

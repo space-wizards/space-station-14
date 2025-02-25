@@ -6,6 +6,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Systems
 {
@@ -13,11 +15,14 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
         public const string DefaultSolutionName = "stomach";
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
@@ -26,12 +31,15 @@ namespace Content.Server.Body.Systems
         private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
         {
             ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        }
 
+        private void OnComponentInit(Entity<StomachComponent> ent, ref ComponentInit args)
+        {
             int digestionResolution = (int)(ent.Comp.DigestionDelay / ent.Comp.UpdateInterval);
 
             for (int i = 0; i < digestionResolution; i++)
             {
-                ent.Comp.DigestionSolutions.Add(new Entity<SolutionComponent>());
+                ent.Comp.DigestionSolutions.Add(new Solution());
             }
         }
 
@@ -57,7 +65,6 @@ namespace Content.Server.Body.Systems
                 if (organ.Body is not { } body || !_solutionContainerSystem.TryGetSolution(body, stomach.BodySolutionName, out var bodySolution))
                     continue;
 
-                // _solutionContainerSystem.UpdateChemicals(stomach.StomachSolution.Value);
                 TryComp<ReactionMixerComponent>(uid, out var reactionMixer);
                 _solutionContainerSystem.UpdateChemicals(stomach.StomachSolution.Value, true, reactionMixer);
 
@@ -65,18 +72,18 @@ namespace Content.Server.Body.Systems
 
                 for (var i = digestionResolution - 1; i >= -1; i--)
                 {
-                    var currentSolution = stomach.DigestionSolutions[i];
+                    Solution currentSolution = stomach.StomachSolution.Value.Comp.Solution;
 
-                    if (i == -1)
-                        currentSolution = stomach.StomachSolution.Value;
+                    if (i != -1)
+                        currentSolution = stomach.DigestionSolutions[i];
 
-                    var transferSolution = currentSolution.Comp.Solution.SplitSolution(stomach.DigestionDelay.TotalSeconds / digestionResolution);
-                    var nextSolution = bodySolution.Value;
+                    Solution transferSolution = currentSolution.SplitSolution(stomach.DigestionDelay.TotalSeconds / digestionResolution);
+                    var nextSolution = bodySolution.Value.Comp.Solution;
 
                     if (i + 1 < digestionResolution)
                         nextSolution = stomach.DigestionSolutions[i + 1];
 
-                    _solutionContainerSystem.TryAddSolution(nextSolution, transferSolution);
+                    nextSolution.AddSolution(transferSolution, _protoMan);
                 }
             }
         }
