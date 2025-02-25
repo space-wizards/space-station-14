@@ -12,7 +12,7 @@ namespace Content.Shared.Audio;
 [Prototype("ambientMusic")]
 public sealed partial class AmbientMusicPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// Traditionally you'd prioritise most rules to least as priority but in our case we'll just be explicit.

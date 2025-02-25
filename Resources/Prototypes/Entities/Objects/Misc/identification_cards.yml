@@ -820,3 +820,11 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AgentIDCard
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface

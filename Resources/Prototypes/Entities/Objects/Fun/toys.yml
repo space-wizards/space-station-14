@@ -1621,6 +1621,7 @@
     - type: DisarmMalus
       malus: 0
     - type: MeleeWeapon
+      wideAnimationRotation: -135
       soundHit:
         collection: RubberHammer
         params:
