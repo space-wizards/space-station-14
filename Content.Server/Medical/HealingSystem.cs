@@ -5,7 +5,6 @@ using Content.Server.Medical.Components;
 using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -20,7 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Random;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Medical;
 
@@ -31,7 +30,6 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
@@ -115,7 +113,7 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
@@ -199,7 +197,7 @@ public sealed class HealingSystem : EntitySystem
         }
 
         _audio.PlayPvs(component.HealingBeginSound, uid,
-                AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+                AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
 
         var isNotSelf = user != target;
 
