@@ -37,11 +37,12 @@
 #Service
 - type: entity
   parent: DefaultStationBeaconService
-  id: DefaultStationBeaconNews
-  suffix: News
+  id: DefaultStationBeaconClown
+  suffix: Clown
   components:
   - type: NavMapBeacon
-    defaultText: station-beacon-news
+    defaultText: station-beacon-clown
+    color: "#FF2FFF"
 
 - type: entity
   parent: DefaultStationBeaconService
@@ -50,6 +51,32 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-hd
+    
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconMime
+  suffix: Mime
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-mime
+    color: "#FFFFFF"
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconMusician
+  suffix: Musician
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-musician
+    color: "#524089"
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconNews
+  suffix: News
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-news
 
 - type: entity
   parent: DefaultStationBeaconService
