@@ -9,7 +9,7 @@ namespace Content.Shared.Preferences.Loadouts;
 public sealed partial class LoadoutGroupPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// User-friendly name for the group.

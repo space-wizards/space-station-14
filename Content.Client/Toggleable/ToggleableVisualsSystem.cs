@@ -7,6 +7,7 @@ using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Inventory;
 using Content.Shared.Light.Components;
 
 namespace Content.Client.Toggleable;
@@ -76,7 +77,16 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
             || !enabled)
             return;
 
-        if (!component.ClothingVisuals.TryGetValue(args.Slot, out var layers))
+        if (!TryComp(args.Equipee, out InventoryComponent? inventory))
+            return;
+        List<PrototypeLayerData>? layers = null;
+
+        // attempt to get species specific data
+        if (inventory.SpeciesId != null)
+            component.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
+
+        // No species specific data.  Try to default to generic data.
+        if (layers == null && !component.ClothingVisuals.TryGetValue(args.Slot, out layers))
             return;
 
         var modulateColor = AppearanceSystem.TryGetData<Color>(uid, ToggleableVisuals.Color, out var color, appearance);
