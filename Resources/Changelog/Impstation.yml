@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Changeling's chameleon skin reveals faster while moving, but is cheaper
-      to evolve.
-    type: Tweak
-  id: 703
-  time: '2024-12-09T18:07:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/970
 - author: DinnerCalzone
   changes:
   - message: (Amber Station) Added brigmedic spawn and locker.
@@ -4089,3 +4081,18 @@
   id: 1202
   time: '2025-02-25T21:12:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1771
+- author: Kandiyaki
+  changes:
+  - message: ashen passage's sound has a much larger radius.
+    type: Tweak
+  - message: ashen passage will heat the user directly upon exiting. sorry, atmos-heads.
+    type: Tweak
+  - message: the flask ritual should accept all water tanks now.
+    type: Fix
+  - message: the madness mask should accept all masks now.
+    type: Fix
+  - message: the codex & knowledge rituals should show their names correctly.
+    type: Fix
+  id: 1203
+  time: '2025-02-25T21:27:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1678
