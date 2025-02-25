@@ -32,7 +32,7 @@
         type: WiresBoundUserInterface
   - type: Appearance
   - type: Damageable
-    damageContainer: Inorganic # This can be changed later.
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -43,7 +43,7 @@
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak # Also change the breaking sound effect.
+          collection: MetalGlassBreak
   - type: StationAiWhitelist
   - type: WiresPanel
   - type: Wires
