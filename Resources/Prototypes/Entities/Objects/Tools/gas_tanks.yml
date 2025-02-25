@@ -117,6 +117,7 @@
   - type: Tag # goob edit
     tags:
       - EmergencyOxygenTank
+      - GasTank # imp
   - type: DamageOtherOnHit # imp
     staminaCost: 3.5
 
@@ -135,6 +136,7 @@
   - type: Tag # goob edit
     tags:
       - EmergencyNitrogenTank
+      - GasTank # imp
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -155,6 +157,7 @@
   - type: Tag # goob edit
     tags:
       - ExtendedEmergencyOxygenTank
+      - GasTank # imp
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -171,6 +174,7 @@
   - type: Tag # goob edit
     tags:
       - EmergencyNitrogenTank
+      - GasTank # imp
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -211,6 +215,7 @@
   - type: Tag
     tags:
       - EmergencyNitrogenTank
+      - GasTank # imp
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -227,6 +232,7 @@
   - type: Tag # goob edit
     tags:
     - ClownEmergencyOxygenTank
+    - GasTank # imp
 
 - type: entity
   parent: GasTankRoundBase

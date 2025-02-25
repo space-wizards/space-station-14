@@ -59,6 +59,7 @@
   - type: Tag
     tags:
       - ExtendedEmergencyOxygenTank
+      - GasTank
 
 - type: entity
   parent: [GasTankRoundBase, BaseCommandContraband]
@@ -71,7 +72,7 @@
   - type: Item
     sprite: _Impstation/Objects/Tanks/nitrogen_command.rsi
   - type: Clothing
-    sprite: _Impstation/Objects/Tanks/nitrogen_command.rsi      
+    sprite: _Impstation/Objects/Tanks/nitrogen_command.rsi
 
 - type: entity
   parent: [GasTankRoundBase, BaseCommandContraband]
@@ -104,6 +105,7 @@
   - type: Tag
     tags:
       - EmergencyNitrogenTank
+      - GasTank
 
 - type: entity
   parent: ExtendedEmergencyOxygenTankCommand
@@ -120,3 +122,4 @@
   - type: Tag
     tags:
       - ExtendedEmergencyOxygenTank
+      - GasTank
