@@ -99,11 +99,5 @@
             - material: Bananium
               amount: 10
               doAfter: 10
-            - tag: PonderingOrb
-              name: pondering orb
-              icon:
-                sprite: Objects/Fun/toys.rsi
-                state: orb
-              doAfter: 3
     - node: throngler
       entity: ThronglerFools
