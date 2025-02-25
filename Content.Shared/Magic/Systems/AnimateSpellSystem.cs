@@ -17,37 +17,31 @@ public sealed class AnimateSpellSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AnimateComponent, ComponentStartup>(OnAnimate);
-        SubscribeLocalEvent<AnimateComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<AnimateComponent, MapInitEvent>(OnAnimate);
     }
 
-    private void OnAnimate(EntityUid uid, AnimateComponent comp, ComponentStartup args)
+    private void OnAnimate(Entity<AnimateComponent> ent, ref MapInitEvent args)
     {
         // Physics bullshittery necessary for object to behave properly
 
-        if (!TryComp<FixturesComponent>(uid, out var fixtures) || !TryComp<PhysicsComponent>(uid, out var physics))
+        if (!TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<PhysicsComponent>(ent, out var physics))
             return;
 
-        var xform = Transform(uid);
+        var xform = Transform(ent);
         var fixture = fixtures.Fixtures.First();
 
-        _transform.Unanchor(uid); // If left anchored they are effectively stuck/immobile and not a threat
-        _physics.SetCanCollide(uid, true, true, false, fixtures, physics);
-        _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
-        _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);
-        _physics.SetBodyType(uid, BodyType.KinematicController, fixtures, physics, xform);
-        _physics.SetBodyStatus(uid, physics, BodyStatus.InAir, true);
-        _physics.SetFixedRotation(uid, false, true, fixtures, physics);
-        _physics.SetHard(uid, fixture.Value, true, fixtures);
-        _container.AttachParentToContainerOrGrid((uid, xform)); // Items animated inside inventory now exit, they can't be picked up and so can't escape otherwise
+        _transform.Unanchor(ent); // If left anchored they are effectively stuck/immobile and not a threat
+        _physics.SetCanCollide(ent, true, true, false, fixtures, physics);
+        _physics.SetCollisionMask(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
+        _physics.SetCollisionLayer(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);
+        _physics.SetBodyType(ent, BodyType.KinematicController, fixtures, physics, xform);
+        _physics.SetBodyStatus(ent, physics, BodyStatus.InAir, true);
+        _physics.SetFixedRotation(ent, false, true, fixtures, physics);
+        _physics.SetHard(ent, fixture.Value, true, fixtures);
+        _container.AttachParentToContainerOrGrid((ent, xform)); // Items animated inside inventory now exit, they can't be picked up and so can't escape otherwise
 
         var ev = new AnimateSpellEvent();
         RaiseLocalEvent(ref ev);
-    }
-
-    private void OnPickupAttempt(EntityUid uid, AnimateComponent comp, GettingPickedUpAttemptEvent args)
-    {
-        args.Cancel();
     }
 }
 
