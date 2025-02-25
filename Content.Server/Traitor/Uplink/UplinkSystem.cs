@@ -69,7 +69,7 @@ public sealed class UplinkSystem : EntitySystem
             return;
 
         var mult = 1f - Math.Log2(1f - _random.NextFloat());
-        balance *= double.IsNaN(mult) ? mult : 1f;
+        balance *= double.IsNaN(mult) ? 1f : mult;
         balance = Math.Round((float)balance);
 
         var store = EnsureComp<StoreComponent>(uplink);
