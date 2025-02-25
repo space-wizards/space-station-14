@@ -1,12 +1,4 @@
 ﻿- type: barSign
-  id: WhiskeyEcho
-  name: barsign-prototype-name-whiskeyecho
-  description: barsign-prototype-description-whiskeyecho
-  icon:
-    sprite: Structures/Wallmounts/barsign.rsi
-    state: whiskeyechoes
-
-- type: barSign
   id: KlubSkub
   name: barsign-prototype-name-klubskub
   description: barsign-prototype-description-klubskub
