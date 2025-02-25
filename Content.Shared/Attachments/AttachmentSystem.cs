@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Attachments.Components;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
@@ -11,6 +12,7 @@ public sealed class AttachmentSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serializer = default!;
     [Dependency] private readonly EntityManager _entMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -23,28 +25,38 @@ public sealed class AttachmentSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
         var item = args.Entity;
-        if (!HasComp<AttachmentComponent>(item)
-            || uid.Comp.Components is not {} compList
-            || compList[args.Container.ID] is not {} compRegistry)
+        if (!TryComp(item, out AttachmentComponent? attachment)
+            || uid.Comp.Components[args.Container.ID] is not {} compRegistry)
             return;
+        Logger.Debug($"{_netMan.IsClient}...attach time");
         foreach (var (compName, compRegistryEntry) in compRegistry)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))
                 continue;
+
             var componentType = componentRegistration.Type;
 
-            if (!HasComp(item, componentType) || HasComp(uid, componentType))
+            if (!HasComp(item, componentType) || (HasComp(uid, componentType) && !attachment.ForceComponents))
                 continue;
 
-            var comp = _serializer.CreateCopy(compRegistryEntry.Component, notNullableOverride: true);
+            if (!_entMan.TryGetComponent(uid, componentType, out var comp))
+            {
+                _entMan.AddComponent(uid, compRegistryEntry, overwrite: true);
+                comp = _entMan.GetComponent(uid, componentType);
+            }
+            else
+            {
+                _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
+            }
             var itemComp = _entMan.GetComponent(item, componentType);
             uid.Comp.AddedComps.Add((item, comp.GetType()));
-            foreach (var field in uid.Comp.Fields[compName])
+            if (uid.Comp.Fields[compName] is {} fields)
+            foreach (var field in fields)
             {
 
             }
-            _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
-            AddComp(uid, comp);
+            // _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
+
             Dirty(uid, comp);
         }
     }
@@ -59,6 +71,7 @@ public sealed class AttachmentSystem : EntitySystem
             || compList[args.Container.ID] is not {} compRegistry
             || uid.Comp.AddedComps.Count == 0)
             return;
+        Logger.Debug($"{_netMan.IsClient}...remove time");
         foreach (var compName in compRegistry.Keys)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))

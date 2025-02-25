@@ -17,7 +17,6 @@ public sealed partial class AttachableComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField]
-    [AbstractDataField]
     public Dictionary<string, List<string>> Fields;
 
     [ViewVariables(VVAccess.ReadOnly)]
