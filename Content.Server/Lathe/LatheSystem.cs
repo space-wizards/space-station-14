@@ -1,19 +1,30 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos;
+
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -25,7 +36,10 @@ using Content.Shared.Power;
 using Content.Shared.ReagentSpeed;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.UserInterface;
+
 using JetBrains.Annotations;
+
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -37,6 +51,9 @@ namespace Content.Server.Lathe
     [UsedImplicitly]
     public sealed class LatheSystem : SharedLatheSystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -47,12 +64,17 @@ namespace Content.Server.Lathe
         [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
         [Dependency] private readonly StackSystem _stack = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
 
         /// <summary>
         /// Per-tick cache
@@ -195,6 +217,8 @@ namespace Content.Server.Lathe
                 return false;
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
+            if (TryComp<LatheGasComponent>(uid, out var comp))
+                return CheckHaveGasForProduce(uid, comp);
 
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
@@ -372,6 +396,17 @@ namespace Content.Server.Lathe
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
+        }
+
+        private bool CheckHaveGasForProduce(EntityUid uid, LatheGasComponent comp)
+        {
+            if (!_nodeContainer.TryGetNode(uid, comp.Inlet, out PipeNode? inlet))
+                return false;
+
+            if (inlet.Air.GetMoles(comp.GasId) <= 0)
+                return false;
+
+            inlet.Air.AdjustMoles(comp.GasId, -comp.GasAmount);
         }
 
         #region UI Messages
