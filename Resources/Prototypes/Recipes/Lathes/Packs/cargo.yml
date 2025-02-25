@@ -5,6 +5,7 @@
   recipes:
   - AppraisalTool
   - Pickaxe
+  - BoxFolderClipboard # Harmony
 
 - type: latheRecipePack
   id: CargoBoardsStatic

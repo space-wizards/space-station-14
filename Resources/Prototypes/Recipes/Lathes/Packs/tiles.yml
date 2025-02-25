@@ -35,6 +35,7 @@
   - FloorTileItemGratingMaint
   - FloorTileItemTechmaint
   - FloorTileItemSteelMaint
+  - FloorTileItemTechmaintDark # Xeno playtest
   - FloorTileItemWood
   - FloorTileItemWoodLarge
   - FloorTileItemWoodPattern

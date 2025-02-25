@@ -49,6 +49,8 @@
   - MagazineShotgunSlug
   - SpeedLoaderMagnum
   - SpeedLoaderMagnumEmpty
+  - StripperClip  # Harmony change - part of RSC PR
+
 
 - type: latheRecipePack
   id: SecurityWeaponsStatic
@@ -70,6 +72,7 @@
   - PowerCageMedium
   - PowerCageSmall
   - TelescopicShield
+  - SecurityBola #Harmony Change: Adds Security Bolas
 
 - type: latheRecipePack
   id: SecurityBoards

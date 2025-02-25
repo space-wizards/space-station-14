@@ -22,6 +22,8 @@
   - MopItem
   - Holoprojector
   - WetFloorSign
+  - CassetteTape # DeltaV
+  - TapeRecorder # DeltaV
 
 - type: latheRecipePack
   id: ServiceBoardsStatic

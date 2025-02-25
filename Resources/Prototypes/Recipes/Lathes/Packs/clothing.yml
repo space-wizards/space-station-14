@@ -20,6 +20,12 @@
   - ClothingUniformJumpsuitQMTurtleneck
   - ClothingUniformJumpskirtQMTurtleneck
   - ClothingUniformJumpsuitQMFormal
+  - ClothingUniformJumpsuitCargoPantsHarmony # Harmony
+  - ClothingUniformJumpsuitCargoverallsHarmony # Harmony
+  - ClothingUniformJumpsuitCargoOfficeSlacksHarmony # Harmony
+  - ClothingUniformJumpskirtCargoOfficeSkirtHarmony # Harmony
+  - ClothingUniformJumpsuitSeniorTechnicianHarmony # Harmony
+  - ClothingUniformJumpskirtSeniorTechnicianHarmony # Harmony
 
 - type: latheRecipePack
   id: ClothingCommand
@@ -31,10 +37,20 @@
   - ClothingUniformJumpskirtCaptain
   - ClothingUniformJumpsuitCapFormal
   - ClothingUniformJumpskirtCapFormalDress
+  - ClothingHeadHatBeretCaptainHarmony # Harmony
+  - ClothingUniformJumpsuitCaptainHawaiianHarmony # Harmony
+  - ClothingUniformJumpsuitCaptainTurtleneckHarmony # Harmony
+  - ClothingUniformJumpskirtCaptainTurtleneckHarmony # Harmony
   # HoP
   - ClothingHeadHatHopcap
   - ClothingUniformJumpsuitHoP
   - ClothingUniformJumpskirtHoP
+  - ClothingHeadHatBeretHeadofPersonnelHarmony # Harmony
+  - ClothingUniformJumpsuitHoPMessKitHarmony #Harmony
+  - ClothingUniformJumpskirtHoPMessKitHarmony #Harmony
+  - ClothingUniformJumpsuitTurtleneckHoPHarmony # Harmony
+  - ClothingUniformJumpskirtTurtleneckHoPHarmony #Harmony
+
 
 - type: latheRecipePack
   id: ClothingEngineering
@@ -48,6 +64,7 @@
   - ClothingUniformJumpskirtEngineering
   - ClothingUniformJumpsuitSeniorEngineer
   - ClothingUniformJumpskirtSeniorEngineer
+  - ClothingHeadHatBeretChiefEngineerHarmony # Harmony
 
 - type: latheRecipePack
   id: ClothingMedical
@@ -78,6 +95,7 @@
   - ClothingUniformJumpskirtScientist
   - ClothingUniformJumpsuitSeniorResearcher
   - ClothingUniformJumpskirtSeniorResearcher
+  - ClothingHeadHatBeretResearchDirectorHarmony # Harmony
 
 - type: latheRecipePack
   id: ClothingSecurity
@@ -110,6 +128,17 @@
   - ClothingHeadHatWarden
   - ClothingUniformJumpsuitWarden
   - ClothingUniformJumpskirtWarden
+  - ClothingHeadHatBeretSecurityBlueHarmony # Harmony
+  - ClothingHeadHatBeretSecuritySeniorOfficerHarmony # Harmony
+  - ClothingHeadHatHoSSoftHarmony # Harmony
+  - ClothingHeadHatHoSWidebrimHarmony # Harmony
+  - ClothingHeadHatSecSoftBlueHarmony # Harmony
+  - ClothingUniformJumpsuitDetectiveBlueHarmony # Harmony
+  - ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony # Harmony
+  - ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony # Harmony
+  - ClothingUniformJumpsuitSecBlueHarmony # Harmony
+  - ClothingUniformJumpsuitWardenBlueHarmony # Harmony
+
 
 - type: latheRecipePack
   id: ClothingService
