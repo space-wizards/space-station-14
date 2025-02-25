@@ -11,7 +11,7 @@ namespace Content.Server.Popups
     {
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly TransformSystem _xform = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void PopupCursor(string? message, PopupType type = PopupType.Small)
         {
@@ -47,8 +47,7 @@ namespace Content.Server.Popups
         {
             if (message == null)
                 return;
-
-            var mapPos = coordinates.ToMap(EntityManager, _xform);
+            var mapPos = _transform.ToMapCoordinates(coordinates);
             var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
             RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
         }
@@ -68,6 +67,21 @@ namespace Content.Server.Popups
 
             if (TryComp(recipient, out ActorComponent? actor))
                 RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), actor.PlayerSession);
+        }
+
+        public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (message == null)
+                return;
+
+            var mapPos = _transform.ToMapCoordinates(coordinates);
+            var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
+            if (recipient != null)
+            {
+                // Don't send to recipient, since they predicted it locally
+                filter = filter.RemovePlayerByAttachedEntity(recipient.Value);
+            }
+            RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
         }
 
         public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
