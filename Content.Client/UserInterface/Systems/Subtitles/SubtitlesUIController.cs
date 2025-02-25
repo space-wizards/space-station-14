@@ -25,6 +25,7 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
     private List<CaptionComponent> _sounds = new();
     [UISystemDependency] private readonly CaptionTreeSystem _captionTree = default!;
     [UISystemDependency] private readonly TransformSystem _xformSystem = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
     public void OnStateEntered(GameplayState state)
@@ -65,6 +66,7 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
         }
 
         var mapPos = _xformSystem.GetMapCoordinates(xform);
+        var angle = _eyeManager.CurrentEye.Rotation.ToVec();
 
         var pos = mapPos.Position;
         var maxVector = new Vector2(1f, 1f);
@@ -75,8 +77,8 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
             // filter to audible sounds
             .Where(a => data.Any(b => b.Component == a))
             // get the ones with non-null captions
-            .Select(sound => sound.LocalizedCaption)
-            .OfType<string>()
+            .Where(sound => sound.LocalizedCaption != null)
+
             // turn the list of sounds into a list of (sound, count)
             .GroupBy(sound => sound)
             .Select(sounds => {
