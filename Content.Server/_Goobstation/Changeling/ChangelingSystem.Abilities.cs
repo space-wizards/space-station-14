@@ -15,6 +15,7 @@ using Content.Server.Light.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Server.Flash.Components;
+using Content.Server.Forensics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
@@ -205,7 +206,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(popupTarget, target, target, PopupType.LargeCaution);
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.LargeCaution);
 
-        TryStealDNA(uid, target, comp, true);
+        if (TryComp<DnaComponent>(target, out var _))
+            TryStealDNA(uid, target, comp, true);
+
         if (!lesserAbsorb) // lesser absorbtions don't grant bonuses or count toward stats
         {
             comp.TotalAbsorbedEntities++;
