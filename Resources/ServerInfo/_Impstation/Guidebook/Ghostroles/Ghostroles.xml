@@ -7,19 +7,19 @@ Depending on the organism, ghost roles may not always be occupied by a player, i
 This section of the guidebook is not exhaustive - It mostly covers non-antagonist ghost roles that present unique mechanics or roleplay considerations.
 
 ## Rules
-All Ghostroles, regardless of their role or their rules text, follow the "new life rule:"
+All ghost roles, regardless of their role or their rules text, follow the "new life rule:"
 
 [color=#ffa500]"You don't remember any of your previous life, and you don't remember anything you learned as a ghost."[/color]
 
 Beyond that, their rules are determined by the text that will pop up when you attempt to take that role.
 
-Here are some of the major types of Ghostrole that you'll encounter:
+Here are some of the major types of ghost roles that you'll encounter:
 
 ## Non-Antagonist:
 <Box>
   <GuideEntityEmbed Entity="MobMonkeyPunpun" Caption=""/>
 </Box>
-Non-Antagonist Ghostroles are not explicitly "good guys," but should avoid harming the station and its crew, directly or otherwise.
+Non-Antagonist ghost roles are not explicitly "good guys," but should avoid harming the station and its crew, directly or otherwise.
 
 ## Free Agent:
 <Box>
@@ -27,7 +27,7 @@ Non-Antagonist Ghostroles are not explicitly "good guys," but should avoid harmi
   <GuideEntityEmbed Entity="MobGoblinStowaway" Caption=""/>
   <GuideEntityEmbed Entity="MobMouse" Caption=""/>
 </Box>
-Free Agent Ghostroles are free to act as they please, with some limitations. [color=red]They are not allowed to cause excessive destruction or death without proper escalation.[/color]
+Free Agent ghost roles are free to act as they please, with some limitations. [color=red]They are not allowed to cause excessive destruction or death without proper escalation.[/color]
 
 ## Familiar:
 <Box>
@@ -35,12 +35,12 @@ Free Agent Ghostroles are free to act as they please, with some limitations. [co
   <GuideEntityEmbed Entity="MobBatRemilia" Caption=""/>
   <GuideEntityEmbed Entity="MobGoblinKnight" Caption=""/>
 </Box>
-Familiar Ghostroles have a "master" and must serve their interests, regardless of what those may be. [color=yellow]If a familiar's master is an antagonist, that familiar is also an antagonist.[/color]
+Familiar ghost roles have a "master" and must serve their interests, regardless of what those may be. [color=yellow]If a familiar's master is an antagonist, that familiar is also an antagonist.[/color]
 
 ## Antagonist:
 <Box>
   <GuideEntityEmbed Entity="MobRatKing" Caption=""/>
   <GuideEntityEmbed Entity="MobRevenant" Caption=""/>
 </Box>
-Ghostroles can be outright Antagonists, but those are all covered in the [textlink="Antagonists" link="Antagonists"] section of the guidebook, in particular the [textlink="Minor Antagonists" link="MinorAntagonists"] entry.
+Ghost roles can be outright Antagonists, but those are all covered in the [textlink="Antagonists" link="Antagonists"] section of the guidebook, in particular the [textlink="Minor Antagonists" link="MinorAntagonists"] entry.
 </Document>
