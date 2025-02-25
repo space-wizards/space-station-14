@@ -283,6 +283,21 @@
     - thumps its tail
 
 - type: emote
+  id: Flip
+  name: chat-emote-name-flip
+  icon: Interface/Emotes/flip.png
+  whitelist:
+    components:
+    - FlipAnimation
+  chatMessages: ["chat-emote-msg-flip"]
+  chatTriggers:
+    - flip
+    - flips
+    - flips out
+    - backflip
+    - backflips
+
+- type: emote
   id: Salute
   name: chat-emote-name-salute
   category: Hands
