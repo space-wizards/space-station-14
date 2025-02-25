@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Emp;
 using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
@@ -7,19 +7,16 @@ using Content.Shared.Emp;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Prototypes;
-using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Random;
+
 
 namespace Content.Server.Clothing.Systems;
 
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -29,7 +26,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, EmpPulseEvent>(OnEmpPulse);
@@ -38,19 +34,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
         SetSelectedPrototype(uid, component.Default, true, component);
-    }
-
-    private void OnVerb(EntityUid uid, ChameleonClothingComponent component, GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
-            return;
-
-        args.Verbs.Add(new InteractionVerb()
-        {
-            Text = Loc.GetString("chameleon-component-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Act = () => TryOpenUi(uid, args.User, component)
-        });
     }
 
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
@@ -88,7 +71,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
 
         var state = new ChameleonBoundUserInterfaceState(component.Slot, component.Default, component.RequireTag);
-        _uiSystem.SetUiState(uid, ChameleonUiKey.Key, state);
+        UI.SetUiState(uid, ChameleonUiKey.Key, state);
     }
 
     /// <summary>

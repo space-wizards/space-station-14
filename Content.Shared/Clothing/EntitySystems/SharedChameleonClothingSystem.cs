@@ -6,9 +6,11 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
+using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -16,7 +18,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -34,6 +35,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
 
     public readonly Dictionary<SlotFlags, List<string>> ValidVariants = new();
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
     public override void Initialize()
     {
@@ -47,6 +49,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
     private void OnPrototypeReload(EntityUid uid, ChameleonClothingComponent component, PrototypesReloadedEventArgs args)
     {
+        SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         PrepareAllVariants();
     }
 
@@ -113,6 +116,22 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         {
             RemComp<ContrabandComponent>(uid);
         }
+    }
+
+    private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
+            return;
+
+        // Can't pass args from a ref event inside of lambdas
+        var user = args.User;
+
+        args.Verbs.Add(new InteractionVerb()
+        {
+            Text = Loc.GetString("chameleon-component-verb-text"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Act = () => UI.TryToggleUi(ent.Owner, ChameleonUiKey.Key, user)
+        });
     }
 
     protected virtual void UpdateSprite(EntityUid uid, EntityPrototype proto) { }
