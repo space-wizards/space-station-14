@@ -128,7 +128,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
             if (_openStorageLimit == 2)
             {
-                if (hotbar?.LeftStorageContainer.Children.Count(c => c.Visible) == 0)
+                if (hotbar?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
                 {
                     hotbar?.LeftStorageContainer.AddChild(window);
                     reorder(hotbar?.LeftStorageContainer, window);
