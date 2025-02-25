@@ -410,7 +410,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     private Color _hoverBorderColorSrgb = Color.ToSrgb(new Color(87, 91, 127, 128));
 
     /// <summary>
-    /// Marker, that control should render border of segment. Is false by default.
+    /// Marker, that controls if border of segment should be rendered. Is false by default.
     /// </summary>
     /// <remarks>
     /// By default color of border is same as color of background. Use <see cref="BorderColor"/>
@@ -422,13 +422,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// Marker, that control should render background of all sector. Is true by default.
     /// </summary>
     public bool DrawBackground { get; set; } = true;
-
-    /// <summary>
-    /// Marker, that control should render separator lines.
-    /// Separator lines are used to visually separate sector of radial menu items.
-    /// Is true by default
-    /// </summary>
-    public bool DrawSeparators { get; set; } = true;
 
     /// <summary>
     /// Color of background in non-hovered state. Accepts RGB color, works with sRGB for DrawPrimitive internally.
@@ -543,7 +536,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, borderColor, false);
         }
 
-        if (!_isWholeCircle && DrawSeparators)
+        if (!_isWholeCircle && DrawBorder)
         {
             DrawSeparatorLines(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, SeparatorColor);
         }

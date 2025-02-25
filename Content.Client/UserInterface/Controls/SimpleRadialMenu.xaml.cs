@@ -119,7 +119,7 @@ public partial class SimpleRadialMenu : RadialMenu
         bool haveNested
     )
     {
-        var button = settings.DisplaySectors
+        var button = settings.UseSectors
             ? ConvertToButtonWithSector(model, settings)
             : new RadialMenuTextureButton();
         button.SetSize = new Vector2(64f, 64f);
@@ -155,7 +155,7 @@ public partial class SimpleRadialMenu : RadialMenu
     {
         var button = new RadialMenuTextureButtonWithSector
         {
-            DrawSeparators = settings.DisplaySeparators,
+            DrawBorder = settings.DisplayBorders,
             DrawBackground = !settings.NoBackground
         };
         if (model.BackgroundColor.HasValue)
@@ -256,9 +256,24 @@ public class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOption> n
 
 public class SimpleRadialMenuSettings
 {
+    /// <summary>
+    /// Default container draw radius. Is going to be further affected by per sector increment.
+    /// </summary>
     public int DefaultContainerRadius = 100;
-    public bool DisplaySectors = true;
-    public bool DisplaySeparators = true;
+
+    /// <summary>
+    /// Marker, if sector-buttons should be used.
+    /// </summary>
+    public bool UseSectors = true;
+
+    /// <summary>
+    /// Marker, if border of buttons should be rendered. Can only be used when <see cref="UseSectors"/> = true.
+    /// </summary>
+    public bool DisplayBorders = true;
+
+    /// <summary>
+    /// Marker, if sector background should not be rendered. Can only be used when <see cref="UseSectors"/> = true.
+    /// </summary>
     public bool NoBackground = false;
 }
 
