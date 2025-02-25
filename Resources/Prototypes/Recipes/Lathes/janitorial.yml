@@ -104,3 +104,19 @@
   materials:
     Steel: 250
     Glass: 1000
+
+- type: latheRecipe
+  id: GenericTank
+  result: GenericTank
+  completetime: 10
+  materials:
+    Steel: 300
+    Plastic: 400
+
+- type: latheRecipe
+  id: GenericTankBig
+  result: GenericTankBig
+  completetime: 10
+  materials:
+    Steel: 700
+    Plastic: 700

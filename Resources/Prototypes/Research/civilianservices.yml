@@ -215,6 +215,19 @@
   - SeniorPhysicianPDAEmpty
   - SeniorOfficerPDAEmpty
 
+- type: technology
+  id: BigContainers
+  name: research-technology-audio-visual-communication
+  icon:
+    sprite: Structures/Wallmounts/camera.rsi
+    state: cameracase
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - PlantBagOfHolding
+  - GenericTankBig
+
 # Tier 3
 
 
@@ -356,6 +369,11 @@
   - SeniorPhysicianPDAEmpty
   - SeniorOfficerPDAEmpty
 
+- type: latheRecipePack
+  id: CivilianServices12
+  recipes:
+  - PlantBagOfHolding
+  - GenericTankBig
 
 - type: latheRecipePack
   id: CivilianServices-1
@@ -365,5 +383,11 @@
   - PassengerIDCard
   - EncryptionKeyCommon
   - ClearPDAEmpty
-
+  - GenericTank
+  - PlantBag
+  - HydroponicsToolMiniHoe
+  - HydroponicsToolScythe
+  - HydroponicsToolHatchet
+  - HydroponicsToolSpade
+  - HydroponicsToolClippers
 

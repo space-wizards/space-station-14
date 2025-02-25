@@ -143,6 +143,15 @@
   result: OreBagOfHolding
 
 - type: latheRecipe
+  id: PlantBagOfHolding
+  result: PlantBagOfHolding
+  completetime: 5
+  materials:
+    Steel: 1500
+    Plasma: 1500
+    Silver: 100
+
+- type: latheRecipe
   id: ClothingMaskWeldingGas
   result: ClothingMaskWeldingGas
   completetime: 3
