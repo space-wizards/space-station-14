@@ -81542,7 +81542,6 @@ entities:
     - type: Transform
       pos: -28.5,12.5
       parent: 2
-    - type: BiasedArtifact
 - proto: MedkitAdvancedFilled
   entities:
   - uid: 4057
