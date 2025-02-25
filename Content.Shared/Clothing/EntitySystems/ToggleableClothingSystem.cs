@@ -54,7 +54,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void HandleEnterCryostorageEvent(Entity<ToggleableClothingComponent> ent, ref InventoryRelayedEvent<EnterCryostorageEvent> args)
     {
-        _inventorySystem.TryUnequip(args.Args.User, ent.Comp.Slot, force: true);
+        if (ent.Comp.Container?.ContainedEntity != null)
+            return;
+
+        var parent = Transform(ent.Owner).ParentUid;
+        _inventorySystem.TryUnequip(args.Args.User, parent, ent.Comp.Slot, force: true);
     }
 
     private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
