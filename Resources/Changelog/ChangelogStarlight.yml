@@ -3610,3 +3610,31 @@ Entries:
   id: 500
   time: '2025-02-21T21:22:14.457685+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed BSO gun description.
+    type: Fix
+  id: 501
+  time: '2025-02-25T13:38:30.388257+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed survival box missing on resomi.
+    type: Fix
+  id: 502
+  time: '2025-02-25T13:38:48.101411+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed alien pistol, now abductor can use it.
+    type: Fix
+  id: 503
+  time: '2025-02-25T13:39:12.554287+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed combat medkit at abductor store(now it filled).
+    type: Fix
+  id: 504
+  time: '2025-02-25T13:40:31.561137+00:00'
+  url: 'null'
