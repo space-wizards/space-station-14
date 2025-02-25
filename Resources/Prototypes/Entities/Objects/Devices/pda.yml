@@ -1965,7 +1965,7 @@
 - type: entity
   parent: PiratePDA
   suffix: Empty
-  id: PiratePDA
+  id: PiratePDAEmpty
   components:
   - type: Pda
     id: null
