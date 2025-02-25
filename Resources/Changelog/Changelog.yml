@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixes the client sometimes not being aware of active role bans.
-    type: Fix
-  id: 7507
-  time: '2024-10-14T03:30:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32725
 - author: OnyxTheBrave
   changes:
   - message: Fixed the Industrial Reagent Grinder's visuals
@@ -3891,3 +3884,10 @@
   id: 8006
   time: '2025-02-25T16:00:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35346
+- author: sowelipililimute
+  changes:
+  - message: Multiple inventory windows now close properly when you hit escape
+    type: Fix
+  id: 8007
+  time: '2025-02-25T16:40:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35040
