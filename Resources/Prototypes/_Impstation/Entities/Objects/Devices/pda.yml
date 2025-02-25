@@ -313,3 +313,23 @@
     - NanoChatCartridge
     - MailMetricsCartridge
     - SOSCartridge # Imp
+
+#Hospitality Director
+- type: entity
+  parent: BasePDA
+  id: HDPDA
+  name: hospitality director PDA
+  description: Mutagen is leaking through the frame... #TODO
+  components:
+  - type: Pda
+    id: HDIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorhydro #TODO
+  - type: PdaBorderColor
+    borderColor: "#44843c" #TODO?
+    accentVColor: "#00cc35" #TODO?
+  - type: Icon
+    state: pda-seniorhydro #TODO

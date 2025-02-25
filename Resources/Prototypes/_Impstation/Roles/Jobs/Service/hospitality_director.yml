@@ -14,7 +14,7 @@
       department: Dining
       time: 18000 #5 hrs, any combination of chef, bartender, and service worker playtime
     - !type:DepartmentTimeRequirement
-      department: Civilian
+      department: Civilian #todo, service dept
       time: 72000 #20 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
@@ -23,24 +23,12 @@
   icon: JobIconHospitalityDirector
   supervisors: job-supervisors-captain
   canBeAntag: false
+  accessGroups:
+  - Service #why don't other heads have their accesses set up this way?
   access:
   - Maintenance
   - Command
   - Cryogenics
-  - HospitalityDirector
-  - Service
-  - Bar
-  - Kitchen
-  - Hydroponics
-  - Service
-  - Janitor
-  - Theatre
-  - Chapel
-  - Lawyer
-  - Clown
-  - Librarian
-  - Mime
-  - Reporter
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -51,7 +39,7 @@
 - type: startingGear
   id: HospitalityDirectorGear #todo, decide starting gear
   equipment:
-    id: JanitorPDA #todo, HospitalityDirectorPDA
+    id: HDPDA
   storage:
     back:
     - Flash

@@ -23,3 +23,16 @@
     - state: idcourier
   - type: PresetIdCard
     job: Courier
+
+- type: entity
+  parent: IDCardStandard
+  id: HDIDCard
+  name: hospitality director ID card
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/id_cards.rsi
+    layers:
+    - state: default
+    - state: idcourier #TODO
+  - type: PresetIdCard
+    job: HospitalityDirector
