@@ -19,12 +19,9 @@
 
 - type: entity
   id: MouseMigration
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
     duration: 50
@@ -42,12 +39,9 @@
 
 - type: entity
   id: KingRatMigration
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
     duration: 50
@@ -68,12 +62,9 @@
 
 - type: entity
   id: CockroachMigration
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -85,12 +76,9 @@
 
 - type: entity
   id: SnailMigrationLowPop
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -104,12 +92,9 @@
 
 - type: entity
   id: SnailMigration
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
     duration: 50

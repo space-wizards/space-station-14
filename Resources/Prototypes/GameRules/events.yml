@@ -69,6 +69,16 @@
       min:  40
       max:  60
 
+# Use this one as a parent for any new VentCrittersRule
+- type: entity
+  parent: BaseStationEventShortDelay
+  id: BaseStationEventVentCritterRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+
 - type: entity
   id: AnomalySpawn
   parent: BaseStationEventShortDelay
@@ -336,12 +346,9 @@
 
 - type: entity
   id: SlimesSpawn
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -357,12 +364,9 @@
 
 - type: entity
   id: SnakeSpawn
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -378,12 +382,9 @@
 
 - type: entity
   id: SpiderSpawn
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -395,12 +396,9 @@
 
 - type: entity
   id: SpiderClownSpawn
-  parent: BaseStationEventShortDelay
+  parent: BaseStationEventVentCritterRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
