@@ -67330,7 +67330,7 @@ entities:
     - type: Transform
       pos: -4.7042303,19.424007
       parent: 1
-- proto: RubberStampMime
+- proto: RubberStampGreytide
   entities:
   - uid: 7786
     components:
