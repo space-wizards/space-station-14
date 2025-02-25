@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: You can no longer attack or perform most other actions while inside vents.
-    type: Tweak
-  - message: You can no longer enter the vents with things in your hands.
-    type: Tweak
-  id: 698
-  time: '2024-12-09T16:40:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/961
 - author: widgetbeck
   changes:
   - message: Fixed Decapoids being sped up by Mucin
@@ -4102,3 +4093,10 @@
   id: 1197
   time: '2025-02-25T02:20:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1762
+- author: DinnerCalzone
+  changes:
+  - message: Slime bubble and vox chitter emotes should now use positional audio properly.
+    type: Fix
+  id: 1198
+  time: '2025-02-25T14:25:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1779
