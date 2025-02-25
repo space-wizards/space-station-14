@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Lathe
 {
+    /// <summary>
+    ///     Component that force lathe to use gas during processing.
+    /// </summary>
     [RegisterComponent, NetworkedComponent]
     public sealed partial class LatheGasComponent : Component
     {
