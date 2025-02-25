@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: It is no longer impossible to do bounties other than the first one if
-      the server has been up for a long period of time.
-    type: Fix
-  id: 7500
-  time: '2024-10-10T14:35:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32700
-- author: pheenty
-  changes:
-  - message: Quartermaster now has external access
-    type: Add
-  id: 7501
-  time: '2024-10-13T04:55:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32631
-- author: Golinth
-  changes:
-  - message: Firebots can no longer become sentient via the sentience event.
-    type: Remove
-  id: 7502
-  time: '2024-10-13T04:55:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32629
-- author: BramvanZijp
-  changes:
-  - message: The playtime requirements for station AI have been increased.
-    type: Tweak
-  - message: The playtime requirements to play borg have been slightly decreased.
-    type: Tweak
-  id: 7503
-  time: '2024-10-13T06:38:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32007
 - author: SkaldetSkaeg
   changes:
   - message: Sleepers can no longer use emotions
@@ -3893,3 +3862,31 @@
   id: 7999
   time: '2025-02-23T23:29:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35322
+- author: metalgearsloth
+  changes:
+  - message: Fix arrivals.
+    type: Fix
+  id: 8000
+  time: '2025-02-24T09:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35439
+- author: Vortebo
+  changes:
+  - message: Added a new Relic arrivals shuttle
+    type: Add
+  id: 8001
+  time: '2025-02-24T21:35:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35194
+- author: Errant
+  changes:
+  - message: The version watermark is now less visually annoying.
+    type: Tweak
+  id: 8002
+  time: '2025-02-24T23:21:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35484
+- author: slarticodefast
+  changes:
+  - message: Fixed mousetraps not being armed when used.
+    type: Fix
+  id: 8003
+  time: '2025-02-25T03:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35486
