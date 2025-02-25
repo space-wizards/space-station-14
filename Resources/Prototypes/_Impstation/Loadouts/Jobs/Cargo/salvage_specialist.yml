@@ -7,7 +7,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 360000 #100 hrs
+      time: 108000 #30 hrs, ~20 rounds
 
 # Jumpsuit
 - type: loadout

@@ -5,7 +5,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobChemist
-      time: 36000 #10 hrs
+      time: 36000 #10 hrs, ~7 rounds
 
 # Jumpsuit
 

@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobChiefMedicalOfficer
-      time: 180000 #50 hrs
+      time: 108000 #30 hrs, ~20 rounds
 
 - type: loadout
   id: ChiefMedicalOfficerVeteranHeadset
@@ -28,6 +28,3 @@
   id: CMOPrestigeLabcoat
   equipment:
     outerClothing: ClothingOuterCoatCMO
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCMO
