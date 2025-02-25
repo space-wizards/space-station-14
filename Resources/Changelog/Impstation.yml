@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Fixed Decapoids being sped up by Mucin
-    type: Fix
-  - message: Fixed Decapoids and Gastropoids using the incorrect density values, which
-      means that they should now correctly shatter glass tables when vaulting.
-    type: Fix
-  id: 699
-  time: '2024-12-09T16:55:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/964
-- author: kipdotnet, Aftrlite
-  changes:
-  - message: Added the tck'tck, and admin-spawn ghost role for mapping and emergency
-      backup.
-    type: Add
-  id: 700
-  time: '2024-12-09T16:56:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/966
-- author: DinnerCalzone
-  changes:
-  - message: Stations we receive from upstream have been hard-forked to enable edits
-      to them specific to our server. This does not come with any changes to the maps
-      as of this moment, but it does enable us to add new content that requires significant
-      map changes to work as well as make any other edits to maps that best suit our
-      server's needs.
-    type: Tweak
-  id: 701
-  time: '2024-12-09T16:54:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/963
 - author: Saeko-44
   changes:
   - message: Abnormium, a new potent medicine made from grinding down abnormality
@@ -4100,3 +4071,27 @@
   id: 1198
   time: '2025-02-25T14:25:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1779
+- author: widgetbeck
+  changes:
+  - message: Added a guidebook section on Ghostroles. Embrace the wikification of
+      the guidebook.
+    type: Add
+  id: 1199
+  time: '2025-02-25T21:00:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1281
+- author: kipdotnet
+  changes:
+  - message: The tck'tck now has a unique fire extinguisher and some new art assets.
+    type: Add
+  - message: The tck'tck no longer is ignored by hostile AI
+    type: Fix
+  id: 1200
+  time: '2025-02-25T21:00:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1777
+- author: Toby222
+  changes:
+  - message: Fixed being able to add empty NanoChat contacts
+    type: Fix
+  id: 1201
+  time: '2025-02-25T20:59:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1778
