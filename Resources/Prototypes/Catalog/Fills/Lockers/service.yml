@@ -79,6 +79,7 @@
         amount: 2
       - id: Plunger
         amount: 2
+      - id: MoproachBox
 
 - type: entity
   id: ClosetLegalFilled
