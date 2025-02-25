@@ -39,22 +39,14 @@ public sealed class AttachmentSystem : EntitySystem
             if (!HasComp(item, componentType) || (HasComp(uid, componentType) && !attachment.ForceComponents))
                 continue;
 
-            if (!_entMan.TryGetComponent(uid, componentType, out var comp))
-            {
-                _entMan.AddComponent(uid, compRegistryEntry, overwrite: true);
-                comp = _entMan.GetComponent(uid, componentType);
-            }
-            else
-            {
-                _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
-            }
+            if (_entMan.TryGetComponent(uid, componentType, out var compExists))
+                _entMan.RemoveComponent(uid, compExists);
+
+            _entMan.AddComponent(uid, compRegistryEntry, overwrite: true);
+            var comp = _entMan.GetComponent(uid, componentType);
+            DirtyField();
             var itemComp = _entMan.GetComponent(item, componentType);
             uid.Comp.AddedComps.Add((item, comp.GetType()));
-            if (uid.Comp.Fields[compName] is {} fields)
-            foreach (var field in fields)
-            {
-
-            }
             // _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
 
             Dirty(uid, comp);
@@ -71,7 +63,7 @@ public sealed class AttachmentSystem : EntitySystem
             || compList[args.Container.ID] is not {} compRegistry
             || uid.Comp.AddedComps.Count == 0)
             return;
-        Logger.Debug($"{_netMan.IsClient}...remove time");
+        Logger.Debug($"{_netMan.IsClient}...remove1 time");
         foreach (var compName in compRegistry.Keys)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))
