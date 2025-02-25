@@ -331,7 +331,7 @@
 - type: cargoProduct
   id: MoproachCrate
   icon:
-    sprite: Mobs/Animals/mothroach/moproach.rsi/
+    sprite: Mobs/Animals/mothroach/moproach.rsi
     state: icon
   product: CrateFunMoproach
   cost: 2000
