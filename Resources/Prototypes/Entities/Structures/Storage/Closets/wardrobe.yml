@@ -152,6 +152,30 @@
   parent: WardrobeMixed
   name: custodial closet
   description: It's a storage unit for janitorial clothes and gear.
+  components:
+  - type: Appearance
+  #imp edit begin
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/janitorcloset.rsi
+    noRot: true
+    layers:
+    - state: janitor
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: janitor_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: janitor
+    stateDoorOpen: janitor_open
+    stateDoorClosed: janitor_door
+  #imp edit end
 
 - type: entity
   id: WardrobeFormal

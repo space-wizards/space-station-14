@@ -13,6 +13,10 @@
 - type: accessLevel
   id: Mime
   name: id-card-access-level-mime
+
+- type: accessLevel
+  id: Musician
+  name: id-card-access-level-musician
   
 - type: accessLevel
   id: Reporter

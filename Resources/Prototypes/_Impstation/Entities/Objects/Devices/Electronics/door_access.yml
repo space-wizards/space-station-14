@@ -76,6 +76,15 @@
   - type: AccessReader
     access: [["Mime"]]
 
+# Musician
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMusician
+  suffix: Musician, Locked
+  components:
+  - type: AccessReader
+    access: [["Musician"]]
+
 # Reporter
 - type: entity
   parent: DoorElectronics

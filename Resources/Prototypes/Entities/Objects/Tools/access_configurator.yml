@@ -47,6 +47,7 @@
       - Maintenance
       - Medical
       - Mime #Imp
+      - Musician #Imp
       - Quartermaster
       - Reporter #Imp
       - Research
@@ -122,6 +123,7 @@
     - Maintenance
     - Medical
     - Mime #Imp
+    - Musician #Imp
     - Quartermaster
     - Reporter #Imp
     - Research

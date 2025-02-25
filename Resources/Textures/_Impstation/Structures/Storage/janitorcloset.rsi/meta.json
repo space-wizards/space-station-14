@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491, main sprites by AftrLite (github) for Impstation. Edited by DinnerCalzone (github).",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "janitor"
+    },
+    {
+      "name": "janitor_door"
+    },
+    {
+      "name": "janitor_open"
+    },
+    {
+      "name": "welded"
+    }
+  ]
+}

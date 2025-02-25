@@ -48,7 +48,6 @@ public sealed partial class IdCardConsoleComponent : Component
         "Atmospherics",
         "Bar",
         "Brig",
-        "Detective",
         "Captain",
         "Cargo",
         "Chapel",
@@ -59,6 +58,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Command",
         "Courier", // Imp
         "Cryogenics",
+        "Detective",
         "Engineering",
         "External",
         "HeadOfPersonnel",
@@ -73,6 +73,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Maintenance",
         "Medical",
         "Mime", // Imp
+        "Musician", // Imp
         "Quartermaster",
         "Reporter", // Imp
         "Research",

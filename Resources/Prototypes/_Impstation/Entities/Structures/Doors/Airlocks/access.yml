@@ -37,6 +37,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMime ]
+
+- type: entity
+  parent: AirlockMusician
+  id: AirlockMusicianLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
       
 - type: entity
   parent: AirlockReporter
@@ -106,6 +115,15 @@
     containers:
       board: [ DoorElectronicsMime ]
       
+- type: entity
+  parent: AirlockMusicianGlass
+  id: AirlockMusicianGlassLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
+
 - type: entity
   parent: AirlockReporterGlass
   id: AirlockReporterGlassLocked
@@ -214,6 +232,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMime ]
+
+- type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintMusicianLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
 
 - type: entity
   parent: AirlockMaintServiceLocked

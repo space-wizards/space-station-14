@@ -74,7 +74,15 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/mime.rsi
-    
+
+- type: entity
+  parent: AirlockService
+  id: AirlockMusician
+  suffix: Musician
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/musician.rsi
+
 - type: entity
   parent: AirlockService
   id: AirlockReporter
@@ -184,6 +192,14 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/mime.rsi
+
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockMusicianGlass
+  suffix: Musician
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/musician.rsi
     
 - type: entity
   parent: AirlockServiceGlass

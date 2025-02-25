@@ -30,6 +30,15 @@
 
 - type: entity
   parent: WindoorServiceLocked
+  id: WindoorMusicianLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
+
+- type: entity
+  parent: WindoorServiceLocked
   id: WindoorReporterLocked
   suffix: Reporter, Locked
   components:
@@ -88,6 +97,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMime ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureMusicianLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
 
 - type: entity
   parent: WindoorSecureServiceLocked
