@@ -371,6 +371,9 @@
 - type: Tag
   id: CoordinatesDisk
 
+- type: Tag
+  id: CorgiWearable
+
 - type: Tag #Ohioans die happy
   id: Corn
 

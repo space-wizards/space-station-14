@@ -381,3 +381,56 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
+
+- type: reagent
+  id: CorgiJuice
+  name: reagent-name-corgijuice
+  group: Toxins
+  desc: reagent-desc-corgijuice
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: dogfood
+  color: "#ed9715"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-stuffy-throat" ]
+        probability: 0.15
+      - !type:Polymorph
+        prototype: CorgiMorph
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+      - !type:GenericStatusEffect
+        key: RatvarianLanguage # there are only so many status effects any species can have and this one lets you add a component so
+        component: BarkAccent
+      - !type:AdjustReagent
+        reagent: CorgiJuice
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: -2
+            Brute: -2
+            Burn: -2
+            Toxin: -2
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: 2
