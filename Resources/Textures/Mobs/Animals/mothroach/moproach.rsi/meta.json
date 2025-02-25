@@ -41,10 +41,6 @@
       ]
     },
     {
-      "name": "mothroach_lazy",
-      "directions": 4
-    },
-    {
       "name": "mothroach_dead",
       "directions": 4
     },
