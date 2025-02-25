@@ -15,3 +15,8 @@
   - /Audio/Announcements/RoundEnd/samhydeantagstrat.ogg
   - /Audio/Announcements/RoundEnd/its_only_game.ogg
   - /Audio/Announcements/RoundEnd/newroundsexy.ogg
+
+- type: soundCollection
+  id: PowerOn
+  files:
+  - /Audio/Announcements/power_on.ogg
