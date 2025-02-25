@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: DinnerwareInventory
   startingInventory:
     ButchCleaver: 1
@@ -27,3 +27,7 @@
     DrinkMugOne: 1
     DrinkMugRainbow: 2
     DrinkMugRed: 2
+  contrabandInventory:
+    CandyBowl: 1
+    BarSpoon: 2
+    DrinkShaker: 2

@@ -1,0 +1,131 @@
+## Static recipes
+
+- type: latheRecipePack
+  id: SecurityEquipmentStatic
+  recipes:
+  - ClothingEyesHudSecurity
+  - ForensicPad
+  - Handcuffs
+  - TargetClown
+  - TargetHuman
+  - TargetSyndicate
+  - Zipties
+
+# Practice ammo/mags and practice weapons
+- type: latheRecipePack
+  id: SecurityPracticeStatic
+  recipes:
+  - BoxShotgunPractice
+  - MagazineBoxLightRiflePractice
+  - MagazineBoxMagnumPractice
+  - MagazineBoxPistolPractice
+  - MagazineBoxRiflePractice
+  - WeaponDisablerPractice
+  - WeaponLaserCarbinePractice
+  - WeaponFlareGunSecurity
+
+# Shared between secfab and emagged autolathe
+- type: latheRecipePack
+  id: SecurityAmmoStatic
+  recipes:
+  - BoxLethalshot
+  - BoxShotgunSlug
+  - MagazineBoxLightRifle
+  - MagazineBoxMagnum
+  - MagazineBoxPistol
+  - MagazineBoxRifle
+  - MagazineLightRifle
+  - MagazineLightRifleEmpty
+  - MagazinePistol
+  - MagazinePistolEmpty
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGunEmpty
+  - MagazinePistolSubMachineGunTopMounted
+  - MagazinePistolSubMachineGunTopMountedEmpty
+  - MagazineRifle
+  - MagazineRifleEmpty
+  - MagazineShotgun
+  - MagazineShotgunEmpty
+  - MagazineShotgunSlug
+  - SpeedLoaderMagnum
+  - SpeedLoaderMagnumEmpty
+
+- type: latheRecipePack
+  id: SecurityWeaponsStatic
+  recipes:
+  - Flash
+  - Stunbaton
+  - CombatKnife
+  - RiotShield
+
+## Dynamic recipes
+
+- type: latheRecipePack
+  id: SecurityEquipment
+  recipes:
+  - ClothingBackpackElectropack
+  - HoloprojectorSecurity
+  - PortableRecharger
+  - PowerCageHigh
+  - PowerCageMedium
+  - PowerCageSmall
+  - TelescopicShield
+
+- type: latheRecipePack
+  id: SecurityBoards
+  recipes:
+  - ShuttleGunDusterCircuitboard
+  - ShuttleGunFriendshipCircuitboard
+  - ShuttleGunPerforatorCircuitboard
+  - ShuttleGunSvalinnMachineGunCircuitboard
+
+- type: latheRecipePack
+  parent:
+  - ScienceExplosives # sec gets everything for modular grenade making that sci does
+  id: SecurityExplosives
+  recipes:
+  - ExplosivePayload
+  - GrenadeBlast
+  - GrenadeEMP
+  - GrenadeFlash
+  - MagazineGrenadeEmpty
+
+# Shared between secfab and emagged protolathe
+- type: latheRecipePack
+  id: SecurityAmmo
+  recipes:
+  - BoxBeanbag
+  - BoxShotgunIncendiary
+  - BoxShotgunUranium
+  - BoxShellTranquilizer
+  - MagazineBoxLightRifleIncendiary
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxMagnumIncendiary
+  - MagazineBoxMagnumUranium
+  - MagazineBoxPistolIncendiary
+  - MagazineBoxPistolUranium
+  - MagazineBoxRifleIncendiary
+  - MagazineBoxRifleUranium
+  - MagazineLightRifleIncendiary
+  - MagazineLightRifleUranium
+  - MagazinePistolIncendiary
+  - MagazinePistolUranium
+  - MagazinePistolSubMachineGunIncendiary
+  - MagazinePistolSubMachineGunUranium
+  - MagazineRifleIncendiary
+  - MagazineRifleUranium
+  - MagazineShotgunBeanbag
+  - MagazineShotgunIncendiary
+  - SpeedLoaderMagnumIncendiary
+  - SpeedLoaderMagnumUranium
+
+- type: latheRecipePack
+  id: SecurityWeapons
+  recipes:
+  - Truncheon
+  - WeaponAdvancedLaser
+  - WeaponDisabler
+  - WeaponDisablerSMG
+  - WeaponLaserCannon
+  - WeaponLaserCarbine
+  - WeaponXrayCannon
