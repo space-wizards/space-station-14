@@ -153,7 +153,6 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField]
         public bool ShowVerb = true;
-
     }
 
     [Serializable, NetSerializable]
