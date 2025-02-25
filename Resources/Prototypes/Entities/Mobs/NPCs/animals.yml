@@ -1199,8 +1199,9 @@
     needsHands: false
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
-    # This needs to be moved to boxinggloves
-    #knockdownSound: /Audio/Weapons/boxingbell.ogg
+    # April Fools - re-add boxing bell sfx
+  - type: Boxing
+    sound: /Audio/Weapons/boxingbell.ogg
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
