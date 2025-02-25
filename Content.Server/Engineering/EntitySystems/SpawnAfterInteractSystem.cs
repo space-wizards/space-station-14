@@ -15,6 +15,7 @@ namespace Content.Server.Engineering.EntitySystems
     public sealed class SpawnAfterInteractSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly TurfSystem _turfSystem = default!;
 
@@ -31,7 +32,7 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if (!TryComp<MapGridComponent>(args.ClickLocation.GetGridUid(EntityManager), out var grid))
+            if (!TryComp<MapGridComponent>(_transformSystem.GetGrid(args.ClickLocation), out var grid))
                 return;
             if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
                 return;
