@@ -7,7 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
-using Content.Shared.Intellicard;
+using Content.Shared.;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
@@ -96,7 +96,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiHolderComponent, MapInitEvent>(OnHolderMapInit);
         SubscribeLocalEvent<StationAiHolderComponent, EntInsertedIntoContainerMessage>(OnHolderConInsert);
         SubscribeLocalEvent<StationAiHolderComponent, EntRemovedFromContainerMessage>(OnHolderConRemove);
-        SubscribeLocalEvent<StationAiHolderComponent, IntellicardDoAfterEvent>(OnIntellicardDoAfter);
+        SubscribeLocalEvent<StationAiHolderComponent, DoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<StationAiCoreComponent, EntInsertedIntoContainerMessage>(OnAiInsert);
         SubscribeLocalEvent<StationAiCoreComponent, EntRemovedFromContainerMessage>(OnAiRemove);
@@ -208,7 +208,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     }
 
 
-    private void OnIntellicardDoAfter(Entity<StationAiHolderComponent> ent, ref IntellicardDoAfterEvent args)
+    private void OnDoAfter(Entity<StationAiHolderComponent> ent, ref DoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -251,7 +251,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
             return;
 
-        //Don't want to download/upload between several intellicards. You can just pick it up at that point.
+        //Don't want to download/upload between several s. You can just pick it up at that point.
         if (HasComp<IntellicardComponent>(args.Target))
             return;
 
@@ -263,24 +263,24 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         if (cardHasAi && coreHasAi)
         {
-            _popup.PopupClient(Loc.GetString("intellicard-core-occupied"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString("-core-occupied"), args.User, args.User, PopupType.Medium);
             args.Handled = true;
             return;
         }
         if (!cardHasAi && !coreHasAi)
         {
-            _popup.PopupClient(Loc.GetString("intellicard-core-empty"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString("-core-empty"), args.User, args.User, PopupType.Medium);
             args.Handled = true;
             return;
         }
 
-        if (TryGetHeld((args.Target.Value, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed)
+        if (TryGetHeld((args.Target.Value, targetHolder), out var held))
         {
-            var ev = new ChatNotificationEvent("IntellicardDownload", args.Used, args.User);
+            var ev = new ChatNotificationEvent("Download", args.Used, args.User);
             RaiseLocalEvent(held, ref ev);
         }
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new DoAfterEvent(), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -538,7 +538,7 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 }
 
 [Serializable, NetSerializable]
-public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class DoAfterEvent : SimpleDoAfterEvent;
 
 
 [Serializable, NetSerializable]
