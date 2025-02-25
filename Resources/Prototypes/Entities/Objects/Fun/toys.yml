@@ -1366,6 +1366,9 @@
     heldPrefix: orb
   - type: TileFrictionModifier
     modifier: 0.001
+  - type: Tag
+    tags:
+    - PonderingOrb
 
 - type: entity
   parent: PonderingOrb
