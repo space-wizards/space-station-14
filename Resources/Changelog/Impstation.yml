@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: You can grind the bug and snail plushies.
-    type: Add
-  id: 697
-  time: '2024-12-09T16:37:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/968
 - author: formlessnameless
   changes:
   - message: You can no longer attack or perform most other actions while inside vents.
@@ -4101,3 +4094,11 @@
   id: 1196
   time: '2025-02-24T22:20:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1775
+- author: AvianMaiden
+  changes:
+  - message: Burst-fire modes on the WT550 and C-20R SMGs should feel better to use;
+      try them out on your friends and foes!
+    type: Tweak
+  id: 1197
+  time: '2025-02-25T02:20:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1762
