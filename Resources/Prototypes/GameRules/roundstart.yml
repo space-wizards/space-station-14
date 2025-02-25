@@ -260,9 +260,11 @@
   components:
   - type: WizardRule
   - type: GameRule
-    minPlayers: 20
+    minPlayers: 10
+    # minPlayers: 1 # For testing
   - type: LoadMapRule
     mapPath: /Maps/Shuttles/wizard.yml
+    # mapPath: /Maps/Nonstations/nukieplanet.yml # For testing
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
