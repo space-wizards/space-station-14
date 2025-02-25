@@ -36,6 +36,7 @@
     allowedSlots:
     - HEAD
   - type: Storage
+    showVerb: false
     grid:
     - 0,0,6,3
     maxItemSize: Small
