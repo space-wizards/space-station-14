@@ -1,5 +1,5 @@
 using Content.Server.Chat.Systems;
-using Content.Server.NPC.Components;
+using Content.Shared.NPC.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Components;
@@ -55,34 +55,11 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (!_entMan.TryGetComponent<MedibotComponent>(owner, out var botComp))
             return HTNOperatorStatus.Failed;
 
-
-        if (!_entMan.TryGetComponent<DamageableComponent>(target, out var damage))
+        if (!_medibot.CheckInjectable((owner, botComp), target) || !_medibot.TryInject((owner, botComp), target))
             return HTNOperatorStatus.Failed;
 
-        if (!_solutionContainer.TryGetInjectableSolution(target, out var injectable, out _))
-            return HTNOperatorStatus.Failed;
-
-        if (!_interaction.InRangeUnobstructed(owner, target))
-            return HTNOperatorStatus.Failed;
-
-        var total = damage.TotalDamage;
-
-        // always inject healthy patients when emagged
-        if (total == 0 && !_entMan.HasComponent<EmaggedComponent>(owner))
-            return HTNOperatorStatus.Failed;
-
-        if (!_entMan.TryGetComponent<MobStateComponent>(target, out var mobState))
-            return HTNOperatorStatus.Failed;
-
-        var state = mobState.CurrentState;
-        if (!_medibot.TryGetTreatment(botComp, mobState.CurrentState, out var treatment) || !treatment.IsValid(total))
-            return HTNOperatorStatus.Failed;
-
-        _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-        _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
-        _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
-        _audio.PlayPvs(botComp.InjectSound, target);
         _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: true, hideLog: true);
+
         return HTNOperatorStatus.Finished;
     }
 }

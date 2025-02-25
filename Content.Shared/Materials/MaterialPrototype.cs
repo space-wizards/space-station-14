@@ -13,11 +13,11 @@ namespace Content.Shared.Materials
     {
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
-        public string[]? Parents { get; }
+        public string[]? Parents { get; private set; }
 
         [ViewVariables]
         [AbstractDataField]
-        public bool Abstract { get; } = false;
+        public bool Abstract { get; private set; } = false;
 
         [ViewVariables]
         [IdDataField]
