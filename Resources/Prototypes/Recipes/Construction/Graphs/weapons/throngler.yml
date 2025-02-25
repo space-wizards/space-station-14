@@ -98,12 +98,6 @@
               doAfter: 1
             - material: Bananium
               amount: 10
-              doAfter: 9
-            - tag: WizardsGrimoire
-              name: wizards grimoire
-              icon:
-                sprite: Objects/Misc/books.rsi
-                state: icon_pentagramm
-              doAfter: 1
+              doAfter: 10
     - node: throngler
       entity: ThronglerFools
