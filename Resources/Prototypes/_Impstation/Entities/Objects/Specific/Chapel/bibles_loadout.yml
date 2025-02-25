@@ -109,3 +109,17 @@
     size: Small
     heldPrefix: unitology
     sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+
+- type: entity
+  name: greybible
+  description: A major breakthrough, this NanoTrasen-issue bible is compatible with all belief systems, even ones that refute its legitimacy.
+  parent: Bible
+  id: Greybible
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
+    state: greybible
+  - type: Item
+    size: Small
+    heldPrefix: greybible
+    sprite: _Impstation/Objects/Specific/Chapel/bibles_loadout.rsi
