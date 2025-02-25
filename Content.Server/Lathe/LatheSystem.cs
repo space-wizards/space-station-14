@@ -3,26 +3,17 @@ using System.Linq;
 
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.NodeContainer;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
-using Content.Shared.Atmos;
-using Content.Shared.Atmos;
 
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -66,7 +57,6 @@ namespace Content.Server.Lathe
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;

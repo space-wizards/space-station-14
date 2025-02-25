@@ -1,8 +1,4 @@
 using Content.Shared.Atmos;
-using Content.Shared.Database;
-using Content.Shared.EntityEffects;
-using Content.Shared.Research.Prototypes;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Lathe
