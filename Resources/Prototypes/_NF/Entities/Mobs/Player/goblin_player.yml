@@ -6,7 +6,7 @@
   components:
   - type: Speech
     speechVerb: Goblin
-  - type: Absorbable
+  - type: Absorbable # imp
     biomassRestored: 0.5
 
 - type: entity

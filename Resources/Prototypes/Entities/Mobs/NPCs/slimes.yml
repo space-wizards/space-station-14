@@ -45,7 +45,7 @@
     spawned:
     - id: FoodMeatSlime
       amount: 2
-  - type: Absorbable # im just going off vibes here
+  - type: Absorbable # imp - im just going off vibes here
     biomassRestored: 0.6
   - type: Respirator
     damage:
