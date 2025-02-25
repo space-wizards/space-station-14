@@ -8,16 +8,6 @@
       role: JobCaptain
       time: 108000 #30 hrs, ~20 rounds
 
-# For the veteran command cosmetic set, used for all command jobs
-- type: loadoutEffectGroup
-  id: VeteranCommand
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 108000 #30 hrs, ~20 rounds
-
 # Jumpsuit
 - type: loadout
   id: CaptainEveningAttire
@@ -29,6 +19,11 @@
   id: CaptainBeret
   equipment:
     head: ClothingHeadHatBeretCaptain
+
+- type: loadout
+  id: CaptainCrusherCap
+  equipment:
+    head: ClothingHeadHatCaptaincrushercap
 
 # Glasses
 - type: loadout

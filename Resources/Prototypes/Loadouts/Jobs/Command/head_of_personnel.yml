@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
-      time: 72000 #20 hrs
+      time: 54000 #15 hrs, ~10 rounds #imp
 
 # Professional HoP Time
 - type: loadoutEffectGroup
