@@ -1,4 +1,3 @@
-using Content.Shared.Item;
 using Content.Shared.Magic.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
