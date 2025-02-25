@@ -26,7 +26,10 @@ namespace Content.Server.Body.Components
         ///     The solution inside of this stomach this transfers reagents to the body.
         /// </summary>
         [ViewVariables]
-        public Entity<SolutionComponent>? Solution;
+        public Entity<SolutionComponent>? StomachSolution;
+
+        [ViewVariables]
+        public List<Entity<SolutionComponent>> DigestionSolutions = new List<Entity<SolutionComponent>>();
 
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
@@ -46,12 +49,6 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public EntityWhitelist? SpecialDigestible = null;
-
-        /// <summary>
-        ///     Used to track how long each reagent has been in the stomach
-        /// </summary>
-        [ViewVariables]
-        public readonly List<ReagentDelta> ReagentDeltas = new();
 
         /// <summary>
         ///     Used to track quantity changes when ingesting & digesting reagents
