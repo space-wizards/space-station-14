@@ -8,17 +8,7 @@
   },
   "states": [
     {
-      "name": "holding",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "holding"
     },
     {
       "name": "holding-equipped-BACKPACK",

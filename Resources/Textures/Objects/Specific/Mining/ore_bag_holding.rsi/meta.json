@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "icon",
+      "name": "icon_unshaded",
       "delays": [
         [
             0.1,
@@ -22,6 +22,9 @@
     {
       "name": "equipped-BELT",
       "directions": 4
+    },
+    {
+      "name": "icon"
     },
     {
       "name": "inhand-left",
