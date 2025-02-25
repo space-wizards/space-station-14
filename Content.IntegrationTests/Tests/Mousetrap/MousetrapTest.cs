@@ -16,7 +16,7 @@ public sealed class MousetrapTest : MovementTest
     private static readonly EntProtoId MousetrapProtoId = "Mousetrap";
     private static readonly EntProtoId MouseProtoId = "MobMouse";
 
-    private static readonly EntProtoId ShoesProtoId = "InteractionTestShoes";
+    private const string ShoesProtoId = "InteractionTestShoes";
 
     [TestPrototypes]
     private static readonly string TestPrototypes = $@"
