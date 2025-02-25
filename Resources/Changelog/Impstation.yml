@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: Abnormium, a new potent medicine made from grinding down abnormality
-      cores. May cause cancer as a side effect.
-    type: Add
-  - message: Philosopher's Juice, a catalyst for endgame chemistry made with unusual
-      materials (more recipes involving this catalyst in the future)
-    type: Add
-  - message: Holium, an impossibly hard to make chemical that will require the entire
-      station to work in tandem to be made in the name of the cult of the hole
-    type: Add
-  id: 702
-  time: '2024-12-09T17:10:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/969
 - author: Darkmajia
   changes:
   - message: Changeling's chameleon skin reveals faster while moving, but is cheaper
@@ -4095,3 +4081,11 @@
   id: 1201
   time: '2025-02-25T20:59:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1778
+- author: formlessnameless
+  changes:
+  - message: Changelings can now eat a lot of different things for varying reward
+      to stave off hunger, but only temporarily...
+    type: Tweak
+  id: 1202
+  time: '2025-02-25T21:12:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1771
