@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 02/24/2025 23:20:20
-  entityCount: 7590
+  time: 02/25/2025 16:47:10
+  entityCount: 7606
 maps:
 - 1
 grids:
@@ -113,7 +113,7 @@ entities:
           version: 6
         2,2:
           ind: 2,2
-          tiles: YgAAAAAAYgAAAAABYgAAAAAAYgAAAAADYgAAAAABYgAAAAACYgAAAAABZQAAAAAEZQAAAAADZQAAAAADYgAAAAAAYgAAAAADYgAAAAADYgAAAAABYgAAAAADYgAAAAABYgAAAAADYgAAAAAAYgAAAAABYgAAAAAAYgAAAAACYgAAAAADYgAAAAAAYgAAAAAAZQAAAAADZQAAAAAAYgAAAAABYgAAAAAAYgAAAAACYgAAAAACYgAAAAADYgAAAAADYgAAAAADYgAAAAACYgAAAAADYgAAAAACYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAACYgAAAAAAYgAAAAAAYgAAAAACYgAAAAADYgAAAAACYgAAAAACYgAAAAAAYgAAAAADYgAAAAADYgAAAAABYgAAAAACYgAAAAACYgAAAAABYgAAAAAAYgAAAAAAZQAAAAACZQAAAAAAYgAAAAAAYgAAAAAAYgAAAAADYgAAAAADYgAAAAACYgAAAAABZQAAAAAAYgAAAAAAZQAAAAAEZQAAAAADZQAAAAABZQAAAAABZQAAAAABZQAAAAABZQAAAAACZQAAAAAAYgAAAAACYgAAAAABYgAAAAACYgAAAAACYgAAAAACYgAAAAACYgAAAAACYgAAAAAAYgAAAAABYgAAAAABYgAAAAAAYgAAAAADYgAAAAABYgAAAAADZQAAAAABZQAAAAABYgAAAAAAYgAAAAACYgAAAAACYgAAAAABYgAAAAACYgAAAAAAYgAAAAAAYgAAAAADYgAAAAAAYgAAAAABYgAAAAABYgAAAAACYgAAAAACYgAAAAADZQAAAAAEZQAAAAADYgAAAAACYgAAAAADYgAAAAABYgAAAAADYgAAAAACYgAAAAADYgAAAAADYgAAAAAAYgAAAAACYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAADZQAAAAACZQAAAAADYgAAAAABYgAAAAABYgAAAAABYgAAAAABYgAAAAABYgAAAAACYgAAAAADYgAAAAAAYgAAAAABYgAAAAABYgAAAAACYgAAAAAAYgAAAAADYgAAAAAAZQAAAAADZQAAAAAAYgAAAAADYgAAAAAAYgAAAAADYgAAAAADYgAAAAADYgAAAAABYgAAAAACYgAAAAABYgAAAAABYgAAAAAAYgAAAAADYgAAAAACYgAAAAACYgAAAAACZQAAAAABZQAAAAABYgAAAAACYgAAAAABYgAAAAAAYgAAAAACYgAAAAACYgAAAAAAYgAAAAACYgAAAAADYgAAAAABYgAAAAAAYgAAAAABYgAAAAADYgAAAAACYgAAAAACZQAAAAAEZQAAAAABYgAAAAABYgAAAAADYgAAAAAAYgAAAAADYgAAAAAAYgAAAAACZQAAAAAAZQAAAAAAZQAAAAABZQAAAAAEZQAAAAACZQAAAAAEZQAAAAAAZQAAAAABZQAAAAADZQAAAAAEZQAAAAADZQAAAAAEZQAAAAACYgAAAAACYgAAAAAAYgAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAZQAAAAABCAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAAZQAAAAADCAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZQAAAAABZQAAAAAEZQAAAAABZQAAAAACZQAAAAAACAAAAAAACAAAAAAACAAAAAAAZQAAAAAAZQAAAAAAZQAAAAAAZQAAAAABZQAAAAAEZQAAAAABZQAAAAAAZQAAAAADZQAAAAADZQAAAAAEZQAAAAABZQAAAAAAZQAAAAABCAAAAAAACAAAAAAACAAAAAAAZQAAAAAAZQAAAAACYgAAAAADCgAAAAAAYgAAAAAACgAAAAAAYgAAAAACCgAAAAAA
+          tiles: YgAAAAAAYgAAAAABYgAAAAAAYgAAAAADYgAAAAABYgAAAAACYgAAAAABZQAAAAAEZQAAAAADZQAAAAADYgAAAAAAYgAAAAADYgAAAAADYgAAAAABYgAAAAADYgAAAAABYgAAAAADYgAAAAAAYgAAAAABYgAAAAAAYgAAAAACYgAAAAADYgAAAAAAYgAAAAAAZQAAAAADZQAAAAAAYgAAAAABYgAAAAAAYgAAAAACYgAAAAACYgAAAAADYgAAAAADYgAAAAADYgAAAAACYgAAAAADYgAAAAACYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAACYgAAAAAAYgAAAAAAYgAAAAACYgAAAAADYgAAAAACYgAAAAACYgAAAAAAYgAAAAADYgAAAAADYgAAAAABYgAAAAACYgAAAAACYgAAAAABYgAAAAAAYgAAAAAAZQAAAAACZQAAAAAABwAAAAAAYgAAAAAAYgAAAAADYgAAAAADYgAAAAACYgAAAAABZQAAAAAAYgAAAAAAZQAAAAAEZQAAAAADZQAAAAABZQAAAAABZQAAAAABZQAAAAABZQAAAAACZQAAAAAABwAAAAAABwAAAAAABwAAAAAAYgAAAAACYgAAAAACYgAAAAACYgAAAAACYgAAAAAAYgAAAAABYgAAAAABYgAAAAAAYgAAAAADYgAAAAABYgAAAAADZQAAAAABZQAAAAABBwAAAAAABwAAAAAABwAAAAAAYgAAAAABYgAAAAACYgAAAAAAYgAAAAAAYgAAAAADYgAAAAAAYgAAAAABYgAAAAABYgAAAAACYgAAAAACYgAAAAADZQAAAAAEZQAAAAADBwAAAAAABwAAAAAABwAAAAAAYgAAAAADYgAAAAACYgAAAAADYgAAAAADYgAAAAAAYgAAAAACYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAAAYgAAAAADZQAAAAACZQAAAAADBwAAAAAABwAAAAAABwAAAAAAYgAAAAABYgAAAAABYgAAAAACYgAAAAADYgAAAAAAYgAAAAABYgAAAAABYgAAAAACYgAAAAAAYgAAAAADYgAAAAAAZQAAAAADZQAAAAAABwAAAAAABwAAAAAABwAAAAAAYgAAAAADYgAAAAADYgAAAAABYgAAAAACYgAAAAABYgAAAAABYgAAAAAAYgAAAAADYgAAAAACYgAAAAACYgAAAAACZQAAAAABZQAAAAABBwAAAAAABwAAAAAAYgAAAAAAYgAAAAACYgAAAAACYgAAAAAAYgAAAAACYgAAAAADYgAAAAABYgAAAAAAYgAAAAABYgAAAAADYgAAAAACYgAAAAACZQAAAAAEZQAAAAABBwAAAAAABwAAAAAACwAAAAAACwAAAAAABwAAAAAABwAAAAAAZQAAAAAAZQAAAAAAZQAAAAABZQAAAAAEZQAAAAACZQAAAAAEZQAAAAAAZQAAAAABZQAAAAADZQAAAAAEZQAAAAADZQAAAAAEZQAAAAACYgAAAAACYgAAAAAAYgAAAAAABwAAAAAABwAAAAAABwAAAAAABwAAAAAAZQAAAAABCAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAAZQAAAAADCAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZQAAAAABZQAAAAAEZQAAAAABZQAAAAACZQAAAAAACAAAAAAACAAAAAAACAAAAAAAZQAAAAAAZQAAAAAAZQAAAAAAZQAAAAABZQAAAAAEZQAAAAABZQAAAAAAZQAAAAADZQAAAAADZQAAAAAEZQAAAAABZQAAAAAAZQAAAAABCAAAAAAACAAAAAAACAAAAAAAZQAAAAAAZQAAAAACYgAAAAADCgAAAAAAYgAAAAAACgAAAAAAYgAAAAACCgAAAAAA
           version: 6
         3,1:
           ind: 3,1
@@ -2497,14 +2497,6 @@ entities:
     - type: Transform
       pos: 29.5,-8.5
       parent: 2
-- proto: AirlockAtmosphericsGlass
-  entities:
-  - uid: 3238
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 10.5,36.5
-      parent: 2
 - proto: AirlockAtmosphericsLocked
   entities:
   - uid: 252
@@ -2518,7 +2510,7 @@ entities:
       pos: 27.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -20793.352
+      secondsUntilStateChange: -22342.248
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2568,7 +2560,7 @@ entities:
       pos: 16.5,25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13773.619
+      secondsUntilStateChange: -15322.517
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2579,7 +2571,7 @@ entities:
       pos: 16.5,24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13771.952
+      secondsUntilStateChange: -15320.85
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2767,27 +2759,18 @@ entities:
       linkedPorts:
         1831:
         - DoorStatus: DoorBolt
-  - uid: 6069
+  - uid: 2527
     components:
     - type: Transform
-      pos: 8.5,38.5
+      pos: 10.5,36.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 4
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
-        6070:
+        2528:
         - DoorStatus: DoorBolt
-  - uid: 6070
-    components:
-    - type: Transform
-      pos: 9.5,35.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 4
-    - type: DeviceLinkSource
-      linkedPorts:
-        6069:
+        2529:
         - DoorStatus: DoorBolt
 - proto: AirlockExternalCargoLocked
   entities:
@@ -2796,6 +2779,8 @@ entities:
     - type: Transform
       pos: 5.5,28.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
         2504:
@@ -2805,8 +2790,10 @@ entities:
     - type: Transform
       pos: 5.5,26.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: Door
-      secondsUntilStateChange: -100965.02
+      secondsUntilStateChange: -102513.92
       state: Opening
     - type: DeviceLinkSource
       linkedPorts:
@@ -2814,6 +2801,19 @@ entities:
         - DoorStatus: DoorBolt
       lastSignals:
         DoorStatus: True
+  - uid: 2529
+    components:
+    - type: Transform
+      pos: 9.5,35.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2527:
+        - DoorStatus: DoorBolt
+        2528:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalEngineeringLocked
   entities:
   - uid: 843
@@ -2855,11 +2855,11 @@ entities:
       pos: 16.5,60.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
         4506:
-        - DoorStatus: Close
+        - DoorStatus: DoorBolt
   - uid: 4499
     components:
     - type: Transform
@@ -2888,11 +2888,11 @@ entities:
       pos: 15.5,58.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
         4265:
-        - DoorStatus: Close
+        - DoorStatus: DoorBolt
   - uid: 4558
     components:
     - type: Transform
@@ -2955,46 +2955,96 @@ entities:
     - type: Transform
       pos: 56.5,-0.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2131:
+        - DoorStatus: DoorBolt
   - uid: 2133
     components:
     - type: Transform
       pos: 58.5,-0.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2130:
+        - DoorStatus: DoorBolt
   - uid: 2134
     components:
     - type: Transform
       pos: 64.5,-0.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2129:
+        - DoorStatus: DoorBolt
   - uid: 2146
     components:
     - type: Transform
       pos: 66.5,-0.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2128:
+        - DoorStatus: DoorBolt
   - uid: 2165
     components:
     - type: Transform
       pos: 66.5,-14.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2164:
+        - DoorStatus: DoorBolt
   - uid: 2166
     components:
     - type: Transform
       pos: 64.5,-14.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2163:
+        - DoorStatus: DoorBolt
   - uid: 2167
     components:
     - type: Transform
       pos: 58.5,-14.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2162:
+        - DoorStatus: DoorBolt
   - uid: 2168
     components:
     - type: Transform
       pos: 56.5,-14.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2161:
+        - DoorStatus: DoorBolt
   - uid: 2502
     components:
     - type: Transform
       pos: 62.5,48.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
         2515:
@@ -3009,9 +3059,9 @@ entities:
       parent: 2
     - type: DeviceLinkSource
       linkedPorts:
-        2502:
-        - DockStatus: Open
-        - DockStatus: AutoClose
+        6658:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
       invokeCounter: 1
 - proto: AirlockExternalGlassShuttleEmergencyLocked
@@ -3021,61 +3071,116 @@ entities:
     - type: Transform
       pos: 66.5,-2.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6070:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2129
     components:
     - type: Transform
       pos: 64.5,-2.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6069:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2130
     components:
     - type: Transform
       pos: 58.5,-2.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6036:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2131
     components:
     - type: Transform
       pos: 56.5,-2.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6035:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2161
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 56.5,-12.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2556:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2162
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 58.5,-12.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        5677:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2163
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 64.5,-12.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        5975:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 2164
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 66.5,-12.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6033:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+- proto: AirlockExternalLocked
+  entities:
+  - uid: 2528
+    components:
+    - type: Transform
+      pos: 8.5,38.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2527:
+        - DoorStatus: DoorBolt
+        2529:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalShuttleLocked
   entities:
   - uid: 2119
@@ -3086,9 +3191,9 @@ entities:
       parent: 2
     - type: DeviceLinkSource
       linkedPorts:
-        734:
-        - DockStatus: Open
-        - DockStatus: AutoClose
+        5653:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
       invokeCounter: 1
   - uid: 2504
@@ -3099,9 +3204,9 @@ entities:
       parent: 2
     - type: DeviceLinkSource
       linkedPorts:
-        733:
-        - DockStatus: Open
-        - DockStatus: AutoClose
+        4748:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
       invokeCounter: 1
 - proto: AirlockFreezerLocked
@@ -3230,7 +3335,7 @@ entities:
       pos: 43.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -82243.016
+      secondsUntilStateChange: -83791.914
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3321,7 +3426,7 @@ entities:
       pos: 13.5,28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13770.752
+      secondsUntilStateChange: -15319.649
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -33163,6 +33268,129 @@ entities:
     - type: Transform
       pos: 39.5,37.5
       parent: 2
+- proto: LogicGateXor
+  entities:
+  - uid: 2556
+    components:
+    - type: Transform
+      pos: 56.49682,-13.42411
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2168:
+        - Output: DoorBolt
+  - uid: 4748
+    components:
+    - type: Transform
+      pos: 4.5246964,28.438223
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        733:
+        - Output: DoorBolt
+  - uid: 5653
+    components:
+    - type: Transform
+      pos: 4.4465714,26.516348
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        734:
+        - Output: DoorBolt
+  - uid: 5677
+    components:
+    - type: Transform
+      pos: 58.46557,-13.470985
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2167:
+        - Output: DoorBolt
+  - uid: 5975
+    components:
+    - type: Transform
+      pos: 64.46557,-13.439735
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2166:
+        - Output: DoorBolt
+  - uid: 6033
+    components:
+    - type: Transform
+      pos: 66.49682,-13.48661
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2165:
+        - Output: DoorBolt
+  - uid: 6035
+    components:
+    - type: Transform
+      pos: 56.609604,-1.5143857
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2132:
+        - Output: DoorBolt
+  - uid: 6036
+    components:
+    - type: Transform
+      pos: 58.453354,-1.5456357
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2133:
+        - Output: DoorBolt
+  - uid: 6069
+    components:
+    - type: Transform
+      pos: 64.47837,-1.566469
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2134:
+        - Output: DoorBolt
+  - uid: 6070
+    components:
+    - type: Transform
+      pos: 66.50962,-1.5248023
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2146:
+        - Output: DoorBolt
+  - uid: 6658
+    components:
+    - type: Transform
+      pos: 63.478973,48.480175
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2502:
+        - Output: DoorBolt
 - proto: LuxuryPen
   entities:
   - uid: 6688
@@ -37831,6 +38059,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 42.5,18.5
       parent: 2
+  - uid: 2530
+    components:
+    - type: Transform
+      pos: 32.5,36.5
+      parent: 2
 - proto: SignVault
   entities:
   - uid: 2503
@@ -38269,15 +38502,15 @@ entities:
       parent: 2
 - proto: SpawnPointAtmos
   entities:
-  - uid: 6033
+  - uid: 3238
     components:
     - type: Transform
-      pos: 27.5,30.5
+      pos: 30.5,34.5
       parent: 2
-  - uid: 6658
+  - uid: 4744
     components:
     - type: Transform
-      pos: 27.5,31.5
+      pos: 29.5,34.5
       parent: 2
 - proto: SpawnPointBartender
   entities:
@@ -38288,15 +38521,15 @@ entities:
       parent: 2
 - proto: SpawnPointBorg
   entities:
-  - uid: 4744
+  - uid: 2557
     components:
     - type: Transform
-      pos: 31.5,55.5
+      pos: 54.5,9.5
       parent: 2
-  - uid: 4745
+  - uid: 2559
     components:
     - type: Transform
-      pos: 33.5,55.5
+      pos: 52.5,8.5
       parent: 2
 - proto: SpawnPointBotanist
   entities:
@@ -38586,15 +38819,15 @@ entities:
       parent: 2
 - proto: SpawnPointStationEngineer
   entities:
-  - uid: 6035
+  - uid: 2533
     components:
     - type: Transform
-      pos: 38.5,35.5
+      pos: 38.5,41.5
       parent: 2
-  - uid: 6036
+  - uid: 2534
     components:
     - type: Transform
-      pos: 35.5,35.5
+      pos: 38.5,42.5
       parent: 2
 - proto: SpawnPointTechnicalAssistant
   entities:
@@ -38784,6 +39017,18 @@ entities:
     components:
     - type: Transform
       pos: 62.5,6.5
+      parent: 2
+- proto: SuitStorageSalv
+  entities:
+  - uid: 2531
+    components:
+    - type: Transform
+      pos: 7.5,32.5
+      parent: 2
+  - uid: 4745
+    components:
+    - type: Transform
+      pos: 8.5,32.5
       parent: 2
 - proto: SuitStorageSec
   entities:
@@ -47864,6 +48109,16 @@ entities:
       parent: 2
 - proto: WeldingFuelTankFull
   entities:
+  - uid: 2535
+    components:
+    - type: Transform
+      pos: 32.5,37.5
+      parent: 2
+  - uid: 2551
+    components:
+    - type: Transform
+      pos: 31.5,37.5
+      parent: 2
   - uid: 7021
     components:
     - type: Transform
