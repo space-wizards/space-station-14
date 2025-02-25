@@ -3,6 +3,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -20,41 +21,20 @@ public sealed class StorageVoiceControlSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StorageSystem _storage = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<StorageVoiceControlComponent, VoiceTriggeredEvent>(VoiceTriggered);
-        SubscribeLocalEvent<StorageVoiceControlComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<StorageVoiceControlComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<StorageVoiceControlComponent, ComponentInit>(OnComponentInit);
-    }
-
-    private static void OnComponentInit(EntityUid uid, StorageVoiceControlComponent component, ComponentInit args)
-    {
-        // We do this explicitly because without this logic, the system would behave in weird ways.
-        // For example, if AllowedSlots is null, the component can't be used unless someone equips it to a slot,
-        // triggering the GotEquippedEvent to enable it.
-        component.IsFunctional = component.AllowedSlots == null;
-    }
-
-    private static void OnGotUnequipped(Entity<StorageVoiceControlComponent> ent, ref GotUnequippedEvent args)
-    {
-        // Don't disable the component if we don't have allowed slots
-        ent.Comp.IsFunctional = ent.Comp.AllowedSlots == null;
-    }
-
-    private static void OnGotEquipped(Entity<StorageVoiceControlComponent> ent, ref GotEquippedEvent args)
-    {
-        // If we don't have allowed slots, it can be used anywhere, so enable functionality.
-        // If we do have allowed slots, check if we're equipped to one of them. If we're not, disable functionality.
-        ent.Comp.IsFunctional = ent.Comp.AllowedSlots == null || (args.SlotFlags & ent.Comp.AllowedSlots) != 0;
     }
 
     private void VoiceTriggered(Entity<StorageVoiceControlComponent> ent, ref VoiceTriggeredEvent args)
     {
-        // Don't do anything if we've disabled the component
-        if (!ent.Comp.IsFunctional)
+        // Check if the component has any slot restrictions via AllowedSlots
+        // If it has slot restrictions, check if the item is in a slot that is allowed
+        if (ent.Comp.AllowedSlots != null && _inventory.TryGetContainingSlot((ent.Owner, null), out var itemSlot) &&
+            (itemSlot.SlotFlags & ent.Comp.AllowedSlots) == 0)
             return;
 
         // Don't do anything if there is no message

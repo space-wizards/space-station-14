@@ -16,11 +16,4 @@ public sealed partial class StorageVoiceControlComponent : Component
     /// </summary>
     [DataField]
     public SlotFlags? AllowedSlots;
-
-    /// <summary>
-    /// Used to mark the component as functional or not depending on the slot it is in.
-    /// </summary>
-    [DataField]
-    public bool IsFunctional;
-
 }
