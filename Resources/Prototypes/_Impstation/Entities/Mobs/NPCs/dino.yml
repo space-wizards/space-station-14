@@ -82,6 +82,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud
+  - type: Absorbable # I'm making all dinos do this. they're big enough. it's fine
+    biomassRestored: 0.9
   - type: Butcherable
     spawned:
     - id: FoodMeat

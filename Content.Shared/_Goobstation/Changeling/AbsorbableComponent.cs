@@ -11,6 +11,10 @@ public sealed partial class AbsorbableComponent : Component
     [DataField("disabled")]
     public bool Disabled = false;
 
-    [DataField("reducedBiomass")]
-    public bool ReducedBiomass = false;
+    /// <summary>
+    /// Percentage of biomass restored on consumption.
+    /// Smallest animals have the lowest percentages, etc. A lower percentage will also have a faster absorb time.
+    /// </summary>
+    [DataField]
+    public float BiomassRestored = 1f;
 }
