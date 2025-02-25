@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The playtime requirements for station AI have been increased.
-    type: Tweak
-  - message: The playtime requirements to play borg have been slightly decreased.
-    type: Tweak
-  id: 7503
-  time: '2024-10-13T06:38:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32007
 - author: SkaldetSkaeg
   changes:
   - message: Sleepers can no longer use emotions
@@ -3892,3 +3883,10 @@
   id: 8002
   time: '2025-02-24T23:21:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35484
+- author: slarticodefast
+  changes:
+  - message: Fixed mousetraps not being armed when used.
+    type: Fix
+  id: 8003
+  time: '2025-02-25T03:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35486
