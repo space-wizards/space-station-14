@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Added a new Safety MothTM poster about being SSD!
-    type: Add
-  id: 7505
-  time: '2024-10-13T11:25:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32736
 - author: K-Dynamic
   changes:
   - message: Added rainbow lizard plushies, which can be found in arcade machines.
@@ -3890,3 +3883,10 @@
   id: 8004
   time: '2025-02-25T13:45:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33038
+- author: spderman3333
+  changes:
+  - message: Electronic bar signs can now be destroyed.
+    type: Tweak
+  id: 8005
+  time: '2025-02-25T14:43:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35490
