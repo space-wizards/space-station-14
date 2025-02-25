@@ -4,7 +4,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.Containers;
