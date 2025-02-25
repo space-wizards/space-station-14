@@ -129,7 +129,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
-            if (TryGetTile(indices, noiseCopy, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
+            if (TryGetTile(indices, noiseCopy, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index(tileLayer.Tile), tileLayer.Variants, out tile))
             {
                 return true;
             }
@@ -163,7 +163,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             variant = _tile.PickVariant(tileDef, (int) variantValue);
         }
 
-        tile = new Tile(tileDef.TileId, 0, variant);
+        tile = new Tile(tileDef.TileId, variant);
         return true;
     }
 

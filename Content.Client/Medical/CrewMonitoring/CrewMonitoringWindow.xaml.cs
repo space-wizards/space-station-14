@@ -25,6 +25,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly SharedTransformSystem _transformSystem;
     private readonly SpriteSystem _spriteSystem;
 
     private NetEntity? _trackedEntity;
@@ -36,10 +37,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _transformSystem = _entManager.System<SharedTransformSystem>();
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
     }
 
     public void Set(string stationName, EntityUid? mapUid)
@@ -290,7 +291,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             {
                 NavMap.TrackedEntities.TryAdd(sensor.SuitSensorUid,
                     new NavMapBlip
-                    (coordinates.Value,
+                    (CoordinatesToLocal(coordinates.Value),
                     _blipTexture,
                     (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
                     sensor.SuitSensorUid == _trackedEntity));
@@ -356,7 +357,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             if (NavMap.TrackedEntities.TryGetValue(castSensor.SuitSensorUid, out var data))
             {
                 data = new NavMapBlip
-                    (data.Coordinates,
+                    (CoordinatesToLocal(data.Coordinates),
                     data.Texture,
                     (currTrackedEntity == null || castSensor.SuitSensorUid == currTrackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
                     castSensor.SuitSensorUid == currTrackedEntity);
@@ -371,35 +372,16 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         if (!_tryToScrollToListFocus)
             return;
 
-        if (!TryGetVerticalScrollbar(SensorScroller, out var vScrollbar))
-            return;
-
         if (TryGetNextScrollPosition(out float? nextScrollPosition))
         {
-            vScrollbar.ValueTarget = nextScrollPosition.Value;
+            SensorScroller.VScrollTarget = nextScrollPosition.Value;
 
-            if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
+            if (MathHelper.CloseToPercent(SensorScroller.VScroll, SensorScroller.VScrollTarget))
             {
                 _tryToScrollToListFocus = false;
                 return;
             }
         }
-    }
-
-    private bool TryGetVerticalScrollbar(ScrollContainer scroll, [NotNullWhen(true)] out VScrollBar? vScrollBar)
-    {
-        vScrollBar = null;
-
-        foreach (var child in scroll.Children)
-        {
-            if (child is not VScrollBar)
-                continue;
-
-            vScrollBar = (VScrollBar) child;
-            return true;
-        }
-
-        return false;
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)
@@ -419,6 +401,26 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         nextScrollPosition = null;
 
         return false;
+    }
+
+    /// <summary>
+    /// Converts the input coordinates to an EntityCoordinates which are in
+    /// reference to the grid that the map is displaying. This is a stylistic
+    /// choice; this window deliberately limits the rate that blips update,
+    /// but if the blip is attached to another grid which is moving, that
+    /// blip will move smoothly, unlike the others. By converting the
+    /// coordinates, we are back in control of the blip movement.
+    /// </summary>
+    private EntityCoordinates CoordinatesToLocal(EntityCoordinates refCoords)
+    {
+        if (NavMap.MapUid != null)
+        {
+            return _transformSystem.WithEntityId(refCoords, (EntityUid)NavMap.MapUid);
+        }
+        else
+        {
+            return refCoords;
+        }
     }
 
     private void ClearOutDatedData()
