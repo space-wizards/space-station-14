@@ -16,6 +16,7 @@
     - HamsterWearable
     - WhitelistChameleon
     - GasMask # goob edit
+    - Mask
   - type: HideLayerClothing
     slots:
     - Snout
@@ -70,6 +71,11 @@
   name: atmospheric gas mask
   description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
   components:
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - GasMask # goob edit
+    - Mask
   - type: Sprite
     sprite: Clothing/Mask/gasatmos.rsi
   - type: Clothing
@@ -186,6 +192,7 @@
     - PetWearable
     - WhitelistChameleon
     - BreathMask # goob edit
+    - Mask
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
@@ -210,6 +217,7 @@
     tags:
     - ClownMask
     - WhitelistChameleon
+    - Mask
   - type: HideLayerClothing
     slots:
     - Snout
