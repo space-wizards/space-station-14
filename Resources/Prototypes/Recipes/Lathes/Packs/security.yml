@@ -23,6 +23,7 @@
   - WeaponDisablerPractice
   - WeaponLaserCarbinePractice
   - WeaponFlareGunSecurity
+  - SecurityBola #Harmony Change: Adds Security Bolas
 
 # Shared between secfab and emagged autolathe
 - type: latheRecipePack
@@ -72,7 +73,6 @@
   - PowerCageMedium
   - PowerCageSmall
   - TelescopicShield
-  - SecurityBola #Harmony Change: Adds Security Bolas
 
 - type: latheRecipePack
   id: SecurityBoards
