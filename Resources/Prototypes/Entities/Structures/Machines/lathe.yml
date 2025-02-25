@@ -567,6 +567,7 @@
 - type: entity
   parent: BaseLathe
   id: OreProcessor
+  suffix: Do not map
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
@@ -596,6 +597,23 @@
       staticPacks:
       - OreSmelting
       - RGlassSmelting
+
+- type: entity
+  parent: OreProcessor
+  id: OreProcessorNitrogen
+  suffix: Requires nitrogen
+  name: ore processor
+  description: It produces sheets and ingots using ores.
+  components:
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: LatheGas
+      gasId: 1
+      gasAmount: 1
 
 - type: entity
   parent: OreProcessor

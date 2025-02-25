@@ -218,7 +218,10 @@ namespace Content.Server.Lathe
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
             if (TryComp<LatheGasComponent>(uid, out var comp))
-                return CheckHaveGasForProduce(uid, comp);
+            {
+                if (CheckHaveGasForProduce(uid, comp) != true)
+                    return false;
+            }
 
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
@@ -407,6 +410,7 @@ namespace Content.Server.Lathe
                 return false;
 
             inlet.Air.AdjustMoles(comp.GasId, -comp.GasAmount);
+            return true;
         }
 
         #region UI Messages
