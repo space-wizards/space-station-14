@@ -11,10 +11,6 @@
     slots:
     - OUTERCLOTHING
     - NECK
-  - type: AllowSuitStorage
-    whitelist:
-      tags:
-      - GasTank
   - type: StealTarget
     stealGroup: HeadCloak
 
@@ -31,10 +27,6 @@
     slots:
     - OUTERCLOTHING
     - NECK
-  - type: AllowSuitStorage
-    whitelist:
-      tags:
-      - GasTank
   - type: StealTarget
     stealGroup: HeadCloak
 
@@ -51,9 +43,5 @@
     slots:
     - OUTERCLOTHING
     - NECK
-  - type: AllowSuitStorage
-    whitelist:
-      tags:
-      - GasTank
   - type: StealTarget
     stealGroup: HeadCloak
