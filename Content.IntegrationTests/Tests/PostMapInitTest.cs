@@ -78,7 +78,10 @@ namespace Content.IntegrationTests.Tests
             "Plasma",
             "Elkridge",
             "Convex",
-            "Relic"
+            "Relic",
+            "Saltern2",
+            "Cluster2",
+            "Atlas2"
         };
 
         /// <summary>
