@@ -104,7 +104,11 @@
             min: 20
           damage:
             types:
-              Cellular: 0.5
+              Cellular: 0.1
+        - !type:AdjustReagent
+          probability: 0.50
+          reagent: Delirium
+          amount: 0.30
 
 - type: reagent
   id: SalicylicAcid
@@ -146,5 +150,5 @@
         - !type:HealthChange
           damage:
             groups:
-              Toxin: -0.6
-              Burn: -0.3
+              Toxin: -2
+              Burn: -1

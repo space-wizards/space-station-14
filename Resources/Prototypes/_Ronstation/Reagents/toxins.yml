@@ -1,0 +1,18 @@
+- type: reagent
+  id: Delirium
+  name: reagent-name-delirium
+  group: Toxins
+  desc: reagent-desc-delirium
+  physicalDesc: reagent-physical-desc-strong-smelling
+  color: "#942222"
+  metabolisms:
+    Poison:
+      metabolismRate: 1.0
+      effects:
+      - !type:Emote
+        emote: Scream
+        probability: 0.4
+      - !type:Jitter
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
