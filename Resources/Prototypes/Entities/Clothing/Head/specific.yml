@@ -33,6 +33,8 @@
   - type: ActiveListener
     range: 0
   - type: StorageVoiceControl
+    allowedSlots:
+    - HEAD
   - type: Storage
     grid:
     - 0,0,6,3
@@ -41,6 +43,7 @@
       tags:
       - HighRiskItem # no hiding objectives or trolling nukies
       - FakeNukeDisk # no disk checking
+      - QuantumSpinInverter # avoid the morbillionth QSI bug
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

@@ -3,6 +3,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.Containers;
@@ -24,10 +25,38 @@ public sealed class StorageVoiceControlSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<StorageVoiceControlComponent, VoiceTriggeredEvent>(VoiceTriggered);
+        SubscribeLocalEvent<StorageVoiceControlComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<StorageVoiceControlComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<StorageVoiceControlComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private static void OnComponentInit(EntityUid uid, StorageVoiceControlComponent component, ComponentInit args)
+    {
+        // We do this explicitly because without this logic, the system would behave in weird ways.
+        // For example, if AllowedSlots is null, the component can't be used unless someone equips it to a slot,
+        // triggering the GotEquippedEvent to enable it.
+        component.IsFunctional = component.AllowedSlots == null;
+    }
+
+    private static void OnGotUnequipped(Entity<StorageVoiceControlComponent> ent, ref GotUnequippedEvent args)
+    {
+        // Don't disable the component if we don't have allowed slots
+        ent.Comp.IsFunctional = ent.Comp.AllowedSlots == null;
+    }
+
+    private static void OnGotEquipped(Entity<StorageVoiceControlComponent> ent, ref GotEquippedEvent args)
+    {
+        // If we don't have allowed slots, it can be used anywhere, so enable functionality.
+        // If we do have allowed slots, check if we're equipped to one of them. If we're not, disable functionality.
+        ent.Comp.IsFunctional = ent.Comp.AllowedSlots == null || (args.SlotFlags & ent.Comp.AllowedSlots) != 0;
     }
 
     private void VoiceTriggered(Entity<StorageVoiceControlComponent> ent, ref VoiceTriggeredEvent args)
     {
+        // Don't do anything if we've disabled the component
+        if (!ent.Comp.IsFunctional)
+            return;
+
         // Don't do anything if there is no message
         if (args.Message == null)
             return;
@@ -43,22 +72,27 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If the player has something in their hands, try to insert it into the storage
         if (hands.ActiveHand != null && hands.ActiveHand.HeldEntity.HasValue)
         {
+            // Disallow insertion and provide a reason why if the person decides to insert the item into itself
+            if (ent.Owner.Equals(hands.ActiveHand.HeldEntity.Value))
+            {
+                _popup.PopupEntity(Loc.GetString("You can't insert an item into itself!"), ent, args.Source);
+                return;
+            }
             if (_storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out var failedReason))
             {
                 // We adminlog before insertion, otherwise the logger will attempt to pull info on an entity that no longer is present and throw an exception
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} inserted {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
                 _storage.Insert(ent, hands.ActiveHand.HeldEntity.Value, out _);
+                return;
             }
-            else
             {
                 // Tell the player the reason why the item couldn't be inserted
-                if (failedReason != null)
-                {
-                    _popup.PopupEntity(Loc.GetString(failedReason), ent, args.Source);
-                    _adminLogger.Add(LogType.Action,
-                        LogImpact.Low,
-                        $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
-                }
+                if (failedReason == null)
+                    return;
+                _popup.PopupEntity(Loc.GetString(failedReason), ent, args.Source);
+                _adminLogger.Add(LogType.Action,
+                    LogImpact.Low,
+                    $"{ToPrettyString(args.Source)} failed to insert {ToPrettyString(hands.ActiveHand.HeldEntity.Value)} into {ToPrettyString(ent)} via voice control");
             }
             return;
         }
