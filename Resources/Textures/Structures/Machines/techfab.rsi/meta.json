@@ -29,7 +29,10 @@
       "name": "cargo"
     },
     {
-      "name": "ammo"
+      "name": "universal"
+    },
+    {
+      "name": "general"
     },
     {
       "name": "panel"

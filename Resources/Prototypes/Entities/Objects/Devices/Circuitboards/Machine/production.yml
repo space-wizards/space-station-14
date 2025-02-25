@@ -92,18 +92,63 @@
           defaultPrototype: Beaker
 
 - type: entity
-  id: AmmoTechFabCircuitboard
+  id: ServiceTechFabCircuitboard
   parent: BaseMachineCircuitboard
-  name: ammo techfab circuit board
-  description: A machine printed circuit board for an ammo techfab.
+  name: service techfab circuit board
+  description: A machine printed circuit board for a service techfab.
   components:
     - type: Sprite
-      state: security
+      state: service
     - type: MachineBoard
-      prototype: AmmoTechFab
+      prototype: ServiceTechFab
       stackRequirements:
         MatterBin: 1
+        Manipulator: 2
+        Glass: 5
+
+- type: entity
+  id: CargoTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cargo techfab circuit board
+  description: A machine printed circuit board for a cargo techfab.
+  components:
+    - type: Sprite
+      state: supply
+    - type: MachineBoard
+      prototype: CargoTechFab
+      stackRequirements:
+        MatterBin: 2
         Manipulator: 1
+
+- type: entity
+  id: ScienceTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: science techfab circuit board
+  description: A machine printed circuit board for a science techfab.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: ScienceTechFab
+      stackRequirements:
+        MatterBin: 2
+        Manipulator: 3
+
+- type: entity
+  id: EngineeringTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: engineering techfab circuit board
+  description: A machine printed circuit board for an engineering techfab.
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: EngineeringTechFab
+      stackRequirements:
+        MatterBin: 1
+        Manipulator: 2
+        Steel: 5
+        Capacitor: 1
 
 - type: entity
   id: MedicalTechFabCircuitboard
@@ -124,6 +169,42 @@
           defaultPrototype: Beaker
     - type: StealTarget
       stealGroup: MedicalTechFabCircuitboard
+
+- type: entity
+  id: GenericTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generic techfab circuit board
+  description: A machine printed circuit board for a generic techfab.
+  components:
+    - type: Sprite
+      state: generic
+    - type: MachineBoard
+      prototype: GenericTechFab
+      stackRequirements:
+        MatterBin: 1
+        Manipulator: 1
+        Steel: 5
+
+- type: entity
+  id: UniversalTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: universal techfab circuit board
+  description: A machine printed circuit board for an universal techfab.
+  components:
+    - type: Sprite
+      state: universal
+    - type: MachineBoard
+      prototype: UniversalTechFab
+      stackRequirements:
+        MatterBin: 3
+        Manipulator: 2
+        Steel: 10
+        Capacitor: 1
+        Plasma: 10
+      tagRequirements:
+        GlassBeaker:
+          amount: 2
+          defaultPrototype: Beaker
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard

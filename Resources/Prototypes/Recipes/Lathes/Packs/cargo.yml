@@ -7,6 +7,14 @@
   - Pickaxe
 
 - type: latheRecipePack
+  id: CargoFullStatic
+  recipes:
+  - OreBag
+  - RadioHandheld
+  - HandheldGPSBasic
+  - FultonBeacon
+
+- type: latheRecipePack
   id: CargoBoardsStatic
   recipes:
   - OreProcessorMachineCircuitboard

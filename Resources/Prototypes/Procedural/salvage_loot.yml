@@ -7,8 +7,6 @@
       entries:
         - proto: AdvMopItem
           prob: 0.5
-        - proto: AmmoTechFabCircuitboard
-          cost: 2
         - proto: AutolatheMachineCircuitboard
           cost: 2
         - proto: BiomassReclaimerMachineCircuitboard

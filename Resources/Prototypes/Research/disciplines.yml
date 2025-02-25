@@ -45,3 +45,27 @@
     1: 0
     2: 0.75
     3: 0.75
+
+- type: techDiscipline
+  id: TransportAndMining
+  name: research-discipline-transport-and-mining
+  color: "#c27b16"
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: transport_and_mining
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+
+- type: techDiscipline
+  id: Biochemical
+  name: research-discipline-biochemical
+  color: "#449ae6"
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: biochemical
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75

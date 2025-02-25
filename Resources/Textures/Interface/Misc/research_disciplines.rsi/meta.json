@@ -21,6 +21,9 @@
     },
     {
       "name": "industrial"
+    },
+    {
+      "name": "transport_and_mining"
     }
   ]
 }

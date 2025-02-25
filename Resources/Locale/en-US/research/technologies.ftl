@@ -2,7 +2,9 @@ research-discipline-none = None
 research-discipline-industrial = Industrial
 research-discipline-arsenal = Arsenal
 research-discipline-experimental = Experimental
-research-discipline-civilian-services = Civilian Services
+research-discipline-civilian-services = Civilian
+research-discipline-transport-and-mining = Transport and mining
+research-discipline-biochemical = Biochemical
 
 research-technology-fulton = Fultons
 research-technology-salvage-equipment = Salvage Equipment

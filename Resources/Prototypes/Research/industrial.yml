@@ -1,35 +1,6 @@
 # Tier 1
 
 - type: technology
-  id: SalvageEquipment
-  name: research-technology-salvage-equipment
-  icon:
-    sprite: Objects/Tools/handdrill.rsi
-    state: handdrill
-  discipline: Industrial
-  tier: 1
-  cost: 7500
-  recipeUnlocks:
-  - MiningDrill
-  - MineralScannerEmpty
-  - OreProcessorIndustrialMachineCircuitboard
-  - ClothingMaskWeldingGas
-
-- type: technology
-  id: SpaceScanning
-  name: research-technology-space-scanning
-  icon:
-    sprite: Objects/Tools/handheld_mass_scanner.rsi
-    state: icon
-  discipline: Industrial
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - RadarConsoleCircuitboard
-  - HandHeldMassScanner
-  - BorgModuleGPS
-
-- type: technology
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
   icon:
@@ -42,18 +13,6 @@
   - PowerCellHigh
   - TurboItemRechargerCircuitboard
   - SMESAdvancedMachineCircuitboard
-
-- type: technology
-  id: MechanicalCompression
-  name: research-technology-mechanical-compression
-  icon:
-    sprite: Structures/Machines/flatpacker.rsi
-    state: base
-  discipline: Industrial
-  tier: 1
-  cost: 10000
-  recipeUnlocks:
-  - FlatpackerMachineCircuitboard
 
 - type: technology
   id: IndustrialEngineering
@@ -137,6 +96,19 @@
   - MiniGravityGeneratorCircuitboard
 
 - type: technology
+  id: DeterrenceTechnologies
+  name: research-technology-deterrence
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - WeaponParticleDecelerator
+  - HoloprojectorField
+
+- type: technology
   id: AdvancedAtmospherics
   name: research-technology-advanced-atmospherics
   icon:
@@ -168,20 +140,6 @@
     - BorgModuleAdvancedTool
     - Fulton
     - FultonBeacon
-
-- type: technology
-  id: MassExcavation
-  name: research-technology-excavation
-  icon:
-    sprite: Objects/Tools/handdrilldiamond.rsi
-    state: handdrill
-  discipline: Industrial
-  tier: 2
-  cost: 12500
-  recipeUnlocks:
-    - OreBagOfHolding
-    - MiningDrillDiamond
-    - AdvancedMineralScannerEmpty
 
 # Tier 3
 

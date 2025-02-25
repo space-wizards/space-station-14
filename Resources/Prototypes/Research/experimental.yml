@@ -112,17 +112,16 @@
   - BasicAnomalousResearch
 
 - type: technology
-  id: DeterrenceTechnologies
-  name: research-technology-deterrence
+  id: MechanicalCompression
+  name: research-technology-mechanical-compression
   icon:
-    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    sprite: Structures/Machines/flatpacker.rsi
     state: base
   discipline: Experimental
   tier: 2
-  cost: 7500
+  cost: 10000
   recipeUnlocks:
-  - WeaponParticleDecelerator
-  - HoloprojectorField
+  - FlatpackerMachineCircuitboard
 
 # Tier 3
 
@@ -150,3 +149,15 @@
   cost: 10000
   recipeUnlocks:
   - DeviceQuantumSpinInverter
+
+- type: technology
+  id: QuantumFiberWeaving
+  name: research-technology-quantum-fiber-weaving
+  icon:
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - ClothingShoesBootsSpeed

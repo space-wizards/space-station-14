@@ -117,34 +117,6 @@
   - FauxTileAstroAsteroidSand
 
 - type: technology
-  id: BiochemicalStasis
-  name: research-technology-biochemical-stasis
-  icon:
-    sprite: Structures/Machines/stasis_bed.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - StasisBedMachineCircuitboard
-  - CryoPodMachineCircuitboard
-  - CryostasisBeaker
-  - SyringeCryostasis
-
-- type: technology
-  id: MechanizedTreatment
-  name: research-technology-mechanized-treatment
-  icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: medical
-  discipline: CivilianServices
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - BorgModuleAdvancedTreatment
-  - BorgModuleDefibrillator
-
-- type: technology
   id: AdvancedCleaning
   name: research-technology-advanced-cleaning
   icon:
@@ -191,40 +163,207 @@
   - ClothingBackpackWaterTank
 
 - type: technology
-  id: BluespaceCargoTransport
-  name: research-technology-bluespace-cargo-transport
+  id: PDAs
+  name: research-technology-advanced-spray
   icon:
-    sprite: Structures/cargo_telepad.rsi
-    state: display
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    state: icon
   discipline: CivilianServices
   tier: 2
-  cost: 15000
+  cost: 12500
   recipeUnlocks:
-  - CargoTelepadMachineCircuitboard
+  - TechnicalAssistantPDAEmpty
+  - MedicalInternPDAEmpty
+  - SecurityCadetPDAEmpty
+  - ResearchAssistantPDAEmpty
+  - ServiceWorkerPDAEmpty
+  - ChefPDAEmpty
+  - BotanistPDAEmpty
+  - ClownPDAEmpty
+  - MimePDAEmpty
+  - ChaplainPDAEmpty
+  - QuartermasterPDAEmpty
+  - CargoPDAEmpty
+  - SalvagePDAEmpty
+  - BartenderPDAEmpty
+  - LibrarianPDAEmpty
+  - LawyerPDAEmpty
+  - JanitorPDAEmpty
+  - CaptainPDAEmpty
+  - HoPPDAEmpty
+  - CEPDAEmpty
+  - EngineerPDAEmpty
+  - CMOPDAEmpty
+  - MedicalPDAEmpty
+  - ParamedicPDAEmpty
+  - ChemistryPDAEmpty
+  - RnDPDAEmpty
+  - SciencePDAEmpty
+  - HoSPDAEmpty
+  - WardenPDAEmpty
+  - SecurityPDAEmpty
+  - MusicianPDAEmpty
+  - AtmosPDAEmpty
+  - PsychologistPDAEmpty
+  - ReporterPDAEmpty
+  - ZookeeperPDAEmpty
+  - BoxerPDAEmpty
+  - DetectivePDAEmpty
+  - BrigmedicPDAEmpty
+  - SeniorEngineerPDAEmpty
+  - SeniorResearcherPDAEmpty
+  - SeniorPhysicianPDAEmpty
+  - SeniorOfficerPDAEmpty
 
 # Tier 3
 
-- type: technology
-  id: QuantumFiberWeaving
-  name: research-technology-quantum-fiber-weaving
-  icon:
-    sprite: Clothing/Shoes/Boots/speedboots.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 3
-  cost: 10000
-  recipeUnlocks:
-  - ClothingShoesBootsSpeed
 
-- type: technology
-  id: BluespaceChemistry
-  name: research-technology-bluespace-chemistry
-  icon:
-    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
-    state: beakerbluespace
-  discipline: CivilianServices
-  tier: 3
-  cost: 10000
-  recipeUnlocks:
-  - BluespaceBeaker
-  - SyringeBluespace
+
+
+- type: latheRecipePack
+  id: CivilianServices1
+  recipes:
+  - BorgModuleGardening
+  - BorgModuleHarvesting
+  - SeedExtractorMachineCircuitboard
+  - HydroponicsTrayMachineCircuitboard
+  - ReagentGrinderIndustrialMachineCircuitboard
+
+- type: latheRecipePack
+  id: CivilianServices2
+  recipes:
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+  - MechEquipmentGrabberSmall
+  - VimHarness
+
+- type: latheRecipePack
+  id: CivilianServices3
+  recipes:
+  - SurveillanceCameraRouterCircuitboard
+  - SurveillanceCameraWirelessRouterCircuitboard
+  - SurveillanceWirelessCameraMovableCircuitboard
+  - SurveillanceWirelessCameraAnchoredCircuitboard
+  - SurveillanceCameraMonitorCircuitboard
+  - SurveillanceWirelessCameraMonitorCircuitboard
+  - TelecomServerCircuitboard
+  - HolopadMachineCircuitboard
+
+- type: latheRecipePack
+  id: CivilianServices4
+  recipes:
+    - ComputerTelevisionCircuitboard
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
+    - MassMediaCircuitboard
+    - JukeboxCircuitBoard
+
+- type: latheRecipePack
+  id: CivilianServices5
+  recipes:
+  - BorgModuleAdvancedCleaning
+
+- type: latheRecipePack
+  id: CivilianServices6
+  recipes:
+  - FatExtractorMachineCircuitboard
+  - BiofabricatorMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
+
+- type: latheRecipePack
+  id: CivilianServices7
+  recipes:
+  - FauxTileAstroGrass
+  - FauxTileMowedAstroGrass
+  - FauxTileJungleAstroGrass
+  - FauxTileAstroIce
+  - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
+
+- type: latheRecipePack
+  id: CivilianServices8
+  recipes:
+  - AdvMopItem
+  - MegaSprayBottle
+
+- type: latheRecipePack
+  id: CivilianServices9
+  recipes:
+  - HonkerHarness
+  - HonkerLArm
+  - HonkerRArm
+  - HonkerLLeg
+  - HonkerRLeg
+  - HonkerCentralElectronics
+  - HonkerPeripheralsElectronics
+  - HonkerTargetingElectronics
+  - MechEquipmentHorn
+
+- type: latheRecipePack
+  id: CivilianServices10
+  recipes:
+  - WeaponSprayNozzle
+  - ClothingBackpackWaterTank
+
+- type: latheRecipePack
+  id: CivilianServices11
+  recipes:
+  - TechnicalAssistantPDAEmpty
+  - MedicalInternPDAEmpty
+  - SecurityCadetPDAEmpty
+  - ResearchAssistantPDAEmpty
+  - ServiceWorkerPDAEmpty
+  - ChefPDAEmpty
+  - BotanistPDAEmpty
+  - ClownPDAEmpty
+  - MimePDAEmpty
+  - ChaplainPDAEmpty
+  - QuartermasterPDAEmpty
+  - CargoPDAEmpty
+  - SalvagePDAEmpty
+  - BartenderPDAEmpty
+  - LibrarianPDAEmpty
+  - LawyerPDAEmpty
+  - JanitorPDAEmpty
+  - CaptainPDAEmpty
+  - HoPPDAEmpty
+  - CEPDAEmpty
+  - EngineerPDAEmpty
+  - CMOPDAEmpty
+  - MedicalPDAEmpty
+  - ParamedicPDAEmpty
+  - ChemistryPDAEmpty
+  - RnDPDAEmpty
+  - SciencePDAEmpty
+  - HoSPDAEmpty
+  - WardenPDAEmpty
+  - SecurityPDAEmpty
+  - MusicianPDAEmpty
+  - AtmosPDAEmpty
+  - PsychologistPDAEmpty
+  - ReporterPDAEmpty
+  - ZookeeperPDAEmpty
+  - BoxerPDAEmpty
+  - DetectivePDAEmpty
+  - BrigmedicPDAEmpty
+  - SeniorEngineerPDAEmpty
+  - SeniorResearcherPDAEmpty
+  - SeniorPhysicianPDAEmpty
+  - SeniorOfficerPDAEmpty
+
+
+- type: latheRecipePack
+  id: CivilianServices-1
+  recipes:
+  - ClothingHeadsetGrey
+  - PassengerPDAEmpty
+  - PassengerIDCard
+  - EncryptionKeyCommon
+  - ClearPDAEmpty
+
+

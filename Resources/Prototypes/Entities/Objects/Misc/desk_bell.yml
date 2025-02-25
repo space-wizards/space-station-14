@@ -3,6 +3,8 @@
   id: DeskBell
   name: desk bell
   description: The cornerstone of any customer service job. You feel an unending urge to ring it.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
@@ -48,3 +50,5 @@
     damage:
       types:
         Blunt: 4
+  - type: Anchorable
+    delay: 0.5

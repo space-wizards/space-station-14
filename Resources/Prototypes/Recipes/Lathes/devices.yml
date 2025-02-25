@@ -198,3 +198,40 @@
     Steel: 500
     Glass: 400
     Gold: 100
+
+- type: latheRecipe
+  id: PassengerIDCard
+  result: PassengerIDCard
+  completetime: 3
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: PassengerPDAEmpty
+  result: PassengerPDAEmpty
+  completetime: 3
+  materials:
+    Steel: 500
+    Plastic: 200
+
+- type: latheRecipe
+  id: ClothingHeadsetGrey
+  result: ClothingHeadsetGrey
+  completetime: 3
+  materials:
+    Steel: 200
+    Plastic: 100
+
+- type: latheRecipe
+  id: EncryptionKeyCommon
+  result: EncryptionKeyCommon
+  completetime: 3
+  materials:
+    Steel: 100
+    Plastic: 50
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ClearPDAEmpty
+  result: ClearPDAEmpty

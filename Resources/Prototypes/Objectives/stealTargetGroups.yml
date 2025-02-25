@@ -159,13 +159,6 @@
     state: zippo_engraved_icon_base
 
 - type: stealTargetGroup
-  id: AmmoTechFabCircuitboard
-  name: steal-target-groups-ammo-tech-fab-circuitboard
-  sprite:
-    sprite: Objects/Misc/module.rsi
-    state: security
-
-- type: stealTargetGroup
   id: ClothingHeadHatWarden
   name: steal-target-groups-clothing-head-hat-warden
   sprite:

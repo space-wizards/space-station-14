@@ -38,6 +38,20 @@
     # If they get spammed make it cost silver.
 
 - type: latheRecipe
+  id: OreBag
+  result: OreBag
+  completetime: 3
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: RadioHandheld
+  result: RadioHandheld
+  completetime: 3
+  materials:
+    Steel: 200
+
+- type: latheRecipe
   id: SeismicCharge
   result: SeismicCharge
   category: Tools

@@ -357,6 +357,17 @@
     solutions:
       injector:
         maxVol: 15
+  - type: ThrowingAngle
+    angle: 50
+  - type: SolutionInjectWhileEmbedded
+    transferAmount: 1
+    solution: injector
+    updateInterval: 2
+    blockSlots: OUTERCLOTHING
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: injector
+    blockSlots: OUTERCLOTHING
   - type: Injector
     injectOnly: false
   - type: ExaminableSolution
@@ -371,9 +382,41 @@
     fillBaseName: syringe
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
+  - type: EmbeddableProjectile
+    minimumSpeed: 3
+    removalTime: 1.0
+    offset: 0.0,0.0
+    embedOnThrow: false
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
   - type: Tag
     tags:
     - Syringe
+    - Trash
+    - SyringeGunAmmo
+  - type: LandAtCursor
 
 - type: entity
   parent: BaseSyringe
@@ -386,6 +429,7 @@
     tags:
     - Syringe
     - Trash
+    - SyringeGunAmmo
 
 - type: entity
   name: mini syringe

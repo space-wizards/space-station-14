@@ -1,0 +1,211 @@
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: TechnicalAssistantPDAEmpty
+  result: TechnicalAssistantPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: MedicalInternPDAEmpty
+  result: MedicalInternPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SecurityCadetPDAEmpty
+  result: SecurityCadetPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ResearchAssistantPDAEmpty
+  result: ResearchAssistantPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ServiceWorkerPDAEmpty
+  result: ServiceWorkerPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ChefPDAEmpty
+  result: ChefPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: BotanistPDAEmpty
+  result: BotanistPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ClownPDAEmpty
+  result: ClownPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: MimePDAEmpty
+  result: MimePDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ChaplainPDAEmpty
+  result: ChaplainPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: QuartermasterPDAEmpty
+  result: QuartermasterPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: CargoPDAEmpty
+  result: CargoPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SalvagePDAEmpty
+  result: SalvagePDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: BartenderPDAEmpty
+  result: BartenderPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: LibrarianPDAEmpty
+  result: LibrarianPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: LawyerPDAEmpty
+  result: LawyerPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: JanitorPDAEmpty
+  result: JanitorPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: CaptainPDAEmpty
+  result: CaptainPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: HoPPDAEmpty
+  result: HoPPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: CEPDAEmpty
+  result: CEPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: EngineerPDAEmpty
+  result: EngineerPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: CMOPDAEmpty
+  result: CMOPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: MedicalPDAEmpty
+  result: MedicalPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ParamedicPDAEmpty
+  result: ParamedicPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ChemistryPDAEmpty
+  result: ChemistryPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: RnDPDAEmpty
+  result: RnDPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SciencePDAEmpty
+  result: SciencePDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: HoSPDAEmpty
+  result: HoSPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: WardenPDAEmpty
+  result: WardenPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SecurityPDAEmpty
+  result: SecurityPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: MusicianPDAEmpty
+  result: MusicianPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: AtmosPDAEmpty
+  result: AtmosPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: PsychologistPDAEmpty
+  result: PsychologistPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ReporterPDAEmpty
+  result: ReporterPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: ZookeeperPDAEmpty
+  result: ZookeeperPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: BoxerPDAEmpty
+  result: BoxerPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: DetectivePDAEmpty
+  result: DetectivePDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: BrigmedicPDAEmpty
+  result: BrigmedicPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SeniorEngineerPDAEmpty
+  result: SeniorEngineerPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SeniorResearcherPDAEmpty
+  result: SeniorResearcherPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SeniorPhysicianPDAEmpty
+  result: SeniorPhysicianPDAEmpty
+
+- type: latheRecipe
+  parent: PassengerPDAEmpty
+  id: SeniorOfficerPDAEmpty
+  result: SeniorOfficerPDAEmpty
+
+

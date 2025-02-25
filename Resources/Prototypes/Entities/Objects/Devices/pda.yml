@@ -1455,3 +1455,525 @@
         type: HealthAnalyzerBoundUserInterface
       enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
+
+
+- type: entity
+  parent: PassengerPDA
+  suffix: Empty
+  id: PassengerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: TechnicalAssistantPDA
+  suffix: Empty
+  id: TechnicalAssistantPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: MedicalInternPDA
+  suffix: Empty
+  id: MedicalInternPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SecurityCadetPDA
+  suffix: Empty
+  id: SecurityCadetPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ResearchAssistantPDA
+  suffix: Empty
+  id: ResearchAssistantPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ServiceWorkerPDA
+  suffix: Empty
+  id: ServiceWorkerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ChefPDA
+  suffix: Empty
+  id: ChefPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: BotanistPDA
+  suffix: Empty
+  id: BotanistPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ClownPDA
+  suffix: Empty
+  id: ClownPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorClownPDA
+  suffix: Empty
+  id: VisitorClownPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: MimePDA
+  suffix: Empty
+  id: MimePDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ChaplainPDA
+  suffix: Empty
+  id: ChaplainPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorChaplainPDA
+  suffix: Empty
+  id: VisitorChaplainPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: QuartermasterPDA
+  suffix: Empty
+  id: QuartermasterPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CargoPDA
+  suffix: Empty
+  id: CargoPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SalvagePDA
+  suffix: Empty
+  id: SalvagePDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: BartenderPDA
+  suffix: Empty
+  id: BartenderPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: LibrarianPDA
+  suffix: Empty
+  id: LibrarianPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorLibrarianPDA
+  suffix: Empty
+  id: VisitorLibrarianPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: LawyerPDA
+  suffix: Empty
+  id: LawyerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorLawyerPDA
+  suffix: Empty 
+  id: VisitorLawyerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: JanitorPDA
+  suffix: Empty
+  id: JanitorPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CaptainPDA
+  suffix: Empty
+  id: CaptainPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: HoPPDA
+  suffix: Empty
+  id: HoPPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CEPDA
+  suffix: Empty
+  id: CEPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: EngineerPDA
+  suffix: Empty
+  id: EngineerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CMOPDA
+  suffix: Empty
+  id: CMOPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: MedicalPDA
+  suffix: Empty
+  id: MedicalPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorMedicalPDA
+  suffix: Empty
+  id: VisitorMedicalPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ParamedicPDA
+  suffix: Empty
+  id: ParamedicPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ChemistryPDA
+  suffix: Empty
+  id: ChemistryPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: RnDPDA
+  suffix: Empty
+  id: RnDPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SciencePDA
+  suffix: Empty
+  id: SciencePDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: HoSPDA
+  suffix: Empty
+  id: HoSPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: WardenPDA
+  suffix: Empty
+  id: WardenPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SecurityPDA
+  suffix: Empty
+  id: SecurityPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CentcomPDA
+  suffix: Empty
+  id: CentcomPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: AdminPDA
+  suffix: Empty
+  id: AdminPDAEmpty
+  description: Why the fuck are you need empty admin PDA?
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: DeathsquadPDA
+  suffix: Empty
+  id: DeathsquadPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: MusicianPDA
+  suffix: Empty
+  id: MusicianPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorMusicianPDA
+  suffix: Empty
+  id: VisitorMusicianPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: AtmosPDA
+  suffix: Empty
+  id: AtmosPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ClearPDA
+  suffix: Empty
+  id: ClearPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: VisitorPDA
+  suffix: Empty
+  id: VisitorPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SyndiPDA
+  suffix: Empty
+  id: SyndiPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ERTLeaderPDA
+  suffix: Empty
+  id: ERTLeaderPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ERTChaplainPDA
+  suffix: Empty
+  id: ERTChaplainPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ERTEngineerPDA
+  suffix: Empty
+  id: ERTEngineerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ERTJanitorPDA
+  suffix: Empty
+  id: ERTJanitorPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ERTMedicPDA
+  suffix: Empty
+  id: ERTMedicPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ERTSecurityPDA
+  suffix: Empty
+  id: ERTSecurityPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CBURNPDA
+  suffix: Empty
+  id: CBURNPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: PsychologistPDA
+  suffix: Empty
+  id: PsychologistPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ReporterPDA
+  suffix: Empty
+  id: ReporterPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: ZookeeperPDA
+  suffix: Empty
+  id: ZookeeperPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: BoxerPDA
+  suffix: Empty
+  id: BoxerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: DetectivePDA
+  suffix: Empty
+  id: DetectivePDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: BrigmedicPDA
+  suffix: Empty
+  id: BrigmedicPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: CluwnePDA
+  suffix: Empty
+  id: CluwnePDAEmpty
+  components:
+  - type: Pda
+    id: null #how lol
+
+- type: entity
+  parent: SeniorEngineerPDA
+  suffix: Empty
+  id: SeniorEngineerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SeniorResearcherPDA
+  suffix: Empty
+  id: SeniorResearcherPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SeniorPhysicianPDA
+  suffix: Empty
+  id: SeniorPhysicianPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SeniorOfficerPDA
+  suffix: Empty
+  id: SeniorOfficerPDAEmpty
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: PiratePDA
+  suffix: Empty
+  id: PiratePDA
+  components:
+  - type: Pda
+    id: null
+
+- type: entity
+  parent: SyndiAgentPDA
+  suffix: Empty
+  id: SyndiAgentPDAEmpty
+  components:
+  - type: Pda
+    id: null
