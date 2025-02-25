@@ -5509,7 +5509,8 @@ entities:
           -1,8:
             0: 55775
           -8,5:
-            0: 47929
+            0: 47897
+            3: 32
           -9,5:
             0: 48051
           -8,6:
@@ -5875,7 +5876,7 @@ entities:
             1: 50247
           -16,14:
             1: 16
-            3: 128
+            4: 128
           -17,14:
             1: 17652
           -16,15:
@@ -6480,18 +6481,18 @@ entities:
             1: 34952
           6,-6:
             1: 61440
-            6: 224
+            5: 224
           6,-5:
             0: 112
             1: 2184
           6,-8:
-            3: 224
-            4: 57344
-          6,-7:
             4: 224
-            5: 57344
+            6: 57344
+          6,-7:
+            6: 224
+            7: 57344
           6,-9:
-            4: 57568
+            6: 57568
           7,-5:
             1: 4080
           7,-8:
@@ -6594,7 +6595,7 @@ entities:
             0: 56477
           -4,-13:
             0: 56524
-            4: 17
+            6: 17
           -5,-12:
             0: 62719
           -4,-11:
@@ -6661,7 +6662,7 @@ entities:
             1: 34944
           -5,-13:
             0: 62464
-            4: 255
+            6: 255
           -8,-14:
             1: 7168
           -8,-13:
@@ -6679,49 +6680,49 @@ entities:
             1: 76
           -7,-16:
             1: 49143
-            4: 16392
+            6: 16392
           -7,-15:
             1: 4411
-            4: 49348
+            6: 49348
           -7,-14:
             1: 49408
-            4: 204
+            6: 204
           -7,-17:
             1: 65263
           -6,-16:
             1: 13313
-            4: 49152
+            6: 49152
           -6,-15:
             1: 15
-            4: 63984
+            6: 63984
           -6,-14:
-            4: 255
+            6: 255
             1: 28672
           -5,-16:
-            4: 61440
+            6: 61440
             1: 1024
           -5,-15:
             1: 15
-            4: 65520
+            6: 65520
           -5,-14:
-            4: 65535
+            6: 65535
           -4,-16:
-            4: 28672
+            6: 28672
             1: 33792
           -4,-15:
             1: 15
-            4: 62448
+            6: 62448
           -4,-14:
-            4: 4607
+            6: 4607
             0: 49152
           -3,-16:
             1: 48877
-            4: 16386
+            6: 16386
           -3,-15:
             1: 11
-            4: 29044
+            6: 29044
           -3,-14:
-            4: 119
+            6: 119
             0: 61440
           -3,-17:
             1: 61167
@@ -6880,7 +6881,7 @@ entities:
           3,16:
             1: 242
           12,11:
-            4: 2
+            6: 2
           14,9:
             1: 39304
             0: 17476
@@ -7536,12 +7537,42 @@ entities:
           - 0
           - 0
         - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
           temperature: 293.15
           moles:
           - 0
           - 0
           - 0
           - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -7570,21 +7601,6 @@ entities:
           moles:
           - 6666.982
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -53556,7 +53572,7 @@ entities:
   - uid: 8330
     components:
     - type: Transform
-      pos: -30.508625,21.457588
+      pos: -32.459488,22.046768
       parent: 2
 - proto: ClothingHandsGlovesColorYellow
   entities:
@@ -56528,6 +56544,15 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -74.382675,-63.392025
       parent: 2
+- proto: DawInstrumentMachineCircuitboard
+  entities:
+  - uid: 23329
+    components:
+    - type: Transform
+      parent: 19524
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: DefaultStationBeaconAI
   entities:
   - uid: 8763
@@ -63908,8 +63933,10 @@ entities:
   - uid: 9848
     components:
     - type: Transform
-      pos: -30.396528,21.712524
-      parent: 2
+      parent: 19524
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: EmergencyLight
   entities:
   - uid: 9849
@@ -106030,6 +106057,43 @@ entities:
     - type: Transform
       pos: -18.5,-16.5
       parent: 2
+- proto: LockerMusician
+  entities:
+  - uid: 19524
+    components:
+    - type: Transform
+      pos: -30.5,21.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 23329
+          - 9848
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerParamedicFilled
   entities:
   - uid: 15849
@@ -123455,20 +123519,10 @@ entities:
       parent: 2
 - proto: SpawnMobDrone
   entities:
-  - uid: 23329
-    components:
-    - type: Transform
-      pos: -41.5,26.5
-      parent: 2
   - uid: 23330
     components:
     - type: Transform
       pos: -40.5,26.5
-      parent: 2
-  - uid: 23331
-    components:
-    - type: Transform
-      pos: -39.5,26.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -125915,7 +125969,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Materials Room
+      id: Drone Room
   - uid: 18997
     components:
     - type: Transform
@@ -129245,11 +129299,6 @@ entities:
     components:
     - type: Transform
       pos: -32.5,23.5
-      parent: 2
-  - uid: 19524
-    components:
-    - type: Transform
-      pos: -30.5,21.5
       parent: 2
   - uid: 19525
     components:

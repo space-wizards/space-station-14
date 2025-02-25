@@ -7201,7 +7201,8 @@ entities:
           5,-9:
             0: 65531
           5,-4:
-            0: 65311
+            0: 63263
+            4: 2048
           6,-8:
             0: 127
             5: 28672
@@ -18124,6 +18125,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 42.5,-17.5
+      parent: 2
+  - uid: 16106
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 24.5,-21.5
       parent: 2
   - uid: 23110
     components:
@@ -65264,8 +65271,10 @@ entities:
   - uid: 9757
     components:
     - type: Transform
-      pos: 24.517786,-13.4080305
-      parent: 2
+      parent: 19651
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: DecoratedFirTree
   entities:
   - uid: 9758
@@ -117198,6 +117207,44 @@ entities:
     - type: Transform
       pos: 25.5,-11.5
       parent: 2
+- proto: LockerMusician
+  entities:
+  - uid: 19651
+    components:
+    - type: Transform
+      pos: 23.5,-13.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19349
+          - 25270
+          - 9757
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerParamedicFilled
   entities:
   - uid: 16982
@@ -125983,11 +126030,6 @@ entities:
     - type: Transform
       pos: -41.5,-35.5
       parent: 2
-  - uid: 18255
-    components:
-    - type: Transform
-      pos: 23.5,-13.5
-      parent: 2
   - uid: 18256
     components:
     - type: Transform
@@ -126002,6 +126044,11 @@ entities:
     components:
     - type: Transform
       pos: 55.5,-5.5
+      parent: 2
+  - uid: 25742
+    components:
+    - type: Transform
+      pos: 24.5,-13.5
       parent: 2
 - proto: RandomPainting
   entities:
@@ -131982,8 +132029,10 @@ entities:
   - uid: 19349
     components:
     - type: Transform
-      pos: 24.148243,-13.192209
-      parent: 2
+      parent: 19651
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: RollerBed
   entities:
   - uid: 19350
@@ -134192,19 +134241,20 @@ entities:
         19543:
         - On: Open
         - Off: Close
-  - uid: 19651
+  - uid: 21278
     components:
     - type: MetaData
       name: light switch
     - type: Transform
-      pos: 21.5,-14.5
+      rot: 3.141592653589793 rad
+      pos: 24.5,-21.5
       parent: 2
     - type: DeviceLinkSource
       linkedPorts:
-        17642:
+        17643:
         - On: On
         - Off: Off
-        17643:
+        17642:
         - On: On
         - Off: Off
   - uid: 24723
@@ -138564,20 +138614,10 @@ entities:
       parent: 2
 - proto: SpawnMobDrone
   entities:
-  - uid: 19977
-    components:
-    - type: Transform
-      pos: 6.5,-45.5
-      parent: 2
   - uid: 21343
     components:
     - type: Transform
       pos: 5.5,-45.5
-      parent: 2
-  - uid: 21468
-    components:
-    - type: Transform
-      pos: 4.5,-45.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -140592,7 +140632,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Arrival Engineering Closet
+      id: Drone Room
   - uid: 20684
     components:
     - type: Transform
@@ -142372,7 +142412,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraService
       nameSet: True
-      id: Breakroom
+      id: Storeroom
   - uid: 20847
     components:
     - type: Transform
@@ -144909,11 +144949,6 @@ entities:
     components:
     - type: Transform
       pos: -48.5,-19.5
-      parent: 2
-  - uid: 21278
-    components:
-    - type: Transform
-      pos: 23.5,-13.5
       parent: 2
   - uid: 21279
     components:
@@ -162104,6 +162139,20 @@ entities:
       parent: 2
 - proto: WarpPointBombing
   entities:
+  - uid: 18178
+    components:
+    - type: Transform
+      pos: 37.5,-18.5
+      parent: 2
+    - type: WarpPoint
+      location: Medbay
+  - uid: 18255
+    components:
+    - type: Transform
+      pos: -6.5,-4.5
+      parent: 2
+    - type: WarpPoint
+      location: Captain's Office
   - uid: 19297
     components:
     - type: Transform
@@ -167519,6 +167568,8 @@ entities:
   - uid: 25270
     components:
     - type: Transform
-      pos: 23.533411,-13.4549055
-      parent: 2
+      parent: 19651
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 ...

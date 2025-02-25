@@ -54678,19 +54678,17 @@ entities:
         - Pressed: Toggle
   - uid: 10003
     components:
-    - type: MetaData
-      name: shutter button
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 30.5,-16.5
       parent: 2
     - type: DeviceLinkSource
       linkedPorts:
-        10029:
+        10027:
         - Pressed: Toggle
         10028:
         - Pressed: Toggle
-        10027:
+        10029:
         - Pressed: Toggle
         10030:
         - Pressed: Toggle

@@ -17,6 +17,17 @@
       "name": "musician_open"
     },
     {
+      "name": "sparking",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "unlocked"
     },
     {

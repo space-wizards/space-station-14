@@ -13074,7 +13074,8 @@ entities:
           4,-1:
             0: 37759
           1,-8:
-            0: 61694
+            0: 61692
+            7: 2
           1,-7:
             0: 36614
             7: 8
@@ -13111,7 +13112,8 @@ entities:
           1,-10:
             0: 61949
           1,-9:
-            0: 3824
+            0: 1776
+            7: 2048
           1,-13:
             0: 65519
           2,-12:
@@ -18759,6 +18761,18 @@ entities:
     - type: Transform
       pos: 4.5,-30.5
       parent: 2
+- proto: AirlockMusicianLocked
+  entities:
+  - uid: 357
+    components:
+    - type: Transform
+      pos: 4.5,-34.5
+      parent: 2
+  - uid: 4677
+    components:
+    - type: Transform
+      pos: 8.5,-34.5
+      parent: 2
 - proto: AirlockQuartermasterLocked
   entities:
   - uid: 849
@@ -18958,18 +18972,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-53.5
-      parent: 2
-- proto: AirlockTheatreLocked
-  entities:
-  - uid: 4677
-    components:
-    - type: Transform
-      pos: 8.5,-34.5
-      parent: 2
-  - uid: 6216
-    components:
-    - type: Transform
-      pos: 4.5,-34.5
       parent: 2
 - proto: AirlockVirologyLocked
   entities:
@@ -66110,8 +66112,10 @@ entities:
   - uid: 4880
     components:
     - type: Transform
-      pos: 7.4465623,-33.43011
-      parent: 2
+      parent: 5499
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 5150
@@ -110166,6 +110170,60 @@ entities:
     - type: Transform
       pos: 5.5,-31.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+- proto: LockerMusician
+  entities:
+  - uid: 5499
+    components:
+    - type: Transform
+      pos: 7.5,-33.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 4880
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerParamedicFilled
   entities:
   - uid: 69
@@ -117440,11 +117498,6 @@ entities:
     - type: Transform
       pos: -33.5,22.5
       parent: 2
-  - uid: 5499
-    components:
-    - type: Transform
-      pos: 7.5,-33.5
-      parent: 2
   - uid: 5586
     components:
     - type: Transform
@@ -119137,15 +119190,15 @@ entities:
       parent: 2
 - proto: RandomInstruments
   entities:
-  - uid: 357
-    components:
-    - type: Transform
-      pos: 7.5,-33.5
-      parent: 2
   - uid: 7795
     components:
     - type: Transform
       pos: 42.5,3.5
+      parent: 2
+  - uid: 16057
+    components:
+    - type: Transform
+      pos: 5.5,-33.5
       parent: 2
   - uid: 20703
     components:
@@ -125732,29 +125785,6 @@ entities:
         - Pressed: DoorBolt
         21405:
         - Pressed: DoorBolt
-  - uid: 16057
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 7.5,-35.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        4677:
-        - Pressed: DoorBolt
-        6216:
-        - Pressed: DoorBolt
-  - uid: 16058
-    components:
-    - type: Transform
-      pos: 7.5,-29.5
-      parent: 2
-  - uid: 16059
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 7.5,-29.5
-      parent: 2
   - uid: 16117
     components:
     - type: MetaData
@@ -126851,12 +126881,15 @@ entities:
     - type: Transform
       pos: -2.5,-18.5
       parent: 2
-  - uid: 8444
+  - uid: 6216
     components:
-    - type: MetaData
-      name: Solars - North West SMES
     - type: Transform
       pos: -30.5,24.5
+      parent: 2
+  - uid: 8444
+    components:
+    - type: Transform
+      pos: -55.5,-58.5
       parent: 2
   - uid: 8838
     components:
@@ -126864,13 +126897,6 @@ entities:
       name: Solars - North East SMES
     - type: Transform
       pos: 46.5,3.5
-      parent: 2
-  - uid: 15810
-    components:
-    - type: MetaData
-      name: Solars - South West SMES
-    - type: Transform
-      pos: -55.5,-58.5
       parent: 2
   - uid: 15942
     components:
@@ -128442,20 +128468,10 @@ entities:
       parent: 2
 - proto: SpawnMobDrone
   entities:
-  - uid: 23417
-    components:
-    - type: Transform
-      pos: 26.5,-17.5
-      parent: 2
   - uid: 23418
     components:
     - type: Transform
       pos: 27.5,-17.5
-      parent: 2
-  - uid: 23419
-    components:
-    - type: Transform
-      pos: 28.5,-17.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -130524,6 +130540,17 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       id: Telecoms
+  - uid: 16058
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 27.5,-16.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Drone Room
   - uid: 18049
     components:
     - type: MetaData
@@ -150018,14 +150045,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 41.5,-11.5
       parent: 2
-- proto: WindoorClownLocked
-  entities:
-  - uid: 23141
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 13.5,-29.5
-      parent: 2
 - proto: WindoorHydroponicsLocked
   entities:
   - uid: 3456
@@ -150281,6 +150300,14 @@ entities:
     components:
     - type: Transform
       pos: -35.5,-34.5
+      parent: 2
+- proto: WindoorSecureClownLocked
+  entities:
+  - uid: 15810
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 13.5,-29.5
       parent: 2
 - proto: WindoorSecureCommandLocked
   entities:

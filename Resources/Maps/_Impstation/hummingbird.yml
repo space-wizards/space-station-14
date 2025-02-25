@@ -5351,15 +5351,19 @@ entities:
           21,7:
             1: 57328
           21,5:
-            1: 61152
+            1: 60576
+            7: 512
+            10: 64
           21,6:
             1: 61166
           21,8:
             1: 65532
           22,5:
-            1: 56796
+            1: 56540
+            7: 256
           22,6:
-            1: 56799
+            1: 56543
+            7: 256
           22,7:
             1: 65532
           22,8:
@@ -6441,6 +6445,21 @@ entities:
           - 0
           - 0
           - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
@@ -6451,8 +6470,10 @@ entities:
   - uid: 3
     components:
     - type: Transform
-      pos: 86.14484,21.58893
-      parent: 2
+      parent: 24698
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ActionToggleBlock
   entities:
   - uid: 5
@@ -16059,8 +16080,10 @@ entities:
   - uid: 1207
     components:
     - type: Transform
-      pos: 86.03164,21.649647
-      parent: 2
+      parent: 24698
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: Beaker
   entities:
   - uid: 1208
@@ -58580,7 +58603,7 @@ entities:
   - uid: 9414
     components:
     - type: Transform
-      pos: 119.372025,22.496803
+      pos: 119.467575,22.483173
       parent: 2
   - uid: 9415
     components:
@@ -61717,8 +61740,10 @@ entities:
   - uid: 9891
     components:
     - type: Transform
-      pos: 86.58234,21.417055
-      parent: 2
+      parent: 24698
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 9892
@@ -76973,7 +76998,7 @@ entities:
   - uid: 11796
     components:
     - type: Transform
-      pos: 86.76001,21.716963
+      pos: 86.92141,21.587875
       parent: 2
     - type: Stack
       count: 30
@@ -77413,7 +77438,7 @@ entities:
   - uid: 11867
     components:
     - type: Transform
-      pos: 85.49983,22.085865
+      pos: 86.249535,21.6035
       parent: 2
   - uid: 11868
     components:
@@ -113426,20 +113451,38 @@ entities:
     - type: Transform
       pos: 88.5,26.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 9467
-          - 9470
-          - 9472
-          - 9471
-          - 9468
-          - 9469
-          - 9465
           - 9466
+          - 9465
+          - 9469
+          - 9468
+          - 9471
+          - 9472
+          - 9470
+          - 9467
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -113807,19 +113850,77 @@ entities:
     - type: Transform
       pos: 88.5,22.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 1409
-          - 1408
-          - 1406
-          - 1407
-          - 1410
-          - 1405
           - 1411
+          - 1405
+          - 1410
+          - 1407
+          - 1406
+          - 1408
+          - 1409
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+- proto: LockerMusician
+  entities:
+  - uid: 24698
+    components:
+    - type: Transform
+      pos: 85.5,22.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19005
+          - 16947
+          - 9891
+          - 3
+          - 1207
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -114918,8 +115019,10 @@ entities:
   - uid: 16947
     components:
     - type: Transform
-      pos: 86.29692,21.62228
-      parent: 2
+      parent: 24698
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 16948
     components:
     - type: Transform
@@ -115892,11 +115995,6 @@ entities:
     - type: Transform
       pos: 84.5,9.5
       parent: 2
-  - uid: 17087
-    components:
-    - type: Transform
-      pos: 85.5,22.5
-      parent: 2
   - uid: 17088
     components:
     - type: Transform
@@ -115950,6 +116048,11 @@ entities:
     components:
     - type: Transform
       pos: 114.5,27.5
+      parent: 2
+  - uid: 24700
+    components:
+    - type: Transform
+      pos: 86.5,21.5
       parent: 2
 - proto: PaperOffice
   entities:
@@ -116162,7 +116265,7 @@ entities:
   - uid: 17126
     components:
     - type: Transform
-      pos: 85.586075,22.16595
+      pos: 86.10891,21.44725
       parent: 2
   - uid: 17127
     components:
@@ -126887,7 +126990,7 @@ entities:
   - uid: 19002
     components:
     - type: Transform
-      pos: 86.869385,21.435713
+      pos: 86.062035,21.7285
       parent: 2
   - uid: 19003
     components:
@@ -126906,8 +127009,10 @@ entities:
   - uid: 19005
     components:
     - type: Transform
-      pos: 86.20734,21.52643
-      parent: 2
+      parent: 24698
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: Scalpel
   entities:
   - uid: 19006
@@ -132539,20 +132644,10 @@ entities:
       parent: 2
 - proto: SpawnMobDrone
   entities:
-  - uid: 24461
-    components:
-    - type: Transform
-      pos: 71.5,51.5
-      parent: 2
   - uid: 24462
     components:
     - type: Transform
       pos: 72.5,51.5
-      parent: 2
-  - uid: 24463
-    components:
-    - type: Transform
-      pos: 73.5,51.5
       parent: 2
 - proto: SpawnMobFinfin
   entities:
@@ -136109,7 +136204,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraService
       nameSet: True
-      id: Service Break Room
+      id: Storeroom
   - uid: 20307
     components:
     - type: Transform
@@ -136196,6 +136291,17 @@ entities:
       - SurveillanceCameraService
       nameSet: True
       id: Chapel Lounge
+  - uid: 24696
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 117.5,21.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: HD's Office
 - proto: SurveillanceCameraSupply
   entities:
   - uid: 20315
@@ -136814,23 +136920,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 87.5,21.5
       parent: 2
-  - uid: 20415
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 86.5,21.5
-      parent: 2
   - uid: 20416
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 85.5,21.5
-      parent: 2
-  - uid: 20417
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 85.5,22.5
       parent: 2
   - uid: 20418
     components:
@@ -137148,6 +137242,11 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 83.5,17.5
+      parent: 2
+  - uid: 24697
+    components:
+    - type: Transform
+      pos: 86.5,21.5
       parent: 2
 - proto: TableCarpet
   entities:
@@ -157720,7 +157819,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -170603.94
+      secondsUntilStateChange: -171064.47
       state: Opening
     - type: Airlock
       autoClose: False
@@ -157815,6 +157914,41 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 101.5,-2.5
+      parent: 2
+- proto: WindoorServiceLocked
+  entities:
+  - uid: 17087
+    components:
+    - type: Transform
+      pos: 72.5,15.5
+      parent: 2
+  - uid: 20415
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 71.5,15.5
+      parent: 2
+  - uid: 20417
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 70.5,15.5
+      parent: 2
+  - uid: 24461
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 72.5,15.5
+      parent: 2
+  - uid: 24463
+    components:
+    - type: Transform
+      pos: 70.5,15.5
+      parent: 2
+  - uid: 24699
+    components:
+    - type: Transform
+      pos: 71.5,15.5
       parent: 2
 - proto: Window
   entities:
