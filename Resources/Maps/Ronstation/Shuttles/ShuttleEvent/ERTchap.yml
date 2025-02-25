@@ -1411,7 +1411,7 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-- proto: RubberStampChaplain
+- proto: RubberStampTrader
   entities:
   - uid: 160
     components:
