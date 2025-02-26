@@ -1,10 +1,9 @@
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Administration.Commands
 {
@@ -12,6 +11,7 @@ namespace Content.Server.Administration.Commands
     sealed class SwapMindCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public string Command => "swapmind";
 
@@ -28,11 +28,11 @@ namespace Content.Server.Administration.Commands
             }
 
             // First player
-            if (!TryParseUid(args[1], shell, _entManager, out var firstEntityUid))
+            if (!TryParseUid(args[0], shell, _entManager, out var firstEntityUid))
                 return;
 
             // Second player
-            if (!TryParseUid(args[2], shell, _entManager, out var secondEntityUid))
+            if (!TryParseUid(args[1], shell, _entManager, out var secondEntityUid))
                 return;
 
             if (!_entManager.HasComponent<MindContainerComponent>(firstEntityUid) ||
