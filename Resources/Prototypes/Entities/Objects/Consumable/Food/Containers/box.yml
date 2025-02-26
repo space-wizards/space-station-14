@@ -482,6 +482,20 @@
       amount: 6
 
 - type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketMoth
+  name: box of moth-pockets
+  components:
+  - type: Sprite
+    state: moth-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketMoth
+      amount: 6
+
+- type: entity
   id: HappyHonk
   parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
