@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.TextScreen;
+namespace Content.Shared.Screen;
 
 [Serializable, NetSerializable]
 public enum TextScreenVisuals : byte
@@ -27,5 +27,7 @@ public enum TextScreenVisuals : byte
     ///     Change text color on the entire screen
     ///     Expects a <see cref="Color"/>.
     /// </summary>
-    Color
+    Color,
+    
+    AlertLevel
 }

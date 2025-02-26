@@ -1,9 +1,10 @@
-namespace Content.Server.Screens.Components;
+namespace Content.Shared.Screen.Components;
 
 [RegisterComponent]
 public sealed partial class ScreenComponent : Component
 {
-
+    [DataField]
+    public string BaseState = "green";
 }
 
 /// <summary>
@@ -32,4 +33,3 @@ public sealed class ShuttleTimerMasks
     public static readonly string Bye = Loc.GetString("shuttle-timer-bye");
     public static readonly string Kill = Loc.GetString("shuttle-timer-kill");
 }
-

@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Access;
@@ -8,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
+using Content.Shared.Screen.Components;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;

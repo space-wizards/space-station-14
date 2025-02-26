@@ -1,11 +1,12 @@
-using Content.Shared.TextScreen;
-using Content.Server.Screens.Components;
+using Content.Shared.Screen;
+using Content.Shared.Screen.Components;
+using Content.Server.AlertLevel;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Robust.Shared.Timing;
 
 
-namespace Content.Server.Screens.Systems;
+namespace Content.Server.Screen.Systems;
 
 /// <summary>
 /// Controls the wallmounted screens on stations and shuttles displaying e.g. FTL duration, ETA
@@ -20,6 +21,7 @@ public sealed class ScreenSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ScreenComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
     }
 
     /// <summary>
@@ -32,6 +34,15 @@ public sealed class ScreenSystem : EntitySystem
             ShuttleTimer(uid, component, args);
         else
             ScreenText(uid, component, args);
+    }
+    
+    private void OnAlertLevelChanged(AlertLevelChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<ScreenComponent>();
+        while (query.MoveNext(out var uid, out var screen))
+        {
+            _appearanceSystem.SetData(uid, TextScreenVisuals.AlertLevel, args.AlertLevel);
+        }
     }
 
     /// <summary>

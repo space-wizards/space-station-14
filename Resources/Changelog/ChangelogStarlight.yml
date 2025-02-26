@@ -3638,3 +3638,17 @@ Entries:
   id: 504
   time: '2025-02-25T13:40:31.561137+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Added light disabling in delta or epsilon alert levels.
+    type: Add
+  id: 505
+  time: '2025-02-26T12:07:18.278262+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added display of alert levels on the screen.
+    type: Add
+  id: 506
+  time: '2025-02-26T12:08:22.586132+00:00'
+  url: 'null'

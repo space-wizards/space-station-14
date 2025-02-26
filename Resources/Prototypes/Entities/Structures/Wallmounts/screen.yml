@@ -22,8 +22,12 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
-    state: screen
     noRot: true
+    layers:
+    - state: screen
+    - state: green
+      shader: unshaded
+      map: ["enum.TextScreenVisuals.AlertLevel"]
   - type: Construction
     graph: Timer
     node: screen

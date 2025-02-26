@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.AlertLevel;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
@@ -67,6 +68,7 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
+            SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -439,6 +441,18 @@ namespace Content.Server.Light.EntitySystems
         {
             if (TryDestroyBulb(uid, component))
                 args.Affected = true;
+        }
+        
+        private void OnAlertLevelChanged(AlertLevelChangedEvent args)
+        {
+            var query = EntityQueryEnumerator<PoweredLightComponent>();
+            while (query.MoveNext(out var uid, out var light))
+            {
+                if (args.AlertLevel == "delta" || args.AlertLevel == "epsilon")
+                    SetState(uid, false, light);
+                else
+                    SetState(uid, true, light);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
-using Content.Shared.TextScreen;
+using Content.Shared.Screen;
+using Content.Shared.Screen.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -27,6 +28,7 @@ namespace Content.Client.TextScreen;
 public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <summary>
     ///     Contains char/state Key/Value pairs. <br/>
@@ -138,6 +140,18 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             else
             {
                 OnTimerFinish(uid, component);
+            }
+        }
+        
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.AlertLevel, out var alertLevel))
+        {
+            if (TryComp<ScreenComponent>(uid, out var screenComp) && TryComp<SpriteComponent>(uid, out var sprite))
+            {
+                if (!sprite.LayerMapTryGet(TextScreenVisuals.AlertLevel, out var layerId) || !sprite.TryGetLayer(layerId, out var layer))
+                    return;
+                
+                layer.SetRsi(null);
+                layer.SetState(alertLevel.ToString());
             }
         }
     }
