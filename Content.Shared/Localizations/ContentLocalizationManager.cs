@@ -105,33 +105,31 @@ namespace Content.Shared.Localizations
             }
         }
 
-        // TODO: allow fluent to take in lists of strings so this can be a format function like it should be.
         /// <summary>
         /// Formats a list as per english grammar rules.
         /// </summary>
         public static string FormatList(List<string> list)
         {
-            return list.Count switch
-            {
-                <= 0 => string.Empty,
-                1 => list[0],
-                2 => $"{list[0]} and {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, and {list[^1]}"
-            };
+            if (list.Count == 0) return string.Empty;
+
+            return Loc.GetString("zzz-list-format",
+                                 ("count", list.Count),
+                                 ("item1", list.ElementAtOrDefault(0) ?? ""),
+                                 ("item2", list.ElementAtOrDefault(1) ?? ""),
+                                 ("items", string.Join(", ", list.Take(list.Count - 1))),
+                                 ("last", list.LastOrDefault() ?? ""));
         }
 
-        /// <summary>
-        /// Formats a list as per english grammar rules, but uses or instead of and.
-        /// </summary>
         public static string FormatListToOr(List<string> list)
         {
-            return list.Count switch
-            {
-                <= 0 => string.Empty,
-                1 => list[0],
-                2 => $"{list[0]} or {list[1]}",
-                _ => $"{string.Join(" or ", list)}"
-            };
+            if (list.Count == 0) return string.Empty;
+
+            return Loc.GetString("zzz-list-format-or",
+                                 ("count", list.Count),
+                                 ("item1", list.ElementAtOrDefault(0) ?? ""),
+                                 ("item2", list.ElementAtOrDefault(1) ?? ""),
+                                 ("items", string.Join(" or ", list.Take(list.Count - 1))),
+                                 ("last", list.LastOrDefault() ?? ""));
         }
 
         /// <summary>
