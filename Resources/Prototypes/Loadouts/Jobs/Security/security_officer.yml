@@ -21,7 +21,7 @@
       requirement:
         !type:DepartmentTimeRequirement
         department: Security
-        time: 324000 #100 hrs, ~60 rounds #imp
+        time: 324000 #90 hrs, ~60 rounds #imp
 
 # Head
 - type: loadout
