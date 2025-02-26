@@ -243,27 +243,23 @@
   parent: BaseGameRule
   id: BaseWizardRule
   components:
-  - type: WizardRule
+  - type: AntagObjectives
+    objectives:
+    - WizardSurviveObjective
+    - WizardDemonstrateObjective
+  - type: LoadMapRule
+    gridPath: /Maps/Shuttles/wizard.yml
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule
     speciesOverride: Human
-    speciesOverrideBlacklist:
-    #Species that do not work with nukies should be included in this list.
-    #Once the issues are fixed the species should be removed from this list to be enabled.
-    #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
-    #- Vox
 
 - type: entity
   parent: BaseWizardRule
   id: Wizard
   components:
-  - type: WizardRule
   - type: GameRule
     minPlayers: 10
-    # minPlayers: 1 # For testing
-  - type: LoadMapRule
-    gridPath: /Maps/Shuttles/wizard.yml
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
