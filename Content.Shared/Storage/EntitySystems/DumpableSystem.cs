@@ -116,7 +116,7 @@ public sealed class DumpableSystem : EntitySystem
         {
             if (comp.Whitelist == null || comp.Whitelist.Tags == null)
                 return;
-            List<ProtoId<TagPrototype>> tags = comp.Whitelist.Tags;
+            var tags = comp.Whitelist.Tags;
             foreach (var entity in storage.Container.ContainedEntities)
             {
                 if (!_tag.HasAnyTag(entity, tags))
