@@ -51,11 +51,12 @@ namespace Content.Shared.Remotes
                 return;
             }
 
+            var accessTarget = args.Used;
+            // This covers the accesses the REMOTE has, and is not effected by the user's ID card.
             if (entity.Comp.ExtendedByID) // Allows some door remotes to inherit the user's access.
             {
-                local accessTarget = args.User; // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
-            } else {
-                local accessTarget = args.Used; // This covers the accesses the REMOTE has, and is not effected by the user's ID card.
+                accessTarget = args.User;
+                // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
             }
 
             if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)

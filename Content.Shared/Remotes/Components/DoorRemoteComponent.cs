@@ -8,6 +8,9 @@ public sealed partial class DoorRemoteComponent : Component
     [AutoNetworkedField]
     [DataField]
     public OperatingMode Mode = OperatingMode.OpenClose;
+    [AutoNetworkedField]
+    [DataField]
+    public bool ExtendedByID = false;
 }
 
 public enum OperatingMode : byte
