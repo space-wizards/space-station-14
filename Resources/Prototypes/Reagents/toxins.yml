@@ -89,15 +89,15 @@
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 2
-        - !type:ChemVomit
-          conditions:
-          - !type:ReagentThreshold
-            min: 2
-          probability: 0.2
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 2
+        probability: 0.2
 
 - type: reagent
   id: Mold
@@ -440,10 +440,10 @@
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 2
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
 
 - type: reagent
   id: Romerol
@@ -457,15 +457,15 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:CauseZombieInfection
-          conditions:
-            - !type:ReagentThreshold
-              min: 5
+      - !type:CauseZombieInfection
+        conditions:
+          - !type:ReagentThreshold
+            min: 5
 
 - type: reagent
   id: UncookedAnimalProteins
   name: reagent-name-uncooked-animal-proteins
-  group: Foods
+  group: Foods # Also a Toxin
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
   flavor: bitter
@@ -475,9 +475,9 @@
       effects:
       - !type:PopupMessage
         conditions:
-          - !type:OrganType
-            type: Animal
-            shouldHave: false
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -485,9 +485,9 @@
       - !type:ChemVomit
         probability: 0.1
         conditions:
-          - !type:OrganType
-            type: Animal
-            shouldHave: false
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
       - !type:HealthChange
         conditions:
         - !type:OrganType
@@ -545,7 +545,7 @@
 - type: reagent
   id: Honk
   name: reagent-name-honk
-  group: Toxins
+  group: Special # Also a Toxin
   desc: reagent-desc-honk
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
@@ -573,7 +573,7 @@
 - type: reagent
   id: Lead
   name: reagent-name-lead
-  group: Toxins
+  group: Elements # Also a Toxin
   desc: reagent-desc-lead
   physicalDesc: reagent-physical-desc-metallic
   color: "#5C6274"
