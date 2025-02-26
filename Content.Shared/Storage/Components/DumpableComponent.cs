@@ -13,7 +13,7 @@ public sealed partial class DumpableDoAfterEvent : SimpleDoAfterEvent
 
 /// <summary>
 /// Lets you dump this container on the ground using a verb,
-/// or when interacting with it on a disposal unit or placeable surface.
+/// or when interacting with it on a disposal unit, placeable surface or lathes.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DumpableComponent : Component
