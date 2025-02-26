@@ -68,7 +68,7 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-musician
-    color: "#524089"
+    color: "#5C4A9E"
 
 - type: entity
   parent: DefaultStationBeaconService
