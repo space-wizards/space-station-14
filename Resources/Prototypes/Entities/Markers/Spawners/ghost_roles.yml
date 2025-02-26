@@ -211,10 +211,10 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostWizard
   name: ghost role spawn point
   suffix: wizard
-  parent: MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-wizard-name
@@ -223,8 +223,6 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanWizard
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
