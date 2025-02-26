@@ -43,6 +43,7 @@ public interface ISharedContentMarkupTagManager
     {
         var consumedNodes = tagStack ?? new Stack<IContentMarkupTag>();
         var returnMessage = new FormattedMessage();
+        var randomSeed = message.Count; // CHAT-TODO: Replace with message uuid.
 
         var nodeEnumerator = message.Nodes.ToList();
 
@@ -57,8 +58,8 @@ public interface ISharedContentMarkupTagManager
                 var consumedNode = consumedNodes.First();
 
                 var consumedNodeResult = node.Name != null
-                    ? consumedNode.MarkupNodeProcessing(node)
-                    : consumedNode.TextNodeProcessing(node);
+                    ? consumedNode.MarkupNodeProcessing(node, randomSeed)
+                    : consumedNode.TextNodeProcessing(node, randomSeed);
 
                 if (consumedNodeResult != null)
                 {
@@ -75,7 +76,7 @@ public interface ISharedContentMarkupTagManager
             {
                 if (!node.Closing)
                 {
-                    var openerNode = tag.OpenerProcessing(node);
+                    var openerNode = tag.OpenerProcessing(node, randomSeed);
                     if (openerNode != null)
                     {
                         nodeEnumerator.InsertRange(i, openerNode);
@@ -87,7 +88,7 @@ public interface ISharedContentMarkupTagManager
                 }
                 else
                 {
-                    var closerNode = tag.CloserProcessing(node);
+                    var closerNode = tag.CloserProcessing(node, randomSeed);
                     if (closerNode != null)
                     {
                         nodeEnumerator.InsertRange(i, closerNode);

@@ -16,6 +16,7 @@
   serverModifiers:
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
+  - !type:AccentChatModifier
   - !type:SpeechVerbChatModifier
   - !type:ColorFulltextChatModifier
     colorKey: Speech

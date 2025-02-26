@@ -15,5 +15,6 @@ public sealed class ContentMarkupTagManager : ISharedContentMarkupTagManager
         new SpeechVerbContentTag(),
         new CodewordsContentTag(),
         new PlayAudioContentTag(),
+        new AccentContentTag(),
     }.ToDictionary(x => x.Name, x => x);
 }

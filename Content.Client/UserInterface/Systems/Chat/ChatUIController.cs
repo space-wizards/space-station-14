@@ -808,6 +808,7 @@ public sealed class ChatUIController : UIController
     private void OnChatMessage(MsgChatMessage message)
     {
         var msg = message.Message;
+        Logger.Debug(msg.Message.ToMarkup());
         ProcessChatMessage(msg);
 
         if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))

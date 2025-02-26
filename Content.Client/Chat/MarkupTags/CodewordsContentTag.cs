@@ -17,7 +17,7 @@ public sealed class CodewordsContentTag : IContentMarkupTag
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
 
-    public List<MarkupNode>? TextNodeProcessing(MarkupNode node)
+    public List<MarkupNode>? TextNodeProcessing(MarkupNode node, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
 
