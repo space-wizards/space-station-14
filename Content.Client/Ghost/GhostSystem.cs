@@ -1,6 +1,7 @@
 using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
+using Content.Shared.Rotation;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -72,7 +73,18 @@ namespace Content.Client.Ghost
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             if (TryComp(uid, out SpriteComponent? sprite))
+            {
                 sprite.Visible = GhostVisibility || uid == _playerManager.LocalEntity;
+
+                var localEnt = _playerManager.LocalSession?.AttachedEntity;
+
+                if (localEnt != null && TryComp(localEnt, out SpriteComponent? otherSprite))
+                {
+                    sprite.CopyFrom(otherSprite);
+                    sprite.Color = Color.White.WithAlpha(0.5f); // ghostly opacity
+                    sprite.Rotation = Angle.Zero; // set upright for dead characters
+                }
+            }
         }
 
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
