@@ -305,7 +305,7 @@
   description: "The worst lighter ever produced, lighterburn is inevitable, do not refuel while lit."
   components:
   - type: Sprite
-    sprite: Objects/tools/Lighters/lighters.rsi
+    sprite: Objects/Tools/Lighters/lighters.rsi
     layers:
     - state: icon_map
     - state: discount_icon_base
