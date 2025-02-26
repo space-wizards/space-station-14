@@ -1,10 +1,10 @@
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controls;
@@ -143,11 +143,8 @@ public class RadialMenu : BaseWindow
         return children.First(x => x.Visible);
     }
 
-    public bool TryToMoveToNewLayer(string newLayer)
+    public bool TryToMoveToNewLayer(Control newLayer)
     {
-        if (newLayer == string.Empty)
-            return false;
-
         var currentLayer = GetCurrentActiveLayer();
 
         if (currentLayer == null)
@@ -161,7 +158,7 @@ public class RadialMenu : BaseWindow
                 continue;
 
             // Hide layers which are not of interest
-            if (result == true || child.Name != newLayer)
+            if (result == true || child != newLayer)
             {
                 child.Visible = false;
             }
@@ -184,6 +181,19 @@ public class RadialMenu : BaseWindow
             ContextualButton.SetOnlyStyleClass(BackButtonStyleClass);
 
         return result;
+    }
+
+    public bool TryToMoveToNewLayer(string targetLayerControlName)
+    {
+        foreach (var child in Children)
+        {
+            if (child.Name == targetLayerControlName && child is RadialContainer)
+            {
+                return TryToMoveToNewLayer(child);
+            }
+        }
+
+        return false;
     }
 
     public void ReturnToPreviousLayer()
@@ -296,9 +306,15 @@ public sealed class RadialMenuOuterAreaButton : RadialMenuTextureButtonBase
 public class RadialMenuTextureButton : RadialMenuTextureButtonBase
 {
     /// <summary>
-    /// Upon clicking this button the radial menu will be moved to the named layer
+    /// Upon clicking this button the radial menu will be moved to the layer of this control.
     /// </summary>
-    public string TargetLayer { get; set; } = string.Empty;
+    public Control? TargetLayer { get; set; }
+
+    /// <summary>
+    /// Other way to set navigation to other container, as <see cref="TargetLayer"/>,
+    /// but using <see cref="Control.Name"/> property of target <see cref="RadialContainer"/>.
+    /// </summary>
+    public string? TargetLayerControlName { get; set; }
 
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
@@ -311,7 +327,7 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
 
     private void OnClicked(ButtonEventArgs args)
     {
-        if (TargetLayer == string.Empty)
+        if (TargetLayer == null && TargetLayerControlName == null)
             return;
 
         var parent = FindParentMultiLayerContainer(this);
@@ -319,7 +335,14 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
         if (parent == null)
             return;
 
-        parent.TryToMoveToNewLayer(TargetLayer);
+        if (TargetLayer != null)
+        {
+            parent.TryToMoveToNewLayer(TargetLayer);
+        }
+        else
+        {
+            parent.TryToMoveToNewLayer(TargetLayerControlName!);
+        }
     }
 
     private RadialMenu? FindParentMultiLayerContainer(Control control)
@@ -339,12 +362,12 @@ public interface IRadialMenuItemWithSector
     /// <summary>
     /// Angle in radian where button sector should start.
     /// </summary>
-    public float AngleSectorFrom { set; }
+    public float AngleSectorFrom { set; get; }
 
     /// <summary>
     /// Angle in radian where button sector should end.
     /// </summary>
-    public float AngleSectorTo { set; }
+    public float AngleSectorTo { set; get; }
 
     /// <summary>
     /// Outer radius for drawing segment and pointer detection.
@@ -365,6 +388,41 @@ public interface IRadialMenuItemWithSector
     /// Coordinates of center in parent component - button container.
     /// </summary>
     public Vector2 ParentCenter { set; }
+
+    /// <summary>
+    /// Marker, is menu item hovered currently.
+    /// </summary>
+    public bool IsHovered { get; }
+
+    /// <summary>
+    /// Color for menu item background when it is hovered over.
+    /// </summary>
+    Color HoverBackgroundColor { get; }
+
+    /// <summary>
+    /// Color for menu item default state.
+    /// </summary>
+    Color BackgroundColor { get; }
+
+    /// <summary>
+    /// Color for menu item border when item is hovered over.
+    /// </summary>
+    Color HoverBorderColor { get; }
+
+    /// <summary>
+    /// Color for menu item border default state.
+    /// </summary>
+    Color BorderColor { get; }
+
+    /// <summary>
+    /// Marker, if menu item background should be drawn.
+    /// </summary>
+    public bool DrawBackground { get; }
+
+    /// <summary>
+    /// Marker, if menu item borders should be drawn.
+    /// </summary>
+    public bool DrawBorder { get; }
 }
 
 [Virtual]
@@ -390,7 +448,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// Marker, that control should render border of segment. Is false by default.
     /// </summary>
     /// <remarks>
-    /// By default color of border is same as color of background. Use <see cref="BorderColor"/>
+    /// Default color of border is same as color of background. Use <see cref="BorderColor"/>
     /// and <see cref="HoverBorderColor"/> to change it.
     /// </remarks>
     public bool DrawBorder { get; set; } = false;
@@ -399,13 +457,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// Marker, that control should render background of all sector. Is true by default.
     /// </summary>
     public bool DrawBackground { get; set; } = true;
-
-    /// <summary>
-    /// Marker, that control should render separator lines.
-    /// Separator lines are used to visually separate sector of radial menu items.
-    /// Is true by default
-    /// </summary>
-    public bool DrawSeparators { get; set; } = true;
 
     /// <summary>
     /// Color of background in non-hovered state. Accepts RGB color, works with sRGB for DrawPrimitive internally.
@@ -443,12 +494,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         set => _hoverBorderColorSrgb = Color.ToSrgb(value);
     }
 
-    /// <summary>
-    /// Color of separator lines.
-    /// Separator lines are used to visually separate sector of radial menu items.
-    /// </summary>
-    public Color SeparatorColor { get; set; } = new Color(128, 128, 128, 128);
-
     /// <inheritdoc />
     float IRadialMenuItemWithSector.AngleSectorFrom
     {
@@ -457,6 +502,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             _angleSectorFrom = value;
             _isWholeCircle = IsWholeCircle(value, _angleSectorTo);
         }
+        get => _angleSectorFrom;
     }
 
     /// <inheritdoc />
@@ -467,6 +513,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             _angleSectorTo = value;
             _isWholeCircle = IsWholeCircle(_angleSectorFrom, value);
         }
+        get => _angleSectorTo;
     }
 
     /// <inheritdoc />
@@ -486,44 +533,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// </summary>
     public RadialMenuTextureButtonWithSector()
     {
-    }
-
-    /// <inheritdoc />
-    protected override void Draw(DrawingHandleScreen handle)
-    {
-        base.Draw(handle);
-
-        if (_parentCenter == null)
-        {
-            return;
-        }
-
-        // draw sector where space that button occupies actually is
-        var containerCenter = (_parentCenter.Value - Position) * UIScale;
-
-        var angleFrom = _angleSectorFrom + _angleOffset;
-        var angleTo = _angleSectorTo + _angleOffset;
-        if (DrawBackground)
-        {
-            var segmentColor = DrawMode == DrawModeEnum.Hover
-                ? _hoverBackgroundColorSrgb
-                : _backgroundColorSrgb;
-
-            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, segmentColor);
-        }
-
-        if (DrawBorder)
-        {
-            var borderColor = DrawMode == DrawModeEnum.Hover
-                ? _hoverBorderColorSrgb
-                : _borderColorSrgb;
-            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, borderColor, false);
-        }
-
-        if (!_isWholeCircle && DrawSeparators)
-        {
-            DrawSeparatorLines(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, SeparatorColor);
-        }
     }
 
     /// <inheritdoc />
