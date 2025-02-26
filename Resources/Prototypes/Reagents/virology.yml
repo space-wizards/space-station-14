@@ -35,10 +35,10 @@
         
 - type: reagent
   id: AIDncerAntibody
-  name: AIDncer antibodies #CHANGE
+  name: reagent-name-aidncerantibody 
   group: Virology
-  desc: AIDncer antibodies #CHANGE
-  physicalDesc: reagent-physical-desc-opaque #CHANGE
+  desc: reagent-desc-aidncerantibody 
+  physicalDesc: reagent-physical-desc-opaque
   flavor: AIDS
   color: "#ffffff"
   metabolisms:
@@ -64,10 +64,10 @@
 
 - type: reagent
   id: AIDncer
-  name: AIDncer virus #CHANGE
+  name: reagent-name-aidncer
   group: Virology
-  desc: AIDncer virus #CHANGE
-  physicalDesc: reagent-physical-desc-opaque #CHANGE
+  desc: reagent-desc-aidncer
+  physicalDesc: reagent-physical-desc-opaque
   flavor: AIDS
   color: "#ffffff"
   metabolisms:
