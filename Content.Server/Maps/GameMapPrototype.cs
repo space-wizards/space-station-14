@@ -26,7 +26,7 @@ public sealed partial class GameMapPrototype : IPrototype
     public float MaxRandomOffset = 1000f;
 
     [DataField]
-    public bool RandomRotation = true;
+    public bool RandomRotation = false; // Harmony change for QOL, default is true.
 
     /// <summary>
     /// Name of the map to use in generic messages, like the map vote.

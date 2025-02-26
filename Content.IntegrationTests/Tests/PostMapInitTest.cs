@@ -45,6 +45,13 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] GameMaps =
         {
+            "dm01-entryway", // Harmony, deathmatch PROMOD map by Unisol
+            "dm02-sandbomb", // Harmony, deathmatch PROMOD map by Unisol
+            "Xeno", // Harmony, playtest for upstream by SlamBamActionman
+            "Barratry", // Harmony, revived by Spanky
+            "Aspid", // Harmony, playtest for upstream by Golinth
+            "Atlas", // Harmony revived by Kravin
+            "Mira", // Harmony, developed by tanuko
             "Dev",
             "TestTeg",
             "Fland",
@@ -61,19 +68,13 @@ namespace Content.IntegrationTests.Tests
             "Reach",
             "Train",
             "Oasis",
-            "Cog",
-            "Xeno", // Xeno map playtest
-            "Barratry", // Update of old map
-            "dm01-entryway", // deathmatch PROMOD map
-            "Aspid", // Pseudo playtest, not merged to upstream yet.
-			"Atlas", // Update of Atlas. Back from the grave!
             "Gate",
             "Amber",
             "Loop",
             "Plasma",
             "Elkridge",
-            "Convex"
-
+            "Convex",
+            "Relic"
         };
 
         /// <summary>

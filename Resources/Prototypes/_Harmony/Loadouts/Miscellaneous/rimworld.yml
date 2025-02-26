@@ -89,8 +89,8 @@
     pocket2: EmergencyMedipen
   storage:
     belt:
-    - MagazineBoxAntiMaterielBig
-    - MagazineBoxAntiMaterielBig
+    - MagazineBoxAntiMateriel
+    - MagazineBoxAntiMateriel
     outerClothing:
     - SpaceCash5000
 
