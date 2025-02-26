@@ -53,6 +53,9 @@ namespace Content.Server.Explosion.EntitySystems
                 _adminLogger.Add(LogType.Trigger, LogImpact.High,
                         $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
                 Trigger(ent, args.Source);
+
+                var voice = new VoiceTriggeredEvent(args.Source, message);
+                RaiseLocalEvent(ent, ref voice);
             }
         }
 
@@ -137,3 +140,12 @@ namespace Content.Server.Explosion.EntitySystems
         }
     }
 }
+
+
+/// <summary>
+///    Raised when a voice trigger is activated, containing the message that triggered it.
+/// </summary>
+/// <param name="Source"> The EntityUid of the entity sending the message</param>
+/// <param name="Message"> The contents of the message</param>
+[ByRefEvent]
+public readonly record struct VoiceTriggeredEvent(EntityUid Source, string? Message);
