@@ -1054,6 +1054,9 @@
   id: QuantumSpinInverter
 
 - type: Tag
+  id: RadDefenseHelmet
+
+- type: Tag
   id: Radio
 
 - type: Tag
