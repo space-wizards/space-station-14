@@ -37,10 +37,10 @@ public sealed class AttachmentSystem : EntitySystem
             if (!HasComp(item, componentType))
                 continue;
 
-            IComponent? comp;
+            _entMan.TryGetComponent(uid, componentType, out var comp);
             if (_timing.IsFirstTimePredicted)
             {
-                if (!HasComp(uid, componentType) || attachment.ForceComponents)
+                if (comp is null || attachment.ForceComponents)
                 {
                     comp = _factory.GetComponent(compRegistryEntry);
                     _entMan.AddComponent(uid, comp, overwrite: attachment.ForceComponents);
@@ -49,11 +49,11 @@ public sealed class AttachmentSystem : EntitySystem
             }
             else
             {
-                if (_entMan.TryGetComponent(uid, componentType, out comp))
+                if (comp is {})
                     _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
             }
 
-            if (_entMan.TryGetComponent(uid, componentType, out comp))
+            if (comp is {})
             {
                 var itemComp = _entMan.GetComponent(item, componentType);
                 _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
