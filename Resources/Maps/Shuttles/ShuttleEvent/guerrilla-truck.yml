@@ -599,6 +599,62 @@ entities:
     - type: Transform
       pos: 6.5,-2.5
       parent: 1
+- proto: ClothingBackpackDuffelSyndicateC4tBundle
+  entities:
+  - uid: 99
+    components:
+    - type: Transform
+      parent: 166
+    - type: Physics
+      canCollide: False
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: >-
+            It provides the following protection:
+
+            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]90%[/color].
+          priority: 0
+          component: Armor
+        - message: This decreases your running speed by [color=yellow]10%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        title: null
+    - type: InsideEntityStorage
+  - uid: 113
+    components:
+    - type: Transform
+      parent: 171
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 114
+    components:
+    - type: Transform
+      parent: 185
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 115
+    components:
+    - type: Transform
+      parent: 98
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 167
+    components:
+    - type: Transform
+      parent: 121
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingBackpackDuffelSyndicateFilledCarbine
   entities:
   - uid: 172
@@ -699,6 +755,25 @@ entities:
       parent: 121
     - type: Physics
       canCollide: False
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: >-
+            It provides the following protection:
+
+            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]90%[/color].
+          priority: 0
+          component: Armor
+        - message: This decreases your running speed by [color=yellow]10%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        title: null
     - type: InsideEntityStorage
 - proto: ClothingBeltMilitaryWebbingGrenadeFilled
   entities:
@@ -708,6 +783,22 @@ entities:
       parent: 121
     - type: Physics
       canCollide: False
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: >-
+            It provides the following protection:
+
+            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]50%[/color].
+          priority: 0
+          component: Armor
+        title: null
     - type: InsideEntityStorage
 - proto: ComputerIFFSyndicate
   entities:
@@ -1041,13 +1132,10 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 99
-          - 100
-          - 113
-          - 114
           - 115
-          - 119
+          - 100
           - 120
+          - 119
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1086,6 +1174,7 @@ entities:
           - 143
           - 144
           - 162
+          - 167
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1119,9 +1208,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 167
           - 168
           - 169
+          - 99
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1156,10 +1245,8 @@ entities:
           occludes: True
           ents:
           - 172
-          - 173
-          - 174
-          - 175
           - 176
+          - 113
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1193,9 +1280,10 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 187
-          - 186
           - 188
+          - 186
+          - 187
+          - 114
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -1460,43 +1548,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-3.5
       parent: 1
-- proto: SupermatterGrenade
-  entities:
-  - uid: 99
-    components:
-    - type: Transform
-      parent: 98
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 113
-    components:
-    - type: Transform
-      parent: 98
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 115
-    components:
-    - type: Transform
-      parent: 98
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 173
-    components:
-    - type: Transform
-      parent: 171
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 175
-    components:
-    - type: Transform
-      parent: 171
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: SyndicateBomb
   entities:
   - uid: 51
@@ -1514,29 +1565,6 @@ entities:
     - type: Transform
       pos: 5.5,-2.5
       parent: 1
-- proto: SyndieMiniBomb
-  entities:
-  - uid: 114
-    components:
-    - type: Transform
-      parent: 98
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 167
-    components:
-    - type: Transform
-      parent: 166
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 174
-    components:
-    - type: Transform
-      parent: 171
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: TableReinforced
   entities:
   - uid: 87
