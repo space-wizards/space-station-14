@@ -15,7 +15,7 @@
     head: ClothingHeadHelmetBombSuit
   inhand:
   # Needed for causing wanton carnage
-  - Sledgehammer
+  - HammerSpaceAsshole
   storage:
     back:
     # Planting charges left and right…
