@@ -36,17 +36,20 @@ public sealed class RadiationNoticingSystem : EntitySystem
                 "radiation-noticing-message-0",
                 "radiation-noticing-message-1",
                 "radiation-noticing-message-2",
-                "radiation-noticing-message-3"
+                "radiation-noticing-message-3",
+                "radiation-noticing-message-4",
+                "radiation-noticing-message-5",
+                "radiation-noticing-message-6"
             ];
 
-            // Todo: detect possessing specific types of organs/blood/etc and conditionally add related messages to the list
+        // Todo: detect possessing specific types of organs/blood/etc and conditionally add related messages to the list
 
-            // pick a random message
-            var msgId = _random.Pick(msgArr);
-            var msg = Loc.GetString(msgId);
+        // pick a random message
+        var msgId = _random.Pick(msgArr);
+        var msg = Loc.GetString(msgId);
 
-            // show it as a popup
-            _popupSystem.PopupEntity(msg, uid, uid);
+        // show it as a popup
+        _popupSystem.PopupEntity(msg, uid, uid);
     }
 
 }
