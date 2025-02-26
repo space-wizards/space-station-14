@@ -31,3 +31,11 @@ public enum TextScreenVisuals : byte
     
     AlertLevel
 }
+
+[Serializable, NetSerializable]
+public enum ScreenType : byte
+{
+    Text,
+    ShuttleTime,
+    AlertLevel
+}

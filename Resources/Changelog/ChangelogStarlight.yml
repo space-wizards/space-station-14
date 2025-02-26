@@ -3652,3 +3652,11 @@ Entries:
   id: 506
   time: '2025-02-26T12:08:22.586132+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: 'Now screens have rotation of types(example: alert levels -> text ->
+      shuttle arrive time).'
+    type: Add
+  id: 507
+  time: '2025-02-26T17:00:32.636185+00:00'
+  url: 'null'

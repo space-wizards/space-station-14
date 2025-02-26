@@ -1,10 +1,10 @@
 using System.Numerics;
 using Robust.Client.Graphics;
 
-namespace Content.Client.TextScreen;
+namespace Content.Client.Screen;
 
 [RegisterComponent]
-public sealed partial class TextScreenVisualsComponent : Component
+public sealed partial class ScreenVisualsComponent : Component
 {
     /// <summary>
     ///     1/32 - the size of a pixel

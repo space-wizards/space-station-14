@@ -1,3 +1,6 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.Screen;
+
 namespace Content.Shared.Screen.Components;
 
 [RegisterComponent]
@@ -5,6 +8,15 @@ public sealed partial class ScreenComponent : Component
 {
     [DataField]
     public string BaseState = "green";
+    
+    [DataField]
+    public ScreenType CurrentScreen = ScreenType.AlertLevel;
+    
+    [DataField("nextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdateTime;
+
+    [DataField]
+    public TimeSpan Delay = TimeSpan.FromSeconds(5);
 }
 
 /// <summary>
