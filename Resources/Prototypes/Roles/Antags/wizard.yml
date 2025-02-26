@@ -16,7 +16,6 @@
   requirements: # I hate time locked roles but this should be enough time for someone to be acclimated
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
-  # TODO: WizardGuide
-  # guides: [ Wizard ]
+  guides: [ Wizard ]
 
 # See wizard_startinggear for wiz start gear options
