@@ -108,9 +108,26 @@ public abstract class SharedJobSystem : EntitySystem
     //imp addition
     public bool MindsHaveSameJobDept(EntityUid mindID1, EntityUid mindID2)
     {
+        MindTryGetJob(mindID1, out var job1);
+        MindTryGetJob(mindID2, out var job2);
+        return JobsHaveSameDept(job1, job2);
+    }
+
+    public bool JobsHaveSameDept(JobPrototype? job1, JobPrototype? job2)
+    {
+        if (job1 == null || job2 == null) return false;
+        TryGetPrimaryDepartment(job1.ID, out var dept1);
+        TryGetPrimaryDepartment(job2.ID, out var dept2);
+        if (dept1 == null || dept2 == null) return false;
+        if (dept1.Equals(dept2))
+        {
+            return true;
+        }
 
         return false;
+
     }
+    //end imp additions
 
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {

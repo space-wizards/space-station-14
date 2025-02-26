@@ -45,6 +45,7 @@ public sealed partial class HereticSystem : EntitySystem
 
     private float _timer = 0f;
     private float _passivePointCooldown = 20f * 60f;
+    private static readonly ProtoId<JobPrototype> SecOffJobProtoID = "SecurityOfficer";
 
     public override void Initialize()
     {
@@ -132,41 +133,17 @@ public sealed partial class HereticSystem : EntitySystem
 
         var pickedTargets = new List<EntityUid?>();
 
-        
-
         var predicates = new List<Func<EntityUid, bool>>();
 
         // pick one command staff
         predicates.Add(t => HasComp<CommandStaffComponent>(t));
 
         // pick one security staff
-        // this would probably break during revs but we ball
-        predicates.Add(t => (HasComp<MindShieldComponent>(t) && !HasComp<CommandStaffComponent>(t)));
+        _jobs.MindTryGetJob(ent, out var userJobProto);
+        predicates.Add(t => (_jobs.JobsHaveSameDept(userJobProto, _prot.Index(SecOffJobProtoID))));  
 
         // pick someone in your department
-        _jobs.MindTryGetJob(ent, out var userJobProto);
-        if (userJobProto!=null)
-        {
-            // get the dept of the users job
-            if(_jobs.TryGetPrimaryDepartment(userJobProto.ID, out var userDept))
-            {
-                //and then write the worst chunk of code ever
-                predicates.Add(t => {
-                    _jobs.MindTryGetJob(t, out var targetJobProto);
-                    if (targetJobProto != null)
-                    {
-                        _jobs.TryGetPrimaryDepartment(targetJobProto.ID, out var targetDept);
-                        if (userDept.Equals(targetDept))
-                        {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-                );
-            }
-        }
-         //get mind, use MindHasJobWithId and trygetprimarydepartment
+        predicates.Add(t => (_jobs.MindsHaveSameJobDept(t, ent)));
 
         // add more predicates here
 
