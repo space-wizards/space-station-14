@@ -1,0 +1,81 @@
+## Cargo
+- type: latheRecipePack
+  id: HarmonyCargoStatic
+  recipes:
+  - BoxFolderClipboard
+
+## Clothing
+- type: latheRecipePack
+  id: HarmonyClothing
+  recipes:
+  # Cargo
+  - ClothingUniformJumpsuitCargoPantsHarmony
+  - ClothingUniformJumpsuitCargoverallsHarmony
+  - ClothingUniformJumpsuitCargoOfficeSlacksHarmony
+  - ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+  - ClothingUniformJumpsuitSeniorTechnicianHarmony
+  - ClothingUniformJumpskirtSeniorTechnicianHarmony
+  # Command - Captain
+  - ClothingHeadHatBeretCaptainHarmony
+  - ClothingUniformJumpsuitCaptainHawaiianHarmony
+  - ClothingUniformJumpsuitCaptainTurtleneckHarmony
+  - ClothingUniformJumpskirtCaptainTurtleneckHarmony
+  # Command - HoP
+  - ClothingHeadHatBeretHeadofPersonnelHarmony
+  - ClothingUniformJumpsuitHoPMessKitHarmony
+  - ClothingUniformJumpskirtHoPMessKitHarmony
+  - ClothingUniformJumpsuitTurtleneckHoPHarmony
+  - ClothingUniformJumpskirtTurtleneckHoPHarmony
+  # Engineering
+  - ClothingHeadHatBeretChiefEngineerHarmony
+  # Science
+  - ClothingHeadHatBeretResearchDirectorHarmony
+  # Security
+  - ClothingHeadHatBeretSecurityBlueHarmony
+  - ClothingHeadHatBeretSecuritySeniorOfficerHarmony
+  - ClothingHeadHatHoSSoftHarmony
+  - ClothingHeadHatHoSWidebrimHarmony
+  - ClothingHeadHatSecSoftBlueHarmony
+  - ClothingUniformJumpsuitDetectiveBlueHarmony
+  - ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony
+  - ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony
+  - ClothingUniformJumpsuitSecBlueHarmony
+  - ClothingUniformJumpsuitWardenBlueHarmony
+
+## Medical
+- type: latheRecipePack
+  id: HarmonyMedicalStatic
+  recipes:
+  # Topicals
+  - Bloodpack
+  # Chemistry
+  - BaseChemistryEmptyVial
+  # Surgery
+  - CircularSaw
+  # Other
+  - ClothingEyesEyepatchHudMedical
+  - ClothingEyesHudMedical
+
+## Security
+- type: latheRecipePack
+  id: HarmonySecurityEquipmentStatic
+  recipes:
+  - SecurityBola
+
+- type: latheRecipePack
+  id: HarmonySecurityAmmoStatic
+  recipes:
+  - StripperClip
+
+## Service
+- type: latheRecipePack
+  id: HarmonyServiceStatic
+  recipes:
+  - CassetteTape # DeltaV
+  - TapeRecorder # DeltaV
+
+## Tiles
+- type: latheRecipePack
+  id: HarmonyFloorTilesStatic
+  recipes:
+  - FloorTileItemTechmaintDark # Xeno playtest

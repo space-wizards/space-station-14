@@ -462,6 +462,8 @@
     layers:
     - state: default
     - state: idbrigmedic
+  - type: PresetIdCard # Harmony Change: Adds the Correct Accesses to the Brigmedic ID
+    job: BrigMedicHarmony
 
 - type: entity
   parent: IDCardStandard

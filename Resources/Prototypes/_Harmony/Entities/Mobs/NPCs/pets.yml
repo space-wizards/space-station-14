@@ -11,7 +11,7 @@
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-Poquito-name
-    description: ghost-role-information-Poquito-name
+    description: ghost-role-information-Poquito-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Butcherable

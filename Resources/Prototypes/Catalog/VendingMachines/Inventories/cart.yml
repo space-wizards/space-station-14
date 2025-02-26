@@ -17,3 +17,6 @@
     EncryptionKeySecurity: 1
     EncryptionKeyService: 3
     ClothingNeckLanyard: 5 #Harmony addition. Also obtainable through bureaucracy crates and character loadouts
+  contrabandInventory:
+    BalloonNT: 2
+    LuxuryPen: 1

@@ -1,0 +1,15 @@
+# Security
+
+- type: entity
+  name: visiting brigmedic spawner
+  id: VisitorBrigmedicSpawnerHarmony
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBrigmedicHarmony

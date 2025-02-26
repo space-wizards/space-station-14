@@ -744,5 +744,13 @@ Entries:
   id: 92
   time: '2025-02-02T20:00:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34824
+- author: Palladinium
+  changes:
+  - message: Added atmospherics device information (air alarms, vents, scrubbers)
+      to admin logs
+    type: Add
+  id: 93
+  time: '2025-02-06T05:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33426
 Name: Admin
 Order: 1

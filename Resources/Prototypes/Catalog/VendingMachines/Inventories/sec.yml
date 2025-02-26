@@ -23,6 +23,7 @@
     SecurityBola: 4 #Harmony Change: Security Bolas added
   # security officers need to follow a diet regimen!
   contrabandInventory:
+    WeaponMeleeNeedle: 2
     FoodDonutHomer: 12
     FoodBoxDonut: 2
     #box evidence

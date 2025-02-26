@@ -1,0 +1,257 @@
+## Static
+
+- type: latheRecipePack
+  id: ClothingCivilian
+  recipes:
+  - ClothingUniformJumpsuitColorGrey
+  - ClothingUniformJumpskirtColorGrey
+  - ClothingUniformJumpsuitLoungewear
+
+- type: latheRecipePack
+  id: ClothingCargo
+  recipes:
+  - ClothingUniformJumpsuitCargo
+  - ClothingUniformJumpskirtCargo
+  - ClothingUniformJumpsuitSalvageSpecialist
+  - ClothingHeadHatQMsoft
+  - ClothingHeadHatBeretQM
+  - ClothingUniformJumpsuitQM
+  - ClothingUniformJumpskirtQM
+  - ClothingUniformJumpsuitQMTurtleneck
+  - ClothingUniformJumpskirtQMTurtleneck
+  - ClothingUniformJumpsuitQMFormal
+  - ClothingUniformJumpsuitCargoPantsHarmony # Harmony
+  - ClothingUniformJumpsuitCargoverallsHarmony # Harmony
+  - ClothingUniformJumpsuitCargoOfficeSlacksHarmony # Harmony
+  - ClothingUniformJumpskirtCargoOfficeSkirtHarmony # Harmony
+  - ClothingUniformJumpsuitSeniorTechnicianHarmony # Harmony
+  - ClothingUniformJumpskirtSeniorTechnicianHarmony # Harmony
+
+- type: latheRecipePack
+  id: ClothingCommand
+  recipes:
+  # Captain
+  - ClothingHeadHatCapcap
+  - ClothingHeadHatCaptain
+  - ClothingUniformJumpsuitCaptain
+  - ClothingUniformJumpskirtCaptain
+  - ClothingUniformJumpsuitCapFormal
+  - ClothingUniformJumpskirtCapFormalDress
+  - ClothingHeadHatBeretCaptainHarmony # Harmony
+  - ClothingUniformJumpsuitCaptainHawaiianHarmony # Harmony
+  - ClothingUniformJumpsuitCaptainTurtleneckHarmony # Harmony
+  - ClothingUniformJumpskirtCaptainTurtleneckHarmony # Harmony
+  # HoP
+  - ClothingHeadHatHopcap
+  - ClothingUniformJumpsuitHoP
+  - ClothingUniformJumpskirtHoP
+  - ClothingHeadHatBeretHeadofPersonnelHarmony # Harmony
+  - ClothingUniformJumpsuitHoPMessKitHarmony #Harmony
+  - ClothingUniformJumpskirtHoPMessKitHarmony #Harmony
+  - ClothingUniformJumpsuitTurtleneckHoPHarmony # Harmony
+  - ClothingUniformJumpskirtTurtleneckHoPHarmony #Harmony
+
+
+- type: latheRecipePack
+  id: ClothingEngineering
+  recipes:
+  - ClothingHeadHatBeretEngineering
+  - ClothingUniformJumpsuitChiefEngineer
+  - ClothingUniformJumpskirtChiefEngineer
+  - ClothingUniformJumpsuitChiefEngineerTurtle
+  - ClothingUniformJumpskirtChiefEngineerTurtle
+  - ClothingUniformJumpsuitEngineering
+  - ClothingUniformJumpskirtEngineering
+  - ClothingUniformJumpsuitSeniorEngineer
+  - ClothingUniformJumpskirtSeniorEngineer
+  - ClothingHeadHatBeretChiefEngineerHarmony # Harmony
+
+- type: latheRecipePack
+  id: ClothingMedical
+  recipes:
+  - ClothingUniformJumpsuitChemistry
+  - ClothingUniformJumpskirtChemistry
+  - ClothingHeadHatBeretCmo
+  - ClothingUniformJumpsuitCMO
+  - ClothingUniformJumpskirtCMO
+  - ClothingUniformJumpsuitCMOTurtle
+  - ClothingUniformJumpskirtCMOTurtle
+  - ClothingHeadHatBeretSeniorPhysician
+  - ClothingUniformJumpsuitMedicalDoctor
+  - ClothingUniformJumpskirtMedicalDoctor
+  - ClothingUniformJumpsuitSeniorPhysician
+  - ClothingUniformJumpskirtSeniorPhysician
+  - ClothingUniformJumpsuitParamedic
+  - ClothingUniformJumpskirtParamedic
+  - ClothingHeadHatParamedicsoft
+
+- type: latheRecipePack
+  id: ClothingScience
+  recipes:
+  - ClothingHeadHatBeretRND
+  - ClothingUniformJumpsuitResearchDirector
+  - ClothingUniformJumpskirtResearchDirector
+  - ClothingUniformJumpsuitScientist
+  - ClothingUniformJumpskirtScientist
+  - ClothingUniformJumpsuitSeniorResearcher
+  - ClothingUniformJumpskirtSeniorResearcher
+  - ClothingHeadHatBeretResearchDirectorHarmony # Harmony
+
+- type: latheRecipePack
+  id: ClothingSecurity
+  recipes:
+  - ClothingUniformJumpsuitDetective
+  - ClothingUniformJumpskirtDetective
+  - ClothingHeadHatBeretHoS
+  - ClothingHeadHatHoshat
+  - ClothingUniformJumpsuitHoS
+  - ClothingUniformJumpskirtHoS
+  - ClothingUniformJumpsuitHosFormal
+  - ClothingUniformJumpskirtHosFormal
+  - ClothingUniformJumpsuitHoSAlt
+  - ClothingUniformJumpskirtHoSAlt
+  - ClothingUniformJumpsuitHoSBlue
+  - ClothingUniformJumpsuitHoSGrey
+  - ClothingUniformJumpsuitHoSParadeMale
+  - ClothingUniformJumpskirtHoSParadeMale
+  - ClothingUniformJumpsuitSeniorOfficer
+  - ClothingUniformJumpskirtSeniorOfficer
+  - ClothingUniformJumpsuitPrisoner
+  - ClothingUniformJumpskirtPrisoner
+  - ClothingHeadHatBeretSecurity
+  - ClothingUniformJumpsuitSec
+  - ClothingUniformJumpskirtSec
+  - ClothingHeadHatBeretBrigmedic
+  - ClothingUniformJumpsuitBrigmedic
+  - ClothingUniformJumpskirtBrigmedic
+  - ClothingHeadHatBeretWarden
+  - ClothingHeadHatWarden
+  - ClothingUniformJumpsuitWarden
+  - ClothingUniformJumpskirtWarden
+  - ClothingHeadHatBeretSecurityBlueHarmony # Harmony
+  - ClothingHeadHatBeretSecuritySeniorOfficerHarmony # Harmony
+  - ClothingHeadHatHoSSoftHarmony # Harmony
+  - ClothingHeadHatHoSWidebrimHarmony # Harmony
+  - ClothingHeadHatSecSoftBlueHarmony # Harmony
+  - ClothingUniformJumpsuitDetectiveBlueHarmony # Harmony
+  - ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony # Harmony
+  - ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony # Harmony
+  - ClothingUniformJumpsuitSecBlueHarmony # Harmony
+  - ClothingUniformJumpsuitWardenBlueHarmony # Harmony
+
+
+- type: latheRecipePack
+  id: ClothingService
+  recipes:
+  - ClothingUniformJumpsuitBartender
+  - ClothingUniformJumpskirtBartender
+  - ClothingUniformJumpsuitChaplain
+  - ClothingUniformJumpskirtChaplain
+  - ClothingUniformJumpsuitChef
+  - ClothingUniformJumpskirtChef
+  - ClothingUniformJumpsuitClown
+  - ClothingUniformJumpsuitHydroponics
+  - ClothingUniformJumpskirtHydroponics
+  - ClothingUniformJumpsuitJanitor
+  - ClothingUniformJumpskirtJanitor
+  - ClothingUniformJumpsuitLawyerBlack
+  - ClothingUniformJumpsuitLibrarian
+  - ClothingUniformJumpskirtColorLightBrown
+  - ClothingUniformJumpsuitMime
+  - ClothingUniformJumpskirtMime
+  - ClothingUniformJumpsuitMusician
+
+- type: latheRecipePack
+  id: WinterCoats
+  recipes:
+  - ClothingOuterWinterCap
+  - ClothingOuterWinterCE
+  - ClothingOuterWinterCMO
+  - ClothingOuterWinterHoP
+  - ClothingOuterWinterHoSUnarmored
+  - ClothingOuterWinterWardenUnarmored
+  - ClothingOuterWinterQM
+  - ClothingOuterWinterRD
+  - ClothingOuterWinterMusician
+  - ClothingOuterWinterClown
+  - ClothingOuterWinterMime
+  - ClothingOuterWinterCoat
+  - ClothingOuterWinterJani
+  - ClothingOuterWinterBar
+  - ClothingOuterWinterChef
+  - ClothingOuterWinterHydro
+  - ClothingOuterWinterAtmos
+  - ClothingOuterWinterEngi
+  - ClothingOuterWinterCargo
+  - ClothingOuterWinterMiner
+  - ClothingOuterWinterMed
+  - ClothingOuterWinterPara
+  - ClothingOuterWinterChem
+  - ClothingOuterWinterGen
+  - ClothingOuterWinterViro
+  - ClothingOuterWinterSci
+  - ClothingOuterWinterRobo
+  - ClothingOuterWinterSec
+
+- type: latheRecipePack
+  id: Ties
+  recipes:
+  - ClothingNeckTieRed
+  - ClothingNeckTieDet
+  - ClothingNeckTieSci
+
+- type: latheRecipePack
+  id: Scarves
+  recipes:
+  - ClothingNeckScarfStripedGreen
+  - ClothingNeckScarfStripedBlue
+  - ClothingNeckScarfStripedRed
+  - ClothingNeckScarfStripedBrown
+  - ClothingNeckScarfStripedLightBlue
+  - ClothingNeckScarfStripedOrange
+  - ClothingNeckScarfStripedBlack
+  - ClothingNeckScarfStripedPurple
+
+- type: latheRecipePack
+  id: Carpets
+  recipes:
+  - Carpet
+  - CarpetBlack
+  - CarpetPink
+  - CarpetBlue
+  - CarpetGreen
+  - CarpetOrange
+  - CarpetPurple
+  - CarpetCyan
+  - CarpetWhite
+
+- type: latheRecipePack
+  id: ClothingCentComm
+  recipes:
+  - ClothingHeadHatCentcomcap
+  - ClothingHeadHatCentcom
+  - ClothingUniformJumpsuitCentcomAgent
+  - ClothingUniformJumpsuitCentcomFormal
+  - ClothingUniformJumpskirtCentcomFormalDress
+  - ClothingUniformJumpsuitCentcomOfficer
+  - ClothingUniformJumpsuitCentcomOfficial
+
+- type: latheRecipePack
+  id: ClothingSyndie
+  recipes:
+  - ClothingHeadHatSyndieMAA
+  - ClothingHeadHatSyndie
+  - ClothingUniformJumpsuitOperative
+  - ClothingUniformJumpskirtOperative
+  - ClothingUniformJumpsuitSyndieFormal
+  - ClothingUniformJumpskirtSyndieFormalDress
+  - ClothingHeadPyjamaSyndicateBlack
+  - ClothingUniformJumpsuitPyjamaSyndicateBlack
+  - ClothingHeadPyjamaSyndicatePink
+  - ClothingUniformJumpsuitPyjamaSyndicatePink
+  - ClothingHeadPyjamaSyndicateRed
+  - ClothingUniformJumpsuitPyjamaSyndicateRed
+  - ClothingOuterWinterCentcom
+  - ClothingOuterWinterSyndie
+  - ClothingOuterWinterSyndieCap
+  - BedsheetSyndie

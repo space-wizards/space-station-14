@@ -5,6 +5,11 @@
   path: /Maps/_Harmony/Shuttles/ShuttleEvent/chemlab.yml
   copies: 1
 
+- type: preloadedGrid
+  id: ShuttleBrigmedic
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/brigmedic.yml
+  copies: 1
+
 # Harmony Hostile Shuttles
 
 - type: preloadedGrid
