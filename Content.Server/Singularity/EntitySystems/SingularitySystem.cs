@@ -153,9 +153,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.PlayPvs(comp.FormationSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(comp.FormationSound, uid, FunAudioParams.WithUniformPitch());
 
-        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid, AudioFun.FunAudioParams())?.Entity;
+        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid, FunAudioParams.WithUniformPitch())?.Entity;
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -191,7 +191,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
             // I feel like IsValid should be checking this or something idk.
             if (!TerminatingOrDeleted(coordinates.EntityId))
-                _audio.PlayPvs(comp.DissipationSound, coordinates, AudioFun.FunAudioParams());
+                _audio.PlayPvs(comp.DissipationSound, coordinates, FunAudioParams.WithUniformPitch());
         }
     }
 

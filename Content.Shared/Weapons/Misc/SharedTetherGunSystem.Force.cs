@@ -42,7 +42,7 @@ public abstract partial class SharedTetherGunSystem
             StopTether(uid, component, land: false);
             _throwing.TryThrow(tethered!.Value, args.ClickLocation, component.ThrowForce, playSound: false);
 
-            _audio.PlayPredicted(component.LaunchSound, uid, null, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(component.LaunchSound, uid, null, FunAudioParams.WithUniformPitch());
         }
         else if (args.Target != null)
         {

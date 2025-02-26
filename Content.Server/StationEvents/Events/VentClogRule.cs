@@ -51,7 +51,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             var foamEnt = Spawn("Foam", transform.Coordinates);
             var spreadAmount = weak ? component.WeakSpread : component.Spread;
             _smoke.StartSmoke(foamEnt, solution, component.Time, spreadAmount);
-            Audio.PlayPvs(component.Sound, transform.Coordinates, AudioFun.FunAudioParams());
+            Audio.PlayPvs(component.Sound, transform.Coordinates, FunAudioParams.WithUniformPitch());
         }
     }
 }

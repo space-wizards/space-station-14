@@ -272,7 +272,7 @@ public class RCDSystem : EntitySystem
         FinalizeRCDOperation(uid, component, mapGridData.Value, args.Direction, args.Target, args.User);
 
         // Play audio and consume charges
-        _audio.PlayPredicted(component.SuccessSound, uid, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.SuccessSound, uid, args.User, FunAudioParams.WithUniformPitch());
         _charges.UseCharges(uid, args.Cost);
     }
 

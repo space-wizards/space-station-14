@@ -152,7 +152,7 @@ public sealed partial class NPCCombatSystem
 
             if (!oldInLos && comp.SoundTargetInLOS != null)
             {
-                _audio.PlayPvs(comp.SoundTargetInLOS, uid, AudioFun.FunAudioParams());
+                _audio.PlayPvs(comp.SoundTargetInLOS, uid, FunAudioParams.WithUniformPitch());
             }
 
             comp.ShootAccumulator += frameTime;

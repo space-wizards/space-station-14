@@ -73,7 +73,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         airlock.Department = args.Department;
         Dirty(target, airlock);
 
-        Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User, AudioFun.FunAudioParams());
+        Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User, FunAudioParams.WithUniformPitch());
         Appearance.SetData(target, DoorVisuals.BaseRSI, args.Sprite);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
 

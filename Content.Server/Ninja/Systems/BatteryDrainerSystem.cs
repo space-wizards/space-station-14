@@ -103,7 +103,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         _battery.SetCharge(comp.BatteryUid.Value, battery.CurrentCharge + output, battery);
         // TODO: create effect message or something
         Spawn("EffectSparks", Transform(target).Coordinates);
-        _audio.PlayPvs(comp.SparkSound, target, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.SparkSound, target, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("battery-drainer-success", ("battery", target)), uid, uid);
 
         // repeat the doafter until battery is full

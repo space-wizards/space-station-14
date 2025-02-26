@@ -73,7 +73,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 var item = Spawn(slot.StartingItem, Transform(uid).Coordinates);
-                    
+
                 if (slot.ContainerSlot != null)
                     _containers.Insert(item, slot.ContainerSlot);
             }
@@ -301,7 +301,7 @@ namespace Content.Shared.Containers.ItemSlots
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null, AudioFun.FunAudioParams());
+            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null, FunAudioParams.WithUniformPitch());
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Content.Shared.Containers.ItemSlots
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, AudioFun.FunAudioParams());
+            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, FunAudioParams.WithUniformPitch());
         }
 
         /// <summary>

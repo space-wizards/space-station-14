@@ -86,7 +86,7 @@ public sealed class LogicGateSystem : EntitySystem
         UpdateOutput(uid, comp);
 
         // notify the user
-        _audio.PlayPvs(comp.CycleSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.CycleSound, uid, FunAudioParams.WithUniformPitch());
         var msg = Loc.GetString("logic-gate-cycle", ("gate", comp.Gate.ToString().ToUpper()));
         _popup.PopupEntity(msg, uid, args.User);
         _appearance.SetData(uid, LogicGateVisuals.Gate, comp.Gate);

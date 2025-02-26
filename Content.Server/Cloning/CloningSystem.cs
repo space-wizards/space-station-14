@@ -318,7 +318,7 @@ namespace Content.Server.Cloning
 
             if (_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                _audio.PlayPvs(clonePod.ScreamSound, uid, AudioFun.FunAudioParams());
+                _audio.PlayPvs(clonePod.ScreamSound, uid, FunAudioParams.WithUniformPitch());
                 Spawn(clonePod.MobSpawnId, transform.Coordinates);
             }
 

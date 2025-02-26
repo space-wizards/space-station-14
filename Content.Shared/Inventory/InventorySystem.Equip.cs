@@ -188,7 +188,7 @@ public abstract partial class InventorySystem
 
         if (!silent && clothing != null)
         {
-            _audio.PlayPredicted(clothing.EquipSound, target, actor, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(clothing.EquipSound, target, actor, FunAudioParams.WithUniformPitch());
         }
 
         Dirty(target, inventory);
@@ -474,7 +474,7 @@ public abstract partial class InventorySystem
 
         if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null)
         {
-            _audio.PlayPredicted(clothing.UnequipSound, target, actor, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(clothing.UnequipSound, target, actor, FunAudioParams.WithUniformPitch());
         }
 
         Dirty(target, inventory);

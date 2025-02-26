@@ -29,7 +29,7 @@ public sealed class LandMineSystem : EntitySystem
             args.Tripper,
             PopupType.LargeCaution);
 
-        _audioSystem.PlayPvs(component.Sound, uid, AudioFun.FunAudioParams());
+        _audioSystem.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)

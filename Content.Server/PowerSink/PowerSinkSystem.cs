@@ -85,7 +85,7 @@ namespace Content.Server.PowerSink
                         testThreshold > component.HighestWarningSoundThreshold)
                     {
                         component.HighestWarningSoundThreshold = currentBatteryThreshold; // Don't re-play in future until next threshold hit
-                        _audio.PlayPvs(component.ElectricSound, entity, AudioFun.FunAudioParams()); // Play SFX
+                        _audio.PlayPvs(component.ElectricSound, entity, FunAudioParams.WithUniformPitch()); // Play SFX
                         break;
                     }
                 }
@@ -100,7 +100,7 @@ namespace Content.Server.PowerSink
                     component.ExplosionTime = _gameTiming.CurTime.Add(_explosionDelayTime);
 
                     // Wind-up SFX
-                    _audio.PlayPvs(component.ChargeFireSound, entity, AudioFun.FunAudioParams()); // Play SFX
+                    _audio.PlayPvs(component.ChargeFireSound, entity, FunAudioParams.WithUniformPitch()); // Play SFX
                 }
                 else if (_gameTiming.CurTime >= component.ExplosionTime)
                 {

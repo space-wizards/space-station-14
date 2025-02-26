@@ -78,7 +78,7 @@ public sealed partial class AnomalySystem
 
         var generating = EnsureComp<GeneratingAnomalyGeneratorComponent>(uid);
         generating.EndTime = Timing.CurTime + component.GenerationLength;
-        generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithLoop(true)))?.Entity;
+        generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithLoop(true)))?.Entity;
         component.CooldownEndTime = Timing.CurTime + component.CooldownLength;
         UpdateGeneratorUi(uid, component);
     }
@@ -176,7 +176,7 @@ public sealed partial class AnomalySystem
         SpawnOnRandomGridLocation(grid, component.SpawnerPrototype);
         RemComp<GeneratingAnomalyGeneratorComponent>(uid);
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, false);
-        Audio.PlayPvs(component.GeneratingFinishedSound, uid, AudioFun.FunAudioParams());
+        Audio.PlayPvs(component.GeneratingFinishedSound, uid, FunAudioParams.WithUniformPitch());
 
         var message = Loc.GetString("anomaly-generator-announcement");
         _radio.SendRadioMessage(uid, message, _prototype.Index<RadioChannelPrototype>(component.ScienceChannel), uid);

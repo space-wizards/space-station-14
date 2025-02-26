@@ -43,6 +43,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         }
 
         // Play attached to our entity because the projectile may immediately delete or the likes.
-        _audio.PlayPredicted(component.Sound, attachedEnt.Value, attachedEnt.Value, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.Sound, attachedEnt.Value, attachedEnt.Value, FunAudioParams.WithUniformPitch());
     }
 }

@@ -171,7 +171,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp(uid, out UseDelayComponent? useDelay) || !_useDelay.TryResetDelay((uid, useDelay), true))
                 return;
 
-            _audio.PlayPvs(component.ExtinguishAttemptSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.ExtinguishAttemptSound, uid, FunAudioParams.WithUniformPitch());
 
             if (_random.Prob(component.Probability))
             {

@@ -100,7 +100,7 @@ public sealed class EggLayerSystem : EntitySystem
         }
 
         // Sound + popups
-        _audio.PlayPvs(egglayer.EggLaySound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(egglayer.EggLaySound, uid, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, uid);
         _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid), true);
 

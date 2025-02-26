@@ -120,7 +120,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
         // this is kinda wack but it's the only sound associated with most animals
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
-            _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid, FunAudioParams.WithUniformPitch());
 
         _hunger.ModifyHunger(uid, -component.HungerPerBirth);
         _hunger.ModifyHunger(partner, -component.HungerPerBirth);
@@ -184,7 +184,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
         // this is kinda wack but it's the only sound associated with most animals
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
-            _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid, FunAudioParams.WithUniformPitch());
 
         var xform = Transform(uid);
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);

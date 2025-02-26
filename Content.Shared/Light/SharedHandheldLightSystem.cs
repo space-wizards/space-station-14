@@ -59,7 +59,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (makeNoise)
         {
             var sound = component.Activated ? component.TurnOnSound : component.TurnOffSound;
-            _audio.PlayPvs(sound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
         }
 
         Dirty(uid, component);

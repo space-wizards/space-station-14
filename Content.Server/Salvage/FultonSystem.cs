@@ -76,7 +76,7 @@ public sealed class FultonSystem : SharedFultonSystem
             });
         }
 
-        Audio.PlayPvs(component.Sound, uid, AudioFun.FunAudioParams());
+        Audio.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch());
         RemCompDeferred<FultonedComponent>(uid);
     }
 }

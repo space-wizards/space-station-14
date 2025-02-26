@@ -318,7 +318,7 @@ public sealed partial class CargoSystem
 
         var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int) price, stackPrototype, xform.Coordinates);
-        _audio.PlayPvs(ApproveSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(ApproveSound, uid, FunAudioParams.WithUniformPitch());
         UpdatePalletConsoleInterface(uid);
     }
 

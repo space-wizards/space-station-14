@@ -503,7 +503,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return true;
         }
 
-        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid, FunAudioParams.WithUniformPitch());
         return true;
     }
 

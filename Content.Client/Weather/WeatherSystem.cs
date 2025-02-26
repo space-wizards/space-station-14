@@ -48,7 +48,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (!Timing.IsFirstTimePredicted || weatherProto.Sound == null)
             return;
 
-        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, AudioFun.FunAudioParams())?.Entity;
+        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, FunAudioParams.WithUniformPitch())?.Entity;
 
         if (!TryComp(weather.Stream, out AudioComponent? comp))
             return;
@@ -131,7 +131,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         // TODO: Fades (properly)
         weather.Stream = _audio.Stop(weather.Stream);
-        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, AudioFun.FunAudioParams())?.Entity;
+        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, FunAudioParams.WithUniformPitch())?.Entity;
         return true;
     }
 

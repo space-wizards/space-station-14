@@ -362,7 +362,7 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        var audio = _audio.PlayPvs(_startupSound, uid, AudioFun.FunAudioParams());
+        var audio = _audio.PlayPvs(_startupSound, uid, FunAudioParams.WithUniformPitch());
         _audio.SetGridAudio(audio);
         component.StartupStream = audio?.Entity;
 
@@ -434,7 +434,7 @@ public sealed partial class ShuttleSystem
         RaiseLocalEvent(uid, ref ev, true);
 
         // Audio
-        var wowdio = _audio.PlayPvs(comp.TravelSound, uid, AudioFun.FunAudioParams());
+        var wowdio = _audio.PlayPvs(comp.TravelSound, uid, FunAudioParams.WithUniformPitch());
         comp.TravelStream = wowdio?.Entity;
         _audio.SetGridAudio(wowdio);
     }
@@ -546,7 +546,7 @@ public sealed partial class ShuttleSystem
         _thruster.DisableLinearThrusters(entity.Comp2);
 
         comp.TravelStream = _audio.Stop(comp.TravelStream);
-        var audio = _audio.PlayPvs(_arrivalSound, uid, AudioFun.FunAudioParams());
+        var audio = _audio.PlayPvs(_arrivalSound, uid, FunAudioParams.WithUniformPitch());
         _audio.SetGridAudio(audio);
 
         if (TryComp<FTLDestinationComponent>(uid, out var dest))

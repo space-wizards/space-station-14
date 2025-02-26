@@ -138,7 +138,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!CanZap(uid, target, user, component))
             return false;
 
-        _audio.PlayPvs(component.ChargeSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.ChargeSound, uid, FunAudioParams.WithUniformPitch());
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             uid, target, uid)
         {
@@ -179,7 +179,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             !TryComp<MobThresholdsComponent>(target, out var thresholds))
             return;
 
-        _audio.PlayPvs(component.ZapSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.ZapSound, uid, FunAudioParams.WithUniformPitch());
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
         if (!TryComp<UseDelayComponent>(uid, out var useDelay))
             return;
@@ -232,7 +232,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         var sound = dead || session == null
             ? component.FailureSound
             : component.SuccessSound;
-        _audio.PlayPvs(sound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
 
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(uid))

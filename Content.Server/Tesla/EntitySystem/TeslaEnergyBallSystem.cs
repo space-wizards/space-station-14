@@ -50,7 +50,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
         if (component.Energy < component.EnergyToDespawn)
         {
-            _audio.PlayPvs(component.SoundCollapse, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.SoundCollapse, uid, FunAudioParams.WithUniformPitch());
             QueueDel(uid);
         }
     }

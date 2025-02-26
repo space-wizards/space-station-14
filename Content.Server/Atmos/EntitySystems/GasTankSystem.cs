@@ -188,7 +188,7 @@ namespace Content.Server.Atmos.EntitySystems
             var dir = _random.NextAngle().ToWorldVec();
             _throwing.TryThrow(gasTank, dir * strength, strength);
             if (gasTank.Comp.OutputPressure >= MinimumSoundValvePressure)
-                _audioSys.PlayPvs(gasTank.Comp.RuptureSound, gasTank, AudioFun.FunAudioParams());
+                _audioSys.PlayPvs(gasTank.Comp.RuptureSound, gasTank, FunAudioParams.WithUniformPitch());
         }
 
         private void ToggleInternals(Entity<GasTankComponent> ent)
@@ -254,7 +254,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             component.ConnectStream = _audioSys.Stop(component.ConnectStream);
-            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, owner, AudioFun.FunAudioParams())?.Entity;
+            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, owner, FunAudioParams.WithUniformPitch())?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -274,7 +274,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (internalsUid != null && internalsComp != null)
                 _internals.DisconnectTank((internalsUid.Value, internalsComp));
             component.DisconnectStream = _audioSys.Stop(component.DisconnectStream);
-            component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, owner, AudioFun.FunAudioParams())?.Entity;
+            component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, owner, FunAudioParams.WithUniformPitch())?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -359,7 +359,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
-                    _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(0.125f)));
+                    _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)));
 
                     QueueDel(owner);
                     return;
@@ -416,7 +416,7 @@ namespace Content.Server.Atmos.EntitySystems
                 Act = () =>
                 {
                     component.IsValveOpen = !component.IsValveOpen;
-                    _audioSys.PlayPvs(component.ValveSound, uid, AudioFun.FunAudioParams());
+                    _audioSys.PlayPvs(component.ValveSound, uid, FunAudioParams.WithUniformPitch());
                 },
                 Disabled = component.IsConnected,
             });

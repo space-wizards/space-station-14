@@ -87,6 +87,6 @@ public abstract partial class SharedVendingMachineSystem
                 PopupType.Medium);
         }
 
-        Audio.PlayPredicted(component.SoundRestockStart, uid, args.User, AudioFun.FunAudioParams());
+        Audio.PlayPredicted(component.SoundRestockStart, uid, args.User, FunAudioParams.WithUniformPitch());
     }
 }

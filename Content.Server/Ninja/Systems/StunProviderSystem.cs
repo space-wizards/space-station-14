@@ -61,7 +61,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
             return;
         }
 
-        _audio.PlayPvs(comp.Sound, target, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.Sound, target, FunAudioParams.WithUniformPitch());
 
         _damageable.TryChangeDamage(target, comp.StunDamage, false, true, null, origin: uid);
         _stun.TryParalyze(target, comp.StunTime, refresh: false);

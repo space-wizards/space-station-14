@@ -185,7 +185,7 @@ public sealed partial class AnomalySystem
             else //it's not unstable
                 continue;
 
-            Audio.PlayPvs(vessel.BeepSound, vesselEnt, AudioFun.FunAudioParams());
+            Audio.PlayPvs(vessel.BeepSound, vesselEnt, FunAudioParams.WithUniformPitch());
             var beepInterval = (vessel.MaxBeepInterval - vessel.MinBeepInterval) * (1 - timerPercentage) + vessel.MinBeepInterval;
             vessel.NextBeep = beepInterval + Timing.CurTime;
         }

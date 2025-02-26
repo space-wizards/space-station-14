@@ -239,7 +239,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(ent, (-total) / 5, ent);
-            _audio.PlayPvs(ent.Comp.InstantBloodSound, ent, AudioFun.FunAudioParams());
+            _audio.PlayPvs(ent.Comp.InstantBloodSound, ent, FunAudioParams.WithUniformPitch());
         }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
@@ -249,7 +249,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            _audio.PlayPvs(ent.Comp.BloodHealedSound, ent, AudioFun.FunAudioParams());
+            _audio.PlayPvs(ent.Comp.BloodHealedSound, ent, FunAudioParams.WithUniformPitch());
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent,
                 ent, PopupType.Medium);
         }

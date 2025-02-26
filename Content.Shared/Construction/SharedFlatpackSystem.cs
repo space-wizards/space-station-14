@@ -100,7 +100,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
             QueueDel(uid);
         }
 
-        _audio.PlayPredicted(comp.UnpackSound, args.Used, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(comp.UnpackSound, args.Used, args.User, FunAudioParams.WithUniformPitch());
     }
 
     private void OnFlatpackExamined(Entity<FlatpackComponent> ent, ref ExaminedEvent args)

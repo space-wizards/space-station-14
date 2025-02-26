@@ -123,7 +123,7 @@ public abstract partial class SharedGunSystem
 
         if (component.BoltClosed != false)
         {
-            Audio.PlayPredicted(component.RackSound, uid, user, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(component.RackSound, uid, user, FunAudioParams.WithUniformPitch());
         }
     }
 
@@ -169,7 +169,7 @@ public abstract partial class SharedGunSystem
                 _slots.SetLock(uid, ChamberSlot, true, slots);
             }
 
-            Audio.PlayPredicted(component.BoltClosedSound, uid, user, AudioFun.FunAudioParams(AudioFun.FunAudioParams()));
+            Audio.PlayPredicted(component.BoltClosedSound, uid, user, FunAudioParams.WithUniformPitch(FunAudioParams.WithUniformPitch()));
         }
         else
         {
@@ -199,7 +199,7 @@ public abstract partial class SharedGunSystem
                 _slots.SetLock(uid, ChamberSlot, false, slots);
             }
 
-            Audio.PlayPredicted(component.BoltOpenedSound, uid, user, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(component.BoltOpenedSound, uid, user, FunAudioParams.WithUniformPitch());
         }
 
         component.BoltClosed = value;

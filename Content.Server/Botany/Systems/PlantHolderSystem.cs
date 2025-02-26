@@ -338,7 +338,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
     private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
     {
-        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner, AudioFun.FunAudioParams());
+        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner, FunAudioParams.WithUniformPitch());
     }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
@@ -720,7 +720,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (seed == null || seed.CanScream == false)
             return false;
 
-        _audio.PlayPvs(seed.ScreamSound, plantholder, AudioFun.FunAudioParams());
+        _audio.PlayPvs(seed.ScreamSound, plantholder, FunAudioParams.WithUniformPitch());
         return true;
     }
 

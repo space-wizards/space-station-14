@@ -106,7 +106,7 @@ public sealed partial class AnomalySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        Audio.PlayPvs(component.CompleteSound, uid, AudioFun.FunAudioParams());
+        Audio.PlayPvs(component.CompleteSound, uid, FunAudioParams.WithUniformPitch());
         Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Args.Target.Value, component);
 

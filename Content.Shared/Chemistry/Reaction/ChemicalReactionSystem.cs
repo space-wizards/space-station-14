@@ -221,7 +221,7 @@ namespace Content.Shared.Chemistry.Reaction
                 effect.Effect(args);
             }
 
-            _audio.PlayPvs(reaction.Sound, soln, AudioFun.FunAudioParams());
+            _audio.PlayPvs(reaction.Sound, soln, FunAudioParams.WithUniformPitch());
         }
 
         /// <summary>

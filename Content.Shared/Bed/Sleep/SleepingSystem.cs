@@ -299,7 +299,7 @@ public sealed partial class SleepingSystem : EntitySystem
         {
             if (user != null)
             {
-                _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user, AudioFun.FunAudioParams());
+                _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user, FunAudioParams.WithUniformPitch());
                 _popupSystem.PopupClient(Loc.GetString("wake-other-failure", ("target", Identity.Entity(ent, EntityManager))), ent, user, PopupType.SmallCaution);
             }
             return false;
@@ -307,7 +307,7 @@ public sealed partial class SleepingSystem : EntitySystem
 
         if (user != null)
         {
-            _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user, FunAudioParams.WithUniformPitch());
             _popupSystem.PopupClient(Loc.GetString("wake-other-success", ("target", Identity.Entity(ent, EntityManager))), ent, user);
         }
 

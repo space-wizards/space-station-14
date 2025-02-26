@@ -122,7 +122,7 @@ public sealed class UnpoweredFlashlightSystem : EntitySystem
         _appearance.SetData(ent, UnpoweredFlashlightVisuals.LightOn, value);
 
         if (!quiet)
-            _audioSystem.PlayPredicted(ent.Comp.ToggleSound, ent, user, AudioFun.FunAudioParams());
+            _audioSystem.PlayPredicted(ent.Comp.ToggleSound, ent, user, FunAudioParams.WithUniformPitch());
 
         _actionsSystem.SetToggled(ent.Comp.ToggleActionEntity, value);
         RaiseLocalEvent(ent, new LightToggleEvent(value));

@@ -317,7 +317,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
         {
-            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)));
+            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
         }
 
         private Solution? GetGrindSolution(EntityUid uid)

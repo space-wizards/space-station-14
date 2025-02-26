@@ -48,7 +48,7 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
                     _transform.DropNextTo(ent, backpack.Owner);
             }
         }
-        _audio.PlayPvs(backpack.Comp.ApproveSound, backpack.Owner, AudioFun.FunAudioParams());
+        _audio.PlayPvs(backpack.Comp.ApproveSound, backpack.Owner, FunAudioParams.WithUniformPitch());
         QueueDel(backpack);
     }
     private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)

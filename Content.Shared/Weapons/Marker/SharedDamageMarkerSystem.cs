@@ -33,7 +33,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
 
         args.BonusDamage += component.Damage;
         RemCompDeferred<DamageMarkerComponent>(uid);
-        _audio.PlayPredicted(component.Sound, uid, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.Sound, uid, args.User, FunAudioParams.WithUniformPitch());
 
         if (TryComp<LeechOnMarkerComponent>(args.Used, out var leech))
         {

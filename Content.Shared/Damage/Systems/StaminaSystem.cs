@@ -307,7 +307,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         if (_net.IsServer)
         {
-            _audio.PlayPvs(sound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
         }
     }
 

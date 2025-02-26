@@ -41,7 +41,7 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
             && TryComp<SpeechComponent>(args.Speaker, out var speech))
         {
             var sound = _speechSound.GetSpeechSound((args.Speaker, speech), args.Message);
-            _audioSystem.PlayPvs(sound, uid, AudioFun.FunAudioParams());
+            _audioSystem.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
 
             component.LastSoundPlayed = time;
         }

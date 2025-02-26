@@ -118,7 +118,7 @@ public sealed class FaxSystem : EntitySystem
         if (comp.PrintingQueue.Count > 0)
         {
             comp.PrintingTimeRemaining = comp.PrintingTime;
-            _audioSystem.PlayPvs(comp.PrintSound, uid, AudioFun.FunAudioParams());
+            _audioSystem.PlayPvs(comp.PrintSound, uid, FunAudioParams.WithUniformPitch());
         }
     }
 
@@ -555,7 +555,7 @@ public sealed class FaxSystem : EntitySystem
 
         component.SendTimeoutRemaining += component.SendTimeout;
 
-        _audioSystem.PlayPvs(component.SendSound, uid, AudioFun.FunAudioParams());
+        _audioSystem.PlayPvs(component.SendSound, uid, FunAudioParams.WithUniformPitch());
 
         UpdateUserInterface(uid, component);
     }
@@ -621,6 +621,6 @@ public sealed class FaxSystem : EntitySystem
     private void NotifyAdmins(string faxName)
     {
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
-        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-8f)));
+        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-8f)));
     }
 }

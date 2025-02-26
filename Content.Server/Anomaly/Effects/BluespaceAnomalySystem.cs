@@ -74,7 +74,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
             _adminLogger.Add(LogType.Teleport, $"{ToPrettyString(ent)} has been teleported to {pos} by the supercritical {ToPrettyString(uid)} at {mapPos}");
 
             _xform.SetWorldPosition(ent, pos);
-            _audio.PlayPvs(component.TeleportSound, ent, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.TeleportSound, ent, FunAudioParams.WithUniformPitch());
         }
     }
 

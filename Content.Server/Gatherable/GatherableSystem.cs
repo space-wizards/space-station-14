@@ -58,7 +58,7 @@ public sealed partial class GatherableSystem : EntitySystem
 
         if (TryComp<SoundOnGatherComponent>(gatheredUid, out var soundComp))
         {
-            _audio.PlayPvs(soundComp.Sound, Transform(gatheredUid).Coordinates, AudioFun.FunAudioParams());
+            _audio.PlayPvs(soundComp.Sound, Transform(gatheredUid).Coordinates, FunAudioParams.WithUniformPitch());
         }
 
         // Complete the gathering process

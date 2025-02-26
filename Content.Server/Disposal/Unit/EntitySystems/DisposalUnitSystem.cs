@@ -767,7 +767,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
     {
-        _audioSystem.PlayPvs(component.InsertSound, uid, AudioFun.FunAudioParams());
+        _audioSystem.PlayPvs(component.InsertSound, uid, FunAudioParams.WithUniformPitch());
 
         if (doInsert && !_containerSystem.Insert(inserted, component.Container))
             return;

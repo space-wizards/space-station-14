@@ -22,7 +22,7 @@ public sealed partial class PlaySoundOperator : HTNOperator
     {
         var uid = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        _audio.PlayPvs(Sound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(Sound, uid, FunAudioParams.WithUniformPitch());
 
         return base.Update(blackboard, frameTime);
     }

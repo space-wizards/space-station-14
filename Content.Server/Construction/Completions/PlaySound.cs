@@ -25,7 +25,7 @@ namespace Content.Server.Construction.Completions
             var scale = (float) IoCManager.Resolve<IRobustRandom>().NextGaussian(1, Variation);
             if (entityManager.TryGetComponent<TransformComponent>(uid, out var xform))
                 entityManager.EntitySysManager.GetEntitySystem<SharedAudioSystem>()
-                .PlayPvs(Sound, xform.Coordinates, AudioFun.FunAudioParams(AudioParams.WithPitchScale(scale)));
+                .PlayPvs(Sound, xform.Coordinates, FunAudioParams.WithUniformPitch(AudioParams.WithPitchScale(scale)));
         }
     }
 }

@@ -140,7 +140,7 @@ public sealed class PaperSystem : EntitySystem
                     ("stamp", args.Used));
             _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
 
-            _audio.PlayPredicted(stampComp.Sound, entity, args.User, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(stampComp.Sound, entity, args.User, FunAudioParams.WithUniformPitch());
 
             UpdateUserInterface(entity);
         }
@@ -171,7 +171,7 @@ public sealed class PaperSystem : EntitySystem
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {args.Text}");
 
-            _audio.PlayPvs(entity.Comp.Sound, entity, AudioFun.FunAudioParams());
+            _audio.PlayPvs(entity.Comp.Sound, entity, FunAudioParams.WithUniformPitch());
         }
 
         entity.Comp.Mode = PaperAction.Read;

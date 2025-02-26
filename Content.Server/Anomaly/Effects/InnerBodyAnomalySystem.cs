@@ -99,7 +99,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
 
         if (ent.Comp.StartSound is not null)
-            _audio.PlayPvs(ent.Comp.StartSound, ent, AudioFun.FunAudioParams());
+            _audio.PlayPvs(ent.Comp.StartSound, ent, FunAudioParams.WithUniformPitch());
 
         if (ent.Comp.StartMessage is not null &&
             _mind.TryGetMind(ent, out _, out var mindComponent) &&

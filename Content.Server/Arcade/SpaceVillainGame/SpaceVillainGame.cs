@@ -104,7 +104,7 @@ public sealed partial class SpaceVillainGame
                     ("enemyName", _villainName),
                     ("attackAmount", attackAmount)
                 );
-                _audioSystem.PlayPvs(arcade.PlayerAttackSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-4f)));
+                _audioSystem.PlayPvs(arcade.PlayerAttackSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
                 if (!VillainChar.Invincible)
                     VillainChar.Hp -= attackAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -117,7 +117,7 @@ public sealed partial class SpaceVillainGame
                     ("magicPointAmount", pointAmount),
                     ("healAmount", healAmount)
                 );
-                _audioSystem.PlayPvs(arcade.PlayerHealSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-4f)));
+                _audioSystem.PlayPvs(arcade.PlayerHealSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
                 if (!PlayerChar.Invincible)
                     PlayerChar.Mp -= pointAmount;
                 PlayerChar.Hp += healAmount;
@@ -129,7 +129,7 @@ public sealed partial class SpaceVillainGame
                     "space-villain-game-player-recharge-message",
                     ("regainedPoints", chargeAmount)
                 );
-                _audioSystem.PlayPvs(arcade.PlayerChargeSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-4f)));
+                _audioSystem.PlayPvs(arcade.PlayerChargeSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
                 PlayerChar.Mp += chargeAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                 break;
@@ -226,7 +226,7 @@ public sealed partial class SpaceVillainGame
                     Loc.GetString("space-villain-game-enemy-dies-message", ("enemyName", _villainName)),
                     true
                 );
-                _audioSystem.PlayPvs(arcade.WinSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-4f)));
+                _audioSystem.PlayPvs(arcade.WinSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
                 _svArcade.ProcessWin(uid, arcade);
                 return false;
             case (false, true):
@@ -237,7 +237,7 @@ public sealed partial class SpaceVillainGame
                     Loc.GetString("space-villain-game-enemy-cheers-message", ("enemyName", _villainName)),
                     true
                 );
-                _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-4f)));
+                _audioSystem.PlayPvs(arcade.GameOverSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
                 return false;
             case (false, false):
                 _running = false;
@@ -247,7 +247,7 @@ public sealed partial class SpaceVillainGame
                     Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", _villainName)),
                     true
                 );
-                _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-4f)));
+                _audioSystem.PlayPvs(arcade.GameOverSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
                 return false;
         }
     }

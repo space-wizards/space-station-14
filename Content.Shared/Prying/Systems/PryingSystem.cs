@@ -171,7 +171,7 @@ public sealed class PryingSystem : EntitySystem
 
         if (args.Used != null && comp != null)
         {
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, AudioFun.FunAudioParams());
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, FunAudioParams.WithUniformPitch());
         }
 
         var ev = new PriedEvent(args.User);

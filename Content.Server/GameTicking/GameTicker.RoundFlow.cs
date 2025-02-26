@@ -648,7 +648,7 @@ namespace Content.Server.GameTicking
                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
             if (proto.Sound != null)
-                _audio.PlayGlobal(proto.Sound, Filter.Broadcast(), true, AudioFun.FunAudioParams());
+                _audio.PlayGlobal(proto.Sound, Filter.Broadcast(), true, FunAudioParams.WithUniformPitch());
         }
 
         private async void SendRoundStartedDiscordMessage()

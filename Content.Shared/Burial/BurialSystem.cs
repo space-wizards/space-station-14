@@ -53,7 +53,7 @@ public sealed class BurialSystem : EntitySystem
             };
 
             if (component.Stream == null)
-                component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.User, AudioFun.FunAudioParams())?.Entity;
+                component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.User, FunAudioParams.WithUniformPitch())?.Entity;
 
             if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
             {
@@ -176,7 +176,7 @@ public sealed class BurialSystem : EntitySystem
 
 
         if (component.Stream == null)
-            component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity, AudioFun.FunAudioParams())?.Entity;
+            component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity, FunAudioParams.WithUniformPitch())?.Entity;
 
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.HandDiggingDoAfter))
         {

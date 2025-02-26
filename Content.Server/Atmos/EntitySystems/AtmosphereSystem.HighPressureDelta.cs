@@ -101,7 +101,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
-                    _audio.PlayPvs(SpaceWindSound, coordinates, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(0.125f)).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                    _audio.PlayPvs(SpaceWindSound, coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 

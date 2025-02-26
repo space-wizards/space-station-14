@@ -94,7 +94,7 @@ public sealed class SliceableFoodSystem : EntitySystem
             FillSlice(sliceUid, lostSolution);
         }
 
-        _audio.PlayPvs(component.Sound, transform.Coordinates, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2)));
+        _audio.PlayPvs(component.Sound, transform.Coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2)));
         var ev = new SliceFoodEvent();
         RaiseLocalEvent(uid, ref ev);
 

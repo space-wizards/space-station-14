@@ -35,7 +35,7 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
                 user);
         }
 
-        _audio.PlayPvs(entity.Comp.AppraisalSound, entity.Owner, AudioFun.FunAudioParams());
+        _audio.PlayPvs(entity.Comp.AppraisalSound, entity.Owner, FunAudioParams.WithUniformPitch());
         _useDelay.TryResetDelay((entity.Owner, useDelay));
         return true;
     }

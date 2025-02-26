@@ -56,7 +56,7 @@ public abstract partial class SharedGunSystem
         component.Entities.Add(args.Used);
         Containers.Insert(args.Used, component.Container);
         // Not predicted so
-        Audio.PlayPredicted(component.SoundInsert, uid, args.User, AudioFun.FunAudioParams());
+        Audio.PlayPredicted(component.SoundInsert, uid, args.User, FunAudioParams.WithUniformPitch());
         args.Handled = true;
         UpdateBallisticAppearance(uid, component);
         DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
@@ -146,7 +146,7 @@ public abstract partial class SharedGunSystem
             else
             {
                 // play sound to be cool
-                Audio.PlayPredicted(component.SoundInsert, uid, args.User, AudioFun.FunAudioParams());
+                Audio.PlayPredicted(component.SoundInsert, uid, args.User, FunAudioParams.WithUniformPitch());
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
@@ -199,7 +199,7 @@ public abstract partial class SharedGunSystem
             DirtyField(uid, gunComp, nameof(GunComponent.NextFire));
         }
 
-        Audio.PlayPredicted(component.SoundRack, uid, user, AudioFun.FunAudioParams());
+        Audio.PlayPredicted(component.SoundRack, uid, user, FunAudioParams.WithUniformPitch());
 
         var shots = GetBallisticShots(component);
         Cycle(uid, component, coordinates);

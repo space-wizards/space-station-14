@@ -73,7 +73,7 @@ namespace Content.Server.Speech
 
             var sound = GetSpeechSound((uid, component), args.Message);
             component.LastTimeSoundPlayed = currentTime;
-            _audio.PlayPvs(sound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
         }
     }
 }

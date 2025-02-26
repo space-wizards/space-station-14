@@ -128,7 +128,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     else
                     {
                         userImpulse = false;
-                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, AudioFun.FunAudioParams());
+                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, FunAudioParams.WithUniformPitch());
                     }
 
                     // Something like ballistic might want to leave it in the container still
@@ -246,7 +246,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
                     }
 
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams());
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, FunAudioParams.WithUniformPitch());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -285,7 +285,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
 
             MuzzleFlash(gunUid, ammoComp, mapDirection.ToAngle(), user);
-            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, FunAudioParams.WithUniformPitch());
         }
     }
 
@@ -372,19 +372,19 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                Audio.PlayPvs(damageSoundType, otherEntity, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(DamagePitchVariation)));
+                Audio.PlayPvs(damageSoundType, otherEntity, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(DamagePitchVariation)));
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(DamagePitchVariation)));
+                Audio.PlayPvs(damageSoundGroup, otherEntity, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(DamagePitchVariation)));
                 playedSound = true;
             }
         }
 
         if (!playedSound && weaponSound != null)
         {
-            Audio.PlayPvs(weaponSound, otherEntity, AudioFun.FunAudioParams());
+            Audio.PlayPvs(weaponSound, otherEntity, FunAudioParams.WithUniformPitch());
         }
     }
 

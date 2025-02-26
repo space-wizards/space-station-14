@@ -487,6 +487,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return;
         }
-        _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(electrified.ShockVolume)));
+        _audio.PlayPvs(electrified.ShockNoises, targetUid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(electrified.ShockVolume)));
     }
 }

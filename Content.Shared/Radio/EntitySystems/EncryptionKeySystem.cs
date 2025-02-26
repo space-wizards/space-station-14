@@ -66,7 +66,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         if (_net.IsServer)
             _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
 
-        _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User, FunAudioParams.WithUniformPitch());
     }
 
     public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent component)
@@ -137,7 +137,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         if (_container.Insert(args.Used, component.KeyContainer))
         {
             _popup.PopupClient(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
-            _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User, FunAudioParams.WithUniformPitch());
             args.Handled = true;
             return;
         }

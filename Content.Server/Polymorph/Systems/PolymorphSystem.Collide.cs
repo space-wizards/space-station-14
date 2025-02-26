@@ -33,7 +33,7 @@ public partial class PolymorphSystem
 
             var ent = PolymorphEntity(data.Ent, data.Polymorph);
             if (ent != null)
-                _audio.PlayPvs(data.Sound, ent.Value, AudioFun.FunAudioParams());
+                _audio.PlayPvs(data.Sound, ent.Value, FunAudioParams.WithUniformPitch());
         }
     }
 

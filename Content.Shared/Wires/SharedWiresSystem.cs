@@ -46,7 +46,7 @@ public abstract class SharedWiresSystem : EntitySystem
         AdminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(uid):target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
 
         var sound = panel.Open ? panel.ScrewdriverOpenSound : panel.ScrewdriverCloseSound;
-        Audio.PlayPredicted(sound, uid, args.User, AudioFun.FunAudioParams());
+        Audio.PlayPredicted(sound, uid, args.User, FunAudioParams.WithUniformPitch());
         args.Handled = true;
     }
 

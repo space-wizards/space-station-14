@@ -53,7 +53,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     {
         var reagent = GetRandomReagentType(entity, severity);
         entity.Comp.ProducingReagent = reagent;
-        _audio.PlayPvs(entity.Comp.ChangeSound, entity, AudioFun.FunAudioParams());
+        _audio.PlayPvs(entity.Comp.ChangeSound, entity, FunAudioParams.WithUniformPitch());
     }
 
     //reagent realtime generation

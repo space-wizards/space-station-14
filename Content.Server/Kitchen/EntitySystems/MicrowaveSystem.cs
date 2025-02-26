@@ -113,7 +113,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(ent.Owner, MicrowaveVisualState.Cooking, microwaveComponent);
 
             microwaveComponent.PlayingStream =
-                _audio.PlayPvs(microwaveComponent.LoopingSound, ent, AudioFun.FunAudioParams(AudioParams.Default.WithLoop(true)).WithMaxDistance(5))?.Entity;
+                _audio.PlayPvs(microwaveComponent.LoopingSound, ent, FunAudioParams.WithUniformPitch(AudioParams.Default.WithLoop(true)).WithMaxDistance(5))?.Entity;
         }
 
         private void OnCookStop(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
@@ -307,7 +307,7 @@ namespace Content.Server.Kitchen.EntitySystems
             _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
             _popupSystem.PopupEntity(selfMessage, victim, victim);
 
-            _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2)));
+            _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2)));
             ent.Comp.CurrentCookTimerTime = 10;
             Wzhzhzh(ent.Owner, ent.Comp, args.Victim);
             UpdateUserInterfaceState(ent.Owner, ent.Comp);
@@ -600,7 +600,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var portionedRecipe = recipes.Select(r =>
                 CanSatisfyRecipe(component, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
 
-            _audio.PlayPvs(component.StartCookingSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.StartCookingSound, uid, FunAudioParams.WithUniformPitch());
             var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
@@ -697,7 +697,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 _container.EmptyContainer(microwave.Storage);
                 microwave.CurrentCookTimeEnd = TimeSpan.Zero;
                 UpdateUserInterfaceState(uid, microwave);
-                _audio.PlayPvs(microwave.FoodDoneSound, uid, AudioFun.FunAudioParams());
+                _audio.PlayPvs(microwave.FoodDoneSound, uid, FunAudioParams.WithUniformPitch());
                 StopCooking((uid, microwave));
             }
         }
@@ -724,7 +724,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             _container.EmptyContainer(ent.Comp.Storage);
-            _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2)));
+            _audio.PlayPvs(ent.Comp.ClickSound, ent, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2)));
             UpdateUserInterfaceState(ent, ent.Comp);
         }
 
@@ -749,7 +749,7 @@ namespace Content.Server.Kitchen.EntitySystems
             ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
             ent.Comp.CurrentCookTimerTime = args.NewCookTime;
             ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
-            _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2)));
+            _audio.PlayPvs(ent.Comp.ClickSound, ent, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2)));
             UpdateUserInterfaceState(ent, ent.Comp);
         }
         #endregion

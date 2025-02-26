@@ -147,7 +147,7 @@ public sealed class SharedExecutionSystem : EntitySystem
 
         ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity, false);
         ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, entity);
-        _audio.PlayPredicted(melee.HitSound, args.Victim, args.Victim, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(melee.HitSound, args.Victim, args.Victim, FunAudioParams.WithUniformPitch());
         _suicide.ApplyLethalDamage((args.Victim, damageableComponent), melee.Damage);
         args.Handled = true;
     }

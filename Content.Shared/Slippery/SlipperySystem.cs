@@ -132,7 +132,7 @@ public sealed class SlipperySystem : EntitySystem
         // Preventing from playing the slip sound when you are already knocked down.
         if (playSound)
         {
-            _audio.PlayPredicted(component.SlipSound, other, other, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(component.SlipSound, other, other, FunAudioParams.WithUniformPitch());
         }
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low,

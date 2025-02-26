@@ -94,7 +94,7 @@ namespace Content.Shared.Toilet.Systems
 
             component.ToggleSeat = !component.ToggleSeat;
 
-            _audio.PlayPredicted(component.SeatSound, uid, uid, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(component.SeatSound, uid, uid, FunAudioParams.WithUniformPitch());
             UpdateAppearance(uid, component);
             Dirty(uid, component, meta);
         }

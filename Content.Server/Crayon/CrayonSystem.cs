@@ -72,7 +72,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         if (component.UseSound != null)
-            _audio.PlayPvs(component.UseSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(0.125f)));
+            _audio.PlayPvs(component.UseSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)));
 
         // Decrease "Ammo"
         component.Charges--;

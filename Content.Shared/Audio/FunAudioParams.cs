@@ -3,14 +3,14 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Audio;
 
-public static class AudioFun
+public static class FunAudioParams
 {
     private static readonly RobustRandom Random = new();
 
     private const float MinPitchScale = 0.2f;
     private const float MaxPitchScale = 2.0f;
 
-    public static AudioParams FunAudioParams(AudioParams? audioParams = null)
+    public static AudioParams WithUniformPitch(AudioParams? audioParams = null)
     {
         audioParams ??= AudioParams.Default;
 
@@ -19,7 +19,7 @@ public static class AudioFun
     }
 
 
-    public static AudioParams FunAudioParams()
+    public static AudioParams WithUniformPitch()
     {
         return new AudioParams
             { Pitch = Random.NextFloat() * (MaxPitchScale - MinPitchScale) + MinPitchScale, Variation = 0 };

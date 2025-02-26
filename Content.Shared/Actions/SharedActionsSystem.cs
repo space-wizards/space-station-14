@@ -702,7 +702,7 @@ public abstract class SharedActionsSystem : EntitySystem
             action.Toggled = !action.Toggled;
         }
 
-        _audio.PlayPredicted(action.Sound, performer, predicted ? performer : null, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(action.Sound, performer, predicted ? performer : null, FunAudioParams.WithUniformPitch());
 
         var dirty = toggledBefore != action.Toggled;
 

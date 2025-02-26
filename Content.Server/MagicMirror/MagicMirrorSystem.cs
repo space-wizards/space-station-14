@@ -100,7 +100,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
 
         component.DoAfter = doAfterId;
-        _audio.PlayPvs(component.ChangeHairSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.ChangeHairSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void OnSelectSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorSelectDoAfterEvent args)
@@ -258,7 +258,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
 
         component.DoAfter = doAfterId;
-        _audio.PlayPvs(component.ChangeHairSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.ChangeHairSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void OnRemoveSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorRemoveSlotDoAfterEvent args)
@@ -336,7 +336,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
 
         component.DoAfter = doAfterId;
-        _audio.PlayPvs(component.ChangeHairSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.ChangeHairSound, uid, FunAudioParams.WithUniformPitch());
     }
     private void OnAddSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorAddSlotDoAfterEvent args)
     {

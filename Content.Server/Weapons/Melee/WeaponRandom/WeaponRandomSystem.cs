@@ -26,7 +26,7 @@ public sealed class WeaponRandomSystem : EntitySystem
     {
         if (_random.Prob(component.RandomDamageChance))
         {
-            _audio.PlayPvs(component.DamageSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.DamageSound, uid, FunAudioParams.WithUniformPitch());
             args.BonusDamage = component.DamageBonus;
         }
     }

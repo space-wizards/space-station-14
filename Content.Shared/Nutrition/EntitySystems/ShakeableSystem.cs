@@ -89,7 +89,7 @@ public sealed partial class ShakeableSystem : EntitySystem
         var othersMessage = Loc.GetString(entity.Comp.ShakePopupMessageOthers, ("user", userName), ("shakeable", shakeableName));
         _popup.PopupPredicted(selfMessage, othersMessage, user, user);
 
-        _audio.PlayPredicted(entity.Comp.ShakeSound, entity, user, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(entity.Comp.ShakeSound, entity, user, FunAudioParams.WithUniformPitch());
 
         return true;
     }

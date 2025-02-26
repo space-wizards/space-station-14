@@ -39,7 +39,7 @@ public sealed class FirestarterSystem : SharedFirestarterSystem
         var xform = Transform(uid);
         var ignitionRadius = component.IgnitionRadius;
         IgniteNearby(uid, xform.Coordinates, args.Severity, ignitionRadius);
-        _audio.PlayPvs(component.IgniteSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.IgniteSound, uid, FunAudioParams.WithUniformPitch());
 
         args.Handled = true;
     }

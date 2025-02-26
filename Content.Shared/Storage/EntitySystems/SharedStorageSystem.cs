@@ -277,7 +277,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!UI.IsUiOpen(uid, args.UiKey))
         {
             UpdateAppearance((uid, storageComp, null));
-            Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Actor, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Actor, FunAudioParams.WithUniformPitch());
         }
     }
 
@@ -360,7 +360,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!silent)
         {
-            Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity, FunAudioParams.WithUniformPitch());
 
             if (useDelay != null)
                 UseDelay.TryResetDelay((uid, useDelay), id: OpenUiUseDelayID);
@@ -605,7 +605,7 @@ public abstract class SharedStorageSystem : EntitySystem
         // If we picked up at least one thing, play a sound and do a cool animation!
         if (successfullyInserted.Count > 0)
         {
-            Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, AudioFun.FunAudioParams(_audioParams));
+            Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, FunAudioParams.WithUniformPitch(_audioParams));
             EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(
                 GetNetEntity(uid),
                 GetNetEntityList(successfullyInserted),
@@ -650,7 +650,7 @@ public abstract class SharedStorageSystem : EntitySystem
             if (_sharedHandsSystem.TryPickupAnyHand(player, item, handsComp: player.Comp)
                 && storage.Comp.StorageRemoveSound != null)
             {
-                Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, AudioFun.FunAudioParams(_audioParams));
+                Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, FunAudioParams.WithUniformPitch(_audioParams));
             }
 
             return;
@@ -907,7 +907,7 @@ public abstract class SharedStorageSystem : EntitySystem
             Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
 
-        Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user, AudioFun.FunAudioParams(_audioParams));
+        Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user, FunAudioParams.WithUniformPitch(_audioParams));
     }
 
     /// <summary>
@@ -1086,7 +1086,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return false;
 
             if (playSound)
-                Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, AudioFun.FunAudioParams(_audioParams));
+                Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, FunAudioParams.WithUniformPitch(_audioParams));
 
             return true;
         }
@@ -1116,7 +1116,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         if (playSound)
-            Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, AudioFun.FunAudioParams(_audioParams));
+            Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, FunAudioParams.WithUniformPitch(_audioParams));
 
         return true;
     }

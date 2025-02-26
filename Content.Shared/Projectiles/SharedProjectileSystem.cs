@@ -111,7 +111,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
                 xform);
         }
 
-        _audio.PlayPredicted(component.Sound, uid, null, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.Sound, uid, null, FunAudioParams.WithUniformPitch());
         component.EmbeddedIntoUid = target;
         var ev = new EmbedEvent(user, target);
         RaiseLocalEvent(uid, ref ev);

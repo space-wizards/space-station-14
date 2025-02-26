@@ -118,7 +118,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not {} projectile)
             return;
 
-        _audio.PlayPredicted(component.CycleSound, uid, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.CycleSound, uid, args.User, FunAudioParams.WithUniformPitch());
         _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
         if (_netManager.IsServer)
@@ -139,7 +139,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (value)
         {
             if (Timing.IsFirstTimePredicted)
-                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user, AudioFun.FunAudioParams())?.Entity;
+                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user, FunAudioParams.WithUniformPitch())?.Entity;
         }
         else
         {

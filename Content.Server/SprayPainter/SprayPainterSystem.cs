@@ -36,7 +36,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!TryComp<AtmosPipeColorComponent>(target, out var color))
             return;
 
-        Audio.PlayPvs(ent.Comp.SpraySound, ent, AudioFun.FunAudioParams());
+        Audio.PlayPvs(ent.Comp.SpraySound, ent, FunAudioParams.WithUniformPitch());
 
         _pipeColor.SetColor(target, color, args.Color);
 

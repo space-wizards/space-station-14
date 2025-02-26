@@ -180,7 +180,7 @@ public sealed class DumpableSystem : EntitySystem
 
         if (dumped)
         {
-            _audio.PlayPredicted(component.DumpSound, uid, args.User, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(component.DumpSound, uid, args.User, FunAudioParams.WithUniformPitch());
         }
     }
 }

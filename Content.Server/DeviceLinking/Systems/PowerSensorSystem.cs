@@ -85,7 +85,7 @@ public sealed class PowerSensorSystem : EntitySystem
         UpdateOutputs(uid, comp);
 
         // notify the user
-        _audio.PlayPvs(comp.SwitchSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.SwitchSound, uid, FunAudioParams.WithUniformPitch());
         var msg = Loc.GetString("power-sensor-switch", ("output", comp.Output));
         _popup.PopupEntity(msg, uid, args.User);
     }

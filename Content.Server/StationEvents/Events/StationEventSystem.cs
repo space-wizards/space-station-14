@@ -49,7 +49,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         if (stationEvent.StartAnnouncement != null)
             ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
 
-        Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true, AudioFun.FunAudioParams());
+        Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true, FunAudioParams.WithUniformPitch());
     }
 
     /// <inheritdoc/>
@@ -88,7 +88,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         if (stationEvent.EndAnnouncement != null)
             ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: stationEvent.EndAnnouncementColor);
 
-        Audio.PlayGlobal(stationEvent.EndAudio, allPlayersInGame, true, AudioFun.FunAudioParams());
+        Audio.PlayGlobal(stationEvent.EndAudio, allPlayersInGame, true, FunAudioParams.WithUniformPitch());
     }
 
     /// <summary>

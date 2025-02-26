@@ -210,7 +210,7 @@ namespace Content.Server.Lathe
             var ev = new LatheStartPrintingEvent(recipe);
             RaiseLocalEvent(uid, ref ev);
 
-            _audio.PlayPvs(component.ProducingSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.ProducingSound, uid, FunAudioParams.WithUniformPitch());
             UpdateRunningAppearance(uid, true);
             UpdateUserInterfaceState(uid, component);
 

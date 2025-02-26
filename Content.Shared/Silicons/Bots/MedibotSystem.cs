@@ -139,7 +139,7 @@ public sealed class MedibotSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
         _popup.PopupClient(Loc.GetString("medibot-target-injected"), medibot, medibot);
 
-        _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot, FunAudioParams.WithUniformPitch());
 
         return true;
     }

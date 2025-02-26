@@ -35,7 +35,7 @@ public sealed class MovementSoundSystem : EntitySystem
         if (moving)
         {
             DebugTools.Assert(ent.Comp.SoundEntity == null);
-            ent.Comp.SoundEntity = _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, ent.Owner, AudioFun.FunAudioParams())?.Entity;
+            ent.Comp.SoundEntity = _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, ent.Owner, FunAudioParams.WithUniformPitch())?.Entity;
         }
         else
         {

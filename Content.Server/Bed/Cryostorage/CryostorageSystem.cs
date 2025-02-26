@@ -197,7 +197,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             }
         }
 
-        _audio.PlayPvs(cryostorageComponent.RemoveSound, ent, AudioFun.FunAudioParams());
+        _audio.PlayPvs(cryostorageComponent.RemoveSound, ent, FunAudioParams.WithUniformPitch());
 
         EnsurePausedMap();
         if (PausedMap == null)

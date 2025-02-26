@@ -94,7 +94,7 @@ public sealed class MorgueSystem : EntitySystem
 
             if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
             {
-                _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, uid, AudioFun.FunAudioParams());
+                _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, uid, FunAudioParams.WithUniformPitch());
             }
         }
     }

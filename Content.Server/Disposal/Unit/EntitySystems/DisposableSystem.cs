@@ -217,7 +217,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     _damageable.TryChangeDamage(ent, to.DamageOnTurn);
                 }
-                _audio.PlayPvs(to.ClangSound, toUid, AudioFun.FunAudioParams());
+                _audio.PlayPvs(to.ClangSound, toUid, FunAudioParams.WithUniformPitch());
             }
 
             return true;

@@ -93,7 +93,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (tool.UseSound == null)
             return;
 
-        _audioSystem.PlayPredicted(tool.UseSound, uid, user, AudioFun.FunAudioParams());
+        _audioSystem.PlayPredicted(tool.UseSound, uid, user, FunAudioParams.WithUniformPitch());
     }
 
     /// <summary>

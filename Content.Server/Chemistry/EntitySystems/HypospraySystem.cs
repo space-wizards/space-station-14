@@ -142,7 +142,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
             // meleeSys.SendLunge(angle, user);
         }
 
-        _audio.PlayPvs(component.InjectSound, user, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.InjectSound, user, FunAudioParams.WithUniformPitch());
 
         // Medipens and such use this system and don't have a delay, requiring extra checks
         // BeginDelay function returns if item is already on delay

@@ -117,11 +117,11 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.RemoveOnTrigger) // if the component gets removed when it's triggered
             {
                 var xform = Transform(uid);
-                _audio.PlayPvs(component.Sound, xform.Coordinates, AudioFun.FunAudioParams()); // play the sound at its last known coordinates
+                _audio.PlayPvs(component.Sound, xform.Coordinates, FunAudioParams.WithUniformPitch()); // play the sound at its last known coordinates
             }
             else // if the component doesn't get removed when triggered
             {
-                _audio.PlayPvs(component.Sound, uid, AudioFun.FunAudioParams()); // have the sound follow the entity itself
+                _audio.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch()); // have the sound follow the entity itself
             }
         }
 
@@ -391,7 +391,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
 
                 timer.TimeUntilBeep += timer.BeepInterval;
-                _audio.PlayPvs(timer.BeepSound, uid, AudioFun.FunAudioParams(timer.BeepSound.Params));
+                _audio.PlayPvs(timer.BeepSound, uid, FunAudioParams.WithUniformPitch(timer.BeepSound.Params));
             }
 
             foreach (var uid in toRemove)

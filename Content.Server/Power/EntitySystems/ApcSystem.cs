@@ -107,7 +107,7 @@ public sealed class ApcSystem : EntitySystem
         battery.CanDischarge = apc.MainBreakerEnabled;
 
         UpdateUIState(uid, apc);
-        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)));
+        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
     }
 
     private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)

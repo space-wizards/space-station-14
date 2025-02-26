@@ -238,7 +238,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
-            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null, AudioFun.FunAudioParams())?.Entity;
+            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null, FunAudioParams.WithUniformPitch())?.Entity;
 
         Dirty(target, tethered);
         Dirty(gunUid, component);

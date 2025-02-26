@@ -89,7 +89,7 @@ namespace Content.Shared.Standing
 
             if (playSound)
             {
-                _audio.PlayPredicted(standingState.DownSound, uid, uid, AudioFun.FunAudioParams());
+                _audio.PlayPredicted(standingState.DownSound, uid, uid, FunAudioParams.WithUniformPitch());
             }
 
             return true;

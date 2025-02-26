@@ -44,7 +44,7 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
                 // We don't predict this because occasionally on client it may not play.
                 // PlayPredicted will still be predicted on the client.
                 if (_netManager.IsServer)
-                    _audio.PlayPvs(recharge.RechargeSound, uid, AudioFun.FunAudioParams());
+                    _audio.PlayPvs(recharge.RechargeSound, uid, FunAudioParams.WithUniformPitch());
             }
 
             if (ammo.Count == ammo.Capacity)

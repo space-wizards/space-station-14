@@ -31,7 +31,7 @@ public sealed class SpraySafetySystem : EntitySystem
 
     private void OnTransferred(Entity<SpraySafetyComponent> ent, ref SolutionTransferredEvent args)
     {
-        _audio.PlayPredicted(ent.Comp.RefillSound, ent, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(ent.Comp.RefillSound, ent, args.User, FunAudioParams.WithUniformPitch());
     }
 
     private void OnSprayAttempt(Entity<SpraySafetyComponent> ent, ref SprayAttemptEvent args)

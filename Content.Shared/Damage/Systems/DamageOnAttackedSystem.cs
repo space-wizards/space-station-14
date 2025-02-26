@@ -79,7 +79,7 @@ public sealed class DamageOnAttackedSystem : EntitySystem
         if (totalDamage != null && totalDamage.AnyPositive())
         {
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured themselves by attacking {ToPrettyString(entity):target} and received {totalDamage.GetTotal():damage} damage");
-            _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User, AudioFun.FunAudioParams());
+            _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User, FunAudioParams.WithUniformPitch());
 
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);

@@ -66,7 +66,7 @@ public abstract partial class SharedStationAiSystem
         var soundToPlay = component.Enabled
             ? component.AirlockElectrifyDisabled
             : component.AirlockElectrifyEnabled;
-        _audio.PlayLocal(soundToPlay, ent, args.User, AudioFun.FunAudioParams());
+        _audio.PlayLocal(soundToPlay, ent, args.User, FunAudioParams.WithUniformPitch());
     }
 }
 

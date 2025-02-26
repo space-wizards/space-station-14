@@ -77,7 +77,7 @@ public abstract partial class SharedToolSystem
         }
 
         if (playSound && current.ChangeSound != null)
-            _audioSystem.PlayPredicted(current.ChangeSound, uid, user, AudioFun.FunAudioParams());
+            _audioSystem.PlayPredicted(current.ChangeSound, uid, user, FunAudioParams.WithUniformPitch());
 
         if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
             multiple.CurrentQualityName = Loc.GetString(quality.Name);

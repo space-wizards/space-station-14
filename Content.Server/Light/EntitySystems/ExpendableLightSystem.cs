@@ -146,12 +146,12 @@ namespace Content.Server.Light.EntitySystems
             switch (component.CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    _audio.PlayPvs(component.LitSound, ent, AudioFun.FunAudioParams());
+                    _audio.PlayPvs(component.LitSound, ent, FunAudioParams.WithUniformPitch());
                     break;
                 case ExpendableLightState.Fading:
                     break;
                 default:
-                    _audio.PlayPvs(component.DieSound, ent, AudioFun.FunAudioParams());
+                    _audio.PlayPvs(component.DieSound, ent, FunAudioParams.WithUniformPitch());
                     break;
             }
 

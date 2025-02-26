@@ -79,7 +79,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
         component.Processing = true;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, true);
-        component.Stream = _audio.PlayPvs(component.ProcessSound, uid, AudioFun.FunAudioParams())?.Entity;
+        component.Stream = _audio.PlayPvs(component.ProcessSound, uid, FunAudioParams.WithUniformPitch())?.Entity;
         component.NextUpdate = _timing.CurTime + component.UpdateTime;
     }
 

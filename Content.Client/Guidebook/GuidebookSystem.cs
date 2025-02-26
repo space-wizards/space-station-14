@@ -151,7 +151,7 @@ public sealed class GuidebookSystem : EntitySystem
         if (!TryComp<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
             return;
 
-        _audioSystem.PlayGlobal(speech.SpeechSounds, Filter.Local(), false, AudioFun.FunAudioParams(speech.AudioParams));
+        _audioSystem.PlayGlobal(speech.SpeechSounds, Filter.Local(), false, FunAudioParams.WithUniformPitch(speech.AudioParams));
     }
 
     public void FakeClientActivateInWorld(EntityUid activated)

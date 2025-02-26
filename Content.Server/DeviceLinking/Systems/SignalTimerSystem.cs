@@ -68,7 +68,7 @@ public sealed class SignalTimerSystem : EntitySystem
     {
         RemComp<ActiveSignalTimerComponent>(uid);
 
-        _audio.PlayPvs(signalTimer.DoneSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(signalTimer.DoneSound, uid, FunAudioParams.WithUniformPitch());
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
         if (_ui.HasUi(uid, SignalTimerUiKey.Key))

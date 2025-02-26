@@ -139,7 +139,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         if (message.PlaySound && localPlayer.UserId != message.TrueSender)
         {
             if (_aHelpSound != null && (_bwoinkSoundEnabled || !_adminManager.IsActive()))
-                _audio.PlayGlobal(_aHelpSound, Filter.Local(), false, AudioFun.FunAudioParams());
+                _audio.PlayGlobal(_aHelpSound, Filter.Local(), false, FunAudioParams.WithUniformPitch());
             _clyde.RequestWindowAttention();
         }
 

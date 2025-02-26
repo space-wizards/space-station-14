@@ -86,7 +86,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
         if (_random.Prob(component.HitSoundProbability))
         {
-            _audio.PlayPvs(component.Sound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch());
         }
 
         if (HasComp<ImmovableRodComponent>(ent))

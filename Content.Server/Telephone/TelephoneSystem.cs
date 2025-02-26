@@ -152,7 +152,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
                     else if (telephone.RingTone != null &&
                         _timing.CurTime > telephone.NextRingToneTime)
                     {
-                        _audio.PlayPvs(telephone.RingTone, uid, AudioFun.FunAudioParams());
+                        _audio.PlayPvs(telephone.RingTone, uid, FunAudioParams.WithUniformPitch());
                         telephone.NextRingToneTime = _timing.CurTime + TimeSpan.FromSeconds(telephone.RingInterval);
                     }
 

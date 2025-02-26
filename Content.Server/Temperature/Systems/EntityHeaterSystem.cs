@@ -96,7 +96,7 @@ public sealed class EntityHeaterSystem : EntitySystem
         comp.Setting = setting;
         power.Load = SettingPower(setting, comp.Power);
         _appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
-        _audio.PlayPvs(comp.SettingSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.SettingSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private float SettingPower(EntityHeaterSetting setting, float max)

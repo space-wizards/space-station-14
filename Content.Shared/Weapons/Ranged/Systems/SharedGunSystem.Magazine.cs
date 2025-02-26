@@ -151,7 +151,7 @@ public abstract partial class SharedGunSystem
         if (ejectMag)
         {
             EjectMagazine(uid, component);
-            Audio.PlayPredicted(component.SoundAutoEject, uid, user, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(component.SoundAutoEject, uid, user, FunAudioParams.WithUniformPitch());
         }
 
         UpdateMagazineAppearance(uid, appearance, !ejectMag, count, capacity);

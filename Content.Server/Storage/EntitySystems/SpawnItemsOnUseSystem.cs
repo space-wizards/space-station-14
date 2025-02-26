@@ -85,7 +85,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 // The entity is often deleted, so play the sound at its position rather than parenting
                 var coordinates = Transform(uid).Coordinates;
-                _audio.PlayPvs(component.Sound, coordinates, AudioFun.FunAudioParams());
+                _audio.PlayPvs(component.Sound, coordinates, FunAudioParams.WithUniformPitch());
             }
 
             component.Uses--;

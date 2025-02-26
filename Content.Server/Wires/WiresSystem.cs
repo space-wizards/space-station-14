@@ -768,7 +768,7 @@ public sealed class WiresSystem : SharedWiresSystem
                 wire.Action?.Pulse(user, wire);
 
                 UpdateUserInterface(used);
-                Audio.PlayPvs(wires.PulseSound, used, AudioFun.FunAudioParams());
+                Audio.PlayPvs(wires.PulseSound, used, FunAudioParams.WithUniformPitch());
                 break;
         }
 

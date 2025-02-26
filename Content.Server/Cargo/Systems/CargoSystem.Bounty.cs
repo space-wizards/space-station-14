@@ -75,7 +75,7 @@ public sealed partial class CargoSystem
         var label = Spawn(component.BountyLabelId, Transform(uid).Coordinates);
         component.NextPrintTime = _timing.CurTime + component.PrintDelay;
         SetupBountyLabel(label, station, bounty.Value);
-        _audio.PlayPvs(component.PrintSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.PrintSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
@@ -95,7 +95,7 @@ public sealed partial class CargoSystem
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
             !_accessReaderSystem.IsAllowed(mob, uid, accessReaderComponent))
         {
-            _audio.PlayPvs(component.DenySound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.DenySound, uid, FunAudioParams.WithUniformPitch());
             return;
         }
 
@@ -106,7 +106,7 @@ public sealed partial class CargoSystem
         db.NextSkipTime = _timing.CurTime + db.SkipDelay;
         var untilNextSkip = db.NextSkipTime - _timing.CurTime;
         _uiSystem.SetUiState(uid, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(db.Bounties, db.History, untilNextSkip));
-        _audio.PlayPvs(component.SkipSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.SkipSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     public void SetupBountyLabel(EntityUid uid, EntityUid stationId, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)

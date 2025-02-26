@@ -50,6 +50,6 @@ public sealed class MechSoundboardSystem : EntitySystem
             return;
 
         // honk!!!!!
-        _audio.PlayPvs(comp.Sounds[msg.Sound], uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.Sounds[msg.Sound], uid, FunAudioParams.WithUniformPitch());
     }
 }

@@ -269,7 +269,7 @@ public abstract class SharedStunSystem : EntitySystem
         knocked.HelpTimer = knocked.HelpInterval / 2f;
 
         _statusEffect.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
-        _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User, FunAudioParams.WithUniformPitch());
         Dirty(uid, knocked);
 
         args.Handled = true;

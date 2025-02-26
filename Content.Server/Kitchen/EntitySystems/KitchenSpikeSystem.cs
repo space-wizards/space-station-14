@@ -166,7 +166,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 QueueDel(gib);
             }
 
-            _audio.PlayPvs(component.SpikeSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(component.SpikeSound, uid, FunAudioParams.WithUniformPitch());
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,

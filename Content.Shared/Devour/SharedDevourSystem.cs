@@ -74,7 +74,7 @@ public abstract class SharedDevourSystem : EntitySystem
         _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
 
         if (component.SoundStructureDevour != null)
-            _audioSystem.PlayPredicted(component.SoundStructureDevour, uid, uid, AudioFun.FunAudioParams(component.SoundStructureDevour.Params));
+            _audioSystem.PlayPredicted(component.SoundStructureDevour, uid, uid, FunAudioParams.WithUniformPitch(component.SoundStructureDevour.Params));
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
         {

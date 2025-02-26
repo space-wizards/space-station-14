@@ -84,7 +84,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
             return;
 
-        _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid, FunAudioParams.WithUniformPitch());
 
         var doAfterCancelled = !_doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
@@ -105,7 +105,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             return;
 
         if (!uid.Comp.Silent)
-            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid, FunAudioParams.WithUniformPitch());
 
         OpenUserInterface(args.User, uid);
         BeginAnalyzingEntity(uid, args.Target.Value);

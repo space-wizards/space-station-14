@@ -195,8 +195,8 @@ public sealed class GatewaySystem : EntitySystem
         // for ui
         comp.NextReady = _timing.CurTime + comp.Cooldown;
 
-        _audio.PlayPvs(comp.OpenSound, uid, AudioFun.FunAudioParams());
-        _audio.PlayPvs(comp.OpenSound, dest, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.OpenSound, uid, FunAudioParams.WithUniformPitch());
+        _audio.PlayPvs(comp.OpenSound, dest, FunAudioParams.WithUniformPitch());
 
         UpdateUserInterface(uid, comp);
         UpdateAppearance(uid);
@@ -218,8 +218,8 @@ public sealed class GatewaySystem : EntitySystem
             destComp.NextReady = _timing.CurTime + destComp.Cooldown;
         }
 
-        _audio.PlayPvs(comp.CloseSound, uid, AudioFun.FunAudioParams());
-        _audio.PlayPvs(comp.CloseSound, dest.Value, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.CloseSound, uid, FunAudioParams.WithUniformPitch());
+        _audio.PlayPvs(comp.CloseSound, dest.Value, FunAudioParams.WithUniformPitch());
 
         _linkedEntity.TryUnlink(uid, dest.Value);
         RemComp<PortalComponent>(dest.Value);
@@ -278,7 +278,7 @@ public sealed class GatewaySystem : EntitySystem
             return false;
 
         _popup.PopupEntity(Loc.GetString("gateway-access-denied"), user);
-        _audio.PlayPvs(comp.AccessDeniedSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.AccessDeniedSound, uid, FunAudioParams.WithUniformPitch());
         return true;
     }
 

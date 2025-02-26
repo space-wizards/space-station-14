@@ -89,7 +89,7 @@ public sealed class SuperBonkSystem : EntitySystem
 
         _clumsySystem.HitHeadClumsy((comp.Target, clumsyComp), uid);
 
-        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, comp.Target, AudioFun.FunAudioParams());
+        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, comp.Target, FunAudioParams.WithUniformPitch());
     }
 
     private void OnMobStateChanged(EntityUid uid, SuperBonkComponent comp, MobStateChangedEvent args)

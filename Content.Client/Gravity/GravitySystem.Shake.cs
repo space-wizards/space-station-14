@@ -34,7 +34,7 @@ public sealed partial class GravitySystem
 
         if (Timing.IsFirstTimePredicted && TryComp<GravityComponent>(uid, out var gravity))
         {
-            _audio.PlayGlobal(gravity.GravityShakeSound, Filter.Local(), true, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)));
+            _audio.PlayGlobal(gravity.GravityShakeSound, Filter.Local(), true, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
         }
     }
 

@@ -174,7 +174,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (component.CurrentNodeId == null)
             return;
 
-        _audio.PlayPvs(component.ActivationSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.ActivationSound, uid, FunAudioParams.WithUniformPitch());
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent

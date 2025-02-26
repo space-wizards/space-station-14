@@ -39,7 +39,7 @@ public sealed class SignalSwitchSystem : EntitySystem
             _deviceLink.SendSignal(uid, comp.StatusPort, comp.State);
         }
 
-        _audio.PlayPvs(comp.ClickSound, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(0.125f)).WithVolume(8f));
+        _audio.PlayPvs(comp.ClickSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)).WithVolume(8f));
 
         args.Handled = true;
     }

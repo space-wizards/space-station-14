@@ -85,7 +85,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         AdminLog.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
         if (_net.IsServer)
-            Audio.PlayPvs(component.PulseSound, uid, AudioFun.FunAudioParams());
+            Audio.PlayPvs(component.PulseSound, uid, FunAudioParams.WithUniformPitch());
 
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
@@ -145,7 +145,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        Audio.PlayPvs(component.SupercriticalSound, Transform(uid).Coordinates, AudioFun.FunAudioParams());
+        Audio.PlayPvs(component.SupercriticalSound, Transform(uid).Coordinates, FunAudioParams.WithUniformPitch());
 
         if (_net.IsServer)
             Log.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");

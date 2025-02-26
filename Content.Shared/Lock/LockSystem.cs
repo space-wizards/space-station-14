@@ -152,7 +152,7 @@ public sealed class LockSystem : EntitySystem
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user);
         }
 
-        _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(lockComp.LockSound, uid, user, FunAudioParams.WithUniformPitch());
 
         lockComp.Locked = true;
         _appearanceSystem.SetData(uid, LockVisuals.Locked, true);
@@ -182,7 +182,7 @@ public sealed class LockSystem : EntitySystem
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
         }
 
-        _audio.PlayPredicted(lockComp.UnlockSound, uid, user, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(lockComp.UnlockSound, uid, user, FunAudioParams.WithUniformPitch());
 
         lockComp.Locked = false;
         _appearanceSystem.SetData(uid, LockVisuals.Locked, false);
@@ -303,7 +303,7 @@ public sealed class LockSystem : EntitySystem
         if (!component.Locked || !component.BreakOnAccessBreaker)
             return;
 
-        _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid, FunAudioParams.WithUniformPitch());
 
         component.Locked = false;
         _appearanceSystem.SetData(uid, LockVisuals.Locked, false);

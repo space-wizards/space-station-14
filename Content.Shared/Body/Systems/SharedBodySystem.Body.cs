@@ -333,7 +333,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null, AudioFun.FunAudioParams());
+        _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null, FunAudioParams.WithUniformPitch());
         return gibs;
     }
 }

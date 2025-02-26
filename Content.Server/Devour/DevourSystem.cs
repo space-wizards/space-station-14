@@ -46,7 +46,7 @@ public sealed class DevourSystem : SharedDevourSystem
             QueueDel(args.Args.Target.Value);
         }
 
-        _audioSystem.PlayPvs(component.SoundDevour, uid, AudioFun.FunAudioParams());
+        _audioSystem.PlayPvs(component.SoundDevour, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void OnGibContents(EntityUid uid, DevourerComponent component, ref BeingGibbedEvent args)

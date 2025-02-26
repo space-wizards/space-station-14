@@ -77,7 +77,7 @@ public sealed class EmagSystem : EntitySystem
 
         _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
 
-        _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent, AudioFun.FunAudioParams());
+        _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent, FunAudioParams.WithUniformPitch());
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
 

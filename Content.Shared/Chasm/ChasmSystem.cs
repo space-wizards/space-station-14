@@ -65,7 +65,7 @@ public sealed class ChasmSystem : EntitySystem
         _blocker.UpdateCanMove(tripper);
 
         if (playSound)
-            _audio.PlayPredicted(component.FallingSound, chasm, tripper, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(component.FallingSound, chasm, tripper, FunAudioParams.WithUniformPitch());
     }
 
     private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)

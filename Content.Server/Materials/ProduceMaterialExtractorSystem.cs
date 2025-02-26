@@ -42,7 +42,7 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
             .Sum(r => r.Quantity.Float());
         _materialStorage.TryChangeMaterialAmount(ent, ent.Comp.ExtractedMaterial, (int) matAmount);
 
-        _audio.PlayPvs(ent.Comp.ExtractSound, ent, AudioFun.FunAudioParams());
+        _audio.PlayPvs(ent.Comp.ExtractSound, ent, FunAudioParams.WithUniformPitch());
         QueueDel(args.Used);
         args.Handled = true;
     }

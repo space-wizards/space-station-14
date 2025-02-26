@@ -160,7 +160,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)));
+            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
         }
 
         /// <summary>

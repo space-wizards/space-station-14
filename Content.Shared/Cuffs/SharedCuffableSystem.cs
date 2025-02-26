@@ -340,7 +340,7 @@ namespace Content.Shared.Cuffs
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
                 component.Used = true;
-                _audio.PlayPredicted(component.EndCuffSound, uid, user, AudioFun.FunAudioParams());
+                _audio.PlayPredicted(component.EndCuffSound, uid, user, FunAudioParams.WithUniformPitch());
 
                 _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-observer-success-message",
                         ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
@@ -539,7 +539,7 @@ namespace Content.Shared.Cuffs
                     ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
-            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user, FunAudioParams.WithUniformPitch());
             return true;
         }
 
@@ -668,7 +668,7 @@ namespace Content.Shared.Cuffs
                     target);
             }
 
-            _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user, FunAudioParams.WithUniformPitch());
         }
 
         public void Uncuff(EntityUid target, EntityUid? user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
@@ -689,7 +689,7 @@ namespace Content.Shared.Cuffs
 
             cuff.Removing = true;
             cuff.Used = false;
-            _audio.PlayPredicted(cuff.EndUncuffSound, target, user, AudioFun.FunAudioParams());
+            _audio.PlayPredicted(cuff.EndUncuffSound, target, user, FunAudioParams.WithUniformPitch());
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 

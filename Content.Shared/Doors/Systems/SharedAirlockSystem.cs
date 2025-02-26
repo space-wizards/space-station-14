@@ -157,9 +157,9 @@ public abstract class SharedAirlockSystem : EntitySystem
 
         var sound = ent.Comp.EmergencyAccess ? ent.Comp.EmergencyOnSound : ent.Comp.EmergencyOffSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user, AudioFun.FunAudioParams());
+            Audio.PlayPredicted(sound, ent, user: user, FunAudioParams.WithUniformPitch());
         else
-            Audio.PlayPvs(sound, ent, AudioFun.FunAudioParams());
+            Audio.PlayPvs(sound, ent, FunAudioParams.WithUniformPitch());
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)

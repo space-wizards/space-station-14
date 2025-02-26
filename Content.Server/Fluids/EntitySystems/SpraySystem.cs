@@ -161,7 +161,7 @@ public sealed class SpraySystem : EntitySystem
             }
         }
 
-        _audio.PlayPvs(entity.Comp.SpraySound, entity, AudioFun.FunAudioParams(entity.Comp.SpraySound.Params.WithVariation(0.125f)));
+        _audio.PlayPvs(entity.Comp.SpraySound, entity, FunAudioParams.WithUniformPitch(entity.Comp.SpraySound.Params.WithVariation(0.125f)));
 
         if (useDelay != null)
             _useDelay.TryResetDelay((entity, useDelay));

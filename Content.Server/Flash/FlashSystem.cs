@@ -88,7 +88,7 @@ namespace Content.Server.Flash
                 return false;
 
             _charges.UseCharge(uid, charges);
-            _audio.PlayPvs(comp.Sound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(comp.Sound, uid, FunAudioParams.WithUniformPitch());
             comp.Flashing = true;
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
 
@@ -178,7 +178,7 @@ namespace Content.Server.Flash
                 Flash(entity, user, source, duration, slowTo, displayPopup);
             }
 
-            _audio.PlayPvs(sound, source, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(1f)).WithMaxDistance(3f));
+            _audio.PlayPvs(sound, source, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(1f)).WithMaxDistance(3f));
         }
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)

@@ -109,7 +109,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
         var popup = Loc.GetString(comp.SwitchText, ("voltage", VoltageString(voltage)));
         _popup.PopupEntity(popup, uid, user);
 
-        _audio.PlayPvs(comp.SwitchSound, uid, AudioFun.FunAudioParams());
+        _audio.PlayPvs(comp.SwitchSound, uid, FunAudioParams.WithUniformPitch());
 
         _useDelay.TryResetDelay((uid, useDelay));
     }

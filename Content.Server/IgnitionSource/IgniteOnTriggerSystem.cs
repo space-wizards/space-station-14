@@ -47,7 +47,7 @@ public sealed class IgniteOnTriggerSystem : EntitySystem
             return;
 
         _source.SetIgnited(ent.Owner);
-        _audio.PlayPvs(ent.Comp.IgniteSound, ent, AudioFun.FunAudioParams());
+        _audio.PlayPvs(ent.Comp.IgniteSound, ent, FunAudioParams.WithUniformPitch());
 
         _useDelay.TryResetDelay((ent.Owner, useDelay));
         ent.Comp.IgnitedUntil = _timing.CurTime + ent.Comp.IgnitedTime;

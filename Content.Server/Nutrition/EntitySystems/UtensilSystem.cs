@@ -72,7 +72,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_robustRandom.Prob(component.BreakChance))
             {
-                _audio.PlayPvs(component.BreakSound, userUid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)));
+                _audio.PlayPvs(component.BreakSound, userUid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
                 EntityManager.DeleteEntity(uid);
             }
         }

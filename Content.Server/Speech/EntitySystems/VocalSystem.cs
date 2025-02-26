@@ -82,7 +82,7 @@ public sealed class VocalSystem : EntitySystem
     {
         if (_random.Prob(component.WilhelmProbability))
         {
-            _audio.PlayPvs(component.Wilhelm, uid, AudioFun.FunAudioParams(component.Wilhelm.Params));
+            _audio.PlayPvs(component.Wilhelm, uid, FunAudioParams.WithUniformPitch(component.Wilhelm.Params));
             return true;
         }
 

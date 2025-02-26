@@ -162,7 +162,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
         if (wasReplaced)
         {
-            _audio.PlayPvs(replacer.Sound, replacerUid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(replacer.Sound, replacerUid, FunAudioParams.WithUniformPitch());
         }
 
         return wasReplaced;

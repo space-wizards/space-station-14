@@ -95,7 +95,7 @@ namespace Content.Server.Medical
             }
 
             // Force sound to play as spill doesn't work if solution is empty.
-            _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid, AudioFun.FunAudioParams(AudioParams.Default.WithVariation(0.2f)).WithVolume(-4f));
+            _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.2f)).WithVolume(-4f));
             _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
         }
     }

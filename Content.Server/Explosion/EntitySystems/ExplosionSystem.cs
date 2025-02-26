@@ -374,7 +374,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             ? queued.Proto.SmallSoundFar
             : queued.Proto.SoundFar;
 
-        _audio.PlayGlobal(farSound, farFilter, true, AudioFun.FunAudioParams(farSound.Params));
+        _audio.PlayGlobal(farSound, farFilter, true, FunAudioParams.WithUniformPitch(farSound.Params));
 
         return new Explosion(this,
             queued.Proto,

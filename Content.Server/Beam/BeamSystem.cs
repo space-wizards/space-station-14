@@ -112,7 +112,7 @@ public sealed class BeamSystem : SharedBeamSystem
             var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
             beam.VirtualBeamController = controllerEnt;
 
-            _audio.PlayPvs(beam.Sound, ent, AudioFun.FunAudioParams());
+            _audio.PlayPvs(beam.Sound, ent, FunAudioParams.WithUniformPitch());
 
             var beamControllerCreatedEvent = new BeamControllerCreatedEvent(ent, controllerEnt);
             RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent);

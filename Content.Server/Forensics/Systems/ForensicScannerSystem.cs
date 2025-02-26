@@ -150,7 +150,7 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid, AudioFun.FunAudioParams());
+                    _audioSystem.PlayPvs(component.SoundMatch, uid, FunAudioParams.WithUniformPitch());
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
                     return;
                 }
@@ -160,13 +160,13 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid, AudioFun.FunAudioParams());
+                    _audioSystem.PlayPvs(component.SoundMatch, uid, FunAudioParams.WithUniformPitch());
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
                     return;
                 }
             }
 
-            _audioSystem.PlayPvs(component.SoundNoMatch, uid, AudioFun.FunAudioParams());
+            _audioSystem.PlayPvs(component.SoundNoMatch, uid, FunAudioParams.WithUniformPitch());
             _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
         }
 

@@ -170,7 +170,7 @@ namespace Content.Server.VendingMachines
 
             Popup.PopupEntity(Loc.GetString("vending-machine-restock-done", ("this", args.Args.Used), ("user", args.Args.User), ("target", uid)), args.Args.User, PopupType.Medium);
 
-            Audio.PlayPvs(restockComponent.SoundRestockDone, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)).WithVariation(0.2f));
+            Audio.PlayPvs(restockComponent.SoundRestockDone, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)).WithVariation(0.2f));
 
             Del(args.Args.Used.Value);
 
@@ -209,7 +209,7 @@ namespace Content.Server.VendingMachines
                 return;
 
             vendComponent.Denying = true;
-            Audio.PlayPvs(vendComponent.SoundDeny, uid, AudioFun.FunAudioParams(AudioParams.Default.WithVolume(-2f)));
+            Audio.PlayPvs(vendComponent.SoundDeny, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
             TryUpdateVisualState(uid, vendComponent);
         }
 
@@ -285,7 +285,7 @@ namespace Content.Server.VendingMachines
             entry.Amount--;
             Dirty(uid, vendComponent);
             TryUpdateVisualState(uid, vendComponent);
-            Audio.PlayPvs(vendComponent.SoundVend, uid, AudioFun.FunAudioParams());
+            Audio.PlayPvs(vendComponent.SoundVend, uid, FunAudioParams.WithUniformPitch());
         }
 
         /// <summary>

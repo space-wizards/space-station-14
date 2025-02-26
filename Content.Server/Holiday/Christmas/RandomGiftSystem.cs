@@ -65,7 +65,7 @@ public sealed class RandomGiftSystem : EntitySystem
             Spawn(component.Wrapper, coords);
 
         args.Handled = true;
-        _audio.PlayPvs(component.Sound, args.User, AudioFun.FunAudioParams());
+        _audio.PlayPvs(component.Sound, args.User, FunAudioParams.WithUniformPitch());
         Del(uid);
         _hands.PickupOrDrop(args.User, handsEnt);
 

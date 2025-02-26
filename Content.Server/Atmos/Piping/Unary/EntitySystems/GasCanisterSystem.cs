@@ -330,7 +330,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
         {
             _popup.PopupEntity(Loc.GetString("gas-canister-popup-denied"), uid, user);
-            _audio.PlayPvs(comp.AccessDeniedSound, uid, AudioFun.FunAudioParams());
+            _audio.PlayPvs(comp.AccessDeniedSound, uid, FunAudioParams.WithUniformPitch());
 
             return true;
         }
