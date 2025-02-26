@@ -101,6 +101,7 @@
       - map: [ "id" ]
       - map: [ "outerClothing" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
+      - map: [ "suitstorage" ]
       - map: [ "back" ]
       - map: [ "neck" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
