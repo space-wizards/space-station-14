@@ -106,3 +106,10 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+
+- type: entity
+  parent: [BaseCentcommContraband, GrenadeShrapnel]
+  id: GrenadeShrapnelNT
+  name: shrapnel grenade
+  suffix: NT
+  description: Releases a deadly spray of shrapnel that causes severe bleeding. NT brand.

@@ -66,6 +66,20 @@
       path: /Audio/Effects/spray2.ogg
 
 - type: entity
+  name: mega space cleaner
+  id: MegaSprayBottleSpaceCleaner
+  parent: MegaSprayBottle
+  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 250
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 250
+
+- type: entity
   name: spray bottle
   id: SprayBottleWater
   suffix: Filled
