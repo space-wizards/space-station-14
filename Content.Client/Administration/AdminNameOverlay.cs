@@ -82,7 +82,7 @@ internal sealed class AdminNameOverlay : Overlay
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
             Vector2 currentOffset = Vector2.Zero;
-            if (playerInfo.Antag)
+            if (classic && playerInfo.Antag)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, "ANTAG", uiScale, Color.OrangeRed);
                 currentOffset += lineoffset;
@@ -108,7 +108,7 @@ internal sealed class AdminNameOverlay : Overlay
                 currentOffset += lineoffset;
             }
 
-            if (playerInfo.StartingJob != null)
+            if (!string.IsNullOrEmpty(playerInfo.StartingJob))
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
                 currentOffset += lineoffset;
