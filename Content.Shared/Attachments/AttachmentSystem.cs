@@ -27,7 +27,6 @@ public sealed class AttachmentSystem : EntitySystem
         if (!TryComp(item, out AttachmentComponent? attachment)
             || uid.Comp.Components[args.Container.ID] is not {} compRegistry)
             return;
-        Logger.Debug($"{_netMan.IsClient}...attach {ToPrettyString(item)} time");
         foreach (var (compName, compRegistryEntry) in compRegistry)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))
@@ -60,8 +59,6 @@ public sealed class AttachmentSystem : EntitySystem
                 _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
             }
         }
-        if (TryComp(uid, out MeleeWeaponComponent? m))
-            Logger.Debug(m.WideAnimationRotation.ToString());
     }
 
     private void OnRemove(Entity<AttachableComponent> uid, ref EntRemovedFromContainerMessage args)
@@ -74,7 +71,6 @@ public sealed class AttachmentSystem : EntitySystem
             || compList[args.Container.ID] is not {} compRegistry
             || uid.Comp.AddedComps.Count == 0)
             return;
-        Logger.Debug($"{_netMan.IsClient}...remove {ToPrettyString(item)} time");
         foreach (var compName in compRegistry.Keys)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))
