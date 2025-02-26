@@ -1022,7 +1022,7 @@
     allowedStates:
       - Alive
       - Dead
-  - type: MobThresholds
+  - type: MobThresholds # imp 1000 > 2000
     thresholds:
       0: Alive
       2000: Dead
@@ -1054,16 +1054,16 @@
   - type: Tag
     tags:
       - FootstepSound
-  - type: NpcFactionMember
+  - type: NpcFactionMember # imp
     factions:
     - AllHostile
-  - type: HTN
+  - type: HTN # imp
     rootTask:
       task: SimpleRangedHostileCompound
     blackboard:
       NavSmash: !type:Bool
         true
-  - type: Destructible
+  - type: Destructible # imp
     thresholds:
     - trigger:
         !type:DamageTrigger
