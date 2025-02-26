@@ -58,7 +58,6 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: true
         probability: 0.1
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
@@ -308,6 +307,9 @@
         damage:
           types:
             Asphyxiation: 5
+      - !type:Emote
+        emote: Wheeze
+        probability: 0.2
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -326,6 +328,9 @@
         damage:
           groups:
             Airloss: 10
+      - !type:Emote
+        emote: Wheeze
+        probability: 0.3
 
 - type: reagent
   id: MindbreakerToxin
@@ -364,7 +369,6 @@
         damage:
           groups:
             Brute: 2
-      # todo: cough, sneeze
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -386,6 +390,12 @@
         visualType: Medium
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
+      - !type:Emote
+        emote: Cough
+        probability: 0.1
+      - !type:Emote
+        emote: Sneeze
+        probability: 0.1
 
 - type: reagent
   id: Theobromine
@@ -556,7 +566,6 @@
       effects:
       - !type:Emote
         emote: Honk
-        showInChat: true
         force: true
         probability: 0.2
       - !type:HealthChange
@@ -624,6 +633,9 @@
         damage:
           groups:
             Airloss: 2
+      - !type:Emote
+        emote: Wheeze
+        probability: 0.1
 
 - type: reagent
   id: Tazinide
