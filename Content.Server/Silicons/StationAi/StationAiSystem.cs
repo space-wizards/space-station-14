@@ -1,25 +1,33 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
+using Content.Server.Silicons.Laws;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
+using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
 
-public sealed class StationAiSystem : SharedStationAiSystem
+public sealed partial class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly SiliconLawSystem _law = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
 
@@ -129,5 +137,30 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, entity, false, true, filter.Recipients.Select(o => o.Channel));
         // Apparently there's no sound for this.
+    }
+
+    public override void SetLoadoutExtraLawset(EntityUid brain, Dictionary<string, string> data)
+    {
+        base.SetLoadoutExtraLawset(brain, data);
+
+        if (data.TryGetValue(ExtraLoadoutLawsetId, out var lawset))
+            _law.SetLaws((ProtoId<SiliconLawsetPrototype>)lawset, brain);
+    }
+
+    public override void SetLoadoutOnTakeover(EntityUid core, EntityUid brain)
+    {
+        base.SetLoadoutOnTakeover(core, brain);
+        if (!_mind.TryGetMind(brain, out _, out var mind) || mind.Session == null)
+            return;
+        var profile = _ticker.GetPlayerProfile(mind.Session);
+
+        if (profile == null)
+            return;
+
+        if (!profile.Loadouts.TryGetValue("StationAi", out var loadout))
+            return;
+
+        SetLoadoutExtraLawset(brain, loadout.ExtraData);
+        SetLoadoutExtraVisuals(core, loadout.ExtraData);
     }
 }

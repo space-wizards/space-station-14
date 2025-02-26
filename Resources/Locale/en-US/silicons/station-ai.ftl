@@ -22,3 +22,9 @@ toggle-light = Toggle light
 ai-device-not-responding = Device is not responding
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
+
+# Loadout
+sai-loadout-name-label = Custom name:
+sai-loadout-screen-label = Screen:
+sai-loadout-lawset-label = Lawset:
+sai-loadout-save-button = Save AI name

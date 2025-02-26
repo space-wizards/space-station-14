@@ -1,0 +1,60 @@
+<loadout:BaseLoadoutWindow xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:loadout="clr-namespace:Content.Client.Lobby.UI.Loadouts"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         SetSize="800 800"
+         MinSize="800 128">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4" SizeFlagsStretchRatio="1">
+        <BoxContainer Name="RoleNameBox" Orientation="Vertical">
+            <Label Name="LoadoutNameLabel" Margin="2" Text="{Loc 'sai-loadout-name-label'}"/>
+            <PanelContainer HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Horizontal">
+                    <LineEdit Name="RoleNameEdit" VerticalExpand="True" HorizontalExpand="True" Margin="4" SizeFlagsStretchRatio="8"/>
+                    <Button Name="SaveNameButton" Text="{Loc 'sai-loadout-save-button'}" VerticalExpand="True" HorizontalExpand="True" Margin="4" SizeFlagsStretchRatio="3"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <cc:HSeparator Margin="5"/>
+        <BoxContainer Name="SkinBox" Orientation="Vertical" Margin="4" SizeFlagsStretchRatio="4">
+            <Label Name="SkinLabel" Margin="2" Text="{Loc 'sai-loadout-screen-label'}"/>
+            <PanelContainer HorizontalExpand="True" SetHeight="128">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True" VScrollEnabled="False">
+                    <BoxContainer Name="SkinList" Orientation="Horizontal" Margin="4"/>
+                </ScrollContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <cc:HSeparator Margin="5"/>
+        <BoxContainer Name="LawsBox" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="4" SizeFlagsStretchRatio="6">
+            <Label Name="LawsLabel" Margin="2" Text="{Loc 'sai-loadout-lawset-label'}"/>
+            <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="4">
+                <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" Margin="0 0 4 0" SizeFlagsStretchRatio="2">
+                    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                        </PanelContainer.PanelOverride>
+                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False" SizeFlagsStretchRatio="4">
+                            <BoxContainer Name="Laws" Orientation="Vertical"/>
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+                <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" Margin="4 0 0 0" SizeFlagsStretchRatio="4">
+                    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                        </PanelContainer.PanelOverride>
+                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False" SizeFlagsStretchRatio="4">
+                            <BoxContainer Name="LawsPreview" Orientation="Vertical"/>
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</loadout:BaseLoadoutWindow>
