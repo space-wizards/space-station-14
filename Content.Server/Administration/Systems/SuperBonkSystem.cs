@@ -4,6 +4,7 @@ using Content.Shared.Clumsy;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Systems;
 
@@ -12,44 +13,38 @@ public sealed class SuperBonkSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ClumsySystem _clumsySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SuperBonkComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SuperBonkComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnBonkShutdown);
+        SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnShutdown);
     }
 
-    public void StartSuperBonk(EntityUid target, float delay = 0.1f, bool stopWhenDead = false)
+    private void OnInit(Entity<SuperBonkComponent> ent, ref ComponentInit args)
     {
+        var (_, component) = ent;
 
-        //The other check in the code to stop when the target dies does not work if the target is already dead.
-        if (stopWhenDead && TryComp<MobStateComponent>(target, out var mState))
-        {
-            if (mState.CurrentState == MobState.Dead)
-                return;
-        }
+        component.NextBonk = _timing.CurTime + component.BonkCooldown;
+    }
 
-        var hadClumsy = EnsureComp<ClumsyComponent>(target, out _);
+    private void OnMobStateChanged(Entity<SuperBonkComponent> ent, ref MobStateChangedEvent args)
+    {
+        var (uid, component) = ent;
 
-        var tables = EntityQueryEnumerator<BonkableComponent>();
-        var bonks = new Dictionary<EntityUid, BonkableComponent>();
-        // This is done so we don't crash if something like a new table is spawned.
-        while (tables.MoveNext(out var uid, out var comp))
-        {
-            bonks.Add(uid, comp);
-        }
+        if (component.StopWhenDead && args.NewMobState == MobState.Dead)
+            RemCompDeferred<SuperBonkComponent>(uid);
+    }
 
-        var sComp = new SuperBonkComponent
-        {
-            Target = target,
-            Tables = bonks.GetEnumerator(),
-            RemoveClumsy = !hadClumsy,
-            StopWhenDead = stopWhenDead,
-        };
+    private void OnShutdown(Entity<SuperBonkComponent> ent, ref ComponentShutdown args)
+    {
+        var (uid, component) = ent;
 
-        AddComp(target, sComp);
+        if (component.RemoveClumsy)
+            RemComp<ClumsyComponent>(uid);
     }
 
     public override void Update(float frameTime)
@@ -59,49 +54,58 @@ public sealed class SuperBonkSystem : EntitySystem
 
         while (comps.MoveNext(out var uid, out var comp))
         {
-            comp.TimeRemaining -= frameTime;
-            if (!(comp.TimeRemaining <= 0))
+            if (comp.NextBonk > _timing.CurTime)
                 continue;
 
-            Bonk(comp);
-
-            if (!(comp.Tables.MoveNext()))
+            if (!TryBonk(uid, comp.Tables.Current) || !comp.Tables.MoveNext())
             {
-                RemComp<SuperBonkComponent>(comp.Target);
+                RemComp<SuperBonkComponent>(uid);
                 continue;
             }
 
-            comp.TimeRemaining = comp.InitialTime;
+            comp.NextBonk += comp.BonkCooldown;
         }
     }
 
-    private void Bonk(SuperBonkComponent comp)
+    public void StartSuperBonk(EntityUid target, bool stopWhenDead = false)
     {
-        var uid = comp.Tables.Current.Key;
+        //The other check in the code to stop when the target dies does not work if the target is already dead.
+        if (stopWhenDead && TryComp<MobStateComponent>(target, out var mobState) && mobState.CurrentState == MobState.Dead)
+            return;
+
+
+        if (EnsureComp<SuperBonkComponent>(target, out var component))
+            return;
+
+        var tables = EntityQueryEnumerator<BonkableComponent>();
+        var bonks = new List<EntityUid>();
+        // This is done so we don't crash if something like a new table is spawned.
+        while (tables.MoveNext(out var uid, out var comp))
+        {
+            bonks.Add(uid);
+        }
+
+        component.Tables = bonks.GetEnumerator();
+        component.RemoveClumsy = !EnsureComp<ClumsyComponent>(target, out _);
+        component.StopWhenDead = stopWhenDead;
+    }
+
+    private bool TryBonk(EntityUid uid, EntityUid tableUid)
+    {
+        if (!TryComp<ClumsyComponent>(uid, out var clumsyComp))
+            return false;
 
         // It would be very weird for something without a transform component to have a bonk component
         // but just in case because I don't want to crash the server.
-        if (!HasComp<TransformComponent>(uid) || !TryComp<ClumsyComponent>(comp.Target, out var clumsyComp))
-            return;
-
-        _transformSystem.SetCoordinates(comp.Target, Transform(uid).Coordinates);
-
-        _clumsySystem.HitHeadClumsy((comp.Target, clumsyComp), uid);
-
-        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, comp.Target);
-    }
-
-    private void OnMobStateChanged(EntityUid uid, SuperBonkComponent comp, MobStateChangedEvent args)
-    {
-        if (comp.StopWhenDead && args.NewMobState == MobState.Dead)
+        if (HasComp<TransformComponent>(tableUid))
         {
-            RemComp<SuperBonkComponent>(uid);
-        }
-    }
+            _transformSystem.SetCoordinates(uid, Transform(tableUid).Coordinates);
 
-    private void OnBonkShutdown(EntityUid uid, SuperBonkComponent comp, ComponentShutdown ev)
-    {
-        if (comp.RemoveClumsy)
-            RemComp<ClumsyComponent>(comp.Target);
+            _clumsySystem.HitHeadClumsy((uid, clumsyComp), tableUid);
+
+            _audioSystem.PlayPvs(clumsyComp.TableBonkSound, tableUid);
+        }
+
+        return true;
     }
 }
