@@ -33,6 +33,8 @@ survivor-round-end-alive-on-shuttle-count =
 
 ## Wizard
 
+objective-issuer-swf = [color=turquoise]The Space Wizards Federation[/color]
+
 wizard-title = Wizard
 wizard-description = There's a Wizard on the station! You never know what they might do.
 
