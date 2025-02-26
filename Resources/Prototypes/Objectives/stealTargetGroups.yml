@@ -155,7 +155,7 @@
   id: FlippoEngravedLighter
   name: steal-target-groups-flippo-engraved-lighter
   sprite:
-    sprite: Objects/Tools/lighters.rsi
+    sprite: Objects/Tools/Lighters/lighters.rsi
     state: zippo_engraved_icon_base
 
 - type: stealTargetGroup
