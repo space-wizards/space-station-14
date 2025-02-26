@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
+using Content.Server.Chat.Systems;
+using Content.Server.Construction.Completions;
 using Content.Server.MoMMI;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
@@ -441,6 +443,16 @@ internal sealed partial class ChatManager : IChatManager
             );
 
             //Logger.Debug(consumerMessage.ToMarkup());
+        }
+
+        // Sends an event to the entity that it spoke.
+        // Systems using this event should exclusively use it for non-message-related functionality.
+        // The message IS passed as an argument, but only if its contents needs to be used to determine functionality.
+        // Still a bit iffy about even having this event...
+        if (senderEntity != null)
+        {
+            var spokeEv = new EntitySpokeEvent(senderEntity.Value, message.ToString(), communicationChannel);
+            _entityManager.EventBus.RaiseLocalEvent(senderEntity.Value, spokeEv);
         }
 
         /* CHAT-TODO: get this part working.

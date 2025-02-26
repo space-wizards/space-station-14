@@ -199,25 +199,25 @@ public sealed class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
 }
 
 /// <summary>
-///     Raised on an entity when it speaks, either through 'say' or 'whisper'.
+///     Raised on an entity when it publishes a message.
+///     Systems using this event should exclusively use it for non-message-related functionality.
+///     The message IS passed as an argument, but only if its contents needs to be used to determine functionality.
 /// </summary>
+/// Slam: Still a bit iffy about even having this event...
 public sealed class EntitySpokeEvent : EntityEventArgs
 {
     public readonly EntityUid Source;
     public readonly string Message;
-    public readonly string? ObfuscatedMessage; // not null if this was a whisper
 
     /// <summary>
-    ///     If the entity was trying to speak into a radio, this was the channel they were trying to access. If a radio
-    ///     message gets sent on this channel, this should be set to null to prevent duplicate messages.
+    ///     The communications channel that the message was being sent to.
     /// </summary>
-    public RadioChannelPrototype? Channel;
+    public CommunicationChannelPrototype Channel;
 
-    public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, string? obfuscatedMessage)
+    public EntitySpokeEvent(EntityUid source, string message, CommunicationChannelPrototype channel)
     {
         Source = source;
         Message = message;
         Channel = channel;
-        ObfuscatedMessage = obfuscatedMessage;
     }
 }

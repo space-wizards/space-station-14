@@ -448,7 +448,8 @@
   id: StationAnnouncement # Used for station announcements
   consumeChatConditions:
   - !type:SameStationChatCondition
-    serverModifiers:
+  serverModifiers:
+  - !type:PlayGlobalAudioChatModifier
   - !type:ColorFulltextChatModifier
     colorKey: IngameAnnouncement
   chatFilter:

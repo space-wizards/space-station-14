@@ -21,6 +21,12 @@ namespace Content.Shared.Speech
         public ProtoId<SpeechSoundsPrototype>? SpeechSounds;
 
         /// <summary>
+        /// These channel prototypes will trigger the speech sound.
+        /// </summary>
+        [DataField]
+        public List<ProtoId<CommunicationChannelPrototype>> SpeechSoundChannels = new() { "ICSpeech", "ICWhisper" };
+
+        /// <summary>
         ///     What speech verb prototype should be used by default for displaying this entity's messages?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]

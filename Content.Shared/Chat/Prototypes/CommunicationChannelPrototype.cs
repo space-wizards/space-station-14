@@ -156,4 +156,6 @@ public enum DefaultChannelParameters
     SenderSession,
     RandomSeed,
     RadioChannel,
+    GlobalAudioPath,
+    GlobalAudioVolume,
 }
