@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
@@ -102,6 +102,13 @@ public abstract class SharedJobSystem : EntitySystem
         }
 
         departmentPrototype = null;
+        return false;
+    }
+
+    //imp addition
+    public bool MindsHaveSameJobDept(EntityUid mindID1, EntityUid mindID2)
+    {
+
         return false;
     }
 
