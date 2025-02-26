@@ -59,9 +59,9 @@
   id: HoPBackpackIan
   effects:
   - !type:GroupLoadoutEffect
-    proto: ProfessionalHoP
+    proto: MasterHoP
   equipment:
-    back: MasterHoP
+    back: ClothingBackpackIan
 
 # Outerclothing
 - type: loadout
