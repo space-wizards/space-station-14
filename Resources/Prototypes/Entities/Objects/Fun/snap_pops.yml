@@ -41,6 +41,11 @@
   description: Contains snap pops for a few minutes of popping fun!
   components:
   - type: Item
+    inhandVisuals:
+      left: 
+      - state: spbox-inhand-left
+      right:
+      - state: spbox-inhand-right
     size: Normal
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
