@@ -32,7 +32,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 40
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
