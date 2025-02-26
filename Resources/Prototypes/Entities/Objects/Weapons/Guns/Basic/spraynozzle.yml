@@ -21,9 +21,16 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: Absorbent
+    pickupAmount: 25
+    solutionName: tank
+    useAbsorberSolution: false
   - type: Appearance
   - type: ClothingSlotAmmoProvider
+  - type: SlotBasedConnectedContainer
     targetSlot: BACK
     providerWhitelist:
       tags:
       - NozzleBackTank
+  - type: UseDelay
+    delay: 0.5
