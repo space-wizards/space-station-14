@@ -48,14 +48,6 @@
   - type: EntityStorageVisuals
     stateBaseClosed: n2
     stateDoorOpen: n2_open
-    stateDoorClosed: n2_door_improvised
-
-- type: entity
-  id: ClosetEmergencyN2Fancy
-  parent: ClosetEmergencyN2
-  suffix: Fancy
-  components:
-  - type: EntityStorageVisuals
     stateDoorClosed: n2_door
 
 # Fire safety closet
