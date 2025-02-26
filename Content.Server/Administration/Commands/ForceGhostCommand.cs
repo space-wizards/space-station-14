@@ -5,7 +5,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using System.Linq;
 
 namespace Content.Server.Administration.Commands;
 
@@ -52,8 +51,9 @@ public sealed class ForceGhostCommand : LocalizedCommands
     {
         if (args.Length == 1)
         {
-            var options = _playerManager.Sessions.Select(c => c.Name).Order().ToArray();
-            return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-forceghost-hint"));
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.SessionNames(players: _playerManager),
+                Loc.GetString("cmd-forceghost-hint"));
         }
 
         return CompletionResult.Empty;
