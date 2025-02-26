@@ -6,6 +6,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Systems;
 using Robust.Server.GameObjects;
@@ -22,6 +23,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedMoverController _mover = default!;
 
         /// <summary>
         /// Whether any NPCs are allowed to run at all.
@@ -103,6 +105,7 @@ namespace Content.Server.NPC.Systems
 
             Log.Debug($"Waking {ToPrettyString(uid)}");
             EnsureComp<ActiveNPCComponent>(uid);
+            _mover.RefreshActiveInput(uid);
         }
 
         public void SleepNPC(EntityUid uid, HTNComponent? component = null)
@@ -126,6 +129,7 @@ namespace Content.Server.NPC.Systems
 
             Log.Debug($"Sleeping {ToPrettyString(uid)}");
             RemComp<ActiveNPCComponent>(uid);
+            _mover.RefreshActiveInput(uid);
         }
 
         /// <inheritdoc />
