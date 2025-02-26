@@ -507,10 +507,12 @@ namespace Content.Server.Ghost
             var playerEntity = mind.CurrentEntity;
 
             if (playerEntity != null && viaCommand)
+            {
                 if (forced)
                     _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
                 else
                     _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+            }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
             RaiseLocalEvent(handleEv);
