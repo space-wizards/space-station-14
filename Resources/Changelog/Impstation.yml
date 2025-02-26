@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Amber Station) Added brigmedic spawn and locker.
-    type: Add
-  id: 704
-  time: '2024-12-10T10:53:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/972
 - author: honeyed-lemons
   changes:
   - message: Shipyard consoles to the quartermasters room in Fland, Box, and Xeno
@@ -4096,3 +4089,10 @@
   id: 1203
   time: '2025-02-25T21:27:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1678
+- author: DinnerCalzone
+  changes:
+  - message: Convex has been derotated to reduce map maintenance load.
+    type: Remove
+  id: 1204
+  time: '2025-02-26T16:03:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1783
