@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: OnyxTheBrave
-  changes:
-  - message: Fixed the Industrial Reagent Grinder's visuals
-    type: Fix
-  id: 7508
-  time: '2024-10-14T03:53:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32758
 - author: irismessage
   changes:
   - message: Made role requirements display in a more understandable format.
@@ -3891,3 +3884,10 @@
   id: 8007
   time: '2025-02-25T16:40:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35040
+- author: Pumkin69
+  changes:
+  - message: Engineers can choose to not wear a headpiece now.
+    type: Fix
+  id: 8008
+  time: '2025-02-26T01:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35508
