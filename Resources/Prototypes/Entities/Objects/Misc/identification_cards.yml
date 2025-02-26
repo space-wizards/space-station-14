@@ -804,14 +804,6 @@
     - Wizard
     - External
     - Maintenance
-  - type: AgentIDCard # Shouldn't be able to chameleon
-  - type: ActivatableUI
-    key: enum.AgentIDCardUiKey.Key
-    inHandsOnly: true
-  - type: UserInterface
-    interfaces:
-      enum.AgentIDCardUiKey.Key:
-        type: AgentIDCardBoundUserInterface
 
 - type: entity
   parent: IDCardStandard
