@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Attachments.Components;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager;
@@ -22,13 +23,10 @@ public sealed class AttachmentSystem : EntitySystem
 
     private void OnInsert(Entity<AttachableComponent> uid, ref EntInsertedIntoContainerMessage args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
         var item = args.Entity;
         if (!TryComp(item, out AttachmentComponent? attachment)
             || uid.Comp.Components[args.Container.ID] is not {} compRegistry)
             return;
-        Logger.Debug($"{_netMan.IsClient}...attach time");
         foreach (var (compName, compRegistryEntry) in compRegistry)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))
@@ -36,20 +34,30 @@ public sealed class AttachmentSystem : EntitySystem
 
             var componentType = componentRegistration.Type;
 
-            if (!HasComp(item, componentType) || (HasComp(uid, componentType) && !attachment.ForceComponents))
+            if (!HasComp(item, componentType))
                 continue;
 
-            if (_entMan.TryGetComponent(uid, componentType, out var compExists))
-                _entMan.RemoveComponent(uid, compExists);
+            _entMan.TryGetComponent(uid, componentType, out var comp);
+            if (_timing.IsFirstTimePredicted)
+            {
+                if (comp is null || attachment.ForceComponents)
+                {
+                    comp = _factory.GetComponent(compRegistryEntry);
+                    _entMan.AddComponent(uid, comp, overwrite: attachment.ForceComponents);
+                    uid.Comp.AddedComps.Add((item, comp.GetType()));
+                }
+            }
+            else
+            {
+                if (comp is {})
+                    _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
+            }
 
-            _entMan.AddComponent(uid, compRegistryEntry, overwrite: true);
-            var comp = _entMan.GetComponent(uid, componentType);
-            DirtyField();
-            var itemComp = _entMan.GetComponent(item, componentType);
-            uid.Comp.AddedComps.Add((item, comp.GetType()));
-            // _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
-
-            Dirty(uid, comp);
+            if (comp is {})
+            {
+                var itemComp = _entMan.GetComponent(item, componentType);
+                _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
+            }
         }
     }
 
@@ -63,7 +71,6 @@ public sealed class AttachmentSystem : EntitySystem
             || compList[args.Container.ID] is not {} compRegistry
             || uid.Comp.AddedComps.Count == 0)
             return;
-        Logger.Debug($"{_netMan.IsClient}...remove1 time");
         foreach (var compName in compRegistry.Keys)
         {
             if (!_factory.TryGetRegistration(compName, out var componentRegistration))
@@ -72,7 +79,7 @@ public sealed class AttachmentSystem : EntitySystem
 
             if (uid.Comp.AddedComps.Find(comp => comp == (item, componentType)) is { } entry)
             {
-                uid.Comp.AddedComps.Remove(entry);
+                uid.Comp.AddedComps.RemoveAll(match => match == entry);
                 _entMan.RemoveComponent(uid, componentType);
             }
         }
