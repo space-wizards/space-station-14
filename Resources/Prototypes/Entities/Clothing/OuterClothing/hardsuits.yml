@@ -290,6 +290,7 @@
         Slash: 0.6
         Piercing: 0.6
         Caustic: 0.7
+    staminaModifier: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
@@ -322,6 +323,7 @@
         Slash: 0.6
         Piercing: 0.6
         Caustic: 0.7
+    staminaModifier: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
@@ -354,6 +356,7 @@
         Slash: 0.6
         Piercing: 0.6
         Caustic: 0.7
+    staminaModifier: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -388,6 +391,7 @@
         Heat: 0.5
         Radiation: 0.5
         Caustic: 0.6
+    staminaModifier: 0.6
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -530,6 +534,7 @@
         Piercing: 0.5
         Radiation: 0.5
         Caustic: 0.6
+    staminaModifier: 0.6
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -1102,7 +1107,7 @@
         Slash: 0.9
         Piercing: 0.9
         Caustic: 0.8
-    staminaModifier: 0.3
+    staminaModifier: 0.8
     ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
