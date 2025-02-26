@@ -3,7 +3,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
