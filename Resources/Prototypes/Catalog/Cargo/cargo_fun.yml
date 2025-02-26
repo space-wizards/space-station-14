@@ -111,7 +111,7 @@
 - type: cargoProduct
   id: FunFinfinPlush
   icon:
-    sprite: Objects/Fun/toys.rsi
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_finfin
   product: CrateFunFinfinPlushie
   cost: 50000

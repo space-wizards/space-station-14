@@ -34,8 +34,8 @@
   path:
     path: /Audio/Jukebox/starlight.ogg
 
-- type: jukebox
-  id: Sunset
-  name: PigeonBeans - Sunset
-  path:
-    path: /Audio/Jukebox/sunset.ogg
+#- type: jukebox # imp music purge - voted to remove from jukebox
+#  id: Sunset
+#  name: PigeonBeans - Sunset
+#  path:
+#    path: /Audio/Jukebox/sunset.ogg

@@ -140,7 +140,8 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSecurity
-        - id: ClothingMaskBreath
+        - id: ClothingMaskGasSecurity
+        - id: JetpackSecurityFilled
   - type: AccessReader
     access: [["Security"]]
 

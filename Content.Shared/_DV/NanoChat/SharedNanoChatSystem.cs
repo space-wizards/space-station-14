@@ -189,6 +189,42 @@ public abstract class SharedNanoChatSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Sets whether notifications are muted for a specific chat.
+    /// </summary>
+    public void ToggleChatMuted(Entity<NanoChatCardComponent?> card, uint chat)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return;
+
+        if (!card.Comp.MutedChats.Remove(chat))
+            card.Comp.MutedChats.Add(chat);
+        Dirty(card);
+    }
+
+    /// <summary>
+    ///     Gets whether NanoChat number is listed.
+    /// </summary>
+    public bool GetListNumber(Entity<NanoChatCardComponent?> card)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return false;
+
+        return card.Comp.ListNumber;
+    }
+
+    /// <summary>
+    ///     Sets whether NanoChat number is listed.
+    /// </summary>
+    public void SetListNumber(Entity<NanoChatCardComponent?> card, bool listNumber)
+    {
+        if (!Resolve(card, ref card.Comp) || card.Comp.ListNumber == listNumber)
+            return;
+
+        card.Comp.ListNumber = listNumber;
+        Dirty(card);
+    }
+
+    /// <summary>
     ///     Gets the time of the last message.
     /// </summary>
     public TimeSpan? GetLastMessageTime(Entity<NanoChatCardComponent?> card)

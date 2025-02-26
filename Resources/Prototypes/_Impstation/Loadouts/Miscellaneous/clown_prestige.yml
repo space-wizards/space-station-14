@@ -94,15 +94,15 @@
 
 # Civilian
 - type: loadout
-  id: ChaplinClown
+  id: ChaplainClown
   effects:
   - !type:GroupLoadoutEffect
     proto: ClownExpertTimer
   equipment:
-    mask: ClothingMaskClownChaplin
+    mask: ClothingMaskClownChaplain
 
 - type: loadout
-  id: ChaplinHonkrobes
+  id: ChaplainHonkrobes
   effects:
   - !type:GroupLoadoutEffect
     proto: ClownExpertTimer

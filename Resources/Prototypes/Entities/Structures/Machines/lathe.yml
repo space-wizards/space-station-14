@@ -477,6 +477,7 @@
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
     - SupermatterComputerCircuitboard # imp
+    - ImpCoffeeMachineCircuitboard #imp
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -870,6 +871,7 @@
         - MagazineBoxLightRifle
         - MagazineBoxMagnum
         - MagazineBoxPistol
+        - MagazineBoxLPistol #imp
         - MagazineBoxRifle
         - MagazineDMR #imp
         - MagazineDMREmpty #imp
@@ -886,6 +888,10 @@
         - MagazineShotgunSlug
         - SpeedLoaderMagnum
         - SpeedLoaderMagnumEmpty
+        - MagazinePistolSubMachineGun #imp
+        - MagazinePistolSubMachineGunEmpty #imp
+        - MagazinePistolSubMachineGunTopMounted #imp
+        - MagazinePistolSubMachineGunTopMountedEmpty #imp
     - type: MaterialStorage
       whitelist:
         tags:

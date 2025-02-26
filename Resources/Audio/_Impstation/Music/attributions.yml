@@ -1,0 +1,503 @@
+# jukebox
+
+- files: ["4ff.ogg"]
+  license: "Custom"
+  copyright: "4ff by NANORAY"
+  source: "https://youtube.com/watch?v=alZKAFzd218"
+
+- files: ["along_with_brew.ogg"]
+  license: "Custom"
+  copyright: "Along With Brew by Pilotredsky. Suggested by EpicToast"
+  source: "https://www.youtube.com/watch?v=qbIAoNR883A"
+
+- files: ["armored_in_green.ogg"]
+  license: "Custom"
+  copyright: "Suburb - Armored in Green by Manabu Namiki and Jake 'virt' Kaufman for Ketsuipachi Arrange"
+  source: "https://www.youtube.com/watch?v=Fg6VtW2s85Q"
+
+- files: ["bio-engineering.ogg"]
+  license: "Custom"
+  copyright: "Bio-Engineering by James Primate for Rain World. Suggested by AvianMaiden"
+  source: "https://www.youtube.com/watch?v=la_Y8nmSkSU"
+
+- files: ["bodybuilder.ogg"]
+  license: "Custom"
+  copyright: "Bodybuilder by Pilotredsun. Suggested by Twibz"
+  source: "https://www.youtube.com/watch?v=g0d9B9oL2h0"
+
+- files: ["cant_go_home_again_baby.ogg"]
+  license: "Custom"
+  copyright: "Can't go home again, baby by SoundTeMP for Ragnarok Online"
+  source: "https://www.youtube.com/watch?v=sMs9Q8nj8xE"
+
+- files: ["cizgi.ogg"]
+  license: "Custom"
+  copyright: "ÇİZGİ FİLM MAKİNESİ by TRT ÇOCUK. Suggested by sageuu"
+  source: "https://www.youtube.com/watch?v=GYzG3PMxfNI"
+
+- files: ["create_a_wrestler.ogg"]
+  license: "Custom"
+  copyright: "Create-A-Wrestler by James A. Johnston and J.J. Maguire for Wrestlemania X8. Suggested by HunBunQueen"
+  source: "https://www.youtube.com/watch?v=wf7BMXcGFR4"
+
+- files: ["dont_drink_it.ogg"]
+  license: "Custom"
+  copyright: "Don't Drink It by Pilotredsky"
+  source: "https://www.youtube.com/watch?v=EBFDLgqn8pw"
+
+- files: ["epoch.ogg"]
+  license: "Custom"
+  copyright: "Epoch by Aaron Cherof for Cobalt Core. Suggested by makeyejr"
+  source: "https://www.youtube.com/watch?v=C0b3p1teA9M"
+
+- files: ["eternal_sanctity.ogg"]
+  license: "Custom"
+  copyright: "Eternal Sanctity by flashygoodness for Tower of Heaven. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=wPqwxBnNxWU"
+
+- files: ["eudora.ogg"]
+  license: "Custom"
+  copyright: "Eudora - Logging Site by David Bergeaud for Rachet & Clank. Suggested by pivotbash"
+  source: "https://www.youtube.com/watch?v=YPMr9OcTGG8"
+
+- files: ["final_tag_roll.ogg"]
+  license: "Custom"
+  copyright: "Final Tag Roll by Rukunetsu"
+  source: "https://youtube.com/watch?v=04RJSbQYKa0"
+
+- files: ["get_enuf.ogg"]
+  license: "Custom"
+  copyright: "GET ENUF by Hideki Naganuma for BOMB RUSH CYBERFUNK. Suggested by Wowls"
+  source: "https://www.youtube.com/watch?v=ODy6rmrh4Og"
+
+- files: ["grinchs_ultimatum.ogg"]
+  license: "Custom"
+  copyright: "Grinch's Ultimatum by PilotRedSun. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=z01VlftkqY8"
+
+- files: ["i_like_it_here.ogg"]
+  license: "Custom"
+  copyright: "I Like It Here by Alistair Lindsay for Rimworld. Suggested by neon"
+  source: "https://www.youtube.com/watch?v=8A4u3hgFO68"
+
+- files: ["in_the_pocket.ogg"]
+  license: "Custom"
+  copyright: "In The Pocket by Ethan Goldhammer for BOMB RUSH CYBERFUNK"
+  source: "https://www.youtube.com/watch?v=LIfZUMkykz4"
+
+- files: ["join_us_4_happy_time.ogg"]
+  license: "Custom"
+  copyright: "Join Us 4 Happy Time (Chao Race) by Kenichi Tokoi and Fumie Kumatani for Sonic Adventure. Suggested by Lightning"
+  source: "https://www.youtube.com/watch?v=KOB6tdoiSGs"
+
+- files: ["last_hoorah.ogg"]
+  license: "Custom"
+  copyright: "Last Hoorah by KiloWatts"
+  source: "https://youtube.com/watch?v=1XTPrbI6O_Y"
+
+- files: ["lax_lullaby.ogg"]
+  license: "Custom"
+  copyright: "Lax Lullaby by Eero Lahtinen for Void Stranger"
+  source: "https://youtube.com/watch?v=8Jo5v0yo1Mg"
+
+- files: ["live_studio_audience.ogg"]
+  license: "Custom"
+  copyright: "Live Studio Audience by Tyron for Dr. Robotnik's Ring Racers"
+  source: "https://youtube.com/watch?v=AWPX_SjL_CA"
+
+- files: ["lonely_rolling_star.ogg"]
+  license: "Custom"
+  copyright: "LONELY ROLLING STAR by Yoshihito Yano and Saki Kabata for Katamari Damacy. Suggested by HunBunQueen"
+  source: "https://www.youtube.com/watch?v=pI5-LvbE4AE"
+
+- files: ["losing_is_fun.ogg"]
+  license: "Custom"
+  copyright: "Losing is Fun by Dabu & Simon Swerwer for Dwarf Fortress. Suggested by stony"
+  source: "https://www.youtube.com/watch?v=GukeCPL7KUQ"
+
+- files: ["lost_in_recollection.ogg"]
+  license: "Custom"
+  copyright: "Lost in Recollection by DrTapeworm for Dr. Robotnik's Ring Racers"
+  source: "https://youtube.com/watch?v=H3bmVqHQLVs"
+
+- files: ["match.ogg"]
+  license: "Custom"
+  copyright: "Match by Fred Mug. Suggested by Masa"
+  source: "https://www.youtube.com/watch?v=KZ02GxqrAv8"
+
+- files: ["montage.ogg"]
+  license: "Custom"
+  copyright: "Montage - 8/40 by Tetsukazu Nakanishi for Ace Combat 3: Electrosphere. Suggested by neon"
+  source: "https://www.youtube.com/watch?v=PMVCOcMitOQ"
+
+- files: ["morning_glow.ogg"]
+  license: "Custom"
+  copyright: "Morning Glow (Ft. Nicholas Mangiafico) by Doc McLennon for BOMB RUSH CYBERFUNK"
+  source: "https://youtube.com/watch?v=rtZyj33tlyI"
+
+- files: ["mt_amient_vs_spasm.ogg"]
+  license: "Custom"
+  copyright: "Mt. Amient vs Spasm by Soichi Terada."
+  source: "https://youtu.be/Ov5OkgHyAxk"
+
+- files: ["neosf_strut.ogg"]
+  license: "Custom"
+  copyright: "Neo-SF Strut by Aethernaut for 2064: Read Only Memories. Suggested by Wowls"
+  source: "https://www.youtube.com/watch?v=wgliv2t_fY4"
+
+- files: ["ordinary_days_v2.ogg"]
+  license: "Custom"
+  copyright: "Ordinary Days V2 by Klaus Veen for Lethal League Blaze"
+  source: "https://www.youtube.com/watch?v=rpGIXmaQ2Ak"
+
+- files: ["overclocked_weakness.ogg"]
+  license: "Custom"
+  copyright: "Overclocked Weakness by Jussi Elsilä for Barotrauma. Suggested by Wowls"
+  source: "https://www.youtube.com/watch?v=wwGn8nnlHVU"
+
+- files: ["pillars_of_creation.ogg"]
+  license: "Custom"
+  copyright: "Pillars of Creation by flashygoodness for Tower of Heaven. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=cAMumZKiKRQ"
+
+- files: ["prelude.ogg"]
+  license: "Custom"
+  copyright: "Prelude by Junya Nakano, Masashi Hamauzu and Nobuo Uematsu for FINAL FANTASY X. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=jJr9m9dfDZI"
+
+- files: ["rolling_down_the_street_in_my_katamari.ogg"]
+  license: "Custom"
+  copyright: "Rolling Down The Street, In My Katamari by Fearofdark."
+  source: "https://youtube.com/watch?v=sOa4VVlI9tE"
+
+- files: ["sam_jones.ogg"]
+  license: "Custom"
+  copyright: "Sam Jones by Leslie Fish. Suggested by fore"
+  source: "https://www.youtube.com/watch?v=IIjuYw2jwtw"
+
+- files: ["set_me_free.ogg"]
+  license: "Custom"
+  copyright: "Set Me Free by Shogo Sakai, Masaaki Iwasaki, Seiji Momoi, Taihei Sato and Arma for Minnesota Fats: Pool Legend. Suggested by leapfrogge"
+  source: "https://www.youtube.com/watch?v=kNoCBMANgPE"
+
+- files: ["shred.ogg"]
+  license: "Custom"
+  copyright: "Shred by B. Bravo and Lean Rock for Lethal League Blaze"
+  source: "https://youtube.com/watch?v=mD-8nkjWZbY"
+
+- files: ["snow_burn.ogg"]
+  license: "Custom"
+  copyright: "Snow Burn by Fearofdark"
+  source: "https://www.youtube.com/watch?v=fvgaJa8lDXc"
+
+- files: ["song_that_plays_when_you_encounter_a_caterpillar.ogg"]
+  license: "Custom"
+  copyright: "song that plays when you encounter a caterpillar by Solaris. Suggested by Stonylogray"
+  source: "https://www.youtube.com/watch?v=3LGdFKIXr9I"
+
+- files: ["space_asshole.ogg"]
+  license: "Custom"
+  copyright: "Space Asshole by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. The author also requested that a link to his bandcamp be included: https://chrisremo.bandcamp.com/"
+  source: "https://idlethumbs.bandcamp.com/track/space-asshole"
+  # The source is a direct link the the track, but not the "main" bandcamp of the author. Hence the link is also included separately in the copyright.
+
+- files: ["thanks.ogg"]
+  license: "Custom"
+  copyright: "Thanks by Pilotredsun. Suggested by EpicToast"
+  source: "https://www.youtube.com/watch?v=7eLARwNIjDY"
+
+- files: ["the_flute_tune.ogg"]
+  license: "Custom"
+  copyright: "The Flute Tune (Soulpride Remix) by J-Cut & Kolt Siewerts"
+  source: "https://www.youtube.com/watch?v=IwLSrNu1ppI"
+
+- files: ["thrashard_in_the_cave.ogg"]
+  license: "Custom"
+  copyright: "Thrashard In The Cave: Stage 2 (Arrange Ver.) by Sota Fujimori for Castlevania Chronicles"
+  source: "https://youtube.com/watch?v=jvMUnnK8oWc"
+
+- files: ["topolla_theatre.ogg"]
+  license: "Custom"
+  copyright: "Topolla Theatre, Home to the One and Only Venus by Keiichi Suzuki and Hirokazu Tanaka for Earthbound. Suggested by starplatinumb"
+  source: "https://www.youtube.com/watch?v=tYEJnBZqBz0"
+
+- files: ["twodaysoff.ogg"]
+  license: "Custom"
+  copyright: "Two Days Off by KiloWatts. Suggested by Wowls"
+  source: "https://www.youtube.com/watch?v=dK9oCBXX6Ec"
+
+- files: ["warsaw.ogg"]
+  license: "Custom"
+  copyright: "Warsaw by PilotRedSun. Suggested by plantkat"
+  source: "https://www.youtube.com/watch?v=_0PQicdTfO8"
+
+- files: ["you_blow_my_mind.ogg"]
+  license: "Custom"
+  copyright: "You Blow My Mind by Hideki Okugawa for Street Fighter III: 3rd Strike: Fight for the Future. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=jUs-ITmi_u4"
+
+- files: ["zip_ykk_arrange.ogg"]
+  license: "Custom"
+  copyright: "ZIP YKK ARRANGE by Rukunetsu"
+  source: "https://youtube.com/watch?v=ZPYiZIrmLVQ"
+
+# lobby
+
+- files: ["actors_anteroom.ogg"]
+  license: "Custom"
+  copyright: "Actor's Anteroom -Remastering- by RAITO for MELTY BLOOD Actress Again Current Code. Suggested by HunBunQueen"
+  source: "https://www.youtube.com/watch?v=PeDJEO5ghZs"
+
+- files: ["ai_bomb.ogg"]
+  license: "Custom"
+  copyright: "Artificial Intelligence Bomb (Remix) by theta, OG by naruto2413. Suggested by Twibz"
+  source: "https://www.youtube.com/watch?v=CBFLKcEo18s"
+
+- files: ["beam_katana_chronicles.ogg"]
+  license: "Custom"
+  copyright: "Beam Katana Chronicles by Masafumi Takada and Jun Fukuda for No More Heroes. Suggested by plantkat"
+  source: "https://www.youtube.com/watch?v=_fcRM4cRkbQ"
+
+- files: ["bee_like_that.ogg"]
+  license: "Custom"
+  copyright: "Bee like that by eebrozgi for Void Stranger. Suggested by flanburgr"
+  source: "https://www.youtube.com/watch?v=XqTwCuYrlgo"
+
+- files: ["burning_mens_soul.ogg"]
+  license: "Custom"
+  copyright: "Burning Men's Soul by Taku Iwasaki for Persona Trinity Soul. Suggested by yesteryear"
+  source: "https://www.youtube.com/watch?v=6plVf2T6AOo"
+
+- files: ["champanhe_e_agua_benta.ogg"]
+  license: "Custom"
+  copyright: "Champanhe E Água Benta by Charlie Brown Jr. Suggested by Metal"
+  source: "https://www.youtube.com/watch?v=g-8QRHw2Dyk"
+
+- files: ["clown.ogg"]
+  license: "Custom"
+  copyright: "clown.ogg by Admiral Hippie"
+  source: "https://www.youtube.com/watch?v=9whQIbNmu9s"
+
+- files: ["cmon.ogg"]
+  license: "Custom"
+  copyright: "cmon by 2 mello"
+  source: "https://youtube.com/watch?v=lzksfBUMLyc"
+
+- files: ["coops_d.ogg"]
+  license: "Custom"
+  copyright: "Coops D - Coops D. Suggested by HunBunQueen"
+  source: "https://www.youtube.com/watch?v=6XHUIrorfp8"
+
+- files: ["diesel.ogg.ogg"]
+  license: "Custom"
+  copyright: "diesel.ogg from Car Transport Simulator 2013. Suggested by Phoebe"
+  source: "https://www.youtube.com/watch?v=OOyqr1JB_ac"
+
+- files: ["digital_nightmare.ogg"]
+  license: "Custom"
+  copyright: "Digital Nightmare by TWRP. Suggested by DOSRG"
+  source: "https://www.youtube.com/watch?v=oyhHBxGyRRk"
+
+- files: ["eve_of_the_war.ogg"]
+  license: "Custom"
+  copyright: "The Eve of the War by Jeff Wayne. Suggested by Kip"
+  source: "https://www.youtube.com/watch?v=E1SpfapUE50"
+
+- files: ["foot_traffic.ogg"]
+  license: "Custom"
+  copyright: "Foot Traffic by 2 mello"
+  source: "https://youtube.com/watch?v=lWdlxuAfjpo"
+
+- files: ["gondalbad.ogg"]
+  license: "Custom"
+  copyright: "gondal"
+  source: "https://www.youtube.com/watch?v=m_dE89ifNq0"
+
+- files: ["hedgehog_stew.ogg"]
+  license: "Custom"
+  copyright: "Hedgehog Stew by iteachvader. Suggested by HunBunQueen"
+  source: "https://www.youtube.com/watch?v=HnyGSl3K-IE"
+
+- files: ["ilun_kinem.ogg"]
+  license: "Custom"
+  copyright: "Drink and Industry - ilun Kinem by Dabu & Simon Swerwer for DWARF Fortress. Suggested by icecreamjones"
+  source: "https://www.youtube.com/watch?v=GhaKh9bCUJA"
+
+- files: ["impossible.ogg"]
+  license: "Custom"
+  copyright: "Impossible by Darren Korb for Transistor. Suggested by hivehum"
+  source: "https://www.youtube.com/watch?v=Vrc5lv0O8yo"
+
+- files: ["iwatodai_dorm.ogg"]
+  license: "Custom"
+  copyright: "Iwatodai Dorm by Shoji Meguro and Yosuke Uda for Persona 3. Suggested by tox"
+  source: "https://www.youtube.com/watch?v=e2Gyaqf7EoU"
+
+- files: ["mantis_battle.ogg"]
+  license: "Custom"
+  copyright: "Mantis Battle by Ben Prunty for FTL. Suggested by YesOfCourse"
+  source: "https://www.youtube.com/watch?v=RdiqG3RGBec"
+
+- files: ["milkyway_battle.ogg"]
+  license: "Custom"
+  copyright: "MilkyWay (Battle) by Ben Prunty for FTL. Suggested by YesOfCourse"
+  source: "https://www.youtube.com/watch?v=AgL6jbqDbx8"
+
+- files: ["move_me.ogg"]
+  license: "Custom"
+  copyright: "Move Me by Kohta Takahashi for Ridge Racer Type 4"
+  source: "https://youtube.com/watch?v=re1IjZsUGtU"
+
+- files: ["mushroom_mayhem.ogg"]
+  license: "Custom"
+  copyright: "Mushroom Mayhem 1 by Lawrence Schwedler for Mario vs Donkey Kong 2: March of the Minis. Suggested by flanburgr"
+  source: "https://www.youtube.com/watch?v=kgrR-19FtR8"
+
+- files: ["music_1.ogg"]
+  license: "Custom"
+  copyright: "Music 1 by Shusaku Uchiyama and Makoto Tomozawa for P.N.03. Suggested by ghost"
+  source: "https://www.youtube.com/watch?v=hRt9izStuoQ"
+
+- files: ["ordinary_days.ogg"]
+  license: "Custom"
+  copyright: "Ordinary Days by Klaus Veen"
+  source: "https://youtube.com/watch?v=7WJeMcfQxhg"
+
+- files: ["organic_journey.ogg"]
+  license: "Custom"
+  copyright: "Organic Journey (Melodie du Crouton) by Doug Brown and Harmonious Wail for Club Penguin. Suggested by Lazy"
+  source: "https://www.youtube.com/watch?v=6lxYnuPakC8"
+
+- files: ["panic_cube.ogg"]
+  license: "Custom"
+  copyright: "Panic Cube by Shinji Hosoe, Ayako Saso, Yousuke Yasui and Yasuhisa Watanabe for Custom Robo. Suggested by starplatinumb"
+  source: "https://www.youtube.com/watch?v=wKghyORBSOs"
+
+- files: ["pizzatron_3000.ogg"]
+  license: "Custom"
+  copyright: "Pizzatron 3000 by Chris Hendricks for Club Penguin. Suggested by Phoebe"
+  source: "https://www.youtube.com/watch?v=LEZg_5PcUKI"
+
+- files: ["ready_steady_gogo.ogg"]
+  license: "Custom"
+  copyright: "Ready Steady Gogo by she. Suggested by sha"
+  source: "https://www.youtube.com/watch?v=HMbxWyw7kj4"
+
+- files: ["snort_worms.ogg"]
+  license: "Custom"
+  copyright: "if god didnt want us to snort worms he wouldn't have made them cylindrical! by MIMIDEATH. Suggested by vonFawks"
+  source: "https://www.youtube.com/watch?v=46i3LbIbbhI"
+
+- files: ["special_stage.ogg"]
+  license: "Custom"
+  copyright: "Special Stage by Naofumi Hataya and Masafumi Ogata for Sonic CD. Suggested by Lightning"
+  source: "https://www.youtube.com/watch?v=cuzotd7eQvc"
+
+- files: ["squarepusher.ogg"]
+  license: "Custom"
+  copyright: "Squarepusher Theme by Squarepusher. Suggested by HunBunQueen"
+  source: "https://www.youtube.com/watch?v=wiycAAoaK2k"
+
+- files: ["summer_love.ogg"]
+  license: "Custom"
+  copyright: "Summer Love by Widdly 2 Diddly for LISA: The Painful. Suggested by happy99"
+  source: "https://www.youtube.com/watch?v=1AKkLEoixkw"
+
+- files: ["swankys_swing.ogg"]
+  license: "Custom"
+  copyright: "Swanky's Swing by David Wise for Donkey Kong Country 2: Diddy Kong's Quest. Suggested by neon"
+  source: "https://www.youtube.com/watch?v=rCdal-AyKzc"
+
+- files: ["the_a_la_menthe.ogg"]
+  license: "Custom"
+  copyright: "Thé à la Menthe Instrumental by La Caution. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=DPvbet4vAWs"
+
+- files: ["the_day_of_night.ogg"]
+  license: "Custom"
+  copyright: "The Day of Night (No Honey Mustard) by Akira Yamaoka. Suggested by mira"
+  source: "https://phantasy-star.online/post/706860054642655232/"
+
+- files: ["the_norwegians.ogg"]
+  license: "Custom"
+  copyright: "The Norwegians by Angelo Badalamenti for Twin Peaks. Suggested by sageuu"
+  source: "https://www.youtube.com/watch?v=wDEKatQwyak"
+
+- files: ["tracking_device.ogg"]
+  license: "Custom"
+  copyright: "Tracking Device by Kelly Bailey for Half-Life 2. Suggested by vonFawks"
+  source: "https://www.youtube.com/watch?v=nb4I-x9uZJc"
+
+- files: ["what_im_feelin.ogg"]
+  license: "Custom"
+  copyright: "What I'm Feelin (Rae & Christian Mix) by Nightmares On Wax. Suggested by vonFawks"
+  source: "https://www.youtube.com/watch?v=pUBhO_zhLUk"
+
+# nuke
+
+- files: ["blatantly_nuclear.ogg"]
+  license: "Custom"
+  copyright: "Blatantly Nuclear by mrjajkes is licensed under the following terms: free use and modification with proper credit to the original creator, excluding usage by FulpStation, White Dream, Wizard's Den, and any ERP/sexually-oriented servers, or for commercial use unless granted permission by the author. For commercial use, please contact the author to discuss details."
+  source: "https://www.youtube.com/watch?v=f5URIS00IIc"
+
+- files: ["cyber_grind.ogg"]
+  license: "Custom"
+  copyright: "The Cyber Grind by meganeko for ULTRAKILL"
+  source: "https://www.youtube.com/watch?v=e9EqU9y69vU"
+
+- files: ["departure.ogg"]
+  license: "Custom"
+  copyright: "Departure by Ippo Yamada and III for MEGA MAN ZERO Mythos"
+  source: "https://www.youtube.com/watch?v=EsQI7Q4X8Nc"
+
+- files: ["fiend.ogg"]
+  license: "Custom"
+  copyright: "Fiend by Masayoshi Soken for FINAL FANTASY XIV: Heavensward"
+  source: "https://youtube.com/watch?v=MfNoBEb0ul8"
+
+- files: ["forget_about_freeman.ogg"]
+  license: "Custom"
+  copyright: "Forget About Freeman by Joel Nielsen for Black Mesa"
+  source: "https://www.youtube.com/watch?v=9OacXUzTNXo"
+
+- files: ["hurry_up.ogg"]
+  license: "Custom"
+  copyright: "Hurry Up! by Ryoji Yoshitomi for Wario Land 4"
+  source: "https://youtube.com/watch?v=fihc2ONQ5v0"
+
+- files: ["roadkilla.ogg"]
+  license: "Custom"
+  copyright: "Roadkilla (Combat X-Mix) by Jay Tholen for Slayers X: Terminal Aftermath - Vengance of the SLAYER"
+  source: "https://www.youtube.com/watch?v=ZGo-MLA6YfU"
+
+- files: ["ruinous_intnt.ogg"]
+  license: "Custom"
+  copyright: "RUINOUS INTNT by NoisyRejects for corru.observer"
+  source: "https://www.youtube.com/watch?v=22fCgKfzhWo"
+
+- files: ["secondwarning.ogg"]
+  license: "Custom"
+  copyright: "Second Warning by Dr.ReB for Lobotomy Corporation"
+  source: "https://www.youtube.com/watch?v=pe3h62MrlPE"
+
+- files: ["shootem.ogg"]
+  license: "Custom"
+  copyright: "Shoot 'Em by Washboard Rhythm Kings"
+  source: "https://www.youtube.com/watch?v=hx01Bt5BHaM"
+
+- files: ["war_without_reason.ogg"]
+  license: "Custom"
+  copyright: "War without Reason by Heaven Pierce Her for ULTRAKILL"
+  source: "https://www.youtube.com/watch?v=Elj4zDLqJvw"
+
+# expedition
+
+- files: ["fzero_fire.ogg"]
+  license: "Custom"
+  copyright: "Feel Our Pain (Fire Field) by Hidenori Shoji for F-Zero GX"
+  source: "https://www.youtube.com/watch?v=9FrV2BYiSB8"
+
+- files: ["mh_jungle.ogg"]
+  license: "Custom"
+  copyright: "Jungle Glutton (Original + Sunbreak remix) by Masato Kohda, Yuko Komiyama, Akihiko Narita, Satoshi Hori, Mana Ogura and Marika Suzuki for Monster Hunter Freedom 2 & Monster Hunter Rise: Sunbreak"
+  source: "https://www.youtube.com/watch?v=gOEbWknk1NU"

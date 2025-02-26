@@ -2,7 +2,7 @@
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCommandContraband]
   id: ClothingOuterCoatCMO
   name: chief medical officer's prestige lab coat
-  description: A medical lab coat for the Chief Medical Officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky. 
+  description: A medical lab coat for the Chief Medical Officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi
@@ -19,9 +19,124 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatJokester
   name: jokester's coat
-  description: A snazzy, striking red overcoat for professional comedians. The shoulder pads enable higher-brow humor. 
+  description: A snazzy, striking red overcoat for professional comedians. The shoulder pads enable higher-brow humor.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Coats/clown_jokestercoat.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Coats/clown_jokestercoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatQmHuge
+  name: quartermaster's XXXL winter coat
+  description: An oversized, exorbitantly fluffy winter coat for quartermasters.
+  components:
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/qm_hugecoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/qm_hugecoat.rsi
+
+- type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatFieldJacket
+  name: field jacket
+  description: A soft black suit jacket with loose cuffs. The white lettering on the back marks the wearer as Nanotrasen security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi
+
+# Not parented to the lightweight bomber because it has armor, so it must be armor-sized and not have pockets (only the detective gets that!)
+# If any changes are made to the lightweight bomber below, those changes must be applied to the security bomber manually
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseFoldable]
+  id: ClothingOuterCoatBomberSecurity
+  name: security bomber jacket
+  description: A red bomber jacket with a badge, worn with the sleeves pushed up. The shield on the back is sewn with special high-vis thread. Due to the kevlar lining, it's bulky and lacks pockets.
+  components:
+  - type: Item
+    size: Huge
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_security.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-open
+      map: ["foldedLayer"]
+      visible: false
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_security.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 1 #its a coat. it doesnt do shit
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-unzip-verb
+    foldVerbText: fold-zip-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: open
+    foldedHeldPrefix: open
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCoatBomberLightweight
+  name: lightweight bomber jacket
+  description: A plain black bomber jacket, worn with the sleeves pushed up.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_basic.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_basic.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-unzip-verb
+    foldVerbText: fold-zip-verb
+
+- type: entity
+  parent: ClothingOuterCoatBomberLightweight
+  id: ClothingOuterCoatBomberCargo
+  name: cargo bomber jacket
+  description: A brown bomber jacket, worn with the sleeves pushed up. It has plenty of pockets, and a Cargonian C on the back.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_cargo.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_cargo.rsi
+
+- type: entity
+  parent: ClothingOuterCoatBomberLightweight
+  id: ClothingOuterCoatBomberEngineer
+  name: engineering bomber jacket
+  description: An orange bomber jacket, worn with the sleeves pushed up. Features high-vis armbands, because safety is your number one concern.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_engineering.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_engineering.rsi
+
+- type: entity
+  parent: ClothingOuterCoatBomberLightweight
+  id: ClothingOuterCoatBomberMedical
+  name: medical bomber jacket
+  description: A blue bomber jacket with chest pockets, worn with the sleeves pushed up. Embroidered on the back is a caduceus, to remind you to do no harm.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_medical.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_medical.rsi
+
+- type: entity
+  parent: ClothingOuterCoatBomberLightweight
+  id: ClothingOuterCoatBomberScience
+  name: science bomber jacket
+  description: A purple bomber jacket with an access badge, worn with the sleeves pushed up. Embroidered on the back is a microscope, because it's important to fuss over the little things.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_science.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/bomber_science.rsi

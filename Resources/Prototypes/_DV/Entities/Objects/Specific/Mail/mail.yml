@@ -576,9 +576,12 @@
     contents:
     - id: PersonalAI
       orGroup: PAI
-      prob: 0.99
+      prob: 0.98
       # Ultra rare
     - id: SyndicatePersonalAI
+      orGroup: PAI
+      prob: 0.01
+    - id: GoldPersonalAI
       orGroup: PAI
       prob: 0.01
 
@@ -639,6 +642,9 @@
     - id: PlushieBug
       prob: 0.1
       orGroup: Plushie
+    - id: PlushieEvilBug
+      prob: 0.01
+      orGroup: Plushie
     - id: PlushieGray
       orGroup: Plushie
     - id: PlushieUrsaMinor
@@ -646,6 +652,23 @@
     - id: PlushieDecapoid
       orGroup: Plushie
     - id: PlushieSnail
+      orGroup: Plushie
+    - id: PlushieThaven
+      orGroup: Plushie
+    - id: PlushieThavenWeird
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieDwarf
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieApid
+      prob: 0.5
+      orGroup: Plushie
+    - id: PlushieGoblin
+      prob: 0.5
+      orGroup: Plushie
+    - id: PlushieGollylad
+      prob: 0.1
       orGroup: Plushie
     - id: PlushieImp
       prob: 0.1

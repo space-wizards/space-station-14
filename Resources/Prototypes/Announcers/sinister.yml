@@ -1,6 +1,6 @@
 - type: announcer
   id: Sinister
-  basePath: /Audio/_Impstation/Announcers/
+  basePath: /Audio/_Impstation/Announcers/Sinister
   baseAudioParams:
     volume: -12
   announcements:

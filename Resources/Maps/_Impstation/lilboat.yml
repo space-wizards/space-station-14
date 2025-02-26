@@ -49223,7 +49223,7 @@ entities:
     - type: Transform
       pos: 8.5,-32.5
       parent: 2
-- proto: SpawnMobWalter
+- proto: SpawnMobChemDog
   entities:
   - uid: 567
     components:

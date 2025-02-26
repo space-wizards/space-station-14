@@ -31,18 +31,23 @@
   loadouts:
   - AdminAssistantJumpsuit
   - AdminAssistantJumpskirt
+  - ClothingUniformNightclubSuit #imp
+  - ClothingUniformNightclubSuitSkirt #imp
 
 - type: loadoutGroup
   id: AdminAssistantShoes
   name: loadout-group-admin-assistant-shoes
   loadouts:
   - BlackShoes
-  - LeatherShoes
   - LacedShoes
+  - LeatherShoes
+  - WhiteDressShoes #imp
+  - BlackHeels #imp
 
 - type: loadoutGroup
   id: AdminAssistantOuter
   name: loadout-group-admin-assistant-outerclothing
+  minLimit: 0
   loadouts:
   - BartenderVest
   - WinterCoatBlack

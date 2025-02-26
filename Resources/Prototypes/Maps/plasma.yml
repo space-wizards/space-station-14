@@ -18,52 +18,54 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_plasma.yml
         - type: StationJobs
-          availableJobs: #Total of 70 jobs roundstart, max of 97 inc. latejoins and trainees.
+          availableJobs: #Total of 70 jobs roundstart, max of 100 inc. latejoins and trainees.
             #command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            AdministrativeAssistant : [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ] # imp
             ChiefEngineer: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service - 18-21
+            # service - 18-21
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
-            Chef: [ 2, 2 ]
-            Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
-            Reporter: [ 2, 3 ]
+            Chef: [ 2, 2 ]
             Clown: [ 1, 2 ] # This might be fun
+            Janitor: [ 3, 3 ]
+            Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #engineering - 8-12
+            Reporter: [ 2, 3 ]
+            ServiceWorker: [ 2, 2 ]
+            # engineering - 8-12
             AtmosphericTechnician: [ 4, 4 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 4, 4 ]
-            #medical - 9-13
+            # medical - 9-13
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 4 ]
-            Paramedic: [ 2, 2 ]
             MedicalIntern: [ 4, 4 ]
+            Paramedic: [ 2, 2 ]
             Psychologist: [ 1, 1 ]
-            #science - 7-13
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 4, 4 ]
-            StationAi: [ 1, 1 ]
+            # science - 7-13
             Borg: [ 2, 4 ]
-            #security - 9-17
-            Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 8 ]
+            ResearchAssistant: [ 4, 4 ]
+            Scientist: [ 4, 4 ]
+            StationAi: [ 1, 1 ]
+            # security - 10-18
+            Brigmedic: [ 1, 1 ] # imp
+            Lawyer: [ 1, 2 ]
             Detective: [ 1, 2 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 1, 2 ]
-            #supply - 11-13
-            SalvageSpecialist: [ 4, 4 ]
+            SecurityOfficer: [ 6, 8 ]
+            Warden: [ 1, 1 ]
+            # supply - 10-15
             CargoTechnician: [ 4, 6 ]
-            SupplyAssistant: [ 3, 3 ]
-            #civilian - the tiders yearn for the mines
+            Courier: [ 2, 2 ] # imp
+            SalvageSpecialist: [ 4, 4 ]
+            SupplyAssistant: [ 3, 3 ] # imp
+            # civilian - the tiders yearn for the mines
             Passenger: [ -1, -1 ]

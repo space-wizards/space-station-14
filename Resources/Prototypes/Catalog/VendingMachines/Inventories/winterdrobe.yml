@@ -10,32 +10,35 @@
     ClothingNeckScarfStripedBlue: 3
     ClothingNeckScarfStripedPurple: 3
     ClothingOuterCoatTrench: 6
-    ClothingOuterWinterColorBlack: 3 #imp
-    ClothingOuterWinterColorGray: 3 #imp
-    ClothingOuterWinterColorWhite: 3 #imp
-    ClothingOuterWinterColorLightBrown: 3 #imp
-    ClothingOuterWinterColorBrown: 3 #imp
-    ClothingOuterWinterColorRed: 3 #imp
-    ClothingOuterWinterColorOrange: 3 #imp
-    ClothingOuterWinterColorYellow: 3 #imp
-    ClothingOuterWinterColorGreen: 3 #imp
-    ClothingOuterWinterColorBlue: 3 #imp
-    ClothingOuterWinterColorPurple: 3 #imp
-    ClothingShoesBootsWinterColorBlack: 3 #imp
-    ClothingShoesBootsWinterColorGray: 3 #imp
-    ClothingShoesBootsWinterColorWhite: 3 #imp
-    ClothingShoesBootsWinterColorLightBrown: 3 #imp
-    ClothingShoesBootsWinterColorBrown: 3 #imp
-    ClothingShoesBootsWinterColorRed: 3 #imp
-    ClothingShoesBootsWinterColorOrange: 3 #imp
-    ClothingShoesBootsWinterColorYellow: 3 #imp
-    ClothingShoesBootsWinterColorGreen: 3 #imp
-    ClothingShoesBootsWinterColorBlue: 3 #imp
-    ClothingShoesBootsWinterColorPurple: 3 #imp
+    # imp additions start
+    ClothingOuterWinterColorBlack: 3
+    ClothingOuterWinterColorGray: 3
+    ClothingOuterWinterColorWhite: 3
+    ClothingOuterWinterColorLightBrown: 3
+    ClothingOuterWinterColorBrown: 3
+    ClothingOuterWinterColorRed: 3
+    ClothingOuterWinterColorOrange: 3
+    ClothingOuterWinterColorYellow: 3
+    ClothingOuterWinterColorGreen: 3
+    ClothingOuterWinterColorBlue: 3
+    ClothingOuterWinterColorPurple: 3
+    ClothingOuterCoatBomberLightweight: 3
+    ClothingOuterCoatBomber: 3
+    ClothingShoesBootsWinterColorBlack: 3
+    ClothingShoesBootsWinterColorGray: 3
+    ClothingShoesBootsWinterColorWhite: 3
+    ClothingShoesBootsWinterColorLightBrown: 3
+    ClothingShoesBootsWinterColorBrown: 3
+    ClothingShoesBootsWinterColorRed: 3
+    ClothingShoesBootsWinterColorOrange: 3
+    ClothingShoesBootsWinterColorYellow: 3
+    ClothingShoesBootsWinterColorGreen: 3
+    ClothingShoesBootsWinterColorBlue: 3
+    ClothingShoesBootsWinterColorPurple: 3
+    # imp additions end
     ClothingOuterFlannelRed: 2
     ClothingOuterFlannelBlue: 2
     ClothingOuterFlannelGreen: 2
-    ClothingOuterCoatBomber: 3
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
 

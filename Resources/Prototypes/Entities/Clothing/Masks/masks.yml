@@ -298,14 +298,14 @@
 
 - type: entity
   parent: ClothingMaskClown
-  id: ClothingMaskClownChaplin
+  id: ClothingMaskClownChaplain
   name: holy clown wig and mask
   description: A mask and wig symbolizing clown asceticism.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/clown_chaplin.rsi
+    sprite: Clothing/Mask/clown_chaplain.rsi
   - type: Clothing
-    sprite: Clothing/Mask/clown_chaplin.rsi
+    sprite: Clothing/Mask/clown_chaplain.rsi
 
 - type: entity
   parent: ClothingMaskClown

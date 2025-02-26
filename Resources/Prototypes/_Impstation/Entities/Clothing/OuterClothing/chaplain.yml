@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterMoon
+  name: moon shroud
+  description: By the power of the-
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/mooncape.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/mooncape.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterSilent
+  name: robes of the silent
+  description: ...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/silentrobe.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/silentrobe.rsi

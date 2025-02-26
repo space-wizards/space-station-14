@@ -105,6 +105,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly BodySystem _bodySystem = default!;
 
     public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
+    public EntProtoId TentaclePrototype = "FishingRodLing"; // imp
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
 
     public EntProtoId ShieldPrototype = "ChangelingShield";

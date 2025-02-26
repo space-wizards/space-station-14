@@ -283,7 +283,7 @@
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
-    description: Charge APCs, help with power, and keep everyone's batteries topped up.
+    description: Help with power, charge batteries, and go on adventures.
     rules: ghost-role-information-silicon-rules
     mindRoles:
     - MindRoleGhostRoleSilicon
@@ -306,3 +306,8 @@
     - Engineering
     - External
     - Salvage
+    - Cargo
+    - Maintenance
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral

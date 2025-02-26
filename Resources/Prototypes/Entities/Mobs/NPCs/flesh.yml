@@ -46,6 +46,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.5
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: CombatMode

@@ -1,3 +1,29 @@
+# species specific
+
+- type: loadoutGroup
+  id: GroupTankHarnessCommand
+  name: loadout-group-tank-harness-command
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessCommand
+
+- type: loadoutGroup
+  id: GroupTankHarnessWithOuterwear
+  name: loadout-group-tank-harness
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessWithOuterwear
+
+- type: loadoutGroup
+  id: GroupTankHarnessCommandWithOuterwear
+  name: loadout-group-tank-harness-command
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessCommandWithOuterwear
+
 - type: loadoutGroup
   id: GroupFullTankAquatic
   name: loadout-group-full-tank-aquatic
@@ -74,7 +100,6 @@
   loadouts:
   - LoadoutDecapoidBreathTool
 
-
 - type: loadoutGroup
   id: GroupBreathToolDecapoidInventory
   name: loadout-group-breath-tool-inventory-decapoid
@@ -83,174 +108,7 @@
   loadouts:
   - LoadoutDecapoidBreathToolInventory
 
-- type: loadoutGroup
-  id: ChemistHead
-  name: loadout-group-chemist-head
-  minLimit: 0
-  loadouts:
-  - MedicalBeret
-  - SeniorPhysicianBeret
-
-
-- type: loadoutGroup
-  id: CaptainGlasses
-  name: loadout-group-captain-glasses
-  loadouts:
-  - CaptainSunglasses
-  - CaptainVisor
-
-- type: loadoutGroup
-  id: CaptainGloves
-  name: loadout-group-captain-gloves
-  loadouts:
-  - CaptainGloves
-  - CaptainFlightGloves
-
-- type: loadoutGroup
-  id: CaptainShoes
-  name: loadout-group-captain-shoes
-  loadouts:
-  - LacedShoes
-  - LeatherShoes
-  - BlackCommandHeels
-  - BlueCommandHeels
-  - CaptainJumpBoots
-
-- type: loadoutGroup
-  id: CommandHeadset
-  name: loadout-group-command-headset
-  loadouts:
-  - CommandHeadsetBasic
-  - CommandHeadset
-  - CommandVeteranHeadset
-
-- type: loadoutGroup
-  id: SurvivalCommand
-  name: loadout-group-survival-command
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenCommand
-  - EmergencyOxygenCommand
-  - LoadoutSpeciesVoxNitrogenCommand
-
-- type: loadoutGroup
-  id: SurvivalExtendedCommand
-  name: loadout-group-survival-extended-command
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenExtendedCommand
-  - EmergencyOxygenExtendedCommand
-  - LoadoutSpeciesVoxNitrogenCommand
-
-- type: loadoutGroup
-  id: SurvivalSecurityCommand
-  name: loadout-group-survival-security-command
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenSecurityCommand
-  - EmergencyOxygenSecurityCommand
-  - LoadoutSpeciesVoxNitrogenCommand
-
-- type: loadoutGroup
-  id: QuartermasterHeadset
-  name: loadout-group-quartermaster-headset
-  loadouts:
-  - QuartermasterHeadsetBasic
-  - QuartermasterHeadset
-  - QuartermasterVeteranHeadset
-
-- type: loadoutGroup
-  id: QuartermasterBackpack
-  name: loadout-group-quartermaster-backpack
-  loadouts:
-  - CargoTechnicianBackpack
-  - CargoTechnicianSatchel
-  - CargoTechnicianDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
-
-- type: loadoutGroup
-  id: ChiefEngineerHeadset
-  name: loadout-group-chief-engineer-headset
-  loadouts:
-  - ChiefEngineerHeadsetBasic
-  - ChiefEngineerHeadset
-  - ChiefEngineerVeteranHeadset
-
-- type: loadoutGroup
-  id: ChiefEngineerBackpack
-  name: loadout-group-chief-engineer-backpack
-  loadouts:
-  - StationEngineerBackpack
-  - StationEngineerSatchel
-  - StationEngineerDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
-
-- type: loadoutGroup
-  id: ResearchDirectorBackpack
-  name: loadout-group-research-director-backpack
-  loadouts:
-  - ScientistBackpack
-  - ScientistSatchel
-  - ScientistDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
-
-- type: loadoutGroup
-  id: HeadofSecurityHeadset
-  name: loadout-group-head-of-security-headset
-  loadouts:
-  - HeadofSecurityHeadsetBasic
-  - HeadofSecurityHeadset
-  - HeadofSecurityVeteranHeadset
-
-- type: loadoutGroup
-  id: HeadofSecurityBackpack
-  name: loadout-group-head-of-security-backpack
-  loadouts:
-  - SecurityBackpack
-  - SecuritySatchel
-  - SecurityDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
-
-- type: loadoutGroup
-  id: ChiefMedicalOfficerHeadset
-  name: loadout-group-chief-medical-officer-headset
-  loadouts:
-  - ChiefMedicalOfficerHeadsetBasic
-  - ChiefMedicalOfficerHeadset
-  - ChiefMedicalOfficerVeteranHeadset
-
-- type: loadoutGroup
-  id: ChiefMedicalOfficerBackpack
-  name: loadout-group-chief-medical-officer-backpack
-  loadouts:
-  - MedicalDoctorBackpack
-  - MedicalDoctorSatchel
-  - MedicalDoctorDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
-
-- type: loadoutGroup
-  id: HoPShoes
-  name: loadout-group-hop-shoes
-  loadouts:
-  - BrownShoes
-  - LacedShoes
-  - LeatherShoes
-  - HoPShoesWhite
-  - BlackCommandHeels
-  - BlueCommandHeels
+# apids
 
 - type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
   id: StartingGearApidBotanist
@@ -329,12 +187,391 @@
     ears: ClothingHeadsetCargo
     #eyes:
 
+# command
+
+- type: loadoutGroup
+  id: CaptainGlasses
+  name: loadout-group-captain-glasses
+  loadouts:
+  - CaptainSunglasses
+  - CaptainVisor
+
+- type: loadoutGroup
+  id: CaptainGloves
+  name: loadout-group-captain-gloves
+  loadouts:
+  - CaptainGloves
+  - CaptainFlightGloves
+
+- type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
+  - CaptainJumpBoots
+
+- type: loadoutGroup
+  id: CommandHeadset
+  name: loadout-group-command-headset
+  loadouts:
+  - CommandHeadsetBasic
+  - CommandHeadset
+  - CommandVeteranHeadset
+
+- type: loadoutGroup
+  id: SurvivalCommand
+  name: loadout-group-survival-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenCommand
+  - EmergencyOxygenCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: SurvivalExtendedCommand
+  name: loadout-group-survival-extended-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenExtendedCommand
+  - EmergencyOxygenExtendedCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: SurvivalSecurityCommand
+  name: loadout-group-survival-security-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurityCommand
+  - EmergencyOxygenSecurityCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - BrownShoes
+  - LacedShoes
+  - LeatherShoes
+  - WhiteDressShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
+
+- type: loadoutGroup
+  id: AdminAssistantBackpack
+  name: loadout-group-admin-assistant-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - LeatherSatchel
+
+# service
+
+- type: loadoutGroup
+  id: ServiceMask
+  name: loadout-group-service-mask
+  minLimit: 0
+  loadouts:
+  - ServiceClown
+
+- type: loadoutGroup
+  id: BartenderNeck
+  name: loadout-group-bartender-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBlack
+  - RedTie
+
+- type: loadoutGroup
+  id: BartenderShoes
+  name: loadout-group-bartender-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - ClownShoesExpert
+
+- type: loadoutGroup
+  id: BartenderPDA
+  name: loadout-group-bartender-id
+  loadouts:
+  - BartenderPDA
+  - SeniorBartenderPDA
+
+- type: loadoutGroup
+  id: ChefNeck
+  name: loadout-group-chef-neck
+  minLimit: 0
+  loadouts:
+  - ScarfRed
+
+- type: loadoutGroup
+  id: ChefShoes
+  name: loadout-group-chef-shoes
+  loadouts:
+  - BlackShoes
+  - ChefShoes
+  - ClownShoesExpert
+
+- type: loadoutGroup
+  id: ChefPDA
+  name: loadout-group-chef-id
+  loadouts:
+  - ChefPDA
+  - SeniorChefPDA
+
+- type: loadoutGroup
+  id: LibrarianNeck
+  name: loadout-group-librarian-neck
+  minLimit: 0
+  loadouts:
+  - ScarfGreen
+
+- type: loadoutGroup
+  id: LibrarianShoes
+  name: loadout-group-librarian-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+
+- type: loadoutGroup
+  id: LawyerShoes
+  name: loadout-group-lawyer-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+
+- type: loadoutGroup
+  id: ChaplainEyes
+  name: loadout-group-chaplain-eyes
+  minLimit: 0
+  loadouts:
+  - ChaplainBlindfold
+
+- type: loadoutGroup
+  id: ChaplainBelt
+  name: loadout-group-chaplain-belt
+  minLimit: 0
+  loadouts:
+  - BeltChaplainDragon
+
+- type: loadoutGroup
+  id: ChaplainShoes
+  name: loadout-group-chaplain-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - ClownShoesExpert
+
+- type: loadoutGroup
+  id: JanitorMask
+  name: loadout-group-janitor-mask
+  minLimit: 0
+  loadouts:
+  - JanitorClown
+
+- type: loadoutGroup
+  id: JanitorNeck
+  name: loadout-group-janitor-neck
+  minLimit: 0
+  loadouts:
+  - ScarfPurple
+
+- type: loadoutGroup
+  id: JanitorShoes
+  name: loadout-group-janitor-shoes
+  loadouts:
+  - JanitorGaloshes
+  - JanitorClownShoes
+
+- type: loadoutGroup
+  id: BotanistNeck
+  name: loadout-group-botanist-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBrown
+  - ScarfGreen
+
+- type: loadoutGroup
+  id: BotanistShoes
+  name: loadout-group-botanist-shoes
+  loadouts:
+  - BrownShoes
+  - ClownShoesExpert
+
+- type: loadoutGroup
+  id: BotanistPDA
+  name: loadout-group-botanist-id
+  loadouts:
+  - BotanistPDA
+  - SeniorBotanistPDA
+
+- type: loadoutGroup
+  id: ClownMask
+  name: loadout-group-clown-mask
+  minLimit: 1
+  loadouts:
+  - ClownMask
+  - ClownNose
+
+- type: loadoutGroup
+  id: ClownNeck
+  name: loadout-group-clown-neck
+  minLimit: 0
+  loadouts:
+  - NeckRuffle
+
+- type: loadoutGroup
+  id: MimeNeck
+  name: loadout-group-mime-neck
+  minLimit: 0
+  loadouts:
+  - ScarfZebra
+
+- type: loadoutGroup
+  id: MimeShoes
+  name: loadout-group-mime-shoes
+  loadouts:
+  - WhiteShoes
+  - BlackShoes
+
+- type: loadoutGroup
+  id: MusicianNeck
+  name: loadout-group-musician-neck
+  minLimit: 0
+  loadouts:
+  - ScarfPurple
+
+- type: loadoutGroup
+  id: MusicianShoes
+  name: loadout-group-musician-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - BlackHeels
+
+- type: loadoutGroup
+  id: ReporterJumpsuit
+  name: loadout-group-reporter-jumpsuit
+  loadouts:
+  - ReporterJumpsuit
+  - JournalistJumpsuit
+  - ClothingUniformBrosBlazer
+  - ClothingUniformBrosBlazerSkirt
+
+- type: loadoutGroup
+  id: ReporterNeck
+  name: loadout-group-reporter-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBlack
+
+- type: loadoutGroup
+  id: ReporterShoes
+  name: loadout-group-reporter-shoes
+  loadouts:
+  - WhiteShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - ClownShoesExpert
+# supply
+
+- type: loadoutGroup
+  id: QuartermasterHeadset
+  name: loadout-group-quartermaster-headset
+  loadouts:
+  - QuartermasterHeadsetBasic
+  - QuartermasterHeadset
+  - QuartermasterVeteranHeadset
+
+- type: loadoutGroup
+  id: QuartermasterBackpack
+  name: loadout-group-quartermaster-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: CargoTechnicianMask
+  name: loadout-group-cargo-technician-mask
+  minLimit: 0
+  loadouts:
+  - CargoClown
+
+- type: loadoutGroup
+  id: CargoTechnicianNeck
+  name: loadout-group-cargo-technician-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBrown
+
+- type: loadoutGroup
+  id: CargoTechnicianPDA
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCargoTechnicianPDA
+
+- type: loadoutGroup
+  id: SalvageSpecialistNeck
+  name: loadout-group-salvage-specialist-neck
+  minLimit: 0
+  loadouts:
+  - MinerCloak
+  - DrillerCape
+  - SaMantle
+  - ScarfBrown
+
 - type: loadoutGroup
   id: SalvageSpecialistJumpsuit
   name: loadout-group-salvage-specialist-jumpsuit
   loadouts:
   - SalvageSpecialistJumpsuit
   - SalvageSpecialistJumpskirt
+
+- type: loadoutGroup
+  id: SalvageSpecialistGlasses
+  name: loadout-group-salvage-specialist-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesCheapSunglasses
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPink
+  - GlassesColorfulPurple
+  - GlassesColorfulRed
+  - GlassesColorfulYellow
+  - GlassesGarBlack
+  - GlassesGarGreen
+  - GlassesGarOrange
+  - GlassesGarRed
+  - GlassesJamjar
+  - GlassesJensen
+
+- type: loadoutGroup
+  id: SalvageSpecialistPDA
+  name: loadout-group-salvage-specialist-id
+  loadouts:
+  - SalvageSpecialistPDA
+  - SeniorSalvageSpecialistPDA
 
 - type: loadoutGroup
   id: CourierHead
@@ -372,6 +609,7 @@
   minLimit: 0
   loadouts:
   - CourierWintercoat
+  - BomberCargo
 
 - type: loadoutGroup
   id: CourierShoes
@@ -379,3 +617,319 @@
   loadouts:
   - LeatherShoes
   - CourierWinterBoots
+# engineering
+
+- type: loadoutGroup
+  id: ChiefEngineerHeadset
+  name: loadout-group-chief-engineer-headset
+  loadouts:
+  - ChiefEngineerHeadsetBasic
+  - ChiefEngineerHeadset
+  - ChiefEngineerVeteranHeadset
+
+- type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: StationEngineerMask
+  name: loadout-group-station-engineer-mask
+  minLimit: 0
+  loadouts:
+  - EngineerClown
+
+- type: loadoutGroup
+  id: StationEngineerNeck
+  name: loadout-group-station-engineer-neck
+  minLimit: 0
+  loadouts:
+  - ScarfOrange
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianNeck
+  name: loadout-group-atmospheric-technician-neck
+  minLimit: 0
+  loadouts:
+  - ScarfLightBlue
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianPDA
+  name: loadout-group-atmospheric-technician-id
+  loadouts:
+  - AtmosphericTechnicianPDA
+  - SeniorAtmosphericTechnicianPDA
+
+# science
+
+- type: loadoutGroup
+  id: ResearchDirectorHeadset
+  name: loadout-group-research-director-headset
+  loadouts:
+  - ResearchDirectorHeadsetBasic
+  - ResearchDirectorHeadset
+  - ResearchDirectorVeteranHeadset
+
+- type: loadoutGroup
+  id: ResearchDirectorBackpack
+  name: loadout-group-research-director-backpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ScientistMask
+  name: loadout-group-scientist-mask
+  minLimit: 0
+  loadouts:
+  - ScientistClown
+  - RoboticsClown
+
+# security
+- type: loadoutGroup
+  id: HeadofSecurityHeadset
+  name: loadout-group-head-of-security-headset
+  loadouts:
+  - HeadofSecurityHeadsetBasic
+  - HeadofSecurityHeadset
+  - HeadofSecurityVeteranHeadset
+
+- type: loadoutGroup
+  id: HeadofSecurityBackpack
+  name: loadout-group-head-of-security-backpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HeadofSecurityBelt
+  name: loadout-group-head-of-security-belt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+  - HeadofSecurityShoulderHolster
+
+- type: loadoutGroup
+  id: WardenNeck
+  name: loadout-group-warden-neck
+  minLimit: 0
+  loadouts:
+  - ScarfRed
+  - ScarfBlue
+
+- type: loadoutGroup
+  id: WardenPDA
+  name: loadout-group-warden-id
+  loadouts:
+  - WardenPDA
+  - SeniorWardenPDA
+
+- type: loadoutGroup
+  id: SecurityMask
+  name: loadout-group-security-mask
+  minLimit: 0
+  loadouts:
+  - SecurityClown
+
+- type: loadoutGroup
+  id: SecurityNeck
+  name: loadout-group-security-neck
+  minLimit: 0
+  loadouts:
+  - ScarfRed
+
+- type: loadoutGroup
+  id: UpperSecurityShoes
+  name: loadout-group-upper-security-shoes
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots
+
+- type: loadoutGroup
+  id: DetectiveShoes
+  name: loadout-group-detective-shoes
+  loadouts:
+  - JackBoots
+  - LeatherShoes
+  - SecurityWinterBoots
+  - SecurityClownShoes
+
+- type: loadoutGroup
+  id: DetectivePDA
+  name: loadout-group-detective-id
+  loadouts:
+  - DetectivePDA
+  - SeniorDetectivePDA
+
+- type: loadoutGroup
+  id: BrigmedicHead
+  name: loadout-group-brigmedic-head
+  minLimit: 0
+  loadouts:
+  - BrigmedicBeret
+  - BrigmedicCap
+
+- type: loadoutGroup
+  id: BrigmedicNeck
+  name: loadout-group-brigmedic-neck
+  minLimit: 0
+  loadouts:
+  - ScarfLightBlue
+  - ScarfRed
+
+- type: loadoutGroup
+  id: BrigmedicJumpsuit
+  name: loadout-group-brigmedic-jumpsuit
+  loadouts:
+  - BrigmedicJumpsuit
+  - BrigmedicJumpskirt
+
+- type: loadoutGroup
+  id: BrigmedicOuterClothing
+  name: loadout-group-brigmedic-outerclothing
+  minLimit: 0
+  loadouts:
+  - BrigmedicArmoredWinterCoat
+  - BrigmedicWinterCoat
+  - ArmorVest
+  - ArmorVestSlim
+  - ArmorVestCompact
+  - BomberSecurity
+
+- type: loadoutGroup
+  id: BrigmedicShoes
+  name: loadout-group-brigmedic-shoes
+  loadouts:
+  - JackBoots
+  - BrigmedicWinterBoots
+
+- type: loadoutGroup
+  id: BrigmedicBackpack
+  name: loadout-group-brigmedic-backpack
+  loadouts:
+  - BrigmedicBackpack
+  - BrigmedicSatchel
+  - BrigmedicDuffel
+
+- type: loadoutGroup
+  id: SurvivalBrigmedic
+  name: loadout-group-survival-brigmedic
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenBrigmedic
+  - EmergencyOxygenBrigmedic
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: GroupSpeciesBreathToolMedSec
+  name: loadout-group-breath-tool
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesBreathToolMedSec
+
+# medical
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHeadset
+  name: loadout-group-chief-medical-officer-headset
+  loadouts:
+  - ChiefMedicalOfficerHeadsetBasic
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerVeteranHeadset
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBackpack
+  name: loadout-group-chief-medical-officer-backpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: MedicalDoctorNeck
+  name: loadout-group-medical-doctor-neck
+  minLimit: 0
+  loadouts:
+  - ScarfLightBlue
+
+- type: loadoutGroup
+  id: ChemistHead
+  name: loadout-group-chemist-head
+  minLimit: 0
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret
+
+- type: loadoutGroup
+  id: ChemistNeck
+  name: loadout-group-chemist-neck
+  minLimit: 0
+  loadouts:
+  - ScarfOrange
+  - ChemistTie
+
+- type: loadoutGroup
+  id: ChemistShoes
+  name: loadout-group-chemist-shoes
+  loadouts:
+  - WhiteShoes
+  - MedicalWinterBoots
+  - ChemistryShoes
+
+- type: loadoutGroup
+  id: ChemistPDA
+  name: loadout-group-chemist-id
+  loadouts:
+  - ChemistryPDA
+  - SeniorChemistryPDA
+
+- type: loadoutGroup
+  id: ParamedicNeck
+  name: loadout-group-paramedic-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBlue
+
+- type: loadoutGroup
+  id: ParamedicPDA
+  name: loadout-group-paramedic-id
+  loadouts:
+  - ParamedicPDA
+  - SeniorParamedicPDA
+
+- type: loadoutGroup
+  id: PsychologistNeck
+  name: loadout-group-psychologist-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBlack
+
+- type: loadoutGroup
+  id: PsychologistShoes
+  name: loadout-group-psychologist-shoes
+  loadouts:
+  - BlackShoes
+  - WhiteShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - ClownShoesExpert

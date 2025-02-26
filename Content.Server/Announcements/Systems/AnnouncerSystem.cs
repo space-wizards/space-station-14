@@ -4,7 +4,7 @@ using Content.Shared.Announcements.Prototypes;
 using Content.Shared.Announcements.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Content.Shared._EinsteinEngines.CCVar;
+using Content.Shared._EE.CCVar;
 
 namespace Content.Server.Announcements.Systems;
 
@@ -26,7 +26,7 @@ public sealed partial class AnnouncerSystem : SharedAnnouncerSystem
         base.Initialize();
         NewAnnouncer();
 
-        _config.OnValueChanged(EinsteinCCVars.Announcer, _ => NewAnnouncer());
+        _config.OnValueChanged(EECCVars.Announcer, _ => NewAnnouncer());
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestarting);
     }

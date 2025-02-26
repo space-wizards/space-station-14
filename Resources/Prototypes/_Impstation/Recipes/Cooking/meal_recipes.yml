@@ -153,3 +153,149 @@
   solids:
     FoodSnackPistachios: 1
     FoodMimana: 1
+
+# a burger for every color
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerBlack
+  name: berserk hamburger recipe
+  result: FoodBurgerCrazyBlack
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonBlack: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerBlackAndWhite
+  name: wacky hamburger recipe
+  result: FoodBurgerCrazyBlackAndWhite
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonMime: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerBlue
+  name: barmy hamburger recipe
+  result: FoodBurgerCrazyBlue
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonBlue: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerOrange
+  name: mental hamburger recipe
+  result: FoodBurgerCrazyOrange
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonOrange: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerPurple
+  name: daft hamburger recipe
+  result: FoodBurgerCrazyPurple
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonPurple: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerRainbow
+  name: insane hamburger recipe
+  result: FoodBurgerCrazyRainbow
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonRainbow: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerRed
+  name: deranged hamburger recipe
+  result: FoodBurgerCrazyRed
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonRed: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerWhite
+  name: cuckoo hamburger recipe
+  result: FoodBurgerCrazyWhite
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonWhite: 1
+    Flare: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburgerYellow
+  name: mad hamburger recipe
+  result: FoodBurgerCrazyYellow
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChiliPepper: 1
+    FoodCabbage: 1
+    CrayonYellow: 1
+    Flare: 1

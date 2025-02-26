@@ -9,10 +9,10 @@ public sealed class ArtifacExpressionTriggerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<TransformComponent, EmoteEvent>(OnEmote);
+        SubscribeLocalEvent<TransformComponent, EntityEmotedEvent>(OnEmote);
     }
 
-    private void OnEmote(EntityUid emoter, TransformComponent component, EmoteEvent args)
+    private void OnEmote(EntityUid emoter, TransformComponent component, EntityEmotedEvent args)
     {
         var emoterXform = Transform(emoter);
 

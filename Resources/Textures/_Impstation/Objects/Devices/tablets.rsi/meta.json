@@ -1,12 +1,20 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Criminal records sprites by lazyriverfolk",
+    "copyright": "Criminal records sprites by lazyriverfolk, criminal records suit storage sprites by Sha-Seng",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+        {
+          "name": "criminal-equipped-SUITSTORAGE",
+          "directions": 4
+        },
+        {
+          "name": "criminal-equipped-SUITSTORAGE-unshaded",
+          "directions": 4
+        },
         {
             "name": "portable_criminal"
         },
