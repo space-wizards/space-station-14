@@ -81,8 +81,8 @@
         tableId: FillLockerEmergencyN2Standard
 
 - type: entity
-  id: ClosetWallEmergencyN2FilledRandom
   parent: ClosetWallEmergencyN2
+  id: ClosetWallEmergencyN2FilledRandom
   suffix: Filled, Random
   components:
   - type: EntityTableContainerFill
