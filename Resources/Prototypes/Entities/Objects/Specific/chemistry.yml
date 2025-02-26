@@ -96,6 +96,62 @@
 
 - type: entity
   parent: BaseItem
+  id: BorgBeaker
+  description: A internal liquid compartment built into a cyborg.
+  components:
+  - type: Tag
+    tags:
+    - GlassBeaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    layers:
+      - state: beaker
+      - state: beaker1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+  - type: MixableSolution
+    solution: beaker
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Drink
+    solution: beaker
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+
+- type: entity
+  parent: BaseItem
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -313,9 +369,9 @@
     - Dropper
 
 - type: entity
-  name: borgdropper
+  name: hydraulic dropper
   parent: Dropper
-  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
+  description: Used to transfer liquid between containers. A hydraulic mechanism allows for a much higher capacity than standard models.
   id: BorgDropper
   components:
   - type: Sprite
@@ -328,7 +384,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 10
+        maxVol: 15
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 

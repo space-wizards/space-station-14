@@ -68,3 +68,14 @@
     materialComposition:
       Plastic: 50
   - type: DnaSubstanceTrace
+
+- type: entity
+  parent: Bucket
+  id: BorgBucket
+  name: water tank
+  description: The internal reservoir of a Janitor Cyborg.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      bucket:
+        maxVol: 500
