@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Gamer3107
-  changes:
-  - message: Portal artifacts no longer target the AI or people within containers
-    type: Fix
-  id: 7510
-  time: '2024-10-14T05:55:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32677
 - author: ScarKy0
   changes:
   - message: Cyborg modules now have icons instead of using the module sprite.
@@ -3891,3 +3884,10 @@
   id: 8009
   time: '2025-02-26T02:18:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35381
+- author: keronshb
+  changes:
+  - message: Added the Wizard Antagonist!
+    type: Add
+  id: 8010
+  time: '2025-02-26T05:34:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35406
