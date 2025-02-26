@@ -113,3 +113,6 @@ alerts-revenant-essence-desc = The power of souls. It sustains you and is used f
 
 alerts-revenant-corporeal-name = Corporeal
 alerts-revenant-corporeal-desc = You have manifested physically. People around you can see and hurt you.
+
+alerts-coldblooded-name = [color=cyan]Coldblooded[/color]
+alerts-coldblooded-desc = You're too [color=cyan]cold[/color] and start feeling sleepy...
