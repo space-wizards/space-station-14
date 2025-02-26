@@ -27,21 +27,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var firstEntInt) || !int.TryParse(args[1], out var secondEntInt))
-            {
-                shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
+            // First player
+            if (!TryParseUid(args[1], shell, _entManager, out var firstEntityUid))
                 return;
-            }
 
-            var firstNetEnt = new NetEntity(firstEntInt);
-            var secondNetEnt = new NetEntity(secondEntInt);
-
-            if (!_entManager.TryGetEntity(firstNetEnt, out var firstEntityUid) ||
-                !_entManager.TryGetEntity(secondNetEnt, out var secondEntityUid))
-            {
-                shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
+            // Second player
+            if (!TryParseUid(args[2], shell, _entManager, out var secondEntityUid))
                 return;
-            }
 
             if (!_entManager.HasComponent<MindContainerComponent>(firstEntityUid) ||
                 !_entManager.HasComponent<MindContainerComponent>(secondEntityUid))
@@ -66,6 +58,42 @@ namespace Content.Server.Administration.Commands
             {
                 shell.WriteLine(Loc.GetString("set-swapmind-command-minds-not-found"));
             }
+        }
+
+        private bool TryParseUid(string str, IConsoleShell shell,
+            IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid)
+        {
+            if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
+                return true;
+
+            if (_playerManager.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)
+            {
+                entityUid = session.AttachedEntity.Value;
+                return true;
+            }
+
+            if (session == null)
+                shell.WriteError(Loc.GetString("cmd-rename-not-found", ("target", str)));
+            else
+                shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
+
+            entityUid = EntityUid.Invalid;
+            return false;
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-mind-command-hint"));
+            }
+
+            if (args.Length == 2)
+            {
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-mind-command-hint"));
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }
