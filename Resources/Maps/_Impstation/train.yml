@@ -12325,6 +12325,11 @@ entities:
     - type: Transform
       pos: -4.5,-200.5
       parent: 2
+  - uid: 7218
+    components:
+    - type: Transform
+      pos: 0.5,-201.5
+      parent: 2
   - uid: 18065
     components:
     - type: Transform
@@ -12367,6 +12372,13 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-124.5
+      parent: 2
+- proto: BedsheetCMO
+  entities:
+  - uid: 19323
+    components:
+    - type: Transform
+      pos: 0.5,-201.5
       parent: 2
 - proto: BedsheetGreen
   entities:
@@ -50212,11 +50224,6 @@ entities:
       parent: 2
 - proto: DogBed
   entities:
-  - uid: 7218
-    components:
-    - type: Transform
-      pos: 0.5,-201.5
-      parent: 2
   - uid: 7219
     components:
     - type: Transform
@@ -50251,6 +50258,11 @@ entities:
     components:
     - type: Transform
       pos: 5.5,-304.5
+      parent: 2
+  - uid: 19322
+    components:
+    - type: Transform
+      pos: 0.5,-203.5
       parent: 2
 - proto: DonkpocketBoxSpawner
   entities:
@@ -88054,6 +88066,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-241.5
+      parent: 2
+- proto: PosterLegitHighClassMartini
+  entities:
+  - uid: 19321
+    components:
+    - type: Transform
+      pos: 14.5,-64.5
       parent: 2
 - proto: PosterLegitIan
   entities:
