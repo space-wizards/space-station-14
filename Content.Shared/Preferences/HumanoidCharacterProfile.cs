@@ -28,10 +28,6 @@ namespace Content.Shared.Preferences
         private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-]");
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
-        public const int MaxNameLength = 32;
-        public const int MaxLoadoutNameLength = 32;
-        public const int MaxDescLength = 512;
-
         /// <summary>
         /// Job preferences for initial spawn.
         /// </summary>
@@ -512,9 +508,9 @@ namespace Content.Shared.Preferences
             {
                 name = GetName(Species, gender);
             }
-            else if (Name.Length > MaxNameLength)
+            else if (Name.Length > configManager.GetCVar(CCVars.MaxNameLength))
             {
-                name = Name[..MaxNameLength];
+                name = Name[..configManager.GetCVar(CCVars.MaxNameLength)];
             }
             else
             {
@@ -540,9 +536,9 @@ namespace Content.Shared.Preferences
             }
 
             string flavortext;
-            if (FlavorText.Length > MaxDescLength)
+            if (FlavorText.Length > configManager.GetCVar(CCVars.MaxFlavorTextLength))
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..MaxDescLength];
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..configManager.GetCVar(CCVars.MaxFlavorTextLength)];
             }
             else
             {
