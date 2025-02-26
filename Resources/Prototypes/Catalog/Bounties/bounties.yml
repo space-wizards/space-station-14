@@ -7,7 +7,7 @@
     amount: 1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
 
 - type: cargoBounty
   id: BountyBaseballBat

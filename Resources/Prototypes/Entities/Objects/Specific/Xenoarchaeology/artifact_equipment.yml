@@ -46,7 +46,7 @@
       capacity: 1
       whitelist:
         components:
-        - Artifact
+        - XenoArtifact
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: RadiationBlockingContainer
