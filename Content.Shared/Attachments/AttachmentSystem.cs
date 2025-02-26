@@ -44,7 +44,6 @@ public sealed class AttachmentSystem : EntitySystem
 
             _entMan.AddComponent(uid, compRegistryEntry, overwrite: true);
             var comp = _entMan.GetComponent(uid, componentType);
-            DirtyField();
             var itemComp = _entMan.GetComponent(item, componentType);
             uid.Comp.AddedComps.Add((item, comp.GetType()));
             // _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
