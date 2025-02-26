@@ -6,7 +6,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Procedural;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
-using Robust.Server.Maps;
 using Robust.Shared.Exceptions;
 using Robust.Shared.Map;
 
@@ -291,15 +290,10 @@ public sealed partial class SalvageSystem
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
 
-                var opts = new MapLoadOptions
-                {
-                    Offset = new Vector2(0, 0)
-                };
-
-                if (!_map.TryLoad(salvMapXform.MapID, salvageProto.MapPath.ToString(), out _, opts))
+                if (!_loader.TryLoadGrid(salvMapXform.MapID, salvageProto.MapPath, out _))
                 {
                     Report(magnet, MagnetChannel, "salvage-system-announcement-spawn-debris-disintegrated");
-                    _mapManager.DeleteMap(salvMapXform.MapID);
+                    _mapSystem.DeleteMap(salvMapXform.MapID);
                     return;
                 }
 
@@ -360,7 +354,7 @@ public sealed partial class SalvageSystem
         if (!TryGetSalvagePlacementLocation(magnet, mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
-            _mapManager.DeleteMap(salvMapXform.MapID);
+            _mapSystem.DeleteMap(salvMapXform.MapID);
             return;
         }
 
@@ -397,7 +391,7 @@ public sealed partial class SalvageSystem
         }
 
         Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
-        _mapManager.DeleteMap(salvMapXform.MapID);
+        _mapSystem.DeleteMap(salvMapXform.MapID);
 
         data.Comp.Announced = false;
 

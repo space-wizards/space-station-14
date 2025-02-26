@@ -1,0 +1,138 @@
+- type: entity
+  parent: [BaseWeaponBallisticTurret, BaseSyndicateContraband]
+  id: WeaponTurretSyndicate
+  suffix: Syndicate
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+
+- type: entity
+  parent: BaseWeaponBallisticTurret
+  id: WeaponTurretSyndicateDisposable
+  name: disposable ballistic turret
+  suffix: Syndicate, Disposable
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:TriggerBehavior
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+    capacity: 50
+  - type: Construction
+    deconstructionTarget: null
+    graph: WeaponTurretSyndicateDisposable
+    node: disposableTurret
+  - type: Repairable
+    qualityNeeded: "Anchoring"
+    doAfterDelay: 3
+  - type: TriggerWhenEmpty
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 1.5
+    totalIntensity: 30
+    canCreateVacuum: false
+
+- type: entity
+  parent: BaseWeaponBallisticTurret
+  id: WeaponTurretNanoTrasen
+  suffix: NanoTrasen
+  components:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+
+- type: entity
+  parent: BaseWeaponBallisticTurret
+  id: WeaponTurretHostile
+  suffix: Hostile
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+
+- type: entity
+  parent: BaseWeaponBallisticTurret
+  id: WeaponTurretAllHostile
+  suffix: All hostile
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AllHostile
+
+- type: entity
+  parent: BaseWeaponBallisticTurret
+  id: WeaponTurretXeno
+  name: xeno turret
+  suffix: Xeno
+  description: Shoots 9mm acid projectiles.
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Xeno
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/xenoturret.rsi
+    noRot: true
+    layers:
+    - state: acid_turret
+  - type: BallisticAmmoProvider
+    proto: BulletAcid
+    capacity: 500
+  - type: Gun
+    fireRate: 1
+    selectedMode: FullAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: HTN
+    rootTask:
+      task: TurretCompound
+    blackboard:
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Animals/snake_hiss.ogg
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/gib1.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatXeno:
+            min: 3
+            max: 5
+  - type: InteractionPopup
+    interactDelay: 1.0
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
