@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargo_core.yml # imp
         - type: StationJobs
-          availableJobs: # Total of 61 jobs roundstart, max of 71 inc. latejoins and trainees.
+          availableJobs: # Total of 62 jobs roundstart, max of 72 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -27,6 +27,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
             # service - 19
             Bartender: [ 2, 2 ]
