@@ -993,19 +993,16 @@
       - CanPilot
       - VimPilot
 
-# onestar is kinda fucked cause the loadout component is broken. sooo they gotta find guns somewhere i guess. /shrug.
 - type: entity
   name: onestar mecha
   id: Onestar
+  description: A gigantic mech. You should really be shooting at it.
   parent: PlayerSiliconBase
+  suffix: Boss, Ghost Role
   components:
-# InnateToolComponent is broken and this doesn't work. might not ever be fixed.
-#  - type: InnateTool
-#    tools:
-#      - id: WeaponMinigun
-#      - id: EnergySword
-#      - id: WeaponLauncherMultipleRocket
-#      - id: WeaponXrayCannon
+  - type: Loadout # imp special. this replaces the InnateTool component.
+    prototypes:
+      - StartingGearOnestarWeapons
   - type: UserInterface
     interfaces:
       enum.StrippingUiKey.Key:
@@ -1025,10 +1022,10 @@
     allowedStates:
       - Alive
       - Dead
-  - type: MobThresholds
+  - type: MobThresholds # imp 1000 > 2000
     thresholds:
       0: Alive
-      1000: Dead
+      2000: Dead
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1057,3 +1054,23 @@
   - type: Tag
     tags:
       - FootstepSound
+  - type: NpcFactionMember # imp
+    factions:
+    - AllHostile
+  - type: HTN # imp
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+  - type: Destructible # imp
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2000
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: OnestarDeath
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

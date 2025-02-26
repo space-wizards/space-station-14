@@ -1,0 +1,107 @@
+- type: entity
+  name: minigun EX-STAR
+  id: MinigunEX
+  parent: [ BaseWeaponHeavyMachineGun, BaseMajorContraband ]
+  description: An effort by Honk! Co. to harness clown hankerchief technology for warfare. It's also cherry scented.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+  - type: Gun
+    fireRate: 15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/minigun.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: CartridgeMinigun #imp
+    fireCost: 100
+  - type: Battery
+    maxCharge: 10000
+    startingCharge: 10000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: Unremoveable
+
+
+- type: entity
+  parent: HyperEutacticBlade
+  name: hypereutactic blade EX-STAR
+  description: All the things the original was, but lighter!
+  id: HEBladeEX
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable
+  - type: Wieldable
+    freeHandsRequired: 0
+
+- type: entity
+  name: RPG-8 EX-STAR
+  parent: BaseWeaponLauncher
+  id: MultiRPGEX
+  description: An effort by Honk! co. to harness miniaturized Christmas Elves for on-the-fly rocket manufacturing.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Gun
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: CartridgeRocketSlow #imp
+    fireCost: 1000
+  - type: Battery
+    maxCharge: 10000
+    startingCharge: 10000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 500
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: x-ray cannon EX-STAR
+  description: Uses a miniaturized nuclear reactor to generate INFINITE unclean energy. Create your own environmental disaster today!
+  parent: WeaponXrayCannon
+  id: XrayEX
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
+
+# StartingGear
+
+- type: startingGear
+  id: StartingGearOnestarWeapons
+  inhand:
+    - MinigunEX
+    - HEBladeEX
+    - MultiRPGEX
+    - XrayEX
