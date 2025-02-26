@@ -39,7 +39,7 @@
   group: Virology
   desc: reagent-desc-aidncerantibody 
   physicalDesc: reagent-physical-desc-opaque
-  flavor: AIDS
+  flavor: bitter
   color: "#ffffff"
   metabolisms:
     Medicine:
@@ -68,7 +68,7 @@
   group: Virology
   desc: reagent-desc-aidncer
   physicalDesc: reagent-physical-desc-opaque
-  flavor: AIDS
+  flavor: bitter
   color: "#ffffff"
   metabolisms:
     Poison:

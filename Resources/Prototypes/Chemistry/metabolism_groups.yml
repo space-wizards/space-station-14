@@ -21,7 +21,7 @@
   
 - type: metabolismGroup
   id: Virology
-  name: Virology #CHANGE
+  name: metabolism-group-virology
 
 - type: metabolismGroup
   id: Drink
