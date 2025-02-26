@@ -548,6 +548,9 @@
       - RoleSurvivalNukie
       components:
       #- type: SpaceAsshole
+      - type: RandomMetadata
+        nameSegments:
+        - SpaceAssholeName
       - type: NpcFactionMember
         factions:
         - Syndicate
