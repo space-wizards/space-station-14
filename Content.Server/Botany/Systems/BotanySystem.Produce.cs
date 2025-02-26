@@ -37,4 +37,14 @@ public sealed partial class BotanySystem
             solutionContainer.AddReagent(chem, amount);
         }
     }
+
+    public void SetYield(SeedData seed, int newYield)
+    {
+        seed.Yield = newYield;
+    }
+
+    public void SetPotency(SeedData seed, int newPotency)
+    {
+        seed.Potency = newPotency;
+    }
 }
