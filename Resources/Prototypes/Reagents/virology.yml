@@ -1,0 +1,100 @@
+#- type: reagent
+#  id: Bicaridine
+#  name: reagent-name-bicaridine
+#  group: Medicine
+#  desc: reagent-desc-bicaridine
+#  physicalDesc: reagent-physical-desc-opaque
+#  flavor: medicine
+#  color: "#ffaa00"
+#  metabolisms:
+#    Medicine:
+#      effects:
+#      - !type:HealthChange
+#        damage:
+#          groups:
+#            Brute: -2
+#      - !type:HealthChange
+#        conditions:
+#        - !type:ReagentThreshold
+#          min: 15
+#        damage:
+#          types:
+#            Asphyxiation: 0.5
+#            Poison: 1.5
+#      - !type:ChemVomit
+#        conditions:
+#        - !type:ReagentThreshold
+#          min: 30
+#        probability: 0.02
+#      - !type:Jitter
+#        conditions:
+#        - !type:ReagentThreshold
+#          min: 15
+#      - !type:Drunk
+
+        
+- type: reagent
+  id: AIDncerAntibody
+  name: AIDncer antibodies #CHANGE
+  group: Virology
+  desc: AIDncer antibodies #CHANGE
+  physicalDesc: reagent-physical-desc-opaque #CHANGE
+  flavor: AIDS
+  color: "#ffffff"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        reagent: AIDncer
+        amount: -0.3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          min: 4.5
+          max: 10
+        reagent: AIDncerAntibody
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: AIDncerAntibody
+        amount: 0.1
+
+- type: reagent
+  id: AIDncer
+  name: AIDncer virus #CHANGE
+  group: Virology
+  desc: AIDncer virus #CHANGE
+  physicalDesc: reagent-physical-desc-opaque #CHANGE
+  flavor: AIDS
+  color: "#ffffff"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:AdjustReagent
+        reagent: AIDncer
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: AIDncerAntibody
+        amount: 0.03
+              
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          

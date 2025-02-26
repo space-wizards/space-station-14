@@ -101,6 +101,7 @@ guide-entry-chemicals = Chemicals
 guide-entry-drinks = Drinks
 guide-entry-foodrecipes = Food Recipes
 
+guide-entry-virology = Virology
 guide-entry-elements = Elements
 guide-entry-medicine = Medicine
 guide-entry-narcotics = Narcotics
