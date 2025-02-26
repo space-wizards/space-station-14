@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.Components;
@@ -16,7 +17,7 @@ public sealed partial class SmokeComponent : Component
     /// <summary>
     /// The solution on the entity with touch and ingestion reactions.
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
@@ -37,4 +38,16 @@ public sealed partial class SmokeComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Duration = 10;
+
+    /// <summary>
+    /// What entities are allowed to examine the foam to see the reagents contained within #IMP
+    /// </summary>
+    [DataField("contentsViewers"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public EntityWhitelist? ContentsViewers = default!;
+
+    /// <summary>
+    /// Are ghosts allowed to examine the contents of this foam? #IMP
+    /// </summary>
+    [DataField("allowGhostExamine"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool AllowGhostExamine = true;
 }

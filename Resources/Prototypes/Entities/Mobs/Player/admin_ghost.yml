@@ -93,6 +93,7 @@
   - type: Loadout
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
+  - type: SupermatterImmune # imp
 
 - type: entity
   id: ActionAGhostShowSolar

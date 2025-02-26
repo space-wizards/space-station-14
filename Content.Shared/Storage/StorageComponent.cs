@@ -65,8 +65,18 @@ namespace Content.Shared.Storage
         [DataField]
         public TimeSpan OpenUiCooldown = TimeSpan.Zero;
 
+        /// <summary>
+        /// Can insert stuff by clicking the storage entity with it.
+        /// </summary>
         [DataField]
-        public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
+        public bool ClickInsert = true;
+
+        /// <summary>
+        /// Open the storage window when pressing E.
+        /// When false you can still open the inventory using verbs.
+        /// </summary>
+        [DataField]
+        public bool OpenOnActivate = true;
 
         /// <summary>
         /// How many entities area pickup can pickup at once.

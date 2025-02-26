@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: FootstepCosmic
+  files:
+  - /Audio/_Impstation/CosmicCult/footsteps/step1.ogg
+  - /Audio/_Impstation/CosmicCult/footsteps/step2.ogg
+  - /Audio/_Impstation/CosmicCult/footsteps/step3.ogg
+  - /Audio/_Impstation/CosmicCult/footsteps/step4.ogg
+  - /Audio/_Impstation/CosmicCult/footsteps/step5.ogg

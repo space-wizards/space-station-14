@@ -1,12 +1,37 @@
 - type: guideEntry
   id: Heretics
   name: guide-entry-heretics
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Heretics.xml" # for imp metashield
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Heretics.xml" # given a consistency pass by dark, keeping in imp directory 4 now
   children:
-  - HereticsAsh
-  - HereticsFlesh
-  - HereticsVoid
+  - HereticsKnowledge
+  - HereticsSpells
+  - HereticsRituals
+  - HereticsPaths
   - HereticsSide
+
+- type: guideEntry
+  id: HereticsPaths
+  name: guide-entry-heretics-paths
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsPaths.xml"
+  children:
+    - HereticsAsh
+    - HereticsFlesh
+    - HereticsVoid
+
+- type: guideEntry
+  id: HereticsKnowledge
+  name: guide-entry-heretics-knowledge
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsKnowledge.xml"
+
+- type: guideEntry
+  id: HereticsSpells
+  name: guide-entry-heretics-spells
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsSpells.xml"
+
+- type: guideEntry
+  id: HereticsRituals
+  name: guide-entry-heretics-rituals
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsRituals.xml"
 
 - type: guideEntry
   id: HereticsAsh

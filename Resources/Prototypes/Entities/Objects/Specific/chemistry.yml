@@ -594,9 +594,9 @@
   components:
   - type: Item
     size: Tiny
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills_canister.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
   - type: Tag
     tags:

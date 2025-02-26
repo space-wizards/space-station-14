@@ -12,7 +12,7 @@
       time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 #10 hrs
+      time: 72000 #20 hrs, imp
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10

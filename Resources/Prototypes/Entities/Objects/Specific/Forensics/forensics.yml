@@ -2,7 +2,7 @@
   id: ForensicPad
   name: forensic pad
   parent: BaseItem
-  description: A forensic pad for collecting fingerprints or fibers.
+  description: A forensic pad for collecting fingerprints, fibers or chemicals.
   components:
   - type: Item
     size: Tiny

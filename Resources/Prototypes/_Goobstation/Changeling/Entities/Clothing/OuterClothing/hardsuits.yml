@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: [ClothingOuterBaseLarge, TierXContraband]
   id: ChangelingClothingOuterHardsuit
   name: organic space suit
   description: A spaceworthy biomass of pressure and temperature resistant tissue.

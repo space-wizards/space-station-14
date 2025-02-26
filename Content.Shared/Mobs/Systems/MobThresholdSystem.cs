@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Events;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mobs.Systems;
@@ -37,6 +38,9 @@ public sealed class MobThresholdSystem : EntitySystem
             component.CurrentThresholdState,
             component.StateAlertDict,
             component.ShowOverlays,
+            component.ShowBruteOverlay,
+            component.ShowAirlossOverlay,
+            component.ShowCritOverlay,
             component.AllowRevives);
     }
 
@@ -45,6 +49,10 @@ public sealed class MobThresholdSystem : EntitySystem
         if (args.Current is not MobThresholdsComponentState state)
             return;
         component.Thresholds = new SortedDictionary<FixedPoint2, MobState>(state.UnsortedThresholds);
+        component.ShowOverlays = state.ShowOverlays;
+        component.ShowBruteOverlay = state.ShowBruteOverlay;
+        component.ShowAirlossOverlay = state.ShowAirlossOverlay;
+        component.ShowCritOverlay = state.ShowCritOverlay;
         component.TriggersAlerts = state.TriggersAlerts;
         component.CurrentThresholdState = state.CurrentThresholdState;
         component.AllowRevives = state.AllowRevives;
@@ -327,6 +335,46 @@ public sealed class MobThresholdSystem : EntitySystem
         VerifyThresholds(uid, component);
     }
 
+    public void SetOverlaysEnabled(EntityUid uid, bool val, MobThresholdsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.ShowOverlays = val;
+        Dirty(uid, component);
+    }
+
+    public void SetBruteOverlayEnabled(EntityUid uid, bool val, MobThresholdsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.ShowBruteOverlay = val;
+        Dirty(uid, component);
+    }
+
+    public void SetAirlossOverlayEnabled(EntityUid uid, bool val, MobThresholdsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.ShowAirlossOverlay = val;
+        Dirty(uid, component);
+    }
+
+    public void SetCritOverlayEnabled(EntityUid uid, bool val, MobThresholdsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.ShowCritOverlay = val;
+        Dirty(uid, component);
+    }
+
+    public void SetTriggersAlerts(EntityUid uid, bool val, MobThresholdsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.TriggersAlerts = val;
+        Dirty(uid, component);
+    }
+
     #endregion
 
     #region Private Implementation
@@ -391,6 +439,16 @@ public sealed class MobThresholdSystem : EntitySystem
         if (alertPrototype.SupportsSeverity)
         {
             var severity = _alerts.GetMinSeverity(currentAlert);
+
+            var ev = new BeforeAlertSeverityCheckEvent(currentAlert, severity);
+            RaiseLocalEvent(target, ev);
+
+            if (ev.CancelUpdate)
+            {
+                _alerts.ShowAlert(target, ev.CurrentAlert, ev.Severity);
+                return;
+            }
+
             if (TryGetNextState(target, currentMobState, out var nextState, threshold) &&
                 TryGetPercentageForState(target, nextState.Value, damageable.TotalDamage, out var percentage))
             {

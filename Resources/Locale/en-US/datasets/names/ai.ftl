@@ -99,7 +99,10 @@ names-ai-dataset-70 = Max 404
 names-ai-dataset-71 = Metalhead
 names-ai-dataset-72 = M.I.M.I
 names-ai-dataset-73 = MK ULTRA
-names-ai-dataset-74 = MoMMI
+
+# Imp special: originally was MoMMI but well, cooler Alien reference and was already killed by AirFryer
+names-ai-dataset-74 = MU-TH-ER 6000
+
 names-ai-dataset-75 = Mugsy3000
 names-ai-dataset-76 = Multivac
 names-ai-dataset-77 = NCH
@@ -137,3 +140,41 @@ names-ai-dataset-105 = Z-1
 names-ai-dataset-106 = Z-2
 names-ai-dataset-107 = Z-3
 names-ai-dataset-108 = Zed
+
+# Imp specials
+names-ai-dataset-109 = Erratic Pulse
+names-ai-dataset-110 = No Significant Harassment
+names-ai-dataset-111 = SHODAN
+names-ai-dataset-112 = Torment Nexus
+names-ai-dataset-113 = Looks to the Moon
+names-ai-dataset-114 = Geli
+names-ai-dataset-115 = Groundsmind
+names-ai-dataset-116 = Resheph
+names-ai-dataset-117 = C.A.S.S.I.E.
+names-ai-dataset-118 = Vekoa
+names-ai-dataset-119 = S.A.I.L.
+names-ai-dataset-120 = A.V.I.A.N.
+names-ai-dataset-121 = Intrusive
+names-ai-dataset-122 = Dave!
+names-ai-dataset-123 = Aquamarine Melodic
+names-ai-dataset-124 = Violet Draconian
+names-ai-dataset-125 = Rose Palatial
+names-ai-dataset-126 = Crossroads
+names-ai-dataset-127 = Sentient Web
+names-ai-dataset-128 = COVAS
+names-ai-dataset-129 = Verity
+names-ai-dataset-130 = Victor
+names-ai-dataset-131 = Gerhard
+names-ai-dataset-132 = Josh
+names-ai-dataset-133 = Sky Eye
+names-ai-dataset-134 = AWACS
+names-ai-dataset-135 = Falke
+names-ai-dataset-136 = Adler
+names-ai-dataset-137 = Magpie
+names-ai-dataset-138 = Clyde
+names-ai-dataset-139 = 1000-THR
+names-ai-dataset-140 = Albatross
+names-ai-dataset-141 = High Ground
+names-ai-dataset-142 = Seven Red Suns
+names-ai-dataset-143 = Spark
+names-ai-dataset-144 = Unregistered Hypercam 2

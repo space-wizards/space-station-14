@@ -41,4 +41,10 @@ public sealed partial class CargoTelepadComponent : Component
 
     [DataField("receiverPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string ReceiverPort = "OrderReceiver";
+
+    /// <summary>
+    /// Imp : The VFX spawned when cargo teleports in.
+    /// </summary>
+    [DataField]
+    public EntProtoId BeamInFx = "CargoTelepadVFX";
 }

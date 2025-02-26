@@ -1,7 +1,7 @@
 - type: entity
   name: holoparasite injector
   id: HoloparasiteInjector
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier3Contraband]
   description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 
 - type: entity
   name: holoparasite box
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier3Contraband]
   id: BoxHoloparasite
   description: A box containing a holoparasite injector.
   components:
@@ -50,7 +50,7 @@
 
 - type: entity
   name: holoclown box
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier2Contraband]
   id: BoxHoloclown
   description: A box containing a holoclown injector.
   components:

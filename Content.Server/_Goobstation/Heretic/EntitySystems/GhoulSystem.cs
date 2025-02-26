@@ -27,7 +27,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Heretic.EntitySystems;
 
-public sealed partial class GhoulSystem : EntitySystem
+public sealed partial class GhoulSystem : Shared.Heretic.EntitySystems.SharedGhoulSystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
@@ -143,7 +143,7 @@ public sealed partial class GhoulSystem : EntitySystem
 
     private void OnExamine(Entity<GhoulComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("examine-system-cant-see-entity"));
+        args.PushMarkup($"[color=red]{Loc.GetString("heretic-ghoul-examine", ("ent", args.Examined))}[/color]");
     }
 
     private void OnMobStateChange(Entity<GhoulComponent> ent, ref MobStateChangedEvent args)

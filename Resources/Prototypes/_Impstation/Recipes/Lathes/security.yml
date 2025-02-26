@@ -100,3 +100,34 @@
   materials:
     Plastic: 500
     Uranium: 1000
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineDMREmpty
+  result: MagazineDMREmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineDMR
+  result: MagazineDMR
+  materials:
+    Steel: 565
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineDMRUranium
+  result: MagazineDMRUranium
+  materials:
+    Steel: 25
+    Plastic: 360
+    Uranium: 360
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineDMRIncendiary
+  result: MagazineDMRIncendiary
+  materials:
+    Steel: 25
+    Plastic: 540

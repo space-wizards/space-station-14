@@ -1,0 +1,26 @@
+- type: entity
+  id: OrganApidLungs
+  parent: [ OrganHumanLungs, OrganHumanStomach ]
+  name: apid lungs
+  description: "For beeathing."
+  suffix: "Apid"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  - type: Metabolizer
+    metabolizerTypes: [ Apid ]
+    maxReagents: 3
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Gas
+      rateModifier: 100.0
+  - type: Lung

@@ -56,6 +56,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "ChiefEngineer",
         "ChiefMedicalOfficer",
         "Command",
+        "Courier", // Imp
         "Cryogenics",
         "Engineering",
         "External",
@@ -65,6 +66,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Janitor",
         "Kitchen",
         "Lawyer",
+        "Logistics", //Imp
         "Maintenance",
         "Medical",
         "Quartermaster",

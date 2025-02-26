@@ -48,8 +48,8 @@
   - type: GameRule
     minPlayers: 35
     delay:
-      min: 2
-      max: 4
+      min: 240
+      max: 420
   - type: AntagObjectives
     objectives:
     - KillRandomTraitorSvSObjective

@@ -275,6 +275,17 @@
       orGroup: Pizza
     - id: KnifePlastic
 
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizzaFilled
+  id: FoodBoxPizzaCotton
+  suffix: Cotton Pizza
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaCotton
+    - id: KnifePlastic
+
 # Nugget
 
 - type: entity
@@ -559,6 +570,9 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
+      - id: GoldPersonalAI #imp
+        orGroup: GiftPool
+        prob: 0.01
       - id: CrayonBox
         orGroup: GiftPool
       - id: ToySword
@@ -572,6 +586,8 @@
         orGroup: GiftPool
       - id: GoldenBikeHorn
         prob: 0.1
+        orGroup: GiftPool
+      - id: SpaceBladeMc #imp
         orGroup: GiftPool
 
 - type: entity
@@ -593,7 +609,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: [HappyHonk, BaseSyndicateContraband]
+  parent: [HappyHonk, Tier1Contraband]
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe
@@ -621,6 +637,8 @@
         prob: 0.6
         orGroup: GiftPool
       - id: PlushieNuke
+        orGroup: GiftPool
+      - id: SpaceBladeContra #imp
         orGroup: GiftPool
 
 - type: entity
@@ -650,6 +668,8 @@
       prob: 0.6
       orGroup: GiftPool
     - id: PlushieNuke
+      orGroup: GiftPool
+    - id: SpaceBladeContra #imp
       orGroup: GiftPool
     # drinks - 4 cans, up to 2 blood-red brews
     - id: DrinkNukieCan
@@ -709,6 +729,8 @@
         orGroup: DrinkPool
       - id: DrinkLemonLimeCan
         orGroup: DrinkPool
+      - id: DrinkLemonLimeCranberryCan
+        orGroup: DrinkPool
       - id: DrinkIcedTeaCan
         orGroup: DrinkPool
       - id: ToyMouse
@@ -757,6 +779,9 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
+      - id: GoldPersonalAI #imp
+        orGroup: GiftPool
+        prob: 0.01
       - id: CrayonBox
         orGroup: GiftPool
       - id: ToySword
@@ -771,3 +796,27 @@
       - id: GoldenBikeHorn
         prob: 0.1
         orGroup: GiftPool
+      - id: SpaceBladeMc #imp
+        orGroup: GiftPool
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxCloth
+  name: box of FlutterSoft-brand cloth
+  description: Fiber is the most important moth meal of the day! Don't skip it or use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth instead.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: cloth-box
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    maxItemSize: Normal
+    whitelist:
+      tags:
+      - ClothMade
+  - type: Item
+    size: Normal
+  - type: StorageFill
+    contents:
+    - id: MaterialCloth10

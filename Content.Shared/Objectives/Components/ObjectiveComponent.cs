@@ -41,6 +41,12 @@ public sealed partial class ObjectiveComponent : Component
     /// </summary>
     [DataField]
     public SpriteSpecifier? Icon;
+
+    /// <summary>
+    /// imp edit - used to mark objectives that are "trivial" w/r/t their TC cost, like DAGD or escape alive and unrestrained
+    /// </summary>
+    [DataField]
+    public bool Trivial;
 }
 
 /// <summary>

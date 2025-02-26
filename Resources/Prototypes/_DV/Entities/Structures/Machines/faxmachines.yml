@@ -1,0 +1,16 @@
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineListeningSyndie
+  name: listening post long range fax machine
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: _DV/Structures/Machines/syndicate_fax_machine.rsi
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#a3a3a3"
+  - type: FaxMachine
+    name: "Unknown?"
+    responsePings: false
+  - type: Emagged

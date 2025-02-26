@@ -62,3 +62,19 @@
       catalyst: true
   products:
     Holium: 1
+    
+- type: reaction
+  id: Medium
+  impact: Medium #lol
+  reactants:
+    AquamDivinos:
+      amount: 1
+    Oculine:
+      amount: 1
+    THC:
+      amount: 1
+    PhilosophersJuice:
+      amount: 1
+      catalyst: true
+  products:
+    Medium: 1

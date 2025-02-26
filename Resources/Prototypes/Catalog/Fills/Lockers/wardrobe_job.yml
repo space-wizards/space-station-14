@@ -191,6 +191,8 @@
          amount: 2
        - id: ClothingUniformJumpsuitSalvageSpecialist
          amount: 2
+       - id: ClothingUniformJumpskirtSalvageSpecialist #imp
+         amount: 2
 
  - type: entity
    id: WardrobeAtmosphericsFilled

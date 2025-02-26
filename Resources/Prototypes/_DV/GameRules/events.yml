@@ -1,0 +1,101 @@
+- type: entityTable
+  id: BasicAntagEventsTableDV
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ListeningPost
+    - id: Fugitive
+
+# Mid round antag spawns
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseMidRoundAntag
+  components:
+  - type: StationEvent
+    weight: 7
+    reoccurrenceDelay: 5
+    minimumPlayers: 15
+    earliestStart: 25
+  - type: MidRoundAntagRule
+
+- type: entity
+  id: ListeningPost
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    weight: 2
+    minimumPlayers: 30
+    maxOccurrences: 1
+    duration: null
+  - type: RuleGrids
+  - type: LoadFarGridRule
+    path: /Maps/_Impstation/Shuttles/listening_post.yml
+    distanceModifier: 13
+  - type: DebrisSpawnerRule
+    count: 12
+    distanceModifier: 7
+  # TODO: funny trolling or intel related objectives
+  - type: AntagLoadProfileRule
+  - type: AntagSelection
+    agentName: listening-post-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSyndicateListener
+      min: 2
+      max: 2
+      pickPlayer: false
+      startingGear: SyndicateListenerGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - names_death_commando
+      - type: AutoImplant
+        implants:
+        - DeathAcidifierImplant
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindRoles:
+      - MindRolePostOperator
+
+- type: entity
+  parent: BaseMidRoundAntag
+  id: Fugitive
+  components:
+  - type: StationEvent
+    startAnnouncement: false
+    weight: 7
+    reoccurrenceDelay: 5
+    minimumPlayers: 30 # it's really easy to find fugitives on lowpop
+    earliestStart: 25
+    duration: null
+  #- type: PrecognitionResult // imp no precog
+  #  message: psionic-power-precognition-fugitive-result-message
+  - type: FugitiveRule
+  - type: AntagLoadProfileRule
+  - type: AntagObjectives
+    objectives:
+    - FugitiveEscapeObjective
+  - type: AntagSelection
+    agentName: fugitive-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostFugitive
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: FugitiveGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - fake_human_first
+        - fake_human_last
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+      - type: EmitSoundOnSpawn # fell out of the ceiling
+        sound: /Audio/Effects/clang.ogg
+      mindRoles:
+      - MindRoleFugitive

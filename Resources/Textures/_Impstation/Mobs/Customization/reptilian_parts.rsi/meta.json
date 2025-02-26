@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "horns_nubby by pinkbat5, all other markings by starlighthowls, head_flat/snout_tall/beard by rainyatrium",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+	  {
+        "name": "snout_tall",
+        "directions": 4
+      },
+	  {
+        "name": "head_flat",
+        "directions": 4
+      },
+	  {
+        "name": "beard",
+        "directions": 4
+      },
+      {
+        "name": "fangs",
+        "directions": 4
+      },
+      {
+        "name": "horns_kobold_ears_piercings",
+        "directions": 4
+      },
+      {
+        "name": "horns_kobold_ears",
+        "directions": 4
+      },
+      {
+        "name": "horns_nubby",
+        "directions": 4
+      },
+      {
+        "name": "piercings1",
+        "directions": 4
+      }
+    ]
+  }

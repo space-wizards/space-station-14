@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Traits.Assorted;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -94,15 +95,21 @@ public sealed class DamageOverlayUiController : UIController
         {
             case MobState.Alive:
             {
-                if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
+                if (EntityManager.HasComponent<PainNumbnessComponent>(entity))
+                {
+                    _overlay.BruteLevel = 0;
+                }
+                else if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
                 {
                     _overlay.BruteLevel = FixedPoint2.Min(1f, bruteDamage / critThreshold).Float();
                 }
+                else
+                    _overlay.BruteLevel = 0;
 
-                if (damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
-                {
+                if (thresholds.ShowAirlossOverlay && damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                     _overlay.OxygenLevel = FixedPoint2.Min(1f, oxyDamage / critThreshold).Float();
-                }
+                else
+                    _overlay.OxygenLevel = 0;
 
                 if (_overlay.BruteLevel < 0.05f) // Don't show damage overlay if they're near enough to max.
                 {
@@ -118,7 +125,10 @@ public sealed class DamageOverlayUiController : UIController
                 if (!_mobThresholdSystem.TryGetDeadPercentage(entity,
                         FixedPoint2.Max(0.0, damageable.TotalDamage), out var critLevel))
                     return;
-                _overlay.CritLevel = critLevel.Value.Float();
+                if (thresholds.ShowCritOverlay)
+                    _overlay.CritLevel = critLevel.Value.Float();
+                else
+                    _overlay.CritLevel = 0;
 
                 _overlay.BruteLevel = 0;
                 _overlay.DeadLevel = 0;

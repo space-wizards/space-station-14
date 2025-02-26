@@ -15,6 +15,9 @@
   equipment:
     id: ReporterPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+    pocket1: HandLabeler # for labeling cassette tapes
+  storage: # Delta-V: reporters start with tape recorder equipment
+    back:
+    - TapeRecorder
+    - CassetteTape
+    - CassetteTape

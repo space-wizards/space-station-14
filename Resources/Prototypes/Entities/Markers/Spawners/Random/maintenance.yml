@@ -17,7 +17,7 @@
         - id: ClothingEyesGlassesGar
         - id: ClothingEyesGlassesGarOrange
         - id: ClothingEyesGlassesGarGiga
-        - id: ClothingEyesGlassesGarMecha
+        - id: ClothingEyesGlassesGarMecha # imp
       - id: Wristwatch
         weight: 0.5
       - id: ClothingHeadHatCake
@@ -89,6 +89,8 @@
       - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
+      - id: HeartLocket
+      - id: CDDogtags
     # Uncommon Group
     - !type:GroupSelector
       weight: 23
@@ -151,6 +153,7 @@
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
         - id: ClothingNeckPansexualPin
+        - id: ClothingNeckOmnisexualPin
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin
@@ -453,6 +456,7 @@
       - id: RifleStock
       - id: ModularReceiver
       - id: HydroponicsToolScythe
+      - id: WeaponPistolZipper
     # Rare Group
     - !type:GroupSelector
       weight: 5
@@ -463,7 +467,6 @@
       - id: ClothingMaskMuzzle
       - id: ClothingMaskGasSecurity
       - id: ShardGlass
-      - id: WeaponPistolZipper
         weight: 2
       - id: Syringe
       - id: Mousetrap
@@ -514,6 +517,34 @@
       offset: 0.0
 
 - type: entityTable
+  id: InsulsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHandsGlovesColorYellowBudget # budget insuls
+      weight: 85
+    - id: ClothingHandsGlovesColorYellow # true insuls
+      weight: 10
+    - id: ClothingHandsGlovesFingerlessInsulated # fingerless
+      weight: 4
+    - id: ClothingHandsGlovesConducting # conducting
+      weight: 1
+
+- type: entity
+  name: Maint Loot Spawner
+  id: MaintenanceInsulsSpawner
+  suffix: Insuls, safe
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: InsulsTable
+
+- type: entityTable
   id: MaintEnemyTable
   table: !type:GroupSelector
     children:
@@ -547,3 +578,4 @@
     table: !type:NestedSelector
       tableId: MaintEnemyTable
       prob: 0.6
+

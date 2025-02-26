@@ -1,0 +1,26 @@
+<Document>
+ #Spells & Foci
+
+<Box>
+  <GuideEntityEmbed Entity="CodexCicatrix" Caption=""/>
+</Box>
+
+  ## We Love Casting Spells
+  Spells are your main form of weaponry, movement, and general utility.
+  
+  You will only start with one spell, the [color=green]Mansus Grasp[/color]. Use your knowledge store to get more.
+  
+  Spells can be activated using the action buttons. Many will require you to click on a target as well.
+
+  ## Focus is Necessary
+  To cast more advanced spells, you must focus by equipping a [color=orange]Magic Focus[/color].
+  
+  Your Codex Cicatrix will function as a focus when it is open and in your hand.
+  
+  You can acquire an Amber Focus using the eponymous ritual. It will act as a focus when worn around your neck.
+  
+  Some more powerful heretical equipment also functions as a focus - namely, the Ominous Armor from the Armorer's Ritual (when the hood is flipped up).
+  
+  [color=yellow]Ascension[/color] disables the need for a focus.
+
+</Document>

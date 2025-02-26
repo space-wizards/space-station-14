@@ -1,0 +1,124 @@
+- type: tile
+  id: FloorCosmicGlyph
+  name: tiles-cosmiccult-floor-glyph
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_glyph.png
+  baseTurf: FloorGlass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicSmooth
+  name: tiles-cosmiccult-floor-smooth
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_smooth.png
+  baseTurf: FloorGlass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicHalf
+  name: tiles-cosmiccult-floor-half
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_half.png
+  baseTurf: FloorGlass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicSplit
+  name: tiles-cosmiccult-floor-split
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_split.png
+  baseTurf: FloorGlass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicNotched
+  name: tiles-cosmiccult-floor-notched
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_notched.png
+  baseTurf: FloorGlass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: entity
+  id: FloorCosmicDecay
+  name: entropic decay
+  description: Just one look at this sends a chill running down your spine.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: FloorOccluder
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+  - type: TileEntityEffect
+    effects:
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.15
+        amount: -30000
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Clickable
+  - type: Sprite
+    sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicdecay.rsi
+    drawdepth: BelowFloor
+    layers:
+      - state: decay
+        shader: unshaded
+  - type: Icon
+    sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicdecay.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: decay
+  - type: Physics
+    bodyType: Static
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: PointLight
+    radius: 4.25
+    energy: 1.75
+    castShadows: false
+    color: "#42a4ae"

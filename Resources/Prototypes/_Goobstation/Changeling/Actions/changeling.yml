@@ -1,6 +1,5 @@
-# abilities
+# Starting
 
-# starting
 - type: entity
   id: ActionEvolutionMenu
   name: Open Evolution Menu
@@ -133,7 +132,8 @@
     useInLesserForm: true
     useInLastResort: true
 
-# combat
+# Combat
+
 - type: entity
   id: ActionToggleArmblade
   name: Toggle Arm Blade
@@ -253,11 +253,12 @@
     chemicalCost: 0
     useInLesserForm: true
 
-# stings
+# Stings
+
 - type: entity
   id: ActionStingBlind
   name: Blind Sting
-  description: We sting a target, blinding them temporarily. Costs a medium amount of chemicals.
+  description: We sting a target, blinding them temporarily. Costs a sizeable amount of chemicals. Stinging multiple times won't intensify the effect.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -272,7 +273,7 @@
       state: sting_blind
     event: !type:StingBlindEvent {}
   - type: ChangelingAction
-    chemicalCost: 35
+    chemicalCost: 50
     useInLesserForm: true
 
 - type: entity
@@ -401,7 +402,8 @@
     chemicalCost: 0
     useInLastResort: true
 
-# utility
+# Utility
+
 - type: entity
   id: ActionAnatomicPanacea
   name: Anatomic Panacea
@@ -510,6 +512,24 @@
     useInLesserForm: true
 
 - type: entity
+  id: ActionHivemindAccess
+  name: Hivemind Access
+  description: We tune our chemical receptors for hivemind communication.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: hivemind_access
+    event: !type:ActionHivemindAccessEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+- type: entity
   id: ActionLastResort
   name: Last Resort
   parent: BaseSuicideAction
@@ -547,6 +567,43 @@
     chemicalCost: 20
 
 - type: entity
+  id: ActionToggleMindshieldFake
+  name: Toggle Mindshield Patterns
+  description: We shape our mental patterns to imitate a mindshield implantation.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: mindshield
+    event: !type:ActionMindshieldFakeEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+    # imp edit ↓
+- type: entity
+  id: ActionToggleTentacle
+  name: Toggle Tentacle
+  description: We shape one of our arms into a Tendon Fishing rod. We may retract our Rod in the same manner as we form it. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: tentacle
+    event: !type:ToggleTentacleEvent {}
+  - type: ChangelingAction
+    chemicalCost: 15
+    requireAbsorbed: 1
+#imp edit ^
+
+- type: entity
   id: ActionToggleSpacesuit
   name: Toggle Space Adaptation
   description: We prepare our cells to resist barotrauma. Costs a small amount of chemicals.
@@ -561,21 +618,3 @@
     event: !type:ActionSpacesuitEvent {}
   - type: ChangelingAction
     chemicalCost: 20
-
-- type: entity
-  id: ActionHivemindAccess
-  name: Hivemind Access
-  description: We tune our chemical receptors for hivemind communication.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
-    itemIconStyle: NoItem
-    icon:
-      sprite: _Goobstation/Changeling/changeling_abilities.rsi
-      state: hivemind_access
-    event: !type:ActionHivemindAccessEvent {}
-  - type: ChangelingAction
-    chemicalCost: 0
-    useInLesserForm: true

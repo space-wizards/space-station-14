@@ -11,6 +11,11 @@
     sprite: Clothing/Neck/Misc/pins.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/pins.rsi
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 1
+    staminaCost: 1
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -110,6 +115,17 @@
     state: pan
   - type: Clothing
     equippedPrefix: pan
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckOmnisexualPin
+  name: omnisexual pin
+  description: Be omni do crime.
+  components:
+  - type: Sprite
+    state: omni
+  - type: Clothing
+    equippedPrefix: omni
 
 - type: entity
   parent: ClothingNeckPinBase

@@ -16,3 +16,9 @@
     proto: Engineer10hr
   equipment:
     jumpsuit: ClothingUniformSpaceJumpsuitEngineer
+
+# Outer CLothing
+- type: loadout
+  id: BomberEngineering
+  equipment:
+    outerClothing: ClothingOuterCoatBomberEngineer

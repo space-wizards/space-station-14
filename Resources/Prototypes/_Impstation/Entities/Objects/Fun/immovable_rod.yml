@@ -32,8 +32,12 @@
   name: immovable Fin Fin
   description: Your best friend! Don't touch him though.
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-finfin
   - type: Sprite
-    sprite: Mobs/Pets/finfin.rsi
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
     state: finfin
     rotation: 0
     noRot: false
@@ -54,6 +58,7 @@
   - type: ImmovableRod
     minSpeed: 0.25
     maxSpeed: 0.25
+    eviscerationPopup: immovable-rod-penetrated-mob-gondal
   - type: TimedDespawn
     lifetime: 141.0
   - type: EmitSoundOnSpawn
@@ -67,4 +72,30 @@
   - type: PointLight
     radius: 3
     color: white
+    energy: 2.0
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepGondal
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodHollowPlasticBarrel
+  name: immovable hollow plastic barrel
+  description: Dying to this barrel would bring no honor. A true warrior must avoid it at all costs.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/plasticbarrel.rsi
+    state: icon
+    rotation: 0
+    noRot: false
+  - type: ImmovableRod
+    hitSound:
+      collection: HollowPlastic
+      params:
+        volume: 20
+        variation: 0.125
+    eviscerationPopup: immovable-rod-penetrated-mob-hollowbarrel
+  - type: PointLight
+    radius: 3
+    color: red
     energy: 2.0

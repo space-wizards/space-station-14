@@ -44,7 +44,7 @@ namespace Content.Client.Chemistry.UI
             // Pill rsi file should have states named as pill1, pill2, and so on.
             var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
-            PillTypeButtons = new Button[20];
+            PillTypeButtons = new Button[22];
             for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
                 // For every button decide which stylebase to have
@@ -152,12 +152,11 @@ namespace Content.Client.Chemistry.UI
 
             UpdateDosageFields(castState);
         }
-
         //assign default values for pill and bottle fields.
         private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
         {
             var output = castState.OutputContainerInfo;
-            var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
+            var remainingCapacity = output is null ?    0 : (output.MaxVolume - output.CurrentVolume).Int();
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
@@ -303,7 +302,7 @@ namespace Content.Client.Chemistry.UI
             }
         }
         /// <summary>
-        /// Take reagent/entity data and present rows, labels, and buttons appropriately.
+        /// Take reagent/entity data and present rows, labels, and buttons appropriately. todo sprites?
         /// </summary>
         private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool addReagentButtons)
         {

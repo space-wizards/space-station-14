@@ -21,3 +21,27 @@
           Quantity: 40
         - ReagentId: ChloralHydrate
           Quantity: 17
+
+- type: entity
+  name: toddler rings stew
+  parent: FoodBowlBase
+  id: FoodToddlerRingsStew
+  description: COME TO NEW RESTAURANT. IT'S CALLED EDIABLI. WE HAVE WORLD FAMOUS TODDLER RING STEW
+  components:
+  - type: FlavorProfile
+    flavors:
+      - metallic
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+    - state: toddlerringstew
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Ipecac
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 10

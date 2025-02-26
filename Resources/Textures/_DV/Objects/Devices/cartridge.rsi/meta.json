@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "cart-chat made by kushbreth (discord), cart-mail by Monotheonist (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cart-stonk"
+        },
+		{
+            "name": "cart-chat"
+        },
+        {
+            "name": "cart-mail"
+        }
+    ]
+}

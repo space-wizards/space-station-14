@@ -70,7 +70,7 @@
   description: Should anything ever go wrong...
 
 - type: entity
-  parent: [BasePhoneInstrument, BaseSyndicateContraband]
+  parent: [BasePhoneInstrument, Tier1Contraband]
   id: PhoneInstrumentSyndicate
   name: blood-red phone
   description: For evil people to call their friends.

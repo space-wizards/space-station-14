@@ -1,0 +1,39 @@
+- type: entity
+  id: DoorCosmicCult
+  parent: BaseMaterialDoorNavMap
+  name: malign passageway
+  description: A strange, disquieting structure.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/cosmicdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    bumpOpen: true
+    clickOpen: true
+    canCrush: true
+    closeTimeOne: 0.8
+    closeTimeTwo: 1.2
+    openTimeOne: 0.8
+    openTimeTwo: 1.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
+    openSound:
+      path: /Audio/_Impstation/CosmicCult/door_open.ogg
+    closeSound:
+      path: /Audio/_Impstation/CosmicCult/door_close.ogg
+  - type: RCDDeconstructable
+    deconstructable: false
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+

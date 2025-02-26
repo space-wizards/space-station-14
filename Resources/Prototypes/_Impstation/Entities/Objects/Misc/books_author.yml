@@ -135,3 +135,16 @@
     - state: tenebraeconspiracybook
   - type: Paper
     content: book-text-tenebraeconspiracy
+
+- type: entity
+  parent: BookBase
+  id: BookSMForDummies
+  name: the supermatter for dummies
+  description: A brand new book, with a holographic cover.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/book.rsi
+    layers:
+    - state: smfordummies
+  - type: Paper
+    content: book-text-smfordummies

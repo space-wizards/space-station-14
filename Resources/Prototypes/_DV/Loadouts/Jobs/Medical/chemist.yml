@@ -1,0 +1,28 @@
+# Neck - DV
+- type: loadout # DV
+  id: ChemistTie
+  equipment:
+    neck: ClothingNeckTieChem
+
+- type: loadout # DV
+  id: ChemistFormalSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemShirt
+
+## Start DV Changes
+- type: loadout
+  id: ChemistryApron
+  equipment:
+    outerClothing: ClothingOuterApronChemist
+
+# Gloves - DV
+- type: loadout
+  id: ChemistryGloves
+  equipment:
+    gloves: ClothingHandsGlovesChemist
+
+- type: loadout
+  id: ChemistryShoes
+  equipment:
+    shoes: ClothingShoesEnclosedChem
+## End DV Changes

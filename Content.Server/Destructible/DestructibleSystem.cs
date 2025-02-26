@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Projectiles;
 
 namespace Content.Server.Destructible
 {
@@ -40,6 +41,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
         [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
+        [Dependency] public readonly SharedProjectileSystem ProjectileSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
         [Dependency] public readonly IAdminLogManager _adminLogger = default!;
@@ -80,6 +82,21 @@ namespace Content.Server.Destructible
                     {
                         _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                    }
+
+                    // Unembed any embedded projectiles if the entity is about to be destroyed
+                    foreach (var behavior in threshold.Behaviors)
+                    {
+                        if (behavior is DoActsBehavior actBehavior && actBehavior.HasAct(ThresholdActs.Destruction))
+                        {
+                            var childEnumerator = Transform(uid).ChildEnumerator;
+                            while (childEnumerator.MoveNext(out var child))
+                            {
+                                if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable) && embeddable.EmbeddedIntoUid != null)
+                                    ProjectileSystem.RemoveEmbed(child, embeddable);
+                            }
+                            break;
+                        }
                     }
 
                     threshold.Execute(uid, this, EntityManager, args.Origin);

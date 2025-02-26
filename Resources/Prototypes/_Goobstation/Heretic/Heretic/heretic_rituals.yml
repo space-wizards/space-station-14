@@ -47,7 +47,7 @@
   requiredTags:
     Eyes: 1
     Book: 1
-    Pen: 1
+    Write: 1
   output:
     CodexCicatrix: 1
 
@@ -61,7 +61,7 @@
     state: icon
   requiredTags:
     Knife: 1
-    Matchstick: 1
+    WeldingTool: 1
   output:
     HereticBladeAsh: 1
 
@@ -76,6 +76,7 @@
     Mask: 1
     Candle: 4
     Stunbaton: 1
+    Liver: 1
   output:
     ClothingMaskMadHeretic: 1
 
@@ -105,7 +106,15 @@
     state: icon
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
-    reagent: Blood
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
   requiredTags:
     Knife: 1
   output:
@@ -132,7 +141,15 @@
     state: raw_prophet
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
-    reagent: Blood
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
   requiredTags:
     Eyes: 1
     Stomach: 1
@@ -148,7 +165,15 @@
     state: stalker
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
-    reagent: Blood
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
   requiredTags:
     Pen: 1
     Heart: 1
@@ -210,7 +235,7 @@
 ### side knowledge
 - type: hereticRitual
   id: RitualOfKnowledge
-  locName: knowledge-path-side-knowledge-name
+  locName: heretic-ritual-side-knowledge
   locDesc: knowledge-path-side-knowledge-desc
   icon: 
     sprite: _Goobstation/Heretic/book.rsi

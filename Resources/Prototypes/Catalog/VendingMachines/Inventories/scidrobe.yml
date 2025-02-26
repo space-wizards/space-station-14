@@ -13,7 +13,8 @@
     ClothingHeadsetScience: 3
     ClothingMaskGas: 3
     ClothingOuterWinterSci: 2
+    ClothingOuterCoatBomberScience: 2 # imp
     ClothingNeckScarfStripedPurple: 3
     ClothingShoesBootsWinterSci: 2
   contrabandInventory:
-    ClothingMaskClownScience: 1
+    ClothingMaskClownScience: 1 # imp

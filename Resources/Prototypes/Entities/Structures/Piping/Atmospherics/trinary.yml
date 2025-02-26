@@ -5,27 +5,27 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: AtmosDevice
-    - type: Tag
-      tags:
-        - Unstackable
-    - type: SubFloorHide
-      blockInteractions: false
-      blockAmbience: false
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-        filter:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: West
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+  - type: AtmosDevice
+  - type: Tag
+    tags:
+    - Unstackable
+  - type: SubFloorHide
+    blockInteractions: false
+    blockAmbience: false
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      filter:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: West
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
 
 - type: entity
   parent: GasTrinaryBase
@@ -70,16 +70,14 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - MixingAndFiltering
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction
-      degrees:
-        - 0
-        - -90
-        - 180
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasFilter
@@ -108,7 +106,9 @@
           False: { state: gasFilterF }
   - type: Construction
     node: filterflipped
-
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
   - type: PipeColorVisuals
   - type: NodeContainer
     nodes:
@@ -124,16 +124,6 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
-  - type: VentCrawTube
-    containerId: VentCrawTube
-  - type: VentCrawJunction
-    degrees:
-      - 0
-      - -90
-      - 180
-  - type: ContainerContainer
-    containers:
-      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasTrinaryBase
@@ -178,16 +168,14 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - MixingAndFiltering
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction
-      degrees:
-        - 0
-        - -90
-        - 180
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasMixer
@@ -234,19 +222,12 @@
   - type: VentCrawTube
     containerId: VentCrawTube
   - type: VentCrawJunction
-    degrees:
-      - 0
-      - -90
-      - 180
-  - type: ContainerContainer
-    containers:
-      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasPipeBase
   id: PressureControlledValve
   name: pneumatic valve
-  description: Valve controlled by pressure.
+  description: A bidirectional valve controlled by pressure. Opens if the output pipe is lower than the pressure of the control pipe by 101.325 kPa.
   placement:
     mode: SnapgridCenter
   components:
@@ -297,13 +278,13 @@
     - type: Construction
       graph: GasTrinary
       node: pneumaticvalve
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - PneumaticValve
+      - Pumps
+      - Valves
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction
-      degrees:
-        - 0
-        - -90
-        - 180
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container

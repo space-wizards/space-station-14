@@ -5,12 +5,6 @@ namespace Content.Shared._Impstation.Decapoids;
 [Serializable, NetSerializable]
 public enum VaporizerVisuals : byte
 {
-    VisualState,
-}
-
-[Serializable, NetSerializable]
-public enum VaporizerVisualLayers : byte
-{
     Indicator,
 }
 

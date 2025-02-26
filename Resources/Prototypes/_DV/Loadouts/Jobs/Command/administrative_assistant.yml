@@ -1,0 +1,30 @@
+# Jumpsuit
+- type: loadout
+  id: AdminAssistantJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAdminAssistant
+
+- type: loadout
+  id: AdminAssistantJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtAdminAssistant
+
+- type: loadout
+  id: AdminAssistantHeadset
+  equipment:
+    ears: ClothingHeadsetAdminAssistant
+
+- type: loadout
+  id: AdminAssistantAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltAdminAssistant
+
+- type: loadout
+  id: BlackGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: loadout
+  id: WhiteGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorWhite

@@ -1,0 +1,15 @@
+#SecLink
+- type: storeCategory
+  id: SeclinkBaton
+  name: store-category-secbaton
+  priority: 0
+
+- type: storeCategory
+  id: SeclinkDisabler
+  name: store-category-secdisabler
+  priority: 1
+
+- type: storeCategory
+  id: SeclinkUtility
+  name: store-category-secutility
+  priority: 2

@@ -1,0 +1,161 @@
+- type: species
+  id: Apid
+  name: species-name-apid
+  roundStart: false
+  prototype: BaseMobApid
+  sprites: MobApidSprites
+  defaultSkinTone: "#385878"
+  markingLimits: MobApidMarkingLimits
+  dollPrototype: MobApidDummy
+  skinColoration: TintedHues # this prevents RandomHumanoidAppearance from fucking with their colorscheme too much
+  maleFirstNames: apid_worker
+  femaleFirstNames: apid_worker
+  lastNames: names_apid
+  sexes:
+  - Male
+  - Female
+  - Unsexed
+
+- type: speciesBaseSprites
+  id: MobApidSprites
+  sprites:
+    Eyes: MobHumanoidAnyMarking
+    Head: MobApidHead
+    HeadTop: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    Chest: MobApidTorso
+    LArm: MobApidLArm
+    RArm: MobApidRArm
+    LHand: MobApidLHand
+    RHand: MobApidRHand
+    LLeg: MobApidLLeg
+    RLeg: MobApidRLeg
+    LFoot: MobApidLFoot
+    RFoot: MobApidRFoot
+    Tail: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+
+- type: markingPoints
+  id: MobApidMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: true
+      defaultMarkings: [ ApidAntennaeDefault ] # these have to be hair in order for RandomHumanoidAppearance to grab 'em
+    Eyes:
+      points: 1
+      required: true
+      defaultMarkings: [ ApidEyesDefault ] # allows me to have more minute control over their color
+    Head:
+      points: 6
+      required: false
+    HeadTop:
+      points: 2
+      required: false
+    Chest:
+      points: 4
+      required: false
+    Undershirt:
+      points: 1
+      required: false
+    Tail: # wings
+      points: 1
+      required: true
+      defaultMarkings: [ ApidWingsAnimatedDefault ]
+    Snout:
+      points: 1
+      required: false
+    Overlay:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobApidEyes
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobApidHead
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobApidHeadMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobApidHeadFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobApidTorso
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobApidTorsoMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobApidTorsoFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobApidLLeg 
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobApidLHand 
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobApidLArm 
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobApidLFoot 
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobApidRLeg 
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobApidRHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobApidRArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobApidRFoot 
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: r_foot

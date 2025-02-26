@@ -105,6 +105,8 @@
         density: 60
         mask:
         - MachineMask
+  - type: StealTarget #imp
+    stealGroup: StealMopBucket
 
 - type: entity
   name: mop bucket

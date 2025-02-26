@@ -33,6 +33,9 @@
           True: { state: icon-open }
           False: { state: icon }
   - type: Appearance
+  - type: DamageOtherOnHit # imp
+    meleeDamageMultiplier: 1.33
+    staminaCost: 12.5
 
 - type: entity
   name: emergency toolbox
@@ -115,7 +118,7 @@
 
 - type: entity
   name: suspicious toolbox
-  parent: [ToolboxBase, BaseSyndicateContraband]
+  parent: [ToolboxBase, Tier2Contraband]
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
   components:
@@ -149,7 +152,7 @@
   id: ToolboxThief
   name: thief undetermined toolbox
   description: This is where your favorite thief's supplies lie. Try to remember which ones.
-  parent: [ BaseItem, BaseMinorContraband ]
+  parent: [ BaseItem ] # imp edit
   components:
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi

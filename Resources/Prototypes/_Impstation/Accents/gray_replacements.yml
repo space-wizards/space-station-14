@@ -1,5 +1,5 @@
 - type: accent
-  id: gray
+  id: gray_accent
   wordReplacements:
     accent-gray-words-1: accent-gray-words-replace-1
     accent-gray-words-2: accent-gray-words-replace-2
@@ -228,7 +228,3 @@
     accent-gray-words-225: accent-gray-words-replace-225
     accent-gray-words-226: accent-gray-words-replace-226
     accent-gray-words-227: accent-gray-words-replace-227
-    accent-gray-words-228: accent-gray-words-replace-228
-    accent-gray-words-229: accent-gray-words-replace-229
-    accent-gray-words-230: accent-gray-words-replace-230
-    accent-gray-words-231: accent-gray-words-replace-231

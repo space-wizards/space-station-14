@@ -22,26 +22,26 @@ marking-SlimeBonehead = Floating Skull
 marking-SlimeBonechest-bonechest = Floating Ribcage
 marking-SlimeBonechest = Floating Ribcage
 
-marking-SlimeBonearmleft-bonearmleft = Floating Arm Bones (Left)
-marking-SlimeBonearmleft = Floating Arm Bones (Left)
+marking-SlimeBonearmleft-bonearmleft = Floating Bones (Left Arm)
+marking-SlimeBonearmleft = Floating Bones (Left Arm)
 
-marking-SlimeBonearmright-bonearmright = Floating Arm Bones (Right)
-marking-SlimeBonearmright = Floating Arm Bones (Right)
+marking-SlimeBonearmright-bonearmright = Floating Bones (Right Arm)
+marking-SlimeBonearmright = Floating Bones (Right Arm)
 
-marking-SlimeBonefootleft-bonefootleft = Floating Foot Bones (Left)
-marking-SlimeBonefootleft = Floating Foot Bones (Left)
+marking-SlimeBonefootleft-bonefootleft = Floating Bones (Left Foot)
+marking-SlimeBonefootleft = Floating Bones (Left Foot)
 
-marking-SlimeBonefootright-bonefootright = Floating Foot Bones (Right)
-marking-SlimeBonefootright = Floating Foot Bones (Right)
+marking-SlimeBonefootright-bonefootright = Floating Bones (Right Foot)
+marking-SlimeBonefootright = Floating Bones (Right Foot)
 
-marking-SlimeBonehandleft-bonehandleft = Floating Hand Bones (Left)
-marking-SlimeBonehandleft = Floating Hand Bones (Left)
+marking-SlimeBonehandleft-bonehandleft = Floating Bones (Left Hand)
+marking-SlimeBonehandleft = Floating Bones (Left Hand)
 
-marking-SlimeBonehandright-bonehandright = Floating Hand Bones (Right)
-marking-SlimeBonehandright = Floating Hand Bones (Right)
+marking-SlimeBonehandright-bonehandright = Floating Bones (Right Hand)
+marking-SlimeBonehandright = Floating Bones (Right Hand)
 
-marking-SlimeBonelegleft-bonelegleft = Floating Leg Bones (Left)
-marking-SlimeBonelegleft = Floating Leg Bones (Left)
+marking-SlimeBonelegleft-bonelegleft = Floating Bones (Left Leg)
+marking-SlimeBonelegleft = Floating Bones (Left Leg)
 
-marking-SlimeBonelegright-bonelegright = Floating Leg Bones (Right)
-marking-SlimeBonelegright = Floating Leg Bones (Right)
+marking-SlimeBonelegright-bonelegright = Floating Bones (Right Leg)
+marking-SlimeBonelegright = Floating Bones (Right Leg)

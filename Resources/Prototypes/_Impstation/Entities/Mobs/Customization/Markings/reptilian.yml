@@ -1,0 +1,76 @@
+- type: marking
+  id: Fangs
+  bodyPart: Snout
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: fangs
+
+- type: marking
+  id: LizardBeard
+  bodyPart: Snout
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: beard
+
+- type: marking
+  id: LizardSnoutTall
+  bodyPart: Snout
+  forcedColoring: true
+  markingCategory: Snout
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: snout_tall
+
+- type: marking
+  id: LizardHornsKoboldEarspiercings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: horns_kobold_ears
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: horns_kobold_ears_piercings
+
+- type: marking
+  id: LizardHornsNubby
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: horns_nubby
+
+- type: marking
+  id: LizardSnoutpiercings
+  bodyPart: Snout
+  markingCategory: Overlay
+  forcedColoring: true
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: piercings1
+
+- type: marking
+  id: LizardHeadFlat
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+    state: head_flat

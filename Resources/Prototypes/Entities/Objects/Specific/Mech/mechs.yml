@@ -115,7 +115,7 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: _Impstation/Objects/Specific/Mech/mecha.rsi #imp edit
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: ripley
@@ -132,10 +132,13 @@
         - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
-    attackRate: 1
+    attackRate: 0.7 #imp change
     damage:
       types:
-        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea. #<- PUSSY #imp edit
+        Piercing: 6
+    soundHit:
+      collection: GreatWrench
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
@@ -249,10 +252,13 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: _Impstation/Objects/Specific/Mech/mecha.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: vim
+    - state: vim_lights #imp edit
+      shader: unshaded
+      visible: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -266,7 +272,7 @@
         - MobLayer
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Mecha/mechmove03.ogg
+      path: /Audio/_Impstation/Mecha/mechmove_1.ogg #imp edit
       params:
         volume: -10
   - type: Mech
@@ -286,7 +292,6 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
@@ -294,7 +299,13 @@
     tags:
     - Maintenance
   # TOOD: buzz / chime actions
-  # TODO: builtin flashlight
+  - type: PointLight #imp edit
+    enabled: true
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 1.5
+    netsync: false
+    color: "#d5fcff"
 
 - type: entity
   parent: MechVim

@@ -4,17 +4,17 @@
   id: GasTankBase
   components:
   - type: Sprite
-    sprite: Objects/Tanks/generic.rsi
+    sprite: _Impstation/Objects/Tanks/generic.rsi #imp
     state: icon
   - type: Item
     size: Normal
-    sprite: Objects/Tanks/generic.rsi
+    sprite: _Impstation/Objects/Tanks/generic.rsi
   - type: Tag
     tags:
     - GasTank
   - type: Clothing
     quickEquip: false
-    sprite: Objects/Tanks/generic.rsi
+    sprite: _Impstation/Objects/Tanks/generic.rsi
     slots:
     - Back
     - suitStorage
@@ -40,11 +40,15 @@
     damage:
       types:
         Blunt: 10
+    soundHit: # imp
+      path: /Audio/Weapons/smash.ogg
   - type: PhysicalComposition
     materialComposition:
       Steel: 185
   - type: StaticPrice
     price: 30
+  - type: DamageOtherOnHit # imp
+    staminaCost: 8
 
 - type: entity
   abstract: true
@@ -63,24 +67,11 @@
   description: A standard cylindrical gas tank for oxygen. It can hold 5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/oxygen.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/oxygen.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen.rsi
   - type: Clothing
-    sprite: Objects/Tanks/oxygen.rsi
-
-- type: entity
-  parent: [GasTankRoundBase, BaseCommandContraband]
-  id: OxygenTankCommand
-  name: command oxygen tank
-  description: A fancy but otherwise normal cylindrical gas tank for oxygen. It can hold 5 L of gas.
-  components:
-  - type: Sprite
-    sprite: Objects/Tanks/oxygencommand.rsi
-  - type: Item
-    sprite: Objects/Tanks/oxygencommand.rsi
-  - type: Clothing
-    sprite: Objects/Tanks/oxygencommand.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen.rsi
 
 - type: entity
   parent: GasTankRoundBase
@@ -89,24 +80,11 @@
   description: A standard cylindrical gas tank for nitrogen. It can hold 5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen.rsi
   - type: Clothing
-    sprite: Objects/Tanks/red.rsi
-
-- type: entity
-  parent: [GasTankRoundBase, BaseCommandContraband]
-  id: NitrogenTankCommand
-  name: command nitrogen tank
-  description: A fancy but otherwise normal cylindrical gas tank for nitrogen. It can hold 5 L of gas.
-  components:
-  - type: Sprite
-    sprite: Objects/Tanks/redcommand.rsi
-  - type: Item
-    sprite: Objects/Tanks/redcommand.rsi
-  - type: Clothing
-    sprite: Objects/Tanks/redcommand.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen.rsi
 
 - type: entity
   parent: GasTankRoundBase
@@ -115,16 +93,16 @@
   description: An easily portable tank for emergencies. Contains very little oxygen, rated for survival use only. It can hold 0.66 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_emergency.rsi #imp
   - type: Item
     size: Small
-    sprite: Objects/Tanks/emergency.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_emergency.rsi
   - type: GasTank
     air:
       volume: 0.66
       temperature: 293.15
   - type: Clothing
-    sprite: Objects/Tanks/emergency.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_emergency.rsi
     slots:
     - Pocket
     - Belt
@@ -139,6 +117,8 @@
   - type: Tag # goob edit
     tags:
       - EmergencyOxygenTank
+  - type: DamageOtherOnHit # imp
+    staminaCost: 3.5
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -147,11 +127,11 @@
   description: An easily portable tank for emergencies. Contains very little nitrogen, rated for survival use only. It can hold 0.66 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_emergency.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/emergency_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_emergency.rsi
   - type: Clothing
-    sprite: Objects/Tanks/emergency_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_emergency.rsi
   - type: Tag # goob edit
     tags:
       - EmergencyNitrogenTank
@@ -163,15 +143,15 @@
   description: An emergency tank with extended capacity. Technically rated for prolonged use. It can hold 1.5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency_extended.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_engineering.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/emergency_extended.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_engineering.rsi
   - type: GasTank
     air:
       volume: 1.5
       temperature: 293.15
   - type: Clothing
-    sprite: Objects/Tanks/emergency_extended.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_engineering.rsi
   - type: Tag # goob edit
     tags:
       - ExtendedEmergencyOxygenTank
@@ -183,14 +163,15 @@
   description: An emergency tank with extended capacity. Technically rated for prolonged use. It can hold 1.5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency_extended_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_engineering.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/emergency_extended_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_engineering.rsi
   - type: Clothing
-    sprite: Objects/Tanks/emergency_extended_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_engineering.rsi
   - type: Tag # goob edit
     tags:
       - EmergencyNitrogenTank
+
 - type: entity
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
@@ -198,20 +179,22 @@
   description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for its small size. It can hold 2.5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency_double.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_double.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/emergency_double.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_double.rsi
   - type: GasTank
     air:
       volume: 2.5
       temperature: 293.15
   - type: Clothing
-    sprite: Objects/Tanks/emergency_double.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_double.rsi
   - type: MeleeWeapon
     attackRate: 0.9
     damage:
       types:
         Blunt: 7.5
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
 
 - type: entity
   parent: DoubleEmergencyOxygenTank
@@ -220,11 +203,11 @@
   description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for its small size. It can hold 2.5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/emergency_double_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_double.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/emergency_double_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_double.rsi
   - type: Clothing
-    sprite: Objects/Tanks/emergency_double_red.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_double.rsi
   - type: Tag
     tags:
       - EmergencyNitrogenTank
@@ -261,16 +244,16 @@
   description: Contains a mixture of air and nitrous oxide. Make sure you don't refill it with pure N2O. It can hold 5 L of gas.
   components:
   - type: Sprite
-    sprite: Objects/Tanks/anesthetic.rsi
+    sprite: _Impstation/Objects/Tanks/anesthetic.rsi #imp
   - type: Item
-    sprite: Objects/Tanks/anesthetic.rsi
+    sprite: _Impstation/Objects/Tanks/anesthetic.rsi
   - type: GasTank
     outputPressure: 30.4
   - type: Clothing
-    sprite: Objects/Tanks/anesthetic.rsi
+    sprite: _Impstation/Objects/Tanks/anesthetic.rsi
 
 - type: entity
-  # it's a square so no rolling dough
+  # it's a square so no rolling dough #??
   parent: GasTankBase
   id: PlasmaTank
   name: plasma tank

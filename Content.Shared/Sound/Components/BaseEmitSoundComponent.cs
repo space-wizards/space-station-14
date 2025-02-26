@@ -19,4 +19,15 @@ public abstract partial class BaseEmitSoundComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool Detach = false;
+
+    /// <summary>
+    /// Play the sound at the position instead of parented to the source entity.
+    /// Useful if the entity is deleted after.
+    /// </summary>
+    [DataField]
+    public bool Positional;
+
+
+
+
 }

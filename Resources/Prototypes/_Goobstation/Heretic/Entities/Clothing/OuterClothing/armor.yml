@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ ClothingOuterBaseMedium, ClothingOuterStorageToggleableBase, BaseMagicContraband ]
+  parent: [ ClothingOuterBaseMedium, ClothingOuterStorageToggleableBase, TierXContraband ]
   id: ClothingOuterArmorHeretic
   name: ominous armor
   description: A ragged, dusty set of robes. Strange eyes line the inside.

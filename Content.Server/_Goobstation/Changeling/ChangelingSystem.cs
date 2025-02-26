@@ -105,6 +105,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly BodySystem _bodySystem = default!;
 
     public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
+    public EntProtoId TentaclePrototype = "FishingRodLing"; // imp
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
 
     public EntProtoId ShieldPrototype = "ChangelingShield";
@@ -693,7 +694,17 @@ public sealed partial class ChangelingSystem : EntitySystem
     private void OnMobStateChange(EntityUid uid, ChangelingComponent comp, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
+        {
             RemoveAllChangelingEquipment(uid, comp);
+            // Automatically put the ling into stasis on death if there's enough biomass
+            if (!comp.IsInStasis && !HasComp<AbsorbedComponent>(uid) && comp.Biomass > 1)
+            {
+                comp.Chemicals = 0f;
+                comp.Biomass -= 1;
+                comp.IsInStasis = true;
+            }
+        }
+
     }
 
     private void OnDamageChange(Entity<ChangelingComponent> ent, ref DamageChangedEvent args)

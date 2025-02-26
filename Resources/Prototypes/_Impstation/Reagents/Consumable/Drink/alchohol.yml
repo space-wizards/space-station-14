@@ -130,6 +130,30 @@
   fizziness: 0.8
 
 - type: reagent
+  id: MoscowMule
+  name: reagent-name-moscowmule
+  parent: BaseAlcohol
+  desc: reagent-desc-moscowmule
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: moscowmule
+  color: "#fef9e7"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/moscowmule.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.125
+  fizziness: 0.65
+
+- type: reagent
   id: Rotgut
   name: reagent-name-rotgut
   parent: BaseSoda
@@ -437,7 +461,7 @@
     Drink:
       effects:
         - !type:GenericStatusEffect
-          key: GrayAccent
+          key: GrayLanguage
           component: GrayAccent
         - !type:SatiateThirst
           factor: 2
@@ -567,3 +591,24 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
+
+- type: reagent
+  id: LovePotion
+  name: reagent-name-lovepotion
+  parent: BaseSoda
+  desc: reagent-desc-lovepotion
+  physicalDesc: reagent-physical-desc-lovepotion
+  flavor: lovepotion
+  color: "#ff60c0"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/lovepotion.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+  fizziness: .1

@@ -36,7 +36,7 @@ public sealed partial class ChameleonClothingComponent : Component
     /// <summary>
     ///     Filter possible chameleon options by a tag in addition to WhitelistChameleon.
     /// </summary>
-    [ViewVariables, DataField]
+    [DataField]
     public string? RequireTag;
 }
 

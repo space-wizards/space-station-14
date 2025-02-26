@@ -23,3 +23,5 @@
         Structural: 10
   - type: Item
     size: Large
+  - type: DamageOtherOnHit # imp
+    staminaCost: 10

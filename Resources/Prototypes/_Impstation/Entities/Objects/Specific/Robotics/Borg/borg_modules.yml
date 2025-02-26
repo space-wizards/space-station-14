@@ -9,12 +9,12 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableMVStackLingering10
-    - CableApcStackLingering10
     - trayScanner
-    - TckWrench
+    - Multitool
+    - RCDRechargingTckTck
+    - MicroDrill
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: tcktck-tools-module }
   - type: Tag
     tags:
       - BorgModuleTckTck
@@ -31,13 +31,14 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGunTckTck
+    - FireExtinguisherTckTck
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: tcktck-eva-module }
   - type: Tag
     tags:
       - BorgModuleTckTck
-      
+
 - type: entity
   id: BorgModuleTckTckGun
   parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
@@ -56,3 +57,60 @@
   - type: Tag
     tags:
       - BorgModuleTckTck
+
+- type: entity
+  id: BorgModuleArtistic
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: artistic borg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-pen
+  - type: ItemBorgModule
+    items:
+    - CrayonRainbowInfinite
+    - SprayPainter
+    - Pen
+  - type: BorgModuleIcon
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: artistic-module }
+
+- type: entity
+  id: BorgModulePaper
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: bureaucracy cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-pen
+  - type: ItemBorgModule
+    items:
+    - Pen
+    - BooksBag
+    - HandLabeler
+    - RubberStampApproved
+    - RubberStampDenied
+    - RubberStampBorg
+  - type: BorgModuleIcon
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: bureaucracy-module }
+
+- type: entity
+  id: BorgModuleBartender
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: bartender cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-beer
+  - type: ItemBorgModule
+    items:
+    - Lighter
+    - DrinkShaker
+    - BarSpoon
+    - BorgIceBucket
+    - Pitcher
+    - BorgDropper
+  - type: BorgModuleIcon
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: bartender-module }

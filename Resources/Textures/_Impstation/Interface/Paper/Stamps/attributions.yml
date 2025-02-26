@@ -1,0 +1,20 @@
+- files:
+  - large_stamp-cap.png
+  - large_stamp-ce.png
+  - large_stamp-centcom.png
+  - large_stamp-chap.png
+  - large_stamp-clown.png
+  - large_stamp-cmo.png
+  - large_stamp-deny.png
+  - large_stamp-hop.png
+  - large_stamp-hos.png
+  - large_stamp-law.png
+  - large_stamp-mime.png
+  - large_stamp-ok.png
+  - large_stamp-qm.png
+  - large_stamp-rd.png
+  - large_stamp-syndicate.png
+  - large_stamp-void.png
+  license: "CC-BY-SA-3.0"
+  copyright: "Stamp icons taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/9a9b428b61f388a0f6d7a20bbba05147e61023d0"

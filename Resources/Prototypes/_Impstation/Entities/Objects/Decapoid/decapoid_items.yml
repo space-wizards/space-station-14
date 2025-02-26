@@ -75,7 +75,7 @@
 
 - type: entity
   name: vaporizer
-  parent: ClothingMaskGas
+  parent: ClothingMaskPullableBase
   id: DecapoidBreathingApparatus
   description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
   components:
@@ -86,6 +86,8 @@
     tags:
       - Vaporizer
       - BreathMask
+      - WhitelistChameleon
+      - GasMask
   - type: Clothing
     quickEquip: true
     slots:
@@ -100,6 +102,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+    hideOnToggle: true
   - type: SpeechSound
     speechSounds: Decapoid
     speechVerb: Robotic
@@ -111,7 +114,7 @@
   parent: GasTankRoundBase
   id: DecapoidVaporTank
   description: 'An alien contraption consisting of two tanks. The smaller tank takes in water and converts it into vapor, which is stored in the larger tank. It can hold 5 L of gas, and 30u of fluid.'
-  components: # todo: some way of knowing that there's an invalid solution
+  components:
   - type: Sprite
     sprite: _Impstation/Objects/Tanks/vapor.rsi
     layers:
@@ -120,7 +123,15 @@
         map: [ "enum.SolutionContainerLayers.Fill" ]
         visible: false
       - state: normal
-        map: [ "enum.VaporizerVisualLayers.Indicator" ]
+        map: [ "indicator" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.VaporizerVisuals.Indicator:
+        indicator:
+          Normal:      { state: "normal" }
+          BadSolution: { state: "bad" }
+          LowSolution: { state: "low" }
+          Empty:       { state: "empty" }
   - type: Appearance
   - type: Item
     size: Normal
@@ -177,6 +188,6 @@
     solution: waterTank
   - type: Vaporizer
   - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    maxFillLevels: 5
     fillBaseName: fill-
     solutionName: waterTank

@@ -144,7 +144,13 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     public void GravPulse(EntityUid uid, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref xform))
+        {
             GravPulse(xform.Coordinates, maxRange, minRange, in baseMatrixDeltaV);
+
+            // imp edit
+            var ev = new GravPulseEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
     }
 
     /// <summary>
@@ -159,7 +165,13 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     public void GravPulse(EntityUid uid, float maxRange, float minRange, float baseRadialDeltaV = 0.0f, float baseTangentialDeltaV = 0.0f, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref xform))
+        {
             GravPulse(xform.Coordinates, maxRange, minRange, baseRadialDeltaV, baseTangentialDeltaV);
+
+            // imp edit
+            var ev = new GravPulseEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
     }
 
     /// <summary>
@@ -280,3 +292,9 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
 
     #endregion Event Handlers
 }
+
+/// <summary>
+/// Raised after each gravity pulse, imp edit
+/// </summary>
+[ByRefEvent]
+public readonly record struct GravPulseEvent();

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "lollipop by Doop",
+    "copyright": "basic, meat, fruit, and cloth lollipop by Doop, entropic lollipop by AftrLite",
     "size": {
       "x": 32,
       "y": 32
@@ -17,7 +17,50 @@
       {
         "name": "big-lollipop-inhand-left",
         "directions": 4
+      },
+      {
+        "name": "cloth-lollipop"
+      },
+      {
+        "name": "cloth-lollipop-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "cloth-lollipop-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "fruit-lollipop"
+      },
+      {
+        "name": "fruit-lollipop-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "fruit-lollipop-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "meat-lollipop"
+      },
+      {
+        "name": "meat-lollipop-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "meat-lollipop-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "entro-lollipop"
+      },
+      {
+        "name": "entro-lollipop-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "entro-lollipop-inhand-left",
+        "directions": 4
       }
-
     ]
   }

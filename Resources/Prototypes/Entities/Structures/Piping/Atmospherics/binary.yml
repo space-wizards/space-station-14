@@ -8,7 +8,7 @@
   - type: AtmosDevice
   - type: Tag
     tags:
-      - Unstackable
+    - Unstackable
   - type: SubFloorHide
     blockInteractions: false
     blockAmbience: false
@@ -57,10 +57,13 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
+  - type: ActivatableUI
+    key: enum.GasPressurePumpUiKey.Key
+  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-        enum.GasPressurePumpUiKey.Key:
-          type: GasPressurePumpBoundUserInterface
+      enum.GasPressurePumpUiKey.Key:
+        type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -70,12 +73,11 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
-  - type: VentCrawTube
-    containerId: VentCrawTube
-  - type: VentCrawTransit
-  - type: ContainerContainer
-    containers:
-      VentCrawTube: !type:Container
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
+  - type: GuideHelp
+    guides:
+    - Pumps
 
 - type: entity
   parent: GasBinaryBase
@@ -133,12 +135,14 @@
       examinableAddress: true
       prefix: device-address-prefix-volume-pump
     - type: WiredNetworkConnection
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - Pumps
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawTransit
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -168,12 +172,14 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasValve
+    - type: GuideHelp
+      guides:
+      - PassiveGate
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawTransit
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -222,12 +228,14 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasValve
+    - type: GuideHelp
+      guides:
+      - ManualValve
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawTransit
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -263,9 +271,9 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Open
-      - Close
-      - Toggle
+    - Open
+    - Close
+    - Toggle
   - type: NodeContainer
     nodes:
       inlet:
@@ -287,12 +295,14 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
+  - type: GuideHelp
+    guides:
+    - SignalValve
   - type: VentCrawTube
     containerId: VentCrawTube
   - type: VentCrawTransit
-  - type: ContainerContainer
-    containers:
-      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -322,14 +332,14 @@
     - type: Construction
       graph: GasBinary
       node: port
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
+    - type: GuideHelp
+      guides:
+      - GasCanisters
     - type: VentCrawTube
       containerId: VentCrawTube
-    - type: VentCrawJunction
-      degrees:
-        - 0
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
+    - type: VentCrawTransit
 
 - type: entity
   parent: GasVentPump
@@ -386,6 +396,14 @@
           pipeDirection: South
     - type: AmbientSound
       enabled: true
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
+    - type: GuideHelp
+      guides:
+      - AirVent
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -448,6 +466,8 @@
         acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
 
 - type: entity
   parent: GasBinaryBase
@@ -488,3 +508,34 @@
   - type: Construction
     graph: GasBinary
     node: radiator
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator
+  - type: GuideHelp
+    guides:
+    - Radiators
+
+- type: entity
+  parent: HeatExchanger
+  id: HeatExchangerBend
+  suffix: Bend
+  components:
+    - type: Sprite
+      layers:
+      - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        state: pipeBend
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+      - state: heBend
+        map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: West
+    - type: Construction
+      graph: GasBinary
+      node: bendradiator

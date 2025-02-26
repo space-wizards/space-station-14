@@ -10,3 +10,13 @@
   - type: PresetIdCard
     job: Passenger
     name: Sir Gollylad
+
+- type: entity
+  parent: AgentIDCard
+  id: IDCardPostOpCard
+  name: Listening Post ID Card
+  components:
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative

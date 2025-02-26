@@ -64,6 +64,7 @@
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
+  - type: DamageOtherOnHitImmune # imp
 
 - type: entity
   id: DisposalUnit
@@ -83,7 +84,7 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
-  - type: RatKingRummageable
+  - type: Rummageable
   - type: RequireProjectileTarget
 
 - type: entity

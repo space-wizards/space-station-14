@@ -1,5 +1,5 @@
 - type: entity
-  parent: ArmBlade
+  parent: [ArmBlade, TierXContraband]
   id: ArmBladeChangeling
   suffix: Unremoveable
   components:

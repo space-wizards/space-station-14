@@ -59,6 +59,18 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledBR
+  name: Nemesis-11 bundle
+  description: "Precise and deadly, just as a professional should be. Bundled with three magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleNemesis
+      - id: MagazineBR
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
@@ -126,6 +138,8 @@
         amount: 4
       - id: MagazineLightRifleBox
         amount: 2
+      - id: MagazineBR
+        amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelClown
@@ -140,8 +154,8 @@
       - id: ClothingShoesClown
       - id: ClothingMaskClown
       - id: BikeHorn
-      - id: ClownPDA
-      - id: ClothingHeadsetService
+      #- id: ClownPDA # imp edit- 2 tc to get maints access and greencomms is causing people to buy this for the wrong reason
+      #- id: ClothingHeadsetService
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

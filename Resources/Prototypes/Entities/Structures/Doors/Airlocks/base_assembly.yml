@@ -7,7 +7,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/public.rsi #imp edit
     state: "assembly"
   - type: Physics
   - type: Fixtures

@@ -1,3 +1,50 @@
+# Airlocks
+- type: entity
+  parent: AirlockCourier
+  id: AirlockCourierLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockLogisticsLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
+
+# Glass Airlocks
+- type: entity
+  parent: AirlockCourierGlass
+  id: AirlockCourierGlassLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockLogisticsGlassLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
+  
+- type: entity
+  parent: AirlockChemistryGlass # For Synth Specailist, unique textures in the future, but this matches the colors of interdyne
+  id: AirlockChemistrySyndicateGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]
+
 # Maintenance Hatches
 - type: entity
   parent: AirlockMaint
@@ -38,3 +85,23 @@
       board: [ DoorElectronicsSecurityMedical ]
   - type: Wires
     layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCourierLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockChemistry # For Synth Specailist, unique textures in the future, but this matches the colors of interdyne
+  id: AirlockChemistrySyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]

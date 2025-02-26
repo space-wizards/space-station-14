@@ -1,5 +1,7 @@
-﻿using Content.Shared.Containers.ItemSlots;
+﻿using Content.Server.Roles;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Chemistry.Components;
@@ -8,6 +10,7 @@ using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Server.Audio;
 using Content.Shared.Coordinates;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -17,6 +20,8 @@ public sealed partial class BorgSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     public void InitializeMMI()
     {
@@ -47,12 +52,21 @@ public sealed partial class BorgSystem
             return;
 
         var ent = args.Entity;
+        if (HasComp<UnborgableComponent>(ent))
+        {
+            return;
+        }
         var linked = EnsureComp<MMILinkedComponent>(ent);
         linked.LinkedMMI = uid;
         Dirty(uid, component);
 
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
+        {
             _mind.TransferTo(mindId, uid, true, mind: mind);
+
+            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+                _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
+        }
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
     }
@@ -86,7 +100,12 @@ public sealed partial class BorgSystem
         RemComp(uid, component);
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
+        {
+            if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+                _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
+
             _mind.TransferTo(mindId, uid, true, mind: mind);
+        }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
     }
@@ -98,10 +117,15 @@ public sealed partial class BorgSystem
         {
             _popup.PopupEntity("The brain suddenly dissolves on contact with the interface!", uid, Shared.Popups.PopupType.MediumCaution);
             _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid);
-            var solution = new Solution();
-            solution.AddReagent("Blood", 30f);
-            _puddle.TrySpillAt(Transform(uid).Coordinates, solution, out _);
-            EntityManager.DeleteEntity(ent);
+            if (_solution.TryGetSolution(ent, "food", out var solution))
+            {
+                if (solution != null)
+                {
+                    Entity<SolutionComponent> solutions = (Entity<SolutionComponent>)solution;
+                    _puddle.TrySpillAt(Transform(uid).Coordinates, solutions.Comp.Solution, out _);
+                }
+            }
+            EntityManager.QueueDeleteEntity(ent);
         }
     }
 }

@@ -1,0 +1,32 @@
+- type: entity
+  id: RandomHumanoidVisitorBrigmedic
+  name: visiting brigmedic ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: brigmedic
+    - type: RandomHumanoidSpawner
+      settings: VisitorBrigmedic
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorCourier
+  name: visiting courier ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cargo_tech # no courier job in the rsi
+    - type: RandomHumanoidSpawner
+      settings: VisitorCourier
+
+- type: entity
+  id: RandomHumanoidVisitorRoboticist
+  name: visiting roboticist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: roboticist # no courier job in the rsi
+    - type: RandomHumanoidSpawner
+      settings: VisitorRoboticist

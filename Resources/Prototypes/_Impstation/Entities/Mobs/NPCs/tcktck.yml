@@ -13,6 +13,9 @@
         Blunt: 5
     soundHit:
       collection: MetalThud
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/_Impstation/Effects/Footsteps/tcktckstep.ogg
   - type: CombatMode
   - type: StaticPrice
     price: 1250
@@ -145,12 +148,9 @@
   - type: UnblockableSpeech
   - type: ReplacementAccent
     accent: silicon
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepBorg
   - type: Lock
     locked: true
-    breakOnEmag: false
+    breakOnAccessBreaker: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
@@ -283,8 +283,10 @@
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
-    description: Charge APCs, help with power, and keep everyone's batteries topped up.
+    description: Help with power, charge batteries, and go on adventures.
     rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
   - type: GhostTakeoverAvailable
   - type: GenericVisualizer
     visuals:
@@ -299,3 +301,13 @@
     clumsyHypo: false
     clumsyDefib: false
     clumsyGuns: false
+  - type: Access
+    tags:
+    - Engineering
+    - External
+    - Salvage
+    - Cargo
+    - Maintenance
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral

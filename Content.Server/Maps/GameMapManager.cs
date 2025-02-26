@@ -228,9 +228,8 @@ public sealed class GameMapManager : IGameMapManager
         Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
         var weight = eligible[0].weight;
-        return eligible.Where(x => x.Item2 == weight)
-            .MinBy(x => x.proto.ID)
-            .proto;
+        var eligibleWithCorrectWeight = eligible.Where(x => x.Item2 == weight).ToArray();
+        return _random.Pick(eligibleWithCorrectWeight).proto;
     }
 
     private void EnqueueMap(string mapProtoName)

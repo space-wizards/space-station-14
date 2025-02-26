@@ -5,7 +5,7 @@
       "y":32
    },
    "license":"CC-BY-SA-3.0",
-   "copyright":"Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da. Signal valve is a digital valve modified by deltanedas.",
+   "copyright":"Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da. Signal valve is a digital valve modified by deltanedas. Manual valve modified by Deerstop at https://github.com/space-wizards/space-station-14/pull/34378",
    "states":[
       {
          "name":"pumpDigitalValve",

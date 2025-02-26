@@ -19,3 +19,10 @@
   - /Audio/_Impstation/Effects/Gasp/s_gasp_female_1.ogg
   - /Audio/_Impstation/Effects/Gasp/s_gasp_female_2.ogg
   - /Audio/_Impstation/Effects/Gasp/s_gasp_female_3.ogg
+
+- type: soundCollection
+  id: VoxGasp
+  files:
+  - /Audio/_Impstation/Voice/Vox/voxgasp1.ogg
+  - /Audio/_Impstation/Voice/Vox/voxgasp2.ogg
+  - /Audio/_Impstation/Voice/Vox/voxgasp3.ogg

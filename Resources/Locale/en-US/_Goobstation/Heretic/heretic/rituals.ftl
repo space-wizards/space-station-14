@@ -9,10 +9,12 @@ heretic-ritual-noritual = No ritual chosen!
 heretic-ritual-basic-sacrifice = Heartbeat of the Mansus
 heretic-ritual-basic-focus = Amber Focus
 heretic-ritual-basic-heart = Relentless Heartbeat
+heretic-ritual-basic-codex = Codex Cicatrix
+
 
 heretic-ritual-fail-sacrifice = There is no corpse to sacrifice.
 heretic-ritual-fail-sacrifice-ineligible = The rune refuses to accept this sacrifice.
-heretic-ritual-fail-reagentpuddle = There is no {$reagentname} present.
+heretic-ritual-fail-reagentpuddle = This ritual needs a puddle of one of these: {$reagentname}.
 heretic-ritual-fail-temperature-hot = It is too hot here.
 heretic-ritual-fail-temperature-cold = It is not cold enough here.
 heretic-ritual-fail-sacrifice-ash = There's either not enough of them dead, or burning.

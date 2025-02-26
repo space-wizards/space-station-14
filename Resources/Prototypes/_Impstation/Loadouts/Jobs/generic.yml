@@ -1,0 +1,9 @@
+- type: loadout
+  id: BlackHeels
+  equipment:
+    shoes: ClothingShoesHeelsBlack
+
+- type: loadout
+  id: LeatherSatchel
+  equipment:
+    back: ClothingBackpackSatchelLeather

@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e | SupplyAssistant recoloured from MedicalIntern by Radezolid, AdminAssistant made by noctyrnal (github)",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "SupplyAssistant"
+        },
+        {
+            "name": "AdminAssistant"
+        }
+    ]
+}

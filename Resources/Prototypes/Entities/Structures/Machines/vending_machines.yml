@@ -78,6 +78,9 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
+  - type: SpookySpeaker
+    messageSet: SpookySpeakerMessagesGeneric
+    speakChance: 0.2
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -135,7 +138,6 @@
     pack: CondimentVendAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
-  - type: Speech
   - type: Transform
     noRot: false
 
@@ -150,11 +152,11 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: AmmoVendAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/ammo.rsi
     layers:
@@ -183,7 +185,6 @@
     pack: BoozeOMatAds
   - type: SpeakOnUIClosed
     pack: BoozeOMatGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/boozeomat.rsi
     layers:
@@ -218,7 +219,6 @@
     pack: BruiseOMatAds
   - type: SpeakOnUIClosed
     pack: BruiseOMatGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/bruiseomat.rsi
     layers:
@@ -265,6 +265,8 @@
     color: "#ffb0b0"
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+  - type: StealTarget #imp
+    stealGroup: PTech
 
 - type: entity
   parent: VendingMachine
@@ -318,7 +320,6 @@
     pack: CigaretteMachineAds
   - type: SpeakOnUIClosed
     pack: CigaretteMachineGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cigs.rsi
     layers:
@@ -342,6 +343,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: ClothesMateAds
   - type: SpeakOnUIClosed
@@ -377,6 +379,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: ClothesMateAds
   - type: SpeakOnUIClosed
@@ -423,7 +426,6 @@
     pack: HotDrinksMachineAds
   - type: SpeakOnUIClosed
     pack: HotDrinksMachineGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/coffee.rsi
     layers:
@@ -459,11 +461,11 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: SpeakOnUIClosed
     pack: RobustSoftdrinksGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola.rsi
     layers:
@@ -528,6 +530,7 @@
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -550,6 +553,7 @@
   components:
   - type: VendingMachine
     pack: SodaInventory
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/soda.rsi
     layers:
@@ -573,6 +577,7 @@
   components:
   - type: VendingMachine
     pack: StarkistInventory
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
@@ -605,9 +610,9 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: RobustSoftdrinksAds
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
     layers:
@@ -640,11 +645,11 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/pwrgame.rsi
     layers:
@@ -677,11 +682,11 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: DrGibbAds
   - type: SpeakOnUIClosed
-    pack: GenericVendGoodbyes
-  - type: Speech
+    pack: DrGibbGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/gib.rsi
     layers:
@@ -696,6 +701,42 @@
     radius: 1.5
     energy: 1.6
     color: "#D82929"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSmite
+  name: Smite Vendor
+  description: Popular with the administration.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/smite.rsi
+    layers:
+    - state: "off"
+      map: [ "enum.VendingMachineVisualLayers.Base" ]
+    - state: "off"
+      map: [ "enum.VendingMachineVisualLayers.BaseUnshaded" ]
+      shader: unshaded
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: VendingMachine
+    pack: SmiteInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+    initialStockQuality: 0.33
+  - type: Advertise
+    pack: SmiteAds
+  - type: SpeakOnUIClosed
+    pack: SmiteGoodbyes
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#00E645"
 
 - type: entity
   parent: VendingMachine
@@ -741,6 +782,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: MagiVendAds
   - type: SpeakOnUIClosed
@@ -778,7 +820,6 @@
     pack: DiscountDansAds
   - type: SpeakOnUIClosed
     pack: DiscountDansGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/discount.rsi
     layers:
@@ -878,6 +919,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: NutriMaxAds
   - type: SpeakOnUIClosed
@@ -936,6 +978,8 @@
     guides:
     - Security
     - Antagonists
+  - type: StealTarget #imp
+    stealGroup: SecTech
 
 - type: entity
   parent: VendingMachine
@@ -951,6 +995,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: MegaSeedAds
   - type: SpeakOnUIClosed
@@ -998,7 +1043,6 @@
     pack: GetmoreChocolateCorpAds
   - type: SpeakOnUIClosed
     pack: GetmoreChocolateCorpGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/snack.rsi
     layers:
@@ -1029,6 +1073,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/sustenance.rsi
     layers:
@@ -1140,11 +1185,11 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     initialStockQuality: 0.33
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: BodaAds
   - type: SpeakOnUIClosed
     pack: BodaGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/sovietsoda.rsi
     layers:
@@ -1174,11 +1219,11 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     screenState: screen
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: AutoDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/theater.rsi
     layers:
@@ -1217,7 +1262,6 @@
     pack: VendomatAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/vendomat.rsi
     layers:
@@ -1250,7 +1294,6 @@
     pack: VendomatAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/robotics.rsi
     layers:
@@ -1352,7 +1395,6 @@
     pack: ChangAds
   - type: SpeakOnUIClosed
     pack: ChangGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/changs.rsi
     layers:
@@ -1380,6 +1422,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/mining.rsi
     layers:
@@ -1418,7 +1461,6 @@
     pack: DonutAds
   - type: SpeakOnUIClosed
     pack: DonutGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/donut.rsi
     layers:
@@ -1500,6 +1542,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: HyDrobeAds
   - type: SpeakOnUIClosed
@@ -1520,6 +1563,8 @@
     color: "#326e3f"
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: StealTarget #imp
+    stealGroup: HyDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1532,6 +1577,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: LawDrobeAds
   - type: SpeakOnUIClosed
@@ -1548,6 +1594,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Lawyer"]]
+  - type: StealTarget #imp
+    stealGroup: LawDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1560,6 +1608,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: SecDrobeAds
   - type: SpeakOnUIClosed
@@ -1580,6 +1629,8 @@
     color: "#d82929"
   - type: AccessReader
     access: [["Security"]]
+  - type: StealTarget #imp
+    stealGroup: SecDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1592,6 +1643,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: BarDrobeAds
   - type: SpeakOnUIClosed
@@ -1608,6 +1660,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Bar"]]
+  - type: StealTarget #imp
+    stealGroup: BarDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1620,6 +1674,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
     layers:
@@ -1636,6 +1691,8 @@
     radius: 1.5
     energy: 1.6
     color: "#CCCCCC" #The holy C
+  - type: StealTarget #imp
+    stealGroup: PietyVend
 
 - type: entity
   parent: VendingMachine
@@ -1648,6 +1705,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: CargoDrobeAds
   - type: SpeakOnUIClosed
@@ -1668,6 +1726,8 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: StealTarget #imp
+    stealGroup: CargoDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1680,6 +1740,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: MediDrobeAds
   - type: SpeakOnUIClosed
@@ -1696,6 +1757,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: StealTarget #imp
+    stealGroup: MediDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1708,6 +1771,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: ChemDrobeAds
   - type: SpeakOnUIClosed
@@ -1724,6 +1788,9 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: StealTarget #imp
+    stealGroup: ChemDrobe
+
 
 - type: entity
   parent: VendingMachine
@@ -1736,6 +1803,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: CuraDrobeAds
   - type: SpeakOnUIClosed
@@ -1752,6 +1820,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Service"]]
+  - type: StealTarget #imp
+    stealGroup: CuraDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1764,6 +1834,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: AtmosDrobeAds
   - type: SpeakOnUIClosed
@@ -1784,6 +1855,8 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
+  - type: StealTarget #imp
+    stealGroup: AtmosDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1796,6 +1869,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: EngiDrobeAds
   - type: SpeakOnUIClosed
@@ -1816,6 +1890,8 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
+  - type: StealTarget #imp
+    stealGroup: EngiDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1828,6 +1904,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: ChefDrobeAds
   - type: SpeakOnUIClosed
@@ -1844,6 +1921,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Kitchen"]]
+  - type: StealTarget #imp
+    stealGroup: ChefDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1856,6 +1935,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: DetDrobeAds
   - type: SpeakOnUIClosed
@@ -1872,6 +1952,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Detective"]]
+  - type: StealTarget #imp
+    stealGroup: DetDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1884,6 +1966,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: JaniDrobeAds
   - type: SpeakOnUIClosed
@@ -1904,6 +1987,8 @@
     color: "#6927C5"
   - type: AccessReader
     access: [["Janitor"]]
+  - type: StealTarget #imp
+    stealGroup: JaniDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1916,6 +2001,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: SciDrobeAds
   - type: SpeakOnUIClosed
@@ -1932,6 +2018,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Research"]]
+  - type: StealTarget #imp
+    stealGroup: SciDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1944,6 +2032,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: SyndieDrobeAds
   - type: SpeakOnUIClosed
@@ -1976,6 +2065,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: RoboDrobeAds
   - type: SpeakOnUIClosed
@@ -1992,6 +2082,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Research"]]
+  - type: StealTarget #imp
+    stealGroup: RoboDrobe
 
 - type: entity
   parent: VendingMachine
@@ -2004,6 +2096,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: GeneDrobeAds
   - type: SpeakOnUIClosed
@@ -2020,6 +2113,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: StealTarget #imp
+    stealGroup: GeneDrobe
 
 - type: entity
   parent: VendingMachine
@@ -2032,6 +2127,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Advertise
     pack: ViroDrobeAds
   - type: SpeakOnUIClosed
@@ -2048,6 +2144,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: StealTarget #imp
+    stealGroup: ViroDrobe
 
 - type: entity
   parent: VendingMachine
@@ -2060,6 +2158,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/centdrobe.rsi
     layers:
@@ -2115,6 +2214,39 @@
   - type: AccessReader
     access: [["Kitchen"], ["Theatre"]]
 
+# Pride Vending Machine
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachinePride
+  name: Pride-O-Mat
+  description: A vending machine containing pride.
+  components:
+  - type: VendingMachine
+    pack: PrideDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Advertise
+    pack: PrideDrobeAds
+  - type: SpeakOnUIClosed
+    pack: PrideDrobeGoodbyes
+  - type: Speech
+  - type: PointLight
+    radius: 1.5
+    energy: 1.3 # reduced energy since the color is pure white
+    color: "#FFFFFF"
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/pride.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+
 # Gas Tank Dispenser
 
 - type: entity
@@ -2122,12 +2254,13 @@
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
   name: gas tank dispenser
-  description: A vendor for dispensing gas tanks.
+  description: A vendor for dispensing gas tanks. Does not dispense frezon.
   components:
   - type: VendingMachine
     pack: TankDispenserEVAInventory
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
+    sprite: _Impstation/Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers #imp
     state: dispenser
 
 - type: entity
@@ -2135,12 +2268,13 @@
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
   name: gas tank dispenser
-  description: A vendor for dispensing gas tanks. This one has an engineering livery.
+  description: A vendor for dispensing gas tanks. This one has an engineering livery. Still doesn't dispense frezon.
   components:
   - type: VendingMachine
     pack: TankDispenserEngineeringInventory
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
+    sprite: _Impstation/Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
     layers:
     - state: dispenser
     - state: dispensereng
@@ -2158,6 +2292,7 @@
     normalState: normal
     denyState: deny
     ejectDelay: 2
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemvend.rsi
     layers:
@@ -2178,7 +2313,7 @@
   parent: VendingMachineChemicals
   id: VendingMachineChemicalsSyndicate
   name: SyndieJuice
-  description: Not made with freshly squeezed syndies I hope.
+  description: Not made with freshly squeezed syndies, I hope. Backwards compatible with standard ChemVend restocks. # DeltaV: Add chemvend part
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
@@ -2187,6 +2322,16 @@
     normalState: normal
     denyState: deny
     ejectDelay: 2
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
+  - type: Sprite # imp
+    sprite: _Impstation/Structures/Machines/VendingMachines/syndiejuice.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["SyndicateAgent"]]
 

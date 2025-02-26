@@ -1,0 +1,21 @@
+- type: entity
+  id: OrganGastropoidStomach
+  parent: OrganHumanStomach
+  name: snail stomach
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Organ
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 75
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Snail]

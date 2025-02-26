@@ -186,12 +186,12 @@
     sprite: Objects/Misc/module.rsi
     state: medical
 
-- type: stealTargetGroup
-  id: ClothingHeadsetAltMedical
-  name: steal-target-groups-clothing-headset-alt-medical
-  sprite:
-    sprite: Clothing/Ears/Headsets/medical.rsi
-    state: icon_alt
+#- type: stealTargetGroup
+#  id: ClothingHeadsetAltMedical
+#  name: steal-target-groups-clothing-headset-alt-medical
+#  sprite:
+#    sprite: Clothing/Ears/Headsets/medical.rsi
+#    state: icon_alt
 
 - type: stealTargetGroup
   id: ResearchAndDevelopmentServerMachineCircuitboard
@@ -392,10 +392,3 @@
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab
-
-- type: stealTargetGroup
-  id: AnimalPipi
-  name: steal-target-groups-animal-pipi
-  sprite:
-    sprite: Mobs/Pets/pipi.rsi
-    state: pipi

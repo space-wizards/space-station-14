@@ -31,7 +31,7 @@
     defaultDirection: 1, 0
   - type: ChamberMagazineAmmoProvider
     soundRack:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Cock/basic_cock.ogg #imp
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -83,9 +83,9 @@
 
 - type: entity
   name: C-20r submachine gun
-  parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
+  parent: [BaseWeaponSubMachineGun, Tier3Contraband]
   id: WeaponSubMachineGunC20r
-  description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo.
+  description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -104,15 +104,19 @@
   - type: Gun
     minAngle: 21
     maxAngle: 32
-    shotsPerBurst: 5
+    shotsPerBurst: 2 #imp
+    burstCooldown: 0.15 #imp
+    burstFireRate: 20 #imp
     availableModes:
-    - SemiAuto
     - Burst
     - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
     autoEject: true
+    soundAutoEject:
+      path: /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg #imp
   - type: MagazineVisuals
     magState: mag
     steps: 6
@@ -123,7 +127,7 @@
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
   id: WeaponSubMachineGunDrozd
-  description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo.
+  description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo. #imp
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -142,15 +146,17 @@
     - type: Gun
       minAngle: 21
       maxAngle: 32
-      fireRate: 12
+      fireRate: 6
       burstFireRate: 12
-      selectedMode: Burst
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
       availableModes:
-        - Burst
+      - Burst
+      - FullAuto
+      - SemiAuto
       shotsPerBurst: 3
       burstCooldown: 0.25
+      selectedMode: Burst #imp
     - type: ItemSlots
       slots:
         gun_magazine:
@@ -228,7 +234,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
   id: WeaponSubMachineGunWt550
-  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
+  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -254,13 +260,13 @@
     angleIncrease: 1.5
     angleDecay: 6
     selectedMode: FullAuto
-    shotsPerBurst: 5
-    burstCooldown: 0.2
-    burstFireRate: 7
+    shotsPerBurst: 3 #imp
+    burstCooldown: 0.5 #imp
+    burstFireRate: 12
     availableModes:
-    - SemiAuto
     - Burst
     - FullAuto
+    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:

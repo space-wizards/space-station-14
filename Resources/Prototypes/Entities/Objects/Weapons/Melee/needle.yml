@@ -22,3 +22,5 @@
   - type: ThrowingAngle
     angle: -135
   - type: LandAtCursor
+  - type: EmbeddableProjectile # imp
+    removalTime: 0

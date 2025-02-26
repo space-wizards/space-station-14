@@ -16,6 +16,7 @@
   # they like eat it idk lol
   - type: Storage
     clickInsert: false
+    openOnActivate: false
     grid:
     - 0,0,1,2
     maxItemSize: Large
@@ -37,8 +38,8 @@
         type: StoreBoundUserInterface
       enum.HereticLivingHeartKey.Key: # goob edit - heretics
         type: LivingHeartMenuBoundUserInterface
-      enum.SpelfMoodsUiKey.Key: # impstation edit
-        type: SpelfMoodsBoundUserInterface
+      enum.ThavenMoodsUiKey.Key: # impstation edit
+        type: ThavenMoodsBoundUserInterface
         requireInputValidation: false
   # to prevent bag open/honk spam
   - type: UseDelay

@@ -24,6 +24,12 @@
   - type: Tag
     tags:
       - HolosignProjector
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 6.5
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   parent: Holoprojector
@@ -67,6 +73,11 @@
       - HolofanProjector
   - type: StaticPrice
     price: 80
+  - type: GuideHelp
+    guides:
+    - AtmosTools
+    - Fires
+    - Spacing
 
 - type: entity
   parent: HolofanProjector

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Sprited for impstation by kipdotnet(github)",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

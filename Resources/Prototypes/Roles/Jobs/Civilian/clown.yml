@@ -28,7 +28,6 @@
 - type: startingGear
   id: ClownGear
   equipment:
-    mask: ClothingMaskClown
     pocket1: BikeHorn
     pocket2: ClownRecorder
     id: ClownPDA

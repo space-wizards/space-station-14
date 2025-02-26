@@ -35,3 +35,24 @@
       - id: Wirecutter
       - id: Welder
       - id: Multitool
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ApidEmergencyResponseBeltFilled
+  name: apid emergency response belt
+  description: Perfect for holding various equipment for stationwide emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/emt.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/emt.rsi
+  - type: StorageFill
+    contents:
+      - id: JawsOfLife
+      - id: DefibrillatorCompact
+      - id: MedicatedSuture
+      - id: RegenerativeMesh
+      - id: SyringeSaline
+      - id: BruteAutoInjector
+      - id: BurnAutoInjector
+      - id: EmergencyMedipen

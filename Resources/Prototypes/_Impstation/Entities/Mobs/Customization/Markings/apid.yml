@@ -1,0 +1,67 @@
+- type: marking
+  id: ApidAntennaeDefault
+  bodyPart: Hair
+  markingCategory: Hair
+  followSkinColor: false
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites: 
+  - sprite: _Impstation/Mobs/Customization/apid.rsi
+    state: defaultAntennae
+    
+- type: marking
+  id: ApidAntennaeSad
+  bodyPart: Hair
+  markingCategory: Hair
+  followSkinColor: false
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites: 
+  - sprite: _Impstation/Mobs/Customization/apid.rsi
+    state: antennaeSad
+
+- type: marking
+  id: ApidAntennaeForward
+  bodyPart: Hair
+  markingCategory: Hair
+  followSkinColor: false
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites: 
+  - sprite: _Impstation/Mobs/Customization/apid.rsi
+    state: antennaeForward
+
+- type: marking
+  id: ApidAntennaeDroopy
+  bodyPart: Hair
+  markingCategory: Hair
+  followSkinColor: false
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites: 
+  - sprite: _Impstation/Mobs/Customization/apid.rsi
+    state: antennaeDroopy
+
+- type: marking
+  id: ApidWingsAnimatedDefault
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Apid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/apid.rsi
+    state: apidWingsDefault
+
+- type: marking
+  id: ApidEyesDefault
+  bodyPart: Eyes
+  markingCategory: Eyes
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFaa"
+  sprites:
+  - sprite: _Impstation/Mobs/Species/Apid/parts.rsi
+    state: eyes

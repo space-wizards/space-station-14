@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: ImprovisedPistolGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: pistol
+      steps:
+      - tag: Pen
+        icon:
+          sprite: Objects/Misc/pens.rsi
+          state: pen
+        name: Pen
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: modular receiver
+      - material: Steel
+        amount: 5
+      - material: Cloth
+        amount: 3
+        doAfter: 10
+  - node: pistol
+    entity: WeaponPistolImprovised

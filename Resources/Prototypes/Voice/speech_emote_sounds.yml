@@ -34,6 +34,10 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -75,7 +79,11 @@
     Whistle:
       collection: Whistles
     Weh:
-      collection: Weh
+      collection:
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -118,6 +126,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -152,6 +162,10 @@
       collection: MaleCry
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -186,6 +200,10 @@
       collection: FemaleCry
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -220,6 +238,8 @@
       collection: UnisexCry
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -266,6 +286,10 @@
       collection: SlimeWhistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -314,6 +338,8 @@
       collection: SlimeWhistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -362,6 +388,8 @@
       collection: SlimeWhistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -389,17 +417,37 @@
     Sigh:
       collection: MaleSigh #placeholder
     Crying:
-      collection: MaleCry #placeholder
+      collection: VoxCry #Imp
+      params:
+        volume: -7
     Whistle:
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
-      collection: MaleGasp #placeholder
+      collection: VoxGasp #Imp
+      params:
+        volume: 10
     DefaultDeathgasp:
       collection: MaleDeathGasp #placeholder
+    Chitter:
+      collection: VoxChitter #Imp
+      params:
+        volume: -5
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    Hiss:
+      collection: VoxHiss #Imp
+      params:
+        volume: -5
   params:
     variation: 0.125
 
@@ -421,17 +469,35 @@
     Sigh:
       collection: FemaleSigh #placeholder
     Crying:
-      collection: FemaleCry #placeholder
+      collection: VoxCry #Imp
+      params:
+        volume: -7
     Whistle:
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
-      collection: FemaleGasp #placeholder
+      collection: VoxGasp #Imp
+      params:
+        volume: 10
     DefaultDeathgasp:
       collection: FemaleDeathGasp #placeholder
+    Chitter:
+      collection: VoxChitter #Imp
+      params:
+        volume: -5
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    Hiss:
+      collection: VoxHiss #Imp
+      params:
+        volume: -5
   params:
     variation: 0.125
 
@@ -453,17 +519,37 @@
     Sigh:
       collection: UnisexSigh #placeholder
     Crying:
-      collection: UnisexCry #placeholder
+      collection: VoxCry #Imp
+      params:
+        volume: -7
     Whistle:
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
-      collection: UnisexGasp #placeholder
+      collection: VoxGasp #Imp
+      params:
+        volume: 10
     DefaultDeathgasp:
-      collection: DeathGasp #placeholder
+      collection: UnisexDeathGasp #placeholder
+    Chitter:
+      collection: VoxChitter #Imp
+      params:
+        volume: -5
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    Hiss:
+      collection: VoxHiss #Imp
+      params:
+        volume: -5
   params:
     variation: 0.125
     # We need vox sounds for the other emotes
@@ -493,6 +579,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -527,6 +615,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -561,6 +651,10 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -599,6 +693,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -635,6 +731,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -671,6 +769,10 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -711,6 +813,10 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -754,6 +860,10 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -797,6 +907,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -838,6 +950,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -876,6 +990,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -914,6 +1030,10 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -973,6 +1093,10 @@
       collection: Salutes
     Crack: # Imp addition
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
+      params:
+        volume: -3
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -987,6 +1111,11 @@
        volume: -5
     Crack:
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
+      params:
+        volume: -3
+
 
 - type: emoteSounds
   id: ReptilianBodyEmotes
@@ -1005,9 +1134,13 @@
       collection: Salutes
     Crack: # Imp addition
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
+      params:
+        volume: -3
 
 - type: emoteSounds
-  id: MaleSpElf
+  id: MaleThaven
   sounds:
     Scream:
       collection: MaleScreams
@@ -1039,6 +1172,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -1050,7 +1185,7 @@
     pitch: 1.25
 
 - type: emoteSounds
-  id: FemaleSpElf
+  id: FemaleThaven
   sounds:
     Scream:
       collection: FemaleScreams
@@ -1082,6 +1217,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -1093,7 +1230,7 @@
     pitch: 1.25
 
 - type: emoteSounds
-  id: UnisexSpElf
+  id: UnisexThaven
   sounds:
     Scream:
       collection: UnisexScreams
@@ -1125,6 +1262,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -1208,5 +1347,12 @@
   id: Parrot
   sound:
     path: /Audio/Animals/parrot_raught.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Goat
+  sound:
+    path: /Audio/Animals/goat_bah.ogg
     params:
       variation: 0.125

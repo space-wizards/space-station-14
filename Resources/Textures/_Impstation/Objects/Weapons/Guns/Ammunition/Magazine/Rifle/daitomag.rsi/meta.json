@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "DVD Player",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "rubber"
+        },
+        {
+            "name": "uranium"
+        },
+        {
+            "name": "mag-1"
+        }
+    ]
+}

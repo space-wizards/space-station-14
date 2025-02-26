@@ -1,0 +1,615 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by Carousel for Impstation",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "thavenchestgills",
+        "directions": 4
+      },
+      {
+        "name": "thavenchestscales",
+        "directions": 4
+      },
+      {
+        "name": "thavenheadscales",
+        "directions": 4
+      },
+      {
+        "name": "thavenleftarmscales",
+        "directions": 4
+      },
+      {
+        "name": "thavenrightarmscales",
+        "directions": 4
+      },
+      {
+        "name": "thavenleftlegscales",
+        "directions": 4
+      },
+      {
+        "name": "thavenrightlegscales",
+        "directions": 4
+      },
+      {
+        "name": "thavenbignaturals",
+        "directions": 4
+      },
+      {
+        "name": "thavennonaturals",
+        "directions": 4
+      },
+      {
+        "name": "thavenfishears",
+        "directions": 4
+      },
+      {
+        "name": "thavenbitemark",
+        "directions": 4
+      },
+      {
+        "name": "thaventattoovines",
+        "directions": 4
+      },
+      {
+        "name": "thavenspines",
+        "directions": 4
+      },
+      {
+        "name": "thaventattoowave",
+        "directions": 4
+      },
+      {
+        "name": "thaventattoosharkminnoweyeliner",
+        "directions": 4
+      },
+      {
+        "name": "snailcheeks",
+        "directions": 4
+      },
+      {
+        "name": "snailshellprosthetic",
+        "directions": 4
+      },
+      {
+        "name": "snailshellprostheticsimple",
+        "directions": 4
+      },
+      {
+        "name": "snailshellprostheticsimplebow",
+        "directions": 4
+      },
+      {
+        "name": "snailshellprostheticsimplecracks",
+        "directions": 4
+      },
+      {
+        "name": "snailshellprostheticsimpleglowinthedarkstars",
+        "directions": 4
+      },
+      {
+        "name": "dionamosschest",
+        "directions": 4
+      },
+      {
+        "name": "dionamoonbloom",
+        "directions": 4
+      },
+      {
+        "name": "dwarfbearcheeks",
+        "directions": 4
+      },
+      {
+        "name": "dwarfchesthair",
+        "directions": 4
+      },
+      {
+        "name": "dwarfarmhair",
+        "directions": 4
+      },
+      {
+        "name": "dwarfleghair",
+        "directions": 4
+      },
+      {
+        "name": "dwarftattooshootingstar",
+        "directions": 4
+      },
+      {
+        "name": "spidergloweyes",
+        "directions": 4
+      },
+      {
+        "name": "spidereyesmulti1",
+        "directions": 4
+      },
+      {
+        "name": "spidereyesmulti2",
+        "directions": 4
+      },
+      {
+        "name": "spidereyesmulti3",
+        "directions": 4
+      },
+      {
+        "name": "spidereyesmulti4",
+        "directions": 4
+      },
+      {
+        "name": "radiumglow",
+        "directions": 4
+      },
+      {
+        "name": "mothtruebutterfly1",
+        "directions": 4
+      },
+      {
+        "name": "mothtruebutterfly2",
+        "directions": 4
+      },
+      {
+        "name": "mothtruebutterfly3",
+        "directions": 4
+      },
+      {
+        "name": "mothfirefly2",
+        "directions": 4
+      },
+      {
+        "name": "voxcocktail1",
+        "directions": 4
+      },
+      {
+        "name": "voxcocktail2",
+        "directions": 4
+      },
+      {
+        "name": "voxcocktail3",
+        "directions": 4
+      },
+      {
+        "name": "voxcocktail4",
+        "directions": 4
+      },
+      {
+        "name": "voxtailstripes",
+        "directions": 4
+      },
+      {
+        "name": "voxarmprostheticl",
+        "directions": 4
+      },
+      {
+        "name": "voxarmprostheticr",
+        "directions": 4
+      },
+      {
+        "name": "voxbeakcolor",
+        "directions": 4
+      },
+      {
+        "name": "voxbeaksplit1",
+        "directions": 4
+      },
+      {
+        "name": "voxbeaksplit2",
+        "directions": 4
+      },
+      {
+        "name": "voxbeaktipped",
+        "directions": 4
+      },
+      {
+        "name": "voxchestplumage",
+        "directions": 4
+      },
+      {
+        "name": "voxfootspines",
+        "directions": 4
+      },
+      {
+        "name": "voxfootgradientl1",
+        "directions": 4
+      },
+      {
+        "name": "voxfootgradientl2",
+        "directions": 4
+      },
+      {
+        "name": "voxfootgradientr1",
+        "directions": 4
+      },
+      {
+        "name": "voxfootgradientr2",
+        "directions": 4
+      },
+      {
+        "name": "voxhandgradientl1",
+        "directions": 4
+      },
+      {
+        "name": "voxhandgradientl2",
+        "directions": 4
+      },
+      {
+        "name": "voxhandgradientl3",
+        "directions": 4
+      },
+      {
+        "name": "voxhandgradientr1",
+        "directions": 4
+      },
+      {
+        "name": "voxhandgradientr2",
+        "directions": 4
+      },
+      {
+        "name": "voxhandgradientr3",
+        "directions": 4
+      },
+      {
+        "name": "voxheadgradient1",
+        "directions": 4
+      },
+      {
+        "name": "voxheadgradient2",
+        "directions": 4
+      },
+      {
+        "name": "voxheadgradient3",
+        "directions": 4
+      },
+      {
+        "name": "voxtailbell1",
+        "directions": 4
+      },
+      {
+        "name": "voxtailbell2",
+        "directions": 4
+      },
+      {
+        "name": "voxtailcolorable",
+        "directions": 4
+      },
+      {
+        "name": "voxtaillantern",
+        "directions": 4
+      },
+      {
+        "name": "voxtailsinglestripe",
+        "directions": 4
+      },
+      {
+        "name": "voxtailsmallplume",
+        "directions": 4
+      },
+      {
+        "name": "voxtailspines",
+        "directions": 4
+      },
+      {
+        "name": "voxarmsstripesl",
+        "directions": 4
+      },
+      {
+        "name": "voxarmsstripesr",
+        "directions": 4
+      },
+      {
+        "name": "voxlegsstripesr",
+        "directions": 4
+      },
+      {
+        "name": "voxlegsstripesl",
+        "directions": 4
+      },
+      {
+        "name": "grayfakelashes",
+        "directions": 4
+      },
+      {
+        "name": "thaventiger1",
+        "directions": 4
+      },
+      {
+        "name": "thaventiger2",
+        "directions": 4
+      },
+      {
+        "name": "thaventigerarmsl",
+        "directions": 4
+      },
+      {
+        "name": "thaventigerarmsr",
+        "directions": 4
+      },
+      {
+        "name": "voxbelly",
+        "directions": 4
+      },
+      {
+        "name": "voxchains",
+        "directions": 4
+      },
+      {
+        "name": "voxsunandmoon",
+        "directions": 4
+      },
+      {
+        "name": "voxcheeks",
+        "directions": 4
+      },
+      {
+        "name": "bee1",
+        "directions": 4
+      },
+      {
+        "name": "bee2",
+        "directions": 4
+      },
+      {
+        "name": "bee3",
+        "directions": 4
+      },
+      {
+        "name": "beetle1",
+        "directions": 4
+      },
+      {
+        "name": "beetle2",
+        "directions": 4
+      },
+      {
+        "name": "beetle3",
+        "directions": 4
+      },
+      {
+        "name": "mothbeetlehorn1",
+        "directions": 4
+      },
+      {
+        "name": "mothbeetlehorn2",
+        "directions": 4
+      },
+      {
+        "name": "mothbiggereyes",
+        "directions": 4
+      },
+      {
+        "name": "snoth1",
+        "directions": 4
+      },
+      {
+        "name": "snoth2",
+        "directions": 4
+      },
+      {
+        "name": "vitiligoheadl",
+        "directions": 4
+      },
+      {
+        "name": "vitiligoheadr",
+        "directions": 4
+      },
+      {
+        "name": "vitiligoheadjaw",
+        "directions": 4
+      },
+      {
+        "name": "vitiligochestf",
+        "directions": 4
+      },
+      {
+        "name": "vitiligoarmr",
+        "directions": 4
+      },
+      {
+        "name": "vitiligoarml",
+        "directions": 4
+      },
+      {
+        "name": "vitiligohandl",
+        "directions": 4
+      },
+      {
+        "name": "vitiligohandr",
+        "directions": 4
+      },
+      {
+        "name": "vitiligolegl",
+        "directions": 4
+      },
+      {
+        "name": "vitiligolegr",
+        "directions": 4
+      },
+      {
+        "name": "vitiligochestspots",
+        "directions": 4
+      },
+      {
+        "name": "voxtailballed",
+        "directions": 4
+      },
+      {
+        "name": "voxtailsplit",
+        "directions": 4
+      },
+      {
+        "name": "thavenbodystripes",
+        "directions": 4
+      },
+      {
+        "name": "thavenheadstripes",
+        "directions": 4
+      },
+      {
+        "name": "thavenearsbigfins",
+        "directions": 4
+      },
+      {
+        "name": "thavenearsbigfins2",
+        "directions": 4
+      },
+      {
+        "name": "thavenheadcap1",
+        "directions": 4
+      },
+      {
+        "name": "thavenheadcap2",
+        "directions": 4
+      },
+      {
+        "name": "glasswing1",
+        "directions": 4
+      },
+      {
+        "name": "glasswing2",
+        "directions": 4
+      },
+      {
+        "name": "glasswing3",
+        "directions": 4
+      },
+      {
+        "name": "crabchestmasked",
+        "directions": 4
+      },
+      {
+        "name": "crabflowermoonpauldron1",
+        "directions": 4
+      },
+      {
+        "name": "crabflowermoonpauldron2",
+        "directions": 4
+      },
+      {
+        "name": "crabflowermoonupper1",
+        "directions": 4
+      },
+      {
+        "name": "crabflowermoonupper2",
+        "directions": 4
+      },
+      {
+        "name": "crabflowermoonupper3",
+        "directions": 4
+      },
+      {
+        "name": "crabgaudyclownhead1",
+        "directions": 4
+      },
+      {
+        "name": "crabgaudyclownhead2",
+        "directions": 4
+      },
+      {
+        "name": "crabgillstripes1",
+        "directions": 4
+      },
+      {
+        "name": "crabgillstripes2",
+        "directions": 4
+      },
+      {
+        "name": "crabheadhighlight",
+        "directions": 4
+      },
+      {
+        "name": "crabrarmstripes",
+        "directions": 4
+      },
+      {
+        "name": "crableftpauldronencrusted1",
+        "directions": 4
+      },
+      {
+        "name": "crableftpauldronencrusted2",
+        "directions": 4
+      },
+      {
+        "name": "crableftpauldronencrusted3",
+        "directions": 4
+      },
+      {
+        "name": "crabrightpauldronencrusted1",
+        "directions": 4
+      },
+      {
+        "name": "crabrightpauldronencrusted2",
+        "directions": 4
+      },
+      {
+        "name": "crabrightpauldronencrusted3",
+        "directions": 4
+      },
+      {
+        "name": "crabsplitclaw1",
+        "directions": 4
+      },
+      {
+        "name": "crabsplitclaw2",
+        "directions": 4
+      },
+      {
+        "name": "crabtalleyes1",
+        "directions": 4
+      },
+      {
+        "name": "crabtalleyes2",
+        "directions": 4
+      },
+      {
+        "name": "rhinobeetle1",
+        "directions": 4
+      },
+      {
+        "name": "rhinobeetle2",
+        "directions": 4
+      },
+      {
+        "name": "rhinobeetle3",
+        "directions": 4
+      },
+      {
+        "name": "crabcrackedchest",
+        "directions": 4
+      },
+      {
+        "name": "crabcrackedhead",
+        "directions": 4
+      },
+      {
+        "name": "crableftpauldronarmored",
+        "directions": 4
+      },
+      {
+        "name": "crabrightpauldronarmored",
+        "directions": 4
+      },
+      {
+        "name": "crableftpauldronwarlord",
+        "directions": 4
+      },
+      {
+        "name": "crabpauldroncracked",
+        "directions": 4
+      },
+      {
+        "name": "crabpauldronsheerspine",
+        "directions": 4
+      },
+      {
+        "name": "crabspine",
+        "directions": 4
+      },
+      {
+        "name": "crabtorsocorset",
+        "directions": 4
+      }
+    ]
+  }

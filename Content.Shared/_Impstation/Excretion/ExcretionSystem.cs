@@ -25,7 +25,7 @@ public abstract partial class SharedExcretionSystem : EntitySystem
 {
     // Managers
     [Dependency] private readonly INetManager _netManager = default!;
-	[Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     // Systems
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -33,11 +33,11 @@ public abstract partial class SharedExcretionSystem : EntitySystem
     [Dependency] private readonly ThirstSystem _thirstSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-	[Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-	[Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-	[Dependency] private readonly SharedJetpackSystem _jetpack = default!;
-	[Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
-	[Dependency] private readonly SharedPuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
+    [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddleSystem = default!;
 
     public override void Initialize()
     {
@@ -55,8 +55,8 @@ public abstract partial class SharedExcretionSystem : EntitySystem
     private void OnMapInit(EntityUid uid, ExcretionComponent comp, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action);
-		/// refreshes the movement speed modifier so that the snailSlowdownModifier triggers.
-		_movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+        /// refreshes the movement speed modifier so that the snailSlowdownModifier triggers.
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
     /// <summary>
@@ -66,7 +66,8 @@ public abstract partial class SharedExcretionSystem : EntitySystem
     {
         _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }
-	// When the action is started, grab thirst information.
+    // When the action is started, grab thirst information.
+
     private void OnExcretionStart(EntityUid uid, ExcretionComponent comp, ExcretionActionEvent args)
     {
         if (TryComp<ThirstComponent>(uid, out var thirstComp)
@@ -93,30 +94,30 @@ public abstract partial class SharedExcretionSystem : EntitySystem
         if (args.Cancelled || args.Handled || comp.Deleted)
             return;
 
-		if(TryComp<ThirstComponent>(uid, out var thirstComp))
-		{
-			if(_thirstSystem.IsThirstBelowState(uid, comp.MinThirstThreshold, thirstComp.CurrentThirst - comp.ThirstCost, thirstComp))
-			{
-				_popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
-				return;
-			}
-		_thirstSystem.ModifyThirst(uid, thirstComp, -comp.ThirstCost);
-		}
+        if (TryComp<ThirstComponent>(uid, out var thirstComp))
+        {
+            if (_thirstSystem.IsThirstBelowState(uid, comp.MinThirstThreshold, thirstComp.CurrentThirst - comp.ThirstCost, thirstComp))
+            {
+                _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
+                return;
+            }
+            _thirstSystem.ModifyThirst(uid, thirstComp, -comp.ThirstCost);
+        }
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {
-			/*
+            /*
 			/// if there aren't values for the desired reagent and its volume, don't do anything.
 			if ((comp.ExcretedReagent != "") &&
 			(comp.ExcretedVolume !<= 0))
 			{
 			*/
-			/// declare a solution and add the specified amount of the specified reagent to it.
-			var solution = new Solution();
-			solution.AddReagent(comp.ExcretedReagent, comp.ExcretedVolume);
-			/// then, spill that reagent @ the entity's coordinates
-			_puddleSystem.TrySpillAt(Transform(uid).Coordinates, solution, out _);
-			///}
+            /// declare a solution and add the specified amount of the specified reagent to it.
+            var solution = new Solution();
+            solution.AddReagent(comp.ExcretedReagent, comp.ExcretedVolume);
+            /// then, spill that reagent @ the entity's coordinates
+            _puddleSystem.TrySpillAt(Transform(uid).Coordinates, solution, out _);
+            ///}
         }
 
         args.Repeat = false;

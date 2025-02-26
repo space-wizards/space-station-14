@@ -1,5 +1,6 @@
 - type: entity
   id: ParticleAcceleratorBase
+  parent: BaseEngineeringContraband #imp
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -26,8 +27,11 @@
   - type: Pullable
   - type: Clickable
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides:
+    - SingularityTeslaEngine
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: ParticleAccelerator
 
 - type: entity
   id: ParticleAcceleratorFinishedPart

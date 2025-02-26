@@ -1,4 +1,4 @@
-using Content.Shared._DeltaV.NanoChat;
+using Content.Shared._DV.NanoChat;
 using Content.Shared.Access.Components;
 using Content.Shared.Audio;
 using Content.Shared.CartridgeLoader;

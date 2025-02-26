@@ -27,7 +27,7 @@
         food:
           maxVol: 5
           reagents:
-          - ReagentId: GreyMatter
+          - ReagentId: Slime
             Quantity: 5
         organ:
           reagents:

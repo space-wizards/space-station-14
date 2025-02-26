@@ -1,0 +1,14 @@
+- files: 
+  - hollow_plastic1.ogg
+  - hollow_plastic2.ogg
+  - hollow_plastic3.ogg
+  - hollow_plastic4.ogg
+  - hollow_plastic5.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Foley by DinnerCalzone"
+  source: "https://github.com/impstation/imp-station-14/pull/1071"
+  
+- files: ["grapple_impact"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station, modified by DinnerCalzone"
+  source: "https://github.com/tgstation/tgstation/blob/3df5d3b42bfb6b3b5adba1067ab41f83816255bb/sound/effects/picaxe1.ogg"

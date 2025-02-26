@@ -1,0 +1,91 @@
+- type: entity
+  name: fishing rod
+  parent: BaseItem
+  id: FishingRodBase
+  components:
+    - type: FishingRod #The component that handles all the joint stuff
+      ropeSprite: _Impstation/Objects/Fishing/fishingrod.rsi/rope.png
+    - type: Gun #The component that handles the firing
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
+      fireRate: 0.5
+      clumsyProof: true
+    - type: BasicEntityAmmoProvider #The component that handles whats being fired
+      proto: FishingHookBase
+      capacity: 1
+    - type: AmmoCounter #The component that adds the ui element to if the hook is attached or not
+    - type: UseDelay #The component that prevents the server from being spammed too much
+      delay: 1.5
+    - type: Appearance #The component that gives the item a visual
+    - type: Sprite #The component that contains the visual itself
+      sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: GenericVisualizer #The component that handles multiple states for the sprite
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }         
+    - type: Construction
+      graph: FishingRod
+      node: rod
+
+- type: entity
+  name: plasma rod
+  parent: FishingRodBase
+  id: FishingRodPlasma
+  components:
+    - type: BasicEntityAmmoProvider #The component that handles whats being fired
+      proto: FishingHookPlasma
+      capacity: 1
+    - type: Sprite #The component that contains the visual itself
+      sprite: _Impstation/Objects/Fishing/fishingrod_plasma.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+
+- type: entity
+  name: Flesh Tentacle
+  parent: [FishingRodBase,TierXContraband]
+  id: FishingRodLing
+  suffix: Unremoveable
+  description: GET OVER HERE!!! # dont remove this :) [you can]
+  components:
+    #- type: fixture im leaving this here since if possible replace this with a way to make the changeling NOT MOVE WHEN REELING!!!
+    #  friction: 20
+    - type: Item
+      size: Ginormous
+    - type: FishingRod #The component that handles all the joint stuff
+      cycleSound: /Audio/Effects/Fluids/glug.ogg
+      ropeSprite: _Impstation/Objects/Fishing/fishingrod_Ling.rsi/rope.png
+      reelRate: 5
+    - type: Gun #The component that handles the firing
+      soundGunshot: /Audio/Effects/demon_attack1.ogg #scorpion-get_over_here.ogg
+    - type: RechargeBasicEntityAmmo
+      rechargeCooldown: 7.5
+      rechargeSound: /Audio/Effects/Fluids/blood1.ogg
+    - type: BasicEntityAmmoProvider #The component that handles whats being fired
+      proto: FishingHookLing
+      capacity: 1
+      count: 1
+    - type: UseDelay #The component that prevents the server from being spammed too much
+      delay: 3.5
+    - type: Sprite #The component that contains the visual itself
+      sprite: _Impstation/Objects/Fishing/fishingrod_Ling.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: Unremoveable
+    - type: GenericVisualizer #The component that handles multiple states for the sprite
+      visuals:
+        enum.AmmoVisuals.HasAmmo: 
+          unshaded:
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }    

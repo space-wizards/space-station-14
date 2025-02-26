@@ -23,3 +23,16 @@
         amount: 2
       - id: MagazineLPistol
         amount: 4
+
+- type: entity
+  id: CrateArmoryDMR
+  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  name: marksman rifle crate
+  description: For when you need a precise and efficient weapon. Contains two Daito DMRs with extra ammunition. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleDaito
+        amount: 2
+      - id: MagazineDMR
+        amount: 4

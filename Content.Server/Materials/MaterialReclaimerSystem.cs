@@ -130,6 +130,10 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
     private void OnRepaired(Entity<MaterialReclaimerComponent> ent, ref RepairedEvent args)
     {
+        //imp edit, unbloodies a broken recycler
+        if (ent.Comp.Broken)
+            _appearance.SetData(ent.Owner, RecyclerVisuals.Bloody, false);
+        //end imp edit
         SetBroken(ent, false);
     }
 

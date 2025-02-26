@@ -64,7 +64,7 @@
       - FoodBurgerGhost
       - FoodBurgerSpell
       - FoodBurgerSuper
-      - FoodBurgerCrazy
+      - FoodBurgerCrazySpawner # imp - selects one of ten crazy burgers
       - FoodPizzaArnoldSlice
       - FoodPizzaUraniumSlice
     rareChance: 0.05

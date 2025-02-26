@@ -1,0 +1,108 @@
+<Document>
+  # Supermatter Engine
+
+  The supermatter engine is an incredibly dangerous, volatile, and radioactive source of power. Without careful management, the supermatter chamber will fill with fire, lightning will arc out, and, eventually, an explosion will obliterate Engineering.
+
+  But with proper care and handling, the supermatter can be an incredibly potent power source for the station. While a basic setup will take care of the station's typical power load, the supermatter crystal is affected strongly by gases in many different ways — both beneficial and harmful.
+
+  ## Precautions
+
+  [bold][color=red]DO NOT INTENTIONALLY WALK INTO THE CRYSTAL BEFORE COOLING HAS BEEN SET UP OR YOU WILL BE BANNED.[/color][/bold]
+
+  Before stepping into the supermatter chamber, there are a few things to keep in mind to avert disaster and personal harm.
+
+  • Do not power the crystal before the cooling loop has been set up. [color=red]Do not touch the crystal. Do not walk into the crystal.[/color]
+
+  • Wear radiation protection around the crystal at all times.
+
+  • Do not stare directly into the crystal. Engineering goggles will prevent hallucinations.
+
+  • If you must approach the crystal, equip and enable magboots.
+
+  ## Supermatter Crystal
+
+  <GuideEntityEmbed Entity="Supermatter" Caption=""/>
+
+  The supermatter crystal is the main focus of the supermatter engine. It slowly siphons and reacts with gases around it, while emitting incredibly harmful — but lucrative — levels of radiation.
+
+  When powered — usually by emitters — the intensity of its radiation will grow, as hot oxygen and plasma are released as waste. To top it all off, [color=red]anything that touches the crystal is instantly vaporized[/color].
+
+  ## Radiation Collectors
+
+  <Box>
+    <GuideEntityEmbed Entity="RadiationCollectorNoTank"/>
+    <GuideEntityEmbed Entity="PlasmaTank"/>
+  </Box>
+
+  To harness the radioactive potential of the crystal, radiation collectors are placed nearby. These connect to HV cables, generating power for the station.
+
+  Radiation collectors require a filled tank of plasma gas to operate, which will need to be replaced periodically to maintain power generation.
+
+  ## Cooling Loop
+
+  At the most fundamental level, the supermatter crystal is kept stable with a "loop" of atmospheric pipes. The chamber is filled with safe, cold gas, whilst any harmful or unwanted byproducts are filtered out of the system.
+
+  <GuideEntityEmbed Entity="NitrogenCanister"/>
+
+  Most stations will come with pre-supplied nitrogen canisters: the supermatter reacts very safely with nitrogen, which makes it an ideal gas for a basic setup.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPort"/>
+    <GuideEntityEmbed Entity="GasPressurePump"/>
+    <GuideEntityEmbed Entity="GasFilter"/>
+  </Box>
+
+  To set up the cooling loop, anchor the nitrogen canisters to the input connector ports and enable the respective gas pumps. Follow the pipes, enabling gas pumps and filters as you go.
+
+  Be careful not to activate the gas pumps inside the interior chamber's airlocks before the full cooling loop is set up. A bypass gas pump is located outside the external airlock; use this to keep gas flowing as you work.
+
+  At least one of the filters that feeds back into the loop should be set to filter nitrogen. This will keep the cooled nitrogen in the loop, ensuring the crystal is kept at safe parameters.
+
+  <GuideEntityEmbed Entity="GasAnalyzer"/>
+
+  Once the full cooling loop has been set up, check with a gas analyzer to make sure the gas is not trapped at any point in the system. Disable the bypass gas pump by the airlocks, enable the interior gas pumps, and configure the air alarm.
+
+  ## Air Alarm Configuration
+
+  <GuideEntityEmbed Entity="AirAlarm" Caption=""/>
+
+  Most air alarms are access-restricted to atmospheric technicians. The supermatter's air alarm is unique, and can be configured by station engineers.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasVentPump"/>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+  </Box>
+
+  By default, the air vents in the supermatter's chamber will only output up to 101.3 kPa of gas, and adhere to pressure lockout parameters.
+
+  Using the air alarm, increase the output threshold of each vent, or switch them to internal pressure bounds. The pressure lockout features of each vent should also be disabled.
+
+  The air scrubbers also need adjustment from their default configuration. Ensure each scrubber is set to filter all gases, and that the WideNet feature is enabled for maximum efficiency.
+
+  ## Emitters
+
+  <GuideEntityEmbed Entity="Emitter"/>
+
+  Once the cooling loop is fully set up and the radiation collectors are filled, the supermatter engine is ready to start up.
+
+  Emitters are the most common way of kickstarting the supermatter and keeping its internal energy high. Interact with an emitter to toggle it on, and it will begin firing lasers at the crystal.
+
+  ## Experimentation
+
+  <GuideEntityEmbed Entity="ComputerSupermatter"/>
+
+  Although nitrogen is good at keeping the supermatter safe and stable, it also hinders the supermatter crystal's power generation.
+
+  The supermatter monitoring console allows close observation of the crystal and the effects that gases have on it. This is a key piece of equipment for safely experimenting with the supermatter.
+
+  <Box>
+    <GuideEntityEmbed Entity="CarbonDioxideCanister" Caption=""/>
+    <GuideEntityEmbed Entity="PlasmaCanister" Caption=""/>
+    <GuideEntityEmbed Entity="TritiumCanister" Caption=""/>
+    <GuideEntityEmbed Entity="WaterVaporCanister" Caption=""/>
+    <GuideEntityEmbed Entity="AmmoniaCanister" Caption=""/>
+    <GuideEntityEmbed Entity="NitrousOxideCanister" Caption=""/>
+  </Box>
+
+  Try out different gas mixes and see what happens!
+</Document>

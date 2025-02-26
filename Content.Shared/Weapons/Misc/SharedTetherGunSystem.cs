@@ -48,6 +48,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         SubscribeLocalEvent<TetheredComponent, BuckleAttemptEvent>(OnTetheredBuckleAttempt);
         SubscribeLocalEvent<TetheredComponent, UpdateCanMoveEvent>(OnTetheredUpdateCanMove);
         SubscribeLocalEvent<TetheredComponent, EntGotInsertedIntoContainerMessage>(OnTetheredContainerInserted);
+        SubscribeLocalEvent<TetheredComponent, ThrownEvent>(OnTetheredThrown); // imp
 
         InitializeForce();
     }
@@ -75,6 +76,24 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     private void OnTetheredUpdateCanMove(EntityUid uid, TetheredComponent component, UpdateCanMoveEvent args)
     {
         args.Cancel();
+    }
+
+    // Imp edit, prevents abusing throwing damage with items that repeatedly throw (i.e. gas tanks)
+    private void OnTetheredThrown(Entity<TetheredComponent> ent, ref ThrownEvent args)
+    {
+        var tetherer = ent.Comp.Tetherer;
+
+        if (TryComp<TetherGunComponent>(tetherer, out var tetherGun))
+        {
+            StopTether(tetherer, tetherGun);
+            return;
+        }
+
+        if (TryComp<ForceGunComponent>(tetherer, out var forceGun))
+        {
+            StopTether(tetherer, forceGun);
+            return;
+        }
     }
 
     public override void Update(float frameTime)

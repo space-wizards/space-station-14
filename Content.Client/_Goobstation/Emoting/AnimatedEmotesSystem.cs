@@ -6,12 +6,14 @@ using Content.Shared.Emoting;
 using System.Numerics;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Rotation;
 
 namespace Content.Client.Emoting;
 
 public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _anim = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _prot = default!;
 
     public override void Initialize()
@@ -45,6 +47,20 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
 
     private void OnFlip(Entity<AnimatedEmotesComponent> ent, ref AnimationFlipEmoteEvent args)
     {
+        var angle = Angle.Zero;
+
+        if (TryComp<RotationVisualsComponent>(ent, out var rotation))
+        {
+            _appearance.TryGetData<RotationState>(ent, RotationVisuals.RotationState, out var state);
+
+            angle = state switch
+            {
+                RotationState.Vertical => rotation.VerticalRotation,
+                RotationState.Horizontal => rotation.HorizontalRotation,
+                _ => Angle.Zero
+            };
+        }
+
         var a = new Animation
         {
             Length = TimeSpan.FromMilliseconds(500),
@@ -57,9 +73,9 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(Angle.Zero, 0f),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(180), 0.25f),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(360), 0.25f),
+                        new AnimationTrackProperty.KeyFrame(angle, 0f),
+                        new AnimationTrackProperty.KeyFrame(angle + Angle.FromDegrees(180), 0.25f),
+                        new AnimationTrackProperty.KeyFrame(angle + Angle.FromDegrees(360), 0.25f),
                     }
                 }
             }

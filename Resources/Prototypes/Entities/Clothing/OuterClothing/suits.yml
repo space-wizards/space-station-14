@@ -102,6 +102,8 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: StealTarget #imp
+    stealGroup: FireSuit
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing, AllowSuitStorageClothing]
@@ -162,6 +164,7 @@
     - type: Stealth
       minVisibility: 0.1
       lastVisibility: 0.1
+      useAltShader: true
   - type: PowerCellDraw
     drawRate: 1.8 # 200 seconds on the default cell
   - type: ToggleCellDraw
@@ -223,9 +226,9 @@
   description: Magic is all about the spell power, ZE!
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Suits/witchrobe.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Suits/witchrobe.rsi
 
 - type: entity
   parent: ClothingOuterBase

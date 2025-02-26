@@ -45,6 +45,7 @@ artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-resurrection = Resurrection
 artifact-trigger-hint-medical = Therapeutic chemicals
 artifact-trigger-hint-funny = Slapstick comedy
+artifact-trigger-hint-expression = Expressiveness
 
 artifact-trigger-hint-drink-classic-martini = Beverage "Classically shaken"
 artifact-trigger-hint-drink-caffine = Beverage "Caffinated"
@@ -54,7 +55,7 @@ artifact-trigger-hint-drink-screwdriver = Beverage "Youtool does not stock vodka
 artifact-trigger-hint-drink-ice-cream = Beverage "I scream"
 artifact-trigger-hint-drink-lemonade = Beverage "Freshly squeezed"
 artifact-trigger-hint-drink-thaven-bad = Beverage "Bad"
-artifact-trigger-hint-drink-starkist = Beverage "This isn't tuna, it's astromomical!"
+artifact-trigger-hint-drink-starkist = Beverage "Astronomically ranged soda"
 artifact-trigger-hint-drink-zombie-slushie = Beverage "Undead, creamy, raw, and icy"
 artifact-trigger-hint-drink-vox-rocks = Beverage "For our feathered coworkers"
 artifact-trigger-hint-drink-doctors-delight = Beverage "Better than medibot"

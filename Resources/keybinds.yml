@@ -166,6 +166,26 @@ binds:
 - function: SwapHands
   type: State
   key: X
+  # DeltaV - NanoChat keybinds Start
+- function: NanoChatNavigateUp
+  type: State
+  key: Up
+  mod1: Alt
+- function: NanoChatNavigateDown
+  type: State
+  key: Down
+  mod1: Alt
+- function: NanoChatNavigateUpUnread
+  type: State
+  key: Up
+  mod1: Alt
+  mod2: Shift
+- function: NanoChatNavigateDownUnread
+  type: State
+  key: Down
+  mod1: Alt
+  mod2: Shift
+  # DeltaV - NanoChat keybinds End
 - function: MoveStoredItem
   type: State
   key: MouseLeft

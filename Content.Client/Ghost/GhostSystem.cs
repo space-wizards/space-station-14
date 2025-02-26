@@ -46,8 +46,10 @@ namespace Content.Client.Ghost
         public bool IsGhostBarPatron => PlayerGhostPatron != null;
 
         public event Action<GhostComponent>? PlayerRemoved;
+        public event Action<MediumComponent>? MediumRemoved;
         public event Action<GhostComponent>? PlayerUpdated;
         public event Action<GhostComponent>? PlayerAttached;
+        public event Action<MediumComponent>? MediumAttached;
         public event Action? PlayerDetached;
         public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
         public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
@@ -69,9 +71,20 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
+
+            SubscribeLocalEvent<MediumComponent, ComponentStartup>(OnMediumStartup);
+            SubscribeLocalEvent<MediumComponent, LocalPlayerAttachedEvent>(OnGhostMediumPlayerAttach);
+            SubscribeLocalEvent<MediumComponent, ToggleGhostsMediumActionEvent>(OnToggleGhostsMedium);
+            SubscribeLocalEvent<MediumComponent, ComponentRemove>(OnGhostMediumRemove);
         }
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
+        {
+            if (TryComp(uid, out SpriteComponent? sprite))
+                sprite.Visible = GhostVisibility || uid == _playerManager.LocalEntity;
+        }
+
+        private void OnMediumStartup(EntityUid uid, MediumComponent component, ComponentStartup args)
         {
             if (TryComp(uid, out SpriteComponent? sprite))
                 sprite.Visible = GhostVisibility || uid == _playerManager.LocalEntity;
@@ -110,6 +123,19 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        private void OnToggleGhostsMedium(EntityUid uid, MediumComponent component, ToggleGhostsMediumActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            var locId = GhostVisibility ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
+            Popup.PopupEntity(Loc.GetString(locId), args.Performer);
+            if (uid == _playerManager.LocalEntity)
+                ToggleGhostVisibility();
+
+            args.Handled = true;
+        }
+
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
             _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
@@ -124,10 +150,27 @@ namespace Content.Client.Ghost
             PlayerRemoved?.Invoke(component);
         }
 
+        private void OnGhostMediumRemove(EntityUid uid, MediumComponent component, ComponentRemove args)
+        {
+            _actions.RemoveAction(uid, component.ToggleGhostsMediumActionEntity);
+
+            if (uid != _playerManager.LocalEntity)
+                return;
+
+            GhostVisibility = false;
+            MediumRemoved?.Invoke(component);
+        }
+
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
         {
             GhostVisibility = true;
             PlayerAttached?.Invoke(component);
+        }
+
+        private void OnGhostMediumPlayerAttach(EntityUid uid, MediumComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
+        {
+            GhostVisibility = true;
+            MediumAttached?.Invoke(component);
         }
 
         private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)

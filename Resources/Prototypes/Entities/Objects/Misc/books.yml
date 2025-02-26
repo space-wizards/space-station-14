@@ -44,6 +44,25 @@
     damage:
       types:
         Blunt: 1
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-book
+    blacklist:
+      components:
+      - SecretStash 
+      - NukeDisk 
+      tags:
+      - QuantumSpinInverter 
+      - FakeNukeDisk 
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: null # can't exactly un-cut a book
+    hasVerbs: false
+    name: secret-stash-book
 
 - type: entity
   parent: BaseItem
@@ -69,6 +88,25 @@
   - type: DamageOtherOnHit
     damage:
       types:
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-book
+    blacklist:
+      components:
+      - SecretStash 
+      - NukeDisk 
+      tags:
+      - QuantumSpinInverter 
+      - FakeNukeDisk 
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: null # can't exactly un-cut a book
+    hasVerbs: false
+    name: secret-stash-book
 
 - type: entity
   id: BookSpaceEncyclopedia

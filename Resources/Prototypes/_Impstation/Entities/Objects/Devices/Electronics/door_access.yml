@@ -30,3 +30,21 @@
   components:
   - type: AccessReader
     access: [["Medical"], ["Security"]]
+
+# Courier
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsCourier
+  suffix: Courier, Locked
+  components:
+  - type: AccessReader
+    access: [["Courier"]]
+
+#Logistics - basically the cargo shuttle and order console
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsLogistics
+  suffix: Logistics, Locked
+  components:
+  - type: AccessReader
+    access: [["Logistics"]]

@@ -13,7 +13,8 @@
     ClothingHeadsetCargo: 3
     ClothingOuterWinterCargo: 2
     ClothingOuterWinterMiner: 2
+    ClothingOuterCoatBomberCargo: 2 # imp
     ClothingNeckScarfStripedBrown: 3
     ClothingShoesBootsWinterCargo: 2
   contrabandInventory:
-    ClothingMaskClownCargo: 1
+    ClothingMaskClownCargo: 1 # imp

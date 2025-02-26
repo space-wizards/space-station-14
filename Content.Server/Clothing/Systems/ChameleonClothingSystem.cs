@@ -1,4 +1,4 @@
-﻿using Content.Server.IdentityManagement;
+using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;

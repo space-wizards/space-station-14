@@ -1,0 +1,38 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatKippahSimple
+  name: simple kippah
+  description: A simple black kippah.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/kippahs/simpleblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/kippahs/simpleblack.rsi
+    slots:
+    - HEAD
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatKippahWhiteAndBlue
+  name: white and blue kippah
+  description: A soft blue and white kippah.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/kippahs/whiteandblue.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/kippahs/whiteandblue.rsi
+    slots:
+    - HEAD
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatKippahBlueAndGold
+  name: blue and gold kippah
+  description: A stiff blue and gold kippah.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/kippahs/blueandgold.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/kippahs/blueandgold.rsi
+    slots:
+    - HEAD

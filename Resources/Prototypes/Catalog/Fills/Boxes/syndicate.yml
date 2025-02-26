@@ -1,6 +1,6 @@
 - type: entity
   id: ElectricalDisruptionKit
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier2Contraband]
   name: electrical disruption kit
   suffix: Filled
   components:
@@ -12,7 +12,7 @@
           amount: 1
 
 - type: entity
-  parent: [BoxVial, BaseSyndicateContraband]
+  parent: [BoxVial, Tier2Contraband]
   id: ChemicalSynthesisKit
   name: chemical synthesis kit
   description: A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
@@ -33,7 +33,7 @@
       - id: SyringeStimulants
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier3Contraband]
   id: ThrowingKnivesKit
   name: throwing knives kit
   description: A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
@@ -52,7 +52,7 @@
 
 - type: entity
   name: deathrattle implant box
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier2Contraband]
   id: BoxDeathRattleImplants
   description: Six deathrattle implants for the whole squad.
   components:
@@ -69,7 +69,7 @@
         amount: 6
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier2Contraband]
   id: AnimalFriendsKit
   name: animal friends kit
   description: Contains 5 doses of Subjuzine to convert animals into your henchmen. Just add blood!
@@ -87,7 +87,7 @@
       - id: PaperWrittenAnimalFriendsKit
 
 - type: entity
-  parent: [BoxCardboard, BaseSyndicateContraband]
+  parent: [BoxCardboard, Tier2Contraband]
   id: CombatBakeryKit
   name: combat bakery kit
   description: A kit of clandestine baked weapons.

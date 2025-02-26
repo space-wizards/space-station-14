@@ -1,0 +1,9 @@
+- type: entity
+  id: MailTeleporterMachineCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
+  name: mail telepad machine board
+  components:
+    - type: Sprite
+      state: supply
+    - type: MachineBoard
+      prototype: MailTeleporter

@@ -34,6 +34,15 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+  # imp edits #
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 9
+    staminaCost: 11.5
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+  # end imp edits #
 
 - type: entity
   parent: [ClothingShoesBootsMagBase]
@@ -61,6 +70,11 @@
     price: 750
   - type: StealTarget
     stealGroup: ClothingShoesBootsMagAdv
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 13
+    staminaCost: 15
 
 - type: entity
   parent: [ClothingShoesBootsMagBase]
@@ -84,7 +98,7 @@
     price: 3000
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseSyndicateContraband]
+  parent: [ClothingShoesBootsMagBase, BaseJetpack, Tier3Contraband]
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
@@ -109,6 +123,13 @@
   - type: Item
     sprite: null
     size: Normal
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 20
+    staminaCost: 25
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
 
 - type: entity
   id: ActionToggleMagboots

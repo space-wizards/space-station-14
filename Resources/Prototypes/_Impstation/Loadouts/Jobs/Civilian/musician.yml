@@ -1,0 +1,10 @@
+- type: loadout
+  id: ClothingUniformMrSpaceWide
+  equipment:
+    jumpsuit: ClothingUniformMrSpaceWide #imp
+
+- type: loadout
+  id: ClothingUniformMrSpaceWideSkirt
+  equipment:
+    jumpsuit: ClothingUniformMrSpaceWideSkirt #imp
+

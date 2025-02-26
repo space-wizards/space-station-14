@@ -33,3 +33,37 @@
     state: uranium_reinforced_window
   objectType: Structure
   placementMode: SnapgridCenter
+
+- type: construction
+  id: Bonfire
+  name: bonfire
+  description: What can be better than a late evening under the sky with guitar and friends?
+  graph: Bonfire
+  startNode: start
+  targetNode: bonfire
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Decoration/bonfire.rsi
+    state: bonfire
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: reinforced secret door
+  id: SecretReinf
+  graph: SecretReinf
+  startNode: start
+  targetNode: reinfSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: _Impstation/Structures/Doors/secret_reinf.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked

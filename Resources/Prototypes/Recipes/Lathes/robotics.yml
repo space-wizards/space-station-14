@@ -188,16 +188,6 @@
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
-  id: BorgModuleBartender
-  result: BorgModuleBartender
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleMusique
-  result: BorgModuleMusique
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
   id: BorgModuleGardening
   result: BorgModuleGardening
 
@@ -205,13 +195,3 @@
   parent: BaseBorgModuleRecipe
   id: BorgModuleHarvesting
   result: BorgModuleHarvesting
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleClowning
-  result: BorgModuleClowning
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModulePaper
-  result: BorgModulePaper

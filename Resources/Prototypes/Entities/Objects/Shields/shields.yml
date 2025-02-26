@@ -152,6 +152,8 @@
           Blunt: 1
           Slash: 1
           Piercing: 1
+      passiveBlockFraction: 0.6  #Imp change
+      activeBlockFraction: 0.7  #Imp change
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -159,13 +161,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 60
+            damage: 120 #Imp changes 60 -> 120
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 30 #Weaker shield
+            damage: 60 #Weaker shield  (Imp changes 30 -> 60)
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -208,6 +210,8 @@
           Slash: 0.5
           Piercing: 0.5
           Heat: 1
+      passiveBlockFraction: 0.4 #Imp change
+      activeBlockFraction: 0.8 #Imp change
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -215,13 +219,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 40
+            damage: 100 #Imp Changes 40 -> 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 20 #Very weak shield
+            damage: 50 #Very weak shield (Imp changes 20 -> 50)
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -268,13 +272,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 40
+            damage: 80 #Imp changes 40 -> 80
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 20
+            damage: 40 #Imp changes 20 -> 40
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -368,7 +372,7 @@
 
 - type: entity
   name: energy shield
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier3Contraband]
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:

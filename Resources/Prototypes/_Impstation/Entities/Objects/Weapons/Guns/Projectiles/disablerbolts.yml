@@ -1,0 +1,38 @@
+- type: entity
+  name : auto disabler bolt
+  id: BulletAutoDisabler
+  parent: BulletDisabler
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/disablerbolts.rsi
+    layers:
+    - state: litelaser
+      shader: unshaded
+  - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 17
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 3
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+
+- type: hitscan
+  id: HitscanDisabler
+  staminaDamage: 40
+  damage:
+    types:
+      Heat: 7
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_omni
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_omni
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_omni

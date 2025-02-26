@@ -54,6 +54,7 @@
   - type: Construction
     graph: Table
     node: TableFrame
+  - type: ThrownItemImmune # imp
 
 - type: entity
   id: CounterWoodFrame
@@ -78,7 +79,6 @@
         - TableMask
         layer:
         - TableLayer
-        - BulletImpassable #Goobstation
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -194,6 +194,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: metaltable
+    base: state_
   - type: Construction
     graph: Table
     node: Table
@@ -235,6 +238,8 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: metalreinforcedtable
   - type: Construction
     graph: Table
     node: TableReinforced
@@ -245,6 +250,9 @@
       types:
         Blunt: 8
     bonkTime: 3
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableGlass
@@ -291,12 +299,17 @@
         node: TableFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: glasstable
   - type: Construction
     graph: Table
     node: TableGlass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableReinforcedGlass
@@ -346,12 +359,17 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: reinforcedglasstable
   - type: Construction
     graph: Table
     node: TableReinforcedGlass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TablePlasmaGlass
@@ -401,12 +419,17 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: plasmaglasstable
   - type: Construction
     graph: Table
     node: TablePlasmaGlass
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableBrass
@@ -445,9 +468,14 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: brasstable
   - type: Construction
     graph: Table
     node: TableBrass
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableWood
@@ -486,11 +514,14 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: woodtable
   - type: Construction
     graph: Table
     node: TableWood
   - type: Tag
     tags:
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -527,11 +558,14 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: woodgambletable
   - type: Construction
     graph: Table
     node: TableCarpet
   - type: Tag
     tags:
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -558,9 +592,14 @@
           path: /Audio/Effects/picaxe2.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: stonetable
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableWeb
@@ -587,12 +626,17 @@
       Brute:
         path:
           "/Audio/Weapons/slash.ogg"
+  - type: IconSmooth
+    key: webtable
   - type: Construction
     graph: WebStructures
     node: table
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCarpet
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 # Fancy tables
 
@@ -624,8 +668,11 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: fancytable
   - type: Tag
     tags:
+    - Table # imp edit
     - Wooden
   - type: FootstepModifier
     footstepSoundCollection:
@@ -643,6 +690,11 @@
   - type: Construction
     graph: Table
     node: TableFancyBlue
+  - type: IconSmooth
+    key: fancytableblue
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyCyan
@@ -656,6 +708,11 @@
   - type: Construction
     graph: Table
     node: TableFancyCyan
+  - type: IconSmooth
+    key: fancytablecyan
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyBlack
@@ -669,6 +726,11 @@
   - type: Construction
     graph: Table
     node: TableFancyBlack
+  - type: IconSmooth
+    key: fancytableblack
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyRed
@@ -682,6 +744,11 @@
   - type: Construction
     graph: Table
     node: TableFancyRed
+  - type: IconSmooth
+    key: fancytablered
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyPurple
@@ -695,6 +762,11 @@
   - type: Construction
     graph: Table
     node: TableFancyPurple
+  - type: IconSmooth
+    key: fancytablepurple
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyPink
@@ -708,6 +780,11 @@
   - type: Construction
     graph: Table
     node: TableFancyPink
+  - type: IconSmooth
+    key: fancytablepink
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyGreen
@@ -721,6 +798,11 @@
   - type: Construction
     graph: Table
     node: TableFancyGreen
+  - type: IconSmooth
+    key: fancytablegreen
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyOrange
@@ -734,6 +816,11 @@
   - type: Construction
     graph: Table
     node: TableFancyOrange
+  - type: IconSmooth
+    key: fancytableorange
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 - type: entity
   id: TableFancyWhite
@@ -747,6 +834,11 @@
   - type: Construction
     graph: Table
     node: TableFancyWhite
+  - type: IconSmooth
+    key: fancytablewhite
+  - type: Tag # imp edit
+    tags:
+    - Table
 
 #Debug
 
@@ -759,6 +851,7 @@
   components:
   - type: Tag
     tags:
+      - Table # imp edit
       - Debug
   - type: Sprite
     sprite: Structures/Furniture/Tables/debug.rsi
@@ -811,6 +904,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: counterwood
+    base: state_
   - type: Construction
     graph: Table
     node: CounterWood
@@ -856,6 +952,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: countermetal
+    base: state_
   - type: Construction
     graph: Table
     node: CounterMetal

@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: DinoSpeech
+  files:
+  - /Audio/_Impstation/Voice/Dino/dino1.ogg
+  - /Audio/_Impstation/Voice/Dino/dino2.ogg

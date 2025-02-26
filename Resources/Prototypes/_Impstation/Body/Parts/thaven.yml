@@ -1,0 +1,117 @@
+- type: entity
+  id: PartThaven
+  parent: [BaseItem, BasePart]
+  name: "thaven body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoThaven
+  name: "thaven torso"
+  parent: [PartThaven, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "torso"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadThaven
+  name: "thaven head"
+  parent: [PartThaven, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "head"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmThaven
+  name: "left thaven arm"
+  parent: [PartThaven, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmThaven
+  name: "right thaven arm"
+  parent: [PartThaven, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandThaven
+  name: "left thaven hand"
+  parent: [PartThaven, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandThaven
+  name: "right thaven hand"
+  parent: [PartThaven, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegThaven
+  name: "left thaven leg"
+  parent: [PartThaven, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegThaven
+  name: "right thaven leg"
+  parent: [PartThaven, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootThaven
+  name: "left thaven foot"
+  parent: [PartThaven, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootThaven
+  name: "right thaven foot"
+  parent: [PartThaven, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_foot"

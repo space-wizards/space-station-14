@@ -1,0 +1,90 @@
+- type: entity
+  id: MagazineDMR
+  name: "magazine (.30 rifle)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineDMR
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifle
+    capacity: 20
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/daitomag.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineDMREmpty
+  name: "magazine (.30 rifle any)"
+  suffix: empty
+  parent: MagazineDMR
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazineDMRPractice
+  name: "magazine (.30 rifle practice)"
+  parent: MagazineDMR
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRiflePractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineDMRUranium
+  name: "magazine (.30 rifle uranium)"
+  parent: MagazineDMR
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineDMRIncendiary
+  name: "magazine (.30 rifle incendiary)"
+  parent: MagazineDMR
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleIncendiary
+    
+- type: entity
+  id: MagazineBR
+  name: "magazine (.25 caseless)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineBR
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 24
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/nemesismag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false

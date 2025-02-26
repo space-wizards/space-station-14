@@ -112,6 +112,11 @@
     stateDoorClosed: generic_door
   - type: StaticPrice
     price: 75
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 10
+    staminaCost: 35
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
@@ -123,6 +128,11 @@
     node: done
     containers:
     - entity_storage
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 15
+    staminaCost: 50
 
 #Wall Closet
 - type: entity

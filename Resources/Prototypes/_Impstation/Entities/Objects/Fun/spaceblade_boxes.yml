@@ -1,0 +1,11 @@
+- type: entity
+  parent: MysterySpaceBladeBox
+  id: MysterySpaceBladeBoxSyndicate
+  suffix: syndicate uplink
+  name: mystery space blade box
+  description: A box containing a 'special' space blade. The side of the box depicts a few blacked-out 'rare' space blades.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: SpaceBladeBoxTrash
+      - id: SpaceBladeContra

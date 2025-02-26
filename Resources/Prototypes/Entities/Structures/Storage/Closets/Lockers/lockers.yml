@@ -29,6 +29,11 @@
     stateBaseClosed: secure
     stateDoorOpen: secure_open
     stateDoorClosed: secure_door
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 15
+    staminaCost: 50
 
 # Cargo
 - type: entity
@@ -365,6 +370,20 @@
     stateDoorOpen: shotguncase_open
     stateDoorClosed: shotguncase_door
   - type: AccessReader
+  - type: Construction
+    graph: GunSafe
+    node: done
+    containers:
+    - entity_storage
+  - type: StaticPrice
+    price: 660
+
+- type: entity
+  id: GunSafeBaseSecure
+  parent: GunSafe
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
     access: [["Armory"]]
 
 # Detective
@@ -407,6 +426,7 @@
   parent: LockerSyndicatePersonal
   description: Advanced locker technology.
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       minBluespaceLinks: 1
       behaviorProperties:

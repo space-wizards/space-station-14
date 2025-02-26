@@ -1,0 +1,44 @@
+<cartridges:StockTradingUiFragment
+    xmlns="https://spacestation14.io"
+    xmlns:cartridges="clr-namespace:Content.Client._DV.CartridgeLoader.Cartridges"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Margin="5"
+    VerticalExpand="True">
+
+    <!-- A parent container to hold the balance label and main content -->
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Header section with balance -->
+        <PanelContainer StyleClasses="AngleRect">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,0,5,0">
+                    <Label Text="{Loc stock-trading-title}"
+                           HorizontalExpand="True"
+                           HorizontalAlignment="Left" />
+                </BoxContainer>
+                <Label Name="Balance"
+                       Text="{Loc stock-trading-balance}"
+                       HorizontalAlignment="Right" />
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Horizontal line under header -->
+        <customControls:HSeparator Margin="5 3 5 5"/>
+
+        <!-- Main content -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <Label Name="NoEntries"
+                   Text="{Loc stock-trading-no-entries}"
+                   HorizontalExpand="True"
+                   HorizontalAlignment="Center"
+                   Visible="False" />
+            <ScrollContainer HorizontalExpand="True"
+                             VerticalExpand="True"
+                             Margin="0,5,0,0">
+                <BoxContainer Name="Entries"
+                              Orientation="Vertical"
+                              VerticalAlignment="Top"
+                              HorizontalExpand="True" />
+            </ScrollContainer>
+        </BoxContainer>
+    </BoxContainer>
+</cartridges:StockTradingUiFragment>

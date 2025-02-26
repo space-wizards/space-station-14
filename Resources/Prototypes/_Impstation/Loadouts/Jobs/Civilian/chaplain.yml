@@ -1,0 +1,126 @@
+# head
+- type: loadout
+  id: ChaplainHeadVeil
+  equipment:
+    head: ClothingHeadHatVeil
+
+- type: loadout
+  id: ChaplainHeadDruid
+  equipment:
+    head: ClothingHeadHatDruid
+
+- type: loadout
+  id: ChaplainHeadMoon
+  equipment:
+    head: ClothingHeadHatMoon
+
+- type: loadout
+  id: ChaplainHeadSun
+  equipment:
+    head: ClothingHeadHatSun
+
+- type: loadout
+  id: ChaplainHeadTidal
+  equipment:
+    head: ClothingHeadHatTidal
+
+# eyes
+- type: loadout
+  id: ChaplainBlindfold
+  equipment:
+    eyes: ClothingEyesChaplainBlindfold
+
+# mask
+- type: loadout
+  id: ChaplainMaskClayshaper
+  equipment:
+    mask: ClothingMaskClayshaper
+
+- type: loadout
+  id: ChaplainMaskFire
+  equipment:
+    mask: ClothingMaskFire
+
+# jumpsuits
+- type: loadout
+  id: ClothingUniformFuneralSuit
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuit
+
+- type: loadout
+  id: ClothingUniformFuneralSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuitSkirt
+
+- type: loadout
+  id: ChaplainSkirtClayshaper
+  equipment:
+    jumpsuit: ClothingUniformSkirtClayshaper
+
+- type: loadout
+  id: ChaplainSkirtDruid
+  equipment:
+    jumpsuit: ClothingUniformSkirtDruid
+
+- type: loadout
+  id: ChaplainSkirtMoon
+  equipment:
+    jumpsuit: ClothingUniformSkirtMoon
+
+- type: loadout
+  id: ChaplainUniformSkirtTidal
+  equipment:
+    jumpsuit: ClothingUniformSkirtTidal
+
+- type: loadout
+  id: ChaplainUniformSun
+  equipment:
+    jumpsuit: ClothingUniformSun
+
+- type: loadout
+  id: ChaplainUniformTech
+  equipment:
+    jumpsuit: ClothingUniformTech
+
+#outerclothing
+- type: loadout
+  id: ChaplainOuterMoon
+  equipment:
+    outerClothing: ClothingOuterMoon
+
+# neck
+- type: loadout
+  id: ChaplainNeckClayshaper
+  equipment:
+    neck: ClothingNeckClayshaper
+
+- type: loadout
+  id: ChaplainNeckDragon
+  equipment:
+    neck: ClothingNeckChaplainDragon
+
+- type: loadout
+  id: ChaplainNeckDruid
+  equipment:
+    neck: ClothingNeckDruid
+
+- type: loadout
+  id: ChaplainNeckDruidMantle
+  equipment:
+    neck: ClothingNeckDruidMantle
+
+- type: loadout
+  id: ChaplainNeckSun
+  equipment:
+    neck: ClothingNeckSun
+
+- type: loadout
+  id: ChaplainNeckTidal
+  equipment:
+    neck: ClothingNeckTidal
+
+# belt
+- type: loadout
+  id: BeltChaplainDragon
+  equipment:
+    belt: ClothingBeltChaplainDragon

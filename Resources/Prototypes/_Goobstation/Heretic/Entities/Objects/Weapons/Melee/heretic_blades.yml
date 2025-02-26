@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BaseMagicContraband ]
+  parent: [ BaseItem, TierXContraband ]
   id: HereticBladeBase
   name: eldritch blade
   description: The sickly blade used by sinister individuals for rituals and sacrifices.
@@ -21,6 +21,8 @@
     size: Normal
     sprite: _Goobstation/Heretic/Blades/blade_blade-inhand.rsi
   - type: ItemToggle
+  - type: DamageOtherOnHit
+    staminaCost: 7
 
 - type: entity
   parent: HereticBladeBase

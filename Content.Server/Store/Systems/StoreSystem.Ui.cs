@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Heretic.EntitySystems;
 using Content.Server.PDA.Ringer;
+using Content.Server.Roles;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -12,6 +14,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Heretic;
 using Content.Shared.Heretic.Prototypes;
 using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
@@ -281,6 +284,49 @@ public sealed partial class StoreSystem
         _admin.Add(LogType.StorePurchase,
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
+
+        //imp edit - add a record of this purchase to the mind that bought this item
+        if (_mind.TryGetMind(buyer, out _, out var mindComp))
+        {
+            //get the currency that makes up most of the listing's base cost
+                //uses base cost for consistency reasons
+                //has the side effect of not tracking things that are free
+                //not sure if I want that to happen tbh? though for now all it misses is the business cards, which don't really matter w/r/t tc spend
+            ProtoId<CurrencyPrototype>? primaryCurrency = null;
+            var primaryCurrencyCost = 0;
+            foreach (var (currency, amount) in listing.OriginalCost)
+            {
+                if (primaryCurrencyCost < amount.Int()) //this assumes that the costs will be in order of priority, not great but it works:tm:
+                {
+                    primaryCurrencyCost = amount.Int();
+                    primaryCurrency = currency;
+                }
+            }
+
+            //get the role that "purchased" this item by primary currency & purchase priority.
+            var purchasePriority = -1;
+            MindRoleComponent? purchaserComp = null;
+            foreach (var mindRole in mindComp.MindRoles) //go over all of the player's mindRoles
+            {
+                foreach (var roleComp in AllComps<MindRoleComponent>(mindRole)) //go over all of their mindRole components
+                {
+                    if (roleComp.PrimaryCurrency == null)
+                        continue;
+                    if (roleComp.PrimaryCurrency == primaryCurrency && roleComp.PurchasePriority >= purchasePriority) //if the primary currencies match & thw new role has a higher priority, replace the old role with the new one
+                    {
+                        purchasePriority = roleComp.PurchasePriority;
+                        purchaserComp = roleComp;
+                    }
+                }
+            }
+
+            //get the name for the thing that was purchased
+            var productIdentifier = listing.Name ?? listing.ID;
+
+            //finally, add it to the list of purchases
+            purchaserComp?.Purchases.Add((productIdentifier, listing.Cost));
+        }
+        //imp edit end
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!

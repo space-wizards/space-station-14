@@ -231,7 +231,7 @@
 - type: cargoProduct
   id: LivestockFinfin
   icon:
-    sprite: Mobs/Pets/finfin.rsi
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
     state: finfin
   product: CrateNPCFinfin
   cost: 100000

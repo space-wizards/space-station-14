@@ -145,26 +145,49 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         if (component.Sound == null)
             return;
 
-        if (predict)
+        if (component.Positional)
         {
-            if (component.Detach)
-            {
-                if (TryComp(uid, out TransformComponent? xform))
-                    _audioSystem.PlayPredicted(component.Sound, xform.Coordinates, user);
+            var coords = Transform(uid).Coordinates;
+            if (predict) {
+                if (component.Detach)
+                {
+                    if (TryComp(uid, out TransformComponent? xform))
+                        _audioSystem.PlayPredicted(component.Sound, xform.Coordinates, user);
+                }
+                else
+                    _audioSystem.PlayPredicted(component.Sound, coords, user);
             }
-            else
-                _audioSystem.PlayPredicted(component.Sound, uid, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                if (component.Detach)
+                {
+                    if (TryComp(uid, out TransformComponent? xform))
+                        _audioSystem.PlayPvs(component.Sound, xform.Coordinates);
+                }
+                else
+                    _audioSystem.PlayPvs(component.Sound, coords);
         }
-        else if (_netMan.IsServer)
+        else
         {
-            // don't predict sounds that client couldn't have played already
-            if (component.Detach)
-            {
-                if (TryComp(uid, out TransformComponent? xform))
-                    _audioSystem.PlayPvs(component.Sound, xform.Coordinates);
+            if (predict) {
+                if (component.Detach)
+                {
+                    if (TryComp(uid, out TransformComponent? xform))
+                        _audioSystem.PlayPredicted(component.Sound, xform.Coordinates, user);
+                }
+                else
+                    _audioSystem.PlayPredicted(component.Sound, uid, user);
             }
-            else
-                _audioSystem.PlayPvs(component.Sound, uid);
+            else if (_netMan.IsServer) {
+                // don't predict sounds that client couldn't have played already
+                if (component.Detach)
+                {
+                    if (TryComp(uid, out TransformComponent? xform))
+                        _audioSystem.PlayPvs(component.Sound, xform.Coordinates);
+                }
+                else
+                    _audioSystem.PlayPvs(component.Sound, uid);
+            }
         }
     }
 

@@ -15,4 +15,11 @@ public sealed partial class StunbatonComponent : Component
 
     [DataField("sparksSound")]
     public SoundSpecifier SparksSound = new SoundCollectionSpecifier("sparks");
+
+    // Impstation
+    /// <summary>
+    /// Should this stun when turned off, instead of when on?
+    /// </summary>
+    [DataField]
+    public bool Inverted = false;
 }
