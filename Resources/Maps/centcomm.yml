@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 247.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 02/19/2025 00:34:47
+  entityCount: 9480
+maps: []
+grids:
+- 1668
+orphans:
+- 1668
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -23233,11 +23244,29 @@ entities:
     - type: Transform
       pos: -0.5,3.5
       parent: 1668
+    - type: NavMapBeacon
+      text: CentComm
   - uid: 9452
     components:
     - type: Transform
       pos: 22.5,-21.5
       parent: 1668
+    - type: NavMapBeacon
+      text: Afterhours
+  - uid: 9479
+    components:
+    - type: Transform
+      pos: -0.5,-41.5
+      parent: 1668
+    - type: NavMapBeacon
+      text: Thunderdome
+  - uid: 9480
+    components:
+    - type: Transform
+      pos: -41.5,-7.5
+      parent: 1668
+    - type: NavMapBeacon
+      text: ERT
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 511

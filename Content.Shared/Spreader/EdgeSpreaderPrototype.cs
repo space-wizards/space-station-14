@@ -8,7 +8,7 @@ namespace Content.Shared.Spreader;
 [Prototype("edgeSpreader")]
 public sealed partial class EdgeSpreaderPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
     [DataField(required:true)] public int UpdatesPerSecond;
 
     /// <summary>
