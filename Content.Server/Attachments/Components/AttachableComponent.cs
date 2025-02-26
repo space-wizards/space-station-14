@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Attachments.Components;
+namespace Content.Server.Attachments.Components;
 
 [RegisterComponent]
 public sealed partial class AttachableComponent : Component

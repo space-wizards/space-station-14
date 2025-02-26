@@ -1,11 +1,11 @@
-﻿using Content.Shared.Attachments.Components;
+﻿using Content.Server.Attachments.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Attachments;
+namespace Content.Server.Attachments;
 
 public sealed class AttachmentSystem : EntitySystem
 {
