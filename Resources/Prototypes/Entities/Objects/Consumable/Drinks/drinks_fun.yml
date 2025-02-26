@@ -143,7 +143,9 @@
         maxVol: 50
         reagents:
         - ReagentId: Mopwata
-          Quantity: 40
+          Quantity: 38
+        - ReagentId: AIDncer
+          Quantity: 2
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata

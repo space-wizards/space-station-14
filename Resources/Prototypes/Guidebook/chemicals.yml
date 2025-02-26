@@ -13,7 +13,13 @@
   - Biological
   - Special
   - Others
+  - VirologyGuide
   filterEnabled: True
+
+- type: guideEntry
+  id: VirologyGuide
+  name: guide-entry-virology
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Virology.xml"
 
 - type: guideEntry
   id: Elements

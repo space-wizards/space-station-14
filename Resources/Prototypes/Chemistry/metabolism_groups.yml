@@ -18,6 +18,10 @@
 - type: metabolismGroup
   id: Food
   name: metabolism-group-food
+  
+- type: metabolismGroup
+  id: Virology
+  name: metabolism-group-virology
 
 - type: metabolismGroup
   id: Drink

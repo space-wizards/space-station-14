@@ -1,4 +1,5 @@
 metabolism-group-poison = Poison
+metabolism-group-virology = Virology
 metabolism-group-medicine = Medicine
 metabolism-group-narcotic = Narcotic
 metabolism-group-alcohol = Alcohol
