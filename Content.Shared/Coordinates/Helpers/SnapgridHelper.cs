@@ -10,11 +10,11 @@ namespace Content.Shared.Coordinates.Helpers
         {
             IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridUid(entMan);
+            var xformSys = entMan.System<SharedTransformSystem>();
+            var gridId = xformSys.GetGrid(coordinates);
 
             if (gridId == null)
             {
-                var xformSys = entMan.System<SharedTransformSystem>();
                 var mapPos = xformSys.ToMapCoordinates(coordinates);
                 var mapX = (int)Math.Floor(mapPos.X) + 0.5f;
                 var mapY = (int)Math.Floor(mapPos.Y) + 0.5f;
