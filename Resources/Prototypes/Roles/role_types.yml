@@ -10,29 +10,38 @@
   id: SoloAntagonist
   name: role-type-solo-antagonist-name
   color: '#d82000'
+  sort: "5"
+  symbol: "🗡 "
 
 - type: roleType
   id: TeamAntagonist
   name: role-type-team-antagonist-name
   color: '#d82000'
+  sort: "6"
+  symbol: "⚔ "
 
 - type: roleType
   id: FreeAgent
   name: role-type-free-agent-name
   color: '#ffff00'
+  sort: "3"
+  symbol: "☯ "
 
 - type: roleType
   id: Familiar
   name: role-type-familiar-name
   color: '#6495ed'
+  sort: "1"
 
 - type: roleType
   id: Silicon
   name: role-type-silicon-name
   color: '#6495ed'
+  sort: "2"
 
 - type: roleType
   id: SiliconAntagonist
   name: role-type-silicon-antagonist-name
   color: '#c832e6'
-
+  sort: "4"
+  symbol: "⛞ "

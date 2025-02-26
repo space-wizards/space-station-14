@@ -42,4 +42,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayClassic =
         CVarDef.Create("ui.admin_overlay_classic", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the admin window player tab will show different antag symbols for each role type
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistSeparateSymbols =
+        CVarDef.Create("ui.admin_playerlist_separate_symbols", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
