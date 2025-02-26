@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Ducky Slippers base taken from ParadiseSS13 at commits https://github.com/ParadiseSS13/Paradise/pull/13996/commits, Lizard Plushie taken from tgstation at commit https://github.com/tgstation/tgstation/pull/30751/commits/6220a7de4bc9b222bdb03e88598508e85d3396c4, sprites by momochitters",
+  "copyright": "Ducky Slippers base taken from ParadiseSS13 at commits https://github.com/ParadiseSS13/Paradise/commit/27edf99e063a31b87cab66c1e29e481ff6a4d88a, Lizard Plushie taken from tgstation at commit https://github.com/tgstation/tgstation/commit/b4f25333593f2550c6bf578d1a03aa9817b7a8fc, sprites by momochitters",
   "size": {
     "x": 32,
     "y": 32
