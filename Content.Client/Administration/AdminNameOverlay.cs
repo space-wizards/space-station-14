@@ -87,6 +87,14 @@ internal sealed class AdminNameOverlay : Overlay
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, "ANTAG", uiScale, Color.OrangeRed);
                 currentOffset += lineoffset;
             }
+            else if (!classic && _filter.Contains(playerInfo.RoleProto))
+            {
+               var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+               var color = playerInfo.RoleProto.Color;
+
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
+                currentOffset += lineoffset;
+            }
 
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             currentOffset += lineoffset;
