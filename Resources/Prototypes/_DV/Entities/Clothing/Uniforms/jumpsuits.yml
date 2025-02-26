@@ -1,3 +1,93 @@
+# Head of Personnel
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBoatswain
+  name: boatswain's turtleneck
+  description: A comfortable rollneck and slacks. Suitable attire for a pipe-smoking bosun.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/boatswain.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/boatswain.rsi
+
+# Detective
+
+- type: entity
+  parent: [ ClothingUniformBase, ClothingUniformRollableBase ] # imp - we dont have rmcrollable so im having this use foldable
+  id: ClothingUniformJumpsuitDetTurtle
+  name: detective's turtleneck
+  description: A comfortable and tight-fitting turtleneck for those with the resolve to reach the position of detective.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/detective_alt.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/detective_alt.rsi
+
+# Warden
+
+- type: entity
+  parent: [ ClothingUniformBase, ClothingUniformRollableBase ] # imp - we dont have rmcrollable so im having this use foldable
+  id: ClothingUniformJumpsuitWardenTurtle
+  name: warden's turtleneck
+  description: A comfortable and tight-fitting turtleneck for those with the patience to reach the position of warden.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/armourer_alt.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/armourer_alt.rsi
+# Misc
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKilt
+  name: kilt
+  description: A fine bit o' garb for the lad an' lasses.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/kilt.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/kilt.rsi
+
+# Chief Justice
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChiefJusticeFormal
+  name: chief justice's formal jumpsuit
+  description: A fancy double-breasted suit with golden accouterments. Sharp and authoritative. # imp edit - fixed typo
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cjformal.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cjformal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChiefJusticeWhite
+  name: chief justice's white jumpsuit
+  description: A modest, white office shirt with hard-earned rank epaulets.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cj_white.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cj_white.rsi
+
+# Clerk
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitClerk
+  name: clerk's suit
+  description: A modest suit for the person with the power to notarize anything.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/clerk.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/clerk.rsi
+
+# Chemist
+
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitChemShirt
@@ -9,6 +99,32 @@
   - type: Clothing
     sprite: _DV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
 
+# Prosecutor
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitProsecutor
+  name: prosecutor's suit
+  description: A red suit with a fancy cravat. Perfect for a prosecutor.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/prosecutorred.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/prosecutorred.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformCybersunAttorney
+  name: cybersun attorney suit
+  description: This durable Suit Jacket and Turtleneck Combo doubles as an Accounting suit, and includes an extra button. Take that, Nerd-otrasen!
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunattorney.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunattorney.rsi
+
+# Administrative Assistant
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAdminAssistant
@@ -19,3 +135,49 @@
     sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
   - type: Clothing
     sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
+
+# Salvage Specialist
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSalvageSpecialistDV
+  name: salvage specialist's worn jumpsuit
+  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/explorer.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/explorer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformCybersunHazard
+  name: cybersun hazard suit
+  description: This high-visibility jumpsuit prevents you from getting run over, yet keeps you dark enough to stay unnoticed!
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunhazard.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunhazard.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformCybersunCasual
+  name: cybersun casual jumpsuit
+  description: With all the non-descript gizmos they shoved in this thing, are you sure it's even safe to put on?
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersuncasual.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersuncasual.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformCybersunRND
+  name: cybersun research turtleneck
+  description: It's another Turtleneck. What'd you expect?
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunrnd.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunrnd.rsi

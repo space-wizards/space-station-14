@@ -1,0 +1,14 @@
+﻿- type: loadout
+  id: PlateCarrier
+  equipment:
+    outerClothing: ClothingOuterArmorPlateCarrier
+
+- type: loadout
+  id: DuraVest
+  equipment:
+    outerClothing: ClothingOuterArmorDuraVest
+
+- type: loadout
+  id: StasecSweater
+  equipment:
+    outerClothing: ClothingOuterStasecSweater

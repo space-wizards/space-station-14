@@ -97,7 +97,15 @@
       - id: ClothingEyesGlasses
       - id: ClothingOuterWinterRD
       - id: ClothingOuterCoatRD
+        orGroup: RdCoat
+        prob: 0.5
+      - id: ClothingOuterCoatRndMysta # DeltaV
+        orGroup: RdCoat
       - id: ClothingNeckCloakRd
+        orGroup: RdCloak
+        prob: 0.5
+      - id: ClothingNeckCloakMystagogue # DeltaV
+        orGroup: RdCloak
 
 - type: entity
   id: DresserWardenFilled

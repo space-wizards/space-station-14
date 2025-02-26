@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: [ ClothingHeadBase, BaseCommandContraband ]
+  id: ClothingHeadHoodMysta
+  name: research director's muffin cap # Delta V - Mystagogue new hat # imp - we dont have a mysta
+  description: Contrary to its silly name, it's actually a symbol of great academic achievement.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Head/Hats/mysta.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Head/Hats/mysta.rsi

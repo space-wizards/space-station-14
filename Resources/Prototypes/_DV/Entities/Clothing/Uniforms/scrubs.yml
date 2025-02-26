@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorCybersun
+  name: cybersun scrubs
+  description: The official uniform of Cybersun's biotechnology division.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Scrubs/cybersun.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Scrubs/cybersun.rsi

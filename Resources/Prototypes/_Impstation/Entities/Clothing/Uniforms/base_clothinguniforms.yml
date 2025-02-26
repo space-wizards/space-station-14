@@ -1,0 +1,10 @@
+﻿- type: entity
+  abstract: true
+  id: ClothingUniformRollableBase
+  components:
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unroll-verb-clothing-jacket
+    foldVerbText: roll-verb-clothing-jacket
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded

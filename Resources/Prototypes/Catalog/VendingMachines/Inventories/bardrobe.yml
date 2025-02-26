@@ -14,11 +14,11 @@
     ClothingUniformNightclubSuitSkirt: 2 #imp
     ClothingUniformJumpsuitBartenderPurple: 2
     ClothingShoesColorBlack: 2
-    ClothingOuterArmorBasicSlim: 2
+    ClothingOuterArmorDuraVest: 2 # DeltaV - ClothingOuterArmorBasicSlim replaced in favour of stabproof vest
     ClothingOuterVest: 2
     ClothingBeltBandolier: 2
     ClothingEyesGlassesSunglasses: 2
-    ClothingNeckScarfStripedBlack: 2
-  contrabandInventory:
+    ClothingNeckScarfStripedBlack: 2 # imp
+  contrabandInventory: # imp
     ClothingMaskClownService: 1
     ClothingOuterApronClown: 1

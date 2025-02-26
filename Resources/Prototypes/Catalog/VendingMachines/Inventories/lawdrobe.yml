@@ -23,6 +23,9 @@
   contrabandInventory:
     ClothingOuterRobesJudge: 1
     ClothingHeadHatPwig: 1
+    ClothingUniformCybersunAttorney: 1
+    CybersunBriefcase: 1
+    ClothingOuterCybersunOvercoat: 1
     # "Legally" obtained currency
     SpaceCash100: 2
   emaggedInventory:

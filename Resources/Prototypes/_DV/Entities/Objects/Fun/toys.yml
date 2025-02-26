@@ -1,0 +1,29 @@
+﻿- type: entity
+  parent: BaseItem
+  id: FoamSabre
+  name: foam sabre
+  description: Cosplay as a captain and command your group of friends!
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Fun/Toys/foam_sabre.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.5
+    range: 2.0
+    damage:
+      types:
+        Blunt: 0
+  - type: Reflect # Imitation of captain's sword, 1% chance of reflecting a projectile for the fun chance of it happening.
+    reflectProb: .01
+    spread: 90
+  - type: Item
+    size: Normal
+    sprite: _DV/Objects/Fun/Toys/foam_sabre.rsi
+  - type: Tag
+    tags:
+    - CaptainSabre # To be able to store it a captain's sheath if you get your hands on one.
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Execution
+    doAfterDuration: 3.0

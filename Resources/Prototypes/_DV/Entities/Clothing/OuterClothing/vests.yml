@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterClerkVest
+  name: clerk's vest
+  description: a silken magenta vest with a pocket to put your notary stamp.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Vests/clerkvest.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Vests/clerkvest.rsi

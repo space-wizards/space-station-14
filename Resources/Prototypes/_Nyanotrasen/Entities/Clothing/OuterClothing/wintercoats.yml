@@ -1,0 +1,12 @@
+﻿- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHyenhSweater
+  name: comfy sweater
+  description: It's comfy.
+  components:
+  - type: Sprite
+    sprite: _Nyanotrasen/Clothing/OuterClothing/WinterCoats/hyenh.rsi
+  - type: Clothing
+    sprite: _Nyanotrasen/Clothing/OuterClothing/WinterCoats/hyenh.rsi
+  - type: TemperatureProtection
+    coolingCoefficient: 0.1

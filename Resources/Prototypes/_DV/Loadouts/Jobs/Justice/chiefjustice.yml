@@ -1,0 +1,14 @@
+﻿- type: loadout
+  id: ChiefJusticeFormalJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefJusticeFormal
+
+- type: loadout
+  id: ChiefJusticeFormalJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCJFormal
+
+- type: loadout
+  id: ChiefJusticeWhiteJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefJusticeWhite

@@ -1,0 +1,18 @@
+﻿- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterStasecSweater
+  name: station security sweater
+  description: A thick synthetic sweater with reinforced shoulders and elbows, enough to warm even the harshest security officer's cold heart.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/WinterCoats/stasecsweater.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/WinterCoats/stasecsweater.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.75
+  - type: AllowSuitStorage

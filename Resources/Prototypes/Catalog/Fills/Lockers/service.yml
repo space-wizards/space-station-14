@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterArmorBasicSlim
+      - id: ClothingOuterArmorDuraVest # DeltaV - ClothingOuterArmorBasicSlim replaced in favour of stabproof vest
       - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
       - id: ClothingEyesHudBeer

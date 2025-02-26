@@ -1,0 +1,4 @@
+﻿- type: loadout
+  id: HoPBoatswain
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBoatswain

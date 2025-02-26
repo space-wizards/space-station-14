@@ -1,0 +1,33 @@
+﻿- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatCybersunWindbreaker
+  name: cybersun windbreaker
+  description: A paramedics windbreaker, sporting the official heraldry of Cybersuns meditech division. Its made of sturdy ballistic fiber.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Coats/cybersunwindbreaker.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Coats/cybersunwindbreaker.rsi
+  - type: TemperatureProtection
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.75
+  - type: AllowSuitStorage #Syndicate Windbreaker, so gun.
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCybersunOvercoat
+  name: cybersun overcoat
+  description: Heavy black robes with magenta and gold trim. It smells old.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Coats/cybersunovercoat.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Coats/cybersunovercoat.rsi
+  - type: TemperatureProtection
+    coolingCoefficient: 0.1

@@ -1,0 +1,17 @@
+﻿# Neck
+- type: loadout
+  id: MystagogueCloak
+  equipment:
+    neck: ClothingNeckCloakMystagogue
+
+# Head
+- type: loadout
+  id: ResearchDirectorHood
+  equipment:
+    head: ClothingHeadHoodMysta
+
+# OuterClothing
+- type: loadout
+  id: MystaLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatRndMysta

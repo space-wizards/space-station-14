@@ -16,6 +16,7 @@
     ClothingHeadBandSkull: 2
     ClothingHeadHatGreyFlatcap: 3
     ClothingHeadHatBrownFlatcap: 3
+    ClothingOuterCoatHyenhSweater: 2 # DeltaV
     ClothingUniformJumpsuitColorGrey: 8
     ClothingUniformJumpskirtColorGrey: 8
     ClothingUniformJumpsuitColorWhite: 3
@@ -66,6 +67,11 @@
     ClothingShoesColorOrange: 2
     ClothingShoesColorRed: 2
     ClothingShoesColorPurple: 2
+    ClothingShoesHeelsRed: 4 # imp
+    ClothingShoesHeelsBlack: 4 # imp
+    ClothingShoesHeelsBlue: 3 # imp
+    ClothingShoesHeelsGreen: 2 # imp
+    ClothingShoesHeelsBrown: 2 # imp
     ClothingHeadHatGreysoft: 8
     ClothingHeadHatMimesoft: 3
     ClothingHeadHatBluesoft: 2
@@ -93,12 +99,7 @@
     ClothingHandsGlovesColorPurple: 2
     ClothingEyesGlassesCheapSunglasses: 3
     # DO NOT ADD MORE, USE UNIFORM DYING
-    ClothingShoesHeelsRed: 4
-    ClothingShoesHeelsBlack: 4
-    ClothingShoesHeelsBlue: 3
-    ClothingShoesHeelsGreen: 2
-    ClothingShoesHeelsBrown: 2
-    #Space Cadet Jumpsuits
+    # imp -Space Cadet Jumpsuits
     ClothingSpaceCadetJumpsuitColorWhite: 3
     ClothingSpaceCadetJumpsuitColorBlack: 3
     ClothingSpaceCadetJumpsuitColorGray: 3
@@ -116,7 +117,7 @@
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
-    ClothingShoesSwat: 2
-    ClothingMaskGas: 1
+    ClothingShoesSwat: 2 # imp
+    ClothingMaskGas: 1 # imp
 
   # DO NOT ADD MORE, USE UNIFORM DYING

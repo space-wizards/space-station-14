@@ -1,0 +1,17 @@
+﻿# armor vests
+
+- type: latheRecipe
+  id: ClothingOuterArmorPlateCarrier
+  result: ClothingOuterArmorPlateCarrier
+  completetime: 10
+  materials:
+    Steel: 1500
+    Plastic: 1500
+
+- type: latheRecipe
+  id: ClothingOuterArmorDuraVest
+  result: ClothingOuterArmorDuraVest
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 1000

@@ -43,7 +43,8 @@
     MakeshiftShield: 0.25
     # rare armor
     ClothingHeadHelmetSwat: 0.25
-    ClothingOuterArmorBasicSlim: 0.25
+    ClothingOuterArmorBasicSlim: 0.125 # imp - splitting rarity with plate carrier
+    ClothingOuterArmorPlateCarrier: 0.125 # DeltaV
     # rare weapons
     WeaponMakeshiftLaser: 0.1
     # money
