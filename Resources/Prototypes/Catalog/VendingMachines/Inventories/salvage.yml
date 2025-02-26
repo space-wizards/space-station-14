@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
     Crowbar: 2
@@ -16,3 +16,5 @@
     FultonBeacon: 1
     Fulton: 2
 # End of Harmony change.
+  contrabandInventory:
+    PlushieCarp: 1
