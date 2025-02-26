@@ -81,20 +81,38 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
+            Vector2 currentOffset = Vector2.Zero;
             if (classic && playerInfo.Antag)
             {
-               args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), _antagLabelClassic, uiScale, _antagColorClassic);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, "ANTAG", uiScale, Color.OrangeRed);
+                currentOffset += lineoffset;
             }
             else if (!classic && _filter.Contains(playerInfo.RoleProto))
             {
                var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
                var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
+                currentOffset += lineoffset;
             }
 
-            args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
-            args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
+            currentOffset += lineoffset;
+
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+            currentOffset += lineoffset;
+
+            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString))
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
+                currentOffset += lineoffset;
+            }
+
+            if (!string.IsNullOrEmpty(playerInfo.StartingJob))
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
+                currentOffset += lineoffset;
+            }
         }
     }
 }
