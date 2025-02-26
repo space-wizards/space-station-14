@@ -1,18 +1,12 @@
 # TODO: same as other wallmount cabinets they should use a base structure prototype
 - type: entity
-  parent: BaseItemCabinet
+  parent: BaseWallmountCabinet
   id: DefibrillatorCabinet
   name: defibrillator cabinet
   description: A small wall mounted cabinet designed to hold a defibrillator.
   placement:
     mode: SnapgridCenter
   components:
-  - type: WallMount
-    arc: 175
-  - type: Transform
-    anchored: true
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/defib_cabinet.rsi
     noRot: false
@@ -30,9 +24,6 @@
         whitelist:
           components:
           - Defibrillator
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
