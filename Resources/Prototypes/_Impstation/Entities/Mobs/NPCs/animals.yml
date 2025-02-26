@@ -81,6 +81,8 @@
     - type: NoSlip
     - type: ZombieImmune
     - type: Food
+    - type: Absorbable # bros bite sized
+      biomassRestored: 0.05
     - type: Extractable
       grindableSolutionName: food
     - type: SolutionContainerManager

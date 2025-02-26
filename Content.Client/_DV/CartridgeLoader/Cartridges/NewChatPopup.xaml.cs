@@ -73,7 +73,7 @@ public sealed partial class NewChatPopup : DefaultWindow
 
     private void CreateChat()
     {
-        if (!uint.TryParse(NumberInput.Text, out var number))
+        if (CreateButton.Disabled || !uint.TryParse(NumberInput.Text, out var number))
             return;
 
         var name = NameInput.Text.Trim();

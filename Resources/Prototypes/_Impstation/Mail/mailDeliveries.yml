@@ -69,7 +69,7 @@
     MailNFSmoke: 0.4
     #MailNFEMP: 0.3 # Imp commented cuz error log :(
     MailNFThrongler: 0.01 # DeltaV: 0.1 to 0.01
-    MailImpFuckingGun: 0.01 # Mira requested this. maybe don't turn it on yet without discussion
+    MailImpFuckingGun: 0.01 # Mira requested this.
 
   # Department and job-specific mail can have slightly higher weights,
   # since they'll be merged with the everyone pool.

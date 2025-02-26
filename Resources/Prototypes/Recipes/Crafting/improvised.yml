@@ -303,7 +303,7 @@
   objectType: Item
   description: A Mothchelin 3-star meal!
   icon:
-    sprite: Objects/Fun/toys.rsi
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: yarn-noodles
 
 - type: construction
@@ -316,7 +316,7 @@
   objectType: Item
   description: A home-made recipe involving a pair of scissors and being very sneaky.
   icon:
-    sprite: Objects/Fun/toys.rsi
+    sprite: _Impstation/Objects/Fun/toys.rsi
     state: fabric-scrap-salad
 
 - type: construction

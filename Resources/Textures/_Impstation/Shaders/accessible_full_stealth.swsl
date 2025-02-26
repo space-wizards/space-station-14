@@ -14,11 +14,11 @@ const highp float light_whitepoint = 1.0;
 void fragment() {
     highp vec4 spriteCol = zTexture(UV);
     highp vec4 outlineCol = getOutlineCol();
-    highp float clampedVis = clamp(visibility, 0, 1);
+    highp float clampedVis = clamp(visibility, 0.0, 1.0);
 
     if (outlineCol.a > 0.1 && ShowOutline) {
         COLOR.rgb = outlineCol.rgb;
-        COLOR.a = outlineCol.a * (1 - clampedVis);
+        COLOR.a = outlineCol.a * (1.0 - clampedVis);
     } else {
         COLOR.rgb = spriteCol.rgb;
         COLOR.a = spriteCol.a * clampedVis;

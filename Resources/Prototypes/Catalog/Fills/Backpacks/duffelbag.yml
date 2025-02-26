@@ -154,8 +154,8 @@
       - id: ClothingShoesClown
       - id: ClothingMaskClown
       - id: BikeHorn
-      - id: ClownPDA
-      - id: ClothingHeadsetService
+      #- id: ClownPDA # imp edit- 2 tc to get maints access and greencomms is causing people to buy this for the wrong reason
+      #- id: ClothingHeadsetService
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

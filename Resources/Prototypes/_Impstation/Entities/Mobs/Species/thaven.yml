@@ -62,8 +62,8 @@
     proto: guardian
   - type: Vocal
     sounds:
-      Male: UnisexThaven
-      Female: UnisexThaven
+      Male: MaleThaven
+      Female: FemaleThaven
       Unsexed: UnisexThaven
   - type: Speech
     speechSounds: Alto

@@ -118,6 +118,8 @@
     groups:
     - id: Medicine
     - id: Poison
+  - type: Absorbable # imp
+    biomassRestored: 0.8
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon

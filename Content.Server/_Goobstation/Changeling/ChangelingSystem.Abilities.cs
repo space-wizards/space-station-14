@@ -15,6 +15,7 @@ using Content.Server.Light.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Server.Flash.Components;
+using Content.Server.Forensics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
@@ -66,6 +67,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionLastResortEvent>(OnLastResort);
         SubscribeLocalEvent<ChangelingComponent, ActionLesserFormEvent>(OnLesserForm);
         SubscribeLocalEvent<ChangelingComponent, ActionMindshieldFakeEvent>(OnMindshieldFake);
+        SubscribeLocalEvent<ChangelingComponent, ToggleTentacleEvent>(OnToggleTentacle); // imp edit
         SubscribeLocalEvent<ChangelingComponent, ActionSpacesuitEvent>(OnSpacesuit);
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
     }
@@ -99,6 +101,11 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-unabsorbable", ("target", Identity.Entity(target, EntityManager))), uid, uid);
             return;
         }
+        if (absorbComp != null && absorbComp.BiomassRestored < 1 && comp.MinorAbsorbs > 3)
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-diminishing-returns", ("target", Identity.Entity(target, EntityManager))), uid, uid);
+            return;
+        }
         if (TryComp<RottingComponent>(target, out var rotComp) && _rotting.RotStage(target, rotComp) >= 2)
         {
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-extremely-bloated", ("target", Identity.Entity(target, EntityManager))), uid, uid);
@@ -117,7 +124,8 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.MediumCaution);
 
         PlayMeatySound(uid, comp);
-        var dargs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(15), new AbsorbDNADoAfterEvent(), uid, target)
+        var absorbTime = TimeSpan.FromSeconds(absorbComp is not null ? 15 * absorbComp.BiomassRestored : 15);
+        var dargs = new DoAfterArgs(EntityManager, uid, absorbTime, new AbsorbDNADoAfterEvent(), uid, target)
         {
             DistanceThreshold = 1.5f,
             BreakOnDamage = true,
@@ -139,17 +147,31 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (args.Cancelled || !IsIncapacitated(target) || HasComp<AbsorbedComponent>(target))
             return;
 
-        PlayMeatySound(args.User, comp);
+        var biomassPercentRestored = 1f;
+        var lesserAbsorb = false;
+        TryComp<AbsorbableComponent>(target, out var absorbComp);
+        if (absorbComp != null)
+            biomassPercentRestored = absorbComp.BiomassRestored;
+
+        if (biomassPercentRestored < 1f) // Check if baseline entity should restore less than 100% of biomass
+        {
+            if (comp.MinorAbsorbs > 0)
+                biomassPercentRestored /= comp.MinorAbsorbs; // If so, divide by # of minor absorbtions performed and increase the count
+            comp.MinorAbsorbs += 1;
+            lesserAbsorb = true;
+        }
+        else
+            comp.MinorAbsorbs = 0; // Reset minor absorbtions if we're consuming something that restores the full value
 
         var reducedBiomass = false;
-        if (HasComp<RottingComponent>(target) || (TryComp<AbsorbableComponent>(target, out var absorbComp) && absorbComp.ReducedBiomass))
+        if (HasComp<RottingComponent>(target))
             reducedBiomass = true;
 
-        float biomassModifier = 1f;
         if (reducedBiomass)
-            biomassModifier = 0.5f;
+            biomassPercentRestored /= 2;
 
-        UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
+        PlayMeatySound(args.User, comp);
+        UpdateBiomass(uid, comp, comp.MaxBiomass * biomassPercentRestored - comp.TotalAbsorbedEntities);
 
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
         _damage.TryChangeDamage(target, dmg, true, false);
@@ -184,10 +206,15 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(popupTarget, target, target, PopupType.LargeCaution);
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.LargeCaution);
 
-        TryStealDNA(uid, target, comp, true);
-        comp.TotalAbsorbedEntities++;
-        comp.MaxChemicals += bonusChemicals;
-        comp.MaxEvolutionPoints += bonusEvolutionPoints;
+        if (TryComp<DnaComponent>(target, out var _))
+            TryStealDNA(uid, target, comp, true);
+
+        if (!lesserAbsorb) // lesser absorbtions don't grant bonuses or count toward stats
+        {
+            comp.TotalAbsorbedEntities++;
+            comp.MaxChemicals += bonusChemicals;
+            comp.MaxEvolutionPoints += bonusEvolutionPoints;
+        }
 
         if (TryComp<StoreComponent>(args.User, out var store))
         {
@@ -319,6 +346,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(uid, comp);
     }
+
     private void OnCreateBoneShard(EntityUid uid, ChangelingComponent comp, ref CreateBoneShardEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -721,7 +749,16 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("changeling-mindshield-start"), ent, ent);
     }
+    private void OnToggleTentacle(EntityUid uid, ChangelingComponent comp, ref ToggleTentacleEvent args) //imp edit
+    {
+        if (!TryUseAbility(uid, comp, args))
+            return;
 
+        if (!TryToggleItem(uid, TentaclePrototype, comp))
+            return;
+
+        PlayMeatySound(uid, comp);
+    }
     public void OnSpacesuit(EntityUid uid, ChangelingComponent comp, ref ActionSpacesuitEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
