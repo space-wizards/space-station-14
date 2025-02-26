@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
@@ -6,7 +6,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Gibbing.Systems;
@@ -223,73 +222,65 @@ public sealed class GibbingSystem : EntitySystem
             FlingDroppedEntity(gibbable, scatterDirection, scatterImpulse, scatterImpulseVariance, scatterCone);
         }
 
-        var gibbedEvent = new EntityGibbedEvent(gibbable, new List<EntityUid> {gibbable});
+        var gibbedEvent = new EntityGibbedEvent(gibbable, new List<EntityUid> { gibbable });
         RaiseLocalEvent(gibbable, ref gibbedEvent);
     }
 
-    private List<EntityUid> GibEntity(Entity<GibbableComponent?> gibbable, TransformComponent parentXform,
+    private void GibEntity(Entity<GibbableComponent?> gibbable, TransformComponent parentXform,
         float randomSpreadMod,
         ref HashSet<EntityUid> droppedEntities, bool flingEntity, Vector2? scatterDirection, float scatterImpulse,
         float scatterImpulseVariance, Angle scatterCone, bool deleteTarget = true)
     {
-        var localGibs = new List<EntityUid>();
         var gibCount = 0;
-        var gibProtoCount = 0;
         if (Resolve(gibbable, ref gibbable.Comp, logMissing: false))
         {
             gibCount = gibbable.Comp.GibCount;
-            gibProtoCount = gibbable.Comp.GibPrototypes.Count;
         }
 
-        var gibAttemptEvent = new AttemptEntityGibEvent(gibbable, gibCount, GibType.Drop);
+        var gibAttemptEvent = new AttemptEntityGibEvent(gibbable, gibCount, GibType.Gib);
         RaiseLocalEvent(gibbable, ref gibAttemptEvent);
         switch (gibAttemptEvent.GibType)
         {
             case GibType.Skip:
-                return localGibs;
+                return;
             case GibType.Drop:
                 DropEntity(gibbable, parentXform, randomSpreadMod, ref droppedEntities, flingEntity,
                     scatterDirection, scatterImpulse, scatterImpulseVariance, scatterCone);
-                localGibs.Add(gibbable);
-                return localGibs;
+                return;
         }
 
-        if (gibbable.Comp != null && gibProtoCount > 0)
-        {
-            if (flingEntity)
-            {
-                for (var i = 0; i < gibAttemptEvent.GibletCount; i++)
-                {
-                    if (!TryCreateRandomGiblet(gibbable.Comp, parentXform.Coordinates, false, out var giblet,
-                            randomSpreadMod))
-                        continue;
-                    FlingDroppedEntity(giblet.Value, scatterDirection, scatterImpulse, scatterImpulseVariance,
-                        scatterCone);
-                    droppedEntities.Add(giblet.Value);
-                }
-            }
-            else
-            {
-                for (var i = 0; i < gibAttemptEvent.GibletCount; i++)
-                {
-                    if (TryCreateRandomGiblet(gibbable.Comp, parentXform.Coordinates, false, out var giblet,
-                            randomSpreadMod))
-                        droppedEntities.Add(giblet.Value);
-                }
-            }
-        }
+        TryCreateGiblet(gibbable, ref gibAttemptEvent, parentXform, randomSpreadMod, ref droppedEntities, flingEntity, scatterDirection, scatterImpulse, scatterImpulseVariance, scatterCone);
 
-        _transformSystem.AttachToGridOrMap(gibbable, Transform(gibbable));
-        if (flingEntity)
-        {
-            FlingDroppedEntity(gibbable, scatterDirection, scatterImpulse, scatterImpulseVariance, scatterCone);
-        }
-
-        var gibbedEvent = new EntityGibbedEvent(gibbable, localGibs);
+        var gibbedEvent = new EntityGibbedEvent(gibbable, droppedEntities);
         RaiseLocalEvent(gibbable, ref gibbedEvent);
         if (deleteTarget)
             QueueDel(gibbable);
-        return localGibs;
+    }
+
+    private void TryCreateGiblet(Entity<GibbableComponent?> gibbable, ref AttemptEntityGibEvent gibAttemptEvent, TransformComponent parentXform,
+        float randomSpreadMod,
+        ref HashSet<EntityUid> droppedEntities, bool flingEntity, Vector2? scatterDirection, float scatterImpulse,
+        float scatterImpulseVariance, Angle scatterCone)
+    {
+        if (gibbable.Comp != null && gibbable.Comp.GibPrototypes.Count > 0)
+        {
+            for (var i = 0; i < gibAttemptEvent.GibletCount; i++)
+            {
+                if (!TryCreateRandomGiblet(gibbable.Comp, parentXform.Coordinates, false, out var giblet,
+                        randomSpreadMod))
+                    continue;
+
+                _transformSystem.AttachToGridOrMap(gibbable);
+                _transformSystem.SetCoordinates(gibbable, parentXform.Coordinates);
+                _transformSystem.SetWorldRotation(gibbable, _random.NextAngle());
+                if (flingEntity)
+                {
+                    FlingDroppedEntity(gibbable, scatterDirection, scatterImpulse, scatterImpulseVariance, scatterCone);
+                }
+
+                droppedEntities.Add(giblet.Value);
+            }
+        }
     }
 
 
