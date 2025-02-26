@@ -2,7 +2,7 @@
   id: Origin
   mapName: 'Origin'
   mapPath: /Maps/_Impstation/origin.yml
-  minPlayers: 65
+  minPlayers: 65 #this map is a mess
   stations:
     Origin:
       stationProto: StandardNanotrasenStation
