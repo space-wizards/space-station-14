@@ -17,4 +17,11 @@ public static class AudioFun
         return audioParams.Value.WithPitchScale(Random.NextFloat() * (MaxPitchScale - MinPitchScale) + MinPitchScale)
             .WithVariation(0);
     }
+
+
+    public static AudioParams FunAudioParams()
+    {
+        return new AudioParams
+            { Pitch = Random.NextFloat() * (MaxPitchScale - MinPitchScale) + MinPitchScale, Variation = 0 };
+    }
 }
