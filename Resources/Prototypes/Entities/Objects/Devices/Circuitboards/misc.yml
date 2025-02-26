@@ -14,3 +14,20 @@
       - StationMapElectronics
   - type: StaticPrice
     price: 30
+
+- type: entity
+  parent: BaseElectronics
+  id: ScreenCircuitboard
+  name: screen electronics
+  description: An electronics board used in information screens.
+  components:
+  - type: Item
+    storedRotation: 0
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: airalarm_electronics
+  - type: Tag
+    tags:
+      - ScreenElectronics
+  - type: StaticPrice
+    price: 30
