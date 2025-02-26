@@ -1,0 +1,78 @@
+- type: entity
+  parent: BaseItem
+  id: ParcelWrap
+  name: parcel wrap
+  description: Paper used contain items for transport.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
+    state: brown
+  - type: ParcelWrap
+    parcelPrototype: WrappedParcel
+    wrapDelay: 1.0
+    wrapSound: /Audio/Items/Handcuffs/rope_start.ogg
+    whitelist:
+      components:
+      - Item
+    blacklist:
+      components:
+      - NukeDisk # Don't try to hide the disk.
+      - WrappedParcel # No wrapping wrapped things.
+      tags:
+      - ParcelWrapBlacklist
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be wrapped or not.
+  - type: LimitedCharges
+    charges: 30
+    maxCharges: 30
+
+- type: entity
+  parent: BaseItem
+  id: WrappedParcel
+  categories: [ HideSpawnMenu ]
+  name: wrapped parcel
+  description: Something wrapped up in paper. I wonder what's inside...
+  components:
+  - type: ContainerContainer
+    containers:
+      contents: !type:ContainerSlot
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.WrappedParcelVisuals.Size:
+        enum.WrappedParcelVisuals.Layer:
+          "Tiny": { state: "parcel-tiny" }
+          "Small": { state: "parcel-small" }
+          "Medium": { state: "parcel-medium" }
+          "Large": { state: "parcel-medium" }
+          "Huge": { state: "parcel-large" }
+          "Ginormous": { state: "parcel-large" }
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
+    layers:
+    - state: parcel-medium
+      map: [ "enum.WrappedParcelVisuals.Layer" ]
+  - type: WrappedParcel
+    unwrapDelay: 0.5
+    unwrapSound: /Audio/Effects/poster_broken.ogg
+    unwrapTrash: ParcelWrapTrash
+  - type: Tag
+    tags:
+    - Recyclable # Parcel entity is recyclable, and when it's destroyed, it'll drop its contents.
+
+- type: entity
+  parent: BaseItem
+  id: ParcelWrapTrash
+  categories: [ HideSpawnMenu ]
+  name: parcel wrap
+  description: The disappointing remnants of an unwrapped parcel.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/parcel_wrap_trash.rsi
+    layers:
+    - state: brown
+  - type: Tag
+    tags:
+    - Trash
+    - ParcelWrapBlacklist # No exponential wrapper trash-splosions.
+    - Recyclable
+  - type: SpaceGarbage
