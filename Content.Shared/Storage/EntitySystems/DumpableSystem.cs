@@ -3,11 +3,12 @@ using Content.Shared.Disposal;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Materials;
 using Content.Shared.Placeable;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -22,6 +23,8 @@ public sealed class DumpableSystem : EntitySystem
     [Dependency] private readonly SharedDisposalUnitSystem _disposalUnitSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
 
@@ -108,6 +111,29 @@ public sealed class DumpableSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
+
+        if (TryComp<MaterialStorageComponent>(args.Target, out var comp))
+        {
+            if (comp.Whitelist == null || comp.Whitelist.Tags == null)
+                return;
+            var tags = comp.Whitelist.Tags;
+            foreach (var entity in storage.Container.ContainedEntities)
+            {
+                if (!_tag.HasAnyTag(entity, tags))
+                    return;
+            }
+
+            UtilityVerb verb = new()
+            {
+                Act = () =>
+                {
+                    StartDoAfter(uid, args.Target, args.User, dumpable);
+                },
+                Text = Loc.GetString("dump-lathe-verb-name", ("lathe", args.Target)),
+                IconEntity = GetNetEntity(uid)
+            };
+            args.Verbs.Add(verb);
+        }
     }
 
     private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable)
@@ -164,6 +190,15 @@ public sealed class DumpableSystem : EntitySystem
             foreach (var entity in dumpQueue)
             {
                 _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
+            }
+        }
+        else if (HasComp<MaterialStorageComponent>(args.Args.Target))
+        {
+            dumped = true;
+
+            foreach (var entity in dumpQueue)
+            {
+                _materialStorage.TryInsertMaterialEntity(args.Args.User, entity, args.Args.Target.Value);
             }
         }
         else
