@@ -38,6 +38,14 @@ public sealed partial class CCVars
         CVarDef.Create("outline.enabled", true, CVar.CLIENTONLY);
 
     /// <summary>
+    /// If true, the antag overlay will show role subtype.
+    /// If false, it will show both role type and subtype.
+    /// If subtype is not set for a mob's mind then role type will be shown regardless of setting.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminOverlaySubtypesOnly =
+        CVarDef.Create("ui.admin_overlay_subtypes_only", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// If true, the admin overlay will be displayed in the old style (showing only "ANTAG")
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayClassic =

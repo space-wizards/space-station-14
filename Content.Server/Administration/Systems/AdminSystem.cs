@@ -232,10 +232,14 @@ public sealed class AdminSystem : EntitySystem
 
         RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
+        LocId? subtype = null;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
             if (_proto.TryIndex(mindComp.RoleType, out var role))
+            {
                 roleType = role;
+                subtype = mindComp.Subtype;
+            }
             else
                 Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
 
@@ -252,8 +256,18 @@ public sealed class AdminSystem : EntitySystem
             overallPlaytime = playTime;
         }
 
-        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, GetNetEntity(session?.AttachedEntity), data.UserId,
-            connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
+        return new PlayerInfo(name,
+            entityName,
+            identityName,
+            startingRole,
+            antag,
+            roleType,
+            subtype,
+            GetNetEntity(session?.AttachedEntity),
+            data.UserId,
+            connected,
+            _roundActivePlayers.Contains(data.UserId),
+            overallPlaytime);
     }
 
     private void OnPanicBunkerChanged(bool enabled)

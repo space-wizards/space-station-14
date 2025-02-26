@@ -1,5 +1,8 @@
-# For use by Role Types
-# Do not touch these
+# The primary role types are referenced by RP Rules, and were specified based on head admin input.
+# Do not create new ones without discussion.
+# You probably want a Subtype instead, anyway. Use the datafield in MindRoleComponent
+
+# Any new primary role types must be listed in RoleTypes.xml
 
 - type: roleType
   id: Neutral

@@ -113,6 +113,7 @@
   - type: MindRole
     antagPrototype: SubvertedSilicon
     roleType: SiliconAntagonist
+    subtype: rule-subtype-subverted
   - type: SubvertedSiliconRole
 
 # Dragon
@@ -120,11 +121,11 @@
   parent: BaseMindRoleAntag
   id: MindRoleDragon
   name: Dragon Role
-#  description:
   components:
   - type: MindRole
     antagPrototype: Dragon
     roleType: TeamAntagonist
+    subtype: role-subtype-dragon
     exclusiveAntag: true
   - type: DragonRole
   - type: RoleBriefing
@@ -135,11 +136,11 @@
   parent: BaseMindRoleAntag
   id: MindRoleNinja
   name: Space Ninja Role
-#  description: mind-role-ninja-description
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
     roleType: SoloAntagonist
+    subtype: role-subtype-ninja
     exclusiveAntag: true
   - type: NinjaRole
 
@@ -148,10 +149,10 @@
   parent: BaseMindRoleAntag
   id: MindRoleNukeops
   name: Nukeops Operative Role
-#  description: mind-role-nukeops-description
   components:
   - type: MindRole
     roleType: TeamAntagonist
+    subtype: role-subtype-nukie
     exclusiveAntag: true
     antagPrototype: Nukeops
   - type: NukeopsRole
@@ -160,7 +161,6 @@
   parent: MindRoleNukeops
   id: MindRoleNukeopsMedic
   name: Nukeops Medic Role
-#  description: mind-role-nukeops-medic-description
   components:
   - type: MindRole
     antagPrototype: NukeopsMedic
@@ -169,7 +169,6 @@
   parent: MindRoleNukeops
   id: MindRoleNukeopsCommander
   name: Nukeops Commander Role
-#  description: mind-role-nukeops-commander-description
   components:
   - type: MindRole
     antagPrototype: NukeopsCommander
@@ -179,22 +178,22 @@
   parent: BaseMindRoleAntag
   id: MindRoleHeadRevolutionary
   name: Head Revolutionary Role
-#  description: mind-role-head-revolutionary-description
   components:
   - type: MindRole
     antagPrototype: HeadRev
     exclusiveAntag: true
     roleType: TeamAntagonist
+    subtype: role-subtype-head-revolutionary
   - type: RevolutionaryRole
 
 - type: entity
   parent: MindRoleHeadRevolutionary
   id: MindRoleRevolutionary
   name: Revolutionary Role
-#  description: mind-role-revolutionary-description
   components:
   - type: MindRole
     antagPrototype: Rev
+    subtype: role-subtype-revolutionary
 
 # Survivors (Wizard)
 - type: entity
@@ -212,11 +211,11 @@
   parent: BaseMindRoleAntag
   id: MindRoleThief
   name: Thief Role
-#  description: mind-role-thief-description
   components:
   - type: MindRole
     antagPrototype: Thief
     roleType: SoloAntagonist
+    subtype: role-subtype-thief
   - type: ThiefRole
 
 # Traitors
@@ -224,19 +223,18 @@
   parent: BaseMindRoleAntag
   id: MindRoleTraitor
   name: Traitor Role
-#  description: mind-role-traitor-description
   components:
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
     roleType: SoloAntagonist
+    subtype: role-subtype-traitor
   - type: TraitorRole
 
 - type: entity
   parent: MindRoleTraitor
   id: MindRoleTraitorSleeper
   name: Sleeper Agent Role
-#  description: mind-role-traitor-sleeper-description
   components:
   - type: MindRole
     antagPrototype: TraitorSleeper
@@ -245,10 +243,10 @@
   parent: MindRoleTraitor
   id: MindRoleTraitorReinforcement
   name: Syndicate Reinforcement Role
-  #  description: mind-role-syndicate-reinforcement-description
   components:
     - type: MindRole
       roleType: TeamAntagonist
+      subtype: role-subtype-traitor-reinforcement
 
 # Wizards
 - type: entity
@@ -268,22 +266,22 @@
   parent: BaseMindRoleAntag
   id: MindRoleInitialInfected
   name: Initial Infected Role
-#  description: mind-role-initial-infected-description
   components:
   - type: MindRole
     antagPrototype: InitialInfected
     exclusiveAntag: true
     roleType: TeamAntagonist
+    subtype: role-subtype-initial-infected
   - type: InitialInfectedRole
 
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleZombie
   name: Zombie Role
-#  description: mind-role-zombie-description
   components:
   - type: MindRole
     antagPrototype: Zombie
     exclusiveAntag: true
     roleType: TeamAntagonist
+    subtype: role-subtype-zombie
   - type: ZombieRole

@@ -21,5 +21,5 @@ public sealed partial class RoleTypePrototype : IPrototype
     ///     The role's displayed color.
     /// </summary>
     [DataField]
-    public Color Color { get; private set; } = Color.FromHex("#eeeeee");
+    public Color Color = Color.FromHex("#eeeeee");
 }
