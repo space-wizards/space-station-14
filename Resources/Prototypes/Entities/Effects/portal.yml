@@ -26,6 +26,14 @@
   - type: Portal
 
 - type: entity
+  abstract: true
+  parent: BasePortal
+  id: BasePortalInterMap
+  components:
+  - type: Portal
+    canTeleportToOtherMaps: true
+
+- type: entity
   id: PortalRed
   parent: BasePortal
   description: This one looks more like a redspace portal.
@@ -54,7 +62,7 @@
     
 - type: entity
   id: PortalArtifact
-  parent: BasePortal
+  parent: BasePortalInterMap
   components:
   - type: Sprite
     layers:
@@ -66,8 +74,6 @@
     netsync: false
   - type: TimedDespawn
     lifetime: 1
-  - type: Portal
-    canTeleportToOtherMaps: true
 
 - type: entity
   id: PortalGatewayBlue
@@ -123,3 +129,11 @@
     volume: -3
     sound:
       path: /Audio/Ambience/anomaly_scary.ogg
+
+- type: entity
+  parent: [ PortalGatewayOrange, BasePortalInterMap ]
+  id: PortalAdminOrange
+
+- type: entity
+  parent: [ PortalGatewayBlue, BasePortalInterMap ]
+  id: PortalAdminBlue
