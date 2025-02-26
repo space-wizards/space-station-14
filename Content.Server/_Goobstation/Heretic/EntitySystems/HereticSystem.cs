@@ -139,8 +139,7 @@ public sealed partial class HereticSystem : EntitySystem
         predicates.Add(t => HasComp<CommandStaffComponent>(t));
 
         // pick one security staff
-        _jobs.MindTryGetJob(ent, out var userJobProto);
-        predicates.Add(t => (_jobs.JobsHaveSameDept(userJobProto, _prot.Index(SecOffJobProtoID))));  
+        predicates.Add(t => _jobs.MindHasJobDept(t, _prot.Index(SecOffJobProtoID)));
 
         // pick someone in your department
         predicates.Add(t => (_jobs.MindsHaveSameJobDept(t, ent)));

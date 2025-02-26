@@ -127,6 +127,23 @@ public abstract class SharedJobSystem : EntitySystem
         return false;
 
     }
+
+    public bool MindHasJobDept(EntityUid mindID, JobPrototype? givenJob)
+    {
+        MindTryGetJob(mindID, out var mindJob);
+        if (mindJob == null || givenJob == null) return false;
+        TryGetPrimaryDepartment(mindJob.ID, out var dept1);
+        TryGetPrimaryDepartment(givenJob.ID, out var dept2);
+        if (dept1 == null || dept2 == null) return false;
+        if (dept1.Equals(dept2))
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
     //end imp additions
 
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
