@@ -602,6 +602,7 @@
   parent: OreProcessor
   id: OreProcessorNitrogen
   suffix: Requires nitrogen
+  description: It produces sheets and ingots using ores. Requires nitrogen for producing.
   components:
     - type: Sprite
       granularLayersRendering: true
@@ -625,9 +626,9 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
-    - type: LatheGas
-      gasId: 1
-      gasAmount: 1
+    - type: GasForProducing
+      gasId: 1 # Nitrogen
+      gasAmount: 5 # 5 moles per recipe
     - type: Rotatable
     - type: PipeColorVisuals
     - type: AtmosPipeColor

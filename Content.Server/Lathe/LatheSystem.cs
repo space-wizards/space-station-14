@@ -201,7 +201,7 @@ namespace Content.Server.Lathe
                 return false;
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
-            if (TryComp<LatheGasComponent>(uid, out var comp))
+            if (TryComp<GasForProducingComponent>(uid, out var comp))
             {
                 if (CheckHaveGasForProduce(uid, comp) != true)
                     return false;
@@ -385,7 +385,7 @@ namespace Content.Server.Lathe
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
 
-        private bool CheckHaveGasForProduce(EntityUid uid, LatheGasComponent comp)
+        private bool CheckHaveGasForProduce(EntityUid uid, GasForProducingComponent comp)
         {
             if (!_nodeContainer.TryGetNode(uid, comp.Inlet, out PipeNode? inlet))
                 return false;
