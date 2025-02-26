@@ -182,6 +182,12 @@ namespace Content.Server.Lathe
             if (!CanProduce(uid, recipe, 1, component))
                 return false;
 
+            if (TryComp<GasForProducingComponent>(uid, out var comp))
+            {
+                if (CheckHaveGasForProduce(uid, comp) != true)
+                    return false;
+            }
+
             foreach (var (mat, amount) in recipe.Materials)
             {
                 var adjustedAmount = recipe.ApplyMaterialDiscount
@@ -201,11 +207,6 @@ namespace Content.Server.Lathe
                 return false;
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
-            if (TryComp<GasForProducingComponent>(uid, out var comp))
-            {
-                if (CheckHaveGasForProduce(uid, comp) != true)
-                    return false;
-            }
 
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
