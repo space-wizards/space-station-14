@@ -6,6 +6,7 @@ using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.Placeable;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -23,6 +24,7 @@ public sealed class DumpableSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
 
@@ -110,8 +112,17 @@ public sealed class DumpableSystem : EntitySystem
             args.Verbs.Add(verb);
         }
 
-        if (HasComp<MaterialStorageComponent>(args.Target))
+        if (TryComp<MaterialStorageComponent>(args.Target, out var comp))
         {
+            if (comp.Whitelist == null || comp.Whitelist.Tags == null)
+                return;
+            List<ProtoId<TagPrototype>> tags = comp.Whitelist.Tags;
+            foreach (var entity in storage.Container.ContainedEntities)
+            {
+                if (!_tag.HasAnyTag(entity, tags))
+                    return;
+            }
+
             UtilityVerb verb = new()
             {
                 Act = () =>
