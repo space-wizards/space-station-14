@@ -290,4 +290,8 @@ ui-options-speech-bubble-background-opacity = Speech bubble background opacity
 
 ## Admin menu
 
+ui-options-admin-player-panel = Admin Menu Players List
 ui-options-enable-classic-overlay = Revert antag overlay to classic mode
+ui-options-admin-playerlist-separate-symbols = Show separate symbols for each antag role type
+ui-options-admin-playerlist-character-color = Color names of antagonist characters
+ui-options-admin-playerlist-roletype-color = Color role types

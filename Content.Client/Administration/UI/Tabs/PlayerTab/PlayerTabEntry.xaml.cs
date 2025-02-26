@@ -27,12 +27,13 @@ public sealed partial class PlayerTabEntry : PanelContainer
         var symbol = separateAntagSymbols ? player.RoleProto.Symbol : antagSymbol;
         CharacterLabel.Text = symbol + player.CharacterName;
 
-        if (player.Antag)
+        if (player.Antag && config.GetCVar(CCVars.AdminPlayerlistHighlightedCharacterColor))
             CharacterLabel.FontColorOverride = player.RoleProto.Color;
         if (player.IdentityName != player.CharacterName)
             CharacterLabel.Text += $" [{player.IdentityName}]";
         RoleTypeLabel.Text = Loc.GetString(player.RoleProto.Name);
-        RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
+        if (config.GetCVar(CCVars.AdminPlayerlistRoleTypeColor))
+            RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
         PlayerEntity = player.NetEntity;

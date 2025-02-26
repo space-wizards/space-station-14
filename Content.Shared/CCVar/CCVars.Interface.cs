@@ -48,4 +48,16 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminPlayerlistSeparateSymbols =
         CVarDef.Create("ui.admin_playerlist_separate_symbols", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, characters with antag role types will have their names colored by their role type
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistHighlightedCharacterColor =
+        CVarDef.Create("ui.admin_playerlist_highlighted_character_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the Role Types column will be colored
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistRoleTypeColor =
+        CVarDef.Create("ui.admin_playerlist_role_type_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
