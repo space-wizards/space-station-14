@@ -54,7 +54,7 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             // Disallow insertion and provide a reason why if the person decides to insert the item into itself
             if (ent.Owner.Equals(hands.ActiveHand.HeldEntity.Value))
             {
-                _popup.PopupEntity(Loc.GetString("You can't insert an item into itself!"), ent, args.Source);
+                _popup.PopupEntity(Loc.GetString("comp-storagevoicecontrol-self-insert", ("entity", hands.ActiveHand.HeldEntity.Value)), ent, args.Source);
                 return;
             }
             if (_storage.CanInsert(ent, hands.ActiveHand.HeldEntity.Value, out var failedReason))
@@ -89,7 +89,7 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             if (storage.Container.ContainedEntities.Count != 0)
             {
                 _container.RemoveEntity(ent, item);
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} retrieved {itemName} from {ToPrettyString(ent)} via voice control");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
                 _hands.TryPickup(args.Source, item, handsComp: hands);
                 break;
             }
