@@ -2,6 +2,7 @@ using Content.Server.Light.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
+using Content.Shared.Smoking.Components;
 
 namespace Content.Server.Light.EntitySystems
 {
