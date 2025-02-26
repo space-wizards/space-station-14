@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Alert;
-using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
@@ -121,7 +119,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioParams.Default.WithVariation(0.05f));
         }
 
         if (Resolve(projectile, ref projectileComp, false))
@@ -174,7 +172,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioParams.Default.WithVariation(0.05f));
         }
 
         var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
