@@ -1,0 +1,60 @@
+﻿<Document>
+  # Inspecting Power
+  Engineers can inspect a power network to see useful statistics about it.
+  This can help engineers diagnose power issues and find root causes to problems.
+
+  ## Power Monitoring Computer
+  The Power Monitoring Computer is a device that can be used to inspect all the power networks on the station.
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerPowerMonitoring"/>
+  </Box>
+
+  The Power Monitoring Computer has two major sections, a station map and the power statistics.
+
+  The station map shows:
+  - The station layout, with [color=green]low[/color], [color=yellow]medium[/color], and [color=orange]high[/color] [textlink="voltage networks" link="VoltageNetworks"] highlighted.
+  - [textlink="All APCs, SMES, and substations." link="VoltageNetworks"]
+  - All power [textlink="producers" link="Generators"] connected to the station (note that they don't have to be connected to a power network to be shown).
+
+  The power statistics show:
+  - The total [textlink="generator" link="Generators"] output, which is what the generators are currently producing to match grid demand.
+  - The total [textlink="battery" link="PowerStorage"] usage, which is the amount of power being drawn from batteries. Grids completely powered by generators will show low battery usage.
+  - The total network loads, which is the amount of power being requested by the station.
+
+  In an ideal situation, the total generator output should match the total network load, and the total battery usage should be low.
+  Using these three statistics, engineers can get an accurate picture of the station's power situation.
+  For example:
+  - If the total generator output is lower than the total network load, the station is in a power deficit.
+  - If the total battery usage is high, the station is drawing power from batteries to make up the difference.
+  - If it is zero with the generator load below the total network load, then the station is actively in a brownout, as the batteries are fully discharged.
+  - If the total generator output is higher than the total network load, the SMESes are charging.
+
+  ## Device Tabs
+  The Power Monitoring Computer has tabs for each device category on the station.
+  Navigating these power tabs will show the power statistics for each device category.
+  For example:
+  - Clicking on a source will show what that source is supplying the power to, and how much power it is supplying. It will also highlight the devices that are connected to that source.
+  - Clicking on an SMES, Substation, or APC will show the two power grids it is connected to, how much power it is receiving, and how much power it is distributing, as well as the exact devices that are making an exchange with the target device.
+
+  ## Inspecting via Multitool
+  The Multitool can be used to inspect power cables to see their power statistics.
+
+  <Box>
+    <GuideEntityEmbed Entity="Multitool"/>
+  </Box>
+
+  When you click on a cable with the Multitool, it will show the cable's power statistics. This includes:
+  - The current supply, which is the amount of power the source is providing.
+  - The current supply from batteries, which is the amount of power being drawn from batteries.
+  - The theoretical supply, which is the maximum amount of power the source could provide if demanded.
+  - The ideal consumption, which is the current demand on the cable.
+  - The input storage, which is the capacity of batteries that are currently charging.
+  - The output storage, which is the capacity of batteries that are currently discharging.
+
+  Note that this information is relevant only to the voltage network you inspected.
+  A [color=green]low voltage[/color] cable (which likely only services a few rooms) will not show the same statistics as a [color=orange]high voltage[/color] cable (which services the entire station).
+
+  This is useful information to keep in mind, as it can help you troubleshoot why "this room is powered, but this one isn't!"
+
+</Document>
