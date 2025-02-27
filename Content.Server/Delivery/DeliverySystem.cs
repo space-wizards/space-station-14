@@ -15,7 +15,7 @@ namespace Content.Server.Delivery;
 /// <summary>
 /// If you're reading this you're gay but server side
 /// </summary>
-public sealed class DeliverySystem : SharedDeliverySystem
+public sealed partial class DeliverySystem : SharedDeliverySystem
 {
     [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -31,6 +31,8 @@ public sealed class DeliverySystem : SharedDeliverySystem
 
         SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand, before: [typeof(SpawnTableOnUseSystem)]);
+
+        InitializeSpawning();
     }
 
     private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
@@ -128,5 +130,12 @@ public sealed class DeliverySystem : SharedDeliverySystem
             return;
 
         _cargo.UpdateBankAccount(ent, account, ent.Comp.SpesoReward);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateSpawner(frameTime);
     }
 }
