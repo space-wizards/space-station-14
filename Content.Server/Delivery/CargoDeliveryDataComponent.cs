@@ -40,7 +40,8 @@ public sealed partial class CargoDeliveryDataComponent : Component
     public int DeliveryCount = 5;
 
     /// <summary>
-    /// Should deliveries be split across spawners??
+    /// Should deliveries be split across spawners?
+    /// If true, each spawner will spawn DeliveryCount / SpawnerAmount deliveries with a minimum of 1.
     /// If false, DeliveryCount amount will spawn on each spawner.
     /// </summary>
     [DataField]
