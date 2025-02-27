@@ -54,7 +54,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void HandleEnterCryostorageEvent(Entity<ToggleableClothingComponent> ent, ref InventoryRelayedEvent<EnterCryostorageEvent> args)
     {
-        // Check to see if we are wearing a toggleable helmet. If so, unequip it.
+        // Check to see if we are wearing toggleable clothing. If so, unequip it.
+        // This prevents a broken item being removed from the container and then being stuck in the world.
         if (ent.Comp.Container == null || ent.Comp.ClothingUid == null)
             return;
 
