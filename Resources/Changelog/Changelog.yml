@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Cyborg modules now have icons instead of using the module sprite.
-    type: Add
-  id: 7511
-  time: '2024-10-14T07:05:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32505
-- author: metalgearsloth
-  changes:
-  - message: Fix tech anomalies firing every tick.
-    type: Fix
-  id: 7512
-  time: '2024-10-14T07:06:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32805
-- author: ada-please
-  changes:
-  - message: Added more prizes to the Space Villain arcade machine
-    type: Add
-  id: 7513
-  time: '2024-10-14T21:59:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32309
-- author: K-Dynamic
-  changes:
-  - message: Added nitrogen tanks to engineering tank dispensers.
-    type: Add
-  id: 7514
-  time: '2024-10-15T08:28:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32565
 - author: slarticodefast
   changes:
   - message: Fixed inconsistent solution transfer amounts from spray bottles to plant
@@ -3891,3 +3863,34 @@
   id: 8010
   time: '2025-02-26T05:34:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35406
+- author: DieselMohawk
+  changes:
+  - message: Joints and Blunts now have randomized names.
+    type: Fix
+  id: 8011
+  time: '2025-02-26T23:37:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35544
+- author: Pumkin69
+  changes:
+  - message: Wizard now has a stamp.
+    type: Add
+  id: 8012
+  time: '2025-02-27T08:26:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35552
+- author: MilenVolf
+  changes:
+  - message: Insect and Ammonia blood can be broken down in centrifuge.
+    type: Tweak
+  id: 8013
+  time: '2025-02-27T10:05:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33614
+- author: qwerltaz
+  changes:
+  - message: The T-ray scanner now shows sub-floor entities above catwalks.
+    type: Tweak
+  - message: Sub-floor entities now retain the correct relative draw depth when using
+      a T-ray scanner.
+    type: Fix
+  id: 8014
+  time: '2025-02-27T10:46:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33012

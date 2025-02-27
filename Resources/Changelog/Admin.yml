@@ -827,5 +827,13 @@ Entries:
   id: 103
   time: '2025-02-25T14:25:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35345
+- author: Errant
+  changes:
+  - message: Some admin settings are now configurable from the Options menu's new
+      Admin tab.
+    type: Add
+  id: 104
+  time: '2025-02-26T22:32:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35543
 Name: Admin
 Order: 1
