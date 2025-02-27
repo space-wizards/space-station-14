@@ -6,7 +6,6 @@ public sealed partial class AttachmentSystem : SharedAttachmentSystem
 {
     protected override void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields)
     {
-        Logger.Debug("Hilarity ensues");
         foreach (var field in fields)
         {
             if (ComponentType.GetField(field) is { } propInfo)

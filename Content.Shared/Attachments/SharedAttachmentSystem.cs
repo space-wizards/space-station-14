@@ -20,25 +20,25 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AttachableComponent, EntInsertedIntoContainerMessage>(OnItemInsert);
-        SubscribeLocalEvent<AttachableComponent, EntRemovedFromContainerMessage>(OnItemRemove);
-        SubscribeLocalEvent<AttachableComponent, EntGotInsertedIntoContainerMessage>(OnInsertInto);
-        SubscribeLocalEvent<AttachableComponent, EntGotRemovedFromContainerMessage>(OnRemoveFrom);
+        SubscribeLocalEvent<AttachmentHolderComponent, EntInsertedIntoContainerMessage>(OnItemInsert);
+        SubscribeLocalEvent<AttachmentHolderComponent, EntRemovedFromContainerMessage>(OnItemRemove);
+        SubscribeLocalEvent<AttachmentHolderComponent, EntGotInsertedIntoContainerMessage>(OnInsertInto);
+        SubscribeLocalEvent<AttachmentHolderComponent, EntGotRemovedFromContainerMessage>(OnRemoveFrom);
     }
 
     protected abstract void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields) where T : IComponent;
 
-    private void OnItemInsert(Entity<AttachableComponent> uid, ref EntInsertedIntoContainerMessage args)
+    private void OnItemInsert(Entity<AttachmentHolderComponent> uid, ref EntInsertedIntoContainerMessage args)
         => AddComponentTo(uid, args.Entity, args.Container.ID);
-    private void OnItemRemove(Entity<AttachableComponent> uid, ref EntRemovedFromContainerMessage args)
+    private void OnItemRemove(Entity<AttachmentHolderComponent> uid, ref EntRemovedFromContainerMessage args)
         => RemoveComponentFrom(uid, args.Entity, args.Container.ID);
 
-    private void OnInsertInto(Entity<AttachableComponent> uid, ref EntGotInsertedIntoContainerMessage args)
+    private void OnInsertInto(Entity<AttachmentHolderComponent> uid, ref EntGotInsertedIntoContainerMessage args)
         => AddComponentTo(uid, args.Container.Owner, args.Container.ID);
-    private void OnRemoveFrom(Entity<AttachableComponent> uid, ref EntGotRemovedFromContainerMessage args)
+    private void OnRemoveFrom(Entity<AttachmentHolderComponent> uid, ref EntGotRemovedFromContainerMessage args)
         => RemoveComponentFrom(uid, args.Container.Owner, args.Container.ID);
 
-    private void AddComponentTo(Entity<AttachableComponent> uid, EntityUid reference, string containerID)
+    private void AddComponentTo(Entity<AttachmentHolderComponent> uid, EntityUid reference, string containerID)
     {
         if (!TryComp(reference, out AttachmentComponent? attachment))
             return;
@@ -86,7 +86,7 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
         }
     }
 
-    private void RemoveComponentFrom(Entity<AttachableComponent> uid, EntityUid reference, string containerID)
+    private void RemoveComponentFrom(Entity<AttachmentHolderComponent> uid, EntityUid reference, string containerID)
     {
         if (!_timing.IsFirstTimePredicted)
             return;

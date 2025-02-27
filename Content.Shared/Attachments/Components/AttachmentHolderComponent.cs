@@ -3,7 +3,7 @@
 namespace Content.Shared.Attachments.Components;
 
 [RegisterComponent]
-public sealed partial class AttachableComponent : Component
+public sealed partial class AttachmentHolderComponent : Component
 {
     /// <summary>
     ///     Components this object will be granted.
