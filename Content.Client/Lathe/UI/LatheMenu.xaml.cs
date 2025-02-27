@@ -120,6 +120,12 @@ public sealed partial class LatheMenu : DefaultWindow
         if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
             quantity = 1;
 
+        RecipeCountNum.Text = recipesToShow.Count.ToString();
+        if (recipesToShow.Count == 1)
+            RecipeCountText.Text = Loc.GetString("lathe-menu-recipe-count-singular");
+        else
+            RecipeCountText.Text = Loc.GetString("lathe-menu-recipe-count");
+
         var sortedRecipesToShow = recipesToShow.OrderBy(_lathe.GetRecipeName);
         RecipeList.Children.Clear();
         _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
