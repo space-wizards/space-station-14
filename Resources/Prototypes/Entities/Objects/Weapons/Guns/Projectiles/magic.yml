@@ -285,6 +285,84 @@
         Structural: 50
 
 - type: entity
+  id: ProjectileIceKnife
+  parent: BaseBulletTrigger
+  name: ice knife
+  description: Brrrrr.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 80
+        Cold: 20 # cold currently isn't resisted by any armor apart from like... CBURN.
+        Structural: 5
+  - type: ChangeTemperatureOnCollide
+    heat: -20000
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: ProjectileGrenade
+    fillPrototype: ProjectileIceKnifeSecondary
+    capacity: 20
+
+- type: entity
+  id: ProjectileIceKnifeII
+  parent: ProjectileIceKnife
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 120
+        Cold: 30 # cold currently isn't resisted by any armor apart from like... CBURN.
+        Structural: 10
+  - type: ChangeTemperatureOnCollide
+    heat: -25000
+  - type: ProjectileGrenade
+    capacity: 30
+
+- type: entity
+  id: ProjectileIceKnifeIII
+  parent: ProjectileIceKnife
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 140
+        Cold: 30 # cold currently isn't resisted by any armor apart from like... CBURN.
+        Structural: 20
+  - type: ChangeTemperatureOnCollide
+    heat: -30000
+  - type: ProjectileGrenade
+    capacity: 40
+
+- type: entity
+  id: ProjectileIceKnifeSecondary
+  parent: BaseBulletTrigger
+  name: ice knife
+  description: Brrrrr.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 40
+        Cold: 10 # cold currently isn't resisted by any armor apart from like... CBURN.
+        Structural: 5
+  - type: ChangeTemperatureOnCollide
+    heat: -15000
+  - type: TimedDespawn
+    lifetime: 0.2
+  - type: SpawnOnDespawn
+    prototype: IceCrust
+
+- type: entity
   parent: ProjectilePolyboltBase
   id: ProjectilePolyboltBread
   name: bread polybolt
