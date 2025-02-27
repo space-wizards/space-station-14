@@ -1,87 +1,18 @@
-﻿using Content.Server.Attachments.Components;
-using Content.Shared.Weapons.Melee;
-using Robust.Shared.Containers;
-using Robust.Shared.Network;
-using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Timing;
+﻿using Content.Shared.Attachments;
 
 namespace Content.Server.Attachments;
 
-public sealed class AttachmentSystem : EntitySystem
+public sealed partial class AttachmentSystem : SharedAttachmentSystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly ISerializationManager _serializer = default!;
-    [Dependency] private readonly EntityManager _entMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
-
-    public override void Initialize()
+    protected override void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields)
     {
-        SubscribeLocalEvent<AttachableComponent, EntInsertedIntoContainerMessage>(OnInsert);
-        SubscribeLocalEvent<AttachableComponent, EntRemovedFromContainerMessage>(OnRemove);
-    }
-
-    private void OnInsert(Entity<AttachableComponent> uid, ref EntInsertedIntoContainerMessage args)
-    {
-        var item = args.Entity;
-        if (!TryComp(item, out AttachmentComponent? attachment)
-            || uid.Comp.Components[args.Container.ID] is not {} compRegistry)
-            return;
-        foreach (var (compName, compRegistryEntry) in compRegistry)
+        Logger.Debug("Hilarity ensues");
+        foreach (var field in fields)
         {
-            if (!_factory.TryGetRegistration(compName, out var componentRegistration))
-                continue;
-
-            var componentType = componentRegistration.Type;
-
-            if (!HasComp(item, componentType))
-                continue;
-
-            _entMan.TryGetComponent(uid, componentType, out var comp);
-            if (_timing.IsFirstTimePredicted)
-            {
-                if (comp is null || attachment.ForceComponents)
-                {
-                    comp = _factory.GetComponent(compRegistryEntry);
-                    _entMan.AddComponent(uid, comp, overwrite: attachment.ForceComponents);
-                    uid.Comp.AddedComps.Add((item, comp.GetType()));
-                }
-            }
+            if (ComponentType.GetField(field) is { } propInfo)
+                propInfo.SetValue(target, propInfo.GetValue(source));
             else
-            {
-                if (comp is {})
-                    _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
-            }
-
-            if (comp is {})
-            {
-                var itemComp = _entMan.GetComponent(item, componentType);
-                _serializer.CopyTo(itemComp, ref comp, notNullableOverride: true);
-            }
-        }
-    }
-
-    private void OnRemove(Entity<AttachableComponent> uid, ref EntRemovedFromContainerMessage args)
-    {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-        var item = args.Entity;
-        if (!HasComp<AttachmentComponent>(item)
-            || uid.Comp.Components is not {} compList
-            || compList[args.Container.ID] is not {} compRegistry
-            || uid.Comp.AddedComps.Count == 0)
-            return;
-        foreach (var compName in compRegistry.Keys)
-        {
-            if (!_factory.TryGetRegistration(compName, out var componentRegistration))
-                continue;
-            var componentType = componentRegistration.Type;
-
-            if (uid.Comp.AddedComps.Find(comp => comp == (item, componentType)) is { } entry)
-            {
-                uid.Comp.AddedComps.RemoveAll(match => match == entry);
-                _entMan.RemoveComponent(uid, componentType);
-            }
+                throw new ArgumentException($"'{field}' is not a field in component {ComponentType}!");
         }
     }
 }

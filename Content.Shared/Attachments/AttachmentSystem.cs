@@ -1,0 +1,111 @@
+﻿using Content.Shared.Attachments.Components;
+using Content.Shared.Fax;
+using Content.Shared.Weapons.Melee;
+using Robust.Shared.Containers;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Attachments;
+
+public abstract partial class SharedAttachmentSystem : EntitySystem
+{
+    [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly ISerializationManager _serializer = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<AttachableComponent, EntInsertedIntoContainerMessage>(OnItemInsert);
+        SubscribeLocalEvent<AttachableComponent, EntRemovedFromContainerMessage>(OnItemRemove);
+        SubscribeLocalEvent<AttachableComponent, EntGotInsertedIntoContainerMessage>(OnInsertInto);
+        SubscribeLocalEvent<AttachableComponent, EntGotRemovedFromContainerMessage>(OnRemoveFrom);
+    }
+
+    protected abstract void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields) where T : IComponent;
+
+    private void OnItemInsert(Entity<AttachableComponent> uid, ref EntInsertedIntoContainerMessage args)
+        => AddComponentTo(uid, args.Entity, args.Container.ID);
+    private void OnItemRemove(Entity<AttachableComponent> uid, ref EntRemovedFromContainerMessage args)
+        => RemoveComponentFrom(uid, args.Entity, args.Container.ID);
+
+    private void OnInsertInto(Entity<AttachableComponent> uid, ref EntGotInsertedIntoContainerMessage args)
+        => AddComponentTo(uid, args.Container.Owner, args.Container.ID);
+    private void OnRemoveFrom(Entity<AttachableComponent> uid, ref EntGotRemovedFromContainerMessage args)
+        => RemoveComponentFrom(uid, args.Container.Owner, args.Container.ID);
+
+    private void AddComponentTo(Entity<AttachableComponent> uid, EntityUid reference, string containerID)
+    {
+        if (!TryComp(reference, out AttachmentComponent? attachment))
+            return;
+
+        var compRegistry = uid.Comp.Components?[containerID];
+        if (compRegistry is null)
+        {
+            if (uid.Comp.Prototypes?[containerID] is { } prototype)
+                compRegistry = _proto.Index(prototype).Components;
+            else
+                return;
+        }
+
+
+        foreach (var (compName, compRegistryEntry) in compRegistry)
+        {
+            if (!_factory.TryGetRegistration(compName, out var componentRegistration))
+                continue;
+
+            var componentType = componentRegistration.Type;
+
+            if (!HasComp(reference, componentType))
+                continue;
+
+            EntityManager.TryGetComponent(uid, componentType, out var comp);
+            if (_timing.IsFirstTimePredicted || _netMan.IsServer)
+            {
+                if (comp is null || attachment.ForceComponents)
+                {
+                    comp = _factory.GetComponent(compRegistryEntry);
+                    EntityManager.AddComponent(uid, comp, overwrite: attachment.ForceComponents);
+                    uid.Comp.AddedComps.Add((reference, comp.GetType()));
+                }
+            }
+            else
+            {
+                if (comp is {})
+                    _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
+            }
+
+            if (comp is {} && _netMan.IsServer && uid.Comp.Fields?[compName] is {} fields)
+            {
+                CopyComponentFields(EntityManager.GetComponent(reference, componentType), ref comp, componentType, fields);
+            }
+        }
+    }
+
+    private void RemoveComponentFrom(Entity<AttachableComponent> uid, EntityUid reference, string containerID)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+        if (!HasComp<AttachmentComponent>(reference)
+            || uid.Comp.Components is not {} compList
+            || compList[containerID] is not {} compRegistry
+            || uid.Comp.AddedComps.Count == 0)
+            return;
+        foreach (var compName in compRegistry.Keys)
+        {
+            if (!_factory.TryGetRegistration(compName, out var componentRegistration))
+                continue;
+            var componentType = componentRegistration.Type;
+
+            if (uid.Comp.AddedComps.Find(comp => comp == (reference, componentType)) is { } entry)
+            {
+                uid.Comp.AddedComps.RemoveAll(match => match == entry);
+                EntityManager.RemoveComponent(uid, componentType);
+            }
+        }
+    }
+}
