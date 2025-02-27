@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix tech anomalies firing every tick.
-    type: Fix
-  id: 7512
-  time: '2024-10-14T07:06:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32805
 - author: ada-please
   changes:
   - message: Added more prizes to the Space Villain arcade machine
@@ -3891,3 +3884,10 @@
   id: 8011
   time: '2025-02-26T23:37:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35544
+- author: Pumkin69
+  changes:
+  - message: Wizard now has a stamp.
+    type: Add
+  id: 8012
+  time: '2025-02-27T08:26:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35552
