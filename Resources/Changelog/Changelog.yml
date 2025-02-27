@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: You can now eject biomass from a biogenerator without having to deconstruct
-      it.
-    type: Tweak
-  id: 7519
-  time: '2024-10-17T03:12:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32854
 - author: lzk228
   changes:
   - message: Fixed holosign projectors power cell popups.
@@ -3896,3 +3888,10 @@
   id: 8018
   time: '2025-02-27T13:47:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32255
+- author: Aisu9
+  changes:
+  - message: Changed Sap-Syrup conversion value.
+    type: Tweak
+  id: 8019
+  time: '2025-02-27T17:25:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32996
