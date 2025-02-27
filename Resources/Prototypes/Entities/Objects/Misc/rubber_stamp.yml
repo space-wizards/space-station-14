@@ -298,3 +298,17 @@
     stampState: "paper_stamp-psychologist"
   - type: Sprite
     state: stamp-psychologist
+
+- type: entity
+  name: wizard's rubber stamp
+  parent: [RubberStampBase, BaseMagicalContraband]
+  id: RubberStampWizard
+  description: A chaotic wizard stamp for serving unchaotic paperwork, how ironic.
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: Wizard
+    stampedColor: "#881bc1"
+    stampState: "paper_stamp-wizard"
+  - type: Sprite
+    state: stamp-wizard
