@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Callmore
-  changes:
-  - message: Prefered item quick store locations can be created again.
-    type: Fix
-  id: 7522
-  time: '2024-10-17T04:00:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32480
 - author: Myra
   changes:
   - message: The game's title bar window will display the name of the server you have
@@ -3899,3 +3892,10 @@
   id: 8021
   time: '2025-02-27T17:57:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32136
+- author: AgentSmithRadio
+  changes:
+  - message: Reptilians can now eat chicken nuggets.
+    type: Tweak
+  id: 8022
+  time: '2025-02-27T23:35:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35569
