@@ -41,7 +41,6 @@
         Slash: 0.60
         Piercing: 0.90
         Heat: 0.90
-    staminaDamageCoefficient: 0.9
   - type: ExplosionResistance # Better than nothing against a blast or shockwave.
     damageCoefficient: 0.90
   - type: AllowSuitStorage
