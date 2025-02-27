@@ -9968,6 +9968,12 @@ entities:
     - type: Transform
       pos: 10.5,-35.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -25.9338
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 1735
     components:
     - type: Transform
@@ -10215,7 +10221,7 @@ entities:
       pos: 30.5,-49.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -6267.476
+      secondsUntilStateChange: -6331.2285
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10355,7 +10361,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -153460.31
+      secondsUntilStateChange: -153524.06
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10366,7 +10372,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -153462.19
+      secondsUntilStateChange: -153525.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11121,7 +11127,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -349031.25
+      secondsUntilStateChange: -349095
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11641,7 +11647,7 @@ entities:
       pos: 44.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -24227.895
+      secondsUntilStateChange: -24291.646
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -65383,7 +65389,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -77779.99
+      secondsUntilStateChange: -77843.74
       state: Opening
   - uid: 18653
     components:
@@ -66249,6 +66255,13 @@ entities:
       text: QM
     - type: WarpPoint
       location: QM
+- proto: DefaultStationBeaconRDRoom
+  entities:
+  - uid: 7204
+    components:
+    - type: Transform
+      pos: 16.5,-32.5
+      parent: 2
 - proto: DefaultStationBeaconRobotics
   entities:
   - uid: 20579
@@ -66296,6 +66309,13 @@ entities:
       parent: 2
     - type: WarpPoint
       location: MiniSec
+- proto: DefaultStationBeaconServerRoom
+  entities:
+  - uid: 7362
+    components:
+    - type: Transform
+      pos: 13.5,-30.5
+      parent: 2
 - proto: DefaultStationBeaconSingularity
   entities:
   - uid: 20582
@@ -66436,6 +66456,13 @@ entities:
       text: Warden
     - type: WarpPoint
       location: Warden
+- proto: DefaultStationBeaconXenoarchaeology
+  entities:
+  - uid: 6692
+    components:
+    - type: Transform
+      pos: 9.5,-32.5
+      parent: 2
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 489
@@ -76398,7 +76425,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -380369.53
+      secondsUntilStateChange: -380433.28
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -133135,6 +133162,21 @@ entities:
       parent: 2
 - proto: SpawnPointResearchAssistant
   entities:
+  - uid: 8198
+    components:
+    - type: Transform
+      pos: 12.5,-23.5
+      parent: 2
+  - uid: 8675
+    components:
+    - type: Transform
+      pos: 11.5,-23.5
+      parent: 2
+  - uid: 8676
+    components:
+    - type: Transform
+      pos: 13.5,-23.5
+      parent: 2
   - uid: 20520
     components:
     - type: Transform
@@ -133176,6 +133218,21 @@ entities:
       parent: 2
 - proto: SpawnPointScientist
   entities:
+  - uid: 8667
+    components:
+    - type: Transform
+      pos: 12.5,-24.5
+      parent: 2
+  - uid: 8670
+    components:
+    - type: Transform
+      pos: 11.5,-24.5
+      parent: 2
+  - uid: 8674
+    components:
+    - type: Transform
+      pos: 13.5,-24.5
+      parent: 2
   - uid: 20523
     components:
     - type: Transform
