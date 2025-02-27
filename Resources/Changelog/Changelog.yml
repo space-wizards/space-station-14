@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Added nitrogen tanks to engineering tank dispensers.
-    type: Add
-  id: 7514
-  time: '2024-10-15T08:28:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32565
 - author: slarticodefast
   changes:
   - message: Fixed inconsistent solution transfer amounts from spray bottles to plant
@@ -3891,3 +3884,13 @@
   id: 8013
   time: '2025-02-27T10:05:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33614
+- author: qwerltaz
+  changes:
+  - message: The T-ray scanner now shows sub-floor entities above catwalks.
+    type: Tweak
+  - message: Sub-floor entities now retain the correct relative draw depth when using
+      a T-ray scanner.
+    type: Fix
+  id: 8014
+  time: '2025-02-27T10:46:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33012
