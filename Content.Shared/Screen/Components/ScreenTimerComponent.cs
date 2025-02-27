@@ -1,9 +1,9 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Client.Screen;
+namespace Content.Shared.Screen.Components;
 
 /// <summary>
-/// Added to an entity already containing a <see cref="TextScreenVisualsComponent"/> to track frame-by-frame timer updates
+/// Added to an entity already containing a <see cref="ScreenVisualsComponent"/> to track frame-by-frame timer updates
 /// </summary>
 [RegisterComponent]
 public sealed partial class ScreenTimerComponent : Component

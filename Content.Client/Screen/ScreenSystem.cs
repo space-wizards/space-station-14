@@ -124,6 +124,9 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             component.TextToDraw = SegmentText((string) text, component);
             ResetText(uid, component);
             BuildTextLayers(uid, component, args.Sprite);
+            if (TryComp<ScreenComponent>(uid, out var screen) && screen.CurrentScreen != ScreenType.ShuttleTime)
+                foreach (var key in component.LayerStatesToDraw.Keys)
+                    args.Sprite.LayerSetVisible(key, false);
             DrawLayers(uid, component.LayerStatesToDraw);
         }
 
@@ -135,6 +138,9 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
                 var timer = EnsureComp<ScreenTimerComponent>(uid);
                 timer.Target = target;
                 BuildTimerLayers(uid, timer, component);
+                if (TryComp<ScreenComponent>(uid, out var screen) && screen.CurrentScreen != ScreenType.ShuttleTime)
+                    foreach (var key in timer.LayerStatesToDraw.Keys)
+                        args.Sprite.LayerSetVisible(key, false);
                 DrawLayers(uid, timer.LayerStatesToDraw);
             }
             else
@@ -318,6 +324,9 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
                 if (sprite.LayerMapTryGet(TextScreenVisuals.AlertLevel, out layerId) && sprite.TryGetLayer(layerId, out var layer))
                     layer.Visible = false;
                 
+                foreach (var key in visuals.LayerStatesToDraw.Keys)
+                    sprite.LayerSetVisible(key, true);
+                
                 foreach (var key in timer.LayerStatesToDraw.Keys)
                     sprite.LayerSetVisible(key, true);
                 
@@ -384,6 +393,19 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             screen.NextUpdateTime += screen.Delay;
             
             ScreenRoll(uid, screen, visuals);
+        }
+        
+        var timerUpdate = EntityQueryEnumerator<ScreenComponent, ScreenVisualsComponent, ScreenTimerComponent>();
+        while (timerUpdate.MoveNext(out var uid, out var screen, out var visuals, out var timer))
+        {
+            if (timer.Target < _gameTiming.CurTime)
+            {
+                OnTimerFinish(uid, visuals);
+                continue;
+            }
+                
+            BuildTimerLayers(uid, timer, visuals);
+            DrawLayers(uid, timer.LayerStatesToDraw);
         }
     }
 

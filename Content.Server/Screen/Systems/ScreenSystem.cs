@@ -4,6 +4,7 @@ using Content.Server.AlertLevel;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Log;
 
 
 namespace Content.Server.Screen.Systems;
@@ -51,24 +52,28 @@ public sealed class ScreenSystem : EntitySystem
     private void ScreenText(EntityUid uid, ScreenComponent component, DeviceNetworkPacketEvent args)
     {
         // don't allow text updates if there's an active timer
-        // (and just check here so the server doesn't have to track them)
-        if (_appearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan target)
+        if (HasComp<ScreenTimerComponent>(uid) 
+            && _appearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan target)
             && target > _gameTiming.CurTime)
             return;
 
         var screenMap = Transform(uid).MapUid;
         var argsMap = Transform(args.Sender).MapUid;
-
-        if (screenMap != null
-            && argsMap != null
-            && screenMap == argsMap
-            && args.Data.TryGetValue(ScreenMasks.Text, out string? text)
-            && text != null
-            )
+        
+        if (screenMap == null || argsMap == null || screenMap != argsMap)
         {
-            _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, text);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, text);
+            Logger.Error($"Can't update screen text, while sender or screen on another map!");
+            return;
         }
+        
+        if (!args.Data.TryGetValue(ScreenMasks.Text, out string? text) || text == null)
+        {
+            Logger.Error($"Can't update screen text, while input text was null!");
+            return;
+        }
+        
+        _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, text);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, text);
     }
 
     /// <summary>
