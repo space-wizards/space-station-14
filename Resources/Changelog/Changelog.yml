@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed inconsistent solution transfer amounts from spray bottles to plant
-      holders.
-    type: Fix
-  id: 7515
-  time: '2024-10-16T03:57:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32813
-- author: Minemoder, ArtisticRoomba, Sarahon
-  changes:
-  - message: Reptiles and Kobolds can now thump their tail.
-    type: Add
-  id: 7516
-  time: '2024-10-16T10:04:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32064
 - author: deltanedas
   changes:
   - message: Fixed grappling hooks sometimes getting bricked.
@@ -3894,3 +3879,20 @@
   id: 8014
   time: '2025-02-27T10:46:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33012
+- author: Katzenminer, slarticodefast
+  changes:
+  - message: You now need to break eggs when using them for microwave recipes. Some
+      recipes have been adjusted accordingly.
+    type: Tweak
+  - message: Fixed a reagent duplication bug when microwaving eggs.
+    type: Fix
+  id: 8015
+  time: '2025-02-27T12:39:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35459
+- author: kosticia
+  changes:
+  - message: Fire resists now can be examined.
+    type: Add
+  id: 8016
+  time: '2025-02-27T12:39:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35183
