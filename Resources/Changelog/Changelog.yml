@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed holosign projectors power cell popups.
-    type: Fix
-  id: 7520
-  time: '2024-10-17T03:21:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32808
 - author: Kickguy223
   changes:
   - message: As an AI, Having a Lawboard inserted into your AI Upload Computer will
@@ -3895,3 +3888,16 @@
   id: 8019
   time: '2025-02-27T17:25:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32996
+- author: SlamBamActionman
+  changes:
+  - message: Pet carriers can no longer be put into toilets.
+    type: Fix
+  - message: You can now escape containers (such as pet carriers) inserted into other
+      containers.
+    type: Fix
+  - message: Thrown items no longer bypasses insertion checks for toilets and disposal
+      units.
+    type: Fix
+  id: 8020
+  time: '2025-02-27T17:43:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35557
