@@ -1,7 +1,5 @@
 using Content.Server.Cloning.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -14,10 +12,10 @@ namespace Content.Server.Cloning;
 public sealed class RandomCloneSpawnerSystem : EntitySystem
 {
     [Dependency] private readonly CloningSystem _cloning = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -31,27 +29,16 @@ public sealed class RandomCloneSpawnerSystem : EntitySystem
         QueueDel(ent.Owner);
 
         if (!_prototypeManager.TryIndex(ent.Comp.Settings, out var settings))
-            return;
-
-        var allHumans = new List<EntityUid>();
-        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
-        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
         {
-            // the player needs to have a minde
-            if (mc.Mind == null)
-                continue;
-
-            // the player has to be alive
-            if (_mobState.IsAlive(uid, mobState))
-                allHumans.Add(uid);
-        }
-        if (allHumans.Count == 0)
-        {
-            Spawn(ent.Comp.FallbackPrototype, Transform(ent.Owner).Coordinates);
+            Log.Error($"Used invalid cloning settings {ent.Comp.Settings} for RandomCloneSpawner");
             return;
         }
 
-        var bodyToClone = _random.Pick(allHumans);
-        _cloning.TryCloning(bodyToClone, _transformSystem.GetMapCoordinates(ent.Owner), settings, out _);
+        var allHumans = _mind.GetAliveHumans();
+
+        var bodyToClone = _random.Pick(allHumans).Comp.OwnedEntity;
+
+        if (bodyToClone != null)
+            _cloning.TryCloning(bodyToClone.Value, _transformSystem.GetMapCoordinates(ent.Owner), settings, out _);
     }
 }

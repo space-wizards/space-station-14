@@ -65,18 +65,22 @@ namespace Content.Server.Forensics
 
         private void OnFingerprintInit(Entity<FingerprintComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.Fingerprint = GenerateFingerprint();
-            Dirty(ent);
+            if (ent.Comp.Fingerprint == null)
+            {
+                ent.Comp.Fingerprint = GenerateFingerprint();
+                Dirty(ent);
+            }
         }
 
-        private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
+        private void OnDNAInit(Entity<DnaComponent> ent, ref MapInitEvent args)
         {
-            if (component.DNA == String.Empty)
+            if (ent.Comp.DNA == string.Empty)
             {
-                component.DNA = GenerateDNA();
+                ent.Comp.DNA = GenerateDNA();
+                Dirty(ent);
 
-                var ev = new GenerateDnaEvent { Owner = uid, DNA = component.DNA };
-                RaiseLocalEvent(uid, ref ev);
+                var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+                RaiseLocalEvent(ent.Owner, ref ev);
             }
         }
 

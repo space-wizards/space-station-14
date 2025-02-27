@@ -9,6 +9,8 @@
   components:
   # general
   - DetailExaminable
+  - Dna
+  - Fingerprint
   - NpcFactionMember
   # traits
   # - LegsParalyzed (you get healed)
@@ -40,7 +42,10 @@
   - OwOAccent
   - ParrotAccent
   - PirateAccent
-  - ReplacementAccent
+  # - ReplacementAccent
+  # Not supported at the moment because AddAccentClothingComponent will make it permanent when cloned.
+  # TODO: AddAccentClothingComponent should use an inventory relay event.
+  # Also ZombieComponent overwrites the old replacement accent, because you can only have one at a time.
   - RussianAccent
   - ScrambledAccent
   - SkeletonAccent

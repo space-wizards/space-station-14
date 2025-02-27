@@ -14,10 +14,4 @@ public sealed partial class RandomCloneSpawnerComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<CloningSettingsPrototype> Settings = "BaseClone";
-
-    /// <summary>
-    ///     Backup prototype to use when no suitable crewmember that could be cloned was found.
-    /// </summary>
-    [DataField]
-    public EntProtoId FallbackPrototype = "MobHuman";
 }

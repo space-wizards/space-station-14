@@ -96,6 +96,7 @@ public sealed class CloningSystem : EntitySystem
 
         // This will properly set the BaseName and EntityName for the clone.
         // Adding the component first before renaming will make sure RefreshNameModifers is called.
+        // Without this the name would get reverted to Urist.
         // If the clone has no name modifiers, NameModifierComponent will be removed again.
         EnsureComp<NameModifierComponent>(clone.Value);
         _metaData.SetEntityName(clone.Value, originalName);
