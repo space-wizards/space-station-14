@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ada-please
-  changes:
-  - message: Added more prizes to the Space Villain arcade machine
-    type: Add
-  id: 7513
-  time: '2024-10-14T21:59:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32309
 - author: K-Dynamic
   changes:
   - message: Added nitrogen tanks to engineering tank dispensers.
@@ -3891,3 +3884,10 @@
   id: 8012
   time: '2025-02-27T08:26:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35552
+- author: MilenVolf
+  changes:
+  - message: Insect and Ammonia blood can be broken down in centrifuge.
+    type: Tweak
+  id: 8013
+  time: '2025-02-27T10:05:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33614
