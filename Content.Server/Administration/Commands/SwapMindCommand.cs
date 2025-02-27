@@ -43,19 +43,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_playerManager.TryGetSessionByUsername(args[0], out var firstSession) ||
-                !_playerManager.TryGetSessionByUsername(args[1], out var secondSession))
-            {
-                shell.WriteLine(Loc.GetString("cmd-swapmind-command-target-has-no-session-message"));
-                return;
-            }
-
-            if (!_mindSystem.TryGetMind(firstSession, out var firstMindId, out var firstMindComponent))
+            if (!_mindSystem.TryGetMind(firstEntityUid.Value, out var firstMindId, out var firstMindComponent))
             {
                 shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
                 return;
             }
-            if (!_mindSystem.TryGetMind(secondSession, out var secondMindId, out var secondMindComponent))
+
+            if (!_mindSystem.TryGetMind(secondEntityUid.Value, out var secondMindId, out var secondMindComponent))
             {
                 shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
                 return;
