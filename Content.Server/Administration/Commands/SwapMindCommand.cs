@@ -13,13 +13,13 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public string Command => "swapmind";
+        public override string Command => "swapmind";
 
-        public string Description => Loc.GetString("set-swapmind-command-description", ("requiredComponent", nameof(MindContainerComponent)));
+        public override string Description => Loc.GetString("cmd-swapmind-command-description", ("requiredComponent", nameof(MindContainerComponent)));
 
-        public string Help => Loc.GetString("set-swapmind-command-help-text", ("command", Command));
+        public override string Help => Loc.GetString("cmd-swapmind-command-help-text", ("command", Command));
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2)
             {
@@ -38,31 +38,40 @@ namespace Content.Server.Administration.Commands
             if (!_entManager.HasComponent<MindContainerComponent>(firstEntityUid) ||
                 !_entManager.HasComponent<MindContainerComponent>(secondEntityUid))
             {
-                shell.WriteLine(Loc.GetString("set-swapmind-command-target-has-no-mind-message"));
+                shell.WriteLine(Loc.GetString("cmd-swapmind-command-target-has-no-mind-message"));
+                return;
+            }
+
+            if (!_playerManager.TryGetSessionByUsername(args[0], out var firstSession) ||
+                !_playerManager.TryGetSessionByUsername(args[1], out var secondSession))
+            {
+                shell.WriteLine(Loc.GetString("cmd-swapmind-command-target-has-no-session-message"));
                 return;
             }
 
             var mindSystem = _entManager.System<SharedMindSystem>();
-
-            var firstMind = _entManager.GetComponent<MindContainerComponent>(firstEntityUid.Value).Mind;
-            var secondMind = _entManager.GetComponent<MindContainerComponent>(secondEntityUid.Value).Mind;
+            if (!mindSystem.TryGetMind(firstSession, out var firstMindId, out var firstMindComponent))
+            {
+                shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
+                return;
+            }
+            if (!mindSystem.TryGetMind(secondSession, out var secondMindId, out var secondMindComponent))
+            {
+                shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
+                return;
+            }
 
             // Swap the minds
-            if (firstMind != null && secondMind != null)
-            {
-                mindSystem.TransferTo(firstMind.Value, secondEntityUid);
-                mindSystem.TransferTo(secondMind.Value, firstEntityUid);
-                shell.WriteLine(Loc.GetString("set-swapmind-success-message"));
-            }
-            else
-            {
-                shell.WriteLine(Loc.GetString("set-swapmind-command-minds-not-found"));
-            }
+            mindSystem.TransferTo(firstMindId, secondEntityUid);
+            mindSystem.TransferTo(secondMindId, firstEntityUid);
+            shell.WriteLine(Loc.GetString("cmd-swapmind-success-message"));
         }
 
         private bool TryParseUid(string str, IConsoleShell shell,
             IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid)
         {
+            entityUid = null;
+
             if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
                 return true;
 
@@ -77,12 +86,12 @@ namespace Content.Server.Administration.Commands
                 shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
                 return false;
             }
-         
+
             entityUid = session.AttachedEntity.Value;
             return true;
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {
