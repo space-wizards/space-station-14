@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration;
-using Content.Shared.Mind;
+using Content.Server.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -8,11 +8,11 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    sealed class SwapMindCommand : LocalizedCommands
+    sealed class SwapMindCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override string Command => "swapmind";
 
