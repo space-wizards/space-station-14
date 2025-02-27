@@ -9,10 +9,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class ForceGhostCommand : LocalizedCommands
+public sealed class ForceGhostCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
 
     public override string Command => "forceghost";
 
@@ -30,20 +33,17 @@ public sealed class ForceGhostCommand : LocalizedCommands
             return;
         }
 
-        var gameTicker = _entityManager.System<GameTicker>();
-        if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
+        if (!_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
             playerStatus is not PlayerGameStatus.JoinedGame)
         {
             shell.WriteLine(Loc.GetString("cmd-forceghost-error-lobby"));
             return;
         }
 
-        var mindSys = _entityManager.System<SharedMindSystem>();
-        if (!mindSys.TryGetMind(player, out var mindId, out var mind))
-            (mindId, mind) = mindSys.CreateMind(player.UserId);
+        if (!_mind.TryGetMind(player, out var mindId, out var mind))
+            (mindId, mind) = _mind.CreateMind(player.UserId);
 
-        var ghostSys = _entityManager.System<GhostSystem>();
-        if (!ghostSys.OnGhostAttempt(mindId, false, true, true, mind))
+        if (!_ghost.OnGhostAttempt(mindId, false, true, true, mind))
             shell.WriteLine(Loc.GetString("cmd-forceghost-denied"));
     }
 
