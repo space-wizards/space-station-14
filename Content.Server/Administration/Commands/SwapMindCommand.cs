@@ -1,9 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Administration.Commands
 {
@@ -12,6 +12,7 @@ namespace Content.Server.Administration.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
         public override string Command => "swapmind";
 
@@ -49,21 +50,20 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = _entManager.System<SharedMindSystem>();
-            if (!mindSystem.TryGetMind(firstSession, out var firstMindId, out var firstMindComponent))
+            if (!_mindSystem.TryGetMind(firstSession, out var firstMindId, out var firstMindComponent))
             {
                 shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
                 return;
             }
-            if (!mindSystem.TryGetMind(secondSession, out var secondMindId, out var secondMindComponent))
+            if (!_mindSystem.TryGetMind(secondSession, out var secondMindId, out var secondMindComponent))
             {
                 shell.WriteLine(Loc.GetString("cmd-swapmind-command-minds-not-found"));
                 return;
             }
 
             // Swap the minds
-            mindSystem.TransferTo(firstMindId, secondEntityUid);
-            mindSystem.TransferTo(secondMindId, firstEntityUid);
+            _mindSystem.TransferTo(firstMindId, secondEntityUid);
+            _mindSystem.TransferTo(secondMindId, firstEntityUid);
             shell.WriteLine(Loc.GetString("cmd-swapmind-success-message"));
         }
 
