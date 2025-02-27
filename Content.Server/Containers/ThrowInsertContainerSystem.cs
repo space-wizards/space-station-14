@@ -34,9 +34,7 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         RaiseLocalEvent(ent, ref beforeThrowArgs);
 
         if (beforeThrowArgs.Cancelled)
-        {
             return;
-        }
 
         if (_random.Prob(ent.Comp.Probability))
         {

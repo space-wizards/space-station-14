@@ -305,7 +305,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (_container.IsEntityInContainer(container))
         {
-            if (_container.TryGetOuterContainer(container,Transform(container), out var outerContainer) &&
+            if (_container.TryGetOuterContainer(container, Transform(container), out var outerContainer) &&
                 !HasComp<HandsComponent>(outerContainer.Owner))
             {
                 _container.Insert(toRemove, outerContainer);
