@@ -60,4 +60,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminPlayerlistRoleTypeColor =
         CVarDef.Create("ui.admin_playerlist_role_type_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the admin overlay will show antag symbols
+    /// </summary>
+    public static readonly CVarDef<bool> AdminOverlaySymbols =
+        CVarDef.Create("ui.admin_overlay_symbols", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

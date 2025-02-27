@@ -7,10 +7,13 @@
             <BoxContainer Orientation="Vertical" Margin="8">
                 <Label Text="{Loc 'ui-options-admin-player-panel'}"
                        StyleClasses="LabelKeyText"/>
-                <CheckBox Name="EnableClassicOverlayCheckBox" Text="{Loc 'ui-options-enable-classic-overlay'}" />
                 <CheckBox Name="PlayerlistSeparateSymbolsCheckBox" Text="{Loc 'ui-options-admin-playerlist-separate-symbols'}" />
                 <CheckBox Name="PlayerlistCharacterColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-character-color'}" />
                 <CheckBox Name="PlayerlistRoleTypeColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-roletype-color'}" />
+                <Label Text="{Loc 'ui-options-admin-overlay-title'}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="EnableClassicOverlayCheckBox" Text="{Loc 'ui-options-enable-classic-overlay'}" />
+                <CheckBox Name="EnableOverlaySymbolsCheckBox" Text="{Loc 'ui-options-enable-overlay-symbols'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
