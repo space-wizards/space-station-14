@@ -148,8 +148,6 @@ public sealed class DumpableSystem : EntitySystem
 
         var dumpQueue = new Queue<EntityUid>(storage.Container.ContainedEntities);
 
-        var dumped = true;
-
         var dumpType = DumpTypeCheck(args.Args.Target.Value);
 
         switch (dumpType)
@@ -180,8 +178,7 @@ public sealed class DumpableSystem : EntitySystem
                 break;
         }
 
-        if (dumped)
-            _audio.PlayPredicted(comp.DumpSound, uid, args.User);
+        _audio.PlayPredicted(comp.DumpSound, uid, args.User);
     }
 
     public byte DumpTypeCheck(EntityUid uid)
