@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Robust.Shared.GameStates;
@@ -81,9 +82,12 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             return;
 
         if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
-            _proj.UnEmbed(ent, projectile, actionOwner.Value);
+            _proj.EmbedDetach(ent, projectile, actionOwner.Value);
 
-        _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
+        _popups.PopupPredicted(Loc.GetString("item-recall-item-summon-self", ("item", ent)),
+                               Loc.GetString("item-recall-item-summon-others", ("item", ent), ("name", Identity.Entity(actionOwner.Value, EntityManager))),
+                               actionOwner.Value, actionOwner.Value);
+        _popups.PopupPredictedCoordinates(Loc.GetString("item-recall-item-disappear", ("item", ent)), Transform(ent).Coordinates, actionOwner.Value);
 
         _hands.TryForcePickupAnyHand(actionOwner.Value, ent);
     }
