@@ -35,6 +35,19 @@
   id: Weapons
   name: lathe-category-weapons
 
+# Biogen
+- type: latheCategory
+  id: Food
+  name: lathe-category-food
+
+- type: latheCategory
+  id: Chemicals
+  name: lathe-category-chemicals
+
+- type: latheCategory
+  id: Materials
+  name: lathe-category-materials
+
 # Cutter machine
 - type: latheCategory
   id: Concrete
@@ -60,15 +73,31 @@
   id: Wood
   name: lathe-category-wood
 
-# Biogen
+# Uniform printer
 - type: latheCategory
-  id: Food
-  name: lathe-category-food
+  id: Bedsheets
+  name: lathe-category-bedsheets
 
 - type: latheCategory
-  id: Chemicals
-  name: lathe-category-chemicals
+  id: Carpets
+  name: lathe-category-carpets
 
 - type: latheCategory
-  id: Materials
-  name: lathe-category-materials
+  id: Coats
+  name: lathe-category-coats
+
+- type: latheCategory
+  id: Command
+  name: lathe-category-command
+
+- type: latheCategory
+  id: Hats
+  name: lathe-category-hats
+
+- type: latheCategory
+  id: Jumpsuits
+  name: lathe-category-jumpsuits
+
+- type: latheCategory
+  id: Neck
+  name: lathe-category-neck

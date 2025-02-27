@@ -20,4 +20,11 @@ public sealed partial class RandomGlobalSpawnSpellEvent : InstantActionEvent, IS
 
     [DataField]
     public string? Speech { get; private set; }
+
+    /// <summary>
+    /// Should this Global spawn spell turn its targets into a Survivor Antagonist?
+    /// Ignores the caster for this.
+    /// </summary>
+    [DataField]
+    public bool MakeSurvivorAntagonist = false;
 }

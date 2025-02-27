@@ -9,6 +9,11 @@ lathe-category-tiles = Tiles
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
 
+# Biogen
+lathe-category-food = Food
+lathe-category-chemicals = Chemicals
+lathe-category-materials = Materials
+
 # Cutter
 lathe-category-concrete = Concrete
 lathe-category-dark = Dark
@@ -17,7 +22,11 @@ lathe-category-steel = Steel
 lathe-category-white = White
 lathe-category-wood = Wood
 
-# Biogen
-lathe-category-food = Food
-lathe-category-chemicals = Chemicals
-lathe-category-materials = Materials
+# Uniform
+lathe-category-bedsheets = Bedsheets
+lathe-category-carpets = Carpets
+lathe-category-coats = Coats
+lathe-category-command = Command
+lathe-category-hats = Hats
+lathe-category-jumpsuits = Jumpsuits
+lathe-category-neck = Neck
