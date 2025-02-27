@@ -89,12 +89,12 @@ namespace Content.Server.Administration.Commands
         {
             if (args.Length == 1)
             {
-                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-mind-command-hint"));
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-swapmind-command-hint"));
             }
 
             if (args.Length == 2)
             {
-                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-mind-command-hint"));
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-swapmind-command-hint"));
             }
 
             return CompletionResult.Empty;
