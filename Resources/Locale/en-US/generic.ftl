@@ -13,5 +13,6 @@ generic-hours = hours
 generic-minutes = minutes
 
 generic-playtime-title = Playtime
+unknown-playtime = UNKNOWN
 
 generic-confirm = Confirm

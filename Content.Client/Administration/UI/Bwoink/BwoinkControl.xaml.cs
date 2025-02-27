@@ -74,7 +74,7 @@ namespace Content.Client.Administration.UI.Bwoink
                 if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
-                if (info.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
+                if (info.OverallPlaytime == null || info.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
                     sb.Append(new Rune(0x23F2)); // ⏲
 
                 sb.AppendFormat("\"{0}\"", text);
