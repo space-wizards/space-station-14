@@ -65,6 +65,9 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, false);
 
+        var ev = new DeliveryUnlockedEvent(user);
+        RaiseLocalEvent(ent, ref ev);
+
         if (rewardMoney)
             GrantSpesoReward(ent.AsNullable());
 
@@ -76,6 +79,9 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     private void OpenDelivery(Entity<DeliveryComponent> ent, EntityUid user)
     {
         _audio.PlayEntity(ent.Comp.OpenSound, user, user);
+
+        var ev = new DeliveryOpenedEvent(user);
+        RaiseLocalEvent(ent, ref ev);
 
         if (ent.Comp.Wrapper != null)
             Spawn(ent.Comp.Wrapper, Transform(user).Coordinates);
@@ -139,3 +145,15 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         UpdateSpawner(frameTime);
     }
 }
+
+/// <summary>
+/// Event raised on the delivery when it is unlocked.
+/// </summary>
+[ByRefEvent]
+public readonly record struct DeliveryUnlockedEvent(EntityUid User);
+
+/// <summary>
+/// Event raised on the delivery when it is opened.
+/// </summary>
+[ByRefEvent]
+public readonly record struct DeliveryOpenedEvent(EntityUid User);

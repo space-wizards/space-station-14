@@ -7,8 +7,66 @@
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
-    openSound: /Audio/Effects/unwrap.ogg
-    unlockSound: /Audio/Effects/Cargo/ping.ogg
+    openSound:
+      path: /Audio/Effects/unwrap.ogg
+    unlockSound:
+      path: /Audio/Effects/Cargo/ping.ogg
+      params:
+        volume: -10
+
+- type: entity # TODO: Move this to a different file, also make this like a proper machine
+  id: CargoMailPad
+  parent: BaseMachinePowered
+  name: mail telepad
+  description: Beam in the pizzas and dig in.
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+        - MachineMask
+  - type: Sprite
+    sprite: Structures/cargo_telepad.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: offline
+      map: [ "enum.CargoTelepadLayers.Base" ]
+    - state: idle
+      map: [ "enum.CargoTelepadLayers.Beam" ]
+      shader: unshaded
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: Appearance
+  - type: CollideOnAnchor
+  - type: NameIdentifier
+    group: CargoTelepads
+  - type: PowerSwitch
+  - type: DeliverySpawner
+    table: !type:NestedSelector
+      tableId: RandomDeliveryBasic
+
+- type: entityTable # TODO: Move to a seperate file, make these actual entity tables people can expand on
+  id: RandomDeliveryBasic
+  table: !type:GroupSelector
+    children:
+    - id: LetterDelivery
+      weight: 0.7
+    - id: PackageDelivery
+      weight: 0.3
 
 - type: entity
   parent: BaseDelivery
