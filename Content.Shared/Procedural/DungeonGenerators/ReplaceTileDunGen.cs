@@ -20,7 +20,7 @@ public sealed partial class ReplaceTileDunGen : IDunGenLayer
 }
 
 [DataRecord]
-public record struct ReplaceTileLayer
+public partial record struct ReplaceTileLayer
 {
     public ProtoId<ContentTileDefinition> Tile;
 
