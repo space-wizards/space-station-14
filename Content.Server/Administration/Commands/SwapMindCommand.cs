@@ -66,19 +66,20 @@ namespace Content.Server.Administration.Commands
             if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
                 return true;
 
-            if (_playerManager.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)
+            if (!_playerManager.TryGetSessionByUsername(str, out var session))
             {
-                entityUid = session.AttachedEntity.Value;
-                return true;
+                shell.WriteError(Loc.GetString("cmd-rename-not-found", ("target", str)));
+                return false;
             }
 
-            if (session == null)
-                shell.WriteError(Loc.GetString("cmd-rename-not-found", ("target", str)));
-            else
+            if (session.AttachedEntity == null)
+            {
                 shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
-
-            entityUid = EntityUid.Invalid;
-            return false;
+                return false;
+            }
+         
+            entityUid = session.AttachedEntity.Value;
+            return true;
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
