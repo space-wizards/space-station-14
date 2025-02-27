@@ -32,31 +32,31 @@ public sealed class DumpableSystem : EntitySystem
     {
         base.Initialize();
         _itemQuery = GetEntityQuery<ItemComponent>();
-        SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract, after: new[]{ typeof(SharedEntityStorageSystem) });
+        SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract, after: [typeof(SharedEntityStorageSystem)]);
         SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
         SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<UtilityVerb>>(AddUtilityVerbs);
         SubscribeLocalEvent<DumpableComponent, DumpableDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnAfterInteract(EntityUid uid, DumpableComponent component, AfterInteractEvent args)
+    private void OnAfterInteract(EntityUid uid, DumpableComponent comp, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Handled)
+        if (!args.CanReach || args.Handled || args.Target == null)
             return;
 
-        if (!_disposalUnitSystem.HasDisposals(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (DumpTypeCheck(uid) == 0)
             return;
 
-        if (!TryComp<StorageComponent>(uid, out var storage))
+        if (!TryComp<StorageComponent>(args.Target, out var storage))
             return;
 
         if (!storage.Container.ContainedEntities.Any())
             return;
 
-        StartDoAfter(uid, args.Target.Value, args.User, component);
+        StartDoAfter(uid, args.Target.Value, args.User, comp);
         args.Handled = true;
     }
 
-    private void AddDumpVerb(EntityUid uid, DumpableComponent dumpable, GetVerbsEvent<AlternativeVerb> args)
+    private void AddDumpVerb(EntityUid uid, DumpableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -68,15 +68,15 @@ public sealed class DumpableSystem : EntitySystem
         {
             Act = () =>
             {
-                StartDoAfter(uid, args.Target, args.User, dumpable);//Had multiplier of 0.6f
+                StartDoAfter(uid, args.Target, args.User, comp);//Had multiplier of 0.6f
             },
             Text = Loc.GetString("dump-verb-name"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }
 
-    private void AddUtilityVerbs(EntityUid uid, DumpableComponent dumpable, GetVerbsEvent<UtilityVerb> args)
+    private void AddUtilityVerbs(EntityUid uid, DumpableComponent comp, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -84,59 +84,34 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<StorageComponent>(uid, out var storage) || !storage.Container.ContainedEntities.Any())
             return;
 
-        if (_disposalUnitSystem.HasDisposals(args.Target))
-        {
-            UtilityVerb verb = new()
-            {
-                Act = () =>
-                {
-                    StartDoAfter(uid, args.Target, args.User, dumpable);
-                },
-                Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
-                IconEntity = GetNetEntity(uid)
-            };
-            args.Verbs.Add(verb);
-        }
+        if (DumpTypeCheck(args.Target) == 0)
+            return;
 
-        if (HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (TryComp<MaterialStorageComponent>(args.Target, out var matComp))
         {
-            UtilityVerb verb = new()
-            {
-                Act = () =>
-                {
-                    StartDoAfter(uid, args.Target, args.User, dumpable);
-                },
-                Text = Loc.GetString("dump-placeable-verb-name", ("surface", args.Target)),
-                IconEntity = GetNetEntity(uid)
-            };
-            args.Verbs.Add(verb);
-        }
-
-        if (TryComp<MaterialStorageComponent>(args.Target, out var comp))
-        {
-            if (comp.Whitelist == null || comp.Whitelist.Tags == null)
+            if (matComp.Whitelist == null || matComp.Whitelist.Tags == null)
                 return;
-            var tags = comp.Whitelist.Tags;
+
             foreach (var entity in storage.Container.ContainedEntities)
             {
-                if (!_tag.HasAnyTag(entity, tags))
+                if (!_tag.HasAnyTag(entity, matComp.Whitelist.Tags))
                     return;
             }
-
-            UtilityVerb verb = new()
-            {
-                Act = () =>
-                {
-                    StartDoAfter(uid, args.Target, args.User, dumpable);
-                },
-                Text = Loc.GetString("dump-lathe-verb-name", ("lathe", args.Target)),
-                IconEntity = GetNetEntity(uid)
-            };
-            args.Verbs.Add(verb);
         }
+
+        UtilityVerb verb = new()
+        {
+            Act = () =>
+            {
+                StartDoAfter(uid, args.Target, args.User, comp);
+            },
+            Text = Loc.GetString("dump-utility-verb-name", ("target", args.Target)),
+            IconEntity = GetNetEntity(uid)
+        };
+        args.Verbs.Add(verb);
     }
 
-    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent dumpable)
+    private void StartDoAfter(EntityUid storageUid, EntityUid targetUid, EntityUid userUid, DumpableComponent comp)
     {
         if (!TryComp<StorageComponent>(storageUid, out var storage))
             return;
@@ -154,7 +129,7 @@ public sealed class DumpableSystem : EntitySystem
             delay += itemSize.Weight;
         }
 
-        delay *= (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
+        delay *= (float)comp.DelayPerItem.TotalSeconds * comp.Multiplier;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
@@ -162,59 +137,64 @@ public sealed class DumpableSystem : EntitySystem
             NeedHand = true,
         });
     }
-
-    private void OnDoAfter(EntityUid uid, DumpableComponent component, DumpableDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, DumpableComponent comp, DumpableDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !TryComp<StorageComponent>(uid, out var storage) || storage.Container.ContainedEntities.Count == 0)
+        if (args.Handled
+        || args.Cancelled
+        || args.Args.Target == null
+        || !TryComp<StorageComponent>(uid, out var storage)
+        || storage.Container.ContainedEntities.Count == 0)
             return;
 
         var dumpQueue = new Queue<EntityUid>(storage.Container.ContainedEntities);
 
-        var dumped = false;
+        var dumped = true;
 
-        if (_disposalUnitSystem.HasDisposals(args.Args.Target))
+        var dumpType = DumpTypeCheck(args.Args.Target.Value);
+
+        switch (dumpType)
         {
-            dumped = true;
+            case 0:
+                var userPos = _transformSystem.GetWorldPosition(uid);
+                foreach (var entity in dumpQueue)
+                {
+                    var transform = Transform(entity);
+                    _transformSystem.SetWorldPositionRotation(entity, userPos + _random.NextVector2Box() / 4, _random.NextAngle(), transform);
+                }
+                return;
 
-            foreach (var entity in dumpQueue)
-            {
-                _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, entity, args.Args.User);
-            }
-        }
-        else if (HasComp<PlaceableSurfaceComponent>(args.Args.Target))
-        {
-            dumped = true;
+            case 1:
+                foreach (var entity in dumpQueue)
+                    _materialStorage.TryInsertMaterialEntity(args.Args.User, entity, args.Args.Target.Value);
+                break;
 
-            var (targetPos, targetRot) = _transformSystem.GetWorldPositionRotation(args.Args.Target.Value);
+            case 2:
+                var (targetPos, targetRot) = _transformSystem.GetWorldPositionRotation(args.Args.Target.Value);
+                foreach (var entity in dumpQueue)
+                    _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
+                break;
 
-            foreach (var entity in dumpQueue)
-            {
-                _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
-            }
-        }
-        else if (HasComp<MaterialStorageComponent>(args.Args.Target))
-        {
-            dumped = true;
-
-            foreach (var entity in dumpQueue)
-            {
-                _materialStorage.TryInsertMaterialEntity(args.Args.User, entity, args.Args.Target.Value);
-            }
-        }
-        else
-        {
-            var targetPos = _transformSystem.GetWorldPosition(uid);
-
-            foreach (var entity in dumpQueue)
-            {
-                var transform = Transform(entity);
-                _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, _random.NextAngle(), transform);
-            }
+            case 3:
+                foreach (var entity in dumpQueue)
+                    _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, entity, args.Args.User);
+                break;
         }
 
         if (dumped)
-        {
-            _audio.PlayPredicted(component.DumpSound, uid, args.User);
-        }
+            _audio.PlayPredicted(comp.DumpSound, uid, args.User);
+    }
+
+    public byte DumpTypeCheck(EntityUid uid)
+    {
+        if (_disposalUnitSystem.HasDisposals(uid))
+            return 3;
+
+        if (HasComp<PlaceableSurfaceComponent>(uid))
+            return 2;
+
+        if (HasComp<MaterialStorageComponent>(uid))
+            return 1;
+
+        return 0;
     }
 }
