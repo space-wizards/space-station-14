@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Added rainbow lizard plushies, which can be found in arcade machines.
-    type: Add
-  id: 7506
-  time: '2024-10-13T22:51:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32564
-- author: PJB3005
-  changes:
-  - message: Fixes the client sometimes not being aware of active role bans.
-    type: Fix
-  id: 7507
-  time: '2024-10-14T03:30:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32725
-- author: OnyxTheBrave
-  changes:
-  - message: Fixed the Industrial Reagent Grinder's visuals
-    type: Fix
-  id: 7508
-  time: '2024-10-14T03:53:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32758
-- author: irismessage
-  changes:
-  - message: Made role requirements display in a more understandable format.
-    type: Tweak
-  id: 7509
-  time: '2024-10-14T03:54:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32806
-- author: Gamer3107
-  changes:
-  - message: Portal artifacts no longer target the AI or people within containers
-    type: Fix
-  id: 7510
-  time: '2024-10-14T05:55:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32677
 - author: ScarKy0
   changes:
   - message: Cyborg modules now have icons instead of using the module sprite.
@@ -3890,3 +3855,39 @@
   id: 8005
   time: '2025-02-25T14:43:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35490
+- author: noirogen
+  changes:
+  - message: Added opacity slider for speech bubble backgrounds, text and speaker
+      names in the accessibility options.
+    type: Add
+  id: 8006
+  time: '2025-02-25T16:00:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35346
+- author: sowelipililimute
+  changes:
+  - message: Multiple inventory windows now close properly when you hit escape
+    type: Fix
+  id: 8007
+  time: '2025-02-25T16:40:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35040
+- author: Pumkin69
+  changes:
+  - message: Engineers can choose to not wear a headpiece now.
+    type: Fix
+  id: 8008
+  time: '2025-02-26T01:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35508
+- author: momochitters
+  changes:
+  - message: Lizard Plushie Slippers can now be constructed.
+    type: Add
+  id: 8009
+  time: '2025-02-26T02:18:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35381
+- author: keronshb
+  changes:
+  - message: Added the Wizard Antagonist!
+    type: Add
+  id: 8010
+  time: '2025-02-26T05:34:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35406
