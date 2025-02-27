@@ -30,6 +30,7 @@ public sealed partial class DeliverySystem
     private void UpdateSpawner(float frameTime)
     {
         var dataQuery = EntityQueryEnumerator<CargoDeliveryDataComponent>();
+        var spawners = EntityQueryEnumerator<DeliverySpawnerComponent>();
         var curTime = _timing.CurTime;
 
         while (dataQuery.MoveNext(out var uid, out var deliveryData))
@@ -37,7 +38,12 @@ public sealed partial class DeliverySystem
             if (deliveryData.NextDelivery < curTime)
             {
                 deliveryData.NextDelivery = curTime + deliveryData.DeliveryCooldown;
-                Log.Debug("Delivery spawn rn isnt that epic");
+                while (spawners.MoveNext(out var spawnerUid, out var spawnerData))
+                {
+                    // Best youll get for now :)
+                    // Testing purposes etc etc
+                    Spawn("LetterDelivery", Transform(spawnerUid).Coordinates);
+                }
             }
         }
     }
