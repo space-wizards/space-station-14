@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: As an AI, Having a Lawboard inserted into your AI Upload Computer will
-      now Play a sound cue
-    type: Add
-  - message: As an AI, Having the Antimov Lawboard uploaded will play an appropriate
-      sound cue
-    type: Add
-  id: 7521
-  time: '2024-10-17T03:41:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32625
 - author: Callmore
   changes:
   - message: Prefered item quick store locations can be created again.
@@ -3901,3 +3890,12 @@
   id: 8020
   time: '2025-02-27T17:43:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35557
+- author: SlamBamActionman
+  changes:
+  - message: Implanters must now specificy which implant they're targeting when extracting,
+      and deals heavy damage to the person performing the extraction if no such implant
+      exists.
+    type: Tweak
+  id: 8021
+  time: '2025-02-27T17:57:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32136
