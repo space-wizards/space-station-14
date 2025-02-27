@@ -84,13 +84,13 @@ internal sealed class AdminNameOverlay : Overlay
             Vector2 currentOffset = Vector2.Zero;
             if (classic && playerInfo.Antag)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, "ANTAG", uiScale, Color.OrangeRed);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, Color.OrangeRed);
                 currentOffset += lineoffset;
             }
             else if (!classic && _filter.Contains(playerInfo.RoleProto))
             {
-               var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-               var color = playerInfo.RoleProto.Color;
+                var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                var color = playerInfo.RoleProto.Color;
 
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
                 currentOffset += lineoffset;
