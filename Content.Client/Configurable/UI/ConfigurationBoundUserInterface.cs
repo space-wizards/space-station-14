@@ -2,45 +2,46 @@
 using Robust.Client.UserInterface;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
-namespace Content.Client.Configurable.UI;
-
-public sealed class ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+namespace Content.Client.Configurable.UI
 {
-    [ViewVariables]
-    private ConfigurationMenu? _menu;
-
-    protected override void Open()
+    public sealed class ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        base.Open();
-        _menu = this.CreateWindow<ConfigurationMenu>();
-        _menu.OnConfiguration += SendConfiguration;
-    }
+        [ViewVariables]
+        private ConfigurationMenu? _menu;
 
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-
-        if (state is not ConfigurationBoundUserInterfaceState configurationState)
-            return;
-
-        _menu?.Populate(configurationState);
-    }
-
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        base.ReceiveMessage(message);
-
-        if (_menu == null)
-            return;
-
-        if (message is ValidationUpdateMessage msg)
+        protected override void Open()
         {
-            _menu.Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
+            base.Open();
+            _menu = this.CreateWindow<ConfigurationMenu>();
+            _menu.OnConfiguration += SendConfiguration;
         }
-    }
 
-    public void SendConfiguration(Dictionary<string, string> config)
-    {
-        SendMessage(new ConfigurationUpdatedMessage(config));
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
+            if (state is not ConfigurationBoundUserInterfaceState configurationState)
+                return;
+
+            _menu?.Populate(configurationState);
+        }
+
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            base.ReceiveMessage(message);
+
+            if (_menu == null)
+                return;
+
+            if (message is ValidationUpdateMessage msg)
+            {
+                _menu.Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
+            }
+        }
+
+        public void SendConfiguration(Dictionary<string, string> config)
+        {
+            SendMessage(new ConfigurationUpdatedMessage(config));
+        }
     }
 }
