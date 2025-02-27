@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    sealed class SwapMindCommand : IConsoleCommand
+    sealed class SwapMindCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
