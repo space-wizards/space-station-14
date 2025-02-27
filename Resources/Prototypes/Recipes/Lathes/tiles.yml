@@ -59,52 +59,6 @@
 
 ## Recipes
 
-# Dark tiles
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDark
-  result: FloorTileItemDark
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkDiagonalMini
-  result: FloorTileItemDarkDiagonalMini
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkDiagonal
-  result: FloorTileItemDarkDiagonal
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkHerringbone
-  result: FloorTileItemDarkHerringbone
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkMini
-  result: FloorTileItemDarkMini
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkMono
-  result: FloorTileItemDarkMono
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkPavement
-  result: FloorTileItemDarkPavement
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkPavementVertical
-  result: FloorTileItemDarkPavementVertical
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkOffset
-  result: FloorTileItemDarkOffset
-
 # Steel tiles
 - type: latheRecipe
   parent: BaseSteelTileRecipe
@@ -160,6 +114,52 @@
   parent: BaseSteelTileRecipe
   id: FloorTileItemSteelPavementVertical
   result: FloorTileItemSteelPavementVertical
+
+# Dark tiles
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDark
+  result: FloorTileItemDark
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkDiagonalMini
+  result: FloorTileItemDarkDiagonalMini
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkDiagonal
+  result: FloorTileItemDarkDiagonal
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkHerringbone
+  result: FloorTileItemDarkHerringbone
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkMini
+  result: FloorTileItemDarkMini
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkMono
+  result: FloorTileItemDarkMono
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkPavement
+  result: FloorTileItemDarkPavement
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkPavementVertical
+  result: FloorTileItemDarkPavementVertical
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkOffset
+  result: FloorTileItemDarkOffset
 
 # White steel tiles
 - type: latheRecipe
