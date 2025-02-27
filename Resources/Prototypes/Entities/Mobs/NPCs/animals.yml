@@ -2851,6 +2851,7 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: DogVision # imp
 
 - type: entity
   name: corgi
@@ -2913,6 +2914,7 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: DogVision # imp
 
 - type: entity
   name: corrupted corgi
