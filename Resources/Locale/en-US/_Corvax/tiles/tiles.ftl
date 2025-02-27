@@ -1,0 +1,19 @@
+tiles-wood-parquet = parquet wood floor
+tiles-wood-chess = chess wood floor
+tiles-wood-black = black wood floor
+tiles-wood-large-black = large black wood floor
+tiles-wood-parquet-black = parquet black wood floor
+tiles-wood-chess-black = chess black wood floor
+tiles-wood-dark = dark wood floor
+tiles-wood-large-dark = large dark wood floor
+tiles-wood-parquet-dark = parquet dark wood floor
+tiles-wood-chess-dark = chess dark wood floor
+tiles-wood-light = light wood floor
+tiles-wood-large-light = large light wood floor
+tiles-wood-parquet-light = parquet light wood floor
+tiles-wood-chess-light = chess light wood floor
+tiles-wood-red = red wood floor
+tiles-wood-large-red = large red wood floor
+tiles-wood-parquet-red = parquet red wood floor
+tiles-wood-chess-red = chess red wood floor
+
