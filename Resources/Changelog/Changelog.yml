@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The Microphone instrument has a new vocal style "Kweh".
-    type: Add
-  id: 7518
-  time: '2024-10-17T01:57:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32848
 - author: deltanedas
   changes:
   - message: You can now eject biomass from a biogenerator without having to deconstruct
@@ -3896,3 +3889,10 @@
   id: 8017
   time: '2025-02-27T12:44:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34316
+- author: deltanedas
+  changes:
+  - message: LogProbe's access logs can now be printed out.
+    type: Tweak
+  id: 8018
+  time: '2025-02-27T13:47:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32255
