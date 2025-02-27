@@ -205,6 +205,12 @@
          orGroup: SalvJumpsuit
        - id: ClothingUniformJumpskirtSalvageSpecialist #imp
          amount: 2
+         orGroup: SalvJumpskirt
+         prob: 0.5
+       - id: ClothingUniformJumpskirtSalvageSpecialistDV
+         amount: 2
+         orGroup: SalvJumpskirt
+
 
  - type: entity
    id: WardrobeAtmosphericsFilled
