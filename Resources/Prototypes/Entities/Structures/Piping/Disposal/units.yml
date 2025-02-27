@@ -77,9 +77,6 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
-    blacklist:
-      components:
-      - EntityStorage
   - type: ThrowInsertContainer
     containerId: disposals
   - type: UserInterface

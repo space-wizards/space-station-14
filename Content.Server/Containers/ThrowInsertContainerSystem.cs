@@ -31,7 +31,7 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
             return;
 
         var beforeThrowArgs = new BeforeThrowInsertEvent(args.Thrown);
-        RaiseLocalEvent(ent, beforeThrowArgs);
+        RaiseLocalEvent(ent, ref beforeThrowArgs);
 
         if (beforeThrowArgs.Cancelled)
         {
@@ -59,12 +59,5 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
 /// Sent before the insertion is made.
 /// Allows preventing the insertion if any system on the entity should need to.
 /// </summary>
-public sealed class BeforeThrowInsertEvent : CancellableEntityEventArgs
-{
-    public readonly EntityUid ThrownEntity;
-
-    public BeforeThrowInsertEvent(EntityUid thrownEntity)
-    {
-        ThrownEntity = thrownEntity;
-    }
-}
+[ByRefEvent]
+public record struct BeforeThrowInsertEvent(EntityUid ThrownEntity, bool Cancelled = false);

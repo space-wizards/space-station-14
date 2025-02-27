@@ -198,10 +198,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         args.Handled = true;
     }
 
-    private void OnThrowInsert(EntityUid uid, SharedDisposalUnitComponent component, BeforeThrowInsertEvent args)
+    private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
     {
-        if (!CanInsert(uid, component, args.ThrownEntity))
-            args.Cancel();
+        if (!CanInsert(ent, ent, args.ThrownEntity))
+            args.Cancelled = true;
     }
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
