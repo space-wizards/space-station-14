@@ -24,7 +24,7 @@ namespace Content.Client.Administration.UI.Bwoink
 
                 Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
 
-                Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("unknown-playtime");
+                Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
             };
 
             OnOpen += () =>
