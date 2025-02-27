@@ -45,6 +45,8 @@
       - DeathAcidifierImplant
       - DeathRattleImplant
       - MindShieldImplant
+      - FakeMindShieldImplant
+      - RadioImplant
       deimplantFailureDamage:
         types:
           Cellular: 50
