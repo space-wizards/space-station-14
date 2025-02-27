@@ -38,20 +38,26 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
     private void OnRemoveFrom(Entity<AttachmentHolderComponent> uid, ref EntGotRemovedFromContainerMessage args)
         => RemoveComponentFrom(uid, args.Container.Owner, args.Container.ID);
 
+    private ComponentRegistry? GetComponentsFromComp(AttachmentHolderComponent comp, string key)
+    {
+        if (comp.Components is { } compList
+            && compList.TryGetValue(key, out var registry))
+            return registry;
+        if (comp.Prototypes is { } protoList
+            && protoList.TryGetValue(key, out var protoId)
+            && _proto.TryIndex(protoId, out var proto))
+            return proto.Components;
+        return null;
+    }
+
     private void AddComponentTo(Entity<AttachmentHolderComponent> uid, EntityUid reference, string containerID)
     {
         if (!TryComp(reference, out AttachmentComponent? attachment))
             return;
 
-        var compRegistry = uid.Comp.Components?[containerID];
+        var compRegistry = GetComponentsFromComp(uid.Comp, containerID);
         if (compRegistry is null)
-        {
-            if (uid.Comp.Prototypes?[containerID] is { } prototype)
-                compRegistry = _proto.Index(prototype).Components;
-            else
-                return;
-        }
-
+            return;
 
         foreach (var (compName, compRegistryEntry) in compRegistry)
         {
@@ -91,9 +97,10 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
         if (!HasComp<AttachmentComponent>(reference)
-            || uid.Comp.Components is not {} compList
-            || compList[containerID] is not {} compRegistry
             || uid.Comp.AddedComps.Count == 0)
+            return;
+        var compRegistry = GetComponentsFromComp(uid.Comp, containerID);
+        if (compRegistry is null)
             return;
         foreach (var compName in compRegistry.Keys)
         {
