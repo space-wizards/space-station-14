@@ -28,5 +28,36 @@
     - id: PackageDelivery
       weight: 1
 
+### Reward Tables
+
+- type: entityTable
+  id: LetterDeliveryRewards
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: LetterSpamEntityTable
+      weight: 0.7
+    - !type:NestedSelector
+      tableId: LetterMinorEntityTable
+      weight: 0.2
+    - !type:NestedSelector
+      tableId: LetterMajorEntityTable
+      weight: 0.1
 
 ### Loot Tables
+
+
+- type: entityTable
+  id: LetterSpamEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: AirAlarmElectronics
+    - id: FireAlarmElectronics
+    - id: DoorElectronics
+    - id: FirelockElectronics
+    - id: APCElectronics
+    - id: SignalTimerElectronics
+    - id: SMESMachineCircuitboard
+    - id: SubstationMachineCircuitboard
+    - id: SpaceVillainArcadeComputerCircuitboard
+    - id: BlockGameArcadeComputerCircuitboard

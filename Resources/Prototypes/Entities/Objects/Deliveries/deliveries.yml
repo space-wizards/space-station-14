@@ -101,4 +101,4 @@
     wrapper: PaperScrap
   - type: SpawnTableOnUse
     table: !type:NestedSelector
-      tableId: RandomTechBoardTable
+      tableId: LetterDeliveryRewards
