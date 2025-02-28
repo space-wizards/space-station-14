@@ -55,10 +55,10 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 200
+        maxVol: 30
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 200
+          Quantity: 30
       
 - type: entity
   id: AutoMenderBurn
@@ -93,7 +93,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 200
+        maxVol: 30
         reagents:
         - ReagentId: Dermaline
-          Quantity: 200
+          Quantity: 30
