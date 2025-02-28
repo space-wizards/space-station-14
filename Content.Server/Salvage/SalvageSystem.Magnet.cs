@@ -354,7 +354,7 @@ public sealed partial class SalvageSystem
         if (!TryGetSalvagePlacementLocation(magnet, mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
-            _mapManager.DeleteMap(salvMapXform.MapID);
+            _mapSystem.DeleteMap(salvMapXform.MapID);
             return;
         }
 
@@ -391,7 +391,7 @@ public sealed partial class SalvageSystem
         }
 
         Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
-        _mapManager.DeleteMap(salvMapXform.MapID);
+        _mapSystem.DeleteMap(salvMapXform.MapID);
 
         data.Comp.Announced = false;
 

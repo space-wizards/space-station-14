@@ -257,6 +257,7 @@
   - type: Tag
     tags:
       - Nugget
+      - Meat
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     layers:
