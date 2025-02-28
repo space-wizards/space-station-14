@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Shipyard consoles to the quartermasters room in Fland, Box, and Xeno
-    type: Add
-  - message: Update EVA access in Fland, Box, and Xeno to be all command.
-    type: Tweak
-  id: 705
-  time: '2024-12-10T10:54:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/973
-- author: ultramario1998
-  changes:
-  - message: Added a headset that's just for Wardens.
-    type: Add
-  id: 706
-  time: '2024-12-10T11:04:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/976
 - author: iaada, kipdotnet
   changes:
   - message: Fixed missing sprite layering on the tck'tck drone, and gave it a grapple
@@ -4096,3 +4080,18 @@
   id: 1204
   time: '2025-02-26T16:03:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1783
+- author: starlighthowls, honeyed_lemons_
+  changes:
+  - message: Tweaks Xenoarch and adds mail to cruise
+    type: Tweak
+  id: 1205
+  time: '2025-02-28T00:38:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1792
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: You can now see when someone is looking at a handheld map and can't hear
+      you.
+    type: Tweak
+  id: 1206
+  time: '2025-02-28T00:39:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1788
