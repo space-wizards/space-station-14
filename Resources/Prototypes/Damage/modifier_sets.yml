@@ -161,7 +161,6 @@
     Piercing: 1.2
     Cold: 1.5
     Poison: 0.8
-    Cellular: 0.2
 
 - type: damageModifierSet
   id: Infernal
