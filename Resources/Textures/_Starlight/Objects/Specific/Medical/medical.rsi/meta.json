@@ -59,6 +59,12 @@
 			"name": "mender1"
 		},
 		{
+			"name": "mender2"
+		},
+		{
+			"name": "mender3"
+		},
+		{
 			"name": "mender-inhand-left",
             "directions": 4
 		},
