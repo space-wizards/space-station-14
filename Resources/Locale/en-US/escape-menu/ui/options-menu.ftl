@@ -298,4 +298,6 @@ ui-options-admin-playerlist-roletype-color = Color role types
 
 ui-options-admin-overlay-title = Admin Overlay
 ui-options-enable-classic-overlay = Revert overlay to classic mode
-ui-options-enable-overlay-symbols = Show antag symbols on the overlay
+ui-options-enable-overlay-symbols = Add antag symbol to text
+ui-options-enable-overlay-playtime = Show playtime
+ui-options-enable-overlay-starting-job = Show starting job

@@ -44,6 +44,7 @@ internal sealed class AdminNameOverlay : Overlay
         _entityLookup = entityLookup;
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
+        // Setting this to a specific font would break the antag symbols
         _font = resourceCache.NotoStack("Regular", 10);
 
         _config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
