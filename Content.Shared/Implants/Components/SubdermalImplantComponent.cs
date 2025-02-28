@@ -49,6 +49,13 @@ public sealed partial class SubdermalImplantComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
+    
+    /// <summary>
+    /// If set, this ProtoId is used when attempting to draw the implant instead.
+    /// Useful if the implant is a child to another implant and you don't want to differentiate between them when drawing.
+    /// </summary>
+    [DataField]
+    public EntProtoId? DrawableProtoIdOverride;
 }
 
 /// <summary>
