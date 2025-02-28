@@ -45,10 +45,39 @@
       weight: 0.1
 
 ### Loot Tables
-
-
+# Letters
 - type: entityTable
   id: LetterSpamEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: MailRobustToolsSpam
+    - id: MailNanotrasenSpam
+    - id: MailSyndicateSpam
+    - id: FirelockElectronics
+    - id: APCElectronics
+    - id: SignalTimerElectronics
+    - id: SMESMachineCircuitboard
+    - id: SubstationMachineCircuitboard
+    - id: SpaceVillainArcadeComputerCircuitboard
+    - id: BlockGameArcadeComputerCircuitboard
+
+- type: entityTable
+  id: LetterMinorEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: AirAlarmElectronics
+    - id: FireAlarmElectronics
+    - id: DoorElectronics
+    - id: FirelockElectronics
+    - id: APCElectronics
+    - id: SignalTimerElectronics
+    - id: SMESMachineCircuitboard
+    - id: SubstationMachineCircuitboard
+    - id: SpaceVillainArcadeComputerCircuitboard
+    - id: BlockGameArcadeComputerCircuitboard
+
+- type: entityTable
+  id: LetterMajorEntityTable
   table: !type:GroupSelector
     children:
     - id: AirAlarmElectronics
