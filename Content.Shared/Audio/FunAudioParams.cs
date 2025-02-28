@@ -6,9 +6,8 @@ namespace Content.Shared.Audio;
 public static class FunAudioParams
 {
     private static readonly RobustRandom Random = new();
-    // [Dependency] private static readonly IRobustRandom Random = default!;
 
-    private const float MinPitchScale = 0.2f;
+    private const float MinPitchScale = 0.1f;
     private const float MaxPitchScale = 2.0f;
 
     public static AudioParams WithUniformPitch(AudioParams? audioParams = null)

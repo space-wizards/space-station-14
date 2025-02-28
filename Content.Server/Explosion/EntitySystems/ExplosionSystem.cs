@@ -364,7 +364,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             ? queued.Proto.SmallSound
             : queued.Proto.Sound;
 
-        _audio.PlayStatic(sound, filter, mapEntityCoords, true, sound.Params);
+        _audio.PlayStatic(sound, filter, mapEntityCoords, true, FunAudioParams.WithUniformPitch(sound.Params));
 
         // play far sound
         // far sound should play for anyone who wasn't in range of any of the effects of the bomb
