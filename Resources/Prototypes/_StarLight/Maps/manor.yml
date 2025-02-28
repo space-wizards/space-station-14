@@ -40,6 +40,7 @@
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 3, 3 ]
             Psychologist: [ 1, 1 ]
+            Surgeon: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
