@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobParamedic
-      time: 187200 #52 hrs (1 hour per week for 1 year)
+      time: 108000 #30 hrs, ~20 rounds #imp
 # Head
 - type: loadout
   id: ParamedicHead

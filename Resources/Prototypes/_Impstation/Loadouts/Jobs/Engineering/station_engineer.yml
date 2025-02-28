@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 36000 #10 hrs
+      time: 36000 #10 hrs, ~7 rounds
 
 # Jumpsuit
 - type: loadout
