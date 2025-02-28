@@ -35,15 +35,15 @@
     damage:
       types:
         Blunt: 1
-    attackRate: 60
+    attackRate: 5
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
-    damage: 2
+    damage: 7
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 2
+    damage: 7
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
