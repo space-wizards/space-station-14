@@ -84,19 +84,6 @@ internal sealed class AdminNameOverlay : Overlay
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
             var currentOffset = Vector2.Zero;
-            if (classic && playerInfo.Antag)
-            {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, Color.OrangeRed);
-                currentOffset += lineoffset;
-            }
-            else if (!classic && _filter.Contains(playerInfo.RoleProto))
-            {
-                var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-                var color = playerInfo.RoleProto.Color;
-
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
-                currentOffset += lineoffset;
-            }
 
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             currentOffset += lineoffset;
@@ -113,6 +100,20 @@ internal sealed class AdminNameOverlay : Overlay
             if (!string.IsNullOrEmpty(playerInfo.StartingJob) && startingJob)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
+                currentOffset += lineoffset;
+            }
+
+            if (classic && playerInfo.Antag)
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, Color.OrangeRed);
+                currentOffset += lineoffset;
+            }
+            else if (!classic && _filter.Contains(playerInfo.RoleProto))
+            {
+                var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                var color = playerInfo.RoleProto.Color;
+
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
                 currentOffset += lineoffset;
             }
         }
