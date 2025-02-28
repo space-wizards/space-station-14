@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: changed up the cryogenic sting to no longer have a chance to cause sleep.
-    type: Tweak
-  - message: changed up the lethargic sting so it has a chance to cause sleep, and
-      no longer mutes victims.
-    type: Tweak
-  - message: changed up the mute sting so it mutes the victim for 3 minutes instead
-      of 5.
-    type: Tweak
-  id: 711
-  time: '2024-12-10T21:11:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/983
 - author: hivehum
   changes:
   - message: The greytide virus will infect much less often.
@@ -4073,3 +4060,10 @@
   id: 1210
   time: '2025-02-28T16:13:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1799
+- author: ATDoop
+  changes:
+  - message: New lobby screen art by Doop!
+    type: Add
+  id: 1211
+  time: '2025-02-28T19:29:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1801
