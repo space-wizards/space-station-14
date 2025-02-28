@@ -327,3 +327,13 @@
   cost: 1500
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: MoproachCrate
+  icon:
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+    state: icon
+  product: CrateFunMoproach
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
