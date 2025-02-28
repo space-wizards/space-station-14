@@ -26,25 +26,25 @@
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BaseWeaponRecipeMelee
+  id: BaseMeleeWeaponRecipe
   completetime: 2
 
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BaseWeaponRecipePracticeGun
+  id: BasePracticeWeaponRecipe
   completetime: 4
 
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BaseWeaponRecipeLongGun
+  id: BaseWeaponRecipeLong
   completetime: 5
 
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BaseWeaponRecipeSidearm
+  id: BaseSidearmWeaponRecipe
   completetime: 6
 
 ## Recipes
@@ -162,7 +162,7 @@
 
 # Melee
 - type: latheRecipe
-  parent: BaseWeaponRecipeMelee
+  parent: BaseMeleeWeaponRecipe
   id: Stunbaton
   result: Stunbaton
   materials:
@@ -170,7 +170,7 @@
     Plastic: 300
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeMelee
+  parent: BaseMeleeWeaponRecipe
   id: Truncheon
   result: Truncheon
   materials:
@@ -178,7 +178,7 @@
     Plastic: 300
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeMelee
+  parent: BaseMeleeWeaponRecipe
   id: CombatKnife
   result: CombatKnife
   materials:
@@ -187,7 +187,7 @@
 
 # Practice guns
 - type: latheRecipe
-  parent: BaseWeaponRecipePracticeGun
+  parent: BasePracticeWeaponRecipe
   id: WeaponDisablerPractice
   result: WeaponDisablerPractice
   materials:
@@ -196,7 +196,7 @@
     Plastic: 200
 
 - type: latheRecipe
-  parent: BaseWeaponRecipePracticeGun
+  parent: BasePracticeWeaponRecipe
   id: WeaponLaserCarbinePractice
   result: WeaponLaserCarbinePractice
   materials:
@@ -206,7 +206,7 @@
 
 # Long Guns
 - type: latheRecipe
-  parent: BaseWeaponRecipeLongGun
+  parent: BaseWeaponRecipeLong
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
   materials:
@@ -215,7 +215,7 @@
     Plastic: 500
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeLongGun
+  parent: BaseWeaponRecipeLong
   id: WeaponAdvancedLaser
   result: WeaponAdvancedLaser
   materials:
@@ -224,7 +224,7 @@
     Gold: 850
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeLongGun
+  parent: BaseWeaponRecipeLong
   id: WeaponLaserCannon
   result: WeaponLaserCannon
   materials:
@@ -233,7 +233,7 @@
     Gold: 500
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeLongGun
+  parent: BaseWeaponRecipeLong
   id: WeaponXrayCannon
   result: WeaponXrayCannon
   materials:
@@ -244,7 +244,7 @@
 
 # Sidearms
 - type: latheRecipe
-  parent: BaseWeaponRecipeSidearm
+  parent: BaseSidearmWeaponRecipe
   id: WeaponDisabler
   result: WeaponDisabler
   materials:
@@ -253,7 +253,7 @@
     Plastic: 200
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeSidearm
+  parent: BaseSidearmWeaponRecipe
   id: WeaponDisablerSMG
   result: WeaponDisablerSMG
   materials:
@@ -262,7 +262,7 @@
     Plastic: 500
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeSidearm
+  parent: BaseSidearmWeaponRecipe
   id: WeaponLaserSvalinn
   result: WeaponLaserSvalinn
   materials:
@@ -270,7 +270,7 @@
     Gold: 500
 
 - type: latheRecipe
-  parent: BaseWeaponRecipeSidearm
+  parent: BaseSidearmWeaponRecipe
   id: WeaponFlareGunSecurity
   result: WeaponFlareGunSecurity
   materials:
