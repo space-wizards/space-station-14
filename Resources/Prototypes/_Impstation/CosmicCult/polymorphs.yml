@@ -110,6 +110,8 @@
        isLooped: true
        reverseWhenFinished: true
   - type: SpriteFade
+  - type: Speech
+    enabled: False
   - type: Transform
   - type: Fixtures
     fixtures:

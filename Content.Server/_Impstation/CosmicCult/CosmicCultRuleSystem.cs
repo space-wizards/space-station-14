@@ -52,7 +52,6 @@ namespace Content.Server._Impstation.CosmicCult;
 /// </summary>
 public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponent>
 {
-    [Dependency] private readonly ISharedAdminLogManager _log = default!; //TODO: Admin logging, probably.
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -76,6 +75,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
     public Entity<MonumentComponent> MonumentInGame; // the monument in the current round.
@@ -96,7 +96,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
         SubscribeLocalEvent<CosmicCultRuleComponent, AfterAntagEntitySelectedEvent>(OnAntagSelect);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-        SubscribeLocalEvent<CosmicCultComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<CosmicCultComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<CosmicMarkGodComponent, ComponentInit>(OnGodSpawn);
     }
 
@@ -474,14 +474,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 _euiMan.OpenEui(new CosmicConvertedEui(), session);
             }
-            if (HasComp<BibleUserComponent>(uid))
-                RemCompDeferred<BibleUserComponent>(uid);
+            RemComp<BibleUserComponent>(uid);
             TotalCult++;
             cosmicGamerule.Cultists.Add(uid);
             UpdateCultData(MonumentInGame);
         }
     }
-    private void OnComponentRemove(Entity<CosmicCultComponent> uid, ref ComponentRemove args)
+    private void OnComponentShutdown(Entity<CosmicCultComponent> uid, ref ComponentShutdown args)
     {
         var query = QueryActiveRules();
         while (query.MoveNext(out var _, out _, out var cosmicGamerule, out _))
@@ -496,17 +495,10 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             RemComp<CosmicCultLeadComponent>(uid);
             RemComp<InfluenceVitalityComponent>(uid);
             RemComp<InfluenceStrideComponent>(uid);
-            if (CurrentTier == 3 || uid.Comp.CosmicEmpowered)
-            {
-                RemComp<PressureImmunityComponent>(uid);
-                RemComp<TemperatureImmunityComponent>(uid);
-            }
-            if (CurrentTier == 3)
-            {
-                RemComp<CosmicStarMarkComponent>(uid);
-                _damage.SetDamageContainerID(uid, uid.Comp.StoredDamageContainer);
-            }
-
+            RemComp<PressureImmunityComponent>(uid);
+            RemComp<TemperatureImmunityComponent>(uid);
+            RemComp<CosmicStarMarkComponent>(uid);
+            _damage.SetDamageContainerID(uid, uid.Comp.StoredDamageContainer);
             _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-deconverted-fluff"), Color.FromHex("#4cabb3"), DeconvertSound);
             _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-deconverted-briefing"), Color.FromHex("#cae8e8"), null);
 
@@ -520,6 +512,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 _euiMan.OpenEui(new CosmicDeconvertedEui(), session);
             }
+            _eye.SetVisibilityMask(uid, 1);
             TotalCult--;
             cosmicGamerule.Cultists.Remove(uid);
             UpdateCultData(MonumentInGame);

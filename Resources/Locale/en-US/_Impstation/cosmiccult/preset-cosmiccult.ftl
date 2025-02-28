@@ -13,7 +13,7 @@ roles-antag-cosmiccultlead-description = Organize the cult into a force to be re
 
 cosmiccult-gamemode-title = The Cosmic Cult
 cosmiccult-gamemode-description =
-    Scanners detect an anmalous increase in Λ-CDM. There is no additional data.
+    Scanners detect an anomalous increase in Λ-CDM. There is no additional data.
 
 
 cosmiccult-finale-ready = A terrifying light surges forth from The Monument!
@@ -29,6 +29,7 @@ cosmiccult-finale-cultist-count = {$COUNT ->
     *[other] The summoning is hastened by {$COUNT} cultists present!
 }
 
+cosmiccult-finale-location = Scanners are detecting an enormous Λ-CDM spike {$location}!
 cosmiccult-finale-cancel-begin = You begin to disrupt The Monument's energies..
 cosmiccult-finale-beckon-begin = You begin to Beckon The Unknown..
 cosmiccult-finale-beckon-success = You beckon for the final curtain call.

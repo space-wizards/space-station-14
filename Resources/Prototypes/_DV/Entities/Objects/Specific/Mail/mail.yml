@@ -220,15 +220,15 @@
     - id: DrinkGlass
       amount: 2
 
-- type: entity
-  parent: BaseMailLarge
-  id: MailNFBible
-  suffix: bible, extended
-  components:
-  - type: Mail
-    contents:
-    - id: Bible
-    - id: ClothingHeadHatWitch1 # DeltaV - Compensates for items that don't exist here
+# - type: entity // Dummy bible mail replacement?
+#   parent: BaseMailLarge
+#   id: MailNFBible
+#   suffix: bible, extended
+#   components:
+#   - type: Mail
+#     contents:
+#     - id: Bible
+#     - id: ClothingHeadHatWitch1 # DeltaV - Compensates for items that don't exist here
 
 - type: entity
   parent: BaseMail

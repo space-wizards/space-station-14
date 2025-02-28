@@ -5,6 +5,8 @@
   components:
   - type: MindRole
     antagPrototype: CosmicAntagCultist
+    exclusiveAntag: true
+    roleType: TeamAntagonist
   - type: CosmicCultRole
 
 - type: entity
@@ -14,4 +16,6 @@
   components:
   - type: MindRole
     antagPrototype: CosmicAntagLeader
+    exclusiveAntag: true
+    roleType: TeamAntagonist
   - type: CosmicCultRole

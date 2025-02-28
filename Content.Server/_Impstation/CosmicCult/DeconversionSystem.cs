@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Jittering;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.SSDIndicator;
 using Content.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -47,7 +48,7 @@ public sealed class DeconversionSystem : EntitySystem
         var deconCultTimer = EntityQueryEnumerator<CleanseCultComponent>();
         while (deconCultTimer.MoveNext(out var uid, out var comp))
         {
-            if (_timing.CurTime >= comp.CleanseTime)
+            if (_timing.CurTime >= comp.CleanseTime && HasComp<SSDIndicatorComponent>(uid))
             {
                 RemComp<CleanseCultComponent>(uid);
                 DeconvertCultist(uid);
@@ -98,7 +99,8 @@ public sealed class DeconversionSystem : EntitySystem
 
             Spawn(uid.Comp.MalignVFX, targetPosition);
             Spawn(uid.Comp.MalignVFX, Transform(args.User).Coordinates);
-            DeconvertCultist(target.Value);
+            EnsureComp<CleanseCultComponent>(target.Value, out var cleanse);
+            cleanse.CleanseDuration = TimeSpan.FromSeconds(1);
             _audio.PlayPvs(uid.Comp.MalignSound, targetPosition, AudioParams.Default.WithVolume(2f));
             _damageable.TryChangeDamage(args.User, uid.Comp.SelfDamage, true);
             _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-success-empowered", ("target", Identity.Entity(target.Value, EntityManager))), args.User, args.User);
@@ -106,7 +108,8 @@ public sealed class DeconversionSystem : EntitySystem
         else if (TryComp<CosmicCultComponent>(args.Target, out var cultComponent) && !cultComponent.CosmicEmpowered)
         {
             Spawn(uid.Comp.CleanseVFX, targetPosition);
-            DeconvertCultist(target.Value);
+            EnsureComp<CleanseCultComponent>(target.Value, out var cleanse);
+            cleanse.CleanseDuration = TimeSpan.FromSeconds(1);
             _audio.PlayPvs(uid.Comp.CleanseSound, targetPosition, AudioParams.Default.WithVolume(4f));
             _popup.PopupEntity(Loc.GetString("cleanse-deconvert-attempt-success", ("target", Identity.Entity(target.Value, EntityManager))), args.User, args.User);
         }
@@ -120,6 +123,6 @@ public sealed class DeconversionSystem : EntitySystem
 
     private void DeconvertCultist(EntityUid uid)
     {
-        RemCompDeferred<CosmicCultComponent>(uid);
+        RemComp<CosmicCultComponent>(uid);
     }
 }

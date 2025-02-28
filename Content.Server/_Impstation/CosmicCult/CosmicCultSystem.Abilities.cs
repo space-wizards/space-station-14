@@ -32,6 +32,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Events;
 using Content.Shared.SSDIndicator;
+using Robust.Shared.Containers;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -52,6 +53,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public void SubscribeAbilities()
     {
@@ -113,36 +115,28 @@ public sealed partial class CosmicCultSystem : EntitySystem
         Spawn(uid.Comp.GlareVFX, Transform(uid).Coordinates);
         args.Handled = true;
         var mapPos = _transform.GetMapCoordinates(args.Performer);
-        var targets = Filter.Empty();
-        targets.AddInRange(mapPos, 10, _playerManager, EntityManager);
-        foreach (var target in targets.Recipients)
+        var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
+        entities.RemoveWhere(entity => HasComp<CosmicCultComponent>(entity) || _container.IsEntityInContainer(entity));
+        foreach (var entity in entities)
         {
-            if (target.AttachedEntity is { } entity)
-            {
-                var hitPos = _transform.GetMapCoordinates(entity).Position;
-                var delta = hitPos - mapPos.Position;
-                if (delta == Vector2.Zero)
-                    continue;
-                if (delta.EqualsApprox(Vector2.Zero))
-                    delta = new(.01f, 0);
+            var hitPos = _transform.GetMapCoordinates(entity).Position;
+            var delta = hitPos - mapPos.Position;
+            if (delta == Vector2.Zero)
+                continue;
+            if (delta.EqualsApprox(Vector2.Zero))
+                delta = new(.01f, 0);
 
-                if (!HasComp<CosmicCultComponent>(entity) || !HasComp<BibleUserComponent>(entity))
-                {
-                    if (!uid.Comp.CosmicEmpowered)
-                    {
-                        _recoil.KickCamera(entity, -delta.Normalized());
-                        _flash.Flash(entity, uid, args.Action, 6 * 1000f, 0.5f);
-                    }
-                    else
-                    {
-                        _recoil.KickCamera(entity, -delta.Normalized());
-                        _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
-                    }
-                }
+            if (!uid.Comp.CosmicEmpowered)
+            {
+                _recoil.KickCamera(entity, -delta.Normalized());
+                _flash.Flash(entity, uid, args.Action, 6 * 1000f, 0.5f);
+            }
+            else
+            {
+                _recoil.KickCamera(entity, -delta.Normalized());
+                _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
             }
         }
-
-        var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
         entities.RemoveWhere(entity => !HasComp<PoweredLightComponent>(entity));
         foreach (var entity in entities)
             _poweredLight.TryDestroyBulb(entity);

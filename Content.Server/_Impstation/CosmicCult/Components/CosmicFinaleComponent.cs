@@ -25,5 +25,5 @@ public sealed partial class CosmicFinaleComponent : Component
     [DataField] public string SelectedBufferSong = string.Empty;
     [DataField] public TimeSpan InteractionTime = TimeSpan.FromSeconds(15);
     [DataField] public SoundSpecifier BufferMusic = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/Before Dawn.ogg");
-    [DataField] public SoundSpecifier FinaleMusic = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/A New Dawn.ogg");
+    [DataField] public SoundSpecifier FinaleMusic = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/A New Dawn.ogg", AudioParams.Default.AddVolume(+12f));
 }

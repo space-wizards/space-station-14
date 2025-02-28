@@ -8,7 +8,7 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 [Access(typeof(DeconversionSystem))]
 public sealed partial class CleanseOnUseComponent : Component
 {
-    [DataField] public TimeSpan UseTime = TimeSpan.FromSeconds(25);
+    [DataField] public TimeSpan UseTime = TimeSpan.FromSeconds(10);
 
     [DataField] public SoundSpecifier SizzleSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 

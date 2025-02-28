@@ -7,11 +7,14 @@
   id: MonumentCosmicCultBase
   name: The Monument
   description: A great slab of unknowledge, only visible to those aware of it. Built of a thousand little nothings, its surface reflects a starless emptiness...
+  placement:
+    mode: AlignTileAny
   components:
   - type: Visibility
     layer: 777
   - type: SpriteFade
   - type: Sprite
+    noRot: true
     sprite: _Impstation/CosmicCult/Tileset/monument.rsi
     layers:
       - state: stage1
@@ -26,7 +29,6 @@
         map: ["enum.MonumentVisualLayers.FinaleLayer"]
     offset: 0,1
     drawdepth: Mobs
-    noRot: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -51,6 +53,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-1.1,-0.2,1.1,0.7"
+        density: 9999
         mask:
         - LargeMobMask
         layer:
@@ -108,6 +111,8 @@
     corruptionGrowth: true
     corruptionReduction: 0.01
     enabled: false
+  - type: Physics
+    bodyType: Static
 
  ########### SPAWN-IN ANIMATION #############
 
@@ -174,6 +179,7 @@
   parent: MonumentCosmicCultBase
   id: MonumentCosmicCult1
   suffix: Base, DO NOT MAP
+
 
 - type: entity
   id: MonumentCosmicCult2

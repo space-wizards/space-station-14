@@ -1,7 +1,7 @@
 ## Cosmic Cult Entropy Mote
 
 - type: entity
-  parent: MaterialBase
+  parent: [ MaterialBase, TierXContraband ]
   id: MaterialCosmicCultEntropy
   name: mote of entropy
   suffix: Full
@@ -25,6 +25,8 @@
     sprite: _Impstation/CosmicCult/Objects/entropymote.rsi
     size: Small
   - type: CosmicEntropyMote
+  - type: Visibility
+    layer: 777
 
 - type: entity
   parent: MaterialCosmicCultEntropy

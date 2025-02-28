@@ -52,7 +52,7 @@ public sealed class CosmicRiftSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginabsorb"), args.User, args.User);
         var doargs = new DoAfterArgs(EntityManager, args.User, uid.Comp.AbsorbTime, new EventAbsorbRiftDoAfter(), args.User, uid)
         {
-            DistanceThreshold = 1.5f, Hidden = true, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true, BreakOnDropItem = true,
+            DistanceThreshold = 1.5f, Hidden = true, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true, MovementThreshold = 0.5f,
         };
         _doAfter.TryStartDoAfter(doargs);
     }
@@ -70,7 +70,7 @@ public sealed class CosmicRiftSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginpurge"), args.User, args.User);
             var doargs = new DoAfterArgs(EntityManager, args.User, uid.Comp.BibleTime, new EventPurgeRiftDoAfter(), uid, uid)
             {
-                DistanceThreshold = 1.5f, Hidden = false, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true, BreakOnDropItem = true,
+                DistanceThreshold = 1.5f, Hidden = false, BreakOnDamage = true, BreakOnDropItem = true, BreakOnMove = true, MovementThreshold = 2f,
             };
             _doAfter.TryStartDoAfter(doargs);
         }
@@ -80,7 +80,7 @@ public sealed class CosmicRiftSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cosmiccult-rift-beginpurge"), args.User, args.User);
             var doargs = new DoAfterArgs(EntityManager, args.User, uid.Comp.ChaplainTime, new EventPurgeRiftDoAfter(), uid, uid)
             {
-                DistanceThreshold = 1.5f, Hidden = false, BreakOnDamage = true, BreakOnHandChange = true, BreakOnMove = true, BreakOnDropItem = true,
+                DistanceThreshold = 1.5f, Hidden = false, BreakOnDamage = true, BreakOnDropItem = true, BreakOnMove = true, MovementThreshold = 2f,
             };
             _doAfter.TryStartDoAfter(doargs);
         }

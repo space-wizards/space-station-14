@@ -5,7 +5,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
-    useDelay: 50
+    useDelay: 45
     whitelist:
       components:
         - HumanoidAppearance

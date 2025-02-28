@@ -332,3 +332,23 @@
     enabled: false
     castShadows: false
     color: "#42a4ae"
+
+- type: entity
+  id: AltarCosmic
+  parent: AltarNanotrasen
+  name: cosmic altar
+  description: Altar of.. Something.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/altar.rsi
+    layers:
+    - state: cosmic
+    - state: cosmic_light
+      shader: unshaded
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/altar.rsi
+    state: cosmic
+  - type: PointLight
+    radius: 1.5
+    energy: 2.5
+    color: "#42a4ae"

@@ -4,6 +4,7 @@ using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -73,8 +74,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
         }
         var stationUid = _station.GetStationInMap(Transform(uid).MapID);
         if (stationUid != null)
+        {
             _alert.SetLevel(stationUid.Value, "octarine", true, true, true, true);
-
+            _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
+            Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid.Owner)))))),
+            null,
+            Color.CadetBlue);
+        }
         comp.FinaleReady = false;
         comp.FinaleActive = true;
         monument.Enabled = true;

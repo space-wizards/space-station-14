@@ -1,11 +1,8 @@
-using Content.Shared.Antag;
 using Robust.Shared.GameStates;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
-using Content.Shared.Item;
 using Content.Shared.Damage;
-using System.Threading;
 using Content.Shared._Impstation.CosmicCult.Prototypes;
 using Content.Shared.Damage.Prototypes;
 
@@ -93,7 +90,7 @@ public sealed partial class CosmicCultComponent : Component
     public DamageSpecifier CosmicSiphonDamage = new()
     {
         DamageDict = new() {
-            { "Asphyxiation", 15 }
+            { "Asphyxiation", 14 }
         }
     };
     #endregion

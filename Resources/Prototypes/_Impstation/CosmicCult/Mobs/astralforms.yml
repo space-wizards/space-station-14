@@ -26,6 +26,7 @@
     visMask:
       - Normal
       - Ghost
+      - 777
   - type: ContentEye
     maxZoom: 1.2, 1.2
   - type: Speech
@@ -74,6 +75,7 @@
     visMask:
       - Normal
       - Ghost
+      - 777
   - type: SSDIndicator
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5

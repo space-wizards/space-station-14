@@ -21,6 +21,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Server.AlertLevel;
 using Content.Shared.SSDIndicator;
+using Content.Server.Announcements.Systems;
+using Content.Server.Pinpointer;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -43,6 +45,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly AlertLevelSystem _alert = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!;
 
     private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
     public int CultistCount;
