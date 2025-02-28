@@ -27,13 +27,4 @@ public sealed partial class GasCondenserComponent : Component
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
-
-    /// <summary>
-    /// For a condenser, how many U of reagents are given for a molar mass of 1
-    /// </summary>
-    /// <remarks>
-    /// Taken based on the idea that one mole of Carbon-12 should equal 1u, because chemistry
-    /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MolarMassToReagentMultiplier = 0.0833f;
 }
