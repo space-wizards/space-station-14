@@ -42,6 +42,7 @@ internal sealed class AdminNameOverlay : Overlay
         _entityLookup = entityLookup;
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
+        // Setting this to a specific font would break the antag symbols
         _font = resourceCache.NotoStack("Regular", 10);
 
         _config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
@@ -83,24 +84,42 @@ internal sealed class AdminNameOverlay : Overlay
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
-
             var symbol = _overlaySymbols ? playerInfo.RoleProto.Symbol : string.Empty;
+
+            var currentOffset = Vector2.Zero;
 
             if (_overlayClassic && playerInfo.Antag)
             {
                 var label = symbol + _antagLabelClassic;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, _antagColorClassic);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
+                currentOffset += lineoffset;
             }
             else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
                 var label = symbol + Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
                 var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
+                currentOffset += lineoffset;
             }
 
-            args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
-            args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
+            currentOffset += lineoffset;
+
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+            currentOffset += lineoffset;
+
+            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString))
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
+                currentOffset += lineoffset;
+            }
+
+            if (!string.IsNullOrEmpty(playerInfo.StartingJob))
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
+                currentOffset += lineoffset;
+            }
         }
     }
 }
