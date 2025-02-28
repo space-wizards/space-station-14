@@ -17,7 +17,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 30
+        maxVol: 35
   - type: RefillableSolution
     solution: injector
   - type: Appearance
@@ -32,11 +32,15 @@
   description: A device used to heal patients brute, burn or both damage types. Uses bicaridine to work.
   parent: BaseAutoMender
   components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 30
   - type: Healing
     solutionDrain: true
     reagentsToDrain:
     - ReagentId: Bicaridine
-      Quantity: 1
+      Quantity: 0.5
     delay: 0.5
     damageContainers:
       - Biological
@@ -56,10 +60,10 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 30
+        maxVol: 35
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 30
+          Quantity: 35
       
 - type: entity
   id: AutoMenderBurn
@@ -71,15 +75,15 @@
     solutionDrain: true
     reagentsToDrain:
     - ReagentId: Dermaline
-      Quantity: 1
+      Quantity: 0.5
     damageContainers:
       - Biological
     delay: 0.5
     damage:
       types:
-        Heat: -2
-        Cold: -2
-        Shock: -2
+        Heat: -1.5
+        Cold: -1.5
+        Shock: -1.5
         Caustic: -1
     healingBeginSound:
       path: "/Audio/_Starlight/Items/Medical/mender.ogg"
@@ -94,7 +98,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 30
+        maxVol: 35
         reagents:
         - ReagentId: Dermaline
-          Quantity: 30
+          Quantity: 35
