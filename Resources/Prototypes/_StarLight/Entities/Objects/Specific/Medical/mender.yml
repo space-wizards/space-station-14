@@ -22,7 +22,7 @@
     solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 1
+    maxFillLevels: 3
     fillBaseName: mender
     solutionName: injector
     
@@ -44,9 +44,9 @@
       groups:
         Brute: -24 # 8 for each type in the group :3
     healingBeginSound:
-      path: "/Audio/Items/Medical/ointment_begin.ogg"
+      path: "/Audio/_Starlight/Items/Medical/mender.ogg"
     healingEndSound:
-      path: "/Audio/Items/Medical/ointment_end.ogg"
+      path: "/Audio/_Starlight/Items/Medical/mender2.ogg"
       
 - type: entity
   suffix: Filled
@@ -81,9 +81,9 @@
         Cold: -6
         Shock: -6
     healingBeginSound:
-      path: "/Audio/Items/Medical/ointment_begin.ogg"
+      path: "/Audio/_Starlight/Items/Medical/mender.ogg"
     healingEndSound:
-      path: "/Audio/Items/Medical/ointment_end.ogg"
+      path: "/Audio/_Starlight/Items/Medical/mender2.ogg"
       
 - type: entity
   suffix: Filled
