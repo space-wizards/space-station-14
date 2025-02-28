@@ -352,3 +352,30 @@
     radius: 1.5
     energy: 2.5
     color: "#42a4ae"
+
+- type: entity
+  id: CosmicTable
+  parent: CounterBase
+  name: malign table
+  description: Unfathomably, cosmically.. Square.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/cosmictable.rsi
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmictable.rsi
+    state: full
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: CosmicMarkStructure
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: cosmictable
+    base: state_
