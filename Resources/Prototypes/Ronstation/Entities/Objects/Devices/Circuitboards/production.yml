@@ -10,3 +10,8 @@
       stackRequirements:
         MatterBin: 1
         Manipulator: 1
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 150
+      chemicalComposition:
+        Silicon: 20
