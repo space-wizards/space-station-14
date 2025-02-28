@@ -101,6 +101,7 @@ marking-HumanHairLongBow = Long Bow
 marking-HumanHairLong = Long Hair 1
 marking-HumanHairLong2 = Long Hair 2
 marking-HumanHairLong3 = Long Hair 3
+marking-HumanHairLongBangs = Long Bangs 2
 marking-HumanHairLongWithBundles = Long With Bundles
 marking-HumanHairLongovereye = Long Over Eye
 marking-HumanHairLbangs = Long Bangs
