@@ -12,6 +12,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -84,7 +85,9 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<StorageComponent>(uid, out var storage) || !storage.Container.ContainedEntities.Any())
             return;
 
-        if (DumpTypeCheck(args.Target) == 0)
+        var dumpType = DumpTypeCheck(args.Target);
+
+        if (dumpType == DumpTypes.noTarget)
             return;
 
         if (TryComp<MaterialStorageComponent>(args.Target, out var matComp))
@@ -99,13 +102,17 @@ public sealed class DumpableSystem : EntitySystem
             }
         }
 
+        var locId = "onto";
+        if (dumpType == DumpTypes.disposal || dumpType == DumpTypes.materialStorage)
+            locId = "into";
+
         UtilityVerb verb = new()
         {
             Act = () =>
             {
                 StartDoAfter(uid, args.Target, args.User, comp);
             },
-            Text = Loc.GetString("dump-utility-verb-name", ("target", args.Target)),
+            Text = Loc.GetString("dump-utility-verb-name", ("target", args.Target), ("into", locId)),
             IconEntity = GetNetEntity(uid)
         };
         args.Verbs.Add(verb);
@@ -152,27 +159,24 @@ public sealed class DumpableSystem : EntitySystem
 
         switch (dumpType)
         {
-            case 0:
+            case DumpTypes.noTarget:
                 var userPos = _transformSystem.GetWorldPosition(uid);
                 foreach (var entity in dumpQueue)
-                {
-                    var transform = Transform(entity);
-                    _transformSystem.SetWorldPositionRotation(entity, userPos + _random.NextVector2Box() / 4, _random.NextAngle(), transform);
-                }
-                return;
+                    _transformSystem.SetWorldPositionRotation(entity, userPos + _random.NextVector2Box() / 4, _random.NextAngle(), Transform(entity));
+                break;
 
-            case 1:
+            case DumpTypes.materialStorage:
                 foreach (var entity in dumpQueue)
                     _materialStorage.TryInsertMaterialEntity(args.Args.User, entity, args.Args.Target.Value);
                 break;
 
-            case 2:
+            case DumpTypes.surface:
                 var (targetPos, targetRot) = _transformSystem.GetWorldPositionRotation(args.Args.Target.Value);
                 foreach (var entity in dumpQueue)
                     _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
                 break;
 
-            case 3:
+            case DumpTypes.disposal:
                 foreach (var entity in dumpQueue)
                     _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, entity, args.Args.User);
                 break;
@@ -181,17 +185,26 @@ public sealed class DumpableSystem : EntitySystem
         _audio.PlayPredicted(comp.DumpSound, uid, args.User);
     }
 
-    public byte DumpTypeCheck(EntityUid uid)
+    [Serializable, NetSerializable]
+    public enum DumpTypes : sbyte
+    {
+        noTarget,
+        materialStorage,
+        surface,
+        disposal
+    }
+
+    public DumpTypes DumpTypeCheck(EntityUid uid)
     {
         if (_disposalUnitSystem.HasDisposals(uid))
-            return 3;
+            return DumpTypes.disposal;
 
         if (HasComp<PlaceableSurfaceComponent>(uid))
-            return 2;
+            return DumpTypes.surface;
 
         if (HasComp<MaterialStorageComponent>(uid))
-            return 1;
+            return DumpTypes.materialStorage;
 
-        return 0;
+        return DumpTypes.noTarget;
     }
 }
