@@ -534,7 +534,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: StaminaResistance
-    damageCoefficient: 0.65
+    damageCoefficient: 0.60
   - type: Armor
     modifiers:
       coefficients:
@@ -596,7 +596,7 @@
   - type: FireProtection
     reduction: 0.8
   - type: StaminaResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
@@ -666,7 +666,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: StaminaResistance
-    damageCoefficient: 0.8
+    damageCoefficient: 0.75
   - type: Armor
     modifiers:
       coefficients:
