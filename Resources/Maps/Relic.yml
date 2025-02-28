@@ -12144,26 +12144,81 @@ entities:
   entities:
   - uid: 210
     components:
+    - type: MetaData
+      desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
+      name: party grenade
+    - type: SmokeOnTrigger
+      duration: 30
+      spreadAmount: 50
+      smokePrototype: Foam
+      solution:
+        reagents:
+        - ReagentId: Happiness
+          Quantity: 30
     - type: Transform
       pos: 28.682674,-1.3183393
       parent: 2
   - uid: 213
     components:
+    - type: MetaData
+      desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
+      name: party grenade
+    - type: SmokeOnTrigger
+      duration: 30
+      spreadAmount: 50
+      smokePrototype: Foam
+      solution:
+        reagents:
+        - ReagentId: THC
+          Quantity: 30
     - type: Transform
       pos: 28.518612,-1.6933393
       parent: 2
   - uid: 215
     components:
+    - type: MetaData
+      desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
+      name: party grenade
+    - type: SmokeOnTrigger
+      duration: 30
+      spreadAmount: 50
+      smokePrototype: Foam
+      solution:
+        reagents:
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 30
     - type: Transform
       pos: 24.348185,-8.066757
       parent: 2
   - uid: 230
     components:
+    - type: MetaData
+      desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
+      name: party grenade
+    - type: SmokeOnTrigger
+      duration: 30
+      spreadAmount: 50
+      smokePrototype: Foam
+      solution:
+        reagents:
+        - ReagentId: BuzzochloricBees
+          Quantity: 30
     - type: Transform
       pos: 24.660685,-8.316757
       parent: 2
   - uid: 367
     components:
+    - type: MetaData
+      desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
+      name: party grenade
+    - type: SmokeOnTrigger
+      duration: 30
+      spreadAmount: 50
+      smokePrototype: Foam
+      solution:
+        reagents:
+        - ReagentId: JuiceThatMakesYouHew
+          Quantity: 30
     - type: Transform
       pos: 28.331112,-1.2949018
       parent: 2
