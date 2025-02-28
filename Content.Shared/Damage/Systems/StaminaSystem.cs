@@ -234,7 +234,7 @@ public sealed partial class StaminaSystem : EntitySystem
     }
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
-        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
+        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null, bool ignoreResist = false)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -245,7 +245,10 @@ public sealed partial class StaminaSystem : EntitySystem
             return;
 
         // Allow stamina resistance to be applied.
-        value = ev.Value;
+        if (!ignoreResist)
+        {
+            value = ev.Value;
+        }
         // Have we already reached the point of max stamina damage?
         if (component.Critical)
             return;
