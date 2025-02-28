@@ -2,7 +2,7 @@
   id: TegCenter
   name: thermo-electric generator
   description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   placement:
     mode: SnapgridCenter
   components:
@@ -102,12 +102,14 @@
       - Power
     - type: StealTarget
       stealGroup: Teg
+    - type: Machine
+      board: TegCenterCircuitboard
 
 - type: entity
   id: TegCirculator
   name: circulator
   description: Passes gas through the thermo-electric generator to exchange heat. Has an inlet and outlet port.
-  parent: BaseMachine
+  parent: [ BaseMachine, ConstructibleMachine ]
   placement:
     mode: SnapgridCenter
   components:
@@ -184,6 +186,8 @@
     - type: TegCirculator
     - type: StealTarget
       stealGroup: Teg
+    - type: Machine
+      board: TegCirculatorCircuitboard
 
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity

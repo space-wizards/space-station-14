@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: EngineTegFlatpack
+  icon:
+    sprite: Structures/Power/Generation/teg.rsi
+    state: static
+  product: CrateEngineeringTeg
+  cost: 15000
+  category: cargoproduct-category-name-engineering
+  group: market

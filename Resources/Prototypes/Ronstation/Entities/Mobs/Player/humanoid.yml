@@ -1,0 +1,62 @@
+## Heccdiver
+
+- type: entity
+  id: RandomHumanoidSpawnerHeccdiver
+  name: HECCdiver
+  suffix: TerragovRole, Heccdiver
+  components:
+    - type: Sprite
+      sprite: Ronstation/Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+      state: icon
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitaryLeader
+        - NamesLastMilitary
+    - type: RandomHumanoidSpawner
+      settings: Heccdiver
+
+- type: randomHumanoidSettings
+  id: Heccdiver
+  parent: EventHumanoidMindShielded
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-Heccdiver-name
+      description: ghost-role-information-Heccdiver-description
+      rules: ghost-role-information-Heccdiver-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ HeccdiverGear ]
+      roleLoadout: [ RoleSurvivalEVA ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitaryLeader
+        - NamesLastMilitary
+
+## Central Command
+
+- type: entity
+  name: CentCom blueshield officer
+  suffix: CentCom
+  id: RandomHumanoidSpawnerCentcomBlueshieldOfficer
+  components:
+    - type: Sprite
+      sprite: Ronstation/Markers/jobs.rsi
+      state: blueshield_officer
+    - type: RandomHumanoidSpawner
+      settings: CentcomBlueshieldOfficer
+
+- type: randomHumanoidSettings
+  id: CentcomBlueshieldOfficer
+  parent: EventHumanoidMindShielded
+  components:
+    - type: GhostRole
+      name: ghost-role-information-centcom-blueshield-officer-name
+      description: ghost-role-information-centcom-blueshield-officer-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ CentcomBlueshieldOfficerGear ]
+      roleLoadout: [ RoleSurvivalStandard ]

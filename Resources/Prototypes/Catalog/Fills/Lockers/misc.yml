@@ -25,6 +25,10 @@
       children:
       - id: EmergencyOxygenTankFilled
       - id: OxygenTankFilled
+    - !type:GroupSelector
+      children:
+      - id: EmergencyNitrogenTankFilled
+      - id: NitrogenTankFilled
     - id: ToolboxEmergencyFilled
       prob: 0.5
     - id: MedkitOxygenFilled
@@ -67,6 +71,10 @@
         - id: ClothingOuterSuitEmergency
         - !type:GroupSelector
           children:
+          - id: EmergencyOxygenTankFilled
+          - id: OxygenTankFilled
+        - !type:GroupSelector
+          children:
           - id: EmergencyNitrogenTankFilled
           - id: NitrogenTankFilled
 
@@ -81,6 +89,10 @@
       children:
       - id: EmergencyOxygenTankFilled
       - id: OxygenTankFilled
+    - !type:GroupSelector
+      children:
+      - id: EmergencyNitrogenTankFilled
+      - id: NitrogenTankFilled
     - id: CrowbarRed
     - !type:GroupSelector
       children:

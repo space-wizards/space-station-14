@@ -29,9 +29,9 @@
   description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Helmets/security.rsi
+    sprite: Ronstation/Clothing/Head/Helmets/security.rsi
   - type: Clothing
-    sprite: Clothing/Head/Helmets/security.rsi
+    sprite: Ronstation/Clothing/Head/Helmets/security.rsi
   - type: Tag
     tags:
     - WhitelistChameleon

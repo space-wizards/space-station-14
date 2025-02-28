@@ -1,0 +1,11 @@
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SalvageShuttleConsoleCircuitboard
+  name: salvage shuttle console board
+  description: A computer printed circuit board for a salvage shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSalvage
+    - type: StealTarget
+      stealGroup: SalvageShuttleConsoleCircuitboard
