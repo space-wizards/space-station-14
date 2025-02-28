@@ -1,3 +1,4 @@
+using Content.Shared.Body.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Storage.Components;
@@ -23,7 +24,7 @@ public sealed class FoldableSystem : EntitySystem
 
         SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
         SubscribeLocalEvent<FoldableComponent, ContainerGettingInsertedAttemptEvent>(OnInsertEvent);
-        SubscribeLocalEvent<FoldableComponent, StoreMobInItemContainerAttemptEvent>(OnStoreThisAttempt);
+        SubscribeLocalEvent<FoldableComponent, InsertIntoEntityStorageAttemptEvent>(OnStoreThisAttempt);
         SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
 
         SubscribeLocalEvent<FoldableComponent, StrapAttemptEvent>(OnStrapAttempt);
@@ -45,10 +46,8 @@ public sealed class FoldableSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref StoreMobInItemContainerAttemptEvent args)
+    public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
     {
-        args.Handled = true;
-
         if (comp.IsFolded)
             args.Cancelled = true;
     }
