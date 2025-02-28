@@ -50,6 +50,8 @@ internal sealed class AdminNameOverlay : Overlay
 
         //TODO make this adjustable via GUI
         var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
+        var playTime = _config.GetCVar(CCVars.AdminOverlayPlaytime);
+        var startingJob = _config.GetCVar(CCVars.AdminOverlayStartingJob);
 
         foreach (var playerInfo in _system.PlayerList)
         {
@@ -102,13 +104,13 @@ internal sealed class AdminNameOverlay : Overlay
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
             currentOffset += lineoffset;
 
-            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString))
+            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && playTime)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
                 currentOffset += lineoffset;
             }
 
-            if (!string.IsNullOrEmpty(playerInfo.StartingJob))
+            if (!string.IsNullOrEmpty(playerInfo.StartingJob) && startingJob)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
                 currentOffset += lineoffset;
