@@ -66,6 +66,7 @@
             # supply - 7-10
             CargoTechnician: [ 4, 4 ]
             SalvageSpecialist: [ 3, 3 ]
+            Courier: [ 2, 2 ]
             SupplyAssistant: [ 3, 3 ]
             # civilian
             Passenger: [ -1, -1 ]
