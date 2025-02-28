@@ -1,9 +1,10 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.Medical.Components
+namespace Content.Shared.Medical.Components
 {
     /// <summary>
     /// Applies a damage change to the target when used in an interaction.
@@ -62,5 +63,11 @@ namespace Content.Server.Medical.Components
         /// </summary>
         [DataField("healingEndSound")]
         public SoundSpecifier? HealingEndSound = null;
+        
+        [DataField]
+        public bool SolutionDrain = false;
+        
+        [DataField]
+        public List<ReagentQuantity> ReagentsToDrain = new();
     }
 }

@@ -51,6 +51,20 @@
 		},
 		{
 			"name": "redointment3"
+		},
+		{
+			"name": "mender"
+		},
+		{
+			"name": "mender1"
+		},
+		{
+			"name": "mender-inhand-left",
+            "directions": 4
+		},
+		{
+			"name": "mender-inhand-right",
+            "directions": 4
 		}
     ]
 }

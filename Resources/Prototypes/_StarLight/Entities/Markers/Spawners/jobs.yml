@@ -75,9 +75,8 @@
     job_id: MiningSpecialist
   - type: Sprite
     layers:
-    - state: green
-    - state: salvagespecialist
-      - state: jobicon
+      - state: green
+      - state: salvagespecialist
 
 - type: entity
   id: SpawnPointSurgeon
