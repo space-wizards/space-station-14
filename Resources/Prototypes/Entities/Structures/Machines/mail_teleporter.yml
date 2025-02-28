@@ -1,0 +1,44 @@
+- type: entity
+  id: CargoMailTeleporter
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: mail teleporter
+  description: Periodically teleports in mail to deliver across the station.
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+        - MachineMask
+  - type: Sprite
+    sprite: Structures/cargo_telepad.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: offline
+      map: [ "enum.CargoTelepadLayers.Base" ]
+    - state: idle
+      map: [ "enum.CargoTelepadLayers.Beam" ]
+      shader: unshaded
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: Appearance
+  - type: CollideOnAnchor
+  - type: Machine
+    board: MailTeleporterMachineCircuitboard
+  - type: PowerSwitch
+  - type: DeliverySpawner
+    table: !type:NestedSelector
+      tableId: RandomDeliveryBasic
