@@ -86,7 +86,7 @@
         damage:
           types:
             Poison:
-              1
+              0.5
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
@@ -132,7 +132,7 @@
         damage:
           types:
             Radiation:
-              1
+              2
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
