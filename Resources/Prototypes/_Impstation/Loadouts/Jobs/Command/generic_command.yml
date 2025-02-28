@@ -1,52 +1,36 @@
-# Timers
 - type: loadoutEffectGroup
-  id: Command10Hr
+  id: VeteranCommand
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 108000 #30 hrs, ~20 rounds
 
 # Back
 - type: loadout
   id: CommandVeteranBackpack
   equipment:
     back: ClothingBackpackCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
 
 - type: loadout
   id: CommandVeteranSatchel
   equipment:
     back: ClothingBackpackSatchelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
 
 - type: loadout
   id: CommandVeteranDuffel
   equipment:
     back: ClothingBackpackDuffelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
 
 # Shoes
 - type: loadout
   id: BlackCommandHeels
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command10Hr
   equipment:
     shoes: ClothingShoesHeelsCommandBlack
 
 - type: loadout
   id: BlueCommandHeels
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Command10Hr
   equipment:
     shoes: ClothingShoesHeelsCommandBlue
 

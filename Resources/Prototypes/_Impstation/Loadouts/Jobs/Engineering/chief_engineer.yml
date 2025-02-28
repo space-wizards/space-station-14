@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobChiefEngineer
-      time: 180000 #50 hrs
+      time: 108000 #30 hrs, ~20 rounds
 
 - type: loadout
   id: ChiefEngineerVeteranHeadset
