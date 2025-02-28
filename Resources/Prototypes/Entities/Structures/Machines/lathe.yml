@@ -1139,6 +1139,10 @@
       - MedkitCombat
       - ClothingEyesGlassesChemical
       - WhiteCane
+      # Starlight-edit start
+      - AutoMenderBrute
+      - AutoMenderBurn
+      # Starlight-edit end
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker

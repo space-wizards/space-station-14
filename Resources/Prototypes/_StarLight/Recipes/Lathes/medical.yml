@@ -191,3 +191,25 @@
     Gold: 300
     Plasma: 300
     Glass: 100
+    
+# Automenders
+
+- type: latheRecipe
+  id: AutoMenderBrute
+  result: AutoMenderBrute
+  category: Tools
+  completetime: 4
+  materials:
+    Plastic: 200
+    Steel: 100
+    Silver: 50
+    
+- type: latheRecipe
+  id: AutoMenderBurn
+  result: AutoMenderBurn
+  category: Tools
+  completetime: 4
+  materials:
+    Plastic: 200
+    Steel: 100
+    Silver: 50
