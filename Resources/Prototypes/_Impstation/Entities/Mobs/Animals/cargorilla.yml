@@ -80,6 +80,8 @@
         Base: dead
       Dead:
         Base: dead
+  - type: Absorbable # lotta meat on a gorilla
+    biomassRestored: 0.8
   - type: Butcherable
     spawned:
     - id: FoodMeat

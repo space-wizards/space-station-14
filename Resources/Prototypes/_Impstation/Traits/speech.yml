@@ -113,7 +113,7 @@
   - type: ParrotSpeech
     maximumPhraseLength: 24 # higher chance of saying a full sentence
     minimumWait: 300
-    maximumWait: 900 # triggers once every 15 minutes
+    maximumWait: 600 # triggers once every 5-10 minutes
     learnChance: 0.1
 
 # 2 cost

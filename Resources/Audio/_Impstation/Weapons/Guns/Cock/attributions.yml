@@ -1,0 +1,9 @@
+- files: ["basic_cock.ogg"]
+  license: "Custom"
+  copyright: "Made by AvianMaiden for Impstation"
+  source: "https://github.com/impstation/imp-station-14/pull/1761"
+  
+- files: ["shotgun_cock.ogg"]
+  license: "Custom"
+  copyright: "Sourced from pre-existing files shotgun_open.ogg and shotgun_close.ogg; modified by AvianMaiden for Impstation"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Weapons/Guns/Cock/shotgun_close.ogg"

@@ -4,7 +4,7 @@ using Content.Shared.Announcements.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Utility;
-using Content.Shared._EinsteinEngines.CCVar;
+using Content.Shared._EE.CCVar;
 
 namespace Content.Server.Announcements.Systems;
 
@@ -21,7 +21,7 @@ public sealed partial class AnnouncerSystem
     /// </summary>
     private void NewAnnouncer()
     {
-        var announcer = _config.GetCVar(EinsteinCCVars.Announcer);
+        var announcer = _config.GetCVar(EECCVars.Announcer);
         if (string.IsNullOrEmpty(announcer) || !_proto.TryIndex<AnnouncerPrototype>(announcer, out _))
             SetAnnouncer(PickAnnouncer());
         else
@@ -33,8 +33,8 @@ public sealed partial class AnnouncerSystem
     /// </summary>
     public AnnouncerPrototype PickAnnouncer()
     {
-        var list = _proto.Index<WeightedRandomPrototype>(_config.GetCVar(EinsteinCCVars.AnnouncerList));
-        var blacklist = _config.GetCVar(EinsteinCCVars.AnnouncerBlacklist).Split(',').Select(a => a.Trim()).ToList();
+        var list = _proto.Index<WeightedRandomPrototype>(_config.GetCVar(EECCVars.AnnouncerList));
+        var blacklist = _config.GetCVar(EECCVars.AnnouncerBlacklist).Split(',').Select(a => a.Trim()).ToList();
         var modWeights = list.Weights.Where(a => !blacklist.Contains(a.Key));
 
         list = new WeightedRandomPrototype();
