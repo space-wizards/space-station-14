@@ -59,8 +59,7 @@
                         PlaceHolder="0"
                         Text="1"
                         HorizontalExpand="True" />
-                    <Label Name="RecipeCountNum" Margin="8 0 2 0" MinWidth="28" Align="Right" />
-                    <Label Name="RecipeCountText" Margin="2 0 8 0" MinWidth="60" />
+                    <Label Name="RecipeCount" Margin="8 0 8 0" MinWidth="90" Align="Right" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
