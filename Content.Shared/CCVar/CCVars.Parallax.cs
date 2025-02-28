@@ -5,7 +5,7 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     public static readonly CVarDef<bool> ParallaxEnabled =
-        CVarDef.Create("parallax.enabled", true, CVar.CLIENTONLY);
+        CVarDef.Create("parallax.enabled", false, CVar.CLIENTONLY);
 
     public static readonly CVarDef<bool> ParallaxDebug =
         CVarDef.Create("parallax.debug", false, CVar.CLIENTONLY);
