@@ -24,6 +24,9 @@
     },
     {
       "name": "obs"
+    },
+    {
+      "name": "surgeon"
     }
   ]
 }

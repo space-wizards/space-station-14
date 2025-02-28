@@ -17,6 +17,13 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobSurgeon
+  groups:
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobNanoTrasenRepresentative

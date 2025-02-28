@@ -2,7 +2,7 @@
   parent: JobIcon
   id: JobIconIAA
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: IAA
   jobName: job-name-iaa
 
@@ -10,7 +10,7 @@
   parent: JobIcon
   id: JobIconMagistrate
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: Magistrate
   jobName: job-name-magistrate
   
@@ -18,6 +18,14 @@
   parent: JobIcon
   id: JobIconBlueShield
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: BlueShield
   jobName: job-name-blueshield
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSurgeon
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: Surgeon
+  jobName: job-name-surgeon

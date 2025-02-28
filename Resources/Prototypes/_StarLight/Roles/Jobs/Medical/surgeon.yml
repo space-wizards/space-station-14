@@ -1,0 +1,29 @@
+- type: job
+  id: Surgeon
+  name: job-name-surgeon
+  description: job-description-surgeon
+  playTimeTracker: JobSurgeon
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 57600 #16 hrs
+  startingGear: SurgeonGear
+  icon: "JobIconSurgeon"
+  supervisors: job-supervisors-cmo
+  canBeAntag: true
+  access:
+  - Medical
+  - Maintenance
+
+- type: startingGear
+  id: SurgeonGear
+  equipment:
+    jumpsuit: UniformScrubsColorGreen
+    shoes: ClothingShoesColorBrown
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesNitrile
+    outerClothing: ClothingOuterCoatLabOpened
+    id: MedicalPDA
+    ears: ClothingHeadsetMedical
+    head: ClothingHeadHatSurgcapGreen
+    back: ClothingBackpackDuffelSurgeryFilled

@@ -1,0 +1,1 @@
+job-supervisors-magistrate = Magistrate

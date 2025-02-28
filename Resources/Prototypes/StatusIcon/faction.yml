@@ -75,5 +75,5 @@
       - ShowAntagIcons
       - VampireIcon
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: Vampire

@@ -21,3 +21,6 @@
 
 - type: playTimeTracker
   id: JobMiningSpecialist
+
+- type: playTimeTracker
+  id: JobSurgeon

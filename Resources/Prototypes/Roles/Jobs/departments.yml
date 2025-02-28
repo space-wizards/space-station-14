@@ -101,6 +101,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - Surgeon # Starlight-edit
 
 - type: department
   id: Security

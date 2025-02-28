@@ -171,15 +171,6 @@
             "name": "HeadRevolutionary"
         },
         {
-            "name": "Magistrate"
-        },
-        {
-            "name": "IAA"
-        },
-        {
-            "name": "BlueShield"
-        },
-        {
             "name": "MindShield",
             "delays":
             [
@@ -203,9 +194,6 @@
         },
         {
             "name": "Changeling"
-        },
-        {
-            "name": "Vampire"
         }
     ]
 }
