@@ -82,7 +82,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
-  # no dragon as carps and xenos can share same dungeons
+  - Dragon
 
 - type: npcFaction
   id: Zombie
