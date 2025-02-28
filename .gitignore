@@ -306,3 +306,7 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+
+# Local files
+.run/*
+CppProperties.json
