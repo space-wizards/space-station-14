@@ -3696,3 +3696,11 @@ Entries:
   id: 512
   time: '2025-02-28T18:34:04.580008+00:00'
   url: 'null'
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added Surgeon role to every map! Medmains rejoice!
+    type: Add
+  id: 513
+  time: '2025-02-28T18:35:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/349
+
