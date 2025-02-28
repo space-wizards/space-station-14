@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet, Darkmajia, Starlighthowls
-  changes:
-  - message: Added and rotated Banana, a new lowpop map!
-    type: Add
-  id: 708
-  time: '2024-12-10T11:11:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/978
 - author: DinnerCalzone
   changes:
   - message: EVA storage rooms on Bagel, Cog, and Marathon have been set to command
@@ -4095,3 +4088,10 @@
   id: 1207
   time: '2025-02-28T00:46:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1782
+- author: Sha-Seng
+  changes:
+  - message: Reduced or removed prestige item requirements per feedback
+    type: Tweak
+  id: 1208
+  time: '2025-02-28T01:00:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1781
