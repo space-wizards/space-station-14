@@ -27,6 +27,9 @@
   - type: CosmicEntropyMote
   - type: Visibility
     layer: 777
+  - type: Tag
+    tags:
+      - Entropy
 
 - type: entity
   parent: MaterialCosmicCultEntropy
@@ -78,3 +81,4 @@
   icon: { sprite: _Impstation/CosmicCult/Objects/entropymote.rsi, state: mote }
   spawn: MaterialCosmicCultEntropy1
   maxCount: 6
+
