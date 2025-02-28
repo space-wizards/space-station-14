@@ -37,7 +37,6 @@
     reagentsToDrain:
     - ReagentId: Bicaridine
       Quantity: 1
-    delay: 2
     damageContainers:
       - Biological
     damage:
