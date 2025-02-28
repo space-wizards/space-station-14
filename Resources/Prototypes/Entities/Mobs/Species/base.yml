@@ -93,8 +93,11 @@
         restitution: 0.0
         mask:
         - MobMask
+        - MobLayer
         layer:
         - MobLayer
+  - type: Physics
+    bodyType: Dynamic
   - type: FloorOcclusion
   - type: RangedDamageSound
     soundGroups:
