@@ -14,7 +14,7 @@ namespace Content.Server.Botany;
 [Prototype("seed")]
 public sealed partial class SeedPrototype : SeedData, IPrototype
 {
-    [IdDataField] public string ID { get; private init; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 }
 
 public enum HarvestType : byte

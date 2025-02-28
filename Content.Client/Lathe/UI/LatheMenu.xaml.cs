@@ -64,7 +64,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
         if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComponent))
         {
-            if (!latheComponent.DynamicRecipes.Any())
+            if (!latheComponent.DynamicPacks.Any())
             {
                 ServerListButton.Visible = false;
             }
@@ -94,8 +94,17 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(recipe, out var proto))
                 continue;
 
-            if (CurrentCategory != null && proto.Category != CurrentCategory)
-                continue;
+            // Category filtering
+            if (CurrentCategory != null)
+            {
+                if (proto.Categories.Count <= 0)
+                    continue;
+
+                var validRecipe = proto.Categories.Any(category => category == CurrentCategory);
+
+                if (!validRecipe)
+                    continue;
+            }
 
             if (SearchBar.Text.Trim().Length != 0)
             {
@@ -179,18 +188,22 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public void UpdateCategories()
     {
+        // Get categories from recipes
         var currentCategories = new List<ProtoId<LatheCategoryPrototype>>();
         foreach (var recipeId in Recipes)
         {
             var recipe = _prototypeManager.Index(recipeId);
 
-            if (recipe.Category == null)
+            if (recipe.Categories.Count <= 0)
                 continue;
 
-            if (currentCategories.Contains(recipe.Category.Value))
-                continue;
+            foreach (var category in recipe.Categories)
+            {
+                if (currentCategories.Contains(category))
+                    continue;
 
-            currentCategories.Add(recipe.Category.Value);
+                currentCategories.Add(category);
+            }
         }
 
         if (Categories != null && (Categories.Count == currentCategories.Count || !Categories.All(currentCategories.Contains)))

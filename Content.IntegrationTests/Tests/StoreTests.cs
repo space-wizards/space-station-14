@@ -5,6 +5,7 @@ using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
@@ -64,6 +65,7 @@ public sealed class StoreTests
         await server.WaitAssertion(() =>
         {
             var invSystem = entManager.System<InventorySystem>();
+            var mindSystem = entManager.System<SharedMindSystem>();
 
             human = entManager.SpawnEntity("HumanUniformDummy", coordinates);
             uniform = entManager.SpawnEntity("UniformDummy", coordinates);
@@ -72,6 +74,9 @@ public sealed class StoreTests
             Assert.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
             Assert.That(invSystem.TryEquip(human, pda, "id"));
 
+            var mind = mindSystem.CreateMind(null);
+            mindSystem.TransferTo(mind, human, mind: mind);
+
             FixedPoint2 originalBalance = 20;
             uplinkSystem.AddUplink(human, originalBalance, null, true);
 
@@ -79,11 +84,11 @@ public sealed class StoreTests
             var discountComponent = entManager.GetComponent<StoreDiscountComponent>(pda);
             Assert.That(
                 discountComponent.Discounts,
-                Has.Exactly(3).Items,
-                $"After applying discount total discounted items count was expected to be '3' "
+                Has.Exactly(6).Items,
+                $"After applying discount total discounted items count was expected to be '6' "
                 + $"but was actually {discountComponent.Discounts.Count}- this can be due to discount "
                 + $"categories settings (maxItems, weight) not being realistically set, or default "
-                + $"discounted count being changed from '3' in StoreDiscountSystem.InitializeDiscounts."
+                + $"discounted count being changed from '6' in StoreDiscountSystem.InitializeDiscounts."
             );
             var discountedListingItems = storeComponent.FullListingsCatalog
                                                        .Where(x => x.IsCostModified)

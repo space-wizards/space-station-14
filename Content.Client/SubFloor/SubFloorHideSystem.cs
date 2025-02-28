@@ -72,9 +72,12 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         }
         else if (scannerRevealed)
         {
-            // allows a t-ray to show wires/pipes above carpets/puddles
-            component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
-            args.Sprite.DrawDepth = (int)Shared.DrawDepth.DrawDepth.FloorObjects + 1;
+            // Allows a t-ray to show wires/pipes above carpets/puddles.
+            if (component.OriginalDrawDepth is not null)
+                return;
+            component.OriginalDrawDepth = args.Sprite.DrawDepth;
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.Puddles;
+            args.Sprite.DrawDepth -= drawDepthDifference - 1;
         }
         else if (component.OriginalDrawDepth.HasValue)
         {
