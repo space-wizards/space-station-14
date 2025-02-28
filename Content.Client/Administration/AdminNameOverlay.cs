@@ -83,7 +83,7 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            Vector2 currentOffset = Vector2.Zero;
+            var currentOffset = Vector2.Zero;
             if (classic && playerInfo.Antag)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, Color.OrangeRed);
