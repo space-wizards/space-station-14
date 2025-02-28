@@ -3688,3 +3688,11 @@ Entries:
   id: 511
   time: '2025-02-28T17:59:43.100154+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: 'Automenders rebalanced(quantity: 200 -> 30 for brute and 35 for burn),
+      delay changed to 0.5, damage heal: 1.5 for burn and 2 for brute.'
+    type: Tweak
+  id: 512
+  time: '2025-02-28T18:34:04.580008+00:00'
+  url: 'null'
