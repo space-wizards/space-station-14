@@ -1,0 +1,139 @@
+- Make sure barkeep's medicine cabinet has proper access (bartender only)
+- Also that the contents actually contain the medicines they're supposed to
+- Add ipecac? Syringe, or pills?
+- Add Haloperidol
+- Diphenhydramine? Diphenylmethylamine?
+
+- Special Drink Ingredients:
+- Add Sulphuric Acid, for Acidspit
+
+- Make sure musician stage railings don't block barstools
+
+- Shutters!
+- Bar, Kitchen, Botany, Graytider Shop - Do they work? Do they all start open (except shop)?
+- Front counters: Sci, Eng, Cargo, Med?, Sec?
+- Others?
+- Command Meeting Room - Also do they work, and do they correctly block the camera?
+
+- Command Meeting Room: Camera to execution chamber, maybe even a button to open the blast doors.
+
+- Graytider Shop: Bolt cafeteria-side door
+
+- Law Office: Direct lawyers wrt "defense" and "prosecution."
+- Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar...
+
+- Weapons Room: Make sure I can't actually fall into the chasms through the railings.
+/* - Check that "radar" computer board. What does it actually do? (Literally the Mass Scanner.) */
+- Make "Duster" cannons be broken
+
+- Science: Hook up gas stuff in arti room
+- Also put the cans in the cans room
+- Research server needs to be hooked up?
+- Big floor decal in Shield room space
+
+- Medbay: Chem-Masters sentient component? Smart Fridge?
+- Morgue: Give morgues a spooky speaking component? Might make a good general PR, actually.
+
+- Engineering: Make sure all the solars rooms have their stuff
+- Figure out how much power the AMEs generate, how much the tesla/singulo generates, how much solars generate,
+	and how much the station will actually need.
+	I'd like to have an actual reason for two AMEs and for there to be pressure to keep them running long-term.
+	Guess no TEG on this station.
+- Relabel holopads to AME North and AME South
+- Atmo: Make the cabbage sentientable? Brassica Oleracea Ambulatora?
+-- Adding walking cabbages would also be a great PR. Especially if it can be a wizard spell.
+- Empty trit and plasma disposal cans
+- Do I put a gateway from atmos to engineering?
+
+/* - Disposals: Make the windoors and the blast doors have good logic for not spacing disposals whenever the lever is pulled. */
+- Execution chamber door access
+- Execution cams and monitors: Hooked up correctly?
+
+- Unlabel all the circuitboards in the unlabeled circuitboard crate (and maybe label the crate?)
+
+- Check perms: Musician's secure locker
+
+- Actually tile clown and mime rooms (under the carpet)
+
+- Bridge: Hamlet. Does he spawn in the cage, or do I have to set that up?
+- Cap's office: Make fax machine sentientable
+- Vault: Fill syringe with 1 dose of cogni (unlabeled)
+-	Remove water from survival kit water bottle
+-	Make flare spent
+-	Make corpse rotten
+--		And add ammonia gas?
+-	Add diary page to room with welder
+
+- Coms: Do the camera monitors work? Do the camera servers work?
+- Extra encryption keys somewhere?
+- Non-security/AI cameras: Are they viewable on TVs?
+
+- Cargo: Give QM's escargot the ability to scream if sentient
+- ...and figure out the 'flavor' tag in the component for sentience
+- Mime's too
+- Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
+
+- Engineering: Give Command, Security encryption keys to CE
+
+- Evac: Make the shuttle like the Amogus lobby.
+
+
+- Wall maps
+- Borg rechargers
+- Lights
+- Emergency Lights
+- Holopads
+- Station Beacons
+- Emergency lockers, Fire lockers
+-- And nitrogen
+- Water and Welding tanks
+- Oxy and Nitrogen cans
+- PACMAN generators
+- Maints Loot
+-- Maints bar?
+- Amogi multitudinous
+- AI cams
+- Security Cams
+- Firelock doors (follow Impostor Door Sabotage as much as possible)
+- Vending Machines
+- Disposal chutes
+- APCs, Substations, whatever else is needed for power
+- Air alarms, fans, scrubbers, whatever else is needed for atmo
+- Fire alarms to make those firelock shutters shut inconveniently
+- At least a couple of escape pods
+- Deconstructable stuff for getting mats
+/* - Vault */
+- AI
+- Lamps on tables, paper, folders, filecabinets, pens
+- Fax machines
+- Detective, Psychologist
+- Courtroom
+- Intercoms
+- Make sure containers have what I expect them to have in them in them.
+- Make sure I can interact with posters correctly
+- Add directional wall signs as per Amonugs
+- Relabel station beacons to match Amogus
+- Mailing units
+- Fax machines - and make sure they have the right names or whatever
+- Evac countdown monitors
+
+- Make the station move forward!
+
+- Cargo, Salvage, and Evac
+- Vault
+- Perma
+- Cap's Office
+- AI
+- PA: Facing towards the front from the very rear of the ship
+	Let 'em choose between tesla and singulo
+- Solars
+- Other exterior stuff
+/* - Put pizza or whatever on the same cafeteria table that has it in Amogus */
+
+- Job numbers in the prototype file
+
+THINGS I COULD MAKE:
+- Plastic table
+- Round table ends
+- Random wall girder things
+- Wood but it's darker (and lighter?)
