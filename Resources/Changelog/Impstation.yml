@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: iaada, kipdotnet
-  changes:
-  - message: Fixed missing sprite layering on the tck'tck drone, and gave it a grapple
-      module.
-    type: Fix
-  id: 707
-  time: '2024-12-10T11:09:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/977
 - author: kipdotnet, Darkmajia, Starlighthowls
   changes:
   - message: Added and rotated Banana, a new lowpop map!
@@ -4095,3 +4087,11 @@
   id: 1206
   time: '2025-02-28T00:39:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1788
+- author: TheGrimbeeper
+  changes:
+  - message: You should now be able to notice something is wrong if you are being
+      irradiated
+    type: Add
+  id: 1207
+  time: '2025-02-28T00:46:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1782
