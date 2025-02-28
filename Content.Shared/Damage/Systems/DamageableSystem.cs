@@ -304,11 +304,14 @@ namespace Content.Shared.Damage
         public DamageSpecifier Damage;
         public EntityUid? Origin;
 
-        public DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
+        public bool IsVirtual; //#IMP For when you want to see what damage could be dealt, without actually dealing it
+
+        public DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null, bool isVirtual = false)
         {
             OriginalDamage = damage;
             Damage = damage;
             Origin = origin;
+            IsVirtual = isVirtual;// # IMP
         }
     }
 
