@@ -39,7 +39,8 @@ public sealed class RadiationNoticingSystem : EntitySystem
                 "radiation-noticing-message-3",
                 "radiation-noticing-message-4",
                 "radiation-noticing-message-5",
-                "radiation-noticing-message-6"
+                "radiation-noticing-message-6",
+                "radiation-noticing-message-7"
             ];
 
         // Todo: detect possessing specific types of organs/blood/etc and conditionally add related messages to the list
