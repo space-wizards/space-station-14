@@ -2,6 +2,23 @@
 
 - type: latheRecipe
   abstract: true
+  id: BaseShieldRecipe
+  categories:
+  - Tools
+  completetime: 4
+
+- type: latheRecipe
+  abstract: true
+  id: BaseTargetRecipe
+  categories:
+  - Tools
+  completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  abstract: true
   id: BaseWeaponRecipe
   categories:
   - Weapons
@@ -30,26 +47,44 @@
   id: BaseWeaponRecipeSidearm
   completetime: 6
 
-- type: latheRecipe
-  abstract: true
-  id: BaseShieldRecipe
-  categories:
-  - Tools
-  completetime: 4
-
-- type: latheRecipe
-  abstract: true
-  id: BaseTargetRecipe
-  categories:
-  - Tools
-  completetime: 5
-  applyMaterialDiscount: false # ingredients dropped when destroyed
-  materials:
-    Steel: 500
-
 ## Recipes
 
-# Misc
+# Clothing
+- type: latheRecipe
+  id: ClothingBackpackElectropack
+  result: ClothingBackpackElectropack
+  categories:
+  - Clothing
+  completetime: 4
+  materials:
+    Steel: 500
+    Plastic: 250
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingEyesHudSecurity
+  result: ClothingEyesHudSecurity
+  categories:
+  - Clothing
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
+
+- type: latheRecipe
+  id: PortableRecharger
+  result: PortableRecharger
+  categories:
+  - Clothing
+  completetime: 15
+  materials:
+    Steel: 2000
+    Uranium: 2000
+    Plastic: 1000
+    Plasma: 500
+    Glass: 500
+
+# Shields
 - type: latheRecipe
   parent: BaseShieldRecipe
   id: RiotShield
@@ -66,6 +101,7 @@
     Steel: 300
     Glass: 800
 
+# Targets
 - type: latheRecipe
   parent: BaseTargetRecipe
   id: TargetHuman
@@ -80,6 +116,49 @@
   parent: BaseTargetRecipe
   id: TargetSyndicate
   result: TargetSyndicate
+
+# Tools
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: Handcuffs
+  result: Handcuffs
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: Zipties
+  result: Zipties
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: ForensicPad
+  result: ForensicPad
+  completetime: 4
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: HoloprojectorSecurity
+  result: HoloprojectorSecurityEmpty
+  materials:
+    Steel: 300
+    Glass: 50
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: Flash
+  result: Flash
+  materials:
+    Glass: 100
+    Plastic: 200
+    Steel: 100
+
+## Weapons
 
 # Melee
 - type: latheRecipe
@@ -197,79 +276,3 @@
   materials:
     Plastic: 100
     Steel: 400
-
-# Clothing
-- type: latheRecipe
-  id: ClothingBackpackElectropack
-  result: ClothingBackpackElectropack
-  categories:
-  - Clothing
-  completetime: 4
-  materials:
-    Steel: 500
-    Plastic: 250
-    Cloth: 500
-
-- type: latheRecipe
-  id: ClothingEyesHudSecurity
-  result: ClothingEyesHudSecurity
-  categories:
-  - Clothing
-  completetime: 2
-  materials:
-    Steel: 300
-    Glass: 200
-
-- type: latheRecipe
-  id: PortableRecharger
-  result: PortableRecharger
-  categories:
-  - Clothing
-  completetime: 15
-  materials:
-    Steel: 2000
-    Uranium: 2000
-    Plastic: 1000
-    Plasma: 500
-    Glass: 500
-
-# Tools
-- type: latheRecipe
-  parent: BaseToolRecipe
-  id: Handcuffs
-  result: Handcuffs
-  materials:
-    Steel: 300
-
-- type: latheRecipe
-  parent: BaseToolRecipe
-  id: Zipties
-  result: Zipties
-  materials:
-    Plastic: 200
-
-- type: latheRecipe
-  parent: BaseToolRecipe
-  id: ForensicPad
-  result: ForensicPad
-  completetime: 4
-  materials:
-    Plastic: 100
-
-- type: latheRecipe
-  parent: BaseToolRecipe
-  id: HoloprojectorSecurity
-  result: HoloprojectorSecurityEmpty
-  materials:
-    Steel: 300
-    Glass: 50
-    Plastic: 50
-
-- type: latheRecipe
-  parent: BaseToolRecipe
-  id: Flash
-  result: Flash
-  materials:
-    Glass: 100
-    Plastic: 200
-    Steel: 100
