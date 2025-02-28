@@ -51,15 +51,16 @@ public sealed class GasCondenserSystem : EntitySystem
             if (_atmosphereSystem.GetGas(i).Reagent is not { } gasReagent)
                 continue;
 
-            var moleToReagentMultiplier = entity.Comp.MolesToReagentMultiplier;
-            var amount = FixedPoint2.Min(FixedPoint2.New(moles * moleToReagentMultiplier), solution.AvailableVolume);
+            var molarMassToReagentMultiplier = entity.Comp.MolarMassToReagentMultiplier;
+            var molarMass = _atmosphereSystem.GetGas(i).MolarMass;
+            var amount = FixedPoint2.Min(FixedPoint2.New(moles * molarMassToReagentMultiplier * molarMass), solution.AvailableVolume);
             if (amount <= 0)
                 continue;
 
             solution.AddReagent(gasReagent, amount);
 
             // if we have leftover reagent, then convert it back to moles and put it back in the mixture.
-            inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
+            inlet.Air.AdjustMoles(i, moles - (amount.Float() / (molarMassToReagentMultiplier * molarMass)));
         }
 
         _solution.UpdateChemicals(entity.Comp.Solution.Value);
