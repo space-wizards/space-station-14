@@ -212,7 +212,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         var hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
+                            dmg = Damageable.TryChangeDamage(hitEntity, dmg * Damageable.UniversalHitscanDamageModifier, origin: user);
 
                         // check null again, as TryChangeDamage returns modified damage values
                         if (dmg != null)
@@ -390,28 +390,28 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
 
-    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
         // Lord
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
         var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
-        var gridUid = fromCoordinates.GetGridUid(EntityManager);
-        var angle = mapDirection;
+        var fromXform = Transform(fromCoordinates.EntityId);
 
         // We'll get the effects relative to the grid / map of the firer
         // Look you could probably optimise this a bit with redundant transforms at this point.
-        var xformQuery = GetEntityQuery<TransformComponent>();
 
-        if (xformQuery.TryGetComponent(gridUid, out var gridXform))
+        var gridUid = fromXform.GridUid;
+        if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
         {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
-
-            fromCoordinates = new EntityCoordinates(gridUid.Value,
-                Vector2.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem), gridInvMatrix));
-
-            // Use the fallback angle I guess?
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
+            var map = _transform.ToMapCoordinates(fromCoordinates);
+            fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
             angle -= gridRot;
+        }
+        else
+        {
+            angle -= _transform.GetWorldRotation(fromXform);
         }
 
         if (distance >= 1f)

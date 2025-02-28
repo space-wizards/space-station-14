@@ -3,7 +3,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseLightRecipe
-  category: Lights
+  categories:
+  - Lights
   completetime: 2
   materials:
     Steel: 50
@@ -189,6 +190,11 @@
   parent: BaseFauxTileRecipe
   id: FauxTileAstroSnow
   result: FloorTileItemAstroSnow
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSand
+  result: FloorTileItemAstroAsteroidSand
 
 - type: latheRecipe
   id: FloorGreenCircuit

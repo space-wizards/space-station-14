@@ -32,3 +32,9 @@
     materialComposition:
       Steel: 400
       Glass: 100
+  - type: GuideHelp
+    guides:
+    - AtmosTools
+    - PipeNetworks
+    - Pipes
+    - GasCanisters

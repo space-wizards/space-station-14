@@ -737,5 +737,103 @@ Entries:
   id: 91
   time: '2025-01-21T23:23:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34563
+- author: ScarKy0
+  changes:
+  - message: Added the omni-accent smite. It adds most accents onto the target.
+    type: Add
+  id: 92
+  time: '2025-02-02T20:00:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34824
+- author: Palladinium
+  changes:
+  - message: Added atmospherics device information (air alarms, vents, scrubbers)
+      to admin logs
+    type: Add
+  id: 93
+  time: '2025-02-06T05:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33426
+- author: nikthechampiongr
+  changes:
+  - message: Vote kicks now also ban the ip of the person that gets votekicked.
+    type: Tweak
+  id: 94
+  time: '2025-02-13T22:03:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35131
+- author: ScarKy0
+  changes:
+  - message: universal access config has additional accesses added
+    type: Add
+  id: 95
+  time: '2025-02-16T21:51:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35229
+- author: Winkarst-cpu
+  changes:
+  - message: Votekick bans now distinguish themselves as votekicks in the "ban reason".
+    type: Tweak
+  id: 96
+  time: '2025-02-17T20:39:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35258
+- author: SlamBamActionman
+  changes:
+  - message: Users with +VVEDIT perms can now use `changecvar playtest.[modifier]
+      [float]` to modify damage/healing scaling live.
+    type: Add
+  id: 97
+  time: '2025-02-18T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35255
+- author: ScarKy0
+  changes:
+  - message: Aghost's intrinsic comms console now uses a new color, announces globally
+      and has significantly lowered delays. Announce command and admin menu option
+      remain unchanged.
+    type: Tweak
+  id: 98
+  time: '2025-02-18T09:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35248
+- author: Simyon
+  changes:
+  - message: Admins with the Server and Mapping AdminFlag can now change the CVars
+      "events.enabled" and "shuttle.auto_call_time" for parity in the "mapping" command.
+    type: Tweak
+  id: 99
+  time: '2025-02-18T10:26:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35239
+- author: Winkarst-cpu
+  changes:
+  - message: Added admin only messages in AHelp.
+    type: Add
+  id: 100
+  time: '2025-02-22T17:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35283
+- author: sowelipililimute
+  changes:
+  - message: Added the ability to use tertiary headers in the guidebook
+    type: Add
+  id: 101
+  time: '2025-02-23T18:48:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35315
+- author: Schrodinger71
+  changes:
+  - message: Added autocompletion for player usernames in setmind command.
+    type: Add
+  id: 102
+  time: '2025-02-24T21:29:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35477
+- author: ScarKy0
+  changes:
+  - message: Admin IDs can now freely change their name, job and icon, like the agent
+      ID. Not chameleon though.
+    type: Add
+  id: 103
+  time: '2025-02-25T14:25:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35345
+- author: Errant
+  changes:
+  - message: Some admin settings are now configurable from the Options menu's new
+      Admin tab.
+    type: Add
+  id: 104
+  time: '2025-02-26T22:32:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35543
 Name: Admin
 Order: 1
