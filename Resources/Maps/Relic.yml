@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 02/28/2025 03:21:47
-  entityCount: 3594
+  time: 02/28/2025 14:58:20
+  entityCount: 3620
 maps:
 - 1
 grids:
@@ -1291,7 +1291,7 @@ entities:
       pos: 27.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36690.92
+      secondsUntilStateChange: -37456.54
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1324,7 +1324,7 @@ entities:
       pos: 16.5,25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -29671.19
+      secondsUntilStateChange: -30436.809
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1335,7 +1335,7 @@ entities:
       pos: 16.5,24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -29669.523
+      secondsUntilStateChange: -30435.143
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1513,7 +1513,7 @@ entities:
     - type: DeviceLinkSink
       invokeCounter: 1
     - type: Door
-      secondsUntilStateChange: -116862.59
+      secondsUntilStateChange: -117628.21
       state: Opening
     - type: DeviceLinkSource
       linkedPorts:
@@ -2023,7 +2023,7 @@ entities:
       pos: 43.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -98140.586
+      secondsUntilStateChange: -98906.2
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2105,7 +2105,7 @@ entities:
       pos: 13.5,28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -29668.322
+      secondsUntilStateChange: -30433.941
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2632,6 +2632,23 @@ entities:
     components:
     - type: Transform
       pos: 33.486614,9.637684
+      parent: 2
+- proto: Bucket
+  entities:
+  - uid: 703
+    components:
+    - type: Transform
+      pos: 13.603792,-12.199328
+      parent: 2
+  - uid: 707
+    components:
+    - type: Transform
+      pos: 13.494417,-12.433703
+      parent: 2
+  - uid: 719
+    components:
+    - type: Transform
+      pos: 13.806917,-12.527453
       parent: 2
 - proto: CableApcStack10
   entities:
@@ -4655,6 +4672,13 @@ entities:
     components:
     - type: Transform
       pos: 53.5,3.5
+      parent: 2
+- proto: DefaultStationBeaconBotany
+  entities:
+  - uid: 821
+    components:
+    - type: Transform
+      pos: 9.5,-9.5
       parent: 2
 - proto: DefaultStationBeaconBridge
   entities:
@@ -7221,6 +7245,50 @@ entities:
     - type: Transform
       pos: 18.5,1.5
       parent: 2
+- proto: hydroponicsTray
+  entities:
+  - uid: 657
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,-12.5
+      parent: 2
+  - uid: 659
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,-12.5
+      parent: 2
+  - uid: 660
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 8.5,-12.5
+      parent: 2
+  - uid: 661
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,-12.5
+      parent: 2
+  - uid: 676
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,-12.5
+      parent: 2
+  - uid: 684
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 11.5,-12.5
+      parent: 2
+  - uid: 685
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 12.5,-12.5
+      parent: 2
 - proto: Igniter
   entities:
   - uid: 6686
@@ -7263,6 +7331,11 @@ entities:
     - type: Transform
       pos: 27.5,10.5
       parent: 2
+  - uid: 794
+    components:
+    - type: Transform
+      pos: 10.5,-6.5
+      parent: 2
   - uid: 2855
     components:
     - type: Transform
@@ -7298,6 +7371,18 @@ entities:
     components:
     - type: Transform
       pos: 23.5,0.5
+      parent: 2
+- proto: LockerBotanistFilled
+  entities:
+  - uid: 688
+    components:
+    - type: Transform
+      pos: 11.5,-10.5
+      parent: 2
+  - uid: 689
+    components:
+    - type: Transform
+      pos: 10.5,-10.5
       parent: 2
 - proto: LockerCaptainFilledNoLaser
   entities:
@@ -8202,6 +8287,16 @@ entities:
       parent: 2
 - proto: PottedPlantRandom
   entities:
+  - uid: 633
+    components:
+    - type: Transform
+      pos: 10.5,-5.5
+      parent: 2
+  - uid: 655
+    components:
+    - type: Transform
+      pos: 10.5,-8.5
+      parent: 2
   - uid: 1558
     components:
     - type: Transform
@@ -9543,6 +9638,13 @@ entities:
     components:
     - type: Transform
       pos: 39.5,35.5
+      parent: 2
+- proto: Rack
+  entities:
+  - uid: 692
+    components:
+    - type: Transform
+      pos: 13.5,-12.5
       parent: 2
 - proto: Railing
   entities:
@@ -11478,6 +11580,13 @@ entities:
     - type: Transform
       pos: 49.5,-12.5
       parent: 2
+- proto: SeedExtractor
+  entities:
+  - uid: 687
+    components:
+    - type: Transform
+      pos: 12.5,-10.5
+      parent: 2
 - proto: SheetGlass10
   entities:
   - uid: 1509
@@ -12363,7 +12472,7 @@ entities:
       pos: 61.5,19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12859.273
+      secondsUntilStateChange: -13624.892
       state: Opening
 - proto: SpaceCash10000
   entities:
@@ -12435,6 +12544,13 @@ entities:
     components:
     - type: Transform
       pos: 52.5,8.5
+      parent: 2
+- proto: SpawnPointBotanist
+  entities:
+  - uid: 690
+    components:
+    - type: Transform
+      pos: 9.5,-7.5
       parent: 2
 - proto: SpawnPointCaptain
   entities:
@@ -13478,6 +13594,16 @@ entities:
     - type: Transform
       pos: 16.5,21.5
       parent: 2
+  - uid: 783
+    components:
+    - type: Transform
+      pos: 10.5,-6.5
+      parent: 2
+  - uid: 820
+    components:
+    - type: Transform
+      pos: 10.5,-7.5
+      parent: 2
   - uid: 1475
     components:
     - type: Transform
@@ -13821,6 +13947,59 @@ entities:
     - type: Transform
       pos: 42.59651,29.715763
       parent: 2
+- proto: TwoWayLever
+  entities:
+  - uid: 828
+    components:
+    - type: Transform
+      pos: -5.5,7.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        254:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        150:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        258:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        256:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        290:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        259:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        165:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        294:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        118:
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
+        382:
+        - Left: Open
+        - Right: Close
+        - Middle: Close
+        357:
+        - Left: Close
+        - Right: Open
+        - Middle: Close
 - proto: UniformPrinter
   entities:
   - uid: 2279
@@ -13919,6 +14098,13 @@ entities:
     - type: Transform
       pos: 20.5,2.5
       parent: 2
+- proto: VendingMachineHydrobe
+  entities:
+  - uid: 797
+    components:
+    - type: Transform
+      pos: 5.5,-10.5
+      parent: 2
 - proto: VendingMachineMedical
   entities:
   - uid: 635
@@ -13932,6 +14118,13 @@ entities:
     components:
     - type: Transform
       pos: 17.5,16.5
+      parent: 2
+- proto: VendingMachineNutri
+  entities:
+  - uid: 736
+    components:
+    - type: Transform
+      pos: 8.5,-10.5
       parent: 2
 - proto: VendingMachineRobotics
   entities:
@@ -13953,6 +14146,13 @@ entities:
     components:
     - type: Transform
       pos: 51.5,5.5
+      parent: 2
+- proto: VendingMachineSeeds
+  entities:
+  - uid: 686
+    components:
+    - type: Transform
+      pos: 13.5,-10.5
       parent: 2
 - proto: VendingMachineTankDispenserEngineering
   entities:
@@ -21204,6 +21404,13 @@ entities:
     - type: Transform
       pos: 22.5,9.5
       parent: 2
+- proto: WaterTankHighCapacity
+  entities:
+  - uid: 691
+    components:
+    - type: Transform
+      pos: 5.5,-12.5
+      parent: 2
 - proto: WeaponCapacitorRecharger
   entities:
   - uid: 1294
@@ -21371,7 +21578,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -12804.173
+      secondsUntilStateChange: -13569.791
       state: Opening
     - type: Airlock
       autoClose: False
