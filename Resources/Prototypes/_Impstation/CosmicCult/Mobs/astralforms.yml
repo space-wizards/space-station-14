@@ -1,0 +1,114 @@
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: MobCosmicAstralAscended
+  name: astral ascended
+  description: Transcendant, ascendant.
+  components:
+  - type: Input
+    context: "ghost"
+  - type: Spectral
+  - type: CosmicAstralBody
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 6
+    baseSprintSpeed: 6
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Mobs/astralform.rsi
+    layers:
+    - state: effect-underlay
+      shader: unshaded
+    - state: ascended-body
+      shader: unshaded
+  - type: NoSlip
+  - type: Eye
+    drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+      - 777
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Speech
+    speechVerb: Ghost
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2
+    energy: 3
+    softness: 1
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+     - !type:FadeBehaviour
+       interpolate: Linear
+       minDuration: 5.5
+       maxDuration: 5.5
+       startValue: 1
+       endValue: 3
+       property: Energy
+       enabled: true
+       isLooped: true
+       reverseWhenFinished: true
+
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: MobCosmicAstralProjection
+  name: astral projection
+  description: Neither here nor there.
+  components:
+  - type: Input
+    context: "ghost"
+  - type: Spectral
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Mobs/astralform.rsi
+    layers:
+    - state: base-body
+      shader: unshaded
+  - type: NoSlip
+  - type: Eye
+    drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+      - 777
+  - type: SSDIndicator
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5
+  - type: MindContainer
+    showExamineInfo: true
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Visibility
+    layer: 2 #ghost vis layer
+  - type: Speech
+    enabled: false
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2
+    energy: 3.5
+    softness: 1
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+     - !type:FadeBehaviour
+       interpolate: Linear
+       minDuration: 5.5
+       maxDuration: 5.5
+       startValue: 2
+       endValue: 3.5
+       property: Energy
+       enabled: true
+       isLooped: true
+       reverseWhenFinished: true
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - CosmicRadio
+  - type: ActionGrant
+    actions:
+    - ActionCosmicReturn

@@ -1,0 +1,45 @@
+- type: entity
+  id: ProjectileCosmicNova
+  name: Astral Nova
+  description: Uh oh.
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2.0
+    energy: 5.0
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Projectile
+    impactEffect: CosmicNovaImpactVfx
+    forceSound: true
+    soundHit:
+      path: /Audio/_Impstation/CosmicCult/ability_nova_impact.ogg
+      params:
+        variation: 0.1
+        volume: +14
+  - type: CosmicAstralNova
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Effects/ability_novavfx.rsi
+    layers:
+    - state: vfx
+      shader: unshaded
+  - type: GravityWell
+    maxRange: 5
+    baseRadialAcceleration: 20
+    baseTangentialAcceleration: 4
+    gravPulsePeriod: 0.025
+  - type: SingularityDistortion
+    intensity: +20
+    falloffPower: 1.5
+  - type: AmbientSound
+    enabled: true
+    volume: 0
+    range: 10
+    sound:
+      path: /Audio/_Impstation/CosmicCult/ability_nova_ambient.ogg
+  - type: CosmicCorrupting
+    corruptionSpeed: 0.4
+    corruptionRadius: 1
+    useVFX: false

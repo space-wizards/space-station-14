@@ -4,7 +4,7 @@
   name: malign wall
   description: A strange-looking wall. Staring at it for too long instills a sense of discomfort.
   components:
-  # - type: CosmicItem
+  - type: CosmicMarkStructure
   - type: Tag
     tags:
       - Wall
@@ -13,20 +13,17 @@
   - type: Icon
     sprite: _Impstation/CosmicCult/Tileset/cosmicwall.rsi
   - type: RCDDeconstructable
-    deconstructable: false
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: walls
+    key: cultwalls
     base: cult
-
-
 
 - type: entity
   parent: WallCosmicCult
@@ -50,7 +47,7 @@
       - map: [ "enum.EdgeLayer.West" ]
         state: trim_west
   - type: IconSmooth
-    key: walls
+    key: cultwalls
     base: cult
   - type: SmoothEdge
 
@@ -73,13 +70,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -125,15 +122,14 @@
     - Wall
   components:
   - type: RCDDeconstructable
-    deconstructable: false
-  # - type: CosmicItem
+  - type: CosmicMarkStructure
   - type: Sprite
     drawdepth: WallTops
     sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_diagonal.rsi
     state: coswindow0
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: cultwindows
     base: coswindow
   - type: Icon
     sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_diagonal.rsi
@@ -142,7 +138,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -157,14 +153,14 @@
     snap:
     - Wall
   components:
-  # - type: CosmicItem
+  - type: CosmicMarkStructure
   - type: Sprite
     drawdepth: WallTops
     sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark_diagonal.rsi
     state: cosDwindow0
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: cultwindows
     base: cosDwindow
   - type: Icon
     sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark_diagonal.rsi

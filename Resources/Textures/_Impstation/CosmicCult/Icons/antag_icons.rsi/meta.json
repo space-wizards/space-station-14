@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "me me",
+
+    "size": {
+        "x": 10,
+        "y": 10
+    },
+    "states": [
+        {
+            "name": "CosmicCult"
+        },
+        {
+            "name": "CosmicCultLead",
+            "delays": [
+                [
+                  0.165, 0.165, 0.165, 0.165, 0.165, 0.165, 0.165
+              ]
+            ]
+        }
+    ]
+}

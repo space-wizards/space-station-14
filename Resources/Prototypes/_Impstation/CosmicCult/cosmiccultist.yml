@@ -1,0 +1,23 @@
+- type: antag
+  id: CosmicAntagCultist
+  name: roles-antag-cosmiccult-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-cosmiccult-description
+  playTimeTracker: AntagCosmicCultist
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 43200 # 12h
+  guides: [ CosmicCult ]
+
+- type: antag
+  id: CosmicAntagLeader
+  name: roles-antag-cosmiccultlead-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-cosmiccultlead-description
+  playTimeTracker: AntagCosmicCultLead
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 144000 # 40h
+  guides: [ CosmicCult ]

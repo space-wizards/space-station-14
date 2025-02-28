@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "A custom item by AftrLite (Github).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "void0",
+      "directions": 4
+    },
+    {
+      "name": "void1",
+      "directions": 4
+    },
+    {
+      "name": "void2",
+      "directions": 4
+    },
+    {
+      "name": "void3",
+      "directions": 4
+    },
+    {
+      "name": "void4",
+      "directions": 4
+    },
+    {
+      "name": "void5",
+      "directions": 4
+    },
+    {
+      "name": "void6",
+      "directions": 4
+    },
+    {
+      "name": "void7",
+      "directions": 4
+    }
+  ]
+}

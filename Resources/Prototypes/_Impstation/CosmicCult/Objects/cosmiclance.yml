@@ -1,6 +1,6 @@
 - type: entity
   name: vacuous lance
-  parent: [ BaseSword, BaseCosmicCultContraband ]
+  parent: [ BaseSword, TierXContraband ]
   id: SpearCosmicCult
   description: An unnerving spear, wrought of indescribable material. Being near it feels like a prickle of static spreading through your nerves.
   components:
