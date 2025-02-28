@@ -1476,6 +1476,6 @@
        !type:String
        pda-wizard
   - type: PdaBorderColor
-    borderColor: "#3F36CB"
+    borderColor: "#7F3300"
   - type: Icon
     state: pda-wizard
