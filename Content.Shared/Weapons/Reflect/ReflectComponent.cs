@@ -27,6 +27,12 @@ public sealed partial class ReflectComponent : Component
 
     [DataField("soundOnReflect")]
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+
+    /// <summary>
+    /// imp edit - should this item allow reflections while it's held? should be false for clothes specifically
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool ReflectWhileHeld = true;
 }
 
 [Flags]

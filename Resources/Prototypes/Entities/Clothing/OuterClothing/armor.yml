@@ -104,6 +104,7 @@
     reflectProb: 1
     reflects:
       - Energy
+    reflectWhileHeld: false #imp edit - don't allow this to reflect things while you're holding it
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, Tier3Contraband ]
