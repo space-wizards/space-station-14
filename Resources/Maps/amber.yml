@@ -14803,8 +14803,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 492
   - uid: 3732
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 3731
