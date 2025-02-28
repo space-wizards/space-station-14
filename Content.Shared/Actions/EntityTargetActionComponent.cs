@@ -1,4 +1,4 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -26,6 +26,12 @@ public sealed partial class EntityTargetActionComponent : BaseTargetActionCompon
     [DataField("whitelist")] public EntityWhitelist? Whitelist;
 
     /// <summary>
+    /// Determines which entities are NOT valid targets for this action.
+    /// </summary>
+    /// <remarks>No blacklist check when null.</remarks>
+    [DataField] public EntityWhitelist? Blacklist;
+
+    /// <summary>
     /// Whether this action considers the user as a valid target entity when using this action.
     /// </summary>
     [DataField("canTargetSelf")] public bool CanTargetSelf = true;
@@ -35,11 +41,13 @@ public sealed partial class EntityTargetActionComponent : BaseTargetActionCompon
 public sealed class EntityTargetActionComponentState : BaseActionComponentState
 {
     public EntityWhitelist? Whitelist;
+    public EntityWhitelist? Blacklist;
     public bool CanTargetSelf;
 
     public EntityTargetActionComponentState(EntityTargetActionComponent component, IEntityManager entManager) : base(component, entManager)
     {
         Whitelist = component.Whitelist;
+        Blacklist = component.Blacklist;
         CanTargetSelf = component.CanTargetSelf;
     }
 }

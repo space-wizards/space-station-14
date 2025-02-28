@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
-using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
@@ -34,7 +33,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly INetManager _net = default!;
     [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private   readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedContainerSystem _container = default!;
@@ -303,8 +301,20 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!ResolveStorage(container, ref component))
             return false;
 
-        RemComp<InsideEntityStorageComponent>(toRemove);
         _container.Remove(toRemove, component.Contents);
+
+        if (_container.IsEntityInContainer(container))
+        {
+            if (_container.TryGetOuterContainer(container, Transform(container), out var outerContainer) &&
+                !HasComp<HandsComponent>(outerContainer.Owner))
+            {
+                _container.Insert(toRemove, outerContainer);
+                return true;
+            }
+        }
+
+        RemComp<InsideEntityStorageComponent>(toRemove);
+
         var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
         TransformSystem.SetWorldPosition(toRemove, pos);
         return true;
@@ -366,17 +376,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 Popup.PopupClient(Loc.GetString("entity-storage-component-welded-shut-message"), target, user);
 
             return false;
-        }
-
-        if (_container.IsEntityInContainer(target))
-        {
-            if (_container.TryGetOuterContainer(target,Transform(target) ,out var container) &&
-                !HasComp<HandsComponent>(container.Owner))
-            {
-                Popup.PopupClient(Loc.GetString("entity-storage-component-already-contains-user-message"), user, user);
-
-                return false;
-            }
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.
