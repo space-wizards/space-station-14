@@ -19,10 +19,10 @@ namespace Content.Server.Atmos.Reactions
             mixture.ReactionResults[(byte)GasReaction.Fire] = 0;
 
             // React faster and with less oxygen per plasma at higher temperatures, up to a maximum.
-            var temperatureReactionScale = ProportionOfRange(temperature,
+            var temperatureScale = ProportionOfRange(temperature,
                 Atmospherics.PlasmaMinimumBurnTemperature,
                 Atmospherics.PlasmaUpperTemperature);
-            if (temperatureReactionScale > 0)
+            if (temperatureScale > 0)
             {
                 var initialOxygenMoles = mixture.GetMoles(Gas.Oxygen);
                 var initialPlasmaMoles = mixture.GetMoles(Gas.Plasma);
@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.Reactions
                 // The maximum rate based on the relative proportions of reactants, expressed as moles of plasma burned.
                 var maximumReactionRate =
                     Math.Min(initialPlasmaMoles, initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn);
-                var reactionRate = maximumReactionRate * temperatureReactionScale / Atmospherics.PlasmaBurnRateDelta;
+                var reactionRate = maximumReactionRate * temperatureScale / Atmospherics.PlasmaBurnRateDelta;
 
                 // TODO I have no fucking idea why the rate is compared against a heat capacity here.
                 // ... but it has the effect of not doing little finicky adjustments, I guess.
@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Reactions
                 {
                     var initialThermalEnergy = temperature * atmosphereSystem.GetHeatCapacity(mixture, true);
 
-                    var oxygenPerPlasmaBurned = Atmospherics.OxygenBurnRateBase - temperatureReactionScale;
+                    var oxygenPerPlasmaBurned = Atmospherics.OxygenBurnRateBase - temperatureScale;
                     // Don't try to use more of the reactants than are actually present.
                     var reactantLimitedReactionRate = MathF.Min(reactionRate,
                         MathF.Min(initialPlasmaMoles, initialOxygenMoles / oxygenPerPlasmaBurned));
