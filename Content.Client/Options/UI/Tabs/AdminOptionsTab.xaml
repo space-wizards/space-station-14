@@ -14,6 +14,8 @@
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="EnableClassicOverlayCheckBox" Text="{Loc 'ui-options-enable-classic-overlay'}" />
                 <CheckBox Name="EnableOverlaySymbolsCheckBox" Text="{Loc 'ui-options-enable-overlay-symbols'}" />
+                <CheckBox Name="EnableOverlayPlaytimeCheckBox" Text="{Loc 'ui-options-enable-overlay-playtime'}" />
+                <CheckBox Name="EnableOverlayStartingJobCheckBox" Text="{Loc 'ui-options-enable-overlay-starting-job'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
