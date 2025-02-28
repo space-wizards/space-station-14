@@ -1,0 +1,7 @@
+- type: marking
+  id: HumanHairLongBangs
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/human_hair.rsi
+      state: longbangs
