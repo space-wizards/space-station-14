@@ -44,6 +44,7 @@ using Content.Shared.Audio;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Server.Bible.Components;
+using Content.Shared.UserInterface;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -384,6 +385,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     private void FinaleReady(Entity<MonumentComponent> uid, CosmicFinaleComponent finaleComp)
     {
         if (TryComp<CosmicCorruptingComponent>(uid, out var comp)) comp.Enabled = true;
+        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = null;
         finaleComp.FinaleReady = true;
         uid.Comp.Enabled = false;
         _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-ready"), Transform(uid).Coordinates, PopupType.Large);

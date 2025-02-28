@@ -20,6 +20,3 @@ public sealed partial class StartFinaleDoAfterEvent : SimpleDoAfterEvent { }
 
 [Serializable, NetSerializable]
 public sealed partial class CancelFinaleDoAfterEvent : SimpleDoAfterEvent { }
-
-[Serializable, NetSerializable]
-public sealed partial class EventForceIngressDoAfter : SimpleDoAfterEvent { }

@@ -1,9 +1,6 @@
-cosmicability-toggle-error = You need to drop something beforehand!
-
-cosmicability-siphon-deverror = DEV ERROR MESSAGE
+cosmicability-generic-fail = Your influence fails to take hold..
 
 cosmicability-siphon-success = You silently draw Entropy from {CAPITALIZE(THE($target))}.
-
 cosmicability-siphon-fail = You can't seem to siphon Entropy from {CAPITALIZE(THE($target))}.
 
 cosmicability-blank-begin = {CAPITALIZE(THE($target))} attempts to grab hold of you!

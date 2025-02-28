@@ -33,6 +33,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Events;
 using Content.Shared.SSDIndicator;
 using Robust.Shared.Containers;
+using Content.Shared.NPC;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -59,7 +60,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         SubscribeLocalEvent<CosmicImposingComponent, BeforeDamageChangedEvent>(OnImpositionDamaged);
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicIngress>(OnCosmicIngress);
-        SubscribeLocalEvent<CosmicCultComponent, EventForceIngressDoAfter>(OnCosmicIngressDoAfter);
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicGlare>(OnCosmicGlare);
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicNova>(OnCosmicNova);
         SubscribeLocalEvent<CosmicAstralNovaComponent, StartCollideEvent>(OnNovaCollide);
@@ -78,34 +78,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = true;
-        var seconds = uid.Comp.CosmicEmpowered ? 4 : 6;
-        var doArgs = new DoAfterArgs(EntityManager, uid, seconds, new EventForceIngressDoAfter(), uid, args.Target)
-        {
-            DistanceThreshold = 1.5f,
-            Hidden = true,
-            BreakOnHandChange = true,
-            BreakOnDamage = true,
-            BreakOnMove = true,
-            BreakOnDropItem = true,
-        };
-        _doAfter.TryStartDoAfter(doArgs);
-    }
-
-    private void OnCosmicIngressDoAfter(Entity<CosmicCultComponent> uid, ref EventForceIngressDoAfter args)
-    {
-        if (args.Args.Target == null)
-            return;
-
-        var target = args.Args.Target.Value;
-        if (args.Cancelled || args.Handled)
-            return;
 
         args.Handled = true;
-        _door.StartOpening(target);
+        _door.StartOpening(args.Target);
         _audio.PlayPvs(uid.Comp.IngressSFX, uid);
-        Spawn(uid.Comp.AbsorbVFX, Transform(target).Coordinates);
+        Spawn(uid.Comp.AbsorbVFX, Transform(args.Target).Coordinates);
     }
+
     #endregion
 
     #region Null Glare
@@ -196,7 +175,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnCosmicSiphon(Entity<CosmicCultComponent> uid, ref EventCosmicSiphon args)
     {
         if (HasComp<CosmicCultComponent>(args.Target) || HasComp<BibleUserComponent>(args.Target))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-siphon-fail", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid);
             return;
+        }
         if (args.Handled)
             return;
         args.Handled = true;
@@ -235,8 +217,11 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region "Shunt" Stun
     private void OnCosmicBlank(Entity<CosmicCultComponent> uid, ref EventCosmicBlank args)
     {
-        if (HasComp<CosmicCultComponent>(args.Target) || HasComp<CosmicMarkBlankComponent>(args.Target) || HasComp<BibleUserComponent>(args.Target)) // Blacklist the chaplain, obviously.
+        if (HasComp<CosmicCultComponent>(args.Target) || HasComp<CosmicMarkBlankComponent>(args.Target) || HasComp<BibleUserComponent>(args.Target) || HasComp<ActiveNPCComponent>(args.Target))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-generic-fail"), uid, uid);
             return;
+        }
         if (args.Handled)
             return;
 
@@ -264,11 +249,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         if (!TryComp<MindContainerComponent>(target, out var mindContainer) || !mindContainer.HasMind)
         {
-            Log.Debug($"Couldn't find a mindcontainer for {target}.");
             return;
         }
 
-        Log.Debug($"Sending {mindContainer.Mind} to the cosmic void!");
         EnsureComp<CosmicMarkBlankComponent>(target);
         RemComp<SSDIndicatorComponent>(target);
 
@@ -282,7 +265,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var spawnPoints = EntityManager.GetAllComponents(typeof(CosmicVoidSpawnComponent)).ToImmutableList();
         if (spawnPoints.IsEmpty)
         {
-            Log.Warning("Couldn't find any cosmic void spawners! Failed to send.");
             return;
         }
         _audio.PlayPvs(comp.BlankSFX, uid, AudioParams.Default.WithVolume(6f));
@@ -299,8 +281,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("cosmicability-blank-transfer"), mobUid, mobUid);
         _audio.PlayPvs(comp.BlankSFX, spawnTgt, AudioParams.Default.WithVolume(6f));
         Spawn(comp.BlankVFX, spawnTgt);
-
-        Log.Debug($"Created wisp entity {mobUid}");
     }
     #endregion
 
@@ -308,7 +288,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnCosmicLapse(Entity<CosmicCultComponent> uid, ref EventCosmicLapse action)
     {
         if (action.Handled || HasComp<CosmicMarkBlankComponent>(action.Target) || HasComp<CleanseCultComponent>(action.Target) || HasComp<BibleUserComponent>(action.Target))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-generic-fail"), uid, uid);
             return;
+        }
         action.Handled = true;
         var tgtpos = Transform(action.Target).Coordinates;
         Spawn(uid.Comp.LapseVFX, tgtpos);

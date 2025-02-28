@@ -23,6 +23,7 @@ using Content.Server.AlertLevel;
 using Content.Shared.SSDIndicator;
 using Content.Server.Announcements.Systems;
 using Content.Server.Pinpointer;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -137,11 +138,19 @@ public sealed partial class CosmicCultSystem : EntitySystem
             if (comp.FinaleActive && !comp.BufferComplete && !comp.PlayedBufferSong && !string.IsNullOrEmpty(comp.SelectedBufferSong))
             {
                 _sound.DispatchStationEventMusic(uid, comp.SelectedBufferSong, StationEventMusicType.CosmicCult);
+                _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
+                Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
+                null,
+                Color.FromHex("#cae8e8"));
                 comp.PlayedBufferSong = true;
             }
             else if (comp.FinaleActive && comp.FinaleTimer <= comp.FinaleSongLength && !comp.PlayedFinaleSong && !string.IsNullOrEmpty(comp.SelectedFinaleSong) && comp.BufferComplete && !comp.PlayedFinaleSong)
             {
                 _sound.DispatchStationEventMusic(uid, comp.SelectedFinaleSong, StationEventMusicType.CosmicCult);
+                _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
+                Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
+                null,
+                Color.FromHex("#cae8e8"));
                 comp.PlayedFinaleSong = true;
             }
             if (comp.FinaleActive && _timing.CurTime >= comp.BufferTimer && comp.FinaleActive && !comp.BufferComplete && !comp.Victory)

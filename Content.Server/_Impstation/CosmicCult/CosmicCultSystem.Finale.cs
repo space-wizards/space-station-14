@@ -1,9 +1,11 @@
 using Content.Server._Impstation.CosmicCult.Components;
+using Content.Shared._Impstation.Cosmiccult;
 using Content.Shared._Impstation.CosmicCult;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.UserInterface;
 using Robust.Shared.Utility;
 
 namespace Content.Server._Impstation.CosmicCult;
@@ -76,11 +78,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (stationUid != null)
         {
             _alert.SetLevel(stationUid.Value, "octarine", true, true, true, true);
-            _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
-            Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid.Owner)))))),
-            null,
-            Color.CadetBlue);
         }
+        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = MonumentKey.Key; // wow! This is the laziest way to disable a UI ever!
         comp.FinaleReady = false;
         comp.FinaleActive = true;
         monument.Enabled = true;
@@ -109,6 +108,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.PlayedBufferSong = false;
         comp.FinaleActive = false;
         comp.FinaleReady = true;
+        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = null; // wow! This is the laziest way to disable a UI ever!
         _appearance.SetData(uid, MonumentVisuals.FinaleReached, 1);
     }
 }
