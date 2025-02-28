@@ -1,11 +1,11 @@
 # Generic
 - type: latheCategory
-  id: Ammo
-  name: lathe-category-ammo
-
-- type: latheCategory
   id: Circuitry
   name: lathe-category-circuitry
+
+- type: latheCategory
+  id: Clothing
+  name: lathe-category-clothing
 
 - type: latheCategory
   id: Lights
@@ -43,6 +43,19 @@
 - type: latheCategory
   id: Materials
   name: lathe-category-materials
+
+# Sec
+- type: latheCategory
+  id: Ammo
+  name: lathe-category-ammo
+
+- type: latheCategory
+  id: Boxes
+  name: lathe-category-boxes
+
+- type: latheCategory
+  id: Magazines
+  name: lathe-category-magazines
 
 # Uniform printer
 - type: latheCategory
