@@ -306,3 +306,5 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+".run/Default [ Client + Server ].run.xml"
+CppProperties.json
