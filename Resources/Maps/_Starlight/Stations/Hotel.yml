@@ -5119,7 +5119,7 @@ entities:
       pos: 8.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33469.094
+      secondsUntilStateChange: -33429.363
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6919,7 +6919,7 @@ entities:
       pos: -38.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -47644.566
+      secondsUntilStateChange: -47604.836
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6937,7 +6937,7 @@ entities:
       pos: -36.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -47543.633
+      secondsUntilStateChange: -47503.902
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -113905,13 +113905,6 @@ entities:
     - type: Transform
       pos: -32.5,9.5
       parent: 2
-- proto: SLVendingMachineSalvage
-  entities:
-  - uid: 20798
-    components:
-    - type: Transform
-      pos: -24.5,-43.5
-      parent: 2
 - proto: SLVendingMachineSecurity
   entities:
   - uid: 16831
@@ -114721,13 +114714,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 30.5,-8.5
       parent: 2
-- proto: SpawnMechPaddyFilled
-  entities:
-  - uid: 20799
-    components:
-    - type: Transform
-      pos: 26.5,-19.5
-      parent: 2
 - proto: SpawnMechRipley
   entities:
   - uid: 16965
@@ -115405,6 +115391,18 @@ entities:
     components:
     - type: Transform
       pos: 50.5,5.5
+      parent: 2
+- proto: SpawnPointSurgeon
+  entities:
+  - uid: 20798
+    components:
+    - type: Transform
+      pos: -34.5,19.5
+      parent: 2
+  - uid: 20799
+    components:
+    - type: Transform
+      pos: -33.5,19.5
       parent: 2
 - proto: SpawnPointTechnicalAssistant
   entities:
