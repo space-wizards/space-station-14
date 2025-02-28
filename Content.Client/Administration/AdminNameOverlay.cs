@@ -25,6 +25,8 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly Font _font;
     private bool _overlayClassic;
     private bool _overlaySymbols;
+    private bool _overlayPlaytime;
+    private bool _overlayStartingJob;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
@@ -46,6 +48,8 @@ internal sealed class AdminNameOverlay : Overlay
 
         _config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
         _config.OnValueChanged(CCVars.AdminOverlaySymbols, (show) => { _overlaySymbols = show; }, true);
+        _config.OnValueChanged(CCVars.AdminOverlayPlaytime, (show) => { _overlayPlaytime = show; }, true);
+        _config.OnValueChanged(CCVars.AdminOverlayStartingJob, (show) => { _overlayStartingJob = show; }, true);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -84,23 +88,41 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            var symbol = _overlaySymbols ? playerInfo.RoleProto.Symbol : string.Empty;
+            var currentOffset = Vector2.Zero;
 
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
+            currentOffset += lineoffset;
+
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+            currentOffset += lineoffset;
+
+            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && _overlayPlaytime)
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
+                currentOffset += lineoffset;
+            }
+
+            if (!string.IsNullOrEmpty(playerInfo.StartingJob) && _overlayStartingJob)
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
+                currentOffset += lineoffset;
+            }
+
+            var symbol = _overlaySymbols ? playerInfo.RoleProto.Symbol : string.Empty;
             if (_overlayClassic && playerInfo.Antag)
             {
                 var label = symbol + _antagLabelClassic;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, _antagColorClassic);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, Color.OrangeRed);
+                currentOffset += lineoffset;
             }
             else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
                 var label = symbol + Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
                 var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
+                currentOffset += lineoffset;
             }
-
-            args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
-            args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
         }
     }
 }

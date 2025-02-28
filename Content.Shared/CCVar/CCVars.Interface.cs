@@ -44,6 +44,18 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_overlay_classic", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// If true, the admin overlay will display the total time of the players
+    /// </summary>
+    public static readonly CVarDef<bool> AdminOverlayPlaytime =
+        CVarDef.Create("ui.admin_overlay_playtime", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the admin overlay will display the players starting position.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminOverlayStartingJob =
+        CVarDef.Create("ui.admin_overlay_starting_job", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// If true, the admin window player tab will show different antag symbols for each role type
     /// </summary>
     public static readonly CVarDef<bool> AdminPlayerlistSeparateSymbols =
