@@ -15,12 +15,14 @@ public sealed class PlayAudioContentTag : IContentMarkupTag
     public List<MarkupNode>? OpenerProcessing(MarkupNode node, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
+        var audioSystem = _entManager.System<AudioSystem>();
         var volume = 1f;
         if (node.Attributes.TryGetValue("volume", out var volumeParam) && volumeParam.LongValue.HasValue)
         {
             volume = volumeParam.LongValue.Value;
         }
-        _entManager.System<AudioSystem>().PlayGlobal(node.Value.StringValue, Filter.Local(), false, AudioParams.Default.WithVolume(volume));
+        if (node.Value.StringValue != null)
+            _entManager.System<AudioSystem>().PlayGlobal(audioSystem.ResolveSound(new SoundPathSpecifier(node.Value.StringValue, null)), Filter.Local(), false, AudioParams.Default.WithVolume(volume));
 
         return null;
     }
