@@ -3777,4 +3777,12 @@ Entries:
   id: 523
   time: '2025-03-01T14:09:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/345
+- author: STARLIGHT TEAM
+  changes:
+  - message: Owners of the Extra Roles role in Discord are now whitelisted for the
+      panic bunker.
+    type: Tweak
+  id: 524
+  time: '2025-03-01T14:32:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/353
 
