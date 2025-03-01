@@ -63,7 +63,7 @@ public sealed partial class DeliverySystem
 
         var deliveryCount = records.Records.Keys.Count / ent.Comp.PlayerToDeliveryRatio;
 
-        if (deliveryCount == 0)
+        if (deliveryCount == 0) // We don't want stations with less than the player ratio to not get mail at all
             deliveryCount++;
 
         if (!ent.Comp.DistributeRandomly)
