@@ -21,12 +21,12 @@ public sealed partial class SpeechVerbChatModifier : ChatModifier
 
     public ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderObj) ||
             !channelParameters.TryGetValue(DefaultChannelParameters.RandomSeed, out var seed)
         )
-            return;
+            return message;
 
         IoCManager.InjectDependencies(this);
 
@@ -49,6 +49,7 @@ public sealed partial class SpeechVerbChatModifier : ChatModifier
         );
 
         message.InsertAfterTag(node, "EntityNameHeader");
+        return message;
     }
 
     private SpeechVerbPrototype GetSpeechVerbProto(FormattedMessage message, ProtoId<SpeechVerbPrototype>? speechVerb, EntityUid sender)

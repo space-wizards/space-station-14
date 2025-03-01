@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Robust.Shared.Configuration;
@@ -17,9 +17,11 @@ public sealed partial class BoldTagChatModifier : ChatModifier
     [DataField]
     public string? TargetNode = null;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         if (TargetNode != null)
             message.InsertOutsideTag(new MarkupNode("bold", null, null), TargetNode);
+
+        return message;
     }
 }

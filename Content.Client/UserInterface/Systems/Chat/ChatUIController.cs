@@ -829,7 +829,7 @@ public sealed class ChatUIController : UIController
 
         foreach (var markupSupplier in proto.ClientModifiers)
         {
-            markupSupplier.ProcessChatModifier(ref msg.Message, proto.ChannelParameters);
+            msg.Message = markupSupplier.ProcessChatModifier(msg.Message, proto.ChannelParameters);
         }
 
         // Process any remaining clientside content markups.

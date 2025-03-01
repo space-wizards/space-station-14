@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -17,7 +17,7 @@ public sealed partial class AccentChatModifier : ChatModifier
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -30,5 +30,7 @@ public sealed partial class AccentChatModifier : ChatModifier
                 message.InsertInsideTag(new MarkupNode("Accent", new MarkupParameter(accentName), null, false), "MainMessage");
             }
         }
+
+        return message;
     }
 }

@@ -17,10 +17,10 @@ public sealed partial class ObfuscateTextChatModifier : ChatModifier
     [DataField]
     public float ObfuscationChance = 0.8f;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         if (!channelParameters.TryGetValue(DefaultChannelParameters.RandomSeed, out var seed))
-            return;
+            return message;
 
         IoCManager.InjectDependencies(this);
 
@@ -45,7 +45,7 @@ public sealed partial class ObfuscateTextChatModifier : ChatModifier
             }
         }
 
-        message = returnMessage;
+        return returnMessage;
     }
 
     private string ObfuscateMessageReadability(string message, float chance)

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -15,7 +15,7 @@ public sealed partial class SessionNameHeaderChatModifier : ChatModifier
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -25,5 +25,7 @@ public sealed partial class SessionNameHeaderChatModifier : ChatModifier
 
             message.InsertBeforeMessage(new MarkupNode("SessionNameHeader", new MarkupParameter(sessionName), null));
         }
+
+        return message;
     }
 }

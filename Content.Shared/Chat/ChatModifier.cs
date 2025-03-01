@@ -15,8 +15,5 @@ public abstract partial class ChatModifier
     /// </summary>
     /// <param name="message">The message to be processed.</param>
     /// <param name="channelParameters">Any parameters that can be handled by the suppliers.</param>
-    public virtual void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
-    {
-
-    }
+    public abstract FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters);
 }

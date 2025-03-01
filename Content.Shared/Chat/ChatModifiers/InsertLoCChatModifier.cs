@@ -27,15 +27,16 @@ public sealed partial class InsertLoCChatModifier : ChatModifier
     [DataField]
     public string LocString = "";
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         if (TargetNode == null)
-            return;
+            return message;
 
         var str = Loc.GetString(LocString);
         if (AfterNode)
             message.InsertAfterTag(new MarkupNode(str), TargetNode);
         else
             message.InsertBeforeTag(new MarkupNode(str), TargetNode);
+        return message;
     }
 }

@@ -450,7 +450,7 @@ internal sealed partial class ChatManager : IChatManager
         // First, we apply all serverside modifiers that are unconditionally applied.
         foreach (var chatModifier in communicationChannel.ServerModifiers)
         {
-            chatModifier.ProcessChatModifier(ref message, compiledChannelParameters);
+            message = chatModifier.ProcessChatModifier(message, compiledChannelParameters);
         }
 
         foreach (var chatConsumerGroup in chatConsumerGroups)
@@ -459,7 +459,7 @@ internal sealed partial class ChatManager : IChatManager
             var consumerMessage = new FormattedMessage(message);
             foreach (var chatModifier in chatConsumerGroup.Value)
             {
-                chatModifier.ProcessChatModifier(ref consumerMessage, compiledChannelParameters);
+                consumerMessage = chatModifier.ProcessChatModifier(consumerMessage, compiledChannelParameters);
             }
 
             // Off the message goes!

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -9,8 +9,10 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SpaceMainMessageChatModifier : ChatModifier
 {
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         message.InsertBeforeTag(new MarkupNode(" "), "MainMessage");
+
+        return message;
     }
 }

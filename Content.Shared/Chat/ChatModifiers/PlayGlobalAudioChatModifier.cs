@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -14,7 +14,7 @@ public sealed partial class PlayGlobalAudioChatModifier : ChatModifier
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -25,5 +25,7 @@ public sealed partial class PlayGlobalAudioChatModifier : ChatModifier
                 : 1f;
             message.PushTag(new MarkupNode("PlayAudio", new MarkupParameter((string)audioPath), new Dictionary<string, MarkupParameter>() { { "volume", new MarkupParameter((long)volume) } }, false), true);
         }
+
+        return message;
     }
 }

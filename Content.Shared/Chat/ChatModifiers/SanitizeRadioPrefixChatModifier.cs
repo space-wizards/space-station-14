@@ -9,10 +9,10 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 {
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         if (!message.Nodes.TryFirstOrDefault(x => x.Name == null, out var firstTextNode))
-            return;
+            return message;
 
         using var nodeEnumerator = message.GetEnumerator();
 
@@ -36,7 +36,7 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
             }
         }
 
-        message = returnMessage;
+        return returnMessage;
     }
 
     private string SanitizeRadioPrefix(string text)
