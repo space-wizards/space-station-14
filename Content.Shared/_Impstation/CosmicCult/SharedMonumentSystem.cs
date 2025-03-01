@@ -118,8 +118,9 @@ public sealed class SharedMonumentSystem : EntitySystem
 
         ent.Comp.AvailableEntropy -= proto.Cost;
         cultComp.EntropyBudget -= proto.Cost;
-        ent.Comp.UnlockedInfluences.Remove(args.InfluenceProtoId);
-        cultComp.UnlockedInfluences.Remove(args.InfluenceProtoId);
+        ent.Comp.UnlockedInfluences.Remove(args.InfluenceProtoId); //todo fiddle with this? this seems like a wierd way of doing things, but makes sense after some reading through the code paths - ruddygreat
+        cultComp.UnlockedInfluences.Remove(args.InfluenceProtoId); //either way, will leave this for the PR that cleans up influence tiering
+        Dirty(uiComp.CurrentSingleUser.Value, cultComp); //force an update to make sure that the client has the correct set of owned abilities
 
         _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
     }

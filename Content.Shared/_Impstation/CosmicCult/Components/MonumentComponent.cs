@@ -10,14 +10,14 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 public sealed partial class MonumentComponent : Component
 {
     [NonSerialized] public const int LayerMask = 777;
-    [DataField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
-    [DataField] public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
-    [DataField] public ProtoId<GlyphPrototype> SelectedGlyph;
-    [DataField] public int AvailableEntropy;
-    [DataField] public int TotalEntropy;
-    [DataField] public int EntropyUntilNextStage;
-    [DataField] public int CrewToConvertNextStage;
-    [DataField] public float PercentageComplete;
+    [DataField, AutoNetworkedField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
+    [DataField, AutoNetworkedField] public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
+    [DataField, AutoNetworkedField] public ProtoId<GlyphPrototype> SelectedGlyph;
+    [DataField, AutoNetworkedField] public int AvailableEntropy;
+    [DataField, AutoNetworkedField] public int TotalEntropy;
+    [DataField, AutoNetworkedField] public int EntropyUntilNextStage;
+    [DataField, AutoNetworkedField] public int CrewToConvertNextStage;
+    [DataField, AutoNetworkedField] public float PercentageComplete;
     /// <summary>
     /// A bool we use to set whether The Monument's UI is available or not.
     /// </summary>

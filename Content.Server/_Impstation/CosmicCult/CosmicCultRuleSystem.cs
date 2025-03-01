@@ -297,6 +297,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         else if (CurrentProgress >= TargetProgress && CurrentTier == 1)
             MonumentTier2(uid);
         UpdateMonumentAppearance(uid, false);
+        Dirty(uid);
     }
 
     public void MonumentTier1(Entity<MonumentComponent> uid)

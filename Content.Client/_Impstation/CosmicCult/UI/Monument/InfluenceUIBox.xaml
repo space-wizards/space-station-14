@@ -25,7 +25,7 @@
                     <Label Name="Cost" HorizontalAlignment="Center" Text="73" FontColorOverride="#4CA7AD" />
                 </BoxContainer>
                 <RichTextLabel Name="Description" />
-                <Button Name="GainButton" Text="{Loc 'monument-interface-influences-button-gain'}" MaxWidth="70" HorizontalAlignment="Right" />
+                <Button Name="GainButton" Text="{Loc 'monument-interface-influences-button-gain'}" HorizontalAlignment="Right" />
             </BoxContainer>
         </BoxContainer>
     </PanelContainer>
