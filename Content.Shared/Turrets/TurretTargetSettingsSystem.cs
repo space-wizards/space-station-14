@@ -73,7 +73,6 @@ public sealed partial class TurretTargetSettingsSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity and its <see cref="TurretTargetSettingsComponent"/></param>
     /// <param name="exemption">The access level proto ID being checked</param>
-    /// <returns></returns>
     [PublicAPI]
     public bool HasAccessLevelExemption(Entity<TurretTargetSettingsComponent> ent, ProtoId<AccessLevelPrototype> exemption)
     {
@@ -88,7 +87,6 @@ public sealed partial class TurretTargetSettingsSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity and its <see cref="TurretTargetSettingsComponent"/></param>
     /// <param name="exemptions"></param>
-    /// <returns></returns>
     [PublicAPI]
     public bool HasAnyAccessLevelExemption(Entity<TurretTargetSettingsComponent> ent, ICollection<ProtoId<AccessLevelPrototype>> exemptions)
     {
@@ -112,7 +110,6 @@ public sealed partial class TurretTargetSettingsSystem : EntitySystem
     /// </remarks>
     /// <param name="ent">The entity and its <see cref="TurretTargetSettingsComponent"/></param>
     /// <param name="target">The target entity</param>
-    /// <returns></returns>
     [PublicAPI]
     public bool EntityIsTargetForTurret(Entity<TurretTargetSettingsComponent> ent, EntityUid target)
     {
