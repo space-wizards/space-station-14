@@ -13,5 +13,8 @@ public sealed class ContentMarkupTagManager : ISharedContentMarkupTagManager
         new EntityNameHeaderContentTag(),
         new SessionNameHeaderContentTag(),
         new SpeechVerbContentTag(),
+        new CodewordsContentTag(),
+        new PlayAudioContentTag(),
+        new AccentContentTag(),
     }.ToFrozenDictionary(x => x.Name, x => x);
 }

@@ -7,7 +7,7 @@ public sealed class EntityNameHeaderContentTag : IContentMarkupTag
 {
     public string Name => "EntityNameHeader";
 
-    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
         var name = node.Value.StringValue;
         if (name == null)

@@ -21,23 +21,22 @@ namespace Content.Server.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class IsAboveCritChatCondition : ChatCondition
 {
-    public override Type? ConsumerType { get; set; } = typeof(EntityUid);
 
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (consumers is HashSet<EntityUid> entityConsumers)
+        IoCManager.InjectDependencies(this);
+
+        if (_entitySystem.TryGetEntitySystem<MobStateSystem>(out var mobStateSystem))
         {
-            IoCManager.InjectDependencies(this);
-
-            if (_entitySystem.TryGetEntitySystem<MobStateSystem>(out var mobStateSystem))
-            {
-                var filteredEntities = entityConsumers.Where(x => !mobStateSystem.IsIncapacitated(x)).ToHashSet();
-                return filteredEntities as HashSet<T> ?? new HashSet<T>();
-            }
+            return mobStateSystem.IsIncapacitated(subjectEntity);
         }
+        return false;
+    }
 
-        return new HashSet<T>();
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        return false;
     }
 }

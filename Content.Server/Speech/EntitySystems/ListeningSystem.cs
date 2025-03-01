@@ -13,12 +13,12 @@ public sealed class ListeningSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EntitySpokeEvent>(OnSpeak);
+        //SubscribeLocalEvent<EntitySpokeEvent>(OnSpeak);
     }
 
     private void OnSpeak(EntitySpokeEvent ev)
     {
-        PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage);
+        //PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage);
     }
 
     public void PingListeners(EntityUid source, string message, string? obfuscatedMessage)

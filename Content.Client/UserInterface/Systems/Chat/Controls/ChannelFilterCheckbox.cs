@@ -5,11 +5,11 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
 public sealed class ChannelFilterCheckbox : CheckBox
 {
-    public readonly ChatChannel Channel;
+    public readonly ChatChannelFilter Channel;
 
     public bool IsHidden => Parent == null;
 
-    public ChannelFilterCheckbox(ChatChannel channel)
+    public ChannelFilterCheckbox(ChatChannelFilter channel)
     {
         Channel = channel;
         Text = Loc.GetString($"hud-chatbox-channel-{Channel}");

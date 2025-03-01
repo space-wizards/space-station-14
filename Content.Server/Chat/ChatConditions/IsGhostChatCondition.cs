@@ -13,16 +13,17 @@ public sealed partial class IsGhostChatCondition : ChatCondition
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (consumers is HashSet<ICommonSession> sessionConsumers)
-        {
-            IoCManager.InjectDependencies(this);
+        IoCManager.InjectDependencies(this);
 
-            var filteredSessions = sessionConsumers.Where(x => _entityManager.HasComponent<GhostComponent>(x.AttachedEntity)).ToHashSet();
-            return filteredSessions as HashSet<T> ?? new HashSet<T>();
-        }
+        return _entityManager.HasComponent<GhostComponent>(subjectEntity);
+    }
 
-        return new HashSet<T>();
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        IoCManager.InjectDependencies(this);
+
+        return _entityManager.HasComponent<GhostComponent>(subjectSession.AttachedEntity);
     }
 }

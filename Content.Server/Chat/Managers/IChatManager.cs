@@ -19,7 +19,7 @@ namespace Content.Server.Chat.Managers
             EntityUid? senderEntity,
             HashSet<ICommonSession>? targetSessions = null,
             bool escapeText = true,
-            Dictionary<Enum, object>? supplierParameters = null,
+            ChatMessageContext? channelParameters = null,
             bool logMessage = true
         );
 
@@ -29,7 +29,7 @@ namespace Content.Server.Chat.Managers
             ICommonSession? senderSession,
             EntityUid? senderEntity,
             HashSet<ICommonSession>? targetSessions = null,
-            Dictionary<Enum, object>? supplierParameters = null,
+            ChatMessageContext? channelParameters = null,
             bool logMessage = true
         );
 
@@ -40,7 +40,7 @@ namespace Content.Server.Chat.Managers
             EntityUid? senderEntity,
             ref List<CommunicationChannelPrototype> usedCommsTypes,
             HashSet<ICommonSession>? targetSessions = null,
-            Dictionary<Enum, object>? supplierParameters = null,
+            ChatMessageContext? channelParameters = null,
             bool logMessage = true
         );
 
@@ -51,7 +51,7 @@ namespace Content.Server.Chat.Managers
             EntityUid? senderEntity,
             ref List<CommunicationChannelPrototype> usedCommsChannels,
             HashSet<ICommonSession>? targetSessions = null,
-            Dictionary<Enum, object>? supplierParameters = null,
+            ChatMessageContext? channelParameters = null,
             bool logMessage = true);
 
         void SendAdminAnnouncement(string message, AdminFlags? requiredFlags = null);

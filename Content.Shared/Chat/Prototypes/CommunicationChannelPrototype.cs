@@ -27,29 +27,54 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     /// </summary>
     [DataField(serverOnly: true)]
     [AlwaysPushInheritance]
-    public List<ChatCondition> PublishChatConditions = new();
+    public List<IChatCondition> PublishChatConditions = new();
 
     /// <summary>
-    /// A collection of consumer conditions and applicable markup tags.
-    /// Clients/entities prioritize the ConsumeCollections in order; if a consumer is active in a collection it will not be included in any subsequent collections in the list.
+    /// The conditions required for a session (i.e. client) to be allowed to consume a message from this communication channel.
+    /// Clients/entities prioritize the ConsumeCollections in order; if a consumer is a'ctive in a collection it will not be included in any subsequent collections in the list.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    [AlwaysPushInheritance]
+    public List<IChatCondition> ConsumeChatConditions = new();
+
+    /// <summary>
+    /// Contains modifiers that are applied on the server.
+    /// Avoid including text nodes or direct text changes/formatting unless necessary for security reasons.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public List<ConsumeCollection> ConsumeCollections = new();
+    public List<ChatModifier> ServerModifiers = new();
 
     /// <summary>
-    /// The kind of communication types this channel utilizes (e.g. speech, OOC, etc.)
+    /// A collection of conditions and applicable modifiers.
+    /// If a condition is met, the corresponding modifier(s) will be applied to the message AFTER the ServerModifiers.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public ChatChannel ChatChannels = ChatChannel.None;
+    public List<ConsumeCollection> ConditionalModifiers = new();
 
     /// <summary>
-    /// If true, an entity does not need to be attached to publish to this channel.
+    /// Contains modifiers that are applied and processed on the client.
+    /// Clientsided ChatModifiers may provide text nodes and include text formatting;
+    /// because of this, attention should be paid to the list order to ensure the correct order of operations.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public bool AllowEntitylessMessages = true;
+    public List<ChatModifier> ClientModifiers = new();
+
+    /// <summary>
+    /// The kind of chat filter this channel works under; used to filter chat clientside.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public ChatChannelFilter ChatFilter = ChatChannelFilter.None;
+
+    /// <summary>
+    /// The way the message is conveyed in the game; audio, visual, OOC or such.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public ChatChannelMedium ChatMedium = ChatChannelMedium.None;
 
     /// <summary>
     /// If true, the same message may not be published twice on the same channel.
@@ -77,15 +102,6 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     public List<ProtoId<CommunicationChannelPrototype>>? BackupChildCommunicationChannels;
 
     /// <summary>
-    /// Contains markup node suppliers that are applied and processed on the client.
-    /// Clientsided ChatModifiers may provide text nodes and include text formatting;
-    /// because of this, attention should be paid to the list order to ensure the correct order of operations.
-    /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public List<ChatModifier> ClientChatModifiers = new();
-
-    /// <summary>
     /// If true, any message published to this channel won't show up in the chatbox.
     /// Useful for vending machines, bots and other speech bubble pop-ups.
     /// </summary>
@@ -108,24 +124,10 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
 public partial struct ConsumeCollection
 {
     /// <summary>
-    /// The conditions required for a session (i.e. client) to be allowed to consume this communication channel.
+    /// The conditions required for a consumer to be allowed to consume this communication channel.
     /// </summary>
     [DataField(serverOnly: true)]
-    public List<ChatCondition> SessionChatConditions = new();
-
-    /// <summary>
-    /// If true, this consume collection will also process all sessions through the EntityChatConditions list.
-    /// This is useful for when you want similar behavior shared between non-client and client entities,
-    /// i.e. most types of speech, and helps cut down on yaml size.
-    /// </summary>
-    [DataField(serverOnly: true)]
-    public bool UseEntitySessionConditions = true;
-
-    /// <summary>
-    /// The conditions required for a non-client entity to be allowed to consume this communication channel.
-    /// </summary>
-    [DataField(serverOnly: true)]
-    public List<ChatCondition> EntityChatConditions = new();
+    public List<IChatCondition> Conditions = new();
 
     /// <summary>
     /// Contains markup node suppliers that are applied and processed on the server.
@@ -133,18 +135,14 @@ public partial struct ConsumeCollection
     /// If such nodes are needed, it's better to supply a tag that gets converted appropriately on the client instead.
     /// </summary>
     [DataField(serverOnly: true)]
-    public List<ChatModifier> ChatModifiers = new();
+    public List<ChatModifier> Modifiers = new();
 
     public ConsumeCollection(
-        List<ChatCondition> sessionChatConditions,
-        bool useEntitySessionConditions,
-        List<ChatCondition> entityChatConditions,
-        List<ChatModifier> chatModifiers)
+        List<IChatCondition> conditions,
+        List<ChatModifier> modifiers)
     {
-        SessionChatConditions = sessionChatConditions;
-        UseEntitySessionConditions = useEntitySessionConditions;
-        EntityChatConditions = entityChatConditions;
-        ChatModifiers = chatModifiers;
+        Conditions = conditions;
+        Modifiers = modifiers;
     }
 }
 
@@ -158,4 +156,6 @@ public enum DefaultChannelParameters
     SenderSession,
     RandomSeed,
     RadioChannel,
+    GlobalAudioPath,
+    GlobalAudioVolume,
 }

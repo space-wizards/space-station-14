@@ -14,7 +14,7 @@ public sealed partial class EntityNameHeaderChatModifier : ChatModifier
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -26,8 +26,7 @@ public sealed partial class EntityNameHeaderChatModifier : ChatModifier
 
             if (!_entityManager.MetaQuery.Resolve(senderEntity, ref metaData, false))
             {
-                name = null;
-                return message;
+                return;
             }
 
             name = metaData.EntityName;
@@ -35,10 +34,7 @@ public sealed partial class EntityNameHeaderChatModifier : ChatModifier
             var nameEv = new TransformSpeakerNameEvent(senderEntity, name);
             _entityManager.EventBus.RaiseLocalEvent(senderEntity, nameEv);
 
-            return InsertBeforeMessage(message,
-                new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null));
+            message.InsertBeforeMessage(new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null));
         }
-
-        return message;
     }
 }

@@ -32,15 +32,15 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelay
 /// </summary>
 public sealed class ListenerConsumeEvent : EntityEventArgs
 {
-    public ChatChannel ChatChannels;
+    public ChatChannelMedium ChatMedium;
 
     public FormattedMessage Message;
 
     public Dictionary<Enum, object> ChannelParameters;
 
-    public ListenerConsumeEvent(ChatChannel chatChannels, FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public ListenerConsumeEvent(ChatChannelMedium chatMedium, FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
-        ChatChannels = chatChannels;
+        ChatMedium = chatMedium;
         Message = message;
         ChannelParameters = channelParameters;
     }

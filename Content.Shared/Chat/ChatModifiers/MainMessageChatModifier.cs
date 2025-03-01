@@ -10,8 +10,8 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class MainMessageChatModifier : ChatModifier
 {
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
-        return InsertAroundText(message, new MarkupNode("MainMessage", null, null));
+        message.InsertAroundText(new MarkupNode("MainMessage", null, null));
     }
 }

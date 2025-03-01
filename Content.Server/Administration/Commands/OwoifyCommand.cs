@@ -1,5 +1,6 @@
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Speech.Accents;
 using Robust.Shared.Console;
 using Robust.Shared.Random;
 
@@ -39,10 +40,10 @@ public sealed class OwoifyCommand : IConsoleCommand
 
         var meta = _entManager.GetComponent<MetaDataComponent>(eUid.Value);
 
-        var owoSys = _entManager.System<OwOAccentSystem>();
+        var owo = new OwOAccent();
         var metaDataSys = _entManager.System<MetaDataSystem>();
 
-        metaDataSys.SetEntityName(eUid.Value, owoSys.Accentuate(meta.EntityName), meta);
-        metaDataSys.SetEntityDescription(eUid.Value, owoSys.Accentuate(meta.EntityDescription), meta);
+        metaDataSys.SetEntityName(eUid.Value, owo.Accentuate(meta.EntityName, 0), meta);
+        metaDataSys.SetEntityDescription(eUid.Value, owo.Accentuate(meta.EntityDescription, 0), meta);
     }
 }

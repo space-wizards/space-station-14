@@ -34,18 +34,17 @@ public sealed class ColorValueContentTag : IContentMarkupTag
         ["Radio.Medical"] = Color.FromHex("#57b8f0"),
         ["Radio.Syndicate"] = Color.FromHex("#8f4a4b"),
         ["Radio.Freelance"] = Color.FromHex("#f6ce64"),
-        ["Radio.Service"] = Color.FromHex("#539c00"),
         ["Radio.Binary"] = Color.FromHex("#2ed2fd"),
         ["Radio.CentCom"] = Color.FromHex("#2681a5"),
         ["Radio.Handheld"] = Color.FromHex("#967101"),
     }.ToFrozenDictionary();
 
-    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
         return [new MarkupNode("color", new MarkupParameter(GetColor(node)), null)];
     }
 
-    public List<MarkupNode>? ProcessClosingTag(MarkupNode node)
+    public List<MarkupNode>? ProcessClosingTag(MarkupNode node, int randomSeed)
     {
         return [new MarkupNode("color", null, null, true)];
     }

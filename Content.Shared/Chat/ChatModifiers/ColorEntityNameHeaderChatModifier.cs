@@ -19,7 +19,7 @@ public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
     [Dependency] private readonly IConfigurationManager _config = default!;
     private static ProtoId<ColorPalettePrototype> _chatNamePalette = "ChatNames";
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -32,14 +32,11 @@ public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
                 var color = Color.TryFromHex(GetNameColor(name));
                 if (color != null)
                 {
-                    return InsertOutsideTag(message,
-                        new MarkupNode("color", new MarkupParameter(color), null),
+                    message.InsertOutsideTag(new MarkupNode("color", new MarkupParameter(color), null),
                         "EntityNameHeader");
                 }
             }
         }
-
-        return message;
     }
 
     // CHAT-TODO: This whole thing needs to be remade such that it doesn't get the whole prototype list every time a message is sent.

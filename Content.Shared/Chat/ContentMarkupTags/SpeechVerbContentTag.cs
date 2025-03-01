@@ -8,7 +8,7 @@ public sealed class SpeechVerbContentTag : IContentMarkupTag
 {
     public string Name => "SpeechVerb";
 
-    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
         if (node.Value.TryGetString(out var speech) &&
             node.Attributes.TryGetValue("id", out var idKey) &&

@@ -15,13 +15,13 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SpeechVerbChatModifier : ChatModifier
 {
-    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -75,8 +75,7 @@ public sealed partial class SpeechVerbChatModifier : ChatModifier
                 new Dictionary<string, MarkupParameter>() { { "id", new MarkupParameter(verbId) } }
             );
 
-            return InsertAfterTag(message, node, "EntityNameHeader");
+            message.InsertAfterTag(node, "EntityNameHeader");
         }
-        return message;
     }
 }

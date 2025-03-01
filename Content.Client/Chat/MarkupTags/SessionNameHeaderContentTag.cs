@@ -7,7 +7,7 @@ public sealed class SessionNameHeaderContentTag : IContentMarkupTag
 {
     public string Name => "SessionNameHeader";
 
-    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
 
         var name = node.Value.StringValue;

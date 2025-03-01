@@ -57,7 +57,7 @@ public partial class ChatBox : UIWidget
         Logger.DebugS("chat", $"{msg.CommunicationChannel}: {msg.Message}");
         if (_protoManager.TryIndex(msg.CommunicationChannel, out var proto))
         {
-            if (!ChatInput.FilterButton.Popup.IsActive(proto.ChatChannels))
+            if (!ChatInput.FilterButton.Popup.IsActive(proto.ChatFilter))
             {
                 return;
             }
@@ -87,7 +87,7 @@ public partial class ChatBox : UIWidget
         }
     }
 
-    private void OnChannelFilter(ChatChannel channel, bool active)
+    private void OnChannelFilter(ChatChannelFilter channel, bool active)
     {
         Contents.Clear();
 

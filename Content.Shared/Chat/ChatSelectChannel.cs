@@ -4,7 +4,7 @@
     ///     Chat channels that the player can select in the chat box.
     /// </summary>
     /// <remarks>
-    ///     Maps to <see cref="ChatChannel"/>, giving better names.
+    ///     Maps to <see cref="ChatChannelFilter"/>, giving better names.
     /// </remarks>
     [Flags]
     public enum ChatSelectChannel : ushort
@@ -14,43 +14,43 @@
         /// <summary>
         ///     Chat heard by players within earshot
         /// </summary>
-        Local = ChatChannel.Local,
+        Local = ChatChannelFilter.Local,
 
         /// <summary>
         ///     Chat heard by players right next to each other
         /// </summary>
-        Whisper = ChatChannel.Whisper,
+        Whisper = ChatChannelFilter.Whisper,
 
         /// <summary>
         ///     Radio messages
         /// </summary>
-        Radio = ChatChannel.Radio,
+        Radio = ChatChannelFilter.Radio,
 
         /// <summary>
         ///     Local out-of-character channel
         /// </summary>
-        LOOC = ChatChannel.LOOC,
+        LOOC = ChatChannelFilter.LOOC,
 
         /// <summary>
         ///     Out-of-character channel
         /// </summary>
-        OOC = ChatChannel.OOC,
+        OOC = ChatChannelFilter.OOC,
 
         /// <summary>
         ///     Emotes
         /// </summary>
-        Emotes = ChatChannel.Emotes,
+        Emotes = ChatChannelFilter.Emotes,
 
         /// <summary>
         ///     Deadchat
         /// </summary>
-        Dead = ChatChannel.Dead,
+        Dead = ChatChannelFilter.Dead,
 
         /// <summary>
         ///     Admin chat
         /// </summary>
-        Admin = ChatChannel.AdminChat,
+        Admin = ChatChannelFilter.AdminChat,
 
-        Console = ChatChannel.Unspecified
+        Console = ChatChannelFilter.Unspecified
     }
 }

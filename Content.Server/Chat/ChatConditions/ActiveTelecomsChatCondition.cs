@@ -13,12 +13,11 @@ namespace Content.Server.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class ActiveTelecomsChatCondition : ChatCondition
 {
-    public override Type? ConsumerType { get; set; } = null;
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    public bool CheckTelecomms(ChatMessageContext channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -27,25 +26,39 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
             !_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype) ||
             !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform)
         )
-            return [];
+            return false;
 
         if (radioPrototype.LongRange)
         {
             return consumers;
         }
 
-        var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
-        var sourceMapId = sourceTransform.MapID;
-        foreach (var (_, keys, power, transform) in servers)
+        if (activeServer == false)
         {
-            if (transform.MapID == sourceMapId &&
-                power.Powered &&
-                keys.Channels.Contains(radioPrototype.ID))
+            var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+            var sourceMapId = sourceTransform.MapID;
+            foreach (var (_, keys, power, transform) in servers)
             {
-                return consumers;
+                if (transform.MapID == sourceMapId &&
+                    power.Powered &&
+                    keys.Channels.Contains(radioPrototype.ID))
+                {
+                    return true;
+                }
             }
         }
 
-        return [];
+        return false;
+    }
+
+
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    {
+        return CheckTelecomms(channelParameters);
+    }
+
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        return CheckTelecomms(channelParameters);
     }
 }

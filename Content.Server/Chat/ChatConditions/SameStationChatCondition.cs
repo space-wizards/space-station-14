@@ -14,34 +14,32 @@ public sealed partial class SameStationChatCondition : ChatCondition
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (consumers is HashSet<ICommonSession> sessionConsumers)
+        return false;
+    }
+
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        IoCManager.InjectDependencies(this);
+
+        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity))
+            return false;
+
+        var stationSystem = _entitySystem.GetEntitySystem<StationSystem>();
+        var station = stationSystem.GetOwningStation((EntityUid)senderEntity);
+
+        if (station == null)
         {
-            IoCManager.InjectDependencies(this);
-
-            if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity))
-                return new HashSet<T>();
-
-            var stationSystem = _entitySystem.GetEntitySystem<StationSystem>();
-            var station = stationSystem.GetOwningStation((EntityUid)senderEntity);
-
-            if (station == null)
-            {
-                // you can't make a station announcement without a station
-                return new HashSet<T>();
-            }
-
-            if (!_entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp))
-                return new HashSet<T>();
-
-            var filter = stationSystem.GetInStation(stationDataComp);
-
-            var resultingConsumers = filter.Recipients.Intersect(sessionConsumers);
-
-            return resultingConsumers.ToHashSet() as HashSet<T> ?? new HashSet<T>();
+            // you can't make a station announcement without a station
+            return false;
         }
 
-        return new HashSet<T>();
+        if (!_entityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp))
+            return false;
+
+        var filter = stationSystem.GetInStation(stationDataComp);
+
+        return filter.Recipients.Contains(subjectSession);
     }
 }

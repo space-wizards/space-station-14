@@ -17,13 +17,13 @@ namespace Content.Shared.Chat.ChatModifiers;
 public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 {
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
 
         var returnMessage = new FormattedMessage();
         if (!message.Nodes.TryFirstOrDefault(x => x.Name == null, out var firstTextNode))
         {
-            return message;
+            return;
         }
         var nodeEnumerator = message.GetEnumerator();
 
@@ -47,7 +47,7 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
         }
 
         nodeEnumerator.Dispose();
-        return returnMessage;
+        message = returnMessage;
     }
 
     private string SanitizeRadioPrefix(string text)
