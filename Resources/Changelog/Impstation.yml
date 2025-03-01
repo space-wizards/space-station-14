@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: brigmed beret has a little cross now hehe
-    type: Tweak
-  id: 716
-  time: '2024-12-11T20:18:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/992
 - author: suyo
   changes:
   - message: Fixed the mixologist chemmaster flatpack not being in your inventory
@@ -4077,3 +4070,10 @@
   id: 1215
   time: '2025-03-01T21:52:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1809
+- author: ruddygreat
+  changes:
+  - message: The Monument's UI should be nicer to use!
+    type: Tweak
+  id: 1216
+  time: '2025-03-01T22:19:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1807
