@@ -243,7 +243,6 @@
   result: MagazinePistolSubMachineGunTopMounted
   materials:
     Steel: 300
-    Silver: 80
 
 - type: latheRecipe
   parent: BaseAmmoBoxRecipe
@@ -436,6 +435,7 @@
     Steel: 160
     Glass: 80
     Plasma: 160
+    Silver: 80
 
 - type: latheRecipe
   parent: BaseAmmoBoxRecipe
