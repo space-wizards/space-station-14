@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -82,11 +83,24 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckInteract);
+            SubscribeLocalEvent<CuffableComponent, EnterCryostorageEvent>(HandleEnterCryostorageEvent);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
+        }
+
+        public void HandleEnterCryostorageEvent(Entity<CuffableComponent> ent, ref EnterCryostorageEvent args)
+        {
+            if (ent.Comp.Container.ContainedEntities.Count == 0)
+                return;
+
+            var cuffsToRemove = ent.Comp.LastAddedCuffs;
+
+            // Uncuff the target and put the cuffs back in their hands.
+            _container.Remove(cuffsToRemove, ent.Comp.Container);
+            _hands.PickupOrDrop(ent.Owner, cuffsToRemove);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)

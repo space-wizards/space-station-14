@@ -19,6 +19,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.UserInterface;
+using Content.Shared.Inventory.VirtualItem;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -49,6 +50,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly VirtualItemSystem _virtualSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -213,6 +215,9 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
                 _ghostSystem.OnGhostAttempt(mind.Value, false);
             }
         }
+
+        var newEv = new EnterCryostorageEvent(ent);
+        RaiseLocalEvent(ent.Owner, ref newEv);
 
         comp.AllowReEnteringBody = false;
         _transform.SetParent(ent, PausedMap.Value);

@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -44,10 +45,22 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
         SubscribeLocalEvent<AttachedClothingComponent, BeingUnequippedAttemptEvent>(OnAttachedUnequipAttempt);
 
+        SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<EnterCryostorageEvent>>(HandleEnterCryostorageEvent);
         SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
         SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
         SubscribeLocalEvent<AttachedClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetAttachedStripVerbsEvent);
         SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingDoAfterEvent>(OnDoAfterComplete);
+    }
+
+    private void HandleEnterCryostorageEvent(Entity<ToggleableClothingComponent> ent, ref InventoryRelayedEvent<EnterCryostorageEvent> args)
+    {
+        // Check to see if we are wearing toggleable clothing. If so, unequip it.
+        // This prevents a broken item being removed from the container and then being stuck in the world.
+        if (ent.Comp.Container == null || ent.Comp.ClothingUid == null)
+            return;
+
+        if (ent.Comp.Container.ContainedEntity == null)
+            _inventorySystem.TryUnequip(args.Args.User, ent.Comp.Slot, force: true);
     }
 
     private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
