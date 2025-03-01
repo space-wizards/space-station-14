@@ -22,12 +22,15 @@
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
     state: box
+  - type: MultiHandedItem
+  - type: Item
+    size: Huge
   - type: Delivery
     spesoReward: 1000
     wrapper: MaterialCardboard1
   - type: SpawnTableOnUse
     table: !type:NestedSelector
-      tableId: RandomTechBoardTable
+      tableId: PackageDeliveryRewards
 
 - type: entity
   parent: BaseDelivery

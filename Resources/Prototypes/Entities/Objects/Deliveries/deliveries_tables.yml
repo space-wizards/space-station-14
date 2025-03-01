@@ -36,12 +36,26 @@
     children:
     - !type:NestedSelector
       tableId: LetterCommonEntityTable
-      weight: 0.7
+      weight: 0.6
     - !type:NestedSelector
       tableId: LetterUncommonEntityTable
-      weight: 0.2
+      weight: 0.3
     - !type:NestedSelector
       tableId: LetterRareEntityTable
+      weight: 0.1
+
+- type: entityTable
+  id: PackageDeliveryRewards
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageCommonEntityTable
+      weight: 0.6
+    - !type:NestedSelector
+      tableId: PackageUncommonEntityTable
+      weight: 0.3
+    - !type:NestedSelector
+      tableId: PackageRareEntityTable
       weight: 0.1
 
 ### Loot Tables
@@ -81,3 +95,49 @@
     - id: ClothingHeadHatHairflower
     - id: ClothingHeadHatFlowerWreath
     - id: StrangePill
+
+# Packages
+# TODO: Currently mostly maints loot, should be updated in the future.
+- type: entityTable
+  id: PackageCommonEntityTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: MaintToolsTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+    - !type:NestedSelector
+      tableId: FoodRandomCakeTable
+      weight: 2
+    - id: FoodBoxPizzaFilled
+
+- type: entityTable
+  id: PackageUncommonEntityTable
+  table: !type:GroupSelector
+    children:
+    # Fluff
+    - !type:NestedSelector
+      tableId: MaintFluffTable
+      weight: 0.4
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+    # Plushies
+    - !type:NestedSelector
+      tableId: AllPlushiesTable
+      weight: 0.4
+    # Weapons
+    - !type:NestedSelector
+      tableId: MaintWeaponTable
+      weight: 0.1
+    # Syndie Loot
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      weight: 0.1
+
+- type: entityTable # TODO: Add more variety!
+  id: PackageRareEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: MedkitAdvanced
+    - id: MobMothroach
+    - id: PipeBomb
