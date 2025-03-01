@@ -6,7 +6,7 @@ While we are not a server that allows sexual content, <b>we do not allow people 
 
 ## Links
 
-[Website](https://impstation.gay/) | [Discord](https://discord.gg/TGNz3cEkag) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.io/about/nightlies/)
+[Website](https://impstation.gay/) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.io/about/nightlies/)
 
 ## Documentation/Wiki
 
