@@ -1,0 +1,17 @@
+name: "Labels: Draft"
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, converted_to_draft, ready_for_review]
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+    - if: ( github.event.pull_request.draft == true )
+      uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "S: Draft"
+    - if: ( github.event.pull_request.draft == false )
+      uses: actions-ecosystem/action-remove-labels@v1
+      with:
+        labels: "S: Draft"
