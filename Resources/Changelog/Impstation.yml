@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Banana has been updated!
-    type: Tweak
-  id: 715
-  time: '2024-12-11T20:12:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/990
 - author: Sha-Seng
   changes:
   - message: brigmed beret has a little cross now hehe
@@ -4063,7 +4056,8 @@
   url: https://github.com/impstation/imp-station-14/pull/1802
 - author: AftrLite
   changes:
-  - message: Various tweaks to Cosmic Cult based on player feedback. Check out the pull request on GitHub for full details!
+  - message: Various tweaks to Cosmic Cult based on player feedback. Check out the
+      pull request on GitHub for full details!
     type: Tweak
   id: 1213
   time: '2025-03-01T04:06:38.0000000+00:00'
@@ -4076,3 +4070,10 @@
   id: 1214
   time: '2025-03-01T04:21:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1800
+- author: dayn-e
+  changes:
+  - message: New lobby art by Six-Valentine!
+    type: Add
+  id: 1215
+  time: '2025-03-01T21:52:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1809
