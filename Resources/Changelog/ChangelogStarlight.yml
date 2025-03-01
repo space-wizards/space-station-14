@@ -3749,4 +3749,32 @@ Entries:
   id: 519
   time: '2025-03-01T14:00:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/352
+- author: Killer Tamashi
+  changes:
+  - message: Changed .30 box sprite again, now says 7.6 mm
+    type: Tweak
+  id: 520
+  time: '2025-03-01T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/345
+- author: Killer Tamashi
+  changes:
+  - message: Nerfed Mime and Clown Hardsuit stun values to 20%
+    type: Tweak
+  id: 521
+  time: '2025-03-01T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/345
+- author: Killer Tamashi
+  changes:
+  - message: Added Stun Resist to Security Hardsuits (30%)
+    type: Add
+  id: 522
+  time: '2025-03-01T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/345
+- author: Killer Tamashi
+  changes:
+  - message: Added Stun Resist to HoS/Captain/BSO Hardsuits (40%)
+    type: Add
+  id: 523
+  time: '2025-03-01T14:09:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/345
 
