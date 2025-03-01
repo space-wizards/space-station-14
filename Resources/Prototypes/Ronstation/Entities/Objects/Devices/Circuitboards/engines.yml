@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: TegCenterCircuitboard
+  name: thermo-electric generator machine board
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: TegCenter
+    stackRequirements:
+      Capacitor: 4
+      MatterBin: 1
+      Steel: 6
+      Cable: 4
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: TegCirculatorCircuitboard
+  name: circulator machine board
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: TegCirculator
+    stackRequirements:
+      Capacitor: 2
+      Steel: 3
+    tagRequirements:
+      Pipe:
+        amount: 1
+        defaultPrototype: GasPipeStraight

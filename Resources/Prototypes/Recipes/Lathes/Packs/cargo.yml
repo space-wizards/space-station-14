@@ -12,6 +12,7 @@
   recipes:
   - OreProcessorMachineCircuitboard
   - SalvageMagnetMachineCircuitboard
+  - OreProcessorBasicMachineCircuitboard
 
 ## Dynamic
 

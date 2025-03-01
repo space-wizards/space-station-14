@@ -388,23 +388,23 @@
   description: A jumpskirt made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: Ronstation/Clothing/Uniforms/Jumpskirt/security.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-      - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-      - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: Ronstation/Clothing/Uniforms/Jumpskirt/security.rsi
+  #- type: Item
+  #  inhandVisuals:
+  #    left:
+  #    - state: inhand-left
+  #      color: "#C12D30"
+  #      sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+  #    - state: overlay-inhand-left
+  #      sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+  #    right:
+  #    - state: inhand-right
+  #      color: "#C12D30"
+  #      sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+  #    - state: overlay-inhand-right
+  #      sprite: Clothing/Uniforms/Jumpsuit/security.rsi
 
 
 - type: entity

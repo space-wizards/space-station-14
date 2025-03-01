@@ -370,6 +370,8 @@
         orGroup: GiftPool
       - id: RGBStaff
         orGroup: GiftPool
+      - id: CardBoxPokerFilled
+        orGroup: GiftPool
     sound:
       path: /Audio/Effects/unwrap.ogg
 

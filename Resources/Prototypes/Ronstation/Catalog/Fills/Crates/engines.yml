@@ -1,0 +1,11 @@
+- type: entity
+  id: CrateEngineeringTeg
+  parent: CrateEngineeringSecure
+  name: thermo-electric generator flatpack set crate
+  description: Contains a set of 3 flatpacks to build your own thermo-electric generator. Requires Engineering access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: TegCenterFlatpack
+      - id: TegCirculatorFlatpack
+        amount: 2

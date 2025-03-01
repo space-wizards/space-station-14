@@ -33,6 +33,10 @@
   name: "gingerbread head"
   parent: [PartGingerbread, BaseHead]
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: Food
   - type: Sprite
     sprite: Mobs/Species/Gingerbread/parts.rsi
     state: "head_m"

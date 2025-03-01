@@ -1,0 +1,5 @@
+
+# This is clear terragov contraband and is illegal to own IC for non-terragov personnel.
+- type: contrabandSeverity
+  id: Terragov
+  examineText: contraband-examine-text-Terragov

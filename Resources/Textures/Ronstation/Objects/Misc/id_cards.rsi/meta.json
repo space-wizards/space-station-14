@@ -1,0 +1,36 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e. heccdiver made by Renee_Aria with minor modifications and inhand sprites by Merrokitsune/Bellkitsu.",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "default"
+      },
+      {
+        "name": "heccdiver"
+      },
+      {
+        "name": "idnanotrasen"
+      },
+      {
+        "name": "default-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "default-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "heccdiver-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "heccdiver-inhand-right",
+        "directions": 4
+      }
+    ]
+}
