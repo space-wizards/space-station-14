@@ -69,16 +69,6 @@
   components:
   - type: SpanishAccent
 
-- type: trait
-  id: Liar
-  name: trait-liar-name
-  description: trait-liar-desc
-  category: SpeechTraits
-  cost: 1
-  components:
-  - type: ReplacementAccent
-    accent: liar
-
 
 
 ##Traits
@@ -104,5 +94,15 @@
   cost: 1
   components:
   - type: FrontalLisp
+
+- type: trait
+  id: Liar
+  name: trait-liar-name
+  description: trait-liar-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: liar
 
 
