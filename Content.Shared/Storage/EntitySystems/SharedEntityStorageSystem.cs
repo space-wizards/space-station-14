@@ -331,7 +331,20 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Contents.ContainedEntities.Count >= component.Capacity)
             return false;
 
-        return CanFit(toInsert, container, component);
+        // Allow other systems to prevent inserting the item: e.g. the item is actually a ghost.
+        var attemptEvent = new InsertIntoEntityStorageAttemptEvent(toInsert);
+        RaiseLocalEvent(toInsert, ref attemptEvent);
+
+        if (attemptEvent.Cancelled)
+            return false;
+
+        // Consult the whitelist. The whitelist ignores the default assumption about how entity storage works.
+        if (component.Whitelist != null)
+            return _whitelistSystem.IsValid(component.Whitelist, toInsert);
+
+        // Mobs can be inserted into entity storage if the container isn't an item. All other entities must be an item.
+        // Being a mob has a higher priority than being an tem.
+        return HasComp<BodyComponent>(toInsert) ? !HasComp<ItemComponent>(container) : HasComp<ItemComponent>(toInsert);
     }
 
     public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
@@ -417,53 +430,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         return Insert(toAdd, container, component);
-    }
-
-    private bool CanFit(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
-    {
-        if (!Resolve(container, ref component))
-            return false;
-
-        // conditions are complicated because of pizzabox-related issues, so follow this guide
-        // 0. Accomplish your goals at all costs.
-        // 1. AddToContents can block anything
-        // 2. maximum item count can block anything
-        // 3. ghosts can NEVER be eaten
-        // 4. items can always be eaten unless a previous law prevents it
-        // 5. if this is NOT AN ITEM, then mobs can always be eaten unless a previous
-        // law prevents it
-        // 6. if this is an item, then mobs must only be eaten if some other component prevents
-        // pick-up interactions while a mob is inside (e.g. foldable)
-        var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
-        RaiseLocalEvent(toInsert, ref attemptEvent);
-        if (attemptEvent.Cancelled)
-            return false;
-
-        var targetIsMob = HasComp<BodyComponent>(toInsert);
-        var storageIsItem = HasComp<ItemComponent>(container);
-        var allowedToEat = component.Whitelist == null ? HasComp<ItemComponent>(toInsert) : _whitelistSystem.IsValid(component.Whitelist, toInsert);
-
-        // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
-        // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
-        // Seriously, it is insanely hacky and weird to get someone out of a backpack once they end up in there.
-        // And to be clear, they should NOT be in there.
-        // For the record, what you need to do is empty the backpack onto a PlacableSurface (table, rack)
-        if (targetIsMob)
-        {
-            if (!storageIsItem)
-                allowedToEat = true;
-            else
-            {
-                var storeEv = new StoreMobInItemContainerAttemptEvent();
-                RaiseLocalEvent(container, ref storeEv);
-                allowedToEat = storeEv is { Handled: true, Cancelled: false };
-
-                if (component.ItemCanStoreMobs)
-                    allowedToEat = true;
-            }
-        }
-
-        return allowedToEat;
     }
 
     private void ModifyComponents(EntityUid uid, SharedEntityStorageComponent? component = null)
