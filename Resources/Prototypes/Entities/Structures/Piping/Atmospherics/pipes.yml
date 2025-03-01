@@ -36,12 +36,8 @@
           collection: MetalBreak
           params:
             volume: -8
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          GasPipeBroken:
-            min: 1
-            max: 1
-        offset: 0
+      - !type:ChangeConstructionNodeBehavior
+        node: broken
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: Sprite
@@ -84,6 +80,27 @@
   - type: Construction
     graph: GasPipe
     node: half
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: halfBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: GuideHelp
     guides:
     - Pipes
@@ -107,6 +124,27 @@
   - type: Construction
     graph: GasPipe
     node: straight
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: straightBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Normal
     storedSprite:
@@ -127,6 +165,23 @@
     - PipeNetworks
 
 - type: entity
+  parent: GasPipeBroken
+  id: GasPipeStraightBroken
+  suffix: Straight
+  components:
+  # FIXME held sprites
+  # FIXME item shape etc.
+  # FIXME inherit more
+  # FIXME sprite copyright
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    visible: false
+    layers:
+      - state: pipeStraightBroken
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+
+- type: entity
   parent: GasPipeBase
   id: GasPipeBend
   suffix: Bend
@@ -144,6 +199,27 @@
   - type: Construction
     graph: GasPipe
     node: bend
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: bendBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Small
     shape:
@@ -171,6 +247,19 @@
     - PipeNetworks
 
 - type: entity
+  parent: GasPipeBroken
+  id: GasPipeBendBroken
+  suffix: Straight
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    visible: false
+    layers:
+      - state: pipeBendBroken
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+
+- type: entity
   parent: GasPipeBase
   id: GasPipeTJunction
   suffix: TJunction
@@ -188,6 +277,27 @@
   - type: Construction
     graph: GasPipe
     node: tjunction
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: tjunctionBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Normal
     shape:
@@ -230,6 +340,27 @@
   - type: Construction
     graph: GasPipe
     node: fourway
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: fourwayBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Normal
     shape:
