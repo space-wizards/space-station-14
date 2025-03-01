@@ -3710,4 +3710,13 @@ Entries:
   id: 514
   time: '2025-03-01T09:04:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/348
+- author: Rinary
+  changes:
+  - message: Added patches as new method to inject reagents in patient(medical item,
+      like pills but clings to the player and slowly transfers reagents directly into
+      the bloodstream)
+    type: Add
+  id: 515
+  time: '2025-03-01T13:49:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/351
 
