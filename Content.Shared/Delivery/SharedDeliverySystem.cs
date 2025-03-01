@@ -3,7 +3,8 @@ using Content.Shared.Examine;
 namespace Content.Shared.Delivery;
 
 /// <summary>
-/// If you're reading this you're gay
+/// Shared side of the DeliverySystem.
+/// Used mostly to predict the examine text.
 /// </summary>
 public abstract class SharedDeliverySystem : EntitySystem
 {

@@ -8,7 +8,8 @@ using Robust.Shared.Timing;
 namespace Content.Server.Delivery;
 
 /// <summary>
-/// If you're reading this you're gay but server side
+/// System for managing deliveries spawned by the mail teleporter.
+/// This covers for spawning deliveries.
 /// </summary>
 public sealed partial class DeliverySystem
 {
@@ -19,8 +20,6 @@ public sealed partial class DeliverySystem
     private void InitializeSpawning()
     {
         SubscribeLocalEvent<CargoDeliveryDataComponent, MapInitEvent>(OnDataMapInit);
-
-        Log.Debug("Initialized");
     }
 
     private void OnDataMapInit(Entity<CargoDeliveryDataComponent> ent, ref MapInitEvent args)
@@ -30,21 +29,17 @@ public sealed partial class DeliverySystem
 
     private void SpawnDelivery(Entity<DeliverySpawnerComponent?> ent, int amount)
     {
-        Log.Debug("SpawnDelivery ran");
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        Log.Debug("SpawnDelivery resolved");
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
         var coords = Transform(ent).Coordinates;
 
         while (amount > 0)
         {
-            Log.Debug(amount.ToString());
             foreach (var id in spawns)
             {
                 Spawn(id, coords);
-                Log.Debug("Spawning");
             }
 
             amount--;
@@ -58,6 +53,7 @@ public sealed partial class DeliverySystem
 
         var spawners = GetValidSpawners(ent);
 
+        // Skip if theres no spawners available
         if (spawners.Count == 0)
             return;
 
@@ -70,7 +66,6 @@ public sealed partial class DeliverySystem
         {
             foreach (var spawner in spawners)
             {
-                Log.Debug("Attempting to spawn deliveries at spawner");
                 SpawnDelivery(spawner, deliveryCount);
             }
         }
@@ -104,10 +99,9 @@ public sealed partial class DeliverySystem
             if (TryComp<ApcPowerReceiverComponent>(spawnerUid, out var power) && !power.Powered)
                 continue;
 
-            Log.Debug("Added valid spawner");
             validSpawners.Add(spawnerUid);
         }
-        Log.Debug("Found " + validSpawners.Count + " spawners");
+
         return validSpawners;
     }
 

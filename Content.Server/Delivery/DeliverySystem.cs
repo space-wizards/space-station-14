@@ -13,7 +13,8 @@ using Robust.Shared.Audio.Systems;
 namespace Content.Server.Delivery;
 
 /// <summary>
-/// If you're reading this you're gay but server side
+/// System for managing deliveries spawned by the mail teleporter.
+/// This covers for letters/packages, as well as granting cargo money and spawning a reward for the player upon opening.
 /// </summary>
 public sealed partial class DeliverySystem : SharedDeliverySystem
 {

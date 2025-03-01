@@ -66,26 +66,28 @@
     children:
     - !type:NestedSelector # Don't you love getting mailed trash?
       tableId: GenericTrashItems
-    - id: MobCockroach
-    - id: MailRobustToolsSpam
-    - id: MailNanotrasenSpam
-    - id: MailSyndicateSpam
-    - id: MailScienceSpiderClanSpam
-    - id: MailAllAccessSpam
-    - id: MailCentcommRetributionSpam
-    - id: MailAlternativeDimensionSpam
-    - id: MailNarsieCultSpam
-    - id: MailRageCageSpam
-    - id: MailVoyageAdvertisementSpam
-    - id: MailEvilLizardSpam
-    - id: MailParentsNeedMoneySpam
+    - !type:GroupSelector
+      weight: 7
+      children:
+      - id: MobCockroach
+      - id: MailRobustToolsSpam
+      - id: MailNanotrasenSpam
+      - id: MailSyndicateSpam
+      - id: MailScienceSpiderClanSpam
+      - id: MailAllAccessSpam
+      - id: MailCentcommRetributionSpam
+      - id: MailAlternativeDimensionSpam
+      - id: MailNarsieCultSpam
+      - id: MailRageCageSpam
+      - id: MailVoyageAdvertisementSpam
+      - id: MailEvilLizardSpam
+      - id: MailParentsNeedMoneySpam
 
 - type: entityTable # TODO: Add more variety!
   id: LetterUncommonEntityTable # Some more varied things, should never be more expensive than 100 spesos
   table: !type:GroupSelector
     children:
     - id: SpaceCash100
-    - id: ResearchDisk
 
 - type: entityTable # TODO: Add more variety!
   id: LetterRareEntityTable # Interesting things that can actually be of use, should never be more expensive than 500 spesos
