@@ -3703,4 +3703,11 @@ Entries:
   id: 513
   time: '2025-02-28T18:35:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/349
+- author: aedler
+  changes:
+  - message: Added 'Long Bangs 2' hairstyle.
+    type: Add
+  id: 514
+  time: '2025-03-01T09:04:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/348
 
