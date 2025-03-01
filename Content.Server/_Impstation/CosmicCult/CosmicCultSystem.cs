@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Content.Server.Popups;
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components;
@@ -242,7 +243,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         var quant = TryComp<StackComponent>(entropy, out var stackComp) ? stackComp.Count : 1;
         if (TryComp<CosmicCultComponent>(cultist, out var cultComp))
+        {
             cultComp.EntropyBudget += quant;
+            Dirty(cultist, cultComp);
+        }
         monument.Comp.TotalEntropy += quant;
         _cultRule.TotalEntropy += quant;
         _cultRule.UpdateCultData(monument);
