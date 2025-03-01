@@ -193,7 +193,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component);
+        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component, true);
 
         args.Handled = true;
     }
