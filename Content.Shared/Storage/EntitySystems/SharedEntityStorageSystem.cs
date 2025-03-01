@@ -250,6 +250,11 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         var count = 0;
         foreach (var entity in ev.Contents)
         {
+            // TODO: Write a better lookup query that does not cause entity storages to attempt to insert themselves
+            // into themselves.
+            if (entity == uid)
+                continue;
+
             if (!ev.BypassChecks.Contains(entity))
             {
                 if (!CanInsert(entity, uid, component))
@@ -342,9 +347,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Whitelist != null)
             return _whitelistSystem.IsValid(component.Whitelist, toInsert);
 
-        // Mobs can be inserted into entity storage if the container isn't an item. All other entities must be an item.
-        // Being a mob has a higher priority than being an tem.
-        return HasComp<BodyComponent>(toInsert) ? !HasComp<ItemComponent>(container) : HasComp<ItemComponent>(toInsert);
+        // The inserted entity must be a mob or an item.
+        return HasComp<BodyComponent>(toInsert) || HasComp<ItemComponent>(toInsert);
     }
 
     public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
