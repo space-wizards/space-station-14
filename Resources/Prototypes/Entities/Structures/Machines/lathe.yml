@@ -568,6 +568,7 @@
 - type: entity
   parent: BaseLathe
   id: OreProcessor
+  suffix: DO NOT MAP
   name: ore processor
   description: It produces sheets and ingots using ores.
   components:
@@ -597,6 +598,43 @@
       staticPacks:
       - OreSmelting
       - RGlassSmelting
+
+- type: entity
+  parent: OreProcessor
+  id: OreProcessorNitrogen
+  suffix: Requires nitrogen
+  description: It produces sheets and ingots using ores. Requires nitrogen for producing.
+  components:
+    - type: Sprite
+      granularLayersRendering: true
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+        - state: pipe
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
+      snapCardinals: true
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: GasForProducing
+      gasId: 1 # Nitrogen
+      gasAmount: 5 # 5 moles per recipe
+    - type: Rotatable
+    - type: PipeColorVisuals
+    - type: AtmosPipeColor
+    - type: Transform
+      noRot: false
 
 - type: entity
   parent: OreProcessor
