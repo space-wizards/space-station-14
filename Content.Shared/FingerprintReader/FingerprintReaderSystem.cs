@@ -24,9 +24,6 @@ public sealed class FingerprintReaderSystem : EntitySystem
         if (!Resolve(target, ref target.Comp, false))
             return true;
 
-        if (!target.Comp.Enabled)
-            return true;
-
         if (target.Comp.AllowedFingerprints.Count == 0)
             return true;
 
@@ -34,7 +31,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
         if (!target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
         {
             if (target.Comp.FailGlovesPopup != null)
-                _popup.PopupPredicted(Loc.GetString(target.Comp.FailGlovesPopup, ("blocker", gloves)), target, user);
+                _popup.PopupEntity(Loc.GetString(target.Comp.FailGlovesPopup, ("blocker", gloves)), target, user);
             return false;
         }
 
@@ -43,7 +40,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
             !target.Comp.AllowedFingerprints.Contains(fingerprint.Fingerprint))
         {
             if (target.Comp.FailPopup != null)
-                _popup.PopupPredicted(Loc.GetString(target.Comp.FailPopup), target, user);
+                _popup.PopupEntity(Loc.GetString(target.Comp.FailPopup), target, user);
 
             return false;
         }
@@ -78,6 +75,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
     public void SetAllowedFingerprints(Entity<FingerprintReaderComponent> target, HashSet<string> fingerprints)
     {
         target.Comp.AllowedFingerprints = fingerprints;
+        Dirty(target);
     }
 
     /// <summary>
@@ -87,6 +85,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
     public void AddAllowedFingerprint(Entity<FingerprintReaderComponent> target, string fingerprint)
     {
         target.Comp.AllowedFingerprints.Add(fingerprint);
+        Dirty(target);
     }
 
     /// <summary>
@@ -96,5 +95,6 @@ public sealed class FingerprintReaderSystem : EntitySystem
     public void RemoveAllowedFingerprint(Entity<FingerprintReaderComponent> target, string fingerprint)
     {
         target.Comp.AllowedFingerprints.Remove(fingerprint);
+        Dirty(target);
     }
 }

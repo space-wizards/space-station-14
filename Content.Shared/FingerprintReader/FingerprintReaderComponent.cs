@@ -6,15 +6,9 @@ namespace Content.Shared.FingerprintReader;
 /// Component for checking if a user's fingerprint matches allowed fingerprints
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(FingerprintReaderSystem))]
 public sealed partial class FingerprintReaderComponent : Component
 {
-    /// <summary>
-    /// Whether the fingerprint reader is enabled.
-    /// If false, all access attempts will always be allowed.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Enabled = true;
-
     /// <summary>
     /// The fingerprints that are allowed to access this entity.
     /// </summary>
