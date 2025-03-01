@@ -25,7 +25,6 @@ namespace Content.Server.Starlight.Medical.Surgery;
 public sealed partial class SurgerySystem : SharedSurgerySystem
 {
     [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -35,7 +34,6 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     [Dependency] private readonly ContainerSystem _containers = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     private readonly List<EntProtoId> _surgeries = [];
     public override void Initialize()

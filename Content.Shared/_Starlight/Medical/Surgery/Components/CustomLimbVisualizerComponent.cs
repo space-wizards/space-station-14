@@ -22,7 +22,7 @@ public sealed partial class CustomLimbVisualizerComponent : Component
 public sealed partial class CustomLimbComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public EntityUid? Item;
+    public EntityUid Item;
 }
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CustomLimbMarkerComponent : Component

@@ -1,3 +1,4 @@
+﻿using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Body.Components;
 using Content.Server.Ghost;
 using Content.Server.Humanoid;
@@ -22,6 +23,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly LimbSystem _limbSystem = default!;//🌟Starlight🌟
 
     public override void Initialize()
     {
@@ -66,15 +68,7 @@ public sealed class BodySystem : SharedBodySystem
         base.AddPart(bodyEnt, partEnt, slotId);
 
         if (TryComp<HumanoidAppearanceComponent>(bodyEnt, out var humanoid))
-        {
-            var layer = partEnt.Comp.ToHumanoidLayers();
-            if (layer != null)
-            {
-                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(
-                    bodyEnt, layers, visible: true, permanent: true, humanoid);
-            }
-        }
+            _limbSystem.AddLimbVisual((bodyEnt, humanoid), partEnt); //🌟Starlight🌟
     }
 
     protected override void RemovePart(

@@ -52,6 +52,21 @@
       path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+
+- type: entity
+  name: cautery
+  id: CauteryCyber
+  parent: Cautery
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: cautery
+  - type: SurgeryTool
+    speed: 0.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
 # Drill
 
 - type: entity
@@ -88,6 +103,19 @@
   components:
   - type: Sprite
     state: abductor
+  - type: SurgeryTool
+    speed: 0.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+
+- type: entity
+  name: drill
+  id: DrillCyber
+  parent: Drill
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: drill
   - type: SurgeryTool
     speed: 0.5
     startSound:
@@ -139,6 +167,21 @@
   components:
   - type: Sprite
     state: abductor
+  - type: SurgeryTool
+    speed: 0.2
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+      
+- type: entity
+  name: scalpel
+  id: ScalpelCyber
+  parent: Scalpel
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: scalpel
   - type: SurgeryTool
     speed: 0.2
     startSound:
@@ -263,6 +306,22 @@
       path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
+      
+- type: entity
+  name: retractor
+  id: RetractorCyber
+  parent: Retractor
+  description: A surgical tool used to hold open incisions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: retractor
+  - type: SurgeryTool
+    speed: 0.4
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
 
 - type: entity
   name: hemostat
@@ -301,6 +360,20 @@
   components:
   - type: Sprite
     state: abductor-hemostat
+  - type: SurgeryTool
+    speed: 0.4
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+      
+- type: entity
+  name: hemostat
+  id: HemostatCyber
+  parent: Hemostat
+  description: A surgical tool used to compress blood vessels to prevent bleeding.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: hemostat
   - type: SurgeryTool
     speed: 0.4
     startSound:
@@ -357,7 +430,20 @@
     speed: 0.4
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
-
+      
+- type: entity
+  name: bone setter
+  id: BoneSetterCyber
+  parent: BoneSetter
+  description: A surgical tool used for setting bones. It also breaks them quite well.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: bonesetter
+  - type: SurgeryTool
+    speed: 0.4
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
 # Saws
 
 - type: entity
@@ -466,6 +552,24 @@
   components:
   - type: Sprite
     state: abductor
+  - type: Tool
+    speedModifier: 0.4
+  - type: SurgeryTool
+    speed: 0.1
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+    endSound:
+      path: /Audio/Items/drill_hit.ogg
+
+- type: entity
+  name: circular saw
+  id: SawCyber
+  parent: SawElectric
+  description: You think you can cut anything with it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: saw
   - type: Tool
     speedModifier: 0.4
   - type: SurgeryTool

@@ -20,6 +20,9 @@ using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.VentCraw;
 using Content.Shared.Interaction.Components;
 using Microsoft.CodeAnalysis;
+using Content.Shared._Starlight.Medical.Body;
+using Content.Server._Starlight.Medical.Limbs;
+using Content.Server.Administration.Systems;
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
@@ -31,8 +34,9 @@ namespace Content.Server.Starlight.Medical.Surgery;
 public sealed partial class SurgerySystem : SharedSurgerySystem
 {
     [Dependency] private readonly IComponentFactory _compFactory = default!;
+    [Dependency] private readonly LimbSystem _limbSystem = default!;
+    [Dependency] private readonly StarlightEntitySystem _entity = default!;
 
-    private readonly EntProtoId _virtual = "PartVirtual";
     public void InitializeSteps()
     {
         SubscribeLocalEvent<SurgeryStepBleedEffectComponent, SurgeryStepEvent>(OnStepBleedComplete);
@@ -119,7 +123,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         }
 
         var organs = _body.GetPartOrgans(args.Part, Comp<BodyPartComponent>(args.Part));
-        foreach (var organ in organs) 
+        foreach (var organ in organs)
         {
             if (!HasComp(organ.Id, type) || !_body.RemoveOrgan(organ.Id, organ.Component)) continue;
 
@@ -139,243 +143,34 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void OnStepEmoteEffectComplete(Entity<SurgeryStepEmoteEffectComponent> ent, ref SurgeryStepEvent args)
         => _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+        
     private void OnStepSpawnComplete(Entity<SurgeryStepSpawnEffectComponent> ent, ref SurgeryStepEvent args)
     {
         if (TryComp(args.Body, out TransformComponent? xform))
             SpawnAtPosition(ent.Comp.Entity, xform.Coordinates);
     }
-    private void OnStepAttachLimbComplete(Entity<SurgeryStepAttachLimbEffectComponent> _, string slot, ref SurgeryStepEvent args)
-    {
-        if (args.Tools.Count == 0
-            || !(args.Tools.FirstOrDefault() is var limbId)
-            || !TryComp<BodyPartComponent>(args.Part, out var bodyPart)
-            || !TryComp<BodyPartComponent>(limbId, out var limb))
-            return;
 
-        var part = args.Part;
-        var body = args.Body;
-
-        if (!_body.AttachPart(part, slot, limbId, bodyPart, limb))
-        {
-            args.IsCancelled = true;
-            return;
-        }
-
-        if (TryComp<HumanoidAppearanceComponent>(body, out var humanoid)) //todo move to system
-        {
-            var limbs = _body.GetBodyPartAdjacentParts(limbId, limb).Except([part]).Concat([limbId]);
-            foreach (var partLimbId in limbs)
-            {
-                if (TryComp<BaseLayerIdComponent>(partLimbId, out var baseLayerStorage)
-                    && TryComp(partLimbId, out BodyPartComponent? partLimb))
-                {
-                    var layer = partLimb.ToHumanoidLayers();
-                    if (layer is null) continue;
-                    _humanoidAppearanceSystem.SetBaseLayerId(body, layer.Value, baseLayerStorage.Layer, true, humanoid);
-                }
-            }
-        }
-
-        switch (limb.PartType)
-        {
-            case BodyPartType.Arm: //todo move to systems
-                if (limb.Children.Keys.Count == 0)
-                    _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left hand" : "right hand", BodyPartType.Hand, out var slotId);
-
-                foreach (var slotId in limb.Children.Keys)
-                {
-                    if (slotId is null) continue;
-                    var slotFullId = BodySystem.GetPartSlotContainerId(slotId);
-                    var child = _containers.GetContainer(limbId, slotFullId);
-
-                    foreach (var containedEnt in child.ContainedEntities)
-                    {
-                        if (TryComp(containedEnt, out BodyPartComponent? innerPart)
-                            && innerPart.PartType == BodyPartType.Hand)
-                            _hands.AddHand(body, slotFullId, limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
-                    }
-                }
-                break;
-            case BodyPartType.Hand:
-                _hands.AddHand(body, BodySystem.GetPartSlotContainerId(slot), limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
-                break;
-            case BodyPartType.Leg:
-                if (limb.Children.Keys.Count == 0)
-                    _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot", BodyPartType.Foot, out var slotId);
-                break;
-            case BodyPartType.Foot:
-                break;
-        }
-    }
+    private void OnStepAttachLimbComplete(Entity<SurgeryStepAttachLimbEffectComponent> _, string slot, ref SurgeryStepEvent args) 
+        => args.IsCancelled = args.Tools.Count == 0
+            || !(args.Tools.FirstOrDefault() is var limdId)
+            || !TryComp<BodyPartComponent>(limdId, out var limb)
+            || !TryComp(args.Part, out BodyPartComponent? part)
+            || !TryComp(args.Body, out HumanoidAppearanceComponent? humanoid)
+            || !_limbSystem.AttachLimb((args.Body, humanoid), slot, (args.Part, part), (limdId, limb));
 
     private void OnStepAttachItemComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, string slot, ref SurgeryStepEvent args)
-    {
-        if (args.Tools.Count == 0
-            || !(args.Tools.FirstOrDefault() is var itemId)
-            || !TryComp<BodyPartComponent>(args.Part, out var bodyPart)
-            || !TryComp(itemId, out MetaDataComponent? metada)
-            || TryComp<BodyPartComponent>(itemId, out var _)
-            || Prototype(itemId) is not EntityPrototype prototype)
-            return;
-
-        var marker = EnsureComp<CustomLimbMarkerComponent>(itemId);
-
-        var virtualIteam = Spawn(_virtual);
-        var virtualBodyPart = EnsureComp<BodyPartComponent>(virtualIteam);
-        var virtualMetadata = EnsureComp<MetaDataComponent>(virtualIteam);
-        var virtualCustomLimb = EnsureComp<CustomLimbComponent>(virtualIteam);
-        _metadata.SetEntityName(virtualIteam, metada.EntityName, virtualMetadata);
-
-        marker.VirtualPart = virtualIteam;
-        virtualCustomLimb.Item = itemId;
-
-        virtualBodyPart.PartType = slot switch
-        {
-            "left arm" => BodyPartType.Arm,
-            "right arm" => BodyPartType.Arm,
-            "left hand" => BodyPartType.Hand,
-            "right hand" => BodyPartType.Hand,
-            "left leg" => BodyPartType.Leg,
-            "right leg" => BodyPartType.Leg,
-            "left foot" => BodyPartType.Foot,
-            "right foot" => BodyPartType.Foot,
-            "tail" => BodyPartType.Tail,
-            _ => BodyPartType.Other,
-        };
-        if (!_body.AttachPart(args.Part, slot, virtualIteam, bodyPart, virtualBodyPart))
-        {
-            args.IsCancelled = true;
-            QueueDel(virtualIteam);
-            return;
-        }
-
-        if (TryComp<HumanoidAppearanceComponent>(args.Body, out var humanoid)) //todo move to system
-        {
-            var layer = GetLayer(slot);
-            if (layer is null)
-                return;
-
-            var vizualizer = EnsureComp<CustomLimbVisualizerComponent>(args.Body);
-            vizualizer.Layers[layer.Value] = GetNetEntity(itemId);
-            Dirty(args.Body, vizualizer);
-
-        }
-        AddItemHand(args.Body, itemId, BodySystem.GetPartSlotContainerId(slot));
-    }
-
-    private void AddItemHand(EntityUid bodyId, EntityUid itemId, string handId)
-    {
-        if (!TryComp<HandsComponent>(bodyId, out var hands))
-            return;
-
-        if (!itemId.IsValid())
-        {
-            Log.Debug("no valid item");
-            return;
-        }
-
-        _hands.AddHand(bodyId, handId, HandLocation.Middle, hands);
-        _hands.DoPickup(bodyId, hands.Hands[handId], itemId, hands);
-        EnsureComp<UnremoveableComponent>(itemId);
-    }
+        => args.IsCancelled = args.Tools.Count == 0 
+            || !(args.Tools.FirstOrDefault() is var itemId) 
+            || !TryComp(itemId, out MetaDataComponent? metadata) 
+            || HasComp<BodyPartComponent>(itemId) 
+            || !TryComp(args.Part, out BodyPartComponent? limb) 
+            || !_limbSystem.AttachItem(args.Body, slot, (args.Part, limb), (itemId, metadata));
 
     private void OnStepAmputationComplete(Entity<SurgeryStepAmputationEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        if (TryComp(args.Body, out TransformComponent? xform)
-            && TryComp(args.Body, out BodyComponent? body)
-            && TryComp(args.Part, out BodyPartComponent? limb))
-        {
-
-            if (!_containers.TryGetContainingContainer((args.Part, null, null), out var container)) return;
-
-            var parentPartAndSlot = _body.GetParentPartAndSlotOrNull(args.Part);
-            if (parentPartAndSlot is null) return;
-            var (_, slotId) = parentPartAndSlot.Value;
-
-            if (_containers.Remove(args.Part, container, destination: xform.Coordinates))
-            {
-                if (TryComp<CustomLimbComponent>(args.Part, out var virtualLimb)
-                    && virtualLimb.Item.HasValue)
-                {
-                    RemoveItemHand(args.Body, virtualLimb.Item.Value, BodySystem.GetPartSlotContainerId(slotId));
-
-                    var vizualizer = EnsureComp<CustomLimbVisualizerComponent>(args.Body);
-
-                    var layer = GetLayer(slotId);
-                    if (layer is not null)
-                    {
-                        vizualizer.Layers.Remove(layer.Value);
-                        Dirty(args.Body, vizualizer);
-                    }
-                    QueueDel(args.Part);
-                }
-                else
-                {
-                    if (TryComp<HumanoidAppearanceComponent>(args.Body, out var humanoid)) //todo move to system
-                    {
-                        var limbs = _body.GetBodyPartAdjacentParts(args.Part, limb).Concat([args.Part]); ;
-                        foreach (var partLimbId in limbs)
-                        {
-                            if (TryComp<BaseLayerIdComponent>(partLimbId, out var baseLayerStorage)
-                                && TryComp(partLimbId, out BodyPartComponent? partLimb))
-                            {
-                                var layer = partLimb.ToHumanoidLayers();
-                                if (layer is null) continue;
-                                if (humanoid.CustomBaseLayers.TryGetValue(layer.Value, out var customBaseLayer))
-                                    baseLayerStorage.Layer = customBaseLayer.Id;
-                                else
-                                {
-                                    var speciesProto = _prototypes.Index(humanoid.Species);
-                                    var baseSprites = _prototypes.Index<HumanoidSpeciesBaseSpritesPrototype>(speciesProto.SpriteSet);
-                                    if (baseSprites.Sprites.TryGetValue(layer.Value, out var baseLayer))
-                                        baseLayerStorage.Layer = baseLayer;
-                                }
-                            }
-                        }
-                    }
-                    switch (limb.PartType)
-                    {
-                        case BodyPartType.Arm:  //todo move to systems
-                            foreach (var limbSlotId in limb.Children.Keys)
-                            {
-                                if (limbSlotId is null) continue;
-                                var child = _containers.GetContainer(args.Part, BodySystem.GetPartSlotContainerId(limbSlotId));
-
-                                foreach (var containedEnt in child.ContainedEntities)
-                                {
-                                    if (TryComp(containedEnt, out BodyPartComponent? innerPart)
-                                        && innerPart.PartType == BodyPartType.Hand)
-                                        _hands.RemoveHand(args.Body, BodySystem.GetPartSlotContainerId(limbSlotId));
-                                }
-                            }
-                            break;
-                        case BodyPartType.Hand:
-                            var parentSlot = _body.GetParentPartAndSlotOrNull(args.Part);
-                            if (parentSlot is not null)
-                                _hands.RemoveHand(args.Body, BodySystem.GetPartSlotContainerId(parentSlot.Value.Slot));
-                            break;
-                        case BodyPartType.Leg:
-                        case BodyPartType.Foot:
-                            break;
-                    }
-                }
-            }
-        }
-    }
-    private void RemoveItemHand(EntityUid bodyId, EntityUid itemId, string handId)
-    {
-        if (!TryComp<HandsComponent>(bodyId, out var hands)
-            || !_hands.TryGetHand(bodyId, handId, out var hand, hands))
-            return;
-
-        if (!itemId.IsValid())
-        {
-            Log.Debug("no valid item");
-            return;
-        }
-        RemComp<UnremoveableComponent>(itemId);
-        _hands.DoDrop(itemId, hand);
-        _hands.RemoveHand(bodyId, handId, hands);
+        if (_entity.TryEntity<TransformComponent, HumanoidAppearanceComponent, BodyComponent>(args.Body, out var body) 
+            && _entity.TryEntity<TransformComponent, MetaDataComponent, BodyPartComponent>(args.Part, out var limb))
+            _limbSystem.Amputatate(body.Value, limb.Value);
     }
 
     private void CustomLimbRemoved(Entity<CustomLimbMarkerComponent> ent, ref ComponentRemove args)
@@ -383,19 +178,4 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         if (ent.Comp.VirtualPart is null) return;
         QueueDel(ent.Comp.VirtualPart.Value);
     }
-
-    public static HumanoidVisualLayers? GetLayer(string slotId) => slotId switch
-    {
-        "left arm" => HumanoidVisualLayers.LArm,
-        "right arm" => HumanoidVisualLayers.RArm,
-        "left hand" => HumanoidVisualLayers.LHand,
-        "right hand" => HumanoidVisualLayers.RHand,
-        "left leg" => HumanoidVisualLayers.LLeg,
-        "right leg" => HumanoidVisualLayers.RLeg,
-        "left foot" => HumanoidVisualLayers.LFoot,
-        "right foot" => HumanoidVisualLayers.RFoot,
-        "tail" => HumanoidVisualLayers.Tail,
-        _ => null,
-    };
-
 }

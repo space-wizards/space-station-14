@@ -133,7 +133,50 @@
   materials:
     Plastic: 100
     Steel: 100
+#
+- type: latheRecipe
+  id: LeftArmCyberReaper
+  result: LeftArmCyberReaper
+  category: Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 550
+    Steel: 100
+    Silver: 450
+    Glass: 100
 
+- type: latheRecipe
+  id: RightArmCyberReaper
+  result: RightArmCyberReaper
+  category: Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 550
+    Steel: 100
+    Silver: 450
+    Glass: 100
+#
+- type: latheRecipe
+  id: LeftArmCyberMechwright
+  result: LeftArmCyberMechwright
+  category: Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 450
+    Steel: 550
+    Silver: 100
+    Glass: 100
+
+- type: latheRecipe
+  id: RightArmCyberMechwright
+  result: RightArmCyberMechwright
+  category: Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 450
+    Steel: 550
+    Silver: 100
+    Glass: 100
 # IMPLANTS
 
 # Eye

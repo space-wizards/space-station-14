@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.UI.CustomControls;
+using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Hands.Systems;
 using Content.Client._Starlight;
 using Content.Shared.Starlight.Medical.Surgery;
@@ -10,6 +10,7 @@ using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Control;
+using Robust.Shared.Timing;
 
 namespace Content.Client._Starlight.Medical.Surgery;
 // Based on the RMC14 build.
@@ -20,6 +21,7 @@ public sealed class SurgeryBui : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IGameTiming _game = default!;
 
     private readonly SurgerySystem _system;
     private readonly HandsSystem _hands;
@@ -39,16 +41,12 @@ public sealed class SurgeryBui : BoundUserInterface
         _system.OnRefresh += UpdateDisabledPanel;
         _hands.OnPlayerItemAdded += OnPlayerItemAdded;
     }
-    private DateTime _lastRefresh = DateTime.UtcNow;
-    private (string k1, EntityUid k2) _throttling = ("", new EntityUid());
     private void OnPlayerItemAdded(string k1, EntityUid k2)
     {
-        if (_throttling.k1.Equals(k1) && _throttling.k2.Equals(k2) && DateTime.UtcNow - _lastRefresh < TimeSpan.FromSeconds(1)) return;
-        _throttling = (k1, k2);
-        _lastRefresh = DateTime.UtcNow;
+        if (!_game.IsFirstTimePredicted) return;
         RefreshUI();
     }
-    protected override void Open() => UpdateState(State);   
+    protected override void Open() => UpdateState(State);
     protected override void UpdateState(BoundUserInterfaceState? state)
     {
         if (state is SurgeryBuiState s)
@@ -288,7 +286,7 @@ public sealed class SurgeryBui : BoundUserInterface
             var surgeryButton = new ChoiceControl();
 
             surgeryButton.Set(Name, texture);
-            if(IsCompleted)
+            if (IsCompleted)
                 surgeryButton.Button.Modulate = Color.Green;
             surgeryButton.Button.OnPressed += _ => OnSurgeryPressed(Ent, netPart, Id);
             _window.Surgeries.AddChild(surgeryButton);
@@ -381,7 +379,7 @@ public sealed class SurgeryBui : BoundUserInterface
     {
         if (_window == null)
             return;
-        
+
         _window.DisabledPanel.Visible = false;
         _window.DisabledPanel.MouseFilter = MouseFilterMode.Ignore;
         return;
