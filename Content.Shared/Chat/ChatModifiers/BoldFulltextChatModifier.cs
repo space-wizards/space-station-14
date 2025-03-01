@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
 /// <summary>
-/// Wraps the entire message in an [italic] tag.
+/// Wraps the entire message in [bold] tag.
 /// </summary>
 [Serializable]
 [DataDefinition]

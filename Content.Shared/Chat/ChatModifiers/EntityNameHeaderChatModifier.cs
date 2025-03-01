@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
@@ -18,23 +18,21 @@ public sealed partial class EntityNameHeaderChatModifier : ChatModifier
     {
         IoCManager.InjectDependencies(this);
 
-        if (channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var sender) && sender is EntityUid)
+        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var sender)
+            || sender is not EntityUid senderEntity
+        )
+            return;
+
+        MetaDataComponent? metaData = null;
+        if (!_entityManager.MetaQuery.Resolve(senderEntity, ref metaData, false))
         {
-            var senderEntity = (EntityUid)sender;
-            MetaDataComponent? metaData = null;
-            string? name;
-
-            if (!_entityManager.MetaQuery.Resolve(senderEntity, ref metaData, false))
-            {
-                return;
-            }
-
-            name = metaData.EntityName;
-
-            var nameEv = new TransformSpeakerNameEvent(senderEntity, name);
-            _entityManager.EventBus.RaiseLocalEvent(senderEntity, nameEv);
-
-            message.InsertBeforeMessage(new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null));
+            return;
         }
+
+        var nameEv = new TransformSpeakerNameEvent(senderEntity, metaData.EntityName);
+        _entityManager.EventBus.RaiseLocalEvent(senderEntity, nameEv);
+
+        var entityNameNode = new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null);
+        message.InsertBeforeMessage(entityNameNode);
     }
 }

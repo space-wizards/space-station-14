@@ -40,7 +40,7 @@ public interface IContentMarkupTag
     /// Returns a list of nodes replacing the closing markup node for this tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public List<MarkupNode>? CloserProcessing(MarkupNode node, int randomSeed)
+    public List<MarkupNode>? ProcessCloser(MarkupNode node, int randomSeed)
     {
         return null;
     }

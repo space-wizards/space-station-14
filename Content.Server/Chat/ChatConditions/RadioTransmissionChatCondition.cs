@@ -1,11 +1,7 @@
-﻿using System.Linq;
 using Content.Server.Radio.Components;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -16,31 +12,26 @@ namespace Content.Server.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class RadioTransmissionChatCondition : ChatCondition
 {
-
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
     protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
         if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
-            !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel))
+            !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel)
+        )
             return false;
 
         IoCManager.InjectDependencies(this);
 
         if (_entityManager.TryGetComponent<WearingHeadsetComponent>((EntityUid)senderEntity, out var headsetComponent))
         {
-            if (_entityManager.TryGetComponent(headsetComponent.Headset, out EncryptionKeyHolderComponent? keys) &&
-                keys.Channels.Contains((string)radioChannel))
-            {
-                return true;
-            }
+            return _entityManager.TryGetComponent(headsetComponent.Headset, out EncryptionKeyHolderComponent? keys)
+                   && keys.Channels.Contains((string)radioChannel);
         }
-        else if (_entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>((EntityUid)senderEntity, out var intrinsicRadioTransmitterComponent))
+
+        if (_entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>((EntityUid)senderEntity, out var intrinsicRadioTransmitterComponent))
         {
-            if (intrinsicRadioTransmitterComponent.Channels.Contains((string)radioChannel))
-            {
-                return true;
-            }
+            return intrinsicRadioTransmitterComponent.Channels.Contains((string)radioChannel);
         }
 
         return false;

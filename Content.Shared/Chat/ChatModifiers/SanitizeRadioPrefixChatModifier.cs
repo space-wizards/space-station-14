@@ -1,10 +1,3 @@
-﻿using System.Linq;
-using Content.Shared.CCVar;
-using Content.Shared.Chat.Prototypes;
-using Content.Shared.Decals;
-using Content.Shared.Radio;
-using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
@@ -16,17 +9,14 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 {
-
     public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
+        if (!message.Nodes.TryFirstOrDefault(x => x.Name == null, out var firstTextNode))
+            return;
+
+        using var nodeEnumerator = message.GetEnumerator();
 
         var returnMessage = new FormattedMessage();
-        if (!message.Nodes.TryFirstOrDefault(x => x.Name == null, out var firstTextNode))
-        {
-            return;
-        }
-        var nodeEnumerator = message.GetEnumerator();
-
         while (nodeEnumerator.MoveNext())
         {
             var node = nodeEnumerator.Current;
@@ -46,7 +36,6 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
             }
         }
 
-        nodeEnumerator.Dispose();
         message = returnMessage;
     }
 

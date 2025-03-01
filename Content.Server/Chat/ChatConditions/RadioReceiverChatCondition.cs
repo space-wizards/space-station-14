@@ -1,11 +1,7 @@
-﻿using System.Linq;
 using Content.Server.Radio.Components;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -21,26 +17,21 @@ public sealed partial class RadioReceiverChatCondition : ChatCondition
 
     protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        IoCManager.InjectDependencies(this);
-
         if (!channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel))
             return false;
 
+        IoCManager.InjectDependencies(this);
+        
         if (_entityManager.TryGetComponent<WearingHeadsetComponent>(subjectEntity, out var headsetComponent))
         {
-            if (_entityManager.TryGetComponent(headsetComponent.Headset, out EncryptionKeyHolderComponent? keys) &&
-                keys.Channels.Contains((string)radioChannel))
-            {
-                return true;
-            }
+            return _entityManager.TryGetComponent(headsetComponent.Headset, out EncryptionKeyHolderComponent? keys)
+                   && keys.Channels.Contains((string)radioChannel);
         }
-        else if (_entityManager.TryGetComponent<IntrinsicRadioReceiverComponent>(subjectEntity, out var intrinsicRadioTransmitterComponent) &&
-                 _entityManager.TryGetComponent<ActiveRadioComponent>(subjectEntity, out var activeRadioComponent))
+
+        if (_entityManager.TryGetComponent<IntrinsicRadioReceiverComponent>(subjectEntity, out _)
+            && _entityManager.TryGetComponent<ActiveRadioComponent>(subjectEntity, out var activeRadioComponent))
         {
-            if (activeRadioComponent.Channels.Contains((string)radioChannel))
-            {
-                return true;
-            }
+            return activeRadioComponent.Channels.Contains((string)radioChannel);
         }
 
         return false;

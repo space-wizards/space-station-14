@@ -1,6 +1,3 @@
-﻿using System.Linq;
-using Robust.Shared.Utility;
-
 namespace Content.Shared.Chat;
 
 public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerComponent
@@ -10,13 +7,13 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
         base.Initialize();
 
         SubscribeLocalEvent<T, ListenerConsumeEvent>(OnListenerConsumeEvent);
-        SubscribeLocalEvent<GetListenerConsumerEvent>(OnGetListenerConsumerEvent);
+        SubscribeLocalEvent<GetListenerConsumersEvent>(OnGetListenerConsumerEvent);
     }
 
     /// <summary>
-    /// Used to gather up all entities that have components with ListenerEntitySystems.
+    /// Used to gather all entities that have components with ListenerEntitySystems.
     /// </summary>
-    protected void OnGetListenerConsumerEvent(ref GetListenerConsumerEvent ev)
+    protected void OnGetListenerConsumerEvent(ref GetListenerConsumersEvent ev)
     {
         var query = AllEntityQuery<T>();
         while (query.MoveNext(out var uid, out var comp))
@@ -26,8 +23,8 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
     }
 
     /// <summary>
-    /// Runs when a message has been "heard" by the entity, and filters out any that should not be recieved by this system specifically.
-    /// If FilteredType is null, all messages heard by the entity are accepted.
+    /// Runs when a message has been "heard" by the entity, and filters out any that should not be received by this system specifically.
+    /// If <see cref="ListenerComponent.FilteredTypes"/> is null, all messages heard by the entity are accepted.
     /// </summary>
     protected void OnListenerConsumeEvent(EntityUid uid, T component, ListenerConsumeEvent args)
     {
@@ -36,7 +33,7 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
     }
 
     /// <summary>
-    /// Runs the desired behavior for when a message has been recieved and accepted by the listening component.
+    /// Runs the desired behavior for when a message has been received and accepted by the listening component.
     /// </summary>
     public abstract void OnListenerMessageReceived(EntityUid uid, T component, ListenerConsumeEvent args);
 }

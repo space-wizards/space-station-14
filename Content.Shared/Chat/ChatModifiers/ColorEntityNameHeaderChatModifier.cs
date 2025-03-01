@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Robust.Shared.Configuration;
@@ -14,9 +14,9 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
 {
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+
     private static ProtoId<ColorPalettePrototype> _chatNamePalette = "ChatNames";
 
     public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
@@ -24,18 +24,18 @@ public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
         IoCManager.InjectDependencies(this);
 
         var colorName = _config.GetCVar(CCVars.ChatEnableColorName);
-        if (colorName && message.TryFirstOrDefault(x => x.Name == "EntityNameHeader", out var nameHeader))
+        if (!colorName || !message.TryFirstOrDefault(x => x.Name == "EntityNameHeader", out var nameHeader))
+            return;
+
+        var name = nameHeader.Value.StringValue;
+        if (name == null)
+            return;
+
+        var color = Color.TryFromHex(GetNameColor(name));
+        if (color != null)
         {
-            var name = nameHeader.Value.StringValue;
-            if (name != null)
-            {
-                var color = Color.TryFromHex(GetNameColor(name));
-                if (color != null)
-                {
-                    message.InsertOutsideTag(new MarkupNode("color", new MarkupParameter(color), null),
-                        "EntityNameHeader");
-                }
-            }
+            message.InsertOutsideTag(new MarkupNode("color", new MarkupParameter(color), null),
+                "EntityNameHeader");
         }
     }
 

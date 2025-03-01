@@ -1,9 +1,5 @@
-﻿using System.Linq;
-using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Decals;
 using Content.Shared.Radio;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -32,22 +28,24 @@ public sealed partial class InsertRadioNameChatModifier : ChatModifier
 
     public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
+        if(!channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel))
+            return;
+
         IoCManager.InjectDependencies(this);
-        if (channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) &&
-            _prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype))
+        if (!_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype))
+            return;
+
+        if (TargetNode == null)
+            return;
+
+        var str = "[" + Loc.GetString(radioPrototype.LocalizedName) + "] ";
+
+        if (AfterNode)
         {
-            if (TargetNode != null)
-            {
-                var str = "[" + Loc.GetString(radioPrototype.LocalizedName) + "] ";
-
-                if (AfterNode)
-                {
-                    message.InsertAfterTag(new MarkupNode(str), TargetNode);
-                    return;
-                }
-
-                message.InsertBeforeTag(new MarkupNode(str), TargetNode);
-            }
+            message.InsertAfterTag(new MarkupNode(str), TargetNode);
+            return;
         }
+
+        message.InsertBeforeTag(new MarkupNode(str), TargetNode);
     }
 }

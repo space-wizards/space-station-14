@@ -86,7 +86,7 @@ public interface ISharedContentMarkupTagManager
                 }
                 else
                 {
-                    var closerNode = tag.ProcessClosingTag(node, randomSeed);
+                    var closerNode = tag.ProcessCloser(node, randomSeed);
                     if (closerNode != null)
                     {
                         nodeEnumerator.InsertRange(i, closerNode);

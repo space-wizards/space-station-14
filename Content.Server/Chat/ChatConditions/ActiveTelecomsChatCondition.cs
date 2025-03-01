@@ -3,6 +3,7 @@ using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -30,21 +31,18 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
 
         if (radioPrototype.LongRange)
         {
-            return consumers;
+            return true;
         }
 
-        if (activeServer == false)
+        var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+        var sourceMapId = sourceTransform.MapID;
+        foreach (var (_, keys, power, transform) in servers)
         {
-            var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
-            var sourceMapId = sourceTransform.MapID;
-            foreach (var (_, keys, power, transform) in servers)
+            if (transform.MapID == sourceMapId &&
+                power.Powered &&
+                keys.Channels.Contains(radioPrototype.ID))
             {
-                if (transform.MapID == sourceMapId &&
-                    power.Powered &&
-                    keys.Channels.Contains(radioPrototype.ID))
-                {
-                    return true;
-                }
+                return true;
             }
         }
 

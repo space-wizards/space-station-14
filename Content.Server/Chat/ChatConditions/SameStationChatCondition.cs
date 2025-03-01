@@ -1,9 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -21,11 +20,11 @@ public sealed partial class SameStationChatCondition : ChatCondition
 
     protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
     {
-        IoCManager.InjectDependencies(this);
-
         if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity))
             return false;
 
+        IoCManager.InjectDependencies(this);
+        
         var stationSystem = _entitySystem.GetEntitySystem<StationSystem>();
         var station = stationSystem.GetOwningStation((EntityUid)senderEntity);
 

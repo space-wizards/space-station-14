@@ -38,7 +38,7 @@ namespace Content.Server.Chat.Managers
             string communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
-            ref List<CommunicationChannelPrototype> usedCommsTypes,
+            List<CommunicationChannelPrototype> usedCommsTypes,
             HashSet<ICommonSession>? targetSessions = null,
             ChatMessageContext? channelParameters = null,
             bool logMessage = true
@@ -49,7 +49,7 @@ namespace Content.Server.Chat.Managers
             CommunicationChannelPrototype communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
-            ref List<CommunicationChannelPrototype> usedCommsChannels,
+            List<CommunicationChannelPrototype> usedCommsChannels,
             HashSet<ICommonSession>? targetSessions = null,
             ChatMessageContext? channelParameters = null,
             bool logMessage = true);

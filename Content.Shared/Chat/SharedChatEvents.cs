@@ -50,7 +50,4 @@ public sealed class ListenerConsumeEvent : EntityEventArgs
 /// Gets a hashset of all the entities that have a component deriving from ListenerComponent.
 /// </summary>
 [ByRefEvent]
-public record struct GetListenerConsumerEvent()
-{
-    public HashSet<EntityUid> Entities = new();
-}
+public record struct GetListenerConsumersEvent(HashSet<EntityUid> Entities);

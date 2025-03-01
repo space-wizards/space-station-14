@@ -432,7 +432,7 @@ public sealed class ChatUIController : UIController
         UpdateChannelPermissions();
     }
 
-    public void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
+    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
     {
         var ent = EntityManager.GetEntity(msg.SenderEntity);
 
@@ -812,53 +812,51 @@ public sealed class ChatUIController : UIController
         Logger.Debug(msg.Message.ToMarkup());
         ProcessChatMessage(msg);
 
-        if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
+        if (!_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
+            return;
+
+        if ((proto.ChatFilter & ChatChannelFilter.AdminRelated) == 0 ||
+            _config.GetCVar(CCVars.ReplayRecordAdminChat))
         {
-            if ((proto.ChatFilter & ChatChannelFilter.AdminRelated) == 0 ||
-                _config.GetCVar(CCVars.ReplayRecordAdminChat))
-            {
-                _replayRecording.RecordClientMessage(msg);
-            }
+            _replayRecording.RecordClientMessage(msg);
         }
     }
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
-        if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
+        if (!_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
+            return;
+
+        foreach (var markupSupplier in proto.ClientModifiers)
         {
-            foreach (var markupSupplier in proto.ClientModifiers)
+            markupSupplier.ProcessChatModifier(ref msg.Message, proto.ChannelParameters);
+        }
+
+        // Process any remaining clientside content markups.
+        msg.Message = _contentMarkupTagManager.ProcessMessage(msg.Message);
+
+        // Log all incoming chat to repopulate when filter is un-toggled
+        if (!msg.HideChat)
+        {
+            History.Add((_timing.CurTick, msg));
+            MessageAdded?.Invoke(msg);
+
+            if (!msg.Read)
             {
-                markupSupplier.ProcessChatModifier(ref msg.Message, proto.ChannelParameters);
+                _sawmill.Debug($"Message filtered: {msg.CommunicationChannel}: {msg.Message}");
+                var count = _unreadMessages.GetValueOrDefault(proto.ChatFilter, 0);
+                count += 1;
+                _unreadMessages[proto.ChatFilter] = count;
+                UnreadMessageCountsUpdated?.Invoke(proto.ChatFilter, count);
             }
+        }
 
-            // Process any remaining clientside content markups.
-            msg.Message = _contentMarkupTagManager.ProcessMessage(msg.Message, null);
-
-            // Log all incoming chat to repopulate when filter is un-toggled
-            if (!msg.HideChat)
+        if (proto.ClientModifiers.Any(x => x is BubbleProviderChatModifier))
+        {
+            var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == BubbleHeaderTagName);
+            if (bubbleHeaderNode.Value.TryGetLong(out var speechEnum))
             {
-                History.Add((_timing.CurTick, msg));
-                MessageAdded?.Invoke(msg);
-
-                if (!msg.Read)
-                {
-                    _sawmill.Debug($"Message filtered: {msg.CommunicationChannel}: {msg.Message}");
-                    if (!_unreadMessages.TryGetValue(proto.ChatFilter, out var count))
-                        count = 0;
-
-                    count += 1;
-                    _unreadMessages[proto.ChatFilter] = count;
-                    UnreadMessageCountsUpdated?.Invoke(proto.ChatFilter, count);
-                }
-            }
-
-            if (proto.ClientModifiers.Where(x => x is BubbleProviderChatModifier).Count() > 0)
-            {
-                var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == BubbleHeaderTagName);
-                if (bubbleHeaderNode.Value.TryGetLong(out var speechEnum))
-                {
-                    AddSpeechBubble(msg, (SpeechBubble.SpeechType)speechEnum);
-                }
+                AddSpeechBubble(msg, (SpeechBubble.SpeechType)speechEnum);
             }
         }
     }
