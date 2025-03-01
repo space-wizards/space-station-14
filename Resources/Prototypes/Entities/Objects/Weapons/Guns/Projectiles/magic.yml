@@ -285,9 +285,9 @@
         Structural: 50
 
 - type: entity
-  id: ProjectileIceKnife
+  id: ProjectileIceShard
   parent: BaseBulletTrigger
-  name: ice knife
+  name: ice shard
   description: Brrrrr.
   categories: [ HideSpawnMenu ]
   components:
@@ -296,54 +296,43 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 80
-        Cold: 20 # cold currently isn't resisted by any armor apart from like... CBURN.
-        Structural: 5
+        Piercing: 60
+        Structural: 20
   - type: ChangeTemperatureOnCollide
-    heat: -20000
+    heat: -30000
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
   - type: ProjectileGrenade
-    fillPrototype: ProjectileIceKnifeSecondary
+    fillPrototype: ProjectileIceShardSecondary
     capacity: 20
+  - type: SpawnOnTrigger
+    proto: IceCrust
 
 - type: entity
-  id: ProjectileIceKnifeII
-  parent: ProjectileIceKnife
+  id: ProjectileIceShardII
+  parent: ProjectileIceShard
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 120
-        Cold: 30 # cold currently isn't resisted by any armor apart from like... CBURN.
-        Structural: 10
   - type: ChangeTemperatureOnCollide
-    heat: -25000
+    heat: -40000
   - type: ProjectileGrenade
     capacity: 30
 
 - type: entity
-  id: ProjectileIceKnifeIII
-  parent: ProjectileIceKnife
+  id: ProjectileIceShardIII
+  parent: ProjectileIceShard
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 140
-        Cold: 30 # cold currently isn't resisted by any armor apart from like... CBURN.
-        Structural: 20
   - type: ChangeTemperatureOnCollide
-    heat: -30000
+    heat: -50000
   - type: ProjectileGrenade
     capacity: 40
 
 - type: entity
-  id: ProjectileIceKnifeSecondary
+  id: ProjectileIceShardSecondary
   parent: BaseBulletTrigger
-  name: ice knife
+  name: ice shard
   description: Brrrrr.
   categories: [ HideSpawnMenu ]
   components:
@@ -352,15 +341,16 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 40
-        Cold: 10 # cold currently isn't resisted by any armor apart from like... CBURN.
-        Structural: 5
+        Piercing: 35
+        Cold: 15 # cold currently isn't resisted by any armor apart from like... CBURN.
   - type: ChangeTemperatureOnCollide
     heat: -15000
   - type: TimedDespawn
-    lifetime: 0.2
+    lifetime: 0.15 # projectiles travel about 3 tiles away from the hit point before despawning
   - type: SpawnOnDespawn
     prototype: IceCrust
+  - type: SpawnOnTrigger
+    proto: IceCrust
 
 - type: entity
   parent: ProjectilePolyboltBase

@@ -14,11 +14,11 @@
     stock: 1
 
 - type: listing
-  id: SpellbookIceKnife
-  name: spellbook-ice-knife-name
-  description: spellbook-ice-knife-desc
-  productAction: ActionIceKnife
-  productUpgradeId: SpellbookIceKnifeUpgrade
+  id: SpellbookIceShard
+  name: spellbook-ice-shard-name
+  description: spellbook-ice-shard-desc
+  productAction: ActionIceShard
+  productUpgradeId: SpellbookIceShardUpgrade
   cost:
     WizCoin: 2
   categories:
@@ -343,10 +343,10 @@
     stock: 2
 
 - type: listing
-  id: SpellbookIceKnifeUpgrade
-  productUpgradeId: SpellbookIceKnifeUpgrade
-  name: spellbook-upgrade-ice-knife-name
-  description: spellbook-upgrade-ice-knife-description
+  id: SpellbookIceShardUpgrade
+  productUpgradeId: SpellbookIceShardUpgrade
+  name: spellbook-upgrade-ice-shard-name
+  description: spellbook-upgrade-ice-shard-description
   icon:
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
     state: bullet
@@ -357,7 +357,7 @@
   conditions:
     - !type:BuyBeforeCondition
       whitelist:
-        - SpellbookIceKnife
+        - SpellbookIceShard
     - !type:ListingLimitedStockCondition
       stock: 2
 

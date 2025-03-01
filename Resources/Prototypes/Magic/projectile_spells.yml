@@ -68,9 +68,9 @@
         speech: action-speech-spell-fireball
 
 - type: entity
-  id: ActionIceKnife
-  name: Ice Knife
-  description: Fires an ice knife towards the clicked location. When the ice knife hits a target, it shatters into smaller shards.
+  id: ActionIceShard
+  name: Ice Shard
+  description: Fires an ice shard towards the clicked location. When the ice shard hits a target, it shatters into smaller shards.
   components:
   - type: Magic
   - type: WorldTargetAction
@@ -85,31 +85,31 @@
       sprite: Structures/Specific/Anomalies/ice_anom.rsi
       state: bullet
     event: !type:ProjectileSpellEvent
-      prototype: ProjectileIceKnife
-      speech: action-speech-spell-ice-knife
+      prototype: ProjectileIceShard
+      speech: action-speech-spell-ice-shard
   - type: ActionUpgrade
     effectedLevels:
-      2: ActionIceKnifeII
-      3: ActionIceKnifeIII
+      2: ActionIceShardII
+      3: ActionIceShardIII
 
 - type: entity
-  id: ActionIceKnifeII
-  parent: ActionIceKnife
-  name: Ice Knife II
-  description: Fires a ice knife that breaks into more projectiles!
+  id: ActionIceShardII
+  parent: ActionIceShard
+  name: Ice Shard II
+  description: Fires a ice shard that breaks into more projectiles!
   components:
   - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
-      prototype: ProjectileIceKnifeII
-      speech: action-speech-spell-ice-knife
+      prototype: ProjectileIceShardII
+      speech: action-speech-spell-ice-shard
 
 - type: entity
-  id: ActionIceKnifeIII
-  parent: ActionIceKnife
-  name: Ice Knife III
-  description: The coldest ice knife in the frozen north!
+  id: ActionIceShardIII
+  parent: ActionIceShard
+  name: Ice Shard III
+  description: The coldest ice shard in the frozen north!
   components:
   - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
-      prototype: ProjectileIceKnifeIII
-      speech: action-speech-spell-ice-knife
+      prototype: ProjectileIceShardIII
+      speech: action-speech-spell-ice-shard
