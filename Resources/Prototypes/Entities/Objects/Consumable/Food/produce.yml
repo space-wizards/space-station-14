@@ -1763,6 +1763,9 @@
           Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+  - type: Log
+    spawnedPrototype: WeaponRevolverPython # So moths can cut them open
+    spawnCount: 1
   - type: Produce
     seedId: gatfruit
   - type: Food
@@ -1770,7 +1773,7 @@
     - WeaponRevolverPython
   - type: Tag
     tags:
-    - Fruit # It's in the name
+    - Fruit # It's in the name 
   - type: FoodSequenceElement
     entries:
       Taco: Gatfruit
@@ -1796,6 +1799,9 @@
           Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
+  - type: Log
+    spawnedPrototype: RevolverCapGun #so moths can cut them open
+    spawnCount: 1
   - type: Produce
     seedId: realCapfruit
   - type: Food
@@ -1815,6 +1821,9 @@
   id: FoodFakeCapfruit
   suffix: Fake
   components:
+  - type: Log
+    spawnedPrototype: RevolverCapGunFake
+    spawnCount: 1
   - type: Produce
     seedId: fakeCapfruit
   - type: Food
@@ -2225,6 +2234,9 @@
           Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
+  - type: Log
+    spawnedPrototype: FoodBungoPit
+    spawnCount: 1
   - type: Produce
     seedId: bungo
   - type: Extractable
