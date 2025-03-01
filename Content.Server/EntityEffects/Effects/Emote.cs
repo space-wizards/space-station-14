@@ -8,6 +8,16 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.EntityEffects.Effects;
 
 /// <summary>
+///     How an emote will show up, in chat with a popup, only as a popup, or neither
+/// </summary>
+public enum EmoteVisiblity : byte
+{
+    ChatAndPopup,
+    Popup,
+    Invisible
+}
+
+/// <summary>
 ///     Tries to force someone to emote (scream, laugh, etc). Still respects whitelists/blacklists and other limits of the specified emote unless forced.
 /// </summary>
 [UsedImplicitly]
@@ -15,9 +25,11 @@ public sealed partial class Emote : EntityEffect
 {
     [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string? EmoteId;
-
+    /// <summary>
+    ///     Determines if the emote text will show up in chat with a popup, be popup only, or be invisible
+    /// </summary>
     [DataField]
-    public bool ShowInChat;
+    public EmoteVisiblity Visibility = EmoteVisiblity.Popup;
 
     [DataField]
     public bool Force = false;
@@ -32,10 +44,17 @@ public sealed partial class Emote : EntityEffect
             return;
 
         var chatSys = args.EntityManager.System<ChatSystem>();
-        if (ShowInChat)
-            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
-        else
-            chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
-
+        switch (Visibility)
+        {
+            case EmoteVisiblity.ChatAndPopup:
+                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+                break;
+            case EmoteVisiblity.Popup:
+                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.HideChat, forceEmote: Force);
+                break;
+            case EmoteVisiblity.Invisible:
+                chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
+                break;
+        }
     }
 }
