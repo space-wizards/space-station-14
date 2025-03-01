@@ -4,7 +4,9 @@
   suffix: "rat"
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Rat ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Rat
 
 - type: entity
   id: OrganRatStomach
