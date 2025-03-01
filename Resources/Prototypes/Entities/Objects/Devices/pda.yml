@@ -761,6 +761,24 @@
     state: pda-paramedic
 
 - type: entity
+  parent: BasePDA
+  id: PrisonerPDA
+  name: prisoner PDA
+  description: Even prisoners deserve one.
+  components:
+  - type: Pda
+    id: PrisonerIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-prisoner
+  - type: PdaBorderColor
+    borderColor: "#333333"
+  - type: Icon
+    state: pda-prisoner
+
+- type: entity
   parent: BaseMedicalPDA
   id: ChemistryPDA
   name: chemistry PDA
