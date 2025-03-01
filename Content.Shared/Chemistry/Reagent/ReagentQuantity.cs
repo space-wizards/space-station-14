@@ -49,6 +49,11 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
         id = Reagent;
         quantity = Quantity;
     }
+    
+    public void SetQuantity(FixedPoint2 quantity)
+    {
+        Quantity = quantity;
+    }
 
     public bool Equals(ReagentQuantity other)
     {

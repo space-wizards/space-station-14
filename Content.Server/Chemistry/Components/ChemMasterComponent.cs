@@ -20,6 +20,9 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("pillDosageLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
         public uint PillDosageLimit;
+        
+        [DataField("patchDosageLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
+        public uint PatchDosageLimit;
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");

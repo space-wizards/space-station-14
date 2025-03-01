@@ -80,6 +80,8 @@ namespace Content.Client.Chemistry.UI
 
             PillDosage.InitDefaultButtons();
             PillNumber.InitDefaultButtons();
+            PatchDosage.InitDefaultButtons();
+            PatchNumber.InitDefaultButtons();
             BottleDosage.InitDefaultButtons();
 
             // Ensure label length is within the character limit.
@@ -147,6 +149,7 @@ namespace Content.Client.Chemistry.UI
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
             CreateBottleButton.Disabled = castState.OutputContainerInfo?.Reagents == null;
             CreatePillButton.Disabled = castState.OutputContainerInfo?.Entities == null;
+            CreatePatchButton.Disabled = castState.OutputContainerInfo?.Entities == null;
             
             UpdateDosageFields(castState);
         }
@@ -162,16 +165,22 @@ namespace Content.Client.Chemistry.UI
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
             PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
+            PatchDosage.Value = (int)Math.Min(bufferVolume, castState.PatchDosageLimit);
             
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
+            PatchNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
+            PatchDosage.IsValid = x => x > 0 && x <= castState.PatchDosageLimit;
             BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
 
             if (PillNumber.Value > pillNumberMax)
                 PillNumber.Value = pillNumberMax;
             if (BottleDosage.Value > bottleAmountMax)
                 BottleDosage.Value = bottleAmountMax;
+            
+            if (PatchNumber.Value > pillNumberMax)
+                PatchNumber.Value = pillNumberMax;
 
             // Avoid division by zero
             if (PillDosage.Value > 0)
@@ -181,6 +190,15 @@ namespace Content.Client.Chemistry.UI
             else
             {
                 PillNumber.Value = 0;
+            }
+            
+            if (PatchDosage.Value > 0)
+            {
+                PatchNumber.Value = Math.Min(bufferVolume / PatchDosage.Value, pillNumberMax);
+            }
+            else
+            {
+                PatchNumber.Value = 0;
             }
 
             BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);

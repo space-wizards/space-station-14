@@ -65,3 +65,9 @@
 
 - type: Tag
   id: Resomi
+  
+- type: Tag
+  id: Patch
+  
+- type: Tag
+  id: PatchPack

@@ -14,6 +14,7 @@ namespace Content.Shared.Chemistry
         public const string InputSlotName = "beakerSlot";
         public const string OutputSlotName = "outputSlot";
         public const string PillSolutionName = "food";
+        public const string PatchSolutionName = "patch";
         public const string BottleSolutionName = "drink";
         public const uint LabelMaxLength = 50;
     }
@@ -63,6 +64,21 @@ namespace Content.Shared.Chemistry
         public readonly string Label;
 
         public ChemMasterCreatePillsMessage(uint dosage, uint number, string label)
+        {
+            Dosage = dosage;
+            Number = number;
+            Label = label;
+        }
+    }
+    
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterCreatePatchesMessage : BoundUserInterfaceMessage
+    {
+        public readonly uint Dosage;
+        public readonly uint Number;
+        public readonly string Label;
+
+        public ChemMasterCreatePatchesMessage(uint dosage, uint number, string label)
         {
             Dosage = dosage;
             Number = number;
@@ -164,13 +180,15 @@ namespace Content.Shared.Chemistry
         public readonly uint SelectedPillType;
 
         public readonly uint PillDosageLimit;
+        
+        public readonly uint PatchDosageLimit;
 
         public readonly bool UpdateLabel;
 
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
-            uint selectedPillType, uint pillDosageLimit, bool updateLabel)
+            uint selectedPillType, uint pillDosageLimit, uint patchDosageLimit, bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
@@ -179,6 +197,7 @@ namespace Content.Shared.Chemistry
             BufferCurrentVolume = bufferCurrentVolume;
             SelectedPillType = selectedPillType;
             PillDosageLimit = pillDosageLimit;
+            PatchDosageLimit = patchDosageLimit;
             UpdateLabel = updateLabel;
         }
     }
