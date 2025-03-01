@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Hue shifted from the original by Shaeone: https://github.com/space-wizards/space-station-14/blob/43eb542a60772dc49e38993a54404a5799dfe344/Resources/Textures/Objects/Decoration/present.rsi/unwrapped.png",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "brown",
+            "directions": 1
+        }
+    ]
+}
