@@ -14,7 +14,9 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Traits;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
@@ -39,6 +41,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly JobRequirementsManager _requirements = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
+    [Dependency] private readonly IDynamicTypeFactory _factory = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
@@ -274,7 +278,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _prototypeManager,
             _resourceCache,
             _requirements,
-            _markings);
+            _markings,
+            _factory);
 
         _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
 
@@ -368,6 +373,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                 _spawn.EquipStartingGear(uid, loadoutProto);
             }
         }
+
+        _spawn.ApplyLoadoutExtras(uid, roleLoadout);
     }
 
     /// <summary>
@@ -466,6 +473,14 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             // Special type like borg or AI, do not spawn a human just spawn the entity.
             dummyEnt = EntityManager.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
+
+            // Applying loadout extras to dummy
+            if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job?.ID)))
+            {
+                var loadout = humanoid?.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job?.ID), _playerManager.LocalSession, humanoid.Species, EntityManager, _prototypeManager);
+                if (loadout != null)
+                    _spawn.ApplyLoadoutExtras(dummyEnt, loadout);
+            }
             return dummyEnt;
         }
         else if (humanoid is not null)
@@ -494,6 +509,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         }
 
         return dummyEnt;
+
     }
 
     #endregion

@@ -314,11 +314,14 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
+    sprite: Mobs/Silicon/ai-screen.rsi
     layers:
-    - state: base
-    - state: ai
+    - state: empty
+      map: ["enum.StationAiVisualState.Key"]
       shader: unshaded
+    - state: base
+  - type: StationAiCore
+  - type: Appearance
 
 - type: entity
   id: PlayerStationAiEmpty
@@ -350,12 +353,12 @@
   - type: StationAiVision
   - type: InteractionOutline
   - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
+    sprite: Mobs/Silicon/ai-screen.rsi
     layers:
-    - state: base
-    - state: ai_empty
-      map: ["unshaded"]
+    - state: empty
+      map: ["enum.StationAiVisualState.Key"]
       shader: unshaded
+    - state: base
   - type: Appearance
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
@@ -363,12 +366,12 @@
     messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: GenericVisualizer
-    visuals:
-      enum.StationAiVisualState.Key:
-        unshaded:
-          Empty: { state: ai_empty }
-          Occupied: { state: ai }
+  # - type: GenericVisualizer
+  #   visuals:
+  #     enum.StationAiVisualState.Key:
+  #       unshaded:
+  #         Empty: { state: "0" }
+  #         #Occupied: { state: ai }
   - type: Telephone
     compatibleRanges:
     - Grid
@@ -397,11 +400,12 @@
     containerId: station_ai_mind_slot
     job: StationAi
   - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
+    sprite: Mobs/Silicon/ai-screen.rsi
     layers:
-    - state: base
-    - state: ai
+    - state: empty
+      map: ["enum.StationAiVisualState.Key"]
       shader: unshaded
+    - state: base
 
 # The actual brain inside the core
 - type: entity
