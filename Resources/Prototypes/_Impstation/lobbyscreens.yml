@@ -46,3 +46,7 @@
 - type: lobbyBackground
   id: BugsDream
   background: /Textures/_Impstation/LobbyScreens/bugsdreamtitlescreen.webp
+
+- type: lobbyBackground
+  id: VarvaraHeretic
+  background: /Textures/_Impstation/LobbyScreens/varvara_heretic.webp.yml
