@@ -1,0 +1,79 @@
+﻿- type: constructionGraph
+  id: Screen
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      steps:
+        - material: Steel
+          amount: 2
+          doAfter: 2.0
+
+  - node: assembly
+    entity: ScreenAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wired
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: wired
+    entity: ScreenAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: electronics
+      steps:
+      - tag: ScreenElectronics
+        store: board
+        name: "screen electronics"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: assembly
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+        - tool: Cutting
+          doAfter: 1
+
+  - node: electronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: screen
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: screen
+    entity: Screen
+    edges:
+    - to: wired
+      conditions:
+      - !type:ContainerNotEmpty
+        container: board
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 1
+
