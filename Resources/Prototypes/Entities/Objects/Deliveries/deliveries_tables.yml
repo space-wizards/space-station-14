@@ -140,6 +140,6 @@
   id: PackageRareEntityTable
   table: !type:GroupSelector
     children:
-    - id: MedkitAdvanced
+    - id: MedkitAdvancedFilled
     - id: MobMothroach
     - id: PipeBomb
