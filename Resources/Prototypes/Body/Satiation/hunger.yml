@@ -1,0 +1,112 @@
+- type: satiation
+  id: NormalSatiationHunger
+  baseDecayRate: 0.01666666666
+  thresholds:
+    Full: 200
+    Okay: 150
+    Concerned: 100
+    Desperate: 50
+    Dead: 0
+  thresholdDecayModifiers:
+    Full: 1.2
+    Okay: 1.0
+    Concerned: 0.8
+    Desperate: 0.6
+    Dead: 0.6
+  slowdownModifier: 0.75
+  alertCategory: Hunger
+  alerts:
+    Concerned: Peckish
+    Desperate: Starving
+    Dead: Starving
+  icons:
+    Full: HungerIconOverfed
+    Concerned: HungerIconPeckish
+    Desperate: HungerIconStarving
+    Dead: HungerIconStarving
+
+- type: satiation
+  id: SimpleMobBaseHunger
+  parent: NormalSatiationHunger
+  thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
+    Full: 100
+    Okay: 50
+    Concerned: 25
+    Desperate: 10
+    Dead: 0
+  baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
+
+- type: satiation
+  id: SnailHunger
+  parent: SimpleMobBaseHunger
+  thresholds:
+    Full: 35
+    Okay: 25
+    Concerned: 15
+    Desperate: 10
+    Dead: 0
+  baseDecayRate: 0.1
+
+- type: satiation
+  id: CockroachHunger
+  parent: SimpleMobBaseHunger
+  baseDecayRate: 0.25
+
+- type: satiation
+  id: MouseHunger
+  parent: SimpleMobBaseHunger
+  thresholds:
+    Full: 35
+    Okay: 25
+    Concerned: 15
+    Desperate: 10
+    Dead: 0
+  baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+
+- type: satiation
+  id: MouseAdmemeHunger
+  parent: MouseHunger
+  baseDecayRate: 10 # always hungry
+  slowdownModifier: 1
+
+- type: satiation
+  id: HamsterHunger
+  parent: SimpleMobBaseHunger
+  baseDecayRate: 0.3
+
+- type: satiation
+  id: RegalRatHunger
+  parent: SimpleMobBaseHunger
+  thresholds:
+    Full: 200
+    Okay: 150
+    Concerned: 100
+    Desperate: 50
+    Dead: 0
+  baseDecayRate: 0.01666666666
+
+- type: satiation
+  id: DionaHunger
+  parent: NormalSatiationHunger
+  baseDecayRate: 0.0083
+
+
+- type: satiationExamination
+  id: HungerExamination
+  descriptions:
+    Full: "examinable-satiation-component-examine-hunger-full"
+    Okay: "examinable-satiation-component-examine-hunger-okay"
+    Concerned: "examinable-satiation-component-examine-hunger-concerned"
+    Desperate: "examinable-satiation-component-examine-hunger-desperate"
+    Dead: "examinable-satiation-component-examine-hunger-desperate"
+  notApplicable: "examinable-satiation-component-examine-hunger-none"
+
+- type: satiationExamination
+  id: ThirstExamination
+  descriptions:
+    Full: "examinable-satiation-component-examine-thirst-full"
+    Okay: "examinable-satiation-component-examine-thirst-okay"
+    Concerned: "examinable-satiation-component-examine-thirst-concerned"
+    Desperate: "examinable-satiation-component-examine-thirst-desperate"
+    Dead: "examinable-satiation-component-examine-thirst-desperate"
+  notApplicable: "examinable-satiation-component-examine-thirst-none"

@@ -53,6 +53,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -182,7 +183,9 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
 
                 // only eat when hungry or if it will eat anything
-                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
+                if (TryComp<SatiationComponent>(owner, out var satiation) &&
+                    _satiation.GetThresholdOrNull((owner, satiation), "Hunger") > SatiationThreshold.Okay &&
+                    avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
@@ -201,7 +204,8 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // only drink when thirsty
-                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
+                if (TryComp<SatiationComponent>(owner, out var satiation) &&
+                    _satiation.GetThresholdOrNull((owner, satiation), "Thirst") > SatiationThreshold.Okay)
                     return 0f;
 
                 // no janicow don't drink the blood puddle
