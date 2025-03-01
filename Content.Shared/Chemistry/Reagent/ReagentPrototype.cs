@@ -106,6 +106,12 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         /// <summary>
+        /// If this reagent is part of a puddle does it evaporate
+        /// </summary>
+        [DataField]
+        public bool Evaporates;
+
+        /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
         /// 0 - completely flat, 1 - fizzes up when nudged.
         /// </summary>
