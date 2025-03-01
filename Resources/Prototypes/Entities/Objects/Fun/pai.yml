@@ -75,6 +75,10 @@
     whitelist:
       components:
         - SecretStash
+  - type: ActionGrant
+    actions:
+    - ActionPAIPlayMidi
+    - ActionPAIOpenMap
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
