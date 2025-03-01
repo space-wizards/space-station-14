@@ -80,7 +80,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
             // Give them a wonderful new access to compensate for everything
             var ids = _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().Where(x => x.CanAddToIdCard).ToArray();
 
-            if (ids == null || ids.Length == 0)
+            if (ids.Length == 0)
                 return;
 
             var random = _random.Pick(ids);

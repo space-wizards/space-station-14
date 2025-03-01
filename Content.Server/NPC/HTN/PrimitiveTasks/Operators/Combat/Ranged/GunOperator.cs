@@ -36,7 +36,7 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
     /// <summary>
     /// If true, only opaque objects will block line of sight.
     /// </summary>
-    [DataField("opaqueKey"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("opaqueKey")]
     public bool UseOpaqueForLOSChecks = false;
 
     // Like movement we add a component and pass it off to the dedicated system.

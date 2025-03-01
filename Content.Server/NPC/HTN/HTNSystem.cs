@@ -133,9 +133,17 @@ public sealed class HTNSystem : EntitySystem
         component.PlanningJob = null;
     }
 
+    /// <summary>
+    /// Enable / disable the hierarchical task network of an entity
+    /// </summary>
+    /// <param name="ent">The entity and its <see cref="HTNComponent"</param>
+    /// <param name="state">Set 'true' to enable, or 'false' to disable, the HTN</param>
+    /// <param name="planCooldown">Specifies a time in seconds before the entity can start planning a new action (only takes effect when the HTN is enabled)</param>
+    // ReSharper disable once InconsistentNaming
+    [PublicAPI]
     public void SetHTNEnabled(Entity<HTNComponent> ent, bool state, float planCooldown = 0f)
     {
-        if (ent.Comp.Enabled = state)
+        if (ent.Comp.Enabled == state)
             return;
 
         ent.Comp.Enabled = state;

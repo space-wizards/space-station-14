@@ -51,6 +51,6 @@ public sealed partial class HTNComponent : NPCComponent
     /// <summary>
     /// Determines whether plans should be made / updated for this entity
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool Enabled = true;
 }
