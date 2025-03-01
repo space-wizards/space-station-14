@@ -714,8 +714,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
 - proto: GeneratorBasic15kW

@@ -99678,10 +99678,6 @@ entities:
 
 
         -P.E.P.
-    - type: UserInterface
-      actors:
-        enum.PaperUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
   - uid: 14747
     components:

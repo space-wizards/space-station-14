@@ -7840,8 +7840,6 @@ entities:
       pos: -61.5,-5.5
       parent: 4812
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 10755
 - proto: AltarSpawner
@@ -33379,10 +33377,6 @@ entities:
           - 6309
           - 14172
           - 14173
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
 - proto: ClothingBeltUtilityFilled
   entities:
@@ -60792,7 +60786,6 @@ entities:
     - type: DeviceNetwork
       configurators:
       - 14139
-      - invalid
       deviceLists:
       - 10755
     - type: AtmosPipeColor
@@ -61880,7 +61873,6 @@ entities:
     - type: DeviceNetwork
       configurators:
       - 14139
-      - invalid
       deviceLists:
       - 10755
     - type: AtmosPipeColor
