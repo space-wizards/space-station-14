@@ -103,6 +103,13 @@
   - CaptainCap
 
 - type: loadoutGroup
+  id: CaptainEars
+  name: loadout-group-captain-ears
+  loadouts:
+  - CommandHeadset
+  - CommandAltHeadset
+
+- type: loadoutGroup
   id: CaptainJumpsuit
   name: loadout-group-captain-jumpsuit
   loadouts:
@@ -136,11 +143,25 @@
   - CaptainWintercoat
 
 - type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  loadouts:
+  - LaceupShoes
+  - CommandWinterBoots
+
+- type: loadoutGroup
   id: HoPHead
   name: loadout-group-hop-head
   minLimit: 0
   loadouts:
   - HoPHead
+
+- type: loadoutGroup
+  id: HoPEars
+  name: loadout-group-hop-ears
+  loadouts:
+  - CommandHeadset
+  - HoPAltHeadset
 
 - type: loadoutGroup
   id: HoPJumpsuit
@@ -172,6 +193,14 @@
   minLimit: 0
   loadouts:
   - HoPWintercoat
+
+- type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - BrownShoes
+  - LaceupShoes
+  - CommandWinterBoots
 
 # Civilian
 - type: loadoutGroup
@@ -590,6 +619,13 @@
   - QuartermasterBeret
 
 - type: loadoutGroup
+  id: QuartermasterEars
+  name: loadout-group-quartermaster-ears
+  loadouts:
+  - QuartermasterHeadset
+  - QuartermasterAltHeadset
+
+- type: loadoutGroup
   id: QuartermasterJumpsuit
   name: loadout-group-quartermaster-jumpsuit
   loadouts:
@@ -619,6 +655,7 @@
   name: loadout-group-quartermaster-shoes
   loadouts:
   - BrownShoes
+  - LaceupShoes
   - CargoWinterBoots
 
 - type: loadoutGroup
@@ -658,6 +695,20 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
+  id: SalvageSpecialistEars
+  name: loadout-group-salvage-specialist-ears
+  loadouts:
+  - CargoHeadset
+  - SalvageMiningHeadset
+
+- type: loadoutGroup
+  id: SalvageSpecialistNeck
+  name: loadout-group-salvage-specialist-neck
+  minLimit: 0
+  loadouts:
+  - MiningCloak
+
+- type: loadoutGroup
   id: SalvageSpecialistBackpack
   name: loadout-group-salvage-specialist-backpack
   loadouts:
@@ -689,6 +740,13 @@
   - ChiefEngineerBeret
 
 - type: loadoutGroup
+  id: ChiefEngineerEars
+  name: loadout-group-chief-engineer-ears
+  loadouts:
+  - ChiefEngineerHeadset
+  - ChiefEngineerAltHeadset
+
+- type: loadoutGroup
   id: ChiefEngineerJumpsuit
   name: loadout-group-chief-engineer-jumpsuit
   loadouts:
@@ -717,6 +775,7 @@
   name: loadout-group-chief-engineer-shoes
   loadouts:
   - BrownShoes
+  - LaceupShoes
   - EngineeringWinterBoots
 
 - type: loadoutGroup
@@ -825,6 +884,13 @@
   - ResearchDirectorBeret
 
 - type: loadoutGroup
+  id: ResearchDirectorEars
+  name: loadout-group-research-director-ears
+  loadouts:
+  - ResearchDirectorHeadset
+  - ResearchDirectorAltHeadset
+
+- type: loadoutGroup
   id: ResearchDirectorNeck
   name: loadout-group-research-director-neck
   minLimit: 0
@@ -852,6 +918,7 @@
   name: loadout-group-research-director-shoes
   loadouts:
   - BrownShoes
+  - LaceupShoes
   - ScienceWinterBoots
 
 - type: loadoutGroup
@@ -940,6 +1007,14 @@
   loadouts:
   - HeadofSecurityHead
   - HeadofSecurityBeret
+  - HeadofSecurityRanger
+
+- type: loadoutGroup
+  id: HeadofSecurityEars
+  name: loadout-group-head-of-security-ears
+  loadouts:
+  - HeadofSecurityHeadset
+  - HeadofSecurityAltHeadset
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
@@ -1114,6 +1189,13 @@
   - CMOMedicalHeadMirror
 
 - type: loadoutGroup
+  id: ChiefMedicalOfficerEars
+  name: loadout-group-chief-medical-officer-ears
+  loadouts:
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerAltHeadset
+
+- type: loadoutGroup
   id: ChiefMedicalOfficerJumpsuit
   name: loadout-group-chief-medical-officer-jumpsuit
   loadouts:
@@ -1143,6 +1225,7 @@
   name: loadout-group-chief-medical-officer-shoes
   loadouts:
   - BrownShoes
+  - LaceupShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup
@@ -1157,6 +1240,13 @@
   - GreenSurgeryCap
   - PurpleSurgeryCap
   - NurseHat
+
+- type: loadoutGroup
+  id: MedicalDoctorEyes
+  name: loadout-group-medical-doctor-eyes
+  loadouts:
+  - MedHud
+  - MedHudEyepatch
 
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
