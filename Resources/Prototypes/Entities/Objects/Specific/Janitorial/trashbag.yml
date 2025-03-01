@@ -64,3 +64,14 @@
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 5
+
+- type: entity
+  name: internal trash bag
+  id: BorgTrashBag
+  description: An upgraded trash bag with a massive internal volume.
+  parent: TrashBag
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,7,6
