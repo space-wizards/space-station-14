@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Traits.Assorted;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -94,7 +95,11 @@ public sealed class DamageOverlayUiController : UIController
         {
             case MobState.Alive:
             {
-                if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
+                if (EntityManager.HasComponent<PainNumbnessComponent>(entity))
+                {
+                    _overlay.BruteLevel = 0;
+                }
+                else if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
                 {
                     _overlay.BruteLevel = FixedPoint2.Min(1f, bruteDamage / critThreshold).Float();
                 }

@@ -1,30 +1,60 @@
 {
 	"version":1,
-	"license":"CC-BY-SA-3.0",
-	"copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/d1e0161af146835f4fb79d21a6200caa9cc842d0/icons/obj/power.dmi and modified.",
+	"license":"CC-BY-SA-4.0",
+	"copyright":"KalimbaMachine (github) & CaasGit (github) for Space Station 14",
 	"size":{"x":32,"y":32},
 	"states":
 	[
 		{
-			"name": "normal",
-			"select": [],
-			"flags": {},
-			"directions": 8
-		},
-		{
-			"name": "broken",
-			"select": [],
-			"flags": {},
-			"directions": 1
-		},
-		{
-			"name": "static"
-		},
-		{
 			"name": "solar_assembly"
 		},
 		{
+			"name": "solar_assembly_tracker_circuit"
+		},
+		{
+			"name": "solar_panel_glass_broken"
+		},
+		{
+			"name": "solar_panel_plasma_broken"
+		},
+		{
+			"name": "solar_panel_uranium_broken"
+		},
+		{
+			"name": "solar_panel_glass"
+		},
+		{
+			"name": "solar_panel_plasma"
+		},
+		{
+			"name": "solar_panel_uranium"
+		},
+		{
 			"name": "solar_tracker"
+		},
+		{
+			"name": "solar_tracker_broken"
+		},
+		{
+			"name": "solar_assembly_uncabled"
+		},
+		{
+			"name": "solar_assembly_tracker_circuit_uncabled"
+		},
+		{
+			"name": "solar_panel_glass_uncabled"
+		},
+		{
+			"name": "solar_panel_plasma_uncabled"
+		},
+		{
+			"name": "solar_panel_uranium_uncabled"
+		},
+		{
+			"name": "solar_tracker_uncabled"
+		},
+		{
+			"name": "solar_tracker_broken_uncabled"
 		}
 	]
 }
