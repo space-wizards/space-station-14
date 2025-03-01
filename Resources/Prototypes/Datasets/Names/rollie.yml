@@ -4,7 +4,7 @@
   - "bifta"
   - "bifter"
   - "bird"
-  - "blunt"
+  #- "blunt" Change: Blunts already exist, no need to make them roll, god forbid we get a joint called a blunt
   - "bloint"
   - "boof"
   - "boofer"
@@ -22,7 +22,7 @@
   - "hootie"
   - "jay"
   - "jimmy"
-  - "joint"
+  #- "joint" Change: Joints already exist, no need to make them roll, same reason as above but backwards
   - "juju"
   - "jeebie weebie"
   - "number"
