@@ -70,6 +70,33 @@ namespace Content.Shared.Crayon
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class CrayonRotationMessage : BoundUserInterfaceMessage
+    {
+        public readonly float Rotation;
+        public CrayonRotationMessage(float rotation)
+        {
+            Rotation = rotation;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class CrayonPreviewModeMessage : BoundUserInterfaceMessage
+    {
+        public readonly bool PreviewMode;
+        public CrayonPreviewModeMessage(bool previewMode)
+        {
+            PreviewMode = previewMode;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public enum CrayonVisuals
+    {
+        State,
+        Color
+    }
+
     /// <summary>
     /// Component state, describes how many charges are left in the crayon in the near-hand UI
     /// </summary>
@@ -80,13 +107,17 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        public readonly float Rotation;
+        public readonly bool PreviewMode;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation, bool previewMode)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            Rotation = rotation;
+            PreviewMode = previewMode;
         }
     }
 
@@ -102,12 +133,16 @@ namespace Content.Shared.Crayon
         /// </summary>
         public bool SelectableColor;
         public Color Color;
+        public float Rotation;
+        public bool PreviewMode;
 
-        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation, bool previewMode)
         {
             Selected = selected;
             SelectableColor = selectableColor;
             Color = color;
+            Rotation = rotation;
+            PreviewMode = previewMode;
         }
     }
 }
