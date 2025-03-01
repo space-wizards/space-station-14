@@ -215,6 +215,27 @@
       - MindRoleTraitorReinforcement
 
 - type: entity
+  id: Changeling
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 999 # TODO: make this reasonable once Changeling is out of WIP
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: changeling-role-greeting
+        color: Red
+      components:
+      - type: ChangelingIdentity
+      - type: ChangelingDevour
+      - type: ChangelingTransform
+      mindRoles:
+      - MindRoleChangeling
+
+- type: entity
   id: Revolutionary
   parent: BaseGameRule
   components:
