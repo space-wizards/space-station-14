@@ -87,9 +87,9 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Loads.Free(component.NetworkLoad.Id);
         }
 
-        private void ApcPowerReceiverRemove(EntityUid uid, ApcPowerReceiverComponent component, ComponentRemove args)
+        private void ApcPowerReceiverRemove(Entity<ApcPowerReceiverComponent> entity, ref ComponentRemove args)
         {
-            component.Provider?.RemoveReceiver(component);
+            entity.Comp.Provider?.RemoveReceiver(entity);
         }
 
         private static void ApcPowerReceiverPaused(
@@ -459,8 +459,9 @@ namespace Content.Server.Power.EntitySystems
             {
                 foreach (var receiver in provider.LinkedReceivers)
                 {
-                    netNode.Loads.Add(receiver.NetworkLoad.Id);
-                    receiver.NetworkLoad.LinkedNetwork = netNode.Id;
+                    var comp = Comp<ApcPowerReceiverComponent>(receiver);
+                    netNode.Loads.Add(comp.NetworkLoad.Id);
+                    comp.NetworkLoad.LinkedNetwork = netNode.Id;
                 }
             }
 
