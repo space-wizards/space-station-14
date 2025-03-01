@@ -28,6 +28,16 @@
   - type: Paper
     content: delivery-spam-reasons-to-choose-syndicate
 
+- type: entity
+  id: MailAlternativeDimensionSpam
+  name: Send reinforcements!
+  description: An official notice from... an alternate timeline?
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-alternate-timeline
+
+
 
 # Scam Mail
 - type: entity
@@ -38,3 +48,21 @@
   components:
   - type: Paper
     content: delivery-spam-tired-of-science
+
+- type: entity
+  id: MailAllAccessSpam
+  name: FREE ALL AXCESS!! # Spelling mistake intentional
+  description: Did you ever want free all access?!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-free-all-access
+
+- type: entity
+  id: MailCentcommRetributionSpam
+  name: NOTICE FROM NANOTRASN!! # Spelling mistake intentional
+  description: An official notice from the CEO of Nanotrasn?!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-centcomm-retribution

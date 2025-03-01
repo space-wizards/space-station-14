@@ -53,13 +53,10 @@
     - id: MailRobustToolsSpam
     - id: MailNanotrasenSpam
     - id: MailSyndicateSpam
-    - id: FirelockElectronics
-    - id: APCElectronics
-    - id: SignalTimerElectronics
-    - id: SMESMachineCircuitboard
-    - id: SubstationMachineCircuitboard
-    - id: SpaceVillainArcadeComputerCircuitboard
-    - id: BlockGameArcadeComputerCircuitboard
+    - id: MailScienceSpiderClanSpam
+    - id: MailAllAccessSpam
+    - id: MailCentcommRetributionSpam
+    - id: MailAlternativeDimensionSpam
 
 - type: entityTable
   id: LetterMinorEntityTable
