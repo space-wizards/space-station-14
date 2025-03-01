@@ -12,7 +12,7 @@ namespace Content.Server.NPC.Components;
 public sealed partial class NPCUseActionOnTargetComponent : Component
 {
     [DataField("actions")]
-    public Dictionary<EntProtoId<EntityWorldTargetActionComponent>, NPCActionsData> Actions = new();
+    public List<NPCActionsData> Actions = new();
     /// <summary>
     /// HTN blackboard key for the target entity
     /// </summary>

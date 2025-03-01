@@ -23,11 +23,11 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
     {
         //check if an action already exists first here to avoid duplicating actions
         //register more than one action, probably use a for each action in ent.Comp.NPCActions
-        /*foreach (var action in ent.Comp.Actions)
+        foreach (var action in ent.Comp.Actions)
         {
-            action.ActionEnt = _actions.AddAction(ent, action.ActionId);
-        }*/
-        ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
+            var npcActionsData = action;
+            npcActionsData.ActionEnt = _actions.AddAction(ent, npcActionsData.ActionId);
+        }
     }
 
     public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)

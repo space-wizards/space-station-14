@@ -6,21 +6,12 @@ namespace Content.Shared.NPC;
 /// <summary>
 /// Contains the actions an NPC is allowed to use, and what they can use them on
 /// </summary>
-[Prototype]
-public sealed partial class NPCActionsDataPrototype : IPrototype
-{
-    [ViewVariables]
-    [IdDataField]
-    public string ID { get; } = default!;
-
-    [DataField]
-    public List<NPCActionsData> Entries = new();
-}
-
 [Serializable]
 [DataDefinition]
 public partial struct NPCActionsData
 {
+    [DataField(required: true)]
+    public EntProtoId<EntityWorldTargetActionComponent> ActionId;
     /// <summary>
     /// HTN blackboard key for the target entity
     /// </summary>
