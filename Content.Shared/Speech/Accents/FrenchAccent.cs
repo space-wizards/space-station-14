@@ -1,27 +1,19 @@
-using Content.Server.Speech.Components;
 using System.Text.RegularExpressions;
+using Content.Shared.Speech.EntitySystems;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-/// <summary>
-/// System that gives the speaker a faux-French accent.
-/// </summary>
-public sealed class FrenchAccentSystem : EntitySystem
+public sealed class FrenchAccent : IAccent
 {
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    public string Name { get; } = "French";
+
+    [Dependency] private readonly SharedReplacementAccentSystem _replacement = default!;
 
     private static readonly Regex RegexTh = new(@"th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexStartH = new(@"(?<!\w)h", RegexOptions.IgnoreCase);
     private static readonly Regex RegexSpacePunctuation = new(@"(?<=\w\w)[!?;:](?!\w)", RegexOptions.IgnoreCase);
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<FrenchAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    public string Accentuate(string message, FrenchAccentComponent component)
+    public string Accentuate(string message, int randomSeed)
     {
         var msg = message;
 
@@ -37,10 +29,5 @@ public sealed class FrenchAccentSystem : EntitySystem
         msg = RegexSpacePunctuation.Replace(msg, " $&");
 
         return msg;
-    }
-
-    private void OnAccentGet(EntityUid uid, FrenchAccentComponent component, AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message, component);
     }
 }

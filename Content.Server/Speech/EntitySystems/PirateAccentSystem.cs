@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
 using System.Text.RegularExpressions;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -10,7 +11,7 @@ public sealed class PirateAccentSystem : EntitySystem
     private static readonly Regex FirstWordAllCapsRegex = new(@"^(\S+)");
 
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly SharedReplacementAccentSystem _sharedReplacement = default!;
 
     public override void Initialize()
     {
@@ -22,7 +23,7 @@ public sealed class PirateAccentSystem : EntitySystem
     // converts left word when typed into the right word. For example typing you becomes ye.
     public string Accentuate(string message, PirateAccentComponent component)
     {
-        var msg = _replacement.ApplyReplacements(message, "pirate");
+        var msg = _sharedReplacement.ApplyReplacements(message, "pirate");
 
         if (!_random.Prob(component.YarrChance))
             return msg;

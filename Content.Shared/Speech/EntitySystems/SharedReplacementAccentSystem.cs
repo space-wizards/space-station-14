@@ -1,31 +1,23 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using Content.Server.Speech.Components;
+using Content.Shared.Speech.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems
+namespace Content.Shared.Speech.EntitySystems
 {
     // TODO: Code in-game languages and make this a language
     /// <summary>
     /// Replaces text in messages, either with full replacements or word replacements.
     /// </summary>
-    public sealed class ReplacementAccentSystem : EntitySystem
+    public sealed class SharedReplacementAccentSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<ReplacementAccentComponent, AccentGetEvent>(OnAccent);
-        }
-
-        private void OnAccent(EntityUid uid, ReplacementAccentComponent component, AccentGetEvent args)
-        {
-            args.Message = ApplyReplacements(args.Message, component.Accent);
-        }
+        //CHAT-TODO: ReplacementAccent is a bit weird and needs to be fully supported.
 
         /// <summary>
         ///     Attempts to apply a given replacement accent prototype to a message.

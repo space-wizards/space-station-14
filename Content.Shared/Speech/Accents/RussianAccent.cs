@@ -1,17 +1,15 @@
 using System.Text;
-using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-public sealed class RussianAccentSystem : EntitySystem
+public sealed class RussianAccent : IAccent
 {
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<RussianAccentComponent, AccentGetEvent>(OnAccent);
-    }
+    public string Name { get; } = "Russian";
 
-    public string Accentuate(string message)
+    [Dependency] private readonly SharedReplacementAccentSystem _replacement = default!;
+
+    public string Accentuate(string message, int randomSeed)
     {
         var accentedMessage = new StringBuilder(_replacement.ApplyReplacements(message, "russian"));
 
@@ -40,10 +38,5 @@ public sealed class RussianAccentSystem : EntitySystem
         }
 
         return accentedMessage.ToString();
-    }
-
-    private void OnAccent(EntityUid uid, RussianAccentComponent component, AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message);
     }
 }

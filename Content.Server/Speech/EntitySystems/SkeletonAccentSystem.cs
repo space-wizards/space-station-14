@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -7,7 +8,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed partial class SkeletonAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly SharedReplacementAccentSystem _sharedReplacement = default!;
 
     [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex BoneRegex();
@@ -33,7 +34,7 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
         msg = BoneRegex().Replace(msg, "bone");
 
         // apply word replacements
-        msg = _replacement.ApplyReplacements(msg, "skeleton");
+        msg = _sharedReplacement.ApplyReplacements(msg, "skeleton");
 
         // Suffix:
         if (_random.Prob(component.ackChance))

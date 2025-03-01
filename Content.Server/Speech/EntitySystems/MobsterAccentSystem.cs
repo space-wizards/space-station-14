@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -16,7 +17,7 @@ public sealed class MobsterAccentSystem : EntitySystem
     private static readonly Regex RegexLastWord = new(@"(\S+)$");
 
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly SharedReplacementAccentSystem _sharedReplacement = default!;
 
     public override void Initialize()
     {
@@ -32,7 +33,7 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Then prefix/suffix funnyies
 
         // direct word replacements
-        var msg = _replacement.ApplyReplacements(message, "mobster");
+        var msg = _sharedReplacement.ApplyReplacements(message, "mobster");
 
         // thinking -> thinkin'
         // king -> king
