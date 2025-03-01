@@ -73609,6 +73609,10 @@ entities:
     - type: Transform
       pos: -14.52124,-43.447884
       parent: 60
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
+    - type: ActiveConveyed
 - proto: FoodBoxDonkpocketPizza
   entities:
   - uid: 15714
