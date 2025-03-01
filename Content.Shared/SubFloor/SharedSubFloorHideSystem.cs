@@ -1,5 +1,6 @@
 using Content.Shared.Audio;
 using Content.Shared.Explosion;
+using Content.Shared.Eye;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -19,10 +20,15 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+        [Dependency] private readonly SharedVisibilitySystem _visibility = default!;
+
+        private EntityQuery<SubFloorHideComponent> _hideQuery;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _hideQuery = GetEntityQuery<SubFloorHideComponent>();
 
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
@@ -67,7 +73,7 @@ namespace Content.Shared.SubFloor
                 return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
-            component.IsUnderCover = false;
+            SetUnderCover((uid, component), false);
             UpdateAppearance(uid, component);
         }
 
@@ -80,7 +86,7 @@ namespace Content.Shared.SubFloor
             }
             else if (component.IsUnderCover)
             {
-                component.IsUnderCover = false;
+                SetUnderCover((uid, component), false);
                 UpdateAppearance(uid, component);
             }
         }
@@ -93,7 +99,7 @@ namespace Content.Shared.SubFloor
             if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(args.NewTile.GridUid, Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
+            UpdateTile(args.NewTile.GridUid, args.Entity.Comp, args.NewTile.GridIndices);
         }
 
         /// <summary>
@@ -105,11 +111,20 @@ namespace Content.Shared.SubFloor
                 return;
 
             if (xform.Anchored && TryComp<MapGridComponent>(xform.GridUid, out var grid))
-                component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates));
+                SetUnderCover((uid, component), HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)));
             else
-                component.IsUnderCover = false;
+                SetUnderCover((uid, component), false);
 
             UpdateAppearance(uid, component);
+        }
+
+        private void SetUnderCover(Entity<SubFloorHideComponent> entity, bool value)
+        {
+            if (entity.Comp.IsUnderCover == value)
+                return;
+
+            entity.Comp.IsUnderCover = value;
+            _visibility.SetLayer(entity.Owner, value ? (ushort) VisibilityFlags.Subfloor : (ushort) VisibilityFlags.Normal);
         }
 
         public bool HasFloorCover(EntityUid gridUid, MapGridComponent grid, Vector2i position)
@@ -125,13 +140,13 @@ namespace Content.Shared.SubFloor
 
             foreach (var uid in Map.GetAnchoredEntities(gridUid, grid, position))
             {
-                if (!TryComp(uid, out SubFloorHideComponent? hideComp))
+                if (!_hideQuery.TryComp(uid, out var hideComp))
                     continue;
 
                 if (hideComp.IsUnderCover == covered)
                     continue;
 
-                hideComp.IsUnderCover = covered;
+                SetUnderCover((uid, hideComp), covered);
                 UpdateAppearance(uid, hideComp);
             }
         }
@@ -153,6 +168,12 @@ namespace Content.Shared.SubFloor
             {
                 Appearance.SetData(uid, SubFloorVisuals.Covered, hideComp.IsUnderCover, appearance);
             }
+        }
+
+        [Serializable, NetSerializable]
+        protected sealed class ShowSubfloorRequestEvent : EntityEventArgs
+        {
+            public bool Value;
         }
     }
 
