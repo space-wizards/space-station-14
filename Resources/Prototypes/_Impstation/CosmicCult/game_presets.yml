@@ -12,3 +12,4 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
+    - BasicStationEventScheduler

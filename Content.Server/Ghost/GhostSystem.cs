@@ -209,6 +209,7 @@ namespace Content.Server.Ghost
             }
 
             SetCanSeeGhosts(uid, true);
+            _eye.SetVisibilityMask(uid, 777); // Imp hack for Cosmic Cult visibility
 
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
