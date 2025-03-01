@@ -30,6 +30,13 @@ public sealed partial class ContainerFillComponent : Component
     /// </summary>
     [DataField("ignoreConstructionSpawn")]
     public bool IgnoreConstructionSpawn = true;
+
+    /// <summary>
+    ///     If true, entities whose containers already contain contents cannot have more contents added by the systems
+    ///		utilizing this component.
+    /// </summary>
+    [DataField("fillEmptyContainersOnly")]
+    public bool FillEmptyContainersOnly = true;
 }
 
 // all of this exists just to validate prototype ids.
