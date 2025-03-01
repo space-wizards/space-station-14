@@ -241,31 +241,27 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.Open = false;
         Dirty(uid, component);
 
-        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
+        var entities = _lookup.GetEntitiesInRange(
+            new EntityCoordinates(uid, component.EnteringOffset),
+            component.EnteringRange,
+            LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries
+        );
 
-        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
+        // Don't insert the container into itself.
+        entities.Remove(uid);
 
-        var ev = new StorageBeforeCloseEvent(entities, new());
+        var ev = new StorageBeforeCloseEvent(entities, []);
         RaiseLocalEvent(uid, ref ev);
-        var count = 0;
+
         foreach (var entity in ev.Contents)
         {
-            // TODO: Write a better lookup query that does not cause entity storages to attempt to insert themselves
-            // into themselves.
-            if (entity == uid)
+            if (!ev.BypassChecks.Contains(entity) && !CanInsert(entity, uid, component))
                 continue;
-
-            if (!ev.BypassChecks.Contains(entity))
-            {
-                if (!CanInsert(entity, uid, component))
-                    continue;
-            }
 
             if (!AddToContents(entity, uid, component))
                 continue;
 
-            count++;
-            if (count >= component.Capacity)
+            if (component.Contents.ContainedEntities.Count >= component.Capacity)
                 break;
         }
 
@@ -334,6 +330,10 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return true;
 
         if (component.Contents.ContainedEntities.Count >= component.Capacity)
+            return false;
+
+        var aabb = _lookup.GetAABBNoContainer(toInsert, Vector2.Zero, 0);
+        if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
             return false;
 
         // Allow other systems to prevent inserting the item: e.g. the item is actually a ghost.
@@ -427,10 +427,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         if (toAdd == container)
-            return false;
-
-        var aabb = _lookup.GetAABBNoContainer(toAdd, Vector2.Zero, 0);
-        if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
             return false;
 
         return Insert(toAdd, container, component);
