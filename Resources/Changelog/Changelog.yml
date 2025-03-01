@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Catofquestionableethics
-  changes:
-  - message: Spacemans cake now contains Polypyrylium Oligomers instead of Omnizine.
-    type: Tweak
-  - message: Slime, Brain and Christmas cakes can now be eaten by Lizards.
-    type: Fix
-  id: 7527
-  time: '2024-10-18T03:08:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32830
 - author: Plykiya
   changes:
   - message: You can no longer print flares or shotgun flares.
@@ -3898,3 +3889,10 @@
   id: 8026
   time: '2025-03-01T18:03:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35438
+- author: SlamBamActionman
+  changes:
+  - message: Slimes no longer have cellular damage resistance.
+    type: Tweak
+  id: 8027
+  time: '2025-03-01T20:24:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35583
