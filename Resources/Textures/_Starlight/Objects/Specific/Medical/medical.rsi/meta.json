@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-    "copyright": "Starlight",
+    "copyright": "Starlight, Menders and Bandaid's taked from Paradise Station",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -71,6 +71,24 @@
 		{
 			"name": "mender-inhand-right",
             "directions": 4
+		},
+		{
+			"name": "bandaid"
+		},
+		{
+			"name": "bandaid-brute"
+		},
+		{
+			"name": "bandaid-burn"
+		},
+		{
+			"name": "bandaid-burn-small"
+		},
+		{
+			"name": "bandaid-clown"
+		},
+		{
+			"name": "bandaid-med"
 		}
     ]
 }

@@ -263,9 +263,9 @@ public sealed class HealingSystem : EntitySystem
     /// <summary>
     /// Scales the self-heal penalty based on the amount of damage taken
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <returns></returns>
+    /// <param name="uid">target</param>
+    /// <param name="component">component of healing item</param>
+    /// <returns>delay modifier</returns>
     public float GetScaledHealingPenalty(EntityUid uid, HealingComponent component)
     {
         var output = component.Delay;

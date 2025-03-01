@@ -60,10 +60,10 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 35
+        maxVol: 30
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 35
+          Quantity: 30
       
 - type: entity
   id: AutoMenderBurn

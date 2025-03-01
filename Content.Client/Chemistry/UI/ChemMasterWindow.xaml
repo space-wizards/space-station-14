@@ -118,6 +118,18 @@
                         <Button MinSize="80 0" Name="CreatePillButton" Access="Public" Text="{Loc 'chem-master-window-create-button'}" />
                     </BoxContainer>
 
+                    <!-- Starlight-patches start -->
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'chem-master-window-patches-label'}" />
+                        <Control HorizontalExpand="True" MinSize="50 0" />
+                        <Label Text="{Loc 'chem-master-window-patches-number-label'}" Margin="5 0 0 0" StyleClasses="LabelSecondaryColor" />
+                        <SpinBox MinSize="100 0" Name="PatchNumber" Access="Public" Value="0" />
+                        <Label Text="{Loc 'chem-master-window-dose-label'}" Margin="5 0 0 0" StyleClasses="LabelSecondaryColor" />
+                        <SpinBox MinSize="100 0" Name="PatchDosage" Access="Public" Value="1" />
+                        <Button MinSize="80 0" Name="CreatePatchButton" Access="Public" Text="{Loc 'chem-master-window-create-button'}" />
+                    </BoxContainer>
+                    <!-- Starlight-patches end -->
+
                     <BoxContainer Orientation="Horizontal">
                         <Label Text="{Loc 'chem-master-window-bottles-label'}" />
                         <Control HorizontalExpand="True" MinSize="50 0" />

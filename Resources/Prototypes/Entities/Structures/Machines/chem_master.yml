@@ -19,6 +19,7 @@
     state: mixer_loaded
   - type: ChemMaster
     pillDosageLimit: 20
+    patchDosageLimit: 20
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -83,6 +84,7 @@
           tags:
           - Bottle
           - PillCanister
+          - PatchPack # Starlight-edit
   - type: SolutionContainerManager
     solutions:
       buffer: {}

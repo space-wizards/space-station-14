@@ -513,6 +513,7 @@
   name: alien pistol
   components:
   - type: RestrictByUserTag
+    doestContain: []
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/alien.rsi
     layers:
