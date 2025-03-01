@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the playtime stats window not showing entries correctly.
-    type: Fix
-  id: 7525
-  time: '2024-10-17T21:32:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32856
-- author: Thatonestomf
-  changes:
-  - message: Smile no longer has a ghost role raffle attached to her
-    type: Fix
-  id: 7526
-  time: '2024-10-18T02:42:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32837
 - author: Catofquestionableethics
   changes:
   - message: Spacemans cake now contains Polypyrylium Oligomers instead of Omnizine.
@@ -3896,3 +3882,19 @@
   id: 8024
   time: '2025-03-01T09:56:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35158
+- author: ScarKy0
+  changes:
+  - message: You can no longer fax, stamp or write on paper scrap.
+    type: Fix
+  id: 8025
+  time: '2025-03-01T14:08:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35596
+- author: ArtisticRoomba, Cojoke-dot
+  changes:
+  - message: The detective can now find the go go hat in their locker. This hat has
+      the ability to store and retrieve items automatically via the saying of a catchphrase.
+      GO GO GADGET!
+    type: Add
+  id: 8026
+  time: '2025-03-01T18:03:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35438

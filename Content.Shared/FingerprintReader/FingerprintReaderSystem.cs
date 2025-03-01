@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -5,35 +6,34 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.FingerprintReader;
 
-// TOOD: This has a lot of overlap with the AccessReaderSystem, maybe merge them in the future?
+// TODO: This has a lot of overlap with the AccessReaderSystem, maybe merge them in the future?
 public sealed class FingerprintReaderSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <summary>
-    /// Checks if the given user has fingerprint access to the target entity
+    /// Checks if the given user has fingerprint access to the target entity.
     /// </summary>
+    /// <param name="target">The target entity.</param>
+    /// <param name="user">User trying to gain access.</param>
+    /// <returns>True if access was granted, otherwise false.</returns>
     [PublicAPI]
     public bool IsAllowed(Entity<FingerprintReaderComponent?> target, EntityUid user)
     {
         if (!Resolve(target, ref target.Comp, false))
             return true;
 
-        if (!target.Comp.Enabled)
-            return true;
-
         if (target.Comp.AllowedFingerprints.Count == 0)
             return true;
 
         // Check for gloves first
-        if (HasBlockingGloves(user) && !target.Comp.IgnoreGloves)
+        if (!target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
         {
             if (target.Comp.FailGlovesPopup != null)
-                _popup.PopupEntity(Loc.GetString(target.Comp.FailGlovesPopup), target, user);
+                _popup.PopupEntity(Loc.GetString(target.Comp.FailGlovesPopup, ("blocker", gloves)), target, user);
             return false;
         }
-
 
         // Check fingerprint match
         if (!TryComp<FingerprintComponent>(user, out var fingerprint) || fingerprint.Fingerprint == null ||
@@ -41,6 +41,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
         {
             if (target.Comp.FailPopup != null)
                 _popup.PopupEntity(Loc.GetString(target.Comp.FailPopup), target, user);
+
             return false;
         }
 
@@ -48,12 +49,21 @@ public sealed class FingerprintReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks whether the user has gloves that block fingerprints
+    /// Gets the blocking gloves of a user. Gloves count as blocking if they hide fingerprints.
     /// </summary>
-    public bool HasBlockingGloves(EntityUid user)
+    /// <param name="user">Entity wearing the gloves.</param>
+    /// <param name="blocker">The returned gloves, if they exist.</param>
+    /// <returns>True if blocking gloves were found, otherwise False.</returns>
+    [PublicAPI]
+    public bool TryGetBlockingGloves(EntityUid user, [NotNullWhen(true)] out EntityUid? blocker)
     {
+        blocker = null;
+
         if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<FingerprintMaskComponent>(gloves))
+        {
+            blocker = gloves;
             return true;
+        }
 
         return false;
     }
@@ -65,7 +75,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
     public void SetAllowedFingerprints(Entity<FingerprintReaderComponent> target, HashSet<string> fingerprints)
     {
         target.Comp.AllowedFingerprints = fingerprints;
-        RaiseFingerprintReaderChangedEvent(target);
+        Dirty(target);
     }
 
     /// <summary>
@@ -75,7 +85,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
     public void AddAllowedFingerprint(Entity<FingerprintReaderComponent> target, string fingerprint)
     {
         target.Comp.AllowedFingerprints.Add(fingerprint);
-        RaiseFingerprintReaderChangedEvent(target);
+        Dirty(target);
     }
 
     /// <summary>
@@ -85,12 +95,6 @@ public sealed class FingerprintReaderSystem : EntitySystem
     public void RemoveAllowedFingerprint(Entity<FingerprintReaderComponent> target, string fingerprint)
     {
         target.Comp.AllowedFingerprints.Remove(fingerprint);
-        RaiseFingerprintReaderChangedEvent(target);
-    }
-
-    private void RaiseFingerprintReaderChangedEvent(EntityUid uid)
-    {
-        var ev = new FingerprintReaderConfigurationChangedEvent();
-        RaiseLocalEvent(uid, ref ev);
+        Dirty(target);
     }
 }
