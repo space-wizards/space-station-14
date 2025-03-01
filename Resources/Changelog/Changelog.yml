@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Aeshus
-  changes:
-  - message: Emote shorthands (like "lol" or ":)") sent in chat are detected throughout
-      the whole message. Note that only the last shorthand in the message will be
-      emoted.
-    type: Tweak
-  id: 7524
-  time: '2024-10-17T14:01:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28645
 - author: slarticodefast
   changes:
   - message: Fixed the playtime stats window not showing entries correctly.
@@ -3898,3 +3889,10 @@
   id: 8023
   time: '2025-03-01T02:12:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35572
+- author: LaCumbiaDelCoronavirus
+  changes:
+  - message: Slimepeople look a bit less bald now.
+    type: Tweak
+  id: 8024
+  time: '2025-03-01T09:56:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35158
