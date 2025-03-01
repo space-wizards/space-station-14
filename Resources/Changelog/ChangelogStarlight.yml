@@ -3719,4 +3719,34 @@ Entries:
   id: 515
   time: '2025-03-01T13:49:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/351
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a system for functional cybernetic limbs.
+    type: Add
+  id: 516
+  time: '2025-03-01T14:00:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added left and right silver Reaper cybernetic arms—contain a full set
+      of surgical tools and are the most effective in the game.
+    type: Add
+  id: 517
+  time: '2025-03-01T14:00:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added left and right Mechwright cybernetic arms—contain a full set of
+      tools, the best on the station but inferior to Abductor tools.
+    type: Add
+  id: 518
+  time: '2025-03-01T14:00:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where a hand would appear after attaching an arm.
+    type: Fix
+  id: 519
+  time: '2025-03-01T14:00:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/352
 
