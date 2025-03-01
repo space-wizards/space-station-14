@@ -66,3 +66,50 @@
       event: !type:ProjectileSpellEvent
         prototype: ProjectileFireball
         speech: action-speech-spell-fireball
+
+- type: entity
+  id: ActionIceKnife
+  name: Ice Knife
+  description: Fires an ice knife towards the clicked location. When the ice knife hits a target, it shatters into smaller shards.
+  components:
+  - type: Magic
+  - type: WorldTargetAction
+    useDelay: 10
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    raiseOnUser: true
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/glass_step.ogg
+    icon:
+      sprite: Structures/Specific/Anomalies/ice_anom.rsi
+      state: bullet
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileIceKnife
+      speech: action-speech-spell-ice-knife
+  - type: ActionUpgrade
+    effectedLevels:
+      2: ActionIceKnifeII
+      3: ActionIceKnifeIII
+
+- type: entity
+  id: ActionIceKnifeII
+  parent: ActionIceKnife
+  name: Ice Knife II
+  description: Fires a ice knife that breaks into more projectiles!
+  components:
+  - type: WorldTargetAction
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileIceKnifeII
+      speech: action-speech-spell-ice-knife
+
+- type: entity
+  id: ActionIceKnifeIII
+  parent: ActionIceKnife
+  name: Ice Knife III
+  description: The coldest ice knife in the frozen north!
+  components:
+  - type: WorldTargetAction
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileIceKnifeIII
+      speech: action-speech-spell-ice-knife
