@@ -115,6 +115,9 @@
       - id: BoxBeaker
         prob: 0.3
       - id: BoxPillCanister
+      - id: PatchPack
+      - id: PatchPack
+      - id: PatchPack
       - id: BoxBottle
       - id: BoxVial
       - id: PlasmaChemistryVial
