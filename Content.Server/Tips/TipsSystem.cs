@@ -1,10 +1,9 @@
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Dataset;
 using Content.Shared.Tips;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -20,6 +19,8 @@ namespace Content.Server.Tips;
 /// </summary>
 public sealed class TipsSystem : EntitySystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> ServerChannel = "Server";
+
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -198,7 +199,7 @@ public sealed class TipsSystem : EntitySystem
             RaiseNetworkEvent(ev);
         } else
         {
-            _chat.SendChannelMessage(msg, "Server", null, null);
+            _chat.SendChannelMessage(msg, ServerChannel, null, null);
         }
     }
 

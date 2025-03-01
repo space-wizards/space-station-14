@@ -3,30 +3,29 @@ using Content.Server.CartridgeLoader;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
-using Content.Server.Light.EntitySystems;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
-using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Light;
-using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
-using Content.Shared.Store.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.PDA
 {
     public sealed class PdaSystem : SharedPdaSystem
     {
+        private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+
         [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
         [Dependency] private readonly InstrumentSystem _instrument = default!;
         [Dependency] private readonly RingerSystem _ringer = default!;
@@ -147,7 +146,7 @@ namespace Content.Server.PDA
                 ("header", args.Header),
                 ("message", message));
 
-            _chatManager.SendChannelMessage(wrappedMessage, "GameMessage", null, ent.Owner, new HashSet<ICommonSession>() { actor.PlayerSession });
+            _chatManager.SendChannelMessage(wrappedMessage, GameMessageChannel, null, ent.Owner, new HashSet<ICommonSession>() { actor.PlayerSession });
         }
 
         /// <summary>

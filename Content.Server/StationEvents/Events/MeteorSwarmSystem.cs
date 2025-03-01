@@ -5,6 +5,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Server.Audio;
@@ -12,12 +13,15 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -34,7 +38,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
         if (component.Announcement is { } locId)
-            _chatManager.SendChannelMessage(Loc.GetString(locId), "GameMessage", null, null);
+            _chatManager.SendChannelMessage(Loc.GetString(locId), GameMessageChannel, null, null);
 
         _audio.PlayGlobal(component.AnnouncementSound, allPlayersInGame, true);
     }

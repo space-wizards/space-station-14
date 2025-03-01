@@ -1,10 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio.Systems;
@@ -48,7 +48,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
         if (stationEvent.StartAnnouncement != null)
-            ChatManager.SendChannelMessage(Loc.GetString(stationEvent.StartAnnouncement), "GameMessage", null, null);
+            ChatManager.SendChannelMessage(Loc.GetString(stationEvent.StartAnnouncement), FileScopedCache.GameMessageChannel, null, null);
 
         Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true);
     }
@@ -87,7 +87,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
         if (stationEvent.EndAnnouncement != null)
-            ChatManager.SendChannelMessage(Loc.GetString(stationEvent.EndAnnouncement), "GameMessage", null, null);
+            ChatManager.SendChannelMessage(Loc.GetString(stationEvent.EndAnnouncement), FileScopedCache.GameMessageChannel, null, null);
 
         Audio.PlayGlobal(stationEvent.EndAudio, allPlayersInGame, true);
     }
@@ -117,4 +117,9 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
             }
         }
     }
+}
+
+static file class FileScopedCache
+{
+    public static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
 }

@@ -9,21 +9,23 @@ using Content.Server.Maps;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Voting;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager
     {
+        private static readonly ProtoId<CommunicationChannelPrototype> ServerChannel = "Server";
+
         [Dependency] private readonly IPlayerLocator _locator = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IBanManager _bans = default!;
@@ -415,7 +417,7 @@ namespace Content.Server.Voting.Managers
                 {
                     var message = Loc.GetString("ui-vote-votekick-not-enough-eligible", ("voters", eligibleVoterNumber.ToString()), ("requirement", eligibleVoterNumberRequirement.ToString()));
                     var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                    _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { initiator });
+                    _chatManager.SendChannelMessage(wrappedMessage, ServerChannel, null, null, [initiator]);
                 }
                 DirtyCanCallVoteAll();
                 return;
@@ -564,7 +566,7 @@ namespace Content.Server.Voting.Managers
                 {
                     var message = Loc.GetString("ui-vote-votekick-server-cancelled", ("target", target));
                     var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                    _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { player });
+                    _chatManager.SendChannelMessage(wrappedMessage, ServerChannel, null, null, [player]);
                 }
             }
         }

@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Robust.Client.Graphics;
@@ -8,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Content.Shared.Chat.ChatConstants;
 
 namespace Content.Client.Chat.UI
 {
@@ -221,7 +221,6 @@ namespace Content.Client.Chat.UI
 
     public sealed class FancyTextSpeechBubble : SpeechBubble
     {
-
         public FancyTextSpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass)
             : base(message, senderEntity, speechStyleClass)
         {
@@ -258,8 +257,8 @@ namespace Content.Client.Chat.UI
             };
 
 
-            if (_chatManager.TryGetMessageInsideTag(message.Message, out var bubbleHeaderMsg, "BubbleHeader") &&
-                _chatManager.TryGetMessageInsideTag(message.Message, out var bubbleMessageMsg, "BubbleMessage"))
+            if (_chatManager.TryGetMessageInsideTag(message.Message, out var bubbleHeaderMsg, BubbleHeaderTagName) &&
+                _chatManager.TryGetMessageInsideTag(message.Message, out var bubbleMessageMsg, BubbleBodyTagName))
             {
                 bubbleHeader.SetMessage(bubbleHeaderMsg);
                 bubbleContent.SetMessage(bubbleMessageMsg);

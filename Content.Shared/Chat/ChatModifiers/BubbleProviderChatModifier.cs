@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
+using static Content.Shared.Chat.ChatConstants;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -16,7 +17,8 @@ public sealed partial class BubbleProviderChatModifier : ChatModifier
 
     public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
-        return InsertOutsideTag(InsertOutsideTag(message, new MarkupNode("BubbleHeader", new MarkupParameter((int)SpeechType), null), "EntityNameHeader"), new MarkupNode("BubbleMessage", null, null), "MainMessage");
+        var bubbleHeader = InsertOutsideTag(message, new MarkupNode(BubbleHeaderTagName, new MarkupParameter((int)SpeechType), null), "EntityNameHeader");
+        return InsertOutsideTag(bubbleHeader, new MarkupNode(BubbleBodyTagName, null, null), "MainMessage");
     }
 }
 

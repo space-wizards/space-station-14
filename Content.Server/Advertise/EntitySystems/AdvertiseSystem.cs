@@ -1,7 +1,7 @@
 using Content.Server.Advertise.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -11,6 +11,8 @@ namespace Content.Server.Advertise.EntitySystems;
 
 public sealed class AdvertiseSystem : EntitySystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> ChatChannel = "BubbleOnlySpeech";
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -63,7 +65,10 @@ public sealed class AdvertiseSystem : EntitySystem
             return;
 
         if (_prototypeManager.TryIndex(advert.Pack, out var advertisements))
-            _chat.SendChannelMessage(Loc.GetString(_random.Pick(advertisements.Values)), "BubbleOnlySpeech", null, uid);
+        {
+            var message = Loc.GetString(_random.Pick(advertisements.Values));
+            _chat.SendChannelMessage(message, ChatChannel, null, uid);
+        }
     }
 
     public override void Update(float frameTime)

@@ -5,11 +5,11 @@ using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Popups;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Prayer;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -20,6 +20,8 @@ namespace Content.Server.Prayer;
 /// </remarks>
 public sealed class PrayerSystem : EntitySystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -83,7 +85,7 @@ public sealed class PrayerSystem : EntitySystem
         var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
-        _chatManager.SendChannelMessage(message, "GameMessage", null, null, new HashSet<ICommonSession>() { target });
+        _chatManager.SendChannelMessage(message, GameMessageChannel, null, null, new HashSet<ICommonSession>() { target });
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity.Value):player} received subtle message from {source.Name}: {message}");
     }
 

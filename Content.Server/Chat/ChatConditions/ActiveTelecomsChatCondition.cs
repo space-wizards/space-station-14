@@ -1,9 +1,8 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
-using Microsoft.Extensions.Logging;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -26,26 +25,27 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
         if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
             !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) ||
             !_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype) ||
-            !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform))
-            return new HashSet<T>();
+            !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform)
+        )
+            return [];
 
-        var activeServer = radioPrototype.LongRange;
-
-        if (activeServer == false)
+        if (radioPrototype.LongRange)
         {
-            var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
-            var sourceMapId = sourceTransform.MapID;
-            foreach (var (_, keys, power, transform) in servers)
+            return consumers;
+        }
+
+        var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+        var sourceMapId = sourceTransform.MapID;
+        foreach (var (_, keys, power, transform) in servers)
+        {
+            if (transform.MapID == sourceMapId &&
+                power.Powered &&
+                keys.Channels.Contains(radioPrototype.ID))
             {
-                if (transform.MapID == sourceMapId &&
-                    power.Powered &&
-                    keys.Channels.Contains(radioPrototype.ID))
-                {
-                    activeServer = true;
-                }
+                return consumers;
             }
         }
 
-        return activeServer ? consumers : new HashSet<T>();
+        return [];
     }
 }

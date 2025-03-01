@@ -9,7 +9,7 @@ using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
 using Content.Server.Station.Systems;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -31,6 +31,8 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
+        private static readonly ProtoId<CommunicationChannelPrototype> ServerChannel = "Server";
+
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IBanManager _banManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;
@@ -115,7 +117,7 @@ namespace Content.Server.GameTicking
         private void SendServerMessage(string message)
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null);
+            _chatManager.SendChannelMessage(wrappedMessage, ServerChannel, null, null);
         }
 
         public override void Update(float frameTime)

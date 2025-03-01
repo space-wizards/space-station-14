@@ -204,14 +204,33 @@ internal sealed partial class ChatManager : IChatManager
 
     #region Base Chat Functionality
 
-    public void SendChannelMessage(string message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, bool escapeText = true, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
+    public void SendChannelMessage(
+        string message,
+        ProtoId<CommunicationChannelPrototype> communicationChannel,
+        ICommonSession? senderSession,
+        EntityUid? senderEntity,
+        HashSet<ICommonSession>? targetSessions = null,
+        bool escapeText = true,
+        Dictionary<Enum, object>? supplierParameters = null,
+        bool logMessage = true
+    )
     {
-        var formattedMessage = escapeText ? FormattedMessage.FromMarkupPermissive(message, out string? error) : FormattedMessage.FromUnformatted(FormattedMessage.EscapeText(message));
+        var formattedMessage = escapeText
+            ? FormattedMessage.FromMarkupPermissive(message, out _)
+            : FormattedMessage.FromUnformatted(FormattedMessage.EscapeText(message));
 
         SendChannelMessage(formattedMessage, communicationChannel, senderSession, senderEntity, targetSessions, supplierParameters);
     }
 
-    public void SendChannelMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
+    public void SendChannelMessage(
+        FormattedMessage message,
+        string communicationChannel,
+        ICommonSession? senderSession,
+        EntityUid? senderEntity,
+        HashSet<ICommonSession>? targetSessions = null,
+        Dictionary<Enum, object>? supplierParameters = null,
+        bool logMessage = true
+    )
     {
         _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
         var usedCommsTypes = new List<CommunicationChannelPrototype>();
@@ -220,7 +239,16 @@ internal sealed partial class ChatManager : IChatManager
             SendChannelMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, supplierParameters);
     }
 
-    public void SendChannelMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, ref List<CommunicationChannelPrototype> usedCommsTypes, HashSet<ICommonSession>? targetSessions = null, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
+    public void SendChannelMessage(
+        FormattedMessage message,
+        string communicationChannel,
+        ICommonSession? senderSession,
+        EntityUid? senderEntity,
+        ref List<CommunicationChannelPrototype> usedCommsTypes,
+        HashSet<ICommonSession>? targetSessions = null,
+        Dictionary<Enum, object>? supplierParameters = null,
+        bool logMessage = true
+    )
     {
         _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
 
@@ -237,7 +265,7 @@ internal sealed partial class ChatManager : IChatManager
     /// <param name="senderEntity">The entity designated as "sending" the message. If null, the message is coming directly from the session/server.</param>
     /// <param name="usedCommsChannels">Tracks the communication channels used. Helps prevent infinitely recursive messages.</param>
     /// <param name="targetSessions">Any sessions that should be specifically targetted (still needs to comply with channel consume conditions). If you are targetting multiple sessions you should likely use a consumeCollection instead of this.</param>
-    /// <param name="supplierParameters">Parameters that may be used by MarkupSuppliers; these are not passed on to the client.</param>
+    /// <param name="channelParameters">Parameters that may be used by MarkupSuppliers; these are not passed on to the client.</param>
     public void SendChannelMessage(
         FormattedMessage message,
         CommunicationChannelPrototype communicationChannel,
@@ -246,9 +274,9 @@ internal sealed partial class ChatManager : IChatManager
         ref List<CommunicationChannelPrototype> usedCommsChannels,
         HashSet<ICommonSession>? targetSessions = null,
         Dictionary<Enum, object>? channelParameters = null,
-        bool logMessage = true)
+        bool logMessage = true
+    )
     {
-
         #region Prep-Step
 
         // This section handles setting up the parameters and any other business that should happen before validation starts.

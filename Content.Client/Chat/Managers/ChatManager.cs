@@ -65,15 +65,8 @@ internal sealed class ChatManager : IChatManager
                 break;
 
             case ChatSelectChannel.Radio:
-                if (radioChannel != null)
-                {
-                    SendMessage(str, "Radio" + radioChannel.ID);
-                }
-                else
-                {
-                    radioChannel = _prototypeManager.Index<RadioChannelPrototype>(DefaultRadioChannel);
-                    SendMessage(str, "Radio" + radioChannel.ID);
-                }
+                radioChannel ??= _prototypeManager.Index<RadioChannelPrototype>(DefaultRadioChannel);
+                SendMessage(str, "Radio" + radioChannel.ID);
                 break;
 
             case ChatSelectChannel.Local:

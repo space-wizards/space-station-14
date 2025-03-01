@@ -2,19 +2,21 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Objectives;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
 
 public sealed partial class AntagSelectionSystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+
     /// <summary>
     /// Tries to get the next non-filled definition based on the current amount of selected minds and other factors.
     /// </summary>
@@ -319,7 +321,7 @@ public sealed partial class AntagSelectionSystem
         if (!string.IsNullOrEmpty(briefing))
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
-            _chat.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { session });
+            _chat.SendChannelMessage(wrappedMessage, GameMessageChannel, null, null, new HashSet<ICommonSession>() { session });
         }
     }
 

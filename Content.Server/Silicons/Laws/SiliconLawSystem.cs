@@ -6,7 +6,7 @@ using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
@@ -22,13 +22,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Silicons.Laws;
 
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -67,7 +68,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         var msg = Loc.GetString("laws-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { actor.PlayerSession });
+        _chatManager.SendChannelMessage(wrappedMessage, GameMessageChannel, null, null, [actor.PlayerSession]);
     }
 
     private void OnToggleLawsScreen(EntityUid uid, SiliconLawBoundComponent component, ToggleLawsScreenEvent args)

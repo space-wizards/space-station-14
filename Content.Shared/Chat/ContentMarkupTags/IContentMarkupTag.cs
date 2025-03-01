@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ContentMarkupTags;
 
@@ -13,7 +13,7 @@ public interface IContentMarkupTag
     /// Processes another markup node with this content tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public List<MarkupNode>? MarkupNodeProcessing(MarkupNode node)
+    public List<MarkupNode>? ProcessMarkupNode(MarkupNode node)
     {
         return null;
     }
@@ -22,7 +22,7 @@ public interface IContentMarkupTag
     /// Processes a text node with this content tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public List<MarkupNode>? TextNodeProcessing(MarkupNode node)
+    public List<MarkupNode>? ProcessTextNode(MarkupNode node)
     {
         return null;
     }
@@ -31,7 +31,7 @@ public interface IContentMarkupTag
     /// Returns a list of nodes replacing the opening markup node for this tag.
     /// Note: If you include a non-text node in the return list that is not closed, you MUST include a closing tag in CloserProcessing.
     /// </summary>
-    public List<MarkupNode>? OpenerProcessing(MarkupNode node)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node)
     {
         return null;
     }
@@ -40,7 +40,7 @@ public interface IContentMarkupTag
     /// Returns a list of nodes replacing the closing markup node for this tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public List<MarkupNode>? CloserProcessing(MarkupNode node)
+    public List<MarkupNode>? ProcessClosingTag(MarkupNode node)
     {
         return null;
     }

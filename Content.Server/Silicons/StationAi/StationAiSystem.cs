@@ -1,6 +1,5 @@
-using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
@@ -8,11 +7,15 @@ using Content.Shared.StationAi;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Silicons.StationAi;
 
 public sealed class StationAiSystem : SharedStationAiSystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+    private static readonly ProtoId<CommunicationChannelPrototype> SiliconChannel = "AIChannel";
+
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -53,7 +56,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         var msg = Loc.GetString("ai-consciousness-download-warning");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { actor.PlayerSession });
+        _chatManager.SendChannelMessage(wrappedMessage, GameMessageChannel, null, null, [actor.PlayerSession]);
 
         if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
             _roles.MindPlaySound(mindId, cue);
@@ -87,7 +90,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var tile = Maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
         var msg = Loc.GetString("ai-wire-snipped", ("coords", tile));
 
-        _chatManager.SendChannelMessage(msg, "AIChannel", null, null);
+        _chatManager.SendChannelMessage(msg, SiliconChannel, null, null);
         // Apparently there's no sound for this.
     }
 }

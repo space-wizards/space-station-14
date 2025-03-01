@@ -3,6 +3,7 @@ using Content.Server.Database.Migrations.Postgres;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
@@ -11,6 +12,7 @@ using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -21,6 +23,8 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> ServerChannel = "Server";
+
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -115,7 +119,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", respawnTracker.Comp.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.SendChannelMessage(wrappedMsg, "Server", null, null, new HashSet<ICommonSession>() { player.Comp.PlayerSession });
+        _chatManager.SendChannelMessage(wrappedMsg, ServerChannel, null, null, [player.Comp.PlayerSession]);
 
         respawnTracker.Comp.RespawnQueue[player.Comp.PlayerSession.UserId] = _timing.CurTime + respawnTracker.Comp.RespawnDelay;
 

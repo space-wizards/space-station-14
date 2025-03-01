@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+using System.Collections.Frozen;
+using System.Diagnostics;
 using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
 
@@ -9,7 +10,7 @@ public sealed class ColorValueContentTag : IContentMarkupTag
     public string Name => "ColorValue";
 
     // TODO: These values should probably be retrieved via yaml, and be customizable in options! This solution works for now!
-    private Dictionary<string, Color> _colors = new Dictionary<string, Color>()
+    private readonly IReadOnlyDictionary<string, Color> _colors = new Dictionary<string, Color>
     {
         ["Base"] = Color.White,
         ["Speech"] = Color.LightGray,
@@ -37,19 +38,19 @@ public sealed class ColorValueContentTag : IContentMarkupTag
         ["Radio.Binary"] = Color.FromHex("#2ed2fd"),
         ["Radio.CentCom"] = Color.FromHex("#2681a5"),
         ["Radio.Handheld"] = Color.FromHex("#967101"),
-    };
+    }.ToFrozenDictionary();
 
-    public List<MarkupNode>? OpenerProcessing(MarkupNode node)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node)
     {
-        return new List<MarkupNode>() { new MarkupNode("color", new MarkupParameter(ColorValueLookup(node)), null) };
+        return [new MarkupNode("color", new MarkupParameter(GetColor(node)), null)];
     }
 
-    public List<MarkupNode>? CloserProcessing(MarkupNode node)
+    public List<MarkupNode>? ProcessClosingTag(MarkupNode node)
     {
-        return new List<MarkupNode>() { new MarkupNode("color", null, null, true) };
+        return [new MarkupNode("color", null, null, true)];
     }
 
-    public Color ColorValueLookup(MarkupNode node)
+    private Color GetColor(MarkupNode node)
     {
         var markupColor = node.Value.StringValue;
         if (markupColor != null && _colors.TryGetValue(markupColor, out var color))

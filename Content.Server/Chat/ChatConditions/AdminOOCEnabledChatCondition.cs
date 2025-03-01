@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Robust.Shared.Configuration;
 
@@ -15,6 +15,8 @@ public sealed partial class AdminOOCEnabledChatCondition : ChatCondition
     {
         IoCManager.InjectDependencies(this);
 
-        return _configurationManager.GetCVar<bool>(CCVars.AdminOocEnabled) ? consumers : new HashSet<T>();
+        return _configurationManager.GetCVar(CCVars.AdminOocEnabled)
+            ? consumers
+            : [];
     }
 }

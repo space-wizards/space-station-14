@@ -42,6 +42,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Content.Shared.Chat.ChatConstants;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
@@ -854,7 +855,7 @@ public sealed class ChatUIController : UIController
 
             if (proto.ClientChatModifiers.Where(x => x is BubbleProviderChatModifier).Count() > 0)
             {
-                var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == "BubbleHeader");
+                var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == BubbleHeaderTagName);
                 if (bubbleHeaderNode.Value.TryGetLong(out var speechEnum))
                 {
                     AddSpeechBubble(msg, (SpeechBubble.SpeechType)speechEnum);

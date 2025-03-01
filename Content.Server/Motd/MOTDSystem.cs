@@ -1,10 +1,11 @@
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Console;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Motd;
 
@@ -13,6 +14,8 @@ namespace Content.Server.Motd;
 /// </summary>
 public sealed class MOTDSystem : EntitySystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> ServerChannel = "Server";
+
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
@@ -37,7 +40,7 @@ public sealed class MOTDSystem : EntitySystem
             return;
 
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
-        _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null);
+        _chatManager.SendChannelMessage(wrappedMessage, ServerChannel, null, null);
     }
 
     /// <summary>
@@ -49,7 +52,7 @@ public sealed class MOTDSystem : EntitySystem
             return;
 
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
-        _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { player });
+        _chatManager.SendChannelMessage(wrappedMessage, ServerChannel, null, null, new HashSet<ICommonSession>() { player });
     }
 
     /// <summary>
@@ -66,7 +69,7 @@ public sealed class MOTDSystem : EntitySystem
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
         shell.WriteLine(wrappedMessage);
         if (shell.Player is { } player)
-            _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { player });
+            _chatManager.SendChannelMessage(wrappedMessage, ServerChannel, null, null, new HashSet<ICommonSession>() { player });
     }
 
     #region Event Handlers
