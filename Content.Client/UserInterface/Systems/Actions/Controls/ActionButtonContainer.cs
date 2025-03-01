@@ -28,9 +28,9 @@ public class ActionButtonContainer : GridContainer
         get => (ActionButton) GetChild(index);
     }
 
-    public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
+    public void SetActionData(ActionsSystem system, EntityUid?[] actionTypes, EntityUid[]? phantomActionTypes = null)
     {
-        var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
+        var uniqueCount = actionTypes.Length + 1;
         var keys = ContentKeyFunctions.GetHotbarBoundKeys();
 
         for (var i = 0; i < uniqueCount; i++)
@@ -42,7 +42,10 @@ public class ActionButtonContainer : GridContainer
 
             if (!actionTypes.TryGetValue(i, out var action))
                 action = null;
-            ((ActionButton) GetChild(i)).UpdateData(action, system);
+
+            var actionButton = (ActionButton) GetChild(i);
+            actionButton.UpdateData(action, system);
+            actionButton.IsPhantom = phantomActionTypes != null ? phantomActionTypes.Any(phantom => action == phantom) : false;
         }
 
         for (var i = ChildCount - 1; i >= uniqueCount; i--)
