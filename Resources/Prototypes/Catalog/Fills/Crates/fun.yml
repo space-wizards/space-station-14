@@ -64,9 +64,11 @@
     - id: PlushieImp
       weight: 0.1
     - id: PlushieHeadofPersonnel
-    - id: PlushieCaptain
-    - id: PlushieGiantBear
       weight: 0.1
+    - id: PlushieCaptain
+      weight: 0.1
+    - id: PlushieGiantBear
+      weight: 0.5
     # imp edit end
 
 - type: entity
