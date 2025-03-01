@@ -4072,18 +4072,8 @@
   url: https://github.com/impstation/imp-station-14/pull/1802
 - author: AftrLite
   changes:
-  - message: Siphon Entropy now inflicts more asphyxiation.
+  - message: Various tweaks to Cosmic Cult based on player feedback. Check out the pull request on GitHub for full details!
     type: Tweak
-  - message: The cosmic cult guidebook and midround announcements have been updated.
-    type: Tweak
-  - message: Influences now cost slightly more Entropy at The Monument.
-    type: Tweak
-  - message: Malign Rifts absorb and purge timings have been adjusted.
-    type: Tweak
-  - message: Malign Rift empowerment now doubles entropy gain, down from triple.
-    type: Tweak
-  - message: Malign Rifts now spawn in correct amounts.
-    type: Fix
   id: 1213
   time: '2025-03-01T04:06:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1804
