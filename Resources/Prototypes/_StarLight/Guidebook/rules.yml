@@ -3,9 +3,9 @@
   name: guide-entry-rules
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/StarlightRules.xml"
-  
+
 # Rules
-  
+
 - type: guideEntry
   id: RuleSL0
   name: guide-entry-sl-rules
@@ -75,118 +75,28 @@
   ruleEntry: true
   priority: 9
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL9.xml"
-  
+
 - type: guideEntry
   id: RuleSL10
   name: guide-entry-sl-rule-10
   ruleEntry: true
   priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL10.xml"
-  
+
 - type: guideEntry
   id: RuleSL11
   name: guide-entry-sl-rule-11
   ruleEntry: true
   priority: 11
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL11.xml"
-  
+
 - type: guideEntry
   id: RuleSL12
   name: guide-entry-sl-rule-12
   ruleEntry: true
   priority: 12
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL12.xml"
-  
-- type: guideEntry
-  id: RuleSL13
-  name: guide-entry-sl-rule-13
-  ruleEntry: true
-  priority: 13
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL13.xml"
-  
-# Sub. Points
-  
-- type: guideEntry
-  id: RuleSLRP1
-  name: guide-entry-sl-rule-4-1
-  ruleEntry: true
-  priority: 1
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP1.xml"
 
-- type: guideEntry
-  id: RuleSLRP2
-  name: guide-entry-sl-rule-4-2
-  ruleEntry: true
-  priority: 2
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP2.xml"
-
-
-- type: guideEntry
-  id: RuleSLRP3
-  name: guide-entry-sl-rule-4-3
-  ruleEntry: true
-  priority: 3
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP3.xml"
-
-- type: guideEntry
-  id: RuleSLRP4
-  name: guide-entry-sl-rule-4-4
-  ruleEntry: true
-  priority: 4
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP4.xml"
-
-- type: guideEntry
-  id: RuleSLRP5
-  name: guide-entry-sl-rule-4-5
-  ruleEntry: true
-  priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP5.xml"
-
-
-- type: guideEntry
-  id: RuleSLRP6
-  name: guide-entry-sl-rule-4-6
-  ruleEntry: true
-  priority: 6
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP6.xml"
-  
-- type: guideEntry
-  id: RuleSLRP7
-  name: guide-entry-sl-rule-4-7
-  ruleEntry: true
-  priority: 7
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP7.xml"
-  
-- type: guideEntry
-  id: RuleSLRP8
-  name: guide-entry-sl-rule-4-8
-  ruleEntry: true
-  priority: 8
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP8.xml"
-  
-# Silicon
-
-- type: guideEntry
-  id: RuleSLS1
-  name: guide-entry-sl-silicon-1
-  ruleEntry: true
-  priority: 1
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Silicon/RuleSLS1.xml"
-  
-- type: guideEntry
-  id: RuleSLS2
-  name: guide-entry-sl-silicon-2
-  ruleEntry: true
-  priority: 2
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Silicon/RuleSLS2.xml"
-  
-- type: guideEntry
-  id: RuleSLS3
-  name: guide-entry-sl-silicon-3
-  ruleEntry: true
-  priority: 3
-  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Silicon/RuleSLS3.xml"
-  
 # Clarifications
 
 - type: guideEntry
