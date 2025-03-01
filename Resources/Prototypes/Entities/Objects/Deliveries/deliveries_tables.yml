@@ -47,9 +47,12 @@
 ### Loot Tables
 # Letters
 - type: entityTable
-  id: LetterCommonEntityTable
+  id: LetterCommonEntityTable # Basically trash and spam mail, maybe something barely useful here and there
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector # Don't you love getting mailed trash?
+      tableId: GenericTrashItems
+    - id: MobCockroach
     - id: MailRobustToolsSpam
     - id: MailNanotrasenSpam
     - id: MailSyndicateSpam
@@ -58,32 +61,18 @@
     - id: MailCentcommRetributionSpam
     - id: MailAlternativeDimensionSpam
 
-- type: entityTable
-  id: LetterUncommonEntityTable
+- type: entityTable # TODO: Add more variety!
+  id: LetterUncommonEntityTable # Some more varied things, should never be more expensive than 100 spesos
   table: !type:GroupSelector
     children:
-    - id: AirAlarmElectronics
-    - id: FireAlarmElectronics
-    - id: DoorElectronics
-    - id: FirelockElectronics
-    - id: APCElectronics
-    - id: SignalTimerElectronics
-    - id: SMESMachineCircuitboard
-    - id: SubstationMachineCircuitboard
-    - id: SpaceVillainArcadeComputerCircuitboard
-    - id: BlockGameArcadeComputerCircuitboard
+    - id: SpaceCash100
+    - id: ResearchDisk
 
-- type: entityTable
-  id: LetterRareEntityTable
+- type: entityTable # TODO: Add more variety!
+  id: LetterRareEntityTable # Interesting things that can actually be of use, should never be more expensive than 500 spesos
   table: !type:GroupSelector
     children:
-    - id: AirAlarmElectronics
-    - id: FireAlarmElectronics
-    - id: DoorElectronics
-    - id: FirelockElectronics
-    - id: APCElectronics
-    - id: SignalTimerElectronics
-    - id: SMESMachineCircuitboard
-    - id: SubstationMachineCircuitboard
-    - id: SpaceVillainArcadeComputerCircuitboard
-    - id: BlockGameArcadeComputerCircuitboard
+    - id: ResearchDisk5000
+    - id: ClothingHeadHatHairflower
+    - id: ClothingHeadHatFlowerWreath
+    - id: StrangePill
