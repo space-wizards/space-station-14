@@ -35,9 +35,9 @@
   - type: WallMount
   - type: Storage
     grid:
-    - 0,0,3,1
-    - 0,3,3,4
-    maxItemSize: Normal
+    - 0,0,5,2
+    - 0,4,5,6
+    maxItemSize: Large
   - type: UserInterface
     interfaces:
      enum.StorageUiKey.Key:
@@ -320,8 +320,8 @@
         acts: ["Destruction"]
   - type: Storage
     grid:
-    - 0,0,5,1
-    - 0,3,5,4
+    - 0,0,9,1
+    - 0,3,9,4
     maxItemSize: Normal
     whitelist:
       tags:
@@ -374,8 +374,8 @@
         acts: ["Destruction"]
   - type: Storage
     grid:
-    - 0,0,5,1
-    - 0,3,5,4
+    - 0,0,9,1
+    - 0,3,9,4
     maxItemSize: Normal
     whitelist:
       tags:
@@ -446,14 +446,15 @@
         acts: ["Destruction"]
   - type: Storage
     grid:
-    - 0,0,5,1
-    - 0,3,5,4
-    maxItemSize: Normal
+    - 0,0,9,1
+    - 0,3,9,5
+    maxItemSize: Large
     whitelist:
       tags:
         - ChemDispensable
         - GlassBeaker
         - Bottle
+        - BoxCardboard
   - type: Construction
     graph: Shelf
     node: ShelfChemistry
