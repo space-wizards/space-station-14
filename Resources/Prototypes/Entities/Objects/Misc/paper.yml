@@ -3,8 +3,6 @@
   id: BasePaper
   abstract: true
   components:
-  - type: Item
-    size: Tiny
   - type: Tag
     tags:
     - Document
@@ -101,6 +99,8 @@
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: scrap
+  - type: Item
+    size: Tiny
 
 - type: entity
   name: office paper
