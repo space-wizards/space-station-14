@@ -1,4 +1,5 @@
 using Content.Server.Power.Components;
+using Content.Server.StationRecords;
 using Content.Shared.Delivery;
 using Content.Shared.EntityTable;
 using Robust.Shared.Random;
@@ -52,23 +53,30 @@ public sealed partial class DeliverySystem
 
     private void SpawnStationDeliveries(Entity<CargoDeliveryDataComponent> ent)
     {
-        Log.Debug("Attempting to spawn deliveries");
+        if (!TryComp<StationRecordsComponent>(ent, out var records))
+            return;
+
         var spawners = GetValidSpawners(ent);
 
         if (spawners.Count == 0)
             return;
+
+        var deliveryCount = records.Records.Keys.Count / ent.Comp.PlayerToDeliveryRatio;
+
+        if (deliveryCount == 0)
+            deliveryCount++;
 
         if (!ent.Comp.DistributeRandomly)
         {
             foreach (var spawner in spawners)
             {
                 Log.Debug("Attempting to spawn deliveries at spawner");
-                SpawnDelivery(spawner, ent.Comp.DeliveryCount);
+                SpawnDelivery(spawner, deliveryCount);
             }
         }
         else
         {
-            var deliverySpawnAmount = ent.Comp.DeliveryCount;
+            var deliverySpawnAmount = deliveryCount;
             while (deliverySpawnAmount > 0)
             {
                 var targetSpawner = _random.Pick(spawners);

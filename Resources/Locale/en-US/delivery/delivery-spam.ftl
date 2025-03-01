@@ -9,7 +9,7 @@ delivery-spam-robust-toolboxes = [color=blue][head=1]
 
                                  AS YOU ARE ONE OF OUR VALUED CUSTOMERS, YOU GET A CUSTOMER BONUS, YOUR TOOLS COME RUST AND LEAD-FREE!!! ISN'T THAT AMAZING? THE TOOLBOX ON THE OTHER HAND, COMES WITH EXTRA LEAD! AMAZING FOR SMASHING SKULLS AND STOPPING RADIATION ALIKE!
 
-                                 {"[bold]ALL THIS AND POSSIBLY MORE FOR ONLY ONE ORGAN![/bold"}
+                                 {"[bold]ALL THIS AND POSSIBLY MORE FOR ONLY ONE ORGAN![/bold]"}
 
                                  ROBUST - TOOLBOXES AND TOOLS:
                                  -LEAD AND ASBESTOS FREE!

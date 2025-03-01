@@ -21,15 +21,16 @@ public sealed partial class CargoDeliveryDataComponent : Component
     public TimeSpan DeliveryCooldown = TimeSpan.FromSeconds(30); // TODO: Bring this back to 2 or 3 minutes after testing is done
 
     /// <summary>
-    /// The amount of different deliveries that will be spawned.
+    /// The ratio at which deliveries will spawn, based on the amount of people in the crew manifest.
+    /// 1 delivery per X players.
     /// </summary>
     [DataField]
-    public int DeliveryCount = 5;
+    public int PlayerToDeliveryRatio = 7;
 
     /// <summary>
     /// Should deliveries be randomly split spawners?
     /// If true, the amount of deliveries will be spawned randomly across all spawners.
-    /// If false, DeliveryCount amount will spawn on each spawner.
+    /// If false, an amount of mail based on PlayerToDeliveryRatio will be spawned on all spawners.
     /// </summary>
     [DataField]
     public bool DistributeRandomly = true;
