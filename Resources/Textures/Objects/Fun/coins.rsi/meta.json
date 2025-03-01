@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By GrownSamoyedDog on Github, Modified from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/15121b534f4ef10339d96412e22fe3ce4d15a45d/icons/obj/coins.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coin_adamantium_heads"
+    },
+    {
+      "name": "coin_adamantium_tails"
+    },
+    {
+      "name": "coin_adamantium_side"
+    },
+    {
+      "name": "coin_bananium_heads"
+    },
+    {
+      "name": "coin_bananium_tails"
+    },
+    {
+      "name": "coin_bananium_side"
+    },
+    {
+      "name": "coin_copper_heads"
+    },
+    {
+      "name": "coin_copper_tails"
+    },
+    {
+      "name": "coin_copper_side"
+    },
+    {
+      "name": "coin_diamond_heads"
+    },
+    {
+      "name": "coin_diamond_tails"
+    },
+    {
+      "name": "coin_diamond_side"
+    },
+    {
+      "name": "coin_gold_heads"
+    },
+    {
+      "name": "coin_gold_tails"
+    },
+    {
+      "name": "coin_gold_side"
+    },
+    {
+      "name": "coin_iron_heads"
+    },
+    {
+      "name": "coin_iron_tails"
+    },
+    {
+      "name": "coin_iron_side"
+    },
+    {
+      "name": "coin_nanotransen_heads"
+    },
+    {
+      "name": "coin_nanotransen_tails"
+    },
+    {
+      "name": "coin_nanotransen_side"
+    },
+    {
+      "name": "coin_plasma_heads"
+    },
+    {
+      "name": "coin_plasma_tails"
+    },
+    {
+      "name": "coin_plasma_side"
+    },
+    {
+      "name": "coin_silver_heads"
+    },
+    {
+      "name": "coin_silver_tails"
+    },
+    {
+      "name": "coin_silver_side"
+    },
+    {
+      "name": "coin_uranium_heads"
+    },
+    {
+      "name": "coin_uranium_tails"
+    },
+    {
+      "name": "coin_uranium_side"
+    },
+    {
+      "name": "coin_game_heads"
+    },
+    {
+      "name": "coin_game_tails"
+    },
+    {
+      "name": "coin_game_side"
+    }
+  ]
+}
