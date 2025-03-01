@@ -204,7 +204,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             args.Cancelled = true;
     }
 
-    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null, bool doAfterInsert = true)
     {
         if (!ResolveDisposals(uid, ref disposal))
             return;
@@ -213,7 +213,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, disposal, toInsert, user);
+
+        if (doAfterInsert)
+            AfterInsert(uid, disposal, toInsert, user);
     }
 
     public override void Update(float frameTime)
