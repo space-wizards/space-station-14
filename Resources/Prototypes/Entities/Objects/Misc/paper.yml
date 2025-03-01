@@ -75,7 +75,6 @@
     interfaces:
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
-  - type: Appearance
   - type: FaxableObject
   - type: PaperVisuals
 
@@ -94,8 +93,6 @@
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: scrap
-  - type: Item
-    size: Tiny
 
 - type: entity
   name: office paper
