@@ -424,6 +424,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         }
         TotalCult++;
         cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value; //todo: nullable
+        Dirty(uid, cultComp);
+
         rule.Comp.Cultists.Add(uid);
     }
 
@@ -467,6 +469,9 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 cultComp.UnlockedInfluences.Add("InfluenceForceIngress");
                 cultComp.UnlockedInfluences.Add("InfluenceUnboundStep");
             }
+
+            Dirty(uid, cultComp);
+
             var transmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(uid);
             var radio = EnsureComp<ActiveRadioComponent>(uid);
             radio.Channels = new() { "CosmicRadio" };
