@@ -47,27 +47,12 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 1
-
-- type: entity
-  id: BaseWritablePaper
-  abstract: true
-  components:
-  - type: Paper
-  - type: PaperLabelType
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-    requiresComplex: false
-  - type: UserInterface
-    interfaces:
-      enum.PaperUiKey.Key:
-        type: PaperBoundUserInterface
-  - type: Appearance
-  - type: FaxableObject
-  - type: PaperVisuals
+  - type: Item
+    size: Tiny
 
 - type: entity
   name: paper
-  parent: [ BasePaper, BaseWritablePaper ]
+  parent: BasePaper
   id: Paper
   description: 'A piece of white paper.'
   components:
@@ -81,8 +66,18 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
-  - type: Item
-    size: Tiny
+  - type: Paper
+  - type: PaperLabelType
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+    requiresComplex: false
+  - type: UserInterface
+    interfaces:
+      enum.PaperUiKey.Key:
+        type: PaperBoundUserInterface
+  - type: Appearance
+  - type: FaxableObject
+  - type: PaperVisuals
 
 - type: entity
   name: paper scrap
