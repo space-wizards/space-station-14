@@ -1,6 +1,13 @@
 ## Static
 
 - type: latheRecipePack
+  id: CargoStatic
+  recipes:
+  - AppraisalTool
+  - Pickaxe
+  - CircuitImprinterMachineCircuitboardAutolathe
+
+- type: latheRecipePack
   id: CargoBoardsStatic
   recipes:
   - OreProcessorMachineCircuitboard
