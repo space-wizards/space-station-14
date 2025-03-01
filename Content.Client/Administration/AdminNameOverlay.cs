@@ -15,8 +15,6 @@ namespace Content.Client.Administration;
 
 internal sealed class AdminNameOverlay : Overlay
 {
-    [Dependency] private readonly IConfigurationManager _config = default!;
-
     private readonly AdminSystem _system;
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
@@ -34,10 +32,15 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
     private readonly Color _antagColorClassic = Color.OrangeRed;
 
-    public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
+    public AdminNameOverlay(
+        AdminSystem system,
+        IEntityManager entityManager,
+        IEyeManager eyeManager,
+        IResourceCache resourceCache,
+        EntityLookupSystem entityLookup,
+        IUserInterfaceManager userInterfaceManager,
+        IConfigurationManager config)
     {
-        IoCManager.InjectDependencies(this);
-
         _system = system;
         _entityManager = entityManager;
         _eyeManager = eyeManager;
@@ -45,12 +48,12 @@ internal sealed class AdminNameOverlay : Overlay
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
         // Setting this to a specific font would break the antag symbols
-        _font = resourceCache.NotoStack("Regular", 10);
+        _font = resourceCache.NotoStack();
 
-        _config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
-        _config.OnValueChanged(CCVars.AdminOverlaySymbols, (show) => { _overlaySymbols = show; }, true);
-        _config.OnValueChanged(CCVars.AdminOverlayPlaytime, (show) => { _overlayPlaytime = show; }, true);
-        _config.OnValueChanged(CCVars.AdminOverlayStartingJob, (show) => { _overlayStartingJob = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlaySymbols, (show) => { _overlaySymbols = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayPlaytime, (show) => { _overlayPlaytime = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayStartingJob, (show) => { _overlayStartingJob = show; }, true);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -113,8 +116,8 @@ internal sealed class AdminNameOverlay : Overlay
             if (_overlayClassic && playerInfo.Antag)
             {
                 var label = symbol + _antagLabelClassic;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, Color.OrangeRed);
-                currentOffset += lineoffset;
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
+                // currentOffset += lineoffset;
             }
             else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
@@ -122,7 +125,7 @@ internal sealed class AdminNameOverlay : Overlay
                 var color = playerInfo.RoleProto.Color;
 
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
-                currentOffset += lineoffset;
+                // currentOffset += lineoffset;
             }
         }
     }
