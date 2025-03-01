@@ -120,7 +120,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         if (TryComp<FingerprintReaderComponent>(ent, out var reader) && entry.Fingerprint != null)
         {
-            reader.AllowedFingerprints.Add(entry.Fingerprint);
+            _fingerprintReader.AddAllowedFingerprint((ent.Owner, reader), entry.Fingerprint);
             Dirty(ent, reader);
         }
 
