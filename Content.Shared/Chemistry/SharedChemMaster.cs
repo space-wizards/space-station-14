@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry
         public const string InputSlotName = "beakerSlot";
         public const string OutputSlotName = "outputSlot";
         public const string PillSolutionName = "food";
-        public const string PatchSolutionName = "patch";
+        public const string PatchSolutionName = "patch"; //Starlight-edit
         public const string BottleSolutionName = "drink";
         public const uint LabelMaxLength = 50;
     }
@@ -71,6 +71,7 @@ namespace Content.Shared.Chemistry
         }
     }
     
+    //Starlight-start
     [Serializable, NetSerializable]
     public sealed class ChemMasterCreatePatchesMessage : BoundUserInterfaceMessage
     {
@@ -85,6 +86,7 @@ namespace Content.Shared.Chemistry
             Label = label;
         }
     }
+    //Starlight-end
 
     [Serializable, NetSerializable]
     public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
@@ -181,14 +183,14 @@ namespace Content.Shared.Chemistry
 
         public readonly uint PillDosageLimit;
         
-        public readonly uint PatchDosageLimit;
+        public readonly uint PatchDosageLimit; //Starlight-edit
 
         public readonly bool UpdateLabel;
 
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
-            uint selectedPillType, uint pillDosageLimit, uint patchDosageLimit, bool updateLabel)
+            uint selectedPillType, uint pillDosageLimit, uint patchDosageLimit, bool updateLabel) // Starlight-edit
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
@@ -197,7 +199,7 @@ namespace Content.Shared.Chemistry
             BufferCurrentVolume = bufferCurrentVolume;
             SelectedPillType = selectedPillType;
             PillDosageLimit = pillDosageLimit;
-            PatchDosageLimit = patchDosageLimit;
+            PatchDosageLimit = patchDosageLimit; //Starlight-edit
             UpdateLabel = updateLabel;
         }
     }

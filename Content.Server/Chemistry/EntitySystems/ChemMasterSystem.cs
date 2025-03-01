@@ -11,7 +11,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage;
-using Content.Shared.Tag;
+using Content.Shared.Tag; //Starlight-edit
 using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -39,13 +39,15 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private readonly TagSystem _tag = default!; //Starlight-edit
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string PillPrototypeId = "Pill";
         
+        //Starlight-start
         [ValidatePrototypeId<EntityPrototype>]
         private const string PatchPrototypeId = "Patch";
+        //Starlight-end
 
         public override void Initialize()
         {
@@ -59,7 +61,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetModeMessage>(OnSetModeMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillTypeMessage>(OnSetPillTypeMessage);
-            SubscribeLocalEvent<ChemMasterComponent, ChemMasterReagentAmountButtonMessage>(OnReagentButtonMessage);
+            SubscribeLocalEvent<ChemMasterComponent, ChemMasterReagentAmountButtonMessage>(OnReagentButtonMessage); //Starlight-edit
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreatePillsMessage>(OnCreatePillsMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreatePatchesMessage>(OnCreatePatchesMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterOutputToBottleMessage>(OnOutputToBottleMessage);
@@ -83,7 +85,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var state = new ChemMasterBoundUserInterfaceState(
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
-                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, chemMaster.PatchDosageLimit, updateLabel);
+                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, chemMaster.PatchDosageLimit, updateLabel); // Starlight-edit
 
             _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
         }
@@ -235,6 +237,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(chemMaster);
         }
         
+        //Starlight-start
         private void OnCreatePatchesMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePatchesMessage message)
         {
             var user = message.Actor;
@@ -274,6 +277,7 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }
+        //Starlight-end
 
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
         {
@@ -373,7 +377,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (!TryComp(container, out StorageComponent? storage))
                 return null;
-
+            
+            //Starlight-start
             var pills = storage.Container.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
             {
                 if (_solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out _, out var solution))
@@ -403,6 +408,7 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 Entities = pills
             };
+            //Starlight-end
         }
 
         private static ContainerInfo BuildContainerInfo(string name, Solution solution)
