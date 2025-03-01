@@ -99,75 +99,90 @@ public partial class SharedGunSystem
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, uid))
             return false;
 
-        // If it's a speedloader try to get ammo from it.
-        if (EntityManager.HasComponent<SpeedLoaderComponent>(uid))
+        // First, check if it's a speedloader and try to get ammo from it.
+        // Otherwise, try to insert the entity directly.
+        if (TryRevolverSpeedLoading(revolverUid, component, uid, user) ||
+            TryRevolverInsertReload(revolverUid, component, uid, user))
         {
-            var freeSlots = 0;
-
-            for (var i = 0; i < component.Capacity; i++)
-            {
-                if (component.AmmoSlots[i] != null || component.Chambers[i] != null)
-                    continue;
-
-                freeSlots++;
-            }
-
-            if (freeSlots == 0)
-            {
-                Popup(Loc.GetString("gun-revolver-full"), revolverUid, user);
-                return false;
-            }
-
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var xform = xformQuery.GetComponent(uid);
-            var ammo = new List<(EntityUid? Entity, IShootable Shootable)>(freeSlots);
-            var ev = new TakeAmmoEvent(freeSlots, ammo, xform.Coordinates, user);
-            RaiseLocalEvent(uid, ev);
-
-            if (ev.Ammo.Count == 0)
-            {
-                Popup(Loc.GetString("gun-speedloader-empty"), revolverUid, user);
-                return false;
-            }
-
-            for (var i = Math.Min(ev.Ammo.Count - 1, component.Capacity - 1); i >= 0; i--)
-            {
-                var index = (component.CurrentIndex + i) % component.Capacity;
-
-                if (component.AmmoSlots[index] != null ||
-                    component.Chambers[index] != null)
-                {
-                    continue;
-                }
-
-                var ent = ev.Ammo.Last().Entity;
-                ev.Ammo.RemoveAt(ev.Ammo.Count - 1);
-
-                if (ent == null)
-                {
-                    Log.Error($"Tried to load hitscan into a revolver which is unsupported");
-                    continue;
-                }
-
-                component.AmmoSlots[index] = ent.Value;
-                Containers.Insert(ent.Value, component.AmmoContainer);
-                SetChamber(index, component, uid);
-
-                if (ev.Ammo.Count == 0)
-                    break;
-            }
-
-            DebugTools.Assert(ammo.Count == 0);
-            UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(revolverUid);
-            Dirty(revolverUid, component);
+            UpdateRevolverAppearance(revolverUid, component);
 
             Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
+
             return true;
         }
 
-        // Try to insert the entity directly.
+        return false;
+    }
+
+    private bool TryRevolverSpeedLoading(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
+    {
+        if (!TryComp<SpeedLoaderComponent>(uid, out var speedLoader))
+            return false;
+
+        var freeSlots = 0;
+
+        for (var i = 0; i < component.Capacity; i++)
+        {
+            if (component.AmmoSlots[i] != null || component.Chambers[i] != null)
+                continue;
+
+            freeSlots++;
+        }
+
+        if (freeSlots == 0)
+        {
+            Popup(Loc.GetString("gun-revolver-full"), revolverUid, user);
+            return false;
+        }
+
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(uid);
+        var ammo = new List<(EntityUid? Entity, IShootable Shootable)>(freeSlots);
+        var ev = new TakeAmmoEvent(freeSlots, ammo, xform.Coordinates, user);
+        RaiseLocalEvent(uid, ev);
+
+        if (ev.Ammo.Count == 0)
+        {
+            Popup(Loc.GetString("gun-speedloader-empty"), revolverUid, user);
+            return false;
+        }
+
+        for (var i = Math.Min(ev.Ammo.Count - 1, component.Capacity - 1); i >= 0; i--)
+        {
+            var index = (component.CurrentIndex + i) % component.Capacity;
+
+            if (component.AmmoSlots[index] != null ||
+                component.Chambers[index] != null)
+            {
+                continue;
+            }
+
+            var ent = ev.Ammo.Last().Entity;
+            ev.Ammo.RemoveAt(ev.Ammo.Count - 1);
+
+            if (ent == null)
+            {
+                Log.Error($"Tried to load hitscan into a revolver which is unsupported");
+                continue;
+            }
+
+            component.AmmoSlots[index] = ent.Value;
+            Containers.Insert(ent.Value, component.AmmoContainer);
+            SetChamber(index, component, uid);
+
+            if (ev.Ammo.Count == 0)
+                break;
+        }
+
+        DebugTools.Assert(ammo.Count == 0);
+        Dirty(revolverUid, component);
+        return true;
+    }
+
+    private bool TryRevolverInsertReload(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid uid,  EntityUid? user)
+    {
         for (var i = 0; i < component.Capacity; i++)
         {
             var index = (component.CurrentIndex + i) % component.Capacity;
@@ -181,15 +196,10 @@ public partial class SharedGunSystem
             component.AmmoSlots[index] = uid;
             Containers.Insert(uid, component.AmmoContainer);
             SetChamber(index, component, uid);
-            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
-            Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
-            UpdateRevolverAppearance(revolverUid, component);
-            UpdateAmmoCount(revolverUid);
             Dirty(revolverUid, component);
             return true;
         }
 
-        Popup(Loc.GetString("gun-revolver-full"), revolverUid, user);
         return false;
     }
 
