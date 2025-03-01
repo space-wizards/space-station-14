@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Reactions
 
         [DataField("gas")] public int GasId { get; private set; } = 0;
 
-        [DataField("molesPerUnit")] public float MolesPerUnit { get; private set; } = 1;
+        [DataField("molesPerUnit")] public float MolesPerTick { get; private set; } = 1;
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
         {
@@ -30,14 +30,14 @@ namespace Content.Server.Atmos.Reactions
                 return ReactionResult.NoReaction;
 
             // If we don't have enough moles of the specified gas, do nothing.
-            if (mixture.GetMoles(GasId) < MolesPerUnit)
+            if (mixture.GetMoles(GasId) < MolesPerTick)
                 return ReactionResult.NoReaction;
 
             // Remove the moles from the mixture...
-            mixture.AdjustMoles(GasId, -MolesPerUnit);
+            mixture.AdjustMoles(GasId, -MolesPerTick);
 
             var tileRef = atmosphereSystem.GetTileRef(tile);
-            atmosphereSystem.Puddle.TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), out _, sound: false);
+            atmosphereSystem.Puddle.TrySpillAt(tileRef, new Solution(Reagent, FixedPoint2.New(MolesPerTick * Atmospherics.MolarMassToReagentMultiplier * atmosphereSystem.GetGas(GasId).MolarMass)), out _, sound: false);
 
             return ReactionResult.Reacting;
         }
