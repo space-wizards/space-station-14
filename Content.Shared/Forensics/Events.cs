@@ -53,7 +53,7 @@ public record struct TransferDnaEvent()
 }
 
 /// <summary>
-/// An event to generate and act upon new DNA for an entity.
+/// Raised on an entity when its DNA has been changed.
 /// </summary>
 [ByRefEvent]
 public record struct GenerateDnaEvent()
