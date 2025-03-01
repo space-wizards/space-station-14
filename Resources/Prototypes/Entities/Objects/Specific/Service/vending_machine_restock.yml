@@ -336,6 +336,7 @@
     - SpaceUpInventory
     - SodaInventory
     - DrGibbInventory
+    - SmiteInventory 
   - type: Sprite
     layers:
     - state: base
