@@ -3440,11 +3440,6 @@ entities:
           - 828
           - 67
           - 130
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
-        - invalid
     - type: ActiveUserInterface
 - proto: DrinkGrapeCan
   entities:

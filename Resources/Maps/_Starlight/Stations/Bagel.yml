@@ -14088,8 +14088,6 @@ entities:
       pos: -37.5,58.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 75
 - proto: AirSensorVox
@@ -108282,8 +108280,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 75
   - uid: 14998
@@ -108295,8 +108291,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 75
   - uid: 14999
@@ -108308,8 +108302,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 75
   - uid: 15000
