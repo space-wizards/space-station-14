@@ -27,6 +27,14 @@ These medications tend to have specific use cases.
 <GuideReagentEmbed Reagent="Ambuzol"/>
 <GuideReagentEmbed Reagent="Oculine"/>
 
+# Rare Medications
+
+These medications are particularly hard to create or source.
+
+<GuideReagentEmbed Reagent="Ichor"/>
+<GuideReagentEmbed Reagent="Omnizine"/>
+<GuideReagentEmbed Reagent="Rororium"/>
+
 # All Medications
 
 This is a list of -all- medications available, including ones previously listed.
