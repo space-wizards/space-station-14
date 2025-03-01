@@ -52,6 +52,11 @@ public sealed partial class CosmicCorruptingComponent : Component
     [DataField] public bool AutoDisable = true;
 
     /// <summary>
+    /// Wether or not the item should have a chance to disintegrate walls. Used for the Monument.
+    /// </summary>
+    [DataField] public bool Disintegrate = false;
+
+    /// <summary>
     /// How much time between tile corruptions.
     /// </summary>
     [DataField, AutoNetworkedField] public TimeSpan CorruptionSpeed = TimeSpan.FromSeconds(6);
@@ -70,4 +75,10 @@ public sealed partial class CosmicCorruptingComponent : Component
     /// The VFX entity we spawn when corruption occurs.
     /// </summary>
     [DataField] public EntProtoId TileConvertVFX = "CosmicFloorSpawnVFX";
+
+    /// <summary>
+    /// The VFX entity we spawn when walls get deleted.
+    /// </summary>
+    [DataField] public EntProtoId TileDisintegrateVFX = "CosmicGenericVFX";
+
 }

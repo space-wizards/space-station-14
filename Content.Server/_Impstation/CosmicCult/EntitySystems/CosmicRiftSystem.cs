@@ -99,7 +99,7 @@ public sealed class CosmicRiftSystem : EntitySystem
         var target = args.Args.Target.Value;
         Spawn(uid.Comp.AbsorbVFX, tgtpos);
         uid.Comp.CosmicEmpowered = true;
-        uid.Comp.CosmicSiphonQuantity = 3;
+        uid.Comp.CosmicSiphonQuantity = 2;
         EnsureComp<PressureImmunityComponent>(args.User);
         EnsureComp<TemperatureImmunityComponent>(args.User);
         RemComp<RespiratorComponent>(args.User);

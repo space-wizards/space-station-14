@@ -4,7 +4,7 @@
   id: InfluenceAberrantLapse
   name: influence-name-lapse
   influenceType: influence-type-active
-  cost: 8
+  cost: 10
   description: influence-description-lapse
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -15,7 +15,7 @@
   id: InfluenceNullGlare
   name: influence-name-glare
   influenceType: influence-type-active
-  cost: 8
+  cost: 10
   description: influence-description-glare
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -26,7 +26,7 @@
   id: InfluenceForceIngress
   name: influence-name-ingress
   influenceType: influence-type-active
-  cost: 12
+  cost: 14
   description: influence-description-ingress
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -37,7 +37,7 @@
   id: InfluenceVacuousImposition
   name: influence-name-imposition
   influenceType: influence-type-active
-  cost: 18
+  cost: 20
   description: influence-description-imposition
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -48,7 +48,7 @@
   id: InfluenceAstralNova
   name: influence-name-nova
   influenceType: influence-type-active
-  cost: 18
+  cost: 20
   description: influence-description-nova
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -62,7 +62,7 @@
   id: InfluenceEschewMetabolism
   name: influence-name-eschew
   influenceType: influence-type-passive
-  cost: 8
+  cost: 10
   description: influence-description-eschew
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -73,7 +73,7 @@
   id: InfluenceUnboundStep
   name: influence-name-step
   influenceType: influence-type-passive
-  cost: 12
+  cost: 14
   description: influence-description-step
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -84,7 +84,7 @@
   id: InfluenceAstralStride
   name: influence-name-stride
   influenceType: influence-type-passive
-  cost: 18
+  cost: 20
   description: influence-description-stride
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -95,7 +95,7 @@
   id: InfluenceVacuousVitality
   name: influence-name-vitality
   influenceType: influence-type-passive
-  cost: 18
+  cost: 20
   description: influence-description-vitality
   icon:
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
