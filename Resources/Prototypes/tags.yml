@@ -315,6 +315,9 @@
   id: ChiliBowl
 
 - type: Tag
+  id: Cherry
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -493,6 +496,12 @@
 
 - type: Tag
   id: DrinkCup
+
+- type: Tag
+  id: DrinkDecoration
+
+- type: Tag
+  id: DrinkGarnish
 
 - type: Tag
   id: DrinkGlass
@@ -786,10 +795,16 @@
   id: Lemon
 
 - type: Tag
+  id: LemonGarnish
+
+- type: Tag
   id: LightBulb
 
 - type: Tag
   id: Lime
+
+- type: Tag
+  id: LimeGarnish
 
 - type: Tag
   id: Machete
@@ -1223,6 +1238,9 @@
   id: Steak
 
 - type: Tag
+  id: Straw
+
+- type: Tag
   id: StringInstrument
 
 - type: Tag
@@ -1280,6 +1298,9 @@
   id: Toolbox
 
 - type: Tag
+  id: Toothpick
+
+- type: Tag
   id: ToothSharkminnow
 
 - type: Tag
@@ -1302,6 +1323,9 @@
 
 - type: Tag
   id: Truncheon
+
+- type: Tag
+  id: Umbrella
 
 - type: Tag
   id: Unimplantable

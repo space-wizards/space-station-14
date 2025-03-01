@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "Created by github user joshepvodka.",
+    "states": [
+        {
+            "name": "umbrella"
+        },
+        {
+            "name": "toothpick"
+        },
+        {
+            "name": "straw"
+        }
+    ]
+}
