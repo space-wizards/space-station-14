@@ -21,41 +21,27 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
+        //check if an action already exists first here to avoid duplicating actions
+        //register more than one action, probably use a for each action in ent.Comp.NPCActions
+        /*foreach (var action in ent.Comp.Actions)
+        {
+            action.ActionEnt = _actions.AddAction(ent, action.ActionId);
+        }*/
         ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
     }
 
-    public bool TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
+    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
-            return false;
-        /*
-        if (!TryComp<EntityWorldTargetActionComponent>(user.Comp.ActionEnt, out var action))
-            return false;
-
-        if (!_actions.ValidAction(action))
-            return false;
-
-        if (action.Event != null)
-        {
-            action.Event.Coords = Transform(target).Coordinates;
-        }*/
+            return;
 
         if (user.Comp.ActionEnt is not { Valid: true } entityTarget)
         {
             Log.Error($"An NPC attempted to perform an entity-targeted action without a target!");
-            return false;
+            return;
         }
 
         _actions.IsValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
-
-        /*_actions.PerformAction(user,
-            null,
-            user.Comp.ActionEnt.Value,
-            action,
-            action.BaseEvent,
-            _timing.CurTime,
-            false);*/
-        return true;
     }
 
     public override void Update(float frameTime)

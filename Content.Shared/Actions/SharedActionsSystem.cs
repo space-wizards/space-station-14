@@ -391,11 +391,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } user)
             return;
 
-        var actionEnt = GetEntity(ev.Action);
-        var actionCoords = GetCoordinates(ev.EntityCoordinatesTarget);
-        var entTarget = GetEntity(ev.EntityTarget);
-
-        IsValidAction(user, actionEnt, entTarget, actionCoords);
+        IsValidAction(user, GetEntity(ev.Action), GetEntity(ev.EntityTarget), GetCoordinates(ev.EntityCoordinatesTarget));
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, Entity<EntityTargetActionComponent> actionEnt)

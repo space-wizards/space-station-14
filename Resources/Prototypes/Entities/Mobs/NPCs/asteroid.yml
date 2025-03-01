@@ -103,7 +103,11 @@
   suffix: Smite
   components:
   - type: NPCUseActionOnTarget
-    actionId: ActionSmiteNoReq
+    actions:
+      ActionGoliathTentacle:
+        targetKey: Target
+      ActionSmiteNoReq:
+        targetKey: Target
   - type: Godmode
   - type: MovementAlwaysTouching
 

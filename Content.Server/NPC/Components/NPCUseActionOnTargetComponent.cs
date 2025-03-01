@@ -1,5 +1,6 @@
 using Content.Server.NPC.Systems;
 using Content.Shared.Actions;
+using Content.Shared.NPC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Components;
@@ -10,6 +11,8 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent, Access(typeof(NPCUseActionOnTargetSystem))]
 public sealed partial class NPCUseActionOnTargetComponent : Component
 {
+    [DataField("actions")]
+    public Dictionary<EntProtoId<EntityWorldTargetActionComponent>, NPCActionsData> Actions = new();
     /// <summary>
     /// HTN blackboard key for the target entity
     /// </summary>
@@ -19,7 +22,7 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
     /// <summary>
     /// Action that's going to attempt to be used.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public EntProtoId<EntityWorldTargetActionComponent> ActionId;
 
     [DataField]
