@@ -1,4 +1,5 @@
 # All spelling mistakes and broken english are intentional!
+# I hate saving paper contents in ftl files
 
 delivery-spam-robust-toolboxes = [color=blue][head=1]
                                  ░░▄▀░░
@@ -114,3 +115,121 @@ delivery-spam-alternate-timeline = [color=red]
                                    I am currently bolted in the Bridge, if you receive this message, please send aid immediately. I don't know how much longer we can last.
 
                                    Glory to Nanotrasen.
+
+delivery-spam-narsie-cult =                         [color=#134975][head=2]The Children of Nar'Sie[/head][/color]
+                                                         The Beginning of a New Era
+                            {"[bold]══──══──══──══──══──══──══──══──══──══──══[/bold]"}
+
+                            {"[head=3]Do you feel lost in the vastness of our cosmos?[/head]"}
+                            In the modern era, it's easy for wayward souls to feel like cogs in the machine of vast corporations.
+
+                            {"[head=3]Do you feel as if you're made for a better purpose?[/head]"}
+                            Do you tire of the life of mundanity forced upon you? Mopping floors, delivering boxes, or filling out endless paperwork?
+
+                            {"[head=3]Do you want to make the galaxy a better place?[/head]"}
+
+
+                            If you answered "Yes" to any of these questions, then contact one of our representatives today! We have members across stations all over the galaxy eager to welcome new members into our flock. Be one of the blades that helps welcome the Geometer of Blood into our universe so that all may know his bliss!
+
+                            All you have to do is say [color=#FF0000][italic]"Sas'so c'arta forbici!"[/italic][/color]
+
+delivery-spam-rage-cage = [color=#aaaaaa]▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀[/color]
+                                                       {"[bold][head=1]THE RAGE CAGE[/head][/bold]"}
+                          {"[color=#aaaaaa]▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬[/color]"}
+                          {"[bold][color=#FF0000][head=3]DO YOU WANT TO FIGHT?[/head][/color][/bold]"}
+                          {"[bold][color=#FF0000][head=3]DO YOU WANT TO WIN?[/head][/color][/bold]"}
+                          {"[bold][color=#FF0000][head=3]DO YOU WANT TO DOMINATE?![/head][/color][/bold]"}
+
+
+
+                          Then come on down to... [color=#FF0000][bold][head=2]THE RAGE CAGE[/head][/bold][/color]
+
+
+
+                          Hidden in the depths of your local Nanotrasen station is the patented [color=#FF0000][bold]RAGE CAGE[/bold][/color]. An electrified fighting arena designed for only the strongest of fighters, the [color=#FF0000][bold]RAGE CAGE[/bold][/color] seperates the Wimps from the Warriors, the Scrubs from the Soldiers, and the Losers from the Winners.
+                          ──────────────────────────────────────────
+                          In the [color=#FF0000][bold]RAGE CAGE[/bold][/color] there is only one rule: [italic]Two fighters enter. One fighter leaves. [/italic]
+                          ──────────────────────────────────────────
+                          No weapons, no armor, just pure unadulterated [bold]COMBAT[/bold]. Don't lose out and be a [bold]WIMP[/bold]. Win the glory of being your station's most robust fighter in the [color=#FF0000][bold]RAGE CAGE[/bold][/color] today!
+
+delivery-spam-evil-lizard = [color=#FF0000][bold][head=2]STOP[/head][/bold][/color]
+
+                            If yore reading this letter...[color=#FF0000][head=3]YOUR ALRAEDY CURSED!!![/head][/color]
+
+                            Im sorry to do this to you but I have to warn you about:
+
+                                   {"[color=#FF0000][head=1]The Ghost of The Bloody Lizardd[/head][/color]"}
+
+                            It all started when i to got a letter in the mail: it was a scary image of a lizard plushie with BLOODY EYES staring RIGHT AT ME. the letter said I was cursed...and if I didn't send this letter to 30 people within 30 days then the Blood Lizard would come in the middle of the night...
+
+                            {"[italic]and KILL ME.[/italic]"}
+
+                            im sorry......but your one of the 30 people i have to send this too..and now yoor cursed too...
+
+                            please send this letter to 30 other people to stop the curse! you can still save yorself! theres still time! don't let the bloody lizard get you too, and take this thingie! it will keep you safe from dark spiirts...[head=3]FOR NOW[/head]
+
+
+
+
+                            {"[head=1]OH NO THERE IT IS!!!!!!!![/head]"}
+
+                            ░░░░░░░░░█░░[color=#67CC40]████████[/color]█[color=#67CC40]███[/color]░░░░░░░░░░
+                            ░░░░░░[color=#FF0000]████[/color]█[color=#6EC543]█[/color][color=#67CC40]███████[/color]█[color=#FF0000]██████[/color]░░░░░░░░
+                            ░░░░[color=#FF0000]████[/color][color=#6EC543]██[/color][color=#67CC40]████████[/color][color=#FF0000]██████[/color][color=#FFFFFF]██[/color][color=#FF0000]█[/color][color=#B53737]█[/color]░░░░░░
+                            ░░░░[color=#FF0000]██[/color][color=#6EC543]██[/color][color=#67CC40]██████████[color=#FF0000]████████[/color][color=#B53737]██[/color]░░░░░░
+                            ░░[color=#6EC543]██████[/color][color=#67CC40]██████████[/color][color=#FF0000]███████[/color][color=#B53737]███[/color]░░░░░░
+                            {"[color=#6EC543]██████[/color][color=#67CC40]██████████████[/color][color=#FF0000]███[/color][color=#B53737]███[/color]░░░░░░░░"}
+                            {"[color=#6EC543]██████[/color][color=#67CC40]██████████████[/color][color=#FF0000]█[/color][color=#6EC543]█████[/color]░░░░░░░░"}
+                            {"[color=#6EC543]██████████[/color][color=#67CC40]██████████[/color][color=#FF0000]█[/color][color=#67CC40]███[/color]░░░░░░░░░░"}
+                            ░░[color=#6EC543]██[/color][color=#FF2020]██[/color][color=#FF3D3D]██[/color][color=#6EC543]████████[/color][color=#67CC40]████[/color][color=#86E158]██[/color]░░░░░░░░░░░░
+                            ░░░░[color=#FF2020]██[/color][color=#FF3D3D]██[/color]░░░░[color=#86E158]████████[/color][color=#6EC543]██[/color][color=#61D034]██[/color]░░░░░░░░[color=#56B037]██[/color]
+                            ░░░░[color=#FF2020]██[/color]░░░░[color=#A8EB7A]██[/color][color=#B5EE85]██████[/color][color=#A8EB7A]██[/color][color=#6EC543]████[/color][color=#61D034]██[/color]░░░░[color=#56B037]██[/color][color=#48A926]██[/color]
+                            ░░░░░░░░[color=#A8EB7A]██[/color][color=#B5EE85]██████████[/color][color=#A8EB7A]██[/color][color=#6EC543]████[/color][color=#56B037]██[/color][color=#48A926]██████[/color]
+                            ░░░░[color=#6EC543]██[/color][color=#61D034]██[/color][color=#A8EB7A]██[/color][color=#B5EE85]██████████[/color][color=#A8EB7A]██[/color][color=#48A926]████████████[/color]
+                            ░░░░[color=#6EC543]████[/color][color=#86E158]██[/color][color=#A8EB7A]██[/color][color=#B5EE85]████[/color][color=#A8EB7A]██[/color][color=#86E158]██[/color][color=#61D034]████[/color][color=#6EC543]██[/color][color=#48A926]████[/color][color=#52A037]██[/color]░░
+                            ░░░░[color=#6EC543]████[/color][color=#61D034]██[/color][color=#86E158]████████[/color][color=#61D034]██[/color][color=#6EC543]██████[/color][color=#52A037]████[/color]░░░░
+                            ░░░░░░[color=#6EC543]████[/color]░░░░░░░░[color=#6EC543]████████[/color]░░░░░░░░
+                            ░░░░░░░░░░░░░░░░░░░░[color=#6EC543]████[/color]░░░░░░░░░░
+
+delivery-spam-parents-need-money = [bold]Hello Child,[/bold]
+
+                                   This is your Parents writing to you: we are in need of money! Our taxes have been audited and we owe $100,000 in spesos to governnment! please help! they only want gift cards so you will need to send us 100 $1000 spesos Bisa gift cards.
+
+                                   please mail to:
+                                   50192 Spess Lane
+                                   Station City, Ignius 40195-243
+                                   Gamma Quadrant
+                                   Guilimin System
+
+                                   if we do not get this money in 10 days then the govertment will come to take away childhood home and we will be homeless.
+
+                                   {"[bold]thank you and we love you,[/bold]"}
+                                   {"[italic]parents[/italics]"}
+
+delivery-spam-voyage-advertisement = [head=2]Join us on the maiden voyage of the...[/head]
+
+                                          ░█▀▀░█▀▀░░░█▀▄░█▀▀░█░░░█▀█░█░█░█▀█░█▀▄
+                                          ░▀▀█░▀▀█░░░█▀▄░█▀▀░█░░░█▀█░▄▀▄░█░█░█▀▄
+                                          ░▀▀▀░▀▀▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀
+
+
+                                     {"[bold]══════════════════════════════════════════[/bold]"}
+
+                                     The latest in Comfortech™ and the most beautiful sights this side of the Iraxsi System! The [italic]SS Relaxor[/italic] is a state of the art luxury Cruiser taking you on the journey of a lifetime!
+
+                                     {"[head=3]Experience the phosphorous lakes of Galimar* from the comfort of our LuxuCabins™ with the all the modern amenities you could ever wish for![/head]"}
+
+                                     {"[head=3]Gaze in awe at the Eye of the Cosmos** while enjoying meals from our Five Star Galaxy class chefs![/head]"}
+
+                                     {"[head=3]Explore the ruins of Agathar***, now open to the public with the assistance of Nanotrasen's top Scientists. All the mysteries of the old Agatharian civilization are excavated and displayed for your viewing pleasure![/head]"}
+
+                                     For the low, low cost of $5,000 spesos a night, the six month luxury cruise could be yours for the vacation of your dreams! Call us today at [color=#00FF00]RELAX-NOW[/color] to book your cruise. Don't wait! Act now!
+
+
+
+
+
+
+                                     {"[italic]*Phosphorus lakes are not for swimming, you waive all rights to legal representations with Relaxination Destinations upon landing on Galimar.[/italic]"}
+                                     {"[italic]**Eye of the Cosmos must not be looked at for longer than five seconds at a time. You do not hear the call of the Eye.[/italic]"}
+                                     {"[italic]***Must sign safety waiver before landing, Relaxination Destinations does not guarantee the safety of the Agatharian ruins. Disappearances of tour groups are down to an acceptable margin of 0.23% of all tour groups that visit the ruins.[/italic]"}

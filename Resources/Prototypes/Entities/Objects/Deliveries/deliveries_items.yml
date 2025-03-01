@@ -37,7 +37,32 @@
   - type: Paper
     content: delivery-spam-alternate-timeline
 
+- type: entity
+  id: MailNarsieCultSpam
+  name: The Children of Nar'Sie
+  description: A local cult is looking for recruits.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-narsie-cult
 
+- type: entity
+  id: MailRageCageSpam
+  name: Do you want to fight?!
+  description: Advertisement for a local fighting club.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-rage-cage
+
+- type: entity
+  id: MailVoyageAdvertisementSpam
+  name: Join us on the maiden voyage!
+  description: Advertisement for a relaxing voyage.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-voyage-advertisement
 
 # Scam Mail
 - type: entity
@@ -66,3 +91,21 @@
   components:
   - type: Paper
     content: delivery-spam-centcomm-retribution
+
+- type: entity
+  id: MailEvilLizardSpam
+  name: DO NOT OPEN THIS MAIL
+  description: You have been cursed!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-evil-lizard
+
+- type: entity
+  id: MailParentsNeedMoneySpam
+  name: Help mom and dad!
+  description: Parents in need of financial support.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-parents-need-money
