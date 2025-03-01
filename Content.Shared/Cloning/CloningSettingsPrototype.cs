@@ -37,13 +37,13 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public SlotFlags? CopyEquipment = SlotFlags.WITHOUT_POCKET;
 
     /// <summary>
-    ///     Whitelist for the euipment allowed to be copied.
+    ///     Whitelist for the equipment allowed to be copied.
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    ///     Blacklist for the euipment allowed to be copied.
+    ///     Blacklist for the equipment allowed to be copied.
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;

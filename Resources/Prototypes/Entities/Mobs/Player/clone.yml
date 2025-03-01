@@ -53,6 +53,9 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  blacklist:
+    components:
+    - AttachedClothing # helmets, which are part of the suit
 
 - type: cloningSettings
   id: Antag
