@@ -54,6 +54,9 @@ public sealed class CraftingTests : InteractionTest
         await CraftItem(Spear);
         await FindEntity(Spear);
 
+        // Reset target because entitylookup will dump this.
+        Target = null;
+
         // Player's hands should be full of the remaining rods, except those dropped during the failed crafting attempt.
         // Spear and left over stacks should be on the floor.
         await AssertEntityLookup((Rod, 2), (Cable, 7), (ShardGlass, 2), (Spear, 1));
