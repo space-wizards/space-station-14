@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Updated Packed, Core, Meta, and Reach! (Changes include spawning command
-      in the conference room, renaming solars, and adding a shipyard computer to the
-      QM's office. See GitHub for full changelog.)
-    type: Tweak
-  id: 714
-  time: '2024-12-11T20:11:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/989
 - author: kipdotnet
   changes:
   - message: Banana has been updated!
@@ -4087,3 +4078,11 @@
   id: 1213
   time: '2025-03-01T04:06:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1804
+- author: hivehum
+  changes:
+  - message: Workplace relationships are unethical and all romance has been removed
+      from the game.
+    type: Remove
+  id: 1214
+  time: '2025-03-01T04:21:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1800
