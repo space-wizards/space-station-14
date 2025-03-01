@@ -2347,3 +2347,21 @@
     - type: Icon
       sprite: Objects/Consumable/Drinks/bloodglass.rsi
       state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkBacchusBlessing
+  suffix: bacchus
+  name: Bacchus' Blessing
+  description: You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BacchusBlessing
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
+    state: icon
