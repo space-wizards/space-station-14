@@ -53,7 +53,6 @@
             Lawyer: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 1, 2 ]
             CargoTechnician: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
