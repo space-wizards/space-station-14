@@ -51,6 +51,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
     /// <summary>
     /// Checks whether the user has gloves that block fingerprints
     /// </summary>
+    [PublicAPI]
     public bool HasBlockingGloves(EntityUid user)
     {
         if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && HasComp<FingerprintMaskComponent>(gloves))
