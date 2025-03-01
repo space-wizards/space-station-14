@@ -27,7 +27,7 @@ public sealed partial class InsertLoCChatModifier : ChatModifier
     [DataField]
     public string LocString = "";
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         if (TargetNode == null)
             return message;

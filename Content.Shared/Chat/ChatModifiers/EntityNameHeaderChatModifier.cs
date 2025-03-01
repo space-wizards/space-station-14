@@ -14,23 +14,21 @@ public sealed partial class EntityNameHeaderChatModifier : ChatModifier
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        IoCManager.InjectDependencies(this);
-
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var sender)
-            || sender is not EntityUid senderEntity
-        )
+        if (!chatMessageContext.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var sender))
             return message;
 
+        IoCManager.InjectDependencies(this);
+        
         MetaDataComponent? metaData = null;
-        if (!_entityManager.MetaQuery.Resolve(senderEntity, ref metaData, false))
+        if (!_entityManager.MetaQuery.Resolve(sender, ref metaData, false))
         {
             return message;
         }
 
-        var nameEv = new TransformSpeakerNameEvent(senderEntity, metaData.EntityName);
-        _entityManager.EventBus.RaiseLocalEvent(senderEntity, nameEv);
+        var nameEv = new TransformSpeakerNameEvent(sender, metaData.EntityName);
+        _entityManager.EventBus.RaiseLocalEvent(sender, nameEv);
 
         var entityNameNode = new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null);
         message.InsertBeforeMessage(entityNameNode);

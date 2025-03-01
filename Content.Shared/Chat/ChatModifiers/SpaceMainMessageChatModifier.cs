@@ -9,7 +9,7 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SpaceMainMessageChatModifier : ChatModifier
 {
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         message.InsertBeforeTag(new MarkupNode(" "), "MainMessage");
 

@@ -9,7 +9,7 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 {
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         if (!message.Nodes.TryFirstOrDefault(x => x.Name == null, out var firstTextNode))
             return message;

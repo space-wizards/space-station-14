@@ -21,16 +21,15 @@ public sealed partial class SpeechVerbChatModifier : ChatModifier
 
     public ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderObj) ||
-            !channelParameters.TryGetValue(DefaultChannelParameters.RandomSeed, out var seed)
+        if (!chatMessageContext.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var sender) ||
+            !chatMessageContext.TryGet<int>(DefaultChannelParameters.RandomSeed, out var seed)
         )
             return message;
 
         IoCManager.InjectDependencies(this);
 
-        var sender = (EntityUid)senderObj;
         //Name property doesn't matter, we're only interested in the speech
         var transformEv = new TransformSpeakerNameEvent(sender, String.Empty);
         _entityManager.EventBus.RaiseLocalEvent(sender, transformEv);
@@ -39,7 +38,7 @@ public sealed partial class SpeechVerbChatModifier : ChatModifier
 
         var count = current.SpeechVerbStrings.Count;
 
-        _random.SetSeed((int)seed);
+        _random.SetSeed(seed);
         var verbId = _random.Next(count);
 
         // if no applicable suffix verb return the normal one used by the entity

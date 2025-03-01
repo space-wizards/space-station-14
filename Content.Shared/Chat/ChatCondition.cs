@@ -77,7 +77,6 @@ public sealed class ChatMessageContext : Dictionary<Enum, object>
     public ChatMessageContext(IDictionary<Enum, object> dictionary) : base(dictionary)
     {
     }
-    
 
     public bool TryGet<T>(Enum key, [NotNullWhen(true)] out T? value)
     {

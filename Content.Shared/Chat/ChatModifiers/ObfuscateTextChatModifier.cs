@@ -17,14 +17,14 @@ public sealed partial class ObfuscateTextChatModifier : ChatModifier
     [DataField]
     public float ObfuscationChance = 0.8f;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.RandomSeed, out var seed))
+        if (!chatMessageContext.TryGet<int>(DefaultChannelParameters.RandomSeed, out var seed))
             return message;
 
         IoCManager.InjectDependencies(this);
 
-        _random.SetSeed((int)seed);
+        _random.SetSeed(seed);
 
         var returnMessage = new FormattedMessage();
 

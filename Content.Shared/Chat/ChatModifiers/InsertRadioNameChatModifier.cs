@@ -26,13 +26,14 @@ public sealed partial class InsertRadioNameChatModifier : ChatModifier
     [DataField]
     public bool AfterNode = true;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        if(!channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel))
+        if(!chatMessageContext.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel))
             return message;
 
         IoCManager.InjectDependencies(this);
-        if (!_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype))
+
+        if (!_prototypeManager.TryIndex(radioChannel, out RadioChannelPrototype? radioPrototype))
             return message;
 
         if (TargetNode == null)

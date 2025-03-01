@@ -827,9 +827,10 @@ public sealed class ChatUIController : UIController
         if (!_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
             return;
 
+        var context = new ChatMessageContext(proto.ChannelParameters);
         foreach (var markupSupplier in proto.ClientModifiers)
         {
-            msg.Message = markupSupplier.ProcessChatModifier(msg.Message, proto.ChannelParameters);
+            msg.Message = markupSupplier.ProcessChatModifier(msg.Message, context);
         }
 
         // Process any remaining clientside content markups.

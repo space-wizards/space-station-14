@@ -19,7 +19,7 @@ public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
 
     private static ProtoId<ColorPalettePrototype> _chatNamePalette = "ChatNames";
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         IoCManager.InjectDependencies(this);
 

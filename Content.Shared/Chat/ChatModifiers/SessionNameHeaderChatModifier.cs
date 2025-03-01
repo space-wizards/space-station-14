@@ -13,18 +13,13 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SessionNameHeaderChatModifier : ChatModifier
 {
-    [Dependency] private readonly EntityManager _entityManager = default!;
-
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        IoCManager.InjectDependencies(this);
+        if (!chatMessageContext.TryGet<ICommonSession>(DefaultChannelParameters.SenderSession, out var sender))
+            return message;
 
-        if (channelParameters.TryGetValue(DefaultChannelParameters.SenderSession, out var sender) && sender is ICommonSession)
-        {
-            var sessionName = ((ICommonSession)sender).Name;
-
-            message.InsertBeforeMessage(new MarkupNode("SessionNameHeader", new MarkupParameter(sessionName), null));
-        }
+        var sessionName = sender.Name;
+        message.InsertBeforeMessage(new MarkupNode("SessionNameHeader", new MarkupParameter(sessionName), null));
 
         return message;
     }

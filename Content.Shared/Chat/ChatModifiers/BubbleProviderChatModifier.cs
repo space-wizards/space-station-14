@@ -15,7 +15,7 @@ public sealed partial class BubbleProviderChatModifier : ChatModifier
     [DataField]
     public SpeechType SpeechType = SpeechType.Say;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         message.InsertOutsideTag(new MarkupNode(BubbleHeaderTagName, new MarkupParameter((int)SpeechType), null), "EntityNameHeader");
         message.InsertOutsideTag(new MarkupNode(BubbleBodyTagName, new MarkupParameter((int)SpeechType), null), "MainMessage");
