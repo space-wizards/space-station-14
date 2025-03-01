@@ -1340,6 +1340,61 @@
   description: flavor-complex-compressed-meat
 
 - type: flavor
+  id: caipirinha
+  flavorType: Complex
+  description: flavor-complex-caipirinha
+
+- type: flavor
+  id: daiquiri
+  flavorType: Complex
+  description: flavor-complex-daiquiri
+
+- type: flavor
+  id: deathintheafternoon
+  flavorType: Complex
+  description: flavor-complex-deathintheafternoon
+
+- type: flavor
+  id: empress75
+  flavorType: Complex
+  description: flavor-complex-empress75
+
+- type: flavor
+  id: espressomartini
+  flavorType: Complex
+  description: flavor-complex-espressomartini
+
+- type: flavor
+  id: mayojito
+  flavorType: Complex
+  description: flavor-complex-mayojito
+
+- type: flavor
+  id: mimeosa
+  flavorType: Complex
+  description: flavor-complex-mimeosa
+
+- type: flavor
+  id: mimosa
+  flavorType: Complex
+  description: flavor-complex-mimosa
+
+- type: flavor
+  id: moscowmule
+  flavorType: Complex
+  description: flavor-complex-moscowmule
+
+- type: flavor
+  id: thesunalsorises
+  flavorType: Complex
+  description: flavor-complex-thesunalsorises
+
+- type: flavor
+  id: whiskeysour
+  flavorType: Complex
+  description: flavor-complex-whiskeysour
+
+- type: flavor
   id: zombiecocktail
   flavorType: Complex
   description: flavor-complex-zombiecocktail
