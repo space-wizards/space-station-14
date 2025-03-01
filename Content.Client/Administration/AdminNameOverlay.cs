@@ -78,7 +78,7 @@ internal sealed class AdminNameOverlay : Overlay
             }
 
             var uiScale = _userInterfaceManager.RootControl.UIScale;
-            var lineoffset = new Vector2(0f, 11f) * uiScale;
+            var lineoffset = new Vector2(0f, 14f) * uiScale;
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
