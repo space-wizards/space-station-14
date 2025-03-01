@@ -3,8 +3,7 @@
               HorizontalAlignment="Stretch"
               HorizontalExpand="True"
               Margin="0 0 0 5">
-    <BoxContainer
-        Orientation="Horizontal">
+    <BoxContainer Orientation="Horizontal">
         <BoxContainer Name="ReactantsContainer" Orientation="Vertical" HorizontalExpand="True"
                       VerticalAlignment="Center">
             <RichTextLabel Name="ReactantsLabel"
