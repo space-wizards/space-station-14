@@ -398,8 +398,8 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             ScreenRoll(uid, screen, visuals);
         }
         
-        var timerUpdate = EntityQueryEnumerator<ScreenComponent, ScreenVisualsComponent, ScreenTimerComponent>();
-        while (timerUpdate.MoveNext(out var uid, out var screen, out var visuals, out var timer))
+        var timerUpdate = EntityQueryEnumerator<ScreenVisualsComponent, ScreenTimerComponent>();
+        while (timerUpdate.MoveNext(out var uid, out var visuals, out var timer))
         {
             if (timer.Target < _gameTiming.CurTime)
             {
