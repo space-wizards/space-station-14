@@ -20,6 +20,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Materials;
+using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -30,7 +31,6 @@ using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
