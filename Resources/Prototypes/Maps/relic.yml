@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Relic Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: 'OG'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_relic.yml
         - type: StationArrivals
