@@ -387,6 +387,9 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
         var query = EntityQueryEnumerator<ScreenComponent, ScreenVisualsComponent>();
         while (query.MoveNext(out var uid, out var screen, out var visuals))
         {
+            if (_gameTiming.CurTime - screen.NextUpdateTime > TimeSpan.FromSeconds(5))
+                screen.NextUpdateTime = _gameTiming.CurTime;
+            
             if (_gameTiming.CurTime < screen.NextUpdateTime)
                 continue;
 
