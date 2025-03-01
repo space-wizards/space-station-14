@@ -3785,4 +3785,11 @@ Entries:
   id: 524
   time: '2025-03-01T14:32:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/353
+- author: Bequin
+  changes:
+  - message: Crescent v2
+    type: Tweak
+  id: 525
+  time: '2025-03-01T16:34:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/354
 
