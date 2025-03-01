@@ -137,7 +137,7 @@
   name: emergency medipen
   parent: ChemicalMedipen
   id: EmergencyMedipen
-  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexamic acid.
+  description: A rapid injector containing epinephrine and tranexamic acid to stabilize critical patients, or give enough energy for a sprint.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -161,10 +161,10 @@
     tags: []
 
 - type: entity
-  name: poison auto-injector
+  name: anti-poison auto-injector
   parent: ChemicalMedipen
   id: AntiPoisonMedipen
-  description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
+  description: A rapid dose of anti-poison medicine. Contains ultravasculine and epinephrine.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -188,7 +188,7 @@
     tags: []
 
 - type: entity
-  name: brute auto-injector
+  name: anti-brute auto-injector
   parent: ChemicalMedipen
   id: BruteAutoInjector
   description: A rapid dose of bicaridine and tranexamic acid, intended for combat applications.
@@ -220,7 +220,7 @@
     tags: []
 
 - type: entity
-  name: burn auto-injector
+  name: anti-burn auto-injector
   parent: ChemicalMedipen
   id: BurnAutoInjector
   description: A rapid dose of dermaline and leporazine, intended for combat applications.
@@ -252,10 +252,10 @@
     tags: []
 
 - type: entity
-  name: rad auto-injector
+  name: anti-rad auto-injector
   parent: ChemicalMedipen
   id: RadAutoInjector
-  description: A rapid dose of anti-radiation. Contains arithrazine and bicaridine.
+  description: A rapid dose of anti-radiation medicine. Contains arithrazine and bicaridine.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -348,7 +348,7 @@
     tags: []
 
 - type: entity
-  name: airloss auto-injector
+  name: anti-airloss auto-injector
   parent: ChemicalMedipen
   id: AirlossAutoInjector
   description: A rapid dose of saline and dexalin plus, intended to get someone up quickly.
@@ -380,10 +380,10 @@
     tags: []
 
 - type: entity
-  name: space medipen
+  name: anti-space medipen
   parent: ChemicalMedipen
   id: SpaceMedipen
-  description: Contains a mix of chemicals that protect you from the deadly effects of space.
+  description: Contains a mix of leporazine and barozine that protects you from the deadly effects of space.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -475,7 +475,7 @@
   name: combat medipen
   parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: CombatMedipen
-  description: A single-use medipen containing chemicals that regenerate most types of damage.
+  description: A single-use medipen containing omnizine and tranexamic acid that regenerate most types of damage and stems bleeding.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
