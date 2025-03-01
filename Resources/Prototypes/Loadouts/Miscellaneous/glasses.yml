@@ -15,7 +15,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours of being a space trucker
+      time: 36000 #10 hours, ~7 rounds, of being a space trucker
 
 # Basic options
 # Glasses

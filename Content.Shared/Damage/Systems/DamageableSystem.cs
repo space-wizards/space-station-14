@@ -224,6 +224,17 @@ namespace Content.Shared.Damage
             Dirty(uid, comp);
         }
 
+        // IMP EDIT BEGIN
+        public void SetDamageContainerID(EntityUid uid, string damageContainerId, DamageableComponent? comp = null)
+        {
+            if (!_damageableQuery.Resolve(uid, ref comp))
+                return;
+
+            comp.DamageContainerID = damageContainerId; // we need to be able to change DamageContainer to make cultists vulnerable to Holy Damage.
+            Dirty(uid, comp);
+        }
+        // IMP EDIT END
+
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
             if (_netMan.IsServer)
@@ -304,11 +315,14 @@ namespace Content.Shared.Damage
         public DamageSpecifier Damage;
         public EntityUid? Origin;
 
-        public DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
+        public bool IsVirtual; //#IMP For when you want to see what damage could be dealt, without actually dealing it
+
+        public DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null, bool isVirtual = false)
         {
             OriginalDamage = damage;
             Damage = damage;
             Origin = origin;
+            IsVirtual = isVirtual;// # IMP
         }
     }
 

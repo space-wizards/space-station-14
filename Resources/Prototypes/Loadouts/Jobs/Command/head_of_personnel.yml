@@ -6,9 +6,9 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
-      time: 72000 #20 hrs
+      time: 36000 #10 hrs, ~7 rounds #imp
 
-# Professional HoP Time
+# Professional HoP Time (imp edit: ian backpack unlocked by MasterHoP instead)
 - type: loadoutEffectGroup
   id: ProfessionalHoP
   effects:
@@ -59,7 +59,7 @@
   id: HoPBackpackIan
   effects:
   - !type:GroupLoadoutEffect
-    proto: ProfessionalHoP
+    proto: MasterHoP
   equipment:
     back: ClothingBackpackIan
 

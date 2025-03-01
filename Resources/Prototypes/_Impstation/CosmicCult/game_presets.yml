@@ -1,0 +1,14 @@
+- type: gamePreset
+  id: CosmicCult
+  alias:
+    - cosmic
+  name: cosmiccult-title
+  description: cosmiccult-description
+  showInVote: false
+  cooldown: 1
+  rules:
+    - CosmicCult
+    - SubGamemodesRule
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation

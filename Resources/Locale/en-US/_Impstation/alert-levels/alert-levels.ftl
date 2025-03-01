@@ -29,3 +29,7 @@ alert-level-white-instructions = Look out for phantoms, and report if necessary.
 alert-level-puce = Puce
 alert-level-puce-announcement = A food recall has been initiated, and your station is affected.
 alert-level-puce-instructions = Don't eat the burgers in the cafeteria...
+
+alert-level-octarine = Octarine
+alert-level-octarine-announcement = A cataclysmic bluespace event threatens to envelop the station. Crewmembers are advised to stay away from the threat, and stay in their workplaces if necessary.
+alert-level-octarine-instructions = EMBRACE THE END.

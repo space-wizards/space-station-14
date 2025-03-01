@@ -114,7 +114,7 @@
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
   product: CrateMindShieldImplants
-  cost: 3000
+  cost: 4000 #imp edit. Double the price of a religious supply cate
   category: cargoproduct-category-name-medical
   group: market
 
