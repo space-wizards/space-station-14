@@ -1,6 +1,58 @@
 - type: entity
-  name: paper
   parent: BaseItem
+  id: BasePaper
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+  - type: Appearance
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Food
+    solution: food
+    delay: 7
+    forceFeedDelay: 7
+  - type: FlavorProfile
+    flavors:
+    - paper
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
+  - type: Item
+    size: Tiny
+
+- type: entity
+  name: paper
+  parent: BasePaper
   id: Paper
   description: 'A piece of white paper.'
   components:
@@ -23,58 +75,12 @@
     interfaces:
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
-  - type: Item
-    size: Tiny
-  - type: Tag
-    tags:
-    - Document
-    - Paper
-  - type: Appearance
   - type: FaxableObject
   - type: PaperVisuals
-  - type: Flammable
-    fireSpread: true
-    alwaysCombustible: true
-    damage:
-      types:
-        Heat: 1
-  - type: FireVisuals
-    sprite: Effects/fire.rsi
-    normalState: fire
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-            Ash:
-              min: 1
-              max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Food
-    solution: food
-    delay: 7
-    forceFeedDelay: 7
-  - type: FlavorProfile
-    flavors:
-    - paper
-  - type: BadFood
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 1
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 1
 
 - type: entity
   name: paper scrap
-  parent: Paper
+  parent: BasePaper
   id: PaperScrap
   description: 'A crumpled up piece of white paper.'
   components:
@@ -84,14 +90,9 @@
     - Trash
     - Paper
   - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: scrap
-    - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
-      visible: false
-    - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
-      visible: false
 
 - type: entity
   name: office paper
