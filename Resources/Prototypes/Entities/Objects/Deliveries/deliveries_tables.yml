@@ -12,7 +12,7 @@
 
 # Letters
 
-- type: entityTable # Used to pick between all different letter types, if there will be more
+- type: entityTable # Used to pick between all different letter types, if there will be more (modifiers could be a good example, fragile etc)
   id: RandomDeliveryLetterBasic
   table: !type:GroupSelector
     children:
@@ -21,7 +21,7 @@
 
 # Packages
 
-- type: entityTable # Used to pick between all different package types, if there will be more
+- type: entityTable # Used to pick between all different package types, if there will be more (modifiers could be a good example, fragile etc)
   id: RandomDeliveryPackageBasic
   table: !type:GroupSelector
     children:
@@ -35,19 +35,19 @@
   table: !type:GroupSelector
     children:
     - !type:NestedSelector
-      tableId: LetterSpamEntityTable
+      tableId: LetterCommonEntityTable
       weight: 0.7
     - !type:NestedSelector
-      tableId: LetterMinorEntityTable
+      tableId: LetterUncommonEntityTable
       weight: 0.2
     - !type:NestedSelector
-      tableId: LetterMajorEntityTable
+      tableId: LetterRareEntityTable
       weight: 0.1
 
 ### Loot Tables
 # Letters
 - type: entityTable
-  id: LetterSpamEntityTable
+  id: LetterCommonEntityTable
   table: !type:GroupSelector
     children:
     - id: MailRobustToolsSpam
@@ -59,7 +59,7 @@
     - id: MailAlternativeDimensionSpam
 
 - type: entityTable
-  id: LetterMinorEntityTable
+  id: LetterUncommonEntityTable
   table: !type:GroupSelector
     children:
     - id: AirAlarmElectronics
@@ -74,7 +74,7 @@
     - id: BlockGameArcadeComputerCircuitboard
 
 - type: entityTable
-  id: LetterMajorEntityTable
+  id: LetterRareEntityTable
   table: !type:GroupSelector
     children:
     - id: AirAlarmElectronics
