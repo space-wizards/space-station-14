@@ -110,11 +110,6 @@
   result: AirAlarmElectronics
 
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
-  id: CircuitImprinterMachineCircuitboardAutolathe
-  result: CircuitImprinterMachineCircuitboard
-
-- type: latheRecipe
   parent: BaseCheapElectronicsRecipe
   id: StationMapElectronics
   result: StationMapCircuitboard
