@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 247.0.0
+  engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 02/19/2025 00:34:47
-  entityCount: 9480
+  time: 02/27/2025 03:29:13
+  entityCount: 9503
 maps: []
 grids:
 - 1668
@@ -2844,6 +2844,13 @@ entities:
             2031: -26,-26
             2032: -27,-26
         - node:
+            color: '#79150096'
+            id: QuarterTileOverlayGreyscale
+          decals:
+            3066: -2,-32
+            3067: -2,-31
+            3068: -2,-30
+        - node:
             color: '#8C347F96'
             id: QuarterTileOverlayGreyscale
           decals:
@@ -2995,6 +3002,49 @@ entities:
             2059: 1,-28
             2060: 2,-28
             2061: 3,-28
+            2977: -10,-2
+            2978: -11,-2
+            2979: -12,-2
+            2980: -13,-2
+            2981: -14,-2
+            2982: -15,-2
+            2983: -16,-2
+            2984: -17,-2
+            2985: -18,-2
+            2986: -19,-2
+            2987: -20,-2
+            2988: -21,-2
+            2989: -22,-2
+            2990: -23,-2
+            2991: -24,-2
+            2992: -25,-2
+            2993: -26,-2
+            2994: -27,-2
+            2995: -28,-2
+            2996: -29,-2
+            2997: -31,-2
+            2998: -30,-2
+            2999: -32,-2
+            3000: -33,-2
+            3001: -34,-2
+            3002: -35,-2
+            3003: -36,-2
+            3004: -37,-2
+            3005: -38,-2
+            3006: -39,-2
+            3007: -40,-2
+            3008: -41,-2
+            3009: -42,-2
+            3010: -44,-2
+            3011: -43,-2
+            3012: -45,-2
+            3013: -46,-2
+            3014: -47,-2
+            3015: -48,-2
+            3016: -49,-2
+            3017: -50,-2
+            3018: -51,-2
+            3019: -52,-2
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale180
@@ -3248,6 +3298,49 @@ entities:
             1998: 4,-26
             1999: 2,-26
             2000: 1,-26
+            3020: -52,0
+            3021: -51,0
+            3022: -50,0
+            3023: -49,0
+            3024: -48,0
+            3025: -47,0
+            3026: -46,0
+            3027: -45,0
+            3028: -44,0
+            3029: -43,0
+            3030: -42,0
+            3031: -41,0
+            3032: -40,0
+            3033: -39,0
+            3034: -38,0
+            3035: -37,0
+            3036: -36,0
+            3037: -35,0
+            3038: -34,0
+            3039: -33,0
+            3040: -32,0
+            3041: -31,0
+            3042: -30,0
+            3043: -29,0
+            3044: -28,0
+            3045: -27,0
+            3046: -26,0
+            3047: -25,0
+            3048: -24,0
+            3049: -23,0
+            3050: -22,0
+            3051: -21,0
+            3052: -20,0
+            3053: -19,0
+            3054: -18,0
+            3055: -17,0
+            3056: -16,0
+            3057: -15,0
+            3058: -14,0
+            3059: -13,0
+            3060: -12,0
+            3061: -11,0
+            3062: -10,0
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale90
@@ -3258,6 +3351,13 @@ entities:
             2363: 0,-11
             2364: 0,-10
             2365: 0,-9
+        - node:
+            color: '#79150096'
+            id: QuarterTileOverlayGreyscale90
+          decals:
+            3063: 0,-30
+            3064: 0,-31
+            3065: 0,-32
         - node:
             color: '#9FED5876'
             id: QuarterTileOverlayGreyscale90
@@ -5882,6 +5982,12 @@ entities:
     components:
     - type: Transform
       pos: -34.5,14.5
+      parent: 1668
+  - uid: 9481
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-13.5
       parent: 1668
 - proto: Ash
   entities:
@@ -14891,6 +14997,96 @@ entities:
     - type: Transform
       pos: -39.5,4.5
       parent: 1668
+  - uid: 9482
+    components:
+    - type: Transform
+      pos: 2.5,-13.5
+      parent: 1668
+  - uid: 9483
+    components:
+    - type: Transform
+      pos: 1.5,-13.5
+      parent: 1668
+  - uid: 9484
+    components:
+    - type: Transform
+      pos: 0.5,-13.5
+      parent: 1668
+  - uid: 9485
+    components:
+    - type: Transform
+      pos: -0.5,-13.5
+      parent: 1668
+  - uid: 9486
+    components:
+    - type: Transform
+      pos: -0.5,-14.5
+      parent: 1668
+  - uid: 9487
+    components:
+    - type: Transform
+      pos: -0.5,-16.5
+      parent: 1668
+  - uid: 9488
+    components:
+    - type: Transform
+      pos: -0.5,-17.5
+      parent: 1668
+  - uid: 9489
+    components:
+    - type: Transform
+      pos: -0.5,-18.5
+      parent: 1668
+  - uid: 9490
+    components:
+    - type: Transform
+      pos: -0.5,-15.5
+      parent: 1668
+  - uid: 9491
+    components:
+    - type: Transform
+      pos: -0.5,-20.5
+      parent: 1668
+  - uid: 9492
+    components:
+    - type: Transform
+      pos: -0.5,-21.5
+      parent: 1668
+  - uid: 9493
+    components:
+    - type: Transform
+      pos: -0.5,-19.5
+      parent: 1668
+  - uid: 9494
+    components:
+    - type: Transform
+      pos: -0.5,-22.5
+      parent: 1668
+  - uid: 9495
+    components:
+    - type: Transform
+      pos: -0.5,-12.5
+      parent: 1668
+  - uid: 9496
+    components:
+    - type: Transform
+      pos: -0.5,-11.5
+      parent: 1668
+  - uid: 9497
+    components:
+    - type: Transform
+      pos: -0.5,-10.5
+      parent: 1668
+  - uid: 9498
+    components:
+    - type: Transform
+      pos: -0.5,-9.5
+      parent: 1668
+  - uid: 9499
+    components:
+    - type: Transform
+      pos: -0.5,-8.5
+      parent: 1668
 - proto: CableApcStack
   entities:
   - uid: 6776
@@ -19656,6 +19852,21 @@ entities:
     components:
     - type: Transform
       pos: -33.5,0.5
+      parent: 1668
+  - uid: 9500
+    components:
+    - type: Transform
+      pos: 2.5,-13.5
+      parent: 1668
+  - uid: 9501
+    components:
+    - type: Transform
+      pos: 1.5,-13.5
+      parent: 1668
+  - uid: 9502
+    components:
+    - type: Transform
+      pos: 0.5,-13.5
       parent: 1668
 - proto: CableMVStack
   entities:
@@ -45068,6 +45279,11 @@ entities:
     - type: Transform
       pos: -10.5,-6.5
       parent: 1668
+  - uid: 9503
+    components:
+    - type: Transform
+      pos: 14.5,-38.5
+      parent: 1668
 - proto: PoweredWarmSmallLight
   entities:
   - uid: 1280
@@ -59989,11 +60205,6 @@ entities:
     - type: Transform
       pos: 13.5,13.5
       parent: 1668
-  - uid: 1618
-    components:
-    - type: Transform
-      pos: 14.5,13.5
-      parent: 1668
   - uid: 1975
     components:
     - type: Transform
@@ -60202,6 +60413,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 30.5,-18.5
+      parent: 1668
+  - uid: 1618
+    components:
+    - type: Transform
+      pos: 14.5,13.5
       parent: 1668
   - uid: 1730
     components:
