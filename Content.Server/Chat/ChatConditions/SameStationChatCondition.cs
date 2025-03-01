@@ -20,13 +20,13 @@ public sealed partial class SameStationChatCondition : ChatCondition
 
     protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
     {
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity))
+        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity))
             return false;
 
         IoCManager.InjectDependencies(this);
         
         var stationSystem = _entitySystem.GetEntitySystem<StationSystem>();
-        var station = stationSystem.GetOwningStation((EntityUid)senderEntity);
+        var station = stationSystem.GetOwningStation(senderEntity);
 
         if (station == null)
         {

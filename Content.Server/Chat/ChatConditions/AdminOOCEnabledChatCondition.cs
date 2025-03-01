@@ -14,12 +14,12 @@ public sealed partial class AdminOOCEnabledChatCondition : ChatCondition
     protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
         IoCManager.InjectDependencies(this);
-        return _configurationManager.GetCVar<bool>(CCVars.AdminOocEnabled);
+        return _configurationManager.GetCVar(CCVars.AdminOocEnabled);
     }
 
     protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
     {
         IoCManager.InjectDependencies(this);
-        return _configurationManager.GetCVar<bool>(CCVars.AdminOocEnabled);
+        return _configurationManager.GetCVar(CCVars.AdminOocEnabled);
     }
 }

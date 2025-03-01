@@ -20,12 +20,16 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
 
     public bool CheckTelecomms(ChatMessageContext channelParameters)
     {
+        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
+            !channelParameters.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel)
+        )
+            return false;
+
         IoCManager.InjectDependencies(this);
 
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
-            !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) ||
-            !_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype) ||
-            !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform)
+        if (
+            !_prototypeManager.TryIndex(radioChannel, out RadioChannelPrototype? radioPrototype) ||
+            !_entityManager.TryGetComponent<TransformComponent>(senderEntity, out var sourceTransform)
         )
             return false;
 

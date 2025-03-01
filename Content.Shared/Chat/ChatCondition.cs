@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -76,6 +77,19 @@ public sealed class ChatMessageContext : Dictionary<Enum, object>
     public ChatMessageContext(IDictionary<Enum, object> dictionary) : base(dictionary)
     {
     }
+    
+
+    public bool TryGet<T>(Enum key, [NotNullWhen(true)] out T? value)
+    {
+        if (TryGetValue(key, out var val))
+        {
+            value = (T)val;
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
 }
 
 public abstract partial class SessionChatConditionBase : ChatCondition
@@ -99,10 +113,7 @@ public abstract partial class EntityChatConditionBase : ChatCondition
 
 public interface IChatCondition
 {
-    bool Check(
-        ChatMessageConditionSubject subject,
-        ChatMessageContext channelParameters
-    );
+    bool Check(ChatMessageConditionSubject subject, ChatMessageContext channelParameters);
 }
 
 [Serializable]

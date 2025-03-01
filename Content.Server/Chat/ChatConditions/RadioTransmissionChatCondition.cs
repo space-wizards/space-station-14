@@ -16,22 +16,22 @@ public sealed partial class RadioTransmissionChatCondition : ChatCondition
 
     protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
-            !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel)
+        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
+            !channelParameters.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel)
         )
             return false;
 
         IoCManager.InjectDependencies(this);
 
-        if (_entityManager.TryGetComponent<WearingHeadsetComponent>((EntityUid)senderEntity, out var headsetComponent))
+        if (_entityManager.TryGetComponent<WearingHeadsetComponent>(senderEntity, out var headsetComponent))
         {
             return _entityManager.TryGetComponent(headsetComponent.Headset, out EncryptionKeyHolderComponent? keys)
-                   && keys.Channels.Contains((string)radioChannel);
+                   && keys.Channels.Contains(radioChannel);
         }
 
-        if (_entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>((EntityUid)senderEntity, out var intrinsicRadioTransmitterComponent))
+        if (_entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(senderEntity, out var intrinsicRadioTransmitterComponent))
         {
-            return intrinsicRadioTransmitterComponent.Channels.Contains((string)radioChannel);
+            return intrinsicRadioTransmitterComponent.Channels.Contains(radioChannel);
         }
 
         return false;

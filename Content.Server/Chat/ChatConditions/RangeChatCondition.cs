@@ -23,12 +23,12 @@ public sealed partial class RangeChatCondition : ChatCondition
 
     protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity))
+        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity))
             return false;
 
         IoCManager.InjectDependencies(this);
 
-        if (!_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform)
+        if (!_entityManager.TryGetComponent<TransformComponent>(senderEntity, out var sourceTransform)
             || !_entityManager.TryGetComponent<TransformComponent>(subjectEntity, out var transform)
         )
             return false;
