@@ -9,7 +9,7 @@ using Content.Shared.Damage.Prototypes;
 namespace Content.Shared._Impstation.CosmicCult.Components;
 
 /// <summary>
-/// Added to mind role entities to tag that they are a cosmic cultist. Holds nearly all cultist-relevant data! Removal of this component is used to call for a deconversion
+/// Added to entities to tag that they are a cosmic cultist. Holds nearly all cultist-relevant data! Removal of this component is used to call for a deconversion
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
@@ -28,20 +28,26 @@ public sealed partial class CosmicCultComponent : Component
     #endregion
 
     #region Ability Data
-    [DataField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences =
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences =
     [
         "InfluenceAberrantLapse",
         "InfluenceNullGlare",
         "InfluenceEschewMetabolism",
     ];
 
-    [DataField] public HashSet<ProtoId<EntityPrototype>> CosmicCultActions =
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<EntityPrototype>> CosmicCultActions =
     [
         "ActionCosmicSiphon",
         "ActionCosmicBlank",
     ];
     public HashSet<EntityUid?> ActionEntities = [];
 
+    [DataField]
+    [AutoNetworkedField]
     public HashSet<ProtoId<InfluencePrototype>> OwnedInfluences = [];
 
     /// <summary>

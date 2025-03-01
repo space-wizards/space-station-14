@@ -120,6 +120,7 @@ public sealed class SharedMonumentSystem : EntitySystem
         cultComp.EntropyBudget -= proto.Cost;
         ent.Comp.UnlockedInfluences.Remove(args.InfluenceProtoId);
         cultComp.UnlockedInfluences.Remove(args.InfluenceProtoId);
+        Dirty(uiComp.CurrentSingleUser.Value, cultComp); //maybe this'll update things easier
 
         _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
     }
