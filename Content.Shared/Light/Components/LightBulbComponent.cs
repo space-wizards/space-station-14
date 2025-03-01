@@ -73,6 +73,12 @@ public sealed partial class LightBulbComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.WithVolume(-6f));
 
+    /// <summary>
+    /// The sound produced when the lightbulb falls on the ground and doesn't break.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier DropSound = new SoundCollectionSpecifier("GlassCrack", AudioParams.Default.WithVolume(-6f).WithPitchScale(0.8f));
+
     #region Appearance
 
     /// <summary>
