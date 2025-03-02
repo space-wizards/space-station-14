@@ -95,6 +95,16 @@
         - MobMask
         layer:
         - MobLayer
+      fix2:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 0
+        restitution: 0
+        mask:
+        - MobLayer
+  - type: Physics
+    bodyType: Dynamic
   - type: FloorOcclusion
   - type: RangedDamageSound
     soundGroups:
