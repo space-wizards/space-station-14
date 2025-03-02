@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Fixed Drones not being able to left click shit.
-    type: Fix
-  id: 719
-  time: '2024-12-12T00:38:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/993
 - author: honeyed-lemons
   changes:
   - message: PDA Messaging <3
@@ -4076,3 +4069,18 @@
   id: 1218
   time: '2025-03-02T00:33:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1813
+- author: widgetbeck
+  changes:
+  - message: Drones now spawn with a lighting RCD, a garbage bag, and a space cleaner
+      bottle.
+    type: Add
+  - message: Drones now have fewer hands - instead, their satchel and T-Ray scanner
+      spawn in their back and pocket slots respectively.
+    type: Tweak
+  - message: Drones can now use machines, and have Engineering access.
+    type: Tweak
+  - message: Drones now require 5 hours of Silicon time.
+    type: Tweak
+  id: 1219
+  time: '2025-03-02T04:57:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1720
