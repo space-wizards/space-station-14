@@ -9,7 +9,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    // If we're iterating through actionContainers for finding refereced actions we'll need this
+    // If we're iterating through actionContainers for finding referenced actions we might need this
     //[Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     /// <inheritdoc/>

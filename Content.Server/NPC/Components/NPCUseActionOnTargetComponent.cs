@@ -13,20 +13,6 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
 {
     [DataField("actions")]
     public List<NPCActionsData> Actions = new();
-    /// <summary>
-    /// HTN blackboard key for the target entity
-    /// </summary>
-    [DataField]
-    public string TargetKey = "Target";
-
-    /// <summary>
-    /// Action that's going to attempt to be used.
-    /// </summary>
-    [DataField]
-    public EntProtoId<EntityWorldTargetActionComponent> ActionId;
-
-    [DataField]
-    public EntityUid? ActionEnt;
 }
 
 /// <summary>
