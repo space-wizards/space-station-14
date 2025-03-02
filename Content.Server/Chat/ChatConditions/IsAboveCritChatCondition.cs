@@ -1,4 +1,4 @@
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Player;
 
@@ -18,7 +18,7 @@ public sealed partial class IsAboveCritChatCondition : ChatCondition
 
         if (_entitySystem.TryGetEntitySystem<MobStateSystem>(out var mobStateSystem))
         {
-            return mobStateSystem.IsIncapacitated(subjectEntity);
+            return !mobStateSystem.IsIncapacitated(subjectEntity);
         }
 
         return false;

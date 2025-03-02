@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
@@ -7,29 +7,11 @@ namespace Content.Shared.Chat;
 
 public interface ISharedContentMarkupTagManager
 {
-    IReadOnlyDictionary<string, IContentMarkupTag> ContentMarkupTagTypes { get; }
-
-    public IContentMarkupTag? GetMarkupTag(string name)
-    {
-        return ContentMarkupTagTypes.GetValueOrDefault(name);
-    }
-
     /// <summary>
-    /// Try to get the markup tag with the provided name.
+    /// Dictionary containing the initialized markup tags mapped to their name.
+    /// Any new ContentMarkupTag must be included in the Content.Client/Server's implementation of this dictionary.
     /// </summary>
-    /// <param name="name">The name of the markup tag to check for.</param>
-    /// <returns></returns>
-    public bool TryGetContentMarkupTag(string name, [NotNullWhen(true)] out IContentMarkupTag? tag)
-    {
-        if (ContentMarkupTagTypes.TryGetValue(name, out var markupTag))
-        {
-            tag = markupTag;
-            return true;
-        }
-
-        tag = null;
-        return false;
-    }
+    IReadOnlyDictionary<string, IContentMarkupTag> ContentMarkupTagTypes { get; }
 
     /// <summary>
     /// Processes the message and applies the ContentMarkupTags.
@@ -43,6 +25,7 @@ public interface ISharedContentMarkupTagManager
         var returnMessage = new FormattedMessage();
         var randomSeed = message.Count; // CHAT-TODO: Replace with message uuid.
 
+        // CHAT-TODO: This code is funky and fildrance should be poked about it later to figure out how to make it optimized.
         var nodeEnumerator = message.Nodes.ToList();
 
         var i = 0;
@@ -70,7 +53,7 @@ public interface ISharedContentMarkupTagManager
             }
 
             // Handles extracting the ContentMarkupTags and applies any processes that those tags have set.
-            if (node.Name != null && TryGetContentMarkupTag(node.Name, out var tag))
+            if (node.Name != null && ContentMarkupTagTypes.TryGetValue(node.Name, out var tag))
             {
                 if (!node.Closing)
                 {

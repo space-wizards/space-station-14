@@ -71,6 +71,7 @@ public sealed partial class SalvageSystem
         var mapId = Comp<MapComponent>(mapUid).MapId;
 
         // CHAT-TODO: This is wrong - should not take the mapUid as an argument and instead it should be baked into the radio prototype
+        // CHAT-TODO: The mapUid is to ensure the message is only sent to salvagers on the exped planet wearing the headset.
         _chat.SendChannelMessage(text, CargoChannel, null, mapUid);
     }
 

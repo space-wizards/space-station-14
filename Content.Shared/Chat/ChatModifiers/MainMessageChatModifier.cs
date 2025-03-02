@@ -1,10 +1,10 @@
-using Robust.Shared.Utility;
+﻿using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
 /// <summary>
 /// Wraps a [MainMessage] tag around all text nodes, which can later be utilized by other chat modifiers.
-/// The tag also adds a space before the message once processed.
+/// Should be included around a message fairly early on in its modification to indicate what text was provided by the source.
 /// </summary>
 [Serializable]
 [DataDefinition]

@@ -623,6 +623,7 @@ public sealed class ChatUIController : UIController
 
             var msg = queueData.MessageQueue.Dequeue();
 
+            // TODO: Getting the message's length like this can probably be optimized!
             queueData.TimeLeft += BubbleDelayBase + msg.Message.Message.ToString().Length * BubbleDelayFactor;
 
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
@@ -836,30 +837,32 @@ public sealed class ChatUIController : UIController
         // Process any remaining clientside content markups.
         msg.Message = _contentMarkupTagManager.ProcessMessage(msg.Message);
 
-        // Log all incoming chat to repopulate when filter is un-toggled
-        if (!msg.HideChat)
-        {
-            History.Add((_timing.CurTick, msg));
-            MessageAdded?.Invoke(msg);
-
-            if (!msg.Read)
-            {
-                _sawmill.Debug($"Message filtered: {msg.CommunicationChannel}: {msg.Message}");
-                var count = _unreadMessages.GetValueOrDefault(proto.ChatFilter, 0);
-                count += 1;
-                _unreadMessages[proto.ChatFilter] = count;
-                UnreadMessageCountsUpdated?.Invoke(proto.ChatFilter, count);
-            }
-        }
-
+        // Create a bubble, should the communication channel expect one.
         if (proto.ClientModifiers.Any(x => x is BubbleProviderChatModifier))
         {
+            // CHAT-TODO: If somehow the chatmodifier is missing, this throws an error. TryFirst?
             var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == BubbleHeaderTagName);
             if (bubbleHeaderNode.Value.TryGetLong(out var speechEnum))
             {
                 AddSpeechBubble(msg, (SpeechBubble.SpeechType)speechEnum);
             }
         }
+
+        // Log all incoming chat to repopulate when filter is un-toggled
+        if (msg.HideChat)
+            return;
+
+        History.Add((_timing.CurTick, msg));
+        MessageAdded?.Invoke(msg);
+
+        if (msg.Read)
+            return;
+
+        _sawmill.Debug($"Message filtered: {msg.CommunicationChannel}: {msg.Message}");
+        var count = _unreadMessages.GetValueOrDefault(proto.ChatFilter, 0);
+        count += 1;
+        _unreadMessages[proto.ChatFilter] = count;
+        UnreadMessageCountsUpdated?.Invoke(proto.ChatFilter, count);
     }
 
     public void OnDeleteChatMessagesBy(MsgDeleteChatMessagesBy msg)

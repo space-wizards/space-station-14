@@ -26,7 +26,7 @@ namespace Content.Server.Speech
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)
         {
-            if (ent.Comp.SpeechSounds == null)
+            if (ent.Comp.SpeechSounds == null || message.Length == 0)
                 return null;
 
             // Play speech sound

@@ -1,4 +1,4 @@
-namespace Content.Shared.Chat;
+﻿namespace Content.Shared.Chat;
 
 public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerComponent
 {
@@ -13,7 +13,7 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
     /// <summary>
     /// Used to gather all entities that have components with ListenerEntitySystems.
     /// </summary>
-    protected void OnGetListenerConsumerEvent(ref GetListenerConsumersEvent ev)
+    private void OnGetListenerConsumerEvent(ref GetListenerConsumersEvent ev)
     {
         var query = AllEntityQuery<T>();
         while (query.MoveNext(out var uid, out var comp))
@@ -26,7 +26,7 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
     /// Runs when a message has been "heard" by the entity, and filters out any that should not be received by this system specifically.
     /// If <see cref="ListenerComponent.FilteredTypes"/> is null, all messages heard by the entity are accepted.
     /// </summary>
-    protected void OnListenerConsumeEvent(EntityUid uid, T component, ListenerConsumeEvent args)
+    private void OnListenerConsumeEvent(EntityUid uid, T component, ListenerConsumeEvent args)
     {
         if (component.FilteredTypes == null || (component.FilteredTypes & args.ChatMedium) != 0)
             OnListenerMessageReceived(uid, component, args);

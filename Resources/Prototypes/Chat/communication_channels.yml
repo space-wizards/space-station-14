@@ -3,7 +3,7 @@
   publishChatConditions:
   - !type:AllChatCondition
     subconditions:
-    - !type:IsGhostChatCondition
+    - !type:IsGhostChatCondition # CHAT-TODO: Can probably be sqoozed into a single condition. Maybe.
       inverted: true
     - !type:IsAboveCritChatCondition
     - !type:HasComponentChatCondition
@@ -33,7 +33,7 @@
   - !type:BoldTagChatModifier
     targetNode: EntityNameHeader
   - !type:ColorEntityNameHeaderChatModifier
-  backupChildCommunicationChannels:
+  fallbackChannels:
   - Dead #If dead, this should attempt the Dead channel
   chatFilter:
   - Local
@@ -56,7 +56,7 @@
   - !type:BoldTagChatModifier
     targetNode: EntityNameHeader
   hideChat: true
-  backupChildCommunicationChannels:
+  fallbackChannels:
   - Dead #If dead, this should attempt the Dead channel
   chatFilter:
   - None
@@ -83,6 +83,7 @@
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
+    defaultColorKey: Whisper
   conditionalModifiers:
   - conditions:
     - !type:RangeChatCondition
@@ -93,14 +94,14 @@
   clientModifiers:
   - !type:SpaceMainMessageChatModifier
   - !type:QuoteMainMessageChatModifier
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: EntityNameHeader
     locString: " whispers"
   - !type:BubbleProviderChatModifier
     speechType: Whisper
   - !type:ColorEntityNameHeaderChatModifier
   - !type:ItalicsFulltextChatModifier
-  backupChildCommunicationChannels:
+  fallbackChannels:
   - Dead #If dead, this should attempt the Dead channel
   chatFilter:
   - Whisper
@@ -152,13 +153,13 @@
   - !type:ColorFulltextChatModifier
     defaultColorKey: Dead
   clientModifiers:
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: EntityNameHeader
     locString: "DEAD: "
     afterNode: false
   - !type:BoldTagChatModifier
     targetNode: EntityNameHeader
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: EntityNameHeader
     locString: ": "
   - !type:BubbleProviderChatModifier
@@ -189,18 +190,18 @@
   - !type:ColorFulltextChatModifier
     defaultColorKey: LOOC
   clientModifiers:
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: EntityNameHeader
     locString: "LOOC: "
     afterNode: false
   - !type:BoldTagChatModifier
     targetNode: EntityNameHeader
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: EntityNameHeader
     locString: ": "
   - !type:BubbleProviderChatModifier
     speechType: LOOC
-  backupChildCommunicationChannels:
+  fallbackChannels:
   - Dead #If dead & not Moderator, this should attempt the Dead channel
   chatFilter:
   - LOOC
@@ -222,13 +223,13 @@
   - !type:ColorFulltextChatModifier
     defaultColorKey: OOC
   clientModifiers:
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: SessionNameHeader
     locString: "OOC: "
     afterNode: false
   - !type:BoldTagChatModifier
     targetNode: SessionNameHeader
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: SessionNameHeader
     locString: ": "
   chatFilter:
@@ -257,7 +258,7 @@
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
   - !type:SpeechVerbChatModifier
-  alwaysChildCommunicationChannels:
+  alwaysRelayedToChannels:
   - ICWhisper
   clientModifiers:
   - !type:ColorRadioChatModifier
@@ -390,13 +391,13 @@
   - !type:ColorFulltextChatModifier
     defaultColorKey: AdminChat
   clientModifiers:
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: SessionNameHeader
     locString: "ADMIN: "
     afterNode: false
   - !type:BoldTagChatModifier
     targetNode: SessionNameHeader
-  - !type:InsertLoCChatModifier
+  - !type:InsertLocChatModifier
     targetNode: SessionNameHeader
     locString: ": "
   chatFilter:

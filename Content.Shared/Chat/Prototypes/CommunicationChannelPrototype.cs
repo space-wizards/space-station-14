@@ -1,4 +1,4 @@
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Chat.Prototypes;
@@ -47,9 +47,9 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     /// A collection of conditions and applicable modifiers.
     /// If a condition is met, the corresponding modifier(s) will be applied to the message AFTER the ServerModifiers.
     /// </summary>
-    [DataField]
+    [DataField(serverOnly: true)]
     [AlwaysPushInheritance]
-    public List<ConsumeCollection> ConditionalModifiers = new();
+    public List<ConditionalModifiersCollection> ConditionalModifiers = new();
 
     /// <summary>
     /// Contains modifiers that are applied and processed on the client.
@@ -90,14 +90,14 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public List<ProtoId<CommunicationChannelPrototype>>? AlwaysChildCommunicationChannels;
+    public List<ProtoId<CommunicationChannelPrototype>>? AlwaysRelayedToChannels;
 
     /// <summary>
     /// If set, a message that fails the conditions to publish on the current channel will try to publish to these communication channels instead.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public List<ProtoId<CommunicationChannelPrototype>>? BackupChildCommunicationChannels;
+    public List<ProtoId<CommunicationChannelPrototype>>? FallbackChannels;
 
     /// <summary>
     /// If true, any message published to this channel won't show up in the chatbox.
@@ -119,7 +119,7 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
 
 [Serializable]
 [DataDefinition]
-public partial struct ConsumeCollection
+public partial struct ConditionalModifiersCollection
 {
     /// <summary>
     /// The conditions required for a consumer to be allowed to consume this communication channel.
@@ -135,7 +135,7 @@ public partial struct ConsumeCollection
     [DataField(serverOnly: true)]
     public List<ChatModifier> Modifiers = new();
 
-    public ConsumeCollection(
+    public ConditionalModifiersCollection(
         List<IChatCondition> conditions,
         List<ChatModifier> modifiers)
     {

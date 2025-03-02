@@ -9,7 +9,7 @@ public sealed class ColorValueContentTag : IContentMarkupTag
 {
     public string Name => "ColorValue";
 
-    // TODO: These values should probably be retrieved via yaml, and be customizable in options! This solution works for now!
+    // CHAT-TODO: These values should probably be retrieved via yaml, and be customizable in options! This solution works for now but should be reworked before release.
     private readonly IReadOnlyDictionary<string, Color> _colors = new Dictionary<string, Color>
     {
         ["Base"] = Color.White,

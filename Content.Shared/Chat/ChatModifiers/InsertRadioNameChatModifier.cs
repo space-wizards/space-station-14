@@ -1,4 +1,4 @@
-using Content.Shared.Chat.Prototypes;
+﻿using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -28,7 +28,7 @@ public sealed partial class InsertRadioNameChatModifier : ChatModifier
 
     public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        if(!chatMessageContext.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel))
+        if (!chatMessageContext.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel))
             return message;
 
         IoCManager.InjectDependencies(this);
@@ -39,7 +39,7 @@ public sealed partial class InsertRadioNameChatModifier : ChatModifier
         if (TargetNode == null)
             return message;
 
-        var str = "[" + Loc.GetString(radioPrototype.LocalizedName) + "] ";
+        var str = "[" + radioPrototype.LocalizedName + "] ";
 
         if (AfterNode)
         {

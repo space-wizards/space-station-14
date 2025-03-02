@@ -12,7 +12,7 @@ public sealed class PlayAudioContentTag : IContentMarkupTag
 
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public List<MarkupNode>? OpenerProcessing(MarkupNode node, int randomSeed)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
         var audioSystem = _entManager.System<AudioSystem>();

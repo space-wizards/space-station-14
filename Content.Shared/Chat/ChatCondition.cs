@@ -21,6 +21,7 @@ public sealed partial class AllChatCondition : IChatCondition
         Subconditions = subconditions;
     }
 
+    [DataField]
     public List<ChatCondition> Subconditions = new();
 
     /// <inheritdoc />
@@ -28,6 +29,7 @@ public sealed partial class AllChatCondition : IChatCondition
     {
         foreach (var chatCondition in Subconditions)
         {
+            Logger.Debug("Test");
             if (!chatCondition.Check(subject, channelParameters))
             {
                 return false;
@@ -54,6 +56,7 @@ public sealed partial class AnyChatCondition : IChatCondition
         Subconditions = subconditions;
     }
 
+    [DataField]
     public List<IChatCondition> Subconditions = new();
 
     /// <inheritdoc />
@@ -129,12 +132,12 @@ public abstract partial class ChatCondition : IChatCondition
         ChatMessageContext channelParameters
     )
     {
-        if (subject.Entity.HasValue && Check(subject.Entity.Value, channelParameters))
+        if (subject.Entity.HasValue && (Check(subject.Entity.Value, channelParameters) == !Inverted))
         {
             return true;
         }
 
-        if (subject.Session != null && Check(subject.Session, channelParameters))
+        if (subject.Session != null && (Check(subject.Session, channelParameters) == !Inverted))
         {
             return true;
         }

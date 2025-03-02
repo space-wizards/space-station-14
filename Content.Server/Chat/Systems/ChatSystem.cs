@@ -132,6 +132,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #endregion
 
+    // CHAT-TODO: Magic string here, remember to fix.
+    // CHAT-TODO: Also probably good idea to indicate these are helper functions primarily for backwards compatability so people don't end up adding stuff to them.
     /// <summary>
     ///     Sends an in-character chat message to relevant clients.
     /// </summary>
