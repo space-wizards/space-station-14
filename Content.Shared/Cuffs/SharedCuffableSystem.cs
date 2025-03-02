@@ -93,13 +93,7 @@ namespace Content.Shared.Cuffs
 
         public void HandleEnterCryostorageEvent(Entity<CuffableComponent> ent, ref EnterCryostorageEvent args)
         {
-            if (ent.Comp.Container.ContainedEntities.Count == 0)
-                return;
-
-            var cuffsToRemove = ent.Comp.LastAddedCuffs;
-
-            _container.Remove(cuffsToRemove, ent.Comp.Container);
-            _hands.PickupOrDrop(ent.Owner, cuffsToRemove);
+            Logger.Info("CuffableSystem received EnterCryostorageEvent --------------------------------------------- ");
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
