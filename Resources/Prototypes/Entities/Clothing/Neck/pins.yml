@@ -124,6 +124,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckGenderqueerPin
+  name: genderqueer pin
+  description: be crime, do gender
+  components:
+  - type: Sprite
+    state: gender
+  - type: Clothing
+    equippedPrefix: gender
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
   name: transgender pin
   description: Be trans do crime.

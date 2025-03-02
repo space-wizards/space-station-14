@@ -7,7 +7,6 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
@@ -15,9 +14,6 @@ using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
@@ -37,6 +33,10 @@ using Robust.Shared.Spawners;
 
 namespace Content.Shared.Magic;
 
+// TODO: Move BeforeCast & Prerequirements (like Wizard clothes) to action comp
+//   Alt idea - make it its own comp and split, like the Charge PR
+// TODO: Move speech to actionComp or again, its own ECS
+// TODO: Use the MagicComp just for pure backend things like spawning patterns?
 /// <summary>
 /// Handles learning and using spells (actions)
 /// </summary>
@@ -60,7 +60,6 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -81,79 +80,6 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
         SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
-
-        // Spell wishlist
-        //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
-
-        // TODO: InstantDoAfterSpell and WorldDoafterSpell
-        //  Both would be an action that take in an event, that passes an event to trigger once the doafter is done
-        //  This would be three events:
-        //    1 - Event that triggers from the action that starts the doafter
-        //    2 - The doafter event itself, which passes the event with it
-        //    3 - The event to trigger once the do-after finishes
-
-        // TODO: Inanimate objects to life ECS
-        //  AI sentience
-
-        // TODO: Flesh2Stone
-        //   Entity Target spell
-        //   Synergy with Inanimate object to life (detects player and allows player to move around)
-
-        // TODO: Lightning Spell
-        // Should just fire lightning, try to prevent arc back to caster
-
-        // TODO: Magic Missile (homing projectile ecs)
-        //   Instant action, target any player (except self) on screen
-
-        // TODO: Random projectile ECS for magic-carp, wand of magic
-
-        // TODO: Recall Spell
-        //  mark any item in hand to recall
-        //    ItemRecallComponent
-        //    Event adds the component if it doesn't exist and the performer isn't stored in the comp
-        //    2nd firing of the event checks to see if the recall comp has this uid, and if it does it calls it
-        //  if no free hands, summon at feet
-        //  if item deleted, clear stored item
-
-        // TODO: Jaunt (should be its own ECS)
-        // Instant action
-        //   When clicked, disappear/reappear (goes to paused map)
-        //   option to restrict to tiles
-        //   option for requiring entry/exit (blood jaunt)
-        //   speed option
-
-        // TODO: Summon Events
-        //  List of wizard events to add into the event pool that frequently activate
-        //  floor is lava
-        //  change places
-        //  ECS that when triggered, will periodically trigger a random GameRule
-        //  Would need a controller/controller entity?
-
-        // TODO: Summon Guns
-        //  Summon a random gun at peoples feet
-        //    Get every alive player (not in cryo, not a simplemob)
-        //  TODO: After Antag Rework - Rare chance of giving gun collector status to people
-
-        // TODO: Summon Magic
-        //  Summon a random magic wand at peoples feet
-        //    Get every alive player (not in cryo, not a simplemob)
-        //  TODO: After Antag Rework - Rare chance of giving magic collector status to people
-
-        // TODO: Bottle of Blood
-        //  Summons Slaughter Demon
-        //  TODO: Slaughter Demon
-        //    Also see Jaunt
-
-        // TODO: Field Spells
-        //  Should be able to specify a grid of tiles (3x3 for example) that it effects
-        //  Timed despawn - so it doesn't last forever
-        //  Ignore caster - for spells that shouldn't effect the caster (ie if timestop should effect the caster)
-
-        // TODO: Touch toggle spell
-        //  1 - When toggled on, show in hand
-        //  2 - Block hand when toggled on
-        //      - Require free hand
-        //  3 - use spell event when toggled & click
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
@@ -446,7 +372,7 @@ public abstract class SharedMagicSystem : EntitySystem
     }
     // End Spell Helpers
     #endregion
-    #region Smite Spells
+    #region Touch Spells
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
@@ -465,7 +391,8 @@ public abstract class SharedMagicSystem : EntitySystem
 
         _body.GibBody(ev.Target, true, body);
     }
-    // End Smite Spells
+
+    // End Touch Spells
     #endregion
     #region Knock Spells
     /// <summary>
