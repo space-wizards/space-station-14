@@ -1,8 +1,0 @@
-- type: entity
-  parent: BaseFlag
-  id: CentComm_Flag
-  name: CentComm flag
-  description: Formerly Stellar Vanguard Solutions.
-  components:
-  - type: Sprite
-    state: centcomm_flag
