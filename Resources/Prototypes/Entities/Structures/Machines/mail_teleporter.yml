@@ -5,9 +5,6 @@
   description: Periodically teleports in mail to deliver across the station.
   components:
   - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Transform
     anchored: true
     noRot: true
@@ -16,10 +13,12 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.00"
+          bounds: "-0.30,-0.30,0.30,0.40"
         density: 190
         mask:
         - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/mailbox.rsi
     layers:
@@ -40,7 +39,6 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-  - type: CollideOnAnchor
   - type: Machine
     board: MailTeleporterMachineCircuitboard
   - type: PowerSwitch
