@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Contraband;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -17,6 +18,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
+using Content.Shared.Roles;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -142,6 +144,22 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
+
+        /// <summary>
+        /// Is this reagent considered contraband? And how severe is it?
+        /// </summary>
+        [DataField]
+        public ProtoId<ContrabandSeverityPrototype>? Contraband = null;
+        /// <summary>
+        /// Which departments is this reagent restricted to?
+        /// </summary>
+        [DataField]
+        public HashSet<ProtoId<DepartmentPrototype>>? AllowedDepartments = null;
+        /// <summary>
+        /// Which jobs is this reagent restricted to?
+        /// </summary>
+        [DataField]
+        public HashSet<ProtoId<JobPrototype>>? AllowedJobs = null;
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {
