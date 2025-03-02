@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Light.Components;
+namespace Content.Shared.Light.Components;
 
 /// <summary>
 ///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>
@@ -21,6 +21,9 @@ public sealed partial class LightReplacerComponent : Component
             Volume = -4f
         }
     };
+
+    [DataField]
+    public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
 
     /// <summary>
     /// Bulbs that were inserted inside light replacer
