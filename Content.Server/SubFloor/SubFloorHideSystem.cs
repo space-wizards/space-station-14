@@ -1,16 +1,46 @@
 using Content.Shared.Construction.Components;
+using Content.Shared.Eye;
 using Content.Shared.SubFloor;
+using Robust.Server.Console;
+using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
+    [Dependency] private readonly IConGroupController _console = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SubFloorHideComponent, AnchorAttemptEvent>(OnAnchorAttempt);
         SubscribeLocalEvent<SubFloorHideComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnShowSubfloor);
+    }
+
+    private void OnShowSubfloor(ShowSubfloorRequestEvent ev, EntitySessionEventArgs args)
+    {
+        // TODO: Commands are a bit of an eh? for client-only but checking shared perms
+        var ent = args.SenderSession.AttachedEntity;
+
+        if (!TryComp(ent, out EyeComponent? eyeComp))
+            return;
+
+        if (ev.Value)
+        {
+            _eye.SetVisibilityMask(ent.Value, eyeComp.VisibilityMask | (int) VisibilityFlags.Subfloor, eyeComp);
+        }
+        else
+        {
+            _eye.SetVisibilityMask(ent.Value, eyeComp.VisibilityMask & (int) ~VisibilityFlags.Subfloor, eyeComp);
+        }
+
+        RaiseNetworkEvent(new ShowSubfloorRequestEvent()
+        {
+            Value = ev.Value,
+        }, args.SenderSession);
     }
 
     private void OnAnchorAttempt(EntityUid uid, SubFloorHideComponent component, AnchorAttemptEvent args)
