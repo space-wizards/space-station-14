@@ -10,7 +10,7 @@
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
-    energyPerUse: 50
+    energyPerUse: 2.5
   - type: ItemToggle
     predictable: false
     soundActivate:
@@ -30,18 +30,20 @@
       types:
         Blunt: 0
   - type: MeleeWeapon
+    autoAttack: true
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 7
+        Blunt: 1
+    attackRate: 5
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 7
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 7
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
