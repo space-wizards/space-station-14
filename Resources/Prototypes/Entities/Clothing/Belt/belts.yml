@@ -34,6 +34,7 @@
         - WeldingMask
       components:
         - Signaller
+        - AccessOverrider
         - StationMap
         - SprayPainter
         - NetworkConfigurator
@@ -185,21 +186,23 @@
         - CombatKnife
         - Truncheon
         - Grenade
+        - GrenadeFlashBang
         - SpeedLoaderRifle
         - SpeedLoaderPistol
         - SpeedLoaderMagnum
         - Shiv
-        - Payload
+        - Cartridge
       components:
         - Stunbaton
         - FlashOnTrigger
         - SmokeOnTrigger
+        - ExplodeOnTrigger
         - Flash
         - Handcuff
         - BallisticAmmoProvider
         - Ammo
         - CartridgeAmmo
-        - Explosive
+        - ChemicalPayload
         - ScatteringGrenade
         - ProjectileGrenade
   - type: ItemMapper
