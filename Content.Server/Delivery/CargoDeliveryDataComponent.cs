@@ -15,10 +15,17 @@ public sealed partial class CargoDeliveryDataComponent : Component
     public TimeSpan NextDelivery;
 
     /// <summary>
-    /// Cooldown between deliveries after one spawns.
+    /// Minimum cooldown after a delivery spawns.
     /// </summary>
     [DataField]
-    public TimeSpan DeliveryCooldown = TimeSpan.FromMinutes(5);
+    public TimeSpan MinDeliveryCooldown = TimeSpan.FromMinutes(4);
+
+    /// <summary>
+    /// Maximum cooldown after a delivery spawns.
+    /// </summary>
+    [DataField]
+    public TimeSpan MaxDeliveryCooldown = TimeSpan.FromMinutes(6);
+
 
     /// <summary>
     /// The ratio at which deliveries will spawn, based on the amount of people in the crew manifest.

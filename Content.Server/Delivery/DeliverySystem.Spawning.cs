@@ -24,7 +24,7 @@ public sealed partial class DeliverySystem
 
     private void OnDataMapInit(Entity<CargoDeliveryDataComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextDelivery = _timing.CurTime + ent.Comp.DeliveryCooldown;
+        ent.Comp.NextDelivery = _timing.CurTime + _random.Next(ent.Comp.MinDeliveryCooldown, ent.Comp.MaxDeliveryCooldown);
     }
 
     private void SpawnDelivery(Entity<DeliverySpawnerComponent?> ent, int amount)
@@ -115,7 +115,7 @@ public sealed partial class DeliverySystem
             if (deliveryData.NextDelivery > curTime)
                 continue;
 
-            deliveryData.NextDelivery += deliveryData.DeliveryCooldown;
+            deliveryData.NextDelivery += _random.Next(deliveryData.MinDeliveryCooldown, deliveryData.MaxDeliveryCooldown); // Random cooldown between min and max
             SpawnStationDeliveries((uid, deliveryData));
         }
     }
