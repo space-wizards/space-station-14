@@ -50,6 +50,8 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] DoNotMapWhitelist =
         {
             "/Maps/centcomm.yml",
+            "/Maps/_Harmony/centcomm.yml", // Harmony CC version
+            "/Maps/_Harmony/barratry.yml", // Harmony map - Contains mime and clown's rubber stamps.
             "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
             "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
             "/Maps/meta.yml", // Contains warden's rubber stamp

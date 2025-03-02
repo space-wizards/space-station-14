@@ -192,7 +192,7 @@
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtHoSAlt
-  name: head of security's assault jumpskirt 
+  name: head of security's assault jumpskirt
   description: It's an assault suit worn by those strong and disciplined enough to achieve the position of Head of Security.
   components:
   - type: Sprite
@@ -267,7 +267,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband] # Harmony Change: Added Contraband Level
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband] # Harmony Change: Added Contraband Level
   id: ClothingUniformJumpskirtBrigmedic
   name: brigmedic jumpskirt
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.

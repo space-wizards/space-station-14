@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseRestrictedContraband]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSecurityContraband]
   id: ClothingBeltBrigmedHarmony
   name: brigmedic belt
   description: Can hold brigmedic gear like medicine and stunbatons.
