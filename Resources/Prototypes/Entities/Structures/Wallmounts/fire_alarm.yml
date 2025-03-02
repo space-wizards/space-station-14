@@ -85,6 +85,9 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: GuideHelp
+    guides:
+    - Networking
   - type: Destructible
     thresholds:
       - trigger:
@@ -104,6 +107,7 @@
               collection: MetalGlassBreak
               params:
                 volume: -4
+  - type: StationAiWhitelist
   placement:
     mode: SnapgridCenter
     snap:

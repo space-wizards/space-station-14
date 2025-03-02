@@ -1,7 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Examine;
 using Content.Shared.Power.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -59,6 +56,9 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         // NOOP on server because client has 0 idea of load so we can't raise it properly in shared.
     }
 
+	/// <summary>
+	/// Checks if entity is APC-powered device, and if it have power.
+    /// </summary>
     public bool IsPowered(Entity<SharedApcPowerReceiverComponent?> entity)
     {
         if (!ResolveApc(entity.Owner, ref entity.Comp))

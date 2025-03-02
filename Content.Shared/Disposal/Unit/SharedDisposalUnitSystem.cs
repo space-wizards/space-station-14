@@ -80,17 +80,126 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         SubscribeLocalEvent<DisposalUnitComponent, DisposalDoAfterEvent>(OnDoAfter);
 
-        SubscribeLocalEvent<DisposalUnitComponent, DisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
+        SubscribeLocalEvent<DisposalUnitComponent, BeforeThrowInsertEvent>(OnThrowInsert);
+
+        SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
+    }
 
         SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnDisposalInit);
 
-        SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(OnDragDropOn);
-        SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(OnMovement);
+    private void AddDisposalAltVerbs(EntityUid uid, SharedDisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        // Behavior for if the disposals bin has items in it
+        if (component.Container.ContainedEntities.Count > 0)
+        {
+            // Verbs to flush the unit
+            AlternativeVerb flushVerb = new()
+            {
+                Act = () => ManualEngage(uid, component),
+                Text = Loc.GetString("disposal-flush-verb-get-data-text"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                Priority = 1,
+            };
+            args.Verbs.Add(flushVerb);
+
+            // Verb to eject the contents
+            AlternativeVerb ejectVerb = new()
+            {
+                Act = () => TryEjectContents(uid, component),
+                Category = VerbCategory.Eject,
+                Text = Loc.GetString("disposal-eject-verb-get-data-text")
+            };
+            args.Verbs.Add(ejectVerb);
+        }
+    }
+
+    private void AddClimbInsideVerb(EntityUid uid, SharedDisposalUnitComponent component, GetVerbsEvent<Verb> args)
+    {
+        // This is not an interaction, activation, or alternative verb type because unfortunately most users are
+        // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
+        if (!args.CanAccess ||
+            !args.CanInteract ||
+            component.Container.ContainedEntities.Contains(args.User) ||
+            !_actionBlockerSystem.CanMove(args.User))
+        {
+            return;
+        }
+
+        if (!CanInsert(uid, component, args.User))
+            return;
+
+        // Add verb to climb inside of the unit,
+        Verb verb = new()
+        {
+            Act = () => TryInsert(uid, args.User, args.User),
+            DoContactInteraction = true,
+            Text = Loc.GetString("disposal-self-insert-verb-get-data-text")
+        };
+        // TODO VERB ICON
+        // TODO VERB CATEGORY
+        // create a verb category for "enter"?
+        // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
+        args.Verbs.Add(verb);
+    }
+
+    private void AddInsertVerb(EntityUid uid, SharedDisposalUnitComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || args.Using == null)
+            return;
+
+        if (!_actionBlockerSystem.CanDrop(args.User))
+            return;
+
+        if (!CanInsert(uid, component, args.Using.Value))
+            return;
+
+        InteractionVerb insertVerb = new()
+        {
+            Text = Name(args.Using.Value),
+            Category = VerbCategory.Insert,
+            Act = () =>
+            {
+                _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
+                AfterInsert(uid, component, args.Using.Value, args.User);
+            }
+        };
+
+        args.Verbs.Add(insertVerb);
+    }
+
+    private void OnDoAfter(EntityUid uid, SharedDisposalUnitComponent component, DoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+            return;
+
+        AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);
+
+        args.Handled = true;
+    }
+
+    private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
+    {
+        if (!CanInsert(ent, ent, args.ThrownEntity))
+            args.Cancelled = true;
+    }
+
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
+    {
+        if (!ResolveDisposals(uid, ref disposal))
+            return;
+
+        if (!_containerSystem.Insert(toInsert, disposal.Container))
+            return;
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
+        AfterInsert(uid, disposal, toInsert, user);
     }
 
     public override void Update(float frameTime)

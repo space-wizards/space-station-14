@@ -119,6 +119,25 @@
 
 - type: entity
   parent: BaseItem
+  id: MedTekCartridge
+  name: MedTek cartridge
+  description: A program that provides medical diagnostic tools.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-med
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-med
+    - type: Cartridge
+      programName: med-tek-program-name
+      icon:
+        sprite: Objects/Specific/Medical/healthanalyzer.rsi
+        state: icon
+    - type: MedTekCartridge
+
+- type: entity
+  parent: BaseItem
   id: AstroNavCartridge
   name: AstroNav cartridge
   description: A program for navigation that provides GPS coordinates.

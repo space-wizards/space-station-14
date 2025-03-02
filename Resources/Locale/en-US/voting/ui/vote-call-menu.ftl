@@ -25,8 +25,8 @@ ui-vote-type-not-available = This vote type has been disabled
 
 # Vote option only available for specific users.
 ui-vote-trusted-users-notice =
-  This vote option is only available to whitelisted players.
-  In addition, you must have been a ghost for { $timeReq } minutes.
+  This vote option is only available to players who have enough playtime or are whitelisted.
+  In addition, you must have been a ghost for { $timeReq } seconds.
 
 # Warning to not abuse a specific vote option.
 ui-vote-abuse-warning =

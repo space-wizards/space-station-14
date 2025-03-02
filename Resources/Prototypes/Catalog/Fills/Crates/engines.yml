@@ -120,12 +120,14 @@
   id: CrateEngineeringSolar
   parent: CrateEngineering
   name: solar assembly crate
-  description: Parts for constructing solar panels and trackers.
+  description: A kit with solar flatpacks and glass to construct ten solar panels.
   components:
   - type: StorageFill
     contents:
       - id: SolarAssemblyFlatpack
-        amount: 6
+        amount: 10
+      - id: SheetGlass10
+        amount: 2
 
 - type: entity
   id: CrateEngineeringShuttle

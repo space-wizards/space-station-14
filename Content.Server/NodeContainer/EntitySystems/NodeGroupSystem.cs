@@ -149,6 +149,13 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
+        // used to manually force an update for the groups
+        // the VisDoUpdate will be done with the next scheduled update
+        public void ForceUpdate()
+        {
+            DoGroupUpdates();
+        }
+
         private void DoGroupUpdates()
         {
             // "Why is there a separate queue for group remakes and node refloods when they both cause eachother"

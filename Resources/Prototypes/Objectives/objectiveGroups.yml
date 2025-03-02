@@ -63,7 +63,6 @@
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
     TechnologyDiskStealCollectionObjective: 1        #rnd
-    FigurineStealCollectionObjective: 0.3          #service
     IDCardsStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2 #only for moth
 
