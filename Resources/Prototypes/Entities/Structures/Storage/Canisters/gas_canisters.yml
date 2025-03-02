@@ -1,9 +1,9 @@
 - type: entity
   abstract: true
   parent: BaseStructureDynamic
-  id: GasCanister
+  id: LargeGasCanister
   name: gas canister
-  description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
+  description: A large canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
     - type: Animateable
     - type: InteractionOutline
@@ -43,20 +43,20 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 600
+            damage: 900
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 300
+            damage: 600
           behaviors:
             - !type:PlaySoundBehavior
               sound:
                 collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                GasCanisterBrokenBase:
+                LargeGasCanisterBrokenBase:
                   min: 1
                   max: 1
             - !type:DoActsBehavior
@@ -102,7 +102,7 @@
     - type: StaticPrice
       price: 200
     - type: AccessReader
-      access: [["Atmospherics"], ["Engineering"], ["Research"]]
+      access: [["Atmospherics"], ["Engineering"]]
     - type: Lock
       locked: false
     - type: GuideHelp
@@ -110,13 +110,48 @@
       - GasCanisters
 
 - type: entity
-  parent: GasCanister
+  abstract: true
+  parent: LargeGasCanister
+  id: SmallGasCanister
+  name: storage canister
+  components:
+    - type: Sprite
+      sprite: Structures/Storage/small-canister.rsi
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SmallGasCanisterBrokenBase:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:DumpCanisterBehavior
+    - type: AccessReader
+      access: [["Atmospherics"], ["Engineering"], ["Research"]]
+
+- type: entity
+  parent: SmallGasCanister
   id: StorageCanister
   name: storage canister
   components:
     - type: Sprite
       layers:
         - state: yellow
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -155,10 +190,56 @@
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
 
+- type: entity
+  parent: LargeGasCanister
+  id: LargeStorageCanister
+  name: large storage canister
+  components:
+    - type: Sprite
+      layers:
+        - state: yellow
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles: # List of gasses for easy reference
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Ammonia
+          - 0 # N2O
+          - 0 # Frezon
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeStorageCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+
 # Filled canisters, contain 1871.71051 moles each
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: AirCanister
   name: air canister
   description: A canister that can contain any type of gas. This one is supposed to contain air mixture. It can be attached to connector ports using a wrench.
@@ -166,6 +247,7 @@
   - type: Sprite
     layers:
       - state: grey
+      - state: valve-closed
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -198,7 +280,7 @@
       - !type:DumpCanisterBehavior
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: OxygenCanister
   name: oxygen canister
   description: A canister that can contain any type of gas. This one is supposed to contain oxygen. It can be attached to connector ports using a wrench.
@@ -206,6 +288,7 @@
   - type: Sprite
     layers:
       - state: blue
+      - state: valve-closed
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -240,7 +323,7 @@
   id: LiquidOxygenCanister
   parent: OxygenCanister
   name: liquid oxygen canister
-  description: A canister that can contain any type of gas. This one is supposed to contain liquid oxygen. It can be attached to connector ports using a wrench.
+  description: A large canister that can contain any type of gas. This one is supposed to contain liquid oxygen. It can be attached to connector ports using a wrench.
   components:
   - type: GasCanister
     gasMixture:
@@ -252,7 +335,7 @@
     access: [["Atmospherics"]]
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: NitrogenCanister
   name: nitrogen canister
   description: A canister that can contain any type of gas. This one is supposed to contain nitrogen. It can be attached to connector ports using a wrench.
@@ -260,6 +343,7 @@
     - type: Sprite
       layers:
         - state: red
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -308,7 +392,7 @@
     access: [["Atmospherics"]]
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: CarbonDioxideCanister
   name: carbon dioxide canister
   description: A canister that can contain any type of gas. This one is supposed to contain carbon dioxide. It can be attached to connector ports using a wrench.
@@ -316,6 +400,7 @@
     - type: Sprite
       layers:
         - state: black
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -368,7 +453,7 @@
     access: [["Atmospherics"]]
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: PlasmaCanister
   name: plasma canister
   description: A canister that can contain any type of gas. This one is supposed to contain plasma. It can be attached to connector ports using a wrench.
@@ -376,6 +461,7 @@
     - type: Sprite
       layers:
         - state: orange
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -412,7 +498,7 @@
       locked: true
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: TritiumCanister
   name: tritium canister
   description: A canister that can contain any type of gas. This one is supposed to contain tritium. It can be attached to connector ports using a wrench.
@@ -420,6 +506,7 @@
     - type: Sprite
       layers:
         - state: green
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -457,14 +544,16 @@
       locked: true
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: WaterVaporCanister
   name: water vapor canister
   description: A canister that can contain any type of gas. This one is supposed to contain water vapor. It can be attached to connector ports using a wrench.
   components:
     - type: Sprite
       layers:
-        - state: water_vapor
+        - state: black
+        - state: rings2
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -501,7 +590,7 @@
         - !type:DumpCanisterBehavior
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: AmmoniaCanister
   name: ammonia canister
   description: A canister that can contain any type of gas. This one is supposed to contain ammonia. It can be attached to connector ports using a wrench.
@@ -509,6 +598,8 @@
     - type: Sprite
       layers:
         - state: greenys
+        - state: rings2
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -548,14 +639,16 @@
       locked: true
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: NitrousOxideCanister
   name: nitrous oxide canister
   description: A canister that can contain any type of gas. This one is supposed to contain nitrous oxide. It can be attached to connector ports using a wrench.
   components:
     - type: Sprite
       layers:
-        - state: redws
+        - state: red
+        - state: rings
+        - state: valve-closed
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -592,16 +685,20 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
 
 - type: entity
-  parent: GasCanister
+  parent: SmallGasCanister
   id: FrezonCanister
   name: frezon canister
   description: A canister that can contain any type of gas. This one is supposed to contain frezon. It can be attached to connector ports using a wrench.
   components:
   - type: Sprite
     layers:
-    - state: frezon
+      - state: frezon
+      - state: rings
+      - state: valve-closed
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -642,13 +739,502 @@
   - type: Lock
     locked: true
 
+# Filled large canisters, contain 18717.1051 moles each
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeAirCanister
+  name: large air canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain air mixture. It can be attached to connector ports using a wrench.
+  components:
+  - type: Sprite
+    layers:
+      - state: grey
+  - type: GasCanister
+    gasMixture:
+      volume: 10000
+      moles:
+        - 3930.592071 # oxygen 21%
+        - 14786.513029 # nitrogen 79%
+      temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 900
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          LargeAirCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeOxygenCanister
+  name: large oxygen canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain oxygen. It can be attached to connector ports using a wrench.
+  components:
+  - type: Sprite
+    layers:
+      - state: blue
+  - type: GasCanister
+    gasMixture:
+      volume: 10000
+      moles:
+        - 18717.1051 # oxygen
+      temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 900
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          LargeOxygenCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
+
+- type: entity
+  id: LargeLiquidOxygenCanister
+  parent: LargeOxygenCanister
+  name: large liquid oxygen canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain liquid oxygen. It can be attached to connector ports using a wrench.
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 10000
+      moles:
+        - 187107.1051 # oxygen
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeNitrogenCanister
+  name: large nitrogen canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain nitrogen. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 18717.1051 # nitrogen
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeNitrogenCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+
+- type: entity
+  id: LargeLiquidNitrogenCanister
+  parent: LargeNitrogenCanister
+  name: large liquid nitrogen canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain liquid nitrogen. It can be attached to connector ports using a wrench.
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 10000
+      moles:
+        - 0 # oxygen
+        - 187107.1051 # nitrogen
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeCarbonDioxideCanister
+  name: large carbon dioxide canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain carbon dioxide. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: black
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 18717.1051 # CO2
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeCarbonDioxideCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  id: LargeLiquidCarbonDioxideCanister
+  parent: LargeCarbonDioxideCanister
+  name: large liquid carbon dioxide canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain liquid carbon dioxide. It can be attached to connector ports using a wrench.
+  components:
+  - type: GasCanister
+    gasMixture:
+      volume: 10000
+      moles:
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 187107.1051 # CO2
+      temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargePlasmaCanister
+  name: large plasma canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain plasma. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: orange
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # carbon dioxide
+          - 18717.1051 # plasma
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargePlasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeTritiumCanister
+  name: large tritium canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain tritium. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 18717.1051 # Tritium
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeTritiumCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeWaterVaporCanister
+  name: large water vapor canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain water vapor. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: water_vapor
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 18717.1051 # Water vapor
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeWaterVaporCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeAmmoniaCanister
+  name: large ammonia canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain ammonia. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: greenys
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 #  Water vapor
+          - 18717.1051 # Ammonia
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeAmmoniaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeNitrousOxideCanister
+  name: large nitrous oxide canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain nitrous oxide. It can be attached to connector ports using a wrench.
+  components:
+    - type: Sprite
+      layers:
+        - state: redws
+    - type: GasCanister
+      gasMixture:
+        volume: 10000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 #  Water vapor
+          - 0 # Ammonia
+          - 18717.1051 # N2O
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 900
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            LargeNitrousOxideCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: LargeGasCanister
+  id: LargeFrezonCanister
+  name: large frezon canister
+  description: A large canister that can contain any type of gas. This one is supposed to contain frezon. It can be attached to connector ports using a wrench.
+  components:
+  - type: Sprite
+    layers:
+    - state: frezon
+  - type: GasCanister
+    gasMixture:
+      volume: 10000
+      moles:
+      - 0 # oxygen
+      - 0 # nitrogen
+      - 0 # CO2
+      - 0 # Plasma
+      - 0 # Tritium
+      - 0 # Water vapor
+      - 0 # Ammonia
+      - 0 # N2O
+      - 18717.1051 # Frezon
+      temperature: 293.15
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 900
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          LargeFrezonCanisterBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
+  - type: Lock
+    locked: true
+
 # Broke Entities
 
 - type: entity
   parent: BaseStructureDynamic
-  id: GasCanisterBrokenBase
-  name: broken gas canister
-  description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
+  id: LargeGasCanisterBrokenBase
+  name: large broken gas canister
+  description: A large broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
   components:
     - type: Destructible
       thresholds:
@@ -699,28 +1285,74 @@
       price: 125
 
 - type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: GasCanisterBrokenBase
+  name: broken gas canister
+  description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
+  components:
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlasteel1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Sprite
+      sprite: Structures/Storage/small-canister.rsi
+      state: grey-side
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 400
+    - type: StaticPrice
+      price: 100
+
+- type: entity
   parent: GasCanisterBrokenBase
   id: StorageCanisterBroken
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: yellow-1
+      layers:
+        - state: yellow-side
+        - state: valve-closed-side
+        - state: crack1
 
 - type: entity
   parent: GasCanisterBrokenBase
   id: AirCanisterBroken
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    state: grey-1
+    - type: Sprite
+      layers:
+        - state: grey-side
+        - state: valve-closed-side
+        - state: crack2
 
 - type: entity
   parent: GasCanisterBrokenBase
   id: OxygenCanisterBroken
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    state: blue-1
+    - type: Sprite
+      layers:
+        - state: blue-side
+        - state: valve-closed-side
+        - state: crack3
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -728,7 +1360,10 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: red-1
+      layers:
+        - state: red-side
+        - state: valve-closed-side
+        - state: crack1
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -736,7 +1371,10 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: black-1
+      layers:
+        - state: black-side
+        - state: valve-closed-side
+        - state: crack2
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -744,7 +1382,10 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: orange-1
+      layers:
+        - state: orange-side
+        - state: valve-closed-side
+        - state: crack3
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -752,7 +1393,10 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: green-1
+      layers:
+        - state: green-side
+        - state: valve-closed-side
+        - state: crack1
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -761,7 +1405,11 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: water_vapor-1
+      layers:
+        - state: black-side
+        - state: rings2-side
+        - state: valve-closed-side
+        - state: crack2
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -769,7 +1417,11 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: greenys-1
+      layers:
+        - state: greenys-side
+        - state: rings2-side
+        - state: valve-closed-side
+        - state: crack3
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -777,11 +1429,108 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      state: redws-1
+      layers:
+        - state: red-side
+        - state: rings-side
+        - state: valve-closed-side
+        - state: crack1
 
 - type: entity
   parent: GasCanisterBrokenBase
   id: FrezonCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      layers:
+        - state: frezon-side
+        - state: rings-side
+        - state: valve-closed-side
+        - state: crack2
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeStorageCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: yellow-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeAirCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: grey-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeOxygenCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: blue-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeNitrogenCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: red-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeCarbonDioxideCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: black-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargePlasmaCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: orange-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeTritiumCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: green-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeWaterVaporCanisterBroken
+  name: broken water vapor canister
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: water_vapor-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeAmmoniaCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: greenys-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeNitrousOxideCanisterBroken
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: redws-1
+
+- type: entity
+  parent: LargeGasCanisterBrokenBase
+  id: LargeFrezonCanisterBroken
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
