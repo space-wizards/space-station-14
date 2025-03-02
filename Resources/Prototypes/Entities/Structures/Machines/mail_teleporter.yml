@@ -21,20 +21,26 @@
         mask:
         - MachineMask
   - type: Sprite
-    sprite: Structures/cargo_telepad.rsi
-    drawdepth: HighFloorObjects
+    sprite: Structures/mailbox.rsi
     layers:
-    - state: offline
-      map: [ "enum.CargoTelepadLayers.Base" ]
-    - state: idle
-      map: [ "enum.CargoTelepadLayers.Beam" ]
+    - state: icon
+    - state: unlit
       shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
   - type: ApcPowerReceiver
     powerLoad: 1000
+    powerDisabled: true
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: CollideOnAnchor
   - type: Machine
     board: MailTeleporterMachineCircuitboard
