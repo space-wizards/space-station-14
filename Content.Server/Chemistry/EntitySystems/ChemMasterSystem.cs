@@ -19,6 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Audio;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -294,7 +295,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ChemMasterComponent> chemMaster)
         {
-            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
         }
 
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)

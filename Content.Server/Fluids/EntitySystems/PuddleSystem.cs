@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -502,7 +503,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return true;
         }
 
-        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid);
+        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid, FunAudioParams.WithUniformPitch());
         return true;
     }
 

@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Doors.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Popups;
@@ -156,9 +157,9 @@ public abstract class SharedAirlockSystem : EntitySystem
 
         var sound = ent.Comp.EmergencyAccess ? ent.Comp.EmergencyOnSound : ent.Comp.EmergencyOffSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user);
+            Audio.PlayPredicted(sound, ent, user: user, FunAudioParams.WithUniformPitch());
         else
-            Audio.PlayPvs(sound, ent);
+            Audio.PlayPvs(sound, ent, FunAudioParams.WithUniformPitch());
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)

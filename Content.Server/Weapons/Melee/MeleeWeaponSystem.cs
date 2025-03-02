@@ -23,6 +23,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Audio;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -155,7 +156,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        _audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        _audio.PlayPvs(combatMode.DisarmSuccessSound, user, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.025f)).WithVolume(5f));
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         var targetEnt = Identity.Entity(target, EntityManager);

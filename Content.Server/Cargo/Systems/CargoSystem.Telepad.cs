@@ -3,6 +3,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
+using Content.Shared.Audio;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
@@ -92,7 +93,7 @@ public sealed partial class CargoSystem
             var currentOrder = comp.CurrentOrders.First();
             if (FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput))
             {
-                _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
+                _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-8f)));
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);

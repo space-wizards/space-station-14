@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Doors.Components;
 using Content.Shared.Prying.Components;
 
@@ -102,9 +103,9 @@ public abstract partial class SharedDoorSystem
 
         var sound = value ? ent.Comp.BoltDownSound : ent.Comp.BoltUpSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user);
+            Audio.PlayPredicted(sound, ent, user: user, FunAudioParams.WithUniformPitch());
         else
-            Audio.PlayPvs(sound, ent);
+            Audio.PlayPvs(sound, ent, FunAudioParams.WithUniformPitch());
         return true;
     }
 

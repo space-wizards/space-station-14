@@ -1,4 +1,5 @@
-﻿using Content.Shared.Beeper.Components;
+﻿using Content.Shared.Audio;
+using Content.Shared.Beeper.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
@@ -90,7 +91,7 @@ public sealed class BeeperSystem : EntitySystem
         var beepEvent = new BeepPlayedEvent(beeper.IsMuted);
         RaiseLocalEvent(owner, ref beepEvent);
         if (!beeper.IsMuted && _net.IsServer)
-            _audio.PlayPvs(beeper.BeepSound, owner);
+            _audio.PlayPvs(beeper.BeepSound, owner, FunAudioParams.WithUniformPitch());
         beeper.LastBeepTime = _timing.CurTime;
     }
 }

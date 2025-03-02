@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Foldable;
@@ -104,7 +105,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         fultoned.Removeable = fulton.Removeable;
         UpdateAppearance(args.Target.Value, fultoned);
         Dirty(args.Target.Value, fultoned);
-        Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User);
+        Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User, FunAudioParams.WithUniformPitch());
     }
 
     private void OnFultonInteract(EntityUid uid, FultonComponent component, AfterInteractEvent args)
@@ -117,7 +118,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
             if (!_foldable.IsFolded(args.Target.Value))
             {
                 component.Beacon = args.Target.Value;
-                Audio.PlayPredicted(beacon.LinkSound, uid, args.User);
+                Audio.PlayPredicted(beacon.LinkSound, uid, args.User, FunAudioParams.WithUniformPitch());
                 _popup.PopupClient(Loc.GetString("fulton-linked"), uid, args.User);
             }
             else

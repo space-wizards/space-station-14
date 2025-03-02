@@ -1,4 +1,5 @@
 using Content.Server.NPC.Components;
+using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Ranged.Components;
@@ -151,7 +152,7 @@ public sealed partial class NPCCombatSystem
 
             if (!oldInLos && comp.SoundTargetInLOS != null)
             {
-                _audio.PlayPvs(comp.SoundTargetInLOS, uid);
+                _audio.PlayPvs(comp.SoundTargetInLOS, uid, FunAudioParams.WithUniformPitch());
             }
 
             comp.ShootAccumulator += frameTime;

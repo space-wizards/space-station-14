@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Audio.Systems;
@@ -34,7 +35,7 @@ public sealed class MovementSoundSystem : EntitySystem
         if (moving)
         {
             DebugTools.Assert(ent.Comp.SoundEntity == null);
-            ent.Comp.SoundEntity = _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, ent.Owner)?.Entity;
+            ent.Comp.SoundEntity = _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, ent.Owner, FunAudioParams.WithUniformPitch())?.Entity;
         }
         else
         {

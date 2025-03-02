@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -32,7 +33,7 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
 
         if (_random.Prob(ent.Comp.Probability))
         {
-            _audio.PlayPvs(ent.Comp.MissSound, ent);
+            _audio.PlayPvs(ent.Comp.MissSound, ent, FunAudioParams.WithUniformPitch());
             _popup.PopupEntity(Loc.GetString(ent.Comp.MissLocString), ent);
             return;
         }
@@ -40,7 +41,7 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (!_containerSystem.Insert(args.Thrown, container))
             throw new InvalidOperationException("Container insertion failed but CanInsert returned true");
 
-        _audio.PlayPvs(ent.Comp.InsertSound, ent);
+        _audio.PlayPvs(ent.Comp.InsertSound, ent, FunAudioParams.WithUniformPitch());
 
         if (args.Component.Thrower != null)
             _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(ent)}");

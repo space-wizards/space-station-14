@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -332,7 +333,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null);
+        _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null, FunAudioParams.WithUniformPitch());
         return gibs;
     }
 }

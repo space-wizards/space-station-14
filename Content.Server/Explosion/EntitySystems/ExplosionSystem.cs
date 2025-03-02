@@ -5,6 +5,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Audio;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -363,7 +364,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             ? queued.Proto.SmallSound
             : queued.Proto.Sound;
 
-        _audio.PlayStatic(sound, filter, mapEntityCoords, true, sound.Params);
+        _audio.PlayStatic(sound, filter, mapEntityCoords, true, FunAudioParams.WithUniformPitch(sound.Params));
 
         // play far sound
         // far sound should play for anyone who wasn't in range of any of the effects of the bomb
@@ -373,7 +374,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             ? queued.Proto.SmallSoundFar
             : queued.Proto.SoundFar;
 
-        _audio.PlayGlobal(farSound, farFilter, true, farSound.Params);
+        _audio.PlayGlobal(farSound, farFilter, true, FunAudioParams.WithUniformPitch(farSound.Params));
 
         return new Explosion(this,
             queued.Proto,

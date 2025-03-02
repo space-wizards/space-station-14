@@ -1,5 +1,6 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -38,7 +39,7 @@ public sealed class SignalSwitchSystem : EntitySystem
             _deviceLink.SendSignal(uid, comp.StatusPort, comp.State);
         }
 
-        _audio.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
+        _audio.PlayPvs(comp.ClickSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)).WithVolume(8f));
 
         args.Handled = true;
     }

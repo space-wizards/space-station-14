@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Station.Components;
+using Content.Shared.Audio;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -61,7 +62,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryComp(stationUid, out StationBankAccountComponent? bank))
                 return;
 
-            _audio.PlayPvs(component.ConfirmSound, uid);
+            _audio.PlayPvs(component.ConfirmSound, uid, FunAudioParams.WithUniformPitch());
             UpdateBankAccount(stationUid.Value, bank, (int) price);
             QueueDel(args.Used);
             args.Handled = true;
@@ -206,7 +207,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             order.Approved = true;
-            _audio.PlayPvs(component.ConfirmSound, uid);
+            _audio.PlayPvs(component.ConfirmSound, uid, FunAudioParams.WithUniformPitch());
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
@@ -369,7 +370,7 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
+            _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid, FunAudioParams.WithUniformPitch());
         }
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)

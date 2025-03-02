@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -237,7 +238,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
-            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null)?.Entity;
+            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null, FunAudioParams.WithUniformPitch())?.Entity;
 
         Dirty(target, tethered);
         Dirty(gunUid, component);

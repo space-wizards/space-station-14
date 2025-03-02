@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Audio;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
@@ -100,7 +101,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
-                    _audio.PlayPvs(SpaceWindSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                    _audio.PlayPvs(SpaceWindSound, coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.Guidebook.Components;
 using Content.Client.Light;
 using Content.Client.Verbs;
+using Content.Shared.Audio;
 using Content.Shared.Guidebook;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
@@ -150,7 +151,7 @@ public sealed class GuidebookSystem : EntitySystem
         if (!TryComp<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
             return;
 
-        _audioSystem.PlayGlobal(speech.SpeechSounds, Filter.Local(), false, speech.AudioParams);
+        _audioSystem.PlayGlobal(speech.SpeechSounds, Filter.Local(), false, FunAudioParams.WithUniformPitch(speech.AudioParams));
     }
 
     public void FakeClientActivateInWorld(EntityUid activated)

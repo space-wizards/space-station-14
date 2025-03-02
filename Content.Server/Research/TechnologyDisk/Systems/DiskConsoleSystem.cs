@@ -1,5 +1,6 @@
 using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
+using Content.Shared.Audio;
 using Content.Shared.UserInterface;
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
@@ -54,7 +55,7 @@ public sealed class DiskConsoleSystem : EntitySystem
             return;
 
         _research.ModifyServerPoints(server.Value, -component.PricePerDisk, serverComp);
-        _audio.PlayPvs(component.PrintSound, uid);
+        _audio.PlayPvs(component.PrintSound, uid, FunAudioParams.WithUniformPitch());
 
         var printing = EnsureComp<DiskConsolePrintingComponent>(uid);
         printing.FinishTime = _timing.CurTime + component.PrintDuration;

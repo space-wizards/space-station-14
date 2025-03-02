@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Light.Components;
 using Content.Shared.Mind.Components;
@@ -121,7 +122,7 @@ public sealed class UnpoweredFlashlightSystem : EntitySystem
         _appearance.SetData(ent, UnpoweredFlashlightVisuals.LightOn, value);
 
         if (!quiet)
-            _audioSystem.PlayPredicted(ent.Comp.ToggleSound, ent, user);
+            _audioSystem.PlayPredicted(ent.Comp.ToggleSound, ent, user, FunAudioParams.WithUniformPitch());
 
         _actionsSystem.SetToggled(ent.Comp.ToggleActionEntity, value);
         RaiseLocalEvent(ent, new LightToggleEvent(value));

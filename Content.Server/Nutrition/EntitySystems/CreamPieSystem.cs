@@ -2,6 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion.Components;
 using Content.Shared.IdentityManagement;
@@ -43,7 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             // The entity is deleted, so play the sound at its position rather than parenting
             var coordinates = Transform(uid).Coordinates;
-            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
+            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)));
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {

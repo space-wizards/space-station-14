@@ -1,5 +1,6 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
+using Content.Shared.Audio;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -85,7 +86,7 @@ public sealed class LogicGateSystem : EntitySystem
         UpdateOutput(uid, comp);
 
         // notify the user
-        _audio.PlayPvs(comp.CycleSound, uid);
+        _audio.PlayPvs(comp.CycleSound, uid, FunAudioParams.WithUniformPitch());
         var msg = Loc.GetString("logic-gate-cycle", ("gate", comp.Gate.ToString().ToUpper()));
         _popup.PopupEntity(msg, uid, args.User);
         _appearance.SetData(uid, LogicGateVisuals.Gate, comp.Gate);

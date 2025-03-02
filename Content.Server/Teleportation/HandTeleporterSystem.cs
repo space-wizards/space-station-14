@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
@@ -91,7 +92,7 @@ public sealed class HandTeleporterSystem : EntitySystem
             timeout.EnteredPortal = null;
             component.FirstPortal = Spawn(component.FirstPortalPrototype, Transform(user).Coordinates);
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.FirstPortal.Value)} at {Transform(component.FirstPortal.Value).Coordinates} using {ToPrettyString(uid)}");
-            _audio.PlayPvs(component.NewPortalSound, uid);
+            _audio.PlayPvs(component.NewPortalSound, uid, FunAudioParams.WithUniformPitch());
         }
         else if (Deleted(component.SecondPortal))
         {
@@ -110,7 +111,7 @@ public sealed class HandTeleporterSystem : EntitySystem
             component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
             _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
-            _audio.PlayPvs(component.NewPortalSound, uid);
+            _audio.PlayPvs(component.NewPortalSound, uid, FunAudioParams.WithUniformPitch());
         }
         else
         {
@@ -137,7 +138,7 @@ public sealed class HandTeleporterSystem : EntitySystem
 
         component.FirstPortal = null;
         component.SecondPortal = null;
-        _audio.PlayPvs(component.ClearPortalsSound, uid);
+        _audio.PlayPvs(component.ClearPortalsSound, uid, FunAudioParams.WithUniformPitch());
 
         if (instability)
             _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), uid, user, PopupType.MediumCaution);

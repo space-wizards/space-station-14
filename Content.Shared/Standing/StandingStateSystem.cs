@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
@@ -88,7 +89,7 @@ namespace Content.Shared.Standing
 
             if (playSound)
             {
-                _audio.PlayPredicted(standingState.DownSound, uid, uid);
+                _audio.PlayPredicted(standingState.DownSound, uid, uid, FunAudioParams.WithUniformPitch());
             }
 
             return true;

@@ -8,6 +8,7 @@ using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Audio;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -50,7 +51,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             var foamEnt = Spawn("Foam", transform.Coordinates);
             var spreadAmount = weak ? component.WeakSpread : component.Spread;
             _smoke.StartSmoke(foamEnt, solution, component.Time, spreadAmount);
-            Audio.PlayPvs(component.Sound, transform.Coordinates);
+            Audio.PlayPvs(component.Sound, transform.Coordinates, FunAudioParams.WithUniformPitch());
         }
     }
 }

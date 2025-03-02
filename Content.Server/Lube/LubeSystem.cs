@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -78,7 +79,7 @@ public sealed class LubeSystem : EntitySystem
                 lubed.SlipsLeft = _random.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
                 lubed.SlipStrength = entity.Comp.SlipStrength;
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
+                _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner, FunAudioParams.WithUniformPitch());
                 _popup.PopupEntity(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
                 return true;
             }

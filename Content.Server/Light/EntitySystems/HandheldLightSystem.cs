@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
@@ -202,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
             if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
                 !TryComp(uid, out battery))
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid, FunAudioParams.WithUniformPitch());
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), uid, user);
                 return false;
             }
@@ -212,7 +213,7 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid, FunAudioParams.WithUniformPitch());
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), uid, user);
                 return false;
             }

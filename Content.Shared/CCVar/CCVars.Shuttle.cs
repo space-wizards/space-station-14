@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Configuration;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.CCVar;
 

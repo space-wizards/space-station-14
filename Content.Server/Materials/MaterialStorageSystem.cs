@@ -6,6 +6,7 @@ using Content.Shared.Stacks;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Content.Shared.Construction;
 using Content.Shared.Database;
 using JetBrains.Annotations;
@@ -101,7 +102,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
             return false;
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
             return false;
-        _audio.PlayPvs(storage.InsertingSound, receiver);
+        _audio.PlayPvs(storage.InsertingSound, receiver, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", receiver),
             ("item", toInsert)), receiver);
         QueueDel(toInsert);

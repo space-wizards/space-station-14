@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Trigger;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -33,7 +34,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
         {
             comp.PrimingAnimation.AnimationTracks.Add(
                 new AnimationTrackPlaySound() {
-                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(comp.PrimingSound), 0) }
+                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(comp.PrimingSound), 0, FunAudioParams.WithUniformPitch) }
                 }
             );
         }

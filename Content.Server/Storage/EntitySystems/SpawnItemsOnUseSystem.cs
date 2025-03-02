@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
@@ -84,7 +85,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 // The entity is often deleted, so play the sound at its position rather than parenting
                 var coordinates = Transform(uid).Coordinates;
-                _audio.PlayPvs(component.Sound, coordinates);
+                _audio.PlayPvs(component.Sound, coordinates, FunAudioParams.WithUniformPitch());
             }
 
             component.Uses--;

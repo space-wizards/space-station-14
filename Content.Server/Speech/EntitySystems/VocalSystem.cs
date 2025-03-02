@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
+using Content.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Speech;
@@ -81,7 +82,7 @@ public sealed class VocalSystem : EntitySystem
     {
         if (_random.Prob(component.WilhelmProbability))
         {
-            _audio.PlayPvs(component.Wilhelm, uid, component.Wilhelm.Params);
+            _audio.PlayPvs(component.Wilhelm, uid, FunAudioParams.WithUniformPitch(component.Wilhelm.Params));
             return true;
         }
 

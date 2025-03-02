@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Speech;
+using Content.Shared.Audio;
 using Content.Shared.Speech;
 using Content.Shared.Chat;
 using Robust.Shared.Audio.Systems;
@@ -40,7 +41,7 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
             && TryComp<SpeechComponent>(args.Speaker, out var speech))
         {
             var sound = _speechSound.GetSpeechSound((args.Speaker, speech), args.Message);
-            _audioSystem.PlayPvs(sound, uid);
+            _audioSystem.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
 
             component.LastSoundPlayed = time;
         }

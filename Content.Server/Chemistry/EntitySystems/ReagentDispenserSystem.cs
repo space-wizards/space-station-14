@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.EntitySystems;
@@ -159,7 +160,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
         }
 
         /// <summary>

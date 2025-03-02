@@ -1,6 +1,7 @@
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Access.Components;
+using Content.Shared.Audio;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Damage;
@@ -84,7 +85,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             if (_timing.CurTime > component.EffectCooldown)
             {
                 RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(uid), GetNetEntity(component.Mover.Value)));
-                _audio.PlayPvs(component.EffectSound, uid);
+                _audio.PlayPvs(component.EffectSound, uid, FunAudioParams.WithUniformPitch());
                 component.EffectCooldown = _timing.CurTime + component.CooldownDuration;
             }
         }

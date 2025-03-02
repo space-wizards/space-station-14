@@ -16,6 +16,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -217,7 +218,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
         if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _audio.PlayPvs(component.OpenSound, uid);
+            _audio.PlayPvs(component.OpenSound, uid, FunAudioParams.WithUniformPitch());
         ReleaseGas(uid, component);
         var afterev = new StorageAfterOpenEvent();
         RaiseLocalEvent(uid, ref afterev);
@@ -267,7 +268,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         TakeGas(uid, component);
         ModifyComponents(uid, component);
         if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _audio.PlayPvs(component.CloseSound, uid);
+            _audio.PlayPvs(component.CloseSound, uid, FunAudioParams.WithUniformPitch());
 
         var afterev = new StorageAfterCloseEvent();
         RaiseLocalEvent(uid, ref afterev);

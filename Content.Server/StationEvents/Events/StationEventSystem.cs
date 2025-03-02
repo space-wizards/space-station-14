@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio.Systems;

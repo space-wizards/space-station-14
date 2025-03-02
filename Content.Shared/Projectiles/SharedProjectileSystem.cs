@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -110,7 +111,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
                 xform);
         }
 
-        _audio.PlayPredicted(component.Sound, uid, null);
+        _audio.PlayPredicted(component.Sound, uid, null, FunAudioParams.WithUniformPitch());
         component.EmbeddedIntoUid = target;
         var ev = new EmbedEvent(user, target);
         RaiseLocalEvent(uid, ref ev);
