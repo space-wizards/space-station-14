@@ -11,6 +11,7 @@
     - id: CockroachMigration
     - id: GasLeak
     - id: GreytideVirus
+    - id: HoloCarpSpawn
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
@@ -623,3 +624,22 @@
       min: 1
       max: 1
       pickPlayer: false
+
+- type: entity
+  id: HoloCarpSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-holopad-malfunction-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 20
+    weight: 4
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobCarpHolo
+      prob: 0.05
+
+
