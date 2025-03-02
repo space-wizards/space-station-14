@@ -1,4 +1,5 @@
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -62,5 +63,5 @@ public sealed partial class SericultureComponent : Component
     [DataField("minHungerThreshold")]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
+    public SatiationThreshold MinHungerThreshold = SatiationThreshold.Okay;
 }

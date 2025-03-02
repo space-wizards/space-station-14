@@ -5,9 +5,11 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Storage;
 using Robust.Server.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -22,10 +24,12 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+
+    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
 
     public override void Initialize()
     {
@@ -82,15 +86,15 @@ public sealed class EggLayerSystem : EntitySystem
             return false;
 
         // Allow infinitely laying eggs if they can't get hungry.
-        if (TryComp<HungerComponent>(uid, out var hunger))
+        if (TryComp<SatiationComponent>(uid, out var satiation))
         {
-            if (_hunger.GetHunger(hunger) < egglayer.HungerUsage)
+            if (_satiation.GetValueOrNull((uid, satiation), HungerSatiation) < egglayer.HungerUsage)
             {
                 _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
                 return false;
             }
 
-            _hunger.ModifyHunger(uid, -egglayer.HungerUsage, hunger);
+            _satiation.ModifyValue((uid, satiation), HungerSatiation, -egglayer.HungerUsage);
         }
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))

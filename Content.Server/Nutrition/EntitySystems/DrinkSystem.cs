@@ -14,7 +14,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -24,6 +23,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -53,6 +53,8 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
+
+    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
 
     public override void Initialize()
     {
@@ -92,9 +94,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateThirst thirst)
+                    if (effect is Satiate satiate && satiate.SatiationType == ThirstSatiation)
                     {
-                        total += thirst.HydrationFactor * quantity.Quantity.Float();
+                        total += satiate.Factor * quantity.Quantity.Float();
                     }
                 }
             }
