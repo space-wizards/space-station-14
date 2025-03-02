@@ -190,6 +190,9 @@ binds:
 - function: OpenEmotesMenu
   type: State
   key: Y
+- function: BugReportMenu
+  type: State
+  key: F12
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
