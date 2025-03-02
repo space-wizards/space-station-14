@@ -33,7 +33,6 @@
     damageModifierSet: StructuralMetallicStrong
   - type: ApcPowerReceiver
     powerLoad: 1000
-    powerDisabled: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:

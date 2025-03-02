@@ -24,7 +24,7 @@ public sealed partial class DeliverySystem
 
     private void OnDataMapInit(Entity<CargoDeliveryDataComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextDelivery = _timing.CurTime;
+        ent.Comp.NextDelivery = _timing.CurTime + ent.Comp.DeliveryCooldown;
     }
 
     private void SpawnDelivery(Entity<DeliverySpawnerComponent?> ent, int amount)
