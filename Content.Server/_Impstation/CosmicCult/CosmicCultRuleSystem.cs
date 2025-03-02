@@ -528,10 +528,12 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 _damage.SetDamageContainerID(uid, "BiologicalMetaphysical");
                 cultComp.EntropyBudget = 20; // pity balance
-                cultComp.UnlockedInfluences.Add("InfluenceVacuousImposition");
-                cultComp.UnlockedInfluences.Add("InfluenceAstralNova");
-                cultComp.UnlockedInfluences.Add("InfluenceAstralStride");
-                cultComp.UnlockedInfluences.Add("InfluenceVacuousVitality");
+
+                foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
+                {
+                    cultComp.UnlockedInfluences.Add(influenceProto.ID);
+                }
+
                 EnsureComp<CosmicStarMarkComponent>(uid);
                 EnsureComp<PressureImmunityComponent>(uid);
                 EnsureComp<TemperatureImmunityComponent>(uid);
@@ -540,8 +542,11 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             else if (CurrentTier == 2)
             {
                 cultComp.EntropyBudget = 12; // pity balance
-                cultComp.UnlockedInfluences.Add("InfluenceForceIngress");
-                cultComp.UnlockedInfluences.Add("InfluenceUnboundStep");
+
+                foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
+                {
+                    cultComp.UnlockedInfluences.Add(influenceProto.ID);
+                }
             }
 
             Dirty(uid, cultComp);
