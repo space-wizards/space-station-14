@@ -14,4 +14,10 @@ public sealed partial class LabelComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? CurrentLabel { get; set; }
+
+    /// <summary>
+    /// Should the label show up in the examine menu?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Examinable = true;
 }
