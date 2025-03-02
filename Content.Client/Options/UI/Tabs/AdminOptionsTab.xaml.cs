@@ -12,7 +12,14 @@ public sealed partial class AdminOptionsTab : Control
     {
         RobustXamlLoader.Load(this);
 
+        Control.AddOptionCheckBox(CCVars.AdminPlayerlistSeparateSymbols, PlayerlistSeparateSymbolsCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminPlayerlistHighlightedCharacterColor, PlayerlistCharacterColorCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminPlayerlistRoleTypeColor, PlayerlistRoleTypeColorCheckBox);
+
         Control.AddOptionCheckBox(CCVars.AdminOverlayClassic, EnableClassicOverlayCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminOverlaySymbols, EnableOverlaySymbolsCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminOverlayPlaytime, EnableOverlayPlaytimeCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminOverlayStartingJob, EnableOverlayStartingJobCheckBox);
 
         Control.Initialize();
     }
