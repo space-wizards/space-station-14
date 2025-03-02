@@ -49,6 +49,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         SubscribeLocalEvent<VirtualItemComponent, GettingInteractedWithAttemptEvent>(OnGettingInteractedWithAttemptEvent);
 
         SubscribeLocalEvent<VirtualItemComponent, GetUsedEntityEvent>(OnGetUsedEntity);
+        SubscribeLocalEvent<VirtualItemComponent, HeldRelayedEvent<EnterCryostorageEvent>>(HandleEnterCryostorageEvent);
     }
 
     /// <summary>
