@@ -553,6 +553,12 @@
     attributes:
       proper: true
       gender: female
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Weapons/flash.ogg
+  - type: FlashOnTrigger
+    range: 3
+  - type: TriggerOnVoice
   - type: Tag
     tags:
     - CannotSuicide
@@ -663,6 +669,12 @@
     thresholds:
       0: Alive
       150: Dead
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Weapons/flash.ogg
+  - type: FlashOnTrigger
+    range: 3
+  - type: TriggerOnVoice
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
