@@ -125,17 +125,26 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the influence thingies
     private void UpdateInfluences(MonumentBuiState state)
     {
-        var influences = _influencePrototypes
-            .OrderByDescending(influence => _unlockedInfluenceProtoIds.Contains(influence.ID))
-            .ThenBy<InfluencePrototype, string>(influence => influence.Name);
-
         InfluencesContainer.RemoveAllChildren();
-        foreach (var influence in influences)
+
+        var influenceUIBoxes = new List<InfluenceUIBox>();
+        foreach (var influence in _influencePrototypes)
         {
-            var UIBoxState = GetUIBoxStateForInfluence(influence, state);
-            var influenceBox = new InfluenceUIBox(influence, UIBoxState, state);
+            var uiBoxState = GetUIBoxStateForInfluence(influence, state);
+            var influenceBox = new InfluenceUIBox(influence, uiBoxState, state);
+            influenceUIBoxes.Add(influenceBox);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
-            InfluencesContainer.AddChild(influenceBox);
+        }
+
+        //sort the list of UI boxes by state (locked -> owned -> not enough entropy -> enough entropy)
+        //then sort alphabetically within those categories
+        influenceUIBoxes = influenceUIBoxes.OrderBy(box => box.State)
+            .ThenBy(box => box.Proto.ID)
+            .ToList();
+
+        foreach (var box in influenceUIBoxes)
+        {
+            InfluencesContainer.AddChild(box);
         }
     }
 

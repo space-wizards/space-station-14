@@ -18,11 +18,14 @@ public sealed partial class InfluenceUIBox : BoxContainer
 
     public enum InfluenceUIBoxState
     {
-        Owned,
-        UnlockedAndEnoughEntropy,
-        UnlockedAndNotEnoughEntropy,
-        Locked
+        UnlockedAndEnoughEntropy = 0,
+        UnlockedAndNotEnoughEntropy = 1,
+        Owned = 2,
+        Locked = 3,
     }
+
+    public readonly InfluenceUIBoxState State;
+    public readonly InfluencePrototype Proto;
 
     public InfluenceUIBox(InfluencePrototype influenceProto, InfluenceUIBoxState state, MonumentBuiState monumentState)
     {
@@ -33,6 +36,9 @@ public sealed partial class InfluenceUIBox : BoxContainer
 
         InfluenceIcon.Texture = _sprite.Frame0(influenceProto.Icon);
         Name.Text = Loc.GetString(influenceProto.Name);
+
+        State = state;
+        Proto = influenceProto;
 
         switch (state)
         {
