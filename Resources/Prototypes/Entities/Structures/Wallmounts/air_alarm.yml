@@ -130,6 +130,7 @@
         - AirSensor
         - Firelock
         - FirelockGlass
+        - FirelockEdge
 
 - type: entity
   id: AirAlarmAssembly
