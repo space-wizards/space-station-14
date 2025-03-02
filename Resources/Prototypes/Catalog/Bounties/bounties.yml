@@ -746,7 +746,7 @@
 
 - type: cargoBounty
   id: BountyTeethSpaceCarp
-  reward: 800
+  reward: 7500
   description: bounty-description-tooth-space-carp
   entries:
   - name: bounty-item-tooth-space-carp
@@ -757,7 +757,7 @@
 
 - type: cargoBounty
   id: BountyTeethSharkminnow
-  reward: 1500
+  reward: 15000
   description: bounty-description-tooth-sharkminnow
   entries:
   - name: bounty-item-tooth-sharkminnow
@@ -765,3 +765,36 @@
     whitelist:
       tags:
       - ToothSharkminnow
+
+- type: cargoBounty
+  id: BountyPlates
+  reward: 20000
+  description: bounty-description-plates
+  entries:
+  - name: bounty-item-plates
+    amount: 4
+    whitelist:
+      tags:
+      - Plates
+      
+- type: cargoBounty
+  id: BountyRemains
+  reward: 15000
+  description: bounty-description-remains
+  entries:
+  - name: bounty-item-remains
+    amount: 2
+    whitelist:
+      tags:
+      - Remains
+      
+- type: cargoBounty
+  id: BountyRing
+  reward: 12500
+  description: bounty-description-ring
+  entries:
+  - name: bounty-item-ring
+    amount: 2
+    whitelist:
+      tags:
+      - Ring
