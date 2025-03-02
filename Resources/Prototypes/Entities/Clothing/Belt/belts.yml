@@ -116,6 +116,7 @@
         - AppraisalTool
       components:
         - Signaller
+        - AccessOverrider
         - StationMap
         - SprayPainter
         - NetworkConfigurator
