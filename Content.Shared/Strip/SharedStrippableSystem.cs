@@ -222,9 +222,6 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
-
-
-
     }
 
     /// <summary>
