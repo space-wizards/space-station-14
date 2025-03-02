@@ -573,6 +573,8 @@
       amount: 1
   products:
     IrishSlammer: 2
+  sound:
+    path: /Audio/Animals/penguin_squawk.ogg # Cocktail is called grenade penguin in localisation
 
 - type: reaction
   id: IrishCoffee
