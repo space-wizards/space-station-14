@@ -4,6 +4,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
+using Content.Shared._Impstation.CosmicCult.Components.Examine;
 
 namespace Content.Client._Impstation.CosmicCult;
 
@@ -23,6 +24,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 
         SubscribeLocalEvent<CosmicCultComponent, GetStatusIconsEvent>(GetCosmicCultIcon);
         SubscribeLocalEvent<CosmicCultLeadComponent, GetStatusIconsEvent>(GetCosmicCultLeadIcon);
+        SubscribeLocalEvent<CosmicMarkBlankComponent, GetStatusIconsEvent>(GetCosmicSSDIcon);
     }
 
     private void OnCosmicStarMarkAdded(Entity<CosmicStarMarkComponent> uid, ref ComponentStartup args)
@@ -61,6 +63,9 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         sprite.RemoveLayer(layer);
     }
 
+
+
+
     private void GetCosmicCultIcon(Entity<CosmicCultComponent> ent, ref GetStatusIconsEvent args)
     {
         if (HasComp<CosmicCultLeadComponent>(ent))
@@ -71,6 +76,12 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     }
 
     private void GetCosmicCultLeadIcon(Entity<CosmicCultLeadComponent> ent, ref GetStatusIconsEvent args)
+    {
+        if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
+            args.StatusIcons.Add(iconPrototype);
+    }
+
+    private void GetCosmicSSDIcon(Entity<CosmicMarkBlankComponent> ent, ref GetStatusIconsEvent args)
     {
         if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
             args.StatusIcons.Add(iconPrototype);

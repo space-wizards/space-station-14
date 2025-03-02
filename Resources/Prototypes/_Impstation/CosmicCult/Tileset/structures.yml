@@ -247,10 +247,10 @@
   - type: CosmicCorrupting
     corruptionGrowth: true
     corruptionRadius: 0.5
-    corruptionMaxRadius: 3
-    corruptionSpeed: 10
+    corruptionMaxRadius: 6
+    corruptionSpeed: 8
     corruptionChance: 1
-    corruptionReduction: 0.245
+    corruptionReduction: 0.16
 
 ##################### SPIRE
 - type: entity

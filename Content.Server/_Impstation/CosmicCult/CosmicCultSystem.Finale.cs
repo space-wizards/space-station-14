@@ -53,7 +53,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnFinaleStartDoAfter(Entity<CosmicFinaleComponent> uid, ref StartFinaleDoAfterEvent args)
     {
         var comp = uid.Comp;
-        if (args.Args.Target == null || args.Cancelled || args.Handled || !TryComp<MonumentComponent>(args.Args.Target, out var monument))
+        if (args.Args.Target == null || args.Cancelled || args.Handled || !TryComp<MonumentComponent>(args.Args.Target, out var monument) || !TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
         {
             uid.Comp.Occupied = false;
             return;
@@ -61,6 +61,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("cosmiccult-finale-beckon-success"), args.Args.User, args.Args.User);
         if (!comp.BufferComplete)
         {
+            corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(3);
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, 2);
             comp.BufferTimer = _timing.CurTime + comp.BufferRemainingTime;
             comp.SelectedBufferSong = _audio.GetSound(comp.BufferMusic);
@@ -68,6 +69,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         }
         else
         {
+            corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(1);
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);
             comp.FinaleTimer = _timing.CurTime + comp.FinaleRemainingTime;
             comp.SelectedFinaleSong = _audio.GetSound(comp.FinaleMusic);
@@ -79,7 +81,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         {
             _alert.SetLevel(stationUid.Value, "octarine", true, true, true, true);
         }
-        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = MonumentKey.Key; // wow! This is the laziest way to disable a UI ever!
+        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = MonumentKey.Key; // wow! This is the laziest way to enable a UI ever!
         comp.FinaleReady = false;
         comp.FinaleActive = true;
         monument.Enabled = true;
@@ -108,6 +110,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.PlayedBufferSong = false;
         comp.FinaleActive = false;
         comp.FinaleReady = true;
+        if (TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp)) corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(6);
         if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = null; // wow! This is the laziest way to disable a UI ever!
         _appearance.SetData(uid, MonumentVisuals.FinaleReached, 1);
     }

@@ -16,7 +16,7 @@ public sealed partial class CosmicFinaleComponent : Component
     [AutoPausedField] public TimeSpan BufferTimer = default!;
     [AutoPausedField] public TimeSpan CultistsCheckTimer = default!;
     [DataField, AutoNetworkedField] public TimeSpan BufferRemainingTime = TimeSpan.FromSeconds(360);
-    [DataField, AutoNetworkedField] public TimeSpan FinaleRemainingTime = TimeSpan.FromSeconds(126);
+    [DataField, AutoNetworkedField] public TimeSpan FinaleRemainingTime = TimeSpan.FromSeconds(125);
     [DataField, AutoNetworkedField] public TimeSpan CheckWait = TimeSpan.FromSeconds(5);
     [DataField] public SoundSpecifier CancelEventSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
     [DataField] public TimeSpan FinaleSongLength;

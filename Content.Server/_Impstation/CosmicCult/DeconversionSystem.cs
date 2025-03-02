@@ -2,6 +2,7 @@ using Content.Server._Impstation.CosmicCult.Components;
 using Content.Server.Bible.Components;
 using Content.Shared._Impstation.CosmicCult;
 using Content.Shared._Impstation.CosmicCult.Components;
+using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -48,7 +49,7 @@ public sealed class DeconversionSystem : EntitySystem
         var deconCultTimer = EntityQueryEnumerator<CleanseCultComponent>();
         while (deconCultTimer.MoveNext(out var uid, out var comp))
         {
-            if (_timing.CurTime >= comp.CleanseTime && HasComp<SSDIndicatorComponent>(uid))
+            if (_timing.CurTime >= comp.CleanseTime && !HasComp<CosmicMarkBlankComponent>(uid))
             {
                 RemComp<CleanseCultComponent>(uid);
                 DeconvertCultist(uid);

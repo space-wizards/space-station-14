@@ -33,7 +33,7 @@ public sealed partial class CosmicCultComponent : Component
     public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences =
     [
         "InfluenceAberrantLapse",
-        "InfluenceNullGlare",
+        "InfluenceNullGlare", // This says Glare but it's currently Shunt/Blank
         "InfluenceEschewMetabolism",
     ];
 
@@ -42,7 +42,7 @@ public sealed partial class CosmicCultComponent : Component
     public HashSet<ProtoId<EntityPrototype>> CosmicCultActions =
     [
         "ActionCosmicSiphon",
-        "ActionCosmicBlank",
+        "ActionCosmicGlare", // set back to ActionCosmicBlank if playtest go bad
     ];
     public HashSet<EntityUid?> ActionEntities = [];
 
