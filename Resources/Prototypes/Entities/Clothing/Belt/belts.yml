@@ -200,7 +200,8 @@
         - Ammo
         - CartridgeAmmo
         - Explosive
-        - ClusterGrenade
+        - ScatteringGrenade
+        - ProjectileGrenade
   - type: ItemMapper
     mapLayers:
       flashbang:
