@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Taken from goonstation and modified by Swept at commit https://github.com/goonstation/goonstation/pull/3555/commits/b24eb6260647c0fcfe858268a26b6160bc50017a, modified into incomplete version by Vermidia",
+    "copyright": "Taken from goonstation and modified by Swept at commit https://github.com/goonstation/goonstation/pull/3555/commits/b24eb6260647c0fcfe858268a26b6160bc50017a, modified into incomplete version by Vermidia, in-hands by SeamLesss (GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,14 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }
