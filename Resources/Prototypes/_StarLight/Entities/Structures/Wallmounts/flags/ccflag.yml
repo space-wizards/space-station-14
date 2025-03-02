@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseFlag
+  id: CentComm_Flag
+  name: CentComm flag
+  description: Formerly Stellar Vanguard Solutions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/flags/ccflag.rsi
