@@ -30,7 +30,7 @@ public sealed partial class InfluenceUIBox : BoxContainer
     public readonly InfluenceUIBoxState State;
     public readonly InfluencePrototype Proto;
 
-    public InfluenceUIBox(InfluencePrototype influenceProto, InfluenceUIBoxState state, MonumentBuiState monumentState)
+    public InfluenceUIBox(InfluencePrototype influenceProto, InfluenceUIBoxState state)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

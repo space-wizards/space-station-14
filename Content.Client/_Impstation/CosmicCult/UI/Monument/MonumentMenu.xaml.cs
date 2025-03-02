@@ -80,7 +80,7 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the entropy fields
     private void UpdateEntropy(MonumentBuiState state)
     {
-        var availableEntropy = "thinking emoji";
+        var availableEntropy = "thinking emoji"; //if you see this, problem.
         if (_entityManager.TryGetComponent<CosmicCultComponent>(_playerManager.LocalEntity, out var cultComp))
         {
             availableEntropy = cultComp.EntropyBudget.ToString();
@@ -135,7 +135,7 @@ public sealed partial class MonumentMenu : FancyWindow
         foreach (var influence in _influencePrototypes)
         {
             var uiBoxState = GetUIBoxStateForInfluence(influence, state);
-            var influenceBox = new InfluenceUIBox(influence, uiBoxState, state);
+            var influenceBox = new InfluenceUIBox(influence, uiBoxState);
             influenceUIBoxes.Add(influenceBox);
             influenceBox.OnGainButtonPressed += () => OnGainButtonPressed?.Invoke(influence.ID);
         }
