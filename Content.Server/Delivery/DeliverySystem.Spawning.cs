@@ -24,7 +24,7 @@ public sealed partial class DeliverySystem
 
     private void OnDataMapInit(Entity<CargoDeliveryDataComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextDelivery = TimeSpan.Zero;
+        ent.Comp.NextDelivery = _timing.CurTime;
     }
 
     private void SpawnDelivery(Entity<DeliverySpawnerComponent?> ent, int amount)
@@ -112,11 +112,11 @@ public sealed partial class DeliverySystem
 
         while (dataQuery.MoveNext(out var uid, out var deliveryData))
         {
-            if (deliveryData.NextDelivery < curTime)
-            {
-                deliveryData.NextDelivery = curTime + deliveryData.DeliveryCooldown;
-                SpawnStationDeliveries((uid, deliveryData));
-            }
+            if (deliveryData.NextDelivery > curTime)
+                continue;
+
+            deliveryData.NextDelivery += deliveryData.DeliveryCooldown;
+            SpawnStationDeliveries((uid, deliveryData));
         }
     }
 }
