@@ -1,0 +1,73 @@
+# Base protoypes
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseComputerboardRecipe
+  categories:
+  - Computers
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  abstract: true
+  id: BaseGoldComputerboardRecipe
+  categories:
+  - Computers
+
+## Recipes
+
+# Cameras
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: SurveillanceCameraMonitorCircuitboard
+  result: SurveillanceCameraMonitorCircuitboard
+
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  result: SurveillanceWirelessCameraMonitorCircuitboard
+
+# Civilian
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: ComputerTelevisionCircuitboard
+  result: ComputerTelevisionCircuitboard
+
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: MassMediaCircuitboard
+  result: ComputerMassMediaCircuitboard
+
+# Engineering
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: SolarControlComputerCircuitboard
+  result: SolarControlComputerCircuitboard
+
+# Medical
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: CloningConsoleComputerCircuitboard
+  result: CloningConsoleComputerCircuitboard
+
+# Science
+- type: latheRecipe
+  parent: BaseGoldComputerboardRecipe
+  id: AnalysisComputerCircuitboard
+  result: AnalysisComputerCircuitboard
+
+- type: latheRecipe
+  parent: BaseGoldComputerboardRecipe
+  id: TechDiskComputerCircuitboard
+  result: TechDiskComputerCircuitboard
+
+# Shuttle
+- type: latheRecipe
+  parent: BaseGoldComputerboardRecipe
+  id: ShuttleConsoleCircuitboard
+  result: ShuttleConsoleCircuitboard
+
+- type: latheRecipe
+  parent: BaseComputerboardRecipe
+  id: RadarConsoleCircuitboard
+  result: RadarConsoleCircuitboard

@@ -1,0 +1,176 @@
+# Non-machine boards, non-computer boards
+# Base protoypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseElectronicsRecipe
+  categories:
+  - Circuitry
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  abstract: true
+  id: BaseCheapElectronicsRecipe
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  abstract: true
+  id: BaseCheapCircuitboardRecipe
+  materials:
+     Steel: 50
+     Glass: 250
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  abstract: true
+  id: BaseCircuitboardRecipe
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 500
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseGoldCircuitboardRecipe
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseSilverCircuitboardRecipe
+  materials:
+    Steel: 100
+    Glass: 500
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseBananiumCircuitboardRecipe
+  materials:
+    Steel: 100
+    Glass: 500
+    Bananium: 100
+
+## Recipes
+
+# Misc
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  id: MailingUnitElectronics
+  result: MailingUnitElectronics
+
+- type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: FreezerElectronics
+  result: FreezerElectronics
+
+# Airtight
+- type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: FirelockElectronics
+  result: FirelockElectronics
+
+- type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: DoorElectronics
+  result: DoorElectronics
+
+# Mechs
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: RipleyCentralElectronics
+  result: RipleyCentralElectronics
+  categories:
+  - Circuitry
+  - Mech
+
+- type: latheRecipe
+  parent: RipleyCentralElectronics
+  id: RipleyPeripheralsElectronics
+  result: RipleyPeripheralsElectronics
+
+- type: latheRecipe
+  parent: BaseBananiumCircuitboardRecipe
+  id: HonkerCentralElectronics
+  result: HonkerCentralElectronics
+  categories:
+  - Circuitry
+  - Mech
+
+- type: latheRecipe
+  parent: HonkerCentralElectronics
+  id: HonkerPeripheralsElectronics
+  result: HonkerPeripheralsElectronics
+
+- type: latheRecipe
+  parent: HonkerCentralElectronics
+  id: HonkerTargetingElectronics
+  result: HonkerTargetingElectronics
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: HamtrCentralElectronics
+  result: HamtrCentralElectronics
+  categories:
+  - Circuitry
+  - Mech
+
+- type: latheRecipe
+  parent: HamtrCentralElectronics
+  id: HamtrPeripheralsElectronics
+  result: HamtrPeripheralsElectronics
+
+# Power
+- type: latheRecipe
+  parent: BaseCheapCircuitboardRecipe
+  id: APCElectronics
+  result: APCElectronics
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: SolarTrackerElectronics
+  result: SolarTrackerElectronics
+
+# Wallmount power
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: WallmountSubstationElectronics
+  result: WallmountSubstationElectronics
+
+# Wallmount
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  id: AirAlarmElectronics
+  result: AirAlarmElectronics
+
+- type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: StationMapElectronics
+  result: StationMapCircuitboard
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  id: IntercomElectronics
+  result: IntercomElectronics
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  id: FireAlarmElectronics
+  result: FireAlarmElectronics
+
+- type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: SignalTimerElectronics
+  result: SignalTimerElectronics

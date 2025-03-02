@@ -2,7 +2,7 @@
 lathe-category-ammo = Ammo
 lathe-category-circuitry = Circuitry
 lathe-category-lights = Lights
-lathe-category-mechs = Mechs
+lathe-category-machines = Machines
 lathe-category-parts = Parts
 lathe-category-robotics = Robotics
 lathe-category-tools = Tools
@@ -12,6 +12,10 @@ lathe-category-weapons = Weapons
 lathe-category-food = Food
 lathe-category-chemicals = Chemicals
 lathe-category-materials = Materials
+
+# Science
+lathe-category-computers = Computers
+lathe-category-mechs = Mechs
 
 # Uniform
 lathe-category-bedsheets = Bedsheets
