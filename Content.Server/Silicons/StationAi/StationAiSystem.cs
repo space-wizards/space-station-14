@@ -1,3 +1,5 @@
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -57,7 +59,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             if (range < 0 || range > ev.VoiceRange)
                 continue;
 
-            ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false));
+            ev.Recipients.TryAdd(actor.PlayerSession, new ChatSystem.ICChatRecipientData(range, false));
         }
     }
 

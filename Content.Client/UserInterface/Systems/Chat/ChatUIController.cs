@@ -828,9 +828,9 @@ public sealed class ChatUIController : UIController
             return;
 
         var context = new ChatMessageContext(proto.ChannelParameters);
-        foreach (var markupSupplier in proto.ClientModifiers)
+        foreach (var modifier in proto.ClientModifiers)
         {
-            msg.Message = markupSupplier.ProcessChatModifier(msg.Message, context);
+            msg.Message = modifier.ProcessChatModifier(msg.Message, context);
         }
 
         // Process any remaining clientside content markups.

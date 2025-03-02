@@ -1,4 +1,4 @@
-using Content.Shared.Speech;
+﻿using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -15,7 +15,7 @@ public sealed class SpeechVerbContentTag : IContentMarkupTag
             idKey.TryGetLong(out var id) &&
             IoCManager.Resolve<IPrototypeManager>().TryIndex(speech, out SpeechVerbPrototype? speechVerbPrototype))
         {
-            return [new MarkupNode(" " + Loc.GetString(speechVerbPrototype.SpeechVerbStrings[(int)id]) + ",")];
+            return new List<MarkupNode>() { new MarkupNode(" " + Loc.GetString(speechVerbPrototype.SpeechVerbStrings[(int)id]) + ",") };
         }
 
         return [];

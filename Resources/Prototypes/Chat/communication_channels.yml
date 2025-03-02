@@ -19,7 +19,7 @@
   - !type:AccentChatModifier
   - !type:SpeechVerbChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: Speech
+    defaultColorKey: Speech
   conditionalModifiers:
   - conditions:
     - !type:RangeChatCondition
@@ -49,7 +49,7 @@
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: Speech
+    defaultColorKey: Speech
   clientModifiers:
   - !type:BubbleProviderChatModifier
     speechType: Say
@@ -127,7 +127,7 @@
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: Emote
+    defaultColorKey: Emote
   clientModifiers:
   - !type:SpaceMainMessageChatModifier
   - !type:BubbleProviderChatModifier
@@ -150,7 +150,7 @@
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: Dead
+    defaultColorKey: Dead
   clientModifiers:
   - !type:InsertLoCChatModifier
     targetNode: EntityNameHeader
@@ -187,7 +187,7 @@
   - !type:MainMessageChatModifier
   - !type:EntityNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: LOOC
+    defaultColorKey: LOOC
   clientModifiers:
   - !type:InsertLoCChatModifier
     targetNode: EntityNameHeader
@@ -220,7 +220,7 @@
   serverModifiers:
   - !type:SessionNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: OOC
+    defaultColorKey: OOC
   clientModifiers:
   - !type:InsertLoCChatModifier
     targetNode: SessionNameHeader
@@ -388,7 +388,7 @@
   serverModifiers:
   - !type:SessionNameHeaderChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: AdminChat
+    defaultColorKey: AdminChat
   clientModifiers:
   - !type:InsertLoCChatModifier
     targetNode: SessionNameHeader
@@ -413,7 +413,7 @@
   serverModifiers:
   - !type:BoldFulltextChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: AdminAlert
+    defaultColorKey: AdminAlert
   chatFilter:
   - AdminAlert
   chatMedium:
@@ -427,7 +427,7 @@
   - !type:AllChatCondition
   serverModifiers:
   - !type:ColorFulltextChatModifier
-      colorKey: Server
+    defaultColorKey: Server
   chatChannels:
   - Server
 
@@ -439,7 +439,7 @@
   - !type:AllChatCondition
   serverModifiers:
   - !type:ColorFulltextChatModifier
-    colorKey: IngameAnnouncement
+    defaultColorKey: IngameAnnouncement
   chatFilter:
   - Notifications
   chatMedium:
@@ -452,7 +452,7 @@
   serverModifiers:
   - !type:PlayGlobalAudioChatModifier
   - !type:ColorFulltextChatModifier
-    colorKey: IngameAnnouncement
+    defaultColorKey: IngameAnnouncement
   chatFilter:
   - Notifications
   chatMedium:

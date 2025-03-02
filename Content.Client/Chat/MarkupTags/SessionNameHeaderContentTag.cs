@@ -1,4 +1,4 @@
-using Content.Shared.Chat.ContentMarkupTags;
+﻿using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
@@ -14,6 +14,6 @@ public sealed class SessionNameHeaderContentTag : IContentMarkupTag
         if (name == null)
             return null;
 
-        return [new MarkupNode(name)];
+        return new List<MarkupNode>() { new MarkupNode(name) };
     }
 }

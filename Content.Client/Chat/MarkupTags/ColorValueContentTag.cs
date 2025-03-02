@@ -1,4 +1,4 @@
-using System.Collections.Frozen;
+﻿using System.Collections.Frozen;
 using System.Diagnostics;
 using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
@@ -41,12 +41,12 @@ public sealed class ColorValueContentTag : IContentMarkupTag
 
     public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
-        return [new MarkupNode("color", new MarkupParameter(GetColor(node)), null)];
+        return new List<MarkupNode>() { new MarkupNode("color", new MarkupParameter(GetColor(node)), null) };
     }
 
     public List<MarkupNode>? ProcessClosingTag(MarkupNode node, int randomSeed)
     {
-        return [new MarkupNode("color", null, null, true)];
+        return new List<MarkupNode>() { new MarkupNode("color", null, null, true) };
     }
 
     private Color GetColor(MarkupNode node)
