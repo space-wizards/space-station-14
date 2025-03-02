@@ -61,11 +61,17 @@
 - type: lobbyBackground
   id: PTAsWoe
   background: /Textures/_Impstation/LobbyScreens/PTAs-woe.webp
+  name: PTA's Woe
+  artist: widgetbeck
 
 - type: lobbyBackground
   id: BugsDream
   background: /Textures/_Impstation/LobbyScreens/bugsdreamtitlescreen.webp
+  name: Bug's Dream
+  artist: Doop
 
 - type: lobbyBackground
   id: VarvaraHeretic
   background: /Textures/_Impstation/LobbyScreens/varvara_heretic.webp
+  name: Heretic Varvara
+  artist: Six-Valentine
