@@ -95,10 +95,10 @@ namespace Content.Shared.Cuffs
         {
             if (ent.Comp.Container.ContainedEntities.Count == 0)
                 return;
+            // is this if statement necessary?
 
             var cuffsToRemove = ent.Comp.LastAddedCuffs;
 
-            // Uncuff the target and put the cuffs back in their hands.
             _container.Remove(cuffsToRemove, ent.Comp.Container);
             _hands.PickupOrDrop(ent.Owner, cuffsToRemove);
         }
