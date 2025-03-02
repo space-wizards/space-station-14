@@ -358,12 +358,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("name", name),
             ("message", content));
 
-        var chat = new ChatMessage(
-            ChatChannel.Local,
-            message,
-            wrappedMessage,
-            NetEntity.Invalid,
-            null);
+        // CHAT-TODO: This probably needs reworking eh?
+        var chat = new ChatMessage("ICSpeech", FormattedMessage.FromMarkupPermissive(wrappedMessage), NetEntity.Invalid, null, false);
 
         var chatMsg = new MsgChatMessage { Message = chat };
 

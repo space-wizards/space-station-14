@@ -17,6 +17,7 @@ public sealed class GermanAccent : IAccent
 
     public string Accentuate(string message, int randomSeed)
     {
+        IoCManager.InjectDependencies(this);
         var msg = message;
 
         // rarely, "the" should become "das" instead of "ze"

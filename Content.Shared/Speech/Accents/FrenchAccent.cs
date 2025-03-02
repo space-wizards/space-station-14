@@ -15,6 +15,7 @@ public sealed class FrenchAccent : IAccent
 
     public string Accentuate(string message, int randomSeed)
     {
+        IoCManager.InjectDependencies(this);
         var msg = message;
 
         msg = _replacement.ApplyReplacements(msg, "french");

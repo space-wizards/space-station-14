@@ -1,10 +1,11 @@
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class MumbleAccentSystem : EntitySystem
 {
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly SharedReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
     {

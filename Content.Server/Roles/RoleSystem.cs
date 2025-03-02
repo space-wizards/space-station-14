@@ -62,12 +62,7 @@ public sealed class RoleSystem : SharedRoleSystem
 
         var message = Loc.GetString("role-type-update-message", ("color", color), ("role", roleText));
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-        _chat.ChatMessageToOne(ChatChannel.Server,
-            message,
-            wrappedMessage,
-            default,
-            false,
-            session.Channel);
+        _chat.SendChannelMessage(wrappedMessage, "GameMessage", session, null);
     }
 }
 
