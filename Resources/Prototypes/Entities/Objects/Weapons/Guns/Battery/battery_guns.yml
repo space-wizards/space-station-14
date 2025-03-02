@@ -397,7 +397,7 @@
         params:
           pitch: 2
     - type: ProjectileBatteryAmmoProvider
-      proto: AntiParticlesProjectile
+      proto: AntiParticlesProjectileSpread
       fireCost: 500
     - type: Battery
       maxCharge: 10000
