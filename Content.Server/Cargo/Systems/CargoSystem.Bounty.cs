@@ -4,6 +4,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Labels;
 using Content.Server.NameIdentifier;
 using Content.Shared.Access.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
@@ -32,6 +33,7 @@ public sealed partial class CargoSystem
     [ValidatePrototypeId<NameIdentifierGroupPrototype>]
     private const string BountyNameIdentifierGroup = "Bounty";
 
+    private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<StackComponent> _stackQuery;
     private EntityQuery<ContainerManagerComponent> _containerQuery;
     private EntityQuery<CargoBountyLabelComponent> _bountyLabelQuery;
@@ -45,6 +47,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
         SubscribeLocalEvent<StationCargoBountyDatabaseComponent, MapInitEvent>(OnMapInit);
 
+        _bodyQuery = GetEntityQuery<BodyComponent>();
         _stackQuery = GetEntityQuery<StackComponent>();
         _containerQuery = GetEntityQuery<ContainerManagerComponent>();
         _bountyLabelQuery = GetEntityQuery<CargoBountyLabelComponent>();
@@ -362,6 +365,10 @@ public sealed partial class CargoSystem
             uid
         };
         if (!TryComp<ContainerManagerComponent>(uid, out var containers))
+            return entities;
+
+        // don't count organs of ungibbed mobs for organ bounties, do the grunt work and gib them!
+        if (_bodyQuery.HasComp(uid))
             return entities;
 
         foreach (var container in containers.Containers.Values)
