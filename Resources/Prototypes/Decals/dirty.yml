@@ -1,7 +1,12 @@
 ﻿# If you spawn any of these, they should probably be made cleanable as well.
 
 - type: decal
+  id: Dirty
+  abstract: true
+
+- type: decal
   id: Dirt
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -10,6 +15,7 @@
 
 - type: decal
   id: DirtLight
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -18,6 +24,7 @@
 
 - type: decal
   id: DirtMedium
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -26,6 +33,7 @@
 
 - type: decal
   id: DirtHeavy
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -34,6 +42,7 @@
 
 - type: decal
   id: DirtHeavyMonotile
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -42,6 +51,7 @@
 
 - type: decal
   id: Damaged
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -50,6 +60,7 @@
 
 - type: decal
   id: Remains
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
@@ -58,10 +69,10 @@
 
 - type: decal
   id: Rust
+  parent: Dirty
   tags: ["station", "dirty"]
   defaultCleanable: true
   sprite:
     sprite: Decals/dirty.rsi
     state: rust
-
 
