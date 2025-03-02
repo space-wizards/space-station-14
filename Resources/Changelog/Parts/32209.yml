@@ -1,0 +1,7 @@
+author: SlamBamActionman
+changes:
+  - message: Phalanximine now has an overdose threshold and works slower, along with other minor tweaks.
+    type: Tweak
+  - message: Arithrazine now deals increased damage during treatment.
+    type: Tweak
+url: https://github.com/space-wizards/space-station-14/pull/32209
