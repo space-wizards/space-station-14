@@ -4,11 +4,13 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
+using Content.Shared.RoundStatistics;
 using Content.Shared.Throwing;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
@@ -27,6 +29,9 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly TriggerSystem _trigger = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+
+        [ValidatePrototypeId<RoundStatisticPrototype>]
+        public const string CreamedCount = "CreamedCount";
 
         public override void Initialize()
         {
@@ -100,6 +105,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", Identity.Name(uid, EntityManager)), ("thrower", args.Thrown)), uid, otherPlayers, false);
+            var evChangeStatsValue = new ChangeStatsValueEvent(CreamedCount, 1);
+            RaiseLocalEvent(ref evChangeStatsValue);
         }
 
         private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)
