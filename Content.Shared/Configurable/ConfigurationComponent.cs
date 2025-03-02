@@ -8,15 +8,30 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Configurable
 {
+    /// <summary>
+    /// Configuration for mailing units.
+    /// </summary>
+    /// <remarks>
+    /// If you want a more detailed description ask the original coder.
+    /// </remarks>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ConfigurationComponent : Component
     {
+        /// <summary>
+        /// Tags for mail unit routing.
+        /// </summary>
         [DataField, AutoNetworkedField]
         public Dictionary<string, string?> Config = new();
 
+        /// <summary>
+        /// Quality to open up the configuration UI.
+        /// </summary>
         [DataField]
         public ProtoId<ToolQualityPrototype> QualityNeeded = SharedToolSystem.PulseQuality;
 
+        /// <summary>
+        /// Validate tags in <see cref="Config"/>.
+        /// </summary>
         [DataField]
         public Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
