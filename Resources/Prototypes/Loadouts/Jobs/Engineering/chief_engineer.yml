@@ -1,4 +1,4 @@
-# For mantles
+# For Master CEs; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterCE
   effects:
@@ -64,8 +64,21 @@
   equipment:
     outerClothing: ClothingOuterWinterCE
 
-# Shoes
+# Ears
 - type: loadout
-  id: BrownShoes
+  id: ChiefEngineerHeadset
   equipment:
-    shoes: ClothingShoesColorBrown
+    ears: ClothingHeadsetCE
+
+- type: loadout
+  id: ChiefEngineerAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltEngineering
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterCE
+
+- type: startingGear
+  id: ChiefEngineerAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltEngineering
