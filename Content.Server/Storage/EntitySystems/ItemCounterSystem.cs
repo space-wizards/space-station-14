@@ -21,7 +21,7 @@ namespace Content.Server.Storage.EntitySystems
             var count = 0;
             foreach (var entity in component.Container.ContainedEntities)
             {
-                if (_whitelistSystem.IsWhitelistPass(itemCounter.Count, entity))
+                if (_whitelistSystem.IsWhitelistPassOrNull(itemCounter.Count, entity))
                     count++;
             }
 
