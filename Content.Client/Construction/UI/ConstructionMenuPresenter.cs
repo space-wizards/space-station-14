@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
+using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
@@ -10,7 +11,7 @@ using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -30,6 +31,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
@@ -38,6 +40,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
+        private List<string> _favoritedRecipeIDs = [];
         private Dictionary<string, TextureButton> _recipeButtons = new();
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
@@ -113,7 +116,8 @@ namespace Content.Client.Construction.UI
 
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
-            PopulateCategories();
+            _configManager.OnValueChanged(CCVars.ConstructionFavorites, SetFavorites, invokeImmediately: true);
+
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
         }
 
@@ -132,6 +136,8 @@ namespace Content.Client.Construction.UI
             _systemManager.SystemUnloaded -= OnSystemUnloaded;
 
             _placementManager.PlacementChanged -= OnPlacementChanged;
+
+            _configManager.UnsubValueChanged(CCVars.ConstructionFavorites, SetFavorites);
         }
 
         private void OnPlacementChanged(object? sender, EventArgs e)
@@ -452,8 +458,12 @@ namespace Content.Client.Construction.UI
             if (_selected is not ConstructionPrototype recipe)
                 return;
 
+            _favoritedRecipeIDs.Remove(recipe.ID);
             if (!_favoritedRecipes.Remove(_selected))
+            {
+                _favoritedRecipeIDs.Add(recipe.ID);
                 _favoritedRecipes.Add(_selected);
+            }
 
             if (_selectedCategory == _favoriteCatName)
             {
@@ -463,8 +473,38 @@ namespace Content.Client.Construction.UI
                     OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
             }
 
+            SaveFavorites();
             PopulateInfo(_selected);
             PopulateCategories(_selectedCategory);
+        }
+
+        public void SetFavorites(string favorites)
+        {
+            _favoritedRecipes.Clear();
+            _favoritedRecipeIDs.Clear();
+
+            _favoritedRecipeIDs.AddRange(favorites.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries));
+            foreach (var id in _favoritedRecipeIDs)
+            {
+                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe))
+                    _favoritedRecipes.Add(recipe);
+            }
+
+            if (_selectedCategory == _favoriteCatName)
+            {
+                if (_favoritedRecipes.Count > 0)
+                    OnViewPopulateRecipes(_constructionView, (string.Empty, _favoriteCatName));
+                else
+                    OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+            }
+
+            PopulateCategories(_selectedCategory);
+        }
+
+        public void SaveFavorites()
+        {
+            _configManager.SetCVar(CCVars.ConstructionFavorites, string.Join(',', _favoritedRecipeIDs));
+            _configManager.SaveToFile();
         }
 
         private void SystemBindingChanged(ConstructionSystem? newSystem)
