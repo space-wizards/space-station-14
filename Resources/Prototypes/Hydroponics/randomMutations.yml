@@ -181,3 +181,7 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantMutateHarvest
+    - name: Fragile
+      baseOdds: 0.018
+      appliesToPlant: false
+      effect: !type:Fragile
