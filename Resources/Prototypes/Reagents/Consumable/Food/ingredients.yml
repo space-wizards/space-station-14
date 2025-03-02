@@ -104,6 +104,13 @@
   flavor: peppery
   color: black
   recognizable: true
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:Emote
+        emote: Sneeze
+        showInChat: true
+        probability: 0.15
 
 - type: reagent
   id: Vinegar

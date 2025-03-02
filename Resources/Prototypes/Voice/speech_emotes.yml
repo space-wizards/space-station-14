@@ -458,3 +458,36 @@
     - pings
     - pinged
     - pinging
+
+- type: emote
+  id: Sweat
+  name: chat-emote-name-sweat
+  whitelist:
+    components:
+    - ThermalRegulator
+  chatMessages: ["chat-emote-msg-sweat"]
+  chatTriggers:
+   - sweat
+   - sweats
+
+- type: emote
+  id: Shiver
+  name: chat-emote-name-shiver
+  whitelist:
+    components:
+    - ThermalRegulator
+  chatMessages: ["chat-emote-msg-shiver"]
+  chatTriggers:
+   - shiver
+   - shivers
+
+- type: emote
+  id: Wheeze
+  name: chat-emote-name-wheeze
+  whitelist:
+    components:
+    - Respirator
+  chatMessages: ["chat-emote-msg-wheeze"]
+  chatTriggers:
+   - wheeze
+   - wheezes
