@@ -25,6 +25,8 @@
       - id: Wirecutter
       - id: Welder
       - id: Multitool
+      - id: GasAnalyzer
+      - id: trayScanner
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled
@@ -50,6 +52,7 @@
     - id: Handcuffs
     - id: HoloprojectorSecurity
     - id: RadioHandheldSecurity
+    - id: FlashlightSeclite
 
 - type: entity
   id: ClothingBeltSecurityFilled
@@ -95,9 +98,8 @@
       - id: Brutepack
         amount: 2
       - id: Ointment
-        amount: 1
+        amount: 2
       - id: Bloodpack
-        amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 
@@ -109,7 +111,9 @@
   - type: StorageFill
     contents:
       - id: Brutepack
+        amount: 2
       - id: Ointment
+        amount: 2
       - id: Bloodpack
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
@@ -125,6 +129,9 @@
     - id: HydroponicsToolMiniHoe
     - id: HydroponicsToolSpade
     - id: HydroponicsToolClippers
+    - id: HydroponicsToolHatchet
+    - id: PlantBGoneSpray
+    - id: EZNutrientChemistryBottle
     - id: RobustHarvestChemistryBottle
 
 - type: entity
@@ -152,7 +159,9 @@
   - type: StorageFill
     contents:
       - id: ExGrenade
-        amount: 4
+        amount: 2
+      - id: GrenadeShrapnel
+        amount: 2
       - id: SyndieMiniBomb
         amount: 2
       - id: EmpGrenade
@@ -203,3 +212,5 @@
     contents:
     - id: FoodShakerSalt
     - id: FoodShakerPepper
+    - id: KitchenKnife
+    - id: RollingPin
