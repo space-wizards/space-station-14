@@ -18,7 +18,7 @@ public sealed partial class CargoDeliveryDataComponent : Component
     /// Cooldown between deliveries after one spawns.
     /// </summary>
     [DataField]
-    public TimeSpan DeliveryCooldown = TimeSpan.FromSeconds(30); // TODO: Bring this back to 2 or 3 minutes after testing is done
+    public TimeSpan DeliveryCooldown = TimeSpan.FromMinutes(5);
 
     /// <summary>
     /// The ratio at which deliveries will spawn, based on the amount of people in the crew manifest.
