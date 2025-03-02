@@ -865,6 +865,13 @@
   - CommandVeteranDuffel
 
 - type: loadoutGroup
+  id: ChiefMedicalOfficerBelt
+  name: loadout-group-chief-medical-officer-belt
+  loadouts:
+  - BeltMedical
+  - BeltMedicalEMT
+
+- type: loadoutGroup
   id: MedicalDoctorNeck
   name: loadout-group-medical-doctor-neck
   minLimit: 0

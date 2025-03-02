@@ -124,6 +124,7 @@ loadout-group-brigmedic-backpack = Brigmedic backpack
 # medical
 loadout-group-chief-medical-officer-backpack = Chief Medical Officer backpack
 loadout-group-chief-medical-officer-headset = Chief Medical Officer headset
+loadout-group-chief-medical-officer-belt = Chief Medical Officer belt
 
 loadout-group-medical-doctor-neck = Medical Doctor neck
 

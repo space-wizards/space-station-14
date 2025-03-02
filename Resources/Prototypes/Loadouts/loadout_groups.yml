@@ -1306,6 +1306,8 @@
   loadouts:
   - BrownShoes
   - WhiteShoes # imp
+  - LacedShoes #imp
+  - LeatherShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup
