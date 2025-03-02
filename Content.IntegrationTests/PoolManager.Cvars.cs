@@ -33,6 +33,7 @@ public static partial class PoolManager
         (CVars.ReplayServerRecordingEnabled.Name, "false"),
         (CCVars.GameDummyTicker.Name, "true"),
         (CCVars.GameLobbyEnabled.Name, "false"),
+        (CCVars.ConfigPresetDevelopment.Name, "true"),
         (CCVars.AdminLogsEnabled.Name, "false"),
         (CCVars.AutosaveEnabled.Name, "false"),
         (CVars.NetBufferSize.Name, "0"),
