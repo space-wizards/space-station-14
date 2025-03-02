@@ -100,9 +100,9 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Blunt: 6
-        Structural: 4
-        Caustic: 4
+        Blunt: 2 # Ronstation - Nerf.
+        Structural: 1 # Ronstation - Nerf.
+        Caustic: 0.5 # Ronstation - Nerf.
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-slimes
