@@ -24,10 +24,10 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
     //TODO make these be read from cvars (with/after #35538 moves iConfigurationManager to the constructor)
-    private float _ghostHideDistance = 300f;
-    private float _ghostFadeDistance = 600f;
+    private float _ghostHideDistance = 2f;
+    private float _ghostFadeDistance = 6f;
     private int _maxOverlayStack = 3;
-    private float _overlayMergeDistance = 75;
+    private float _overlayMergeDistance = 1f;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
@@ -53,6 +53,8 @@ internal sealed class AdminNameOverlay : Overlay
     {
         var viewport = args.WorldAABB;
         var colorDisconnected = Color.White;
+        var uiScale = _userInterfaceManager.RootControl.UIScale;
+        var lineoffset = new Vector2(0f, 14f) * uiScale;
 
         //TODO make this adjustable via GUI
         var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
@@ -85,8 +87,6 @@ internal sealed class AdminNameOverlay : Overlay
                 continue;
             }
 
-            var uiScale = _userInterfaceManager.RootControl.UIScale;
-            var lineoffset = new Vector2(0f, 14f) * uiScale;
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
@@ -97,10 +97,14 @@ internal sealed class AdminNameOverlay : Overlay
             //  TODO would be "cheaper" if playerinfo already contained a ghost bool, and ghosts could then be ordered to the bottom of any stack
             if (_entityManager.HasComponent<GhostComponent>(entity))
             {
-                var mobPosition = _eyeManager.WorldToScreen(aabb.Center);
-                var mousePosition = _userInterfaceManager.MousePositionScaled.Position * uiScale;
-                var dist = Vector2.Distance(mobPosition, mousePosition);
+                // We want the map positions here, so we don't have to worry about resolution and such shenanigans
+                var mobPosition = aabb.Center;
+                var mousePosition = _eyeManager
+                    .ScreenToMap(_userInterfaceManager.MousePositionScaled.Position * uiScale)
+                    .Position;
+                //TODO Am I dumb? Why do I need to multiply Scaled with the UI Scale to get the correct value? Feels the opposite of what should be happening
 
+                var dist = Vector2.Distance(mobPosition, mousePosition);
                 if (dist < _ghostHideDistance)
                     continue;
 
@@ -108,10 +112,11 @@ internal sealed class AdminNameOverlay : Overlay
                 colorDisconnected.A = alpha;
             }
 
-            // If the new overlay textblock is within merge distance of any previous ones
+            // If the new overlay text block is within merge distance of any previous ones
             // merge them into a stack so they don't hide each other
             // additional entries after maximum stack size is reached will be drawn over the last entry
-            var stack = drawnOverlays.FindAll(x => Vector2.Distance(x.Item1, screenCoordinates) <= _overlayMergeDistance);
+            var stack = drawnOverlays.FindAll(x =>
+                Vector2.Distance(_eyeManager.ScreenToMap(x.Item1).Position, aabb.Center) <= _overlayMergeDistance);
             if (stack.Count > 0)
             {
                 screenCoordinates = stack.First().Item1;
