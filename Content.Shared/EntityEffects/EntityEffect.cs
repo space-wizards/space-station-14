@@ -46,6 +46,13 @@ public abstract partial class EntityEffect
     public virtual bool ShouldLog { get; private set; } = false;
 
     public abstract void Effect(EntityEffectBaseArgs args);
+    // public void Effect(EntityEffectBaseArgs args)
+    // {
+    //     var eventType = typeof(ExecuteEntityEffectEvent<>).MakeGenericType(new Type[] { this.GetType() });
+
+    //     object o = Activator.CreateInstance(eventType, this, args);
+    //     _entMan.EventBus.RaiseLocalEvent(o);
+    // }
 
     /// <summary>
     /// Produces a localized, bbcode'd guidebook description for this effect.
@@ -86,6 +93,19 @@ public static class EntityEffectExt
         }
 
         return true;
+    }
+}
+
+[ByRefEvent]
+public struct ExecuteEntityEffectEvent<T> where T : EntityEffect
+{
+    public T Effect;
+    public EntityEffectBaseArgs Args;
+
+    public ExecuteEntityEffectEvent(T effect, EntityEffectBaseArgs args)
+    {
+        Effect = effect;
+        Args = args;
     }
 }
 
