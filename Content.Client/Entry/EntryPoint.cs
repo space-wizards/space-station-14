@@ -73,7 +73,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
-        [Dependency] private readonly ISharedContentMarkupTagManager _contentMarkupTagManager = default!;
 
         public override void Init()
         {

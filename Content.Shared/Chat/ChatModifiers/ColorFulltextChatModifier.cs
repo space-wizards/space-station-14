@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -11,16 +11,17 @@ namespace Content.Shared.Chat.ChatModifiers;
 public sealed partial class ColorFulltextChatModifier : ChatModifier
 {
     [DataField]
-    public string ColorKey = "Base";
+    public string DefaultColorKey = "Base";
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
 
-        var colorKey = ColorKey;
-        if (channelParameters.TryGetValue(ColorFulltextMarkupParameter.Color, out var color))
-            colorKey = (string)color;
+        var colorKey = DefaultColorKey;
+        if (chatMessageContext.TryGet<string>(ColorFulltextMarkupParameter.Color, out var color))
+            colorKey = color;
 
         message.InsertAroundMessage(new MarkupNode("ColorValue", new MarkupParameter(colorKey), null, false));
+        return message;
     }
 
     public enum ColorFulltextMarkupParameter

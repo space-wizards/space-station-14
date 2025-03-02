@@ -1,10 +1,11 @@
-﻿using Content.Server.Chat.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
-using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.Player;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -14,6 +15,8 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleComponent>
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> ServerChannel = "Server";
+
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -35,7 +38,7 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
                 continue;
 
             var callout = GetCallout(kill, ev);
-            _chatManager.SendChannelMessage(callout, "Server", null, null);
+            _chatManager.SendChannelMessage(callout, ServerChannel, null, null);
         }
     }
 

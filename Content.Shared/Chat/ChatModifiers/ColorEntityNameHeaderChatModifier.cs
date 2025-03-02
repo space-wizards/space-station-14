@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Robust.Shared.Configuration;
@@ -14,29 +14,31 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
 {
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+
     private static ProtoId<ColorPalettePrototype> _chatNamePalette = "ChatNames";
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         IoCManager.InjectDependencies(this);
 
         var colorName = _config.GetCVar(CCVars.ChatEnableColorName);
-        if (colorName && message.TryFirstOrDefault(x => x.Name == "EntityNameHeader", out var nameHeader))
+        if (!colorName || !message.TryFirstOrDefault(x => x.Name == "EntityNameHeader", out var nameHeader))
+            return message;
+
+        var name = nameHeader.Value.StringValue;
+        if (name == null)
+            return message;
+
+        var color = Color.TryFromHex(GetNameColor(name));
+        if (color != null)
         {
-            var name = nameHeader.Value.StringValue;
-            if (name != null)
-            {
-                var color = Color.TryFromHex(GetNameColor(name));
-                if (color != null)
-                {
-                    message.InsertOutsideTag(new MarkupNode("color", new MarkupParameter(color), null),
-                        "EntityNameHeader");
-                }
-            }
+            message.InsertOutsideTag(new MarkupNode("color", new MarkupParameter(color), null),
+                "EntityNameHeader");
         }
+
+        return message;
     }
 
     // CHAT-TODO: This whole thing needs to be remade such that it doesn't get the whole prototype list every time a message is sent.

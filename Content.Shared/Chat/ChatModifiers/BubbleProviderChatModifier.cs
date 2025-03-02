@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
+using static Content.Shared.Chat.ChatConstants;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -14,10 +15,11 @@ public sealed partial class BubbleProviderChatModifier : ChatModifier
     [DataField]
     public SpeechType SpeechType = SpeechType.Say;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        message.InsertOutsideTag(new MarkupNode("BubbleHeader", new MarkupParameter((int)SpeechType), null), "EntityNameHeader");
-        message.InsertOutsideTag(new MarkupNode("BubbleMessage", new MarkupParameter((int)SpeechType), null), "MainMessage");
+        message.InsertOutsideTag(new MarkupNode(BubbleHeaderTagName, new MarkupParameter((int)SpeechType), null), "EntityNameHeader");
+        message.InsertOutsideTag(new MarkupNode(BubbleBodyTagName, new MarkupParameter((int)SpeechType), null), "MainMessage");
+        return message;
     }
 }
 

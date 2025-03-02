@@ -5,44 +5,51 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.Managers
 {
     public interface IChatManager : ISharedChatManager
     {
-        public void SendChannelMessage(string message,
-            string communicationChannel,
+        public void SendChannelMessage(
+            string message,
+            ProtoId<CommunicationChannelPrototype> communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
             HashSet<ICommonSession>? targetSessions = null,
             bool escapeText = true,
             ChatMessageContext? channelParameters = null,
-            bool logMessage = true);
+            bool logMessage = true
+        );
 
-        public void SendChannelMessage(FormattedMessage message,
+        public void SendChannelMessage(
+            FormattedMessage message,
             string communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
             HashSet<ICommonSession>? targetSessions = null,
             ChatMessageContext? channelParameters = null,
-            bool logMessage = true);
+            bool logMessage = true
+        );
 
-        public void SendChannelMessage(FormattedMessage message,
+        public void SendChannelMessage(
+            FormattedMessage message,
             string communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
-            ref List<CommunicationChannelPrototype> usedCommsTypes,
+            List<CommunicationChannelPrototype> usedCommsTypes,
             HashSet<ICommonSession>? targetSessions = null,
             ChatMessageContext? channelParameters = null,
-            bool logMessage = true);
+            bool logMessage = true
+        );
 
         public void SendChannelMessage(
             FormattedMessage message,
             CommunicationChannelPrototype communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
-            ref List<CommunicationChannelPrototype> usedCommsChannels,
+            List<CommunicationChannelPrototype> usedCommsChannels,
             HashSet<ICommonSession>? targetSessions = null,
             ChatMessageContext? channelParameters = null,
             bool logMessage = true);

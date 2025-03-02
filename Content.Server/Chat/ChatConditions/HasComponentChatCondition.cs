@@ -1,17 +1,5 @@
-﻿using System.Linq;
-using Content.Server.Power.Components;
-using Content.Server.Radio.Components;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Chat;
-using Content.Shared.Chat.Prototypes;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Radio;
-using Content.Shared.Radio.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.ChatConditions;
 
@@ -32,16 +20,11 @@ public sealed partial class HasComponentChatCondition : ChatCondition
     {
         IoCManager.InjectDependencies(this);
 
-        if (Component != null)
-        {
-            var comp = _componentFactory.GetRegistration(Component, true);
-            if (_entityManager.HasComponent(subjectEntity, comp.Type))
-            {
-                return true;
-            }
-        }
+        if (Component == null)
+            return false;
 
-        return false;
+        var comp = _componentFactory.GetRegistration(Component, true);
+        return _entityManager.HasComponent(subjectEntity, comp.Type);
     }
 
     protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)

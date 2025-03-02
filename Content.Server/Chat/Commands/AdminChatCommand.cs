@@ -1,13 +1,17 @@
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.Commands
 {
     [AdminCommand(AdminFlags.Adminchat)]
     internal sealed class AdminChatCommand : IConsoleCommand
     {
+        private static readonly ProtoId<CommunicationChannelPrototype> ChatChannel = "AdminChat";
+
         public string Command => "asay";
         public string Description => "Send chat messages to the private admin chat channel.";
         public string Help => "asay <text>";
@@ -29,7 +33,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, "AdminChat", player, null);
+            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, ChatChannel, player, null);
         }
     }
 }

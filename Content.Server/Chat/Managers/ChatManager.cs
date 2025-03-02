@@ -206,28 +206,56 @@ internal sealed partial class ChatManager : IChatManager
 
     #region Base Chat Functionality
 
-    public void SendChannelMessage(string message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, bool escapeText = true, ChatMessageContext? channelParameters = null, bool logMessage = true)
+    public void SendChannelMessage(
+        string message,
+        ProtoId<CommunicationChannelPrototype> communicationChannel, 
+        ICommonSession? senderSession, 
+        EntityUid? senderEntity, 
+        HashSet<ICommonSession>? targetSessions = null, 
+        bool escapeText = true, 
+        ChatMessageContext? channelParameters = null, 
+        bool logMessage = true
+    )
     {
-        var formattedMessage = escapeText ? FormattedMessage.FromMarkupPermissive(message, out string? error) : FormattedMessage.FromUnformatted(FormattedMessage.EscapeText(message));
+        var formattedMessage = escapeText
+            ? FormattedMessage.FromMarkupPermissive(message, out _)
+            : FormattedMessage.FromUnformatted(FormattedMessage.EscapeText(message));
 
         SendChannelMessage(formattedMessage, communicationChannel, senderSession, senderEntity, targetSessions, channelParameters);
     }
 
-    public void SendChannelMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, ChatMessageContext? channelParameters = null, bool logMessage = true)
+    public void SendChannelMessage(
+        FormattedMessage message, 
+        string communicationChannel, 
+        ICommonSession? senderSession, 
+        EntityUid? senderEntity, 
+        HashSet<ICommonSession>? targetSessions = null, 
+        ChatMessageContext? channelParameters = null, 
+        bool logMessage = true
+    )
     {
         _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
         var usedCommsTypes = new List<CommunicationChannelPrototype>();
 
         if (proto != null)
-            SendChannelMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, channelParameters);
+            SendChannelMessage(message, proto, senderSession, senderEntity, usedCommsTypes, targetSessions, channelParameters);
     }
 
-    public void SendChannelMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, ref List<CommunicationChannelPrototype> usedCommsTypes, HashSet<ICommonSession>? targetSessions = null, ChatMessageContext? channelParameters = null, bool logMessage = true)
+    public void SendChannelMessage(
+        FormattedMessage message, 
+        string communicationChannel, 
+        ICommonSession? senderSession, 
+        EntityUid? senderEntity, 
+        List<CommunicationChannelPrototype> usedCommsTypes, 
+        HashSet<ICommonSession>? targetSessions = null, 
+        ChatMessageContext? channelParameters = null, 
+        bool logMessage = true
+    )
     {
         _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
 
         if (proto != null)
-            SendChannelMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, channelParameters);
+            SendChannelMessage(message, proto, senderSession, senderEntity, usedCommsTypes, targetSessions, channelParameters);
     }
 
     /// <summary>
@@ -246,12 +274,12 @@ internal sealed partial class ChatManager : IChatManager
         CommunicationChannelPrototype communicationChannel,
         ICommonSession? senderSession,
         EntityUid? senderEntity,
-        ref List<CommunicationChannelPrototype> usedCommsChannels,
+        List<CommunicationChannelPrototype> usedCommsChannels,
         HashSet<ICommonSession>? targetSessions = null,
         ChatMessageContext? channelParameters = null,
-        bool logMessage = true)
+        bool logMessage = true
+    )
     {
-
         #region Prep-Step
 
         // This section handles setting up the parameters and any other business that should happen before validation starts.
@@ -268,8 +296,10 @@ internal sealed partial class ChatManager : IChatManager
         var compiledChannelParameters = new ChatMessageContext(communicationChannel.ChannelParameters);
         if (channelParameters != null)
         {
-            channelParameters.ToList()
-                .ForEach(x => compiledChannelParameters[x.Key] = x.Value);
+            foreach (var (key, value) in channelParameters)
+            {
+                compiledChannelParameters[key] = value;
+            }
         }
 
         // Includes the sender as a parameter for nodes that need it
@@ -312,7 +342,7 @@ internal sealed partial class ChatManager : IChatManager
         }
 
         // We also pass it on to any child channels that should be included.
-        var childChannels = HandleChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
+        var childChannels = FilterChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
         if (childChannels.Count > 0)
         {
             foreach (var childChannel in childChannels)
@@ -322,7 +352,7 @@ internal sealed partial class ChatManager : IChatManager
                     childChannel,
                     senderSession,
                     senderEntity,
-                    ref usedCommsChannels,
+                    usedCommsChannels,
                     targetSessions,
                     channelParameters);
             }
@@ -332,7 +362,7 @@ internal sealed partial class ChatManager : IChatManager
         // Useful for e.g. making ghosts trying to send LOOC messages fall back to Deadchat instead.
         if (failedPublishing)
         {
-            var backupChildChannels = HandleChildChannels(communicationChannel, communicationChannel.BackupChildCommunicationChannels);
+            var backupChildChannels = FilterChildChannels(communicationChannel, communicationChannel.BackupChildCommunicationChannels);
             if (backupChildChannels.Count > 0)
             {
                 foreach (var backupChildChannel in backupChildChannels)
@@ -342,7 +372,7 @@ internal sealed partial class ChatManager : IChatManager
                         backupChildChannel,
                         senderSession,
                         senderEntity,
-                        ref usedCommsChannels,
+                        usedCommsChannels,
                         targetSessions);
                 }
             }
@@ -420,7 +450,7 @@ internal sealed partial class ChatManager : IChatManager
         // First, we apply all serverside modifiers that are unconditionally applied.
         foreach (var chatModifier in communicationChannel.ServerModifiers)
         {
-            chatModifier.ProcessChatModifier(ref message, compiledChannelParameters);
+            message = chatModifier.ProcessChatModifier(message, compiledChannelParameters);
         }
 
         foreach (var chatConsumerGroup in chatConsumerGroups)
@@ -429,7 +459,7 @@ internal sealed partial class ChatManager : IChatManager
             var consumerMessage = new FormattedMessage(message);
             foreach (var chatModifier in chatConsumerGroup.Value)
             {
-                chatModifier.ProcessChatModifier(ref consumerMessage, compiledChannelParameters);
+                consumerMessage = chatModifier.ProcessChatModifier(consumerMessage, compiledChannelParameters);
             }
 
             // Off the message goes!
@@ -492,21 +522,25 @@ internal sealed partial class ChatManager : IChatManager
 
     #region Private API
 
-    private List<CommunicationChannelPrototype> HandleChildChannels(CommunicationChannelPrototype communicationChannel, List<ProtoId<CommunicationChannelPrototype>>? childChannels)
+    private List<CommunicationChannelPrototype> FilterChildChannels(
+        CommunicationChannelPrototype communicationChannel,
+        List<ProtoId<CommunicationChannelPrototype>>? childChannels
+    )
     {
+        if (childChannels == null)
+            return [];
+
         var returnChannels = new List<CommunicationChannelPrototype>();
-        if (childChannels != null)
+        foreach (var childChannel in childChannels)
         {
-            foreach (var childChannel in childChannels)
+            if (!_prototypeManager.TryIndex(childChannel, out var channelProto))
+                continue;
+
+            //Prevents a repeatable channel from sending via another repeatable channel
+            //without a non-repeatable in-between; should stop some looping behavior from executing.
+            if (communicationChannel.NonRepeatable || channelProto.NonRepeatable)
             {
-                if (_prototypeManager.TryIndex(childChannel, out var channelProto))
-                {
-                    //Prevents a repeatable channel from sending via another repeatable channel without a non-repeatable inbetween; should stop some looping behavior from executing.
-                    if (communicationChannel.NonRepeatable || channelProto.NonRepeatable)
-                    {
-                        returnChannels.Add(channelProto);
-                    }
-                }
+                returnChannels.Add(channelProto);
             }
         }
 

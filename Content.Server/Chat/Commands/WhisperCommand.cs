@@ -1,14 +1,17 @@
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
     internal sealed class WhisperCommand : IConsoleCommand
     {
+        private static readonly ProtoId<CommunicationChannelPrototype> ChatChannel = "ICWhisper";
+
         public string Command => "whisper";
         public string Description => "Send chat messages to the local channel as a whisper";
         public string Help => "whisper <text>";
@@ -37,7 +40,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, "ICWhisper", shell.Player, playerEntity);
+            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, ChatChannel, shell.Player, playerEntity);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
-using Microsoft.Extensions.Logging;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -21,28 +20,33 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
 
     public bool CheckTelecomms(ChatMessageContext channelParameters)
     {
-        IoCManager.InjectDependencies(this);
-
-        if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
-            !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) ||
-            !_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype) ||
-            !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform))
+        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
+            !channelParameters.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel)
+        )
             return false;
 
-        var activeServer = radioPrototype.LongRange;
+        IoCManager.InjectDependencies(this);
 
-        if (activeServer == false)
+        if (
+            !_prototypeManager.TryIndex(radioChannel, out RadioChannelPrototype? radioPrototype) ||
+            !_entityManager.TryGetComponent<TransformComponent>(senderEntity, out var sourceTransform)
+        )
+            return false;
+
+        if (radioPrototype.LongRange)
         {
-            var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
-            var sourceMapId = sourceTransform.MapID;
-            foreach (var (_, keys, power, transform) in servers)
+            return true;
+        }
+
+        var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+        var sourceMapId = sourceTransform.MapID;
+        foreach (var (_, keys, power, transform) in servers)
+        {
+            if (transform.MapID == sourceMapId &&
+                power.Powered &&
+                keys.Channels.Contains(radioPrototype.ID))
             {
-                if (transform.MapID == sourceMapId &&
-                    power.Powered &&
-                    keys.Channels.Contains(radioPrototype.ID))
-                {
-                    return true;
-                }
+                return true;
             }
         }
 

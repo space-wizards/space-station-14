@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,18 +12,16 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class PlayGlobalAudioChatModifier : ChatModifier
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        IoCManager.InjectDependencies(this);
+        if (!chatMessageContext.TryGet<string>(DefaultChannelParameters.GlobalAudioPath, out var audioPath))
+            return message;
 
-        if (channelParameters.TryGetValue(DefaultChannelParameters.GlobalAudioPath, out var audioPath))
-        {
-            var volume = channelParameters.TryGetValue(DefaultChannelParameters.GlobalAudioVolume, out var audioVolume)
-                ? (float)audioVolume
-                : 1f;
-            message.PushTag(new MarkupNode("PlayAudio", new MarkupParameter((string)audioPath), new Dictionary<string, MarkupParameter>() { { "volume", new MarkupParameter((long)volume) } }, false), true);
-        }
+        var volume = chatMessageContext.TryGet<float>(DefaultChannelParameters.GlobalAudioVolume, out var audioVolume)
+            ? audioVolume
+            : 1f;
+        message.PushTag(new MarkupNode("PlayAudio", new MarkupParameter(audioPath), new Dictionary<string, MarkupParameter>() { { "volume", new MarkupParameter((long)volume) } }, false), true);
+
+        return message;
     }
 }

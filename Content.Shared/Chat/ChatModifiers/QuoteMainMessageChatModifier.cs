@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -9,10 +9,11 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class QuoteMainMessageChatModifier : ChatModifier
 {
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         var quoteNode = new MarkupNode("\"");
         message.InsertBeforeTag(quoteNode, "MainMessage");
         message.InsertAfterTag(quoteNode, "MainMessage");
+        return message;
     }
 }

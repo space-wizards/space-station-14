@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using Content.Shared.Administration.Managers;
 using Robust.Shared.Player;
 
@@ -10,13 +9,13 @@ namespace Content.Shared.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class IsAdminChatCondition : ChatCondition
 {
+    [Dependency] private readonly ISharedAdminManager _admin = default!;
+
     /// <summary>
     /// If true, deadmined sessions will be included.
     /// </summary>
     [DataField]
     public bool IncludeDeadmin;
-
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
 
     protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {

@@ -1,15 +1,13 @@
-﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chat.ContentMarkupTags;
-using Content.Shared.Chat.Testing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat;
 
 public interface ISharedContentMarkupTagManager
 {
-    Dictionary<string, IContentMarkupTag> ContentMarkupTagTypes { get; }
+    IReadOnlyDictionary<string, IContentMarkupTag> ContentMarkupTagTypes { get; }
 
     public IContentMarkupTag? GetMarkupTag(string name)
     {
@@ -58,8 +56,8 @@ public interface ISharedContentMarkupTagManager
                 var consumedNode = consumedNodes.First();
 
                 var consumedNodeResult = node.Name != null
-                    ? consumedNode.MarkupNodeProcessing(node, randomSeed)
-                    : consumedNode.TextNodeProcessing(node, randomSeed);
+                    ? consumedNode.ProcessMarkupNode(node, randomSeed)
+                    : consumedNode.ProcessTextNode(node, randomSeed);
 
                 if (consumedNodeResult != null)
                 {
@@ -76,7 +74,7 @@ public interface ISharedContentMarkupTagManager
             {
                 if (!node.Closing)
                 {
-                    var openerNode = tag.OpenerProcessing(node, randomSeed);
+                    var openerNode = tag.ProcessOpeningTag(node, randomSeed);
                     if (openerNode != null)
                     {
                         nodeEnumerator.InsertRange(i, openerNode);
@@ -88,7 +86,7 @@ public interface ISharedContentMarkupTagManager
                 }
                 else
                 {
-                    var closerNode = tag.CloserProcessing(node, randomSeed);
+                    var closerNode = tag.ProcessCloser(node, randomSeed);
                     if (closerNode != null)
                     {
                         nodeEnumerator.InsertRange(i, closerNode);

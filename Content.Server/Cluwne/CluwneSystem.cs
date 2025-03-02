@@ -14,7 +14,6 @@ using Robust.Shared.Prototypes;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
-using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Clumsy;
@@ -23,6 +22,8 @@ namespace Content.Server.Cluwne;
 
 public sealed class CluwneSystem : EntitySystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> EmoteChannel = "Emote";
+
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -96,7 +97,7 @@ public sealed class CluwneSystem : EntitySystem
         {
             _audio.PlayPvs(component.SpawnSound, uid);
             // Probably should be localized
-            _chatManager.SendChannelMessage("honks", "Emote", null, uid);
+            _chatManager.SendChannelMessage("honks", EmoteChannel, null, uid);
         }
 
         else if (_robustRandom.Prob(component.KnockChance))
@@ -104,7 +105,7 @@ public sealed class CluwneSystem : EntitySystem
             _audio.PlayPvs(component.KnockSound, uid);
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             // Probably should be localized
-            _chatManager.SendChannelMessage("spasms", "Emote", null, uid);
+            _chatManager.SendChannelMessage("spasms", EmoteChannel, null, uid);
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Chat.Prototypes;
@@ -15,7 +13,7 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     /// <summary>
     /// The prototype we inherit from.
     /// </summary>
-    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<CommunicationChannelPrototype>))]
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<CommunicationChannelPrototype>))]
     public string[]? Parents { get; }
 
     [NeverPushInheritance]

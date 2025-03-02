@@ -1,8 +1,3 @@
-﻿using System.Linq;
-using Content.Shared.CCVar;
-using Content.Shared.Decals;
-using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
@@ -32,18 +27,16 @@ public sealed partial class InsertLoCChatModifier : ChatModifier
     [DataField]
     public string LocString = "";
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        if (TargetNode != null)
-        {
-            var str = Loc.GetString(LocString);
-            if (AfterNode)
-            {
-                message.InsertAfterTag(new MarkupNode(str), TargetNode);
-                return;
-            }
+        if (TargetNode == null)
+            return message;
 
+        var str = Loc.GetString(LocString);
+        if (AfterNode)
+            message.InsertAfterTag(new MarkupNode(str), TargetNode);
+        else
             message.InsertBeforeTag(new MarkupNode(str), TargetNode);
-        }
+        return message;
     }
 }

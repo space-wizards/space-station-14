@@ -1,5 +1,3 @@
-﻿using Robust.Shared.Utility;
-
 namespace Content.Shared.Chat.Testing;
 
 public sealed class TestListenerSystem : ListenerEntitySystem<TestListenerComponent>

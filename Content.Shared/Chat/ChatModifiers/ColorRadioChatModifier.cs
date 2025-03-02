@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -15,14 +15,18 @@ public sealed partial class ColorRadioChatModifier : ChatModifier
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
+        if (!chatMessageContext.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radio))
+            return message;
+
         IoCManager.InjectDependencies(this);
 
-        if (channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radio) &&
-            _prototypeManager.TryIndex((string)radio, out RadioChannelPrototype? radioPrototype))
+        if (_prototypeManager.TryIndex(radio, out RadioChannelPrototype? radioPrototype))
         {
             message.InsertAroundMessage(new MarkupNode("color", new MarkupParameter(radioPrototype.Color), null, false));
         }
+
+        return message;
     }
 }

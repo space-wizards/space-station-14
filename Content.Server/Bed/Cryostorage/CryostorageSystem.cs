@@ -11,7 +11,6 @@ using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
-using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -27,12 +26,17 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using System.Globalization;
+using Content.Shared.Chat.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bed.Cryostorage;
 
 /// <inheritdoc/>
 public sealed class CryostorageSystem : SharedCryostorageSystem
 {
+    private static readonly ProtoId<CommunicationChannelPrototype> GameMessageChannel = "GameMessage";
+
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
@@ -290,7 +294,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         var msg = Loc.GetString(locKey, ("time", comp.GracePeriod.TotalMinutes));
         if (TryComp<ActorComponent>(args.Entity, out var actor))
-            _chatManager.SendChannelMessage(msg, "GameMessage", null, null, new HashSet<ICommonSession>() { actor.PlayerSession });
+            _chatManager.SendChannelMessage(msg, GameMessageChannel, null, null, new HashSet<ICommonSession>() { actor.PlayerSession });
     }
 
     private List<CryostorageContainedPlayerData> GetAllContainedData(Entity<CryostorageComponent> ent)

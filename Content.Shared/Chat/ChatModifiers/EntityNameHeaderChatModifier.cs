@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
@@ -14,27 +14,25 @@ public sealed partial class EntityNameHeaderChatModifier : ChatModifier
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
+        if (!chatMessageContext.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var sender))
+            return message;
+
         IoCManager.InjectDependencies(this);
-
-        if (channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var sender) && sender is EntityUid)
+        
+        MetaDataComponent? metaData = null;
+        if (!_entityManager.MetaQuery.Resolve(sender, ref metaData, false))
         {
-            var senderEntity = (EntityUid)sender;
-            MetaDataComponent? metaData = null;
-            string? name;
-
-            if (!_entityManager.MetaQuery.Resolve(senderEntity, ref metaData, false))
-            {
-                return;
-            }
-
-            name = metaData.EntityName;
-
-            var nameEv = new TransformSpeakerNameEvent(senderEntity, name);
-            _entityManager.EventBus.RaiseLocalEvent(senderEntity, nameEv);
-
-            message.InsertBeforeMessage(new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null));
+            return message;
         }
+
+        var nameEv = new TransformSpeakerNameEvent(sender, metaData.EntityName);
+        _entityManager.EventBus.RaiseLocalEvent(sender, nameEv);
+
+        var entityNameNode = new MarkupNode("EntityNameHeader", new MarkupParameter(nameEv.VoiceName), null);
+        message.InsertBeforeMessage(entityNameNode);
+
+        return message;
     }
 }

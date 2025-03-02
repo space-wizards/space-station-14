@@ -6,7 +6,7 @@ namespace Content.Client.Chat.Managers
 {
     public interface IChatManager : ISharedChatManager
     {
-        public void SendMessage(string text, ChatSelectChannel channel, RadioChannelPrototype? radioChannel);
+        public void SendMessage(string text, ChatSelectChannel channel, RadioChannelPrototype? radioChannel = null);
 
         public void SendMessage(string text, string channel);
 

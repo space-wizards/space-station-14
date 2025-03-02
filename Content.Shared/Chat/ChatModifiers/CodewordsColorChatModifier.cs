@@ -1,6 +1,3 @@
-﻿using System.Linq;
-using Content.Shared.CCVar;
-using Content.Shared.Decals;
 using Content.Shared.Mind;
 using Content.Shared.Roles.RoleCodeword;
 using Robust.Shared.Player;
@@ -19,13 +16,17 @@ public sealed partial class CodewordsColorChatModifier : ChatModifier
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
 
-    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
         IoCManager.InjectDependencies(this);
 
         if (_entSys.TryGetEntitySystem<SharedMindSystem>(out var mindSystem) &&
             _player.LocalUser != null && mindSystem.TryGetMind(_player.LocalUser.Value, out var mindId) &&
-            _ent.TryGetComponent(mindId, out RoleCodewordComponent? codewordComp))
+            _ent.TryGetComponent(mindId, out RoleCodewordComponent? codewordComp)
+        )
             message.InsertInsideTag(new MarkupNode("Codewords", null, null), "MainMessage");
+
+        return message;
+
     }
 }
