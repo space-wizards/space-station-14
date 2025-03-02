@@ -94,24 +94,29 @@ internal sealed class AdminNameOverlay : Overlay
 
             var currentOffset = Vector2.Zero;
 
+            // Username
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             currentOffset += lineoffset;
 
+            // Character name
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
             currentOffset += lineoffset;
 
+            // Playtime
             if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && _overlayPlaytime)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
                 currentOffset += lineoffset;
             }
 
+            // Job
             if (!string.IsNullOrEmpty(playerInfo.StartingJob) && _overlayStartingJob)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
                 currentOffset += lineoffset;
             }
 
+            // Classic Antag Label
             var symbol = _overlaySymbols ? playerInfo.RoleProto.Symbol : string.Empty;
             if (_overlayClassic && playerInfo.Antag)
             {
@@ -119,6 +124,7 @@ internal sealed class AdminNameOverlay : Overlay
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
                 // currentOffset += lineoffset;
             }
+            // Role Type
             else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
                 var label = symbol + Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
