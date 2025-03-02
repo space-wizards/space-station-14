@@ -1988,7 +1988,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 1
+  metamorphicMaxFillLevels: 2
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
