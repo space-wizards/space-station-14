@@ -87,6 +87,9 @@
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
+    - type: Tag
+      tags:
+      - PlushieThrongler
 
 - type: entity
   parent: BasePlushie

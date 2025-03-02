@@ -379,3 +379,12 @@
         amount: 1
         prob: 0.05
 
+- type: entity
+  name: moproach kit crate
+  description: A box with one moproach kit that provides you with two moproaches.
+  id: CrateFunMoproach
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: MoproachBox

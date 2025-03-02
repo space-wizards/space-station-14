@@ -211,6 +211,9 @@
   id: CapacitorStockPart
 
 - type: Tag
+  id: CaptainIDCard
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag
@@ -514,6 +517,12 @@
 
 - type: Tag
   id: EmitterBolt
+
+- type: Tag
+  id: EnergyKatana
+
+- type: Tag
+  id: EnergySword
 
 - type: Tag
   id: Enzyme
@@ -1013,6 +1022,9 @@
 
 - type: Tag
   id: PlushieSharkPink
+  
+- type: Tag
+  id: PlushieThrongler
 
 - type: Tag
   id: Potato
@@ -1148,6 +1160,9 @@
   id: Skewer
 
 - type: Tag
+  id: Sledgehammer
+
+- type: Tag
   id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
@@ -1211,6 +1226,9 @@
   id: Steak
 
 - type: Tag
+  id: Stunbaton
+
+- type: Tag
   id: StringInstrument
 
 - type: Tag
@@ -1230,6 +1248,9 @@
 
 - type: Tag
   id: Syndicate
+
+- type: Tag
+  id: SyndicateIDCard
 
 - type: Tag
   id: SyndicateSegwayKeys
@@ -1326,6 +1347,9 @@
 
 - type: Tag
   id: WeaponAntiqueLaser
+
+- type: Tag
+  id: WeaponCrusherDagger
 
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
