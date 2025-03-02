@@ -168,6 +168,7 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
+      - id: ReadytoneCartridge
 
 - type: entity
   name: Maint Loot Spawner
