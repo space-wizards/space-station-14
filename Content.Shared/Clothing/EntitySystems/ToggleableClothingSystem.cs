@@ -56,6 +56,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     {
         if (ent.Comp.Container == null || ent.Comp.ClothingUid == null)
             return;
+        
         if (ent.Comp.Container.ContainedEntity == null)
             _inventorySystem.TryUnequip(args.Args.User, ent.Comp.Slot, force: true);
     }
