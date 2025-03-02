@@ -33,6 +33,7 @@ public abstract class SharedStrippableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {
@@ -220,8 +221,10 @@ public abstract class SharedStrippableSystem : EntitySystem
             NeedHand = true,
             DuplicateCondition = DuplicateConditions.SameTool
         };
-
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
+
+
+
     }
 
     /// <summary>
@@ -418,6 +421,8 @@ public abstract class SharedStrippableSystem : EntitySystem
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        _interactionSystem.DoContactInteraction(held, target.Owner);
+
     }
 
     /// <summary>
