@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseItem
+  id: SalvageShuttle
+  name: Reclaimer
+  description: Is this real or fake?????
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mining/salvage_shuttle.rsi
+    state: icon
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Shuttle/shuttle_impact2.ogg
+  - type: Item
+    size: Normal
+  - type: TileFrictionModifier
+    modifier: 0.5
