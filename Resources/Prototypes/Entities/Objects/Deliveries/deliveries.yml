@@ -3,6 +3,33 @@
   parent: BaseItem
   id: BaseDelivery
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DeliveryVisuals.IsFragile:
+        enum.DeliveryVisualLayers.FragileStamp:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsLocked:
+        enum.DeliveryVisualLayers.Lock:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsPriority:
+        enum.DeliveryVisualLayers.PriorityTape:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsPriorityInactive:
+        enum.DeliveryVisualLayers.PriorityTape:
+          True: { shader: shaded, state: priority_inactive }
+          False: { shader: unshaded, state: priority }
+      enum.DeliveryVisuals.IsBroken:
+        enum.DeliveryVisualLayers.Breakage:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsTrash:
+        enum.DeliveryVisualLayers.Icon:
+          True: { visible: true }
+          False: { visible: false }
   - type: Label
     examinable: false
   - type: FingerprintReader
@@ -22,8 +49,27 @@
   name: package
   components:
   - type: Sprite
-    sprite: Objects/Storage/boxes.rsi
-    state: box
+    sprite: Objects/Specific/Cargo/mail_large.rsi
+    scale: 0.85,0.85
+    layers:
+    - state: icon
+      map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      scale: 0.6, 0.6
+      offset: -0.23, -0.23
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
+    - state: priority
+      map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
+      visible: false
+      shader: unshaded
+    - state: broken
+      map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
   - type: MultiHandedItem
   - type: Item
     size: Huge
@@ -61,47 +107,6 @@
     - state: broken
       map: [ "enum.DeliveryVisualLayers.Breakage" ]
       visible: false
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.DeliveryVisuals.IsFragile:
-        enum.DeliveryVisualLayers.FragileStamp:
-          True:
-            visible: true
-          False:
-            visible: false
-      enum.DeliveryVisuals.IsLocked:
-        enum.DeliveryVisualLayers.Lock:
-          True:
-            visible: true
-          False:
-            visible: false
-      enum.DeliveryVisuals.IsPriority:
-        enum.DeliveryVisualLayers.PriorityTape:
-          True:
-            visible: true
-          False:
-            visible: false
-      enum.DeliveryVisuals.IsPriorityInactive:
-        enum.DeliveryVisualLayers.PriorityTape:
-          True:
-            shader: shaded
-            state: priority_inactive
-          False:
-            shader: unshaded
-            state: priority
-      enum.DeliveryVisuals.IsBroken:
-        enum.DeliveryVisualLayers.Breakage:
-          True:
-            visible: true
-          False:
-            visible: false
-      enum.DeliveryVisuals.IsTrash:
-        enum.DeliveryVisualLayers.Icon:
-          True:
-            state: trash
-          False:
-            state: icon
   - type: Item
     storedRotation: 90
   - type: Delivery
