@@ -313,6 +313,19 @@
   - LawyerNeck
 
 - type: loadoutGroup
+  id: ChaplainDevoter
+  name: loadout-group-chaplain-devoter
+  minLimit: 0
+  loadouts:
+  - AltarDevoterNanotrasen
+  - AltarDevoterChaos
+  - AltarDevoterDruid
+  - AltarDevoterToolbox
+  - AltarDevoterSpaceChristian
+  - AltarDevoterSatana
+  - AltarDevoterTechnology
+
+- type: loadoutGroup
   id: ChaplainHead
   name: loadout-group-chaplain-head
   minLimit: 0
