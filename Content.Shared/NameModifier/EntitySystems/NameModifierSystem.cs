@@ -41,7 +41,7 @@ public sealed class NameModifierSystem : EntitySystem
     {
         if (Resolve(entity, ref entity.Comp, logMissing: false))
             return entity.Comp.BaseName;
-        return MetaData(entity).EntityName;
+        return Name(entity);
     }
 
     /// <summary>
