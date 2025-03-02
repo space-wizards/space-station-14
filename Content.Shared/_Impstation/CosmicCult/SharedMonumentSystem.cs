@@ -60,17 +60,11 @@ public sealed class SharedMonumentSystem : EntitySystem
 
         if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(args.Actor, out var cultComp))
         {
-            //todo remove these later when I get around to taking influences out of the state
-            ent.Comp.AvailableEntropy = cultComp.EntropyBudget;
-            ent.Comp.UnlockedInfluences = cultComp.UnlockedInfluences;
-
             var buiState = new MonumentBuiState(
-                cultComp.EntropyBudget,
                 ent.Comp.EntropyUntilNextStage,
                 ent.Comp.CrewToConvertNextStage,
                 ent.Comp.PercentageComplete,
                 ent.Comp.SelectedGlyph,
-                cultComp.UnlockedInfluences,
                 ent.Comp.UnlockedGlyphs
                 );
 
@@ -97,19 +91,21 @@ public sealed class SharedMonumentSystem : EntitySystem
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, -1);
 
-        if (ent.Comp.CurrentGlyph is not null) QueueDel(ent.Comp.CurrentGlyph);
+        if (ent.Comp.CurrentGlyph is not null)
+            QueueDel(ent.Comp.CurrentGlyph);
+
         var glyphEnt = Spawn(proto.Entity, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
         ent.Comp.CurrentGlyph = glyphEnt;
 
         _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
-        _ui.CloseUi(ent.Owner, MonumentKey.Key);
     }
 
     private void OnGlyphRemove(Entity<MonumentComponent> ent, ref GlyphRemovedMessage args)
     {
-        if (ent.Comp.CurrentGlyph is not null) QueueDel(ent.Comp.CurrentGlyph);
+        if (ent.Comp.CurrentGlyph is not null)
+            QueueDel(ent.Comp.CurrentGlyph);
+
         _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
-        _ui.CloseUi(ent.Owner, MonumentKey.Key);
     }
 
     private void OnInfluenceSelected(Entity<MonumentComponent> ent, ref InfluenceSelectedMessage args)
@@ -120,7 +116,7 @@ public sealed class SharedMonumentSystem : EntitySystem
         if (!_prototype.TryIndex(args.InfluenceProtoId, out var proto) || !TryComp<ActivatableUIComponent>(ent, out var uiComp) || !TryComp<CosmicCultComponent>(senderEnt, out var cultComp))
             return;
 
-        if (ent.Comp.AvailableEntropy < proto.Cost || cultComp.OwnedInfluences.Contains(proto) || args.Sender == null)
+        if (cultComp.EntropyBudget < proto.Cost || cultComp.OwnedInfluences.Contains(proto) || args.Sender == null)
             return;
 
         cultComp.OwnedInfluences.Add(proto);
@@ -135,7 +131,6 @@ public sealed class SharedMonumentSystem : EntitySystem
             UnlockPassive(senderEnt.Value, proto); //Not unlocking an action? call the helper function to add the influence's passive effects
         }
 
-        ent.Comp.AvailableEntropy -= proto.Cost;
         cultComp.EntropyBudget -= proto.Cost;
         Dirty(senderEnt.Value, cultComp); //force an update to make sure that the client has the correct set of owned abilities
 

@@ -82,7 +82,7 @@
     sound:
       path: /Audio/_Impstation/CosmicCult/god_ambient.ogg
   - type: ActivatableUI
-    singleUser: true
+    singleUser: false
     requiresComplex: true
     blockSpectators: true
     key: enum.MonumentKey.Key

@@ -29,7 +29,6 @@ public sealed partial class MonumentMenu : FancyWindow
     private readonly IEnumerable<InfluencePrototype> _influencePrototypes;
     private readonly ButtonGroup _glyphButtonGroup;
     private ProtoId<GlyphPrototype> _selectedGlyphProtoId = string.Empty;
-    private HashSet<ProtoId<InfluencePrototype>> _unlockedInfluenceProtoIds = [];
     private HashSet<ProtoId<GlyphPrototype>> _unlockedGlyphProtoIds = [];
     public Action<ProtoId<GlyphPrototype>>? OnSelectGlyphButtonPressed;
     public Action? OnRemoveGlyphButtonPressed;
@@ -57,7 +56,6 @@ public sealed partial class MonumentMenu : FancyWindow
     public void UpdateState(MonumentBuiState state)
     {
         _selectedGlyphProtoId = state.SelectedGlyph;
-        _unlockedInfluenceProtoIds = state.UnlockedInfluences;
         _unlockedGlyphProtoIds = state.UnlockedGlyphs;
 
         CultProgressBar.BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = new Color(15, 17, 30) };
@@ -82,7 +80,13 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the entropy fields
     private void UpdateEntropy(MonumentBuiState state)
     {
-        AvailableEntropy.Text = Loc.GetString("monument-interface-entropy-value", ("infused", state.AvailableEntropy.ToString()));
+        var availableEntropy = "thinking emoji";
+        if (_entityManager.TryGetComponent<CosmicCultComponent>(_playerManager.LocalEntity, out var cultComp))
+        {
+            availableEntropy = cultComp.EntropyBudget.ToString();
+        }
+
+        AvailableEntropy.Text = Loc.GetString("monument-interface-entropy-value", ("infused", availableEntropy));
         EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", state.EntropyUntilNextStage.ToString()));
         CrewToConvertUntilNextStage.Text = state.CrewToConvertUntilNextStage.ToString();
     }
@@ -150,11 +154,10 @@ public sealed partial class MonumentMenu : FancyWindow
 
     private InfluenceUIBox.InfluenceUIBoxState GetUIBoxStateForInfluence(InfluencePrototype influence, MonumentBuiState state)
     {
-        var unlocked = _unlockedInfluenceProtoIds.Contains(influence.ID);
-
         if (!_entityManager.TryGetComponent<CosmicCultComponent>(_playerManager.LocalEntity, out var cultComp)) //this feels wrong but seems to be the correct way to do this?
             return InfluenceUIBox.InfluenceUIBoxState.Locked; //early return with locked if there's somehow no cult comp
 
+        var unlocked = cultComp.UnlockedInfluences.Contains(influence.ID);
         var owned = cultComp.OwnedInfluences.Any(ownedProtoId => ownedProtoId.Id.Equals(influence.ID));
 
         //more verbose than it needs to be, but it reads nicer
@@ -166,7 +169,7 @@ public sealed partial class MonumentMenu : FancyWindow
         if (unlocked)
         {
             //if it's unlocked, do we have enough entropy to buy it?
-            return influence.Cost > state.AvailableEntropy ? InfluenceUIBox.InfluenceUIBoxState.UnlockedAndNotEnoughEntropy : InfluenceUIBox.InfluenceUIBoxState.UnlockedAndEnoughEntropy;
+            return influence.Cost > cultComp.EntropyBudget ? InfluenceUIBox.InfluenceUIBoxState.UnlockedAndNotEnoughEntropy : InfluenceUIBox.InfluenceUIBoxState.UnlockedAndEnoughEntropy;
         }
 
         return InfluenceUIBox.InfluenceUIBoxState.Locked;

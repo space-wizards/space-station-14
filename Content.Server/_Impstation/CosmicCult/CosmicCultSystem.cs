@@ -273,6 +273,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         if (!HasComp<CosmicEntropyMoteComponent>(args.Used) || !HasComp<CosmicCultComponent>(args.User) || !uid.Comp.Enabled || args.Handled)
             return;
+
         args.Handled = AddEntropy(uid, args.Used, args.User);
     }
     private bool AddEntropy(Entity<MonumentComponent> monument, EntityUid entropy, EntityUid cultist)
@@ -283,8 +284,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
             cultComp.EntropyBudget += quant;
             Dirty(cultist, cultComp);
         }
-        monument.Comp.TotalEntropy += quant;
+
         _cultRule.TotalEntropy += quant;
+        monument.Comp.TotalEntropy = _cultRule.TotalEntropy;
         _cultRule.UpdateCultData(monument);
 
         _ui.SetUiState(monument.Owner, MonumentKey.Key, new MonumentBuiState(monument.Comp)); //this can't be predicted (afaik) as it relies on the cultRuleSystem, which is serverside

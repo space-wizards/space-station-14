@@ -13,7 +13,6 @@ public sealed partial class MonumentComponent : Component
     [DataField, AutoNetworkedField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
     [DataField, AutoNetworkedField] public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
     [DataField, AutoNetworkedField] public ProtoId<GlyphPrototype> SelectedGlyph;
-    [DataField, AutoNetworkedField] public int AvailableEntropy;
     [DataField, AutoNetworkedField] public int TotalEntropy;
     [DataField, AutoNetworkedField] public int EntropyUntilNextStage;
     [DataField, AutoNetworkedField] public int CrewToConvertNextStage;
