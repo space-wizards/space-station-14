@@ -46,4 +46,9 @@ public sealed partial class NPCActionsData
     /// A place to store the EntityUID of our action (might not be necessary make sure to check stupid)
     /// </summary>
     [DataField] public EntityUid? ActionEnt;
+    /// <summary>
+    /// If true, will not give the entity a new action but will instead try to find a matching action the entity can use. If false, the entity will get a new usable action.
+    /// Currently doesn't have logic behind it :^)
+    /// </summary>
+    [DataField] public bool Reference;
 }

@@ -1,8 +1,6 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
-using Content.Shared.NPC;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -11,6 +9,8 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    // If we're iterating through actionContainers for finding refereced actions we'll need this
+    //[Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,12 +22,13 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
+        EnsureComp<ActionsContainerComponent>(ent.Owner, out var comp);
         foreach (var action in ent.Comp.Actions)
         {
-            //check if an action already exists first here to avoid duplicating actions
-            /*if (ent.Owner.TryGetValue<EntityUid>(action, out var dummy))
-                action.ActionEnt = dummy;
-            else*/
+            if (action.Reference)
+                //TODO: This should have logic to find the action or create a listener for if the action gets added but currently does nothing
+                action.ActionEnt = _actions.AddAction(ent, action.ActionId);
+            else
                 action.ActionEnt = _actions.AddAction(ent, action.ActionId);
         }
     }
