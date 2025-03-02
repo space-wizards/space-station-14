@@ -144,6 +144,7 @@ cosmiccult-ui-popup-confirm = Confirm
 objective-issuer-cosmiccult = [bold][color=#cae8e8]The Unknown[/color][/bold]
 
 objective-cosmiccult-charactermenu = You must usher in the end of all things. Complete your tasks to advance the cult's progress.
+objective-cosmiccultlead-charactermenu You must lead the cult to usher in the end of all things. Oversee and ensure the cult's progress.
 
 objective-condition-entropy-title = SIPHON ENTROPY
 objective-condition-entropy-desc = Collectively siphon at least {$count} entropy from the crew.
@@ -156,7 +157,7 @@ objective-condition-victory-desc = Beckon The Unknown, and herald the final curt
 
 cosmiccult-radio-tier1-progress = The monument is beckoned unto realspace..
 cosmiccult-announce-tier2-progress = An unnerving numbness prickles your senses.
-cosmiccult-announce-tier2-warning = Scanners detect a notable increase in Λ-CDM! Rifts in realspace may appear shortly.
+cosmiccult-announce-tier2-warning = Scanners detect a notable increase in Λ-CDM! Rifts in realspace may appear shortly. Please alert your station's chaplain if sighted.
 
 cosmiccult-announce-tier3-progress = Arcs of bluespace energy crackle across the station's groaning structure. The end draws near.
 cosmiccult-announce-tier3-warning = Critical increase in Λ-CDM detected. Infected personnel are to be eliminated on sight.

@@ -280,3 +280,26 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+- type: entity
+  id: CosmicEchoVfx
+  name: malign echo
+  description: A trace of malign light..
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: TimedDespawn
+    lifetime: 50
+  - type: CosmicMarkEcho
+  - type: InteractionOutline
+  - type: Sprite
+    layers:
+    - sprite: _Impstation/CosmicCult/Effects/effect_echo.rsi
+      state: vfx
+      shader: unshaded
+  - type: Clickable
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    castShadows: false
+    color: "#42a4ae"

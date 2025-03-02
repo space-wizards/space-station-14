@@ -45,6 +45,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Server.Bible.Components;
 using Content.Shared.UserInterface;
+using Content.Server.Ghost;
+using Content.Server.Light.Components;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -77,6 +79,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
     public Entity<MonumentComponent> MonumentInGame; // the monument in the current round.
@@ -131,7 +134,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _roundEnd.EndRound(); //Woo game over yeaaaah
             foreach (var cultist in cultRule.Cultists)
             {
-                if (TryComp<MobStateComponent>(cultist, out var state) && state.CurrentState == MobState.Alive)
+                if (TryComp<MobStateComponent>(cultist, out var state) && state.CurrentState != MobState.Dead)
                 {
                     if (!TryComp<MindContainerComponent>(cultist, out var mindContainer) || !mindContainer.HasMind)
                         return;
@@ -341,6 +344,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 Spawn("CosmicMalignRift", coords);
             }
         }
+        var lights = EntityQueryEnumerator<PoweredLightComponent>();
+        while (lights.MoveNext(out var light, out _))
+        {
+            if (!_rand.Prob(0.50f))
+                continue;
+            _ghost.DoGhostBooEvent(light);
+        }
     }
 
     private void MonumentTier3(Entity<MonumentComponent> uid)
@@ -381,6 +391,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         while (objectiveQuery.MoveNext(out var _, out var objectiveComp))
         {
             objectiveComp.Tier = 3;
+        }
+        var lights = EntityQueryEnumerator<PoweredLightComponent>();
+        while (lights.MoveNext(out var light, out _))
+        {
+            if (!_rand.Prob(0.25f))
+                continue;
+            _ghost.DoGhostBooEvent(light);
         }
     }
 

@@ -163,7 +163,6 @@ public sealed class CosmicGlyphSystem : EntitySystem
         var projectionEnt = Spawn(uid.Comp.SpawnProjection, Transform(uid).Coordinates);
         if (_mind.TryGetMind(args.User, out var mindId, out var _))
             _mind.TransferTo(mindId, projectionEnt);
-        RemComp<SSDIndicatorComponent>(args.User);
         EnsureComp<CosmicMarkBlankComponent>(args.User);
         EnsureComp<CosmicAstralBodyComponent>(projectionEnt, out var astralComp);
         var mind = Comp<MindComponent>(mindId);
