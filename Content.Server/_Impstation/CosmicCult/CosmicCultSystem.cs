@@ -299,22 +299,22 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #endregion
 
     #region Movespeed
-    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args)
+    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args) // i wish movespeed was easier to work with
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args)
+    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args) // these functions just make sure
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args)
+    private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args) // that movespeed applies more-or-less correctly
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args)
+    private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }

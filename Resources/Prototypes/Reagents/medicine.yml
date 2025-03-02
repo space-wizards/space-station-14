@@ -1102,7 +1102,7 @@
       - !type:CleanseCult
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 10
       - !type:HealthChange
         conditions:
         - !type:TotalDamage

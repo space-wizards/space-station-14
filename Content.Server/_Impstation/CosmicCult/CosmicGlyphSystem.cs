@@ -309,6 +309,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
         var possibleTargets = _lookup.GetEntitiesInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, range);
         if (exclude != null)
             possibleTargets.RemoveWhere(exclude);
+        possibleTargets.RemoveWhere(target => HasComp<CosmicMarkBlankComponent>(target) || HasComp<CosmicMarkLapseComponent>(target)); // We never want these.
 
         return possibleTargets;
     }

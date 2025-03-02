@@ -1,14 +1,14 @@
 - files:
     - antag_cosmic_deconvert.ogg
     - antag_cosmic_briefing.ogg
-  license: "Custom"
+  license: "CC-BY-SA-3.0"
   copyright: "Custom jingle written for Cosmic Cult by Octofoss."
   source: "https://octofoss.bandcamp.com/"
 
 - files:
     - A New Dawn.ogg
     - Before Dawn.ogg
-  license: "Custom"
+  license: "CC-BY-SA-3.0"
   copyright: "Composed by Nahu Pyrope for Cosmic Cult."
   source: "https://linktr.ee/nahupyrope"
 
@@ -40,7 +40,7 @@
     - ability_imposition.ogg
     - ability_glare.ogg
     - ability_blank.ogg
-  license: "Custom"
-  copyright: "By AftrLite(GitHub) for Cosmic Cult 
+  license: "CC-BY-SA-3.0"
+  copyright: "By AftrLite(GitHub) for Cosmic Cult
     - originally released on SS14 Impstation. Made using a combination of (Creative Commons 0) samples from freesound.org and personally-recorded foley."
   source: "https://freesound.org/"
