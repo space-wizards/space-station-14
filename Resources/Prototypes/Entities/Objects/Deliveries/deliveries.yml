@@ -3,6 +3,8 @@
   parent: BaseItem
   id: BaseDelivery
   components:
+  - type: Label
+    examinable: false
   - type: FingerprintReader
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
@@ -39,6 +41,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Cargo/mail.rsi
+    scale: 0.8,0.8
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
@@ -99,6 +102,8 @@
             state: trash
           False:
             state: icon
+  - type: Item
+    storedRotation: 90
   - type: Delivery
     spesoReward: 500
     wrapper: PaperScrap

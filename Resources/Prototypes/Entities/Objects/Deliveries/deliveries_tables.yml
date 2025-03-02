@@ -69,7 +69,6 @@
     - !type:GroupSelector
       weight: 7
       children:
-      - id: MobCockroach
       - id: MailRobustToolsSpam
       - id: MailNanotrasenSpam
       - id: MailSyndicateSpam
@@ -87,7 +86,10 @@
   id: LetterUncommonEntityTable # Some more varied things, should never be more expensive than 100 spesos
   table: !type:GroupSelector
     children:
+    - id: MobCockroach
     - id: SpaceCash100
+    - id: StrangePill
+    - id: Joint
 
 - type: entityTable # TODO: Add more variety!
   id: LetterRareEntityTable # Interesting things that can actually be of use, should never be more expensive than 500 spesos
@@ -96,7 +98,7 @@
     - id: ResearchDisk5000
     - id: ClothingHeadHatHairflower
     - id: ClothingHeadHatFlowerWreath
-    - id: StrangePill
+    - id: JointRainbow
 
 # Packages
 # TODO: Currently mostly maints loot, should be updated in the future.

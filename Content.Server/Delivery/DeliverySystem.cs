@@ -6,6 +6,8 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Labels.EntitySystems;
+using Content.Shared.NameModifier.Components;
 using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
@@ -25,6 +27,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private readonly SharedLabelSystem _label = default!;
 
     public override void Initialize()
     {
@@ -62,6 +65,11 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
             return false;
 
+        var deliveryName = MetaData(ent).EntityName;
+
+        if (TryComp<NameModifierComponent>(ent, out var modifier))
+            deliveryName = modifier.BaseName;
+
         _audio.PlayEntity(ent.Comp.UnlockSound, user, user);
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, false);
@@ -72,13 +80,18 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (rewardMoney)
             GrantSpesoReward(ent.AsNullable());
 
-        _popup.PopupEntity(Loc.GetString("delivery-unlocked", ("delivery", ent)), user, user);
+        _popup.PopupEntity(Loc.GetString("delivery-unlocked", ("delivery", deliveryName)), user, user);
         Dirty(ent);
         return true;
     }
 
     private void OpenDelivery(Entity<DeliveryComponent> ent, EntityUid user)
     {
+        var deliveryName = MetaData(ent).EntityName;
+
+        if (TryComp<NameModifierComponent>(ent, out var modifier))
+            deliveryName = modifier.BaseName;
+
         _audio.PlayEntity(ent.Comp.OpenSound, user, user);
 
         var ev = new DeliveryOpenedEvent(user);
@@ -87,7 +100,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.Wrapper != null)
             Spawn(ent.Comp.Wrapper, Transform(user).Coordinates);
 
-        _popup.PopupEntity(Loc.GetString("delivery-opened", ("delivery", ent)), user, user);
+        _popup.PopupEntity(Loc.GetString("delivery-opened", ("delivery", deliveryName)), user, user);
     }
 
     // TODO: generic updateVisuals from component data
@@ -118,6 +131,8 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         ent.Comp.RecipientStation = stationId.Value;
 
         _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
+
+        _label.Label(ent, ent.Comp.RecipientName);
 
         if (TryComp<FingerprintReaderComponent>(ent, out var reader) && entry.Fingerprint != null)
         {
