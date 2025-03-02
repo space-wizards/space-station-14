@@ -454,4 +454,8 @@ public enum LogType
     /// Commands related to admemes. Stuff like config changes, etc.
     /// </summary>
     AdminCommands = 98,
+    /// <summary>
+    /// Artifact node got activated.
+    /// </summary>
+    ArtifactNode = 99
 }

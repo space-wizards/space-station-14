@@ -34,6 +34,10 @@ public abstract partial class SharedInstrumentComponent : Component
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
 }
 
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ActiveInstrumentComponent : Component;
+
 [Serializable, NetSerializable]
 public sealed class InstrumentComponentState : ComponentState
 {
