@@ -78,7 +78,6 @@
     size: Huge
   - type: Delivery
     spesoReward: 1000
-    wrapper: MaterialCardboard1
   - type: SpawnTableOnUse
     deleteOnUse: false
     table: !type:NestedSelector
@@ -118,7 +117,6 @@
     storedRotation: 90
   - type: Delivery
     spesoReward: 500
-    wrapper: PaperScrap
   - type: SpawnTableOnUse
     deleteOnUse: false
     table: !type:NestedSelector
