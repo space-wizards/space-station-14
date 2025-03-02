@@ -63,9 +63,10 @@ namespace Content.Server.Forensics
             ApplyEvidence(uid, args.Other);
         }
 
-        private void OnFingerprintInit(EntityUid uid, FingerprintComponent component, MapInitEvent args)
+        private void OnFingerprintInit(Entity<FingerprintComponent> ent, ref MapInitEvent args)
         {
-            component.Fingerprint = GenerateFingerprint();
+            ent.Comp.Fingerprint = GenerateFingerprint();
+            Dirty(ent);
         }
 
         private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
