@@ -1,11 +1,12 @@
-<DefaultWindow xmlns="https://spacestation14.io">
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical" MinWidth="243" Margin="0 0 5 0">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5">
-                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
+                <LineEdit Name="SearchBar" PlaceHolder="{Loc 'construction-menu-search'}" HorizontalExpand="True"/>
                 <OptionButton Name="OptionCategories" Access="Public" MinSize="130 0"/>
             </BoxContainer>
-            <ItemList Name="Recipes" Access="Public" SelectMode="Single" VerticalExpand="True"/>
+            <controls:ListContainer Name="Recipes" Access="Public" Group="True" Toggle="True" VerticalExpand="True" />
             <ScrollContainer Name="RecipesGridScrollContainer" VerticalExpand="True" Access="Public" Visible="False">
                 <GridContainer Name="RecipesGrid" Columns="5" Access="Public"/>
             </ScrollContainer>
@@ -18,7 +19,7 @@
             <Control>
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 5">
                     <BoxContainer Orientation="Horizontal" Align="Center">
-                        <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep" Margin="0 0 10 0"/>
+                        <EntityPrototypeView Name="TargetTexture" HorizontalAlignment="Right" Stretch="Fill" Margin="0 0 10 0"/>
                         <BoxContainer Orientation="Vertical">
                             <RichTextLabel Name="TargetName"/>
                             <RichTextLabel Name="TargetDesc"/>

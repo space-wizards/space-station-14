@@ -19,7 +19,7 @@
           steps:
             - tag: CarpetBlack
               doAfter: 1
-              name: black carpet
+              name: construction-graph-tag-black-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-black
@@ -29,7 +29,7 @@
           steps:
             - tag: CarpetBlue
               doAfter: 1
-              name: blue carpet
+              name: construction-graph-tag-blue-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-blue
@@ -39,7 +39,7 @@
           steps:
             - tag: CarpetCyan
               doAfter: 1
-              name: cyan carpet
+              name: construction-graph-tag-cyan-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-cyan
@@ -49,7 +49,7 @@
           steps:
             - tag: CarpetGreen
               doAfter: 1
-              name: green carpet
+              name: construction-graph-tag-green-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-green
@@ -59,7 +59,7 @@
           steps:
             - tag: CarpetOrange
               doAfter: 1
-              name: orange carpet
+              name: construction-graph-tag-orange-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-orange
@@ -69,7 +69,7 @@
           steps:
             - tag: CarpetPink
               doAfter: 1
-              name: pink carpet
+              name: construction-graph-tag-pink-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-pink
@@ -79,7 +79,7 @@
           steps:
             - tag: CarpetPurple
               doAfter: 1
-              name: purple carpet
+              name: construction-graph-tag-purple-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-purple
@@ -89,7 +89,7 @@
           steps:
             - tag: CarpetRed
               doAfter: 1
-              name: red carpet
+              name: construction-graph-tag-red-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-red
@@ -99,11 +99,11 @@
           steps:
             - tag: CarpetWhite
               doAfter: 1
-              name: white carpet
+              name: construction-graph-tag-white-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-white
-              
+
     - node: Curtains
       entity: HospitalCurtains
       edges:
@@ -126,7 +126,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-    
+
     - node: CurtainsBlack
       entity: CurtainsBlack
       edges:
@@ -148,8 +148,8 @@
               amount: 1
           steps:
             - tool: Cutting
-              doAfter: 1    
-              
+              doAfter: 1
+
     - node: CurtainsBlue
       entity: CurtainsBlue
       edges:
@@ -172,7 +172,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsCyan
       entity: CurtainsCyan
       edges:
@@ -195,7 +195,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsGreen
       entity: CurtainsGreen
       edges:
@@ -218,7 +218,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsOrange
       entity: CurtainsOrange
       edges:
@@ -241,7 +241,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsPink
       entity: CurtainsPink
       edges:
@@ -264,7 +264,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsPurple
       entity: CurtainsPurple
       edges:
@@ -287,7 +287,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsRed
       entity: CurtainsRed
       edges:
@@ -310,7 +310,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsWhite
       entity: CurtainsWhite
       edges:
