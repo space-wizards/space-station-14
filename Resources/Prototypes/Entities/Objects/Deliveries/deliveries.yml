@@ -27,7 +27,7 @@
           True: { visible: true }
           False: { visible: false }
       enum.DeliveryVisuals.IsTrash:
-        enum.DeliveryVisualLayers.Icon:
+        enum.DeliveryVisualLayers.Trash:
           True: { visible: true }
           False: { visible: false }
   - type: Label
@@ -54,6 +54,9 @@
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
     - state: postmark
     - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
       scale: 0.6, 0.6
@@ -77,6 +80,7 @@
     spesoReward: 1000
     wrapper: MaterialCardboard1
   - type: SpawnTableOnUse
+    deleteOnUse: false
     table: !type:NestedSelector
       tableId: PackageDeliveryRewards
 
@@ -91,6 +95,9 @@
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
     - state: postmark
     - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
       scale: 0.8, 0.8
@@ -113,5 +120,6 @@
     spesoReward: 500
     wrapper: PaperScrap
   - type: SpawnTableOnUse
+    deleteOnUse: false
     table: !type:NestedSelector
       tableId: LetterDeliveryRewards

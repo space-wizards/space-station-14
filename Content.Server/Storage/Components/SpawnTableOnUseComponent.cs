@@ -14,4 +14,11 @@ public sealed partial class SpawnTableOnUseComponent : Component
     /// </summary>
     [DataField(required: true)]
     public EntityTableSelector Table = default!;
+
+    /// <summary>
+    /// Should the entity be deleted after being used?
+    /// If false, it will be dropped on the ground instead.
+    /// </summary>
+    [DataField]
+    public bool DeleteOnUse = true;
 }

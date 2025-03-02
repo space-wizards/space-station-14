@@ -10,6 +10,7 @@ using Content.Shared.Labels.EntitySystems;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Popups;
 using Content.Shared.StationRecords;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Delivery;
@@ -28,6 +29,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
     [Dependency] private readonly SharedLabelSystem _label = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -41,6 +43,12 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
     private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
     {
+        if (ent.Comp.IsOpened) // If already open, handle it so more loot doesn't spawn
+        {
+            args.Handled = true;
+            return;
+        }
+
         if (ent.Comp.IsLocked)
         {
             // Always handle the event during unlock attempts to prevent SpawnTableOnUse
@@ -97,8 +105,12 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         var ev = new DeliveryOpenedEvent(user);
         RaiseLocalEvent(ent, ref ev);
 
-        if (ent.Comp.Wrapper != null)
-            Spawn(ent.Comp.Wrapper, Transform(user).Coordinates);
+        ent.Comp.IsOpened = true;
+        _appearance.SetData(ent, DeliveryVisuals.IsTrash, ent.Comp.IsOpened);
+
+        _tag.AddTag(ent, "Trash");
+
+        Dirty(ent);
 
         _popup.PopupEntity(Loc.GetString("delivery-opened", ("delivery", deliveryName)), user, user);
     }

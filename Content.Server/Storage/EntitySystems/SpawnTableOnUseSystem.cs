@@ -31,8 +31,15 @@ public sealed class SpawnTableOnUseSystem : EntitySystem
 
         // Don't delete the entity in the event bus, so we queue it for deletion.
         // We need the free hand for the new item, so we send it to nullspace.
-        _transform.DetachEntity(ent, Transform(ent));
-        QueueDel(ent);
+        if (ent.Comp.DeleteOnUse)
+        {
+            _transform.DetachEntity(ent, Transform(ent));
+            QueueDel(ent);
+        }
+        else
+        {
+            _hands.TryDrop(args.User, coords);
+        }
 
         foreach (var id in spawns)
         {

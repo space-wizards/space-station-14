@@ -39,4 +39,5 @@ public enum DeliveryVisualLayers : byte
     JobStamp,
     PriorityTape,
     Breakage,
+    Trash,
 }

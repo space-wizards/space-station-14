@@ -12,6 +12,9 @@ namespace Content.Shared.Delivery;
 public sealed partial class DeliveryComponent : Component
 {
     [DataField, AutoNetworkedField]
+    public bool IsOpened;
+
+    [DataField, AutoNetworkedField]
     public bool IsLocked = true;
 
     [DataField, AutoNetworkedField]
@@ -31,7 +34,4 @@ public sealed partial class DeliveryComponent : Component
 
     [DataField(required: true)]
     public SoundSpecifier? OpenSound;
-
-    [DataField]
-    public EntProtoId? Wrapper;
 }
