@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -45,16 +44,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
         SubscribeLocalEvent<AttachedClothingComponent, BeingUnequippedAttemptEvent>(OnAttachedUnequipAttempt);
 
-        SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<EnterCryostorageEvent>>(HandleEnterCryostorageEvent);
         SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
         SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
         SubscribeLocalEvent<AttachedClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetAttachedStripVerbsEvent);
         SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingDoAfterEvent>(OnDoAfterComplete);
-    }
-
-    private void HandleEnterCryostorageEvent(Entity<ToggleableClothingComponent> ent, ref InventoryRelayedEvent<EnterCryostorageEvent> args)
-    {
-        Logger.Info("HandleEnterCryostorageEvent ------------------------------------------------------------------- ");
     }
 
     private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
