@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: pheenty
-  changes:
-  - message: QM is now considered an important job.
-    type: Tweak
-  - message: QM is now correctly considered head for traitor's kill head objective,
-      while warden now isn't.
-    type: Fix
-  id: 7529
-  time: '2024-10-18T09:43:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32721
 - author: JIPDawg
   changes:
   - message: On Salamander the round will now restart after 5 minutes from when the
@@ -3896,3 +3886,11 @@
   id: 8028
   time: '2025-03-02T02:29:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35330
+- author: metalgearsloth
+  changes:
+  - message: Predict vending machine UI and have the buttons reflect whether the UI
+      is useable.
+    type: Tweak
+  id: 8029
+  time: '2025-03-02T02:47:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33412
