@@ -252,14 +252,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnStartCultLead(Entity<CosmicCultLeadComponent> uid, ref ComponentInit args)
     {
         _actions.AddAction(uid, ref uid.Comp.CosmicMonumentActionEntity, uid.Comp.CosmicMonumentAction, uid);
-        if (!_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-        _role.MindHasRole<CosmicCultRoleComponent>(mindId, out var cosmicRole);
-        if (cosmicRole is not null)
-        {
-            EnsureComp<RoleBriefingComponent>(cosmicRole.Value.Owner);
-            Comp<RoleBriefingComponent>(cosmicRole.Value.Owner).Briefing = Loc.GetString("objective-cosmiccultlead-charactermenu");
-        }
     }
 
     /// <summary>
