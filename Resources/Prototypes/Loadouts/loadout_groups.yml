@@ -679,6 +679,14 @@
   - SalvageBoots
   - CargoWinterBoots
 
+- type: loadoutGroup
+  id: SalvageSpecialistEars
+  name: loadout-group-salvage-specialist-ears
+  minLimit: 0
+  loadouts:
+  - CargoHeadset
+  - MiningHeadset
+
 # Engineering
 - type: loadoutGroup
   id: ChiefEngineerHead

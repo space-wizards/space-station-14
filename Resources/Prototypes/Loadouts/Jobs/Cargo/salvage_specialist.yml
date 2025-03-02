@@ -14,6 +14,17 @@
   equipment:
     back: ClothingBackpackDuffelSalvage
 
+# Ears
+- type: loadout
+  id: CargoHeadset
+  equipment:
+    headsets: ClothingHeadsetCargo
+
+- type: loadout
+  id: MiningHeadset
+  equipment:
+    headsets: ClothingHeadsetMining
+
 # OuterClothing
 - type: loadout
   id: SalvageSpecialistWintercoat
