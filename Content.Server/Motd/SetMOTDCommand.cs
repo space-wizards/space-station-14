@@ -28,7 +28,7 @@ public sealed class SetMotdCommand : LocalizedCommands
         if (args.Length > 0)
         {
             motd = string.Join(" ", args).Trim();
-            if (player != null && _chatManager.MessageCharacterLimit(player, motd))
+            if (player != null && _chatManager.ExceedsCharacterLimit(player, motd))
                 return; // check function prints its own error response
         }
 
