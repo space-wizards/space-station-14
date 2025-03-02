@@ -22,12 +22,13 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
-        //check if an action already exists first here to avoid duplicating actions
-        //register more than one action, probably use a for each action in ent.Comp.NPCActions
         foreach (var action in ent.Comp.Actions)
         {
-            var npcActionsData = action;
-            action.ActionEnt = _actions.AddAction(ent, npcActionsData.ActionId);
+            //check if an action already exists first here to avoid duplicating actions
+            /*if (ent.Owner.TryGetValue<EntityUid>(action, out var dummy))
+                action.ActionEnt = dummy;
+            else*/
+                action.ActionEnt = _actions.AddAction(ent, action.ActionId);
         }
     }
 
