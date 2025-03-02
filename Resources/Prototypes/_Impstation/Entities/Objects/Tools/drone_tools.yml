@@ -73,7 +73,31 @@
     tags:
     - DroneUsable
 
+# PAI actions
 
+- type: entity
+  id: ActionDroneOpenMap
+  name: Open Map
+  description: Look upon yourself.
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      checkConsciousness: false
+      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+      event: !type:OpenUiActionEvent
+        key: enum.StationMapUiKey.Key
+
+- type: entity
+  id: ActionDronePlayMidi
+  name: Play MIDI
+  description: Contribute to the ambiance.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: Interface/Actions/pai-midi.png
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key
 
 # StartingGear
 
