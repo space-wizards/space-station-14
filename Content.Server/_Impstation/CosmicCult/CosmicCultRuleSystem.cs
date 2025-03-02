@@ -47,6 +47,9 @@ using Content.Server.Bible.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
+using Content.Shared._Impstation.Cosmiccult;
+using Content.Shared._Impstation.CosmicCult.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -80,6 +83,9 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
     public Entity<MonumentComponent> MonumentInGame; // the monument in the current round.
@@ -258,25 +264,30 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
     public void UpdateCultData(Entity<MonumentComponent> uid) // This runs every time Entropy is Inserted into The Monument, and every time a Cultist is Converted or Deconverted.
     {
-        var scalar = 7; //This value acts as the multiplier for monument progression.
+        var scalar = 7; // one cultist is worth this many entropy
+        //todo this should probably be a cvar - ruddygreat
+
         if (uid.Comp == null || !TryComp<CosmicFinaleComponent>(uid, out var finaleComp))
             return;
+
         TotalCrew = _antag.GetTotalPlayerCount(_playerMan.Sessions);
+
 #if DEBUG
-        if (TotalCrew < 25) TotalCrew = 25;
+        if (TotalCrew < 25)
+            TotalCrew = 25;
 #endif
         PercentConverted = Math.Round((double)(100 * TotalCult) / TotalCrew);
         Tier3Percent = Math.Round((double)TotalCrew / 100 * 40); // 40% of current pop
         switch (CurrentTier)
         {
             case 1:
-                TargetProgress = Convert.ToInt16(Tier3Percent / 2 * scalar);
+                TargetProgress = (int) (Tier3Percent / 2 * scalar);
                 break;
             case 2:
-                TargetProgress = Convert.ToInt16(Tier3Percent * scalar);
+                TargetProgress = (int) (Tier3Percent * scalar);
                 break;
             case 3:
-                TargetProgress = Convert.ToInt16(Tier3Percent) * scalar + 20;
+                TargetProgress = (int) Tier3Percent * scalar + 20;
                 uid.Comp.EntropyUntilNextStage = 0;
                 uid.Comp.CrewToConvertNextStage = 0;
                 break;
@@ -286,8 +297,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         if (CurrentTier < 3)
         {
-            uid.Comp.CrewToConvertNextStage = Convert.ToInt16(Math.Ceiling(Convert.ToDouble((TargetProgress - CurrentProgress) / scalar)));
-            uid.Comp.EntropyUntilNextStage = Convert.ToInt16(TargetProgress) - Convert.ToInt16(CurrentProgress);
+            uid.Comp.CrewToConvertNextStage = (int) Math.Ceiling((TargetProgress - CurrentProgress) / scalar);
+            uid.Comp.EntropyUntilNextStage = (int) (TargetProgress - CurrentProgress); //todo this goes negative on tier up? - ruddygreat
         }
 
         uid.Comp.PercentageComplete = CurrentProgress / TargetProgress * 100;
@@ -300,7 +311,10 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         else if (CurrentProgress >= TargetProgress && CurrentTier == 1)
             MonumentTier2(uid);
         UpdateMonumentAppearance(uid, false);
-        Dirty(uid);
+
+        Dirty(uid.Owner, uid.Comp);
+
+        _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp));
     }
 
     public void MonumentTier1(Entity<MonumentComponent> uid)
@@ -308,6 +322,26 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         CurrentTier = 1;
         UpdateMonumentAppearance(uid, false);
         MonumentInGame = uid; //Since there's only one Monument per round, let's store its UID for the rest of the round. Saves us on spamming enumerators.
+
+        //this is probably unnecessary but I have no idea where they get added to the list atm - ruddygreat
+        foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 1))
+        {
+            uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
+        }
+
+        //basically completely unnecessary, but putting this here for sanity & futureproofing - ruddygreat
+        var query = EntityQueryEnumerator<CosmicCultComponent>();
+        while (query.MoveNext(out var cultist, out var cultComp))
+        {
+
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 1))
+            {
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
+            }
+
+            Dirty(cultist, cultComp);
+        }
+
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out _, out var objectiveComp))
         {
@@ -319,25 +353,38 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     {
         uid.Comp.PercentageComplete = 50;
         CurrentTier = 2;
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphWarding");
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphBlades");
-        UpdateMonumentAppearance(uid, true);
-        var sender = Loc.GetString("cosmiccult-announcement-sender");
-        var query = EntityQueryEnumerator<CosmicCultComponent>();
-        while (query.MoveNext(out _, out var cultComp))
+
+        foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 2))
         {
-            cultComp.UnlockedInfluences.Add("InfluenceForceIngress");
-            cultComp.UnlockedInfluences.Add("InfluenceUnboundStep");
-            cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); // pity system. 4% of the playercount worth of entropy on tier up
+            uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
         }
+
+        UpdateMonumentAppearance(uid, true);
+
+        var query = EntityQueryEnumerator<CosmicCultComponent>();
+        while (query.MoveNext(out var cultist, out var cultComp))
+        {
+
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
+            {
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
+            }
+
+            cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); // pity system. 4% of the playercount worth of entropy on tier up
+            Dirty(cultist, cultComp);
+        }
+
+        var sender = Loc.GetString("cosmiccult-announcement-sender");
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-progress"), sender, Color.FromHex("#4cabb3"));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-warning"), null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier2.ogg", Filter.Broadcast(), false, AudioParams.Default);
+
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out _, out var objectiveComp))
         {
             objectiveComp.Tier = 2;
         }
+
         for (var i = 0; i < Convert.ToInt16(TotalCrew / 4); i++) // spawn # malign rifts equal to 25% of the playercount
         {
             if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
@@ -345,6 +392,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 Spawn("CosmicMalignRift", coords);
             }
         }
+
         var lights = EntityQueryEnumerator<PoweredLightComponent>();
         while (lights.MoveNext(out var light, out _))
         {
@@ -359,10 +407,16 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         uid.Comp.PercentageComplete = 0;
         uid.Comp.HasCollision = true;
         CurrentTier = 3;
+
         _visibility.SetLayer(uid.Owner, 1, true);
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphCessation");
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphTruth");
+
+        foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 3))
+        {
+            uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
+        }
+
         UpdateMonumentAppearance(uid, true);
+
         var query = EntityQueryEnumerator<CosmicCultComponent>();
         while (query.MoveNext(out var cultist, out var cultComp))
         {
@@ -370,29 +424,39 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             EnsureComp<PressureImmunityComponent>(cultist);
             RemComp<TemperatureSpeedComponent>(cultist);
             RemComp<RespiratorComponent>(cultist);
+
             _damage.SetDamageContainerID(cultist, "BiologicalMetaphysical");
-            cultComp.UnlockedInfluences.Add("InfluenceVacuousImposition");
-            cultComp.UnlockedInfluences.Add("InfluenceAstralNova");
-            cultComp.UnlockedInfluences.Add("InfluenceAstralStride");
-            cultComp.UnlockedInfluences.Add("InfluenceVacuousVitality");
+
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
+            {
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
+            }
+
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); //pity system. 4% of the playercount worth of entropy on tier up
+            Dirty(cultist, cultComp);
         }
+
         var sender = Loc.GetString("cosmiccult-announcement-sender");
         var mapData = _map.GetMap(_transform.GetMapId(uid.Owner.ToCoordinates()));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-progress"), sender, Color.FromHex("#4cabb3"));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-warning"), null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier3.ogg", Filter.Broadcast(), false, AudioParams.Default);
+
         EnsureComp<ParallaxComponent>(mapData, out var parallax);
         parallax.Parallax = "CosmicFinaleParallax";
         Dirty(mapData, parallax);
+
         EnsureComp<MapLightComponent>(mapData, out var mapLight);
         mapLight.AmbientLightColor = Color.FromHex("#210746");
+
         Dirty(mapData, mapLight);
+
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out var _, out var objectiveComp))
         {
             objectiveComp.Tier = 3;
         }
+
         var lights = EntityQueryEnumerator<PoweredLightComponent>();
         while (lights.MoveNext(out var light, out _))
         {
@@ -417,10 +481,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     {
         if (!_mind.TryGetMind(uid, out var mindId, out var mind))
             return;
+
         EnsureComp<CosmicCultComponent>(uid, out var cultComp);
         EnsureComp<IntrinsicRadioReceiverComponent>(uid);
+
         _role.MindAddRole(mindId, "MindRoleCosmicCult", mind, true);
         _role.MindHasRole<CosmicCultRoleComponent>(mindId, out var cosmicRole);
+
         if (cosmicRole is not null)
         {
             EnsureComp<RoleBriefingComponent>(cosmicRole.Value.Owner);
@@ -442,8 +509,11 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         {
             _euiMan.OpenEui(new CosmicRoundStartEui(), session);
         }
+
         TotalCult++;
+
         cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value; //todo: nullable
+
         Dirty(uid, cultComp);
 
         rule.Comp.Cultists.Add(uid);
@@ -456,13 +526,16 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         {
             if (!_mind.TryGetMind(uid, out var mindId, out var mind))
                 return;
+
             _role.MindAddRole(mindId, "MindRoleCosmicCult", mind, true);
             _role.MindHasRole<CosmicCultRoleComponent>(mindId, out var cosmicRole);
+
             if (cosmicRole is not null)
             {
                 EnsureComp<RoleBriefingComponent>(cosmicRole.Value.Owner);
                 Comp<RoleBriefingComponent>(cosmicRole.Value.Owner).Briefing = Loc.GetString("objective-cosmiccult-charactermenu");
             }
+
             _antag.SendBriefing(mind.Session, Loc.GetString("cosmiccult-role-conversion-fluff"), Color.FromHex("#4cabb3"), BriefingSound);
             _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-short-briefing"), Color.FromHex("#cae8e8"), null);
 
@@ -474,10 +547,12 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 _damage.SetDamageContainerID(uid, "BiologicalMetaphysical");
                 cultComp.EntropyBudget = 20; // pity balance
-                cultComp.UnlockedInfluences.Add("InfluenceVacuousImposition");
-                cultComp.UnlockedInfluences.Add("InfluenceAstralNova");
-                cultComp.UnlockedInfluences.Add("InfluenceAstralStride");
-                cultComp.UnlockedInfluences.Add("InfluenceVacuousVitality");
+
+                foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
+                {
+                    cultComp.UnlockedInfluences.Add(influenceProto.ID);
+                }
+
                 EnsureComp<CosmicStarMarkComponent>(uid);
                 EnsureComp<PressureImmunityComponent>(uid);
                 EnsureComp<TemperatureImmunityComponent>(uid);
@@ -486,8 +561,11 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             else if (CurrentTier == 2)
             {
                 cultComp.EntropyBudget = 12; // pity balance
-                cultComp.UnlockedInfluences.Add("InfluenceForceIngress");
-                cultComp.UnlockedInfluences.Add("InfluenceUnboundStep");
+
+                foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
+                {
+                    cultComp.UnlockedInfluences.Add(influenceProto.ID);
+                }
             }
 
             Dirty(uid, cultComp);
@@ -500,13 +578,17 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _mind.TryAddObjective(mindId, mind, "CosmicFinalityObjective");
             _mind.TryAddObjective(mindId, mind, "CosmicMonumentObjective");
             _mind.TryAddObjective(mindId, mind, "CosmicEntropyObjective");
+
             if (_mind.TryGetSession(mindId, out var session))
             {
                 _euiMan.OpenEui(new CosmicConvertedEui(), session);
             }
+
             RemComp<BibleUserComponent>(uid);
+
             TotalCult++;
             cosmicGamerule.Cultists.Add(uid);
+
             UpdateCultData(MonumentInGame);
         }
     }

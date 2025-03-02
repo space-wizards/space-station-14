@@ -13,7 +13,6 @@ public sealed partial class MonumentComponent : Component
     [DataField, AutoNetworkedField] public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences = [];
     [DataField, AutoNetworkedField] public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs = [];
     [DataField, AutoNetworkedField] public ProtoId<GlyphPrototype> SelectedGlyph;
-    [DataField, AutoNetworkedField] public int AvailableEntropy;
     [DataField, AutoNetworkedField] public int TotalEntropy;
     [DataField, AutoNetworkedField] public int EntropyUntilNextStage;
     [DataField, AutoNetworkedField] public int CrewToConvertNextStage;
@@ -21,14 +20,14 @@ public sealed partial class MonumentComponent : Component
     /// <summary>
     /// A bool we use to set whether The Monument's UI is available or not.
     /// </summary>
-    [DataField] public bool Enabled = true;
+    [DataField, AutoNetworkedField] public bool Enabled = true;
     /// <summary>
     /// A bool that determines whether The Monument is tangible to non-cultists.
     /// </summary>
-    [DataField] public bool HasCollision = false;
+    [DataField, AutoNetworkedField] public bool HasCollision = false;
     [DataField, AutoNetworkedField] public TimeSpan TransformTime = TimeSpan.FromSeconds(2.8);
     [DataField, AutoNetworkedField] public EntityUid? CurrentGlyph;
-    [AutoPausedField] public TimeSpan VitalityCheckTimer = default!;
+    [AutoPausedField, DataField] public TimeSpan VitalityCheckTimer = default!;
     [DataField] public TimeSpan CheckWait = TimeSpan.FromSeconds(5);
     [DataField] public DamageSpecifier MonumentHealing = new()
     {
@@ -49,9 +48,10 @@ public sealed partial class MonumentComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class InfluenceSelectedMessage(ProtoId<InfluencePrototype> influenceProtoId) : BoundUserInterfaceMessage
+public sealed class InfluenceSelectedMessage(ProtoId<InfluencePrototype> influenceProtoId, NetEntity? sender) : BoundUserInterfaceMessage
 {
     public ProtoId<InfluencePrototype> InfluenceProtoId = influenceProtoId;
+    public NetEntity? Sender = sender;
 }
 
 [Serializable, NetSerializable]

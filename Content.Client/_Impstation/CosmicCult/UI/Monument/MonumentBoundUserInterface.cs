@@ -18,7 +18,7 @@ public sealed class MonumentBoundUserInterface(EntityUid owner, Enum uiKey) : Bo
 
         _menu = this.CreateWindow<MonumentMenu>();
 
-        _menu.OnSelectGlyphButtonPressed += (ProtoId<GlyphPrototype> protoId) => { SendMessage(new GlyphSelectedMessage(protoId)); };
+        _menu.OnSelectGlyphButtonPressed += protoId => { SendMessage(new GlyphSelectedMessage(protoId)); };
         _menu.OnRemoveGlyphButtonPressed += () => { SendMessage(new GlyphRemovedMessage()); };
 
         _menu.OnGainButtonPressed += OnIdSelected;
@@ -33,6 +33,6 @@ public sealed class MonumentBoundUserInterface(EntityUid owner, Enum uiKey) : Bo
     }
     private void OnIdSelected(ProtoId<InfluencePrototype> selectedInfluence)
     {
-        SendMessage(new InfluenceSelectedMessage(selectedInfluence));
+        SendMessage(new InfluenceSelectedMessage(selectedInfluence, EntMan.GetNetEntity(PlayerManager.LocalEntity)));
     }
 }

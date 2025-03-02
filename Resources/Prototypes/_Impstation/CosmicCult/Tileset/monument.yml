@@ -82,7 +82,7 @@
     sound:
       path: /Audio/_Impstation/CosmicCult/god_ambient.ogg
   - type: ActivatableUI
-    singleUser: true
+    singleUser: false
     requiresComplex: true
     blockSpectators: true
     key: enum.MonumentKey.Key
@@ -96,7 +96,6 @@
     - ccGlyphKnowledge
     - ccGlyphProjection
     selectedGlyph: ccGlyphKnowledge
-    availableEntropy: 0
     totalEntropy: 0
     entropyUntilNextStage: 777
     crewToConvertNextStage:  777

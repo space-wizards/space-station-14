@@ -57,14 +57,22 @@ public sealed class SharedMonumentSystem : EntitySystem
     {
         if (!_ui.IsUiOpen(ent.Owner, MonumentKey.Key) || !TryComp<ActivatableUIComponent>(ent, out var uiComp))
             return;
-        if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(uiComp.CurrentSingleUser, out var cultComp))
+
+        if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(args.Actor, out var cultComp))
         {
-            ent.Comp.UnlockedInfluences = cultComp.UnlockedInfluences;
-            ent.Comp.AvailableEntropy = cultComp.EntropyBudget;
+            var buiState = new MonumentBuiState(
+                ent.Comp.EntropyUntilNextStage,
+                ent.Comp.CrewToConvertNextStage,
+                ent.Comp.PercentageComplete,
+                ent.Comp.SelectedGlyph,
+                ent.Comp.UnlockedGlyphs
+                );
+
+            _ui.SetUiState(ent.Owner, MonumentKey.Key, buiState);
         }
         else
             _ui.CloseUi(ent.Owner, MonumentKey.Key); // based on the prior IF, this effectively cancels the UI if the user is either not a cultist, or the Finale is ready to trigger.
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
+
     }
 
     #region UI listeners
@@ -83,61 +91,50 @@ public sealed class SharedMonumentSystem : EntitySystem
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, -1);
 
-        if (ent.Comp.CurrentGlyph is not null) QueueDel(ent.Comp.CurrentGlyph);
+        if (ent.Comp.CurrentGlyph is not null)
+            QueueDel(ent.Comp.CurrentGlyph);
+
         var glyphEnt = Spawn(proto.Entity, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
         ent.Comp.CurrentGlyph = glyphEnt;
 
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
-        _ui.CloseUi(ent.Owner, MonumentKey.Key);
+        _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
     }
 
     private void OnGlyphRemove(Entity<MonumentComponent> ent, ref GlyphRemovedMessage args)
     {
-        if (ent.Comp.CurrentGlyph is not null) QueueDel(ent.Comp.CurrentGlyph);
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
-        _ui.CloseUi(ent.Owner, MonumentKey.Key);
+        if (ent.Comp.CurrentGlyph is not null)
+            QueueDel(ent.Comp.CurrentGlyph);
+
+        _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
     }
 
     private void OnInfluenceSelected(Entity<MonumentComponent> ent, ref InfluenceSelectedMessage args)
     {
-        if (!_prototype.TryIndex(args.InfluenceProtoId, out var proto) || !TryComp<ActivatableUIComponent>(ent, out var uiComp) || !TryComp<CosmicCultComponent>(uiComp.CurrentSingleUser, out var cultComp))
+
+        var senderEnt = GetEntity(args.Sender);
+
+        if (!_prototype.TryIndex(args.InfluenceProtoId, out var proto) || !TryComp<ActivatableUIComponent>(ent, out var uiComp) || !TryComp<CosmicCultComponent>(senderEnt, out var cultComp))
             return;
-        if (ent.Comp.AvailableEntropy < proto.Cost || cultComp.OwnedInfluences.Contains(proto) || uiComp.CurrentSingleUser == null)
+
+        if (cultComp.EntropyBudget < proto.Cost || cultComp.OwnedInfluences.Contains(proto) || args.Sender == null)
             return;
+
         cultComp.OwnedInfluences.Add(proto);
 
         if (proto.InfluenceType == "influence-type-active")
         {
-            var actionEnt = _actions.AddAction(uiComp.CurrentSingleUser.Value, proto.Action);
+            var actionEnt = _actions.AddAction(senderEnt.Value, proto.Action);
             cultComp.ActionEntities.Add(actionEnt);
         }
         else if (proto.InfluenceType == "influence-type-passive")
         {
-            UnlockPassive(uiComp.CurrentSingleUser.Value, proto); //Not unlocking an action? call the helper function to add the influence's passive effects
+            UnlockPassive(senderEnt.Value, proto); //Not unlocking an action? call the helper function to add the influence's passive effects
         }
 
-        ent.Comp.AvailableEntropy -= proto.Cost;
         cultComp.EntropyBudget -= proto.Cost;
-        ent.Comp.UnlockedInfluences.Remove(args.InfluenceProtoId); //todo fiddle with this? this seems like a wierd way of doing things, but makes sense after some reading through the code paths - ruddygreat
-        cultComp.UnlockedInfluences.Remove(args.InfluenceProtoId); //either way, will leave this for the PR that cleans up influence tiering
-        Dirty(uiComp.CurrentSingleUser.Value, cultComp); //force an update to make sure that the client has the correct set of owned abilities
+        Dirty(senderEnt.Value, cultComp); //force an update to make sure that the client has the correct set of owned abilities
 
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
-    }
-    #endregion
-
-    #region Helper functions
-    private MonumentBuiState GenerateBuiState(MonumentComponent comp)
-    {
-        return new MonumentBuiState(
-            comp.AvailableEntropy,
-            comp.EntropyUntilNextStage,
-            comp.CrewToConvertNextStage,
-            comp.PercentageComplete,
-            comp.SelectedGlyph,
-            comp.UnlockedInfluences,
-            comp.UnlockedGlyphs
-        );
+        _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
     }
     #endregion
 
