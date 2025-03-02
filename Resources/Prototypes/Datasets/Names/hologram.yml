@@ -1,17 +1,5 @@
-﻿- type: dataset
-  id: names_hologram
+﻿- type: localizedDataset
+  id: NamesHologram
   values:
-  - Apollo
-  - Data
-  - GLIMMER
-  - El Roi
-  - Hephaestus
-  - Holo-AI
-  - Holo-Friend
-  - Hologram
-  - Odysseus
-  - Persephone
-  - Petra
-  - Processor
-  - Prometheus
-  - Theseus
+    prefix: names-hologram-dataset-
+    count: 14
