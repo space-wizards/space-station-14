@@ -159,10 +159,10 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 6.5
+    weight: 4.5 # Ronstation - Made even more rarer.
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 27 # Ronstation - Made even more rarer.
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
