@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/cae6017c486dbadef2b2d86ddc58d7226c17597c/icons/mob/clothing/suit.dmi, https://github.com/ParadiseSS13/Paradise/blob/cab0fa52972c777ec3929cc2e03a74088349486f/icons/obj/clothing/suits.dmi",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/cae6017c486dbadef2b2d86ddc58d7226c17597c/icons/mob/clothing/suit.dmi, https://github.com/ParadiseSS13/Paradise/blob/cab0fa52972c777ec3929cc2e03a74088349486f/icons/obj/clothing/suits.dmi, closed states by SonicHDC",
   "size": {
     "x": 32,
     "y": 32
@@ -12,11 +12,22 @@
       "directions": 4
     },
     {
+      "name": "open-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
       "name": "equipped-OUTERCLOTHING-vox",
       "directions": 4
     },
     {
+      "name": "open-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
       "name": "icon"
+    },
+    {
+      "name": "icon-open"
     }
   ]
 }
