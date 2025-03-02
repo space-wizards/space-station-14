@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Changelings have had their evolution point economy significantly rebalanced.
-    type: Tweak
-  - message: Absorbing crewmates grants no evolution points, and absorbing changelings
-      grants fewer evolution points than before.
-    type: Remove
-  - message: Absorption grants changelings the ability to fully refund their evolution
-      points.
-    type: Add
-  id: 722
-  time: '2024-12-12T02:58:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/996
 - author: kipdotnet
   changes:
   - message: Tck'tcks now can swap between LV and MV power.
@@ -4074,3 +4061,10 @@
   id: 1221
   time: '2025-03-02T21:32:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1817
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.03 (Experimental)
+    type: Tweak
+  id: 1222
+  time: '2025-03-02T22:05:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1818
