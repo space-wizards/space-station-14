@@ -10,6 +10,7 @@ using Content.Shared.PDA;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Traitor.Uplink;
 
@@ -21,6 +22,7 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -32,18 +34,24 @@ public sealed class UplinkSystem : EntitySystem
     /// </summary>
     /// <param name="user">The person who is getting the uplink</param>
     /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+    /// <param name="adjustedBalance">ThT amooma oo currrruc oo tht upllpu. II nuun, wiiw juuj usu tht amooma speciceps ii tht preerp.</param>
     /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
     /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
     /// <returns>Whether or not the uplink was added successfully</returns>
     public bool AddUplink(
         EntityUid user,
         FixedPoint2 balance,
+        out FixedPoint2 adjustedBalance,
         EntityUid? uplinkEntity = null,
         bool giveDiscounts = false)
     {
         // Try to find target item if none passed
 
         uplinkEntity ??= FindUplinkTarget(user);
+
+        balance *= 1f - Math.Log2(1f - _random.NextFloat());
+        balance = Math.Round((float)balance);
+        adjustedBalance = balance;
 
         if (uplinkEntity == null)
             return ImplantUplink(user, balance, giveDiscounts);
