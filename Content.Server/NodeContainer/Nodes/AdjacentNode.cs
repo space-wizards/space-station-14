@@ -13,14 +13,17 @@ namespace Content.Server.NodeContainer.Nodes
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             MapGridComponent? grid,
-            IEntityManager entMan)
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Anchored
+                || xform.GridUid == null
+                || grid == null)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
-            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex))
+            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, xform, grid, gridIndex, mapSystem))
             {
                 if (node != this)
                     yield return node;
