@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.DeviceLinking.Components;
 
 /// <summary>
-/// Entity with this component will be automatically linked to devices that have the specified components.
+/// Entities with this component will be automatically linked to devices that have the specified prototypes.
 /// </summary>
 [RegisterComponent]
 public sealed partial class AlarmAutoLinkComponent : Component
