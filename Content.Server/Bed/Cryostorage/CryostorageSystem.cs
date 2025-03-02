@@ -19,7 +19,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.UserInterface;
-using Content.Shared.Inventory.VirtualItem;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -50,7 +49,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly VirtualItemSystem _virtualSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -213,14 +211,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
                 HasComp<CryostorageContainedComponent>(mind.Value.Comp.CurrentEntity))
             {
                 _ghostSystem.OnGhostAttempt(mind.Value, false);
-            }
-        }
-
-        foreach (var hand in _hands.EnumerateHands(ent))
-        {
-            if (TryComp(hand.HeldEntity, out VirtualItemComponent? virt))
-            {
-                _virtualSystem.DeleteVirtualItem((hand.HeldEntity.Value, virt), ent.Owner);
             }
         }
 
