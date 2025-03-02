@@ -146,6 +146,13 @@ namespace Content.Shared.Storage
         {
             Key,
         }
+
+        /// <summary>
+        /// Allow or disallow showing the "open/close storage" verb.
+        /// This is desired on items that we don't want to be accessed by the player directly.
+        /// </summary>
+        [DataField]
+        public bool ShowVerb = true;
     }
 
     [Serializable, NetSerializable]

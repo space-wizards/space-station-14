@@ -369,7 +369,7 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
+            _audio.PlayPvs(_audio.ResolveSound(component.ErrorSound), uid);
         }
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
@@ -522,7 +522,7 @@ namespace Content.Server.Cargo.Systems
             var item = Spawn(order.ProductId, spawn);
 
             // Ensure the item doesn't start anchored
-            _transformSystem.Unanchor((item, Transform(item)));
+            _transformSystem.Unanchor(item, Transform(item));
 
             // Create a sheet of paper to write the order details on
             var printed = EntityManager.SpawnEntity(paperProto, spawn);
