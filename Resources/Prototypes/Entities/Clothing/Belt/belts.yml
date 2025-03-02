@@ -33,6 +33,8 @@
         - GPS
         - WeldingMask
       components:
+        - Signaller
+        - AccessOverrider
         - StationMap
         - SprayPainter
         - NetworkConfigurator
@@ -113,6 +115,8 @@
         - Multitool
         - AppraisalTool
       components:
+        - Signaller
+        - AccessOverrider
         - StationMap
         - SprayPainter
         - NetworkConfigurator
@@ -163,7 +167,7 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
   id: ClothingBeltAssault
   name: assault belt
   description: A tactical assault belt.
@@ -172,19 +176,36 @@
     sprite: Clothing/Belt/assault.rsi
   - type: Clothing
     sprite: Clothing/Belt/assault.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
   - type: Storage
     whitelist:
       tags:
         - CigPack
         - Taser
+        - Sidearm
+        - CombatKnife
+        - Truncheon
+        - Grenade
+        - GrenadeFlashBang
+        - SpeedLoaderRifle
+        - SpeedLoaderPistol
+        - SpeedLoaderMagnum
+        - Shiv
+        - Cartridge
       components:
         - Stunbaton
         - FlashOnTrigger
         - SmokeOnTrigger
+        - ExplodeOnTrigger
         - Flash
         - Handcuff
         - BallisticAmmoProvider
         - Ammo
+        - CartridgeAmmo
+        - ChemicalPayload
+        - ScatteringGrenade
+        - ProjectileGrenade
   - type: ItemMapper
     mapLayers:
       flashbang:
@@ -272,7 +293,10 @@
         - DiscreteHealthAnalyzer
         - SurgeryTool
         - Dropper
+        - Syringe
+        - CentrifugeCompatible
       components:
+        - Healing
         - Hypospray
         - Injector
         - Pill
@@ -481,6 +505,7 @@
         - MagazineMagnum
         - CombatKnife
         - Truncheon
+        - SecwayKeys
       components:
         - Stunbaton
         - FlashOnTrigger
