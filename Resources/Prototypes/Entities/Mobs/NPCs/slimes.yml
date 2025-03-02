@@ -25,7 +25,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      80: Dead # Ronstation - Nerf.
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 4
