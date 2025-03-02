@@ -144,7 +144,7 @@ cosmiccult-ui-popup-confirm = Confirm
 objective-issuer-cosmiccult = [bold][color=#cae8e8]The Unknown[/color][/bold]
 
 objective-cosmiccult-charactermenu = You must usher in the end of all things. Complete your tasks to advance the cult's progress.
-objective-cosmiccultlead-charactermenu You must lead the cult to usher in the end of all things. Oversee and ensure the cult's progress.
+objective-cosmiccultlead-charactermenu = You must lead the cult to usher in the end of all things. Oversee and ensure the cult's progress.
 
 objective-condition-entropy-title = SIPHON ENTROPY
 objective-condition-entropy-desc = Collectively siphon at least {$count} entropy from the crew.
