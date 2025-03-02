@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Changelings now absorb the rest of their current body on use of Last
-      Resort, regaining biomass.
-    type: Tweak
-  - message: Halved the incubation time of the changeling egg so you come back as
-      a monkey sooner.
-    type: Tweak
-  - message: There is now a confirmation popup for Last Resort so you don't accidentally
-      explode into a slug.
-    type: Fix
-  - message: Headslugs can no longer slip. They're slugs. Have you ever seen a slug
-      slip?
-    type: Fix
-  id: 721
-  time: '2024-12-12T02:58:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/995
 - author: Darkmajia
   changes:
   - message: Changelings have had their evolution point economy significantly rebalanced.
@@ -4084,3 +4067,10 @@
   id: 1220
   time: '2025-03-02T21:27:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1816
+- author: Piras314, hivehum, Darkmajia
+  changes:
+  - message: Lobby art is credited at the bottom of the lobby screen.
+    type: Add
+  id: 1221
+  time: '2025-03-02T21:32:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1817
