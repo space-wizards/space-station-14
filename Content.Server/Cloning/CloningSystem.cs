@@ -10,7 +10,6 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -27,16 +26,8 @@ public sealed class CloningSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     /// <summary>
     ///     Spawns a clone of the given humanoid mob at the specified location or in nullspace.
