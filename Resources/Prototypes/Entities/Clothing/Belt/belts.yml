@@ -289,9 +289,9 @@
         - SurgeryTool
         - Dropper
         - Syringe
-        - Healing
         - CentrifugeCompatible
       components:
+        - Healing
         - Hypospray
         - Injector
         - Pill
