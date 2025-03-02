@@ -166,6 +166,11 @@
       - id: ClearPDA # change to visitor one day.
         prob: 0.10
       - id: PersonalAI
+        orGroup: pAI
+        prob: 0.99
+      - id: GoldPersonalAI #imp
+        orGroup: pAI
+        prob: 0.01
 
 - type: entity
   id: CratePermaEscapeLights

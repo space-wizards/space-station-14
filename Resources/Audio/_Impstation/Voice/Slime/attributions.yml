@@ -112,7 +112,7 @@
 
 - files: ["s_bubble.ogg"]
   license: "CC-BY-4.0"
-  copyright: "Audiolarx on freesound.org"
+  copyright: "Audiolarx on freesound.org, mixed to mono by DinnerCalzone (github)"
   source: "https://freesound.org/people/audiolarx/sounds/263945/"
 
 - files: ["s_pop.ogg"]

@@ -33,7 +33,7 @@
       types:
         Blunt: 6
     soundHit:
-      path: /Audio/_EinsteinEngines/Weapons/electricguitarhit.ogg
+      path: /Audio/_EE/Weapons/electricguitarhit.ogg
   - type: DamageOtherOnHit
     staminaCost: 8
   # end imp edits #
@@ -74,7 +74,7 @@
       types:
         Blunt: 6
     soundHit:
-      path: /Audio/_EinsteinEngines/Weapons/electricguitarhit.ogg
+      path: /Audio/_EE/Weapons/electricguitarhit.ogg
   - type: DamageOtherOnHit
     staminaCost: 8
   # end imp edits #
@@ -114,7 +114,7 @@
         Blunt: 6
         Slash: 2
     soundHit:
-      path: /Audio/_EinsteinEngines/Weapons/electricguitarhit.ogg # imp
+      path: /Audio/_EE/Weapons/electricguitarhit.ogg # imp
   - type: Wieldable
   - type: IncreaseDamageOnWield #they don't call it an axe for nothing
     damage:

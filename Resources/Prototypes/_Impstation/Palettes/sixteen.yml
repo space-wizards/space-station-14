@@ -1,0 +1,38 @@
+﻿- type: palette
+  id: BusinessSlacks
+  name: BusinessSlacks
+  colors:
+    tan: "#c7b887"
+    burgundy: "#66392f"
+    jeans: "#143756"
+    grey: "#484847"
+    khakis: "#9c7727"
+    black: "#292929"
+    green: "#475928"
+
+- type: palette
+  id: ButtonUp
+  name: ButtonUp
+  colors:
+    white: "#F9FFFE"
+    blue: "#a2c2e4"
+    black: "#292929"
+    salmon: "#e0bfbf"
+    grey: "#716e78"
+    tan: "#cec6ab"
+
+- type: palette
+  id: BusinessTie
+  name: BusinessTie
+  colors:
+    black: "#1c1b1b"
+    red: "#75120d"
+    grey: "#4a4c4f"
+    blue: "#304b6e"
+
+- type: palette
+  id: BusinessBelt
+  name: BusinessBelt
+  colors:
+    brown: "#4a3a2a"
+    black: "#212020"

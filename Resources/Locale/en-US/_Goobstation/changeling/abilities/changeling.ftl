@@ -13,6 +13,7 @@ changeling-absorb-start-target = You feel a sharp stabbing pain!
 changeling-absorb-start-others = {CAPITALIZE($user)} hunches over {THE($target)}!
 changeling-absorb-fail-incapacitated = We cannot consume {THE($target)} until {SUBJECT($target)} {CONJUGATE-BE($target)} incapacitated.
 changeling-absorb-fail-absorbed = We have already consumed {THE($target)}.
+changeling-absorb-fail-diminishing-returns = We can gain no more sustenence from {THE($target)}. We must consume a more complex being.
 changeling-absorb-fail-unabsorbable = We cannot consume {THE($target)}.
 changeling-absorb-fail-extremely-bloated = {CAPITALIZE(THE($target))} is too rotten to consume.
 changeling-absorb-end-self = We have consumed {THE($target)}.

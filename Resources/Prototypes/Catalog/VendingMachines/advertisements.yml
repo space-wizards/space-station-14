@@ -230,7 +230,7 @@
   id: SecDrobeAds
   values:
     prefix: advertisement-secdrobe-
-    count: 5
+    count: 6
 
 - type: localizedDataset
   id: SecTechAds

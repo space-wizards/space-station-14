@@ -61939,11 +61939,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.469517,17.597729
       parent: 2
-  - uid: 23414
-    components:
-    - type: Transform
-      pos: -19.5,-52.5
-      parent: 2
 - proto: ChairFoldingSpawnFolded
   entities:
   - uid: 18834
@@ -64439,6 +64434,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,-16.5
+      parent: 2
+  - uid: 13258
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -27.5,-47.5
       parent: 2
   - uid: 14569
     components:
@@ -128193,10 +128194,10 @@ entities:
       parent: 2
 - proto: SpawnPointAdminAssistant
   entities:
-  - uid: 23415
+  - uid: 13296
     components:
     - type: Transform
-      pos: -19.5,-52.5
+      pos: -29.5,-47.5
       parent: 2
 - proto: SpawnPointAtmos
   entities:
@@ -128275,10 +128276,10 @@ entities:
       parent: 2
 - proto: SpawnPointCaptain
   entities:
-  - uid: 13296
+  - uid: 23145
     components:
     - type: Transform
-      pos: -18.5,-56.5
+      pos: -28.5,-44.5
       parent: 2
 - proto: SpawnPointCargoTechnician
   entities:
@@ -128350,17 +128351,17 @@ entities:
       parent: 2
 - proto: SpawnPointChiefEngineer
   entities:
-  - uid: 23306
+  - uid: 23414
     components:
     - type: Transform
-      pos: -15.5,-56.5
+      pos: -27.5,-44.5
       parent: 2
 - proto: SpawnPointChiefMedicalOfficer
   entities:
   - uid: 13548
     components:
     - type: Transform
-      pos: -19.5,-53.5
+      pos: -30.5,-46.5
       parent: 2
 - proto: SpawnPointClown
   entities:
@@ -128390,17 +128391,17 @@ entities:
       parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
-  - uid: 13678
+  - uid: 23306
     components:
     - type: Transform
-      pos: -19.5,-56.5
+      pos: -29.5,-44.5
       parent: 2
 - proto: SpawnPointHeadOfSecurity
   entities:
-  - uid: 13258
+  - uid: 13678
     components:
     - type: Transform
-      pos: -19.5,-55.5
+      pos: -30.5,-45.5
       parent: 2
 - proto: SpawnPointJanitor
   entities:
@@ -128820,10 +128821,10 @@ entities:
       parent: 2
 - proto: SpawnPointQuartermaster
   entities:
-  - uid: 23307
+  - uid: 23415
     components:
     - type: Transform
-      pos: -16.5,-56.5
+      pos: -26.5,-46.5
       parent: 2
 - proto: SpawnPointReporter
   entities:
@@ -128861,10 +128862,10 @@ entities:
       parent: 2
 - proto: SpawnPointResearchDirector
   entities:
-  - uid: 23145
+  - uid: 23307
     components:
     - type: Transform
-      pos: -15.5,-52.5
+      pos: -26.5,-45.5
       parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:

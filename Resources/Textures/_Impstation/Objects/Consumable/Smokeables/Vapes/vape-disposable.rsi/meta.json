@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "base.png created by Mozinov, edited by nowaitstop; others made by nowaitstop",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "fill1"
+    },
+    {
+      "name": "fill2"
+    },
+    {
+      "name": "fill3"
+    },
+    {
+      "name": "fill4"
+    },
+    {
+      "name": "fill5"
+    },
+    {
+      "name": "pen"
+    }
+  ]
+}

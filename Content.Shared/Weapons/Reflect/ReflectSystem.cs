@@ -205,7 +205,7 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectHandEquipped(EntityUid uid, ReflectComponent component, GotEquippedHandEvent args)
     {
-        if (_gameTiming.ApplyingState)
+        if (_gameTiming.ApplyingState || !component.ReflectWhileHeld) //imp edit - add held reflect check
             return;
 
         EnsureComp<ReflectUserComponent>(args.User);

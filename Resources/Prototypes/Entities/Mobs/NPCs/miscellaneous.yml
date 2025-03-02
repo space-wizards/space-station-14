@@ -27,6 +27,8 @@
             - MobMask
           layer:
             - MobLayer
+    - type: Absorbable # imp edit
+      biomassRestored: 0.4
     - type: DamageStateVisuals
       states:
         Alive:
@@ -127,6 +129,8 @@
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
   - type: NpcFactionMember
     factions:
       - SimpleHostile

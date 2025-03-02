@@ -1,0 +1,46 @@
+<Document>
+# Ghost roles
+Ghost roles are characters and creatures that can show up after the start of a round, controlled by observing or deceased players. Their individual goals differ, but the intent of all ghost roles is to add more variety to a shift, as well as giving deceased players something to do if their character is unlikely to be revived.
+
+Depending on the organism, ghost roles may not always be occupied by a player, instead acting as an NPC. Even if a player is not inhabiting a character at the beginning of the round, it might be occupied later on.
+
+This section of the guidebook is not exhaustive - It mostly covers non-antagonist ghost roles that present unique mechanics or roleplay considerations.
+
+## Rules
+All ghost roles, regardless of their role or their rules text, follow the "new life rule:"
+
+[color=#ffa500]"You don't remember any of your previous life, and you don't remember anything you learned as a ghost."[/color]
+
+Beyond that, their rules are determined by the text that will pop up when you attempt to take that role.
+
+Here are some of the major types of ghost roles that you'll encounter:
+
+## Non-Antagonist:
+<Box>
+  <GuideEntityEmbed Entity="MobMonkeyPunpun" Caption=""/>
+</Box>
+Non-Antagonist ghost roles are not explicitly "good guys," but should avoid harming the station and its crew, directly or otherwise.
+
+## Free Agent:
+<Box>
+  <GuideEntityEmbed Entity="MobSkeletonCloset" Caption=""/>
+  <GuideEntityEmbed Entity="MobGoblinStowaway" Caption=""/>
+  <GuideEntityEmbed Entity="MobMouse" Caption=""/>
+</Box>
+Free Agent ghost roles are free to act as they please, with some limitations. [color=red]They are not allowed to cause excessive destruction or death without proper escalation.[/color]
+
+## Familiar:
+<Box>
+  <GuideEntityEmbed Entity="MobDiscworldLuggage" Caption=""/>
+  <GuideEntityEmbed Entity="MobBatRemilia" Caption=""/>
+  <GuideEntityEmbed Entity="MobGoblinKnight" Caption=""/>
+</Box>
+Familiar ghost roles have a "master" and must serve their interests, regardless of what those may be. [color=yellow]If a familiar's master is an antagonist, that familiar is also an antagonist.[/color]
+
+## Antagonist:
+<Box>
+  <GuideEntityEmbed Entity="MobRatKing" Caption=""/>
+  <GuideEntityEmbed Entity="MobRevenant" Caption=""/>
+</Box>
+Ghost roles can be outright Antagonists, but those are all covered in the [textlink="Antagonists" link="Antagonists"] section of the guidebook, in particular the [textlink="Minor Antagonists" link="MinorAntagonists"] entry.
+</Document>

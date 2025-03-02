@@ -8,6 +8,15 @@
     containers:
       board: [ DoorElectronicsCourier ]
 
+- type: entity
+  parent: AirlockCargo
+  id: AirlockLogisticsLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
+
 # Glass Airlocks
 - type: entity
   parent: AirlockCourierGlass
@@ -17,6 +26,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCourier ]
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockLogisticsGlassLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
   
 - type: entity
   parent: AirlockChemistryGlass # For Synth Specailist, unique textures in the future, but this matches the colors of interdyne

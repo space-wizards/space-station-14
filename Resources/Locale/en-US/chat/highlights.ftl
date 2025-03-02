@@ -6,6 +6,8 @@ highlights-chief-medical-officer = Chief Medical Officer, "CMO", MedBay, "Med", 
 highlights-head-of-security = Head of Security, "HoS", Security, "Sec", Command
 highlights-quartermaster = Quartermaster, "QM", Cargo, Command
 highlights-research-director = Research Director, "RD", Science, "Sci", Command
+# impstation edit - new job
+highlights-administrative-assistant = Administrative Assistant, "AA", Command, Secretary
 
 # Security
 highlights-detective = Detective, "Det", Security, "Sec"
@@ -20,6 +22,7 @@ highlights-cargo-technician = Cargo Technician, Cargo Tech, Cargo
 highlights-salvage-specialist = Salvage Specialist, Salvager, Salvage, "Salv", Miner
 # impstation edit - new job
 highlights-courier = Courier, Mail, Penalized
+highlights-supply-assistant = Supply Assistant, Supply, Cargo
 
 # Engineering
 highlights-atmospheric-technician = Atmospheric Technician, Atmos tech, Atmospheric, Atmos

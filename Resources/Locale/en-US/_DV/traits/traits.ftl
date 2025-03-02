@@ -24,3 +24,13 @@ trait-estradiol-sensitive-desc = Your body is capable of taking on Nanotrasen's 
 
 trait-testosterone-sensitive-name = Testosterone sensitive
 trait-testosterone-sensitive-desc = Your body is capable of taking on Nanotrasen's special masculinization medicines.
+
+# impstation edit - removing mentions of unimplemented species
+
+trait-ultravision-name = Ultraviolet vision
+trait-ultravision-desc = Whether through custom bionic eyes, random mutation,
+                         or something else, you perceive the world with ultraviolet light.
+
+trait-deuteranopia-name = Deuteranopia
+trait-deuteranopia-desc = Whether through custom bionic eyes, random mutation,
+                          or something else, you have red-green colour blindness.

@@ -109,9 +109,9 @@ public sealed class MailSystem : EntitySystem
         {
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 continue;
-
+            var curTime = _timing.CurTime;
             // imp. replacing the CCVar
-            if (_timing.CurTime < mailTeleporter.NextDelivery)
+            if (curTime < mailTeleporter.NextDelivery)
                 continue;
 
             TimeSpan nextTimeToAdd;
@@ -120,7 +120,7 @@ public sealed class MailSystem : EntitySystem
             else
                 nextTimeToAdd = mailTeleporter.AverageInterval;
 
-            mailTeleporter.NextDelivery += _timing.CurTime + nextTimeToAdd;
+            mailTeleporter.NextDelivery = _timing.CurTime + nextTimeToAdd;
             SpawnMail(uid, nextTimeToAdd, mailTeleporter);
         }
     }

@@ -111,6 +111,8 @@
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
+  - type: Absorbable # imp edit - big rat
+    biomassRestored: 0.6
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -274,6 +276,8 @@
         Base: dead
       Dead:
         Base: splat
+  - type: Absorbable # imp edit
+    biomassRestored: 0.1
   - type: Butcherable
     spawned:
     - id: FoodMeatRat

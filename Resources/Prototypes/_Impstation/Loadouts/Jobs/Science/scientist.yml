@@ -16,3 +16,9 @@
     proto: Science10hr
   equipment:
     jumpsuit: ClothingUniformSpaceJumpsuitScientist
+
+# Outer Clothing
+- type: loadout
+  id: BomberScience
+  equipment:
+    outerClothing: ClothingOuterCoatBomberScience

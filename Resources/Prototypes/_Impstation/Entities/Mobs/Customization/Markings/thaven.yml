@@ -105,3 +105,33 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
     state: rarmtat1
+
+- type: marking
+  id: ThavenREyeGlow
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: reyeglow
+  shader: unshaded
+
+- type: marking
+  id: ThavenLEyeGlow
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: leyeglow
+  shader: unshaded

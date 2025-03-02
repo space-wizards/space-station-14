@@ -566,3 +566,7 @@ HolopadCargoMailroomCourier: HolopadCargoMailroom
 # 2025-01-20
 # impstation: Make sure the templar helmet doesn't slink back in and break new maps
 ClothingHeadHelmetTemplar: null
+
+# 2025-02-18
+# impstation: Replace Walter spawns with the Walter/Dolby spawner
+SpawnMobWalter: SpawnMobChemDog

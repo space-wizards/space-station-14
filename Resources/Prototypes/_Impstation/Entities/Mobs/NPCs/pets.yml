@@ -243,6 +243,40 @@
       path: /Audio/Animals/sloth_squeak.ogg
 
 - type: entity
+  name: Poly
+  parent: [ MobParrot ]
+  id: MobParrotPoly
+  description: The Chief Engineer's beloved snitch.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
+  - type: Sprite # wearable on shoulder :)
+    sprite: _NF/Mobs/NPC/Animals/parrot.rsi
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+  - type: CanEscapeInventory
+  - type: ActiveListener
+    range: 5
+  - type: ParrotSpeech # this is by default tuned to frontier 6 hour shift numbers, so im ramping it up kind of high to compensate
+    minimumWait: 60
+    maximumWait: 180
+    learnChance: 0.5
+    blacklist:
+      components:
+      - ParrotSpeech # Stop parrots repeating their own speech
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-avian
+  - type: StealTarget
+    stealGroup: AnimalPoly
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
   name: Dolby
   parent: MobCorgiPuppy
   id: MobDolby

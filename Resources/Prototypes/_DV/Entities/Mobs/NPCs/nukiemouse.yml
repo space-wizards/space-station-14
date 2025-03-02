@@ -75,6 +75,8 @@
       Dead:
         Base: splat
   - type: Food
+  - type: Absorbable # imp edit - mouse bite sized
+    biomassRestored: 0.1
   - type: Hunger
     baseDecayRate: 0.1
   - type: Extractable

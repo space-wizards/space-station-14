@@ -88,9 +88,9 @@
     zeroVisible: true
   - type: Gun
     minAngle: 2
-    maxAngle: 18
+    maxAngle: 15
     angleIncrease: 3
-    angleDecay: 18
+    angleDecay: 15
     fireRate: 3
     selectedMode: FullAuto
     availableModes:
@@ -132,7 +132,7 @@
     steps: 4
     zeroVisible: true
   - type: Gun
-    fireRate: 1.3
+    fireRate: 0.9
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
   - type: HitscanBatteryAmmoProvider

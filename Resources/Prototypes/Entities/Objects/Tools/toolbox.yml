@@ -152,7 +152,7 @@
   id: ToolboxThief
   name: thief undetermined toolbox
   description: This is where your favorite thief's supplies lie. Try to remember which ones.
-  parent: [ BaseItem, BaseMinorContraband ]
+  parent: [ BaseItem ] # imp edit
   components:
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi

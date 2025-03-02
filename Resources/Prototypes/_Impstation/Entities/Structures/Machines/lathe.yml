@@ -72,6 +72,7 @@
       - DrinkWaterBottleEmpty #imp recipe
       - Pitcher #imp recipe
       - BarSpoon #imp recipe
+      - DrinkDisposableCup #imp recipe
       #food      
       - KitchenKnife
       - FoodPlate

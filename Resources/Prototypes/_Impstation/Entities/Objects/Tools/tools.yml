@@ -104,7 +104,7 @@
   - type: StaticPrice
     price: 100
   - type: MeleeWeapon
-    wideAnimationRotation: 0 #youre just hitting people with the backside of it
+    wideAnimationRotation: 180 #youre just hitting people with the backside of it
     attackRate: 1
     damage:
       types:

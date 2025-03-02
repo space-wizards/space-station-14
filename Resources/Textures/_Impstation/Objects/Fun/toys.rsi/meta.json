@@ -1,7 +1,7 @@
 ﻿{
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "sprited by carousel for impstation",
+    "copyright": "minor, giant bear, plushie hop, and plushie captain by carousel. finfin, yarn noodles, fabric scrap salad by starlighthowls. gray plushie by tox. bug, dolls, and imp specific species plushies by Doop. imp plush by mqole,",
     "size": {
         "x": 32,
         "y": 32
@@ -15,10 +15,123 @@
             "directions": 4
         },
         {
-            "name": "plushie1"
+            "name": "plushie_cap"
         },
         {
-            "name": "plushie2"
+            "name": "plushie_hop"
+        },
+        {
+            "name": "plushie_finfin"
+        },
+        {
+            "name": "plushie_finfin-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_finfin-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "yarn-noodles"
+        },
+        {
+            "name": "fabric-scrap-salad"
+        },
+        {
+            "name": "plushie_gray"
+        },
+        {
+            "name": "minor"
+        },
+        {
+            "name": "plushie_bug"
+        },
+        {
+            "name": "plushie_bug-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_bug-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "bug-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "plushie_evilbug"
+        },
+        {
+            "name": "plushie_evilbug-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_evilbug-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "evilbug-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "plushie_decapoid"
+        },
+        {
+            "name": "plushie_snail"
+        },
+        {
+            "name": "plushie_imp"
+        },
+        {
+            "name": "plushie_thaven"
+        },
+        {
+            "name": "plushie_thavenweird"
+        },
+        {
+            "name": "plushie_goblin"
+        },
+        {
+            "name": "plushie_gollylad"
+        },
+        {
+            "name": "plushie_apid"
+        },
+        {
+            "name": "plushie_dwarf"
+        },
+        {
+            "name": "plushie_dwarf_unshaded",
+            "delays": [
+                [
+                  0.2,
+                  0.2,
+                  0.2,
+                  0.2
+                ]
+            ]
+        },
+        {
+            "name": "doll_base"
+        },
+        {
+            "name": "doll_base-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "doll_base-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "doll_hair"
+        },
+        {
+            "name": "doll_hair-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "doll_hair-inhand-right",
+            "directions": 4
         }
     ]
 }

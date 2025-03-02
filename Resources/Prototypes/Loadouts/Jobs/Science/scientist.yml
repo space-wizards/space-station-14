@@ -6,7 +6,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Science
-      time: 216000 #60 hrs
+      time: 108000 #30 hrs, ~20 rounds #imp
 
 # Head
 - type: startingGear

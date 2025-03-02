@@ -11,6 +11,7 @@
     inverted: true # stop playing intern if you're good at cargo!
   icon: "JobIconSupplyAssistant"
   supervisors: job-supervisors-qm
+  canBeAntag: false # imp. lol
   access:
   - Cargo
   - Maintenance

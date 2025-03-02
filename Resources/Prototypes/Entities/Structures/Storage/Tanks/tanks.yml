@@ -122,6 +122,9 @@
   name: water cooler
   description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
   components:
+  - type: Tag
+    tags:
+    - WaterTank
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     layers:
@@ -172,6 +175,9 @@
   description: A highly pressurized water tank made to hold gargantuan amounts of water.
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - WaterTank
   - type: StaticPrice
     price: 2500
   - type: Sprite

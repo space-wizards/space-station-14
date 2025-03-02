@@ -6,12 +6,12 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobWarden
-      time: 21600 #6 hrs
+      time: 18000 #5 hrs, ~4 rounds #imp
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
       department: Security
-      time: 216000 # 60 hrs
+      time: 108000 #30 hrs, ~20 rounds #imp
 
 #Security Star
 - type: loadoutEffectGroup
@@ -21,7 +21,7 @@
       requirement:
         !type:DepartmentTimeRequirement
         department: Security
-        time: 360000 #100 hrs
+        time: 324000 #90 hrs, ~60 rounds #imp
 
 # Head
 - type: loadout

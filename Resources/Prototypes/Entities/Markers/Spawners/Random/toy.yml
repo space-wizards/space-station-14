@@ -12,6 +12,11 @@
       rarePrototypes:
         - FoamBlade
         - PlushieGhost
+        #imp edits
+        - PlushieImp
+        - PlushieApid
+        - PlushieGoblin
+        #imp edits end
       rareChance: 0.03
       prototypes:
         - PlushieBee
@@ -30,6 +35,11 @@
         - PlushieSharkBlue
         - PlushieSharkPink
         - PlushieSharkGrey
+        #imp edits
+        - PlushieSnail
+        - PlushieDecapoid
+        - PlushieThaven
+        #imp edits end
         - ToyAmongPequeno
         - ToyMouse
         - PlushieDiona
@@ -116,7 +126,7 @@
       - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
-      - ToyFigurineQuartermaster   
+      - ToyFigurineQuartermaster
       - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
       - ToyFigurineEngineer
@@ -150,7 +160,7 @@
       - ToyFigurineHamlet
       - ToyFigurineThief
       - ToyFigurineCourier #<imp>
-      - ToyFigurineBrigmedic 
+      - ToyFigurineBrigmedic
       - ToyFigurineCyborgDefault
       - ToyFigurineCyborgEngineering
       - ToyFigurineCyborgJanitorial

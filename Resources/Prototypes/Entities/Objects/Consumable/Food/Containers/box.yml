@@ -570,6 +570,9 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
+      - id: GoldPersonalAI #imp
+        orGroup: GiftPool
+        prob: 0.01
       - id: CrayonBox
         orGroup: GiftPool
       - id: ToySword
@@ -776,6 +779,9 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
+      - id: GoldPersonalAI #imp
+        orGroup: GiftPool
+        prob: 0.01
       - id: CrayonBox
         orGroup: GiftPool
       - id: ToySword

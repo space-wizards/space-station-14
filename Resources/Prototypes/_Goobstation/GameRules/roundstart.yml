@@ -4,7 +4,7 @@
   components:
   - type: ChangelingRule
   - type: GameRule
-    minPlayers: 15
+    minPlayers: 20 #imp: up from 15
     delay:
       min: 30
       max: 60
@@ -17,8 +17,8 @@
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 6
-      playerRatio: 10
+      max: 5 #imp: 6>5
+      playerRatio: 15 #imp: up from 10
       lateJoinAdditional: true
       blacklist:
         components:
