@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Players becoming Traitor without a PDA now correctly get the text and
-      audio notifications, and the code words. They are also given an Uplink Implant,
-      with the price taken from their starting TC.
-    type: Fix
-  id: 7531
-  time: '2024-10-18T12:55:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30359
 - author: Beck Thompson
   changes:
   - message: Plushies will now eject their contents when recycled in the recycler!
@@ -3896,3 +3887,16 @@
   id: 8030
   time: '2025-03-02T12:56:16.674298+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32209
+- author: slarticodefast
+  changes:
+  - message: Fixed various traits and abilites being lost when getting cloned.
+    type: Fix
+  - message: Fixed various bugs when cloning zombified players.
+    type: Fix
+  - message: Unrevivable characters can no longer be cloned.
+    type: Tweak
+  - message: Fixed default device linking for the cloning console.
+    type: Fix
+  id: 8031
+  time: '2025-03-02T15:50:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35555
