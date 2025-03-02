@@ -1,3 +1,4 @@
+using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -29,5 +30,16 @@ public sealed class MonumentBuiState : BoundUserInterfaceState
         SelectedGlyph = selectedGlyph;
         UnlockedInfluences = unlockedInfluences;
         UnlockedGlyphs = unlockedGlyphs;
+    }
+
+    public MonumentBuiState(MonumentComponent comp)
+    {
+        AvailableEntropy = comp.AvailableEntropy;
+        EntropyUntilNextStage = comp.EntropyUntilNextStage;
+        CrewToConvertUntilNextStage = comp.CrewToConvertNextStage;
+        PercentageComplete = comp.PercentageComplete;
+        SelectedGlyph = comp.SelectedGlyph;
+        UnlockedInfluences = comp.UnlockedInfluences;
+        UnlockedGlyphs = comp.UnlockedGlyphs;
     }
 }

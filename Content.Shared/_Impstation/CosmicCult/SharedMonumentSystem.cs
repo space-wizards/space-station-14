@@ -59,12 +59,21 @@ public sealed class SharedMonumentSystem : EntitySystem
             return;
         if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(uiComp.CurrentSingleUser, out var cultComp))
         {
-            ent.Comp.UnlockedInfluences = cultComp.UnlockedInfluences;
-            ent.Comp.AvailableEntropy = cultComp.EntropyBudget;
+            var buiState = new MonumentBuiState(
+                cultComp.EntropyBudget,
+                ent.Comp.EntropyUntilNextStage,
+                ent.Comp.CrewToConvertNextStage,
+                ent.Comp.PercentageComplete,
+                ent.Comp.SelectedGlyph,
+                cultComp.UnlockedInfluences,
+                ent.Comp.UnlockedGlyphs
+                );
+
+            _ui.SetUiState(ent.Owner, MonumentKey.Key, buiState);
         }
         else
             _ui.CloseUi(ent.Owner, MonumentKey.Key); // based on the prior IF, this effectively cancels the UI if the user is either not a cultist, or the Finale is ready to trigger.
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
+
     }
 
     #region UI listeners
@@ -87,14 +96,14 @@ public sealed class SharedMonumentSystem : EntitySystem
         var glyphEnt = Spawn(proto.Entity, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
         ent.Comp.CurrentGlyph = glyphEnt;
 
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
+        _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
         _ui.CloseUi(ent.Owner, MonumentKey.Key);
     }
 
     private void OnGlyphRemove(Entity<MonumentComponent> ent, ref GlyphRemovedMessage args)
     {
         if (ent.Comp.CurrentGlyph is not null) QueueDel(ent.Comp.CurrentGlyph);
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
+        _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
         _ui.CloseUi(ent.Owner, MonumentKey.Key);
     }
 
@@ -122,25 +131,10 @@ public sealed class SharedMonumentSystem : EntitySystem
         cultComp.UnlockedInfluences.Remove(args.InfluenceProtoId); //either way, will leave this for the PR that cleans up influence tiering
         Dirty(uiComp.CurrentSingleUser.Value, cultComp); //force an update to make sure that the client has the correct set of owned abilities
 
-        _ui.SetUiState(ent.Owner, MonumentKey.Key, GenerateBuiState(ent.Comp));
+        _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
     }
     #endregion
-
-    #region Helper functions
-    private MonumentBuiState GenerateBuiState(MonumentComponent comp)
-    {
-        return new MonumentBuiState(
-            comp.AvailableEntropy,
-            comp.EntropyUntilNextStage,
-            comp.CrewToConvertNextStage,
-            comp.PercentageComplete,
-            comp.SelectedGlyph,
-            comp.UnlockedInfluences,
-            comp.UnlockedGlyphs
-        );
-    }
-    #endregion
-
+    
     private void UnlockPassive(EntityUid cultist, InfluencePrototype proto)
     {
         switch (proto.PassiveName) // Yay, switch statements.
