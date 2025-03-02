@@ -292,6 +292,19 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         NotifyLawsChanged(target, cue);
     }
 
+    public void SetLaws(ProtoId<SiliconLawsetPrototype> proto, EntityUid target, SoundSpecifier? cue = null)
+    {
+        if (!TryComp<SiliconLawProviderComponent>(target, out var component))
+            return;
+        var newLaws = _prototype.Index(proto).Laws.Select(law => (SiliconLaw)_prototype.Index<SiliconLawPrototype>(law)).ToList();
+
+        if (component.Lawset == null)
+            component.Lawset = new SiliconLawset();
+
+        component.Lawset.Laws = newLaws;
+        NotifyLawsChanged(target, cue);
+    }
+
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         // TODO: Prediction dump this

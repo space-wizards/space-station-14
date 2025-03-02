@@ -153,6 +153,12 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField]
         public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+        [DataField]
+        public string? LoadoutOverride;
+
+        [DataField]
+        public string? LoadoutButtonText;
     }
 
     /// <summary>

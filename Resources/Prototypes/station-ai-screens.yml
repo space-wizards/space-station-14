@@ -1,0 +1,289 @@
+- type: aiScreen
+  id: Default
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai
+  priority: -1
+
+- type: aiScreen
+  id: Red
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-red
+  priority: 0
+
+- type: aiScreen
+  id: U
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-u
+  priority: 0
+
+- type: aiScreen
+  id: Mono
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-mono
+  priority: 0
+
+- type: aiScreen
+  id: Static
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-static
+  priority: 0
+
+- type: aiScreen
+  id: Cheerful
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-cheerful
+  priority: 0
+
+- type: aiScreen
+  id: Stern
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-stern
+  priority: 0
+
+- type: aiScreen
+  id: Wierd
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-wierd
+  priority: 0
+
+- type: aiScreen
+  id: Gentoo
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-gentoo
+
+- type: aiScreen
+  id: Nanotrasen
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-nanotrasen
+
+- type: aiScreen
+  id: Database
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-database
+
+- type: aiScreen
+  id: Goon
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-goon
+
+- type: aiScreen
+  id: Heartline
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-heartline
+
+- type: aiScreen
+  id: President
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-president
+
+- type: aiScreen
+  id: Clown
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-clown
+
+- type: aiScreen
+  id: Clown2
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-clown2
+
+- type: aiScreen
+  id: Serithi
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-serithi
+
+- type: aiScreen
+  id: Alien
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-alien
+
+- type: aiScreen
+  id: Sheltered
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-sheltered
+
+- type: aiScreen
+  id: Fabulous
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-fabulous
+
+- type: aiScreen
+  id: Wasp
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-wasp
+
+- type: aiScreen
+  id: Eager
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-eager
+
+- type: aiScreen
+  id: EagerOld
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-eager-old
+
+- type: aiScreen
+  id: Royal
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-royal
+
+- type: aiScreen
+  id: Ravensdale
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-ravensdale
+
+- type: aiScreen
+  id: Bored
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-bored
+
+- type: aiScreen
+  id: Magma
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-magma
+
+- type: aiScreen
+  id: Triumvirate
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-triumvirate
+
+- type: aiScreen
+  id: Ahasuerus
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-ahasuerus
+
+- type: aiScreen
+  id: Godfrey
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-godfrey
+
+- type: aiScreen
+  id: Smiley
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-smiley
+
+- type: aiScreen
+  id: Angryface
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-angryface
+
+- type: aiScreen
+  id: Soviet
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-soviet
+
+- type: aiScreen
+  id: Matrix
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-matrix
+
+- type: aiScreen
+  id: Bliss
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-bliss
+
+- type: aiScreen
+  id: Glitchman
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-glitchman
+
+- type: aiScreen
+  id: Lonestar
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-lonestar
+
+- type: aiScreen
+  id: Angel
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-angel
+
+- type: aiScreen
+  id: Hourglass
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-hourglass
+
+- type: aiScreen
+  id: Helios
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-helios
+
+- type: aiScreen
+  id: Rainbow
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-rainbow
+
+- type: aiScreen
+  id: Thinking
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-thinking
+
+- type: aiScreen
+  id: Jackfrost
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-jackfrost
+
+- type: aiScreen
+  id: Moth
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-mothman
+
+- type: aiScreen
+  id: 4Chan
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-4chan
+
+- type: aiScreen
+  id: Terminal
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-terminal
+
+- type: aiScreen
+  id: Honey
+  icon:
+    sprite: /Textures/Mobs/Silicon/ai-screen.rsi
+    state: ai-honeycomb

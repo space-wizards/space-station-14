@@ -1,6 +1,6 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
+<loadout:BaseLoadoutWindow xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+         xmlns:loadout="clr-namespace:Content.Client.Lobby.UI.Loadouts"
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          SetSize="800 800"
          MinSize="800 128">
@@ -19,4 +19,4 @@
                               HorizontalExpand="True">
         </VerticalTabContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</loadout:BaseLoadoutWindow>
