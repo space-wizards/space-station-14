@@ -102,7 +102,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var timeDelta = args.dt;
             var pressureDelta = timeDelta * vent.TargetPressureChange;
 
-            var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold) && !vent.IsPressureLockoutManuallyDisabled;
+            var lockout = !vent.IsPressureLockoutManuallyDisabled && (vent.VelocityPressureLockoutEnabled
+                ? vent.VelocityPressureLockoutValue <= vent.VelocityPressureValueMin
+                : environment.Pressure < vent.UnderPressureLockoutThreshold);
             if (vent.UnderPressureLockout != lockout) // update visuals only if this changes
             {
                 vent.UnderPressureLockout = lockout;
@@ -130,10 +132,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 // how many moles to transfer to change external pressure by pressureDelta
                 // (ignoring temperature differences because I am lazy)
-                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R) * vent.VelocityPressureModifier;
 
                 // Only run if the device is under lockout and not being overriden
-                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride & !vent.IsPressureLockoutManuallyDisabled)
+                if (!vent.VelocityPressureLockoutEnabled && vent.UnderPressureLockout && !vent.PressureLockoutOverride && !vent.IsPressureLockoutManuallyDisabled)
                 {
                     // Leak only a small amount of gas as a proportion of supply pipe pressure.
                     var pipeDelta = pipe.Air.Pressure - environment.Pressure;
@@ -150,11 +152,25 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     if (internalDelta <= 0)
                         return;
 
-                    var maxTransfer = internalDelta * pipe.Air.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                    var maxTransfer = internalDelta * pipe.Air.Volume / (pipe.Air.Temperature * Atmospherics.R) * vent.VelocityPressureModifier;
                     transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
 
+                var curPressure = environment.Pressure;
                 _atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
+                if (vent.VelocityPressureLockoutEnabled)
+                {
+                    var deltaP = curPressure - vent.PreviousPressure;
+                    // Bias towards opening the valve, increase acceleration if pressure is increasing
+                    // Will add an acceleration and deceleration parameter later
+                    var delta = deltaP * (vent.VelocityPressureAcceleration / pressureDelta) * (deltaP < 0 ? 1.0f : 10.0f);
+
+                    vent.VelocityPressureLockoutValue =
+                        Math.Clamp(vent.VelocityPressureLockoutValue + delta,
+                            vent.VelocityPressureValueMin, 1.0f);
+
+                    vent.PreviousPressure = curPressure;
+                }
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0)
             {
@@ -348,6 +364,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (pumpComponent.PumpDirection == VentPumpDirection.Releasing & pumpComponent.UnderPressureLockout & !pumpComponent.PressureLockoutOverride & !pumpComponent.IsPressureLockoutManuallyDisabled)
                 {
                     args.PushMarkup(Loc.GetString("gas-vent-pump-uvlo"));
+                }
+                if(pumpComponent.VelocityPressureLockoutEnabled)
+                {
+                    args.PushMarkup(Loc.GetString("gas-vent-pump-close-value", ("percent", (int)(pumpComponent.VelocityPressureLockoutValue*100))));
                 }
             }
         }
