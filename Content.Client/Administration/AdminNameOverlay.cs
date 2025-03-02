@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -47,15 +48,18 @@ internal sealed class AdminNameOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var viewport = args.WorldAABB;
+        var colorDisconnected = Color.White;
 
         //TODO make this adjustable via GUI
         var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
         var playTime = _config.GetCVar(CCVars.AdminOverlayPlaytime);
         var startingJob = _config.GetCVar(CCVars.AdminOverlayStartingJob);
+        var drawnOverlays = new List<(Vector2,Vector2)>() ;
 
         foreach (var playerInfo in _system.PlayerList)
         {
             var entity = _entityManager.GetEntity(playerInfo.NetEntity);
+            var alpha = 1f;
 
             // Otherwise the entity can not exist yet
             if (entity == null || !_entityManager.EntityExists(entity))
@@ -85,37 +89,89 @@ internal sealed class AdminNameOverlay : Overlay
 
             var currentOffset = Vector2.Zero;
 
-            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
+            //  Ghosts near the cursor are made transparent/invisible
+            //  TODO would be "cheaper" if playerinfo already contained a ghost bool, and ghosts could then be ordered to the bottom of any stack
+            if (_entityManager.HasComponent<GhostComponent>(entity))
+            {
+                var minDistance = 300f;
+                var maxDistance = 600f;
+
+                var mobPosition = _eyeManager.WorldToScreen(aabb.Center);
+                var mousePosition = _userInterfaceManager.MousePositionScaled.Position * uiScale;
+                var dist = Vector2.Distance(mobPosition, mousePosition);
+
+                if (dist < minDistance)
+                    continue;
+
+                alpha = Math.Clamp((dist - minDistance) / (maxDistance - minDistance), 0f, 1f);
+                colorDisconnected.A = alpha;
+            }
+
+            // If the new overlay textblock is within overlap distance of any previous ones
+            // merge them into a stack so they don't hide each other
+            // additional entries after maxStack is reached will be drawn over the last entry
+            var maxStack = 3;
+            var overlapTolerance = 75; //TODO:ERRANT is this scaled?
+            var stack = drawnOverlays.FindAll(x => Vector2.Distance(x.Item1, screenCoordinates) < overlapTolerance);
+            if (stack.Count > 0)
+            {
+                screenCoordinates = stack.First().Item1;
+
+                var i = 1;
+                foreach (var s in stack)
+                {
+                    if (i <= maxStack - 1)
+                        currentOffset = lineoffset + s.Item2 ;
+                    i++;
+                }
+
+            }
+
+            var color = Color.Yellow;
+            color.A = alpha;
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? color : colorDisconnected);
             currentOffset += lineoffset;
 
-            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
+            color = Color.Aquamarine;
+            color.A = alpha;
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? color : Color.White);
             currentOffset += lineoffset;
 
             if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && playTime)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
+                color = Color.Orange;
+                color.A = alpha;
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? color : colorDisconnected);
                 currentOffset += lineoffset;
             }
 
             if (!string.IsNullOrEmpty(playerInfo.StartingJob) && startingJob)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
+                color = Color.GreenYellow;
+                color.A = alpha;
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? color : colorDisconnected);
                 currentOffset += lineoffset;
             }
 
             if (classic && playerInfo.Antag)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, Color.OrangeRed);
+                color = Color.OrangeRed;
+                color.A = alpha;
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, color);
                 currentOffset += lineoffset;
             }
             else if (!classic && _filter.Contains(playerInfo.RoleProto))
             {
+                color =  playerInfo.RoleProto.Color;
+                color.A = alpha;
                 var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-                var color = playerInfo.RoleProto.Color;
 
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
                 currentOffset += lineoffset;
             }
+
+            //Save the coordinates and size of the text block, to merge with nearby blocks that are too close
+            drawnOverlays.Add((screenCoordinates, currentOffset));
         }
     }
 }
