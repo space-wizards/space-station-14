@@ -195,3 +195,14 @@
   description: Bones and silk combined together.
   icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
   objectType: Item
+
+- type: construction
+  name: throngler
+  id: ThronglerFools
+  graph: ThronglerFools
+  startNode: start
+  targetNode: throngler
+  category: construction-category-weapons
+  description: You are not really going to try make this, are you?
+  icon: { sprite: Objects/Weapons/Melee/Throngler2.rsi, state: icon }
+  objectType: Item

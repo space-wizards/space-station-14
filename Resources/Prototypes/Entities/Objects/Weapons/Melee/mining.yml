@@ -172,6 +172,7 @@
   - type: Tag
     tags:
     - Knife
+    - WeaponCrusherDagger
 
 # Like a crusher... but better
 - type: entity

@@ -98,6 +98,9 @@
     - Back
     - Belt
   - type: Reflect
+  - type: Tag
+    tags:
+    - EnergyKatana
 
 - type: entity
   name: machete
@@ -193,3 +196,20 @@
     - type: Grammar
       attributes:
         proper: true
+
+- type: entity
+  name: throngler
+  parent: Throngler
+  id: ThronglerFools
+  suffix: Announcement
+  description: Why would you make this?
+  components:
+    - type: AnnounceOnSpawn
+      message: throngler-was-crafted
+      sender: throngler-was-crafted-sender
+      sound:
+        path: /Audio/Misc/gamma.ogg
+      color: red
+    - type: Construction
+      graph: ThronglerFools
+      node: throngler

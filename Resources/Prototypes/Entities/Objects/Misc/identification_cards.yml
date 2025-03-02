@@ -119,6 +119,7 @@
     - WhitelistChameleon
     - WhitelistChameleonIdCard
     - HighRiskItem
+    - CaptainIDCard
   - type: StealTarget
     stealGroup: CaptainIDCard
 
@@ -648,6 +649,9 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+  - type: Tag
+    tags:
+    - SyndicateIDCard
 
 - type: entity
   parent: IDCardStandard
