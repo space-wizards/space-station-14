@@ -12,7 +12,7 @@ public sealed class AccentContentTag : IContentMarkupTag
 
     private string? _accent;
 
-    public List<MarkupNode>? OpenerProcessing(MarkupNode node, int randomSeed)
+    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
         if (node.Value.TryGetString(out var accentName))
         {
@@ -24,7 +24,7 @@ public sealed class AccentContentTag : IContentMarkupTag
         return null;
     }
 
-    public List<MarkupNode>? TextNodeProcessing(MarkupNode node, int randomSeed)
+    public List<MarkupNode>? ProcessTextNode(MarkupNode node, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
 

@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Speech.Accents;
@@ -6,7 +7,7 @@ namespace Content.Shared.Speech.EntitySystems;
 
 public sealed class SharedAccentSystem : EntitySystem
 {
-    public Dictionary<string, IAccent> AccentTypes => new IAccent[]
+    public IReadOnlyDictionary<string, IAccent> AccentTypes => new IAccent[]
     {
         new BarkAccent(),
         new BackwardsAccent(),
@@ -14,7 +15,7 @@ public sealed class SharedAccentSystem : EntitySystem
         new GermanAccent(),
         new RussianAccent(),
         new FrenchAccent(),
-    }.ToDictionary(x => x.Name, x => x);
+    }.ToFrozenDictionary(x => x.Name, x => x);
 
     //public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
 
