@@ -118,6 +118,11 @@ ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
+ui-options-header-text-cursor = Text cursor
+ui-options-header-text-cursor-select = Text selecting
+ui-options-header-text-edit = Text editing
+ui-options-header-text-chat = Chat
+ui-options-header-text-other = Text input other
 
 ui-options-hotkey-keymap = Use US QWERTY Keys
 ui-options-hotkey-toggle-walk = Toggle Walk
@@ -276,11 +281,6 @@ ui-options-function-text-scroll-to-bottom = Scroll to bottom
 ui-options-function-text-tab-complete = Tab completion
 ui-options-function-text-complete-next = Complete next
 ui-options-function-text-complete-prev = Complete previous
-ui-options-header-text-cursor = Text cursor
-ui-options-header-text-cursor-select = Text selecting
-ui-options-header-text-edit = Text editing
-ui-options-header-text-chat = Chat
-ui-options-header-text-other = Text input other
 
 ## Network menu
 
