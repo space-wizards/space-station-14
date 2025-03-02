@@ -52,6 +52,13 @@ namespace Content.IntegrationTests.Tests
             "/Maps/centcomm.yml",
             "/Maps/_Harmony/centcomm.yml", // Harmony CC version
             "/Maps/_Harmony/barratry.yml", // Harmony map - Contains mime and clown's rubber stamps.
+            "/Maps/_Harmony/xeno.yml", // Harmony map - Contains Matter Dematerializer
+            "/Maps/_Harmony/Nonstations/listening-outpost.yml", // Harmony - Contains a billion illegal things
+            "/Maps/_Harmony/Shuttles/ERT-chaplain-medium.yml", // Harmony - Contains centcomm folders.
+            "/Maps/_Harmony/Shuttles/syndicate-diplomacy.yml", // Harmony - Contains syndicate rubber stamp.
+            "/Maps/_Harmony/Shuttles/syndicate-dropship.yml", // Harmony - Contains syndicate rubber stamp.
+            "/Maps/_Harmony/Shuttles/syndicate-paramedic.yml", // Harmony - Contains syndicate rubber stamp.
+            "/Maps/_Harmony/Shuttles/WizDen-ERT-Shuttles/ERT-Small-Deathsquad.yml", // Harmony - Contains handheld crew monitor.
             "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
             "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
             "/Maps/meta.yml", // Contains warden's rubber stamp
