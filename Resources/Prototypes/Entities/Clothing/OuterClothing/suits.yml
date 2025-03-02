@@ -265,6 +265,9 @@
     node: suit
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingOuterBase
