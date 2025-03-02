@@ -124,7 +124,7 @@
   name: wizard's magical pen
   parent: [ PenEmbeddable, BaseMagicalContraband ]
   id: PenWiz
-  description: A luxurious fountain pen with a magical crystal in it.
+  description: A luxurious fountain pen. Seems to have a magical crystal eraser.
   components:
   - type: Sprite
     state: pen_wizard
