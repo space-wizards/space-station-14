@@ -96,7 +96,6 @@
     - ccGlyphKnowledge
     - ccGlyphProjection
     selectedGlyph: ccGlyphKnowledge
-    availableEntropy: 0
     totalEntropy: 0
     entropyUntilNextStage: 777
     crewToConvertNextStage:  777
