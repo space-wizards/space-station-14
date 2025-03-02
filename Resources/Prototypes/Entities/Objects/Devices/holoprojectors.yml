@@ -54,7 +54,7 @@
   parent: Holoprojector
   id: HolofanProjector
   name: holofan projector
-  description: Stop suicidal passengers from killing everyone during atmos emergencies.
+  description: Stops suicidal passengers from killing everyone during atmos emergencies.
   components:
   - type: HolosignProjector
     signProto: HoloFan
@@ -72,6 +72,20 @@
     - AtmosTools
     - Fires
     - Spacing
+
+- type: entity
+  parent: HolofanProjector
+  id: HolofanProjectorBorg
+  suffix: borg
+  description: Stops suicidal crew from causing more crew harm during atmos emergencies. Powered by a self-recharing power cell.
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false
 
 - type: entity
   parent: HolofanProjector
