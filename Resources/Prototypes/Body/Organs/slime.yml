@@ -36,8 +36,11 @@
     - type: Item
       size: Small
       heldPrefix: brain
+    - type: ReactionMixer
+      reactionTypes:
+      - Centrifuge
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan

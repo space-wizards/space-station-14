@@ -92,6 +92,9 @@
   - type: Item
     size: Small
     heldPrefix: stomach
+  - type: ReactionMixer
+    reactionTypes:
+    - Centrifuge
 
 - type: entity
   id: OrganMouseStomach
