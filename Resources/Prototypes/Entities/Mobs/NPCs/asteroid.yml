@@ -83,7 +83,8 @@
       NavSmash: !type:Bool
         true
   - type: NPCUseActionOnTarget
-    actionId: ActionGoliathTentacle
+    actions:
+    - actionId: ActionGoliathTentacle
   - type: Tag
     tags:
     - CannotSuicide

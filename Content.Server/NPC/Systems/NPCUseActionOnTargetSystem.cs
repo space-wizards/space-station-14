@@ -1,6 +1,7 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
+using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -26,16 +27,16 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         foreach (var action in ent.Comp.Actions)
         {
             var npcActionsData = action;
-            npcActionsData.ActionEnt = _actions.AddAction(ent, npcActionsData.ActionId);
+            action.ActionEnt = _actions.AddAction(ent, npcActionsData.ActionId);
         }
     }
 
-    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
+    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, Components.NPCActionsData action, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
             return;
 
-        if (user.Comp.ActionEnt is not { Valid: true } entityTarget)
+        if (action.ActionEnt is not { Valid: true } entityTarget)
         {
             Log.Error($"An NPC attempted to perform an entity-targeted action without a target!");
             return;
@@ -52,10 +53,13 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         var query = EntityQueryEnumerator<NPCUseActionOnTargetComponent, HTNComponent>();
         while (query.MoveNext(out var uid, out var comp, out var htn))
         {
-            if (!htn.Blackboard.TryGetValue<EntityUid>(comp.TargetKey, out var target, EntityManager))
-                continue;
+            foreach (var action in comp.Actions)
+            {
+                if (!htn.Blackboard.TryGetValue<EntityUid>(action.TargetKey, out var target, EntityManager))
+                    continue;
 
-            TryUseAction((uid, comp), target);
+                TryUseAction((uid, comp), action, target);
+            }
         }
     }
 }
