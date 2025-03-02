@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: PDA Messaging <3
-    type: Add
-  id: 720
-  time: '2024-12-12T01:15:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/985
 - author: formlessnameless
   changes:
   - message: Changelings now absorb the rest of their current body on use of Last
@@ -4084,3 +4077,10 @@
   id: 1219
   time: '2025-03-02T04:57:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1720
+- author: ruddygreat
+  changes:
+  - message: The Monument can now be used by multiple cultists at the same time(!)
+    type: Tweak
+  id: 1220
+  time: '2025-03-02T21:27:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1816
