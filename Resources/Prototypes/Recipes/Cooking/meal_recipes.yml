@@ -1802,6 +1802,13 @@
   solids:
     FoodDonkpocketCarp: 1
 
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketMoth
+  name: warm moth-pocket recipe
+  result: FoodDonkpocketMothWarm
+  time: 5
+  solids:
+    FoodDonkpocketMoth: 1
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
