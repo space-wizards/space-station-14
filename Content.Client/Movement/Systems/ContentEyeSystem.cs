@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
 namespace Content.Client.Movement.Systems;
@@ -51,5 +52,15 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     public void RequestEye(bool drawFov, bool drawLight)
     {
         RaisePredictiveEvent(new RequestEyeEvent(drawFov, drawLight));
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
+        while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
+        {
+            UpdateEyeOffset((entity, eyeComponent));
+        }
     }
 }

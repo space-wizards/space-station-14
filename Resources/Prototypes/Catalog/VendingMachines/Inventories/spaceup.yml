@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: SpaceUpInventory
   startingInventory:
     DrinkSpaceUpCan: 3
@@ -8,7 +8,11 @@
     DrinkIcedTeaCan: 2
     DrinkSolDryCan: 2
     DrinkLemonLimeCan: 2
+    DrinkLemonLimeCranberryCan: 2
     DrinkFourteenLokoCan: 2
+  contrabandInventory:
+    DrinkSpaceMountainWindBottleFull: 2
+    DrinkSpaceUpBottleFull: 2
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

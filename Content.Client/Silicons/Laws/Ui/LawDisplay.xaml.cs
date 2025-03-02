@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Silicons.Laws.Ui;
@@ -18,7 +19,12 @@ public sealed partial class LawDisplay : Control
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+
+    private static readonly TimeSpan PressCooldown = TimeSpan.FromSeconds(3);
+
+    private readonly Dictionary<Button, TimeSpan> _nextAllowedPress = new();
 
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
     {
@@ -47,6 +53,8 @@ public sealed partial class LawDisplay : Control
             MinWidth = 75,
         };
 
+        _nextAllowedPress[localButton] = TimeSpan.Zero;
+
         localButton.OnPressed += _ =>
         {
             _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Local);
@@ -71,6 +79,8 @@ public sealed partial class LawDisplay : Control
                 MinWidth = 75,
             };
 
+            _nextAllowedPress[radioChannelButton] = TimeSpan.Zero;
+
             radioChannelButton.OnPressed += _ =>
             {
                 switch (radioChannel)
@@ -90,9 +100,21 @@ public sealed partial class LawDisplay : Control
                         );
                         break;
                 }
+                _nextAllowedPress[radioChannelButton] = _timing.CurTime + PressCooldown;
             };
 
             LawAnnouncementButtons.AddChild(radioChannelButton);
+        }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        var curTime = _timing.CurTime;
+        foreach (var (button, nextPress) in _nextAllowedPress)
+        {
+            button.Disabled = curTime < nextPress;
         }
     }
 }

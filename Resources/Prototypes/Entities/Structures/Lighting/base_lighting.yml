@@ -44,6 +44,19 @@
     cost: 4
     delay: 2
     fx: EffectRCDDeconstruct2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,0.5,0.4,0.35"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -253,6 +266,19 @@
       radius: 6
       softness: 1.1
       enabled: true
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,0.5,0.2,0.35"
+          density: 190
+          mask:
+          - TabletopMachineMask
+          layer:
+          - TabletopMachineLayer
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
@@ -365,6 +391,27 @@
     damage:
       types:
         Heat: 1
+    popupText: powered-light-component-burn-hand
+
+- type: entity
+  id: PoweredWarmSmallLight
+  suffix: Warm
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: base
+  - type: PointLight
+    enabled: true
+    radius: 6
+    energy: 1
+    softness: 3
+    color: "#FF8A0C"
+  - type: PoweredLight
+    hasLampOnSpawn: WarmLightBulb
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
     popupText: powered-light-component-burn-hand
 
 - type: entity

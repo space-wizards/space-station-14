@@ -1,0 +1,22 @@
+- type: constructionGraph
+  id: ClothingShoeSlippersLizard
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shoes
+          steps:
+            - tag: PlushieLizard #Weh!
+              name: lizard plushie
+              icon:
+                sprite: Objects/Fun/toys.rsi
+                state: plushie_lizard
+              doAfter: 1
+            - tag: PlushieLizard
+              name: lizard plushie
+              icon:
+                sprite: Objects/Fun/toys.rsi
+                state: plushie_lizard
+              doAfter: 1
+    - node: shoes
+      entity: ClothingShoeSlippersLizard

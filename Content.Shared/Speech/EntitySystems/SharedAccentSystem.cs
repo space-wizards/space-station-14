@@ -11,6 +11,9 @@ public sealed class SharedAccentSystem : EntitySystem
         new BarkAccent(),
         new BackwardsAccent(),
         new OwOAccent(),
+        new GermanAccent(),
+        new RussianAccent(),
+        new FrenchAccent(),
     }.ToDictionary(x => x.Name, x => x);
 
     //public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
@@ -20,6 +23,9 @@ public sealed class SharedAccentSystem : EntitySystem
         SubscribeLocalEvent<BarkAccentComponent, AccentGetEvent>((e, c, ev) => ev.Accents.Add("Bark"));
         SubscribeLocalEvent<BackwardsAccentComponent, AccentGetEvent>((e, c, ev) => ev.Accents.Add("Backwards"));
         SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>((e, c, ev) => ev.Accents.Add("OwO"));
+        SubscribeLocalEvent<GermanAccentComponent, AccentGetEvent>((e, c, ev) => ev.Accents.Add("German"));
+        SubscribeLocalEvent<RussianAccentComponent, AccentGetEvent>((e, c, ev) => ev.Accents.Add("Russian"));
+        SubscribeLocalEvent<FrenchAccentComponent, AccentGetEvent>((e, c, ev) => ev.Accents.Add("French"));
     }
 
     /// <summary>
