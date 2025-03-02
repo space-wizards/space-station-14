@@ -59,6 +59,10 @@ public sealed class SharedMonumentSystem : EntitySystem
             return;
         if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(uiComp.CurrentSingleUser, out var cultComp))
         {
+            //todo remove these later when I get around to taking influences out of the state
+            ent.Comp.AvailableEntropy = cultComp.EntropyBudget;
+            ent.Comp.UnlockedInfluences = cultComp.UnlockedInfluences;
+
             var buiState = new MonumentBuiState(
                 cultComp.EntropyBudget,
                 ent.Comp.EntropyUntilNextStage,

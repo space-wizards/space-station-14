@@ -49,6 +49,7 @@ public sealed partial class MonumentComponent : Component
 }
 
 [Serializable, NetSerializable]
+//todo include sender in this
 public sealed class InfluenceSelectedMessage(ProtoId<InfluencePrototype> influenceProtoId) : BoundUserInterfaceMessage
 {
     public ProtoId<InfluencePrototype> InfluenceProtoId = influenceProtoId;

@@ -47,6 +47,8 @@ using Content.Server.Bible.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
+using Content.Shared._Impstation.CosmicCult.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -80,6 +82,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
     public Entity<MonumentComponent> MonumentInGame; // the monument in the current round.
@@ -308,6 +312,26 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         CurrentTier = 1;
         UpdateMonumentAppearance(uid, false);
         MonumentInGame = uid; //Since there's only one Monument per round, let's store its UID for the rest of the round. Saves us on spamming enumerators.
+
+        //this is probably unnecessary but I have no idea where they get added to the list atm - ruddygreat
+        foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 1))
+        {
+            uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
+        }
+
+        //basically completely unnecessary, but putting this here for sanity & futureproofing - ruddygreat
+        var query = EntityQueryEnumerator<CosmicCultComponent>();
+        while (query.MoveNext(out var cultist, out var cultComp))
+        {
+
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 1))
+            {
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
+            }
+
+            Dirty(cultist, cultComp);
+        }
+
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out _, out var objectiveComp))
         {
@@ -319,26 +343,38 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     {
         uid.Comp.PercentageComplete = 50;
         CurrentTier = 2;
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphWarding");
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphBlades");
+
+        foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 2))
+        {
+            uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
+        }
+
         UpdateMonumentAppearance(uid, true);
-        var sender = Loc.GetString("cosmiccult-announcement-sender");
+
         var query = EntityQueryEnumerator<CosmicCultComponent>();
         while (query.MoveNext(out var cultist, out var cultComp))
         {
-            cultComp.UnlockedInfluences.Add("InfluenceForceIngress");
-            cultComp.UnlockedInfluences.Add("InfluenceUnboundStep");
+
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
+            {
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
+            }
+
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); // pity system. 4% of the playercount worth of entropy on tier up
             Dirty(cultist, cultComp);
         }
+
+        var sender = Loc.GetString("cosmiccult-announcement-sender");
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-progress"), sender, Color.FromHex("#4cabb3"));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-warning"), null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier2.ogg", Filter.Broadcast(), false, AudioParams.Default);
+
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out _, out var objectiveComp))
         {
             objectiveComp.Tier = 2;
         }
+
         for (var i = 0; i < Convert.ToInt16(TotalCrew / 4); i++) // spawn # malign rifts equal to 25% of the playercount
         {
             if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
@@ -346,6 +382,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 Spawn("CosmicMalignRift", coords);
             }
         }
+
         var lights = EntityQueryEnumerator<PoweredLightComponent>();
         while (lights.MoveNext(out var light, out _))
         {
@@ -360,10 +397,16 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         uid.Comp.PercentageComplete = 0;
         uid.Comp.HasCollision = true;
         CurrentTier = 3;
+
         _visibility.SetLayer(uid.Owner, 1, true);
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphCessation");
-        uid.Comp.UnlockedGlyphs.Add("ccGlyphTruth");
+
+        foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 3))
+        {
+            uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
+        }
+
         UpdateMonumentAppearance(uid, true);
+
         var query = EntityQueryEnumerator<CosmicCultComponent>();
         while (query.MoveNext(out var cultist, out var cultComp))
         {
@@ -371,30 +414,39 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             EnsureComp<PressureImmunityComponent>(cultist);
             RemComp<TemperatureSpeedComponent>(cultist);
             RemComp<RespiratorComponent>(cultist);
+
             _damage.SetDamageContainerID(cultist, "BiologicalMetaphysical");
-            cultComp.UnlockedInfluences.Add("InfluenceVacuousImposition");
-            cultComp.UnlockedInfluences.Add("InfluenceAstralNova");
-            cultComp.UnlockedInfluences.Add("InfluenceAstralStride");
-            cultComp.UnlockedInfluences.Add("InfluenceVacuousVitality");
+
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
+            {
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
+            }
+
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); //pity system. 4% of the playercount worth of entropy on tier up
             Dirty(cultist, cultComp);
         }
+
         var sender = Loc.GetString("cosmiccult-announcement-sender");
         var mapData = _map.GetMap(_transform.GetMapId(uid.Owner.ToCoordinates()));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-progress"), sender, Color.FromHex("#4cabb3"));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-warning"), null, Color.FromHex("#cae8e8"));
         _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier3.ogg", Filter.Broadcast(), false, AudioParams.Default);
+
         EnsureComp<ParallaxComponent>(mapData, out var parallax);
         parallax.Parallax = "CosmicFinaleParallax";
         Dirty(mapData, parallax);
+
         EnsureComp<MapLightComponent>(mapData, out var mapLight);
         mapLight.AmbientLightColor = Color.FromHex("#210746");
+
         Dirty(mapData, mapLight);
+
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out var _, out var objectiveComp))
         {
             objectiveComp.Tier = 3;
         }
+
         var lights = EntityQueryEnumerator<PoweredLightComponent>();
         while (lights.MoveNext(out var light, out _))
         {

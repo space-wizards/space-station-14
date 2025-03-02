@@ -10,6 +10,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: lapse
   action: ActionCosmicLapse
+  tier: 1
 
 # - type: influence
 #   id: InfluenceNullGlare
@@ -23,7 +24,7 @@
 #   action: ActionCosmicGlare
 
 - type: influence
-  id: InfluenceNullGlare ## Yeah it's actually shunt right now but we give it the same slot
+  id: InfluenceNullGlare #Yeah it's actually shunt right now but we give it the same slot
   name: influence-name-shunt
   influenceType: influence-type-active
   cost: 10
@@ -32,6 +33,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: blank
   action: ActionCosmicBlank
+  tier: 1 #remember to update when this gets set back to what it should be
 
 - type: influence
   id: InfluenceForceIngress
@@ -43,6 +45,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: ingress
   action: ActionCosmicIngress
+  tier: 2
 
 - type: influence
   id: InfluenceVacuousImposition
@@ -54,6 +57,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: entropic
   action: ActionCosmicImposition
+  tier: 3
 
 - type: influence
   id: InfluenceAstralNova
@@ -65,6 +69,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: nova
   action: ActionCosmicNova
+  tier: 3
 
 
 ### PASSIVE INFLUENCES
@@ -79,6 +84,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: metabolism
   passiveName: eschew
+  tier: 1
 
 - type: influence
   id: InfluenceUnboundStep
@@ -90,6 +96,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: step
   passiveName: step
+  tier: 2
 
 - type: influence
   id: InfluenceAstralStride
@@ -101,6 +108,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: stride
   passiveName: stride
+  tier: 3
 
 - type: influence
   id: InfluenceVacuousVitality
@@ -112,3 +120,4 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: astral
   passiveName: vitality
+  tier: 3
