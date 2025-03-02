@@ -1982,8 +1982,8 @@
   name: reagent-name-bacchus-blessing
   parent: BaseAlcohol
   desc: reagent-desc-bacchus-blessing
-  physicalDesc: reagent-physical-desc-overpowering
-  flavor: hooch # TODO: Make Flavor
+  physicalDesc: reagent-physical-desc-unidentifiable
+  flavor: bacchusblessing
   color: "#331303"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
@@ -2006,7 +2006,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 1
+          min: 6
         - !type:OrganType
           type: Dwarf
           shouldHave: false
@@ -2016,7 +2016,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 1
+          min: 6
         - !type:OrganType
           type: Dwarf
         damage:
