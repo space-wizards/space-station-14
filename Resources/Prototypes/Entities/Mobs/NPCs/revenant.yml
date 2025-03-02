@@ -8,6 +8,7 @@
   components:
   - type: Input
     context: "ghost"
+  - type: RevenantVisuals
   - type: Spectral
   - type: MovementSpeedModifier
     baseWalkSpeed: 6
@@ -44,17 +45,6 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: Revenant
-    malfunctionWhitelist:
-      components:
-      # emag lockers open
-      - EntityStorage
-      # emag doors open
-      - Airlock
-      # troll medical to help get kills
-      - StasisBed
-      - EmaggableMedibot
-      # borg become killer
-      - EmagSiliconLaw
   - type: PointLight
     color: MediumPurple
     radius: 2
