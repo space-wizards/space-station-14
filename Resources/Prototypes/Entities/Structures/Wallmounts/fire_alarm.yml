@@ -114,6 +114,17 @@
     - Wallmount
 
 - type: entity
+  id: FireAlarmAutoLink
+  parent: FireAlarm
+  suffix: Autolink
+  components:
+    - type: AlarmAutoLink
+      autoLinkPrototypes:
+        - AirSensor
+        - Firelock
+        - FirelockGlass
+
+- type: entity
   id: FireAlarmAssembly
   name: fire alarm assembly
   description: A fire alarm assembly. Very mild.
@@ -142,3 +153,4 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
+
