@@ -1,6 +1,8 @@
 using System.Globalization;
+using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Cuffs;
 using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
@@ -13,9 +15,13 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Mind.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.UserInterface;
@@ -33,7 +39,9 @@ namespace Content.Server.Bed.Cryostorage;
 /// <inheritdoc/>
 public sealed class CryostorageSystem : SharedCryostorageSystem
 {
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
@@ -49,6 +57,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly CuffableSystem _cuffable = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -98,12 +107,31 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         if (args.Type == CryostorageRemoveItemBuiMessage.RemovalType.Hand)
         {
             if (_hands.TryGetHand(cryoContained, args.Key, out var hand))
+            {
                 entity = hand.HeldEntity;
+
+                if (entity == null)
+                    return;
+
+                if (TryComp<VirtualItemComponent>(entity, out var virtualItem) &&
+                    TryComp<CuffableComponent>(cryoContained, out var cuffable) &&
+                    _cuffable.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
+                {
+                    _cuffable.Uncuff(cryoContained, attachedEntity, virtualItem.BlockingEntity, cuffable);
+                }
+                else
+                    _hands.TryDrop(attachedEntity, entity.Value);
+            }
         }
         else
         {
             if (_inventory.TryGetSlotContainer(cryoContained, args.Key, out var slot, out _))
+            {
                 entity = slot.ContainedEntity;
+
+                if (!_inventorySystem.TryUnequip(attachedEntity, cryoContained, slot.ID))
+                    return;
+            }
         }
 
         if (entity == null)
@@ -113,8 +141,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             $"{ToPrettyString(attachedEntity):player} removed item {ToPrettyString(entity)} from cryostorage-contained player " +
             $"{ToPrettyString(cryoContained):player}, stored in cryostorage {ToPrettyString(ent)}");
 
-        _container.TryRemoveFromContainer(entity.Value);
-        _transform.SetCoordinates(entity.Value, Transform(attachedEntity).Coordinates);
         _hands.PickupOrDrop(attachedEntity, entity.Value);
         UpdateCryostorageUIState(ent);
     }
@@ -323,7 +349,10 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             if (hand.HeldEntity == null)
                 continue;
 
-            data.HeldItems.Add(hand.Name, Name(hand.HeldEntity.Value));
+            if (_entityManager.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
+                data.HeldItems.Add(hand.Name, Name(virt.BlockingEntity));
+            else
+                data.HeldItems.Add(hand.Name, Name(hand.HeldEntity.Value));
         }
 
         return data;
