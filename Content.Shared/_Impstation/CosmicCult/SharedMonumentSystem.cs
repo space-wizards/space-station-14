@@ -134,7 +134,7 @@ public sealed class SharedMonumentSystem : EntitySystem
         _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
     }
     #endregion
-    
+
     private void UnlockPassive(EntityUid cultist, InfluencePrototype proto)
     {
         switch (proto.PassiveName) // Yay, switch statements.

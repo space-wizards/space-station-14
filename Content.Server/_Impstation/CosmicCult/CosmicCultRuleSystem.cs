@@ -324,11 +324,12 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         UpdateMonumentAppearance(uid, true);
         var sender = Loc.GetString("cosmiccult-announcement-sender");
         var query = EntityQueryEnumerator<CosmicCultComponent>();
-        while (query.MoveNext(out _, out var cultComp))
+        while (query.MoveNext(out var cultist, out var cultComp))
         {
             cultComp.UnlockedInfluences.Add("InfluenceForceIngress");
             cultComp.UnlockedInfluences.Add("InfluenceUnboundStep");
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); // pity system. 4% of the playercount worth of entropy on tier up
+            Dirty(cultist, cultComp);
         }
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-progress"), sender, Color.FromHex("#4cabb3"));
         _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-warning"), null, Color.FromHex("#cae8e8"));
@@ -376,6 +377,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             cultComp.UnlockedInfluences.Add("InfluenceAstralStride");
             cultComp.UnlockedInfluences.Add("InfluenceVacuousVitality");
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); //pity system. 4% of the playercount worth of entropy on tier up
+            Dirty(cultist, cultComp);
         }
         var sender = Loc.GetString("cosmiccult-announcement-sender");
         var mapData = _map.GetMap(_transform.GetMapId(uid.Owner.ToCoordinates()));
