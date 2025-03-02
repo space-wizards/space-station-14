@@ -102,6 +102,7 @@ loadout-group-cargo-technician-shoes = Cargo Technician shoes
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
 loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
+loadout-group-salvage-specialist-ears = Salvage Specialist ears
 
 # Engineering
 loadout-group-chief-engineer-head = Chief Engineer head
