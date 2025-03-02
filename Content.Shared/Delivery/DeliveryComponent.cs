@@ -5,7 +5,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Delivery;
 
 /// <summary>
-/// Component given to deliveries. I will write this eventually.
+/// Component given to deliveries.
+/// Means the entity is a delivery, which upon opening will grant a reward to cargo.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeliveryComponent : Component
