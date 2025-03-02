@@ -1,7 +1,32 @@
+## Base stash
+
+- type: entity
+  id: BaseStash
+  abstract: true
+  components:
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
+      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
+      tags:
+      - QuantumSpinInverter # It will cause issues with the grinder...
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
+    name: secret-stash-plushie
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+
 ## Plushies
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseStash]
   id: BasePlushie
   abstract: true
   components:
@@ -53,24 +78,7 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
-  - type: Speech
-    speechVerb: Default # for pais (In the secret stash)
-  - type: SecretStash
-    secretStashName: secret-stash-plushie
-    blacklist:
-      components:
-      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
-      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
-      tags:
-      - QuantumSpinInverter # It will cause issues with the grinder...
-      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
-    name: secret-stash-plushie
+
 
 - type: entity
   parent: BasePlushie
@@ -853,45 +861,6 @@
 
 - type: entity
   parent: BasePlushie
-  id: ToyRubberDuck
-  name: rubber ducky
-  description: Not carried here by ocean currents.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Objects/Fun/ducky.rsi
-    state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/ducky.rsi
-    slots:
-    - HEAD
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
-  - type: Tag
-    tags:
-    - ToyRubberDuck
-
-- type: entity
-  parent: BasePlushie
   id: PlushieVox
   name: vox plushie
   description: SKREEEEEEEEEEEE!
@@ -964,6 +933,7 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 - type: entity
   parent: BasePlushie
   id: PlushiePenguin
@@ -1034,6 +1004,112 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+## Rubber
+
+- type: entity
+  parent: [BaseItem, BaseStash]
+  id: BaseRubberToy
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+  - type: Tag
+    tags:
+      - Payload
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: StaticPrice
+    price: 5
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+
+- type: entity
+  parent: BaseRubberToy
+  id: ToyRubberDuck
+  name: rubber ducky
+  description: Not carried here by ocean currents.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Fun/ducky.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/ducky.rsi
+    slots:
+    - HEAD
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: Tag
+    tags:
+    - ToyRubberDuck
+
+- type: entity
+  parent: BaseRubberToy
+  id: RubberChicken
+  name: rubber chicken
+  description: A stress inducing parody of nature's most delectable avian.
+  components:
+  - type: Sprite
+    state: rubber_chicken
+  - type: EmitSoundOnUse
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: MeleeWeapon
+    wideAnimationRotation: 110
+    soundHit:
+      collection: RubberChicken
+      params:
+        variation: 0.125
 
 ## Cheapo Figurines
 
@@ -1809,52 +1885,3 @@
       params:
         volume: -9
         maxDistance: 3
-
-- type: entity
-  parent: BasePlushie
-  id: RubberChicken
-  name: rubber chicken
-  description: A stress inducing parody of nature's most delectable avian.
-  components:
-  - type: Sprite
-    state: rubber_chicken
-  - type: EmitSoundOnUse
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnLand
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnActivate
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnCollide
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: MeleeWeapon
-    wideAnimationRotation: 110
-    soundHit:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 25
