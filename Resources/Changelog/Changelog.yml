@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: JIPDawg
-  changes:
-  - message: On Salamander the round will now restart after 5 minutes from when the
-      Evac shuttle arrives at CentCom.
-    type: Tweak
-  id: 7530
-  time: '2024-10-18T10:03:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32776
 - author: Errant
   changes:
   - message: Players becoming Traitor without a PDA now correctly get the text and
@@ -3894,3 +3886,13 @@
   id: 8029
   time: '2025-03-02T02:47:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33412
+- author: SlamBamActionman
+  changes:
+  - message: Phalanximine now has an overdose threshold and works slower, along with
+      other minor tweaks.
+    type: Tweak
+  - message: Arithrazine now deals increased damage during treatment.
+    type: Tweak
+  id: 8030
+  time: '2025-03-02T12:56:16.674298+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32209
