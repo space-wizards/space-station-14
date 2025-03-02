@@ -18,6 +18,12 @@
   name: LGBT pin
   description: Be gay do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: lgbt-inhand-left
+      right:
+      - state: lgbt-inhand-right
   - type: Sprite
     state: lgbt
   - type: Clothing
@@ -29,6 +35,12 @@
   name: straight ally pin
   description: Be ally do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: ally-inhand-left
+      right:
+      - state: ally-inhand-right
   - type: Sprite
     state: ally
   - type: Clothing
@@ -40,6 +52,12 @@
   name: aromantic pin
   description: Be aro do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: aro-inhand-left
+      right:
+      - state: aro-inhand-right
   - type: Sprite
     state: aro
   - type: Clothing
@@ -51,6 +69,12 @@
   name: asexual pin
   description: Be ace do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: asex-inhand-left
+      right:
+      - state: asex-inhand-right
   - type: Sprite
     state: asex
   - type: Clothing
@@ -62,6 +86,12 @@
   name: bisexual pin
   description: Be bi do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bi-inhand-left
+      right:
+      - state: bi-inhand-right
   - type: Sprite
     state: bi
   - type: Clothing
@@ -73,6 +103,12 @@
   name: gay pin
   description: Be gay~ do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: gay-inhand-left
+      right:
+      - state: gay-inhand-right
   - type: Sprite
     state: gay
   - type: Clothing
@@ -84,6 +120,12 @@
   name: intersex pin
   description: Be intersex do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inter-inhand-left
+      right:
+      - state: inter-inhand-right
   - type: Sprite
     state: inter
   - type: Clothing
@@ -95,6 +137,12 @@
   name: lesbian pin
   description: Be lesbian do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: les-inhand-left
+      right:
+      - state: les-inhand-right
   - type: Sprite
     state: les
   - type: Clothing
@@ -106,6 +154,12 @@
   name: non-binary pin
   description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: non-inhand-left
+      right:
+      - state: non-inhand-right
   - type: Sprite
     state: non
   - type: Clothing
@@ -117,6 +171,12 @@
   name: pansexual pin
   description: Be pan do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: pan-inhand-left
+      right:
+      - state: pan-inhand-right
   - type: Sprite
     state: pan
   - type: Clothing
@@ -128,6 +188,12 @@
   name: omnisexual pin
   description: Be omni do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: omni-inhand-left
+      right:
+      - state: omni-inhand-right
   - type: Sprite
     state: omni
   - type: Clothing
@@ -139,6 +205,12 @@
   name: genderqueer pin
   description: be crime, do gender
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: gender-inhand-left
+      right:
+      - state: gender-inhand-right
   - type: Sprite
     state: gender
   - type: Clothing
@@ -150,6 +222,12 @@
   name: transgender pin
   description: Be trans do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trans-inhand-left
+      right:
+      - state: trans-inhand-right
   - type: Sprite
     state: trans
   - type: Clothing
@@ -161,6 +239,12 @@
   name: autism pin
   description: Be autism do crime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: autism-inhand-left
+      right:
+      - state: autism-inhand-right
   - type: Sprite
     state: autism
   - type: Clothing
@@ -172,6 +256,12 @@
   name: golden autism pin
   description: Be autism do warcrime.
   components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: goldautism-inhand-left
+      right:
+      - state: goldautism-inhand-right
   - type: Sprite
     state: goldautism
   - type: Clothing
