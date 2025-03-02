@@ -163,6 +163,7 @@ namespace Content.Client.Lobby.UI
             #region Name
 
             NameEdit.OnTextChanged += args => { SetName(args.Text); };
+            NameEdit.IsValid = args => args.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
             NameRandomize.OnPressed += args => RandomizeName();
             RandomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
             WarningLabel.SetMarkup($"[color=red]{Loc.GetString("humanoid-profile-editor-naming-rules-warning")}[/color]");
