@@ -862,9 +862,14 @@
       tags:
       - Syringe
       - HighRiskItem
+      - Sidearm
+      - Taser
       components:
-      - Contraband
+      - Gun
+      - MeleeWeapon
   - type: PAI # imp; this is added specifically for the internal station map feature but the other aspects are not especially against the identity of drones. and i dont want to put the work into ECS-ifying PAIComponent
+    mapActionId: ActionDroneOpenMap # redefining these to reflavor their descriptions.
+    midiActionId: ActionDronePlayMidi
   - type: Instrument # imp
     allowPercussion: false
     handheld: false
@@ -897,6 +902,9 @@
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 36000 # ten hours
+    - !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 18000 # five hours
     makeSentient: true
     name: Maintenance Drone
     description: Maintain the station. Ignore other beings except drones.
@@ -992,6 +1000,10 @@
       - EmagImmune
       - CanPilot
       - VimPilot
+  - type: Access
+    tags:
+    - Engineering
+    - Maintenance
 
 - type: entity
   name: onestar mecha

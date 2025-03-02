@@ -36,12 +36,12 @@ namespace Content.Server.Drone
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-		[Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+        [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-			SubscribeLocalEvent<DroneComponent, UseAttemptEvent>(OnUseAttempt);
+            SubscribeLocalEvent<DroneComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
@@ -51,46 +51,46 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
         }
 
-		// Imp. this replaces OnInteractionAttempt from the upstream version of DroneSystem.
-		private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args) 
-		{
-			if (args.Used != null && NonDronesInRange(uid, component))
-			{
-				if (_whitelist.IsBlacklistPass(component.Blacklist, args.Used)) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+        // Imp. this replaces OnInteractionAttempt from the upstream version of DroneSystem.
+        private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args)
+        {
+            if (args.Used != null && NonDronesInRange(uid, component))
+            {
+                if (_whitelist.IsBlacklistPass(component.Blacklist, args.Used)) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+                {
+                    args.Cancel();
+                    if (_gameTiming.CurTime >= component.NextProximityAlert)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("drone-cant-use-nearby", ("being", component.NearestEnt)), uid, uid);
+                        component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+                    }
+                }
+
+                else if (_whitelist.IsWhitelistPass(component.Whitelist, args.Used)) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
 				{
-					args.Cancel();
-					if (_gameTiming.CurTime >= component.NextProximityAlert)
-					{
-						_popupSystem.PopupEntity(Loc.GetString("drone-cant-use-nearby", ("being", component.NearestEnt)), uid, uid);
-						component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
-					}
-				}
-				
-				else if (_whitelist.IsWhitelistPass(component.Whitelist, args.Used)) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
-				{
-					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
-					if (_gameTiming.CurTime >= component.NextProximityAlert)
-					{
-						_popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", component.NearestEnt)), uid, uid);
-						component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
-					}
-				}
-			}
-			
-			else if (args.Used != null && _whitelist.IsBlacklistPass(component.Blacklist, args.Used))
-			{
-				args.Cancel();
-				if (_gameTiming.CurTime >= component.NextProximityAlert)
-				{
-					_popupSystem.PopupEntity(Loc.GetString("drone-cant-use"), uid, uid);
-					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
-				}
-			}
-		}
+                    component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+                    if (_gameTiming.CurTime >= component.NextProximityAlert)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", component.NearestEnt)), uid, uid);
+                        component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+                    }
+                }
+            }
+
+            else if (args.Used != null && _whitelist.IsBlacklistPass(component.Blacklist, args.Used))
+            {
+                args.Cancel();
+                if (_gameTiming.CurTime >= component.NextProximityAlert)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("drone-cant-use"), uid, uid);
+                    component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+                }
+            }
+        }
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
+            if (_whitelist.IsBlacklistPass(component.Blacklist, args.Target))
             {
                 args.Cancel();
             }
@@ -164,9 +164,9 @@ namespace Content.Server.Drone
                     if ((TryComp<MobStateComponent>(entity, out var entityMobState) && _mobStateSystem.IsDead(entity, entityMobState)))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-					{
-						component.NearestEnt = Identity.Entity(entity, EntityManager); // imp. instead of doing popups in here, set a variable to the nearest entity for use elsewhere.
-					}
+                    {
+                        component.NearestEnt = Identity.Entity(entity, EntityManager); // imp. instead of doing popups in here, set a variable to the nearest entity for use elsewhere.
+                    }
                     return true;
                 }
             }

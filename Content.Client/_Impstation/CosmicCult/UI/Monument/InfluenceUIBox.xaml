@@ -1,0 +1,32 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Margin="10 10 10 0"
+              HorizontalExpand="True"
+              MinHeight="120"
+              Name="InfluenceBox"
+>
+    <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <!-- Header -->
+            <BoxContainer Orientation="Horizontal" Margin="0 0 0 10">
+                <TextureRect Name="InfluenceIcon" VerticalAlignment="Center" TextureScale="2 2" Stretch="KeepCentered" Margin="0 0 10 0" />
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Name="Name" HorizontalAlignment="Left" FontColorOverride="#4CA7AD" />
+                    <PanelContainer StyleClasses="LowDivider" MinHeight="4" Margin="0 5 0 5" />
+                    <BoxContainer VerticalAlignment="Center">
+                        <Label Name="Status" HorizontalAlignment="Left" HorizontalExpand="True" />
+                        <Label Name="Type" HorizontalAlignment="Right" HorizontalExpand="True" />
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+            <!-- Body -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10 0 0 0">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="CostText" Text="{Loc 'monument-interface-influences-cost'}" Margin="0 0 10 0" />
+                    <Label Name="Cost" HorizontalAlignment="Center" Text="73" FontColorOverride="#4CA7AD" />
+                </BoxContainer>
+                <RichTextLabel Name="Description" />
+                <Button Name="GainButton" Text="{Loc 'monument-interface-influences-button-gain'}" HorizontalAlignment="Right" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

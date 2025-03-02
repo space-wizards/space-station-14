@@ -1,0 +1,53 @@
+- type: glyph
+  id: ccGlyphKnowledge
+  name: cult-glyph-name-knowledge
+  tooltip: cult-glyph-description-knowledge
+  icon:
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    state: knowledge
+  entity: CosmicGlyphKnowledge
+
+- type: glyph
+  id: ccGlyphProjection
+  name: cult-glyph-name-projection
+  tooltip: cult-glyph-description-projection
+  icon:
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    state: projection
+  entity: CosmicGlyphProjection
+
+- type: glyph
+  id: ccGlyphWarding
+  name: cult-glyph-name-warding
+  tooltip: cult-glyph-description-warding
+  icon:
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    state: warding
+  entity: CosmicGlyphWarding
+
+- type: glyph
+  id: ccGlyphBlades
+  name: cult-glyph-name-blades
+  tooltip: cult-glyph-description-blades
+  icon:
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    state: blades
+  entity: CosmicGlyphBlades
+
+- type: glyph
+  id: ccGlyphCessation
+  name: cult-glyph-name-cessation
+  tooltip: cult-glyph-description-cessation
+  icon:
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    state: cessation
+  entity: CosmicGlyphCessation
+
+- type: glyph
+  id: ccGlyphTruth
+  name: cult-glyph-name-truth
+  tooltip: cult-glyph-description-truth
+  icon:
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    state: truth
+  entity: CosmicGlyphTruth

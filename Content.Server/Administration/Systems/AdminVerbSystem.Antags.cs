@@ -1,3 +1,4 @@
+using Content.Server._Impstation.CosmicCult.Components;
 using Content.Server.Administration.Commands;
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
@@ -180,5 +181,20 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-heretic"),
         };
         args.Verbs.Add(heretic);
+
+        // IMPSTATION - COSMIC CULT
+        Verb cosmiccult = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-cosmiccultist"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/_Impstation/CosmicCult/Icons/antag_icons.rsi"), "CosmicCult"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<CosmicCultRuleComponent>(targetPlayer, "CosmicCult");
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-cosmiccultist"),
+        };
+        args.Verbs.Add(cosmiccult);
     }
 }

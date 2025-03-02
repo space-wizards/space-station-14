@@ -7,6 +7,8 @@
   suffix: Unremoveable
   components:
   - type: Unremoveable
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Satchels/dronesatchel.rsi
 
 - type: entity
   parent: trayScanner
@@ -40,14 +42,76 @@
     component: ResearchServer
     targetName: the station
 
+- type: entity
+  id: RCDRechargingDrone
+  parent: BaseItem
+  name: lighting RCD
+  description: The sleek, pared-down offspring the standard Rapid Construction Device. Only capable of producing standardized lighting solutions. 
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/dronercd.rsi
+    state: icon
+  - type: LimitedCharges
+    maxCharges: 10
+    charges: 10
+  - type: AutoRecharge
+    rechargeDuration: 10
+  - type: RCD
+    availablePrototypes:
+    - TubeLight
+    - BulbLight
+  - type: UserInterface
+    interfaces:
+      enum.RcdUiKey.Key:
+        type: RCDMenuBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.RcdUiKey.Key
+  - type: Tag
+    tags:
+    - DroneUsable
+
+# PAI actions
+
+- type: entity
+  id: ActionDroneOpenMap
+  name: Open Map
+  description: Look upon yourself.
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      checkConsciousness: false
+      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+      event: !type:OpenUiActionEvent
+        key: enum.StationMapUiKey.Key
+
+- type: entity
+  id: ActionDronePlayMidi
+  name: Play MIDI
+  description: Contribute to the ambiance.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: Interface/Actions/pai-midi.png
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key
+
 # StartingGear
 
 - type: startingGear
   id: StartingGearDroneTools
   equipment:
-    pocket1: PinpointerStationUnremoveable
+    pocket1: trayScannerUnremoveable
+    pocket2: PinpointerStationUnremoveable
+    back: DroneSatchelUnremovable
+  storage:
+    back:
+    - TrashBag
+    - SprayBottleSpaceCleaner
   inhand:
-    - DroneSatchelUnremovable
-    - trayScannerUnremoveable
+    - RCDRechargingDrone
     - OmnitoolUnremoveable
     - WelderExperimentalUnremoveable

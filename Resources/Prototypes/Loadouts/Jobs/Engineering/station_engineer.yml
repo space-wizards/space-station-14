@@ -6,17 +6,17 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 21600 #6 hrs
+      time: 18000 #5 hrs, ~4 rounds #imp
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 21600 #6 hrs
+      time: 18000 #5 hrs, ~4 rounds #imp
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
       department: Engineering
-      time: 216000 # 60 hrs
+      time: 108000 #30 hrs, ~20 rounds #imp
 
 # Head
 - type: startingGear
