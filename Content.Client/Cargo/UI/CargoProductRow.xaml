@@ -1,24 +1,29 @@
-﻿<PanelContainer xmlns="https://spacestation14.io"
-                HorizontalExpand="True">
-    <Button Name="MainButton"
-            ToolTip=""
+﻿<PanelContainer HorizontalExpand="True" xmlns="https://spacestation14.io">
+    <Button
+        Access="Public"
+        HorizontalExpand="True"
+        Name="MainButton"
+        ToolTip=""
+        VerticalExpand="True" />
+    <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+        <TextureRect
+            Access="Public"
+            MinSize="32 32"
+            Name="Icon"
+            RectClipContent="True" />
+        <Label
             Access="Public"
             HorizontalExpand="True"
-            VerticalExpand="True" />
-    <BoxContainer Orientation="Horizontal"
-                  HorizontalExpand="True">
-        <TextureRect Name="Icon"
-                     Access="Public"
-                     MinSize="32 32"
-                     RectClipContent="True" />
-        <Label Name="ProductName"
-               Access="Public"
-               HorizontalExpand="True" />
+            Name="ProductName" />
         <PanelContainer StyleClasses="BackgroundDark">
-            <Label Name="PointCost"
-                   Access="Public"
-                   MinSize="52 32"
-                   Align="Right" />
+            <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                <CheckBox Access="Public" Name="Restricted" />
+                <Label
+                    Access="Public"
+                    Align="Right"
+                    MinSize="52 32"
+                    Name="PointCost" />
+            </BoxContainer>
         </PanelContainer>
     </BoxContainer>
 </PanelContainer>
