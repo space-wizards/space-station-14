@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Plushies will now eject their contents when recycled in the recycler!
-    type: Fix
-  id: 7532
-  time: '2024-10-18T12:58:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32838
 - author: Ilya246
   changes:
   - message: Spectral locator, rare maintenance loot that lets you know if any ghosts
@@ -3900,3 +3893,11 @@
   id: 8031
   time: '2025-03-02T15:50:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35555
+- author: HTMLSystem
+  changes:
+  - message: Arachnids and moths now have new sprites when wearing glasses, huds,
+      visors, and eyepatches.
+    type: Add
+  id: 8032
+  time: '2025-03-02T20:58:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31812
