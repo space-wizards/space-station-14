@@ -3792,4 +3792,11 @@ Entries:
   id: 525
   time: '2025-03-01T16:34:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/354
+- author: Grapegifter, Neccer
+  changes:
+  - message: Revised rule set.
+    type: Tweak
+  id: 526
+  time: '2025-03-02T18:42:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/350
 
