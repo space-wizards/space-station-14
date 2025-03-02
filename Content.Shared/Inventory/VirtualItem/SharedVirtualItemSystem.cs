@@ -277,4 +277,9 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (_netManager.IsServer)
             QueueDel(item);
     }
+
+    private void HandleEnterCryostorageEvent(Entity<VirtualItemComponent> ent, ref HeldRelayedEvent<EnterCryostorageEvent> args)
+    {
+        DeleteVirtualItem((ent, ent.Comp), ent.Owner);
+    }
 }
