@@ -102,10 +102,6 @@ public sealed class TegSystem : EntitySystem
 
     private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, ref AtmosDeviceUpdateEvent args)
     {
-        var tegGroup = GetNodeGroup(uid);
-        if (tegGroup is not { IsFullyBuilt: true })
-            return;
-
         var supplier = Comp<PowerSupplierComponent>(uid);
         var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
         if (!powerReceiver.Powered)
@@ -113,6 +109,10 @@ public sealed class TegSystem : EntitySystem
             supplier.MaxSupply = 0;
             return;
         }
+
+        var tegGroup = GetNodeGroup(uid);
+        if (tegGroup is not { IsFullyBuilt: true })
+            return;
 
         var circA = tegGroup.CirculatorA!.Owner;
         var circB = tegGroup.CirculatorB!.Owner;

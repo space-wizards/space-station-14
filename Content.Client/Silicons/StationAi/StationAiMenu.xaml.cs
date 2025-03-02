@@ -15,7 +15,6 @@ public sealed partial class StationAiMenu : RadialMenu
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     public event Action<BaseStationAiAction>? OnAiRadial;
 
@@ -55,7 +54,6 @@ public sealed partial class StationAiMenu : RadialMenu
             // TODO: This radial boilerplate is quite annoying
             var button = new StationAiMenuButton(action.Event)
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),
                 ToolTip = action.Tooltip != null ? Loc.GetString(action.Tooltip) : null,
             };
@@ -122,7 +120,7 @@ public sealed partial class StationAiMenu : RadialMenu
     }
 }
 
-public sealed class StationAiMenuButton(BaseStationAiAction action) : RadialMenuTextureButton
+public sealed class StationAiMenuButton(BaseStationAiAction action) : RadialMenuTextureButtonWithSector
 {
     public BaseStationAiAction Action = action;
 }

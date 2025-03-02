@@ -7,11 +7,28 @@
   - Ivy
   - Stalk
   - Petal
+  - Petals
   - Thorn
+  - Thorns
+  - Vine
+  - Vines
+  - Branch
+  - Branches
+  - Weed
+  - Weeds
   - Rose
   - Dandelion
+  - Lilac
+  - Lily
   - Birch
+  - Oak
+  - Spruce
   - Willow
+  - Cyprus
+  - Mangrove
+  - Stump
+  - Sap
+  - Bayou
   - Bay
   - Lake
   - River
@@ -21,12 +38,63 @@
   - Mountain
   - Peak
   - Garden
+  - Ocean
+  - Arctic
+  - Sea
+  - Spring
+  - Swamp
+  - Stream
+  - Forest
+  - Rainforest
   - Soil
+  - Valley
+  - Moor
+  - Steppe
+  - Orchard
+  - Orchid
+  - Glacier
+  - Desert
+  - Tundra
+  - Taiga
+  - Plain
+  - Plains
+  - Plateau
+  - Cliff
+  - Coast
+  - Shore
+  - Jungle
+  - Tropics
   - Flower
+  - Grass
+  - Bark
+  - Autumn
+  - Summer
+  - Winter
+  - Fruit
+  - Leaves
+  - Overgrowth
+  - Atmosphere
+  - Climate
+  - Chill
+  - Winds
+  - Blossom
+  - Bloom
+  - Cap
+  - Saturation
+  - Permeation
+  - Light
+  - Taste
+  - Acorn
+  - Shell
+  - Ice
+  - Monsoon
+  - Overcast
+  - Storm
 
 - type: dataset
   id: DionaLast
   values:
+# Positive
   - Peace
   - Harmony
   - Relaxation
@@ -48,3 +116,107 @@
   - Equilibrium
   - Composure
   - Control
+  - Bliss
+  - Enjoyment
+  - Optimism
+  - Ecstasy
+  - Cheer
+  - Delight
+  - Luxury
+  - Euphoria
+  - Excitement
+  - Satisfaction
+  - Cleanliness
+  - Expression
+  - Enrichment
+  - Enthusiam
+  - Brilliance
+  - Determination
+  - Integrity
+  - Justice
+  - Kindness
+  - Bravery
+  - Empathy
+  - Stoicism
+  - Competence
+  - Love
+  - Hope
+  - Honesty
+  - Generosity
+  - Oppritunity
+  - Motivation
+# Neutral
+  - Urgency
+  - Vitality
+  - Hardiness
+  - Vigor
+  - Agility
+  - Dexterity
+  - Perception
+  - Wisdom
+  - Charisma
+  - Persistence
+  - Perseverance
+  - Density
+  - Strength
+  - Congestion
+  - Concentration
+  - Intensity
+  - Refinement
+  - Obscurity
+  - Fortitude
+  - Endurance
+  - Patience
+  - Passivity
+  - Indifference
+  - Sleepiness
+  - Neutrality
+  - Fairness
+  - Silliness 
+  - Restraint
+  - Silence
+  - Bewilderment
+  - Tactility
+  - Invisibility
+  - Darkness
+  - Fragility
+  - Action
+  - Awakening
+  - Activity
+  - Audacity
+  - Vivacity
+  - Knowledge
+  - Modification
+# Negative
+# These should be something a diona would still realistically name themselves, i.e not inherintly self deprecating.
+  - Envy
+  - Ineptitude
+  - Ignorance
+  - Decay
+  - Lethargy
+  - Bitterness
+  - Acidity
+  - Illness
+  - Weakness
+  - Enervation
+  - Fatigue
+  - Noxiousness
+  - Convolution
+  - Confusion
+  - Agitation
+  - Despair
+  - Sorrow
+  - Pain
+  - Animosity
+  - Fury
+  - Disinterest
+  - Anger
+  - Rage
+  - Displeasure
+  - Irritation
+  - Resentment
+  - Soreness
+  - Frustration
+  - Insanity
+  - Chaos
+  - Fear

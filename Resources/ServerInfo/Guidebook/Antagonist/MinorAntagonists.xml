@@ -9,12 +9,12 @@
     <GuideEntityEmbed Entity="MobRevenant"/>
   </Box>
 
-  Revenants are ethereal beings made of ectoplasm that haunt the crew and steal [color=cyan]life essence[/color] from them.
+  Revenants are ethereal beings made of ectoplasm that haunt the crew and steal [color=#8f63e6]life essence[/color] from them.
   - Your essence is your very own [bold]life force[/bold]. Taking damage reduces your essence.
   - Essence is also spent to use [bold]abilities[/bold].
-  - To gain essence you first [bold]inspect[/bold] various souls for their worth. More worthy souls grant more essence. Then you must [bold]siphon[/bold] it either when the victim is crit, dead or asleep.
+  - To gain essence you first [bold]inspect[/bold] various souls for their worth. More worthy souls grant more essence. Then you must [bold]siphon[/bold] it either when the victim is crit, dead or asleep. All of this is done with [color=yellow][bold][keybind="Use"][/bold][/color].
   - [bold]Stolen essence[/bold] is used to purchase new abilities to incapacitate the crew easier.
-  - You are [bold]vulnerable[/bold] to attacks when you siphon a soul or use an ability. You can tell when you are vulnerable when you have a [italic]"Corporeal"[/italic] status effect.
+  - You are [bold]vulnerable[/bold] to attacks when you siphon a soul or use an ability. You can tell when you are vulnerable when you have a [color=#8f63e6][italic]Corporeal[/italic][/color] status effect.
 
   # Rat King
 
@@ -26,12 +26,12 @@
     <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
   </Box>
 
-  Rat Kings are abnormally large rodents capable of [color=cyan]raising huge rat armies[/color] by eating equally huge amounts of food.
-  - You have several abilities that come at the cost of your [bold]hunger[/bold].
-  - One ability is summoning [color=cyan]Rat Servants[/color] who you can [bold]command[/bold] to stay in place, follow you, attack a target of your choice or attack indiscriminately.
-  - You can conjure a cloud of [color=#77b58e]ammonia[/color], which is mildly poisonous to humans but heals rats.
-  - You can also [italic]"Rummage"[/italic] through any disposal unit by using the context menu. Use this to find [bold]scraps of food[/bold] to grow your army.
-  - Besides your abilities, you are [bold]stronger[/bold] than most other animals. You and your servants are capable of speech and you're both small enough to fit under airlocks and tables.
+  Rat kings are abnormally large rodents capable of [color=yellow]raising huge rat armies[/color] by eating equally huge amounts of food.
+  - You have several abilities that come at the cost of your [bold]hunger.[/bold]
+  - One such ability is [color=yellow][italic]Raise Army[/italic][/color], which summons a [bold]Rat Servant[/bold]. You can [bold]command[/bold] your servants to stay in place, follow you, attack a target of your choice or attack indiscriminately.
+  - You can conjure a cloud of [color=#77b58e]ammonia[/color] using [color=purple][italic]Rat King's Domain[/italic][/color]. This purple gas is mildly poisonous to humans but heals rats.
+  - [color=#9daa98][italic]Rummage[/italic][/color] through a disposal unit by using the context menu. Use this to find [bold]scraps of food[/bold] to grow your army.
+  - Besides your abilities, [bold]you are stronger than most other animals.[/bold] You and your servants are capable of speech and you're both small enough to fit under airlocks and tables.
   - [bold]Your underlings are still very fragile![/bold] Beware of spacings, explosions and the buisness end of a melee weapon.
 
   # Space Dragon
@@ -44,11 +44,11 @@
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
   </Box>
 
-  Space Dragons is are giant extradimensional fish that [color=cyan]create rifts and eat crew.[/color]
-  - Dragons have powerful jaws to [bold]devour[/bold] infrastructure such as doors, windows, and walls.
-  - Your [color=orange]dragon's breath[/color] is a flaming projectile which travels a straight flight path, exploding multiple times and igniting things along the way. Be careful, your carps are not immune to this!
-  - You have the ability to summon [bold]carp rifts[/bold] that periodically spawn [bold]space carp[/bold]. There can be 3 rifts active at any given time.
-  - Rifts charge up energy over a period of 5 minutes and are [bold]vulnerable[/bold] during this time.  After 5 minutes, it becomes invulnerable and will continue summoning carp as long as the dragon lives.
+  Space dragons are giant extradimensional fish that can [color=red]eat crew[/color] and create [color=#4b7fcc]carp rifts.[/color]
+  - Dragons have powerful jaws that allow them to [color=red][italic]Devour[/italic][/color] infrastructure such as doors, windows, and walls.
+  - They can also heal themselves by using [color=red][italic]Devour[/italic][/color] on crew members that have gone unconscious or have died.
+  - Your [color=orange][italic]Dragon's Breath[/italic][/color] is a [bold]flaming projectile[/bold] which travels a straight flight path, exploding multiple times and igniting things along the way. Try not to hit your carps with this!
+  - You have the ability to [color=#4b7fcc][italic]Summon a Carp Rift[/italic][/color]. Rifts periodically spawn [bold]space carp[/bold] and charge up energy over a period of 5 minutes, [bold]which is when it's vulnerable.[/bold] After 5 minutes, it becomes invulnerable and will continue summoning carp as long as the dragon lives.
   - You'll suffer a [bold]temporary debilitating feedback effect[/bold] if one of your rifts are destroyed before it's done charging.
   - If a period of five minutes passes since your spawn or since the last time a rift was charging, [bold]you'll disappear.[/bold]
   - Dragons who have the maximum of 3 fully charged rifts will [bold]never disappear[/bold], but they are still mortal.
@@ -61,6 +61,6 @@
   </Box>
 
   Slimes and spiders have no remarkable features, but will [color=cyan]infest the station[/color] from time to time regardless. Both will give chase and attack anything they see.
-  - Slimes may deal extra [bold]cellular or posion damage[/bold], based upon their color. Water hurts them just as it would hurt a slime person.
-  - Spiders can lay [bold]webs[/bold], which non-spiders have a hard time moving through. They can easily be destroyed with a blade.
+  - Slimes may [bold]deal extra cellular or poison damage[/bold], based upon their color. Water hurts them just as it would hurt a slime person.
+  - Spiders have a venomous bite and can [bold]create webs[/bold] that are hard to move though. Webs are easily destroyed with a blade. They can also pry open airlocks.
 </Document>

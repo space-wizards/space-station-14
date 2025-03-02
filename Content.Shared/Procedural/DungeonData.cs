@@ -14,7 +14,7 @@ namespace Content.Shared.Procedural;
 /// This lets us share data between different dungeon configs without having to repeat entire configs.
 /// </remarks>
 [DataRecord]
-public sealed class DungeonData
+public sealed partial class DungeonData
 {
     // I hate this but it also significantly reduces yaml bloat if we add like 10 variations on the same set of layers
     // e.g. science rooms, engi rooms, cargo rooms all under PlanetBase for example.

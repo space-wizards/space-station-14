@@ -38,17 +38,12 @@ public sealed class SeedExtractorSystem : EntitySystem
             args.User, PopupType.Medium);
 
         QueueDel(args.Used);
+        args.Handled = true;
 
         var amount = _random.Next(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1);
         var coords = Transform(uid).Coordinates;
 
         var packetSeed = seed;
-        if (packetSeed.Sentient)
-        {
-            if (!packetSeed.Unique) // clone if necessary before modifying the seed
-                packetSeed = packetSeed.Clone();
-            packetSeed.Sentient = false; // remove Sentient to avoid ghost role spam
-        }
         if (amount > 1)
             packetSeed.Unique = false;
 

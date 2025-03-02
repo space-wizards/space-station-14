@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
-using Content.Shared.EntityEffects;
 
 namespace Content.Server.EntityEffects.Effects;
 

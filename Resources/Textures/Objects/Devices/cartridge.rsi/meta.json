@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d and tgstation at tgstation at https://github.com/tgstation/tgstation/commit/0c15d9dbcf0f2beb230eba5d9d889ef2d1945bb8, cart-log made by Skarletto (github)",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d and tgstation at tgstation at https://github.com/tgstation/tgstation/commit/0c15d9dbcf0f2beb230eba5d9d889ef2d1945bb8, cart-log made by Skarletto (github), cart-sec made by dieselmohawk (discord), cart-nav, cart-med made by ArchRBX (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -56,7 +56,13 @@
       "name": "cart-m"
     },
     {
+      "name": "cart-med"
+    },
+    {
       "name": "cart-mi"
+    },
+    {
+      "name": "cart-nav"
     },
     {
       "name": "cart-ord"
@@ -69,6 +75,9 @@
     },
     {
       "name": "cart-s"
+    },
+    {
+      "name": "cart-sec"
     },
     {
       "name": "cart-tear"

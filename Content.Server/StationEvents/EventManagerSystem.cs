@@ -148,20 +148,20 @@ public sealed class EventManagerSystem : EntitySystem
             return null;
         }
 
-        var sumOfWeights = 0;
+        var sumOfWeights = 0.0f;
 
         foreach (var stationEvent in availableEvents.Values)
         {
-            sumOfWeights += (int) stationEvent.Weight;
+            sumOfWeights += stationEvent.Weight;
         }
 
-        sumOfWeights = _random.Next(sumOfWeights);
+        sumOfWeights = _random.NextFloat(sumOfWeights);
 
         foreach (var (proto, stationEvent) in availableEvents)
         {
-            sumOfWeights -= (int) stationEvent.Weight;
+            sumOfWeights -= stationEvent.Weight;
 
-            if (sumOfWeights <= 0)
+            if (sumOfWeights <= 0.0f)
             {
                 return proto.ID;
             }
@@ -210,7 +210,7 @@ public sealed class EventManagerSystem : EntitySystem
             if (prototype.Abstract)
                 continue;
 
-            if (!prototype.TryGetComponent<StationEventComponent>(out var stationEvent))
+            if (!prototype.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                 continue;
 
             allEvents.Add(prototype, stationEvent);

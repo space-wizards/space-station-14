@@ -5,8 +5,8 @@
 
 - files: ["ninja_greeting.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from TG station."
-  source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
+  copyright: "Created by Chillyconmor"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
 
 - files: ["thief_greeting.ogg"]
   license: "CC-BY-NC-4.0"
@@ -27,6 +27,11 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/2f63c779cb43543cfde76fa7ddaeacfde185fded/sound/effects/ratvar_reveal.ogg"
+
+- files: ["cryo_warning.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/00cf2da5f785c110b9930077b3202f1a4638e1fd/sound/machines/cryo_warning.ogg"
 
 - files: ["epsilon.ogg"]
   license: "CC-BY-SA-3.0"

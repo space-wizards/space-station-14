@@ -60,7 +60,7 @@
 - type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee.
-  parent: [ GrenadeBase, BaseRestrictedContraband ]
+  parent: [ GrenadeBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
   components:
   - type: Sprite
@@ -81,6 +81,9 @@
     guides:
     - Security
     - Antagonists
+  - type: Tag
+    tags:
+    - GrenadeFlashBang
 
 - type: entity
   id: GrenadeFlashEffect
@@ -106,6 +109,22 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: OnUseTimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
@@ -146,13 +165,13 @@
 
 
 - type: entity
-  name: supermatter grenade
-  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
-  parent: [GrenadeBase, BaseSyndicateContraband]
-  id: SupermatterGrenade
+  parent: [ GrenadeBase, BaseSyndicateContraband ]
+  id: SingularityGrenade
+  name: singularity grenade
+  description: Grenade that simulates the power of a singularity, pulling things in a heap.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
+    sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
   - type: OnUseTimerTrigger
     delay: 3
     beepInterval: 0.46
@@ -165,11 +184,6 @@
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 200
-    intensitySlope: 30
-    maxIntensity: 120
   - type: SoundOnTrigger
     removeOnTrigger: true
     sound:
@@ -187,10 +201,10 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
-        maxRange: 8
-        baseRadialAcceleration: 145
-        baseTangentialAcceleration: 5
-        gravPulsePeriod: 0.01
+        maxRange: 10
+        baseRadialAcceleration: 5
+        baseTangentialAcceleration: .5
+        gravPulsePeriod: 0.03
       - type: SingularityDistortion
         intensity: 150
         falloffPower: 1.5
@@ -206,12 +220,12 @@
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
-      - type: ExplodeOnTrigger
+      - type: DeleteOnTrigger
 
 - type: entity
   name: whitehole grenade
   description: Grenade that repulses everything around for some time.
-  parent: SupermatterGrenade
+  parent: SingularityGrenade
   id: WhiteholeGrenade
   components:
   - type: Sprite
@@ -373,7 +387,7 @@
       path: /Audio/Effects/hallelujah.ogg
 
 - type: entity
-  parent: [ GrenadeBase, BaseMinorContraband ]
+  parent: [ GrenadeBase, BaseSecurityContraband ]
   id: SmokeGrenade
   name: smoke grenade
   description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
@@ -391,7 +405,7 @@
       path: /Audio/Items/smoke_grenade_prime.ogg
 
 - type: entity
-  parent: SmokeGrenade
+  parent: [ BaseCivilianContraband, SmokeGrenade ]
   id: CleanerGrenade
   name: cleanade
   description: Special grenade for janitors, releasing large cloud of space cleaner foam.
@@ -424,7 +438,7 @@
         Quantity: 50
 
 - type: entity
-  parent: SmokeGrenade
+  parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
   description: An emergency tool used for patching up holes. Almost as good as real walls.

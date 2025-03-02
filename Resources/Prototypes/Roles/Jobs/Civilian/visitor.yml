@@ -9,3 +9,5 @@
   overrideConsoleVisibility: true
   access:
   - Maintenance
+  extendedAccess:
+  - External

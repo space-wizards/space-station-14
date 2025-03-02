@@ -75,6 +75,8 @@
       tags:
       - HighRiskItem #ian meat
     efficiency: 0.9
+    onlyReclaimDrainable: false
+    solutionContainerId: output
   - type: Sprite
     sprite: Structures/Machines/recycling.rsi
     layers:
@@ -84,7 +86,7 @@
   - type: GenericVisualizer
     visuals:
       enum.ConveyorVisuals.State:
-        enum.RecyclerVisualLayers.Main:
+        enum.ConveyorState.Off:
           Forward: { state: grinder-b1 }
           Reverse: { state: grinder-b1 }
           Off: { state: grinder-b0 }

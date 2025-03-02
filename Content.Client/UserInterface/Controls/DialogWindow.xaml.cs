@@ -107,6 +107,14 @@ public sealed partial class DialogWindow : FancyWindow
         OpenCentered();
     }
 
+    protected override void Opened()
+    {
+        base.Opened();
+        
+        // Grab keyboard focus for the first dialog entry
+        _promptLines[0].Item2.GrabKeyboardFocus();
+    }
+
     private void Confirm()
     {
         var results = new Dictionary<string, string>();
