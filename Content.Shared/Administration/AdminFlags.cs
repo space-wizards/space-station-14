@@ -125,6 +125,11 @@
         NameColor = 1 << 21,
 
         /// <summary>
+        ///     Lets you run masskick command.
+        /// </summary>
+        MassKick = 1 << 22,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,
