@@ -347,6 +347,7 @@
   - HeadofSecurityOuterClothing
   - SecurityShoes
   - SurvivalSecurity
+  - BigBoiSecGuyBadgeBackpack #use backpack varient if the role has a neck slot in use.
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -361,6 +362,7 @@
   - WardenOuterClothing
   - SecurityShoes
   - SurvivalSecurity
+  - BigBoiSecGuyBadge
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -376,6 +378,7 @@
   - SecurityPDA
   - SecurityBelt
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -390,6 +393,7 @@
   - DetectiveOuterClothing
   - SecurityShoes
   - SurvivalSecurity
+  - SecBadgeBackpack #use backpack varient if the role has a neck slot in use.
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -400,6 +404,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - GroupSpeciesBreathToolSecurity
 
