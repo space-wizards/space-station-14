@@ -22,8 +22,8 @@ public sealed partial class DeliveryComponent : Component
     [DataField, AutoNetworkedField]
     public string? RecipientJobTitle;
 
-    [DataField]
-    public EntityUid RecipientStation;
+    [DataField, AutoNetworkedField]
+    public EntityUid? RecipientStation;
 
     [DataField(required: true)]
     public SoundSpecifier? UnlockSound;
