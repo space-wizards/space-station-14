@@ -23,12 +23,16 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
+    //TODO make these be read from cvars (with/after #35538 moves iConfigurationManager to the constructor)
+    private float _ghostHideDistance = 300f;
+    private float _ghostFadeDistance = 600f;
+    private int _maxOverlayStack = 3;
+    private float _overlayMergeDistance = 75;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
         ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
     private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
-    private readonly Color _antagColorClassic = Color.OrangeRed;
 
     public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
@@ -93,26 +97,21 @@ internal sealed class AdminNameOverlay : Overlay
             //  TODO would be "cheaper" if playerinfo already contained a ghost bool, and ghosts could then be ordered to the bottom of any stack
             if (_entityManager.HasComponent<GhostComponent>(entity))
             {
-                var minDistance = 300f;
-                var maxDistance = 600f;
-
                 var mobPosition = _eyeManager.WorldToScreen(aabb.Center);
                 var mousePosition = _userInterfaceManager.MousePositionScaled.Position * uiScale;
                 var dist = Vector2.Distance(mobPosition, mousePosition);
 
-                if (dist < minDistance)
+                if (dist < _ghostHideDistance)
                     continue;
 
-                alpha = Math.Clamp((dist - minDistance) / (maxDistance - minDistance), 0f, 1f);
+                alpha = Math.Clamp((dist - _ghostHideDistance) / (_ghostFadeDistance - _ghostHideDistance), 0f, 1f);
                 colorDisconnected.A = alpha;
             }
 
-            // If the new overlay textblock is within overlap distance of any previous ones
+            // If the new overlay textblock is within merge distance of any previous ones
             // merge them into a stack so they don't hide each other
-            // additional entries after maxStack is reached will be drawn over the last entry
-            var maxStack = 3;
-            var overlapTolerance = 75; //TODO:ERRANT is this scaled?
-            var stack = drawnOverlays.FindAll(x => Vector2.Distance(x.Item1, screenCoordinates) < overlapTolerance);
+            // additional entries after maximum stack size is reached will be drawn over the last entry
+            var stack = drawnOverlays.FindAll(x => Vector2.Distance(x.Item1, screenCoordinates) <= _overlayMergeDistance);
             if (stack.Count > 0)
             {
                 screenCoordinates = stack.First().Item1;
@@ -120,11 +119,10 @@ internal sealed class AdminNameOverlay : Overlay
                 var i = 1;
                 foreach (var s in stack)
                 {
-                    if (i <= maxStack - 1)
+                    if (i <= _maxOverlayStack - 1)
                         currentOffset = lineoffset + s.Item2 ;
                     i++;
                 }
-
             }
 
             var color = Color.Yellow;
