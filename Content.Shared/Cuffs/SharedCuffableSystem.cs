@@ -83,7 +83,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckInteract);
-            SubscribeLocalEvent<CuffableComponent, EnterCryostorageEvent>(HandleEnterCryostorageEvent);
+            SubscribeLocalEvent<CuffableComponent, HeldRelayedEvent<EnterCryostorageEvent>>(HandleEnterCryostorageEvent);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
@@ -91,9 +91,12 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
         }
 
-        public void HandleEnterCryostorageEvent(Entity<CuffableComponent> ent, ref EnterCryostorageEvent args)
+        private void HandleEnterCryostorageEvent(Entity<CuffableComponent> ent, ref HeldRelayedEvent<EnterCryostorageEvent> args)
         {
-            Logger.Info("CuffableSystem received EnterCryostorageEvent --------------------------------------------- ");
+            if (ent.Comp.CuffedHandCount > 0)
+            {
+                TryUncuff(ent, ent, cuffable: ent.Comp);
+            }
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
