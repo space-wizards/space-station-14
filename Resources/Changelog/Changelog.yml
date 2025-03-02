@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can no longer print flares or shotgun flares.
-    type: Remove
-  id: 7528
-  time: '2024-10-18T03:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32563
 - author: pheenty
   changes:
   - message: QM is now considered an important job.
@@ -3896,3 +3889,10 @@
   id: 8027
   time: '2025-03-01T20:24:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35583
+- author: metalgearsloth
+  changes:
+  - message: Removed radioactivity from uranium.
+    type: Tweak
+  id: 8028
+  time: '2025-03-02T02:29:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35330
