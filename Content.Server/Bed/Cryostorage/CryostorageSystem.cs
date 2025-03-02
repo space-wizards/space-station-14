@@ -216,8 +216,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             }
         }
 
-        var newEv = new EnterCryostorageEvent();
-        RaiseLocalEvent(ent.Owner, ref newEv);
+        foreach (var hand in _hands.EnumerateHands(ent))
+        {
+            if (TryComp(hand.HeldEntity, out VirtualItemComponent? virt))
+            {
+                _virtualSystem.DeleteVirtualItem((hand.HeldEntity.Value, virt), ent.Owner);
+            }
+        }
 
         comp.AllowReEnteringBody = false;
         _transform.SetParent(ent, PausedMap.Value);
