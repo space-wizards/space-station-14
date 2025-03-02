@@ -2,8 +2,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
-using Content.Server.EntityEffects.EffectConditions;
-using Content.Server.EntityEffects.Effects;
+using Content.Shared.EntityEffects.EffectConditions;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -269,7 +269,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             foreach (var cond in effect.Conditions)
             {
-                if (cond is OrganType organ && !organ.Condition(lung, EntityManager))
+                if (cond is OrganType organ && !organ.Condition(new (lung, EntityManager)))
                     return false;
             }
 
