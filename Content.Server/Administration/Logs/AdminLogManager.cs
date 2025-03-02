@@ -230,18 +230,42 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         _sawmill.Debug($"Saving {copy.Count} admin logs.");
 
-        if (_metricsEnabled)
+        try
         {
-            LogsSent.Inc(copy.Count);
+            if (_metricsEnabled)
+            {
+                LogsSent.Inc(copy.Count);
 
-            using (DatabaseUpdateTime.NewTimer())
+                using (DatabaseUpdateTime.NewTimer())
+                {
+                    await task;
+                }
+            }
+            else
             {
                 await task;
-                return;
             }
         }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to save logs: {ex.Message}");
+            _sawmill.Warning("Re-enqueueing logs and retrying at the next update.");
 
-        await task;
+            foreach (var log in copy)
+            {
+                if (log.RoundId == _currentRoundId)
+                {
+                    _logQueue.Enqueue(log);
+                }
+                else
+                {
+                    _preRoundLogQueue.Enqueue(log);
+                }
+            }
+
+            Queue.Set(_logQueue.Count);
+            PreRoundQueue.Set(_preRoundLogQueue.Count);
+        }
     }
 
     public void RoundStarting(int id)
