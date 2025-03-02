@@ -7,6 +7,7 @@
     - category: Health
     - category: Stamina
     - alertType: SuitPower
+    - alertType: Breathing
     - category: Internals
     - alertType: Fire
     - alertType: Handcuffed
@@ -33,6 +34,19 @@
   - type: Sprite
     layers:
     - map: [ "enum.AlertVisualLayers.Base" ]
+
+- type: alert
+  id: Breathing
+  icons:
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: on
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: off
+  clickEvent: !type:ToggleBreathingAlertEvent
+  name: alerts-breathing-name
+  description: alerts-breathing-desc
+  minSeverity: 0
+  maxSeverity: 1
 
 - type: alert
   id: LowOxygen
