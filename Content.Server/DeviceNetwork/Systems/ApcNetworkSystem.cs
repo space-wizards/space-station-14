@@ -4,6 +4,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
+using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Server.DeviceNetwork.Systems
 {

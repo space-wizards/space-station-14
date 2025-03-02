@@ -22,12 +22,15 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Robust.Server.GameObjects;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {

@@ -1,7 +1,9 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Components.Devices;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.DeviceNetwork.Systems.Devices
 {

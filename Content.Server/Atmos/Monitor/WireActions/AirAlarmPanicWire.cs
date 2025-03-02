@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Wires;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Wires;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Monitor;
 

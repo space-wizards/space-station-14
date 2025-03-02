@@ -1,4 +1,4 @@
-﻿using Content.Server.Disposal.Unit.Components;
+﻿using DisposalHolderComponent = Content.Server.Disposal.Unit.DisposalHolderComponent;
 
 namespace Content.Server.Disposal.Tube;
 
