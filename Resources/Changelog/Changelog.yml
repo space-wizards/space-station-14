@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Scalpels and shivs now work as knives!
-    type: Add
-  id: 7535
-  time: '2024-10-19T02:40:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32858
 - author: PJB3005
   changes:
   - message: Fix more performance issues on long-running game servers, hopefully.
@@ -3902,3 +3895,10 @@
   id: 8034
   time: '2025-03-03T11:11:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34535
+- author: Velken
+  changes:
+  - message: Wizards now have their own unique magical pen.
+    type: Add
+  id: 8035
+  time: '2025-03-03T15:54:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35623
