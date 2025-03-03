@@ -1,0 +1,32 @@
+﻿- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskClayshaper
+  name: clayshaper's visage
+  description: Cloth mother? Wire mother?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/clayshapermask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/clayshapermask.rsi
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskFire
+  name: flamecaller's mask
+  description: It smells like burning.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/flamemask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/flamemask.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskSilent
+  name: mask of the silent
+  description: ...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/silentmask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/silentmask.rsi

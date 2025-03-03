@@ -37,6 +37,8 @@
       thresholds:
         0: Alive
         100: Dead
+    - type: Absorbable
+      biomassRestored: 0.4
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
       baseSprintSpeed: 5
@@ -95,6 +97,8 @@
     spawned:
     - id: FoodTomato
       amount: 1
+  - type: Absorbable
+    biomassRestored: 0.2
   - type: Destructible
     thresholds:
     - trigger:

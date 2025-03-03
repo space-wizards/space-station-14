@@ -1,0 +1,72 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      Title="{Loc 'monument-interface-title'}"
+                      MinSize="650 600"
+                      SetSize="750 620">
+    <BoxContainer Orientation="Vertical" Margin="5 5 5 0">
+        <!-- Header -->
+        <BoxContainer Margin="7 10 7 0">
+            <!-- Progress bar -->
+            <ProgressBar Name="CultProgressBar" SetHeight="30" MaxValue="100" HorizontalExpand="True">
+                <Label Name="ProgressBarPercentage" HorizontalAlignment="Center"></Label>
+            </ProgressBar>
+        </BoxContainer>
+        <!-- Main body -->
+        <BoxContainer Orientation="Horizontal"  VerticalExpand="True" Margin="10 20 10 10">
+            <!-- Left section -->
+            <BoxContainer Name="LeftContainer" MinWidth="250" Orientation="Vertical" Margin="0 0 20 0">
+                <!-- First section (Entropy) -->
+                <BoxContainer Name="EntropyArea" HorizontalExpand="True" MinHeight="100" Orientation="Vertical" Margin="0 0 0 0">
+                    <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-title'}" />
+                    <PanelContainer HorizontalExpand="True" StyleClasses="LowDivider" Margin="0 0 0 10" />
+                    <TextureRect Name="MonumentIcon"
+                                 TexturePath="/Textures/_Impstation/CosmicCult/Interface/mote_3.png"
+                                 Stretch="KeepAspectCentered"
+                                 VerticalAlignment="Center"
+                                 MinSize="32 32"
+                                 TextureScale="2 2"
+                                 Margin="0 0 0 10" />
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-available-label'}" Margin="0 0 5 0"  StyleClasses="LabelSmall" />
+                        <Label HorizontalAlignment="Center" Name="AvailableEntropy" FontColorOverride="#4CA7AD" StyleClasses="LabelSmall" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Center">
+                        <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-next-stage-title'}" Margin="0 0 5 0"  StyleClasses="LabelSmall" />
+                        <Label HorizontalAlignment="Center" Name="EntropyUntilNextStage" FontColorOverride="#4CA7AD" StyleClasses="LabelSmall" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-crew-convert-title'}" Margin="0 0 5 0"  StyleClasses="LabelSmall" />
+                        <Label HorizontalAlignment="Center" Name="CrewToConvertUntilNextStage" FontColorOverride="#4CA7AD" StyleClasses="LabelSmall" />
+                    </BoxContainer>
+                </BoxContainer>
+                <!-- Second section (Glyphs) -->
+                <BoxContainer Name="GlyphArea" HorizontalExpand="True" MinHeight="75" Orientation="Vertical" Margin="0 20 0 0">
+                    <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-glyphs-title'}" />
+                    <PanelContainer StyleClasses="LowDivider" />
+                    <!-- Filled out programatically -->
+                    <GridContainer HorizontalAlignment="Center" Name="GlyphContainer" Columns="3" Margin="0 5" />
+                    <Button Name="SelectGlyphButton" Text="{Loc 'monument-interface-glyphs-button-scribe'}" SetHeight="50" Margin="0 10 0 0" />
+                    <Button Name="RemoveGlyphButton" Text="{Loc 'monument-interface-glyphs-button-unscribe'}" SetHeight="50" Margin="0 10 0 0" />
+                </BoxContainer>
+            </BoxContainer>
+            <!-- Right section -->
+            <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical">
+                <BoxContainer VerticalExpand="True" HorizontalExpand="True" MinHeight="450" Orientation="Vertical" Margin="0 0 0 0">
+                    <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-influences-title'}" />
+                    <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 0" />
+                    <!-- Influences -->
+                    <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="0">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                        </PanelContainer.PanelOverride>
+                        <!-- Filled out programatically -->
+                        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer Name="InfluencesContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" />
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

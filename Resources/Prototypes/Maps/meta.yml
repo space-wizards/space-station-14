@@ -16,53 +16,53 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
-          availableJobs:
-            #service
+          availableJobs: # Total of 70 jobs roundstart, max of 109 inc. latejoins and trainees. what is going ON in this map
+            # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             AdministrativeAssistant: [ 1, 1 ] # imp
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            # service - 17-19
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
-            Chef: [ 2, 2 ]
-            Janitor: [ 2, 3 ]
             Chaplain: [ 1, 1 ]
+            Chef: [ 2, 2 ]
+            Clown: [ 1, 1 ]
+            Janitor: [ 2, 3 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
             Reporter: [ 2, 2 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            # engineering - 9-19
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 6, 8 ]
             TechnicalAssistant: [ 6, 8 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
+            # medical - 7-17
             Chemist: [ 2, 3 ]
             MedicalDoctor: [ 4, 6 ]
             MedicalIntern: [ 4, 6 ]
             Paramedic: [ 1, 2 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
-            Scientist: [ 5, 7 ]
-            ResearchAssistant: [ 3, 6 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 6 ]
-            Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 2, 2 ]
-            Brigmedic: [ 1, 1 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 3, 5 ]
-            SupplyAssistant: [ 3, 3 ] # imp
-            Courier: [ 2, 2 ] # imp
-            #civilian
-            Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            #silicon
-            StationAi: [ 1, 1 ]
+            # science - 10-18
             Borg: [ 4, 4 ]
+            ResearchAssistant: [ 3, 6 ]
+            Scientist: [ 5, 7 ]
+            StationAi: [ 1, 1 ]
+            # security - 11-15
+            Brigmedic: [ 1, 1 ] # imp
+            Detective: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 4, 4 ]
+            SecurityOfficer: [ 6, 6 ]
+            Warden: [ 1, 1 ]
+            # supply - 8-13
+            CargoTechnician: [ 3, 5 ]
+            Courier: [ 2, 2 ] # imp
+            SalvageSpecialist: [ 3, 3 ]
+            SupplyAssistant: [ 3, 3 ] # imp
+            # civilian
+            Passenger: [ -1, -1 ]

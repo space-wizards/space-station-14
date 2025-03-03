@@ -1,0 +1,92 @@
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomBusiness
+  name: business casual outfit
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_torso_business
+      map: [ "torso" ]
+    - state: base_leg_business
+      map: [ "leg" ]
+    - state: decor_torso_tie
+      map: [ "decor" ]
+    - state: decor_torso_belt
+      map: [ "overlay" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_torso_business
+        map: [ "torso" ]
+      - state: base_leg_business
+        map: [ "leg" ]
+      - state: decor_torso_tie
+        map: [ "decor" ]
+      - state: decor_torso_belt
+        map: [ "overlay" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_business: ButtonUp
+        leg:
+          base_leg_business: BusinessSlacks
+        decor:
+          decor_torso_tie: BusinessTie
+        overlay:
+          decor_torso_belt: BusinessBelt
+
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomBusinessSkirt
+  name: business casual skirt outfit
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: decor_leg_stocking
+      map: [ "stocking" ]
+    - state: base_torso_business
+      map: [ "torso" ]
+    - state: base_leg_businessskirt
+      map: [ "leg" ]
+    - state: decor_torso_tie
+      map: [ "decor" ]
+    - state: decor_torso_belt2
+      map: [ "overlay" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: decor_leg_stocking
+        map: [ "stocking" ]
+      - state: base_torso_business
+        map: [ "torso" ]
+      - state: base_leg_businessskirt
+        map: [ "leg" ]
+      - state: decor_torso_tie
+        map: [ "decor" ]
+      - state: decor_torso_belt2
+        map: [ "overlay" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_business: ButtonUp
+        leg:
+          base_leg_businessskirt: BusinessSlacks
+        decor:
+          decor_torso_tie: BusinessTie
+        overlay:
+          decor_torso_belt2: BusinessBelt
+
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingRandomBusinessSpawner
+  name: random business casual outfit
+  components:
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+    - ClothingUniformRandomBusinessSkirt
+    - ClothingUniformRandomBusiness

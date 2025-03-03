@@ -86,17 +86,30 @@ namespace Content.Shared.GameTicking
     public sealed class TickerLobbyStatusEvent : EntityEventArgs
     {
         public bool IsRoundStarted { get; }
-        public string? LobbyBackground { get; }
+        public string? LobbyBackgroundImage { get; } // imp edit
+        public string? LobbyBackgroundName { get; } // imp edit
+        public string? LobbyBackgroundArtist { get; } // imp edit
         public bool YouAreReady { get; }
         // UTC.
         public TimeSpan StartTime { get; }
         public TimeSpan RoundStartTimeSpan { get; }
         public bool Paused { get; }
 
-        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbyBackground, bool youAreReady, TimeSpan startTime, TimeSpan preloadTime, TimeSpan roundStartTimeSpan, bool paused)
+        public TickerLobbyStatusEvent(
+            bool isRoundStarted,
+            string? lobbyBackgroundImage, // imp edit
+            string? lobbyBackgroundName, // imp edit
+            string? lobbyBackgroundArtist, // imp edit
+            bool youAreReady,
+            TimeSpan startTime,
+            TimeSpan preloadTime,
+            TimeSpan roundStartTimeSpan,
+            bool paused)
         {
             IsRoundStarted = isRoundStarted;
-            LobbyBackground = lobbyBackground;
+            LobbyBackgroundImage = lobbyBackgroundImage; // imp edit
+            LobbyBackgroundName = lobbyBackgroundName; // imp edit
+            LobbyBackgroundArtist = lobbyBackgroundArtist; // imp edit
             YouAreReady = youAreReady;
             StartTime = startTime;
             RoundStartTimeSpan = roundStartTimeSpan;

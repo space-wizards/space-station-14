@@ -1,0 +1,6 @@
+- type: ssdIcon
+  id: CosmicSSDIcon
+  icon:
+    sprite: /Textures/_Impstation/CosmicCult/Effects/astralsleep.rsi
+    state: icon
+  locationPreference: Right

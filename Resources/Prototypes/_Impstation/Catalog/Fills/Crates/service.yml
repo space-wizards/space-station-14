@@ -13,10 +13,28 @@
   id: CrateServiceJanitorialHardsuit
   parent: CrateTrashCartJani
   name: janitorial hardsuit crate
-  description: A necessity for any janitor trying to keep the oustide of the station as spotless as the inside.
+  description: A necessity for any janitor trying to keep the outside of the station as spotless as the inside.
   components:
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitJanitor
         amount: 1
-        
+
+- type: entity
+  id: CrateServiceMaintBarKit
+  parent: CratePlastic
+  name: maintenance bar kit
+  description: A crate to carry on the tradition of bar engineering. Drinks not included.
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoozeDispenserMachineCircuitboard
+        - id: SodaDispenserMachineCircuitboard
+        - id: MaterialWoodPlank
+        - id: MaterialCloth10
+        - id: DrinkGlass
+          amount: 5
+        - id: Spoon
+        - id: DrinkShaker
+        - id: CustomDrinkJug
+          amount: 2

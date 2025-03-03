@@ -153,3 +153,33 @@
   - type: ConditionalSpawner
     prototypes:
       - MobPipi
+
+- type: entity
+  name: Dolby Spawner
+  id: SpawnMobDogPuppyDolby
+  suffix: Chemistry pet, steal target
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobDolby
+
+- type: entity
+  name: Dog Spawner
+  id: SpawnMobChemDog
+  #suffix imp edit
+  suffix: Chemistry pet, steal target
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: RandomSpawner
+    prototypes:
+      - MobWalter
+      - MobDolby

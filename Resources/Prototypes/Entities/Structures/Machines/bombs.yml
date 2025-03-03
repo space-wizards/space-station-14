@@ -48,6 +48,7 @@
       openOnActivation: true
       guides:
       - Defusal
+    - type: Engraveable # imp - horseplinko is cooking
 
 - type: entity
   parent: BaseHardBomb

@@ -284,6 +284,7 @@
 - type: entity
   name: Walter Spawner
   id: SpawnMobWalter
+  suffix: Chemistry pet, steal target #imp
   parent: MarkerBase
   components:
   - type: Sprite

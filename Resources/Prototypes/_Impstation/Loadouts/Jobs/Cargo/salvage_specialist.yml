@@ -8,3 +8,46 @@
   id: SalvageSpecialistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSalvageSpecialist
+
+# Mantle
+
+- type: loadout
+  id: DrillerCape
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    neck: ClothingNeckCloakDriller
+
+# Eyes
+- type: loadout
+  id: GlassesGarGreen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    eyes: ClothingEyesGlassesGar
+
+- type: loadout
+  id: GlassesGarOrange
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    eyes: ClothingEyesGlassesGarOrange
+
+- type: loadout
+  id: GlassesGarRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    eyes: ClothingEyesGlassesGarGiga
+
+- type: loadout
+  id: GlassesGarBlack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    eyes: ClothingEyesGlassesGarMecha

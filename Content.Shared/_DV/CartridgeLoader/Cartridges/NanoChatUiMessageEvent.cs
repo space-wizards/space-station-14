@@ -50,10 +50,13 @@ public enum NanoChatUiMessageType : byte
 {
     NewChat,
     SelectChat,
+    EditChat,
     CloseChat,
     SendMessage,
     DeleteChat,
     ToggleMute,
+    ToggleMuteChat,
+    ToggleListNumber,
 }
 
 // putting this here because i can
@@ -99,6 +102,8 @@ public struct NanoChatRecipient
 [Serializable, NetSerializable, DataRecord]
 public struct NanoChatMessage
 {
+    public const int MaxContentLength = 256;
+
     /// <summary>
     ///     When the message was sent.
     /// </summary>

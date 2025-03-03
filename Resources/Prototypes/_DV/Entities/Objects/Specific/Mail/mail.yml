@@ -220,15 +220,15 @@
     - id: DrinkGlass
       amount: 2
 
-- type: entity
-  parent: BaseMailLarge
-  id: MailNFBible
-  suffix: bible, extended
-  components:
-  - type: Mail
-    contents:
-    - id: Bible
-    - id: ClothingHeadHatWitch1 # DeltaV - Compensates for items that don't exist here
+# - type: entity // Dummy bible mail replacement?
+#   parent: BaseMailLarge
+#   id: MailNFBible
+#   suffix: bible, extended
+#   components:
+#   - type: Mail
+#     contents:
+#     - id: Bible
+#     - id: ClothingHeadHatWitch1 # DeltaV - Compensates for items that don't exist here
 
 - type: entity
   parent: BaseMail
@@ -576,9 +576,12 @@
     contents:
     - id: PersonalAI
       orGroup: PAI
-      prob: 0.99
+      prob: 0.98
       # Ultra rare
     - id: SyndicatePersonalAI
+      orGroup: PAI
+      prob: 0.01
+    - id: GoldPersonalAI
       orGroup: PAI
       prob: 0.01
 
@@ -639,6 +642,9 @@
     - id: PlushieBug
       prob: 0.1
       orGroup: Plushie
+    - id: PlushieEvilBug
+      prob: 0.01
+      orGroup: Plushie
     - id: PlushieGray
       orGroup: Plushie
     - id: PlushieUrsaMinor
@@ -647,15 +653,34 @@
       orGroup: Plushie
     - id: PlushieSnail
       orGroup: Plushie
+    - id: PlushieThaven
+      orGroup: Plushie
+    - id: PlushieThavenWeird
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieDwarf
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieApid
+      prob: 0.5
+      orGroup: Plushie
+    - id: PlushieGoblin
+      prob: 0.5
+      orGroup: Plushie
+    - id: PlushieGollylad
+      prob: 0.1
+      orGroup: Plushie
     - id: PlushieImp
       prob: 0.1
       orGroup: Plushie
     - id: PlushieHeadofPersonnel
+      prob: 0.1
       orGroup: Plushie
     - id: PlushieCaptain
+      prob: 0.1
       orGroup: Plushie
     - id: PlushieGiantBear
-      prob: 0.1
+      prob: 0.5
       orGroup: Plushie
     # imp edit end
 

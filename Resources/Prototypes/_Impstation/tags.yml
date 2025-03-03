@@ -81,6 +81,9 @@
   id: SprayPainter
 
 - type: Tag
+  id: VapeCart
+
+- type: Tag
   id: Vaporizer
 
 - type: Tag

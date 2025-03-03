@@ -1,0 +1,34 @@
+- type: sourcePort
+  id: SupermatterInactive
+  name: signal-port-name-supermatter-inactive
+  description: signal-port-description-supermatter-inactive
+
+- type: sourcePort
+  id: SupermatterNormal
+  name: signal-port-name-supermatter-normal
+  description: signal-port-description-supermatter-normal
+
+- type: sourcePort
+  id: SupermatterCaution
+  name: signal-port-name-supermatter-caution
+  description: signal-port-description-supermatter-caution
+
+- type: sourcePort
+  id: SupermatterWarning
+  name: signal-port-name-supermatter-warning
+  description: signal-port-description-supermatter-warning
+
+- type: sourcePort
+  id: SupermatterDanger
+  name: signal-port-name-supermatter-danger
+  description: signal-port-description-supermatter-danger
+
+- type: sourcePort
+  id: SupermatterEmergency
+  name: signal-port-name-supermatter-emergency
+  description: signal-port-description-supermatter-emergency
+
+- type: sourcePort
+  id: SupermatterDelaminating
+  name: signal-port-name-supermatter-delaminating
+  description: signal-port-description-supermatter-delaminating

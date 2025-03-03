@@ -50,7 +50,7 @@
     sprite: _Impstation/Objects/Consumable/Food/snacks.rsi
     state: shrimps
   product: FoodSnackShrimpspack
-  cost: 35 #votv cost
+  cost: 45 #was 35 because votv, upped to 45 because arbitrage and I'm no fun.
   category: cargoproduct-category-name-food
   group: market
 

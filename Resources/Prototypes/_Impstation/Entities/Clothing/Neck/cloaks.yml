@@ -79,3 +79,11 @@
   - type: Sprite
     sprite: _Impstation/Clothing/Neck/Cloaks/cmogreatcloak.rsi
 
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakDriller
+  name: driller's cape
+  description: Worn by the bravest salvagers, whose diamond-tipped drills can pierce the very heavens.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/driller.rsi

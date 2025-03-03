@@ -1,17 +1,4 @@
 - type: loadoutEffectGroup
-  id: PrestigeGold
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-      time: 1512000 #420 hours
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Silicon
-      time: 36000 #10 hours
-
-- type: loadoutEffectGroup
   id: Tutorial #imp
   effects:
   - !type:JobRequirementLoadoutEffect
@@ -31,21 +18,6 @@
   storage:
     back:
     - CigPackSpirits
-
-- type: loadout
-  id: PersonalAI
-  storage:
-    back:
-    - PersonalAI
-
-- type: loadout
-  id: GoldPersonalAI
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: PrestigeGold
-  storage:
-    back:
-    - GoldPersonalAI
 
 - type: loadout
   id: TutorialAI_Newcomer #imp. <15 hours.
@@ -142,3 +114,15 @@
   storage:
     back:
     - SilverRingTrinket
+
+- type: loadout
+  id: PlushieDoll
+  storage:
+    back:
+    - PlushieDoll
+
+- type: loadout
+  id: PlushieDollHair
+  storage:
+    back:
+    - PlushieDollHair

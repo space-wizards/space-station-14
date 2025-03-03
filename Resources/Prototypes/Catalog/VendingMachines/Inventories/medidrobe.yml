@@ -22,8 +22,9 @@
     ClothingHeadHatSurgcapGreen: 4
     ClothingHeadHatSurgcapBlue: 4
     ClothingHeadHatSurgcapPurple: 4
-    ClothingNeckScarfStripedLightBlue: 2
+    ClothingOuterCoatBomberMedical: 2 # imp
+    ClothingNeckScarfStripedLightBlue: 2 # imp
     ClothingShoesBootsWinterMed: 2
   contrabandInventory:
     ClothingUniformJumpskirtOfLife: 1
-    ClothingMaskClownMedical: 1
+    ClothingMaskClownMedical: 1 # imp

@@ -43,7 +43,7 @@
       - id: MobBingus
         prob: 0.005
         orGroup: MobCat
-      - id: MobPipi
+      - id: MobPipi #imp
         prob: 0.005
         orGroup: MobCat
 
@@ -97,12 +97,17 @@
 - type: entity
   id: CrateNPCPuppyCorgi
   parent: CrateLivestock
-  name: puppy corgi crate
-  description: A crate containing a single puppy corgi. Awww.
+  name: puppy crate #imp, removed references to 'corgi puppy'
+  description: A crate containing a single puppy. Awww. #imp
   components:
   - type: StorageFill
     contents:
     - id: MobCorgiPuppy
+      prob: 1 #imp
+      orGroup: MobCorgiPuppy
+    - id: MobDolby #imp
+      prob: 0.005
+      orGroup: MobCorgiPuppy
 
 - type: entity
   id: CrateNPCCow
@@ -267,14 +272,3 @@
     contents:
       - id: MobMothroach
         amount: 4
-
-- type: entity
-  id: CrateNPCFinfin
-  parent: CrateLivestock
-  name: fin fin crate
-  description: A crate containing your new best friend, imported straight from Teo. Adorable, but otherwise useless. Are you SURE you want to buy this one?
-  components:
-  - type: StorageFill
-    contents:
-      - id: MobFinfin
-        amount: 1

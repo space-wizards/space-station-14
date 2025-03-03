@@ -1,0 +1,23 @@
+﻿- type: entity
+  id: FoodBurgerCrazySpawner
+  parent: MarkerBase
+  categories: [HideSpawnMenu]
+  name: random crazy hamburger spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Consumable/Food/burger.rsi
+      state: crazy
+  - type: RandomSpawner
+    prototypes:
+    - FoodBurgerCrazy
+    - FoodBurgerCrazyBlack
+    - FoodBurgerCrazyBlackAndWhite
+    - FoodBurgerCrazyBlue
+    - FoodBurgerCrazyOrange
+    - FoodBurgerCrazyPurple
+    - FoodBurgerCrazyRainbow
+    - FoodBurgerCrazyRed
+    - FoodBurgerCrazyWhite
+    - FoodBurgerCrazyYellow

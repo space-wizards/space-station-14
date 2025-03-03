@@ -28,6 +28,28 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: EntityHeater
+    requirePower: false
+  - type: ItemPlacer
+    maxEntities: 6 # big fire, many steaks
+    whitelist:
+      components:
+      - Temperature
+  - type: PlaceableSurface
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: false
 
 # imp edit - most of these components are new, with old ones rolled into BaseBonfire. and yet, we are still in an upstream file
 - type: entity
@@ -40,18 +62,6 @@
     layers:
     - state: bonfire
   - type: Appearance
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 130
-        mask:
-        - MachineMask
-        layer:
-        - MidImpassable
-        - LowImpassable
   - type: Destructible
     thresholds:
       - trigger:
@@ -110,6 +120,19 @@
   - type: Sprite
     layers:
       - state: legionnaire_bonfire
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
   # imp edits
   - type: PointLight
     radius: 5

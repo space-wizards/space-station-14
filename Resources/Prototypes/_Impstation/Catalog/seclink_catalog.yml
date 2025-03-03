@@ -97,7 +97,7 @@
   description: seclink-spaceblade-desc
   productEntity: SpaceBladeSec
   cost:
-    DisablerToken: 1
+    UtilityToken: 1
   categories:
     - SeclinkUtility
 

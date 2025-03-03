@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Client.Audio;
-using Content.Shared._EinsteinEngines.CCVar;
+using Content.Shared._EE.CCVar;
 using Content.Shared.Announcements.Events;
 using Content.Shared.Announcements.Systems;
 using Robust.Client.Audio;
@@ -27,10 +27,10 @@ public sealed class AnnouncerSystem : SharedAnnouncerSystem
     {
         base.Initialize();
 
-        AnnouncerVolume = _config.GetCVar(EinsteinCCVars.AnnouncerVolume) * 100f / ContentAudioSystem.AnnouncerMultiplier;
+        AnnouncerVolume = _config.GetCVar(EECCVars.AnnouncerVolume) * 100f / ContentAudioSystem.AnnouncerMultiplier;
 
-        _config.OnValueChanged(EinsteinCCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
-        _config.OnValueChanged(EinsteinCCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
+        _config.OnValueChanged(EECCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
+        _config.OnValueChanged(EECCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
 
         SubscribeNetworkEvent<AnnouncementSendEvent>(OnAnnouncementReceived);
     }
@@ -39,8 +39,8 @@ public sealed class AnnouncerSystem : SharedAnnouncerSystem
     {
         base.Shutdown();
 
-        _config.UnsubValueChanged(EinsteinCCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
-        _config.UnsubValueChanged(EinsteinCCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
+        _config.UnsubValueChanged(EECCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
+        _config.UnsubValueChanged(EECCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
     }
 
 
@@ -78,7 +78,7 @@ public sealed class AnnouncerSystem : SharedAnnouncerSystem
         source.Gain = AnnouncerVolume * SharedAudioSystem.VolumeToGain(ev.AudioParams.Volume);
         source.Global = true;
 
-        if (_config.GetCVar(EinsteinCCVars.AnnouncerDisableMultipleSounds))
+        if (_config.GetCVar(EECCVars.AnnouncerDisableMultipleSounds))
         {
             foreach (var audioSource in AnnouncerSources.ToList())
             {

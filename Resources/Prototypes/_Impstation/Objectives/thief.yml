@@ -1,3 +1,5 @@
+# pets
+
 - type: entity
   parent: BaseThiefStealAnimalObjective
   id: FinFinStealObjective
@@ -7,6 +9,20 @@
     stealGroup: AnimalFinFin
   - type: Objective
     difficulty: 2
+
+- type: entity
+  parent: BaseThiefStealAnimalObjective
+  id: PolyStealObjective
+  components:
+  - type: StealCondition
+    verifyMapExistence: true
+    stealGroup: AnimalPoly
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: Objective
+    difficulty: 2.5 # this thing will not shut the fuck up
+
+# critical infrastructure
 
 - type: entity
   parent: BaseThiefStealStructureObjective
@@ -19,39 +35,6 @@
     descriptionText: objective-condition-thief-generator-description
   - type: Objective
     difficulty: 1.5
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
-  id: CigaretteStealCollectionObjective
-  components:
-  - type: SpeciesRequirement
-    allowedSpecies:
-      - Gray
-  - type: StealCondition
-    stealGroup: Cigarettes
-    descriptionText: objective-condition-thief-cigarettes
-    minCollectionSize: 1
-    maxCollectionSize: 30
-    verifyMapExistence: false
-  - type: Objective
-    difficulty: 0.3
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
-  id: PositronicBrainStealCollectionObjective
-  components:
-  - type: SpeciesRequirement
-    allowedSpecies:
-      - Thaven
-  - type: NotJobRequirement
-    job: Scientist
-  - type: StealCondition
-    stealGroup: PositronicBrains
-    minCollectionSize: 1
-    maxCollectionSize: 3
-    verifyMapExistence: false
-  - type: Objective
-    difficulty: 2
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -75,7 +58,7 @@
   - type: StealCondition
     stealGroup: AICore
   - type: Objective
-    difficulty: 2.5 #im making this high difficulty so its rare even though objectively it's pretty easy
+    difficulty: 1.75 # misunderstood how difficulty works lol
 
 - type: entity
   parent: BaseThiefStealStructureObjective
@@ -94,33 +77,64 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: AtmosFireSuitStealObjective
+  id: ShipyardComputerCircuitboardStealObjective
   components:
-  - type: SpeciesRequirement
-    allowedSpecies: #its tough out there being extremely vulnerable to fire
-      - Moth
-      - Diona
-      - Decapoid
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    job: SalvageSpecialist
   - type: StealCondition
-    stealGroup: FireSuit
+    stealGroup: ShipyardComputerCircuitboard
   - type: Objective
-    difficulty: 1
+    difficulty: 0.7
+
+# annoying command
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: ClothingCommandHeadsetStealObjective #imp edit: i'm branching this out from just the CMO's headset to all command headsets so there is less of a blatant kick-me sign on the CMO
+  components:
+  - type: StealCondition
+    stealGroup: CommandHeadset
+    minCollectionSize: 1
+    maxCollectionSize: 7
+  - type: Objective
+    difficulty: 1.5
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: MopBucketStealObjective
+  id: SecPillCanisterStealObjective
   components:
-  - type: SpeciesRequirement
-    allowedSpecies:
-      - SlimePerson
+  - type: StealCondition
+    stealGroup: SecPillCanister
+  - type: Objective
+    difficulty: 1
+
+# rare but otherwise not notable
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ShiningSpringStealObjective
+  components:
   - type: NotJobRequirement
     job: Janitor
   - type: StealCondition
-    stealGroup: StealMopBucket
+    stealGroup: ShiningSpring
   - type: Objective
     difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: EvilSkullArtifactItemStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    verifyMapExistence: true
+    stealGroup: EvilSkullArtifactItem
+    descriptionText: objective-condition-thief-evil-skull-description
+  - type: Objective
+    difficulty: 0.6 #a little harder than the bible, it glows red and there's only on, and it's an artifact
+
+# pda cartridges
 
 - type: entity
   parent: BaseThiefStealObjective
@@ -157,12 +171,13 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: SecPillCanisterStealObjective
+  id: StockTradingCartridgeStealObjective
   components:
   - type: StealCondition
-    stealGroup: SecPillCanister
+    stealGroup: StockTradingCartridge
   - type: Objective
     difficulty: 1
+# vending machines
 
 - type: entity
   parent: BaseThiefStealStructureObjective
@@ -393,38 +408,84 @@
   - type: Objective
     difficulty: 1
 
+# species exclusive and/or joke objectives
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: CigaretteStealCollectionObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - Gray
+  - type: StealCondition
+    stealGroup: Cigarettes
+    descriptionText: objective-condition-thief-cigarettes
+    minCollectionSize: 1
+    maxCollectionSize: 30
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 0.3
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: PositronicBrainStealCollectionObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - Thaven
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: PositronicBrains
+    minCollectionSize: 1
+    maxCollectionSize: 3
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 2
+
 - type: entity
   parent: BaseThiefStealObjective
-  id: ShiningSpringStealObjective
+  id: AtmosFireSuitStealObjective
   components:
+  - type: SpeciesRequirement
+    allowedSpecies: #its tough out there being extremely vulnerable to fire
+    - Moth
+    - Diona
+    - Decapoid
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: FireSuit
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: MopBucketStealObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - SlimePerson
   - type: NotJobRequirement
     job: Janitor
   - type: StealCondition
-    stealGroup: ShiningSpring
+    stealGroup: StealMopBucket
   - type: Objective
     difficulty: 0.5
 
 - type: entity
-  parent: BaseThiefStealObjective
-  id: ShipyardComputerCircuitboardStealObjective
+  parent: BaseThiefStealStructureObjective
+  id: SeedExtractorStealObjective
   components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+    - Diona
   - type: NotJobRequirement
-    job: SalvageSpecialist
+    job: Botanist
   - type: StealCondition
-    stealGroup: ShipyardComputerCircuitboard
+    stealGroup: SeedExtractor
   - type: Objective
-    difficulty: 0.7
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
-  id: ClothingCommandHeadsetStealObjective #imp edit: i'm branching this out from just the CMO's headset to all command headsets so there is less of a blatant kick-me sign on the CMO
-  components:
-  - type: StealCondition
-    stealGroup: CommandHeadset
-    minCollectionSize: 1
-    maxCollectionSize: 7
-  - type: Objective
-    difficulty: 1.5
+    difficulty: 0.5
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -436,39 +497,3 @@
     maxCollectionSize: 50
   - type: Objective
     difficulty: 1.2
-
-- type: entity
-  parent: BaseThiefStealStructureObjective
-  id: SeedExtractorStealObjective
-  components:
-  - type: SpeciesRequirement
-    allowedSpecies:
-      - Diona
-  - type: NotJobRequirement
-    job: Botanist
-  - type: StealCondition
-    stealGroup: SeedExtractor
-  - type: Objective
-    difficulty: 0.5
-
-- type: entity
-  parent: BaseThiefStealObjective
-  id: EvilSkullArtifactItemStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Chaplain
-  - type: StealCondition
-    verifyMapExistence: true
-    stealGroup: EvilSkullArtifactItem
-    descriptionText: objective-condition-thief-evil-skull-description
-  - type: Objective
-    difficulty: 0.6 #a little harder than the bible, it glows red and there's only on, and it's an artifact
-
-- type: entity
-  parent: BaseThiefStealObjective
-  id: StockTradingCartridgeStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: StockTradingCartridge
-  - type: Objective
-    difficulty: 1

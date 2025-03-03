@@ -37,6 +37,8 @@
     damage:
       types:
         Blunt: 20
+  - type: Absorbable # imp edit - there's meat in there probably
+    biomassRestored: 0.6
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 1

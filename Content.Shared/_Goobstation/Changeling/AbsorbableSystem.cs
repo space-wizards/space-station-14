@@ -17,7 +17,7 @@ public sealed partial class SharedAbsorbableSystem : EntitySystem
     private void OnExamine(Entity<AbsorbableComponent> ent, ref ExaminedEvent args)
     {
         var reducedBiomass = false;
-        if (!HasComp<RottingComponent>(ent.Owner) && TryComp<AbsorbableComponent>(ent.Owner, out var comp) && comp.ReducedBiomass)
+        if (!HasComp<RottingComponent>(ent.Owner) && TryComp<AbsorbableComponent>(ent.Owner, out var comp) && comp.BiomassRestored < 1)
             reducedBiomass = true;
 
         if (HasComp<ChangelingComponent>(args.Examiner) && !HasComp<AbsorbedComponent>(ent.Owner) && reducedBiomass)

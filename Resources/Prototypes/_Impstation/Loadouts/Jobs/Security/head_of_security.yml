@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 90000 #25 hrs
+      time: 54000 #15 hrs, ~10 rounds, half the standard due to HoS having an extreme unlock requirement
 
 - type: loadout
   id: HeadofSecurityVeteranHeadset
@@ -28,9 +28,6 @@
   id: HeadofSecurityEliteArmor
   equipment:
     outerClothing: ClothingOuterArmorHoSEliteArmor
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranHOS
 
 - type: loadout
   id: HeadofSecurityJumpsuitGrey

@@ -1,44 +1,77 @@
 - type: lobbyBackground
   id: DieBadly
   background: /Textures/_Impstation/LobbyScreens/pov_you_are_about_to_die_badly_in_a_tunnel_and_your_coords_are_off.webp
+  name: POV You Are About To Die Badly In A Tunnel And Your Coords Are Off
+  artist: Carousel
 
 - type: lobbyBackground
   id: YumTrain
   background: /Textures/_Impstation/LobbyScreens/IMG_0138.webp
+  name: Yum-Yum Train
+  artist: Lion
 
 - type: lobbyBackground
   id: Screwloose
   background: /Textures/_Impstation/LobbyScreens/screwloose.webp
+  name: Screwloose
+  artist: SnazzyGator
 
 - type: lobbyBackground
   id: AkakichinoGrey
   background: /Textures/_Impstation/LobbyScreens/Akachi_Imp_Station_Big.webp
+  name: Akakichi no Grey
+  artist: lazyriverfolk
 
 - type: lobbyBackground
   id: No-Ro
   background: /Textures/_Impstation/LobbyScreens/NO-RO.webp
-
+  name: NO-RO
+  artist: GooseyTeeth
 
 - type: lobbyBackground
   id: SamGreetingCard
   background: /Textures/_Impstation/LobbyScreens/greeting_card_lobby.webp
+  name: Greeting Card
+  artist: ghostphasemoon
 
 - type: lobbyBackground
   id: Bellmoth
   background: /Textures/_Impstation/LobbyScreens/Shovel_incident.webp
+  name: Shovel Incident
+  artist: Wowls
 
 - type: lobbyBackground
   id: 70'sNovelCover
   background: /Textures/_Impstation/LobbyScreens/impstation70snovelcover.webp
+  name: 70's Novel Cover
+  artist: LandsharkRAWR
 
 - type: lobbyBackground
   id: ChezSlog
   background: /Textures/_Impstation/LobbyScreens/impstation_chez_slog.webp
+  name: Chez Slog
+  artist: Wendy, Pixel Curatrix
 
 - type: lobbyBackground
   id: Woods
   background: /Textures/_Impstation/LobbyScreens/woodsbig.webp
+  name: Woods
+  artist: snip cowlegz
 
 - type: lobbyBackground
   id: PTAsWoe
   background: /Textures/_Impstation/LobbyScreens/PTAs-woe.webp
+  name: PTA's Woe
+  artist: widgetbeck
+
+- type: lobbyBackground
+  id: BugsDream
+  background: /Textures/_Impstation/LobbyScreens/bugsdreamtitlescreen.webp
+  name: Bug's Dream
+  artist: Doop
+
+- type: lobbyBackground
+  id: VarvaraHeretic
+  background: /Textures/_Impstation/LobbyScreens/varvara_heretic.webp
+  name: Heretic Varvara
+  artist: Six-Valentine

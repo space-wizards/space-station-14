@@ -6,6 +6,7 @@
     TraitorObjectiveGroupKill: 1
     TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
     TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+    TraitorGimmickObjectives: 0.06 #Imp: Gimmick Objectives
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSteal
@@ -159,6 +160,7 @@
     TropicoStealObjective: 1
     #imp
     FinFinStealObjective: 1
+    PolyStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

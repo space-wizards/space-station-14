@@ -1,0 +1,11 @@
+- type: entity
+  id: WardrobeBusinessFilled
+  suffix: Filled
+  parent: WardrobeBusiness
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformRandomBusiness
+        amount: 10
+      - id: ClothingUniformRandomBusinessSkirt
+        amount: 10

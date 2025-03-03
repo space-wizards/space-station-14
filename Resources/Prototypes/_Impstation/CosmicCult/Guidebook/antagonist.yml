@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: CosmicCult
+  name: guide-entry-cosmiccult
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/CosmicCult.xml" # given a consistency pass by dark, keeping in imp directory 4 now
+  children:
+  - CosmicCultDeconversion
+
+- type: guideEntry
+  id: CosmicCultDeconversion
+  name: guide-entry-cosmiccult-deconversion
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/CosmicCultDeconversion.xml"

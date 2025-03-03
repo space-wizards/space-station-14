@@ -14,7 +14,7 @@
     - RCDRechargingTckTck
     - MicroDrill
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: tcktck-tools-module }
   - type: Tag
     tags:
       - BorgModuleTckTck
@@ -31,10 +31,10 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGunTckTck
-    - FireExtinguisher
+    - FireExtinguisherTckTck
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: tcktck-eva-module }
   - type: Tag
     tags:
       - BorgModuleTckTck

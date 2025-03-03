@@ -22,7 +22,7 @@
   components:
   - type: ChaplainGearMenu
     possibleSets:
-    # - ChaplainGearRosary ## UNFINISHED! SoonTM.
+    - ChaplainGearRosary
     - ChaplainGearGrail
     - ChaplainGearGlove
     - ChaplainGearBow
@@ -53,6 +53,9 @@
   parent: NullRodBase
   description: An expensive-looking rosary, made from silver. Exudes somewhat soothing vibes. Nice!
   components:
+  - type: UseDelay
+    delay: 5.0
+  - type: CleanseOnUse
   - type: Prayable
     bibleUserOnly: true
   - type: Sprite
@@ -68,12 +71,11 @@
     - Neck
     - Belt
 
-
 - type: entity
   name: gildgrail
   id: NullRodGrail
   parent: NullRodBase
-  description: A jewel-encrusted golden chalice. Looks so expensive, it's almost concerning. Can hold a deceptively large volume of liquid.
+  description: Looks so expensive, it's almost concerning. Can hold a deceptively large volume of liquid. Said to ward off evil.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Misc/nullrod_grail.rsi
@@ -136,7 +138,9 @@
     - Holy
     - Shake
     mixMessage: "null-grail-mix-success"
-
+  - type: CleanseOnUse
+    enabled: false
+    canPurge: true
 
 - type: entity
   name: divine grasp

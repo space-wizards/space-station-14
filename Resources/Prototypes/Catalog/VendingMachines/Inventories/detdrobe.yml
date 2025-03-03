@@ -13,7 +13,8 @@
     ClothingUniformDetectiveSuitSkirt: 2 #imp
     ClothingUniformMiamiVice: 2 #imp
     ClothingUniformMiamiViceSkirt: 2 #imp
-    ClothingOuterVestDetective: 2
+    ClothingOuterCoatFieldJacket: 1 #imp
+    ClothingOuterVestDetective: 1
     ClothingNeckTieDet: 2
     ClothingHeadHatFedoraGrey: 2
     ClothingHandsGlovesColorBlack: 2
