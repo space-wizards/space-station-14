@@ -55,5 +55,16 @@ namespace Content.Server.Abilities.Mime
         [DataField]
         public ProtoId<AlertPrototype> VowBrokenAlert = "VowBroken";
 
+        /// <summary>
+        /// Does this component prevent the mime from writing on paper while their vow is active?
+        /// </summary>
+        [DataField]
+        public bool PreventWriting = false;
+
+        /// <summary>
+        /// What message is displayed when the mime fails to write?
+        /// </summary>
+        [DataField]
+        public LocId FailWriteMessage = "paper-component-illiterate-mime";
     }
 }
