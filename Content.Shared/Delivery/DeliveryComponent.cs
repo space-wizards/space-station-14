@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Delivery;
 
@@ -34,4 +34,7 @@ public sealed partial class DeliveryComponent : Component
 
     [DataField(required: true)]
     public SoundSpecifier? OpenSound;
+
+    [DataField]
+    public BaseContainer? Container = default!;
 }

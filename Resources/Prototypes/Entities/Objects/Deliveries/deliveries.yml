@@ -42,6 +42,9 @@
       path: /Audio/Effects/Cargo/ping.ogg
       params:
         volume: -10
+  - type: ContainerContainer
+    containers:
+      delivery: !type:Container
 
 - type: entity
   parent: BaseDelivery
@@ -78,10 +81,10 @@
     size: Huge
   - type: Delivery
     spesoReward: 1000
-  - type: SpawnTableOnUse
-    deleteOnUse: false
-    table: !type:NestedSelector
-      tableId: PackageDeliveryRewards
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: PackageDeliveryRewards
 
 - type: entity
   parent: BaseDelivery
@@ -117,7 +120,7 @@
     storedRotation: 90
   - type: Delivery
     spesoReward: 500
-  - type: SpawnTableOnUse
-    deleteOnUse: false
-    table: !type:NestedSelector
-      tableId: LetterDeliveryRewards
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: LetterDeliveryRewards
