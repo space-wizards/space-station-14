@@ -280,67 +280,15 @@
     sprite: Objects/Storage/petcarrier.rsi
     state: icon
 
-- type: construction
-  name: goliath hardsuit
-  id: HardsuitGoliath
-  graph: HardsuitGoliath
-  startNode: start
-  targetNode: hardsuitGoliath
-  category: construction-category-clothing
-  objectType: Item
-  description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide.
-  icon:
-    sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
-    state: icon
-
-- type: construction
-  name: yarn noodles
-  id: yarnnoodles
-  graph: YarnNoodles
-  startNode: start
-  targetNode: noodles
-  category: construction-category-misc
-  objectType: Item
-  description: A Mothchelin 3-star meal!
-  icon:
-    sprite: _Impstation/Objects/Fun/toys.rsi
-    state: yarn-noodles
-
-- type: construction
-  name: fabric scrap salad
-  id: fabricscrapsalad
-  graph: FabricScrapSalad
-  startNode: start
-  targetNode: salad
-  category: construction-category-misc
-  objectType: Item
-  description: A home-made recipe involving a pair of scissors and being very sneaky.
-  icon:
-    sprite: _Impstation/Objects/Fun/toys.rsi
-    state: fabric-scrap-salad
-
-- type: construction
-  name: improvised pistol
-  id: improvisedpistol
-  graph: ImprovisedPistolGraph
-  startNode: start
-  targetNode: pistol
-  category: construction-category-weapons
-  objectType: Item
-  description: A pistol kitbashed from whatever can be found. Ammo not included.
-  icon:
-    sprite: _Impstation/Objects/Weapons/Guns/Pistols/improvpistol.rsi
-    state: icon
-
-- type: construction
-  name: bouquet
-  id: Bouquet
-  graph: Bouquet
-  startNode: start
-  targetNode: bouquet
-  category: construction-category-misc
-  objectType: Item
-  description: A thoughtful and inedible gift for your loved one(s).
-  icon:
-    sprite: _Impstation/Objects/Fun/bouquet.rsi
-    state: icon
+# - type: construction
+#   name: goliath hardsuit
+#   id: HardsuitGoliath
+#   graph: HardsuitGoliath
+#   startNode: start
+#   targetNode: hardsuitGoliath
+#   category: construction-category-clothing
+#   objectType: Item
+#   description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide.
+#   icon:
+#     sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
+#     state: icon
