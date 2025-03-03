@@ -7,8 +7,8 @@
   - type: Item
     size: Normal
   - type: Sprite
-    sprite: _Impstation/Objects/Specific/Chemistry/synthflesh.rsi
-    state: icon
+    sprite: _Impstation/Mobs/Pets/homunculus.rsi/
+    state: homunculus
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
@@ -48,11 +48,10 @@
     tags:
     - FootstepSound
     - VimPilot
-  - type: Speech
-    speechVerb: MaleHuman
-    speechSounds: MaleHuman
   - type: Vocal
     sounds:
       Male: MaleHuman
       Female: MaleHuman
       Unsexed: MaleHuman
+  - type: Puller
+    needsHands: false

@@ -58,7 +58,6 @@
         amount: -1
 
 - type: reagent
-  parent: Blood
   id: SynthFlesh
   name: reagent-name-synthflesh
   group: Biological
@@ -68,3 +67,17 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-alive
   slippery: false
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -3
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 2
+      - !type:ChemVomit
+        probability: 0.75
+      - !type:Jitter
