@@ -48,7 +48,7 @@ public sealed partial class MonumentComponent : Component
     /// offset used to make the progress bar reset to 0 every time
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ProgressOffset;
+    public int ProgressOffset;
 
     /// <summary>
     /// A bool we use to set whether The Monument's UI is available or not.

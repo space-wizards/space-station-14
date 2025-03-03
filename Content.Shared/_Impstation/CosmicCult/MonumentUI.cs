@@ -16,24 +16,21 @@ public sealed class MonumentBuiState : BoundUserInterfaceState
 {
     public int CurrentProgress;
     public int TargetProgress;
-    public float ProgressOffset;
     public ProtoId<GlyphPrototype> SelectedGlyph;
     public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs;
 
-    public MonumentBuiState(int currentProgress, int targetProgress, float progressOffset, ProtoId<GlyphPrototype> selectedGlyph, HashSet<ProtoId<GlyphPrototype>> unlockedGlyphs)
+    public MonumentBuiState(int currentProgress, int targetProgress, int progressOffset, ProtoId<GlyphPrototype> selectedGlyph, HashSet<ProtoId<GlyphPrototype>> unlockedGlyphs)
     {
-        CurrentProgress = currentProgress;
-        TargetProgress = targetProgress;
-        ProgressOffset = progressOffset;
+        CurrentProgress = currentProgress - progressOffset;
+        TargetProgress = targetProgress - progressOffset;
         SelectedGlyph = selectedGlyph;
         UnlockedGlyphs = unlockedGlyphs;
     }
 
     public MonumentBuiState(MonumentComponent comp)
     {
-        CurrentProgress = comp.CurrentProgress;
-        TargetProgress = comp.TargetProgress;
-        ProgressOffset = comp.ProgressOffset;
+        CurrentProgress = comp.CurrentProgress - comp.ProgressOffset;
+        TargetProgress = comp.TargetProgress - comp.ProgressOffset;
         SelectedGlyph = comp.SelectedGlyph;
         UnlockedGlyphs = comp.UnlockedGlyphs;
     }

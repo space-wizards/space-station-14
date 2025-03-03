@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._Impstation.CCVar;
 using Content.Shared._Impstation.Cosmiccult;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Prototypes;
@@ -11,6 +12,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._Impstation.CosmicCult.UI.Monument;
@@ -20,6 +22,7 @@ public sealed partial class MonumentMenu : FancyWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     private readonly SpriteSystem _sprite;
 
@@ -73,7 +76,10 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the entropy fields
     private void UpdateBar(MonumentBuiState state)
     {
-        var percentComplete = (state.CurrentProgress - state.ProgressOffset) / (state.TargetProgress - state.ProgressOffset) * 100; //too many parenthesis but I'm not taking any chances
+        var percentComplete = ((float) state.CurrentProgress / (float) state.TargetProgress) * 100f; //too many parenthesis & probably unnecessary float casts but I'm not taking any chances
+
+        if (percentComplete > 100)
+           percentComplete -= 100; //mini hack to force things to behave
 
         CultProgressBar.Value = percentComplete;
 
@@ -90,7 +96,7 @@ public sealed partial class MonumentMenu : FancyWindow
         }
 
         var entropyToNextStage = state.TargetProgress - state.CurrentProgress;
-        var crewToNextStage = (int) Math.Round((double) entropyToNextStage / 7, MidpointRounding.AwayFromZero); //one crew member is "worth" 7 entropy, this needs to be gotten from a cvar - ruddygreat
+        var crewToNextStage = (int) Math.Round((double) entropyToNextStage / _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue), MidpointRounding.AwayFromZero); //one crew member is "worth" 7 entropy, this needs to be gotten from a cvar - ruddygreat
 
         AvailableEntropy.Text = Loc.GetString("monument-interface-entropy-value", ("infused", availableEntropy));
         EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", entropyToNextStage.ToString()));
