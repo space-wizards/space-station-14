@@ -3,7 +3,7 @@
   mapName: 'Relic'
   mapPath: /Maps/Relic.yml
   minPlayers: 20
-  maxPlayers: 55
+  #maxPlayers: 55
   stations:
     Relic:
       stationProto: StandardNanotrasenStation
