@@ -51,6 +51,7 @@
   - type: Appearance
   - type: PipeColorVisuals
   - type: NodeContainer
+  - type: AtmosPipeLayer
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
