@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: The greytide virus event has been disabled.
-    type: Remove
-  id: 726
-  time: '2024-12-13T10:19:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1010
 - author: widgetbeck
   changes:
   - message: Goblin event weights adjusted to make them more common.
@@ -4070,3 +4063,14 @@
   id: 1225
   time: '2025-03-03T08:43:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1822
+- author: Sha-Seng
+  changes:
+  - message: Greatcoat logos touched up to match the style of departmental bomber
+      logos
+    type: Tweak
+  - message: Emergency gas tanks are now properly labeled so that they fit into tank
+      harnesses
+    type: Fix
+  id: 1226
+  time: '2025-03-03T08:46:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1780
