@@ -46,7 +46,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
     [ValidatePrototypeId<TagPrototype>]

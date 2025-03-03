@@ -83,7 +83,7 @@ public abstract partial class SharedDoorSystem
         if (component.Powered)
             args.PryTimeModifier *= component.PoweredPryModifier;
 
-        if (DoorSystem.IsBolted(uid))
+        if (IsBolted(uid))
             args.PryTimeModifier *= component.BoltedPryModifier;
     }
 
@@ -109,7 +109,7 @@ public abstract partial class SharedDoorSystem
         if (autoev.Cancelled)
             return;
 
-        DoorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
+        SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
     }
 
     private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)
@@ -164,6 +164,6 @@ public abstract partial class SharedDoorSystem
 
     public bool CanChangeState(EntityUid uid, AirlockComponent component)
     {
-        return component.Powered && !DoorSystem.IsBolted(uid);
+        return component.Powered && !IsBolted(uid);
     }
 }
