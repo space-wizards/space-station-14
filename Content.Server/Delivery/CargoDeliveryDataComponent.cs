@@ -36,7 +36,7 @@ public sealed partial class CargoDeliveryDataComponent : Component
 
     /// <summary>
     /// The minimum amount of deliveries that will spawn.
-    /// This is not per spawner and still follows the logic of DistributeRandomly.
+    /// This is not per spawner unless DistributeRandomly is false.
     /// </summary>
     [DataField]
     public int MinimumDeliverySpawn = 1;
