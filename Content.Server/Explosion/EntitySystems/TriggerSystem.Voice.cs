@@ -161,25 +161,12 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
         {
-            if (!args.IsInDetailsRange)
-                return;
-
-            string keyPhrase;
-
-            if (!string.IsNullOrWhiteSpace(component.KeyPhrase))
+            if (args.IsInDetailsRange)
             {
-                keyPhrase = component.KeyPhrase;
+                args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
+                    ? Loc.GetString("trigger-voice-uninitialized")
+                    : Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase)));
             }
-            else if (!string.IsNullOrWhiteSpace(component.DefaultKeyPhrase))
-            {
-                keyPhrase = Loc.GetString(component.DefaultKeyPhrase);
-            }
-            else
-            {
-                keyPhrase = Loc.GetString("trigger-voice-uninitialized");
-            }
-
-            args.PushText(Loc.GetString("examine-trigger-voice", ("keyphrase", keyPhrase)));
         }
     }
 }
