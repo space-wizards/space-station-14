@@ -443,6 +443,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// <param name="uid"> The uid of the door</param>
     /// <param name="door"> The doorcomponent of the door</param>
     /// <param name="user"> The user (if any) opening the door</param>
+    /// <param name="partial"> If the door is partially closed. Partially-closed doors have already done logic
+    //  checks for closing once before and, ergo, skip checks like being powered and not bolted.</param>
     public bool CanClose(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool partial = false)
     {
         if (!Resolve(uid, ref door))
