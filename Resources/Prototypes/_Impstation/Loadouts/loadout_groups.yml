@@ -388,9 +388,13 @@
   - ChaplainBookBible
   - ChaplainBookQuran
   - ChaplainBookTanakh
+  - ChaplainBookScroll
+  - ChaplainBookTablet
+  - ChaplainBookGreybible
   - ChaplainBookKojiki
   - ChaplainBookTao
   - ChaplainBookGrimoire
+  - ChaplainBookETB
   - ChaplainBookDiscordia
   - ChaplainBookUnitology
   - ChaplainBookBibble

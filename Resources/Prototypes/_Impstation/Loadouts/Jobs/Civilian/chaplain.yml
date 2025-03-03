@@ -18,46 +18,70 @@
   id: ChaplainBookQuran
   storage:
     back:
-    - Quran
+    - BibleQuran
 
 - type: loadout
   id: ChaplainBookTanakh
   storage:
     back:
-    - Tanakh
+    - BibleTanakh
 
 - type: loadout
   id: ChaplainBookBibble
   storage:
     back:
-    - Bibble
+    - BibleBibble
 
 - type: loadout
   id: ChaplainBookTao
   storage:
     back:
-    - TaoTeachings
+    - BibleTaoTeachings
 
 - type: loadout
   id: ChaplainBookKojiki
   storage:
     back:
-    - Kojiki
+    - BibleKojiki
 
 - type: loadout
   id: ChaplainBookGrimoire
   storage:
     back:
-    - ChaplainsGrimoire
+    - BibleChaplainsGrimoire
 
 - type: loadout
   id: ChaplainBookDiscordia
   storage:
     back:
-    - PrincipiaDiscordia
+    - BiblePrincipiaDiscordia
 
 - type: loadout
   id: ChaplainBookUnitology
   storage:
     back:
-    - UnitologyTome
+    - BibleUnitologyTome
+
+- type: loadout
+  id: ChaplainBookScroll
+  storage:
+    back:
+    - BibleHolyScroll
+
+- type: loadout
+  id: ChaplainBookTablet
+  storage:
+    back:
+    - BibleHolyTablet
+
+- type: loadout
+  id: ChaplainBookGreybible
+  storage:
+    back:
+    - Greybible
+
+- type: loadout
+  id: ChaplainBookETB
+  storage:
+    back:
+    - ExtremeTeenBible
