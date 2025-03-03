@@ -25,30 +25,30 @@
   - WeaponFlareGunSecurity
 
 # Shared between secfab and emagged autolathe
-- type: latheRecipePack
-  id: SecurityAmmoStatic
-  recipes:
-  - BoxLethalshot
-  - BoxShotgunSlug
-  - MagazineBoxLightRifle
-  - MagazineBoxMagnum
-  - MagazineBoxPistol
-  - MagazineBoxRifle
-  - MagazineLightRifle
-  - MagazineLightRifleEmpty
-  - MagazinePistol
-  - MagazinePistolEmpty
-  - MagazinePistolSubMachineGun
-  - MagazinePistolSubMachineGunEmpty
-  - MagazinePistolSubMachineGunTopMounted
-  - MagazinePistolSubMachineGunTopMountedEmpty
-  - MagazineRifle
-  - MagazineRifleEmpty
-  - MagazineShotgun
-  - MagazineShotgunEmpty
-  - MagazineShotgunSlug
-  - SpeedLoaderMagnum
-  - SpeedLoaderMagnumEmpty
+# - type: latheRecipePack
+  # id: SecurityAmmoStatic
+  # recipes:
+  # - BoxLethalshot
+  # - BoxShotgunSlug
+  # - MagazineBoxLightRifle
+  # - MagazineBoxMagnum
+  # - MagazineBoxPistol
+  # - MagazineBoxRifle
+  # - MagazineLightRifle
+  # - MagazineLightRifleEmpty
+  # - MagazinePistol
+  # - MagazinePistolEmpty
+  # - MagazinePistolSubMachineGun
+  # - MagazinePistolSubMachineGunEmpty
+  # - MagazinePistolSubMachineGunTopMounted
+  # - MagazinePistolSubMachineGunTopMountedEmpty
+  # - MagazineRifle
+  # - MagazineRifleEmpty
+  # - MagazineShotgun
+  # - MagazineShotgunEmpty
+  # - MagazineShotgunSlug
+  # - SpeedLoaderMagnum
+  # - SpeedLoaderMagnumEmpty
 
 - type: latheRecipePack
   id: SecurityWeaponsStatic
@@ -91,33 +91,33 @@
   - MagazineGrenadeEmpty
 
 # Shared between secfab and emagged protolathe
-- type: latheRecipePack
-  id: SecurityAmmo
-  recipes:
-  - BoxBeanbag
-  - BoxShotgunIncendiary
-  - BoxShotgunUranium
-  - BoxShellTranquilizer
-  - MagazineBoxLightRifleIncendiary
-  - MagazineBoxLightRifleUranium
-  - MagazineBoxMagnumIncendiary
-  - MagazineBoxMagnumUranium
-  - MagazineBoxPistolIncendiary
-  - MagazineBoxPistolUranium
-  - MagazineBoxRifleIncendiary
-  - MagazineBoxRifleUranium
-  - MagazineLightRifleIncendiary
-  - MagazineLightRifleUranium
-  - MagazinePistolIncendiary
-  - MagazinePistolUranium
-  - MagazinePistolSubMachineGunIncendiary
-  - MagazinePistolSubMachineGunUranium
-  - MagazineRifleIncendiary
-  - MagazineRifleUranium
-  - MagazineShotgunBeanbag
-  - MagazineShotgunIncendiary
-  - SpeedLoaderMagnumIncendiary
-  - SpeedLoaderMagnumUranium
+# - type: latheRecipePack
+  # id: SecurityAmmo
+  # recipes:
+  # - BoxBeanbag
+  # - BoxShotgunIncendiary
+  # - BoxShotgunUranium
+  # - BoxShellTranquilizer
+  # - MagazineBoxLightRifleIncendiary
+  # - MagazineBoxLightRifleUranium
+  # - MagazineBoxMagnumIncendiary
+  # - MagazineBoxMagnumUranium
+  # - MagazineBoxPistolIncendiary
+  # - MagazineBoxPistolUranium
+  # - MagazineBoxRifleIncendiary
+  # - MagazineBoxRifleUranium
+  # - MagazineLightRifleIncendiary
+  # - MagazineLightRifleUranium
+  # - MagazinePistolIncendiary
+  # - MagazinePistolUranium
+  # - MagazinePistolSubMachineGunIncendiary
+  # - MagazinePistolSubMachineGunUranium
+  # - MagazineRifleIncendiary
+  # - MagazineRifleUranium
+  # - MagazineShotgunBeanbag
+  # - MagazineShotgunIncendiary
+  # - SpeedLoaderMagnumIncendiary
+  # - SpeedLoaderMagnumUranium
 
 - type: latheRecipePack
   id: SecurityWeapons

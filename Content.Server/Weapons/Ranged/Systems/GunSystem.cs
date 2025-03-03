@@ -698,26 +698,32 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             spreadIndex++;
             var index = -1;
+            var hitIndex = 0;
 
             hitscanEvent.Effects[spreadIndex] = new Effect[hit.Count];
             ref var effects = ref hitscanEvent.Effects[spreadIndex];
 
-            foreach (var (fromCoordinates, distance, angle, hitEntity) in hit)
+            foreach (var entry in hit.ToList())
             {
+                var (fromCoordinates, distance, angle, hitEntity) = entry;
+                
                 var fromXform = Transform(fromCoordinates.EntityId);
-
                 var gridUid = fromXform.GridUid;
+                
                 if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
                 {
                     var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
                     var map = _transform.ToMapCoordinates(fromCoordinates);
-                    fromCoordinates = new EntityCoordinates(gridUid.Value, Vecto2.Transform(map.Position, gridInvMatrix))
+                    fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
                     angle -= gridRot;
                 }
                 else
                 {
-                    angle -= _transform.GetWorldPosition(fromXform);
+                    angle -= _transform.GetWorldRotation(fromXform);
                 }
+                
+                hit[hitIndex] = (fromCoordinates, distance, angle, hitEntity);
+                hitIndex++;
 
                 index++;
                 effects[index] = new Effect

@@ -132,7 +132,8 @@
     - ElectronicsStatic
   - type: EmagLatheRecipes
     emagStaticPacks:
-    - SecurityAmmoStatic
+    - StarlightSecurityEmagWeaponsStatic
+    - StarlightSecurityAmmoStatic
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -209,10 +210,10 @@
     - FauxTiles
   - type: EmagLatheRecipes
     emagDynamicPacks:
-    - SecurityAmmo
-    - SecurityExplosives
-    - SecurityEquipment
-    - SecurityWeapons
+    - StarlightSecurityAmmo
+    - StarlightSecurityExplosives
+    - StarlightSecurityEquipment
+    - StarlightSecurityWeapons
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -266,7 +267,7 @@
     - ShuttleBoards
   - type: EmagLatheRecipes
     emagDynamicPacks:
-    - SecurityBoards
+    - StarlightSecurityBoards
   - type: MaterialStorage
     whitelist:
       tags:
@@ -391,14 +392,14 @@
     staticPacks:
     - SecurityEquipmentStatic
     - SecurityPracticeStatic
-    - SecurityAmmoStatic
+    - StarlightSecurityAmmoStatic
     - SecurityWeaponsStatic
     dynamicPacks:
-    - SecurityEquipment
-    - SecurityBoards
-    - SecurityExplosives
-    - SecurityAmmo
-    - SecurityWeapons
+    - StarlightSecurityEquipment
+    - StarlightSecurityBoards
+    - StarlightSecurityExplosives
+    - StarlightSecurityAmmo
+    - StarlightSecurityWeapons
     - SecurityDisablers
   - type: MaterialStorage
     whitelist:
@@ -432,7 +433,7 @@
       idleState: icon
       runningState: icon
       staticPacks:
-      - SecurityAmmoStatic
+      - StarlightSecurityAmmoStatic
     - type: MaterialStorage
       whitelist:
         tags:

@@ -1,0 +1,195 @@
+## Static recipes
+
+- type: latheRecipePack
+  id: StarlightSecurityEquipmentStatic
+  recipes:
+  - ClothingEyesHudSecurity
+  - ForensicPad
+  - Handcuffs
+  - TargetClown
+  - TargetHuman
+  - TargetSyndicate
+  - Zipties
+
+# Practice ammo/mags and practice weapons
+- type: latheRecipePack
+  id: StarlightSecurityPracticeStatic
+  recipes:
+  - BoxShotgunPractice
+  - MagazineBoxLightRiflePractice
+  - MagazineBoxMagnumPractice
+  - MagazineBoxPistolPractice
+  - MagazineBoxRiflePractice
+  - WeaponDisablerPractice
+  - WeaponLaserCarbinePractice
+  - WeaponFlareGunSecurity
+
+# Shared between secfab and emagged autolathe
+- type: latheRecipePack
+  id: StarlightSecurityAmmoStatic
+  recipes:
+######################BOX#######################
+# Light Rifle
+      - MagazineBoxLightRifleSP
+      - MagazineBoxLightRifleHP
+      - MagazineBoxLightRifleFMJ
+# Magnum
+      - MagazineBoxMagnumSP
+      - MagazineBoxMagnumHP
+      - MagazineBoxMagnumFMJ
+# Pistol
+      - MagazineBoxPistolSP
+      - MagazineBoxPistolHP
+      - MagazineBoxPistolFMJ
+# Rifle
+      - MagazineBoxRifleSP
+      - MagazineBoxRifleHP
+      - MagazineBoxRifleFMJ
+#####################MAGAZINE#######################
+# Light Rifle
+      - MagazineLightRifleSP
+      - MagazineLightRifleHP
+      - MagazineLightRifleFMJ
+      - MagazineLightRifleEmpty
+# Magnum
+      - SpeedLoaderMagnumSP
+      - SpeedLoaderMagnumHP
+      - SpeedLoaderMagnumFMJ
+      - SpeedLoaderMagnumEmpty
+# Pistol
+      - MagazinePistolSP
+      - MagazinePistolHP
+      - MagazinePistolFMJ
+      - MagazinePistolEmpty
+# SMG
+      - MagazinePistolSubMachineGunSP
+      - MagazinePistolSubMachineGunEmpty
+      - MagazinePistolSubMachineGunTopMounted
+      - MagazinePistolSubMachineGunTopMountedEmpty
+# Rifle
+      - MagazineRifleSP
+      - MagazineRifleHP
+      - MagazineRifleFMJ
+      - MagazineRifleEmpty
+# Shotgun
+      - MagazineShotgun
+      - MagazineShotgunEmpty
+      - MagazineShotgunSlug
+####################################################
+
+- type: latheRecipePack
+  id: StarlightSecurityEmagWeaponsStatic
+  recipes:
+      - BoxLethalshot
+      - BoxShotgunSlug
+      - CombatKnife
+      - RiotShield
+
+## Dynamic recipes
+
+- type: latheRecipePack
+  id: StarlightSecurityEquipment
+  recipes:
+  - ClothingBackpackElectropack
+  - HoloprojectorSecurity
+  - PortableRecharger
+  - PowerCageHigh
+  - PowerCageMedium
+  - PowerCageSmall
+  - TelescopicShield
+
+- type: latheRecipePack
+  id: StarlightSecurityBoards
+  recipes:
+  - ShuttleGunDusterCircuitboard
+  - ShuttleGunFriendshipCircuitboard
+  - ShuttleGunPerforatorCircuitboard
+  - ShuttleGunSvalinnMachineGunCircuitboard
+
+- type: latheRecipePack
+  parent:
+  - ScienceExplosives # sec gets everything for modular grenade making that sci does
+  id: StarlightSecurityExplosives
+  recipes:
+  - ExplosivePayload
+  - GrenadeBlast
+  - GrenadeEMP
+  - GrenadeFlash
+  - MagazineGrenadeEmpty
+
+# Shared between secfab and emagged protolathe
+- type: latheRecipePack
+  id: StarlightSecurityAmmo
+  recipes:
+#####################BOX#######################
+# Light Rifle
+      - MagazineBoxLightRifleRubber
+      - MagazineBoxLightRifleIncendiary
+      - MagazineBoxLightRifleUranium
+      - MagazineBoxLightRifleAP
+# Magnum
+      - MagazineBoxMagnumRubber
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxMagnumUranium
+      - MagazineBoxMagnumAP
+# Pistol
+      - MagazineBoxPistolRubber
+      - MagazineBoxPistolIncendiary
+      - MagazineBoxPistolUranium
+      - MagazineBoxPistolAP
+# Rifle
+      - MagazineBoxRifleRubber
+      - MagazineBoxRifleIncendiary
+      - MagazineBoxRifleUranium
+      - MagazineBoxRifleAP
+# Shotgun
+      - BoxBeanbag
+      - BoxShotgunIncendiary
+      - BoxShotgunUranium
+      - BoxShellTranquilizer
+#####################MAGAZINE#######################
+# Light Rifle
+      - MagazineLightRifleIncendiary
+      - MagazineLightRifleUranium
+      - MagazineLightRifleAP
+# Magnum
+      - SpeedLoaderMagnumIncendiary
+      - SpeedLoaderMagnumUranium
+      - SpeedLoaderMagnumAP
+# Pistol
+      - MagazinePistolIncendiary
+      - MagazinePistolUranium
+      - MagazinePistolAP
+# Rifle
+      - MagazineRifleIncendiary
+      - MagazineRifleUranium
+      - MagazineRifleAP
+# Shotgun
+      - MagazineShotgunBeanbag
+      - MagazineShotgunIncendiary
+      - MagazineShotgunIncendiary
+# Grenade
+      - MagazineGrenadeEmpty
+#####################CARTRIDGE######################
+# Light Rifle
+      - CartridgeLightRifleRubber
+# Magnum
+      - CartridgeMagnumRubber
+# Pistol
+      - CartridgePistolRubber
+# Rifle
+      - CartridgeRifleRubber
+####################################################
+
+- type: latheRecipePack
+  id: StarlightSecurityWeapons
+  recipes:
+  - Truncheon
+  - WeaponAdvancedLaser
+  - WeaponLaserCannon
+  - WeaponLaserCarbine
+  - WeaponXrayCannon
+  - WeaponIonRifle
+  - WeaponIonCarbine
+  - WeaponDecloner
+  - WeaponLaserImmolator
