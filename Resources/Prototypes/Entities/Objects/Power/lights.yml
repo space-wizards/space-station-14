@@ -395,7 +395,7 @@
 - type: entity
   parent: BaseLightTubeCrystal
   name: black crystal light tube
-  description: A high power high energy bulb which has a small colored crystal inside. It seems quite dim.
+  description: A high power high energy bulb which has a small colored crystal inside. It isn't very bright.
   id: LightTubeCrystalBlack
   components:
   - type: LightBulb
@@ -489,6 +489,21 @@
 
 - type: entity
   parent: BaseLightbulbCrystal
+  name: yellow crystal light bulb
+  id: LightBulbCrystalYellow
+  components:
+  - type: LightBulb
+    color: "#ffde46"
+  - type: Construction
+    graph: YellowLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalYellow
+
+- type: entity
+  parent: BaseLightbulbCrystal
   name: pink crystal light bulb
   id: LightBulbCrystalPink
   components:
@@ -516,6 +531,24 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalOrange
+
+- type: entity
+  parent: BaseLightbulbCrystal
+  name: black crystal light bulb
+  description: A high power high energy bulb which has a small colored crystal inside. It isn't very bright.
+  id: LightBulbCrystalBlack
+  components:
+  - type: LightBulb
+    color: "#363636"
+    lightEnergy: 1
+    lightRadius: 8
+  - type: Construction
+    graph: BlackLightBulb
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalBlack
 
 - type: entity
   parent: BaseLightbulbCrystal
