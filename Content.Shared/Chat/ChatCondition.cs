@@ -29,7 +29,6 @@ public sealed partial class AllChatCondition : IChatCondition
     {
         foreach (var chatCondition in Subconditions)
         {
-            Logger.Debug("Test");
             if (!chatCondition.Check(subject, channelParameters))
             {
                 return false;
