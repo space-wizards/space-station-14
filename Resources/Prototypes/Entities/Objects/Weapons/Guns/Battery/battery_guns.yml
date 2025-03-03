@@ -117,9 +117,9 @@
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
     layers:
     - state: base
-      map: ["enum.GunVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base" ]
     - state: mag-unshaded-4
-      map: ["enum.GunVisualLayers.MagUnshaded"]
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
       shader: unshaded
   - type: MagazineVisuals
     magState: mag
