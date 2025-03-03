@@ -96,7 +96,8 @@ public sealed partial class MonumentMenu : FancyWindow
         }
 
         var entropyToNextStage = state.TargetProgress - state.CurrentProgress;
-        var crewToNextStage = (int) Math.Round((double) entropyToNextStage / _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue), MidpointRounding.AwayFromZero); //one crew member is "worth" 7 entropy, this needs to be gotten from a cvar - ruddygreat
+        var min = entropyToNextStage == 0 ? 0 : 1; //I have no idea what to call this. makes it so that it shows 0 crew for the final stage but at least one at all other times
+        var crewToNextStage = (int) Math.Max(Math.Round((double) entropyToNextStage / _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue), MidpointRounding.ToPositiveInfinity), min); //force it to be at least one
 
         AvailableEntropy.Text = Loc.GetString("monument-interface-entropy-value", ("infused", availableEntropy));
         EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", entropyToNextStage.ToString()));
