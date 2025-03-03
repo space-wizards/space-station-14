@@ -76,9 +76,11 @@ namespace Content.Client.Administration.UI.Bwoink
                     sb.Append(' ');
                 }
 
+                // Mark antagonists with symbol
                 if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
+                // Mark new players with symbol
                 if (IsNewPlayer(info))
                     sb.Append(new Rune(0x23F2)); // ⏲
 
@@ -89,11 +91,12 @@ namespace Content.Client.Administration.UI.Bwoink
 
             bool IsNewPlayer(PlayerInfo info)
             {
-                if (newPlayerThreshold <= 0 || (info.OverallPlaytime == null && !info.Connected))
+                // Don't show every disconnected player as new, don't show 0-minute players as new if threshold is
+                if (newPlayerThreshold <= 0 || info.OverallPlaytime is null && !info.Connected)
                     return false;
 
-                return (info.OverallPlaytime == null
-                        || info.OverallPlaytime <= TimeSpan.FromMinutes(newPlayerThreshold));
+                return (info.OverallPlaytime is null
+                        || info.OverallPlaytime < TimeSpan.FromMinutes(newPlayerThreshold));
             }
 
             ChannelSelector.Comparison = (a, b) =>
