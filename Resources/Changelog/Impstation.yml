@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Vent crawlers now have different vent entry times based on their size.
-    type: Tweak
-  id: 725
-  time: '2024-12-13T10:20:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1000
 - author: Darkmajia
   changes:
   - message: The greytide virus event has been disabled.
@@ -4070,3 +4063,10 @@
   id: 1224
   time: '2025-03-03T03:13:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1820
+- author: widgetbeck
+  changes:
+  - message: Drones can weld now. Oops.
+    type: Fix
+  id: 1225
+  time: '2025-03-03T08:43:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1822
