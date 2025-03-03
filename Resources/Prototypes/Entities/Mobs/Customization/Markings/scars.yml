@@ -57,8 +57,8 @@
   speciesRestriction: [Human, Dwarf]
   followSkinColor: true
   sprites:
-    - sprite: Mobs/Customization/scars.rsi
-      state: scar_neck
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_neck
 
 - type: marking
   id: ScarChestBullets
@@ -67,8 +67,18 @@
   speciesRestriction: [Human, Dwarf]
   followSkinColor: true
   sprites:
-    - sprite: Mobs/Customization/scars.rsi
-      state: scar_chest_bullets
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_chest_bullets
+
+- type: marking
+  id: ScarStomachBullets
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_stomach_bullets
 
 - type: marking
   id: ScarFace1
@@ -77,8 +87,8 @@
   speciesRestriction: [Human, Dwarf]
   followSkinColor: true
   sprites:
-    - sprite: Mobs/Customization/scars.rsi
-      state: scar_face_1
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_face_1
 
 - type: marking
   id: ScarFace2
@@ -87,5 +97,5 @@
   speciesRestriction: [Human, Dwarf]
   followSkinColor: true
   sprites:
-    - sprite: Mobs/Customization/scars.rsi
-      state: scar_face_2
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_face_2

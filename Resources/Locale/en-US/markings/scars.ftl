@@ -19,6 +19,9 @@ marking-ScarNeck = Neck Scar
 marking-ScarChestBullets-scar_chest_bullets = Bullet Holes Scar
 marking-ScarChestBullets = Chest Scar (Bullets)
 
+marking-ScarStomachBullets-scar_stomach_bullets = Bullet Holes Scar
+marking-ScarStomachBullets = Stomach Scar (Bullets)
+
 marking-ScarFace1-scar_face_1 = Face Scar
 marking-ScarFace1 = Face Scar (Large)
 
