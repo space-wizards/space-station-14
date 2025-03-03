@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Gas prices are both higher and lower. Frezon up to 3 spesos per mol,
-      Tritium down to 2 per mol.
-    type: Tweak
-  id: 724
-  time: '2024-12-13T10:19:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/997
-- author: formlessnameless
-  changes:
   - message: Vent crawlers now have different vent entry times based on their size.
     type: Tweak
   id: 725
@@ -4066,3 +4058,15 @@
   id: 1223
   time: '2025-03-03T01:52:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1819
+- author: Darkmajia
+  changes:
+  - message: The goliath hardsuit is no longer craftable.
+    type: Remove
+  - message: The goliath hardsuit can be found rarely on salvage.
+    type: Tweak
+  - message: The goliath and maxim hardsuits can be found rarely in grand lottery
+      crates.
+    type: Tweak
+  id: 1224
+  time: '2025-03-03T03:13:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1820
