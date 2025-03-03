@@ -7,7 +7,7 @@ namespace Content.Client.Chat.Managers;
 
 public sealed class ContentMarkupTagManager : ISharedContentMarkupTagManager
 {
-    public IReadOnlyDictionary<string, IContentMarkupTag> ContentMarkupTagTypes => new IContentMarkupTag[]
+    public IReadOnlyDictionary<string, ContentMarkupTagBase> ContentMarkupTagTypes => new ContentMarkupTagBase[]
     {
         new ColorValueContentTag(),
         new EntityNameHeaderContentTag(),

@@ -1,4 +1,3 @@
-﻿using System.Diagnostics;
 using Content.Shared.Chat.ContentMarkupTags;
 using Content.Shared.Mind;
 using Content.Shared.Roles.RoleCodeword;
@@ -7,17 +6,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
 
-public sealed class CodewordsContentTag : IContentMarkupTag
+public sealed class CodewordsContentTag : ContentMarkupTagBase
 {
     // This can, in the future, be refactored into a generalized word highlighting tag.
 
-    public string Name => "Codewords";
+    public override string Name => "Codewords";
 
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
 
-    public List<MarkupNode>? TextNodeProcessing(MarkupNode node, int randomSeed)
+    public override IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
 
@@ -35,8 +34,8 @@ public sealed class CodewordsContentTag : IContentMarkupTag
                     baseMsg.InsertAroundString(new MarkupNode("color", new MarkupParameter(codewordData.Color), null), codeword, false);
                 }
             }
-            return new List<MarkupNode>(baseMsg.Nodes);
+            return baseMsg.Nodes;
         }
-        return new List<MarkupNode>() {node} ;
+        return new List<MarkupNode> { node } ;
     }
 }

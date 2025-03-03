@@ -7,7 +7,7 @@ namespace Content.Server.Chat;
 public sealed class ContentMarkupTagManager : ISharedContentMarkupTagManager
 {
     // This dictionary should contain serverside-only ContentMarkupTags.
-    public IReadOnlyDictionary<string, IContentMarkupTag> ContentMarkupTagTypes => new IContentMarkupTag[]
+    public IReadOnlyDictionary<string, ContentMarkupTagBase> ContentMarkupTagTypes => new ContentMarkupTagBase[]
     {
 
     }.ToFrozenDictionary(x => x.Name, x => x);

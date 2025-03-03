@@ -1,13 +1,13 @@
-﻿using System.Collections.Frozen;
+using System.Collections.Frozen;
 using System.Diagnostics;
 using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
 
-public sealed class ColorValueContentTag : IContentMarkupTag
+public sealed class ColorValueContentTag : ContentMarkupTagBase
 {
-    public string Name => "ColorValue";
+    public override string Name => "ColorValue";
 
     // TODO: These values should probably be retrieved via yaml, and be customizable in options! This solution works for now!
     private readonly IReadOnlyDictionary<string, Color> _colors = new Dictionary<string, Color>
@@ -39,14 +39,14 @@ public sealed class ColorValueContentTag : IContentMarkupTag
         ["Radio.Handheld"] = Color.FromHex("#967101"),
     }.ToFrozenDictionary();
 
-    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
+    public override IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
-        return new List<MarkupNode>() { new MarkupNode("color", new MarkupParameter(GetColor(node)), null) };
+        return new List<MarkupNode> { new MarkupNode("color", new MarkupParameter(GetColor(node)), null) };
     }
 
-    public List<MarkupNode>? ProcessClosingTag(MarkupNode node, int randomSeed)
+    public override IReadOnlyList<MarkupNode> ProcessCloser(MarkupNode node, int randomSeed)
     {
-        return new List<MarkupNode>() { new MarkupNode("color", null, null, true) };
+        return new List<MarkupNode> { new MarkupNode("color", null, null, true) };
     }
 
     private Color GetColor(MarkupNode node)

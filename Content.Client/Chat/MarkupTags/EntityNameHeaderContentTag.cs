@@ -1,18 +1,18 @@
-﻿using Content.Shared.Chat.ContentMarkupTags;
+using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
 
-public sealed class EntityNameHeaderContentTag : IContentMarkupTag
+public sealed class EntityNameHeaderContentTag : ContentMarkupTagBase
 {
-    public string Name => "EntityNameHeader";
+    public override string Name => "EntityNameHeader";
 
-    public List<MarkupNode>? ProcessOpeningTag(MarkupNode node, int randomSeed)
+    public override IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node, int randomSeed)
     {
         var name = node.Value.StringValue;
         if (name == null)
-            return null;
+            return [];
 
-        return new List<MarkupNode>() { new MarkupNode(name) };
+        return new List<MarkupNode> { new MarkupNode(name) };
     }
 }
