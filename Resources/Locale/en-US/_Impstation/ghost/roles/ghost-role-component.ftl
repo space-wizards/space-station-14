@@ -72,4 +72,4 @@ ghost-role-information-apid-description = A Beefolk worker, called in as backup 
 ghost-role-information-tutorial-rules = You are a [color=#39f5ab][bold]special Tutorial pAI[/bold][/color]. This pAI is only available to those either new to the game generally, or to those in trainee roles. By taking this ghost role, you will be expected to know how your master's role works, be on hand to help them learn, and generally be welcoming and helpful. [color=red][bold]Failure to do so may result in administrator action.[/bold][/color]
 
 ghost-role-information-homunculus-name = homunculus
-ghost-role-information-homunculus-description = A homunculi created by someone who does not appreciate life, yet it lives to serve.
+ghost-role-information-homunculus-description = A homunculi created by someone who does not appreciate life. It lives to serve.
