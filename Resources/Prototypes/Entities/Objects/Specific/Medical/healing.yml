@@ -739,7 +739,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: desoxyephedrine
+        - ReagentId: Desoxyephedrine
           Quantity: 10
 
 - type: entity
