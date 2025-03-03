@@ -29,6 +29,7 @@
     PenteticAcid: 3
 
 - type: reaction
+  minTemp: 353
   id: Cordrazine
   reactants:
     Bromine:
@@ -53,3 +54,14 @@
       amount: 1
   products:
     SalicylicAcid: 3
+
+- type: reaction
+  minTemp: 316
+  id: Spaceacillin
+  reactants:
+    Amatoxin:
+      amount: 2
+    Ethanol:
+      amount: 1
+  products:
+    Spaceacillin: 3

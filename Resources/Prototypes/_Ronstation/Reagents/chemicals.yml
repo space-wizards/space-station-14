@@ -13,25 +13,27 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1
-            Asphyxiation: 1
+            Poison: 0.5
+            Asphyxiation: 0.5
       - !type:PopupMessage
         type: Local
         visualType: MediumCaution
         messages: [ "cyanide-effect-horrendously-weak" ]
-        probability: 0.1
+        probability: 0.2
+      - !type:Jitter
+        probability: 0.2
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 4
+        time: 3
         type: Add
-        probability: 0.1
+        probability: 0.5
 
 - type: reagent
   id: Formaldehyde
   name: reagent-name-formaldehyde
   desc: reagent-desc-formaldehyde
   physicalDesc: reagent-physical-desc-pungent
-  color: "#B4004B"
+  color: "#8A0E22"
   boilingPoint: 254.15
   meltingPoint: 180.92
   metabolisms:
@@ -70,27 +72,9 @@
       - !type:GenericStatusEffect
         key: Drowsiness
         component: Drowsiness
-        time: 1.25
+        time: 5
         type: Add
         refresh: false
-  reactiveEffects:
-    Acidic:
-      methods: [ Touch ]
-      effects:
-      - !type:HealthChange
-        ignoreResistances: false
-        damage:
-          types:
-            Poison: 0.05
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        component: Drowsiness
-        time: 2.5
-        type: Add
-        refresh: false
-      - !type:MovespeedModifier
-        walkSpeedModifier: 0.75
-        sprintSpeedModifier: 0.75
 
 - type: reagent
   id: Saltpetre
@@ -164,6 +148,14 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
+        damage:
+          types:
+            Poison: 0.5
+      - !type:HealthChange
+        probability: 0.2
+        conditions:
+        - !type:OrganType
+          type: Animal
         damage:
           types:
             Poison: 0.5
