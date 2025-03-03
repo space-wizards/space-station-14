@@ -356,6 +356,9 @@
     - HEAD
   - type: Speech
     speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+      - PlushieLizard
 
 - type: entity
   parent: PlushieLizard
@@ -1621,6 +1624,7 @@
     - type: DisarmMalus
       malus: 0
     - type: MeleeWeapon
+      wideAnimationRotation: -135
       soundHit:
         collection: RubberHammer
         params:
