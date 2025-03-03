@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/03/2025 06:47:10
-  entityCount: 2602
+  time: 03/03/2025 07:06:07
+  entityCount: 2605
 maps: []
 grids:
 - 1
@@ -1252,7 +1252,7 @@ entities:
       pos: 17.5,34.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -17243.23
+      secondsUntilStateChange: -17515.773
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1426,15 +1426,10 @@ entities:
     - type: Transform
       pos: 23.319506,22.477367
       parent: 1
-  - uid: 1355
-    components:
-    - type: Transform
-      pos: 23.527359,22.585592
-      parent: 1
   - uid: 1357
     components:
     - type: Transform
-      pos: 23.730484,22.694967
+      pos: 22.587187,7.8004417
       parent: 1
 - proto: AmeShielding
   entities:
@@ -12576,6 +12571,13 @@ entities:
     - type: Transform
       pos: 6.5,15.5
       parent: 1
+- proto: MachineFrameDestroyed
+  entities:
+  - uid: 1355
+    components:
+    - type: Transform
+      pos: 25.5,13.5
+      parent: 1
 - proto: MaintenanceToolSpawner
   entities:
   - uid: 2494
@@ -13267,6 +13269,21 @@ entities:
     components:
     - type: Transform
       pos: 20.5,8.5
+      parent: 1
+  - uid: 2506
+    components:
+    - type: Transform
+      pos: 20.5,8.5
+      parent: 1
+  - uid: 2507
+    components:
+    - type: Transform
+      pos: 22.5,7.5
+      parent: 1
+  - uid: 2508
+    components:
+    - type: Transform
+      pos: 22.5,8.5
       parent: 1
 - proto: SalvageSpawnerMobMiningAsteroid
   entities:
