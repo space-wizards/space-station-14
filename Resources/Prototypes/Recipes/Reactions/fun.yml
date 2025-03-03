@@ -256,4 +256,43 @@
     JuiceThatMakesYouWeh:
       amount: 1
   products:
-    CorgiJuice: 3
+    CorgiJuice: 2
+- type: reaction
+  id: CorgiJuiceHew
+  reactants:
+    UncookedAnimalProteins:
+      amount: 1
+    JuiceThatMakesYouHew:
+      amount: 1
+    Happiness:
+      amount: 1
+  products:
+    CorgiJuice: 4
+
+- type: reaction
+  id: CorgiJuiceWaterDestruction
+  reactants:
+    CorgiJuice:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    CorgiJuice: 1
+- type: reaction
+  id: CorgiJuiceFluoroDestruction
+  reactants:
+    CorgiJuice:
+      amount: 1
+    Fluorosurfactant:
+      amount: 1
+  products:
+    CorgiJuice: 1
+- type: reaction
+  id: CorgiJuiceWateredDown
+  reactants:
+    ConcentratedCorgiJuice:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    CorgiJuice: 2

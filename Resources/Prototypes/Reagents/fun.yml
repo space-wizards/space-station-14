@@ -434,3 +434,56 @@
         factor: 2
       - !type:SatiateHunger
         factor: 2
+
+- type: reagent
+  id: ConcentratedCorgiJuice
+  name: reagent-name-concentratedcorgijuice
+  group: Toxins
+  desc: reagent-desc-corgijuice
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: dogfood
+  color: "#ed9715"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-stuffy-throat" ]
+        probability: 0.15
+      - !type:Polymorph
+        prototype: PermanentCorgiMorph
+        conditions:
+        - !type:ReagentThreshold
+          min: 40
+      - !type:GenericStatusEffect
+        key: RatvarianLanguage
+        component: BarkAccent
+      - !type:AdjustReagent
+        reagent: CorgiJuice
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: -2
+            Brute: -2
+            Burn: -2
+            Toxin: -2
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: 2
