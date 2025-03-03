@@ -305,17 +305,25 @@
 
 - type: entity
   parent: BaseLightTube
-  name: cyan crystal light tube
+  name: crystal light tube
   description: A high power high energy bulb which has a small colored crystal inside.
-  id: LightTubeCrystalCyan
+  id: BaseLightTubeCrystal
+  abstract: true
   components:
   - type: LightBulb
-    color: "#47f8ff"
     lightEnergy: 3
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 60
+
+- type: entity
+  parent: BaseLightTubeCrystal
+  name: cyan crystal light tube
+  id: LightTubeCrystalCyan
+  components:
+  - type: LightBulb
+    color: "#47f8ff"
   - type: Construction
     graph: CyanLight
     node: icon
@@ -325,7 +333,7 @@
     - id: ShardCrystalCyan
 
 - type: entity
-  parent: LightTubeCrystalCyan
+  parent: BaseLightTubeCrystal
   name: blue crystal light tube
   id: LightTubeCrystalBlue
   components:
@@ -345,7 +353,7 @@
     - id: ShardCrystalBlue
 
 - type: entity
-  parent: LightTubeCrystalCyan
+  parent: BaseLightTubeCrystal
   name: yellow crystal light tube
   id: LightTubeCrystalYellow
   components:
@@ -365,7 +373,7 @@
     - id: ShardCrystalYellow
 
 - type: entity
-  parent: LightTubeCrystalCyan
+  parent: BaseLightTubeCrystal
   name: pink crystal light tube
   id: LightTubeCrystalPink
   components:
@@ -385,7 +393,7 @@
     - id: ShardCrystalPink
 
 - type: entity
-  parent: LightTubeCrystalCyan
+  parent: BaseLightTubeCrystal
   name: orange crystal light tube
   id: LightTubeCrystalOrange
   components:
@@ -405,7 +413,7 @@
     - id: ShardCrystalOrange
 
 - type: entity
-  parent: LightTubeCrystalCyan
+  parent: BaseLightTubeCrystal
   name: black crystal light tube
   description: A high power high energy bulb which has a small colored crystal inside. It seems quite dim.
   id: LightTubeCrystalBlack
@@ -426,7 +434,7 @@
     - id: ShardCrystalBlack
 
 - type: entity
-  parent: LightTubeCrystalCyan
+  parent: BaseLightTubeCrystal
   name: red crystal light tube
   id: LightTubeCrystalRed
   components:
