@@ -30,7 +30,7 @@ public abstract partial class SharedDoorSystem
         // the initial power-check.
 
         if (TryComp(uid, out DoorComponent? door)
-            && !door.Partial
+            && !args.Partial
             && !CanChangeState(uid, airlock))
         {
             args.Cancel();
