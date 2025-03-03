@@ -26,7 +26,7 @@
         sound:
           collection: MetalBreak
   - type: StaticPrice
-    price: 30
+    price: 45
 
 # Trash bin
 - type: entity
