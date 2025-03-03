@@ -36,9 +36,6 @@ namespace Content.Client.Administration.UI.Bwoink
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            var newPlayerThreshold = 0;
-            _cfg.OnValueChanged(CCVars.NewPlayerThreshold, (val) => { newPlayerThreshold = val; }, true);
-
             var uiController = _ui.GetUIController<AHelpUIController>();
             if (uiController.UIHelper is not AdminAHelpUIHandler helper)
                 return;
@@ -79,7 +76,7 @@ namespace Content.Client.Administration.UI.Bwoink
                 if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
-                if (newPlayerThreshold != 0 && (info.OverallPlaytime == null || info.OverallPlaytime <= TimeSpan.FromMinutes(newPlayerThreshold)))
+                if (info.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
                     sb.Append(new Rune(0x23F2)); // ⏲
 
                 sb.AppendFormat("\"{0}\"", text);
