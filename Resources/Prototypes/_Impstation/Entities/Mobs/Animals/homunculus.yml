@@ -17,6 +17,8 @@
     name: ghost-role-information-homunculus-name
     description: ghost-role-information-homunculus-description
     rules: ghost-role-information-familiar-rules
+    mindRoles:
+      - MindRoleGhostRoleFamiliar
   - type: Physics
   - type: UserInterface
   - type: Fixtures
