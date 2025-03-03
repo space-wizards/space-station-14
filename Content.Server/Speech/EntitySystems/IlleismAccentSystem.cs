@@ -90,14 +90,14 @@ public sealed class IlleismAccentSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        ent.Comp.IllesimStateIndex = (ent.Comp.IllesimStateIndex + 1) % 3;
+        ent.Comp.IlleismStateIndex = (ent.Comp.IlleismStateIndex + 1) % 3;
         _popup.PopupEntity(Loc.GetString("trait-illeism-adjust"), ent.Owner, ent.Owner);
         args.Handled = true;
     }
     private void OnAccent(EntityUid uid, IlleismAccentComponent component, AccentGetEvent args)
     {
         var message = args.Message;
-        var name = component.IllesimStateIndex == 2 ? Name(uid) : Name(uid).Split(component.IllesimStrings[component.IllesimStateIndex])[0];
+        var name = component.IlleismStateIndex == 2 ? Name(uid) : Name(uid).Split(component.IlleismStrings[component.IlleismStateIndex])[0];
         var upperName = name.ToUpper();
 
         // I am going to Sec -> NAME is going to Sec

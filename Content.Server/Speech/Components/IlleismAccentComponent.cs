@@ -18,8 +18,8 @@ public sealed partial class IlleismAccentComponent : Component
     public EntityUid? SelfToggleActionEntity;
 
     [DataField]
-    public int IllesimStateIndex = 0;
+    public int IlleismStateIndex = 0;
 
     [DataField]
-    public List<string> IllesimStrings = [" ", "-"];
+    public List<string> IlleismStrings = [" ", "-"];
 }
