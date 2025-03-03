@@ -257,17 +257,10 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
-            var energyChange = comp.Energy;
-
-            // Apply percentage-based drain if this is negative energy
-            if (comp.Energy < 0 && comp.PercentageDrain != 0f)
-            {
-                var percentDrain = singulo.Energy * comp.PercentageDrain;
-                // Add both effects together
-                energyChange += -percentDrain;
-            }
-
-            AdjustEnergy(args.EventHorizonUid, energyChange, singularity: singulo);
+            // Calculate the percentage change (positive or negative)
+            var percentageChange = singulo.Energy * (comp.EnergyFactor - 1f);
+            // Apply both the flat and percentage changes
+            AdjustEnergy(args.EventHorizonUid, comp.Energy + percentageChange, singularity: singulo);
         }
     }
 
