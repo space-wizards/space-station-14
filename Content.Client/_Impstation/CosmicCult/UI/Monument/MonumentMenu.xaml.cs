@@ -73,8 +73,11 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the entropy fields
     private void UpdateBar(MonumentBuiState state)
     {
-        CultProgressBar.Value = state.PercentageComplete;
-        ProgressBarPercentage.Text = Loc.GetString("monument-interface-progress-bar", ("percentage", state.PercentageComplete.ToString("0")));
+        var percentComplete = (state.CurrentProgress - state.ProgressOffset) / (state.TargetProgress - state.ProgressOffset) * 100; //too many parenthesis but I'm not taking any chances
+
+        CultProgressBar.Value = percentComplete;
+
+        ProgressBarPercentage.Text = Loc.GetString("monument-interface-progress-bar", ("percentage", percentComplete.ToString("0")));
     }
 
     // Update all the entropy fields
@@ -86,9 +89,12 @@ public sealed partial class MonumentMenu : FancyWindow
             availableEntropy = cultComp.EntropyBudget.ToString();
         }
 
+        var entropyToNextStage = state.TargetProgress - state.CurrentProgress;
+        var crewToNextStage = (int) Math.Round((double) entropyToNextStage / 7, MidpointRounding.AwayFromZero); //one crew member is "worth" 7 entropy, this needs to be gotten from a cvar - ruddygreat
+
         AvailableEntropy.Text = Loc.GetString("monument-interface-entropy-value", ("infused", availableEntropy));
-        EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", state.EntropyUntilNextStage.ToString()));
-        CrewToConvertUntilNextStage.Text = state.CrewToConvertUntilNextStage.ToString();
+        EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", entropyToNextStage.ToString()));
+        CrewToConvertUntilNextStage.Text = crewToNextStage.ToString();
     }
 
     // Update all the glyph buttons

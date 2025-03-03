@@ -92,11 +92,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     public int CurrentTier; // current cult tier
     public int TotalCrew; // total connected players
     public int TotalCult; // total cultists
-    public int TotalEntropy; // total entropy in the monument
-    public float CurrentProgress; // percent of progress towards the next tier
-    public float TargetProgress; // current tier's progress target
     public double PercentConverted; // percentage of connected players that are cultists
-    public double Tier3Percent; // 40 percent of connected players
+    public double Tier3NumCrew; // 40 percent of connected players
     public int EntropySiphoned; // the total entropy siphoned by the cult.
 
     public override void Initialize()
@@ -117,11 +114,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         CurrentTier = 0;
         TotalCrew = 0;
         TotalCult = 0;
-        TotalEntropy = 0;
         PercentConverted = 0;
-        CurrentProgress = 0.001f;
-        TargetProgress = 80;
-        Tier3Percent = 40;
+        Tier3NumCrew = 40;
     }
 
     private void OnAntagSelect(Entity<CosmicCultRuleComponent> uid, ref AfterAntagEntitySelectedEvent args)
@@ -158,11 +152,11 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
     private static void SetWinType(Entity<CosmicCultRuleComponent> uid, WinType type)
     {
-        if (uid.Comp.WinLocked == true)
+        if (uid.Comp.WinLocked)
             return;
         uid.Comp.WinType = type;
 
-        if (type == WinType.CultComplete || type == WinType.CrewComplete || type == WinType.CultMajor) //Let's lock in our WinType to prevent us from setting a worse win if a better win's been achieved.
+        if (type is WinType.CultComplete or WinType.CrewComplete or WinType.CultMajor) //Let's lock in our WinType to prevent us from setting a worse win if a better win's been achieved.
             uid.Comp.WinLocked = true;
     }
 
@@ -251,15 +245,26 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         if (!TryComp<CosmicFinaleComponent>(uid, out var finaleComp))
             return;
         _appearance.SetData(uid, MonumentVisuals.Monument, CurrentTier);
-        if (CurrentTier == 3) _appearance.SetData(uid, MonumentVisuals.Tier3, true);
-        else if (CurrentTier == 2) _appearance.SetData(uid, MonumentVisuals.Tier3, false);
+
+        switch (CurrentTier)
+        {
+            case 3:
+                _appearance.SetData(uid, MonumentVisuals.Tier3, true);
+                break;
+            case 2:
+                _appearance.SetData(uid, MonumentVisuals.Tier3, false);
+                break;
+        }
+
         if (tierUp)
         {
             var transformComp = EnsureComp<MonumentTransformingComponent>(uid);
             transformComp.EndTime = _timing.CurTime + uid.Comp.TransformTime;
             _appearance.SetData(uid, MonumentVisuals.Transforming, true);
         }
-        if (finaleComp.FinaleReady || finaleComp.FinaleActive) _appearance.SetData(uid, MonumentVisuals.FinaleReached, true);
+
+        if (finaleComp.FinaleReady || finaleComp.FinaleActive)
+            _appearance.SetData(uid, MonumentVisuals.FinaleReached, true);
     }
 
     public void UpdateCultData(Entity<MonumentComponent> uid) // This runs every time Entropy is Inserted into The Monument, and every time a Cultist is Converted or Deconverted.
@@ -276,44 +281,45 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         if (TotalCrew < 25)
             TotalCrew = 25;
 #endif
+
         PercentConverted = Math.Round((double)(100 * TotalCult) / TotalCrew);
-        Tier3Percent = Math.Round((double)TotalCrew / 100 * 40); // 40% of current pop
+        Tier3NumCrew = Math.Round((double)TotalCrew / 100 * 40); // 40% of current pop
+        //todo make the 40% there a cvar - ruddygreat
+
+        //note - these ar the thresholds for moving to the next tier
+        //so t1 -> 2 needs 20% of the crew
+        //t2 -> 3 needs 40%
+        //and t3 -> finale needs an extra 20 entropy
         switch (CurrentTier)
         {
             case 1:
-                TargetProgress = (int) (Tier3Percent / 2 * scalar);
+                uid.Comp.ProgressOffset = 0;
+                uid.Comp.TargetProgress = (int) (Tier3NumCrew / 2 * scalar);
                 break;
             case 2:
-                TargetProgress = (int) (Tier3Percent * scalar);
+                uid.Comp.ProgressOffset = (float) (Tier3NumCrew / 2 * scalar); //reset the progress offset
+                uid.Comp.TargetProgress = (int) (Tier3NumCrew * scalar);
                 break;
             case 3:
-                TargetProgress = (int) Tier3Percent * scalar + 20;
-                uid.Comp.EntropyUntilNextStage = 0;
-                uid.Comp.CrewToConvertNextStage = 0;
+                uid.Comp.ProgressOffset = (float) (Tier3NumCrew * scalar);
+                uid.Comp.TargetProgress = (int) Tier3NumCrew * scalar + 20;
                 break;
         }
 
-        CurrentProgress = TotalEntropy + TotalCult * scalar;
+        uid.Comp.CurrentProgress = uid.Comp.TotalEntropy + TotalCult * scalar;
 
-        if (CurrentTier < 3)
-        {
-            uid.Comp.CrewToConvertNextStage = (int) Math.Ceiling((TargetProgress - CurrentProgress) / scalar);
-            uid.Comp.EntropyUntilNextStage = (int) (TargetProgress - CurrentProgress); //todo this goes negative on tier up? - ruddygreat
-        }
-
-        uid.Comp.PercentageComplete = CurrentProgress / TargetProgress * 100;
-        if (CurrentProgress >= TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady)
+        if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady)
             FinaleReady(uid, finaleComp);
         else if (finaleComp.FinaleReady || finaleComp.FinaleActive)
-            uid.Comp.PercentageComplete = 100;
-        else if (CurrentProgress >= TargetProgress && CurrentTier == 2)
+            uid.Comp.CurrentProgress = uid.Comp.TargetProgress;
+        else if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 2)
             MonumentTier3(uid);
-        else if (CurrentProgress >= TargetProgress && CurrentTier == 1)
+        else if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 1)
             MonumentTier2(uid);
+
         UpdateMonumentAppearance(uid, false);
 
         Dirty(uid.Owner, uid.Comp);
-
         _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp));
     }
 
@@ -347,11 +353,14 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         {
             objectiveComp.Tier = 1;
         }
+
+        Dirty(uid);
+        _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp));
     }
 
     private void MonumentTier2(Entity<MonumentComponent> uid)
     {
-        uid.Comp.PercentageComplete = 50;
+        //uid.Comp.PercentageComplete = 50;
         CurrentTier = 2;
 
         foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 2))
@@ -370,7 +379,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 cultComp.UnlockedInfluences.Add(influenceProto.ID);
             }
 
-            cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); // pity system. 4% of the playercount worth of entropy on tier up
+            cultComp.EntropyBudget += (int) Math.Floor(Math.Round((double)TotalCrew / 100 * 4)); // pity system. 4% of the playercount worth of entropy on tier up
             Dirty(cultist, cultComp);
         }
 
@@ -400,11 +409,14 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 continue;
             _ghost.DoGhostBooEvent(light);
         }
+
+        Dirty(uid);
+        _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp));
     }
 
     private void MonumentTier3(Entity<MonumentComponent> uid)
     {
-        uid.Comp.PercentageComplete = 0;
+        //uid.Comp.PercentageComplete = 0;
         uid.Comp.HasCollision = true;
         CurrentTier = 3;
 
@@ -464,14 +476,32 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 continue;
             _ghost.DoGhostBooEvent(light);
         }
+
+        Dirty(uid);
+        _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp));
     }
 
     private void FinaleReady(Entity<MonumentComponent> uid, CosmicFinaleComponent finaleComp)
     {
-        if (TryComp<CosmicCorruptingComponent>(uid, out var comp)) comp.Enabled = true;
-        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = null;
+        if (TryComp<CosmicCorruptingComponent>(uid, out var comp))
+            comp.Enabled = true;
+
+        if (TryComp<ActivatableUIComponent>(uid, out var uiComp))
+        {
+            if (TryComp<UserInterfaceComponent>(uid, out var uiComp2)) //close the UI for everyone who has it open
+            {
+                _ui.CloseUi((uid.Owner, uiComp2), MonumentKey.Key);
+            }
+
+            uiComp.Key = null;
+        }
+
         finaleComp.FinaleReady = true;
         uid.Comp.Enabled = false;
+
+        Dirty(uid);
+        _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp));
+
         _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-ready"), Transform(uid).Coordinates, PopupType.Large);
     }
     #endregion
