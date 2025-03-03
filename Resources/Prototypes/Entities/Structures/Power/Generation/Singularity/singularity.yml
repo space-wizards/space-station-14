@@ -113,7 +113,7 @@
     level: "yellow"
   - type: AnnounceOnSpawn
     message: xeno-arch-announce-singularity
-    sender: xeno-arch-announce-sender-centra-command
+    sender: xeno-arch-announce-sender-central-command
     sound:
       path: /Audio/Misc/notice1.ogg
     color: yellow
