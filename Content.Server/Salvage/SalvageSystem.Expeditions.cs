@@ -11,6 +11,7 @@ using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Salvage;
 
@@ -39,6 +40,8 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentGetState>(OnExpeditionGetState);
 
         SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
+
+        SubscribeLocalEvent<SalvageMissionDependencyComponent, ComponentShutdown>(OnMissionDependencyShutdown);
 
         _cooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionCooldown);
         Subs.CVar(_configurationManager, CCVars.SalvageExpeditionCooldown, SetCooldownChange);
@@ -185,5 +188,17 @@ public sealed partial class SalvageSystem
     private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
+    }
+
+    private void OnMissionDependencyShutdown(EntityUid uid, SalvageMissionDependencyComponent dependencyComponent, ref ComponentShutdown args)
+    {
+        // Maybe we don't delete the mission planet when disk is destroyed while someone's on it. (Exped planets are paused until a shuttle FTLs to them)
+        var mapId = dependencyComponent.AssociatedMapId;
+        var mapPaused = _mapSystem.IsPaused(mapId);
+        if (mapPaused == false)
+            return;
+
+        // Delete the map, which in extension cancels the expedition
+        _mapSystem.DeleteMap(mapId);
     }
 }
