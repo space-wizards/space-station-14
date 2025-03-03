@@ -3,7 +3,7 @@
   name: seeds-kronkus-vine-name
   noun: seeds-noun-seeds
   displayName: seeds-kronkus-vine-display-name
-  plantRsi: Objects/Specific/Hydroponics/kronkus_vine.rsi
+  plantRsi: _Ronstation/Objects/Specific/Hydroponics/kronkus_vine.rsi
   packetPrototype: KronkusSeeds
   productPrototypes:
     - KronkusVineSegment
