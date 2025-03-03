@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Tck'tcks now can swap between LV and MV power.
-    type: Tweak
-  - message: Tck'tcks now have sprites for being anchored.
-    type: Tweak
-  id: 723
-  time: '2024-12-12T20:07:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1002
 - author: formlessnameless
   changes:
   - message: Gas prices are both higher and lower. Frezon up to 3 spesos per mol,
@@ -4068,3 +4059,10 @@
   id: 1222
   time: '2025-03-02T22:05:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1818
+- author: Cutinup99
+  changes:
+  - message: Warden's hardsuit has been changed, the armor is better but its slower
+    type: Tweak
+  id: 1223
+  time: '2025-03-03T01:52:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1819
