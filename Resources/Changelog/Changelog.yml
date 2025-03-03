@@ -1,69 +1,4 @@
 ﻿Entries:
-- author: Catofquestionableethics
-  changes:
-  - message: Spacemans cake now contains Polypyrylium Oligomers instead of Omnizine.
-    type: Tweak
-  - message: Slime, Brain and Christmas cakes can now be eaten by Lizards.
-    type: Fix
-  id: 7527
-  time: '2024-10-18T03:08:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32830
-- author: Plykiya
-  changes:
-  - message: You can no longer print flares or shotgun flares.
-    type: Remove
-  id: 7528
-  time: '2024-10-18T03:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32563
-- author: pheenty
-  changes:
-  - message: QM is now considered an important job.
-    type: Tweak
-  - message: QM is now correctly considered head for traitor's kill head objective,
-      while warden now isn't.
-    type: Fix
-  id: 7529
-  time: '2024-10-18T09:43:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32721
-- author: JIPDawg
-  changes:
-  - message: On Salamander the round will now restart after 5 minutes from when the
-      Evac shuttle arrives at CentCom.
-    type: Tweak
-  id: 7530
-  time: '2024-10-18T10:03:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32776
-- author: Errant
-  changes:
-  - message: Players becoming Traitor without a PDA now correctly get the text and
-      audio notifications, and the code words. They are also given an Uplink Implant,
-      with the price taken from their starting TC.
-    type: Fix
-  id: 7531
-  time: '2024-10-18T12:55:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30359
-- author: Beck Thompson
-  changes:
-  - message: Plushies will now eject their contents when recycled in the recycler!
-    type: Fix
-  id: 7532
-  time: '2024-10-18T12:58:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32838
-- author: Ilya246
-  changes:
-  - message: Spectral locator, rare maintenance loot that lets you know if any ghosts
-      are nearby.
-    type: Add
-  id: 7533
-  time: '2024-10-18T13:42:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32323
-- author: PJB3005
-  changes:
-  - message: You can now start removing items via stripping while holding something.
-    type: Tweak
-  id: 7534
-  time: '2024-10-18T19:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32750
 - author: Beck Thompson
   changes:
   - message: Scalpels and shivs now work as knives!
@@ -3898,3 +3833,72 @@
   id: 8026
   time: '2025-03-01T18:03:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35438
+- author: SlamBamActionman
+  changes:
+  - message: Slimes no longer have cellular damage resistance.
+    type: Tweak
+  id: 8027
+  time: '2025-03-01T20:24:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35583
+- author: metalgearsloth
+  changes:
+  - message: Removed radioactivity from uranium.
+    type: Tweak
+  id: 8028
+  time: '2025-03-02T02:29:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35330
+- author: metalgearsloth
+  changes:
+  - message: Predict vending machine UI and have the buttons reflect whether the UI
+      is useable.
+    type: Tweak
+  id: 8029
+  time: '2025-03-02T02:47:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33412
+- author: SlamBamActionman
+  changes:
+  - message: Phalanximine now has an overdose threshold and works slower, along with
+      other minor tweaks.
+    type: Tweak
+  - message: Arithrazine now deals increased damage during treatment.
+    type: Tweak
+  id: 8030
+  time: '2025-03-02T12:56:16.674298+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32209
+- author: slarticodefast
+  changes:
+  - message: Fixed various traits and abilites being lost when getting cloned.
+    type: Fix
+  - message: Fixed various bugs when cloning zombified players.
+    type: Fix
+  - message: Unrevivable characters can no longer be cloned.
+    type: Tweak
+  - message: Fixed default device linking for the cloning console.
+    type: Fix
+  id: 8031
+  time: '2025-03-02T15:50:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35555
+- author: HTMLSystem
+  changes:
+  - message: Arachnids and moths now have new sprites when wearing glasses, huds,
+      visors, and eyepatches.
+    type: Add
+  id: 8032
+  time: '2025-03-02T20:58:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31812
+- author: FairlySadPanda
+  changes:
+  - message: Pet carriers now only carry pets. preventing various unintended, albeit
+      hilarious, activities.
+    type: Fix
+  id: 8033
+  time: '2025-03-03T10:04:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35587
+- author: Coolsurf6
+  changes:
+  - message: Pain from Burn damage is now calculated when displaying the red damage
+      overlay
+    type: Tweak
+  id: 8034
+  time: '2025-03-03T11:11:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34535
