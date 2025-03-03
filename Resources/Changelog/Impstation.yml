@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Goblin event weights adjusted to make them more common.
-    type: Tweak
-  id: 727
-  time: '2024-12-13T18:48:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1008
 - author: Darkmajia
   changes:
   - message: Beer now makes you wuhey.
@@ -4074,3 +4067,10 @@
   id: 1226
   time: '2025-03-03T08:46:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1780
+- author: mqole
+  changes:
+  - message: more pages blagh thusd Cosmic Cult Guidebook. Read Them
+    type: Add
+  id: 1227
+  time: '2025-03-03T09:15:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1824
