@@ -21,6 +21,7 @@
   - JugSilicon
   - JugSodium
   - JugSulfur
+  - JugBromine
 
 - type: reagentDispenserInventory
   id: EmptyInventory
