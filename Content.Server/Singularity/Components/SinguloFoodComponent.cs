@@ -10,8 +10,8 @@ namespace Content.Server.Singularity.Components
         public float Energy = 1f;
 
         /// <summary>
-        /// The percentage of the singularity's current energy that this food will drain.
-        /// Only applies when Energy is negative.
+        /// Multiplier applied to singularity's energy.
+        /// 1.0 = no change, 0.97 = 3% reduction, 1.05 = 5% increase
         /// </summary>
         [DataField]
         public float EnergyFactor = 1f;
