@@ -21,7 +21,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
-    - id: SpiderClownSpawn
+#    - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
 
