@@ -70,6 +70,62 @@
   id: MobSyndicateFootsoldierPilot
 
 - type: entity
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateFootsoldierSalvageToolbox
+  suffix: "Salvage, Suspicious Toolbox"
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearRuinToolbox
+
+- type: entity
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateFootsoldierSalvageViper
+  suffix: "Salvage, Viper"
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearRuinPistol
+
+- type: entity
+  name: elite syndicate footsoldier
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateFootsoldierElite
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateEliteFootsoldierGearRuin
+
+- type: entity
+  name: elite syndicate footsoldier
+  parent: MobSyndicateFootsoldierElite
+  id: MobSyndicateFootsoldierEliteSalvage
+  suffix: "Salvage, AKM"
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateEliteFootsoldierGearRuinAKMS
+
+- type: entity
+  name: syndicate repairman
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateRepairman
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateRepairmanGearRuin
+
+- type: entity
+  name: syndicate repairman
+  parent: MobSyndicateRepairmanSalvage
+  id: MobSyndicateRepairmanSalvage
+  suffix: "Salvage, Suspicious Toolbox"
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateRepairmanGearRuinToolbox
+
+- type: entity
   parent: BaseMobHuman
   suffix: Dead
   save: false # mobs are currently not saveable.

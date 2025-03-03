@@ -240,6 +240,8 @@
   proto: SyndicateBase
   biomes:
     - Snow
+  factions:
+    - Syndicate
 
 - type: salvageDungeonMod
   id: LavaBrig

@@ -12,6 +12,7 @@ public sealed partial class NPCCombatSystem
 {
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     private EntityQuery<CombatModeComponent> _combatQuery;
     private EntityQuery<NPCSteeringComponent> _steeringQuery;
@@ -116,6 +117,16 @@ public sealed partial class NPCCombatSystem
                 comp.Status = CombatStatus.Unspecified;
                 comp.ShootAccumulator = 0f;
                 continue;
+            }
+
+            if (_entityManager.TryGetComponent<ChamberMagazineAmmoProviderComponent>(gunUid, out var chamberAmmoProviderComponent) && chamberAmmoProviderComponent.BoltClosed == false)
+            {
+                // uh uh uhm bolt the gun
+                _gun.SetBoltClosed(gunUid, chamberAmmoProviderComponent, true, uid);
+
+                // couldn't bolt it for whatever reason so we fuck off
+                if (chamberAmmoProviderComponent.BoltClosed == false)
+                    continue;
             }
 
             comp.LOSAccumulator -= frameTime;

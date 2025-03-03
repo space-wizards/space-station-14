@@ -44,6 +44,69 @@
     back:
     - BoxSurvival
 
+# Syndicate Footsoldier Gear - No Headset, With Syndie Toolbox
+- type: startingGear
+  id: SyndicateFootsoldierGearRuinToolbox
+  parent: SyndicateFootsoldierGearRuin
+  inhand:
+    - ToolboxSyndicate
+
+# Syndicate Footsoldier Gear - No Headset, With Viper (pistol)
+- type: startingGear
+  id: SyndicateFootsoldierGearRuinPistol
+  parent: SyndicateFootsoldierGearRuin
+  inhand:
+    - WeaponPistolViper
+
+# Syndicate Elite Footsoldier Gear - No Headset
+- type: startingGear
+  id: SyndicateEliteFootsoldierGearRuin
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    head: ClothingHeadHelmetSwatSyndicate
+    eyes: ClothingEyesGlassesSunglasses
+    neck: ClothingNeckMantleHOS # like the commander's mantle that nukies get except its not called a commander's mantle. also makes them more identifiable
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBulletproof
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsJack #purely for less slowdown
+    id: SyndiPDA
+  storage:
+    back:
+    - BoxSurvival
+
+# Syndicate Elite Footsoldier Gear - No Headset, With AKMS
+- type: startingGear
+  id: SyndicateEliteFootsoldierGearRuinAKMS
+  parent: SyndicateEliteFootsoldierGearRuin
+  inhand:
+    - WeaponRifleAk
+
+# Syndicate Repairman Gear - No Headset
+- type: startingGear
+  id: SyndicateRepairmanGearRuin
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineerSyndie
+    head: ClothingHeadHatHardhatArmored
+    eyes: ClothingEyesGlassesMeson
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBasicSlim
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsSyndieFilled
+    id: SyndiPDA
+  storage:
+    back:
+    - BoxSurvival
+
+# Syndicate Repairman Gear - No Headset, With Syndie Toolbox
+- type: startingGear
+  id: SyndicateRepairmanGearRuinSalvage
+  parent: SyndicateRepairmanGearRuin
+  inhand:
+    - ToolboxSyndicate
+
 # Syndicate Footsoldier Gear
 - type: startingGear
   id: SyndicateFootsoldierGear
