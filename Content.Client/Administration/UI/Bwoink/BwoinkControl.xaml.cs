@@ -36,6 +36,9 @@ namespace Content.Client.Administration.UI.Bwoink
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
+            var newPlayerThreshold = 0;
+            _cfg.OnValueChanged(CCVars.NewPlayerThreshold, (val) => { newPlayerThreshold = val; }, true);
+
             var uiController = _ui.GetUIController<AHelpUIController>();
             if (uiController.UIHelper is not AdminAHelpUIHandler helper)
                 return;
@@ -76,13 +79,22 @@ namespace Content.Client.Administration.UI.Bwoink
                 if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
-                if (info.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
+                if (IsNewPlayer(info))
                     sb.Append(new Rune(0x23F2)); // ⏲
 
                 sb.AppendFormat("\"{0}\"", text);
 
                 return sb.ToString();
             };
+
+            bool IsNewPlayer(PlayerInfo info)
+            {
+                if (newPlayerThreshold <= 0 || (info.OverallPlaytime == null && !info.Connected))
+                    return false;
+
+                return (info.OverallPlaytime == null
+                        || info.OverallPlaytime <= TimeSpan.FromMinutes(newPlayerThreshold));
+            }
 
             ChannelSelector.Comparison = (a, b) =>
             {
@@ -112,8 +124,8 @@ namespace Content.Client.Administration.UI.Bwoink
                 // Sort connected players by New Player status, then by Antag status
                 if (a.Connected && b.Connected)
                 {
-                    var aNewPlayer = a.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold));
-                    var bNewPlayer = b.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold));
+                    var aNewPlayer = IsNewPlayer(a);
+                    var bNewPlayer = IsNewPlayer(b);
 
                     if (aNewPlayer != bNewPlayer)
                         return aNewPlayer ? -1 : 1;
