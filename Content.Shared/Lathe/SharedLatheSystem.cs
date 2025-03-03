@@ -75,6 +75,7 @@ public abstract class SharedLatheSystem : EntitySystem
             if (_materialStorage.GetMaterialAmount(uid, material) < adjustedAmount * amount)
                 return false;
         }
+
         return true;
     }
 

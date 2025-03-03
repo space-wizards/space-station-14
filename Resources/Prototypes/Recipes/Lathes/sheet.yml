@@ -5,6 +5,8 @@
   materials:
     RawIron: 100
     Coal: 30
+  requiedGas:
+    1: 5 # Nitrogen, five moles
 
 - type: latheRecipe
   id: SheetSteel30

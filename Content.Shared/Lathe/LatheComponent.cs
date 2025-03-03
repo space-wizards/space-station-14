@@ -62,18 +62,36 @@ namespace Content.Shared.Lathe
         [ViewVariables]
         public LatheRecipePrototype? CurrentRecipe;
 
+        #region Atmos
+
+        /// <summary>
+        ///     The ID for the pipe node that will be used if recipe require gas.
+        /// </summary>
+        [DataField]
+        public string Inlet = "pipe";
+
+        /// <summary>
+        ///     The ID for the pipe node that will be used if recipe require gas.
+        /// </summary>
+        [ViewVariables]
+        public float CurrentGasAmount;
+
+        #endregion
+
         #region MachineUpgrading
+
         /// <summary>
         /// A modifier that changes how long it takes to print a recipe
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float TimeMultiplier = 1;
 
         /// <summary>
         /// A modifier that changes how much of a material is needed to print a recipe
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
+
         #endregion
     }
 

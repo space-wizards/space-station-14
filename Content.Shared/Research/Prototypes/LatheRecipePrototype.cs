@@ -1,10 +1,12 @@
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Materials;
+
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes
@@ -70,5 +72,16 @@ namespace Content.Shared.Research.Prototypes
         /// </summary>
         [DataField]
         public ProtoId<LatheCategoryPrototype>? Category;
+
+        #region Atmos
+
+        /// <summary>
+        ///     Id of gas and float number of requied amount that will be consumed during producion.
+        //      Can be null.
+        /// </summary>
+        [DataField]
+        public Dictionary<Gas, int> RequiedGas = new();
+
+        #endregion
     }
 }

@@ -8,6 +8,7 @@ using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -182,16 +183,21 @@ namespace Content.Server.Lathe
             if (!CanProduce(uid, recipe, 1, component))
                 return false;
 
-            if (TryComp<GasForProducingComponent>(uid, out var comp))
+            foreach (var (gas, amount) in recipe.RequiedGas)
             {
-                if (CheckHaveGasForProduce(uid, comp) != true)
+                if (!_nodeContainer.TryGetNode(uid, component.Inlet, out PipeNode? inlet))
                     return false;
+
+                if (inlet.Air.GetMoles(gas) <= 0)
+                    return false;
+
+                inlet.Air.AdjustMoles(gas, -amount);
             }
 
             foreach (var (mat, amount) in recipe.Materials)
             {
                 var adjustedAmount = recipe.ApplyMaterialDiscount
-                    ? (int) (-amount * component.MaterialUseMultiplier)
+                    ? (int)(-amount * component.MaterialUseMultiplier)
                     : -amount;
 
                 _materialStorage.TryChangeMaterialAmount(uid, mat, adjustedAmount);
@@ -384,18 +390,6 @@ namespace Content.Server.Lathe
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
-        }
-
-        private bool CheckHaveGasForProduce(EntityUid uid, GasForProducingComponent comp)
-        {
-            if (!_nodeContainer.TryGetNode(uid, comp.Inlet, out PipeNode? inlet))
-                return false;
-
-            if (inlet.Air.GetMoles(comp.GasId) <= 0)
-                return false;
-
-            inlet.Air.AdjustMoles(comp.GasId, -comp.GasAmount);
-            return true;
         }
 
         #region UI Messages
