@@ -14,4 +14,6 @@
       food:
         reagents:
         - ReagentId: KronkusExtract
-          Quantity: 15
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 5

@@ -1,0 +1,10 @@
+- type: entity
+  parent: SeedBase
+  name: packet of kronkus vine seeds
+  description: "A pack of highly illegal kronkus seeds. Possession of these seeds carries the death penalty in 7 sectors."
+  id: KronkusSeeds
+  components:
+    - type: Seed
+      seedId: kronkusVine
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/kronkus_vine.rsi
