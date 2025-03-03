@@ -31,5 +31,5 @@ reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 reagent-name-hew = hewzine
 reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!
 
-reagent-name-corgijuice = essence of corgi
+reagent-name-corgijuice = juice that makes you a corgi
 reagent-desc-corgijuice = A convoluted healing liquid with extreme side effects when overconsumed.
