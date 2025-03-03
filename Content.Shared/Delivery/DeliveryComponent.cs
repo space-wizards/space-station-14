@@ -24,7 +24,7 @@ public sealed partial class DeliveryComponent : Component
     public bool IsLocked = true;
 
     /// <summary>
-    /// The amount of spesos that gets added to the station back account on unlock.
+    /// The amount of spesos that gets added to the station bank account on unlock.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int SpesoReward = 500;
@@ -44,7 +44,7 @@ public sealed partial class DeliveryComponent : Component
     public string? RecipientJobTitle;
 
     /// <summary>
-    /// The EnttyUid of the station this delivery was spawned on.
+    /// The EntityUid of the station this delivery was spawned on.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? RecipientStation;

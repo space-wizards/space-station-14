@@ -6,7 +6,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Delivery;
 
 /// <summary>
-/// Component given to deliveries. I will write this eventually.
+/// Used to mark entities that are valid for spawning deliveries on.
+/// If this requires power, it needs to be powered to count as a valid spawner.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeliverySpawnerComponent : Component

@@ -49,6 +49,38 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         InitializeSpawning();
     }
 
+    private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
+    {
+        var container = _container.EnsureContainer<Container>(ent, "delivery");
+
+        var stationId = _station.GetStationInMap(Transform(ent).MapID);
+
+        if (stationId == null)
+            return;
+
+        _records.TryGetRandomRecord<GeneralStationRecord>(stationId.Value, out var entry);
+
+        if (entry == null)
+            return;
+
+        ent.Comp.RecipientName = entry.Name;
+        ent.Comp.RecipientJobTitle = entry.JobTitle;
+        ent.Comp.RecipientStation = stationId.Value;
+        ent.Comp.Container = container;
+
+        _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
+
+        _label.Label(ent, ent.Comp.RecipientName);
+
+        if (TryComp<FingerprintReaderComponent>(ent, out var reader) && entry.Fingerprint != null)
+        {
+            _fingerprintReader.AddAllowedFingerprint((ent.Owner, reader), entry.Fingerprint);
+            Dirty(ent, reader);
+        }
+
+        Dirty(ent);
+    }
+
     private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
     {
         args.Handled = true;
@@ -143,39 +175,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         // If we're trying to unlock, always remove the priority tape
         if (!isLocked)
             _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
-    }
-
-
-    private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
-    {
-        var container = _container.EnsureContainer<Container>(ent, "delivery");
-
-        var stationId = _station.GetStationInMap(Transform(ent).MapID);
-
-        if (stationId == null)
-            return;
-
-        _records.TryGetRandomRecord<GeneralStationRecord>(stationId.Value, out var entry);
-
-        if (entry == null)
-            return;
-
-        ent.Comp.RecipientName = entry.Name;
-        ent.Comp.RecipientJobTitle = entry.JobTitle;
-        ent.Comp.RecipientStation = stationId.Value;
-        ent.Comp.Container = container;
-
-        _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
-
-        _label.Label(ent, ent.Comp.RecipientName);
-
-        if (TryComp<FingerprintReaderComponent>(ent, out var reader) && entry.Fingerprint != null)
-        {
-            _fingerprintReader.AddAllowedFingerprint((ent.Owner, reader), entry.Fingerprint);
-            Dirty(ent, reader);
-        }
-
-        Dirty(ent);
     }
 
     private void GrantSpesoReward(Entity<DeliveryComponent?> ent)
