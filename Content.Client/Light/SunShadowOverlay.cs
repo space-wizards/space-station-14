@@ -22,6 +22,7 @@ public sealed class SunShadowOverlay : Overlay
 
     private readonly HashSet<Entity<SunShadowCastComponent>> _shadows = new();
 
+    private IRenderTexture? _blurTarget;
     private IRenderTexture? _target;
 
     public SunShadowOverlay()
@@ -50,13 +51,20 @@ public sealed class SunShadowOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var mapId = args.MapId;
         var worldBounds = args.WorldBounds;
+        var targetSize = viewport.LightRenderTarget.Size;
 
-        if (_target?.Size != viewport.LightRenderTarget.Size)
+        if (_target?.Size != targetSize)
         {
             _target = _clyde
-                .CreateRenderTarget(viewport.LightRenderTarget.Size,
+                .CreateRenderTarget(targetSize,
                     new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                     name: "sun-shadow-target");
+
+            if (_blurTarget?.Size != targetSize)
+            {
+                _blurTarget = _clyde
+                    .CreateRenderTarget(targetSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "sun-shadow-blur");
+            }
         }
 
         var lightScale = viewport.LightRenderTarget.Size / (Vector2)viewport.Size;
@@ -124,6 +132,9 @@ public sealed class SunShadowOverlay : Overlay
                     }
                 },
                 Color.Transparent);
+
+            // Slightly blur it just to avoid aliasing issues on the later viewport-wide blur.
+            _clyde.BlurRenderTarget(viewport, _target, _target, eye, 1f);
 
             // Draw stencil (see roofoverlay).
             args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
