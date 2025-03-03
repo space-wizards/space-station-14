@@ -103,3 +103,17 @@
             sprite: Structures/Power/Generation/Singularity/singularity_6.rsi
             state: singularity_6
             scale: .9,.9
+
+- type: entity
+  parent: Singularity
+  id: SingularityXenoArch
+  suffix: Artifact
+  components:
+  - type: AlertLevelChangeOnSpawn
+    level: "yellow"
+  - type: AnnounceOnSpawn
+    message: xeno-arch-announce-singularity
+    sender: xeno-arch-announce-sender-centra-command
+    sound:
+      path: /Audio/Misc/notice1.ogg
+    color: yellow

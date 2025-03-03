@@ -148,3 +148,17 @@
     - state: tesla_projectile
   - type: Electrified
     requirePower: false
+
+- type: entity
+  parent: TeslaEnergyBall
+  id: TeslaEnergyBallXenoArch
+  suffix: Artifact
+  components:
+  - type: AlertLevelChangeOnSpawn
+    level: "yellow"
+  - type: AnnounceOnSpawn
+    message: xeno-arch-announce-tesla
+    sender: xeno-arch-announce-sender-centra-command
+    sound:
+      path: /Audio/Misc/notice1.ogg
+    color: yellow
