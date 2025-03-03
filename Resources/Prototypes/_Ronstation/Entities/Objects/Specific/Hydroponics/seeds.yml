@@ -7,4 +7,4 @@
     - type: Seed
       seedId: kronkusVine
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/kronkus_vine.rsi
+      sprite: _Ronstation/Objects/Specific/Hydroponics/kronkus_vine.rsi
