@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Spectral locator, rare maintenance loot that lets you know if any ghosts
-      are nearby.
-    type: Add
-  id: 7533
-  time: '2024-10-18T13:42:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32323
 - author: PJB3005
   changes:
   - message: You can now start removing items via stripping while holding something.
@@ -3901,3 +3893,11 @@
   id: 8032
   time: '2025-03-02T20:58:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31812
+- author: FairlySadPanda
+  changes:
+  - message: Pet carriers now only carry pets. preventing various unintended, albeit
+      hilarious, activities.
+    type: Fix
+  id: 8033
+  time: '2025-03-03T10:04:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35587
