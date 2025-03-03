@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: You can now start removing items via stripping while holding something.
-    type: Tweak
-  id: 7534
-  time: '2024-10-18T19:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32750
 - author: Beck Thompson
   changes:
   - message: Scalpels and shivs now work as knives!
@@ -3901,3 +3894,11 @@
   id: 8033
   time: '2025-03-03T10:04:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35587
+- author: Coolsurf6
+  changes:
+  - message: Pain from Burn damage is now calculated when displaying the red damage
+      overlay
+    type: Tweak
+  id: 8034
+  time: '2025-03-03T11:11:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34535
