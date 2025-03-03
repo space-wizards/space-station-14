@@ -683,7 +683,7 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
     // 🌟Starlight🌟
-    private void FireEffects(List<List<(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, EntityUid? hitEntity)>> hits, HitscanPrototype hitscan)
+    private void FireEffects(List<List<(EntityCoordinates fromCoordinates, float distance, Angle angle, EntityUid? hitEntity)>> hits, HitscanPrototype hitscan)
     {
         if (hits.Count == 0) return;
         var hitscanEvent = new HitscanEvent
@@ -702,22 +702,21 @@ public sealed partial class GunSystem : SharedGunSystem
             hitscanEvent.Effects[spreadIndex] = new Effect[hit.Count];
             ref var effects = ref hitscanEvent.Effects[spreadIndex];
 
-            foreach (var (fromCoordinatesOrig, distance, mapDirection, hitEntity) in hit)
+            foreach (var (fromCoordinates, distance, angle, hitEntity) in hit)
             {
-                var fromCoordinates = fromCoordinatesOrig;
-                var gridUid = _transform.GetGrid(fromCoordinates);
-                var angle = mapDirection;
+                var fromXform = Transform(fromCoordinates.EntityId);
 
-                var xformQuery = GetEntityQuery<TransformComponent>();
-                if (xformQuery.TryGetComponent(gridUid, out var gridXform))
+                var gridUid = fromXform.GridUid;
+                if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
                 {
-                    var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
-
-                    fromCoordinates = new EntityCoordinates(gridUid.Value,
-                        Vector2.Transform(_transform.ToMapCoordinates(fromCoordinates).Position, gridInvMatrix));
-
-                    // Use the fallback angle I guess?
+                    var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
+                    var map = _transform.ToMapCoordinates(fromCoordinates);
+                    fromCoordinates = new EntityCoordinates(gridUid.Value, Vecto2.Transform(map.Position, gridInvMatrix))
                     angle -= gridRot;
+                }
+                else
+                {
+                    angle -= _transform.GetWorldPosition(fromXform);
                 }
 
                 index++;

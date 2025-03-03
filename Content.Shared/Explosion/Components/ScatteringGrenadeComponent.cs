@@ -38,6 +38,12 @@ public sealed partial class ScatteringGrenadeComponent : Component
     public int Capacity = 3;
 
     /// <summary>
+    /// Number of grenades currently contained in the cluster (both spawned and unspawned)
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int Count => UnspawnedCount + Container.ContainedEntities.Count;
+
+    /// <summary>
     /// Decides if contained entities trigger after getting launched
     /// </summary>
     [DataField]
