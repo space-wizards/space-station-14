@@ -46,23 +46,97 @@
       - MagazineSMGUzi
       
 - type: entity
-  id: MagazinePistol40Nr
-  name: pistol magazine (40 NR)
+  id: MagazinePistol40Base
+  name: "Pistol Magazine (.40)"
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol40NrSP
+    proto: CartridgePistol40SP
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgePistolSP8
+        - CartridgePistolDP
     capacity: 10
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/40nr.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/40.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
     steps: 6
     zeroVisible: false
   - type: Tag
     tags:
-      - MagazinePistolSP8
+      - MagazinePistolDP
+
+- type: entity
+  id: MagazinePistol40Empty
+  name: "Pistol Magazine (.40 any)"
+  suffix: empty
+  parent: MagazinePistol40Base
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazinePistol40SP
+  name: "Pistol Magazine (.40 SP)"
+  parent: MagazinePistol40Base
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol40SP
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]  
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistol40HP
+  name: "Pistol Magazine (.40 HP)"
+  parent: MagazinePistol40Base
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol40HP
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]  
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistol40FMJ
+  name: "Pistol Magazine (.40 FMJ)"
+  parent: MagazinePistol40Base
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol40FMJ
+  - type: Sprite
+    layers:
+    - state: fmj
+      map: ["enum.GunVisualLayers.Base"]  
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistol40AP
+  name: "Pistol Magazine (.40 AP)"
+  parent: MagazinePistol40Base
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol40AP
+  - type: Sprite
+    layers:
+    - state: ap
+      map: ["enum.GunVisualLayers.Base"]  
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
