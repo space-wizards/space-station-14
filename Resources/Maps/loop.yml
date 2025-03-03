@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 02/17/2025 22:19:14
+  entityCount: 17778
+maps:
+- 1
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   34: Space
   41: FloorArcadeBlue2
@@ -53,7 +64,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
@@ -7267,7 +7277,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50568.94
+      secondsUntilStateChange: -50998.375
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12233,11 +12243,6 @@ entities:
     components:
     - type: Transform
       pos: -21.18376,72.50857
-      parent: 2
-  - uid: 9041
-    components:
-    - type: Transform
-      pos: -35.100624,62.530506
       parent: 2
 - proto: BoxFolderGreen
   entities:
@@ -43742,7 +43747,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298324.5
+      secondsUntilStateChange: -298753.94
       state: Opening
   - uid: 6747
     components:
@@ -43750,7 +43755,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298325.22
+      secondsUntilStateChange: -298754.66
       state: Opening
   - uid: 6749
     components:
@@ -43758,7 +43763,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298323.78
+      secondsUntilStateChange: -298753.22
       state: Opening
   - uid: 6750
     components:
@@ -43766,7 +43771,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298323.16
+      secondsUntilStateChange: -298752.6
       state: Opening
   - uid: 9721
     components:
@@ -76348,7 +76353,8 @@ entities:
   - uid: 9067
     components:
     - type: Transform
-      pos: -35.585,62.874256
+      rot: -1.5707963267948966 rad
+      pos: -35.009964,62.848682
       parent: 2
   - uid: 15928
     components:
@@ -78536,6 +78542,13 @@ entities:
     components:
     - type: Transform
       pos: -18.5,63.5
+      parent: 2
+- proto: PaperBin20
+  entities:
+  - uid: 9041
+    components:
+    - type: Transform
+      pos: -35.5,62.5
       parent: 2
 - proto: PaperCNCSheet
   entities:
@@ -92373,6 +92386,18 @@ entities:
     - type: Transform
       pos: -34.5,67.5
       parent: 2
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 17777
+    components:
+    - type: Transform
+      pos: -83.5,55.5
+      parent: 2
+  - uid: 17778
+    components:
+    - type: Transform
+      pos: -83.5,69.5
+      parent: 2
 - proto: SpawnPointLawyer
   entities:
   - uid: 15239
@@ -97419,12 +97444,26 @@ entities:
     - type: Transform
       pos: -37.66107,39.822132
       parent: 2
+- proto: ToyFigurineJanitor
+  entities:
+  - uid: 17775
+    components:
+    - type: Transform
+      pos: -34.461563,68.50844
+      parent: 2
 - proto: ToyFigurineLawyer
   entities:
   - uid: 7153
     components:
     - type: Transform
       pos: -10.356424,64.17697
+      parent: 2
+- proto: ToyFigurineLibrarian
+  entities:
+  - uid: 17776
+    components:
+    - type: Transform
+      pos: -66.40901,58.667908
       parent: 2
 - proto: ToyFigurineMedicalDoctor
   entities:
