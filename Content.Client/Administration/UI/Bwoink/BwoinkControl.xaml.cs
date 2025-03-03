@@ -108,31 +108,37 @@ namespace Content.Client.Administration.UI.Bwoink
                 if (a.IsPinned != b.IsPinned)
                     return a.IsPinned ? -1 : 1;
 
-                // First, sort by unread. Any chat with unread messages appears first.
+                // Then, any chat with unread messages.
                 var aUnread = ach.Unread > 0;
                 var bUnread = bch.Unread > 0;
                 if (aUnread != bUnread)
                     return aUnread ? -1 : 1;
 
-                // Sort by recent messages during the current round.
+                // Then, any chat with recent messages from the current round
                 var aRecent = a.ActiveThisRound && ach.LastMessage != DateTime.MinValue;
                 var bRecent = b.ActiveThisRound && bch.LastMessage != DateTime.MinValue;
                 if (aRecent != bRecent)
                     return aRecent ? -1 : 1;
 
-                // Next, sort by connection status. Any disconnected players are grouped towards the end.
+                // Sort by connection status. Disconnected players will be last.
                 if (a.Connected != b.Connected)
                     return a.Connected ? -1 : 1;
 
-                // Sort connected players by New Player status, then by Antag status
+                // Sort connected players by whether they have joined the round, then by New Player status, then by Antag status
                 if (a.Connected && b.Connected)
                 {
                     var aNewPlayer = IsNewPlayer(a);
                     var bNewPlayer = IsNewPlayer(b);
 
+                    //  Players who have joined the round will be listed before players in the lobby
+                    if (a.ActiveThisRound != b.ActiveThisRound)
+                        return a.ActiveThisRound ? -1 : 1;
+
+                    //  Within both the joined group and lobby group, new players will be grouped and listed first
                     if (aNewPlayer != bNewPlayer)
                         return aNewPlayer ? -1 : 1;
 
+                    //  Within all four previous groups, antagonists will be listed first.
                     if (a.Antag != b.Antag)
                         return a.Antag ? -1 : 1;
                 }
