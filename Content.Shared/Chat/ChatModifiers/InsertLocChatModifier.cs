@@ -1,14 +1,16 @@
-using Robust.Shared.Utility;
+﻿using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
+// CHAT-TODO: This could probably be used to do a more generic string insertion modifier for non-LoC strings too
 /// <summary>
-/// Inserts an LoC string after a specific node. Useful for formatting certain messages, such as whispering.
+/// Inserts a localized string after a specific node. Useful for formatting certain messages, such as whispering.
 /// </summary>
 [Serializable]
 [DataDefinition]
-public sealed partial class InsertLoCChatModifier : ChatModifier
+public sealed partial class InsertLocChatModifier : ChatModifier
 {
+    // CHAT-TODO: Might be worth refactoring this into a base class with insertAFter/insertBefore derived types. Having it be a var might be considered ugly.
     /// <summary>
     /// If false, the string will be inserted before the node.
     /// </summary>
@@ -25,7 +27,7 @@ public sealed partial class InsertLoCChatModifier : ChatModifier
     /// The string that should be inserted.
     /// </summary>
     [DataField]
-    public string LocString = "";
+    public string LocString = default!;
 
     public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {

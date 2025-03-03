@@ -1,4 +1,4 @@
-using Content.Shared.Chat.Prototypes;
+﻿using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -38,6 +38,7 @@ public sealed partial class SpeechVerbChatModifier : ChatModifier
 
         var count = current.SpeechVerbStrings.Count;
 
+        // CHAT-TODO: Is doing SetSeed repeatedly like this OK? Is necessary for determinism, but might be scary... Doublecheck with smart people.
         _random.SetSeed(seed);
         var verbId = _random.Next(count);
 

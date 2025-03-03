@@ -208,12 +208,12 @@ internal sealed partial class ChatManager : IChatManager
 
     public void SendChannelMessage(
         string message,
-        ProtoId<CommunicationChannelPrototype> communicationChannel, 
-        ICommonSession? senderSession, 
-        EntityUid? senderEntity, 
-        HashSet<ICommonSession>? targetSessions = null, 
-        bool escapeText = true, 
-        ChatMessageContext? channelParameters = null, 
+        ProtoId<CommunicationChannelPrototype> communicationChannel,
+        ICommonSession? senderSession,
+        EntityUid? senderEntity,
+        HashSet<ICommonSession>? targetSessions = null,
+        bool escapeText = true,
+        ChatMessageContext? channelParameters = null,
         bool logMessage = true
     )
     {
@@ -225,12 +225,12 @@ internal sealed partial class ChatManager : IChatManager
     }
 
     public void SendChannelMessage(
-        FormattedMessage message, 
-        string communicationChannel, 
-        ICommonSession? senderSession, 
-        EntityUid? senderEntity, 
-        HashSet<ICommonSession>? targetSessions = null, 
-        ChatMessageContext? channelParameters = null, 
+        FormattedMessage message,
+        string communicationChannel,
+        ICommonSession? senderSession,
+        EntityUid? senderEntity,
+        HashSet<ICommonSession>? targetSessions = null,
+        ChatMessageContext? channelParameters = null,
         bool logMessage = true
     )
     {
@@ -242,13 +242,13 @@ internal sealed partial class ChatManager : IChatManager
     }
 
     public void SendChannelMessage(
-        FormattedMessage message, 
-        string communicationChannel, 
-        ICommonSession? senderSession, 
-        EntityUid? senderEntity, 
-        List<CommunicationChannelPrototype> usedCommsTypes, 
-        HashSet<ICommonSession>? targetSessions = null, 
-        ChatMessageContext? channelParameters = null, 
+        FormattedMessage message,
+        string communicationChannel,
+        ICommonSession? senderSession,
+        EntityUid? senderEntity,
+        List<CommunicationChannelPrototype> usedCommsTypes,
+        HashSet<ICommonSession>? targetSessions = null,
+        ChatMessageContext? channelParameters = null,
         bool logMessage = true
     )
     {
@@ -342,7 +342,7 @@ internal sealed partial class ChatManager : IChatManager
         }
 
         // We also pass it on to any child channels that should be included.
-        var childChannels = FilterChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
+        var childChannels = FilterChildChannels(communicationChannel, communicationChannel.AlwaysRelayedToChannels);
         if (childChannels.Count > 0)
         {
             foreach (var childChannel in childChannels)
@@ -362,10 +362,10 @@ internal sealed partial class ChatManager : IChatManager
         // Useful for e.g. making ghosts trying to send LOOC messages fall back to Deadchat instead.
         if (failedPublishing)
         {
-            var backupChildChannels = FilterChildChannels(communicationChannel, communicationChannel.BackupChildCommunicationChannels);
-            if (backupChildChannels.Count > 0)
+            var fallbackChannels = FilterChildChannels(communicationChannel, communicationChannel.FallbackChannels);
+            if (fallbackChannels.Count > 0)
             {
-                foreach (var backupChildChannel in backupChildChannels)
+                foreach (var backupChildChannel in fallbackChannels)
                 {
                     SendChannelMessage(
                         message,

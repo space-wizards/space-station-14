@@ -1,4 +1,4 @@
-using Robust.Shared.Utility;
+﻿using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -41,14 +41,17 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 
     private string SanitizeRadioPrefix(string text)
     {
+        // Common radio is only ";" which means only the first symbol needs to be removed.
         if (text.StartsWith(SharedChatSystem.RadioCommonPrefix))
         {
             return text[1..].TrimStart();
         }
 
+        // If the channel starts with a non-common radio channel prefix, assume the first two symbols are radio prefixes (e.g. ":s").
         if (text.StartsWith(SharedChatSystem.RadioChannelPrefix) ||
             text.StartsWith(SharedChatSystem.RadioChannelAltPrefix))
         {
+            // Not exactly sure what this does but seems to cover situations where only the prefix symbol is given.
             if (text.Length < 2 || char.IsWhiteSpace(text[1]))
             {
                 return text[1..].TrimStart();

@@ -28,8 +28,10 @@ internal sealed class ChatManager : IChatManager
         _sawmill.Level = LogLevel.Info;
     }
 
+    // TODO: Necessary for compatability with how the chatbox system is set up, but should ideally be refactored cleaner.
     public void SendMessage(string text, ChatSelectChannel channel, RadioChannelPrototype? radioChannel)
     {
+        // TODO: Get this changed away from being commands.
         var str = text.ToString();
         switch (channel)
         {
@@ -64,6 +66,7 @@ internal sealed class ChatManager : IChatManager
                     _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                 break;
 
+            // CHAT-TODO: The way this uses a magic string and forces "Radio" + channel id isn't good. Necessary for backwards compatability now, but should be refactored.
             case ChatSelectChannel.Radio:
                 radioChannel ??= _prototypeManager.Index<RadioChannelPrototype>(DefaultRadioChannel);
                 SendMessage(str, "Radio" + radioChannel.ID);

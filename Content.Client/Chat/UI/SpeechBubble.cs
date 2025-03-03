@@ -20,6 +20,7 @@ namespace Content.Client.Chat.UI
         [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
         private readonly SharedTransformSystem _transformSystem;
 
+        // CHAT-TODO: All instances of SpeechType can probably use our channel prototypes instead.
         public enum SpeechType : byte
         {
             Emote,
@@ -61,6 +62,7 @@ namespace Content.Client.Chat.UI
         // man down
         public event Action<EntityUid, SpeechBubble>? OnDied;
 
+        // CHAT-TODO: Consider changing SpeechType to something more fitting with the communication channel protos
         public static SpeechBubble CreateSpeechBubble(SpeechType type, ChatMessage message, EntityUid senderEntity)
         {
             switch (type)
@@ -264,7 +266,7 @@ namespace Content.Client.Chat.UI
                 StyleClasses = { "bubbleContent" },
             };
 
-
+            // CHAT-TODO: Replace with FormattedMessage API
             if (_chatManager.TryGetMessageInsideTag(message.Message, out var bubbleHeaderMsg, BubbleHeaderTagName) &&
                 _chatManager.TryGetMessageInsideTag(message.Message, out var bubbleMessageMsg, BubbleBodyTagName))
             {

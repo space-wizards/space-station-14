@@ -7,6 +7,7 @@ public interface ISharedChatManager
 {
     void Initialize();
 
+    // CHAT-TODO: Replace with FormattedMessage API, this is kinda obsoleted and is only used in one place.
     /// <summary>
     /// Helper function that tries to find the first instance of a tag and returns a FormattedMessage containing the nodes inside.
     /// </summary>
