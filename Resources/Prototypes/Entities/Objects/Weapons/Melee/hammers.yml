@@ -23,6 +23,10 @@
         Structural: 10
   - type: Item
     size: Large
+  - type: Tag
+    tags:
+    - Knife
+    - WeaponCrusherDagger
 
 - type: entity
   id: Mjollnir
