@@ -19,6 +19,9 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnVoiceInit(EntityUid uid, TriggerOnVoiceComponent component, ComponentInit args)
         {
+            if (!string.IsNullOrEmpty(component.DefaultKeyPhrase))
+                component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+
             if (component.IsListening)
                 EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
             else
@@ -80,6 +83,20 @@ namespace Content.Server.Explosion.EntitySystems
                 Priority = 1
             });
 
+            if (!string.IsNullOrEmpty(component.DefaultKeyPhrase)
+                && component.KeyPhrase != Loc.GetString(component.DefaultKeyPhrase))
+            {
+                args.Verbs.Add(new AlternativeVerb
+                {
+                    Text = Loc.GetString("verb-trigger-voice-default"),
+                    Act = () =>
+                    {
+                        component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+                        SetToDefault(ent, @event.User);
+                    },
+                });
+            }
+
             if (string.IsNullOrWhiteSpace(component.KeyPhrase))
                 return;
 
@@ -129,14 +146,40 @@ namespace Content.Server.Explosion.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("popup-trigger-voice-recorded", ("keyphrase", component.KeyPhrase!)), ent);
         }
 
+        private void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid source)
+        {
+            var component = ent.Comp;
+            EnsureComp<ActiveListenerComponent>(ent).Range = component.ListenRange;
+
+            _adminLogger.Add(
+                LogType.Trigger,
+                LogImpact.Low,
+                $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{component.KeyPhrase}'. User: {ToPrettyString(source):speaker}");
+
+            _popupSystem.PopupEntity(Loc.GetString("popup-trigger-voice-set-default", ("keyphrase", component.KeyPhrase!)), ent);
+        }
+
         private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
+            if (!args.IsInDetailsRange)
+                return;
+
+            string keyPhrase;
+
+            if (!string.IsNullOrWhiteSpace(component.KeyPhrase))
             {
-                args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
-                    ? Loc.GetString("trigger-voice-uninitialized")
-                    : Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase)));
+                keyPhrase = component.KeyPhrase;
             }
+            else if (!string.IsNullOrWhiteSpace(component.DefaultKeyPhrase))
+            {
+                keyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+            }
+            else
+            {
+                keyPhrase = Loc.GetString("trigger-voice-uninitialized");
+            }
+
+            args.PushText(Loc.GetString("examine-trigger-voice", ("keyphrase", keyPhrase)));
         }
     }
 }
