@@ -6,7 +6,7 @@ namespace Content.Shared.Roles;
 public sealed partial class DepartmentPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// The name LocId of the department that will be displayed in the various menus.

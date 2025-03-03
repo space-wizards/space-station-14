@@ -96,6 +96,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+  - type: ShowJobIcons
 
 # Ai
 - type: entity
@@ -429,6 +430,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
   - type: Eye
     drawFov: false
   - type: Examiner
