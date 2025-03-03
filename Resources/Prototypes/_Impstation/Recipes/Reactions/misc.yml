@@ -1,0 +1,30 @@
+- type: reaction
+  id: CreateSynthFleshReagent
+  impact: Low
+  quantized: true
+  conserveEnergy: true
+  reactants:
+    SulfuricAcid:
+      amount: 10
+    Blood:
+      amount: 10
+    Carbon:
+      amount: 5
+    Oxygen:
+      amount: 5
+  products:
+    SynthFlesh: 30
+
+- type: reaction
+  id: CreateSynthFleshBlob
+  impact: Low
+  quantized: true
+  conserveEnergy: true
+  reactants:
+    SynthFlesh:
+      amount: 30
+    Cognizine:
+      amount: 5
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: Homunculus
