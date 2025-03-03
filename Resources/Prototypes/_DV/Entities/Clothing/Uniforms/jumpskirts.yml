@@ -79,7 +79,7 @@
 # Salvage Specialist
 
 - type: entity
-  parent: ClothingUniformJumpsuitSalvageSpecialist
+  parent: ClothingUniformJumpsuitSalvageSpecialistDV
   id: ClothingUniformJumpskirtSalvageSpecialistDV
   name: salvage specialist's worn jumpskirt
   components:

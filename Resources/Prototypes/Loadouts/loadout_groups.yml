@@ -368,9 +368,6 @@
   - ClerkJumpskirt # DeltaV
   - ClothingUniformCreamSuit #imp
   - ClothingUniformCreamSuitSkirt #imp
-  - ChiefJusticeFormalJumpsuit # DeltaV
-  - ChiefJusticeFormalJumpskirt # DeltaV
-  - ChiefJusticeWhiteJumpsuit # DeltaV
   - ProsecutorJumpsuit # DeltaV
   - ProsecutorJumpskirt # DeltaV
 
@@ -1095,9 +1092,6 @@
   - HeadofSecurityProfessionalJumpskirt # imp
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
-  - ChiefJusticeFormalJumpsuit # DeltaV
-  - ChiefJusticeFormalJumpskirt # DeltaV
-  - ChiefJusticeWhiteJumpsuit # DeltaV
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
