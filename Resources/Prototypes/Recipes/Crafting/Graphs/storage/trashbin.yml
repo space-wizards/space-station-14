@@ -24,6 +24,6 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
-              amount: 5
+              amount: 3
             - !type:EmptyAllContainers
             - !type:DeleteEntity
