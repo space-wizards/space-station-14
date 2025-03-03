@@ -1,9 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Administration;
 using Content.Server.Mind;
+using Content.Shared.Administration;
 using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+
 
 namespace Content.Server.Administration.Commands;
 
