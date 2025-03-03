@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -18,7 +18,7 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 
         var returnMessage = new FormattedMessage();
         while (nodeEnumerator.MoveNext())
-        {
+        {   
             var node = nodeEnumerator.Current;
             if (node == firstTextNode)
             {

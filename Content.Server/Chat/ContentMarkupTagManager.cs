@@ -4,10 +4,10 @@ using Content.Shared.Chat.ContentMarkupTags;
 
 namespace Content.Server.Chat;
 
-public sealed class ContentMarkupTagManager : ISharedContentMarkupTagManager
+public sealed class ContentMarkupTagManager : SharedContentMarkupTagManagerBase
 {
     // This dictionary should contain serverside-only ContentMarkupTags.
-    public IReadOnlyDictionary<string, ContentMarkupTagBase> ContentMarkupTagTypes => new ContentMarkupTagBase[]
+    protected override IReadOnlyDictionary<string, ContentMarkupTagBase> ContentMarkupTagTypes => new ContentMarkupTagBase[]
     {
 
     }.ToFrozenDictionary(x => x.Name, x => x);

@@ -1,37 +1,38 @@
-﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat;
 
-public interface ISharedContentMarkupTagManager
+public abstract class SharedContentMarkupTagManagerBase
 {
     /// <summary>
-    /// Dictionary containing the initialized markup tags mapped to their name.
+    /// Map of initialized markup tags by their name.
     /// Any new ContentMarkupTag must be included in the Content.Client/Server's implementation of this dictionary.
     /// </summary>
-    IReadOnlyDictionary<string, IContentMarkupTag> ContentMarkupTagTypes { get; }
+    protected abstract IReadOnlyDictionary<string, ContentMarkupTagBase> ContentMarkupTagTypes { get; }
 
     /// <summary>
     /// Processes the message and applies the ContentMarkupTags.
     /// </summary>
-    /// <param name="message">The input message.</param>
+    /// <param name="nodes">The input message.</param>
     /// <param name="tagStack">If used iteratively, tagStack includes existing tags acting on the message.</param>
-    /// <returns></returns>
-    public FormattedMessage ProcessMessage(FormattedMessage message, Stack<ContentMarkupTagBase>? tagStack = null)
+    /// <returns>Message that is a result of application of all MarkupTags.</returns>
+    public IReadOnlyCollection<MarkupNode> ProcessMessage(IReadOnlyCollection<MarkupNode> nodes, Stack<ContentMarkupTagBase>? tagStack = null)
     {
         var consumedNodes = tagStack ?? new Stack<ContentMarkupTagBase>();
-        var returnMessage = new FormattedMessage();
-        var randomSeed = message.Count; // CHAT-TODO: Replace with message uuid.
+        var result = new List<MarkupNode>();
+        var randomSeed = nodes.Count; // CHAT-TODO: Replace with message uuid.
 
         // CHAT-TODO: This code is funky and fildrance should be poked about it later to figure out how to make it optimized.
-        var nodeEnumerator = message.Nodes.ToList();
+        var messageNodes = nodes.ToList();
+
+        var stack = new Stack<MarkupNode>();
 
         var i = 0;
-        while (i < nodeEnumerator.Count)
+        while (i < messageNodes.Count)
         {
-            var node = nodeEnumerator[i];
+            var node = messageNodes[i];
 
             // Iteratively go through all nodes that have been consumed and are acting on the message.
             if (consumedNodes.Count > 0)
@@ -44,10 +45,10 @@ public interface ISharedContentMarkupTagManager
 
                 if (consumedNodeResult.Count > 0)
                 {
-                    var iteratedMessage = ProcessMessage(FormattedMessage.FromMarkupOrThrow(string.Join("", consumedNodeResult)), new Stack<ContentMarkupTagBase>(consumedNodes.Skip(1)));
-                    returnMessage.AddMessage(iteratedMessage);
-                    nodeEnumerator.InsertRange(i, iteratedMessage.Nodes);
-                    i += iteratedMessage.Nodes.Count + 1;
+                    var processed = ProcessMessage(consumedNodeResult, new(consumedNodes.Skip(1)));
+                    result.AddRange(processed);
+                    messageNodes.InsertRange(i, processed);
+                    i += processed.Count + 1;
                     continue;
                 }
             }
@@ -60,9 +61,9 @@ public interface ISharedContentMarkupTagManager
                     var openerNode = tag.ProcessOpeningTag(node, randomSeed);
                     if (openerNode.Count > 0)
                     {
-                        nodeEnumerator.InsertRange(i, openerNode);
+                        messageNodes.InsertRange(i, openerNode);
                         i += openerNode.Count;
-                        returnMessage.AddMessage(FormattedMessage.FromMarkupOrThrow(string.Join("", openerNode)));
+                        result.AddRange(openerNode);
                     }
 
                     consumedNodes.Push(tag);
@@ -72,9 +73,9 @@ public interface ISharedContentMarkupTagManager
                     var closerNode = tag.ProcessCloser(node, randomSeed);
                     if (closerNode.Count > 0)
                     {
-                        nodeEnumerator.InsertRange(i, closerNode);
+                        messageNodes.InsertRange(i, closerNode);
                         i += closerNode.Count;
-                        returnMessage.AddMessage(FormattedMessage.FromMarkupOrThrow(string.Join("", closerNode)));
+                        result.AddRange(closerNode);
                     }
 
                     consumedNodes.Pop();
@@ -84,17 +85,19 @@ public interface ISharedContentMarkupTagManager
             {
                 if (!node.Closing)
                 {
-                    returnMessage.PushTag(node);
+                    result.Add(node);
+                    stack.Push(node);
                 }
                 else
                 {
-                    returnMessage.Pop();
+                    var lastOpened = stack.Pop();
+                    result.Add(new MarkupNode(lastOpened.Name, null, null, true));
                 }
             }
 
             i++;
         }
 
-        return returnMessage;
+        return result;
     }
 }
