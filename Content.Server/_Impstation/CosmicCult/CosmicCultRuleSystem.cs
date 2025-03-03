@@ -296,7 +296,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady)
             FinaleReady(uid, finaleComp);
         else if (finaleComp.FinaleReady || finaleComp.FinaleActive)
-            uid.Comp.CurrentProgress = uid.Comp.TargetProgress;
+            uid.Comp.TargetProgress = uid.Comp.CurrentProgress;
         else if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 2)
         {
             MonumentTier3(uid);
@@ -506,6 +506,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         finaleComp.FinaleReady = true;
         uid.Comp.Enabled = false;
+        uid.Comp.TargetProgress = uid.Comp.CurrentProgress;
 
         _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-ready"), Transform(uid).Coordinates, PopupType.Large);
     }
