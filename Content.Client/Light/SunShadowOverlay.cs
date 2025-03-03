@@ -2,6 +2,8 @@ using System.Numerics;
 using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +15,7 @@ public sealed class SunShadowOverlay : Overlay
 
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _xformSys;
@@ -29,102 +32,112 @@ public sealed class SunShadowOverlay : Overlay
         ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
     }
 
+    private List<Entity<MapGridComponent>> _grids = new();
+
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (!_entManager.TryGetComponent(args.MapUid, out SunShadowComponent? sun))
-            return;
-
-        var direction = sun.Direction;
-        var alpha = Math.Clamp(sun.Alpha, 0f, 1f);
-
-        // Nowhere to cast to so ignore it.
-        if (direction.Equals(Vector2.Zero) || alpha == 0f)
-            return;
-
-        direction = new(MathF.Round(direction.X, 2), MathF.Round(direction.Y, 2));
-        var length = direction.Length();
-        var worldHandle = args.WorldHandle;
         var viewport = args.Viewport;
         var eye = viewport.Eye;
-        var mapId = args.MapId;
 
         if (eye == null)
             return;
 
-        // Feature todo: dynamic shadows for mobs and trees. Also ideally remove the fake tree shadows.
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(args.MapId,
+            args.WorldBounds.Enlarged(SunShadowComponent.MaxLength),
+            ref _grids);
 
-
-        // TODO: Jittering still not quite perfect
+        var worldHandle = args.WorldHandle;
+        var mapId = args.MapId;
         var worldBounds = args.WorldBounds;
-        var expandedBounds = worldBounds.Enlarged(length + 0.1f);
-        _shadows.Clear();
 
         if (_target?.Size != viewport.LightRenderTarget.Size)
         {
             _target = _clyde
                 .CreateRenderTarget(viewport.LightRenderTarget.Size,
-                    new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "sun-shadow-target");
+                    new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
+                    name: "sun-shadow-target");
         }
 
-        var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
+        var lightScale = viewport.LightRenderTarget.Size / (Vector2)viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
 
-        // Draw shadow polys to stencil
-        args.WorldHandle.RenderInRenderTarget(_target,
-            () =>
+        foreach (var grid in _grids)
+        {
+            if (!_entManager.TryGetComponent(grid.Owner, out SunShadowComponent? sun))
             {
-                var invMatrix =
-                    _target.GetWorldToLocalMatrix(eye, scale);
-                var indices = new Vector2[PhysicsConstants.MaxPolygonVertices];
+                continue;
+            }
 
-                // Go through shadows in range.
+            var direction = sun.Direction;
+            var alpha = Math.Clamp(sun.Alpha, 0f, 1f);
 
-                // For each one we:
-                // - Get the original vertices.
-                // - Extrapolate these along the sun direction.
-                // - Combine the above into 1 single polygon to draw.
+            // Nowhere to cast to so ignore it.
+            if (direction.Equals(Vector2.Zero) || alpha == 0f)
+                continue;
 
-                // Note that this is range-limited for accuracy; if you set it too high it will clip through walls or other undesirable entities.
-                // This is probably not noticeable most of the time but if you want something "accurate" you'll want to code a solution.
-                // Ideally the CPU would have its own shadow-map copy that we could just ray-cast each vert into though
-                // You might need to batch verts or the likes as this could get expensive.
-                _lookup.GetEntitiesIntersecting(mapId, expandedBounds, _shadows);
+            // Feature todo: dynamic shadows for mobs and trees. Also ideally remove the fake tree shadows.
+            // TODO: Jittering still not quite perfect
 
-                foreach (var ent in _shadows)
+            var expandedBounds = worldBounds.Enlarged(direction.Length() + 0.01f);
+            _shadows.Clear();
+
+            // Draw shadow polys to stencil
+            args.WorldHandle.RenderInRenderTarget(_target,
+                () =>
                 {
-                    var xform = _entManager.GetComponent<TransformComponent>(ent.Owner);
-                    var worldMatrix = _xformSys.GetWorldMatrix(xform);
-                    var renderMatrix = Matrix3x2.Multiply(worldMatrix, invMatrix);
+                    var invMatrix =
+                        _target.GetWorldToLocalMatrix(eye, scale);
+                    var indices = new Vector2[PhysicsConstants.MaxPolygonVertices * 2];
 
-                    indices[0] = new Vector2(-0.5f, -0.5f);
-                    indices[1] = new Vector2(0.5f, -0.5f);
-                    indices[2] = new Vector2(0.5f, 0.5f);
-                    indices[3] = new Vector2(-0.5f, 0.5f);
+                    // Go through shadows in range.
 
-                    indices[4] = indices[0] + direction;
-                    indices[5] = indices[1] + direction;
-                    indices[6] = indices[2] + direction;
-                    indices[7] = indices[3] + direction;
+                    // For each one we:
+                    // - Get the original vertices.
+                    // - Extrapolate these along the sun direction.
+                    // - Combine the above into 1 single polygon to draw.
 
-                    var points = PhysicsHull.ComputePoints(indices, 8);
-                    worldHandle.SetTransform(renderMatrix);
+                    // Note that this is range-limited for accuracy; if you set it too high it will clip through walls or other undesirable entities.
+                    // This is probably not noticeable most of the time but if you want something "accurate" you'll want to code a solution.
+                    // Ideally the CPU would have its own shadow-map copy that we could just ray-cast each vert into though
+                    // You might need to batch verts or the likes as this could get expensive.
+                    _lookup.GetEntitiesIntersecting(mapId, expandedBounds, _shadows);
 
-                    worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, points, Color.White);
-                }
-            }, Color.Transparent);
+                    foreach (var ent in _shadows)
+                    {
+                        var xform = _entManager.GetComponent<TransformComponent>(ent.Owner);
+                        var worldMatrix = _xformSys.GetWorldMatrix(xform);
+                        var renderMatrix = Matrix3x2.Multiply(worldMatrix, invMatrix);
+                        var pointCount = ent.Comp.Points.Length;
 
-        // Draw stencil (see roofoverlay).
-        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
-            () =>
-            {
-                var invMatrix =
-                    viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, scale);
-                worldHandle.SetTransform(invMatrix);
+                        Array.Copy(ent.Comp.Points, indices, pointCount);
 
-                var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
-                worldHandle.UseShader(maskShader);
+                        for (var i = 0; i < pointCount; i++)
+                        {
+                            indices[pointCount + i] = indices[i] + direction;
+                        }
 
-                worldHandle.DrawTextureRect(_target.Texture, worldBounds, Color.Black.WithAlpha(alpha));
-            }, null);
+                        var points = PhysicsHull.ComputePoints(indices, pointCount * 2);
+                        worldHandle.SetTransform(renderMatrix);
+
+                        worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, points, Color.White);
+                    }
+                },
+                Color.Transparent);
+
+            // Draw stencil (see roofoverlay).
+            args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+                () =>
+                {
+                    var invMatrix =
+                        viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, scale);
+                    worldHandle.SetTransform(invMatrix);
+
+                    var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
+                    worldHandle.UseShader(maskShader);
+
+                    worldHandle.DrawTextureRect(_target.Texture, worldBounds, Color.Black.WithAlpha(alpha));
+                }, null);
+        }
     }
 }
