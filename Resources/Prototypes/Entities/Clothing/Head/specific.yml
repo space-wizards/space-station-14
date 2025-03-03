@@ -30,6 +30,8 @@
   - type: TriggerOnVoice
     defaultKeyPhrase: key-phrase-gadget
     listenRange: 0
+  - type: ActiveListener
+    range: 0
   - type: StorageVoiceControl
     allowedSlots:
     - HEAD
