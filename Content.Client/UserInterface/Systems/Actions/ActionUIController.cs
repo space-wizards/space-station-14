@@ -627,20 +627,20 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         QueueWindowUpdate();
     }
 
-    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, ActionButton action)
+    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        HandleActionPressed(args, action);
+        HandleActionPressed(args, button);
     }
 
-    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton dragged)
+    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        HandleActionUnpressed(args, dragged);
+        HandleActionUnpressed(args, button);
     }
 
     private void OnWindowActionFocusExisted(ActionButton button)
