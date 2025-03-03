@@ -9,20 +9,17 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    // If we're iterating through actionContainers for finding referenced actions we might need this
-    //[Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NPCUseActionOnTargetComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NPCUseActionOnTargetComponent, ActionAddedEvent>(OnActionAdded);
     }
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
-        EnsureComp<ActionsContainerComponent>(ent.Owner, out var comp);
         foreach (var action in ent.Comp.Actions)
         {
             if (action.Reference)
@@ -31,6 +28,11 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             else
                 action.ActionEnt = _actions.AddAction(ent, action.ActionId);
         }
+    }
+
+    private void OnActionAdded(EntityUid uid, NPCUseActionOnTargetComponent component, ActionAddedEvent args)
+    {
+        Log.Error($"Rawr!");
     }
 
     public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, Components.NPCActionsData action, EntityUid target)
