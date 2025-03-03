@@ -698,32 +698,28 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             spreadIndex++;
             var index = -1;
-            var hitIndex = 0;
 
             hitscanEvent.Effects[spreadIndex] = new Effect[hit.Count];
             ref var effects = ref hitscanEvent.Effects[spreadIndex];
 
-            foreach (var entry in hit.ToList())
+            foreach (var (fromCoordinates, distance, angle, hitEntity) in hit)
             {
-                var (fromCoordinates, distance, angle, hitEntity) = entry;
-                
                 var fromXform = Transform(fromCoordinates.EntityId);
+
                 var gridUid = fromXform.GridUid;
+                var finalCoordinates = fromCoordinates;
                 
                 if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
                 {
                     var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
                     var map = _transform.ToMapCoordinates(fromCoordinates);
-                    fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
+                    finalCoordinates = new EntityCoordinates(gridUid.Value, Vecto2.Transform(map.Position, gridInvMatrix))
                     angle -= gridRot;
                 }
                 else
                 {
                     angle -= _transform.GetWorldRotation(fromXform);
                 }
-                
-                hit[hitIndex] = (fromCoordinates, distance, angle, hitEntity);
-                hitIndex++;
 
                 index++;
                 effects[index] = new Effect
@@ -735,12 +731,12 @@ public sealed partial class GunSystem : SharedGunSystem
 
                 if (distance >= 1f)
                 {
-                    var muzzleCoords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                    var travelCoords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                    var muzzleCoords = finalCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                    var travelCoords = finalCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
                     effect.MuzzleCoordinates = GetNetCoordinates(muzzleCoords);
                     effect.TravelCoordinates = GetNetCoordinates(travelCoords);
                 }
-                var impactCoords = fromCoordinates.Offset(angle.ToVec() * distance);
+                var impactCoords = finalCoordinates.Offset(angle.ToVec() * distance);
                 effect.ImpactCoordinates = GetNetCoordinates(impactCoords);
 
                 if (hitEntity is not null)
@@ -753,7 +749,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             {
                                 var color = _proto.Index(bloodstream.BloodReagent).SubstanceColor;
                                 // A flash of the neuralyzer, then a man in a black suit says that you didn’t see any “vector crutch” here, and if you did—read it again.
-                                var coords = fromCoordinates.Offset((angle.ToVec() * (distance + 1.3f)) + new Vector2(-0.5f, -0.5f));
+                                var coords = finalCoordinates.Offset((angle.ToVec() * (distance + 1.3f)) + new Vector2(-0.5f, -0.5f));
                                 _decals.TryAddDecal(_rand.Pick(_bloodDecals), coords, out _, color, angle + Angle.FromDegrees(-45), cleanable: true);
                             });
                         }
@@ -764,7 +760,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                 }
 
-                pvs.Add(fromCoordinates);
+                pvs.Add(finalCoordinates);
             }
         }
 
