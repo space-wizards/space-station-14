@@ -277,7 +277,7 @@
 
 - type: entity
   parent: BaseItem
-  id: SparlightBorgiCube
+  id: BorgiCube
   name: borgi cube
   description: Just add water! BORK!
   components:
@@ -311,11 +311,11 @@
         solution: cube
   - type: Rehydratable
     possibleSpawns:
-    - SparlightSmartSubWooferVulnerable
-    - SparlightSubWooferVulnerable
-    - SparlightSmartBorgiVulnerable
-    - SparlightBorgiVulnerable
-    - SparlightSmartCorgi
+    - SmartSubWooferVulnerable
+    - SubWooferVulnerable
+    - SmartBorgiVulnerable
+    - BorgiVulnerable
+    - SmartCorgi
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -337,7 +337,7 @@
 
 - type: entity
   parent: BaseItem
-  id: SparlightShadowBorgiCube
+  id: ShadowBorgiCube
   name: shadow borgi cube
   description: Just add water! BORK!
   components:
@@ -364,7 +364,7 @@
         solution: cube
   - type: Rehydratable
     possibleSpawns:
-    - SparlightShadowBorgi
+    - ShadowBorgi
   - type: CollisionWake
     enabled: false
   - type: Fixtures

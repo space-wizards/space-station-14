@@ -1,5 +1,5 @@
 - type: dataset
-  id: Sparlightnames_borgi
+  id: names_borgi
   values:
   - Subwoofer
   - Borgi
@@ -24,7 +24,7 @@
   - Core-Gi
 
 - type: dataset
-  id: Sparlightnames_corgi
+  id: names_corgi
   values:
   - Ian but Smarter
   - Braindog
@@ -37,7 +37,7 @@
   - Bongus
 
 - type: dataset
-  id: Sparlightnames_syndiborgi
+  id: names_syndiborgi
   values:
   - Red Rover
   - Bites-The-Ankles
@@ -47,7 +47,7 @@
   - Bullet Borker
 
 - type: dataset
-  id: Sparlightnames_shadowborgi
+  id: names_shadowborgi
   values:
   - Red Rover
   - Bites-The-Ankles

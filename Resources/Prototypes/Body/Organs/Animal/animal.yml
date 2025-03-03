@@ -168,7 +168,7 @@
 # Borgi Animal Body
 
 - type: entity
-  id: SparlightLeftHandAdmemeCorgi
+  id: LeftHandAdmemeCorgi
   name: corgi hand
   parent: PartAnimal
   categories: [ HideSpawnMenu ]
@@ -181,7 +181,7 @@
     symmetry: Left
 
 - type: entity
-  id: SparlightRightHandAdmemeCorgi
+  id: RightHandAdmemeCorgi
   name: corgi hand
   parent: PartAnimal
   categories: [ HideSpawnMenu ]

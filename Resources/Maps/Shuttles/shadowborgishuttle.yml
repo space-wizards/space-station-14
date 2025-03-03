@@ -6007,7 +6007,7 @@ entities:
     - type: Transform
       pos: 9.343766,-0.97529805
       parent: 2
-- proto: SparlightShadowBorgifabricator
+- proto: ShadowBorgifabricator
   entities:
   - uid: 167
     components:

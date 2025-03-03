@@ -501,94 +501,94 @@
 
   # Borgi Lawset, normal
 - type: siliconLaw
-  id: SparlightBorgi1
+  id: Borgi1
   order: 1
   lawString: law-borgi-1
 
 - type: siliconLaw
-  id: SparlightBorgi2
+  id: Borgi2
   order: 2
   lawString: law-borgi-2
 
 - type: siliconLaw
-  id: SparlightBorgi3
+  id: Borgi3
   order: 3
   lawString: law-borgi-3
 
 - type: siliconLawset
-  id: SparlightBorgiLawset
+  id: BorgiLawset
   laws:
-  - SparlightBorgi1
-  - SparlightBorgi2
-  - SparlightBorgi3
+  - Borgi1
+  - Borgi2
+  - Borgi3
   obeysTo: laws-owner-crew
 
 # Borgi Lawset, Syndicate
 - type: siliconLaw
-  id: SparlightSyndiBorgi1
+  id: SyndiBorgi1
   order: 1
   lawString: law-syndiborgi-1
 
 - type: siliconLaw
-  id: SparlightSyndiBorgi2
+  id: SyndiBorgi2
   order: 2
   lawString: law-syndiborgi-2
 
 - type: siliconLaw
-  id: SparlightSyndiBorgi3
+  id: SyndiBorgi3
   order: 3
   lawString: law-syndiborgi-3
 
 
 - type: siliconLawset
-  id: SparlightSyndiBorgiLawset
+  id: SyndiBorgiLawset
   laws:
-  - SparlightSyndiBorgi1
-  - SparlightSyndiBorgi2
-  - SparlightSyndiBorgi3
+  - SyndiBorgi1
+  - SyndiBorgi2
+  - SyndiBorgi3
   obeysTo: laws-owner-syndicate
 
 # Borgi Lawset, Shadow Factory
 - type: siliconLaw
-  id: SparlightShadowBorgi1
+  id: ShadowBorgi1
   order: 1
   lawString: law-shadowborgi-1
 
 - type: siliconLaw
-  id: SparlightShadowBorgi2
+  id: ShadowBorgi2
   order: 2
   lawString: law-shadowborgi-2
 
 - type: siliconLaw
-  id: SparlightShadowBorgi3
+  id: ShadowBorgi3
   order: 3
   lawString: law-shadowborgi-3
 
 - type: siliconLaw
-  id: SparlightShadowBorgi4
+  id: ShadowBorgi4
   order: 4
   lawString: law-shadowborgi-4
   
 - type: siliconLaw
-  id: SparlightShadowBorgi5
+  id: ShadowBorgi5
   order: 5
   lawString: law-shadowborgi-5
   
 - type: siliconLaw
-  id: SparlightShadowBorgi6
+  id: ShadowBorgi6
   order: 6
   lawString: law-shadowborgi-6
 
 
 - type: siliconLawset
-  id: SparlightShadowFactoryBorgiLawset
+  id: ShadowFactoryBorgiLawset
   laws:
-  - SparlightShadowBorgi1
-  - SparlightShadowBorgi2
-  - SparlightShadowBorgi3
-  - SparlightShadowBorgi4
-  - SparlightShadowBorgi5
-  - SparlightShadowBorgi6
+  - ShadowBorgi1
+  - ShadowBorgi2
+  - ShadowBorgi3
+  - ShadowBorgi4
+  - ShadowBorgi5
+  - ShadowBorgi6
   obeysTo: laws-owner-syndicate
 
 

@@ -364,7 +364,7 @@
     - HostileCubesStatic
 
 - type: entity
-  id: SparlightShadowBorgifabricator
+  id: ShadowBorgifabricator
   parent: Biofabricator
   name: shadow borgi cube fabricator
   description: Produces creatures of evil.
@@ -373,7 +373,7 @@
     idleState: icon
     runningState: building
     staticPacks:
-    - SparlightShadowBorgiCubeRecipePack
+    - ShadowBorgiCubeRecipePack
   - type: MaterialStorage
     ignoreColor: true
     whitelist:

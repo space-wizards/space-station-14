@@ -1265,11 +1265,11 @@
     stock: 1
 
 - type: listing
-  id: SparlightUplinkSyndicateBorgi0
+  id: UplinkSyndicateBorgi0
   name: Syndicate Borgi
   description: A syndicate borgi, with no modules
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
-  productEntity: SparlightSyndiCorgi
+  productEntity: SyndiCorgi
   cost:
     Telecrystal: 20
   categories:
@@ -1279,11 +1279,11 @@
     stock: 3
 
 - type: listing
-  id: SparlightUplinkSyndicateBorgi1
+  id: UplinkSyndicateBorgi1
   name: Kitted Syndicate Borgi
   description: A syndicate borgi, with Assault modules
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
-  productEntity: SparlightSyndiCorgiKit1
+  productEntity: SyndiCorgiKit1
   cost:
     Telecrystal: 60
   categories:
@@ -1297,11 +1297,11 @@
       - NukeOpsUplink
 
 - type: listing
-  id: SparlightUplinkSyndicateBorgi2
+  id: UplinkSyndicateBorgi2
   name: Speed Syndicate Borgi
   description: A syndicate borgi, with dagger modules and additional speed
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
-  productEntity: SparlightSyndiCorgiKit2
+  productEntity: SyndiCorgiKit2
   cost:
     Telecrystal: 50
   categories:

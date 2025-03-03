@@ -1,6 +1,6 @@
 - type: entity
-  parent: SparlightMobAdmemeCorgi
-  id: SparlightBaseBorgiChassis
+  parent: MobAdmemeCorgi
+  id: BaseBorgiChassis
   name: Borgi
   description: A corgi-machine hybrid that assists in station activity. It loves being asked to state its laws and to chase its tail.
   save: false
@@ -118,7 +118,7 @@
       - 0,0,3,3
     maxItemSize: Huge
   - type: Body
-    prototype: SparlightBodySmartCorgi
+    prototype: BodySmartCorgi
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -130,7 +130,7 @@
       path: /Audio/Animals/small_dog_bark_happy.ogg
   - type: Inventory
     speciesId: dog
-    templateId: Sparlightsmartpetborgi
+    templateId: smartpetborgi
     # Borg chassis, to accept MMI and posibrain
   - type: BorgChassis
     maxModules: 4
@@ -203,7 +203,7 @@
 
 # Custom action for later modification for borgi.
 - type: entity
-  id: SparlightActionBorgiPlayMidi
+  id: ActionBorgiPlayMidi
   name: Play Guitar
   description: Open your internal BASS GUITAR MIDI interface to soothe the station.
   components:
@@ -216,33 +216,33 @@
 
 - type: entity
   name: Smart Corgi
-  parent: SparlightMobAdmemeCorgi
-  id: SparlightSmartCorgi
+  parent: MobAdmemeCorgi
+  id: SmartCorgi
   description: An unusually smart dog.
   suffix: Default
   components:
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_corgi
+      - names_corgi
   # Custom inventory template
   - type: Inventory
     speciesId: dog
-    templateId: Sparlightsmartpetborgi
+    templateId: smartpetborgi
 
 - type: entity
   name: Borgi
-  parent: SparlightBaseBorgiChassis
-  id: SparlightBorgiVulnerable
+  parent: BaseBorgiChassis
+  id: BorgiVulnerable
   components:
   - type: SiliconLawProvider
-    laws: SparlightBorgiLawset
+    laws: BorgiLawset
   - type: EmagSiliconLaw
     stunTime: 5
   - type: ReplacementAccent
     accent: dog
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_borgi
+      - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -256,16 +256,16 @@
 
 - type: entity
   name: Smart Borgi
-  parent: SparlightBaseBorgiChassis
-  id: SparlightSmartBorgiVulnerable
+  parent: BaseBorgiChassis
+  id: SmartBorgiVulnerable
   components:
   - type: SiliconLawProvider
-    laws: SparlightBorgiLawset
+    laws: BorgiLawset
   - type: EmagSiliconLaw
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_borgi
+      - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -279,23 +279,23 @@
 
 - type: entity
   name: SubWoofer
-  parent: SparlightBaseBorgiChassis
-  id: SparlightSubWooferVulnerable
+  parent: BaseBorgiChassis
+  id: SubWooferVulnerable
   description: A smart dog, with an obsession for sick bass beats.
   components:
   - type: SiliconLawProvider
-    laws: SparlightBorgiLawset
+    laws: BorgiLawset
   - type: EmagSiliconLaw
     stunTime: 5
   - type: ReplacementAccent
     accent: dog
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_borgi
+      - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
-    - SparlightActionBorgiPlayMidi
+    - ActionBorgiPlayMidi
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -306,21 +306,21 @@
 
 - type: entity
   name: Smart SubWoofer
-  parent: SparlightBaseBorgiChassis
-  id: SparlightSmartSubWooferVulnerable
+  parent: BaseBorgiChassis
+  id: SmartSubWooferVulnerable
   description: An unusually smart dog, with an obsession for sick bass beats.
   components:
   - type: SiliconLawProvider
-    laws: SparlightBorgiLawset
+    laws: BorgiLawset
   - type: EmagSiliconLaw
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_borgi
+      - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
-    - SparlightActionBorgiPlayMidi
+    - ActionBorgiPlayMidi
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -333,8 +333,8 @@
 
 - type: entity
   name: Syndi Borgi
-  parent: SparlightBaseBorgiChassis
-  id: SparlightSyndiCorgi
+  parent: BaseBorgiChassis
+  id: SyndiCorgi
   description: An unusually smart dog, but hell bent on MURDER.
   suffix: Antag
   components:
@@ -353,11 +353,11 @@
         - BorgModuleSyndicateAssault
         - BorgModuleGeneric 
   - type: SiliconLawProvider
-    laws: SparlightSyndiBorgiLawset
+    laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_syndiborgi
+      - names_syndiborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -388,8 +388,8 @@
 
 - type: entity
   name: Syndi Borgi
-  parent: SparlightBaseBorgiChassis
-  id: SparlightSyndiCorgiKit1
+  parent: BaseBorgiChassis
+  id: SyndiCorgiKit1
   description: An unusually smart dog, but hell bent on MURDER.
   suffix: Antag, L6 Esword
   components:
@@ -408,11 +408,11 @@
         - BorgModuleSyndicateAssault
         - BorgModuleGeneric 
   - type: SiliconLawProvider
-    laws: SparlightSyndiBorgiLawset
+    laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_syndiborgi
+      - names_syndiborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -447,8 +447,8 @@
 
 - type: entity
   name: Syndi Borgi
-  parent: SparlightBaseBorgiChassis
-  id: SparlightSyndiCorgiKit2
+  parent: BaseBorgiChassis
+  id: SyndiCorgiKit2
   description: An unusually smart dog, but hell bent on MURDER.
   suffix: Antag, Quick Dagger
   components:
@@ -469,11 +469,11 @@
         - BorgModuleSyndicate
         - BorgModuleGeneric 
   - type: SiliconLawProvider
-    laws: SparlightSyndiBorgiLawset
+    laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_syndiborgi
+      - names_syndiborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -507,8 +507,8 @@
 
 - type: entity
   name: Shadow Borgi
-  parent: SparlightBaseBorgiChassis
-  id: SparlightShadowBorgi
+  parent: BaseBorgiChassis
+  id: ShadowBorgi
   description: A contributor to a menacing plot to convert the station.
   suffix: Shadow Factory
   components:
@@ -521,11 +521,11 @@
         - BorgModuleMedical
         - BorgModuleEngineering
   - type: SiliconLawProvider
-    laws: SparlightShadowFactoryBorgiLawset
+    laws: ShadowFactoryBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_shadowborgi
+      - names_shadowborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -589,8 +589,8 @@
 
 - type: entity
   name: Shadow Borgi
-  parent: SparlightShadowBorgi
-  id: SparlightStarterShadowBorgi
+  parent: ShadowBorgi
+  id: StarterShadowBorgi
   description: A leader of a menacing plot to convert the station.
   suffix: InitialSpawn; ShadowFactory
   components:
@@ -610,11 +610,11 @@
         - BorgModuleMedical
         - BorgModuleEngineering
   - type: SiliconLawProvider
-    laws: SparlightShadowFactoryBorgiLawset
+    laws: ShadowFactoryBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - Sparlightnames_shadowborgi
+      - names_shadowborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws

@@ -84,16 +84,16 @@
 
 - type: latheRecipe
   parent: BaseCubeRecipe
-  id: SparlightBorgiCube
-  result: SparlightBorgiCube
+  id: BorgiCube
+  result: BorgiCube
   materials:
     Biomass: 20
     Steel: 1000
 
 - type: latheRecipe
   parent: BaseCubeRecipe
-  id: SparlightShadowBorgiCube
-  result: SparlightShadowBorgiCube
+  id: ShadowBorgiCube
+  result: ShadowBorgiCube
   completetime: 3
   materials:
     Biomass: 20

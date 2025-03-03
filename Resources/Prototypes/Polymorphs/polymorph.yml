@@ -24,7 +24,7 @@
 - type: polymorph
   id: CorgiMorph
   configuration:
-    entity: SparlightSmartCorgi
+    entity: SmartCorgi
     forced: true
     inventory: Drop
     transferName: true

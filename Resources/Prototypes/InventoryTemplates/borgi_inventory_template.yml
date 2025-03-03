@@ -1,5 +1,5 @@
 - type: inventoryTemplate
-  id: Sparlightsmartpetborgi
+  id: smartpetborgi
   slots:
   - name: ears
     slotTexture: ears

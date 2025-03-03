@@ -3604,7 +3604,7 @@
   name: admemeCorgi
   abstract: true
   parent: [SimpleMobBase, StripableInventoryBase]
-  id: SparlightMobAdmemeCorgi
+  id: MobAdmemeCorgi
   description: Finally, a space corgi!
   components:
   # Use corgi sprite
@@ -3639,14 +3639,14 @@
   # Custom inventory template
   - type: Inventory
     speciesId: dog
-    templateId: Sparlightsmartpetborgi
+    templateId: smartpetborgi
   - type: Hands # HANDS!
   - type: Puller
   - type: Stripping
   - type: ComplexInteraction
   # Implement custom borgi body type
   - type: Body
-    prototype: SparlightBodySmartCorgi
+    prototype: BodySmartCorgi
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 180
