@@ -56,7 +56,7 @@
         ruins: !type:GridSpawnGroup
           hide: true
           nameGrid: true
-          minCount: 2
+          minCount: 3
           maxCount: 3
           stationGrid: false
           paths:
