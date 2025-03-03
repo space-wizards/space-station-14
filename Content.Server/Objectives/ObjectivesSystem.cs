@@ -169,30 +169,27 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     totalObjectives++;
 
                     agentSummary.Append("- ");
-                    if (ShowGreentext)
-                    {
-                        if (progress > 0.99f)
-                        {
-                            agentSummary.AppendLine(Loc.GetString(
-                                "objectives-objective-success",
-                                ("objective", objectiveTitle),
-                                ("markupColor", "green")
-                            ));
-                            completedObjectives++;
-                        }
-                        else
-                        {
-                            agentSummary.AppendLine(Loc.GetString(
-                                "objectives-objective-fail",
-                                ("objective", objectiveTitle),
-                                ("progress", (int) (progress * 100)),
-                                ("markupColor", "red")
-                            ));
-                        }
-                    }
-                    else
+                    if (!ShowGreentext)
                     {
                         agentSummary.AppendLine(objectiveTitle);
+                    }
+                    if (ShowGreentext && progress > 0.99f)
+                    {
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-success",
+                            ("objective", objectiveTitle),
+                            ("markupColor", "green")
+                        ));
+                        completedObjectives++;
+                    }
+                    if (ShowGreentext && progress < 1f)
+                    {
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-fail",
+                            ("objective", objectiveTitle),
+                            ("progress", (int) (progress * 100)),
+                            ("markupColor", "red")
+                        ));
                     }
                 }
             }
