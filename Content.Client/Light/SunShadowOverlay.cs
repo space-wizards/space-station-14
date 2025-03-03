@@ -1,13 +1,9 @@
 using System.Numerics;
-using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
-using Robust.Shared.Collections;
 using Robust.Shared.Enums;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Light;
 
@@ -45,6 +41,7 @@ public sealed class SunShadowOverlay : Overlay
         if (direction.Equals(Vector2.Zero) || alpha == 0f)
             return;
 
+        direction = new(MathF.Round(direction.X, 2), MathF.Round(direction.Y, 2));
         var length = direction.Length();
         var worldHandle = args.WorldHandle;
         var viewport = args.Viewport;
@@ -54,13 +51,10 @@ public sealed class SunShadowOverlay : Overlay
         if (eye == null)
             return;
 
-        // TODO: Fix jittering (imprecision due to matrix maths?)
-        // Likely need to get all loca lcoords and shit.
-        // Also looks like they stretch on right side of the screen quite badly, check PR.
-
         // Feature todo: dynamic shadows for mobs and trees. Also ideally remove the fake tree shadows.
 
 
+        // TODO: Jittering still not quite perfect
         var worldBounds = args.WorldBounds;
         var expandedBounds = worldBounds.Enlarged(length + 0.1f);
         _shadows.Clear();
@@ -112,10 +106,10 @@ public sealed class SunShadowOverlay : Overlay
                     indices[6] = indices[2] + direction;
                     indices[7] = indices[3] + direction;
 
-                    var hull = PhysicsHull.ComputeHull(indices, 8);
+                    var points = PhysicsHull.ComputePoints(indices, 8);
                     worldHandle.SetTransform(renderMatrix);
 
-                    worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, hull.Points[..hull.Count], Color.White);
+                    worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, points, Color.White);
                 }
             }, Color.Transparent);
 
