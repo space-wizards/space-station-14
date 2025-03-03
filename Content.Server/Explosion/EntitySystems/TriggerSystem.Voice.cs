@@ -11,17 +11,21 @@ namespace Content.Server.Explosion.EntitySystems
     {
         private void InitializeVoice()
         {
+            SubscribeLocalEvent<TriggerOnVoiceComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<TriggerOnVoiceComponent, ComponentInit>(OnVoiceInit);
             SubscribeLocalEvent<TriggerOnVoiceComponent, ExaminedEvent>(OnVoiceExamine);
             SubscribeLocalEvent<TriggerOnVoiceComponent, GetVerbsEvent<AlternativeVerb>>(OnVoiceGetAltVerbs);
             SubscribeLocalEvent<TriggerOnVoiceComponent, ListenEvent>(OnListen);
         }
 
-        private void OnVoiceInit(EntityUid uid, TriggerOnVoiceComponent component, ComponentInit args)
+        private void OnMapInit(EntityUid uid, TriggerOnVoiceComponent component, MapInitEvent args)
         {
             if (!string.IsNullOrEmpty(component.DefaultKeyPhrase))
                 component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+        }
 
+        private void OnVoiceInit(EntityUid uid, TriggerOnVoiceComponent component, ComponentInit args)
+        {
             if (component.IsListening)
                 EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
             else
@@ -91,7 +95,6 @@ namespace Content.Server.Explosion.EntitySystems
                     Text = Loc.GetString("verb-trigger-voice-default"),
                     Act = () =>
                     {
-                        component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
                         SetToDefault(ent, @event.User);
                     },
                 });
@@ -149,6 +152,10 @@ namespace Content.Server.Explosion.EntitySystems
         private void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid source)
         {
             var component = ent.Comp;
+
+            if (!string.IsNullOrEmpty(component.DefaultKeyPhrase))
+                component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+
             EnsureComp<ActiveListenerComponent>(ent).Range = component.ListenRange;
 
             _adminLogger.Add(
