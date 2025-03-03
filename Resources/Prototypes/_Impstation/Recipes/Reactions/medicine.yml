@@ -13,7 +13,7 @@
   minTemp: 400
   reactants:
     SynthFlesh:
-      amount: 2
+      amount: 1
     Doxarubixadone:
       amount: 1
   products:
