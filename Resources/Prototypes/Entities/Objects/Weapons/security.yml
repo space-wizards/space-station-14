@@ -259,7 +259,8 @@
         shader: unshaded
   - type: PointLight
     enabled: false
-    radius: 24
+    radius: 8
+    energy: 10
     color: "#FFAF38"
     netsync: false
   - type: ItemTogglePointLight
