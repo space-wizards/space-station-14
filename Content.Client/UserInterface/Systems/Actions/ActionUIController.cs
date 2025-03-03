@@ -680,7 +680,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
-        if (args.Function != EngineKeyFunctions.UIClick || _actionsSystem == null)
+        if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
         HandleActionUnpressed(args, button);
