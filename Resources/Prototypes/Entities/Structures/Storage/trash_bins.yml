@@ -18,7 +18,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 30 # Trash bins are less expensive to mnake & generally smaller
+        damage: 30 # Trash bins are less expensive to make & generally smaller
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
