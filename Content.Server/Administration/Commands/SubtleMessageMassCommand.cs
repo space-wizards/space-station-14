@@ -19,6 +19,8 @@ public sealed class SubtleMessageMassCommand : LocalizedEntityCommands
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override string Command => "massmsg";
+    public override string Description => Loc.GetString("massmsg-command-description");
+    public override string Help => Loc.GetString("massmsg-command-help-text", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -61,7 +63,7 @@ public sealed class SubtleMessageMassCommand : LocalizedEntityCommands
 
             if (located == null)
             {
-                shell.WriteError(Loc.GetString("cmd-ban-player"));
+                shell.WriteError(Loc.GetString("massmsg-player-unable"));
                 continue;
             }
 
@@ -75,20 +77,23 @@ public sealed class SubtleMessageMassCommand : LocalizedEntityCommands
         if (args.Length >= 3)
             return CompletionResult.FromHintOptions(
                 CompletionHelper.SessionNames(),
-                "username/all"
+                Loc.GetString("massmsg-command-hint")
             );
 
         if (args.Length == 1)
-            return CompletionResult.FromHint("message");
+            return CompletionResult.FromHint(Loc.GetString("massmsg-command-hint-one-args"));
 
         if (args.Length == 2)
         {
             var option = new CompletionOption[]
             {
-                new(Loc.GetString("prayer-popup-subtle-default"), LocalizationManager.GetString("default")),
+                new(Loc.GetString("prayer-popup-subtle-default"), Loc.GetString("default")),
             };
 
-            return CompletionResult.FromHintOptions(option, "popupMessage");
+            return CompletionResult.FromHintOptions(
+                option,
+                Loc.GetString("massmsg-command-hint-second-args")
+            );
         }
 
         return CompletionResult.Empty;
