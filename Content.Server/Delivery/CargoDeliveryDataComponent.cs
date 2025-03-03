@@ -35,7 +35,14 @@ public sealed partial class CargoDeliveryDataComponent : Component
     public int PlayerToDeliveryRatio = 7;
 
     /// <summary>
-    /// Should deliveries be randomly split spawners?
+    /// The minimum amount of deliveries that will spawn.
+    /// This is not per spawner and still follows the logic of DistributeRandomly.
+    /// </summary>
+    [DataField]
+    public int MinimumDeliverySpawn = 1;
+
+    /// <summary>
+    /// Should deliveries be randomly split between spawners?
     /// If true, the amount of deliveries will be spawned randomly across all spawners.
     /// If false, an amount of mail based on PlayerToDeliveryRatio will be spawned on all spawners.
     /// </summary>

@@ -28,3 +28,15 @@ public abstract class SharedDeliverySystem : EntitySystem
         args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
     }
 }
+
+/// <summary>
+/// Event raised on the delivery when it is unlocked.
+/// </summary>
+[ByRefEvent]
+public readonly record struct DeliveryUnlockedEvent(EntityUid User);
+
+/// <summary>
+/// Event raised on the delivery when it is opened.
+/// </summary>
+[ByRefEvent]
+public readonly record struct DeliveryOpenedEvent(EntityUid User);

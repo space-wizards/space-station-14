@@ -196,15 +196,3 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         UpdateSpawner(frameTime);
     }
 }
-
-/// <summary>
-/// Event raised on the delivery when it is unlocked.
-/// </summary>
-[ByRefEvent]
-public readonly record struct DeliveryUnlockedEvent(EntityUid User);
-
-/// <summary>
-/// Event raised on the delivery when it is opened.
-/// </summary>
-[ByRefEvent]
-public readonly record struct DeliveryOpenedEvent(EntityUid User);

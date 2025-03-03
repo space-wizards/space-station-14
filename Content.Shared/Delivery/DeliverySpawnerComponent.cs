@@ -17,9 +17,10 @@ public sealed partial class DeliverySpawnerComponent : Component
     [DataField(required: true)]
     public EntityTableSelector Table = default!;
 
+    /// <summary>
+    /// Whether this spawner is enabled.
+    /// If false, it will not spawn any deliveries.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsEnabled = true;
-
-    [DataField, AutoNetworkedField]
-    public bool IsValidSpawner = true;
 }

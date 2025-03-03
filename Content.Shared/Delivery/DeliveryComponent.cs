@@ -11,30 +11,59 @@ namespace Content.Shared.Delivery;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeliveryComponent : Component
 {
+    /// <summary>
+    /// Whether this delivery has been opened before.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsOpened;
 
+    /// <summary>
+    /// Whether this delivery is still locked using the fingerprint reader.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsLocked = true;
 
+    /// <summary>
+    /// The amount of spesos that gets added to the station back account on unlock.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public int SpesoReward = 500;
 
+    /// <summary>
+    /// The name of the recipient of this delivery.
+    /// Used for the examine text.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string? RecipientName;
 
+    /// <summary>
+    /// The job of the recipient of this delivery.
+    /// Used for the examine text.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string? RecipientJobTitle;
 
+    /// <summary>
+    /// The EnttyUid of the station this delivery was spawned on.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? RecipientStation;
 
+    /// <summary>
+    /// The sound to play when the delivery is unlocked.
+    /// </summary>
     [DataField(required: true)]
     public SoundSpecifier? UnlockSound;
 
+    /// <summary>
+    /// The sound to play when the delivery is opened.
+    /// </summary>
     [DataField(required: true)]
     public SoundSpecifier? OpenSound;
 
+    /// <summary>
+    /// The container with all the contents of the delivery.
+    /// </summary>
     [DataField]
     public BaseContainer? Container = default!;
 }
