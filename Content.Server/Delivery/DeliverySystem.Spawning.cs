@@ -35,6 +35,8 @@ public sealed partial class DeliverySystem
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
         var coords = Transform(ent).Coordinates;
 
+        PlaySpawnSound((ent.Owner, ent.Comp));
+
         while (amount > 0)
         {
             foreach (var id in spawns)
@@ -43,6 +45,18 @@ public sealed partial class DeliverySystem
             }
 
             amount--;
+        }
+    }
+
+    private void PlaySpawnSound(Entity<DeliverySpawnerComponent> ent)
+    {
+        if (ent.Comp.NextSoundTime > _timing.CurTime)
+            return;
+
+        if (ent.Comp.SpawnSound != null)
+        {
+            _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
+            ent.Comp.NextSoundTime = _timing.CurTime + ent.Comp.SpawnSoundCooldown;
         }
     }
 

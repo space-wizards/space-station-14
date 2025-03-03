@@ -43,5 +43,9 @@
     board: MailTeleporterMachineCircuitboard
   - type: PowerSwitch
   - type: DeliverySpawner
+    spawnSound:
+      path: /Audio/Effects/Lightning/lightningbolt.ogg
+      params:
+        volume: 7
     table: !type:NestedSelector
       tableId: RandomDeliveryBasic
