@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: insoPL
-  changes:
-  - message: Zombies once again have zombie blood.
-    type: Fix
-  id: 7537
-  time: '2024-10-19T15:31:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32532
 - author: Beck Thompson
   changes:
   - message: When MMIs and positronic brains are inserted into plushies, their names
@@ -3903,3 +3896,10 @@
   id: 8036
   time: '2025-03-03T16:37:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35643
+- author: DuckManZach
+  changes:
+  - message: Butter is now cheaper to produce!
+    type: Tweak
+  id: 8037
+  time: '2025-03-03T22:04:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35650
