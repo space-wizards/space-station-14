@@ -1,6 +1,18 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 02/27/2025 03:35:50
+  entityCount: 25342
+maps:
+- 943
+grids:
+- 60
+- 7536
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   1: FloorArcadeBlue
@@ -9282,7 +9294,6 @@ entities:
     - type: OccluderTree
     - type: Parallax
       parallax: BagelStation
-    - type: LoadedMap
   - uid: 7536
     components:
     - type: MetaData
@@ -63541,6 +63552,11 @@ entities:
     - type: Transform
       pos: 21.5,-21.5
       parent: 60
+  - uid: 23927
+    components:
+    - type: Transform
+      pos: -32.5,-3.5
+      parent: 60
   - uid: 24816
     components:
     - type: Transform
@@ -100417,13 +100433,11 @@ entities:
       parent: 60
 - proto: GravityGenerator
   entities:
-  - uid: 11694
+  - uid: 6708
     components:
     - type: Transform
       pos: -9.5,4.5
       parent: 60
-    - type: PointLight
-      radius: 175.75
 - proto: Grille
   entities:
   - uid: 8
@@ -116604,12 +116618,6 @@ entities:
     - type: Transform
       pos: 9.5,-19.5
       parent: 60
-  - uid: 6708
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -33.5,-20.5
-      parent: 60
   - uid: 6797
     components:
     - type: Transform
@@ -116669,8 +116677,8 @@ entities:
   - uid: 7906
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -18.5,-19.5
+      rot: 3.141592653589793 rad
+      pos: -31.5,-20.5
       parent: 60
   - uid: 8041
     components:
@@ -116999,6 +117007,11 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 11694
+    components:
+    - type: Transform
+      pos: -21.5,-18.5
+      parent: 60
   - uid: 11726
     components:
     - type: Transform

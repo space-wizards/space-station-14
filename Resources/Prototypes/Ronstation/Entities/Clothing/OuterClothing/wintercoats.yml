@@ -1,0 +1,22 @@
+- type: entity
+  parent: [ClothingOuterWinterCoatToggleable, BaseCentcommCommandContraband]
+  id: ClothingOuterWinterBlueshield
+  name: blueshield winter coat
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/OuterClothing/WinterCoats/coat.rsi
+    layers:
+    - state: BLUESHIELD-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: BLUESHIELD-inhand-left
+      right:
+      - state: BLUESHIELD-inhand-right
+  - type: Clothing
+    sprite: Ronstation/Clothing/OuterClothing/WinterCoats/coat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: BLUESHIELD-equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterBlueshield

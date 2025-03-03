@@ -1,0 +1,8 @@
+- type: entity
+  parent: [ ClothingNeckBase, BaseTerragovContraband ]
+  id: ClothingNeckCloakHeccdiver
+  name: heccdiver cape
+  description: A black cape bearing the symbol of an elite task force.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Neck/Cloaks/heccdiver.rsi

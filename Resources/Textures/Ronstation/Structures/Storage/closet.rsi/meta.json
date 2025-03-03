@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "Taken from tgstation, blueshield locker is merely a security locker resprited by Merrokitsune for Ronstation.",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "blueshield"
+      },
+      {
+        "name": "blueshield_door"
+      },
+      {
+        "name": "blueshield_open"
+      },
+      {
+        "name": "generic"
+      },
+      {
+        "name": "generic_door"
+      },
+      {
+        "name": "generic_open"
+      },
+      {
+        "name": "generic_icon"
+      },
+      {
+        "name": "welded"
+      },
+      {
+        "name": "unlocked"
+      },
+      {
+        "name": "locked"
+      }
+    ]
+  }

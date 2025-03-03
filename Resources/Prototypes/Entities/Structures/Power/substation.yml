@@ -9,7 +9,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
-    sprite: Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi
     snapCardinals: true
     layers:
     - state: substation
@@ -24,7 +24,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1
-    color: "#ff6900"
+    color: "#00db00"
     castShadows: false
   - type: NodeContainer
     examinable: true
@@ -40,7 +40,7 @@
     sourceNode: input
     loadNode: output
     collectionName: substation
-    sprite: Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi
     state: substation_static
   - type: BatteryCharger
     voltage: High
@@ -131,7 +131,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1
-    color: "#ff6900"
+    color: "#00db00"
     netsync: false
     castShadows: false
     offset: 0, -0.2
@@ -153,7 +153,7 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi
     layers:
     - state: substation_wall
     - state: screen_wall
@@ -175,7 +175,7 @@
     group: Substation
     sourceNode: input
     loadNode: output
-    sprite: Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi
     state: substation_wall_static
   - type: BatteryCharger
     voltage: High
@@ -280,7 +280,7 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi
     layers:
     - state: substation_wall
   - type: Construction

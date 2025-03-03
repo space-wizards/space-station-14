@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingEyesGlassesSecurity, BaseRestrictedContraband]
+  id: ClothingEyesGlassesSecurityVisor
+  name: security visor
+  description: Upgraded sunglasses that provide flash immunity and a security HUD. Looks badass.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Eyes/Hud/sec_visor.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/Eyes/Hud/sec_visor.rsi

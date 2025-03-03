@@ -1,0 +1,8 @@
+# Passenger gear for closet skeletons
+- type: startingGear
+  id: SkeletonPassengerGear
+  equipment:
+    id: PassengerPDA
+    back: ClothingBackpack
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack

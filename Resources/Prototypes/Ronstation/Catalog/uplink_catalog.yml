@@ -1,0 +1,13 @@
+- type: listing
+  id: UplinkMobMothroachSyndicate
+  name: uplink-mobmothroach-syndicate-name
+  description: uplink-mobmothroach-syndicate-desc
+  icon: { sprite: Ronstation/Objects/Devices/communication.rsi, state: old-radio-syndimothroach }
+  productEntity: ReinforcementRadioSyndicateSyndiMothroach
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkAllies
