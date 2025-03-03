@@ -192,8 +192,11 @@ public sealed partial class SalvageSystem
 
     private void OnMissionDependencyShutdown(EntityUid uid, SalvageMissionDependencyComponent dependencyComponent, ref ComponentShutdown args)
     {
+        // Incase the map was already deleted before the component was (e.g. when exped ends naturally)
+        if (dependencyComponent.AssociatedMapId == null || !_mapSystem.TryGetMap(dependencyComponent.AssociatedMapId.Value, out EntityUid? mapUid))
+            return;
         // Maybe we don't delete the mission planet when disk is destroyed while someone's on it. (Exped planets are paused until a shuttle FTLs to them)
-        var mapId = dependencyComponent.AssociatedMapId;
+        var mapId = dependencyComponent.AssociatedMapId.Value;
         var mapPaused = _mapSystem.IsPaused(mapId);
         if (mapPaused == false)
             return;
