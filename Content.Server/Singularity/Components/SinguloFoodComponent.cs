@@ -7,7 +7,7 @@ namespace Content.Server.Singularity.Components
     public sealed partial class SinguloFoodComponent : Component
     {
         /// <summary>
-        /// Flat ajustment to the singularity's energy when this entity is eaten by the event horizon.
+        /// Flat adjustment to the singularity's energy when this entity is eaten by the event horizon.
         /// </summary>
         [DataField]
         public float Energy = 1f;
