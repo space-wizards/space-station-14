@@ -712,6 +712,39 @@
 - type: entity
   name: pill canister
   parent: PillCanister
+  id: PillCanisterDesoxyephedrine
+  suffix: Desoxyephedrine 10u, 5
+  components:
+  - type: Label
+    currentLabel: desoxyephedrine 10u
+  - type: StorageFill
+    contents:
+    - id: PillDesoxyephedrine
+      amount: 5
+
+- type: entity
+  name: pill
+  suffix: Desoxyephedrine 10u
+  parent: Pill
+  id: PillDesoxyephedrine
+  components:
+  - type: Pill
+    pillType: 20
+  - type: Sprite
+    state: pill21
+  - type: Label
+    currentLabel: desoxyephedrine 10u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: desoxyephedrine
+          Quantity: 10
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
   id: PillCanisterCharcoal
   suffix: Charcoal 10u, 3
   components:

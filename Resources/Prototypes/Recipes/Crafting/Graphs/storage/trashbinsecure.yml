@@ -1,0 +1,36 @@
+- type: constructionGraph
+  id: TrashBinSecure
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: trashbinsecure
+          steps:
+            - material: Steel
+              amount: 3
+            - material: Cable
+              amount: 2
+              doAfter: 3
+
+
+    - node: trashbinsecure
+      entity: CrateTrashBinSecure
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 3
+          conditions:
+            - !type:StorageWelded
+              welded: false
+            - !type:Locked
+              locked: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity
