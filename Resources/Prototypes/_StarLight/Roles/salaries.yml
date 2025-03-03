@@ -16,6 +16,7 @@
     Paramedic: 50
     MedicalDoctor: 58
     MedicalIntern: 23
+    Surgeon: 90
 
     AtmosphericTechnician: 90
     StationEngineer: 54
