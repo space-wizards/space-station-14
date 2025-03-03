@@ -20,3 +20,26 @@
       - state: equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterCourier
+
+- type: entity
+  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  id: ClothingOuterWinterHD
+  name: hospitality director's winter coat
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/hdcoat.rsi
+    layers:
+    - state: icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/hdcoat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterHD

@@ -126,3 +126,37 @@
     sprite: _Impstation/Clothing/Ears/Headsets/securitywarden.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/securitywarden.rsi
+
+- type: entity
+  parent: [ClothingHeadsetService, BaseCommandContraband]
+  id: ClothingHeadsetHD
+  name: hospitality director's headset
+  description: A headset used by the hospitality director to make sure the service staff are doing their jobs.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: StealTarget
+    stealGroup: CommandHeadset
+
+- type: entity
+  parent: [ClothingHeadsetService, BaseCommandContraband]
+  id: ClothingHeadsetHDveteran
+  name: hospitality director's veteran headset
+  description: A sleek headset, earned through a long career as hospitality director.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+      - EncryptionKeyCommand
+  - type: Sprite
+    sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhd.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhd.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset

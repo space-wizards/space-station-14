@@ -144,7 +144,7 @@ entities:
           version: 6
         -3,0:
           ind: -3,0
-          tiles: HAAAAAAAEAAAAAABDwAAAAADDwAAAAAADwAAAAACDwAAAAADDwAAAAACDwAAAAACDwAAAAAADwAAAAADDwAAAAADDwAAAAAADwAAAAAADwAAAAACDwAAAAADDwAAAAAADQAAAAAAEAAAAAAADwAAAAAADwAAAAAADQAAAAAADQAAAAAADwAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAABDwAAAAAADwAAAAABDwAAAAACDQAAAAAADwAAAAABDwAAAAACDwAAAAACDwAAAAAADwAAAAADDwAAAAACDwAAAAADDQAAAAAADwAAAAACDwAAAAABDwAAAAACDwAAAAACDwAAAAABDwAAAAADDwAAAAABDQAAAAAADwAAAAABDwAAAAADDwAAAAADDwAAAAACDwAAAAAADwAAAAABDwAAAAABDQAAAAAADwAAAAADDwAAAAABDwAAAAABDQAAAAAAFQAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAACDwAAAAADDwAAAAAADwAAAAAADwAAAAACDwAAAAACDwAAAAACDwAAAAABDwAAAAABDwAAAAAADwAAAAADDQAAAAAADQAAAAAAFwAAAAAADQAAAAAADwAAAAABDwAAAAAADwAAAAAADwAAAAABDwAAAAADDwAAAAACDwAAAAABDwAAAAACDQAAAAAADwAAAAABDwAAAAADDwAAAAAAFwAAAAAADQAAAAAAFwAAAAAAFQAAAAAADwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAAADwAAAAABDwAAAAADDwAAAAABDQAAAAAADwAAAAADDwAAAAACDwAAAAAADQAAAAAADQAAAAAAFwAAAAAADQAAAAAADQAAAAAADwAAAAAADwAAAAACDwAAAAABDQAAAAAADwAAAAACDQAAAAAADQAAAAAADQAAAAAADwAAAAADDwAAAAABDwAAAAADDQAAAAAADQAAAAAADQAAAAAAFQAAAAAADwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAADDwAAAAAADwAAAAABDwAAAAAADQAAAAAADwAAAAACDwAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAACDwAAAAADDwAAAAABDwAAAAADDwAAAAACDwAAAAADDwAAAAABDwAAAAADDwAAAAADDwAAAAADDwAAAAABDQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAADQAAAAAADwAAAAADDwAAAAADDwAAAAADDwAAAAADDwAAAAAADwAAAAADDwAAAAACDwAAAAAADwAAAAABDwAAAAADDwAAAAACDQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAADQAAAAAADQAAAAAADwAAAAADDwAAAAABDwAAAAACDwAAAAADDwAAAAABDwAAAAABDwAAAAACDwAAAAACDwAAAAADDwAAAAABDQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEwAAAAAADQAAAAAADwAAAAACDwAAAAACDwAAAAADDwAAAAACDwAAAAADDwAAAAAADwAAAAADDwAAAAACDwAAAAAADwAAAAADDwAAAAADEgAAAAAAEgAAAAAAEgAAAAAAEwAAAAAADQAAAAAADwAAAAACDwAAAAACDwAAAAAADwAAAAACDwAAAAABDwAAAAABDwAAAAADDwAAAAABDwAAAAACDwAAAAADDQAAAAAAEgAAAAAAEgAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAAADwAAAAABDwAAAAABDwAAAAABDwAAAAABDwAAAAACDwAAAAABDwAAAAABDwAAAAABDwAAAAACDQAAAAAAEgAAAAAAEgAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAADDwAAAAADDwAAAAABDwAAAAAADwAAAAAADwAAAAACDwAAAAACDwAAAAADDwAAAAAADwAAAAADDQAAAAAA
+          tiles: HAAAAAAAEAAAAAABDwAAAAADDwAAAAAADwAAAAACDwAAAAADDwAAAAACDwAAAAACDwAAAAAADwAAAAADDwAAAAADDwAAAAAADwAAAAAADwAAAAACDwAAAAADDwAAAAAADQAAAAAAEAAAAAAADwAAAAAADwAAAAAADQAAAAAADQAAAAAADwAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAABDwAAAAAADwAAAAABDwAAAAACDQAAAAAADwAAAAABDwAAAAACDwAAAAACDwAAAAAADwAAAAADDwAAAAACDwAAAAADDQAAAAAADwAAAAACDwAAAAABDwAAAAACDwAAAAACDwAAAAABDwAAAAADDwAAAAABDQAAAAAADwAAAAABDwAAAAADDwAAAAADDwAAAAACDwAAAAAADwAAAAABDwAAAAABDQAAAAAADwAAAAADDwAAAAABDwAAAAABDQAAAAAAFQAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAACDwAAAAADDwAAAAAADwAAAAAADwAAAAACDwAAAAACDwAAAAACDwAAAAABDwAAAAABDwAAAAAADwAAAAADDQAAAAAADQAAAAAAFwAAAAAADQAAAAAADwAAAAABDwAAAAAADwAAAAAADwAAAAABDwAAAAADDwAAAAACDwAAAAABDwAAAAACDQAAAAAADwAAAAABDwAAAAADDwAAAAAAFwAAAAAADQAAAAAAFwAAAAAAFQAAAAAADwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAAADwAAAAABDwAAAAADDwAAAAABDQAAAAAADwAAAAADDwAAAAACDwAAAAAADQAAAAAADQAAAAAAFwAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAACDQAAAAAADQAAAAAADwAAAAACDQAAAAAADQAAAAAADQAAAAAADwAAAAADDwAAAAABDwAAAAADDQAAAAAADQAAAAAADQAAAAAAFQAAAAAADwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAADDwAAAAAADwAAAAABDwAAAAAADQAAAAAADwAAAAACDwAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAACDwAAAAADDwAAAAABDwAAAAADDwAAAAACDwAAAAADDwAAAAABDwAAAAADDwAAAAADDwAAAAADDwAAAAABDQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAADQAAAAAADwAAAAADDwAAAAADDwAAAAADDwAAAAADDwAAAAAADwAAAAADDwAAAAACDwAAAAAADwAAAAABDwAAAAADDwAAAAACDQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAADQAAAAAADQAAAAAADwAAAAADDwAAAAABDwAAAAACDwAAAAADDwAAAAABDwAAAAABDwAAAAACDwAAAAACDwAAAAADDwAAAAABDQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEwAAAAAADQAAAAAADwAAAAACDwAAAAACDwAAAAADDwAAAAACDwAAAAADDwAAAAAADwAAAAADDwAAAAACDwAAAAAADwAAAAADDwAAAAADEgAAAAAAEgAAAAAAEgAAAAAAEwAAAAAADQAAAAAADwAAAAACDwAAAAACDwAAAAAADwAAAAACDwAAAAABDwAAAAABDwAAAAADDwAAAAABDwAAAAACDwAAAAADDQAAAAAAEgAAAAAAEgAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAAADwAAAAABDwAAAAABDwAAAAABDwAAAAABDwAAAAACDwAAAAABDwAAAAABDwAAAAABDwAAAAACDQAAAAAAEgAAAAAAEgAAAAAADQAAAAAADQAAAAAADQAAAAAADwAAAAADDwAAAAADDwAAAAABDwAAAAAADwAAAAAADwAAAAACDwAAAAACDwAAAAADDwAAAAAADwAAAAADDQAAAAAA
           version: 6
         -3,-1:
           ind: -3,-1
@@ -6833,7 +6833,8 @@ entities:
           0,10:
             0: 30503
           -1,10:
-            0: 65319
+            6: 1
+            0: 65318
           0,11:
             0: 887
             1: 32768
@@ -7511,7 +7512,7 @@ entities:
             1: 61440
           16,-4:
             1: 8738
-            6: 2184
+            7: 2184
           16,-3:
             1: 8738
             3: 2184
@@ -7522,7 +7523,7 @@ entities:
             1: 8738
             3: 2184
           17,-4:
-            6: 819
+            7: 819
             3: 2176
             1: 32768
           17,-3:
@@ -8722,6 +8723,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 23.708832
+          - 89.19037
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 0
           - 0
           - 0
@@ -8956,13 +8972,6 @@ entities:
       container: 18691
 - proto: ActionToggleLight
   entities:
-  - uid: 7435
-    components:
-    - type: Transform
-      parent: 7385
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7385
   - uid: 9671
     components:
     - type: Transform
@@ -14574,7 +14583,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -257564.92
+      secondsUntilStateChange: -258038.52
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14838,7 +14847,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -112218.65
+      secondsUntilStateChange: -112692.24
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -27945,6 +27954,11 @@ entities:
     - type: Transform
       pos: 1.5,41.5
       parent: 5350
+  - uid: 7131
+    components:
+    - type: Transform
+      pos: -41.5,6.5
+      parent: 5350
   - uid: 7137
     components:
     - type: Transform
@@ -27960,6 +27974,11 @@ entities:
     - type: Transform
       pos: -67.5,10.5
       parent: 5350
+  - uid: 7191
+    components:
+    - type: Transform
+      pos: -43.5,6.5
+      parent: 5350
   - uid: 7192
     components:
     - type: Transform
@@ -27970,10 +27989,20 @@ entities:
     - type: Transform
       pos: -10.5,12.5
       parent: 5350
+  - uid: 7209
+    components:
+    - type: Transform
+      pos: -42.5,10.5
+      parent: 5350
   - uid: 7210
     components:
     - type: Transform
       pos: -14.5,17.5
+      parent: 5350
+  - uid: 7218
+    components:
+    - type: Transform
+      pos: -42.5,9.5
       parent: 5350
   - uid: 7220
     components:
@@ -27984,6 +28013,11 @@ entities:
     components:
     - type: Transform
       pos: 62.5,-21.5
+      parent: 5350
+  - uid: 7224
+    components:
+    - type: Transform
+      pos: -42.5,8.5
       parent: 5350
   - uid: 7235
     components:
@@ -28039,6 +28073,16 @@ entities:
     components:
     - type: Transform
       pos: 62.5,-24.5
+      parent: 5350
+  - uid: 7384
+    components:
+    - type: Transform
+      pos: -43.5,8.5
+      parent: 5350
+  - uid: 7385
+    components:
+    - type: Transform
+      pos: -42.5,6.5
       parent: 5350
   - uid: 7399
     components:
@@ -66992,31 +67036,6 @@ entities:
     - type: Transform
       pos: -49.479202,-34.51553
       parent: 5350
-- proto: ClothingBeltSecurityFilled
-  entities:
-  - uid: 7218
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: GroupExamine
-      group:
-      - hoverMessage: ""
-        contextText: verb-examine-group-other
-        icon: /Textures/Interface/examine-star.png
-        components:
-        - Armor
-        - ClothingSpeedModifier
-        entries:
-        - message: >-
-            It provides the following protection:
-
-            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]10%[/color].
-          priority: 0
-          component: Armor
-        title: null
-    - type: InsideEntityStorage
 - proto: ClothingBeltUtility
   entities:
   - uid: 5395
@@ -67092,16 +67111,6 @@ entities:
         lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSecurity
   entities:
-  - uid: 7209
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 8206
     components:
     - type: Transform
@@ -67314,15 +67323,6 @@ entities:
     - type: Transform
       pos: -40.43663,-23.468378
       parent: 5350
-- proto: ClothingHandsGlovesCombat
-  entities:
-  - uid: 7191
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: ClothingHandsGlovesFingerlessInsulated
   entities:
   - uid: 4748
@@ -68148,13 +68148,6 @@ entities:
     - type: Transform
       pos: 26.36865,-59.55566
       parent: 5350
-  - uid: 7545
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: ClothingShoesBootsPerformer
   entities:
   - uid: 9989
@@ -80511,15 +80504,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 76.5,-27.5
       parent: 5350
-- proto: DoorRemoteArmory
-  entities:
-  - uid: 7757
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: Dresser
   entities:
   - uid: 3195
@@ -84152,7 +84136,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -35057.688
+      secondsUntilStateChange: -35531.285
       state: Closing
   - uid: 9615
     components:
@@ -85777,13 +85761,6 @@ entities:
       parent: 5350
 - proto: Flash
   entities:
-  - uid: 7384
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 12066
     components:
     - type: Transform
@@ -85876,27 +85853,6 @@ entities:
     - type: ActionsContainer
 - proto: FlashlightSeclite
   entities:
-  - uid: 7385
-    components:
-    - type: Transform
-      parent: 6696
-    - type: HandheldLight
-      toggleActionEntity: 7435
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 7462
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7435
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: InsideEntityStorage
   - uid: 9670
     components:
     - type: Transform
@@ -96356,6 +96312,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,27.5
+      parent: 5350
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
+  - uid: 6696
+    components:
+    - type: Transform
+      pos: -3.5,40.5
       parent: 5350
     - type: AtmosPipeColor
       color: '#FF0000FF'
@@ -109809,13 +109772,6 @@ entities:
     components:
     - type: Transform
       pos: -3.5,41.5
-      parent: 5350
-    - type: AtmosPipeColor
-      color: '#FF0000FF'
-  - uid: 22451
-    components:
-    - type: Transform
-      pos: -3.5,40.5
       parent: 5350
     - type: AtmosPipeColor
       color: '#FF0000FF'
@@ -129381,15 +129337,6 @@ entities:
     - type: Transform
       pos: 24.5,6.5
       parent: 5350
-- proto: HoloprojectorSecurity
-  entities:
-  - uid: 7939
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: HospitalCurtainsOpen
   entities:
   - uid: 6777
@@ -131547,54 +131494,13 @@ entities:
       parent: 5350
     - type: Physics
       bodyType: Static
-- proto: LockerWarden
+- proto: LockerWardenFilledHardsuit
   entities:
-  - uid: 6696
+  - uid: 3254
     components:
     - type: Transform
-      anchored: True
       pos: -3.5,40.5
       parent: 5350
-    - type: Physics
-      bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.8839531
-        - 7.0872526
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7939
-          - 7385
-          - 7384
-          - 7224
-          - 7218
-          - 7209
-          - 7191
-          - 7131
-          - 7545
-          - 7757
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerWeldingSuppliesFilled
   entities:
   - uid: 6288
@@ -136300,12 +136206,6 @@ entities:
       parent: 5350
 - proto: PowerCellHigh
   entities:
-  - uid: 7462
-    components:
-    - type: Transform
-      parent: 7385
-    - type: Physics
-      canCollide: False
   - uid: 9672
     components:
     - type: Transform
@@ -145843,15 +145743,6 @@ entities:
     - type: Transform
       pos: -34.732925,-41.207012
       parent: 5350
-- proto: RubberStampWarden
-  entities:
-  - uid: 7131
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: SalvageMagnet
   entities:
   - uid: 6114
@@ -179607,13 +179498,6 @@ entities:
     - type: Transform
       pos: -0.80255723,44.790676
       parent: 5350
-  - uid: 7224
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 7543
     components:
     - type: Transform
@@ -185074,7 +184958,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -40769.598
+      secondsUntilStateChange: -41243.195
       state: Opening
     - type: ContainerContainer
       containers:

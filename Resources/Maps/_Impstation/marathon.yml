@@ -23928,7 +23928,7 @@ entities:
   - uid: 2681
     components:
     - type: Transform
-      pos: -4.5,-24.5
+      pos: -5.5,-24.5
       parent: 2
   - uid: 2682
     components:
@@ -32885,6 +32885,11 @@ entities:
     - type: Transform
       pos: 25.5,-12.5
       parent: 2
+  - uid: 23331
+    components:
+    - type: Transform
+      pos: 38.5,18.5
+      parent: 2
   - uid: 23342
     components:
     - type: Transform
@@ -32904,6 +32909,41 @@ entities:
     components:
     - type: Transform
       pos: -12.5,14.5
+      parent: 2
+  - uid: 23407
+    components:
+    - type: Transform
+      pos: 38.5,19.5
+      parent: 2
+  - uid: 23408
+    components:
+    - type: Transform
+      pos: 37.5,19.5
+      parent: 2
+  - uid: 23409
+    components:
+    - type: Transform
+      pos: 36.5,19.5
+      parent: 2
+  - uid: 23410
+    components:
+    - type: Transform
+      pos: 35.5,19.5
+      parent: 2
+  - uid: 23411
+    components:
+    - type: Transform
+      pos: 30.5,51.5
+      parent: 2
+  - uid: 23412
+    components:
+    - type: Transform
+      pos: -5.5,-25.5
+      parent: 2
+  - uid: 23413
+    components:
+    - type: Transform
+      pos: -6.5,-25.5
       parent: 2
 - proto: CableApcStack
   entities:

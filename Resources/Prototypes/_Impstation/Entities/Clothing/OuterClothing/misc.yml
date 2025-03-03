@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterApronHD
+  name: hospitality director's apron
+  description: A thick green-apron, perfect for insulating your soft flesh from spills, soil and thorns.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/apronhd.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/apronhd.rsi

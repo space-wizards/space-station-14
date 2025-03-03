@@ -281,6 +281,48 @@
   - ServiceClown
 
 - type: loadoutGroup
+  id: HospitalityDirectorHead
+  name: loadout-group-hospitality-director-head
+  minLimit: 0
+  loadouts:
+  - #TODO
+
+- type: loadoutGroup
+  id: HospitalityDirectorNeck
+  name: loadout-group-hospitality-director-neck
+  minLimit: 0
+  loadouts:
+  - #TODO
+
+- type: loadoutGroup
+  id: HospitalityDirectorJumpsuit
+  name: loadout-group-hospitality-director-jumpsuit
+  minLimit: 0
+  loadouts:
+  - #TODO
+
+- type: loadoutGroup
+  id: HospitalityDirectorOuterClothing
+  name: loadout-group-hospitality-director-outerclothing
+  minLimit: 0
+  loadouts:
+  - #TODO
+  
+- type: loadoutGroup
+  id: HospitalityDirectorShoes
+  name: loadout-group-hospitality-director-shoes
+  minLimit: 0
+  loadouts:
+  - #TODO
+
+- type: loadoutGroup
+  id: HospitalityDirectorBackpack
+  name: loadout-group-hospitality-director-backpack
+  minLimit: 0
+  loadouts:
+  - #TODO
+
+- type: loadoutGroup
   id: BartenderNeck
   name: loadout-group-bartender-neck
   minLimit: 0
