@@ -1,0 +1,24 @@
+- type: seed
+  id: kronkusVine
+  name: seeds-kronkus-vine-name
+  noun: seeds-noun-seeds
+  displayName: seeds-kronkus-vine-display-name
+  plantRsi: Objects/Specific/Hydroponics/kronkus_vine.rsi
+  packetPrototype: KronkusSeeds
+  productPrototypes:
+    - KronkusVineSegment
+  harvestRepeat: Repeat
+  lifespan: 60
+  maturation: 8
+  production: 4
+  yield: 3
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.50
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    KronkusExtract:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 10
