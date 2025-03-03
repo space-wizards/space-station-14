@@ -40,7 +40,6 @@ using Robust.Server.Player;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
-using DisposalTubeComponent = Content.Server.Disposal.Tube.DisposalTubeComponent;
 
 namespace Content.Server.Administration.Systems
 {

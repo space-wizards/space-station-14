@@ -1,6 +1,5 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.Wires;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Wires;
