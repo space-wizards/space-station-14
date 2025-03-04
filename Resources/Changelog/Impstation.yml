@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Beer now makes you wuhey.
-    type: Add
-  id: 728
-  time: '2024-12-13T20:54:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1011
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: .20 rifle, .30 rifle, and .25 caseless each receive damage buffs
@@ -4074,3 +4067,10 @@
   id: 1227
   time: '2025-03-03T09:15:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1824
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.04 (Provisional)
+    type: Tweak
+  id: 1228
+  time: '2025-03-04T02:01:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1829
