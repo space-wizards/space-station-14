@@ -214,7 +214,7 @@
     - StarlightCyberOrgansDynamic
     - StarlightImplantDynamic
 
-    - StarlightSecurityAmmo
+    - StarlightSecurityAmmoDynamic
     - StarlightSecurityExplosives
     - StarlightSecurityEquipment
     - StarlightSecurityWeapons
@@ -406,7 +406,7 @@
     - StarlightSecurityEquipment
     - StarlightSecurityBoards
     - StarlightSecurityExplosives
-    - StarlightSecurityAmmo
+    - StarlightSecurityAmmoDynamic
     - StarlightSecurityWeapons
     - SecurityDisablers
 

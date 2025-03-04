@@ -45,7 +45,15 @@
   - MagazineBoxRifleSP
   - MagazineBoxRifleHP
   - MagazineBoxRifleFMJ
+# Shotgun
+  - BoxLethalshot
+  - BoxShotgunSlug
 #####################MAGAZINE#######################
+# LMG
+  - LightRifleHeavyMagazineSP
+  - LightRifleHeavyMagazineHP
+  - LightRifleHeavyMagazineFMJ
+  - LightRifleHeavyMagazineEmpty
 # Light Rifle
   - MagazineLightRifleSP
   - MagazineLightRifleHP
@@ -63,6 +71,8 @@
   - MagazinePistolEmpty
 # SMG
   - MagazinePistolSubMachineGunSP
+  - MagazinePistolSubMachineGunHP
+  - MagazinePistolSubMachineGunFMJ
   - MagazinePistolSubMachineGunEmpty
   - MagazinePistolSubMachineGunTopMounted
   - MagazinePistolSubMachineGunTopMountedEmpty
@@ -75,6 +85,11 @@
   - MagazineShotgun
   - MagazineShotgunEmpty
   - MagazineShotgunSlug
+  
+  - SpeedLoaderMagnumBasic
+  - SpeedLoaderShotgunEmpty
+  - SpeedLoaderShotgunSlug
+  - SpeedLoaderShotgunBeanbag
 ####################################################
 
 - type: latheRecipePack
@@ -124,7 +139,7 @@
 
 # Shared between secfab and emagged protolathe
 - type: latheRecipePack
-  id: StarlightSecurityAmmo
+  id: StarlightSecurityAmmoDynamic
   recipes:
 #####################BOX#######################
 # Light Rifle
@@ -153,6 +168,10 @@
   - BoxShotgunUranium
   - BoxShellTranquilizer
 #####################MAGAZINE#######################
+# LMG
+  - LightRifleHeavyMagazineIncendiary
+  - LightRifleHeavyMagazineUranium
+  - LightRifleHeavyMagazineAP
 # Light Rifle
   - MagazineLightRifleIncendiary
   - MagazineLightRifleUranium
@@ -165,6 +184,10 @@
   - MagazinePistolIncendiary
   - MagazinePistolUranium
   - MagazinePistolAP
+# SMG
+  - MagazinePistolSubMachineGunIncendiary
+  - MagazinePistolSubMachineGunUranium
+  - MagazinePistolSubMachineGunAP
 # Rifle
   - MagazineRifleIncendiary
   - MagazineRifleUranium
@@ -172,7 +195,8 @@
 # Shotgun
   - MagazineShotgunBeanbag
   - MagazineShotgunIncendiary
-  - MagazineShotgunIncendiary
+  - SpeedLoaderShotgunIncendiary
+  - SpeedLoaderShotgunUranium
 # Grenade
   - MagazineGrenadeEmpty
 #####################CARTRIDGE######################
