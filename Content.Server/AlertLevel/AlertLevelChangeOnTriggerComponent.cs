@@ -1,12 +1,15 @@
 using Content.Server.AlertLevel.Systems;
 
-namespace Content.Server.AlertLevel
+namespace Content.Server.AlertLevel.Systems
 {
+    /// <summary>
+    /// This component is for changing the alert level of the station when triggered.
+    /// </summary>
     [RegisterComponent, Access(typeof(AlertLevelChangeOnTriggerSystem))]
     public sealed partial class AlertLevelChangeOnTriggerComponent : Component
     {
         ///<summary>
-        ///The alert level to change to when the entity is spawned.
+        ///The alert level to change to when triggered.
         ///</summary>
         [DataField]
         public string Level = "blue";
