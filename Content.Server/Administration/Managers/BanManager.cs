@@ -261,7 +261,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
+        if (!_prototypeManager.TryIndex(role, out JobPrototype? _) && !_prototypeManager.TryIndex(role, out AntagPrototype? _)) // Starlight-edit: You also can ban antagonists what don't have job prototype
         {
             throw new ArgumentException($"Invalid role '{role}'", nameof(role));
         }
