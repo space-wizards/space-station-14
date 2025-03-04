@@ -749,6 +749,38 @@
     color: "#F317F3"
 
 - type: entity
+  parent: ComputerComms
+  id: CentcommComputerComms
+  name: central command communications computer
+  description: A computer used to make world wide announcements via keyboard. The superior cousin of the regular communications computer.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_logs
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [[ "CentralCommand" ]]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-centcom
+    color: "#1d8bad"
+    canShuttle: false
+    global: true
+  - type: Computer
+    board: CentcommCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#00FF00"
+
+- type: entity
   parent: BaseComputerAiAccess
   id: ComputerSolarControl
   name: solar control computer
@@ -1221,6 +1253,7 @@
   # Putting this as "DO NOT MAP" until the performance issues are fixed.
   # And it's more fleshed out.
   suffix: TESTING, DO NOT MAP
+  categories: [ DoNotMap ]
   components:
     - type: Sprite
       layers:
