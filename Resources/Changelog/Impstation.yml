@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: .20 rifle, .30 rifle, and .25 caseless each receive damage buffs
-    type: Tweak
-  - message: Lecter and AKMS received firerate reductions to account for damage increases.
-      AKMS received further adjustments.
-    type: Tweak
-  - message: L6 SAW and Mosin changed from .30 rifle to .20 rifle to keep their performance
-      the same as before
-    type: Tweak
-  - message: Central Command has finalized a deal with Blackburn Munitions Inc. and
-      has outfitted each station with one of their new "Daito" precision firearms--
-      a new slow-firing weapon chambered in .30 rifle ammunition.
-    type: Add
-  - message: The Syndicate has completed development on their new line of Nemesis-11
-      Battle Rifles chambered in .25 caseless and will offer them for both traitors
-      and nuclear operatives to choose for their arsenal.
-    type: Add
-  id: 729
-  time: '2024-12-13T20:59:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1004
 - author: hivehum
   changes:
   - message: Added dozens of new possible targets for thieves and traitors to steal.
@@ -4074,3 +4053,10 @@
   id: 1228
   time: '2025-03-04T02:01:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1829
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult Patch 1.05 (Provisional)
+    type: Tweak
+  id: 1229
+  time: '2025-03-04T11:40:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1830
