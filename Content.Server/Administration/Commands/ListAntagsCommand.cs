@@ -44,11 +44,11 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
         if (antagList.Count == 0)
         {
-            shell.WriteLine(Loc.GetString("lsantags-not-antags"));
+            shell.WriteLine(Loc.GetString("lsantags-command-not-antags"));
         }
         else
         {
-            shell.WriteLine($"{Loc.GetString("lsantags-list-antags")}\n{string.Join("\n", antagList)}");
+            shell.WriteLine($"{Loc.GetString("lsantags-command-list-antags")}\n{string.Join("\n", antagList)}");
         }
     }
 }
