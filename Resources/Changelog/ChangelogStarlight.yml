@@ -3806,4 +3806,11 @@ Entries:
   id: 527
   time: '2025-03-03T05:10:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/355
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed "Credit vending machines are broken"
+    type: Fix
+  id: 528
+  time: '2025-03-04T05:29:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/361
 
