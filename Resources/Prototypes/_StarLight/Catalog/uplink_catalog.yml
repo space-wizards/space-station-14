@@ -99,11 +99,11 @@
 # Cybernetics
 
 - type: listing
-  id: UplinkEyeImplantNightVision
+  id: UplinkCyberEyeNightVision
   name: uplink-nightvision-eyes
   description: uplink-nightvision-eyes-desc
   icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_night }
-  productEntity: EyeImplantNightVision
+  productEntity: CyberEyeNightVision
   discountDownTo:
     Telecrystal: 2
   cost:
@@ -112,11 +112,11 @@
   - UplinkCybernetics
 
 - type: listing
-  id: UplinkEyeImplantThermal
+  id: UplinkCyberEyeThermal
   name: uplink-thermalvision-eyes
   description: uplink-thermalvision-eyes-desc
   icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_thermal }
-  productEntity: EyeImplantThermal
+  productEntity: CyberEyeThermal
   discountDownTo:
     Telecrystal: 4
   cost:

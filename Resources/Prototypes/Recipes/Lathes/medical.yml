@@ -18,14 +18,15 @@
   parent: BaseSurgicalRecipe
   id: Retractor
   result: Retractor
-  category: Surgery
-
+  categories:
+  - Surgery
 
 - type: latheRecipe
   parent: BaseSurgicalRecipe
   id: Cautery
   result: Cautery
-  category: Surgery
+  categories:
+  - Surgery
   materials:
     Steel: 200
 
@@ -33,7 +34,8 @@
   parent: BaseToolRecipe
   id: Drill
   result: Drill
-  category: Surgery
+  categories:
+  - Surgery
   materials:
     Steel: 200
     Plastic: 100
@@ -42,7 +44,8 @@
   parent: BaseSurgicalRecipe
   id: Saw
   result: Saw
-  category: Surgery
+  categories:
+  - Surgery
   materials:
     Steel: 200
 
@@ -50,7 +53,8 @@
   parent: BaseSurgicalRecipe
   id: Hemostat
   result: Hemostat
-  category: Surgery
+  categories:
+  - Surgery
   materials:
     Steel: 200
 

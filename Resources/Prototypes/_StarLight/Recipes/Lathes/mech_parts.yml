@@ -10,19 +10,22 @@
 - type: latheRecipe
   abstract: true
   id: BaseClarkePartRecipe
-  category: Clarke
+  categories:
+  - Clarke
   completetime: 10
   
 - type: latheRecipe
   abstract: true
   id: BaseDurandPartRecipe
-  category: Durand
+  categories:
+  - Durand
   completetime: 10
   
 - type: latheRecipe
   abstract: true
   id: BaseGygaxPartRecipe
-  category: Gygax
+  categories:
+  - Gygax
   completetime: 10
   
 # Recipes
@@ -207,7 +210,8 @@
 - type: latheRecipe
   id: RipleyMKIIHarness
   result: RipleyMKIIHarness
-  category: RipleyMKII
+  categories:
+  - RipleyMKII
   completetime: 10
   materials:
     Steel: 1500
@@ -216,7 +220,8 @@
 - type: latheRecipe
   id: RipleyUpgradeKit
   result: RipleyUpgradeKit
-  category: RipleyMKII
+  categories:
+  - RipleyMKII
   completetime: 10
   materials:
     Steel: 500
@@ -303,7 +308,8 @@
 - type: latheRecipe
   id: VimHarness
   result: VimHarness
-  category: Vim
+  categories:
+  - Vim
   completetime: 5
   materials:
     Steel: 500
@@ -314,7 +320,8 @@
 - type: latheRecipe
   id: MechEquipmentDrill
   result: WeaponMechMelleDrill
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 1000
@@ -323,7 +330,8 @@
 - type: latheRecipe
   id: MechEquipmentDrillDiamond
   result: WeaponMechMelleDrillDiamond
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 1000
@@ -334,7 +342,8 @@
 - type: latheRecipe
   id: MechEquipmentGrabber
   result: MechEquipmentGrabber
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 500
@@ -351,7 +360,8 @@
 - type: latheRecipe
   id: MechEquipmentHorn
   result: MechEquipmentHorn
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 500
@@ -360,7 +370,8 @@
 - type: latheRecipe
   id: MechEquipmentHonkerBananaMortar
   result: WeaponMechSpecialBananaMortar
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 1150
@@ -369,7 +380,8 @@
 - type: latheRecipe
   id: MechEquipmentHonkerMousetrapMortar
   result: WeaponMechSpecialMousetrapMortar
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 1200
@@ -379,7 +391,8 @@
 - type: latheRecipe
   id: MechAirTank
   result: MechAirTank
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 1000
@@ -388,7 +401,8 @@
 - type: latheRecipe
   id: MechThruster
   result: MechThruster
-  category: MechEquipment
+  categories:
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 1000

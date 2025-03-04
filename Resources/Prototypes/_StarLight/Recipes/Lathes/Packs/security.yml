@@ -30,62 +30,82 @@
   recipes:
 ######################BOX#######################
 # Light Rifle
-      - MagazineBoxLightRifleSP
-      - MagazineBoxLightRifleHP
-      - MagazineBoxLightRifleFMJ
+  - MagazineBoxLightRifleSP
+  - MagazineBoxLightRifleHP
+  - MagazineBoxLightRifleFMJ
 # Magnum
-      - MagazineBoxMagnumSP
-      - MagazineBoxMagnumHP
-      - MagazineBoxMagnumFMJ
+  - MagazineBoxMagnumSP
+  - MagazineBoxMagnumHP
+  - MagazineBoxMagnumFMJ
 # Pistol
-      - MagazineBoxPistolSP
-      - MagazineBoxPistolHP
-      - MagazineBoxPistolFMJ
+  - MagazineBoxPistolSP
+  - MagazineBoxPistolHP
+  - MagazineBoxPistolFMJ
 # Rifle
-      - MagazineBoxRifleSP
-      - MagazineBoxRifleHP
-      - MagazineBoxRifleFMJ
-#####################MAGAZINE#######################
-# Light Rifle
-      - MagazineLightRifleSP
-      - MagazineLightRifleHP
-      - MagazineLightRifleFMJ
-      - MagazineLightRifleEmpty
-# Magnum
-      - SpeedLoaderMagnumSP
-      - SpeedLoaderMagnumHP
-      - SpeedLoaderMagnumFMJ
-      - SpeedLoaderMagnumEmpty
-# Pistol
-      - MagazinePistolSP
-      - MagazinePistolHP
-      - MagazinePistolFMJ
-      - MagazinePistolEmpty
-# SMG
-      - MagazinePistolSubMachineGunSP
-      - MagazinePistolSubMachineGunEmpty
-      - MagazinePistolSubMachineGunTopMounted
-      - MagazinePistolSubMachineGunTopMountedEmpty
-# Rifle
-      - MagazineRifleSP
-      - MagazineRifleHP
-      - MagazineRifleFMJ
-      - MagazineRifleEmpty
+  - MagazineBoxRifleSP
+  - MagazineBoxRifleHP
+  - MagazineBoxRifleFMJ
 # Shotgun
-      - MagazineShotgun
-      - MagazineShotgunEmpty
-      - MagazineShotgunSlug
+  - BoxLethalshot
+  - BoxShotgunSlug
+#####################MAGAZINE#######################
+# LMG
+  - LightRifleHeavyMagazineSP
+  - LightRifleHeavyMagazineHP
+  - LightRifleHeavyMagazineFMJ
+  - LightRifleHeavyMagazineEmpty
+# Light Rifle
+  - MagazineLightRifleSP
+  - MagazineLightRifleHP
+  - MagazineLightRifleFMJ
+  - MagazineLightRifleEmpty
+# Magnum
+  - SpeedLoaderMagnumSP
+  - SpeedLoaderMagnumHP
+  - SpeedLoaderMagnumFMJ
+  - SpeedLoaderMagnumEmpty
+# Pistol
+  - MagazinePistolSP
+  - MagazinePistolHP
+  - MagazinePistolFMJ
+  - MagazinePistolEmpty
+# SMG
+  - MagazinePistolSubMachineGunSP
+  - MagazinePistolSubMachineGunHP
+  - MagazinePistolSubMachineGunFMJ
+  - MagazinePistolSubMachineGunEmpty
+  - MagazinePistolSubMachineGunTopMounted
+  - MagazinePistolSubMachineGunTopMountedEmpty
+# Rifle
+  - MagazineRifleSP
+  - MagazineRifleHP
+  - MagazineRifleFMJ
+  - MagazineRifleEmpty
+# Shotgun
+  - MagazineShotgun
+  - MagazineShotgunEmpty
+  - MagazineShotgunSlug
+  
+  - SpeedLoaderMagnumBasic
+  - SpeedLoaderShotgunEmpty
+  - SpeedLoaderShotgunSlug
+  - SpeedLoaderShotgunBeanbag
 ####################################################
 
 - type: latheRecipePack
   id: StarlightSecurityEmagWeaponsStatic
   recipes:
-      - BoxLethalshot
-      - BoxShotgunSlug
-      - CombatKnife
-      - RiotShield
+  - BoxLethalshot
+  - BoxShotgunSlug
+  - CombatKnife
+  - RiotShield
 
 ## Dynamic recipes
+
+- type: latheRecipePack
+  id: StarlightDefenseStatic
+  recipes:
+  - EnergyDomeTurtle
 
 - type: latheRecipePack
   id: StarlightSecurityEquipment
@@ -119,66 +139,75 @@
 
 # Shared between secfab and emagged protolathe
 - type: latheRecipePack
-  id: StarlightSecurityAmmo
+  id: StarlightSecurityAmmoDynamic
   recipes:
 #####################BOX#######################
 # Light Rifle
-      - MagazineBoxLightRifleRubber
-      - MagazineBoxLightRifleIncendiary
-      - MagazineBoxLightRifleUranium
-      - MagazineBoxLightRifleAP
+  - MagazineBoxLightRifleRubber
+  - MagazineBoxLightRifleIncendiary
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxLightRifleAP
 # Magnum
-      - MagazineBoxMagnumRubber
-      - MagazineBoxMagnumIncendiary
-      - MagazineBoxMagnumUranium
-      - MagazineBoxMagnumAP
+  - MagazineBoxMagnumRubber
+  - MagazineBoxMagnumIncendiary
+  - MagazineBoxMagnumUranium
+  - MagazineBoxMagnumAP
 # Pistol
-      - MagazineBoxPistolRubber
-      - MagazineBoxPistolIncendiary
-      - MagazineBoxPistolUranium
-      - MagazineBoxPistolAP
+  - MagazineBoxPistolRubber
+  - MagazineBoxPistolIncendiary
+  - MagazineBoxPistolUranium
+  - MagazineBoxPistolAP
 # Rifle
-      - MagazineBoxRifleRubber
-      - MagazineBoxRifleIncendiary
-      - MagazineBoxRifleUranium
-      - MagazineBoxRifleAP
+  - MagazineBoxRifleRubber
+  - MagazineBoxRifleIncendiary
+  - MagazineBoxRifleUranium
+  - MagazineBoxRifleAP
 # Shotgun
-      - BoxBeanbag
-      - BoxShotgunIncendiary
-      - BoxShotgunUranium
-      - BoxShellTranquilizer
+  - BoxBeanbag
+  - BoxShotgunIncendiary
+  - BoxShotgunUranium
+  - BoxShellTranquilizer
 #####################MAGAZINE#######################
+# LMG
+  - LightRifleHeavyMagazineIncendiary
+  - LightRifleHeavyMagazineUranium
+  - LightRifleHeavyMagazineAP
 # Light Rifle
-      - MagazineLightRifleIncendiary
-      - MagazineLightRifleUranium
-      - MagazineLightRifleAP
+  - MagazineLightRifleIncendiary
+  - MagazineLightRifleUranium
+  - MagazineLightRifleAP
 # Magnum
-      - SpeedLoaderMagnumIncendiary
-      - SpeedLoaderMagnumUranium
-      - SpeedLoaderMagnumAP
+  - SpeedLoaderMagnumIncendiary
+  - SpeedLoaderMagnumUranium
+  - SpeedLoaderMagnumAP
 # Pistol
-      - MagazinePistolIncendiary
-      - MagazinePistolUranium
-      - MagazinePistolAP
+  - MagazinePistolIncendiary
+  - MagazinePistolUranium
+  - MagazinePistolAP
+# SMG
+  - MagazinePistolSubMachineGunIncendiary
+  - MagazinePistolSubMachineGunUranium
+  - MagazinePistolSubMachineGunAP
 # Rifle
-      - MagazineRifleIncendiary
-      - MagazineRifleUranium
-      - MagazineRifleAP
+  - MagazineRifleIncendiary
+  - MagazineRifleUranium
+  - MagazineRifleAP
 # Shotgun
-      - MagazineShotgunBeanbag
-      - MagazineShotgunIncendiary
-      - MagazineShotgunIncendiary
+  - MagazineShotgunBeanbag
+  - MagazineShotgunIncendiary
+  - SpeedLoaderShotgunIncendiary
+  - SpeedLoaderShotgunUranium
 # Grenade
-      - MagazineGrenadeEmpty
+  - MagazineGrenadeEmpty
 #####################CARTRIDGE######################
 # Light Rifle
-      - CartridgeLightRifleRubber
+  - CartridgeLightRifleRubber
 # Magnum
-      - CartridgeMagnumRubber
+  - CartridgeMagnumRubber
 # Pistol
-      - CartridgePistolRubber
+  - CartridgePistolRubber
 # Rifle
-      - CartridgeRifleRubber
+  - CartridgeRifleRubber
 ####################################################
 
 - type: latheRecipePack
@@ -193,3 +222,36 @@
   - WeaponIonCarbine
   - WeaponDecloner
   - WeaponLaserImmolator
+
+- type: latheRecipePack
+  id: StarlightSecurityMechsWeapons
+  recipes:
+  - WeaponMechCombatMissileRack8
+  - WeaponMechCombatShotgun
+  - WeaponMechCombatShotgunIncendiary
+  - WeaponMechCombatUltraRifle
+
+- type: latheRecipePack
+  id: StarlightSecurityMechs
+  recipes:
+  - GygaxHarness
+  - GygaxArmor
+  - GygaxHead
+  - GygaxLArm
+  - GygaxLLeg
+  - GygaxRArm
+  - GygaxRLeg
+  - GygaxCentralElectronics
+  - GygaxPeripheralsElectronics
+  - GygaxTargetingElectronics
+
+  - DurandHarness
+  - DurandArmor
+  - DurandHead
+  - DurandLArm
+  - DurandLLeg
+  - DurandRArm
+  - DurandRLeg
+  - DurandCentralElectronics
+  - DurandPeripheralsElectronics
+  - DurandTargetingElectronics
