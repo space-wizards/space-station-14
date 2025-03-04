@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ Lawyer ]
+    allowedJobs: [ Lawyer ]
 
 # For non-sanctioned decapoid tech
 - type: entity
