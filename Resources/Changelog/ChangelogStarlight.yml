@@ -3813,4 +3813,26 @@ Entries:
   id: 528
   time: '2025-03-04T05:29:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/361
-
+- author: Rinary
+  changes:
+  - message: Fixed mag lights on all starlight guns.
+    type: Fix
+  id: 529
+  time: '2025-03-04T14:41:36.840315+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Returned all mech weapons/equipment, gigax and durand parts, exosuit
+      tank and another parts to lathes.
+    type: Fix
+  id: 530
+  time: '2025-03-04T14:42:13.168175+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed antag rolebans, now they work correctly(banned players can't be
+      antags, don't work for admin force).
+    type: Fix
+  id: 531
+  time: '2025-03-04T14:42:47.396130+00:00'
+  url: 'null'
