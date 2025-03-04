@@ -247,7 +247,11 @@ public sealed class AdminSystem : EntitySystem
 
         // Connection status and playtime
         var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
-        TimeSpan? overallPlaytime = null;
+
+        // Start with the last available playtime data
+        var cachedInfo = GetCachedPlayerInfo(data.UserId);
+        var overallPlaytime = cachedInfo?.OverallPlaytime;
+        // Overwrite with current playtime data, unless it's null (such as if the player just disconnected)
         if (session != null &&
             _playTime.TryGetTrackerTimes(session, out var playTimes) &&
             playTimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var playTime))
