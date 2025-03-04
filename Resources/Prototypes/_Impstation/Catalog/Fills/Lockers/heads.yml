@@ -2,16 +2,14 @@
   id: LockerFillHospitalityDirector
   table: !type:AllSelector
     children:
-    - id: AccessConfigurator
-    - id: AdvMopItem
     - id: BoxEncryptionKeyService
     - id: ClothingBeltChefFilled
     - id: ClothingBeltJanitorFilled
     - id: ClothingBeltPlantFilled
-    - id: ClothingHandsGlovesJanitor
+    - id: ClothingHeadsetAltService
     - id: ClothingShoesGaloshes
     - id: DoorRemoteService
-    - id: RubberStampHop #todo rubberstampHd
+    - id: RubberStampHD
     - id: ServiceTechFabCircuitboard
     - id: WeaponLauncherCleanerLake
 

@@ -3,10 +3,13 @@
   parent: Dresser
   suffix: Filled, Hospitality Director
   components:
-  - type: StorageFill #TODO
+  - type: StorageFill 
     contents:
-      - id: ClothingHeadHatHopcap
-      - id: ClothingOuterWinterHoP
-      - id: ClothingEyesGlasses
-      - id: ClothingNeckCloakHop
-
+      - id: ClothingHeadHatBeretHD
+      - id: ClothingHeadHatHDsoft
+      - id: ClothingUniformJumpsuitHDTurtle
+      - id: ClothingUniformJumpskirtHDTurtle
+      - id: ClothingUniformJumpsuitHospitalityDirectorJanitor
+      - id: ClothingUniformJumpskirtHospitalityDirectorJanitor
+      - id: ClothingOuterWinterHD
+      - id: ClothingNeckCloakHd
