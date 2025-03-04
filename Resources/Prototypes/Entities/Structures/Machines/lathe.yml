@@ -270,6 +270,7 @@
     - CameraBoards
     - MechBoards
     - ShuttleBoards
+    - StarlightMechBoards
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - StarlightSecurityBoards
@@ -321,8 +322,13 @@
     - BorgModules
     - MechParts
     - MechEquipment
+    - StarlightMechEquipment
+    - StarlightMechWeapon
     - StarlightSecurityMechs
-    - StarlightIndustrialMechsDynamic
+    - StarlightMechParts
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+    - StarlightMechWeapon
   - type: MaterialStorage
     whitelist:
       tags:
