@@ -101,25 +101,6 @@
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
-- type: technology
-  id: RipleyAPLU
-  name: research-technology-ripley-aplu
-  icon:
-    sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
-    state: base
-  discipline: Industrial
-  tier: 1
-  cost: 7500
-  recipeUnlocks:
-  - RipleyHarness
-  - RipleyLArm
-  - RipleyRArm
-  - RipleyLLeg
-  - RipleyRLeg
-  - RipleyCentralElectronics
-  - RipleyPeripheralsElectronics
-  - MechEquipmentGrabber
-
 # Tier 2
 
 - type: technology
@@ -184,41 +165,6 @@
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
     - MechEquipmentDrillDiamond
-
-- type: technology
-  id: Ripley2
-  name: research-technology-ripley-mkii
-  icon:
-    sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
-    state: base
-  discipline: Industrial
-  tier: 2
-  cost: 8000
-  recipeUnlocks:
-  - RipleyMKIIHarness
-  - RipleyUpgradeKit
-  technologyPrerequisites:
-  - RipleyAPLU
-
-- type: technology
-  id: Clarke
-  name: research-technology-clarke
-  icon:
-    sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
-    state: base
-  discipline: Industrial
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - ClarkeHarness
-  - ClarkeHead
-  - ClarkeLArm
-  - ClarkeRArm
-  - ClarkeTreads
-  - ClarkeCentralElectronics
-  - ClarkePeripheralsElectronics
-  technologyPrerequisites:
-  - RipleyAPLU
 
 # Tier 3
 

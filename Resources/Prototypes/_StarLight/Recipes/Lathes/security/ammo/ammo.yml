@@ -1,7 +1,8 @@
 - type: latheRecipe
   id: ShellShotgunBeanbag
   result: MagazineBoxLightRifleRubber
-  category: Ammo
+  categories:
+  - Ammo
   completetime: 5
   materials:
     Steel: 350

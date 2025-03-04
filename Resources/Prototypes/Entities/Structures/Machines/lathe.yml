@@ -192,7 +192,6 @@
     unlitRunningState: unlit-building
     staticPacks:
     - ChemistryStatic
-    - SurgeryStatic
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
@@ -210,10 +209,16 @@
     - FauxTiles
   - type: EmagLatheRecipes
     emagDynamicPacks:
+    - StarlightSurgeryDynamic
+    - StarlightCyberlimbDynamic
+    - StarlightCyberOrgansDynamic
+    - StarlightImplantDynamic
+
     - StarlightSecurityAmmo
     - StarlightSecurityExplosives
     - StarlightSecurityEquipment
     - StarlightSecurityWeapons
+    - StarlightDefenseStatic
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -316,6 +321,8 @@
     - BorgModules
     - MechParts
     - MechEquipment
+    - StarlightSecurityMechs
+    - StarlightIndustrialMechsDynamic
   - type: MaterialStorage
     whitelist:
       tags:
@@ -395,12 +402,15 @@
     - StarlightSecurityAmmoStatic
     - SecurityWeaponsStatic
     dynamicPacks:
+    - StarlightDefenseStatic
     - StarlightSecurityEquipment
     - StarlightSecurityBoards
     - StarlightSecurityExplosives
     - StarlightSecurityAmmo
     - StarlightSecurityWeapons
     - SecurityDisablers
+
+    - StarlightSecurityMechsWeapons
   - type: MaterialStorage
     whitelist:
       tags:
@@ -470,8 +480,11 @@
     - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
-    - SurgeryStatic
     dynamicPacks:
+    - StarlightSurgeryDynamic
+    - StarlightCyberlimbDynamic
+    - StarlightCyberOrgansDynamic
+    - StarlightImplantDynamic
     - Chemistry
   - type: Machine
     board: MedicalTechFabCircuitboard
