@@ -294,9 +294,9 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady)
         {
-            if (!finaleComp.AutoFinaleStarted) //check if we've not already started the auto finale countdown
+            if (!finaleComp.FinaleDelayStarted) //check if we've not already started the finale delay
             {
-                finaleComp.AutoFinaleStarted = true; //set that we've started it
+                finaleComp.FinaleDelayStarted = true; //set that we've started it
                 //do everything else
 
                 var timer = TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultFinaleDelaySeconds));
@@ -315,16 +315,10 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 Timer.Spawn(timer,
                     () =>
                     {
-                        finaleComp.AutoFinale = false;
-                        if (!finaleComp.FinaleActive) //if the finale hasn't already been started, start it
-                        {
-                            _cult.StartFinale((uid, finaleComp));
-                        }
+                        ReadyFinale(uid, finaleComp);
+                        UpdateCultData(uid); //duplicated work but it looks nicer than calling updateAppearance on it's own
                     });
             }
-
-            //set everything up for allowing cultists to either call it early or wait out the two minutes.
-            ReadyFinale(uid, finaleComp);
         }
         else if (finaleComp.FinaleReady || finaleComp.FinaleActive)
             uid.Comp.TargetProgress = uid.Comp.CurrentProgress;
@@ -386,7 +380,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                         _visibility.SetLayer((uid, visComp), 1);
 
                     uid.Comp.CanTierUp = true;
-                    UpdateCultData(uid); //instantly go up a tier if they manage it. todo replace the 20 entropy buffer with a 5 min timer or so? - ruddygreat
+                    UpdateCultData(uid); //instantly go up a tier if they manage it.
                     _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp)); //not sure if this is needed but I'll be safe
                 });
         }
