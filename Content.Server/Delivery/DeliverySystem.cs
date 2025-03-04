@@ -51,7 +51,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
     private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
     {
-        var container = _container.EnsureContainer<Container>(ent, "delivery");
+        _container.EnsureContainer<Container>(ent, ent.Comp.Container);
 
         var stationId = _station.GetStationInMap(Transform(ent).MapID);
 
@@ -66,7 +66,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         ent.Comp.RecipientName = entry.Name;
         ent.Comp.RecipientJobTitle = entry.JobTitle;
         ent.Comp.RecipientStation = stationId.Value;
-        ent.Comp.Container = container;
 
         _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
 
@@ -151,7 +150,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         _popup.PopupEntity(Loc.GetString("delivery-opened", ("delivery", deliveryName)), user, user);
 
-        if (!_container.TryGetContainer(ent, "delivery", out var container))
+        if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
 
         if (attemptPickup)

@@ -1,6 +1,5 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Delivery;
 
@@ -65,5 +64,5 @@ public sealed partial class DeliveryComponent : Component
     /// The container with all the contents of the delivery.
     /// </summary>
     [DataField]
-    public BaseContainer? Container = default!;
+    public string Container = "delivery";
 }
