@@ -110,13 +110,13 @@ public sealed partial class MonumentComponent : Component
     /// the amount of time to wait for a stage change
     /// </summary>
     [DataField]
-    public TimeSpan TierWait = TimeSpan.FromSeconds(60);
+    public TimeSpan TierUpWait = TimeSpan.FromSeconds(60);
 
     /// <summary>
     /// wether or not there's a stage change queued
     /// </summary>
     [DataField]
-    public bool TierChanging = false;
+    public bool CanTierUp = true;
 }
 
 [Serializable, NetSerializable]
