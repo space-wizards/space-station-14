@@ -81,25 +81,30 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Some items could be labeled.
-            // If they are, we need to check if both the label and the original name match the requester's message
+            // Some items could be labeled, or their names otherwise modified
+            // If they are, we need to check if the original name or the modified name is in the message
 
-            // Check and pull the LabelComponent and NameModifierComponent, if they exist, preform comparisons
-            if (TryComp<LabelComponent>(item, out var itemLabelComponent) &&
-                TryComp<NameModifierComponent>(item, out var itemNameModifierComponent))
+            // Check and pull the NameModifierComponent for the original item name and compare
+            // We explicitly check this by itself
+            // and not check both the NameModifierComponent and the LabelComponent
+            // at the same time because something else could have modified the name
+            if (TryComp<NameModifierComponent>(item, out var itemNameModifierComponent) &&
+                args.Message.Contains(itemNameModifierComponent.BaseName, StringComparison.InvariantCultureIgnoreCase))
             {
-                if (args.Message.Contains(itemNameModifierComponent.BaseName,
-                        StringComparison.InvariantCultureIgnoreCase) ||
-                    itemLabelComponent.CurrentLabel != null && args.Message.Contains(itemLabelComponent.CurrentLabel,
-                        StringComparison.InvariantCultureIgnoreCase))
-                {
-                    ExtractItemFromStorage(ent, item, args.Source, hands);
-                    break;
-                }
+                ExtractItemFromStorage(ent, item, args.Source, hands);
+                break;
             }
 
-            // Check the item's regular name.
-            // If the message doesn't match the item name the requestor requested, skip and move on to the next item
+            // Check and pull the LabelComponent for the current label and compare
+            if (TryComp<LabelComponent>(item, out var itemLabelComponent) &&
+                (itemLabelComponent.CurrentLabel == null || args.Message.Contains(itemLabelComponent.CurrentLabel,
+                    StringComparison.InvariantCultureIgnoreCase)))
+            {
+                ExtractItemFromStorage(ent, item, args.Source, hands);
+                break;
+            }
+
+            // Check the item's regular name. If it matches, extract it from storage
             if (args.Message.Contains(MetaData(item).EntityName, StringComparison.InvariantCultureIgnoreCase))
             {
                 ExtractItemFromStorage(ent, item, args.Source, hands);
