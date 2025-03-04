@@ -21,7 +21,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -50,7 +50,7 @@
     capacity: 100
   - type: Item
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi #imp
   - type: MagazineVisuals
     magState: mag
     steps: 8

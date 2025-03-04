@@ -16,7 +16,7 @@
     tags:
     - Sidearm
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/deckard.rsi #imp
     quickEquip: false
     slots:
     - suitStorage
@@ -57,7 +57,7 @@
   description: A rare, custom-built revolver. Use when there is no time for the Voight-Kampff test. Uses .45 magnum ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/deckard.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -85,9 +85,9 @@
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/inspector.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/inspector.rsi #imp
   - type: RevolverAmmoProvider
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
@@ -100,9 +100,9 @@
   description: The iconic sidearm of the dreaded death squads... allegedly. Uses .45 magnum ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/mateba.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/mateba.rsi #imp
   - type: Gun
     fireRate: 3
     soundGunshot:
@@ -115,9 +115,9 @@
   description: A robust revolver favored by Syndicate agents. Uses .45 magnum ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/python.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/python.rsi #imp
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 2
@@ -148,9 +148,9 @@
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi #imp
   - type: Gun
     fireRate: 1
   - type: ContainerContainer
