@@ -382,8 +382,25 @@ public sealed partial class SalvageSystem
                 salvMob.LinkedEntity = mapChild;
             }
         }
+        // IMP Change | currently doesn't say the size of the wrecks when pulling due to the markup on the size strings
+        switch (offering)
+        {
+            case AsteroidOffering asteroid:
+                Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("offeringType", (Loc.GetString($"dungeon-config-proto-{asteroid.Id}")).ToLower()), ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
 
-        Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
+                break;
+            case DebrisOffering debris:
+                Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("offeringType", (Loc.GetString($"salvage-magnet-debris-{debris.Id}")).ToLower()), ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
+
+                break;
+            case SalvageOffering wreck:
+                Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("offeringType", (Loc.GetString($"salvage-map-wreck").ToLower())), ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
+
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
         _mapManager.DeleteMap(salvMapXform.MapID);
 
         data.Comp.Announced = false;
