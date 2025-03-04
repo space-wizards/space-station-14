@@ -44,7 +44,7 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
         if (antagList.Count == 0)
         {
-            shell.WriteLine(Loc.GetString("lsantags-not-antags"));
+            shell.WriteLine(Loc.GetString("lsantags-no-antags"));
         }
         else
         {
