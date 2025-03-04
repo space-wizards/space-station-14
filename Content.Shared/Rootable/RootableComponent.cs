@@ -26,7 +26,7 @@ public sealed partial class RootableComponent : Component
     /// Is the entity currently rooted?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Rooted = false;
+    public bool Rooted;
 
     /// <summary>
     /// The puddle that is currently affecting this entity.
