@@ -16,6 +16,7 @@ cosmiccult-gamemode-description =
     Scanners detect an anomalous increase in Λ-CDM. There is no additional data.
 
 
+cosmiccult-finale-autocall-briefing = The Finale begins in {$minutesandseconds}, gather the cult and prepare for the end!
 cosmiccult-finale-ready = A terrifying light surges forth from The Monument!
 cosmiccult-finale-count = There are {$COUNT} cultists empowering the monument..
 cosmiccult-finale-cultist-count = {$COUNT ->
@@ -97,11 +98,11 @@ cosmiccult-role-deconverted-briefing =
 
 cosmiccult-monument-stage2-briefing =
     The Monument grows in power!
-    Its influence will affect realspace in 60 seconds.
+    Its influence will affect realspace in {$time} seconds.
 
 cosmiccult-monument-stage3-briefing =
     The Monument has been completed!
-    Its influence will begin to overlap with realspace in 60 seconds.
+    Its influence will begin to overlap with realspace in {$time} seconds.
     This is the final stretch! Amass as much entropy as you can muster.
 
 ## MALIGN RIFTS

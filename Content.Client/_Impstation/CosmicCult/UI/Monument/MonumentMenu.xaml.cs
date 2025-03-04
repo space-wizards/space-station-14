@@ -78,8 +78,7 @@ public sealed partial class MonumentMenu : FancyWindow
     {
         var percentComplete = ((float) state.CurrentProgress / (float) state.TargetProgress) * 100f; //too many parenthesis & probably unnecessary float casts but I'm not taking any chances
 
-        if (percentComplete > 100)
-           percentComplete -= 100; //mini hack to force things to behave
+        percentComplete = Math.Min(percentComplete, 100);
 
         CultProgressBar.Value = percentComplete;
 
@@ -95,7 +94,7 @@ public sealed partial class MonumentMenu : FancyWindow
             availableEntropy = cultComp.EntropyBudget.ToString();
         }
 
-        var entropyToNextStage = state.TargetProgress - state.CurrentProgress;
+        var entropyToNextStage = Math.Max(state.TargetProgress - state.CurrentProgress, 0);
         var min = entropyToNextStage == 0 ? 0 : 1; //I have no idea what to call this. makes it so that it shows 0 crew for the final stage but at least one at all other times
         var crewToNextStage = (int) Math.Max(Math.Round((double) entropyToNextStage / _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue), MidpointRounding.ToPositiveInfinity), min); //force it to be at least one
 
