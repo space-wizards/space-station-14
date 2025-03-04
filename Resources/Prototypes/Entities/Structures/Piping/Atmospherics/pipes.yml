@@ -82,6 +82,11 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayer
+    layerVisualStates:
+    - pipeHalf0
+    - pipeHalf
+    - pipeHalf2
   - type: Construction
     graph: GasPipe
     node: half
@@ -105,6 +110,11 @@
     layers:
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayer
+    layerVisualStates:
+    - pipeStraight0
+    - pipeStraight
+    - pipeStraight2
   - type: Construction
     graph: GasPipe
     node: straight
@@ -142,6 +152,11 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayer
+    layerVisualStates:
+    - pipeBend0
+    - pipeBend
+    - pipeBend2
   - type: Construction
     graph: GasPipe
     node: bend
@@ -186,6 +201,11 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayer
+    layerVisualStates:
+    - pipeTJunction0
+    - pipeTJunction
+    - pipeTJunction2
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -228,6 +248,11 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayer
+    layerVisualStates:
+    - pipeFourway0
+    - pipeFourway
+    - pipeFourway2
   - type: Construction
     graph: GasPipe
     node: fourway
@@ -263,6 +288,11 @@
     layers:
       - state: pipeBroken
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayer
+    layerVisualStates:
+    - pipeBroken0
+    - pipeBroken
+    - pipeBroken2
   - type: Construction
     graph: GasPipe
     node: broken
