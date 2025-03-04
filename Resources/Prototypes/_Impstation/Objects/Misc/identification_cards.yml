@@ -20,3 +20,16 @@
     tags:
     - SyndicateAgent
     - NuclearOperative
+
+- type: entity
+  parent: IDCardStandard
+  id: HDIDCard
+  name: hospitality director ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - sprite: _Impstation/Objects/Misc/id_cards.rsi
+      state: idhospitalitydirector
+  - type: PresetIdCard
+    job: HospitalityDirector
