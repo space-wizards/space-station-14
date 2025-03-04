@@ -14,6 +14,7 @@
   - !type:AddComponentSpecial
     components:
     - type: MimePowers
+      preventWriting: true
     - type: FrenchAccent
 
 - type: startingGear
@@ -21,9 +22,8 @@
   equipment:
     gloves: ClothingHandsGlovesColorWhite
     shoes: ClothingShoesColorWhite
-    pocket1: CrayonMime
-    pocket2: Paper
     id: MimePDA
+    pocket1: CrayonMime
     ears: ClothingHeadsetService
   storage:
     back:
