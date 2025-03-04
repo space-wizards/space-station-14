@@ -75,11 +75,40 @@
     WizCoin: 3
   categories:
   - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookRepulse
+  name: spellbook-repulse-name
+  description: spellbook-repulse-desc
+  productAction: ActionRepulse
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookSmoke
+  name: spellbook-smoke-name
+  description: spellbook-smoke-desc
+  productAction: ActionSmoke
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 # Utility
 - type: listing
   id: SpellbookPolymorphSpider
-  name: spellbook-polymoprh-spider-name
+  name: spellbook-polymorph-spider-name
   description: spellbook-polymorph-spider-desc
   productAction: ActionPolymorphWizardSpider
   cost:
@@ -197,6 +226,45 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookHammerMjollnir
+  name: spellbook-hammer-mjollnir-name
+  description: spellbook-hammer-mjollnir-description
+  productEntity: Mjollnir
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookHammerSingularity
+  name: spellbook-hammer-singularity-name
+  description: spellbook-hammer-singularity-description
+  productEntity: SingularityHammer
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookStaffAnimation
+  name: spellbook-staff-animation-name
+  description: spellbook-staff-animation-description
+  productEntity: AnimationStaff
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Event
 - type: listing
   id: SpellbookEventSummonGhosts
@@ -278,3 +346,16 @@
     - SpellbookJaunt
   - !type:ListingLimitedStockCondition
     stock: 2
+
+- type: listing
+  id: SpellbookItemRecallSwap
+  name: spellbook-item-recall-name
+  description: spellbook-item-recall-description
+  productAction: ActionItemRecall
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
