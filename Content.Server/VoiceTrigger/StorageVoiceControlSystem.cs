@@ -4,6 +4,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Labels.Components;
+using Content.Shared.NameModifier.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.Containers;
@@ -79,20 +81,49 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Get the item's name
-            var itemName = MetaData(item).EntityName;
-            // The message doesn't match the item name the requestor requested, skip and move on to the next item
-            if (!args.Message.Contains(itemName, StringComparison.InvariantCultureIgnoreCase))
-                continue;
+            // Some items could be labeled.
+            // If they are, we need to check if both the label and the original name match the requester's message
 
-            // We found the item we want, so draw it from storage and place it into the player's hands
-            if (storage.Container.ContainedEntities.Count != 0)
+            // Check and pull the LabelComponent and NameModifierComponent, if they exist, preform comparisons
+            if (TryComp<LabelComponent>(item, out var itemLabelComponent) &&
+                TryComp<NameModifierComponent>(item, out var itemNameModifierComponent))
             {
-                _container.RemoveEntity(ent, item);
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
-                _hands.TryPickup(args.Source, item, handsComp: hands);
+                if (args.Message.Contains(itemNameModifierComponent.BaseName,
+                        StringComparison.InvariantCultureIgnoreCase) ||
+                    itemLabelComponent.CurrentLabel != null && args.Message.Contains(itemLabelComponent.CurrentLabel,
+                        StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ExtractItemFromStorage(ent, item, args.Source, hands);
+                    break;
+                }
+            }
+
+            // Check the item's regular name.
+            // If the message doesn't match the item name the requestor requested, skip and move on to the next item
+            if (args.Message.Contains(MetaData(item).EntityName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                ExtractItemFromStorage(ent, item, args.Source, hands);
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// Extracts an item from storage and places it into the player's hands.
+    /// </summary>
+    /// <param name="ent">The entity of the item with the StorageVoiceControlComponent</param>
+    /// <param name="item">The entity of the item to be extracted from the attached storage</param>
+    /// <param name="source">The entity of the person wearing the item</param>
+    /// <param name="hands">The HandsComponent of the person wearing the item</param>
+    private void ExtractItemFromStorage(Entity<StorageVoiceControlComponent> ent,
+        EntityUid item,
+        EntityUid source,
+        HandsComponent hands)
+    {
+        _container.RemoveEntity(ent, item);
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
+        _hands.TryPickup(source, item, handsComp: hands);
     }
 }
