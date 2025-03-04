@@ -1,26 +1,20 @@
 using System.Linq;
-using System.Text;
-using Content.Server.Administration;
-using Content.Server.Administration.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
-public sealed class ListAntagsCommand : LocalizedEntityCommands
+public sealed class ListAntagsCommand : LocalizedCommands // LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly AdminSystem _adminSystem = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
     public override string Command => "lsantags";
+    public override string Description => Loc.GetString("lsantag-command-description");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -50,12 +44,11 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
         if (antagList.Count == 0)
         {
-            shell.WriteLine("Антагонистов нет.");
+            shell.WriteLine(Loc.GetString("lsantag-not-antags"));
         }
         else
         {
-            shell.WriteLine("Список антагонистов:\n" + string.Join("\n", antagList));
+            shell.WriteLine($"{Loc.GetString("lsantag-list-antags")}\n{string.Join("\n", antagList)}");
         }
     }
-
 }

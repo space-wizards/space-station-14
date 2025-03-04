@@ -1,2 +1,4 @@
-##lsantag-cmd = [color=red]===== List of antagonists =====[/color]\n
-lsantag-cmd = [color=blue]===== List of antagonists =====[/color]
+# Command: lsantag
+lsantag-command-description = Lists players who are antagonists.
+lsantag-command-not-antags = There are no antagonists.
+lsantag-command-list-antags = List of antagonists:
