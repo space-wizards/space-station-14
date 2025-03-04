@@ -19,7 +19,7 @@
   id: LawyerGear
   equipment:
     id: LawyerPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer # imp edit
   inhand:
     - BriefcaseBrownFilled
   storage:

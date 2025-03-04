@@ -160,3 +160,20 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhd.rsi
   - type: StealTarget #imp
     stealGroup: CommandHeadset
+    
+- type: entity
+  parent: [ClothingHeadset, BaseRestrictedLawyerContraband]
+  id: ClothingHeadsetLawyer
+  name: lawyer headset
+  description: Lets you shout at security while letting your boss shout at you.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi

@@ -244,7 +244,6 @@
       key_slots:
       - EncryptionKeySecurity
       - EncryptionKeyCommon
-      - EncryptionKeyService # imp edit
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
