@@ -266,7 +266,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _appearance.SetData(uid, MonumentVisuals.Transforming, true);
         }
 
-        if (finaleComp.FinaleReady || finaleComp.FinaleActive || finaleComp.ForceShowFinaleVisuals)
+        if (finaleComp.FinaleReady || finaleComp.FinaleActive)
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, true);
     }
 
@@ -312,13 +312,10 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                         StageAlertSound);
                 }
 
-                finaleComp.ForceShowFinaleVisuals = true;
-
                 Timer.Spawn(timer,
                     () =>
                     {
                         finaleComp.AutoFinale = false;
-                        finaleComp.ForceShowFinaleVisuals = false; //unset this for sanity, it should be unnecessary due to startFinale setting finaleActive to true
                         if (!finaleComp.FinaleActive) //if the finale hasn't already been started, start it
                         {
                             _cult.StartFinale((uid, finaleComp));
