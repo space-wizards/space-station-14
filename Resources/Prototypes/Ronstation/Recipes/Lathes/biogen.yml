@@ -2,7 +2,8 @@
   id: BioGenNitrogen
   resultReagents:
     Nitrogen: 10
-  category: Food
+  categories:
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     state: icon
@@ -14,7 +15,8 @@
   id: BioGenHydrogen
   resultReagents:
     Hydrogen: 10
-  category: Food
+  categories:
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     state: icon
@@ -26,7 +28,8 @@
   id: BioGenOxygen
   resultReagents:
     Oxygen: 10
-  category: Food
+  categories:
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     state: icon
@@ -38,7 +41,8 @@
   id: BioGenPhosphorus
   resultReagents:
     Phosphorus: 10
-  category: Food
+  categories:
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     state: icon
@@ -50,7 +54,8 @@
   id: BioGenPotassium
   resultReagents:
     Potassium: 10
-  category: Food
+  categories:
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     state: icon
