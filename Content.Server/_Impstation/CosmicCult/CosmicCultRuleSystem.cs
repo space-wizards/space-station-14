@@ -284,6 +284,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 #endif
 
         PercentConverted = Math.Round((double) (100 * TotalCult) / TotalCrew);
+        //todo early call the shuttle if totalCult - dead cultists == 0?
+        //subscribe to onMobStateChanged for the cultComp to figure out when a cultist is dead
 
         //this can probably be somewhere else but
         UpdateMonumentReqsForTier(uid, CurrentTier);
