@@ -3836,3 +3836,10 @@ Entries:
   id: 531
   time: '2025-03-04T14:42:47.396130+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed CC spawn, Fixed abductor/admeme shuttles spawn.
+    type: Fix
+  id: 532
+  time: '2025-03-04T15:32:02.662189+00:00'
+  url: 'null'
