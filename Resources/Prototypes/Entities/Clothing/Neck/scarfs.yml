@@ -78,8 +78,8 @@
 - type: entity
   parent: ClothingScarfBase
   id: ClothingNeckScarfStripedPurple
-  name: striped purple scarf
-  description: A stylish striped purple scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  name: excessively-long purple scarf
+  description: A very, very, very long purple scarf. It's easy to lose yourself in its length, but it's perfect to make you feel warm on the very longest, very darkest nights, when it feels like the sun might never rise again.
   components:
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/purple.rsi
