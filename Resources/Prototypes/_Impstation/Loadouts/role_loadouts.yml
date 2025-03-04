@@ -45,7 +45,9 @@
   - HospitalityDirectorNeck
   - HospitalityDirectorJumpsuit
   - HospitalityDirectorOuterClothing
+  - HospitalityDirectorGloves
   - HospitalityDirectorShoes
+  - HospitalityDirectorHeadset
   - Glasses
   - HospitalityDirectorBackpack
   - SurvivalCommand

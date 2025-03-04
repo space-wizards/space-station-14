@@ -7,3 +7,9 @@
   id: LeatherSatchel
   equipment:
     back: ClothingBackpackSatchelLeather
+
+- type: loadout
+  id: GreenWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterColorGreen
+

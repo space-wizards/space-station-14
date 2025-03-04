@@ -285,42 +285,82 @@
   name: loadout-group-hospitality-director-head
   minLimit: 0
   loadouts:
-  - #TODO
+  - HospitalityDirectorHead
+  - BotanistBandana
+  - BartenderHead
+  - HospitalityDirectorBeret
 
 - type: loadoutGroup
   id: HospitalityDirectorNeck
   name: loadout-group-hospitality-director-neck
   minLimit: 0
   loadouts:
-  - #TODO
+  - HospitalityDirectorCloak
+  - HospitalityDirectorMantle
+  - ScarfLightGreen
 
 - type: loadoutGroup
   id: HospitalityDirectorJumpsuit
   name: loadout-group-hospitality-director-jumpsuit
+  loadouts:
+  - HospitalityDirectorJumpsuit
+  - HospitalityDirectorJumpskirt
+  - HospitalityDirectorTurtleneck
+  - HospitalityDirectorTurtleneckSkirt
+  - HospitalityDirectorJanitorJumpsuit
+  - HospitalityDirectorJanitorJumpskirt
+  - HospitalityDirectorBartenderJumpsuit
+  - HospitalityDirectorBartenderJumpskirt
+  - HospitalityDirectorBotanyJumpsuit
+
+- type: loadoutGroup
+  id: HospitalityDirectorGloves
+  name: loadout-group-hospitality-director-gloves
   minLimit: 0
   loadouts:
-  - #TODO
+  - JanitorRubberGloves
+  - BotanistLeatherGloves
+
 
 - type: loadoutGroup
   id: HospitalityDirectorOuterClothing
   name: loadout-group-hospitality-director-outerclothing
   minLimit: 0
   loadouts:
-  - #TODO
+  - HospitalityDirectorApron
+  - HospitalityDirectorVest
+  - HospitalityDirectorWintercoat
   
 - type: loadoutGroup
   id: HospitalityDirectorShoes
   name: loadout-group-hospitality-director-shoes
-  minLimit: 0
   loadouts:
-  - #TODO
+  - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - GreenWinterBoots
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: HospitalityDirectorBackpack
   name: loadout-group-hospitality-director-backpack
-  minLimit: 0
   loadouts:
-  - #TODO
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - LeatherSatchel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HospitalityDirectorHeadset
+  name: loadout-group-hospitality-director-headset
+  loadouts:
+  - HospitalityDirectorHeadsetBasic
+  - HospitalityDirectorHeadset
+  - HospitalityDirectorVeteranHeadset
 
 - type: loadoutGroup
   id: BartenderNeck
@@ -445,6 +485,14 @@
   loadouts:
   - ScarfBrown
   - ScarfGreen
+  - ScarfLightGreen
+
+- type: loadoutGroup
+  id: BotanistGloves
+  name: loadout-group-botanist-gloves
+  minLimit: 0
+  loadouts:
+  - BotanistLeatherGloves
 
 - type: loadoutGroup
   id: BotanistShoes

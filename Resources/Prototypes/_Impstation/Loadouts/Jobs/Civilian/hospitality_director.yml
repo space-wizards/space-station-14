@@ -20,14 +20,24 @@
 
 # Jumpsuit
 - type: loadout
+  id: HospitalityDirectorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHD
+
+- type: loadout
+  id: HospitalityDirectorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHD
+ 
+- type: loadout
   id: HospitalityDirectorTurtleneck
   equipment:
-    jumpsuit: ClothingUniformJumpsuitHospitalityDirectorTurtle
+    jumpsuit: ClothingUniformJumpsuitHDTurtle
 
 - type: loadout
   id: HospitalityDirectorTurtleneckSkirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtHospitalityDirectorTurtle
+    jumpsuit: ClothingUniformJumpskirtHDTurtle
     
 - type: loadout
   id: HospitalityDirectorJanitorJumpsuit
@@ -60,9 +70,14 @@
   equipment:
     head: ClothingHeadHatHDsoft
 
+- type: startingGear
+  id: ServiceBeret
+  equipment:
+    head: ClothingHeadHatBeretHD
+
 - type: loadout
   id: HospitalityDirectorBeret
-  startingGear: ClothingHeadHatBeretHD
+  startingGear: ServiceBeret
 
 # Neck
 - type: loadout
@@ -98,12 +113,6 @@
   id: HospitalityDirectorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHD
-
-# Shoes
-- type: loadout
-  id: BrownShoes
-  equipment:
-    shoes: ClothingShoesColorBrown
 
 # Headset
 - type: loadout

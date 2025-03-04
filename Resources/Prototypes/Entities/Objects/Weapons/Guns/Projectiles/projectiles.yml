@@ -229,6 +229,7 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
+    muzzleFlash: null
   - type: StaminaDamageOnCollide
     damage: 30
   - type: Projectile
