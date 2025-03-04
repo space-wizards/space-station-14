@@ -37,7 +37,7 @@
                                                FontColorOverride="{x:Static maths:Color.DarkGray}"
                                                StyleClasses="LabelBig" HorizontalExpand="True" />
                                         <Button Name="ManifestButton" Access="Public"
-                                                Text="Manifest"
+                                                Text="{Loc 'ui-lobby-manifest-button'}"
                                                 StyleClasses="ButtonBig" MinWidth="137" />
                                         <Button Name="ReadyButton" Access="Public" ToggleMode="True"
                                                 Text="{Loc 'ui-lobby-ready-up-button'}"
