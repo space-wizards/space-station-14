@@ -57,6 +57,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
+        if (!CheckForCharges(uid))
+            return;
+
         var (actId, act) = _random.Pick(options);
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
@@ -73,15 +76,6 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 return;
 
             actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
-        }
-
-        // Staves have limited charges, other items may not
-        if (TryComp<LimitedChargesComponent>(uid, out var charges))
-        {
-            if (_charges.IsEmpty(uid, charges))
-                return;
-
-            _charges.UseCharge(uid, charges);
         }
 
         // First, try entity target actions
@@ -102,6 +96,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 {
                     entAct.Event.Target = args.Target.Value;
                 }
+
+                if (!CheckForCharges(uid))
+                    return;
 
                 _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
@@ -127,6 +124,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 entAct.Event.Coords = args.ClickLocation;
             }
 
+            if (!CheckForCharges(uid))
+                return;
+
             _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
             args.Handled = true;
             return;
@@ -149,6 +149,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         {
             act.Event.Target = args.ClickLocation;
         }
+
+        if (!CheckForCharges(uid))
+            return;
 
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
@@ -174,5 +177,20 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         return valid;
+    }
+
+    private bool CheckForCharges(EntityUid uid)
+    {
+        // Staves have limited charges, other items may not
+        if (TryComp<LimitedChargesComponent>(uid, out var charges))
+        {
+            if (_charges.IsEmpty(uid, charges))
+                return false;
+
+            _charges.UseCharge(uid, charges);
+            return true;
+        }
+
+        return true;
     }
 }
