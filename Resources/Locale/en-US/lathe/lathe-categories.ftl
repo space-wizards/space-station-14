@@ -21,7 +21,7 @@ lathe-category-hats = Hats
 lathe-category-jumpsuits = Jumpsuits
 lathe-category-neck = Neck
 
-#Mechs
+# Mechs
 lathe-category-mechs = Mechs
 lathe-category-mechs-vim = Vim
 lathe-category-mechs-honker = H.O.N.K.

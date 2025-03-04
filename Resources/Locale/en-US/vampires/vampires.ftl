@@ -33,9 +33,9 @@ store-currency-display-blood-essence = Blood Essence
 store-category-vampirepowers = Powers
 store-category-vampirepassives = Passives
 
-#Powers
+# Powers
 
-#Passives
+# Passives
 vampire-passive-unholystrength = Unholy Strength
 vampire-passive-unholystrength-description = Infuse your upper body muscles with essence, granting you claws and increased strength. Effect: 10 Slash per hit
 
@@ -45,7 +45,7 @@ vampire-passive-supernaturalstrength-description = Increase your upper body musc
 vampire-passive-deathsembrace = Deaths Embrace
 vampire-passive-deathsembrace-description = Embrace death and it shall pass you over. Effect: Heal when in a coffin, automatically return to your coffin upon death for 100 blood essence.
 
-#Mutation menu
+# Mutation menu
 
 vampire-mutation-menu-ui-window-name = Mutation menu
 

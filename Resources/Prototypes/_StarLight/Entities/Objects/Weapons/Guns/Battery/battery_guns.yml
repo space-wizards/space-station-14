@@ -16,9 +16,10 @@
     - state: disable
       map: ["enum.FireModesLayers.FireMode"]
       shader: unshaded
-    - state: disable-unshaded-0
+    - state: disable-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Appearance
   - type: Item
     heldPrefix: disable4
   - type: Clothing
@@ -73,6 +74,7 @@
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
     fireCost: 100
+  - type: Appearance
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
@@ -159,6 +161,7 @@
   id: WeaponDominator
   description: A high-tech weapon created by the law enforcement organization Sibyl System, designed specifically to fight crime.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/dominator.rsi
     layers:
@@ -210,6 +213,7 @@
   id: WeaponMultiphaseGun
   description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes. But it don't have ability to slowly reload over time.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/multiphase_gun.rsi
     layers:
@@ -387,6 +391,7 @@
   id: WeaponM1911
   description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/m1911.rsi
     layers:
@@ -427,6 +432,7 @@
   id: WeaponPulsePistol
   description: An extremely compact version of the pulse carabine.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_pistol.rsi
     layers:
@@ -472,6 +478,7 @@
   id: WeaponPDW9
   description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pdw9.rsi
     layers:
@@ -584,6 +591,7 @@
   id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
@@ -639,6 +647,7 @@
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse.rsi
     layers:
@@ -692,6 +701,7 @@
   id: WeaponANNIHILATOR
   description: A weapon that is almost as infamous as its users.
   components:
+  - type: Appearance
   - type: Gun
     selectedMode: Burst
     fireRate: 3
