@@ -17,23 +17,12 @@ public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
     [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
-    private void OnTrigger(EntityUid uid, AlertLevelChangeOnTriggerComponent ent, ref TriggerEvent args)
+    private void OnTrigger(Entity<AlertLevelChangeOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        var stationuid = _station.GetOwningStation(uid);
+        var stationuid = _station.GetOwningStation(ent.Owner);
         if (!stationuid.HasValue)
             return;
 
-        if (ent.Level == null)
-            return;
-
-        if (!TryComp<AlertLevelComponent>(stationuid.Value, out var alertLevelComponent))
-            return;
-
-        if (_alertLevelSystem.GetLevel(stationuid.Value) != _alertLevelSystem.GetDefaultLevel(stationuid.Value))
-        {
-            return;
-        }
-
-        _alertLevelSystem.SetLevel(stationuid.Value, ent.Level, true, true, true);
+        _alertLevelSystem.SetLevel(stationuid.Value, ent.Comp.Level, true, true, true);
     }
 }
