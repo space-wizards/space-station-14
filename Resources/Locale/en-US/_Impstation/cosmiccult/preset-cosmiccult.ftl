@@ -97,11 +97,11 @@ cosmiccult-role-deconverted-briefing =
 
 cosmiccult-monument-stage2-briefing =
     The Monument grows in power!
-    Its influence will affect realspace in 60 seconds.
+    Its influence will affect realspace in {$time} seconds.
 
 cosmiccult-monument-stage3-briefing =
     The Monument has been completed!
-    Its influence will begin to overlap with realspace in 60 seconds.
+    Its influence will begin to overlap with realspace in {$time} seconds.
     This is the final stretch! Amass as much entropy as you can muster.
 
 ## MALIGN RIFTS
