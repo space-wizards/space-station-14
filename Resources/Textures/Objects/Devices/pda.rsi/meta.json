@@ -266,6 +266,9 @@
         "name": "pda-admin-assistant"
     },
     {
+        "name": "pda-hd"
+    },
+    {
       "name": "equipped-IDCARD",
       "directions": 4
     }
