@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added dozens of new possible targets for thieves and traitors to steal.
-    type: Add
-  id: 730
-  time: '2024-12-13T21:31:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1005
 - author: honeyed-lemons
   changes:
   - message: Tweaked Boxes Medical
@@ -4060,3 +4053,10 @@
   id: 1229
   time: '2025-03-04T11:40:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1830
+- author: Delta-V
+  changes:
+  - message: 'A shipment from Delta-V Sector: tons of new clothes!'
+    type: Add
+  id: 1230
+  time: '2025-03-04T13:32:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1786
