@@ -33,6 +33,16 @@ namespace Content.Server.Speech.EntitySystems
                 .Replace("l", "w").Replace("L", "W");
         }
 
+        public string MaybeAccentuate(string? message, float chance = 1.0f)
+        {
+            if (message == null || _random.Prob(chance))
+            {
+                return message ?? string.Empty;
+            }
+
+            return Accentuate(message);
+        }
+
         private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)
         {
             args.Message = Accentuate(args.Message);
