@@ -55,15 +55,15 @@ public sealed class SharedMonumentSystem : EntitySystem
 
     private void OnUIOpened(Entity<MonumentComponent> ent, ref BoundUIOpenedEvent args)
     {
-        if (!_ui.IsUiOpen(ent.Owner, MonumentKey.Key) || !TryComp<ActivatableUIComponent>(ent, out var uiComp))
+        if (!_ui.IsUiOpen(ent.Owner, MonumentKey.Key))
             return;
 
-        if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(args.Actor, out var cultComp))
+        if (ent.Comp.Enabled && HasComp<CosmicCultComponent>(args.Actor))
         {
             _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
         }
         else
-            _ui.CloseUi(ent.Owner, MonumentKey.Key); //close the UI if the finale is ready to trigger
+            _ui.CloseUi(ent.Owner, MonumentKey.Key); //close the UI if the monument isn't available
         //todo this can probably be done better - have it keep the UI open but replace everything with some kinda "The End Is Coming" text? - ruddygreat
 
     }
