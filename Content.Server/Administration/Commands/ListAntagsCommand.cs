@@ -8,7 +8,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
-public sealed class ListAntagsCommand : LocalizedCommands // LocalizedEntityCommands
+public sealed class ListAntagsCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
