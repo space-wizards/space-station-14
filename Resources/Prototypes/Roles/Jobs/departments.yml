@@ -14,26 +14,27 @@
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#9FED58"
-  weight: -10
+  color: "#BCBCBC" #imp edit, grey for the greytide
+  weight: -11
   roles:
-  - HospitalityDirector #Imp
-  - Bartender
-  - Botanist
-  - Boxer
-  - Chaplain
-  - Chef
-  - Clown
-  - Janitor
-  - Lawyer
-  - Librarian
-  - Mime
-  - Musician
+  # begin imp edit, service split
+  #- Bartender
+  #- Botanist
+  #- Boxer
+  #- Chaplain
+  #- Chef
+  #- Clown
+  #- Janitor
+  #- Lawyer
+  #- Librarian
+  #- Mime
+  #- Musician
+  #- Reporter
+  #- Visitor
+  #- Zookeeper
+  #- ServiceWorker
+  # end imp edit, a department of one
   - Passenger
-  - Reporter
-  - Visitor
-  - Zookeeper
-  - ServiceWorker
 
 - type: department
   id: CentralCommand

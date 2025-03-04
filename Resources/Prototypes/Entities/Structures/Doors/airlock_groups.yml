@@ -98,30 +98,30 @@
   id: Departments
   departments:
     atmospherics: Engineering
-    service: Civilian #imp edit
     cargo: Cargo
     chemistry: Medical
     command: Command
     engineering: Engineering
-    freezer: Civilian
-    basic: Civilian
-    hydroponics: Civilian
-    maintenance: Civilian
     medical: Medical
     science: Science
     security: Security
     virology: Medical
     #begin imp edit
-    bar: Civilian
-    chapel: Civilian
-    clown: Civilian
-    janitor: Civilian
-    kitchen: Civilian
-    lawyer: Civilian
-    librarian: Civilian
-    mime: Civilian
-    reporter: Civilian
-    theatre: Civilian
+    basic: Civilian #imp edit
+    service: Service #imp edit
+    freezer: Service  
+    hydroponics: Service
+    maintenance: Service
+    bar: Service
+    chapel: Service
+    clown: Service
+    janitor: Service
+    kitchen: Service
+    lawyer: Service
+    librarian: Service
+    mime: Service
+    reporter: Service
+    theatre: Service
     salvage: Cargo
     courier: Cargo
     #end imp edit

@@ -14,7 +14,7 @@
       department: Dining
       time: 18000 #5 hrs, any combination of chef, bartender, and service worker playtime
     - !type:DepartmentTimeRequirement
-      department: Civilian #todo, service dept
+      department: Service
       time: 72000 #20 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs

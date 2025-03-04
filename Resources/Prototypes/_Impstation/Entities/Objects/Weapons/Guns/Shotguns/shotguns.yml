@@ -30,7 +30,7 @@
 
 - type: entity
   name: stun Kammerer
-  parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseMinorSecurityCivilianContraband]
+  parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderContraband]
   id: WeaponShotgunKammererBeanbag
   description: A pump shotgun with a built-in silencer, modified to only accept .50 stun slugs.
   components:
