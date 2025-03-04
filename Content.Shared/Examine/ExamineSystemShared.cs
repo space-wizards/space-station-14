@@ -271,7 +271,6 @@ namespace Content.Shared.Examine
             //Add an entity description if one is declared
             if (!string.IsNullOrEmpty(metadata.EntityDescription))
             {
-                // text = _owOAccentSystem.MaybeAccentuate(text);
                 message.AddText(metadata.EntityDescription);
                 hasDescription = true;
             }
