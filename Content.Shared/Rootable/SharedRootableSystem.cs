@@ -51,6 +51,7 @@ public abstract class SharedRootableSystem : EntitySystem
 
     private void OnRootableMapInit(EntityUid uid, RootableComponent component, MapInitEvent args)
     {
+        component.NextUpdate = _timing.CurTime;
         _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
     }
 
