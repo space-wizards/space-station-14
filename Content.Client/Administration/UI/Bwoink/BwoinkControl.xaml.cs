@@ -89,6 +89,9 @@ namespace Content.Client.Administration.UI.Bwoink
                 return sb.ToString();
             };
 
+            // <summary>
+            // Returns true if the player's overall playtime is under the set threshold
+            // </summary>
             bool IsNewPlayer(PlayerInfo info)
             {
                 // Don't show every disconnected player as new, don't show 0-minute players as new if threshold is

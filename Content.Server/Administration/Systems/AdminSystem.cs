@@ -222,6 +222,7 @@ public sealed class AdminSystem : EntitySystem
         var entityName = string.Empty;
         var identityName = string.Empty;
 
+        // Visible (identity) name can be different from real name
         if (session?.AttachedEntity != null)
         {
             entityName = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
@@ -230,6 +231,7 @@ public sealed class AdminSystem : EntitySystem
 
         var antag = false;
 
+        // Starting role, antagonist status and role type
         RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp))
@@ -243,6 +245,7 @@ public sealed class AdminSystem : EntitySystem
             startingRole = _jobs.MindTryGetJobName(mindId);
         }
 
+        // Connection status and playtime
         var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
         TimeSpan? overallPlaytime = null;
         if (session != null &&
