@@ -1,4 +1,5 @@
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Power.Components
 {
@@ -16,6 +17,7 @@ namespace Content.Server.Power.Components
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [DataField]
+        [GuidebookData]
         public float MaxCharge;
 
         /// <summary>
