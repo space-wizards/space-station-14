@@ -64,8 +64,6 @@ public sealed class SharedMonumentSystem : EntitySystem
         }
         else
             _ui.CloseUi(ent.Owner, MonumentKey.Key); //close the UI if the monument isn't available
-        //todo this can probably be done better - have it keep the UI open but replace everything with some kinda "The End Is Coming" text? - ruddygreat
-
     }
 
     #region UI listeners

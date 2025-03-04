@@ -24,7 +24,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
     private void OnInteract(Entity<CosmicFinaleComponent> uid, ref InteractHandEvent args)
     {
-        if (!HasComp<CosmicCultComponent>(args.User) && uid.Comp.FinaleActive && !args.Handled)
+        if (!HasComp<CosmicCultComponent>(args.User) && (uid.Comp.FinaleActive && !uid.Comp.AutoFinale) && !args.Handled)
         {
             uid.Comp.Occupied = true;
             var doargs = new DoAfterArgs(EntityManager, args.User, uid.Comp.InteractionTime, new CancelFinaleDoAfterEvent(), uid, uid)
@@ -50,15 +50,22 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
     private void OnFinaleStartDoAfter(Entity<CosmicFinaleComponent> uid, ref StartFinaleDoAfterEvent args)
     {
-        var comp = uid.Comp;
-
-        if (args.Args.Target == null || args.Cancelled || args.Handled || !TryComp<MonumentComponent>(args.Args.Target, out var monument) || !TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
+        if (args.Args.Target == null || args.Cancelled || args.Handled || !TryComp<MonumentComponent>(uid, out var monument) || !TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
         {
             uid.Comp.Occupied = false;
             return;
         }
 
         _popup.PopupEntity(Loc.GetString("cosmiccult-finale-beckon-success"), args.Args.User, args.Args.User);
+        StartFinale(uid);
+    }
+
+    public void StartFinale(Entity<CosmicFinaleComponent> uid)
+    {
+        var comp = uid.Comp;
+        if (!TryComp<MonumentComponent>(uid, out var monument) || !TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
+            return;
+
         if (!comp.BufferComplete)
         {
             corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(3);
@@ -88,9 +95,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         comp.FinaleReady = false;
         comp.FinaleActive = true;
+        comp.AutoFinale = false;
         monument.Enabled = true;
 
-        Dirty(args.Args.Target!.Value, monument);
+        Dirty(uid, monument);
         _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(monument));
     }
 
@@ -120,15 +128,27 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.PlayedBufferSong = false;
         comp.FinaleActive = false;
         comp.FinaleReady = true;
+        comp.AutoFinale = false;
 
-        if (TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp)) corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(6);
+        if (TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
+            corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(6);
 
-        if (TryComp<ActivatableUIComponent>(uid, out var uiComp)) uiComp.Key = null; // wow! This is the laziest way to disable a UI ever!
+        if (TryComp<ActivatableUIComponent>(uid, out var uiComp))
+        {
+            if (TryComp<UserInterfaceComponent>(uid, out var uiComp2)) //close the UI for everyone who has it open
+            {
+                _ui.CloseUi((uid.Owner, uiComp2), MonumentKey.Key);
+            }
+
+            uiComp.Key = null; //kazne called this the laziest way to disable a UI ever
+        }
 
         _appearance.SetData(uid, MonumentVisuals.FinaleReached, 1);
 
         if (!TryComp<MonumentComponent>(args.Args.Target, out var monument))
             return;
+
+        monument.Enabled = false;
 
         Dirty(args.Args.Target!.Value, monument);
         _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(monument));

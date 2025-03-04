@@ -5,6 +5,9 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CosmicFinaleComponent : Component
 {
+    [DataField] public bool AutoFinale = true;
+    [DataField] public bool AutoFinaleStarted = false;
+    [DataField] public bool ForceShowFinaleVisuals = false;
     [DataField] public bool FinaleReady = false;
     [DataField] public bool FinaleActive = false;
     [DataField] public bool Victory = false;

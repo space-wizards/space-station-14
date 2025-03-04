@@ -101,18 +101,6 @@ public sealed partial class MonumentComponent : Component
     };
 
     /// <summary>
-    /// the timer used for staging up the monument
-    /// </summary>
-    [AutoPausedField, DataField]
-    public TimeSpan TierChangeTimer = default!;
-
-    /// <summary>
-    /// the amount of time to wait for a stage change
-    /// </summary>
-    [DataField]
-    public TimeSpan TierUpWait = TimeSpan.FromSeconds(60);
-
-    /// <summary>
     /// wether or not there's a stage change queued
     /// </summary>
     [DataField]

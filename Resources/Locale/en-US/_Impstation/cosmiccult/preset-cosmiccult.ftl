@@ -16,6 +16,7 @@ cosmiccult-gamemode-description =
     Scanners detect an anomalous increase in Λ-CDM. There is no additional data.
 
 
+cosmiccult-finale-autocall-briefing = The Finale begins in {$minutesandseconds}. Prepare yourself!
 cosmiccult-finale-ready = A terrifying light surges forth from The Monument!
 cosmiccult-finale-count = There are {$COUNT} cultists empowering the monument..
 cosmiccult-finale-cultist-count = {$COUNT ->
