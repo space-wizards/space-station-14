@@ -85,6 +85,11 @@ public sealed partial class CosmicCultComponent : Component
     [DataField, AutoNetworkedField] public bool CosmicEmpowered = false;
 
     /// <summary>
+    /// Wether or not this cultist needs to respirate.
+    /// </summary>
+    [DataField, AutoNetworkedField] public bool Respiration = true;
+
+    /// <summary>
     /// A string for storing what damage container this cultist had upon conversion.
     /// </summary>
     [DataField, AutoNetworkedField] public ProtoId<DamageContainerPrototype> StoredDamageContainer = "Biological";

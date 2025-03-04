@@ -28,7 +28,7 @@ public sealed class SharedMonumentSystem : EntitySystem
         SubscribeLocalEvent<MonumentComponent, GlyphSelectedMessage>(OnGlyphSelected);
         SubscribeLocalEvent<MonumentComponent, GlyphRemovedMessage>(OnGlyphRemove);
         SubscribeLocalEvent<MonumentComponent, InfluenceSelectedMessage>(OnInfluenceSelected);
-        SubscribeLocalEvent<MonumentComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<MonumentCollisionComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
     public override void Update(float frameTime)
@@ -47,7 +47,7 @@ public sealed class SharedMonumentSystem : EntitySystem
     /// <summary>
     /// Ensures that Cultists can't walk through The Monument and allows non-cultists to walk through the space.
     /// </summary>
-    private void OnPreventCollide(EntityUid uid, MonumentComponent comp, ref PreventCollideEvent args)
+    private void OnPreventCollide(EntityUid uid, MonumentCollisionComponent comp, ref PreventCollideEvent args)
     {
         if (!HasComp<CosmicCultComponent>(args.OtherEntity) && !comp.HasCollision)
             args.Cancelled = true;

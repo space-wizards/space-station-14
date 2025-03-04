@@ -136,7 +136,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         var query = QueryActiveRules();
         while (query.MoveNext(out var ruleUid, out _, out var cultRule, out _))
         {
-            SetWinType((ruleUid, cultRule), WinType.CultComplete); //Last i checked, there's no coming back from summoning a fragment of raw cosmic power. Cult wins this round.
+            SetWinType((ruleUid, cultRule), WinType.CultComplete); //here's no coming back from this. Cult wins this round
             _roundEnd.EndRound(); //Woo game over yeaaaah
             foreach (var cultist in cultRule.Cultists)
             {
@@ -162,7 +162,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             return;
         uid.Comp.WinType = type;
 
-        if (type is WinType.CultComplete or WinType.CrewComplete or WinType.CultMajor) //Let's lock in our WinType to prevent us from setting a worse win if a better win's been achieved.
+        if (type is WinType.CultComplete or WinType.CrewComplete) //Let's lock in our WinType to prevent us from setting a worse win if a better win's been achieved.
             uid.Comp.WinLocked = true;
     }
 
@@ -193,18 +193,18 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             }
         }
         if (tier < 3 && leaderAlive)
-            SetWinType(uid, WinType.Neutral); //The Monument isn't Tier 3, but the cult leader's alive and at Centcomm! That's a Neutral outcome.
+            SetWinType(uid, WinType.Neutral); //The Monument isn't Tier 3, but the cult leader's alive and at Centcomm! a Neutral outcome
         var monument = AllEntityQuery<CosmicFinaleComponent>();
         while (monument.MoveNext(out var monumentUid, out var comp))
         {
             _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
-            if (comp.FinaleActive || comp.BufferComplete || comp.FinaleReady)
+            if (tier == 3 && !comp.FinaleActive || !comp.BufferComplete || !comp.FinaleReady)
             {
-                SetWinType(uid, WinType.CultMajor); //Despite the crew's escape, The Finale is available or active. Major win!
+                SetWinType(uid, WinType.CultMinor); //The crew escaped, and The Monument wasn't fully empowered. a small win
             }
-            else if (tier == 3)
+            else if (comp.FinaleActive || comp.BufferComplete || comp.FinaleReady)
             {
-                SetWinType(uid, WinType.CultMinor); //The crew escaped, and The Monument wasn't fully empowered. Good enough for a small win!
+                SetWinType(uid, WinType.CultMajor); //Despite the crew's escape, The Finale is available or active. Major win
             }
             QueueDel(monumentUid); // The monument doesn't need to stick around postround! Into the bin with you.
         }
@@ -212,12 +212,12 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         var cultistsAlive = EntityQuery<CosmicCultComponent, MobStateComponent>(true)
             .Any(op => op.Item2.CurrentState == MobState.Alive && op.Item1.Running);
         if (cultistsAlive)
-            return; // There's still cultists alive! We return, since this leads to the default CrewMinor WinType.
+            return; // There's still cultists alive! stop checking stuff
 
         if (TotalCult == 0)
-            SetWinType(uid, WinType.CrewComplete); // No cultists registered! That means everyone got deconverted!
+            SetWinType(uid, WinType.CrewComplete); // No cultists registered! That means everyone got deconverted
         else
-            SetWinType(uid, WinType.CrewMajor); // There's still cultists registered, but if we got here, that means they're all dead. Rip.
+            SetWinType(uid, WinType.CrewMajor); // There's still cultists registered, but if we got here, that means they're all dead
     }
 
     protected override void AppendRoundEndText(EntityUid uid,
@@ -427,8 +427,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
     private void MonumentTier3(Entity<MonumentComponent> uid)
     {
-        //uid.Comp.PercentageComplete = 0;
-        uid.Comp.HasCollision = true;
         CurrentTier = 3;
 
         _visibility.SetLayer(uid.Owner, 1, true);
@@ -440,13 +438,19 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         UpdateMonumentAppearance(uid, true);
 
+        var colideQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
+        while (colideQuery.MoveNext(out var collideEnt, out var collideComp))
+        {
+            collideComp.HasCollision = true;
+            Dirty(collideEnt, collideComp);
+        }
+
         var query = EntityQueryEnumerator<CosmicCultComponent>();
         while (query.MoveNext(out var cultist, out var cultComp))
         {
             EnsureComp<CosmicStarMarkComponent>(cultist);
             EnsureComp<PressureImmunityComponent>(cultist);
-            RemComp<TemperatureSpeedComponent>(cultist);
-            RemComp<RespiratorComponent>(cultist);
+            EnsureComp<TemperatureImmunityComponent>(cultist);
 
             _damage.SetDamageContainerID(cultist, "BiologicalMetaphysical");
 
@@ -454,7 +458,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 cultComp.UnlockedInfluences.Add(influenceProto.ID);
             }
-
+            cultComp.Respiration = false;
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); //pity system. 4% of the playercount worth of entropy on tier up
             Dirty(cultist, cultComp);
         }
@@ -583,6 +587,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 _damage.SetDamageContainerID(uid, "BiologicalMetaphysical");
                 cultComp.EntropyBudget = 20; // pity balance
+                cultComp.Respiration = false;
 
                 foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
                 {
@@ -592,7 +597,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 EnsureComp<CosmicStarMarkComponent>(uid);
                 EnsureComp<PressureImmunityComponent>(uid);
                 EnsureComp<TemperatureImmunityComponent>(uid);
-                RemComp<RespiratorComponent>(uid);
             }
             else if (CurrentTier == 2)
             {
