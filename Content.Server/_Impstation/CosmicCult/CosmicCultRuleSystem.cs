@@ -309,7 +309,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                     MonumentTier3(uid);
                     UpdateMonumentReqsForTier(uid, CurrentTier);
                     uid.Comp.CanTierUp = true;
-                    UpdateCultData(uid); //instantly go up a tier if they manage it. this might be too easy.
+                    UpdateCultData(uid); //instantly go up a tier if they manage it. todo replace the 20 entropy buffer with a 5 min timer or so? - ruddygreat
+                    _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp)); //not sure if this is needed but I'll be safe
                 });
         }
         else if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 1 && uid.Comp.CanTierUp)
@@ -329,6 +330,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                     UpdateMonumentReqsForTier(uid, CurrentTier);
                     uid.Comp.CanTierUp = true;
                     UpdateCultData(uid); //instantly go up a tier if they manage it
+                    _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp)); //not sure if this is needed but I'll be safe
                 });
 
         }
