@@ -46,8 +46,8 @@ public sealed class DoorSystem : SharedDoorSystem
                 SetBoltsDown(ent, true);
         }
 
-        UpdateBoltLightStatus(ent);
         ent.Comp.Powered = args.Powered;
         Dirty(ent, ent.Comp);
+        UpdateBoltLightStatus(ent);
     }
 }

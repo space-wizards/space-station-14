@@ -47,6 +47,11 @@
     layers:
     - state: icon
       map: ["base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Bombs/c4.rsi
+    slots:
+    - HEAD
+    quickEquip: false
   - type: OnUseTimerTrigger
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]

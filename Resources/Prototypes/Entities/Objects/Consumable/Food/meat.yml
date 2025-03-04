@@ -525,6 +525,7 @@
   - type: Tag
     tags:
     - Raw
+    - Meat
   - type: Sprite
     state: snake
   - type: SolutionContainerManager
@@ -677,6 +678,11 @@
     tags:
     - Raw
     - Meat
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
   - type: Sprite
     state: slime
 
@@ -699,6 +705,36 @@
           Quantity: 3
         - ReagentId: Water
           Quantity: 4 #It makes saline if you add salt!
+
+- type: entity
+  name: anomalous meat mass
+  parent: FoodMeatRawBase
+  id: FoodMeatAnomaly
+  description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
+  components:
+  - type: Sprite
+    state: anomalymeat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 90
+        - ReagentId: Fat
+          Quantity: 90
+  - type: SliceableFood
+    count: 10
+    sliceTime: 5
+    slice: FoodMeat #That's... So much meat
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: AnomalyMeatSteak
+    node: start
+    defaultTarget: anomaly steak
+  - type: Tag
+    tags:
+    - Meat
 
 # Cooked
 
@@ -1171,6 +1207,35 @@
     entries:
       Burger: MeatSnail
       Taco: MeatSnail
+
+- type: entity
+  name: anomalous steak
+  parent: FoodMeatBase
+  id: FoodMeatAnomalyCooked
+  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: anomalymeat-cooked #Kinda hard to cook this... thing evenly
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 100
+        - ReagentId: Protein
+          Quantity: 50
+  - type: SliceableFood
+    count: 10
+    sliceTime: 5
+    slice: FoodMeatCooked
+  - type: Construction
+    graph: AnomalyMeatSteak
+    node: anomaly steak
 
 # Cutlets
 

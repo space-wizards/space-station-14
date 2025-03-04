@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
@@ -115,6 +116,18 @@ public sealed partial record PolymorphConfiguration
     [DataField(serverOnly: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Cooldown = TimeSpan.Zero;
+
+    /// <summary>
+    ///     If not null, this sound will be played when being polymorphed into something.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? PolymorphSound;
+
+    /// <summary>
+    ///     If not null, this sound will be played when being reverted from a polymorph.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? ExitPolymorphSound;
 }
 
 public enum PolymorphInventoryChange : byte

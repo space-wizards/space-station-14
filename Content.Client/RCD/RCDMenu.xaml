@@ -11,37 +11,37 @@
     <!-- The radial menu will try to open so that its center is located where the player's cursor is currently -->
 
     <!-- Entry layer (shows main categories) -->
-    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" Radius="64" ReserveSpaceForHiddenChildren="False">
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-walls-and-flooring'}" TargetLayer="WallsAndFlooring" Visible="False">
+    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" InitialRadius="100" ReserveSpaceForHiddenChildren="False">
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'rcd-component-walls-and-flooring'}" TargetLayer="WallsAndFlooring" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/walls_and_flooring.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-windows-and-grilles'}" TargetLayer="WindowsAndGrilles" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'rcd-component-windows-and-grilles'}" TargetLayer="WindowsAndGrilles" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/windows_and_grilles.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-airlocks'}" TargetLayer="Airlocks" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'rcd-component-airlocks'}" TargetLayer="Airlocks" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/airlocks.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-electrical'}" TargetLayer="Electrical" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'rcd-component-electrical'}" TargetLayer="Electrical" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/multicoil.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-lighting'}" TargetLayer="Lighting" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'rcd-component-lighting'}" TargetLayer="Lighting" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/lighting.png"/>
-        </ui:RadialMenuTextureButton>
+        </ui:RadialMenuTextureButtonWithSector>
     </ui:RadialContainer>
 
     <!-- Walls and flooring -->
-    <ui:RadialContainer Name="WallsAndFlooring"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="WallsAndFlooring"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Windows and grilles -->
-    <ui:RadialContainer Name="WindowsAndGrilles"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="WindowsAndGrilles"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Airlocks -->
-    <ui:RadialContainer Name="Airlocks"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Airlocks"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Computer and machine frames -->
-    <ui:RadialContainer Name="Electrical"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Electrical"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
        
     <!-- Lighting -->
-    <ui:RadialContainer Name="Lighting"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Lighting"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
 </ui:RadialMenu>

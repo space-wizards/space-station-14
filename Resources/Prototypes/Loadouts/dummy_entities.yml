@@ -1,0 +1,9 @@
+- type: entity
+  id: LoadoutDummyCandles
+  categories: [ HideSpawnMenu ]
+  name: three candles
+  description: A set of three colorful candles for secret rituals!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/candles.rsi
+    state: loadout
