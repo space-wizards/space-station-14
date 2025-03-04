@@ -9,7 +9,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
+    gridPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
   - type: AntagObjectives
     objectives:
     - AbductObjective
@@ -76,7 +76,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/Signaleer.yml
+    gridPath: /Maps/_Starlight/Shuttles/Signaleer.yml
     
 - type: entity
   parent: BaseGameRule
@@ -84,7 +84,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/LancePirates.yml
+    gridPath: /Maps/_Starlight/Shuttles/LancePirates.yml
     
 - type: entity
   parent: BaseGameRule
@@ -92,7 +92,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/VoxATS.yml
+    gridPath: /Maps/_Starlight/Shuttles/VoxATS.yml
 
   #Pig's ERT Shuttle
 - type: entity
@@ -101,4 +101,4 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+    gridPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
