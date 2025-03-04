@@ -1,3 +1,14 @@
+## EnergyDome
+
+- type: latheRecipe
+  id: EnergyDomeTurtle
+  result: EnergyDomeTurtle
+  completetime: 12
+  materials:
+    Steel: 1000
+    Plastic: 500
+    Silver: 150
+
 ## Weapons
 
 - type: latheRecipe

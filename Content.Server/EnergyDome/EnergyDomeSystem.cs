@@ -210,7 +210,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
     public bool AttemptToggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
     {
-        if (TryComp<UseDelayComponent>(generator, out var useDelay) && _useDelay.IsDelayed(new Entity<UseDelayComponent>(generator, useDelay)))
+        if (_useDelay.IsDelayed(generator.Owner))
         {
             _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
             _popup.PopupEntity(

@@ -1,6 +1,42 @@
 # Tier 2
 
 - type: technology
+  id: Gygax
+  name: research-technology-gygax
+  icon:
+    sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
+    state: base
+  discipline: Arsenal
+  tier: 2
+  cost: 11600
+  recipeUnlocks:
+  - GygaxHarness
+  - GygaxArmor
+  - GygaxHead
+  - GygaxLArm
+  - GygaxLLeg
+  - GygaxRArm
+  - GygaxRLeg
+  - GygaxCentralElectronics
+  - GygaxPeripheralsElectronics
+  - GygaxTargetingElectronics
+  - WeaponMechCombatUltraRifle
+  technologyPrerequisites:
+  - Ripley2
+
+- type: technology
+  id: EnergyBarriers
+  name: research-technology-energy_barriers
+  icon: 
+    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 5400
+  recipeUnlocks:
+  - EnergyDomeTurtle
+
+- type: technology
   id: ArmorPenetrationMunitions
   name: research-technology-armor-penetration
   icon:
@@ -31,11 +67,52 @@
     state: icon
   discipline: Arsenal
   tier: 2
-  cost: 8000
+  cost: 8200
   recipeUnlocks:
   - WeaponIonRifle
   - WeaponIonCarbine
   
+# Tier 3
+
+- type: technology
+  id: ExplosiveMechAmmunition
+  name: research-technology-explosive-mech-ammunition
+  icon:
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_missilerack
+  discipline: Arsenal
+  tier: 3
+  cost: 15400
+  recipeUnlocks:
+  - WeaponMechCombatMissileRack8
+  technologyPrerequisites:
+  - ExplosiveTechnology
+  
+- type: technology
+  id: Durand
+  name: research-technology-durand
+  icon:
+    sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
+    state: base
+  discipline: Arsenal
+  tier: 3
+  cost: 16600
+  recipeUnlocks:
+  - DurandHarness
+  - DurandArmor
+  - DurandHead
+  - DurandLArm
+  - DurandLLeg
+  - DurandRArm
+  - DurandRLeg
+  - DurandCentralElectronics
+  - DurandPeripheralsElectronics
+  - DurandTargetingElectronics
+  - WeaponMechCombatShotgun
+  - WeaponMechCombatShotgunIncendiary
+  technologyPrerequisites:
+  - Gygax
+
  # Tier 4 
 
 - type: technology

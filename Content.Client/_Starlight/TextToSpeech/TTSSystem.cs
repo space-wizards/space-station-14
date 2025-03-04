@@ -109,10 +109,10 @@ public sealed class TextToSpeechSystem : EntitySystem
         var audioStream = _audioManager.LoadAudioOggVorbis(stream);
 
         return globally
-            ? _audio.PlayGlobal(audioStream, @params)
+            ? _audio.PlayGlobal(audioStream, null, @params)
             : sourceUid != null
-                ? _audio.PlayEntity(audioStream, sourceUid.Value, @params)
-                : _audio.PlayGlobal(audioStream, @params);
+                ? _audio.PlayEntity(audioStream, sourceUid.Value, null, @params)
+                : _audio.PlayGlobal(audioStream, null, @params);
     }
 
     public override void Update(float frameTime)

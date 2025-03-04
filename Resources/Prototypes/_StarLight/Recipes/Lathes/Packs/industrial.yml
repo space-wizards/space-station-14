@@ -1,0 +1,14 @@
+- type: latheRecipePack
+  id: StarlightIndustrialMechsDynamic
+  recipes:
+  - RipleyMKIIHarness
+  - RipleyUpgradeKit
+
+  - ClarkeHarness
+  - ClarkeHead
+  - ClarkeLArm
+  - ClarkeRArm
+  - ClarkeTreads
+  - ClarkeCentralElectronics
+  - ClarkePeripheralsElectronics
+  

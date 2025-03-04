@@ -5,7 +5,7 @@ namespace Content.Shared.Procedural;
 [Prototype("salvageDifficulty")]
 public sealed partial class SalvageDifficultyPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// Color to be used in UI.
