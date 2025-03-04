@@ -264,7 +264,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var newSpawn = _random.Pick(spawnPoints);
         var spawnTgt = Transform(newSpawn.Uid).Coordinates;
         var mobUid = Spawn(comp.SpawnWisp, spawnTgt);
-        EnsureComp<AntagImmuneComponent>(mobUid);
         EnsureComp<InVoidComponent>(mobUid, out var inVoid);
         inVoid.OriginalBody = target;
         inVoid.ExitVoidTime = _timing.CurTime + comp.CosmicBlankDuration;
@@ -365,6 +364,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _actions.RemoveAction(uid, uid.Comp.CosmicMonumentActionEntity);
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
+        Spawn("MonumentCollider", _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
         Spawn(uid.Comp.MonumentPrototype, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
     }
     #endregion

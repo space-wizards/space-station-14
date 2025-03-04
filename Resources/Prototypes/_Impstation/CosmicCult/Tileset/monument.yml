@@ -10,11 +10,22 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: Fixtures
+    fixtures:
+      MonumentCollider:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.1,-0.2,1.1,0.7"
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+        density: 1000
+        hard: false
   - type: Visibility
     layer: 777
   - type: SpriteFade
   - type: Sprite
-    noRot: true
     sprite: _Impstation/CosmicCult/Tileset/monument.rsi
     layers:
       - state: stage1
@@ -46,18 +57,6 @@
           3: {state: finale-overlay3}
   - type: InteractionOutline
   - type: Transform
-    noRot: true
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-1.1,-0.2,1.1,0.7"
-        density: 9999
-        mask:
-        - LargeMobMask
-        layer:
-        - WallLayer
   - type: PointLight
     enabled: true
     castShadows: false
@@ -129,7 +128,6 @@
         shader: unshaded
     offset: 0,1
     drawdepth: Mobs
-    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -143,7 +141,6 @@
         - WallLayer
   - type: InteractionOutline
   - type: Transform
-    noRot: true
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/_Impstation/CosmicCult/monument_spawn.ogg
@@ -169,6 +166,28 @@
        endValue: 4.5
        property: Energy
        enabled: true
+
+ ########### COLLIDER LAY-Z FIX #############
+
+- type: entity
+  id: MonumentCollider
+  suffix: Debug, DO NOT MAP
+  parent: BaseStructure
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: MonumentCollision
+  - type: Fixtures
+    fixtures:
+      MonumentCollider:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.08,-0.18,1.08,0.68"
+        density: 9999
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
 
  ########### STAGE 1 #############
 
