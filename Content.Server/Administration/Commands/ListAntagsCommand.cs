@@ -14,7 +14,7 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
     [Dependency] private readonly SharedRoleSystem _role = default!;
 
     public override string Command => "lsantags";
-    public override string Description => Loc.GetString("lsantag-command-description");
+    public override string Description => Loc.GetString("lsantags-command-description");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -29,8 +29,8 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
                 continue;
 
             // Getting information about the player
-            var playerName = mind.Session?.Name ?? "Неизвестный";
-            var icName = mind.CharacterName ?? "Безымянный";
+            var playerName = mind.Session?.Name ?? Loc.GetString("lsantags-command-unknown");
+            var icName = mind.CharacterName ?? Loc.GetString("santags-command-nameless");
             var antagRoles = _role.MindGetAllRoleInfo(mindId)
                 .Where(role => role.Antagonist)
                 .Select(role => Loc.GetString(role.Name))
@@ -44,11 +44,11 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
         if (antagList.Count == 0)
         {
-            shell.WriteLine(Loc.GetString("lsantag-not-antags"));
+            shell.WriteLine(Loc.GetString("lsantags-not-antags"));
         }
         else
         {
-            shell.WriteLine($"{Loc.GetString("lsantag-list-antags")}\n{string.Join("\n", antagList)}");
+            shell.WriteLine($"{Loc.GetString("lsantags-list-antags")}\n{string.Join("\n", antagList)}");
         }
     }
 }
