@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-4.0",
-    "copyright": "WIP",
+    "copyright": "most states sourced from https://github.com/new-frontiers-14/frontier-station-14/pull/1596. brosblade, equipped-BACKPACK/equipped-SUITSTORAGE, gayblade and ratking sprited by carousel for impstation.",
     "size": {
       "x": 32,
       "y": 32
@@ -74,6 +74,23 @@
           },
           {
               "name": "mcblade"
+          },
+          {
+              "name": "brosblade"
+          },
+          {
+              "name": "equipped-BACKPACK",
+              "directions": 4
+          },
+          {
+              "name": "equipped-SUITSTORAGE",
+              "directions": 4
+          },
+          {
+              "name": "gayblade"
+          },
+          {
+              "name": "ratking"
           }
       ]
   }
