@@ -848,9 +848,6 @@
       - MagazineBoxPistolHP
       - MagazineBoxPistolFMJ
       - MagazineBoxPistolPractice
-      - MagazineBoxPistol40SP
-      - MagazineBoxPistol40HP
-      - MagazineBoxPistol40FMJ
 # Rifle
       - MagazineBoxRifleSP
       - MagazineBoxRifleHP
@@ -878,10 +875,6 @@
       - MagazinePistolHP
       - MagazinePistolFMJ
       - MagazinePistolEmpty
-      - MagazinePistol40SP
-      - MagazinePistol40HP
-      - MagazinePistol40FMJ
-      - MagazinePistol40Empty
 # SMG
       - MagazinePistolSubMachineGunSP
       - MagazinePistolSubMachineGunHP
@@ -937,7 +930,6 @@
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
       - MagazineBoxPistolAP
-      - MagazineBoxPistol40AP
 # Rifle
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
@@ -959,7 +951,6 @@
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazinePistolAP
-      - MagazinePistol40AP
 # SMG
       - MagazinePistolSubMachineGunIncendiary
       - MagazinePistolSubMachineGunUranium
