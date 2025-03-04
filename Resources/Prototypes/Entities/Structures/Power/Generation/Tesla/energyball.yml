@@ -154,7 +154,8 @@
   id: TeslaEnergyBallXenoArch
   suffix: Artifact
   components:
-  - type: AlertLevelChangeOnSpawn
+  - type: TriggerOnSpawn
+  - type: AlertLevelChangeOnTrigger
     level: "yellow"
   - type: AnnounceOnSpawn
     message: xeno-arch-announce-tesla
