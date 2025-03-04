@@ -37,7 +37,7 @@
       - type: CommandStaff
 
 - type: startingGear
-  id: HospitalityDirectorGear #todo, decide starting gear
+  id: HospitalityDirectorGear
   equipment:
     id: HDPDA
   storage:

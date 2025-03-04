@@ -319,17 +319,17 @@
   parent: BasePDA
   id: HDPDA
   name: hospitality director PDA
-  description: Mutagen is leaking through the frame... #TODO
+  description: Looks recently cleaned.
   components:
   - type: Pda
     id: HDIDCard
   - type: Appearance
     appearanceDataInit:
-      enum.PdaVisuals.PdaType:
-        !type:String
-        pda-seniorhydro #TODO
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-hd
   - type: PdaBorderColor
-    borderColor: "#44843c" #TODO?
-    accentVColor: "#00cc35" #TODO?
+    borderColor: "#61b861"
+    accentHColor: "#447987"
   - type: Icon
-    state: pda-seniorhydro #TODO
+    state: pda-hd
