@@ -136,70 +136,70 @@
   id: ChaplainBookQuran
   storage:
     back:
-    - BibleQuran
+    - HolyTextQuran
 
 - type: loadout
   id: ChaplainBookTanakh
   storage:
     back:
-    - BibleTanakh
+    - HolyTextTanakh
 
 - type: loadout
   id: ChaplainBookBibble
   storage:
     back:
-    - BibleBibble
+    - HolyTextBibble
 
 - type: loadout
   id: ChaplainBookTao
   storage:
     back:
-    - BibleTaoTeachings
+    - HolyTextTaoTeachings
 
 - type: loadout
   id: ChaplainBookKojiki
   storage:
     back:
-    - BibleKojiki
+    - HolyTextKojiki
 
 - type: loadout
   id: ChaplainBookGrimoire
   storage:
     back:
-    - BibleChaplainsGrimoire
+    - HolyTextChaplainsGrimoire
 
 - type: loadout
   id: ChaplainBookDiscordia
   storage:
     back:
-    - BiblePrincipiaDiscordia
+    - HolyTextPrincipiaDiscordia
 
 - type: loadout
   id: ChaplainBookUnitology
   storage:
     back:
-    - BibleUnitologyTome
+    - HolyTextUnitologyTome
 
 - type: loadout
   id: ChaplainBookScroll
   storage:
     back:
-    - BibleHolyScroll
+    - HolyTextHolyScroll
 
 - type: loadout
   id: ChaplainBookTablet
   storage:
     back:
-    - BibleHolyTablet
+    - HolyTextHolyTablet
 
 - type: loadout
   id: ChaplainBookGreybible
   storage:
     back:
-    - Greybible
+    - HolyTextGreybible
 
 - type: loadout
   id: ChaplainBookETB
   storage:
     back:
-    - ExtremeTeenBible
+    - HolyTextExtremeTeenBible
