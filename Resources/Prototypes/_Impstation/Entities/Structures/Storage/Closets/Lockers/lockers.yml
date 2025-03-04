@@ -68,7 +68,7 @@
 - type: entity
   id: LockerMusician
   parent: LockerBaseSecure
-  name: musician's locker
+  name: musician locker
   components:
   - type: Appearance
   - type: Sprite
