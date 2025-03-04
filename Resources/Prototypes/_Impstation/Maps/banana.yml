@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargo_banana.yml
         - type: StationJobs
-          availableJobs: # Total of 25 jobs roundstart, max of 29 inc. latejoins and trainees.
+          availableJobs: # Total of 26 jobs roundstart, max of 30 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -27,6 +27,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
             # service - 7
             Bartender: [ 1, 1 ]
