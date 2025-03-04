@@ -164,7 +164,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         }
         if (args.Handled)
             return;
-        args.Handled = true;
 
         var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicSiphonDelay, new EventCosmicSiphonDoAfter(), uid, args.Target)
         {
@@ -175,6 +174,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             BreakOnMove = true,
             BreakOnDropItem = true,
         };
+        args.Handled = true;
         _doAfter.TryStartDoAfter(doargs);
     }
 
@@ -183,6 +183,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (args.Args.Target == null)
             return;
         var target = args.Args.Target.Value;
+        if (args.Cancelled || args.Handled)
+            return;
+        args.Handled = true;
 
         _damageable.TryChangeDamage(args.Target, uid.Comp.SiphonAsphyxDamage, origin: uid);
         _damageable.TryChangeDamage(args.Target, uid.Comp.SiphonColdDamage, origin: uid);

@@ -191,6 +191,12 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                         continue;
                     _ghost.DoGhostBooEvent(light);
                 }
+                var colideQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
+                while (colideQuery.MoveNext(out var collideEnt, out var collideComp))
+                {
+                    collideComp.HasCollision = true;
+                    Dirty(collideEnt, collideComp);
+                }
                 _visibility.SetLayer(uid, 1, true);
                 comp.TierChanging = false;
                 comp.Enabled = true;
@@ -503,12 +509,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         UpdateMonumentAppearance(uid, true);
 
-        var colideQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
-        while (colideQuery.MoveNext(out var collideEnt, out var collideComp))
-        {
-            collideComp.HasCollision = true;
-            Dirty(collideEnt, collideComp);
-        }
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out var _, out var objectiveComp))
         {
