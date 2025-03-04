@@ -41,6 +41,7 @@
   - type: Tool
     qualities:
       - Prying
+      - Axing
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
@@ -68,3 +69,6 @@
     quickEquip: false
     slots:
     - back
+  - type: Tool
+    qualities:
+      - Prying
