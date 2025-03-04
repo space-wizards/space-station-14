@@ -33,7 +33,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
     private IEnumerable<string>? _objectives;
 
-    public bool ShowGreentext { get; set; }
+    private bool _showGreentext;
 
     public override void Initialize()
     {
@@ -41,7 +41,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
-        Subs.CVar(_cfg, CCVars.GameShowGreentext, value => ShowGreentext = value, true);
+        Subs.CVar(_cfg, CCVars.GameShowGreentext, value => _showGreentext = value, true);
 
         _prototypeManager.PrototypesReloaded += CreateCompletions;
     }
@@ -169,11 +169,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     totalObjectives++;
 
                     agentSummary.Append("- ");
-                    if (!ShowGreentext)
+                    if (!_showGreentext)
                     {
                         agentSummary.AppendLine(objectiveTitle);
                     }
-                    if (ShowGreentext && progress > 0.99f)
+                    else if (progress > 0.99f)
                     {
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-success",
@@ -182,7 +182,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                         ));
                         completedObjectives++;
                     }
-                    if (ShowGreentext && progress < 1f)
+                    else
                     {
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-fail",
