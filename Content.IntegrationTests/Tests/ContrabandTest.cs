@@ -36,7 +36,7 @@ public sealed class ContrabandTest
                     Assert.That(contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count, Is.Not.EqualTo(0),
                         @$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
                 }
-            }
+            });
         });
 
         await pair.CleanReturnAsync();
