@@ -1,30 +1,50 @@
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.GameStates;
+using System.IO.Pipelines;
 
 namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Contains layer data for atmos pipes. These layers allow multiple pipes with the same direction
-/// to occupy the same tile without their contents mixing.
+/// Contains layer data for atmos pipes. Layers allow multiple atmos pipes with the same orientation
+/// to be anchored to the same tile without their contents mixing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedAtmosPipeLayerSystem))]
 public sealed partial class AtmosPipeLayerComponent : Component
 {
     /// <summary>
-    /// The minimum value a pipe layer can be assigned
+    /// The maximum pipe layer assignable.
     /// </summary>
-    public const int MinPipeLayer = 1;
-
-    /// <summary>
-    /// The maximum value a pipe layer can be assigned
-    /// </summary>
-    public const int MaxPipeLayer = 3;
+    public const int MaxPipeLayer = 2;
 
     /// <summary>
     /// Determines which layer the pipe is currently assigned.
     /// Only pipes on the same layer can connect with each other.
     /// </summary>
     [DataField("pipeLayer"), AutoNetworkedField]
-    public int CurrentPipeLayer = 2;
+    public int CurrentPipeLayer = 1;
+
+    /// <summary>
+    /// An array containing the state names of the different pipe layers.
+    /// </summary>
+    /// <remarks>
+    /// Note: there must be an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
+    /// </remarks>
+    [DataField]
+    public string[] LayerVisualStates = new string[MaxPipeLayer + 1];
+
+    [DataField]
+    public bool OffsetAboveFloorLayers = false;
+
+    [DataField]
+    public bool PipeLayersLocked = false;
+
+    /// <summary>
+    /// An array containing the state names of the connectors for the different pipe layers.
+    /// </summary>
+    /// /// <remarks>
+    /// Note: there must be an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
+    /// </remarks>
+    [DataField]
+    public string[] ConnectorVisualStates = { "pipeConnector0", "pipeConnector", "pipeConnector2" };
 }

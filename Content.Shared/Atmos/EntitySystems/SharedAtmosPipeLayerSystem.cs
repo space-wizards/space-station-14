@@ -1,13 +1,22 @@
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.SubFloor;
 using Content.Shared.Verbs;
+using System.Numerics;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
 public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
+    private Vector2[] _layerOffsets = { new Vector2(-0.21875f, 0f), new Vector2(0f, 0f), new Vector2(0.21875f, 0f) };
+
     public override void Initialize()
     {
         base.Initialize();
@@ -27,8 +36,10 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        for (var i = AtmosPipeLayerComponent.MinPipeLayer; i < AtmosPipeLayerComponent.MaxPipeLayer; i++)
+        for (var i = 0; i < AtmosPipeLayerComponent.MaxPipeLayer + 1; i++)
         {
+            var index = i;
+
             var v = new Verb
             {
                 Priority = 1,
@@ -39,7 +50,7 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    SetPipeLayer(ent, i);
+                    SetPipeLayer(ent, index);
                 }
             };
 
@@ -52,6 +63,9 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
         if (!args.Complex)
             return;
 
+        if (!_handsSystem.IsHolding(args.User, ent))
+            return;
+
         CyclePipeLayer(ent);
     }
 
@@ -60,15 +74,26 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
         var newLayer = ent.Comp.CurrentPipeLayer + 1;
 
         if (newLayer > AtmosPipeLayerComponent.MaxPipeLayer)
-            newLayer = AtmosPipeLayerComponent.MinPipeLayer;
+            newLayer = 0;
 
         SetPipeLayer(ent, newLayer);
     }
 
     public virtual void SetPipeLayer(Entity<AtmosPipeLayerComponent> ent, int layer)
     {
-        ent.Comp.CurrentPipeLayer = Math.Clamp(layer, AtmosPipeLayerComponent.MinPipeLayer, AtmosPipeLayerComponent.MaxPipeLayer);
+        if (ent.Comp.PipeLayersLocked)
+            return;
 
+        ent.Comp.CurrentPipeLayer = Math.Clamp(layer, 0, AtmosPipeLayerComponent.MaxPipeLayer);
         Dirty(ent);
+
+        if (TryComp<AppearanceComponent>(ent, out var appearance))
+        {
+            _appearance.SetData(ent, PipeVisualLayers.Pipe, ent.Comp.LayerVisualStates[ent.Comp.CurrentPipeLayer], appearance);
+            _appearance.SetData(ent, PipeVisualLayers.Connector, ent.Comp.ConnectorVisualStates[ent.Comp.CurrentPipeLayer], appearance);
+
+            if (ent.Comp.OffsetAboveFloorLayers)
+                _appearance.SetData(ent, SubfloorLayers.FirstLayer, _layerOffsets[ent.Comp.CurrentPipeLayer], appearance);
+        }
     }
 }

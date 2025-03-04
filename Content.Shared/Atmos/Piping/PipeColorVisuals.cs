@@ -1,10 +1,16 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Piping
+namespace Content.Shared.Atmos.Piping;
+
+[Serializable, NetSerializable]
+public enum PipeColorVisuals
 {
-    [Serializable, NetSerializable]
-    public enum PipeColorVisuals
-    {
-        Color,
-    }
+    Color,
+}
+
+[Serializable, NetSerializable]
+public enum PipeVisualLayers : byte
+{
+    Pipe,
+    Connector,
 }

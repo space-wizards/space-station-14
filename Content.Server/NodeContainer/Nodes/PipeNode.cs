@@ -23,7 +23,7 @@ namespace Content.Server.NodeContainer.Nodes
         public PipeDirection OriginalPipeDirection;
 
         [DataField]
-        public int CurrentPipeLayer = 2;
+        public int CurrentPipeLayer = 1;
 
         /// <summary>
         ///     The *current* pipe directions (accounting for rotation)

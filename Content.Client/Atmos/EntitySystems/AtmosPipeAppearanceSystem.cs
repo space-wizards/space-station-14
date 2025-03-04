@@ -3,6 +3,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.EntitySystems;
@@ -32,6 +33,18 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             sprite.LayerSetRSI(layer, component.Sprite.RsiPath);
             sprite.LayerSetState(layer, component.Sprite.RsiState);
             sprite.LayerSetDirOffset(layer, ToOffset(layerKey));
+        }
+    }
+
+    public void SetLayerState(Entity<PipeAppearanceComponent> ent, string state)
+    {
+        if (!TryComp(ent, out SpriteComponent? sprite))
+            return;
+
+        foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
+        {
+            var layer = sprite.LayerMapGet(layerKey);
+            sprite.LayerSetState(layer, state);
         }
     }
 
