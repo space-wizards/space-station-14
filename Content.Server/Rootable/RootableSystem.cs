@@ -22,7 +22,7 @@ public sealed class RootableSystem : SharedRootableSystem
 
     [Dependency] private readonly ISharedAdminLogManager _logger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
@@ -31,64 +31,54 @@ public sealed class RootableSystem : SharedRootableSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<RootableComponent>();
+        var query = EntityQueryEnumerator<RootableComponent, BloodstreamComponent>();
         var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var rooted))
+        while (query.MoveNext(out var uid, out var rooted, out var bloodstream))
         {
-            if (!rooted.Rooted || rooted.PuddleEntity == null || curTime < rooted.NextSecond)
+            if (!rooted.Rooted || rooted.PuddleEntity == null || curTime < rooted.NextUpdate)
                 continue;
 
-            rooted.NextSecond += TimeSpan.FromSeconds(1);
+            rooted.NextUpdate += TimeSpan.FromSeconds(rooted.TransferFrequency);
 
-            PuddleReact(uid, rooted.PuddleEntity.Value);
+            PuddleReact(uid, rooted.PuddleEntity.Value, rootableComponent: rooted, bloodstreamComponent: bloodstream);
         }
     }
 
     /// <summary>
     /// Determines if the puddle is set up properly and if so, moves on to reacting.
     /// </summary>
-    private void PuddleReact(EntityUid entity, EntityUid puddleUid, RootableComponent? rootableComponent = null, PuddleComponent? puddleComponent = null)
+    private void PuddleReact(EntityUid entity, EntityUid puddleUid, RootableComponent? rootableComponent = null, PuddleComponent? puddleComponent = null, BloodstreamComponent? bloodstreamComponent = null)
     {
         if (!Resolve(entity, ref rootableComponent) || !Resolve(puddleUid, ref puddleComponent))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName, ref puddleComponent.Solution, out var solution) ||
+        if (!_solutionContainer.ResolveSolution(puddleUid, puddleComponent.SolutionName, ref puddleComponent.Solution, out var solution) ||
             solution.Contents.Count == 0)
         {
             return;
         }
 
-        ReactWithEntity(entity, puddleUid, solution, rootableComponent, puddleComponent);
+        ReactWithEntity(entity, puddleUid, solution, rootableComponent, puddleComponent, bloodstreamComponent);
     }
 
     /// <summary>
     /// Attempt to transfer an amount of the solution to the entity's bloodstream.
     /// </summary>
-    private void ReactWithEntity(EntityUid entity, EntityUid puddleUid, Solution solution, RootableComponent? rootableComponent = null, PuddleComponent? puddleComponent = null)
+    private void ReactWithEntity(EntityUid entity, EntityUid puddleUid, Solution solution, RootableComponent? rootableComponent = null, PuddleComponent? puddleComponent = null, BloodstreamComponent? bloodstreamComponent = null)
     {
-        if (!Resolve(entity, ref rootableComponent) || !Resolve(puddleUid, ref puddleComponent) || puddleComponent.Solution == null)
+        if (!Resolve(entity, ref rootableComponent, ref bloodstreamComponent) || !Resolve(puddleUid, ref puddleComponent) || puddleComponent.Solution == null)
             return;
 
-        if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
-            return;
-
-        if (!_solutionContainerSystem.ResolveSolution(entity, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
+        if (!_solutionContainer.ResolveSolution(entity, bloodstreamComponent.ChemicalSolutionName, ref bloodstreamComponent.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
             return;
 
         var availableTransfer = FixedPoint2.Min(solution.Volume, rootableComponent.TransferRate);
         var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
-        var transferSolution = _solutionContainerSystem.SplitSolution(puddleComponent.Solution.Value, transferAmount);
+        var transferSolution = _solutionContainer.SplitSolution(puddleComponent.Solution.Value, transferAmount);
 
-        foreach (var reagentQuantity in transferSolution.Contents.ToArray())
-        {
-            if (reagentQuantity.Quantity == FixedPoint2.Zero)
-                continue;
-            var reagentProto = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+        _reactive.DoEntityReaction(entity, transferSolution, ReactionMethod.Ingestion);
 
-            _reactive.ReactionEntity(entity, ReactionMethod.Ingestion, reagentProto, reagentQuantity, transferSolution);
-        }
-
-        if (_blood.TryAddToChemicals(entity, transferSolution, bloodstream))
+        if (_blood.TryAddToChemicals(entity, transferSolution, bloodstreamComponent))
         {
             // Log solution addition by puddle
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} absorbed puddle {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");

@@ -39,13 +39,19 @@ public sealed partial class RootableComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public TimeSpan NextSecond;
+    public TimeSpan NextUpdate;
 
     /// <summary>
     /// The max rate at which chemicals are transferred from the puddle to the rooted entity.
     /// </summary>
     [DataField]
     public FixedPoint2 TransferRate = 0.75;
+
+    /// <summary>
+    /// The frequency of which chemicals are transferred from the puddle to the rooted entity.
+    /// </summary>
+    [DataField]
+    public float TransferFrequency = 1;
 
     /// <summary>
     /// The movement speed modifier for when rooting is active.

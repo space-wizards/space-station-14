@@ -28,7 +28,7 @@ public abstract class SharedRootableSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
 
@@ -84,7 +84,7 @@ public abstract class SharedRootableSystem : EntitySystem
         else
             _alerts.ClearAlert(uid, rooted.RootedAlert);
 
-        _audioSystem.PlayPredicted(rooted.RootSound, uid.ToCoordinates(), uid);
+        _audio.PlayPredicted(rooted.RootSound, uid.ToCoordinates(), uid);
 
         return true;
     }
@@ -122,8 +122,8 @@ public abstract class SharedRootableSystem : EntitySystem
 
         entity.Comp.PuddleEntity = args.OtherEntity;
 
-        if (entity.Comp.NextSecond < _timing.CurTime) // To prevent constantly moving to new puddles resetting the timer
-            entity.Comp.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
+        if (entity.Comp.NextUpdate < _timing.CurTime) // To prevent constantly moving to new puddles resetting the timer
+            entity.Comp.NextUpdate = _timing.CurTime + TimeSpan.FromSeconds(1);
     }
 
     private void OnEndCollide(Entity<RootableComponent> entity, ref EndCollideEvent args)
