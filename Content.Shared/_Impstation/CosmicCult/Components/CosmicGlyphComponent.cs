@@ -14,7 +14,7 @@ public sealed partial class CosmicGlyphComponent : Component
     /// <summary>
     ///     Damage dealt on glyph activation.
     /// </summary>
-    [DataField] public DamageSpecifier? ActivationDamage;
+    [DataField] public float ActivationDamage;
     [DataField] public bool CanBeErased = true;
     [DataField] public EntProtoId GylphVFX = "CosmicGenericVFX";
     [DataField] public SoundSpecifier GylphSFX = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/glyph_trigger.ogg");

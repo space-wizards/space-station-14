@@ -92,6 +92,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
+    public readonly SoundSpecifier StageAlertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/tier_up.ogg");
     public Entity<MonumentComponent> MonumentInGame; // the monument in the current round.
     public int CurrentTier; // current cult tier
     public int TotalCrew; // total connected players
@@ -112,6 +113,90 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<CosmicCultComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<CosmicMarkGodComponent, ComponentInit>(OnGodSpawn);
+    }
+
+    public override void Update(float frameTime) // This Update() can fit so much functionality in it
+    {
+        base.Update(frameTime);
+
+        var tierQuery = EntityQueryEnumerator<MonumentComponent>();
+        while (tierQuery.MoveNext(out var uid, out var comp))
+        {
+            if (_timing.CurTime >= comp.TierChangeTimer && comp.TierChanging && CurrentTier == 2) // TIER 2 STAGEUP
+            {
+                var sender = Loc.GetString("cosmiccult-announcement-sender");
+                _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-progress"), sender, Color.FromHex("#4cabb3"));
+                _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-warning"), null, Color.FromHex("#cae8e8"));
+                _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier2.ogg", Filter.Broadcast(), false, AudioParams.Default);
+
+                for (var i = 0; i < Convert.ToInt16(TotalCrew / 4); i++) // spawn # malign rifts equal to 25% of the playercount
+                {
+                    if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
+                    {
+                        Spawn("CosmicMalignRift", coords);
+                    }
+                }
+
+                var lights = EntityQueryEnumerator<PoweredLightComponent>();
+                while (lights.MoveNext(out var light, out _))
+                {
+                    if (!_rand.Prob(0.50f))
+                        continue;
+                    _ghost.DoGhostBooEvent(light);
+                }
+                comp.TierChanging = false;
+                comp.Enabled = true;
+                Dirty(uid, comp);
+            }
+
+            if (_timing.CurTime >= comp.TierChangeTimer && comp.TierChanging && CurrentTier == 3) // TIER 3 STAGEUP
+            {
+                var query = EntityQueryEnumerator<CosmicCultComponent>();
+                while (query.MoveNext(out var cultist, out var cultComp))
+                {
+                    EnsureComp<CosmicStarMarkComponent>(cultist);
+                    EnsureComp<PressureImmunityComponent>(cultist);
+                    EnsureComp<TemperatureImmunityComponent>(cultist);
+
+                    _damage.SetDamageContainerID(cultist, "BiologicalMetaphysical");
+
+                    foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
+                    {
+                        cultComp.UnlockedInfluences.Add(influenceProto.ID);
+                    }
+                    cultComp.Respiration = false;
+                    cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 10))); //pity system. 10% of the playercount worth of entropy on tier up
+                    Dirty(cultist, cultComp);
+                }
+
+                var sender = Loc.GetString("cosmiccult-announcement-sender");
+                var mapData = _map.GetMap(_transform.GetMapId(MonumentInGame.Owner.ToCoordinates()));
+                _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-progress"), sender, Color.FromHex("#4cabb3"));
+                _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-warning"), null, Color.FromHex("#cae8e8"));
+                _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier3.ogg", Filter.Broadcast(), false, AudioParams.Default);
+
+                EnsureComp<ParallaxComponent>(mapData, out var parallax);
+                parallax.Parallax = "CosmicFinaleParallax";
+                Dirty(mapData, parallax);
+
+                EnsureComp<MapLightComponent>(mapData, out var mapLight);
+                mapLight.AmbientLightColor = Color.FromHex("#210746");
+
+                Dirty(mapData, mapLight);
+
+                var lights = EntityQueryEnumerator<PoweredLightComponent>();
+                while (lights.MoveNext(out var light, out _))
+                {
+                    if (!_rand.Prob(0.25f))
+                        continue;
+                    _ghost.DoGhostBooEvent(light);
+                }
+                _visibility.SetLayer(uid, 1, true);
+                comp.TierChanging = false;
+                comp.Enabled = true;
+                Dirty(uid, comp);
+            }
+        }
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -328,15 +413,15 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         {
             case 1:
                 monument.Comp.ProgressOffset = 0;
-                monument.Comp.TargetProgress = (int) (tier3NumCrew / 2 * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
+                monument.Comp.TargetProgress = (int)(tier3NumCrew / 2 * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
                 break;
             case 2:
-                monument.Comp.ProgressOffset = (int) (tier3NumCrew / 2 * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue)); //reset the progress offset
-                monument.Comp.TargetProgress = (int) (tier3NumCrew * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
+                monument.Comp.ProgressOffset = (int)(tier3NumCrew / 2 * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue)); //reset the progress offset
+                monument.Comp.TargetProgress = (int)(tier3NumCrew * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
                 break;
             case 3:
-                monument.Comp.ProgressOffset = (int) (tier3NumCrew * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
-                monument.Comp.TargetProgress = (int) (tier3NumCrew * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue) + _config.GetCVar(ImpCCVars.CosmicCultExtraEntropyForFinale));
+                monument.Comp.ProgressOffset = (int)(tier3NumCrew * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
+                monument.Comp.TargetProgress = (int)(tier3NumCrew * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue) + _config.GetCVar(ImpCCVars.CosmicCultExtraEntropyForFinale));
                 break;
         }
     }
@@ -376,60 +461,40 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     private void MonumentTier2(Entity<MonumentComponent> uid)
     {
         CurrentTier = 2;
+        uid.Comp.TierChangeTimer = _timing.CurTime + uid.Comp.TierWait;
+        uid.Comp.TierChanging = true;
+        uid.Comp.Enabled = false;
+        UpdateMonumentAppearance(uid, true);
 
         foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 2))
         {
             uid.Comp.UnlockedGlyphs.Add(glyphProto.ID);
         }
-
-        UpdateMonumentAppearance(uid, true);
-
-        var query = EntityQueryEnumerator<CosmicCultComponent>();
-        while (query.MoveNext(out var cultist, out var cultComp))
-        {
-
-            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
-            {
-                cultComp.UnlockedInfluences.Add(influenceProto.ID);
-            }
-
-            cultComp.EntropyBudget += (int) Math.Floor(Math.Round((double)TotalCrew / 100 * 4)); // pity system. 4% of the playercount worth of entropy on tier up
-            Dirty(cultist, cultComp);
-        }
-
-        var sender = Loc.GetString("cosmiccult-announcement-sender");
-        _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-progress"), sender, Color.FromHex("#4cabb3"));
-        _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-warning"), null, Color.FromHex("#cae8e8"));
-        _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier2.ogg", Filter.Broadcast(), false, AudioParams.Default);
-
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out _, out var objectiveComp))
         {
             objectiveComp.Tier = 2;
         }
-
-        for (var i = 0; i < Convert.ToInt16(TotalCrew / 4); i++) // spawn # malign rifts equal to 25% of the playercount
+        var query = EntityQueryEnumerator<CosmicCultComponent>();
+        while (query.MoveNext(out var cultist, out var cultComp))
         {
-            if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
+            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
             {
-                Spawn("CosmicMalignRift", coords);
+                cultComp.UnlockedInfluences.Add(influenceProto.ID);
             }
+            _antag.SendBriefing(cultist, Loc.GetString("cosmiccult-monument-stage2-briefing"), Color.FromHex("#4cabb3"), StageAlertSound);
+            cultComp.EntropyBudget += (int) Math.Floor(Math.Round((double)TotalCrew / 100 * 10)); // pity system. 10% of the playercount worth of entropy on tier up
+            Dirty(cultist, cultComp);
         }
 
-        var lights = EntityQueryEnumerator<PoweredLightComponent>();
-        while (lights.MoveNext(out var light, out _))
-        {
-            if (!_rand.Prob(0.50f))
-                continue;
-            _ghost.DoGhostBooEvent(light);
-        }
     }
 
     private void MonumentTier3(Entity<MonumentComponent> uid)
     {
         CurrentTier = 3;
-
-        _visibility.SetLayer(uid.Owner, 1, true);
+        uid.Comp.TierChangeTimer = _timing.CurTime + uid.Comp.TierWait;
+        uid.Comp.TierChanging = true;
+        uid.Comp.Enabled = false;
 
         foreach (var glyphProto in _protoMan.EnumeratePrototypes<GlyphPrototype>().Where(proto => proto.Tier == 3))
         {
@@ -444,52 +509,15 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             collideComp.HasCollision = true;
             Dirty(collideEnt, collideComp);
         }
-
-        var query = EntityQueryEnumerator<CosmicCultComponent>();
-        while (query.MoveNext(out var cultist, out var cultComp))
-        {
-            EnsureComp<CosmicStarMarkComponent>(cultist);
-            EnsureComp<PressureImmunityComponent>(cultist);
-            EnsureComp<TemperatureImmunityComponent>(cultist);
-
-            _damage.SetDamageContainerID(cultist, "BiologicalMetaphysical");
-
-            foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
-            {
-                cultComp.UnlockedInfluences.Add(influenceProto.ID);
-            }
-            cultComp.Respiration = false;
-            cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 4))); //pity system. 4% of the playercount worth of entropy on tier up
-            Dirty(cultist, cultComp);
-        }
-
-        var sender = Loc.GetString("cosmiccult-announcement-sender");
-        var mapData = _map.GetMap(_transform.GetMapId(uid.Owner.ToCoordinates()));
-        _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-progress"), sender, Color.FromHex("#4cabb3"));
-        _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier3-warning"), null, Color.FromHex("#cae8e8"));
-        _audio.PlayGlobal("/Audio/_Impstation/CosmicCult/tier3.ogg", Filter.Broadcast(), false, AudioParams.Default);
-
-        EnsureComp<ParallaxComponent>(mapData, out var parallax);
-        parallax.Parallax = "CosmicFinaleParallax";
-        Dirty(mapData, parallax);
-
-        EnsureComp<MapLightComponent>(mapData, out var mapLight);
-        mapLight.AmbientLightColor = Color.FromHex("#210746");
-
-        Dirty(mapData, mapLight);
-
         var objectiveQuery = EntityQueryEnumerator<CosmicTierConditionComponent>();
         while (objectiveQuery.MoveNext(out var _, out var objectiveComp))
         {
             objectiveComp.Tier = 3;
         }
-
-        var lights = EntityQueryEnumerator<PoweredLightComponent>();
-        while (lights.MoveNext(out var light, out _))
+        var cultQuery = EntityQueryEnumerator<CosmicCultComponent>();
+        while (cultQuery.MoveNext(out var cultist, out var cultComp))
         {
-            if (!_rand.Prob(0.25f))
-                continue;
-            _ghost.DoGhostBooEvent(light);
+            _antag.SendBriefing(cultist, Loc.GetString("cosmiccult-monument-stage3-briefing"), Color.FromHex("#4cabb3"), StageAlertSound);
         }
     }
 
@@ -580,13 +608,14 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _antag.SendBriefing(uid, Loc.GetString("cosmiccult-role-short-briefing"), Color.FromHex("#cae8e8"), null);
 
             var cultComp = EnsureComp<CosmicCultComponent>(uid);
+            cultComp.EntropyBudget = 10; // pity balance
             cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value;
             EnsureComp<IntrinsicRadioReceiverComponent>(uid);
 
             if (CurrentTier == 3)
             {
                 _damage.SetDamageContainerID(uid, "BiologicalMetaphysical");
-                cultComp.EntropyBudget = 20; // pity balance
+                cultComp.EntropyBudget = 48; // pity balance
                 cultComp.Respiration = false;
 
                 foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 3))
@@ -600,7 +629,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             }
             else if (CurrentTier == 2)
             {
-                cultComp.EntropyBudget = 12; // pity balance
+                cultComp.EntropyBudget = 26; // pity balance
 
                 foreach (var influenceProto in _protoMan.EnumeratePrototypes<InfluencePrototype>().Where(influenceProto => influenceProto.Tier == 2))
                 {

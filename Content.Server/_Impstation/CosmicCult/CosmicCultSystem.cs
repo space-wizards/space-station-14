@@ -272,7 +272,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnInfuseEntropy(Entity<MonumentComponent> uid, ref InteractUsingEvent args)
     {
         if (!HasComp<CosmicEntropyMoteComponent>(args.Used) || !HasComp<CosmicCultComponent>(args.User) || !uid.Comp.Enabled || args.Handled)
+        {
+            _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-unavailable"), args.User, args.User);
             return;
+        }
 
         args.Handled = AddEntropy(uid, args.Used, args.User);
     }
