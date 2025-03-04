@@ -1,0 +1,11 @@
+﻿# Jumpsuit
+
+- type: loadout
+  id: WardenTurtlesuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitWardenTurtle
+
+- type: loadout
+  id: WardenTurtleskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtWardenTurtle

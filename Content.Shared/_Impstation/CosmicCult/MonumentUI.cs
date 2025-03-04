@@ -14,26 +14,23 @@ public enum MonumentKey : byte
 [Serializable, NetSerializable]
 public sealed class MonumentBuiState : BoundUserInterfaceState
 {
-    public int EntropyUntilNextStage;
-    public int CrewToConvertUntilNextStage;
-    public float PercentageComplete;
+    public int CurrentProgress;
+    public int TargetProgress;
     public ProtoId<GlyphPrototype> SelectedGlyph;
     public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs;
 
-    public MonumentBuiState(int entropyUntilNextStage, int crewToConvertUntilNextStage, float percentageComplete, ProtoId<GlyphPrototype> selectedGlyph, HashSet<ProtoId<GlyphPrototype>> unlockedGlyphs)
+    public MonumentBuiState(int currentProgress, int targetProgress, int progressOffset, ProtoId<GlyphPrototype> selectedGlyph, HashSet<ProtoId<GlyphPrototype>> unlockedGlyphs)
     {
-        EntropyUntilNextStage = entropyUntilNextStage;
-        CrewToConvertUntilNextStage = crewToConvertUntilNextStage;
-        PercentageComplete = percentageComplete;
+        CurrentProgress = currentProgress - progressOffset;
+        TargetProgress = targetProgress - progressOffset;
         SelectedGlyph = selectedGlyph;
         UnlockedGlyphs = unlockedGlyphs;
     }
 
     public MonumentBuiState(MonumentComponent comp)
     {
-        EntropyUntilNextStage = comp.EntropyUntilNextStage;
-        CrewToConvertUntilNextStage = comp.CrewToConvertNextStage;
-        PercentageComplete = comp.PercentageComplete;
+        CurrentProgress = comp.CurrentProgress - comp.ProgressOffset;
+        TargetProgress = comp.TargetProgress - comp.ProgressOffset;
         SelectedGlyph = comp.SelectedGlyph;
         UnlockedGlyphs = comp.UnlockedGlyphs;
     }

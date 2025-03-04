@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Vent crawlers now have different vent entry times based on their size.
-    type: Tweak
-  id: 725
-  time: '2024-12-13T10:20:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1000
-- author: Darkmajia
-  changes:
-  - message: The greytide virus event has been disabled.
-    type: Remove
-  id: 726
-  time: '2024-12-13T10:19:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1010
-- author: widgetbeck
-  changes:
-  - message: Goblin event weights adjusted to make them more common.
-    type: Tweak
-  id: 727
-  time: '2024-12-13T18:48:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1008
-- author: Darkmajia
-  changes:
-  - message: Beer now makes you wuhey.
-    type: Add
-  id: 728
-  time: '2024-12-13T20:54:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1011
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: .20 rifle, .30 rifle, and .25 caseless each receive damage buffs
-    type: Tweak
-  - message: Lecter and AKMS received firerate reductions to account for damage increases.
-      AKMS received further adjustments.
-    type: Tweak
-  - message: L6 SAW and Mosin changed from .30 rifle to .20 rifle to keep their performance
-      the same as before
-    type: Tweak
-  - message: Central Command has finalized a deal with Blackburn Munitions Inc. and
-      has outfitted each station with one of their new "Daito" precision firearms--
-      a new slow-firing weapon chambered in .30 rifle ammunition.
-    type: Add
-  - message: The Syndicate has completed development on their new line of Nemesis-11
-      Battle Rifles chambered in .25 caseless and will offer them for both traitors
-      and nuclear operatives to choose for their arsenal.
-    type: Add
-  id: 729
-  time: '2024-12-13T20:59:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1004
-- author: hivehum
-  changes:
-  - message: Added dozens of new possible targets for thieves and traitors to steal.
-    type: Add
-  id: 730
-  time: '2024-12-13T21:31:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1005
 - author: honeyed-lemons
   changes:
   - message: Tweaked Boxes Medical
@@ -4070,3 +4014,49 @@
   id: 1224
   time: '2025-03-03T03:13:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1820
+- author: widgetbeck
+  changes:
+  - message: Drones can weld now. Oops.
+    type: Fix
+  id: 1225
+  time: '2025-03-03T08:43:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1822
+- author: Sha-Seng
+  changes:
+  - message: Greatcoat logos touched up to match the style of departmental bomber
+      logos
+    type: Tweak
+  - message: Emergency gas tanks are now properly labeled so that they fit into tank
+      harnesses
+    type: Fix
+  id: 1226
+  time: '2025-03-03T08:46:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1780
+- author: mqole
+  changes:
+  - message: more pages blagh thusd Cosmic Cult Guidebook. Read Them
+    type: Add
+  id: 1227
+  time: '2025-03-03T09:15:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1824
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.04 (Provisional)
+    type: Tweak
+  id: 1228
+  time: '2025-03-04T02:01:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1829
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult Patch 1.05 (Provisional)
+    type: Tweak
+  id: 1229
+  time: '2025-03-04T11:40:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1830
+- author: Delta-V
+  changes:
+  - message: 'A shipment from Delta-V Sector: tons of new clothes!'
+    type: Add
+  id: 1230
+  time: '2025-03-04T13:32:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1786

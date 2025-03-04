@@ -9,7 +9,7 @@
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
     ClothingHeadHatSecurityTrooper: 3 # imp
-    ClothingHeadHelmetJustice: 10 # imp 1<10
+    ClothingHeadHelmetJustice: 10 # imp 1>10
     ClothingHeadBandRed: 3
     ClothingMaskNeckGaiterRed: 3
     ClothingHandsGlovesColorBlack: 3
@@ -20,12 +20,11 @@
     ClothingUniformJumpsuitSecBlue: 3
     ClothingUniformSecurityTrooper: 3 # imp
     ClothingHeadsetSecurity: 3
+    ClothingOuterStasecSweater: 2 # DeltaV
+    ClothingNeckCWPSec: 2 # DeltaV - add cold weather ponchos
     ClothingOuterWinterSec: 2
     ClothingNeckScarfStripedRed: 3
     ClothingOuterCoatBomberSecurity: 1 # imp
-    ClothingOuterArmorBasic: 1 # imp 2>1
-    ClothingOuterArmorBasicSlim: 1 # imp
-    ClothingOuterArmorBasicCompact: 1 # imp
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2

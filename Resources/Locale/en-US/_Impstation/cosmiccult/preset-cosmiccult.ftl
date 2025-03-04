@@ -95,7 +95,14 @@ cosmiccult-role-deconverted-briefing =
     Deconverted!
     You are no longer a Cosmic Cultist.
 
+cosmiccult-monument-stage2-briefing =
+    The Monument grows in power!
+    Its influence will affect realspace in 60 seconds.
 
+cosmiccult-monument-stage3-briefing =
+    The Monument has been completed!
+    Its influence will begin to overlap with realspace in 60 seconds.
+    This is the final stretch! Amass as much entropy as you can muster.
 
 ## MALIGN RIFTS
 
@@ -160,7 +167,7 @@ cosmiccult-announce-tier2-progress = An unnerving numbness prickles your senses.
 cosmiccult-announce-tier2-warning = Scanners detect a notable increase in Λ-CDM! Rifts in realspace may appear shortly. Please alert your station's chaplain if sighted.
 
 cosmiccult-announce-tier3-progress = Arcs of bluespace energy crackle across the station's groaning structure. The end draws near.
-cosmiccult-announce-tier3-warning = Critical increase in Λ-CDM detected. Infected personnel are to be eliminated on sight.
+cosmiccult-announce-tier3-warning = Critical increase in Λ-CDM detected. Infected personnel are to be neutralized.
 
 cosmiccult-announce-victory-summon = A FRACTION OF COSMIC POWER IS CALLED FORTH.
 
@@ -169,4 +176,5 @@ cosmiccult-announce-victory-summon = A FRACTION OF COSMIC POWER IS CALLED FORTH.
 
 cosmiccult-spire-entropy = A mote of entropy condenses from the surface of the spire.
 cosmiccult-entropy-inserted = You infuse {$count} entropy into The Monument.
+cosmiccult-entropy-unavailable = You can't do that right now.
 cosmiccult-astral-ascendant = {$NAME}, Ascendant

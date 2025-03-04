@@ -1,86 +1,88 @@
 - type: vendingMachineInventory
   id: AutoDrobeInventory
   startingInventory:
-    ClothingHeadHatJester: 1
-    ClothingUniformJumpsuitJester: 1
-    ClothingHeadHatJesterAlt: 1
-    ClothingUniformJumpsuitJesterAlt: 1
-    ClothingShoesJester: 2
+    ClothingEyesBlindfold: 1
+    ClothingHeadHatBeretFrench: 2
+    ClothingHeadHatCardborg: 2
+    ClothingHeadHatCasa: 1
+    ClothingHeadHatChickenhead: 2
     ClothingHeadHatCircusClown: 1 #imp
+    ClothingHeadHatCowboyBlack: 1
+    ClothingHeadHatCowboyBrown: 1
+    ClothingHeadHatCowboyGrey: 1
+    ClothingHeadHatCowboyWhite: 1
+    ClothingHeadHatGladiator: 1
+    ClothingHeadHatJester: 1
+    ClothingHeadHatJesterAlt: 1
+    ClothingHeadHatPumpkin: 2
+    ClothingHeadHatPwig: 2
+    ClothingHeadHatRedRacoon: 2
+    ClothingHeadHatSantahat: 2
+    # ClothingHeadHatShrineMaidenWig: 2 # imp edit - giving this religious outfit the sanctity it deserves
+    ClothingHeadHatSkub: 2
+    ClothingHeadHatSombrero: 2
+    ClothingHeadHatWitch1: 2
+    ClothingHeadPaperSack: 2
+    ClothingHeadPaperSackSmile: 2
+    ClothingHeadRastaHat: 2
     ClothingMaskClownNose: 3 #imp
+    ClothingMaskJoy: 2
+    ClothingMaskSadMime: 1
+    ClothingMaskScaredMime: 1
     ClothingNeckRuffle: 2 #imp
-    ClothingUniformCircusClown: 1 #imp
-    ClothingShoesCircus: 2 #imp
-    ClothingUniformJokester: 1 #imp
+    ClothingNeckScarfStripedZebra: 1 # imp
+    ClothingOuterCardborg: 2
+    ClothingOuterClownPriest: 1
     ClothingOuterCoatJokester: 1 #imp
-    ClothingShoesJokester: 2 #imp
+    ClothingOuterDameDane: 2
+    ClothingOuterPoncho: 2
+    ClothingOuterPonchoClassic: 2
+    ClothingOuterRedRacoon: 2
+    ClothingOuterRobesJudge: 2
+
+    ClothingOuterSanta: 2
+    ClothingOuterSkub: 2
+    ClothingOuterSuitChicken: 2
+    ClothingOuterSuitMonkey: 2
+    # ClothingOuterSuitShrineMaiden: 2
+    ClothingOuterSuitWitchRobes: 2
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
     ClothingOuterWinterMusician: 1
-    ClothingMaskJoy: 2
-    ClothingHeadHatCardborg: 2
-    ClothingOuterCardborg: 2
-    ClothingHeadHatSombrero: 2
-    ClothingOuterPonchoClassic: 2
-    ClothingHeadHatPwig: 2
-    ClothingOuterRobesJudge: 2
-    ClothingOuterPoncho: 2
-    ClothingHeadHatSantahat: 2
-    ClothingOuterSanta: 2
-    ClothingHeadHatSkub: 2
-    ClothingOuterSkub: 2
-    ClothingHeadHatBeretFrench: 2
+    ClothingShoesBootsCowboyBlack: 1
+    ClothingShoesBootsCowboyBrown: 1
+    ClothingShoesBootsCowboyWhite: 1
+    ClothingShoesCircus: 2 #imp
+    ClothingShoesDameDane: 2
+    ClothingShoesJester: 2
+    ClothingShoesJokester: 2 #imp
+    ClothingUniformCircusClown: 1 #imp
+    ClothingUniformJokester: 1 #imp
+    ClothingUniformJumpsuitDameDane: 2
+    ClothingUniformJumpsuitGladiator: 1
+    ClothingUniformJumpsuitJester: 1
+    ClothingUniformJumpsuitJesterAlt: 1
+    ClothingUniformJumpsuitKilt: 3 # DeltaV - SCOTTTTLANDDDDD FURREVERRRRR!!
+    ClothingUniformJumpsuitKimono: 1
     ClothingUniformMrSpaceWide: 2 #imp
     ClothingUniformMrSpaceWideSkirt: 2 #imp
-    ClothingOuterSuitChicken: 2
-    ClothingHeadHatChickenhead: 2
-    ClothingOuterSuitMonkey: 2
-    ClothingHeadHatPumpkin: 2
-    # ClothingHeadHatShrineMaidenWig: 2 # imp edit - giving this religious outfit the sanctity it deserves
-    # ClothingOuterSuitShrineMaiden: 2
-    # Gohei: 2
-    ClothingOuterSuitWitchRobes: 2
-    ClothingHeadHatWitch1: 2
-    ClothingHeadHatRedRacoon: 2
-    ClothingOuterRedRacoon: 2
-    ClothingHeadPaperSack: 2
-    ClothingHeadPaperSackSmile: 2
-    ClothingEyesBlindfold: 1
-    ClothingHeadRastaHat: 2
-    ClothingUniformJumpsuitDameDane: 2
-    ClothingShoesDameDane: 2
-    ClothingOuterDameDane: 2
-    ClothingOuterClownPriest: 1
-    ClothingMaskSadMime: 1
-    ClothingMaskScaredMime: 1
-    ClothingUniformJumpsuitKimono: 1
-    ClothingHeadHatCasa: 1
     FoodPoppy: 1
-    ClothingHeadHatGladiator: 1
-    ClothingUniformJumpsuitGladiator: 1
-    ClothingHeadHatCowboyBrown: 1
-    ClothingHeadHatCowboyBlack: 1
-    ClothingHeadHatCowboyWhite: 1
-    ClothingHeadHatCowboyGrey: 1
-    ClothingShoesBootsCowboyBrown: 1
-    ClothingShoesBootsCowboyBlack: 1
-    ClothingShoesBootsCowboyWhite: 1
-    ClothingNeckScarfStripedZebra: 1
-  contrabandInventory:
-    ClothingUniformJumpsuitAncient: 1
-    ClothingUniformJumpsuitCossack: 1
-    ClothingUniformJumpsuitLoungewear: 1
+    # Gohei: 2
+  contrabandInventory: # imp
     ClothingShoesSlippers: 1
     ClothingShoesTourist: 1
     ClothingShoesWizard: 1
-    ClothingUniformHitmanSuit: 1 #imp
-    ClothingUniformHitmanSuitSkirt: 1 #imp
-    ClothingUniformBrosBlazer: 1 #imp
-    ClothingUniformBrosBlazerSkirt: 1 #imp
+    ClothingUniformBrosBlazer: 1
+    ClothingUniformBrosBlazerSkirt: 1
+    ClothingUniformHitmanSuit: 1
+    ClothingUniformHitmanSuitSkirt: 1
+    ClothingUniformJumpsuitAncient: 1
+    ClothingUniformJumpsuitCossack: 1
+    ClothingUniformJumpsuitLoungewear: 1
   emaggedInventory:
-    ClothingShoesBling: 1
-    ClothingShoesBootsCowboyFancy: 1
-    ClothingOuterDogi: 1
+    ClothingHeadHatCowboyBountyHunter: 1
     ClothingMaskBlushingClown: 1
     ClothingMaskBlushingMime: 1
-    ClothingHeadHatCowboyBountyHunter: 1
+    ClothingOuterDogi: 1
+    ClothingShoesBling: 1
+    ClothingShoesBootsCowboyFancy: 1

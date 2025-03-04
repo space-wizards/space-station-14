@@ -189,6 +189,7 @@
   loadouts:
   - HoPJumpsuit
   - HoPJumpskirt
+  - HoPBoatswain # DeltaV
 
 - type: loadoutGroup
   id: HoPNeck
@@ -363,8 +364,12 @@
   - LawyerJumpskirtRed
   - LawyerJumpsuitGood
   - LawyerJumpskirtGood
+  - ClerkJumpsuit # DeltaV
+  - ClerkJumpskirt # DeltaV
   - ClothingUniformCreamSuit #imp
   - ClothingUniformCreamSuitSkirt #imp
+  - ProsecutorJumpsuit # DeltaV
+  - ProsecutorJumpskirt # DeltaV
 
 - type: loadoutGroup
   id: LawyerNeck
@@ -372,6 +377,7 @@
   minLimit: 0
   loadouts:
   - LawyerNeck
+  - ProsecutorNeck # DeltaV
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -613,6 +619,7 @@
   loadouts:
   - MimeSuspendersRed
   - MimeSuspendersBlack
+  - FoamSabre # DeltaV - Add foam sabre to the mime's loadout.
 
 - type: loadoutGroup
   id: SurvivalMime
@@ -933,6 +940,7 @@
   minLimit: 0
   loadouts:
   - ResearchDirectorBeret
+  - ResearchDirectorHood # DeltaV
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
@@ -941,6 +949,7 @@
   loadouts:
   - ResearchDirectorMantle
   - ResearchDirectorCloak
+  - MystagogueCloak # DeltaV
   - ScarfPurple # imp
 
 - type: loadoutGroup
@@ -956,6 +965,7 @@
   minLimit: 0
   loadouts:
   - ResearchDirectorLabCoat
+  - MystaLabCoat # DeltaV
   - ResearchDirectorWintercoat
 
 - type: loadoutGroup
@@ -1064,6 +1074,7 @@
   minLimit: 0
   loadouts:
   - HeadofSecurityHead
+  - HeadofSecurityHeadDV
   - HeadofSecurityBeret
   - HeadofSecurityPatrolCap # imp
 
@@ -1103,6 +1114,8 @@
   - ArmorVest #imp
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
+  - DuraVest # DeltaV
+  - PlateCarrier # DeltaV
   - HeadofSecurityEliteArmor #imp
 
 - type: loadoutGroup
@@ -1119,7 +1132,12 @@
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
+  - WardenTurtleskirt # DeltaV
+  - WardenTurtlesuit # DeltaV
   - SecurityJumpsuitBlue # imp
+  - ChiefJusticeFormalJumpsuit # DeltaV
+  - ChiefJusticeFormalJumpskirt # DeltaV
+  - ChiefJusticeWhiteJumpsuit # DeltaV
 
 - type: loadoutGroup
   id: WardenOuterClothing
@@ -1130,6 +1148,8 @@
   - ArmorVest #imp
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
+  - DuraVest # DeltaV
+  - PlateCarrier # DeltaV
   - WardenWinterCoatUnarmored # imp
   - BomberSecurity #imp
 
@@ -1178,7 +1198,10 @@
   - ArmorVest
   - ArmorVestSlim
   - ArmorVestCompact #imp
+  - DuraVest # DeltaV
+  - PlateCarrier # DeltaV
   - SecurityOfficerWintercoat
+  - StasecSweater # DeltaV
   - BomberSecurity #imp
 
 - type: loadoutGroup
@@ -1218,6 +1241,8 @@
   loadouts:
   - DetectiveJumpsuit
   - DetectiveJumpskirt
+  - ForensicSpecTurtleskirt # DeltaV
+  - ForensicSpecTurtlesuit # DeltaV
   - NoirJumpsuit
   - NoirJumpskirt
   - ClothingUniformMiamiVice #imp
@@ -1235,6 +1260,8 @@
   - ArmorVest #imp
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
+  - DuraVest # DeltaV
+  - PlateCarrier # DeltaV
   - BomberSecurity #imp
   - ClothingOuterCoatFieldJacket #imp
 

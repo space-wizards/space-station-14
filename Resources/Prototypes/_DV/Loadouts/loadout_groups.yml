@@ -1,12 +1,4 @@
-- type: loadoutGroup
-  id: ChemistGloves
-  name: loadout-group-chemistry-gloves
-  minLimit: 0
-  loadouts:
-  - LatexGloves
-  - NitrileGloves
-  - ChemistryGloves
-
+# Supply
 ## Supply Assistant
 - type: loadoutGroup
   id: SupplyAssistantJumpsuit
@@ -23,6 +15,26 @@
   - CargoTechnicianSatchel
   - CargoTechnicianDuffel
 
+# Medical
+## Psychologist
+- type: loadoutGroup
+  id: PsychologistOuterClothing
+  name: loadout-group-psychologist-outerclothing
+  minLimit: 0
+  loadouts:
+  - MedicalDoctorWintercoat
+  - PsychologistSweater
+
+## Chemist
+- type: loadoutGroup
+  id: ChemistGloves
+  name: loadout-group-chemistry-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+  - ChemistryGloves
+
 # Command
 ## Administrative Assistant
 - type: loadoutGroup
@@ -31,6 +43,8 @@
   loadouts:
   - AdminAssistantJumpsuit
   - AdminAssistantJumpskirt
+  - ClerkJumpskirt # imp - no clerk
+  - ClerkJumpsuit # imp - no clerk
   - ClothingUniformNightclubSuit #imp
   - ClothingUniformNightclubSuitSkirt #imp
 

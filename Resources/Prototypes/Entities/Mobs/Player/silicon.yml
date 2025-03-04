@@ -866,7 +866,7 @@
       - Taser
       components:
       - Gun
-      - MeleeWeapon
+      - EnergySword
   - type: PAI # imp; this is added specifically for the internal station map feature but the other aspects are not especially against the identity of drones. and i dont want to put the work into ECS-ifying PAIComponent
     mapActionId: ActionDroneOpenMap # redefining these to reflavor their descriptions.
     midiActionId: ActionDronePlayMidi

@@ -1,0 +1,12 @@
+﻿- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckCloakMystagogue
+  name: research director's other cloak # imp - we dont have mysta
+  description: A comfy white and purple cloak, perfect for those sleepless nights when you're haunted by the yet unsolved mysteries of the universe.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Neck/Cloaks/mystacloak.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Neck/Cloaks/mystacloak.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
