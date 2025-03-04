@@ -8,15 +8,16 @@
 - type: startingGear
   id: SyndicateRecruiterGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitDetectiveGrey
-    jumpskirt: ClothingUniformJumpskirtDetectiveGrey
+    jumpsuit: ClothingUniformCybersunAttorney
     back: ClothingBackpackSatchel
     head: ClothingHeadHatFedoraBrown
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorWhite
-    outerClothing: ClothingOuterCoatTrench
+    outerClothing: ClothingOuterCybersunOvercoat
     shoes: ClothingShoesLeather
     id: UndercoverPDA
     ears: ClothingHeadsetGrey
     pocket1: PenRecruiter
     pocket2: RubberStampSyndicate
+  inhand:
+    - CybersunBriefcase

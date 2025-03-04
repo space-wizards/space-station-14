@@ -1,0 +1,140 @@
+﻿# Security Sweater
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterStasecSweater
+  result: ClothingOuterStasecSweater
+  completetime: 4
+
+# Ponchos
+
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingNeckCWPArctic
+  result: ClothingNeckCWPArctic
+  completetime: 4
+  materials:
+    Cloth: 500
+    Durathread: 300
+
+- type: latheRecipe
+  parent: ClothingNeckCWPArctic
+  id: ClothingNeckCWPSec
+  result: ClothingNeckCWPSec
+
+# Chief Justice Wardrobe
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitChiefJusticeFormal
+  result: ClothingUniformJumpsuitChiefJusticeFormal
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtCJFormal
+  result: ClothingUniformJumpskirtCJFormal
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitChiefJusticeWhite
+  result: ClothingUniformJumpsuitChiefJusticeWhite
+  completetime: 5
+
+# Clerk
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitClerk
+  result: ClothingUniformJumpsuitClerk
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtClerk
+  result: ClothingUniformJumpskirtClerk
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterClerkVest
+  result: ClothingOuterClerkVest
+
+# Prosecutor
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitProsecutor
+  result: ClothingUniformJumpsuitProsecutor
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtProsecutor
+  result: ClothingUniformJumpskirtProsecutor
+# Salvage Specialist
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtSalvageSpecialistDV
+  result: ClothingUniformJumpskirtSalvageSpecialistDV
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSalvageSpecialistDV
+  result: ClothingUniformJumpsuitSalvageSpecialistDV
+
+# Command Hats
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHoodMysta
+  result: ClothingHeadHoodMysta
+
+#Syndicate Clothing
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformCybersunAttorney
+  result: ClothingUniformCybersunAttorney
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: UniformScrubsColorCybersun
+  result: UniformScrubsColorCybersun
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformCybersunHazard
+  result: ClothingUniformCybersunHazard
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformCybersunCasual
+  result: ClothingUniformCybersunCasual
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformCybersunRND
+  result: ClothingUniformCybersunRND
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterCoatCybersunWindbreaker
+  result: ClothingOuterCoatCybersunWindbreaker
+  materials:
+    Cloth: 100
+    Durathread: 200 #increased durathread cost since it has armor
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterCybersunOvercoat
+  result: ClothingOuterCybersunOvercoat
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatSurgcapCybersun
+  result: ClothingHeadHatSurgcapCybersun
+
+# Utility
+
+- type: latheRecipe
+  id: ClothingBeltPaperwork
+  result: ClothingBeltPaperwork
+  materials:
+    Cloth: 200
+    Durathread: 100

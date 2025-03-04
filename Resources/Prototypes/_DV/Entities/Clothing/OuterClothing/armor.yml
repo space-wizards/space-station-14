@@ -22,3 +22,25 @@
   - type: ExplosionResistance # More protective against explosives than you think. Helps in preventing all those vital organs from jiggling around o.o
     damageCoefficient: 0.70
   - type: AllowSuitStorage
+
+#Alternate / slim basic armor vest replacement
+- type: entity
+  parent: ClothingOuterBaseMedium
+  id: ClothingOuterArmorDuraVest
+  name: durathread vest
+  description: A tight-fitting and sturdy armor vest, reinforced with durathread weave to protect against sharp objects and blunt force trauma.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Armor/duravest.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Armor/duravest.rsi
+  - type: Armor # Good against stabs and knocks, offers minimal protection from gunshots and lasfire.
+    modifiers:
+      coefficients:
+        Blunt: 0.60
+        Slash: 0.60
+        Piercing: 0.90
+        Heat: 0.90
+  - type: ExplosionResistance # Better than nothing against a blast or shockwave.
+    damageCoefficient: 0.90
+  - type: AllowSuitStorage

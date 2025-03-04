@@ -344,6 +344,16 @@
   - BlackHeels
 
 - type: loadoutGroup
+  id: LawyerOuterClothing
+  name: loadout-group-lawyer-outerclothing
+  minLimit: 0
+  loadouts:
+  - BartenderVest
+  - ClerkVest
+  - WinterCoatBlack
+  - WinterCoatBrown
+
+- type: loadoutGroup
   id: LawyerShoes
   name: loadout-group-lawyer-shoes
   loadouts:
@@ -545,6 +555,8 @@
   loadouts:
   - SalvageSpecialistJumpsuit
   - SalvageSpecialistJumpskirt
+  - SalvageSpecialistJumpsuitDV # DeltaV
+  - SalvageSpecialistJumpskirtDV # DeltaV
 
 - type: loadoutGroup
   id: SalvageSpecialistGlasses
@@ -808,6 +820,8 @@
   - ArmorVest
   - ArmorVestSlim
   - ArmorVestCompact
+  - PlateCarrier # DeltaV
+  - DuraVest # DeltaV
   - BomberSecurity
 
 - type: loadoutGroup
