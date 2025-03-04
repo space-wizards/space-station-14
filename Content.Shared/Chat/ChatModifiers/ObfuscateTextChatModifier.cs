@@ -26,26 +26,18 @@ public sealed partial class ObfuscateTextChatModifier : ChatModifier
 
         _random.SetSeed(seed);
 
-        var returnMessage = new FormattedMessage();
-
         using var nodeEnumerator = message.GetEnumerator();
         while (nodeEnumerator.MoveNext())
         {
             var node = nodeEnumerator.Current;
             if (node.Name == null && node.Value.TryGetString(out var text))
             {
-                returnMessage.AddText(ObfuscateMessageReadability(text, ObfuscationChance));
-            }
-            else
-            {
-                if (!node.Closing)
-                    returnMessage.PushTag(node);
-                else
-                    returnMessage.Pop();
+                var obfuscated = ObfuscateMessageReadability(text, ObfuscationChance);
+                message.Replace(node, new MarkupNode(obfuscated));
             }
         }
 
-        return returnMessage;
+        return message;
     }
 
     private string ObfuscateMessageReadability(string message, float chance)

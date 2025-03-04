@@ -1,6 +1,4 @@
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Radio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
@@ -20,7 +18,12 @@ public sealed partial class PlayGlobalAudioChatModifier : ChatModifier
         var volume = chatMessageContext.TryGet<float>(DefaultChannelParameters.GlobalAudioVolume, out var audioVolume)
             ? audioVolume
             : 1f;
-        message.PushTag(new MarkupNode("PlayAudio", new MarkupParameter(audioPath), new Dictionary<string, MarkupParameter>() { { "volume", new MarkupParameter((long)volume) } }, false), true);
+        var nodeParams = new Dictionary<string, MarkupParameter>
+        {
+            ["volume"] = new MarkupParameter((long)volume)
+        };
+        var audioNode = new MarkupNode("PlayAudio", new MarkupParameter(audioPath), nodeParams, false);
+        message.PushTag(audioNode, true);
 
         return message;
     }

@@ -836,7 +836,7 @@ public sealed class ChatUIController : UIController
 
         // Process any remaining clientside content markups.
         var postProcessedNodes = _contentMarkupTagManager.ProcessMessage(msg.Message);
-        msg.Message = FormattedMessage.FromMarkupOrThrow(string.Join("", postProcessedNodes));
+        msg.Message = FormattedMessage.FromNodes(postProcessedNodes);
 
         // Create a bubble, should the communication channel expect one.
         if (proto.ClientModifiers.Any(x => x is BubbleProviderChatModifier))
