@@ -7,7 +7,12 @@
         {
             "version": 1,
             "license": "CC-BY-SA-3.0",
-            "copyright": "Taken from CODEBASE at COMMIT LINK",
+            "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+            "links": [
+                "https://example.com/commit/123456",
+                "https://example.com/source",
+                "https://example.com/author"
+            ],
             "size": {
                 "x": 32,
                 "y": 32
@@ -16,18 +21,33 @@
                 {
                     "name": "basic",
                     "license": "CC-BY-SA-3.0",
-                    "copyright": "Taken from CODEBASE at COMMIT LINK"
+                    "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+                    "links": [
+                        "https://example.com/commit/123456",
+                        "https://example.com/source",
+                        "https://example.com/author"
+                    ]
                 },
                 {
                     "name": "basic-directions",
                     "license": "CC-BY-SA-3.0",
-                    "copyright": "Taken from CODEBASE at COMMIT LINK",
+                    "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+                    "links": [
+                        "https://example.com/commit/123456",
+                        "https://example.com/source",
+                        "https://example.com/author"
+                    ],
                     "directions": 4
                 },
                 {
                     "name": "basic-delays",
                     "license": "CC-BY-SA-3.0",
-                    "copyright": "Taken from CODEBASE at COMMIT LINK",
+                    "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+                    "links": [
+                        "https://example.com/commit/123456",
+                        "https://example.com/source",
+                        "https://example.com/author"
+                    ],
                     "delays": [
                         [
                             0.1,
@@ -38,7 +58,12 @@
                 {
                     "name": "basic-delays-directions",
                     "license": "CC-BY-SA-3.0",
-                    "copyright": "Taken from CODEBASE at COMMIT LINK",
+                    "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+                    "links": [
+                        "https://example.com/commit/123456",
+                        "https://example.com/source",
+                        "https://example.com/author"
+                    ],
                     "directions": 4,
                     "delays": [
                         [
@@ -84,13 +109,17 @@
             "deprecated": true,
             "deprecationMessage": "Whole-file licencing is not recommended. You should be doing individual licencing on each state!",
             "enum": [
+                "CC-BY-3.0",
+                "CC-BY-4.0",
                 "CC-BY-SA-3.0",
                 "CC-BY-SA-4.0",
                 "CC-BY-NC-3.0",
                 "CC-BY-NC-4.0",
                 "CC-BY-NC-SA-3.0",
                 "CC-BY-NC-SA-4.0",
-                "CC0-1.0"
+                "CC0-1.0",
+                "MIT",
+                "Custom"
             ],
             "examples": [
                 "CC-BY-SA-3.0"
@@ -104,11 +133,25 @@
             "title": "Copyright Info",
             "description": "The copyright holder. This is typically a link to the commit of the codebase that the icon is pulled from.",
             "deprecated": true,
-            "deprecationMessage": "Whole-file attribtuion is not recommended. You should be doing individual attribution on each state!",
+            "deprecationMessage": "Whole-file attribution is not recommended. You should be doing individual attribution on each state!",
             "default": "",
             "examples": [
-                "Taken from CODEBASE at COMMIT LINK"
+                "Modified from SOURCE NAME by USERNAME (GitHub/Discord)"
             ]
+        },
+        "links": {
+            "$id": "#/properties/links",
+            "type": "array",
+            "title": "Links",
+            "description": "A list of URL links related to the work, such as source or author links.",
+            "items": {
+                "type": "string",
+                "examples": [
+                    "https://example.com/commit/123456",
+                    "https://example.com/source",
+                    "https://example.com/author"
+                ]
+            }
         },
         "size": {
             "$id": "#/properties/size",
@@ -160,12 +203,22 @@
                     {
                         "name": "basic",
                         "license": "CC-BY-SA-3.0",
-                        "copyright": "Taken from CODEBASE at COMMIT LINK"
+                        "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+                        "links": [
+                            "https://example.com/commit/123456",
+                            "https://example.com/source",
+                            "https://example.com/author"
+                        ]
                     },
                     {
                         "name": "basic-directions",
                         "license": "CC-BY-SA-3.0",
-                        "copyright": "Taken from CODEBASE at COMMIT LINK",
+                        "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
+                        "links": [
+                            "https://example.com/commit/123456",
+                            "https://example.com/source",
+                            "https://example.com/author"
+                        ],
                         "directions": 4
                     }
                 ]
@@ -188,13 +241,17 @@
                         "title": "License",
                         "description": "The license for the associated icon states. Restricted to SS14-compatible asset licenses.",
                         "enum": [
+                            "CC-BY-3.0",
+                            "CC-BY-4.0",
                             "CC-BY-SA-3.0",
                             "CC-BY-SA-4.0",
                             "CC-BY-NC-3.0",
                             "CC-BY-NC-4.0",
                             "CC-BY-NC-SA-3.0",
                             "CC-BY-NC-SA-4.0",
-                            "CC0-1.0"
+                            "CC0-1.0",
+                            "MIT",
+                            "Custom"
                         ],
                         "examples": [
                             "CC-BY-SA-3.0"
