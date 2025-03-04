@@ -5,7 +5,6 @@
   components:
   - type: EntityTargetAction
     useDelay: 0
-    charges: 5
     itemIconStyle: BigAction
     whitelist:
       components:

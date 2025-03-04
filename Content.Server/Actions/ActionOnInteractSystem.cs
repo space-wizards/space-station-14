@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -15,6 +17,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
 
     public override void Initialize()
     {
@@ -70,6 +73,15 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 return;
 
             actionEnts = actionsContainerComponent.Container.ContainedEntities.ToList();
+        }
+
+        // Staves have limited charges, other items may not
+        if (TryComp<LimitedChargesComponent>(uid, out var charges))
+        {
+            if (_charges.IsEmpty(uid, charges))
+                return;
+
+            _charges.UseCharge(uid, charges);
         }
 
         // First, try entity target actions
