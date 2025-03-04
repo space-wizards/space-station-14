@@ -285,11 +285,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
             Dirty(cultist, cultComp);
         }
 
-        _cultRule.TotalEntropy += quant;
-        monument.Comp.TotalEntropy = _cultRule.TotalEntropy;
+        monument.Comp.TotalEntropy += quant;
         _cultRule.UpdateCultData(monument);
-
-        _ui.SetUiState(monument.Owner, MonumentKey.Key, new MonumentBuiState(monument.Comp)); //this can't be predicted (afaik) as it relies on the cultRuleSystem, which is serverside
 
         _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-inserted", ("count", quant)), cultist, cultist);
         _audio.PlayEntity("/Audio/_Impstation/CosmicCult/insert_entropy.ogg", cultist, monument);

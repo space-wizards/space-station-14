@@ -60,18 +60,11 @@ public sealed class SharedMonumentSystem : EntitySystem
 
         if (ent.Comp.Enabled && TryComp<CosmicCultComponent>(args.Actor, out var cultComp))
         {
-            var buiState = new MonumentBuiState(
-                ent.Comp.EntropyUntilNextStage,
-                ent.Comp.CrewToConvertNextStage,
-                ent.Comp.PercentageComplete,
-                ent.Comp.SelectedGlyph,
-                ent.Comp.UnlockedGlyphs
-                );
-
-            _ui.SetUiState(ent.Owner, MonumentKey.Key, buiState);
+            _ui.SetUiState(ent.Owner, MonumentKey.Key, new MonumentBuiState(ent.Comp));
         }
         else
-            _ui.CloseUi(ent.Owner, MonumentKey.Key); // based on the prior IF, this effectively cancels the UI if the user is either not a cultist, or the Finale is ready to trigger.
+            _ui.CloseUi(ent.Owner, MonumentKey.Key); //close the UI if the finale is ready to trigger
+        //todo this can probably be done better - have it keep the UI open but replace everything with some kinda "The End Is Coming" text? - ruddygreat
 
     }
 

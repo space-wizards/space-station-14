@@ -97,9 +97,6 @@
     - ccGlyphProjection
     selectedGlyph: ccGlyphKnowledge
     totalEntropy: 0
-    entropyUntilNextStage: 777
-    crewToConvertNextStage:  777
-    percentageComplete: 0
   - type: GuideHelp
     guides:
     - CosmicCult

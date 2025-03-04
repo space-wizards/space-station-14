@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._Impstation.CCVar;
 using Content.Shared._Impstation.Cosmiccult;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Prototypes;
@@ -11,6 +12,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._Impstation.CosmicCult.UI.Monument;
@@ -20,6 +22,7 @@ public sealed partial class MonumentMenu : FancyWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     private readonly SpriteSystem _sprite;
 
@@ -73,8 +76,14 @@ public sealed partial class MonumentMenu : FancyWindow
     // Update all the entropy fields
     private void UpdateBar(MonumentBuiState state)
     {
-        CultProgressBar.Value = state.PercentageComplete;
-        ProgressBarPercentage.Text = Loc.GetString("monument-interface-progress-bar", ("percentage", state.PercentageComplete.ToString("0")));
+        var percentComplete = ((float) state.CurrentProgress / (float) state.TargetProgress) * 100f; //too many parenthesis & probably unnecessary float casts but I'm not taking any chances
+
+        if (percentComplete > 100)
+           percentComplete -= 100; //mini hack to force things to behave
+
+        CultProgressBar.Value = percentComplete;
+
+        ProgressBarPercentage.Text = Loc.GetString("monument-interface-progress-bar", ("percentage", percentComplete.ToString("0")));
     }
 
     // Update all the entropy fields
@@ -86,9 +95,13 @@ public sealed partial class MonumentMenu : FancyWindow
             availableEntropy = cultComp.EntropyBudget.ToString();
         }
 
+        var entropyToNextStage = state.TargetProgress - state.CurrentProgress;
+        var min = entropyToNextStage == 0 ? 0 : 1; //I have no idea what to call this. makes it so that it shows 0 crew for the final stage but at least one at all other times
+        var crewToNextStage = (int) Math.Max(Math.Round((double) entropyToNextStage / _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue), MidpointRounding.ToPositiveInfinity), min); //force it to be at least one
+
         AvailableEntropy.Text = Loc.GetString("monument-interface-entropy-value", ("infused", availableEntropy));
-        EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", state.EntropyUntilNextStage.ToString()));
-        CrewToConvertUntilNextStage.Text = state.CrewToConvertUntilNextStage.ToString();
+        EntropyUntilNextStage.Text = Loc.GetString("monument-interface-entropy-value", ("infused", entropyToNextStage.ToString()));
+        CrewToConvertUntilNextStage.Text = crewToNextStage.ToString();
     }
 
     // Update all the glyph buttons
