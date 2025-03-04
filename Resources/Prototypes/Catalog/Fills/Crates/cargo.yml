@@ -417,3 +417,8 @@
     - id: GrenadeFoamDart
       prob: 0.001
       orGroup: NotUseful
+    # imp stuff
+    - id: ClothingOuterHardsuitGoliath
+      prob: 0.05
+    - id: ClothingOuterHardsuitMaxim # i hit the juckport 1 trillion$
+      prob: 0.001

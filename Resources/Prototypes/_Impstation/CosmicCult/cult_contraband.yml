@@ -1,8 +1,0 @@
-- type: entity
-  id: BaseCosmicCultContraband
-  abstract: true
-  components:
-  - type: Contraband
-    severity: CosmicCultContrabandSeverity
-    # no one should be carrying this around visibly!
-    allowedDepartments: []

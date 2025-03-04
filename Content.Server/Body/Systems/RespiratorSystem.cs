@@ -18,6 +18,7 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared._Impstation.CosmicCult.Components;
 
 namespace Content.Server.Body.Systems;
 
@@ -98,6 +99,9 @@ public sealed class RespiratorSystem : EntitySystem
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;
                     _chat.TryEmoteWithChat(uid, respirator.GaspEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
                 }
+
+                if (TryComp<CosmicCultComponent>(uid, out var cultComponent) && !cultComponent.Respiration) return; // Imp HACK so cultists gasp but don't take respiration damage.
+                // One line change but a refactor would be so much better. this is VERY BAD and AWFUL.
 
                 TakeSuffocationDamage((uid, respirator));
                 respirator.SuffocationCycles += 1;

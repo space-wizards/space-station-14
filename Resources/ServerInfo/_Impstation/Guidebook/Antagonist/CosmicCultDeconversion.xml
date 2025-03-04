@@ -1,0 +1,34 @@
+<Document>
+  # Deconversion
+  <Box>
+    <GuideEntityEmbed Entity="Bible" Caption=""/>
+  </Box>
+
+  When mounting an effort to thwart the [color=#4cabb3]Cosmic Cult[/color], there are several methods the crew might employ to ensure their survival and safety. One of these methods is [color=Yellow]Deconversion[/color].
+
+  To [color=Yellow]Deconvert[/color] a cosmic cultist, two methods can be employed. The first is by having a cultist drink a glass of [color=#91C3F7]Holy Water[/color] — by force, if neccesary. Holy Water can be procured from:
+  - Shipments of religious supplies, available from Cargo. These contain two jugs of Holy Water, as well as a Bible.
+  - Usage of a Bible by a Chaplain on most containers of water will bless the water, turning it into Holy Water.
+  - Usage of a Gildgrail by a Chaplain to swirl its contents will bless any water inside the Gildgrail, turning it into Holy Water.
+  <Box>
+    <GuideEntityEmbed Entity="NullRodRosary" Caption=""/>
+  </Box>
+  Alternatively, Chaplains may channel their divine spark though a [color=Yellow]Silvered Rosary[/color] and use it on anyone they suspect of being a cultist.
+
+  ## Suppression Methods
+  <Box>
+    <GuideEntityEmbed Entity="NullRodDefault" Caption=""/>
+    <GuideEntityEmbed Entity="NullRodGrail" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="Bible" Caption=""/>
+    <GuideEntityEmbed Entity="MindShieldImplanter" Caption=""/>
+  </Box>
+
+  Deconversion is but one method for dealing with an encroaching cult. Crew aboard the station may alternatively wish to invest in [color=Green]Mindshield[/color] implanters.
+
+  These state-of-the-art devices can prevent outside influences from brainwashing crewmembers, providing a powerful utility against the cult's influence.
+
+  The [color=Yellow]Chaplain[/color]'s devotion renders them immune to nearly all of the cosmic cult's powers.
+
+</Document>

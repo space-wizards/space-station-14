@@ -51,7 +51,7 @@
     MailNFJoints: 0.2
     MailNFGoldCigars: 0.1
     #Unique items - 1
-    MailNFBible: 1
+    # MailNFBible: 1 // Dummy bible mail replacement?
     #Fun - 9.31 including MailNFEMP
     MailImpCarpetiumBottle: 1
     MailImpBedsheets: 1

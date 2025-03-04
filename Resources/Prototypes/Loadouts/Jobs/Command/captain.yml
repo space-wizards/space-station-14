@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobCaptain
-      time: 72000 #20 hrs
+      time: 36000 #10 hrs, ~7 rounds #imp
 
 # Jumpsuit
 - type: loadout
@@ -39,14 +39,6 @@
   id: CaptainCap
   equipment:
     head: ClothingHeadHatCapcap
-
-- type: loadout
-  id: CaptainCrusherCap
-  equipment:
-    head: ClothingHeadHatCaptaincrushercap
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
 
 # Glasses
 - type: loadout

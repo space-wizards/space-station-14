@@ -1,234 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Amber Station) Added brigmedic spawn and locker.
-    type: Add
-  id: 704
-  time: '2024-12-10T10:53:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/972
-- author: honeyed-lemons
-  changes:
-  - message: Shipyard consoles to the quartermasters room in Fland, Box, and Xeno
-    type: Add
-  - message: Update EVA access in Fland, Box, and Xeno to be all command.
-    type: Tweak
-  id: 705
-  time: '2024-12-10T10:54:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/973
-- author: ultramario1998
-  changes:
-  - message: Added a headset that's just for Wardens.
-    type: Add
-  id: 706
-  time: '2024-12-10T11:04:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/976
-- author: iaada, kipdotnet
-  changes:
-  - message: Fixed missing sprite layering on the tck'tck drone, and gave it a grapple
-      module.
-    type: Fix
-  id: 707
-  time: '2024-12-10T11:09:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/977
-- author: kipdotnet, Darkmajia, Starlighthowls
-  changes:
-  - message: Added and rotated Banana, a new lowpop map!
-    type: Add
-  id: 708
-  time: '2024-12-10T11:11:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/978
-- author: DinnerCalzone
-  changes:
-  - message: EVA storage rooms on Bagel, Cog, and Marathon have been set to command
-      access.
-    type: Tweak
-  - message: Solar station beacons on Bagel, Cog, Marathon, Omega, and Origin have
-      been renamed to differentiate them.
-    type: Tweak
-  - message: (Cog) Incorporated some upstream changes, namely adding additional infrastructure
-      to the tesla area.
-    type: Add
-  - message: (Cog) The arrivals security checkpoint has been replaced with a vox box.
-      The checkpoint has been moved to the west next to the rec room.
-    type: Tweak
-  - message: (Marathon) Incorporated upstream changes, including an overhaul to the
-      station's atmos systems.
-    type: Add
-  - message: (Marathon) Added a service techfab to the corridor between the bar and
-      kitchen.
-    type: Add
-  - message: (Omega) Made the location of the RTG in space near engineering much more
-      obvious.
-    type: Tweak
-  id: 709
-  time: '2024-12-10T11:14:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/979
-- author: Darkmajia
-  changes:
-  - message: Changeling text has been revised in many areas.
-    type: Tweak
-  - message: Changeling bone shards no longer display as errors during the Christmas
-      season.
-    type: Fix
-  id: 710
-  time: '2024-12-10T16:32:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/947
-- author: Kandiyaki
-  changes:
-  - message: changed up the cryogenic sting to no longer have a chance to cause sleep.
-    type: Tweak
-  - message: changed up the lethargic sting so it has a chance to cause sleep, and
-      no longer mutes victims.
-    type: Tweak
-  - message: changed up the mute sting so it mutes the victim for 3 minutes instead
-      of 5.
-    type: Tweak
-  id: 711
-  time: '2024-12-10T21:11:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/983
-- author: hivehum
-  changes:
-  - message: The greytide virus will infect much less often.
-    type: Tweak
-  id: 712
-  time: '2024-12-10T21:11:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/981
-- author: Saeko-44
-  changes:
-  - message: aquam divinos, an upgrade to holy water for the chaplain
-    type: Add
-  - message: aqua avari, a poison for the chaplain
-    type: Add
-  id: 713
-  time: '2024-12-10T23:55:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/982
-- author: EpicToast
-  changes:
-  - message: Updated Packed, Core, Meta, and Reach! (Changes include spawning command
-      in the conference room, renaming solars, and adding a shipyard computer to the
-      QM's office. See GitHub for full changelog.)
-    type: Tweak
-  id: 714
-  time: '2024-12-11T20:11:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/989
-- author: kipdotnet
-  changes:
-  - message: Banana has been updated!
-    type: Tweak
-  id: 715
-  time: '2024-12-11T20:12:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/990
-- author: Sha-Seng
-  changes:
-  - message: brigmed beret has a little cross now hehe
-    type: Tweak
-  id: 716
-  time: '2024-12-11T20:18:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/992
-- author: suyo
-  changes:
-  - message: Fixed the mixologist chemmaster flatpack not being in your inventory
-      on spawn
-    type: Fix
-  id: 717
-  time: '2024-12-12T00:35:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/994
-- author: ultramario1998
-  changes:
-  - message: Several new bounties have been added to the Cargo computer!
-    type: Add
-  id: 718
-  time: '2024-12-12T00:38:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/986
-- author: FlippenPage
-  changes:
-  - message: Fixed Drones not being able to left click shit.
-    type: Fix
-  id: 719
-  time: '2024-12-12T00:38:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/993
-- author: honeyed-lemons
-  changes:
-  - message: PDA Messaging <3
-    type: Add
-  id: 720
-  time: '2024-12-12T01:15:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/985
-- author: formlessnameless
-  changes:
-  - message: Changelings now absorb the rest of their current body on use of Last
-      Resort, regaining biomass.
-    type: Tweak
-  - message: Halved the incubation time of the changeling egg so you come back as
-      a monkey sooner.
-    type: Tweak
-  - message: There is now a confirmation popup for Last Resort so you don't accidentally
-      explode into a slug.
-    type: Fix
-  - message: Headslugs can no longer slip. They're slugs. Have you ever seen a slug
-      slip?
-    type: Fix
-  id: 721
-  time: '2024-12-12T02:58:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/995
-- author: Darkmajia
-  changes:
-  - message: Changelings have had their evolution point economy significantly rebalanced.
-    type: Tweak
-  - message: Absorbing crewmates grants no evolution points, and absorbing changelings
-      grants fewer evolution points than before.
-    type: Remove
-  - message: Absorption grants changelings the ability to fully refund their evolution
-      points.
-    type: Add
-  id: 722
-  time: '2024-12-12T02:58:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/996
-- author: kipdotnet
-  changes:
-  - message: Tck'tcks now can swap between LV and MV power.
-    type: Tweak
-  - message: Tck'tcks now have sprites for being anchored.
-    type: Tweak
-  id: 723
-  time: '2024-12-12T20:07:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1002
-- author: formlessnameless
-  changes:
-  - message: Gas prices are both higher and lower. Frezon up to 3 spesos per mol,
-      Tritium down to 2 per mol.
-    type: Tweak
-  id: 724
-  time: '2024-12-13T10:19:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/997
-- author: formlessnameless
-  changes:
-  - message: Vent crawlers now have different vent entry times based on their size.
-    type: Tweak
-  id: 725
-  time: '2024-12-13T10:20:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1000
-- author: Darkmajia
-  changes:
-  - message: The greytide virus event has been disabled.
-    type: Remove
-  id: 726
-  time: '2024-12-13T10:19:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1010
-- author: widgetbeck
-  changes:
-  - message: Goblin event weights adjusted to make them more common.
-    type: Tweak
-  id: 727
-  time: '2024-12-13T18:48:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1008
-- author: Darkmajia
-  changes:
-  - message: Beer now makes you wuhey.
-    type: Add
-  id: 728
-  time: '2024-12-13T20:54:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1011
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: .20 rifle, .30 rifle, and .25 caseless each receive damage buffs
@@ -4096,3 +3866,211 @@
   id: 1203
   time: '2025-02-25T21:27:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1678
+- author: DinnerCalzone
+  changes:
+  - message: Convex has been derotated to reduce map maintenance load.
+    type: Remove
+  id: 1204
+  time: '2025-02-26T16:03:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1783
+- author: starlighthowls, honeyed_lemons_
+  changes:
+  - message: Tweaks Xenoarch and adds mail to cruise
+    type: Tweak
+  id: 1205
+  time: '2025-02-28T00:38:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1792
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: You can now see when someone is looking at a handheld map and can't hear
+      you.
+    type: Tweak
+  id: 1206
+  time: '2025-02-28T00:39:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1788
+- author: TheGrimbeeper
+  changes:
+  - message: You should now be able to notice something is wrong if you are being
+      irradiated
+    type: Add
+  id: 1207
+  time: '2025-02-28T00:46:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1782
+- author: Sha-Seng
+  changes:
+  - message: Reduced or removed prestige item requirements per feedback
+    type: Tweak
+  id: 1208
+  time: '2025-02-28T01:00:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1781
+- author: mqole
+  changes:
+  - message: The overall changeling population has been lightly culled.
+    type: Tweak
+  id: 1209
+  time: '2025-02-28T16:12:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1793
+- author: ruddygreat
+  changes:
+  - message: Reflective vests no longer provide their reflection while being held.
+    type: Fix
+  id: 1210
+  time: '2025-02-28T16:13:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1799
+- author: ATDoop
+  changes:
+  - message: New lobby screen art by Doop!
+    type: Add
+  id: 1211
+  time: '2025-02-28T19:29:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1801
+- author: AftrLite and the team at Impstation
+  changes:
+  - message: 'NEW MAJOR ANTAGONIST: THE COSMIC CULT. The Vast Nameless Unknown wants
+      you to uninstall reality. As a treat.'
+    type: Add
+  - message: The Silvered Rosary is now available as a Null Rod Transformation for
+      the Chaplain.
+    type: Add
+  - message: The religious supplies crate is now available from cargo.
+    type: Add
+  - message: The Entro-pop lollipop is now craftable.. Somehow.
+    type: Add
+  - message: The price of mindshield crates has been increased.
+    type: Tweak
+  - message: Bibles have been removed from mail.
+    type: Tweak
+  id: 1212
+  time: '2025-02-28T21:27:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1802
+- author: AftrLite
+  changes:
+  - message: Various tweaks to Cosmic Cult based on player feedback. Check out the
+      pull request on GitHub for full details!
+    type: Tweak
+  id: 1213
+  time: '2025-03-01T04:06:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1804
+- author: hivehum
+  changes:
+  - message: Workplace relationships are unethical and all romance has been removed
+      from the game.
+    type: Remove
+  id: 1214
+  time: '2025-03-01T04:21:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1800
+- author: dayn-e
+  changes:
+  - message: New lobby art by Six-Valentine!
+    type: Add
+  id: 1215
+  time: '2025-03-01T21:52:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1809
+- author: ruddygreat
+  changes:
+  - message: The Monument's UI should be nicer to use!
+    type: Tweak
+  id: 1216
+  time: '2025-03-01T22:19:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1807
+- author: hivehum
+  changes:
+  - message: The warden locker no longer has a brigmedic hardsuit.
+    type: Remove
+  id: 1217
+  time: '2025-03-01T23:59:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1812
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult Patch 1.02 (Experimental)
+    type: Tweak
+  id: 1218
+  time: '2025-03-02T00:33:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1813
+- author: widgetbeck
+  changes:
+  - message: Drones now spawn with a lighting RCD, a garbage bag, and a space cleaner
+      bottle.
+    type: Add
+  - message: Drones now have fewer hands - instead, their satchel and T-Ray scanner
+      spawn in their back and pocket slots respectively.
+    type: Tweak
+  - message: Drones can now use machines, and have Engineering access.
+    type: Tweak
+  - message: Drones now require 5 hours of Silicon time.
+    type: Tweak
+  id: 1219
+  time: '2025-03-02T04:57:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1720
+- author: ruddygreat
+  changes:
+  - message: The Monument can now be used by multiple cultists at the same time(!)
+    type: Tweak
+  id: 1220
+  time: '2025-03-02T21:27:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1816
+- author: Piras314, hivehum, Darkmajia
+  changes:
+  - message: Lobby art is credited at the bottom of the lobby screen.
+    type: Add
+  id: 1221
+  time: '2025-03-02T21:32:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1817
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.03 (Experimental)
+    type: Tweak
+  id: 1222
+  time: '2025-03-02T22:05:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1818
+- author: Cutinup99
+  changes:
+  - message: Warden's hardsuit has been changed, the armor is better but its slower
+    type: Tweak
+  id: 1223
+  time: '2025-03-03T01:52:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1819
+- author: Darkmajia
+  changes:
+  - message: The goliath hardsuit is no longer craftable.
+    type: Remove
+  - message: The goliath hardsuit can be found rarely on salvage.
+    type: Tweak
+  - message: The goliath and maxim hardsuits can be found rarely in grand lottery
+      crates.
+    type: Tweak
+  id: 1224
+  time: '2025-03-03T03:13:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1820
+- author: widgetbeck
+  changes:
+  - message: Drones can weld now. Oops.
+    type: Fix
+  id: 1225
+  time: '2025-03-03T08:43:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1822
+- author: Sha-Seng
+  changes:
+  - message: Greatcoat logos touched up to match the style of departmental bomber
+      logos
+    type: Tweak
+  - message: Emergency gas tanks are now properly labeled so that they fit into tank
+      harnesses
+    type: Fix
+  id: 1226
+  time: '2025-03-03T08:46:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1780
+- author: mqole
+  changes:
+  - message: more pages blagh thusd Cosmic Cult Guidebook. Read Them
+    type: Add
+  id: 1227
+  time: '2025-03-03T09:15:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1824
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.04 (Provisional)
+    type: Tweak
+  id: 1228
+  time: '2025-03-04T02:01:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1829

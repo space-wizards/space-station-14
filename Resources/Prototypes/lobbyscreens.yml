@@ -1,47 +1,83 @@
 - type: lobbyBackground
   id: Warden
   background: /Textures/LobbyScreens/warden.webp
+  # EE - Lobby Background Credits
+  name: Warden
+  artist: Solbusaur
 
 - type: lobbyBackground
   id: Pharmacy
   background: /Textures/LobbyScreens/pharmacy.webp
+  # EE - Lobby Background Credits
+  name: Pharmacy
+  artist: Solbusaur
 
 - type: lobbyBackground
   id: SSXIV
   background: /Textures/LobbyScreens/ssxiv.webp
+  # EE - Lobby Background Credits
+  name: SSXIV
+  artist: Abyssal
 
 - type: lobbyBackground
   id: Susstation
   background: /Textures/LobbyScreens/susstation.webp
+  # EE - Lobby Background Credits
+  name: Sus Station
+  artist: Alekshhh
 
 - type: lobbyBackground
   id: SkellyVsTheRev
   background: /Textures/LobbyScreens/skellyvstherev.webp
+  # EE - Lobby Background Credits
+  name: Skelly Vs The Rev
+  artist: Hannah 'FairlySadPanda' Dawson
 
 - type: lobbyBackground
   id: Doomed
   background: /Textures/LobbyScreens/doomed.webp
+  # EE - Lobby Background Credits
+  name: Doomed
+  artist: brainfood1183
 
 - type: lobbyBackground
   id: Blueprint
   background: /Textures/LobbyScreens/blueprint.webp
+  # EE - Lobby Background Credits
+  name: Blueprint
+  artist: data_redacted
 
 - type: lobbyBackground
   id: Behonker
   background: /Textures/LobbyScreens/behonker.webp
+  # EE - Lobby Background Credits
+  name: Behonker
+  artist: InCrah
 
 - type: lobbyBackground
   id: TerminalStation
   background: /Textures/LobbyScreens/terminalstation.webp
+  # EE - Lobby Background Credits
+  name: Terminal Station
+  artist: aserovich
 
 - type: lobbyBackground
   id: JustAWeekAway
   background: /Textures/LobbyScreens/justaweekaway.webp
+  # EE - Lobby Background Credits
+  name: Just A Week Away
+  artist: plantyfern
 
 - type: lobbyBackground
   id: JaniShootout
   background: /Textures/LobbyScreens/janishootout.webp
+  # EE - Lobby Background Credits
+  name: JaniShootout
+  artist: psychpsyo
 
 - type: lobbyBackground
   id: ReclaimerNuke
   background: /Textures/LobbyScreens/reclaimer-nuke.webp
+  # EE - Lobby Background Credits
+  name: Reclaimer Nuke
+  artist: GetOutMarutak

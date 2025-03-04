@@ -1,6 +1,6 @@
 - type: entity
   name: entropic blade
-  parent: [ BaseSword, BaseCosmicCultContraband ]
+  parent: [ BaseSword, TierXContraband ]
   id: SwordCosmicCult
   description: An eerie greatsword wrought of indescribable material, forcibly extruded down into reality. Your instincts tell you that it does not belong here.
   components:

@@ -1,0 +1,82 @@
+## Cosmic Cult Entropy Mote
+
+- type: entity
+  parent: [ MaterialBase, TierXContraband ]
+  id: MaterialCosmicCultEntropy
+  name: mote of entropy
+  suffix: Full
+  components:
+  - type: Stack
+    count: 6
+    stackType: Entropy
+    baseLayer: base
+    layerStates:
+    - mote
+    - mote_2
+    - mote_3
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/entropymote.rsi
+    state: mote
+    layers:
+    - state: mote
+      map: ["base"]
+  - type: Appearance
+  - type: Item
+    sprite: _Impstation/CosmicCult/Objects/entropymote.rsi
+    size: Small
+  - type: CosmicEntropyMote
+  - type: Tag
+    tags:
+      - Entropy
+
+- type: entity
+  parent: MaterialCosmicCultEntropy
+  id: MaterialCosmicCultEntropy1
+  suffix: One
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: MaterialCosmicCultEntropy
+  id: MaterialCosmicCultEntropy2
+  suffix: Two
+  components:
+  - type: Stack
+    count: 2
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: MaterialCosmicCultEntropy
+  id: MaterialCosmicCultEntropy3
+  suffix: Three
+  components:
+  - type: Stack
+    count: 3
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: MaterialCosmicCultEntropy
+  id: MaterialCosmicCultEntropy4
+  suffix: Four
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: MaterialCosmicCultEntropy
+  id: MaterialCosmicCultEntropy5
+  suffix: Five
+  components:
+  - type: Stack
+    count: 5
+
+- type: stack
+  id: Entropy
+  name: mote of entropy
+  icon: { sprite: _Impstation/CosmicCult/Objects/entropymote.rsi, state: mote }
+  spawn: MaterialCosmicCultEntropy1
+  maxCount: 6
+

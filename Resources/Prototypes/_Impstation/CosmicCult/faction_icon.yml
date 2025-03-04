@@ -1,0 +1,23 @@
+- type: factionIcon
+  id: CosmicCultIcon
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - CosmicCult
+  icon:
+    sprite: /Textures/_Impstation/CosmicCult/Icons/antag_icons.rsi
+    state: CosmicCult
+
+- type: factionIcon
+  id: CosmicCultLeadIcon
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - CosmicCult
+  icon:
+    sprite: /Textures/_Impstation/CosmicCult/Icons/antag_icons.rsi
+    state: CosmicCultLead
