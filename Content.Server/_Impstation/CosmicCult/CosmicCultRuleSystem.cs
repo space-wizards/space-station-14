@@ -291,37 +291,42 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         uid.Comp.CurrentProgress = uid.Comp.TotalEntropy + (TotalCult * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
 
         if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady)
-            if (finaleComp.AutoFinale) //if we're in auto-finale mode
+        {
+            if (!finaleComp.AutoFinaleStarted) //check if we've not already started the auto finale countdown
             {
-                if (!finaleComp.AutoFinaleStarted) //check if we've not already started it
+                finaleComp.AutoFinaleStarted = true; //set that we've started it
+                //do everything else
+
+                var timer = TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultFinaleDelaySeconds));
+                var cultistQuery = EntityQueryEnumerator<CosmicCultComponent>();
+                while (cultistQuery.MoveNext(out var cultist, out var cultistComp))
                 {
-                    finaleComp.AutoFinaleStarted = true; //set that we've started it
-                    //do everything else
-
-                    var timer = TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultFinaleDelaySeconds));
-                    var cultistQuery = EntityQueryEnumerator<CosmicCultComponent>();
-                    while (cultistQuery.MoveNext(out var cultist, out var cultistComp))
-                    {
-                        var mins = timer.Minutes;
-                        var secs = timer.Seconds;
-                        _antag.SendBriefing(cultist, Loc.GetString("cosmiccult-finale-autocall-briefing", ("minutesandseconds", $"{mins} minutes and {secs} seconds")), Color.FromHex("#4cabb3"), StageAlertSound);
-                    }
-
-                    finaleComp.ForceShowFinaleVisuals = true;
-
-                    Timer.Spawn(timer,
-                        () =>
-                        {
-                            finaleComp.AutoFinale = false;
-                            finaleComp.ForceShowFinaleVisuals = false; //unset this for sanity, it should be unnecessary due to startFinale setting finaleActive to true
-                            _cult.StartFinale((uid, finaleComp));
-                        });
+                    var mins = timer.Minutes;
+                    var secs = timer.Seconds;
+                    _antag.SendBriefing(cultist,
+                        Loc.GetString("cosmiccult-finale-autocall-briefing",
+                            ("minutesandseconds", $"{mins} minutes and {secs} seconds")),
+                        Color.FromHex("#4cabb3"),
+                        StageAlertSound);
                 }
+
+                finaleComp.ForceShowFinaleVisuals = true;
+
+                Timer.Spawn(timer,
+                    () =>
+                    {
+                        finaleComp.AutoFinale = false;
+                        finaleComp.ForceShowFinaleVisuals = false; //unset this for sanity, it should be unnecessary due to startFinale setting finaleActive to true
+                        if (!finaleComp.FinaleActive) //if the finale hasn't already been started, start it
+                        {
+                            _cult.StartFinale((uid, finaleComp));
+                        }
+                    });
             }
-            else
-            {
-                ReadyFinale(uid, finaleComp);
-            }
+
+            //set everything up for allowing cultists to either call it early or wait out the two minutes.
+            ReadyFinale(uid, finaleComp);
+        }
         else if (finaleComp.FinaleReady || finaleComp.FinaleActive)
             uid.Comp.TargetProgress = uid.Comp.CurrentProgress;
         else if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 2 && uid.Comp.CanTierUp)
@@ -332,7 +337,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             var cultistQuery = EntityQueryEnumerator<CosmicCultComponent>();
             while (cultistQuery.MoveNext(out var cultist, out var cultistComp))
             {
-                _antag.SendBriefing(cultist, Loc.GetString("cosmiccult-monument-stage3-briefing", ("time", timer.Seconds)), Color.FromHex("#4cabb3"), StageAlertSound);
+                _antag.SendBriefing(cultist, Loc.GetString("cosmiccult-monument-stage3-briefing", ("time", _config.GetCVar(ImpCCVars.CosmicCultT3RevealDelaySeconds))), Color.FromHex("#4cabb3"), StageAlertSound);
             }
 
             MonumentTier3(uid);

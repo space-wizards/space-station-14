@@ -5,6 +5,7 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CosmicFinaleComponent : Component
 {
+    //this tangle of bools isn't great but using an enum for the state can't quite capture all the info they represent - ruddygreat
     [DataField] public bool AutoFinale = true;
     [DataField] public bool AutoFinaleStarted = false;
     [DataField] public bool ForceShowFinaleVisuals = false;

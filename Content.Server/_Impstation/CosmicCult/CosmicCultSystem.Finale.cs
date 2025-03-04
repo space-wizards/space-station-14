@@ -24,7 +24,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
     private void OnInteract(Entity<CosmicFinaleComponent> uid, ref InteractHandEvent args)
     {
-        if (!HasComp<CosmicCultComponent>(args.User) && (uid.Comp.FinaleActive && !uid.Comp.AutoFinale) && !args.Handled)
+        if (!HasComp<CosmicCultComponent>(args.User) && uid.Comp.FinaleActive && !args.Handled)
         {
             uid.Comp.Occupied = true;
             var doargs = new DoAfterArgs(EntityManager, args.User, uid.Comp.InteractionTime, new CancelFinaleDoAfterEvent(), uid, uid)
@@ -95,7 +95,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         comp.FinaleReady = false;
         comp.FinaleActive = true;
-        comp.AutoFinale = false;
         monument.Enabled = true;
 
         Dirty(uid, monument);
@@ -128,7 +127,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         comp.PlayedBufferSong = false;
         comp.FinaleActive = false;
         comp.FinaleReady = true;
-        comp.AutoFinale = false;
 
         if (TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
             corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(6);
