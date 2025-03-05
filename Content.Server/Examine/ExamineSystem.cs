@@ -72,14 +72,18 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
             var text = GetExamineText(entity, player.AttachedEntity);
+            var textAccentified = new FormattedMessage();
             foreach (var msg in text.Nodes)
             {
-                if (msg.Name != null)
+                if (msg.Name is not null)
                     continue;
 
                 var nodeText = msg.Value.StringValue ?? "";
                 nodeText = _owOAccentSystem.MaybeAccentuate(nodeText);
+                textAccentified.AddText(nodeText);
             }
+
+            text = textAccentified;
 
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);

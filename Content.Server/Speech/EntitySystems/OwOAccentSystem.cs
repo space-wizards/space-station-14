@@ -35,7 +35,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public string MaybeAccentuate(string? message, float chance = 1.0f)
         {
-            if (message == null || _random.Prob(chance))
+            if (message == null || !_random.Prob(chance))
             {
                 return message ?? string.Empty;
             }
