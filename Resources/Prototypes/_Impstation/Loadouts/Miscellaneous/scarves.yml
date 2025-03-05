@@ -32,7 +32,7 @@
 - type: loadout
   id: ScarfLightGreen
   equipment:
-    neck: ClothingNeckScarfStripedLightGreen
+    neck: ClothingNeckScarfStripedLimeGreen
 
 # Orange
 - type: loadout

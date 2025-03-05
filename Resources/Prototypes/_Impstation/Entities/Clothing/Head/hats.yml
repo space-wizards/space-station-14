@@ -173,7 +173,7 @@
     sprite: _Impstation/Clothing/Head/Hats/circusclownhat.rsi
     
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretHD
   name: hospitality director's beret
   description: A beret with the service's insignia emblazoned on it. For hospitality directors that are more inclined towards style.
@@ -185,5 +185,6 @@
   - type: Tag
     tags:
     - ClothMade
+    - DroneUsable
     - HamsterWearable
     - WhitelistChameleon

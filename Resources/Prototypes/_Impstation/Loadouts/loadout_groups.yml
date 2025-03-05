@@ -286,7 +286,7 @@
   minLimit: 0
   loadouts:
   - HospitalityDirectorHead
-  - BotanistBandana
+  - HospitalityDirectorBandana
   - BartenderHead
   - HospitalityDirectorBeret
 

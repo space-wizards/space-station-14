@@ -70,6 +70,11 @@
   equipment:
     head: ClothingHeadHatHDsoft
 
+- type: loadout
+  id: HospitalityDirectorBandana
+  equipment:
+    head: ClothingHeadBandHD
+
 - type: startingGear
   id: ServiceBeret
   equipment:

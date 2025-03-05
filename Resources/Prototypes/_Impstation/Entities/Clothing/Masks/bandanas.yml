@@ -1,0 +1,14 @@
+- type: entity
+  parent: [ClothingMaskBandanaBase, BaseCommandContraband]
+  id: ClothingMaskBandHD
+  name: lead botanical bandana
+  description: A botany bandana to make you look cool and shows seniority, made from natural fibers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Bandanas/hd.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Bandanas/hd.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade

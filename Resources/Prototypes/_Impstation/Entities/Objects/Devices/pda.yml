@@ -329,7 +329,7 @@
        !type:String
        pda-hd
   - type: PdaBorderColor
-    borderColor: "#61b861"
+    borderColor: "#77b861"
     accentHColor: "#447987"
   - type: Icon
     state: pda-hd

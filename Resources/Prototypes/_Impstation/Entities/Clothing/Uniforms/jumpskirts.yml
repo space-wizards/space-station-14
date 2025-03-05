@@ -155,7 +155,7 @@
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtHD
   name: hospitality director's jumpskirt
-  description: A uniform of speldid sartorial make, fit for the lead of the service department.
+  description: A uniform of splendid sartorial make, fit for the lead of the service department.
   components:
     - type: Sprite
       sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hd_uniform.rsi

@@ -14,7 +14,7 @@
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#BCBCBC" #imp edit, grey for the greytide
+  color: "#9e9e9e" #imp edit, grey for the greytide
   weight: -11
   roles:
   # begin imp edit, service split
@@ -25,6 +25,7 @@
   #- Chef
   #- Clown
   #- Janitor
+  #- HeadOfPersonnel
   #- Lawyer
   #- Librarian
   #- Mime

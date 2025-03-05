@@ -5,6 +5,7 @@
   components:
   - type: StorageFill 
     contents:
+      - id: ClothingHeadBandHD
       - id: ClothingHeadHatBeretHD
       - id: ClothingHeadHatHDsoft
       - id: ClothingUniformJumpsuitHDTurtle
