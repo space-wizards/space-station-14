@@ -157,7 +157,7 @@
         orGroup: HoSJumpskirt
       - id: ClothingUniformJumpskirtHoSPro
         orGroup: HosJumpskirt
-      - id: ClothingOuterWinterHoSUnarmored
+      - id: ClothingOuterWinterHoS
 
 - type: entity
   id: DresserQuarterMasterFilled
