@@ -33,6 +33,7 @@
 
 - Medbay: Chem-Masters sentient component? Smart Fridge?
 - Morgue: Give morgues a spooky speaking component? Might make a good general PR, actually.
+- Doctors' Nap Room station beacon: Make sure it's right
 
 - Engineering: Make sure all the solars rooms have their stuff
 - Figure out how much power the AMEs generate, how much the tesla/singulo generates, how much solars generate,
@@ -62,7 +63,12 @@
 -	Make flare spent
 -	Make corpse rotten
 --		And add ammonia gas?
+--		Make corpse exist even
+--			Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
+				shoes, bling, ID computer board in pocket
+-	Put more stuff in backpack
 -	Add diary page to room with welder
+-	Empty welder of fuel
 
 - Coms: Do the camera monitors work? Do the camera servers work?
 - Extra encryption keys somewhere?
@@ -72,10 +78,23 @@
 - ...and figure out the 'flavor' tag in the component for sentience
 - Mime's too
 - Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
+/* - Re-label the quartermaster's quarters that belong in the quartermaster's quarters */
+- Re-label (and add) station beacon
+/* - Fill gun safe? Or just get rid of it? And rename. */
+- Make sure QM has perms for the safe
 
 - Engineering: Give Command, Security encryption keys to CE
 
 - Evac: Make the shuttle like the Amogus lobby.
+-	Rename + fill ore crates
+-	Decals, of course
+
+/* - EVA: Move it to the left a bit */
+
+- Security: Make the "Sus Forms" in the unused room
+--	"Crewmember name: Crewmember color: Amount of susness (1 2 3 4 5 6 7 8 9 10)
+		Reason for suspicion: -Vented -Faked a task -Walked away from a body -Didn't fix lights -I just don't like them"
+		"Are they also a baka? *Yes/*No
 
 
 - Wall maps
@@ -116,6 +135,7 @@
 - Mailing units
 - Fax machines - and make sure they have the right names or whatever
 - Evac countdown monitors
+- Name buttons and levers(?) for clarity
 
 - Make the station move forward!
 
@@ -132,8 +152,33 @@
 
 - Job numbers in the prototype file
 
+==
+What I currently have left:
+-Finish AI
+-TEG
+-Psych
+-Finish Viro
+-Dorms/Cryopods
+-Solars
+-Evac Shuttle
+-Latejoin shuttle place?
+--Can I change the arrivals shuttle?
+-Electrical wiring
+--Wanna try to make it especially easy to sabotage lights
+-Gas pipes
+-Disposal/Mail/Toilet networks
+-Lighting
+-Decals
+-Various hooking up levers, buttons, airlocks
+-All the bits and pieces above that this doesn't cover
+==
+
 THINGS I COULD MAKE:
 - Plastic table
 - Round table ends
 - Random wall girder things
 - Wood but it's darker (and lighter?)
+- Feather, whip for prosecutor - and defense/prosecution signs?
+-- Also a toupee for when they're feeling payne.
+-- And a dang gavel
+- Huge thrusters?
