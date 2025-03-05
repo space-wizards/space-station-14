@@ -62,9 +62,9 @@ namespace Content.Client.Administration.UI.Bwoink
                 var sb = new StringBuilder();
 
                 if (info.Connected)
-                    sb.Append('●');
+                    sb.Append(info.ActiveThisRound ? '⚫' : '◐');
                 else
-                    sb.Append(info.ActiveThisRound ? '○' : '·');
+                    sb.Append(info.ActiveThisRound ? '⭘' : '·');
 
                 sb.Append(' ');
                 if (AHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
