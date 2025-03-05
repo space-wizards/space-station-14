@@ -678,3 +678,444 @@ accent-gray-words-replace-226 = oum
 
 accent-gray-words-227 = tesloose
 accent-gray-words-replace-227 = tellzoos
+
+accent-gray-words-228 = revolution
+accent-gray-words-replace-228 = uneon
+
+accent-gray-words-229 = revolutionary
+accent-gray-words-replace-229 = uneoon
+
+accent-gray-words-230 = revolutionaries
+accent-gray-words-replace-230 = uneoons
+
+accent-gray-words-231 = union
+accent-gray-words-replace-231 = umiyum
+
+accent-gray-words-232 = ghost
+accent-gray-words-replace-232 = bampi
+
+accent-gray-words-233 = ghosts
+accent-gray-words-replace-233 = bampis
+
+accent-gray-words-234 = blob
+accent-gray-words-replace-234 = sprodi
+
+accent-gray-words-235 = blobs
+accent-gray-words-replace-235 = sprodis
+
+accent-gray-words-236 = cult
+accent-gray-words-replace-236 = yosh
+
+accent-gray-words-237 = ratvar
+accent-gray-words-replace-237 = ginyosh
+
+accent-gray-words-238 = entropy
+accent-gray-words-replace-238 = wuboo
+
+accent-gray-words-239 = cultist
+accent-gray-words-replace-239 = yash
+
+accent-gray-words-240 = cultists
+accent-gray-words-replace-240 = yashi
+
+accent-gray-words-241 = cults
+accent-gray-words-replace-241 = yoshs
+
+accent-gray-words-242 = wizard
+accent-gray-words-replace-242 = khonii
+
+accent-gray-words-243 = wizards
+accent-gray-words-replace-243 = khoniis
+
+accent-gray-words-244 = zombie
+accent-gray-words-replace-244 = dedii
+
+accent-gray-words-245 = undead
+accent-gray-words-replace-245 = sombii
+
+accent-gray-words-246 = kodepiiae
+accent-gray-words-replace-246 = birtee
+
+accent-gray-words-247 = boob
+accent-gray-words-replace-247 = knaturel
+
+accent-gray-words-248 = boobs
+accent-gray-words-replace-248 = knaturels
+
+accent-gray-words-249 = ass
+accent-gray-words-replace-249 = duu
+
+accent-gray-words-250 = asses
+accent-gray-words-replace-250 = duus
+
+accent-gray-words-251 = asshole
+accent-gray-words-replace-251 = duudar
+
+accent-gray-words-252 = dickhead
+accent-gray-words-replace-252 = deekdar
+
+accent-gray-words-253 = head
+accent-gray-words-replace-253 = dar
+
+accent-gray-words-254 = changeling
+accent-gray-words-replace-254 = murph
+
+accent-gray-words-255 = ling
+accent-gray-words-replace-255 = ebaade
+
+accent-gray-words-256 = shapeshifter
+accent-gray-words-replace-256 = ameluguu
+
+accent-gray-words-257 = changelings
+accent-gray-words-replace-257 = murphs
+
+accent-gray-words-258 = lings
+accent-gray-words-replace-258 = ebaades
+
+accent-gray-words-259 = shapeshifters
+accent-gray-words-replace-259 = ameluguus
+
+accent-gray-words-260 = heretic
+accent-gray-words-replace-260 = raasel
+
+accent-gray-words-261 = heretics
+accent-gray-words-replace-261 = raasels
+
+accent-gray-words-262 = vampire
+accent-gray-words-replace-262 = whulfi
+
+accent-gray-words-263 = vampires
+accent-gray-words-replace-263 = whulfis
+
+accent-gray-words-264 = werewolf
+accent-gray-words-replace-264 = baat
+
+accent-gray-words-265 = werewolfs
+accent-gray-words-replace-265 = baats
+
+accent-gray-words-266 = goblin
+accent-gray-words-replace-266 = dooeiti
+
+accent-gray-words-267 = goblins
+accent-gray-words-replace-267 = dooeitis
+
+accent-gray-words-268 = diona
+accent-gray-words-replace-268 = fuuna
+
+accent-gray-words-269 = dionas
+accent-gray-words-replace-269 = fuunas
+
+accent-gray-words-270 = gastropod
+accent-gray-words-replace-270 = wiite
+
+accent-gray-words-271 = gastropods
+accent-gray-words-replace-271 = wiites
+
+accent-gray-words-272 = decapoid
+accent-gray-words-replace-272 = moluu
+
+accent-gray-words-273 = decapoids
+accent-gray-words-replace-273 = moluus
+
+accent-gray-words-274 = vox
+accent-gray-words-replace-274 = sqak
+
+accent-gray-words-275 = voxs
+accent-gray-words-replace-275 = sqaks
+
+accent-gray-words-276 = dwarf
+accent-gray-words-replace-276 = erfmii
+
+accent-gray-words-277 = dwarves
+accent-gray-words-replace-277 = erfmiis
+
+accent-gray-words-278 = dwarfs
+accent-gray-words-replace-278 = erfmiis
+
+accent-gray-words-279 = arachnid
+accent-gray-words-replace-279 = beiti
+
+accent-gray-words-280 = arachnids
+accent-gray-words-replace-280 = beitis
+
+accent-gray-words-281 = thaven
+accent-gray-words-replace-281 = hiephes
+
+accent-gray-words-282 = thavens
+accent-gray-words-replace-282 = hiephes
+
+accent-gray-words-283 = anomalocarid
+accent-gray-words-replace-283 = pedii
+
+accent-gray-words-284 = anomalocarids
+accent-gray-words-replace-284 = pediis
+
+accent-gray-words-285 = kodepiiaes
+accent-gray-words-replace-285 = birtees
+
+accent-gray-words-286 = squid
+accent-gray-words-replace-286 = birtee
+
+accent-gray-words-287 = squids
+accent-gray-words-replace-287 = birtees
+
+accent-gray-words-288 = shrimp
+accent-gray-words-replace-288 = pedii
+
+accent-gray-words-289 = shrimps
+accent-gray-words-replace-289 = pediis
+
+accent-gray-words-290 = clockwork
+accent-gray-words-replace-290 = ginuu
+
+accent-gray-words-291 = cosmic
+accent-gray-words-replace-291 = wubii
+
+accent-gray-words-292 = service
+accent-gray-words-replace-292 = phiiga
+
+accent-gray-words-293 = HoP
+accent-gray-words-replace-293 = phiidar
+
+accent-gray-words-294 = officer
+accent-gray-words-replace-294 = pooka
+
+accent-gray-words-295 = engineer
+accent-gray-words-replace-295 = tekta
+
+accent-gray-words-296 = engineers
+accent-gray-words-replace-296 = tektas
+
+accent-gray-words-297 = engineering
+accent-gray-words-replace-297 = tuktu
+
+accent-gray-words-298 = chief
+accent-gray-words-replace-298 = dar-wa
+
+accent-gray-words-299 = medical
+accent-gray-words-replace-299 = pofin
+
+accent-gray-words-300 = CMO
+accent-gray-words-replace-300 = pofidar
+
+accent-gray-words-301 = CE
+accent-gray-words-replace-301 = tekdar
+
+accent-gray-words-302 = QM
+accent-gray-words-replace-302 = meidar
+
+accent-gray-words-303 = security
+accent-gray-words-replace-303 = tobbi
+
+accent-gray-words-304 = HoS
+accent-gray-words-replace-304 = tobdar
+
+accent-gray-words-305 = admin
+accent-gray-words-replace-305 = leelo
+
+accent-gray-words-306 = assistant
+accent-gray-words-replace-306 = schewii
+
+accent-gray-words-307 = brig
+accent-gray-words-replace-307 = breeg
+
+accent-gray-words-308 = armory
+accent-gray-words-replace-308 = haarmoni
+
+accent-gray-words-309 = jail
+accent-gray-words-replace-309 = jieel
+
+accent-gray-words-310 = science
+accent-gray-words-replace-310 = wabatwee
+
+accent-gray-words-311 = RD
+accent-gray-words-replace-311 = wabadar
+
+accent-gray-words-312 = rock
+accent-gray-words-replace-312 = ku
+
+accent-gray-words-313 = genetic
+accent-gray-words-replace-313 = tiinae
+
+accent-gray-words-314 = genetics
+accent-gray-words-replace-314 = tiinaes
+
+accent-gray-words-315 = AI
+accent-gray-words-replace-315 = beepdar
+
+accent-gray-words-316 = TEG
+accent-gray-words-replace-316 = nofum
+
+accent-gray-words-317 = mime
+accent-gray-words-replace-317 = oobiett
+
+accent-gray-words-318 = chef
+accent-gray-words-replace-318 = berguh
+
+accent-gray-words-319 = supermatter
+accent-gray-words-replace-319 = vroku
+
+accent-gray-words-320 = singularity
+accent-gray-words-replace-320 = suuki
+
+accent-gray-words-321 = geras
+accent-gray-words-replace-321 = sqoni
+
+accent-gray-words-322 = bro
+accent-gray-words-replace-322 = ugg
+
+accent-gray-words-323 = bros
+accent-gray-words-replace-323 = ugghs
+
+accent-gray-words-324 = drone
+accent-gray-words-replace-324 = glormii
+
+accent-gray-words-325 = drones
+accent-gray-words-replace-325 = glormiis
+
+accent-gray-words-326 = money
+accent-gray-words-replace-326 = blin
+
+accent-gray-words-327 = speso
+accent-gray-words-replace-327 = bliien
+
+accent-gray-words-328 = spesos
+accent-gray-words-replace-328 = bliiens
+
+accent-gray-words-329 = atmos
+accent-gray-words-replace-329 = tekti
+
+accent-gray-words-330 = atmospheric
+accent-gray-words-replace-330 = tektii
+
+accent-gray-words-331 = botany
+accent-gray-words-replace-331 = sipuu
+
+accent-gray-words-332 = botanist
+accent-gray-words-replace-332 = phii-sip
+
+accent-gray-words-333 = anomaly
+accent-gray-words-replace-333 = waba-ki
+
+accent-gray-words-334 = anomalies
+accent-gray-words-replace-334 = waba-kis
+
+accent-gray-words-335 = apid
+accent-gray-words-replace-335 = buuzi
+
+accent-gray-words-336 = bee
+accent-gray-words-replace-336 = buuz
+
+accent-gray-words-337 = janitor
+accent-gray-words-replace-337 = yooni
+
+accent-gray-words-338 = rocks
+accent-gray-words-replace-338 = kus
+
+accent-gray-words-339 = doctor
+accent-gray-words-replace-339 = pofii
+
+accent-gray-words-340 = scientist
+accent-gray-words-replace-340 = wabi
+
+accent-gray-words-341 = salvage
+accent-gray-words-replace-341 = meiku
+
+accent-gray-words-342 = salvager
+accent-gray-words-replace-342 = kuboo
+
+accent-gray-words-343 = brigmed
+accent-gray-words-replace-343 = pobi
+
+accent-gray-words-344 = brigmedic
+accent-gray-words-replace-344 = pobee
+
+accent-gray-words-345 = detective
+accent-gray-words-replace-345 = serlok
+
+accent-gray-words-346 = warden
+accent-gray-words-replace-346 = haardar
+
+accent-gray-words-347 = scientists
+accent-gray-words-replace-347 = wabis
+
+accent-gray-words-348 = courier
+accent-gray-words-replace-348 = meil
+
+accent-gray-words-349 = psychologist
+accent-gray-words-replace-349 = pofink
+
+accent-gray-words-350 = psychology
+accent-gray-words-replace-350 = pofinki
+
+accent-gray-words-351 = psych
+accent-gray-words-replace-351 = fink
+
+accent-gray-words-352 = lawyer
+accent-gray-words-replace-352 = bruedin
+
+accent-gray-words-353 = bar
+accent-gray-words-replace-353 = sipsu
+
+accent-gray-words-354 = bartender
+accent-gray-words-replace-354 = sipmou
+
+accent-gray-words-355 = chaplain
+accent-gray-words-replace-355 = bibbi
+
+accent-gray-words-356 = librarian
+accent-gray-words-replace-356 = deol
+
+accent-gray-words-357 = officers
+accent-gray-words-replace-357 = pookas
+
+accent-gray-words-358 = brigmeds
+accent-gray-words-replace-358 = pobis
+
+accent-gray-words-359 = brigmedics
+accent-gray-words-replace-359 = pobees
+
+accent-gray-words-360 = salvagers
+accent-gray-words-replace-360 = kuboos
+
+accent-gray-words-361 = janitors
+accent-gray-words-replace-361 = yoonis
+
+accent-gray-words-362 = couriers
+accent-gray-words-replace-362 = meils
+
+accent-gray-words-363 = wardens
+accent-gray-words-replace-363 = haardars
+
+accent-gray-words-364 = detectives
+accent-gray-words-replace-364 = serloks
+
+accent-gray-words-365 = bartenders
+accent-gray-words-replace-365 = sipmous
+
+accent-gray-words-366 = lawyers
+accent-gray-words-replace-366 = bruedin
+
+accent-gray-words-367 = psychologists
+accent-gray-words-replace-367 = pofinks
+
+accent-gray-words-368 = librarians
+accent-gray-words-replace-368 = deols
+
+accent-gray-words-369 = chaplains
+accent-gray-words-replace-369 = bibbis
+
+accent-gray-words-370 = apids
+accent-gray-words-replace-370 = buuziz
+
+accent-gray-words-371 = bees
+accent-gray-words-replace-371 = buuzz
+
+accent-gray-words-372 = thieves
+accent-gray-words-replace-372 = orfi
+
+accent-gray-words-373 = redead
+accent-gray-words-replace-373 = dadit
+
+accent-gray-words-374 = thief
+accent-gray-words-replace-374 = orf
