@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Calecute
-  changes:
-  - message: wide attacks that deal blunt damage will now deal stamina damage.
-    type: Fix
-  id: 7539
-  time: '2024-10-20T03:41:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32422
 - author: Thatonestomf
   changes:
   - message: Mute toxin now mutes even after is metabolized, similar to glue
@@ -3907,3 +3900,11 @@
   id: 8038
   time: '2025-03-05T09:14:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33185
+- author: Boaz1111, Ktyria
+  changes:
+  - message: 'Added five new scars for humans and dwarves: Three for the face, two
+      for the chest.'
+    type: Add
+  id: 8039
+  time: '2025-03-05T10:26:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35644
