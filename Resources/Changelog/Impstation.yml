@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Sterile swabs are now able to crafted from the service techfab.
-    type: Add
-  - message: The rolling pin's service techfab recipe now better reflects its crafting
-      menu recipe.
-    type: Tweak
-  id: 732
-  time: '2024-12-14T13:53:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1017
 - author: Darkmajia
   changes:
   - message: The brigmedic's hardsuit slows its user down less, and its resistances
@@ -4064,3 +4054,11 @@
   id: 1231
   time: '2025-03-05T13:42:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1823
+- author: Darkmajia
+  changes:
+  - message: The proto-kinetic accelerator makes a clicking sound if it's not ready
+      to fire.
+    type: Add
+  id: 1232
+  time: '2025-03-05T14:00:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1831
