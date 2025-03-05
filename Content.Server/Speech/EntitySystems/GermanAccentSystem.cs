@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class GermanAccentSystem : EntitySystem, IAccentSystem
+public sealed class GermanAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;

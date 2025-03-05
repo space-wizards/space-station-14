@@ -14,8 +14,6 @@ namespace Content.Server.Examine
     {
         [Dependency] private readonly VerbSystem _verbSystem = default!;
 
-        private readonly RandomAccentuator _randomAccentuator = new();
-
         private readonly FormattedMessage _entityNotFoundMessage = new();
         private readonly FormattedMessage _entityOutOfRangeMessage = new();
 
@@ -73,7 +71,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
             var text = GetExamineText(entity, player.AttachedEntity);
-            text = _randomAccentuator.MaybeAccentuate(text);
+            text = RandomAccentuator.MaybeAccentuate(text);
 
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);

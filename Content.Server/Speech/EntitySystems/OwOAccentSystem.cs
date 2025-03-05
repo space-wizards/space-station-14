@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed class OwOAccentSystem : EntitySystem, IAccentSystem
+    public sealed class OwOAccentSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
