@@ -1,0 +1,34 @@
+- type: entity
+  name: ascendant's dendrite
+  parent: BaseAnimalOrgan
+  id: AscendantDendrite
+  description: A bundle of semi-ephemeral tissue extracted from the unravelling husk of an astral ascendant. A faint malign light pulses within.
+  components:
+  - type: Item
+    size: Normal
+  - type: Food
+  - type: FlavorProfile
+    flavors:
+      - strange
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/ascendantorgan.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fresium
+          Quantity: 15
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fresium
+        Quantity: 10

@@ -9,7 +9,6 @@
   - type: Input
     context: "ghost"
   - type: Spectral
-  - type: CosmicAstralBody
   - type: MovementSpeedModifier
     baseWalkSpeed: 6
     baseSprintSpeed: 6
@@ -50,6 +49,7 @@
        isLooped: true
        reverseWhenFinished: true
 
+### ASTRAL PROJECTION
 - type: entity
   parent:
   - Incorporeal
@@ -112,3 +112,144 @@
   - type: ActionGrant
     actions:
     - ActionCosmicReturn
+
+
+### ASCENDANT EVENTSPAWN
+- type: entity
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  id: MobCosmicRogueAscended
+  name: astral ascended
+  suffix: EVENTSPAWN
+  description: An entity from beyond the borders of bluespace. Its contours continuously blur and blend together, unnerving to the eye.
+  components:
+  - type: Bloodstream
+    bloodMaxVolume: 650
+    bloodReagent: Fresium
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-astral-ascended-name
+    description: ghost-role-information-astral-ascended-description
+    rules: ghost-role-information-astral-ascended-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: MobMover
+  - type: Input
+    context: "ghost"
+  - type: MovementIgnoreGravity
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 5
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Mobs/astralrogue.rsi
+    noRot: true
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: underlay
+      shader: unshaded
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: base
+      shader: unshaded
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: underlay
+        BaseUnshaded: base
+      Critical:
+        BaseUnshaded: base-crit
+      Dead:
+        Base: underlay-off
+        BaseUnshaded: base-dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: NoSlip
+  - type: Eye
+    visMask:
+      - Normal
+      - Ghost
+      - 777
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Speech
+    speechVerb: Ghost
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2
+    energy: 3
+    softness: 1
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+     - !type:FadeBehaviour
+       interpolate: Linear
+       minDuration: 5.5
+       maxDuration: 5.5
+       startValue: 1
+       endValue: 3
+       property: Energy
+       enabled: true
+       isLooped: true
+       reverseWhenFinished: true
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: Puller
+    needsHands: false
+  - type: MobState
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritLastWords
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      450: Critical
+      500: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      250: 0.7
+      400: 0.5
+  - type: Absorbable # imp
+    biomassRestored: 0.8
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDragon
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-astral-ascended
+    interactFailureString: petting-failure-astral-ascended
+    interactFailureSound:
+      path: /Audio/_Impstation/CosmicCult/cosmic_unwield.ogg
+    soundPerceivedByOthers: false
+  - type: RandomMetadata
+    nameSegments:
+    - ascendant_names
+    - ascendant_titles
+  - type: Flammable
+    damage:
+      types: {}
+  - type: StatusEffects # Overwriting status effects
+    allowed:
+    - SlowedDown
+    - RadiationProtection
+    - Adrenaline
