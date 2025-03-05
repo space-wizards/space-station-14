@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Resources/Maps/_Impstation/Shuttles/lunaevac.yml
+          emergencyShuttlePath: /Maps/_Impstation/Shuttles/lunaevac.yml
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargojeep_luna.yml
         - type: StationJobs
