@@ -87,8 +87,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly ILogManager _logman = default!;
-    [Dependency] private readonly CosmicCultSystem _cult = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
@@ -308,8 +306,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 #endif
 
         PercentConverted = Math.Round((double) (100 * TotalCult) / TotalCrew);
-        //todo early call the shuttle if totalCult - dead cultists == 0?
-        //subscribe to onMobStateChanged for the cultComp to figure out when a cultist is dead
 
         //this can probably be somewhere else but
         UpdateMonumentReqsForTier(uid, CurrentTier);
