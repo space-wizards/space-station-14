@@ -10364,6 +10364,7 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: NavMap
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 15607
@@ -12734,6 +12735,13 @@ entities:
       parent: 2
 - proto: AirlockEngineeringLocked
   entities:
+  - uid: 362
+    components:
+    - type: MetaData
+      name: airlock (Tech Vault)
+    - type: Transform
+      pos: 34.5,-5.5
+      parent: 2
   - uid: 1186
     components:
     - type: MetaData
@@ -13992,7 +14000,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -291831.53
+      secondsUntilStateChange: -292255.38
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -78171,11 +78179,6 @@ entities:
       parent: 2
 - proto: HighSecCommandLocked
   entities:
-  - uid: 362
-    components:
-    - type: Transform
-      pos: 34.5,-5.5
-      parent: 2
   - uid: 537
     components:
     - type: MetaData
@@ -91149,20 +91152,10 @@ entities:
       parent: 2
 - proto: SpawnMobDrone
   entities:
-  - uid: 9013
-    components:
-    - type: Transform
-      pos: 35.5,-6.5
-      parent: 2
   - uid: 12670
     components:
     - type: Transform
       pos: 36.5,-6.5
-      parent: 2
-  - uid: 15307
-    components:
-    - type: Transform
-      pos: 37.5,-6.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
