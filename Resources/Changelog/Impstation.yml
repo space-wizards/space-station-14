@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: The brigmedic's hardsuit slows its user down less, and its resistances
-      have received adjustment.
-    type: Tweak
-  id: 733
-  time: '2024-12-14T13:56:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1021
 - author: Saeko-44
   changes:
   - message: Added three new vessels able to be purchased from the shipyard console.
@@ -4062,3 +4054,10 @@
   id: 1232
   time: '2025-03-05T14:00:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1831
+- author: RosySaturniidae
+  changes:
+  - message: One new figurine! I'm not sure why NT made this one.
+    type: Add
+  id: 1233
+  time: '2025-03-05T22:20:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1843
