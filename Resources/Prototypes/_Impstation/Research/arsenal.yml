@@ -12,17 +12,3 @@
   recipeUnlocks:
   - FullAutoConversionKit
   - HyperBurstConversionKit
-
-# Tier 2
-
-- type: technology
-  id: EnhancedSecurityDevices
-  name: research-technology-enhanced-security-devices
-  icon:
-    sprite: _Impstation/Objects/Tools/pribarplus.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 2
-  cost: 3000 # Cheap because it only does one thing right now - compare to Advanced Tools which is 10000
-  recipeUnlocks:
-  - PRIbarPlusConversionKit
