@@ -386,6 +386,25 @@
   - ClownShoesExpert
 
 - type: loadoutGroup
+  id: ChaplainBook
+  name: loadout-group-chaplain-books
+  minLimit: 1
+  loadouts:
+  - ChaplainBookBible
+  - ChaplainBookQuran
+  - ChaplainBookTanakh
+  - ChaplainBookScroll
+  - ChaplainBookTablet
+  - ChaplainBookGreybible
+  - ChaplainBookKojiki
+  - ChaplainBookTao
+  - ChaplainBookGrimoire
+  - ChaplainBookETB
+  - ChaplainBookDiscordia
+  - ChaplainBookUnitology
+  - ChaplainBookBibble
+
+- type: loadoutGroup
   id: JanitorMask
   name: loadout-group-janitor-mask
   minLimit: 0
@@ -629,6 +648,7 @@
   loadouts:
   - LeatherShoes
   - CourierWinterBoots
+
 # engineering
 
 - type: loadoutGroup
