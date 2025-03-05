@@ -187,6 +187,73 @@
     ears: ClothingHeadsetCargo
     #eyes:
 
+- type: startingGear #science
+  id: StartingGearApidScientist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    id: SciencePDA
+    belt: ClothingBeltUtilityBlackFilled
+    outerClothing: ClothingOuterWinterSci
+    #head:
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+
+- type: startingGear #janitor
+  id: StartingGearApidJanitor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    id: JanitorPDA
+    belt: ClothingBeltJanitorFilled
+    outerClothing: ClothingOuterWinterJani
+    head: ClothingHeadHatPurplesoftFlipped
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesGlassesChemical
+  inhand:
+  - AdvMopItem
+
+- type: startingGear #AA
+  id: StartingGearApidAdministrativeAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAdminAssistant
+    id: AdminAssistantPDA
+    belt: ClothingBeltPaperworkFilled
+    outerClothing: ClothingOuterWinterColorBlue
+    #head:
+    pocket1: EmergencyOxygenTankCommandFilled
+    pocket2: ClothingMaskBreathCommand
+    ears: ClothingHeadsetAdminAssistant
+    eyes: ClothingEyesHudCommand
+
+- type: startingGear #Chaplain
+  id: StartingGearApidChaplain
+  equipment:
+    jumpsuit: ClothingUniformSkirtDruid
+    id: ChaplainPDA
+    belt: Beeble #thusd beeble
+    #outerClothing: ClothingOuterCoatGentle
+    head: ClothingHeadHatFlowerWreath
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+    #eyes:
+
+- type: startingGear #Salvage
+  id: StartingGearApidSalvageSpecialist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    id: SalvagePDA
+    belt: ClothingBeltSalvageWebbingApid
+    outerClothing: ClothingOuterHardsuitSpatio
+    #head: 
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: SurvivalKnife
+    ears: ClothingHeadsetCargo
+    eyes: ClothingEyesGlassesMeson
+
 # command
 
 - type: loadoutGroup
