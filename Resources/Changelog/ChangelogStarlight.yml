@@ -3843,3 +3843,18 @@ Entries:
   id: 532
   time: '2025-03-04T15:32:02.662189+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed antagonists missing.
+    type: Fix
+  id: 533
+  time: '2025-03-05T09:15:23.519876+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed antagonists ban. (Outdated, Not supported by antag selection
+      system).
+    type: Remove
+  id: 534
+  time: '2025-03-05T09:15:54.452589+00:00'
+  url: 'null'

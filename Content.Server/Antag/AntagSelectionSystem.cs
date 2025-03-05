@@ -433,10 +433,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (ent.Comp.SelectedSessions.Contains(session))
             return false;
-        
-        var roleBans = _banManager.GetRoleBans(session.UserId);
-        if (roleBans != null && !def.PrefRoles.Select(role => role.ToString()).Any(role => roleBans.Contains(role)))
-            return false;
 
         mind ??= session.GetMind();
 
