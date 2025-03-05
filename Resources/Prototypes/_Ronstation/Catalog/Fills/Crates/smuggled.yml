@@ -1,7 +1,7 @@
 - type: entity
   id: ArmorySmuggledWeaponry
   parent: CratePrivateSecure
-  name: unmarked crate
+  name: unmarked weapons crate
   description: An unmarked crate. The identification numbers have been scratched off.
   suffix: smuggled weaponry
   components:
