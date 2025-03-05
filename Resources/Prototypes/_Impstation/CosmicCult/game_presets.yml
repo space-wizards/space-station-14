@@ -13,3 +13,35 @@
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
     - BasicStationEventScheduler
+
+- type: gamePreset #Runs Cosmic Cult but shows "Secret" in lobby.
+  id: SecretCosmicCult
+  alias:
+    - secretcosmic
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  cooldown: 1
+  rules:
+    - CosmicCult
+    - SubGamemodesRule
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: CrossfireChaos #For Admin Use: Cult + Nukeops + SpyVsSpy
+  alias:
+  - crossfire
+  name: crossfirechaos-title
+  description: crossfirechaos-description
+  showInVote: false
+  rules:
+    - CosmicCult
+    - Nukeops
+    - SpyVsSpy
+    - MeteorSwarmScheduler
+    - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation

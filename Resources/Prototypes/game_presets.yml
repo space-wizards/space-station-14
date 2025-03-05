@@ -60,6 +60,7 @@
   description: aller-at-once-description
   showInVote: false #Please god dont do this
   rules:
+    - CosmicCult
     - Nukeops
     - Traitor
     - Revolutionary

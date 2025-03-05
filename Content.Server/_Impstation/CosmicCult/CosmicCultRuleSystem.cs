@@ -109,6 +109,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<CosmicCultComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<CosmicMarkGodComponent, ComponentInit>(OnGodSpawn);
+        SubscribeLocalEvent<CosmicCultComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -152,7 +153,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             }
         }
     }
-
     private static void SetWinType(Entity<CosmicCultRuleComponent> uid, WinType type)
     {
         if (uid.Comp.WinLocked)
@@ -172,6 +172,19 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         while (query.MoveNext(out var uid, out _, out var cultRule, out _))
         {
             OnRoundEnd((uid, cultRule)); //If so, let's consult our Winconditions and set an appropriate WinType.
+        }
+    }
+
+    private void OnMobStateChanged(Entity<CosmicCultComponent> uid, ref MobStateChangedEvent args)
+    {
+        var cultistsAlive = EntityQuery<CosmicCultComponent, MobStateComponent>(true)
+            .Any(op => op.Item2.CurrentState == MobState.Alive && op.Item1.Running); //Are there cultists alive?
+        if (cultistsAlive)
+            return;
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var ruleUid, out _, out var ruleComp, out _))
+        {
+            OnRoundEnd((ruleUid, ruleComp));
         }
     }
 
@@ -210,6 +223,9 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             .Any(op => op.Item2.CurrentState == MobState.Alive && op.Item1.Running);
         if (cultistsAlive)
             return; // There's still cultists alive! stop checking stuff
+
+        _roundEnd.DoRoundEndBehavior(uid.Comp.RoundEndBehavior, uid.Comp.EvacShuttleTime, uid.Comp.RoundEndTextSender, uid.Comp.RoundEndTextShuttleCall, uid.Comp.RoundEndTextAnnouncement);
+        uid.Comp.RoundEndBehavior = RoundEndBehavior.Nothing; // prevent this being called multiple times.
 
         if (TotalCult == 0)
             SetWinType(uid, WinType.CrewComplete); // No cultists registered! That means everyone got deconverted

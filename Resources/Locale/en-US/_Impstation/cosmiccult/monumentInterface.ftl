@@ -11,6 +11,7 @@ monument-interface-entropy-infused-label = Infused:
 monument-interface-entropy-value = {$infused} Entropy
 monument-interface-entropy-available-label = Available for use:
 monument-interface-entropy-next-stage-title = Entropy till next Stage:
+monument-interface-entropy-seperator = OR
 monument-interface-entropy-crew-convert-title = Converts till next Stage:
 
 # Glyphs
