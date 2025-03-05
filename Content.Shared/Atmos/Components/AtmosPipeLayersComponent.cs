@@ -21,7 +21,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Only pipes on the same layer can connect with each other.
     /// </summary>
     [DataField("pipeLayer"), AutoNetworkedField]
-    public int CurrentPipeLayer = 0;
+    public byte CurrentPipeLayer = 0;
 
     /// <summary>
     /// An array containing the state names of the different pipe layers.

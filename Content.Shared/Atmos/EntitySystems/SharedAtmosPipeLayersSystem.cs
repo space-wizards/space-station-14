@@ -90,7 +90,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (ent.Comp.PipeLayersLocked)
             return;
 
-        ent.Comp.CurrentPipeLayer = Math.Clamp(layer, 0, AtmosPipeLayersComponent.MaxPipeLayer);
+        ent.Comp.CurrentPipeLayer = (byte)Math.Clamp(layer, 0, AtmosPipeLayersComponent.MaxPipeLayer);
         Dirty(ent);
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))

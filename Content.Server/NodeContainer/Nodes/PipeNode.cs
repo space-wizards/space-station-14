@@ -25,7 +25,7 @@ namespace Content.Server.NodeContainer.Nodes
         ///     The layer to which the pipe node is assigned
         /// </summary>
         [DataField]
-        public int CurrentPipeLayer = 0;
+        public byte CurrentPipeLayer = 0;
 
         /// <summary>
         ///     The *current* pipe directions (accounting for rotation)
