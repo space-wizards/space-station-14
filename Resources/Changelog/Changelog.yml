@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: When MMIs and positronic brains are inserted into plushies, their names
-      will be updated to the plushies name (Exactly the same way pAIs do).
-    type: Add
-  id: 7538
-  time: '2024-10-20T02:46:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32914
-- author: Calecute
-  changes:
-  - message: wide attacks that deal blunt damage will now deal stamina damage.
-    type: Fix
-  id: 7539
-  time: '2024-10-20T03:41:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32422
 - author: Thatonestomf
   changes:
   - message: Mute toxin now mutes even after is metabolized, similar to glue
@@ -3903,3 +3888,23 @@
   id: 8037
   time: '2025-03-03T22:04:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35650
+- author: SlamBamActionman
+  changes:
+  - message: Top and bottom undergarments can now be found in the Markings tab of
+      the character creator.
+    type: Add
+  - message: The Accessibility tab of Options now has a Censor Nudity Toggle, which
+      adds undergarments to all characters on your client. Undergarments selected
+      in the character creator take priority.
+    type: Add
+  id: 8038
+  time: '2025-03-05T09:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33185
+- author: Boaz1111, Ktyria
+  changes:
+  - message: 'Added five new scars for humans and dwarves: Three for the face, two
+      for the chest.'
+    type: Add
+  id: 8039
+  time: '2025-03-05T10:26:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35644
