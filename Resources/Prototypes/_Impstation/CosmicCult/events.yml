@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseGameRule
-  id: AscendantSpawn
+  id: RogueAscendedSpawn
   components:
   - type: StationEvent
     weight: 6
@@ -11,8 +11,8 @@
   - type: SpaceSpawnRule
     spawnDistance: 0
   - type: AntagSpawner
-    prototype: MobCosmicRogueAscended
-  - type: CosmicAscendantRule
+    prototype: MobRogueAscended
+  - type: RogueAscendedRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective

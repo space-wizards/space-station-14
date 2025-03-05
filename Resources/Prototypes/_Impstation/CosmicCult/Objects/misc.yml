@@ -1,7 +1,7 @@
 - type: entity
   name: ascendant's dendrite
   parent: BaseAnimalOrgan
-  id: AscendantDendrite
+  id: AscendedDendrite
   description: A bundle of semi-ephemeral tissue extracted from the unravelling husk of an astral ascendant. A faint malign light pulses within.
   components:
   - type: Item

@@ -23,13 +23,13 @@
 # Ascendant Event
 - type: entity
   parent: BaseMindRoleAntag
-  id: MindRoleCosmicAscendant
-  name: Ascendant Role
+  id: MindRoleCosmicAscended
+  name: Rogue Ascended Role
   components:
   - type: MindRole
-    antagPrototype: Ascendant
+    antagPrototype: RogueAscendedSpawn
     roleType: TeamAntagonist
     exclusiveAntag: true
-  - type: CosmicAscendantRole
+  - type: RogueAscendedRole
   - type: RoleBriefing
     briefing: dragon-role-briefing

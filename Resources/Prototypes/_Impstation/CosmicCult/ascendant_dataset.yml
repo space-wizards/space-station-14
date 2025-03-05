@@ -1,5 +1,5 @@
 - type: dataset
-  id: ascendant_titles
+  id: ascended_titles
   values:
   - Ascendant
   - Apocryphal
@@ -7,7 +7,7 @@
   - Transcendant
 
 - type: dataset
-  id: ascendant_names
+  id: ascended_names
   values:
   - It-That-Gazes,
   - It-That-Fled,

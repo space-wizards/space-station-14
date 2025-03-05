@@ -114,11 +114,11 @@
     - ActionCosmicReturn
 
 
-### ASCENDANT EVENTSPAWN
+### ASCENDED EVENTSPAWN
 - type: entity
   parent: [ SimpleSpaceMobBase, FlyingMobBase ]
-  id: MobCosmicRogueAscended
-  name: astral ascended
+  id: MobRogueAscended
+  name: rogue ascended
   suffix: EVENTSPAWN
   description: An entity from beyond the borders of bluespace. Its contours continuously blur and blend together, unnerving to the eye.
   components:
@@ -129,9 +129,9 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: ghost-role-information-astral-ascended-name
-    description: ghost-role-information-astral-ascended-description
-    rules: ghost-role-information-astral-ascended-rules
+    name: ghost-role-information-rogue-ascended-name
+    description: ghost-role-information-rogue-ascended-description
+    rules: ghost-role-information-rogue-ascended-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     raffle:
@@ -232,19 +232,19 @@
     biomassRestored: 0.8
   - type: Butcherable
     spawned:
-    - id: FoodMeatDragon
-      amount: 2
+    - id: AscendedDendrite
+      amount: 1
   - type: InteractionPopup
     successChance: 0.25
-    interactSuccessString: petting-success-astral-ascended
-    interactFailureString: petting-failure-astral-ascended
+    interactSuccessString: petting-success-rogue-ascended
+    interactFailureString: petting-failure-rogue-ascended
     interactFailureSound:
       path: /Audio/_Impstation/CosmicCult/cosmic_unwield.ogg
     soundPerceivedByOthers: false
   - type: RandomMetadata
     nameSegments:
-    - ascendant_names
-    - ascendant_titles
+    - ascended_names
+    - ascended_titles
   - type: Flammable
     damage:
       types: {}

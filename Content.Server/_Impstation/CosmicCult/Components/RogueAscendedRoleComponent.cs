@@ -6,7 +6,7 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 ///     Added to mind role entities to tag that they are using the cosmic cult systems.
 /// </summary>
 [RegisterComponent]
-public sealed partial class CosmicAscendantRoleComponent : BaseMindRoleComponent
+public sealed partial class RogueAscendedRoleComponent : BaseMindRoleComponent
 {
 
 }
