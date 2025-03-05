@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Tweaked Boxes Medical
-    type: Tweak
-  id: 731
-  time: '2024-12-13T21:34:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1014
 - author: DinnerCalzone
   changes:
   - message: Sterile swabs are now able to crafted from the service techfab.
@@ -4060,3 +4053,14 @@
   id: 1230
   time: '2025-03-04T13:32:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1786
+- author: Allie
+  changes:
+  - message: Add a few cosmetic bible flavours for chaplains to choose from, ranging
+      from real to generic to silly.
+    type: Add
+  - message: Chaplains may now select their preferred flavour of holy text as part
+      of their loadout.
+    type: Tweak
+  id: 1231
+  time: '2025-03-05T13:42:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1823
