@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Spectral locator, rare maintenance loot that lets you know if any ghosts
-      are nearby.
-    type: Add
-  id: 7533
-  time: '2024-10-18T13:42:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32323
-- author: PJB3005
-  changes:
-  - message: You can now start removing items via stripping while holding something.
-    type: Tweak
-  id: 7534
-  time: '2024-10-18T19:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32750
-- author: Beck Thompson
-  changes:
-  - message: Scalpels and shivs now work as knives!
-    type: Add
-  id: 7535
-  time: '2024-10-19T02:40:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32858
-- author: PJB3005
-  changes:
-  - message: Fix more performance issues on long-running game servers, hopefully.
-    type: Fix
-  id: 7536
-  time: '2024-10-19T14:51:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32897
-- author: insoPL
-  changes:
-  - message: Zombies once again have zombie blood.
-    type: Fix
-  id: 7537
-  time: '2024-10-19T15:31:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32532
 - author: Beck Thompson
   changes:
   - message: When MMIs and positronic brains are inserted into plushies, their names
@@ -3901,3 +3865,41 @@
   id: 8032
   time: '2025-03-02T20:58:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31812
+- author: FairlySadPanda
+  changes:
+  - message: Pet carriers now only carry pets. preventing various unintended, albeit
+      hilarious, activities.
+    type: Fix
+  id: 8033
+  time: '2025-03-03T10:04:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35587
+- author: Coolsurf6
+  changes:
+  - message: Pain from Burn damage is now calculated when displaying the red damage
+      overlay
+    type: Tweak
+  id: 8034
+  time: '2025-03-03T11:11:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34535
+- author: Velken
+  changes:
+  - message: Wizards now have their own unique magical pen.
+    type: Add
+  id: 8035
+  time: '2025-03-03T15:54:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35623
+- author: rokudara-sen
+  changes:
+  - message: Particle decelerators now drain an additional percentage of a singularity's
+      current energy.
+    type: Tweak
+  id: 8036
+  time: '2025-03-03T16:37:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35643
+- author: DuckManZach
+  changes:
+  - message: Butter is now cheaper to produce!
+    type: Tweak
+  id: 8037
+  time: '2025-03-03T22:04:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35650
