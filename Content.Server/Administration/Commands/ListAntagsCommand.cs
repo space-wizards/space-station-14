@@ -25,7 +25,11 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        bool showObjectives = args.Length > 0 && args[0].ToLower() == "true";
+        const string Yellow = "\u001b[33m";
+        const string Red = "\u001b[31m";
+        const string Reset = "\u001b[0m";
+
+        var showObjectives = args.Length > 0 && args[0].ToLower() == "true";
         var antagList = new List<string>();
         var allMinds = _entityManager.EntityQueryEnumerator<MindComponent>();
 
@@ -43,7 +47,16 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
             var antagRolesStr = string.Join(", ", antagRoles);
             var entityInfo = _entityManager.ToPrettyString(mindId);
 
-            var antagInfo = $"{playerName} ({icName}) {entityInfo} - Roles: {antagRolesStr}";
+            var coloredPlayerName = $"{Yellow}{playerName}{Reset}";
+            var coloredAntagRoles = $"{Red}{antagRolesStr}{Reset}";
+
+            var antagInfo = Loc.GetString(
+                "lsantags-command-list-info",
+                ("playerName", coloredPlayerName),
+                ("icName", icName),
+                ("entityInfo", entityInfo),
+                ("antagRoles", coloredAntagRoles)
+            );
 
             if (showObjectives)
             {
