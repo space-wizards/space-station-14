@@ -27,11 +27,11 @@
         "name": "base"
     },
 	{
-        "name": "equipped-BACKPACK"
+        "name": "equipped-BACKPACK",
 	    "directions": 4
     },
 	{
-        "name": "equipped-SUITSTORAGE"
+        "name": "equipped-SUITSTORAGE",
 	    "directions": 4
     }
   ]
