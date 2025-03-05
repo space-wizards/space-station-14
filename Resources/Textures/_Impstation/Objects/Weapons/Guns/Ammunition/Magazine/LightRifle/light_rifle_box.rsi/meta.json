@@ -10,6 +10,9 @@
         {
             "name": "base"
         },
+	    {
+            "name": "icon"
+        },
         {
             "name": "mag-1"
         },
