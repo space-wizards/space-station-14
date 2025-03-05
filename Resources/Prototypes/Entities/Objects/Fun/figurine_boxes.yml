@@ -195,4 +195,7 @@
         orGroup: SpacemenFig
       - id: ToyFigurineCyborgSaboteur
         prob: 0.50
+        orGroup: SpacemenFig 
+      - id: ToyFigurineCosmicCultist
+        prob: 0.20 
         orGroup: SpacemenFig #</imp>
