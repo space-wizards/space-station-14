@@ -46,6 +46,7 @@ radio-implant = radio {$baseName}
 uplink-implant = uplink {$baseName}
 emp-implant = EMP {$baseName}
 scram-implant = scram {$baseName}
+dna-scrambler-implant = DNA scrambler {$baseName}
 micro-bomb-implant = micro-bomb {$baseName}
 macro-bomb-implant = macro-bomb {$baseName}
 death-acidifier-implant = death-acidifer {$baseName}
