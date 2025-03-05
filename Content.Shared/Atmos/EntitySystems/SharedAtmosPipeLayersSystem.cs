@@ -28,7 +28,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
     private void OnExamined(Entity<AtmosPipeLayersComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup("Current layer: " + ent.Comp.CurrentPipeLayer);
+        var layer = Loc.GetString("atmos-pipe-layers-component-layer-" + ent.Comp.CurrentPipeLayer);
+        args.PushMarkup(Loc.GetString("atmos-pipe-layers-component-current-layer", ("layer", layer)));
     }
 
     private void OnGetVerb(Entity<AtmosPipeLayersComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -84,9 +85,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
     public virtual void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer)
     {
-        if (layer == ent.Comp.CurrentPipeLayer)
-            return;
-
         if (ent.Comp.PipeLayersLocked)
             return;
 

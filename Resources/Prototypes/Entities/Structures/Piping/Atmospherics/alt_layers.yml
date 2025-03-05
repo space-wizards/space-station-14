@@ -20,19 +20,39 @@
 - type: entity
   parent: [GasPipeStraight, GasPipeLayer1]
   id: GasPipeStraight1
-                
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeStraight1
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
+
 - type: entity
   parent: [GasPipeStraight, GasPipeLayer2]
   id: GasPipeStraight2
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeStraight2
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
 
 # GasPipeHalf
 - type: entity
   parent: [GasPipeHalf, GasPipeLayer1]
   id: GasPipeHalf1
-                
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeHalf1
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
+      
 - type: entity
   parent: [GasPipeHalf, GasPipeLayer2]
   id: GasPipeHalf2
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeHalf2
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
 
 # GasPipeBend
 - type: entity

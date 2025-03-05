@@ -21,7 +21,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Only pipes on the same layer can connect with each other.
     /// </summary>
     [DataField("pipeLayer"), AutoNetworkedField]
-    public int CurrentPipeLayer = 1;
+    public int CurrentPipeLayer = 0;
 
     /// <summary>
     /// An array containing the state names of the different pipe layers.
@@ -45,5 +45,5 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Note: there must be an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
     /// </remarks>
     [DataField]
-    public string[] ConnectorVisualStates = { "pipeConnector0", "pipeConnector", "pipeConnector2" };
+    public string[] ConnectorVisualStates = { "pipeConnector", "pipeConnector1", "pipeConnector2" };
 }

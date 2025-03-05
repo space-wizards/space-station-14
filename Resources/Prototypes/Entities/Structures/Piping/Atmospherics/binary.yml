@@ -24,8 +24,8 @@
         pipeDirection: South
   - type: AtmosPipeLayers
     layerVisualStates:
-    - pipeStraight0
     - pipeStraight
+    - pipeStraight1
     - pipeStraight2
 
 - type: entity
@@ -360,8 +360,8 @@
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
       layerVisualStates:
-      - pipeStraight0
       - pipeStraight
+      - pipeStraight1
       - pipeStraight2
     - type: GenericVisualizer
       visuals:

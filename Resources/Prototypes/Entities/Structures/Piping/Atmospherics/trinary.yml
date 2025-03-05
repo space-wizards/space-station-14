@@ -28,8 +28,8 @@
           pipeDirection: South
     - type: AtmosPipeLayers
       layerVisualStates:
-      - pipeTrinaryConnectors0
       - pipeTrinaryConnectors
+      - pipeTrinaryConnectors1
       - pipeTrinaryConnectors2
 
 - type: entity

@@ -50,8 +50,8 @@
     - type: AtmosPipeLayers
       pipeLayersLocked: false
       layerVisualStates:
-      - pipeHalf0
       - pipeHalf
+      - pipeHalf1
       - pipeHalf2
     - type: Appearance
     - type: PipeColorVisuals
@@ -103,8 +103,8 @@
     - type: AtmosPipeLayers
       pipeLayersLocked: false
       layerVisualStates:
-      - pipeHalf0
       - pipeHalf
+      - pipeHalf1
       - pipeHalf2
     - type: Appearance
     - type: PipeColorVisuals
@@ -146,8 +146,8 @@
     - type: AtmosPipeLayers
       pipeLayersLocked: false
       layerVisualStates:
-      - pipeHalf0
       - pipeHalf
+      - pipeHalf1
       - pipeHalf2
     - type: Appearance
     - type: PipeColorVisuals

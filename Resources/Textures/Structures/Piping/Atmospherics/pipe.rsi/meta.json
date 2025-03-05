@@ -48,7 +48,7 @@
          "directions":4
       },
       {
-         "name":"pipeTJunction0",
+         "name":"pipeTJunction1",
          "directions":4
       },
            {
@@ -60,7 +60,7 @@
          "directions":4
       },
       {
-         "name":"pipeHalf0",
+         "name":"pipeHalf1",
          "directions":4
       },
       {
@@ -72,7 +72,7 @@
          "directions":4
       },
       {
-         "name":"pipeBend0",
+         "name":"pipeBend1",
          "directions":4
       },
       {
@@ -84,7 +84,7 @@
          "directions":4
       },
       {
-         "name": "pipeFourway0",
+         "name": "pipeFourway1",
          "directions":4
       },
       {
@@ -96,7 +96,7 @@
          "directions":4
       },
       {
-         "name":"pipeStraight0",
+         "name":"pipeStraight1",
          "directions":4
       },
       {
@@ -108,7 +108,7 @@
          "directions":4
       },
       {
-         "name":"pipeConnector0",
+         "name":"pipeConnector1",
          "directions":4
       },
       {
@@ -120,7 +120,7 @@
          "directions":4
       },
       {
-         "name":"pipeTrinaryConnectors0",
+         "name":"pipeTrinaryConnectors1",
          "directions":4
       },
       {
@@ -132,7 +132,7 @@
          "directions":4
       },
       {
-         "name":"pipeUnaryConnectors0",
+         "name":"pipeUnaryConnectors1",
          "directions":4
       },
       {
