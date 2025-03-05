@@ -87,8 +87,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly ILogManager _logman = default!;
-    [Dependency] private readonly CosmicCultSystem _cult = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
@@ -109,6 +107,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<CosmicCultComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<CosmicMarkGodComponent, ComponentInit>(OnGodSpawn);
+        SubscribeLocalEvent<CosmicCultComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -150,9 +149,9 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                     _body.GibBody(cultist); //You won't be needing your old body anymore, so let's explode it to enhance the vibes.
                 }
             }
+            QueueDel(MonumentInGame); // The monument doesn't need to stick around postround! Into the bin with you.
         }
     }
-
     private static void SetWinType(Entity<CosmicCultRuleComponent> uid, WinType type)
     {
         if (uid.Comp.WinLocked)
@@ -171,11 +170,24 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var cultRule, out _))
         {
-            OnRoundEnd((uid, cultRule)); //If so, let's consult our Winconditions and set an appropriate WinType.
+            ConfirmWinState((uid, cultRule)); //If so, let's consult our Winconditions and set an appropriate WinType.
         }
     }
 
-    private void OnRoundEnd(Entity<CosmicCultRuleComponent> uid)
+    private void OnMobStateChanged(Entity<CosmicCultComponent> uid, ref MobStateChangedEvent args)
+    {
+        var cultistsAlive = EntityQuery<CosmicCultComponent, MobStateComponent>(true)
+            .Any(op => op.Item2.CurrentState == MobState.Alive && op.Item1.Running); //Are there cultists alive?
+        if (cultistsAlive)
+            return;
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var ruleUid, out _, out var ruleComp, out _))
+        {
+            ConfirmWinState((ruleUid, ruleComp));
+        }
+    }
+
+    private void ConfirmWinState(Entity<CosmicCultRuleComponent> uid)
     {
         var tier = CurrentTier;
         var leaderAlive = false;
@@ -203,13 +215,23 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             {
                 SetWinType(uid, WinType.CultMajor); //Despite the crew's escape, The Finale is available or active. Major win
             }
-            QueueDel(monumentUid); // The monument doesn't need to stick around postround! Into the bin with you.
         }
 
         var cultistsAlive = EntityQuery<CosmicCultComponent, MobStateComponent>(true)
             .Any(op => op.Item2.CurrentState == MobState.Alive && op.Item1.Running);
         if (cultistsAlive)
             return; // There's still cultists alive! stop checking stuff
+
+        _roundEnd.DoRoundEndBehavior(uid.Comp.RoundEndBehavior, uid.Comp.EvacShuttleTime, uid.Comp.RoundEndTextSender, uid.Comp.RoundEndTextShuttleCall, uid.Comp.RoundEndTextAnnouncement);
+        uid.Comp.RoundEndBehavior = RoundEndBehavior.Nothing; // prevent this being called multiple times.
+
+        if (TryComp<CosmicFinaleComponent>(MonumentInGame, out var finComp))
+        {
+            MonumentInGame.Comp.Enabled = false;
+            finComp.FinaleReady = false;
+            finComp.FinaleActive = false;
+            _popup.PopupCoordinates(Loc.GetString("cosmiccult-monument-powerdown"), Transform(MonumentInGame).Coordinates, PopupType.Large);
+        }
 
         if (TotalCult == 0)
             SetWinType(uid, WinType.CrewComplete); // No cultists registered! That means everyone got deconverted
@@ -284,8 +306,6 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 #endif
 
         PercentConverted = Math.Round((double) (100 * TotalCult) / TotalCrew);
-        //todo early call the shuttle if totalCult - dead cultists == 0?
-        //subscribe to onMobStateChanged for the cultComp to figure out when a cultist is dead
 
         //this can probably be somewhere else but
         UpdateMonumentReqsForTier(uid, CurrentTier);

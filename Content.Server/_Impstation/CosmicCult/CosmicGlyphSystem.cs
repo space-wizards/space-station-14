@@ -34,7 +34,6 @@ public sealed class CosmicGlyphSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     public override void Initialize()
     {
