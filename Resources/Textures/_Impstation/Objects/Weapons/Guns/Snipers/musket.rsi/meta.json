@@ -20,17 +20,19 @@
       "directions": 4
     },
     {
-        "name": "wielded-inhand-right",
-        "directions": 4
+      "name": "wielded-inhand-right",
+      "directions": 4
     },
     {
       "name": "base"
     },
 	{
       "name": "equipped-BACKPACK"
+      "directions": 4
     },
 	{
       "name": "equipped-SUITSTORAGE"
+      "directions": 4
     }
   ]
 }
