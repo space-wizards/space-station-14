@@ -4,7 +4,6 @@ using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Console;
 
-
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
@@ -39,7 +38,12 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
             var antagRolesStr = string.Join(", ", antagRoles);
             var entityInfo = _entityManager.ToPrettyString(mindId);
 
-            antagList.Add($"{playerName} {entityInfo} - Roles: {Loc.GetString(antagRolesStr)}");
+            antagList.Add(Loc.GetString(
+                "lsantags-command-list-info",
+                ("playerName", playerName),
+                ("entityInfo", entityInfo),
+                ("antagRoles", antagRolesStr)
+            ));
         }
 
         if (antagList.Count == 0)
