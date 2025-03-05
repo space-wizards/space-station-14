@@ -2,7 +2,7 @@
 - type: entity
   abstract: true
   id: GasPipeLayer1
-  #categories: [ HideSpawnMenu ]
+  suffix: Alt 1
   components:
   - type: AtmosPipeLayers
     pipeLayer: 1
@@ -11,7 +11,7 @@
 - type: entity
   abstract: true
   id: GasPipeLayer2
-  #categories: [ HideSpawnMenu ]
+  suffix: Alt 2
   components:
   - type: AtmosPipeLayers
     pipeLayer: 2
@@ -20,6 +20,7 @@
 - type: entity
   parent: [GasPipeStraight, GasPipeLayer1]
   id: GasPipeStraight1
+  suffix: Straight, alt 1
   components:
   - type: Sprite
     layers:
@@ -29,6 +30,7 @@
 - type: entity
   parent: [GasPipeStraight, GasPipeLayer2]
   id: GasPipeStraight2
+  suffix: Straight, alt 2
   components:
   - type: Sprite
     layers:
@@ -39,6 +41,7 @@
 - type: entity
   parent: [GasPipeHalf, GasPipeLayer1]
   id: GasPipeHalf1
+  suffix: Half, alt 1
   components:
   - type: Sprite
     layers:
@@ -48,6 +51,7 @@
 - type: entity
   parent: [GasPipeHalf, GasPipeLayer2]
   id: GasPipeHalf2
+  suffix: Half, alt 2  
   components:
   - type: Sprite
     layers:
@@ -58,28 +62,64 @@
 - type: entity
   parent: [GasPipeBend, GasPipeLayer1]
   id: GasPipeBend1
-
+  suffix: Bend, alt 1
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeBend1
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      
 - type: entity
   parent: [GasPipeBend, GasPipeLayer2]
   id: GasPipeBend2
+  suffix: Bend, alt 2
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeBend2
+      map: [ "enum.PipeVisualLayers.Pipe" ]
 
 # GasPipeTJunction
 - type: entity
   parent: [GasPipeTJunction, GasPipeLayer1]
   id: GasPipeTJunction1
-
+  suffix: TJunction, alt 1
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeTJunction1
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
+      
 - type: entity
   parent: [GasPipeTJunction, GasPipeLayer2]
   id: GasPipeTJunction2
-
+  suffix: TJunction, alt 2
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeTJunction2
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
+      
 # GasPipeFourway
 - type: entity
   parent: [GasPipeFourway, GasPipeLayer1]
   id: GasPipeFourway1
-
+  suffix: Fourway, alt 1
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeFourway1
+      map: [ "enum.PipeVisualLayers.Pipe" ] 
+      
 - type: entity
   parent: [GasPipeFourway, GasPipeLayer2]
   id: GasPipeFourway2
+  suffix: Fourway, alt 2
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeFourway2
+      map: [ "enum.PipeVisualLayers.Pipe" ]  
 
 # GasVentPump
 - type: entity
@@ -212,10 +252,12 @@
 - type: entity
   parent: [GasFilterFlipped, GasPipeLayer1]
   id: GasFilterFlipped1
-
+  suffix: Flipped, alt 1
+  
 - type: entity
   parent: [GasFilterFlipped, GasPipeLayer2]
   id: GasFilterFlipped2
+  suffix: Flipped, alt 2
  
 # GasMixer
 - type: entity
@@ -230,11 +272,13 @@
 - type: entity
   parent: [GasMixerFlipped, GasPipeLayer1]
   id: GasMixerFlipped1
+  suffix: Flipped, alt 1  
   
 - type: entity
   parent: [GasMixerFlipped, GasPipeLayer2]
   id: GasMixerFlipped2
-
+  suffix: Flipped, alt 2
+  
 # PressureControlledValve
 - type: entity
   parent: [PressureControlledValve, GasPipeLayer1]

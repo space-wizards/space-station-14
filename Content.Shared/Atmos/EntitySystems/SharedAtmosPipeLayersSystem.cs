@@ -15,14 +15,14 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
-    private Vector2[] _layerOffsets = { new Vector2(-0.21875f, 0f), new Vector2(0f, 0f), new Vector2(0.21875f, 0f) };
+    private Vector2[] _layerOffsets = { new Vector2(0f, 0f), new Vector2(0.21875f, 0f), new Vector2(-0.21875f, 0f) };
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<AtmosPipeLayersComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<AtmosPipeLayersComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
         SubscribeLocalEvent<AtmosPipeLayersComponent, ActivateInWorldEvent>(OnInteractHandEvent);
     }
 
@@ -32,7 +32,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         args.PushMarkup(Loc.GetString("atmos-pipe-layers-component-current-layer", ("layer", layer)));
     }
 
-    private void OnGetVerb(Entity<AtmosPipeLayersComponent> ent, ref GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<AtmosPipeLayersComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
@@ -43,12 +43,14 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         for (var i = 0; i < AtmosPipeLayersComponent.MaxPipeLayer + 1; i++)
         {
             var index = i;
+            var layer = Loc.GetString("atmos-pipe-layers-component-layer-" + index);
+            var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layer", layer));
 
-            var v = new Verb
+            var v = new AlternativeVerb
             {
                 Priority = 1,
                 Category = VerbCategory.SelectType,
-                Text = "Layer " + i,
+                Text = label,
                 Disabled = i == ent.Comp.CurrentPipeLayer,
                 Impact = LogImpact.Low,
                 DoContactInteraction = true,
