@@ -40,9 +40,7 @@
   - type: CosmicGlyph
     glyphName: truth
     requiredCultists: 3
-    activationDamage:
-      types:
-        Asphyxiation: 50
+    activationDamage: 80
 
 - type: entity
   parent: CosmicGlyphBase
@@ -57,9 +55,7 @@
   - type: CosmicGlyph
     glyphName: knowledge
     requiredCultists: 2
-    activationDamage:
-      types:
-        Asphyxiation: 25
+    activationDamage: 40
 
 - type: entity
   parent: CosmicGlyphBase
@@ -74,9 +70,7 @@
   - type: CosmicGlyph
     glyphName: cessation
     requiredCultists: 1
-    activationDamage:
-      types:
-        Asphyxiation: 15
+    activationDamage: 25
 
 - type: entity
   parent: CosmicGlyphBase
@@ -91,9 +85,7 @@
   - type: CosmicGlyph
     glyphName: blades
     requiredCultists: 2
-    activationDamage:
-      types:
-        Asphyxiation: 50
+    activationDamage: 80
 
 - type: entity
   parent: CosmicGlyphBase
@@ -108,9 +100,7 @@
   - type: CosmicGlyph
     glyphName: warding
     requiredCultists: 2
-    activationDamage:
-      types:
-        Asphyxiation: 50
+    activationDamage: 80
 
 - type: entity
   parent: CosmicGlyphBase

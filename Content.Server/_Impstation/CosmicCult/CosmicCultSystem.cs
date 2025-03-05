@@ -37,6 +37,7 @@ using Content.Shared.Stunnable;
 using Content.Server.Doors.Systems;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Flash;
+using Content.Shared._Impstation.Cosmiccult;
 using Content.Shared.Camera;
 using Robust.Shared.Player;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -84,6 +85,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
     public int CultistCount;
 
@@ -270,7 +272,11 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnInfuseEntropy(Entity<MonumentComponent> uid, ref InteractUsingEvent args)
     {
         if (!HasComp<CosmicEntropyMoteComponent>(args.Used) || !HasComp<CosmicCultComponent>(args.User) || !uid.Comp.Enabled || args.Handled)
+        {
+            _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-unavailable"), args.User, args.User);
             return;
+        }
+
         args.Handled = AddEntropy(uid, args.Used, args.User);
     }
     private bool AddEntropy(Entity<MonumentComponent> monument, EntityUid entropy, EntityUid cultist)
@@ -281,9 +287,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
             cultComp.EntropyBudget += quant;
             Dirty(cultist, cultComp);
         }
+
         monument.Comp.TotalEntropy += quant;
-        _cultRule.TotalEntropy += quant;
         _cultRule.UpdateCultData(monument);
+
         _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-inserted", ("count", quant)), cultist, cultist);
         _audio.PlayEntity("/Audio/_Impstation/CosmicCult/insert_entropy.ogg", cultist, monument);
         QueueDel(entropy);
@@ -292,22 +299,22 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #endregion
 
     #region Movespeed
-    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args)
+    private void OnStartInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentInit args) // i wish movespeed was easier to work with
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args)
+    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args) // these functions just make sure
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args)
+    private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args) // that movespeed applies more-or-less correctly
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args)
+    private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }

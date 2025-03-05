@@ -1,3 +1,4 @@
+using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -13,21 +14,24 @@ public enum MonumentKey : byte
 [Serializable, NetSerializable]
 public sealed class MonumentBuiState : BoundUserInterfaceState
 {
-    public int AvailableEntropy;
-    public int EntropyUntilNextStage;
-    public int CrewToConvertUntilNextStage;
-    public float PercentageComplete;
+    public int CurrentProgress;
+    public int TargetProgress;
     public ProtoId<GlyphPrototype> SelectedGlyph;
-    public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences;
     public HashSet<ProtoId<GlyphPrototype>> UnlockedGlyphs;
-    public MonumentBuiState(int availableEntropy, int entropyUntilNextStage, int crewToConvertUntilNextStage, float percentageComplete, ProtoId<GlyphPrototype> selectedGlyph, HashSet<ProtoId<InfluencePrototype>> unlockedInfluences, HashSet<ProtoId<GlyphPrototype>> unlockedGlyphs)
+
+    public MonumentBuiState(int currentProgress, int targetProgress, int progressOffset, ProtoId<GlyphPrototype> selectedGlyph, HashSet<ProtoId<GlyphPrototype>> unlockedGlyphs)
     {
-        AvailableEntropy = availableEntropy;
-        EntropyUntilNextStage = entropyUntilNextStage;
-        CrewToConvertUntilNextStage = crewToConvertUntilNextStage;
-        PercentageComplete = percentageComplete;
+        CurrentProgress = currentProgress - progressOffset;
+        TargetProgress = targetProgress - progressOffset;
         SelectedGlyph = selectedGlyph;
-        UnlockedInfluences = unlockedInfluences;
         UnlockedGlyphs = unlockedGlyphs;
+    }
+
+    public MonumentBuiState(MonumentComponent comp)
+    {
+        CurrentProgress = comp.CurrentProgress - comp.ProgressOffset;
+        TargetProgress = comp.TargetProgress - comp.ProgressOffset;
+        SelectedGlyph = comp.SelectedGlyph;
+        UnlockedGlyphs = comp.UnlockedGlyphs;
     }
 }

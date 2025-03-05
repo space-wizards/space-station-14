@@ -134,6 +134,7 @@
   groups:
   - LawyerNeck
   - LawyerJumpsuit
+  - LawyerOuterClothing # imp
   - LawyerShoes # imp
   - Glasses
   - CommonBackpack
@@ -650,6 +651,7 @@
   - PsychologistNeck # imp
   - PsychologistJumpsuit
   - PsychologistShoes # imp
+  - PsychologistOuterClothing # DeltaV
   - Glasses
   - MedicalBackpack
   - Survival

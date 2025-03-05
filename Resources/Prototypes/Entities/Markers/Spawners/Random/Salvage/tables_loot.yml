@@ -251,6 +251,7 @@
     - id: BlueprintSeismicCharge
     - id: WeaponCrusherGlaive
     - id: ClothingOuterHardsuitSalvage
+    - id: ClothingOuterHardsuitGoliath # imp
     - id: OmnizineChemistryBottle
     - !type:GroupSelector
       children:

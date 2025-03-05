@@ -1,7 +1,7 @@
 - type: mailDeliveryPool
   id: RandomDeltaVMailDeliveryPool
   everyone:
-    #Imp: table weight adds to 41
+    #Imp: table weight adds to 40.1
     #Clothing - 8
     MailWinterCoat: 1.5
     MailNFCosplayWizard: 1
@@ -52,7 +52,7 @@
     MailNFGoldCigars: 0.1
     #Unique items - 1
     # MailNFBible: 1 // Dummy bible mail replacement?
-    #Fun - 9.31 including MailNFEMP
+    #Fun - 9.41 including MailNFEMP
     MailImpCarpetiumBottle: 1
     MailImpBedsheets: 1
     MailCrayon: 1
@@ -67,6 +67,7 @@
     MailBlockGameDIY: 0.4
     MailSpaceVillainDIY: 0.4 # Lowered to accommodate the foam sabre
     MailNFSmoke: 0.4
+    MailFoamSabre: 0.1
     #MailNFEMP: 0.3 # Imp commented cuz error log :(
     MailNFThrongler: 0.01 # DeltaV: 0.1 to 0.01
     MailImpFuckingGun: 0.01 # Mira requested this.

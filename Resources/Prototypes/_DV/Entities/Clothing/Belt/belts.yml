@@ -1,0 +1,32 @@
+﻿- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltFoamSheath
+  name: foam sheath
+  description: A foam sheath to cosplay as the captain! It seems to be able to fit a real sabre in it.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Belt/foamsheath.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Belt/foamsheath.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltPaperwork
+  name: paperwork belt
+  description: For all your tactical paperwork needs on the field.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Belt/paperwork.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Belt/paperwork.rsi
+  - type: Storage
+    whitelist:
+      tags:
+      - Folder
+      - Document
+      - Flashlight
+      - Radio
+      components:
+      - FitsInDispenser
+      - Stamp
+      - HandLabeler # imp

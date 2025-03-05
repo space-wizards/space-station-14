@@ -53,7 +53,7 @@ public sealed partial class CosmicCultComponent : Component
     /// <summary>
     /// The duration of the doAfter for Siphon Entropy
     /// </summary>
-    [DataField, AutoNetworkedField] public TimeSpan CosmicSiphonDelay = TimeSpan.FromSeconds(4);
+    [DataField, AutoNetworkedField] public TimeSpan CosmicSiphonDelay = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// The duration of the doAfter for Shunt Subjectivity
@@ -85,18 +85,33 @@ public sealed partial class CosmicCultComponent : Component
     [DataField, AutoNetworkedField] public bool CosmicEmpowered = false;
 
     /// <summary>
+    /// Wether or not this cultist needs to respirate.
+    /// </summary>
+    [DataField, AutoNetworkedField] public bool Respiration = true;
+
+    /// <summary>
     /// A string for storing what damage container this cultist had upon conversion.
     /// </summary>
     [DataField, AutoNetworkedField] public ProtoId<DamageContainerPrototype> StoredDamageContainer = "Biological";
 
     /// <summary>
-    /// The damage to apply upon a successful Siphon Entropy
+    /// The asphyx damage to apply upon a successful Siphon Entropy
     /// </summary>
     [DataField, AutoNetworkedField]
-    public DamageSpecifier CosmicSiphonDamage = new()
+    public DamageSpecifier SiphonAsphyxDamage = new()
     {
         DamageDict = new() {
-            { "Asphyxiation", 23 }
+            { "Asphyxiation", 15 }
+        }
+    };
+    /// <summary>
+    /// The cold damage to apply upon a successful Siphon Entropy. WTF IS THE CORRECT WAY TO INVOKE A DAMAGEDICT WITH MULTIPLE TYPES!? AAGH. This would save one line of code and this damage specifier entry.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier SiphonColdDamage = new()
+    {
+        DamageDict = new() {
+            { "Cold", 6 }
         }
     };
     #endregion

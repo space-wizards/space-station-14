@@ -1,0 +1,51 @@
+<Document>
+ # The Monument
+  <Box>
+    <GuideEntityEmbed Entity="MonumentCosmicCult1" Caption=""/>
+    <GuideEntityEmbed Entity="MonumentCosmicCult2" Caption=""/>
+    <GuideEntityEmbed Entity="MonumentCosmicCult3" Caption=""/>
+  </Box>
+
+  Before you set about your goals, The Monument must be [italic][color=#4cabb3]Beckoned[/color][/italic] by your cult leader. When first built, the Monument is invisible, intangible, and effectively imperceptible to any non-cultist. Once empowered, the Monument will become both visible and tangible to all individuals aboard the station.
+
+  It is for this reason that the Monument is best hidden from prying eyes, and in a relatively defendable location.
+
+  Entropy may be infused into the Monument to empower it. As you infuse the Monument with entropy, the cult will collectively gain access to more [color=#4cabb3][bold]Influences[/bold][/color] and [color=#4cabb3][bold]Glyphs[/bold][/color], which can be attained by interacting with the Monument.
+
+  Cultists can interact with the monument to purchase additional [color=#4cabb3][bold]Influences[/bold][/color]. Entropy stored in the monument for the sake of purchasing is [italic]per person,[/italic] so one cultist purchasing an ability will not spend any entropy collected by other cultists.
+
+  [textlink="For more on Influences, click here." link="CosmicCultInfluences"]
+
+  ## Beckoning the Unknown
+  <Box>
+    <GuideEntityEmbed Entity="PlushieCosmicCult" Caption=""/>
+  </Box>
+
+  Should you succeed in fully empowering the Monument to the third stage, it will hunger for one last threshold of entropy - fuel to feed the final curtain call. Once enough entropy has been infused, the empowered Monument will glow, signalling that it can now be used to [color=#4cabb3][bold]Beckon[/bold][/color] the Unknown. Any cultist may do so by interacting with the monument.
+
+  Be prepared to defend the Monument when doing so, as just one waylaid action from a single disruptive soul is all it will take to bring this ritual to a sudden, unceremonious halt.
+
+  Once the Monument becomes ready to activate, cultists [bold]must[/bold] activate it before being once again able to access the Monument's store and glyphs - the end [bold]cannot[/bold] be forestalled.
+
+  ## Glyphs
+  Glyphs may be [color=#4cabb3]Scribed[/color] by interacting with the Monument. You may also [color=#4cabb3]Unscribe[/color] an unused Glyph in a similar manner at The Monument.
+
+  Be aware that activating a Glyph will sap the health of all cultists aiding in the Glyph's activation!
+
+  <Box>
+    <GuideEntityEmbed Entity="CosmicGlyphKnowledge" Caption=""/>
+    <GuideEntityEmbed Entity="CosmicGlyphProjection" Caption=""/>
+    <GuideEntityEmbed Entity="CosmicGlyphWarding" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="CosmicGlyphBlades" Caption=""/>
+    <GuideEntityEmbed Entity="CosmicGlyphCessation" Caption=""/>
+    <GuideEntityEmbed Entity="CosmicGlyphTruth" Caption=""/>
+  </Box>
+  - [bold]Glyph of Knowledge[/bold] allows a non-cultist brought upon it to be [color=#4cabb3]converted[/color] into a fellow cosmic cultist! Chaplains and individuals with a mindshield cannot be converted using this glyph.
+  - [bold]Glyph of Projection[/bold] will allow the cultist using it to temporarily escape their body as a free-floating and imperceptible [color=#4cabb3]Astral Form[/color], allowing the cultist to spy on unsuspecting crewmembers.
+  - [bold]Glyph of Warding[/bold] transmutes any spacesuit - hard or soft - into the cosmic cult's special [color=#4cabb3]Entropic Armor[/color].
+  - [bold]Glyph of Blades[/bold] randomly transmutes any sharp object into one of the cosmic cult's [color=#4cabb3]Unique Weapons[/color].
+  - [bold]Glyph of Cessation[/bold] transmutes a portable atmospherics scrubber into an unanchored [color=#4cabb3]Vacuous Spire[/color].
+  - [bold]Glyph of Truth[/bold] allows any non-cultist brought upon it to be [color=#4cabb3]converted[/color] into a fellow cosmic cultist, even if they are a chaplain or protected by a mindshield.
+</Document>

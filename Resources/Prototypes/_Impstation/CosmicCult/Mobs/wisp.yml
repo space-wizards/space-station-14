@@ -3,6 +3,7 @@
   parent: [ BaseSimpleMob, FlyingMobBase ]
   id: MobCosmicWisp
   components:
+  - type: AntagImmune
   - type: Sprite
     drawdepth: Mobs
     sprite: _Impstation/CosmicCult/Mobs/wisp.rsi

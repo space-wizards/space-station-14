@@ -195,7 +195,7 @@ namespace Content.Client.Lobby
             else
             {
                 Lobby!.StartTime.Text = string.Empty;
-                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
+                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready" : "lobby-state-player-status-not-ready");
                 Lobby!.ReadyButton.ToggleMode = true;
                 Lobby!.ReadyButton.Disabled = false;
                 Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
@@ -240,13 +240,27 @@ namespace Content.Client.Lobby
 
         private void UpdateLobbyBackground()
         {
-            if (_gameTicker.LobbyBackground != null)
+            if (_gameTicker.LobbyBackgroundImage is { } image)
             {
-                Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
+                // imp edit
+                Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(image);
+
+                var name = string.IsNullOrEmpty(_gameTicker.LobbyBackgroundName)
+                    ? Loc.GetString("lobby-state-background-unknown-name")
+                    : _gameTicker.LobbyBackgroundName;
+
+                var artist = string.IsNullOrEmpty(_gameTicker.LobbyBackgroundArtist)
+                    ? Loc.GetString("lobby-state-background-unknown-artist")
+                    : _gameTicker.LobbyBackgroundArtist;
+
+                var markup = Loc.GetString("lobby-state-background-text", ("name", name), ("artist", artist));
+
+                Lobby!.LobbyBackground.SetMarkup(markup);
             }
             else
             {
                 Lobby!.Background.Texture = null;
+                Lobby!.LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text")); // imp edit
             }
 
         }

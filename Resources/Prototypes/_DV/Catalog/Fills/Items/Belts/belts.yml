@@ -1,0 +1,21 @@
+﻿- type: entity
+  id: ClothingBeltFoamSheathFilled
+  parent: ClothingBeltFoamSheath
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - FoamSabre
+
+- type: entity
+  parent: ClothingBeltPaperwork
+  id: ClothingBeltPaperworkFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxFolderBase
+    - id: BoxFolderBlack
+    - id: BoxFolderClipboard
+    - id: DrinkVacuumFlask

@@ -20,6 +20,8 @@ using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Server.Light.Components;
 using Robust.Shared.Physics.Events;
 using Content.Shared.NPC;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -155,14 +157,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region Siphon Entropy
     private void OnCosmicSiphon(Entity<CosmicCultComponent> uid, ref EventCosmicSiphon args)
     {
-        if (HasComp<CosmicCultComponent>(args.Target) || HasComp<BibleUserComponent>(args.Target))
+        if (HasComp<CosmicCultComponent>(args.Target) || HasComp<BibleUserComponent>(args.Target) || HasComp<ActiveNPCComponent>(args.Target) || TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-siphon-fail", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid);
             return;
         }
         if (args.Handled)
             return;
-        args.Handled = true;
 
         var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicSiphonDelay, new EventCosmicSiphonDoAfter(), uid, args.Target)
         {
@@ -173,6 +174,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             BreakOnMove = true,
             BreakOnDropItem = true,
         };
+        args.Handled = true;
         _doAfter.TryStartDoAfter(doargs);
     }
 
@@ -180,13 +182,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         if (args.Args.Target == null)
             return;
-
         var target = args.Args.Target.Value;
         if (args.Cancelled || args.Handled)
             return;
-
         args.Handled = true;
-        _damageable.TryChangeDamage(args.Target, uid.Comp.CosmicSiphonDamage, origin: uid);
+
+        _damageable.TryChangeDamage(args.Target, uid.Comp.SiphonAsphyxDamage, origin: uid);
+        _damageable.TryChangeDamage(args.Target, uid.Comp.SiphonColdDamage, origin: uid);
         _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
 
         var entropyMote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
@@ -265,7 +267,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var newSpawn = _random.Pick(spawnPoints);
         var spawnTgt = Transform(newSpawn.Uid).Coordinates;
         var mobUid = Spawn(comp.SpawnWisp, spawnTgt);
-        EnsureComp<AntagImmuneComponent>(mobUid);
         EnsureComp<InVoidComponent>(mobUid, out var inVoid);
         inVoid.OriginalBody = target;
         inVoid.ExitVoidTime = _timing.CurTime + comp.CosmicBlankDuration;
@@ -366,6 +367,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _actions.RemoveAction(uid, uid.Comp.CosmicMonumentActionEntity);
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
+        Spawn("MonumentCollider", _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
         Spawn(uid.Comp.MonumentPrototype, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
     }
     #endregion

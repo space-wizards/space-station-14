@@ -23,7 +23,7 @@
 - type: startingGear
   id: AdminAssistantGear
   equipment:
-    belt: BoxFolderClipboard
+    belt: ClothingBeltPaperworkFilled
     id: AdminAssistantPDA
     pocket1: RubberStampAdminAssistant
   storage:

@@ -55,8 +55,12 @@
                     <!-- Left Bot Panel -->
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
-                        <PanelContainer StyleClasses="AngleRect">
+                        <PanelContainer StyleClasses="AngleRect" Margin="0 0 3 0">
                             <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
+                        </PanelContainer>
+                        <!-- Lobby background credits, imp edit -->
+                        <PanelContainer StyleClasses="AngleRect">
+                            <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Center" />
                         </PanelContainer>
                     </BoxContainer>
                 </Control>

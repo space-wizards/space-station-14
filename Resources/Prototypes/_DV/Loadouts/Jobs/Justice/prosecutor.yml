@@ -1,0 +1,16 @@
+﻿# Jumpsuit
+- type: loadout
+  id: ProsecutorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitProsecutor
+
+- type: loadout
+  id: ProsecutorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtProsecutor
+
+# Neck
+- type: loadout
+  id: ProsecutorNeck
+  equipment:
+    neck: ClothingNeckProsecutorbadge

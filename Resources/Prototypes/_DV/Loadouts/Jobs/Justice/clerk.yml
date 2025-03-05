@@ -1,0 +1,16 @@
+﻿# Jumpsuit
+- type: loadout
+  id: ClerkJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitClerk
+
+- type: loadout
+  id: ClerkJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtClerk
+
+# Outer Clothing
+- type: loadout
+  id: ClerkVest
+  equipment:
+    outerClothing: ClothingOuterClerkVest
