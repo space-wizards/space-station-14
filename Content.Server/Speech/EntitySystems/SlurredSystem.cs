@@ -108,4 +108,9 @@ public sealed class SlurredSystem : SharedSlurredSystem
 
         return sb.ToString();
     }
+
+    public string Accentuate(string message)
+    {
+        return Accentuate(message, 0.3f);
+    }
 }

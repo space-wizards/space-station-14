@@ -18,6 +18,11 @@ public sealed class MumbleAccentSystem : EntitySystem
         return _replacement.ApplyReplacements(message, "mumble");
     }
 
+    public string Accentuate(string message)
+    {
+        return _replacement.ApplyReplacements(message, "mumble");
+    }
+
     private void OnAccentGet(EntityUid uid, MumbleAccentComponent component, AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message, component);

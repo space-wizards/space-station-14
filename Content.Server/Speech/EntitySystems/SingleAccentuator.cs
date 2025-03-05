@@ -22,6 +22,10 @@ public sealed class SingleAccentuator
             entMan.EntitySysManager.GetEntitySystem<OwOAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<GermanAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<RussianAccentSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<FrenchAccentSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<MumbleAccentSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<SlurredSystem>(),
+
         };
         return random.Pick(accentSystems);
     }
@@ -36,6 +40,13 @@ public sealed class SingleAccentuator
                 return germanAccentSystem.Accentuate(message);
             case RussianAccentSystem russianAccentSystem:
                 return russianAccentSystem.Accentuate(message);
+            case FrenchAccentSystem frenchAccentSystem:
+                return frenchAccentSystem.Accentuate(message);
+            case MumbleAccentSystem mumbleAccentSystem:
+                return mumbleAccentSystem.Accentuate(message);
+            case SlurredSystem slurredSystem:
+                return slurredSystem.Accentuate(message);
+
         }
 
         return message;

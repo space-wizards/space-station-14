@@ -39,6 +39,24 @@ public sealed class FrenchAccentSystem : EntitySystem
         return msg;
     }
 
+    public string Accentuate(string message)
+    {
+        var msg = message;
+
+        msg = _replacement.ApplyReplacements(msg, "french");
+
+        // replaces th with z
+        msg = RegexTh.Replace(msg, "'z");
+
+        // replaces h with ' at the start of words.
+        msg = RegexStartH.Replace(msg, "'");
+
+        // spaces out ! ? : and ;.
+        msg = RegexSpacePunctuation.Replace(msg, " $&");
+
+        return msg;
+    }
+
     private void OnAccentGet(EntityUid uid, FrenchAccentComponent component, AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message, component);
