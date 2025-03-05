@@ -394,7 +394,7 @@ public sealed partial class SalvageSystem
 
                 break;
             case SalvageOffering wreck:
-                Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("offeringType", (Loc.GetString($"salvage-map-wreck").ToLower())), ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
+                Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("offeringType", (Loc.GetString($"salvage-map-wreck")).ToLower()), ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
 
                 break;
             default:
