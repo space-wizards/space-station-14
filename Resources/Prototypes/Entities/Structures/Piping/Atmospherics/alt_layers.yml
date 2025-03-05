@@ -1,0 +1,225 @@
+# Layer 1
+- type: entity
+  abstract: true
+  id: GasPipeLayer1
+  #categories: [ HideSpawnMenu ]
+  components:
+  - type: AtmosPipeLayers
+    pipeLayer: 1
+    
+# Layer 2
+- type: entity
+  abstract: true
+  id: GasPipeLayer2
+  #categories: [ HideSpawnMenu ]
+  components:
+  - type: AtmosPipeLayers
+    pipeLayer: 2
+
+# GasPipeStraight
+- type: entity
+  parent: [GasPipeStraight, GasPipeLayer1]
+  id: GasPipeStraight1
+                
+- type: entity
+  parent: [GasPipeStraight, GasPipeLayer2]
+  id: GasPipeStraight2
+
+# GasPipeHalf
+- type: entity
+  parent: [GasPipeHalf, GasPipeLayer1]
+  id: GasPipeHalf1
+                
+- type: entity
+  parent: [GasPipeHalf, GasPipeLayer2]
+  id: GasPipeHalf2
+
+# GasPipeBend
+- type: entity
+  parent: [GasPipeBend, GasPipeLayer1]
+  id: GasPipeBend1
+
+- type: entity
+  parent: [GasPipeBend, GasPipeLayer2]
+  id: GasPipeBend2
+
+# GasPipeTJunction
+- type: entity
+  parent: [GasPipeTJunction, GasPipeLayer1]
+  id: GasPipeTJunction1
+
+- type: entity
+  parent: [GasPipeTJunction, GasPipeLayer2]
+  id: GasPipeTJunction2
+
+# GasPipeFourway
+- type: entity
+  parent: [GasPipeFourway, GasPipeLayer1]
+  id: GasPipeFourway1
+
+- type: entity
+  parent: [GasPipeFourway, GasPipeLayer2]
+  id: GasPipeFourway2
+
+# GasVentPump
+- type: entity
+  parent: [GasVentPump, GasPipeLayer1]
+  id: GasVentPump1
+
+- type: entity
+  parent: [GasVentPump, GasPipeLayer2]
+  id: GasVentPump2
+
+# GasPassiveVent
+- type: entity
+  parent: [GasPassiveVent, GasPipeLayer1]
+  id: GasPassiveVent1
+
+- type: entity
+  parent: [GasPassiveVent, GasPipeLayer2]
+  id: GasPassiveVent2
+
+# GasVentScrubber
+- type: entity
+  parent: [GasVentScrubber, GasPipeLayer1]
+  id: GasVentScrubber1
+
+- type: entity
+  parent: [GasVentScrubber, GasPipeLayer2]
+  id: GasVentScrubber2
+
+# GasPressurePump
+- type: entity
+  parent: [GasPressurePump, GasPipeLayer1]
+  id: GasPressurePump1
+
+- type: entity
+  parent: [GasPressurePump, GasPipeLayer2]
+  id: GasPressurePump2
+
+# GasVolumePump
+- type: entity
+  parent: [GasVolumePump, GasPipeLayer1]
+  id: GasVolumePump1
+
+- type: entity
+  parent: [GasVolumePump, GasPipeLayer2]
+  id: GasVolumePump2
+
+# GasPassiveGate
+- type: entity
+  parent: [GasPassiveGate, GasPipeLayer1]
+  id: GasPassiveGate1
+ 
+- type: entity
+  parent: [GasPassiveGate, GasPipeLayer2]
+  id: GasPassiveGate2
+ 
+# GasValve
+- type: entity
+  parent: [GasValve, GasPipeLayer1]
+  id: GasValve1
+
+- type: entity
+  parent: [GasValve, GasPipeLayer2]
+  id: GasValve2
+ 
+# SignalControlledValve
+- type: entity
+  parent: [SignalControlledValve, GasPipeLayer1]
+  id: SignalControlledValve1
+
+- type: entity
+  parent: [SignalControlledValve, GasPipeLayer2]
+  id: SignalControlledValve2
+
+# GasPort
+- type: entity
+  parent: [GasPort, GasPipeLayer1]
+  id: GasPort1
+
+- type: entity
+  parent: [GasPort, GasPipeLayer2]
+  id: GasPort2
+ 
+# GasDualPortVentPump
+- type: entity
+  parent: [GasDualPortVentPump, GasPipeLayer1]
+  id: GasDualPortVentPump1
+
+- type: entity
+  parent: [GasDualPortVentPump, GasPipeLayer2]
+  id: GasDualPortVentPump2
+
+# GasRecycler
+- type: entity
+  parent: [GasRecycler, GasPipeLayer1]
+  id: GasRecycler1
+  
+- type: entity
+  parent: [GasRecycler, GasPipeLayer2]
+  id: GasRecycler2
+
+# HeatExchanger
+- type: entity
+  parent: [HeatExchanger, GasPipeLayer1]
+  id: HeatExchanger1
+
+- type: entity
+  parent: [HeatExchanger, GasPipeLayer2]
+  id: HeatExchanger2
+  
+# HeatExchangerBend
+- type: entity
+  parent: [HeatExchangerBend, GasPipeLayer1]
+  id: HeatExchangerBend1
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: [HeatExchangerBend, GasPipeLayer2]
+  id: HeatExchangerBend2
+
+# GasFilter
+- type: entity
+  parent: [GasFilter, GasPipeLayer1]
+  id: GasFilter1
+
+- type: entity
+  parent: [GasFilter, GasPipeLayer2]
+  id: GasFilter2
+
+# GasFilterFlipped
+- type: entity
+  parent: [GasFilterFlipped, GasPipeLayer1]
+  id: GasFilterFlipped1
+
+- type: entity
+  parent: [GasFilterFlipped, GasPipeLayer2]
+  id: GasFilterFlipped2
+ 
+# GasMixer
+- type: entity
+  parent: [GasMixer, GasPipeLayer1]
+  id: GasMixer1
+
+- type: entity
+  parent: [GasMixer, GasPipeLayer2]
+  id: GasMixer2
+
+# GasMixerFlipped
+- type: entity
+  parent: [GasMixerFlipped, GasPipeLayer1]
+  id: GasMixerFlipped1
+  
+- type: entity
+  parent: [GasMixerFlipped, GasPipeLayer2]
+  id: GasMixerFlipped2
+
+# PressureControlledValve
+- type: entity
+  parent: [PressureControlledValve, GasPipeLayer1]
+  id: PressureControlledValve1
+
+- type: entity
+  parent: [PressureControlledValve, GasPipeLayer2]
+  id: PressureControlledValve2

@@ -51,7 +51,7 @@
   - type: Appearance
   - type: PipeColorVisuals
   - type: NodeContainer
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
@@ -82,7 +82,7 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeHalf0
     - pipeHalf
@@ -110,7 +110,7 @@
     layers:
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeStraight0
     - pipeStraight
@@ -152,7 +152,7 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeBend0
     - pipeBend
@@ -201,7 +201,7 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeTJunction0
     - pipeTJunction
@@ -248,7 +248,7 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeFourway0
     - pipeFourway
@@ -288,7 +288,7 @@
     layers:
       - state: pipeBroken
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeBroken0
     - pipeBroken

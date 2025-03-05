@@ -128,6 +128,18 @@
          "directions":4
       },
       {
+         "name":"pipeUnaryConnectors",
+         "directions":4
+      },
+      {
+         "name":"pipeUnaryConnectors0",
+         "directions":4
+      },
+      {
+         "name":"pipeUnaryConnectors2",
+         "directions":4
+      },
+      {
          "name":"storageStraight",
          "directions":4
       },

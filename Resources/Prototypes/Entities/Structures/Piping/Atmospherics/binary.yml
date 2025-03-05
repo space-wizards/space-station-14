@@ -22,7 +22,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     layerVisualStates:
     - pipeStraight0
     - pipeStraight
@@ -52,7 +52,7 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     offsetAboveFloorLayers: true
   - type: Appearance
   - type: GenericVisualizer
@@ -110,7 +110,7 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: AtmosPipeLayer
+    - type: AtmosPipeLayers
       offsetAboveFloorLayers: true
     - type: Appearance
     - type: GenericVisualizer
@@ -166,7 +166,7 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpPassiveGate
           map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: AtmosPipeLayer
+    - type: AtmosPipeLayers
       offsetAboveFloorLayers: true
     - type: Appearance
     - type: PipeColorVisuals
@@ -203,7 +203,7 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: AtmosPipeLayer
+    - type: AtmosPipeLayers
       offsetAboveFloorLayers: true
     - type: Appearance
     - type: GenericVisualizer
@@ -258,7 +258,7 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-  - type: AtmosPipeLayer
+  - type: AtmosPipeLayers
     offsetAboveFloorLayers: true
   - type: Appearance
   - type: GenericVisualizer
@@ -358,6 +358,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      layerVisualStates:
+      - pipeStraight0
+      - pipeStraight
+      - pipeStraight2
     - type: GenericVisualizer
       visuals:
         enum.VentPumpVisuals.State:

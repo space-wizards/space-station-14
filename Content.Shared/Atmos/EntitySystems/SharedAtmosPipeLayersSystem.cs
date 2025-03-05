@@ -10,7 +10,7 @@ using System.Numerics;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
-public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
+public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -21,22 +21,25 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AtmosPipeLayerComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<AtmosPipeLayerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
-        SubscribeLocalEvent<AtmosPipeLayerComponent, ActivateInWorldEvent>(OnInteractHandEvent);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, ActivateInWorldEvent>(OnInteractHandEvent);
     }
 
-    private void OnExamined(Entity<AtmosPipeLayerComponent> ent, ref ExaminedEvent args)
+    private void OnExamined(Entity<AtmosPipeLayersComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup("Current layer: " + ent.Comp.CurrentPipeLayer);
     }
 
-    private void OnGetVerb(Entity<AtmosPipeLayerComponent> ent, ref GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<AtmosPipeLayersComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        for (var i = 0; i < AtmosPipeLayerComponent.MaxPipeLayer + 1; i++)
+        if (ent.Comp.PipeLayersLocked)
+            return;
+
+        for (var i = 0; i < AtmosPipeLayersComponent.MaxPipeLayer + 1; i++)
         {
             var index = i;
 
@@ -58,7 +61,7 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
         }
     }
 
-    private void OnInteractHandEvent(Entity<AtmosPipeLayerComponent> ent, ref ActivateInWorldEvent args)
+    private void OnInteractHandEvent(Entity<AtmosPipeLayersComponent> ent, ref ActivateInWorldEvent args)
     {
         if (!args.Complex)
             return;
@@ -69,22 +72,25 @@ public abstract partial class SharedAtmosPipeLayerSystem : EntitySystem
         CyclePipeLayer(ent);
     }
 
-    public void CyclePipeLayer(Entity<AtmosPipeLayerComponent> ent)
+    public void CyclePipeLayer(Entity<AtmosPipeLayersComponent> ent)
     {
         var newLayer = ent.Comp.CurrentPipeLayer + 1;
 
-        if (newLayer > AtmosPipeLayerComponent.MaxPipeLayer)
+        if (newLayer > AtmosPipeLayersComponent.MaxPipeLayer)
             newLayer = 0;
 
         SetPipeLayer(ent, newLayer);
     }
 
-    public virtual void SetPipeLayer(Entity<AtmosPipeLayerComponent> ent, int layer)
+    public virtual void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer)
     {
+        if (layer == ent.Comp.CurrentPipeLayer)
+            return;
+
         if (ent.Comp.PipeLayersLocked)
             return;
 
-        ent.Comp.CurrentPipeLayer = Math.Clamp(layer, 0, AtmosPipeLayerComponent.MaxPipeLayer);
+        ent.Comp.CurrentPipeLayer = Math.Clamp(layer, 0, AtmosPipeLayersComponent.MaxPipeLayer);
         Dirty(ent);
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))

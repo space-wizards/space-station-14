@@ -19,11 +19,8 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
-    - type: AtmosPipeLayer
-      layerVisualStates:
-      - pipeHalf0
-      - pipeHalf
-      - pipeHalf2
+    - type: AtmosPipeLayers
+      pipeLayersLocked: true
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -50,6 +47,12 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayersLocked: false
+      layerVisualStates:
+      - pipeHalf0
+      - pipeHalf
+      - pipeHalf2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -97,6 +100,12 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_passive
           map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayersLocked: false
+      layerVisualStates:
+      - pipeHalf0
+      - pipeHalf
+      - pipeHalf2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveVent
@@ -134,6 +143,12 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayersLocked: false
+      layerVisualStates:
+      - pipeHalf0
+      - pipeHalf
+      - pipeHalf2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer

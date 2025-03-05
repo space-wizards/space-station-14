@@ -1,6 +1,5 @@
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.GameStates;
-using System.IO.Pipelines;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -9,8 +8,8 @@ namespace Content.Shared.Atmos.Components;
 /// to be anchored to the same tile without their contents mixing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedAtmosPipeLayerSystem))]
-public sealed partial class AtmosPipeLayerComponent : Component
+[Access(typeof(SharedAtmosPipeLayersSystem))]
+public sealed partial class AtmosPipeLayersComponent : Component
 {
     /// <summary>
     /// The maximum pipe layer assignable.

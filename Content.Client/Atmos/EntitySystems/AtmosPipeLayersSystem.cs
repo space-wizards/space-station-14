@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace Content.Client.Atmos.EntitySystems;
 
-public sealed partial class AtmosPipeLayerSystem : SharedAtmosPipeLayerSystem
+public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosPipeAppearanceSystem _pipeAppearance = default!;
@@ -16,10 +16,10 @@ public sealed partial class AtmosPipeLayerSystem : SharedAtmosPipeLayerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AtmosPipeLayerComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnAppearanceChange(Entity<AtmosPipeLayerComponent> ent, ref AppearanceChangeEvent ev)
+    private void OnAppearanceChange(Entity<AtmosPipeLayersComponent> ent, ref AppearanceChangeEvent ev)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;

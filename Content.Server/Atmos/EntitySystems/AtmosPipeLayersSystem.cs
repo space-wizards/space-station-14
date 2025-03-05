@@ -7,11 +7,23 @@ using Content.Shared.Atmos.EntitySystems;
 
 namespace Content.Server.Atmos.EntitySystems;
 
-public sealed partial class AtmosPipeLayerSystem : SharedAtmosPipeLayerSystem
+public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
 
-    public override void SetPipeLayer(Entity<AtmosPipeLayerComponent> ent, int layer)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<AtmosPipeLayersComponent, ComponentInit>(OnInit);
+    }
+
+    private void OnInit(Entity<AtmosPipeLayersComponent> ent, ref ComponentInit args)
+    {
+        SetPipeLayer(ent, ent.Comp.CurrentPipeLayer);
+    }
+
+    public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer)
     {
         base.SetPipeLayer(ent, layer);
 
@@ -21,6 +33,9 @@ public sealed partial class AtmosPipeLayerSystem : SharedAtmosPipeLayerSystem
         foreach (var (id, node) in nodeContainer.Nodes)
         {
             if (node is not PipeNode { } pipeNode)
+                continue;
+
+            if (pipeNode.CurrentPipeLayer == ent.Comp.CurrentPipeLayer)
                 continue;
 
             pipeNode.CurrentPipeLayer = ent.Comp.CurrentPipeLayer;
