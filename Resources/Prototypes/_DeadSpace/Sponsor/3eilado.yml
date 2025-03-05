@@ -37,7 +37,6 @@
       - id: ClothingShoesBootsMag3eilado
       - id: PaperLaw3eilado
       - id: ToyBall3eilado
-      - id: ToyScythe3eilado
       - id: ClothingEyesGlassesMeson3eilado
       - id: PlushieMoth3eilado
       - id: PDA3eilado
@@ -46,19 +45,21 @@
       - id: DominatorMedkitAdvanced
       - id: ADTtelescopicBaton
       - id: SpaceCash1000
-      - id: WeaponDisablerToySponsor
       - id: ClothingHeadset3eilado
-      - id: ClothingUniformJumpsuit3eilado
-      - id: ClothingHeadHat3eilado
-      - id: ClothingOuterCoat3eilado
       - id: ClothingNeckCloak3eiladoBlack
       - id: ClothingNeckCloak3eiladoWhite
       - id: ClothingHandsRing3eilado
       - id: FoodIris3eilado
-      - id: ShardCrystalOrange3eilado
       - id: ClothingEyesSigma3eilado
       - id: ClothingNeckCharm3eilado
       - id: Hypo3eilado
+      - id: ClothingUniformJumpsuit3eiladoSpicebush
+      - id: ClothingOuterCoat3eiladoSpicebush
+      - id: Stick3eiladoSpicebush
+      - id: RCD3eilado
+      - id: ClothingHeadHat3eiladoSpicebush
+      - id: Fan3eiladoSpicebush
+      - id: ClothingShoesBoots3eilado
 
 # Belt
 - type: entity
@@ -362,7 +363,6 @@
   id: ToyScythe3eilado
   name: игручешная кроваво-красная коса
   description: Удобная технологичная коса, будь та настоящей, ей было бы весело наказывать врагов.
-  categories: [ HideSpawnMenu ]
   components:
   - type: EnergySword
     colorOptions:
@@ -564,7 +564,6 @@
   id: ClothingUniformJumpsuit3eilado
   name: белая рубашка
   description: Удобная белая рубашка для комплекта «полярная ночь»
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/jumpsuit.rsi
@@ -577,7 +576,6 @@
   id: ClothingHeadHat3eilado
   name: шляпа полярной ночи
   description: Удобный головной убор.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/hat.rsi
@@ -590,7 +588,6 @@
   id: ClothingOuterCoat3eilado
   name: пальто полярной ночи
   description: Это пальто выглядит удобно.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/coat.rsi
@@ -726,7 +723,6 @@
   id: ShardCrystalOrange3eilado
   name: оранжевый осколок кристалла в форме звезды
   description: Вероятность успешного завершения этой миссии была ноль процентов. Но, видимо, в вашем случае любые расчёты теряют смысл.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -764,3 +760,116 @@
     onlyAffectsMobs: false
   - type: UseDelay
     delay: 1.0
+
+# 05.03.2025
+# jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuit3eiladoSpicebush
+  name: белый ханбок Линдеры
+  description: От этой одежды пахнет цветками линдеры. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/jumpsuit.rsi
+
+# Coat 
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoat3eiladoSpicebush
+  name: хаори цветущей E.G.O Линдеры
+  description: От этой одежды пахнет цветками линдеры. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/coat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+
+# head
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHat3eiladoSpicebush
+  name: венок цветущей Линдеры
+  description: Венок сделанный из веток куста линдеры. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/head.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/head.rsi
+
+# Stick
+- type: entity
+  parent: BaseItem
+  id: Stick3eiladoSpicebush
+  name: цветущее копье Линдеры
+  description: Копье, сделанное из веток и цветов куста линдеры.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/longstick.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/longstick.rsi
+    size: Normal
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 0
+    wideAnimationRotation: 135
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: Execution
+    doAfterDuration: 4.0
+
+#fan
+- type: entity
+  parent: BaseItem
+  id: Fan3eiladoSpicebush
+  name: цветущий веер Линдеры
+  description: Веер, сделанный из веток и цветов куста линдеры.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/fan.rsi
+    state: icon
+    scale: "0.7, 0.7"
+  - type: Item
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/fan.rsi
+    size: Normal
+
+# RCD
+- type: entity
+  id: RCD3eilado
+  parent: RCDCE
+  name: свиток «Astreya»
+  description: Свиток модификации «Макнота». Создан корпорацией 1’А.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/rcd.rsi
+    layers:
+    - state: icon
+  - type: AutoRecharge
+    rechargeDuration: 4
+
+# Shoes
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBoots3eilado
+  name: коричневые кожаные сандалии
+  description: Удобная обувь цветущей коллекции.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/shoes.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/Spicebush/shoes.rsi
