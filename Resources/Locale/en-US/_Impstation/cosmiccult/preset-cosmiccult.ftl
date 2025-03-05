@@ -35,6 +35,8 @@ cosmiccult-finale-cancel-begin = You begin to disrupt The Monument's energies..
 cosmiccult-finale-beckon-begin = You begin to Beckon The Unknown..
 cosmiccult-finale-beckon-success = You beckon for the final curtain call.
 
+cosmiccult-monument-powerdown = The Monument falls silent..
+
 ## ROUNDEND TEXT
 
 cosmiccult-roundend-cultist-count = {$initialCount ->
@@ -66,8 +68,8 @@ cosmiccult-summary-crewminor = The cult has been left leaderless.
 cosmiccult-summary-crewmajor = All cosmic cultists were eliminated.
 cosmiccult-summary-crewcomplete = Every single cosmic cultist was deconverted!
 
-cosmiccult-elimination-shuttle-call = Based on our scans from our long-range sensors, the Λ-CDM anomaly has subsided! We will call emergency shuttle that will arrive shortly. ETA: {$time} {$units}. You can recall the shuttle to extend the shift.
-cosmiccult-elimination-announcement = Based on our scans from our long-range sensors, the Λ-CDM anomaly has subsided! Shuttle is already called.
+cosmiccult-elimination-shuttle-call = Based on scans from our long-range sensors, the Λ-CDM anomaly has subsided. We will call emergency shuttle that will arrive shortly. ETA: {$time} {$units}. You can recall the shuttle to extend the shift.
+cosmiccult-elimination-announcement = Based on scans from our long-range sensors, the Λ-CDM anomaly has subsided. Shuttle is already called.
 
 
 ## BRIEFINGS
