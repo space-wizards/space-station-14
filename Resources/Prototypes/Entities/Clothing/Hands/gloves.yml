@@ -444,3 +444,67 @@
     fiberMaterial: fibers-rubber
     fiberColor: fibers-yellow
   - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsCatPaws
+  name: cat paws gloves
+  description: Extra soft cat paws, especially made for the most stern assistants.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/paws.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/paws.rsi
+    
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsWhite
+  components:
+  - type: Sprite
+    state: white
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: white-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-white
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsBrown
+  components:
+  - type: Sprite
+    state: brown
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: brown-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-brown
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsBlack
+  components:
+  - type: Sprite
+    state: black
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: black-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsCatPaws
+  id: ClothingHandsCatPawsBlackWhite
+  components:
+  - type: Sprite
+    state: black_white
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: black_white-equipped-HAND
+  - type: Fiber
+    fiberColor: fibers-grey
