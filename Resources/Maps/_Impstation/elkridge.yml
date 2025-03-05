@@ -12738,7 +12738,7 @@ entities:
   - uid: 362
     components:
     - type: MetaData
-      name: airlock (Tech Vault)
+      name: airlock (Engi Storage)
     - type: Transform
       pos: 34.5,-5.5
       parent: 2
@@ -12867,13 +12867,6 @@ entities:
       name: airlock (Station Anchor)
     - type: Transform
       pos: 44.5,-5.5
-      parent: 2
-  - uid: 11339
-    components:
-    - type: MetaData
-      name: airlock (Gravity Generator)
-    - type: Transform
-      pos: 38.5,-5.5
       parent: 2
   - uid: 12076
     components:
@@ -14000,7 +13993,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292255.38
+      secondsUntilStateChange: -292327.1
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -78195,8 +78188,17 @@ entities:
       parent: 2
   - uid: 4996
     components:
+    - type: MetaData
+      name: high security door (Tech Vault)
     - type: Transform
       pos: 36.5,-2.5
+      parent: 2
+  - uid: 6569
+    components:
+    - type: MetaData
+      name: high security door (Grav Gen)
+    - type: Transform
+      pos: 38.5,-5.5
       parent: 2
 - proto: HolopadAiCore
   entities:
