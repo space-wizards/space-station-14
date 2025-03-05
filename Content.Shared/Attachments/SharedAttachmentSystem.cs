@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Attachments;
 
@@ -55,39 +56,45 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
         if (!TryComp(reference, out AttachmentComponent? attachment))
             return;
 
-        var compRegistry = GetComponentsFromComp(uid.Comp, containerID);
-        if (compRegistry is null)
+        if (!_timing.ApplyingState && _netMan.IsClient)
             return;
 
-        foreach (var (compName, compRegistryEntry) in compRegistry)
+        if (GetComponentsFromComp(uid.Comp, containerID) is not {} components)
+            return;
+
+        foreach (var (componentName, componentEntry) in components)
         {
-            if (!_factory.TryGetRegistration(compName, out var componentRegistration))
+            if (!_factory.TryGetRegistration(componentName, out var componentRegistration))
                 continue;
 
             var componentType = componentRegistration.Type;
 
-            if (!HasComp(reference, componentType))
+            if (!EntityManager.TryGetComponent(reference, componentType, out var referenceComp))
                 continue;
 
             EntityManager.TryGetComponent(uid, componentType, out var comp);
-            if (_timing.IsFirstTimePredicted || _netMan.IsServer)
+            if (_netMan.IsServer)
             {
                 if (comp is null || attachment.ForceComponents)
                 {
-                    comp = _factory.GetComponent(compRegistryEntry);
+                    comp = _factory.GetComponent(componentEntry);
                     EntityManager.AddComponent(uid, comp, overwrite: attachment.ForceComponents);
                     uid.Comp.AddedComps.Add((reference, comp.GetType()));
+                }
+
+                if (uid.Comp.CopyAllFields?.Contains(componentName) is true)
+                {
+                    _serializer.CopyTo(referenceComp, ref comp, notNullableOverride: true);
+                }
+                else if (uid.Comp.Fields?[componentName] is {} fields)
+                {
+                    CopyComponentFields(referenceComp, ref comp, componentType, fields);
                 }
             }
             else
             {
                 if (comp is {})
-                    _serializer.CopyTo(compRegistryEntry.Component, ref comp, notNullableOverride: true);
-            }
-
-            if (comp is {} && _netMan.IsServer && uid.Comp.Fields?[compName] is {} fields)
-            {
-                CopyComponentFields(EntityManager.GetComponent(reference, componentType), ref comp, componentType, fields);
+                    _serializer.CopyTo(componentEntry.Component, ref comp, notNullableOverride: true);
             }
         }
     }
@@ -96,9 +103,11 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
     {
         if (!_timing.IsFirstTimePredicted)
             return;
+
         if (!HasComp<AttachmentComponent>(reference)
             || uid.Comp.AddedComps.Count == 0)
             return;
+
         var compRegistry = GetComponentsFromComp(uid.Comp, containerID);
         if (compRegistry is null)
             return;

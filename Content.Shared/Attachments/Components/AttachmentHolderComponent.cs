@@ -26,6 +26,13 @@ public sealed partial class AttachmentHolderComponent : Component
     [DataField]
     public Dictionary<string, List<string>>? Fields;
 
+    /// <summary>
+    ///     If a component name exists in this list, every field will be copied from the reference.
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public List<string>? CopyAllFields;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public List<(EntityUid, Type)> AddedComps = new ();
 }
