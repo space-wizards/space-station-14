@@ -3,7 +3,7 @@ using Content.Server.Speech.Components;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class RussianAccentSystem : EntitySystem
+public sealed class RussianAccentSystem : EntitySystem, IAccentSystem
 {
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
     public override void Initialize()

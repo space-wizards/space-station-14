@@ -1,9 +1,10 @@
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed class OwOAccentSystem : EntitySystem
+    public sealed class OwOAccentSystem : EntitySystem, IAccentSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -31,16 +32,6 @@ namespace Content.Server.Speech.EntitySystems
             return message.Replace("!", _random.Pick(Faces))
                 .Replace("r", "w").Replace("R", "W")
                 .Replace("l", "w").Replace("L", "W");
-        }
-
-        public string MaybeAccentuate(string? message, float chance = 1.0f)
-        {
-            if (message == null || !_random.Prob(chance))
-            {
-                return message ?? string.Empty;
-            }
-
-            return Accentuate(message);
         }
 
         private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)

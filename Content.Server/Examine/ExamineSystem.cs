@@ -13,7 +13,8 @@ namespace Content.Server.Examine
     public sealed class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private readonly VerbSystem _verbSystem = default!;
-        [Dependency] private readonly OwOAccentSystem _owOAccentSystem = default!;
+
+        private readonly RandomAccentuator _randomAccentuator = new();
 
         private readonly FormattedMessage _entityNotFoundMessage = new();
         private readonly FormattedMessage _entityOutOfRangeMessage = new();
@@ -72,18 +73,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
             var text = GetExamineText(entity, player.AttachedEntity);
-            var textAccentified = new FormattedMessage();
-            foreach (var msg in text.Nodes)
-            {
-                if (msg.Name is not null)
-                    continue;
-
-                var nodeText = msg.Value.StringValue ?? "";
-                nodeText = _owOAccentSystem.MaybeAccentuate(nodeText);
-                textAccentified.AddText(nodeText);
-            }
-
-            text = textAccentified;
+            text = _randomAccentuator.MaybeAccentuate(text);
 
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);
