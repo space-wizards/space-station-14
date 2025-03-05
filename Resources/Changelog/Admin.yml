@@ -843,5 +843,18 @@ Entries:
   id: 105
   time: '2025-02-28T20:51:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35520
+- author: Beck Thompson, Errant
+  changes:
+  - message: Brand new players with NULL playtime data are no longer missing the clock
+      icon in the Bwoink menu. Disconnected new players also no longer lose their
+      clock icon.
+    type: Fix
+  - message: Connected players who have entered the round are now sorted above connected
+      players who are still in the lobby. Players still in the lobby have a half-full
+      symbol.
+    type: Tweak
+  id: 106
+  time: '2025-03-05T16:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35648
 Name: Admin
 Order: 1
