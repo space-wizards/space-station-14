@@ -34,3 +34,22 @@ scramble-implant-activated-popup = Your appearance shifts and changes!
 
 deathrattle-implant-dead-message = {$user} has died {$position}.
 deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required {$position}.
+
+## Implants
+sad-trombone-implant = sad trombone {$baseName}
+light-implant = light {$baseName}
+bike-horn-implant = bike horn {$baseName}
+tracking-implant = tracking {$baseName}
+storage-implant = storage {$baseName}
+freedom-implant = freedom {$baseName}
+radio-implant = radio {$baseName}
+uplink-implant = uplink {$baseName}
+emp-implant = EMP {$baseName}
+scram-implant = scram {$baseName}
+micro-bomb-implant = micro-bomb {$baseName}
+macro-bomb-implant = macro-bomb {$baseName}
+death-acidifier-implant = death-acidifer {$baseName}
+death-rattle-implant = death rattle {$baseName}
+fake-mindshield-implant = fake mindshield {$baseName}
+mindshield-implant = mindshield {$baseName}
+radio-centcomm-implant = radio centcomm {$baseName}

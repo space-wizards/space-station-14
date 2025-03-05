@@ -31,6 +31,14 @@ public sealed partial class CleanForensicsDoAfterEvent : SimpleDoAfterEvent
 }
 
 /// <summary>
+/// Raised when a Successful clean doafter has occured.
+/// </summary>
+[ByRefEvent]
+public record struct ForensicsCleanedEvent()
+{
+};
+
+/// <summary>
 /// An event to apply DNA evidence from a donor onto some recipient.
 /// </summary>
 [ByRefEvent]

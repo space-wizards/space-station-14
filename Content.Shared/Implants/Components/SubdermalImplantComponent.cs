@@ -56,6 +56,12 @@ public sealed partial class SubdermalImplantComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? DrawableProtoIdOverride;
+
+    /// <summary>
+    /// The Name of localization id of the implant for naming the Implanter
+    /// </summary>
+    [DataField]
+    public LocId ImplantLoc;
 }
 
 /// <summary>

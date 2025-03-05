@@ -11,6 +11,8 @@
     - type: ContainerContainer
       containers:
         implanter_slot: !type:ContainerSlot { }
+    - type: NameModifier
+      baseName: Implanter
     - type: Implanter
       whitelist:
         components:
@@ -108,6 +110,7 @@
   description: A disposable syringe exclusively designed for the injection of subdermal implants.
   abstract: true
   components:
+
     - type: Sprite
       sprite: Objects/Specific/Medical/implanter.rsi
       state: implanter0
@@ -124,10 +127,11 @@
 - type: entity
   id: BaseImplantOnlyImplanterSyndi
   parent: [BaseImplantOnlyImplanter, BaseSyndicateContraband]
-  name: syndicate implanter
-  description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
+  description: A compact disposable syringe exclusively designed for the injection of subdermal implants. Remember to use soap to clean the evidence!
   abstract: true
   components:
+    - type: NameModifier
+      baseName: Syndicate Implanter
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
     - type: Sprite

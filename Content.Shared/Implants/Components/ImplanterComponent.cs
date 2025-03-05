@@ -107,6 +107,12 @@ public sealed partial class ImplanterComponent : Component
     [AutoNetworkedField]
     public EntProtoId? DeimplantChosen = null;
 
+    /// <summary>
+    /// Stores the current stored implant name, to be cleared if someone cleans the evidence off of the implanter.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? CurrentImplanterLoc;
+
     public bool UiUpdateNeeded;
 }
 
