@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: Added three new vessels able to be purchased from the shipyard console.
-    type: Add
-  id: 734
-  time: '2024-12-14T13:55:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1012
 - author: TGRCdev
   changes:
   - message: Vapor tank continues to vaporize water when it's low on water.
@@ -4061,3 +4054,10 @@
   id: 1233
   time: '2025-03-05T22:20:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1843
+- author: sageu
+  changes:
+  - message: gleep zazz dom-un! More grayspeak words.
+    type: Add
+  id: 1234
+  time: '2025-03-05T22:30:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1838
