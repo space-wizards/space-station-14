@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using Content.Shared.Attachments;
 using Robust.Shared.Utility;
 
@@ -10,26 +11,26 @@ public sealed partial class AttachmentSystem : SharedAttachmentSystem
     {
         foreach (var field in fields)
         {
-            if (ComponentType.GetField(field) is { } propInfo)
-                propInfo.SetValue(target, propInfo.GetValue(source));
+            FieldInfo propInfo;
+            if (ComponentType.GetField(field) is { } propInfoNormal)
+                propInfo = propInfoNormal;
+            else if (ComponentType.GetField(char.ToUpper(field[0]) + field[1..]) is { } propInfoUpper) // Try harder
+                propInfo = propInfoUpper;
+            else if (ComponentType.GetFields()
+                         .ToList()
+                         .Find(fieldInfo => fieldInfo.HasCustomAttribute<DataFieldAttribute>()) is {} fieldInfoExisting
+                     && fieldInfoExisting.GetCustomAttribute<DataFieldAttribute>()!.Tag == field) // Try even harder
+            {
+                // Try even harder
+                propInfo = fieldInfoExisting;
+            }
+            
             else
             {
-                foreach (var fieldinfo in ComponentType.GetFields())
-                {
-                    if (fieldinfo.HasCustomAttribute<DataFieldAttribute>())
-                    {
-                        var dataFieldAttr = fieldinfo.GetCustomAttribute<DataFieldAttribute>();
-                        if (dataFieldAttr?.Tag is {})
-                            throw new ArgumentException(
-                                $"'{field}' is not a field in component {ComponentType}! Did you mean '{dataFieldAttr.Tag}'?");
-                        else
-                            throw new ArgumentException(
-                                $"'{field}' is not a field in component {ComponentType}! Did you forget to capitalize it?");
-                    }
-                }
                 throw new ArgumentException(
-                    $"'{field}' is not a field or DataField in component {ComponentType}! Did you type it correctly?");
+                    $"Field '{field}' does not exist publicly in component type '{ComponentType}'");
             }
+            propInfo.SetValue(target, propInfo.GetValue(source));
         }
     }
 }

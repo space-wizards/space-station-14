@@ -25,6 +25,12 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
         SubscribeLocalEvent<AttachmentHolderComponent, EntRemovedFromContainerMessage>(OnItemRemove);
         SubscribeLocalEvent<AttachmentHolderComponent, EntGotInsertedIntoContainerMessage>(OnInsertInto);
         SubscribeLocalEvent<AttachmentHolderComponent, EntGotRemovedFromContainerMessage>(OnRemoveFrom);
+        SubscribeLocalEvent<AttachmentHolderComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(Entity<AttachmentHolderComponent> uid, ref ComponentInit args)
+    {
+
     }
 
     protected abstract void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields) where T : IComponent;
