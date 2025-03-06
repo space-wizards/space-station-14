@@ -1,8 +1,8 @@
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
-using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
+using Robust.Shared.Reflection;
 using System.Numerics;
 
 namespace Content.Client.Atmos.EntitySystems;
@@ -11,6 +11,7 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosPipeAppearanceSystem _pipeAppearance = default!;
+    [Dependency] private readonly IReflectionManager _reflection = default!;
 
     public override void Initialize()
     {
@@ -35,10 +36,18 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
             _pipeAppearance.SetLayerState((ent, pipeAppearance), connectorState);
         }
 
-        if (ent.Comp.OffsetAboveFloorLayers &&
-            _appearance.TryGetData<Vector2>(ent, SubfloorLayers.FirstLayer, out var offset))
+        if (_appearance.TryGetData<Vector2>(ent, PipeVisualLayers.Device, out var offset))
         {
-            sprite.LayerSetOffset(SubfloorLayers.FirstLayer, offset);
+            foreach (var layer in ent.Comp.LayersToOffset)
+                sprite.LayerSetOffset(ParseKey(layer), offset);
         }
+    }
+
+    private object ParseKey(string keyString)
+    {
+        if (_reflection.TryParseEnumReference(keyString, out var @enum))
+            return @enum;
+
+        return keyString;
     }
 }

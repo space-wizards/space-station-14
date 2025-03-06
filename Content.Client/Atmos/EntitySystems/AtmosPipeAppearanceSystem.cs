@@ -3,7 +3,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.EntitySystems;

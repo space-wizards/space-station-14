@@ -32,9 +32,16 @@ public sealed partial class AtmosPipeLayersComponent : Component
     [DataField]
     public string[] LayerVisualStates = new string[MaxPipeLayer + 1];
 
+    /// <summary>
+    /// A hashset of sprite layers which be automatically offset by a 
+    /// pre-specified Vector2 when the pipe layer changes.
+    /// </summary>
     [DataField]
-    public bool OffsetAboveFloorLayers = false;
+    public HashSet<string> LayersToOffset = new();
 
+    /// <summary>
+    /// The pipe layers of this entity cannot be changed when this value is true. 
+    /// </summary>
     [DataField]
     public bool PipeLayersLocked = false;
 

@@ -24,7 +24,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     The layer to which the pipe node is assigned
         /// </summary>
-        [DataField]
+        [DataField("pipeLayer")]
         public byte CurrentPipeLayer = 0;
 
         /// <summary>

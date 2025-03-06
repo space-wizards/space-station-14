@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
-  id: GasPipeBase
   parent: BaseItem
+  id: GasPipeSansVisuals
   name: pipe
   description: Holds gas.
   placement:
@@ -16,7 +16,6 @@
     damageModifierSet: Metallic
   - type: SubFloorHide
   - type: CollideOnAnchor
-  - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
   - type: Destructible
@@ -49,12 +48,9 @@
     drawdepth: ThinPipe
     visible: false
   - type: Appearance
-  - type: PipeColorVisuals
   - type: NodeContainer
-  - type: AtmosPipeLayers
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
-  - type: AtmosPipeColor
   - type: AtmosMonitoringConsoleDevice
   - type: Tag
     tags:
@@ -65,6 +61,16 @@
   - type: StaticPrice
     price: 30
 
+- type: entity
+  abstract: true  
+  parent: GasPipeSansVisuals
+  id: GasPipeBase
+  components:
+  - type: AtmosPipeColor
+  - type: AtmosPipeLayers
+  - type: PipeColorVisuals
+  - type: PipeAppearance
+  
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
 - type: entity
@@ -289,10 +295,11 @@
       - state: pipeBroken
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
+    pipeLayersLocked: true
     layerVisualStates:
     - pipeBroken
-    - pipeBroken1
-    - pipeBroken2
+    - pipeBroken
+    - pipeBroken
   - type: Construction
     graph: GasPipe
     node: broken

@@ -4,7 +4,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.SubFloor;
 using Content.Shared.Verbs;
 using System.Numerics;
 
@@ -49,7 +48,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var v = new AlternativeVerb
             {
                 Priority = 1,
-                Category = VerbCategory.SelectType,
+                Category = VerbCategory.ChangePipeLayer,
                 Text = label,
                 Disabled = i == ent.Comp.CurrentPipeLayer,
                 Impact = LogImpact.Low,
@@ -97,9 +96,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         {
             _appearance.SetData(ent, PipeVisualLayers.Pipe, ent.Comp.LayerVisualStates[ent.Comp.CurrentPipeLayer], appearance);
             _appearance.SetData(ent, PipeVisualLayers.Connector, ent.Comp.ConnectorVisualStates[ent.Comp.CurrentPipeLayer], appearance);
-
-            if (ent.Comp.OffsetAboveFloorLayers)
-                _appearance.SetData(ent, SubfloorLayers.FirstLayer, _layerOffsets[ent.Comp.CurrentPipeLayer], appearance);
+            _appearance.SetData(ent, PipeVisualLayers.Device, _layerOffsets[ent.Comp.CurrentPipeLayer], appearance);
         }
     }
 }

@@ -85,5 +85,8 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory SelectType = new("verb-categories-select-type", null);
 
         public static readonly VerbCategory PowerLevel = new("verb-categories-power-level", null);
+
+        public static readonly VerbCategory ChangePipeLayer =
+            new("verb-categories-change-pipe-layer", "/Textures/Interface/VerbIcons/spanner.png");
     }
 }

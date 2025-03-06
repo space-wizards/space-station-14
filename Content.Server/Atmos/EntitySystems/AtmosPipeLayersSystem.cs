@@ -25,6 +25,9 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 
     public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer)
     {
+        if (ent.Comp.PipeLayersLocked)
+            return;
+
         base.SetPipeLayer(ent, layer);
 
         if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
