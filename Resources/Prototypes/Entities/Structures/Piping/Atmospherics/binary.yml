@@ -429,7 +429,7 @@
     sprite: Structures/Machines/gasrecycler.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight
+      state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: running
     - state: unlit
