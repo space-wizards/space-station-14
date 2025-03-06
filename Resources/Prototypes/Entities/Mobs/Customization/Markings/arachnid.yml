@@ -5,7 +5,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chelicerae.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chelicerae.rsi #imp, redirects to our lighter version
     state: downwards
 
 - type: marking
@@ -14,7 +14,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chelicerae.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chelicerae.rsi #imp, redirects to our lighter version
     state: inwards
 
 # Appendages

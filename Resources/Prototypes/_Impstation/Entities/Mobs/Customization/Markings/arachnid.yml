@@ -72,10 +72,6 @@
   markingCategory: HeadSide
   speciesRestriction: [Arachnid]
   forcedColoring: false
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
   sprites:
   - sprite: _Impstation/Mobs/Customization/Arachnid/chelicerae.rsi
     state: small
