@@ -12,7 +12,6 @@
     spawnDistance: 0
   - type: AntagSpawner
     prototype: MobRogueAscended
-  - type: RogueAscendedRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective
@@ -26,3 +25,9 @@
       pickPlayer: false
       mindRoles:
       - MindRoleCosmicAscendant
+      briefing:
+        text: ninja-role-greeting
+        color: Green
+        sound: /Audio/Misc/ninja_greeting.ogg
+      components:
+      - type: RogueAscended

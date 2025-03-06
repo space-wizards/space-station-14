@@ -4,3 +4,9 @@ ghost-role-information-rogue-ascended-rules = You are a [color=red][bold]Team An
 
 petting-success-rogue-ascended = Dodging lashing tendrils and ripples of astral power, you pet {THE($target)}, somehow.
 petting-failure-rogue-ascended = You begin to raise your hand.. But then you decide you'd rather not be reduced to your component elements.
+
+rogue-ascended-round-end-agent-name = dragon
+
+objective-issuer-rogue-ascended = [color=#7567b6]Astral Ascendant[/color]
+
+rogue-ascended-role-briefing = Shit yourshelf {$direction}.
