@@ -13,3 +13,75 @@
   - type: Item
     size: Small
     heldPrefix: lungs
+
+- type: entity
+  id: OrganVoxStomach
+  parent: OrganAnimalStomach
+  name: vox stomach
+  description: "A blue stomach that smells of garbage."
+  components:
+  - type: Organ
+  - type: Sprite
+    Sprite: Mobs/Species/Human/organs.rsi
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Trash
+      - Fruit
+      - ReptilianFood
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
+      - VoxFood
+      - Vegetable
+
+- type: entity
+  id: OrganVoxLiver
+  parent: OrganAnimalLiver
+  name: liver
+  description: "Blue and smells flammable."
+  components:
+  - type: Sprite
+    state: liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [Vox]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganVoxHeart
+  parent: BaseAnimalOrgan
+  name: heart
+  description: "The strange blue heart of a vox"
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Item
+    size: Small
+    heldPrefix: heart
+  - type: Metabolizer
+    updateInterval: 1.5
+    maxReagents: 2
+    metabolizerTypes: [Vox]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic

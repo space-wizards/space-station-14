@@ -43,6 +43,9 @@
   - type: Food
     trash: 
     - FoodPacketBoritosTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: C&Ds
@@ -59,6 +62,9 @@
   - type: Food
     trash: 
     - FoodPacketCnDsTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: cheesie honkers
@@ -76,6 +82,9 @@
   - type: Food
     trash: 
     - FoodPacketCheesieTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: chips
@@ -94,6 +103,9 @@
   - type: Food
     trash: 
     - FoodPacketChipsTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: chocolate bar
@@ -110,6 +122,7 @@
   - type: Tag
     tags:
       - FoodSnack
+      - VoxFood
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
@@ -160,6 +173,7 @@
       - id: FoodSnackEnergyBar
     sound:
       path: /Audio/Effects/unwrap.ogg
+      
 
 - type: entity
   name: energy bar
@@ -176,6 +190,9 @@
   - type: Sprite
     state: energybar-open
   - type: Item
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: sweetie's pistachios
@@ -215,6 +232,9 @@
   - type: Food
     trash: 
     - FoodPacketPopcornTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: 4no raisins
@@ -250,6 +270,9 @@
   - type: Food
     trash: 
     - FoodPacketSemkiTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: sus jerky
@@ -285,6 +308,9 @@
   - type: Food
     trash: 
     - FoodPacketSyndiTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   parent: FoodSnackBase
@@ -310,6 +336,9 @@
   - type: Food
     trash: 
     - FoodPacketCupRamenTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   parent: DrinkRamen
@@ -353,6 +382,9 @@
   - type: Food
     trash: 
     - FoodPacketChowMeinTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: dan dan noodles
@@ -382,6 +414,9 @@
   - type: Food
     trash: 
     - FoodPacketDanDanTrash
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   name: fortune cookie
@@ -408,6 +443,9 @@
   - type: Food
     trash: 
     - FoodCookieFortune
+  - type: Tag
+    tags:
+      - VoxFood
 
 - type: entity
   id: FoodSnackNutribrick
@@ -474,7 +512,6 @@
     sound:
       path: /Audio/Effects/unwrap.ogg
 
-
 - type: entity
   id: FoodSnackMREBrownieOpen
   parent: FoodSnackBase
@@ -497,6 +534,9 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+  - type: Tag
+    tags:
+      - VoxFood
 
 # Trash
 
@@ -522,6 +562,16 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
+  - type: Food
+    requiresSpecialDigestion: true
+
 
 - type: entity
   categories: [ HideSpawnMenu ]
