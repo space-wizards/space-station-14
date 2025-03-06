@@ -48,10 +48,12 @@
   recipeUnlocks:
   - SpeedLoaderMagnumAP
   - MagazinePistolAP
+  - MagazinePistol40AP
   - MagazineRifleAP
   - MagazineLightRifleAP
   - MagazineBoxMagnumAP
   - MagazineBoxPistolAP
+  - MagazineBoxPistol40AP
   - MagazineBoxRifleAP
   - MagazineBoxLightRifleAP
   - LightRifleHeavyMagazineAP

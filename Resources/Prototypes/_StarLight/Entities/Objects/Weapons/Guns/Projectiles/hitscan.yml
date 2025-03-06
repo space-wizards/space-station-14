@@ -298,7 +298,7 @@
       state: ap
       
 - type: hitscan
-  id: BulletPistolTrace40NrSP
+  id: BulletPistolTrace40SP
   parent: BulletTrace
   staminaDamage: 15
   damage:
@@ -314,7 +314,7 @@
   ricochetChance: 0.20
   
 - type: hitscan
-  id: BulletPistolTrace40NrHP
+  id: BulletPistolTrace40HP
   parent: BulletTrace
   staminaDamage: 20
   damage:
@@ -330,7 +330,7 @@
   ricochetChance: 0.10
   
 - type: hitscan
-  id: BulletPistolTrace40NrFMJ
+  id: BulletPistolTrace40FMJ
   parent: BulletTrace
   staminaDamage: 13
   damage:
@@ -347,7 +347,7 @@
   pierceLevel: Wood
   
 - type: hitscan
-  id: BulletPistolTrace40NrAP
+  id: BulletPistolTrace40AP
   parent: BulletTrace
   staminaDamage: 10
   damage:
