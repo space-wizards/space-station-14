@@ -112,24 +112,24 @@
   params:
     variation: 0.125
   sounds:
-    Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
-    Honk:
-      collection: BikeHorn
-    Whistle:
-      collection: Whistles
     Crying:
       collection: FemaleCry
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Gasp:
+      collection: FemaleGasp
+    Hew:
+      collection: Hew
+    Honk:
+      collection: BikeHorn
+    Laugh:
+      path: /Audio/Animals/lizard_happy.ogg
+    Scream:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    Weh:
+      collection: Weh
+    Whistle:
+      collection: Whistles
 
 - type: emoteSounds
   id: MaleSlime
