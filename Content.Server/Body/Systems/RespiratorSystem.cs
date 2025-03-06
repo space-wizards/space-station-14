@@ -100,7 +100,7 @@ public sealed class RespiratorSystem : EntitySystem
                     _chat.TryEmoteWithChat(uid, respirator.GaspEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
                 }
 
-                if (TryComp<CosmicCultComponent>(uid, out var cultComponent) && !cultComponent.Respiration) return; // Imp HACK so cultists gasp but don't take respiration damage.
+                if (TryComp<CosmicCultComponent>(uid, out var cultComponent) && !cultComponent.Respiration && !_mobState.IsIncapacitated(uid)) return; // Imp HACK so cultists gasp while in crit.
                 // One line change but a refactor would be so much better. this is VERY BAD and AWFUL.
 
                 TakeSuffocationDamage((uid, respirator));

@@ -33,7 +33,7 @@ public sealed partial class CosmicCultComponent : Component
     public HashSet<ProtoId<InfluencePrototype>> UnlockedInfluences =
     [
         "InfluenceAberrantLapse",
-        "InfluenceNullGlare", // This says Glare but it's currently Shunt/Blank
+        "InfluenceShuntSubjectivity", // This says Glare but it's currently Shunt/Blank
         "InfluenceEschewMetabolism",
     ];
 

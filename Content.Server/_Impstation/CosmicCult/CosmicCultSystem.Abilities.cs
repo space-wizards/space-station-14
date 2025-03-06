@@ -22,6 +22,7 @@ using Robust.Shared.Physics.Events;
 using Content.Shared.NPC;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Doors.Components;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -55,13 +56,17 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region Force Ingress
     private void OnCosmicIngress(Entity<CosmicCultComponent> uid, ref EventCosmicIngress args)
     {
+        var target = args.Target;
         if (args.Handled)
             return;
 
         args.Handled = true;
-        _door.StartOpening(args.Target);
+        if (uid.Comp.CosmicEmpowered)
+            if (TryComp<DoorBoltComponent>(target, out var doorBolt))
+                _door.SetBoltsDown((target, doorBolt), false);
+        _door.StartOpening(target);
         _audio.PlayPvs(uid.Comp.IngressSFX, uid);
-        Spawn(uid.Comp.AbsorbVFX, Transform(args.Target).Coordinates);
+        Spawn(uid.Comp.AbsorbVFX, Transform(target).Coordinates);
         MalignEcho(uid);
     }
 
@@ -75,7 +80,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         MalignEcho(uid);
         args.Handled = true;
         var mapPos = _transform.GetMapCoordinates(args.Performer);
-        var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
+        var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10); // static range of 10. because.
         entities.RemoveWhere(entity => HasComp<CosmicCultComponent>(entity) || _container.IsEntityInContainer(entity));
         foreach (var entity in entities)
         {
@@ -89,12 +94,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
             if (!uid.Comp.CosmicEmpowered)
             {
                 _recoil.KickCamera(entity, -delta.Normalized());
-                _flash.Flash(entity, uid, args.Action, 6 * 1000f, 0.5f);
+                _flash.Flash(entity, uid, args.Action, 8 * 1000f, 0.3f);
             }
             else
             {
                 _recoil.KickCamera(entity, -delta.Normalized());
-                _flash.Flash(entity, uid, args.Action, 9 * 1000f, 0.5f);
+                _flash.Flash(entity, uid, args.Action, 10 * 1000f, 0.2f);
             }
         }
         entities.RemoveWhere(entity => !HasComp<PoweredLightComponent>(entity));
@@ -167,7 +172,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.CosmicSiphonDelay, new EventCosmicSiphonDoAfter(), uid, args.Target)
         {
-            DistanceThreshold = 1.5f,
+            DistanceThreshold = 2f,
             Hidden = true,
             BreakOnHandChange = true,
             BreakOnDamage = true,
@@ -195,14 +200,14 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _hands.TryForcePickupAnyHand(uid, entropyMote1);
         _cultRule.IncrementCultObjectiveEntropy(uid);
 
-        if (_cultRule.CurrentTier > 1 || uid.Comp.CosmicEmpowered)
+        if (uid.Comp.CosmicEmpowered) // if you're empowered there's a 50% chance to flicker lights on siphon
         {
             var lights = GetEntityQuery<PoweredLightComponent>();
-            foreach (var light in _lookup.GetEntitiesInRange(uid, 10, LookupFlags.StaticSundries)) // static range of 10, because dhsdkh dflh.
+            foreach (var light in _lookup.GetEntitiesInRange(uid, 5, LookupFlags.StaticSundries)) // static range of 5. because.
             {
                 if (!lights.HasComponent(light))
                     continue;
-                if (!_random.Prob(0.25f))
+                if (!_random.Prob(0.5f))
                     continue;
                 _ghost.DoGhostBooEvent(light);
             }

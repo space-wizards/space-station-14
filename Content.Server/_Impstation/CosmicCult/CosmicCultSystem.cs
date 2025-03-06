@@ -213,7 +213,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 var cultistsPresent = CultistCount = _cosmicGlyphs.GatherCultists(uid, 5).Count; //Let's use the cultist collecting hashset from Cosmic Glyphs to see how many folks are around!
                 CultistCount = int.Clamp(cultistsPresent, 0, 10);
                 _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-cultist-count", ("COUNT", CultistCount)), Transform(uid).Coordinates);
-                var modifyTime = TimeSpan.FromSeconds(360 * 5 / (360 - 25 * CultistCount) - 5);
+                var modifyTime = TimeSpan.FromSeconds(360 * 7 / (360 - 40 * CultistCount) - 5);
                 comp.BufferTimer -= modifyTime;
             }
         }
@@ -255,6 +255,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnStartCultLead(Entity<CosmicCultLeadComponent> uid, ref ComponentInit args)
     {
         _actions.AddAction(uid, ref uid.Comp.CosmicMonumentActionEntity, uid.Comp.CosmicMonumentAction, uid);
+        if (TryComp<CosmicCultComponent>(uid, out var cultComp))
+        {
+            cultComp.UnlockedInfluences.Remove("InfluenceShuntSubjectivity");
+            cultComp.UnlockedInfluences.Add("InfluenceNullGlare");
+            cultComp.OwnedInfluences.Add("InfluenceShuntSubjectivity");
+        }
     }
 
     /// <summary>

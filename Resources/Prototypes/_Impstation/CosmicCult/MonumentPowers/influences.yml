@@ -12,19 +12,19 @@
   action: ActionCosmicLapse
   tier: 1
 
-# - type: influence
-#   id: InfluenceNullGlare
-#   name: influence-name-glare
-#   influenceType: influence-type-active
-#   cost: 10
-#   description: influence-description-glare
-#   icon:
-#     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-#     state: glare
-#   action: ActionCosmicGlare
+- type: influence
+  id: InfluenceNullGlare
+  name: influence-name-glare
+  influenceType: influence-type-active
+  cost: 10
+  description: influence-description-glare
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: glare
+  action: ActionCosmicGlare
 
 - type: influence
-  id: InfluenceNullGlare #Yeah it's actually shunt right now but we give it the same slot
+  id: InfluenceShuntSubjectivity
   name: influence-name-shunt
   influenceType: influence-type-active
   cost: 10
