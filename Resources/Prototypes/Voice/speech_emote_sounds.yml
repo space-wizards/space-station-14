@@ -263,24 +263,24 @@
   params:
     variation: 0.125
   sounds:
-    Scream:
-      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
-    Laugh:
-      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
     Chitter:
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
-    Weh:
-      collection: Weh
+    DefaultDeathgasp:
+      collection: DeathGasp
+    Gasp:
+      collection: MaleGasp
     Hew:
       collection: Hew
     Honk:
       collection: BikeHorn
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp
+    Laugh:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+    Scream:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+    Weh:
+      collection: Weh
 
 - type: emoteSounds
   id: UnisexDwarf
