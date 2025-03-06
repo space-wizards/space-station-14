@@ -41,8 +41,8 @@
           orGroup: HolyText
         - id: HolyTextHolyTablet
           orGroup: HolyText
-        - id: HolyTextGreyBible
-          orGroup: Holytext
+        - id: HolyTextGreybible
+          orGroup: HolyText
           prob: 0.4
         - id: HolyTextKojiki
           orGroup: HolyText
