@@ -103,8 +103,7 @@ public sealed class ClumsySystem : EntitySystem
         // This event is called in shared, thats why it has all the extra prediction stuff.
         var rand = new System.Random((int)_timing.CurTick.Value);
 
-        // If someone is putting you on the table, always get past the guard.
-        if (!_cfg.GetCVar(CCVars.GameTableBonk) && args.PuttingOnTable == ent.Owner && !rand.Prob(ent.Comp.ClumsyDefaultCheck))
+        if (!_cfg.GetCVar(CCVars.GameTableBonk) && !rand.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
         HitHeadClumsy(ent, args.BeingClimbedOn);
