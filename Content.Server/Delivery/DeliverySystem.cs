@@ -4,12 +4,8 @@ using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Labels.EntitySystems;
-using Content.Shared.NameModifier.EntitySystems;
-using Content.Shared.Popups;
 using Content.Shared.StationRecords;
-using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
@@ -64,7 +60,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (TryComp<FingerprintReaderComponent>(ent, out var reader) && entry.Fingerprint != null)
         {
             _fingerprintReader.AddAllowedFingerprint((ent.Owner, reader), entry.Fingerprint);
-            Dirty(ent, reader);
         }
 
         Dirty(ent);

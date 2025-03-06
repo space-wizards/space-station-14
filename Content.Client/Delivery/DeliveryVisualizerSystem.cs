@@ -11,8 +11,7 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    [ValidatePrototypeId<JobIconPrototype>]
-    private const string UnknownIcon = "JobIconUnknown";
+    private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
 
     protected override void OnAppearanceChange(EntityUid uid, DeliveryComponent component, ref AppearanceChangeEvent args)
     {

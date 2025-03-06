@@ -3,11 +3,11 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
@@ -34,7 +34,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<DeliveryComponent, ActivateInWorldEvent>(OnUseInWorld);
+        SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
     }
 
     private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
@@ -63,20 +63,27 @@ public abstract class SharedDeliverySystem : EntitySystem
             OpenDelivery(ent, args.User);
     }
 
-    private void OnUseInWorld(Entity<DeliveryComponent> ent, ref ActivateInWorldEvent args)
+    private void OnGetVerbs(Entity<DeliveryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.Complex)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.IsOpened)
             return;
 
-        args.Handled = true;
-
-        if (ent.Comp.IsOpened)
+        if (_hands.IsHolding(args.User, ent))
             return;
 
-        if (ent.Comp.IsLocked)
-            TryUnlockDelivery(ent, args.User);
-        else
-            OpenDelivery(ent, args.User, false);
+        var user = args.User;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Act = () =>
+            {
+                if (ent.Comp.IsLocked)
+                    TryUnlockDelivery(ent, user);
+                else
+                    OpenDelivery(ent, user, false);
+            },
+            Text = ent.Comp.IsLocked ? Loc.GetString("delivery-unlock-verb") : Loc.GetString("delivery-open-verb"),
+        });
     }
 
     private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true)
@@ -87,11 +94,12 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
-        if (ent.Comp.UnlockSound != null)
-            _audio.PlayPredicted(ent.Comp.UnlockSound, user, user);
+        _audio.PlayPredicted(ent.Comp.UnlockSound, user, user);
 
         ent.Comp.IsLocked = false;
-        UpdateAntiTamperVisuals(ent, false);
+        UpdateAntiTamperVisuals(ent, ent.Comp.IsLocked);
+
+        Dirty(ent);
 
         var ev = new DeliveryUnlockedEvent(user);
         RaiseLocalEvent(ent, ref ev);
@@ -100,7 +108,6 @@ public abstract class SharedDeliverySystem : EntitySystem
             GrantSpesoReward(ent.AsNullable());
 
         _popup.PopupPredicted(Loc.GetString("delivery-unlocked", ("delivery", deliveryName)), user, user);
-        Dirty(ent);
         return true;
     }
 
@@ -108,13 +115,13 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
-        if (ent.Comp.OpenSound != null)
-            _audio.PlayPredicted(ent.Comp.OpenSound, user, user);
+        _audio.PlayPredicted(ent.Comp.OpenSound, user, user);
 
         var ev = new DeliveryOpenedEvent(user);
         RaiseLocalEvent(ent, ref ev);
 
-        _hands.TryDrop(user);
+        if (attemptPickup)
+            _hands.TryDrop(user, ent);
 
         ent.Comp.IsOpened = true;
         _appearance.SetData(ent, DeliveryVisuals.IsTrash, ent.Comp.IsOpened);

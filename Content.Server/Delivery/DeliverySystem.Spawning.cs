@@ -37,7 +37,7 @@ public sealed partial class DeliverySystem
         if (ent.Comp.SpawnSound != null)
             _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
 
-        while (amount > 0)
+        for (int i = 0; i < amount; i++)
         {
             var spawns = _entityTable.GetSpawns(ent.Comp.Table);
 
@@ -45,8 +45,6 @@ public sealed partial class DeliverySystem
             {
                 Spawn(id, coords);
             }
-
-            amount--;
         }
     }
 
