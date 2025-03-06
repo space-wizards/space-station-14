@@ -67,14 +67,14 @@ accent-transatlantic-words-18-2 = strong guy
 accent-transatlantic-words-replace-18 = baby grand
 
 accent-transatlantic-words-19 = confused
-accent-transatlantic-words-19-3 = flummoxed
-accent-transatlantic-words-19-4 = bewildered
-accent-transatlantic-words-19-5 = disorientated
-accent-transatlantic-words-19-6 = disoriented
-accent-transatlantic-words-19-7 = messed up
-accent-transatlantic-words-19-8 = screwed up
-accent-transatlantic-words-19-9 = made a mistake
-accent-transatlantic-words-19-10 = fucked up
+accent-transatlantic-words-19-2 = flummoxed
+accent-transatlantic-words-19-3 = bewildered
+accent-transatlantic-words-19-4 = disorientated
+accent-transatlantic-words-19-5 = disoriented
+accent-transatlantic-words-19-6 = messed up
+accent-transatlantic-words-19-7 = screwed up
+accent-transatlantic-words-19-8 = made a mistake
+accent-transatlantic-words-19-9 = fucked up
 accent-transatlantic-words-replace-19 = balled up
 
 accent-transatlantic-words-20 = tomboy
@@ -95,11 +95,8 @@ accent-transatlantic-words-24 = chatting
 accent-transatlantic-words-24-2 = talking
 accent-transatlantic-words-replace-24 = flapping gums
 
-accent-transatlantic-words-24 = gun
-accent-transatlantic-words-replace-24 = roscoe
-
 accent-transatlantic-words-25 = get lost
-accent-transatlantic-words-25=2 = fuck off
+accent-transatlantic-words-25-2 = fuck off
 accent-transatlantic-words-25-3 = go away
 accent-transatlantic-words-25-4 = buzz off
 accent-transatlantic-words-replace-25 = scram
@@ -109,9 +106,8 @@ accent-transatlantic-words-26-2 = epic
 accent-transatlantic-words-26-3 = fantastic
 accent-transatlantic-words-replace-26 = the bee's knees
 
-accent-transatlantic-words-27 = what's your problem
-accent-transatlantic-words-27-2 = whats your problem
-accent-transatlantic-words-replace-27 = what's your beef
+accent-transatlantic-words-27 = problem
+accent-transatlantic-words-replace-27 = beef
 
 accent-transatlantic-words-28 = corrupt
 accent-transatlantic-words-28-2 = unjust
@@ -375,3 +371,6 @@ accent-transatlantic-words-105-4 = smart alec
 accent-transatlantic-words-105-5 = smartalec
 accent-transatlantic-words-105-6 = smart-alec
 accent-transatlantic-words-replace-105 = wise guy
+
+accent-transatlantic-words-106 = gun
+accent-transatlantic-words-replace-106 = roscoe
