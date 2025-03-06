@@ -549,6 +549,24 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
+    - type: entity
+  id: BorgModuleAdvancedClowning
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: advanced clowning cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-clown
+  - type: ItemBorgModule
+    items:
+    - BikeHorn
+    - ClownRecorder
+    - BikeHornInstrument
+    - HoloprojectorBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
+
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
