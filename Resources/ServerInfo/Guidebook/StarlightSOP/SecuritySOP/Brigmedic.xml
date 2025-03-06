@@ -9,6 +9,7 @@
     <Box>    
         <GuideEntityEmbed Entity="MedkitAdvancedFilled"/>
         <GuideEntityEmbed Entity="DefibrillatorBrigmedical"/>
+        <GuideEntityEmbed Entity="HandheldBrigmedicCrewMonitor"/>
     </Box>
     <Box>
         <GuideEntityEmbed Entity="WeaponDisabler"/>
