@@ -1430,7 +1430,7 @@
 
 - type: entity
   parent: BasePlushie
-  id: ToyAmoungPequeno  # imp
+  id: ToyAmongPequeno
   name: amoung pequeño  # imp
   description: Sus!
   components:
