@@ -1,0 +1,98 @@
+﻿- type: entity
+  name: raw coffee beans
+  parent: FoodProduceBase
+  id: FoodCoffeeBeansRaw
+  description: Green coffee beans, just waiting to be roasted.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bitter
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Theobromine # Caffeine
+          Quantity: 1
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi
+    state: produce-beans
+  - type: Tag
+    tags:
+    - Fruit
+  - type: Construction
+    graph: Coffee
+    node: start
+    defaultTarget: light roasted coffee
+  - type: AtmosExposed # Expose the beans to atmosphere - heats and cools them
+  - type: Temperature # Temperature components needed to cook the beans
+    currentTemperature: 290
+  - type: InternalTemperature
+    thickness: 0.008 # 8mm (roughly bean sized)
+    area: .2 # essentially a giant sheet of beans
+
+- type: entity
+  name: light roasted coffee beans
+  parent: FoodProduceBase
+  id: FoodCoffeeBeansRoastedLight
+  description: Cinnamon roast coffee beans. Bright and fruity.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bitter
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: CoffeeGrounds
+          Quantity: 5
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi
+    state: produce-beans-light
+  - type: Tag
+    tags:
+    - Fruit
+  - type: Construction
+    graph: Coffee
+    node: light roasted coffee
+    defaultTarget: medium roasted coffee
+  - type: AtmosExposed # Expose the beans to atmosphere - heats and cools them
+  - type: Temperature # Temperature components needed to cook the beans
+  - type: InternalTemperature
+    thickness: 0.008 # 8mm (roughly bean sized)
+    area: .2 # essentially a giant sheet of beans
+    conductivity: 1.5 # Arbitrarily chosen
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: medium roasted coffee beans
+  parent: FoodCoffeeBeansRoastedLight
+  id: FoodCoffeeBeansRoastedMedium
+  description: City roast coffee beans. Smooth and nutty.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi
+    state: produce-beans-medium
+  - type: Construction
+    graph: Coffee
+    node: medium roasted coffee
+    defaultTarget: dark roasted coffee
+
+- type: entity
+  name: dark roasted coffee beans
+  parent: FoodCoffeeBeansRoastedLight
+  id: FoodCoffeeBeansRoastedDark
+  description: Viennese roast coffee beans. Smoky and spicy.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi
+    state: produce-beans-dark
+  - type: Construction
+    graph: Coffee
+    node: dark roasted coffee
