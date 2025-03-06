@@ -221,20 +221,20 @@
 
 - type: emoteSounds
   id: UnisexVox
-  sounds:
-    Scream:
-      path: /Audio/Voice/Vox/shriek1.ogg
-    Laugh:
-      path: /Audio/Voice/Vox/vox_laugh.ogg
-    Honk:
-      collection: BikeHorn
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
   params:
     variation: 0.125
     # We need vox sounds for the other emotes
+  sounds:
+    Hew:
+      collection: Hew
+    Honk:
+      collection: BikeHorn
+    Laugh:
+      path: /Audio/Voice/Vox/vox_laugh.ogg
+    Scream:
+      path: /Audio/Voice/Vox/shriek1.ogg
+    Weh:
+      collection: Weh
 
 - type: emoteSounds
   id: UnisexDiona
