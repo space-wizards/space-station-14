@@ -471,15 +471,13 @@ namespace Content.Client.Lobby.UI
             for (var i = 0; i < _voices.Count; i++)
             {
                 var voice = _voices[i];
-                if (Profile.Sex != Sex.Unsexed && Profile.Sex != voice.Sex)
-                    continue;
 
-                VoiceButton.AddItem(Loc.GetString(voice.Name), i);
+                VoiceButton.AddItem($"[{voice.Sex}] {Loc.GetString(voice.Name)}", i);
             }
 
             if (string.IsNullOrEmpty(Profile.Voice))
             {
-                var available = _voices.Where(x => Profile.Sex == Sex.Unsexed || x.Sex == Profile.Sex).ToArray();
+                var available = _voices.ToArray();
                 if (available.Length > 0)
                 {
                     var index = new Random().Next(0, available.Length);
