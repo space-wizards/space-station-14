@@ -238,25 +238,25 @@
 
 - type: emoteSounds
   id: UnisexDiona
-  sounds:
-    Scream:
-      path: /Audio/Voice/Diona/diona_scream.ogg
-    Laugh:
-      collection: DionaLaugh
-    Chirp:
-      path: /Audio/Animals/nymph_chirp.ogg
-    Honk:
-      collection: BikeHorn
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp
   params:
     variation: 0.125
+  sounds:
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg
+    DefaultDeathgasp:
+      collection: DeathGasp
+    Hew:
+      collection: Hew
+    Honk:
+      collection: BikeHorn
+    Gasp:
+      collection: MaleGasp
+    Laugh:
+      collection: DionaLaugh
+    Scream:
+      path: /Audio/Voice/Diona/diona_scream.ogg
+    Weh:
+      collection: Weh
 
 - type: emoteSounds
   id: UnisexArachnid
