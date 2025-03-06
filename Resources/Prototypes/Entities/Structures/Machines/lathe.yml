@@ -406,6 +406,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - PRIbarPlusConversionKit #imp
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
       - TelescopicShield
@@ -813,6 +814,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - PRIbarPlusConversionKit #imp
       - ShuttleGunDusterCircuitboard
       - ShuttleGunFriendshipCircuitboard
       - ShuttleGunPerforatorCircuitboard

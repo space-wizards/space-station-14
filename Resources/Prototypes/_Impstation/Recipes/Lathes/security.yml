@@ -15,7 +15,7 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
-    
+
 - type: latheRecipe
   parent: BaseWeaponRecipe
   id: FullAutoConversionKit
@@ -24,7 +24,7 @@
     Steel: 500
     Glass: 200
     Plastic: 500
-    
+
 - type: latheRecipe
   parent: BaseWeaponRecipe
   id: HyperBurstConversionKit
@@ -33,7 +33,15 @@
     Steel: 500
     Glass: 200
     Plastic: 500
-    
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: PRIbarPlusConversionKit
+  result: PRIbarPlusConversionKit
+  materials:
+    Steel: 500
+    Plastic: 500
+
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe
   id: MagazineLPistolEmpty
@@ -78,7 +86,7 @@
   result: MagazineBoxLPistol
   materials:
     Steel: 1000
-    
+
 - type: latheRecipe
   parent: BaseAmmoRecipe
   id: MagazineBoxLPistolIncendiary

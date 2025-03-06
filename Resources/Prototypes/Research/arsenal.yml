@@ -127,12 +127,13 @@
   id: SpecialMeans
   name: research-technology-special-means
   icon:
-    sprite: Clothing/Back/Backpacks/electropack.rsi
+    sprite: _Impstation/Objects/Tools/pribarplus.rsi #imp, changed so people won't gloss over it (nobody wants electropacks)
     state: icon
   discipline: Arsenal
   tier: 1
   cost: 5000
   recipeUnlocks:
+  - PRIbarPlusConversionKit #imp
   - ClothingBackpackElectropack
 
 # Tier 2
