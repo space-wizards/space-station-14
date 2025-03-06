@@ -478,15 +478,19 @@ namespace Content.Client.Construction.UI
             PopulateCategories(_selectedCategory);
         }
 
+        // The favorites list is stored within a CVar and shared between multiple SS14 forks with potentially differing behaviors.
+        // To minimize fighting between clients, the following rules should be observed when updating the variable:
+        //  - Do not remove or modify unrecognized entries. Other forks may have different recipes.
+        //  - Do not rearrange the list unless the player intentionally performs some action to do so.
         public void SetFavorites(string favorites)
         {
             _favoritedRecipes.Clear();
             _favoritedRecipeIDs.Clear();
 
-            _favoritedRecipeIDs.AddRange(favorites.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries));
+            _favoritedRecipeIDs.AddRange(favorites.Split(','));
             foreach (var id in _favoritedRecipeIDs)
             {
-                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe))
+                if (_prototypeManager.TryIndex(id.Trim(), out ConstructionPrototype? recipe))
                     _favoritedRecipes.Add(recipe);
             }
 
