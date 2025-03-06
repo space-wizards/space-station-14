@@ -11,6 +11,8 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
+    private readonly ProtoId<JobIconPrototype> _unknownIcon = "JobIconUnknown";
+
     protected override void OnAppearanceChange(EntityUid uid, DeliveryComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -19,7 +21,7 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
         _appearance.TryGetData(uid, DeliveryVisuals.JobIcon, out string job, args.Component);
 
         if (string.IsNullOrEmpty(job))
-            job = "JobIconUnknown";
+            job = _unknownIcon;
 
         if (!_prototype.TryIndex<JobIconPrototype>(job, out var icon))
         {

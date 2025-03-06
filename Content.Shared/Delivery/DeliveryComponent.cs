@@ -51,14 +51,14 @@ public sealed partial class DeliveryComponent : Component
     /// <summary>
     /// The sound to play when the delivery is unlocked.
     /// </summary>
-    [DataField(required: true)]
-    public SoundSpecifier? UnlockSound;
+    [DataField]
+    public SoundSpecifier? UnlockSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg", AudioParams.Default.WithVolume(-10));
 
     /// <summary>
     /// The sound to play when the delivery is opened.
     /// </summary>
-    [DataField(required: true)]
-    public SoundSpecifier? OpenSound;
+    [DataField]
+    public SoundSpecifier? OpenSound = new SoundPathSpecifier("/Audio/Effects/unwrap.ogg");
 
     /// <summary>
     /// The container with all the contents of the delivery.

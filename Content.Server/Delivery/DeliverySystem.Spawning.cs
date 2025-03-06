@@ -32,13 +32,14 @@ public sealed partial class DeliverySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        var spawns = _entityTable.GetSpawns(ent.Comp.Table);
         var coords = Transform(ent).Coordinates;
 
         PlaySpawnSound((ent.Owner, ent.Comp));
 
         while (amount > 0)
         {
+            var spawns = _entityTable.GetSpawns(ent.Comp.Table);
+
             foreach (var id in spawns)
             {
                 Spawn(id, coords);

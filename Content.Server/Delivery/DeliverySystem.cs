@@ -114,7 +114,9 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
-        _audio.PlayEntity(ent.Comp.UnlockSound, user, user);
+        if (ent.Comp.UnlockSound != null)
+            _audio.PlayEntity(ent.Comp.UnlockSound, user, user);
+
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, false);
 
@@ -133,7 +135,8 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     {
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
-        _audio.PlayEntity(ent.Comp.OpenSound, user, user);
+        if (ent.Comp.OpenSound != null)
+            _audio.PlayEntity(ent.Comp.OpenSound, user, user);
 
         var ev = new DeliveryOpenedEvent(user);
         RaiseLocalEvent(ent, ref ev);

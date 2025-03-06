@@ -17,7 +17,7 @@
         - MachineLayer
   - type: Sprite
     sprite: Structures/mailbox.rsi
-    noRotation: true
+    snapCardinals: true
     layers:
     - state: icon
     - state: unlit

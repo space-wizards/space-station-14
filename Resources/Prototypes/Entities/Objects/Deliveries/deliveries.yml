@@ -36,12 +36,6 @@
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
-    openSound:
-      path: /Audio/Effects/unwrap.ogg
-    unlockSound:
-      path: /Audio/Effects/Cargo/ping.ogg
-      params:
-        volume: -10
   - type: ContainerContainer
     containers:
       delivery: !type:Container
