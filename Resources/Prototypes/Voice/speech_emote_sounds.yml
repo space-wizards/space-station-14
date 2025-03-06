@@ -327,46 +327,46 @@
 
 - type: emoteSounds
   id: FemaleDwarf
+  params:
+    variation: 0.125
+    pitch: 0.75
   sounds:
-    Scream:
-      collection: FemaleScreams
-    Laugh:
-      collection: FemaleLaugh
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    CatMeow:
-      collection: CatMeows
     CatHisses:
       collection: CatHisses
+    CatMeow:
+      collection: CatMeows
+    Cough:
+      collection: FemaleCoughs
+    Crying:
+      collection: FemaleCry
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    Gasp:
+      collection: FemaleGasp
+    Hew:
+      collection: Hew
+    Honk:
+      collection: BikeHorn
+    Laugh:
+      collection: FemaleLaugh
     MonkeyScreeches:
       collection: MonkeyScreeches
     RobotBeep:
       collection: RobotBeeps
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
+    Scream:
+      collection: FemaleScreams
     Sigh:
       collection: FemaleSigh
-    Honk:
-      collection: BikeHorn
-    Crying:
-      collection: FemaleCry
-    Whistle:
-      collection: Whistles
+    Sneeze:
+      collection: FemaleSneezes
+    Snore:
+      collection: Snores
     Weh:
       collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
-  params:
-    variation: 0.125
-    pitch: 0.75
+    Whistle:
+      collection: Whistles
+    Yawn:
+      collection: FemaleYawn
 
 - type: emoteSounds
   id: UnisexMoth
