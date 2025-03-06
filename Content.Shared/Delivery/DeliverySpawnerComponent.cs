@@ -29,7 +29,7 @@ public sealed partial class DeliverySpawnerComponent : Component
     /// The sound to play when the spawner spawns a delivery.
     /// </summary>
     [DataField]
-    public SoundSpecifier? SpawnSound;
+    public SoundSpecifier? SpawnSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg", AudioParams.Default.WithVolume(-7));
 
     /// <summary>
     /// The time before the spawning sound can play again.

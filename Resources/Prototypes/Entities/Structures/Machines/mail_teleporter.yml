@@ -4,16 +4,12 @@
   name: mail teleporter
   description: Periodically teleports in mail to deliver across the station.
   components:
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
-    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.30,-0.30,0.30,0.40"
+          bounds: "-0.40,-0.40,0.40,0.40"
         density: 190
         mask:
         - MachineMask
@@ -43,9 +39,5 @@
     board: MailTeleporterMachineCircuitboard
   - type: PowerSwitch
   - type: DeliverySpawner
-    spawnSound:
-      path: /Audio/Effects/Lightning/lightningbolt.ogg
-      params:
-        volume: 7
     table: !type:NestedSelector
       tableId: RandomDeliveryBasic

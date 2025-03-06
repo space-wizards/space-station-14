@@ -12,21 +12,19 @@
 
 # Letters
 
-- type: entityTable # Used to pick between all different letter types, if there will be more (modifiers could be a good example, fragile etc)
+- type: entityTable # Used to pick between all different letter types, if there will be more
   id: RandomDeliveryLetterBasic
   table: !type:GroupSelector
     children:
     - id: LetterDelivery
-      weight: 1
 
 # Packages
 
-- type: entityTable # Used to pick between all different package types, if there will be more (modifiers could be a good example, fragile etc)
+- type: entityTable # Used to pick between all different package types, if there will be more
   id: RandomDeliveryPackageBasic
   table: !type:GroupSelector
     children:
     - id: PackageDelivery
-      weight: 1
 
 ### Reward Tables
 
