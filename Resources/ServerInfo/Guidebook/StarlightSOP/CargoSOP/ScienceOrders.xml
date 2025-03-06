@@ -1,0 +1,21 @@
+<Document>
+
+# Science Orders
+
+Basic Materials only for printer/lathes
+<Box>
+    <GuideEntityEmbed Entity="SheetSteel"/>
+    <GuideEntityEmbed Entity="SheetGlass"/>
+    <GuideEntityEmbed Entity="SheetPlastic"/>
+    <GuideEntityEmbed Entity="SheetPlasteel"/> 
+</Box>
+
+Other
+<Box>
+    <GuideEntityEmbed Entity="SheetPlasma"/> 
+    <GuideEntityEmbed Entity="SimpleXenoArtifact"/> 
+    <GuideEntityEmbed Entity="CrateVendingMachineRestockRoboticsFilled"/> 
+</Box>
+
+
+</Document>

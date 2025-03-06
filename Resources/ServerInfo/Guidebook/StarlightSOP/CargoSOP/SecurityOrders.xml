@@ -1,0 +1,20 @@
+<Document>
+
+# Security Orders
+
+Basic Materials only for printer/lathes
+<Box>
+    <GuideEntityEmbed Entity="SheetSteel"/>
+    <GuideEntityEmbed Entity="SheetGlass"/>
+    <GuideEntityEmbed Entity="SheetPlastic"/>
+</Box>
+
+Refill Crates
+<Box>
+    <GuideEntityEmbed Entity="CrateSecurityTrackingMindshieldImplants"/>
+    <GuideEntityEmbed Entity="CrateVendingMachineRestockSecTechFilled"/>
+</Box>
+
+</Document>
+
+
