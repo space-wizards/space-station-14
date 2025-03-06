@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PixelTheKermit (github) for SS14. Arrows, core, fiddleback, skull and target made by Nairodian (github) for SS14. Segments marking and all east/west sprites made and edited by Sha-Seng (Github) for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chest_segments1",
+      "directions": 4
+    },
+    {
+      "name": "chest_segments2",
+      "directions": 4
+    },
+    {
+      "name": "stripes",
+      "directions": 4
+    },
+    {
+      "name": "slashes",
+      "directions": 4
+    },
+    {
+      "name": "x",
+      "directions": 4
+    },
+    {
+      "name": "cross",
+      "directions": 4
+    },
+    {
+      "name": "heart",
+      "directions": 4
+    },
+    {
+      "name": "hourglass",
+      "directions": 4
+    },
+    {
+      "name": "nail-and-hammer",
+      "directions": 4
+    },
+    {
+      "name": "star",
+      "directions": 4
+    },
+    {
+      "name": "core",
+      "directions": 4
+    },
+    {
+      "name": "skull",
+      "directions": 4
+    },
+    {
+      "name": "target",
+      "directions": 4
+    }
+  ]
+}

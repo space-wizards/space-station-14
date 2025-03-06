@@ -124,7 +124,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: stripes
   coloring:
     default:
@@ -137,7 +137,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: slashes
   coloring:
     default:
@@ -150,7 +150,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: x
   coloring:
     default:
@@ -163,7 +163,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: cross
   coloring:
     default:
@@ -176,7 +176,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: heart
   coloring:
     default:
@@ -189,7 +189,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: hourglass
   coloring:
     default:
@@ -202,7 +202,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: nail-and-hammer
   coloring:
     default:
@@ -215,7 +215,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: star
   coloring:
     default:
@@ -241,7 +241,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: core
   coloring:
     default:
@@ -267,7 +267,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: skull
   coloring:
     default:
@@ -280,7 +280,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: target
   coloring:
     default:
