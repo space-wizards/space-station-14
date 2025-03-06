@@ -5,3 +5,6 @@ delivery-recipient-no-job = Unknown
 
 delivery-unlocked = You unlock the {$delivery} with your fingerprint.
 delivery-opened = You open the {$delivery}.
+
+delivery-unlock-verb = Unlock
+delivery-open-verb = Open
