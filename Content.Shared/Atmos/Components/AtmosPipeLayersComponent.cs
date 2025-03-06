@@ -1,5 +1,9 @@
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.DoAfter;
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -14,7 +18,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// <summary>
     /// The maximum pipe layer assignable.
     /// </summary>
-    public const int MaxPipeLayer = 2;
+    public const byte MaxPipeLayer = 2;
 
     /// <summary>
     /// Determines which layer the pipe is currently assigned.
@@ -53,4 +57,31 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// </remarks>
     [DataField]
     public string[] ConnectorVisualStates = { "pipeConnector", "pipeConnector1", "pipeConnector2" };
+
+    /// <summary>
+    /// Tool quality required to cause a pipe to change layers
+    /// </summary>
+    [DataField]
+    public ProtoId<ToolQualityPrototype> Tool = "Anchoring";
+
+    /// <summary>
+    /// The base delay to use for changing layers.
+    /// </summary>
+    [DataField]
+    public float Delay = 1f;
+}
+
+
+[Serializable, NetSerializable]
+public sealed partial class TryCyclingPipeLayerCompletedEvent : SimpleDoAfterEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class TrySettingPipeLayerCompletedEvent : SimpleDoAfterEvent
+{
+    public int PipeLayer;
+
+    public TrySettingPipeLayerCompletedEvent(int pipeLayer)
+    {
+        PipeLayer = pipeLayer;
+    }
 }
