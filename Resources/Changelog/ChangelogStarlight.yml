@@ -3900,4 +3900,11 @@ Entries:
   id: 540
   time: '2025-03-06T11:16:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/366
+- author: B1773rm4n
+  changes:
+  - message: Cargo SOP in the Guidebook
+    type: Add
+  id: 541
+  time: '2025-03-06T14:47:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/369
 
