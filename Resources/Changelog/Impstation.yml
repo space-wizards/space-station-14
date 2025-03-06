@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Swapped normal beds with medical beds on Packed.
-    type: Tweak
-  id: 736
-  time: '2024-12-14T20:47:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1013
 - author: irismessage
   changes:
   - message: Look at my tips boy
@@ -4060,3 +4053,11 @@
   id: 1235
   time: '2025-03-06T15:14:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1699
+- author: hivehum
+  changes:
+  - message: You see the correct number of colors for a dog. If you're a dog. If you
+      aren't a dog don't read this message.
+    type: Tweak
+  id: 1236
+  time: '2025-03-06T15:16:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1787
