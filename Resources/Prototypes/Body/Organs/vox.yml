@@ -18,7 +18,7 @@
   id: OrganVoxStomach
   parent: OrganAnimalStomach
   name: vox stomach
-  description: "A blue stomach that smells of garbage."
+  description: "A blue stomach that smells of ammonia."
   components:
   - type: Organ
   - type: Sprite

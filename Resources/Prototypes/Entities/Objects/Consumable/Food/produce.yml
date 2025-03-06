@@ -398,8 +398,6 @@
   - type: Food
     requiresSpecialDigestion: true
 
-
-
 - type: entity
   name: baked banana peel
   parent: TrashBananaPeel

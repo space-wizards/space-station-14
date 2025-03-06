@@ -708,7 +708,7 @@
   name: reagent-name-toxintrash
   group: Toxins
   desc: reagent-desc-toxintrash
-  flavor:
+  flavor: trashy
   physicalDesc: reagent-physical-desc-nondescript
   metabolisms:
     Poison:
@@ -721,7 +721,7 @@
           shouldHave: false
         damage:
           types:
-            Poison: 5
+            Poison: 3.5
     Food:
       effects:
       - !type:SatiateHunger

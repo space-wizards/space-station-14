@@ -45,7 +45,7 @@
     - FoodPacketBoritosTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: C&Ds
@@ -64,7 +64,7 @@
     - FoodPacketCnDsTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: cheesie honkers
@@ -84,7 +84,7 @@
     - FoodPacketCheesieTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: chips
@@ -105,7 +105,7 @@
     - FoodPacketChipsTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: chocolate bar
@@ -122,7 +122,6 @@
   - type: Tag
     tags:
       - FoodSnack
-      - VoxFood
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
@@ -173,7 +172,6 @@
       - id: FoodSnackEnergyBar
     sound:
       path: /Audio/Effects/unwrap.ogg
-      
 
 - type: entity
   name: energy bar
@@ -192,7 +190,7 @@
   - type: Item
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: sweetie's pistachios
@@ -234,7 +232,7 @@
     - FoodPacketPopcornTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: 4no raisins
@@ -272,7 +270,7 @@
     - FoodPacketSemkiTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: sus jerky
@@ -310,7 +308,7 @@
     - FoodPacketSyndiTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   parent: FoodSnackBase
@@ -338,7 +336,7 @@
     - FoodPacketCupRamenTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   parent: DrinkRamen
@@ -384,7 +382,7 @@
     - FoodPacketChowMeinTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: dan dan noodles
@@ -416,7 +414,7 @@
     - FoodPacketDanDanTrash
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   name: fortune cookie
@@ -445,7 +443,7 @@
     - FoodCookieFortune
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 - type: entity
   id: FoodSnackNutribrick
@@ -536,7 +534,7 @@
           Quantity: 3
   - type: Tag
     tags:
-      - VoxFood
+    - VoxFood
 
 # Trash
 
@@ -571,7 +569,6 @@
           Quantity: 5
   - type: Food
     requiresSpecialDigestion: true
-
 
 - type: entity
   categories: [ HideSpawnMenu ]
