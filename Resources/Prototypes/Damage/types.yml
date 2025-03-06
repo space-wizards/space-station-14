@@ -21,19 +21,19 @@
   name: damage-type-blunt
   armorCoefficientPrice: 2
   armorFlatPrice: 10
-  
+
 - type: damageType
   id: Cellular
   name: damage-type-cellular
   armorCoefficientPrice: 5
   armorFlatPrice: 30
-  
+
 - type: damageType
   id: Caustic
   name: damage-type-caustic
   armorCoefficientPrice: 5
   armorFlatPrice: 30
-  
+
 - type: damageType
   id: Cold
   name: damage-type-cold
@@ -84,3 +84,11 @@
   name: damage-type-structural
   armorCoefficientPrice: 1
   armorFlatPrice: 1
+
+# Metaphysical damage. Damage represents supernatural injuries that emphasize the fantasy elements in the game
+- type: damageType
+  id: Holy
+  name: damage-type-holy
+  armorCoefficientPrice: 1
+  armorFlatPrice: 1
+

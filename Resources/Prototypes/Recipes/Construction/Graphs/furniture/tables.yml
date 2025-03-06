@@ -55,6 +55,8 @@
             - material: Plasteel
               amount: 1
               doAfter: 1
+            - tool: Welding
+              doAfter: 3
 
         - to: TableGlass
           steps:
@@ -73,7 +75,7 @@
             - material: PlasmaGlass
               amount: 1
               doAfter: 1
-        
+
         - to: TableBrass
           steps:
             - material: Brass
@@ -143,6 +145,8 @@
               prototype: SheetPlasteel1
               amount: 1
           steps:
+            - tool: Welding
+              doAfter: 3
             - tool: Anchoring
               doAfter: 1
 
@@ -211,73 +215,73 @@
             - material: Cloth
               amount: 1
               doAfter: 1
-              
+
         - to: TableFancyBlack
-          steps: 
+          steps:
             - tag: CarpetBlack
               name: black carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-black
-              
+
         - to: TableFancyBlue
-          steps: 
+          steps:
             - tag: CarpetBlue
               name: blue carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-blue
-              
+
         - to: TableFancyCyan
-          steps: 
+          steps:
             - tag: CarpetCyan
               name: cyan carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-cyan
-              
+
         - to: TableFancyGreen
-          steps: 
+          steps:
             - tag: CarpetGreen
               name: green carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-green
-              
+
         - to: TableFancyOrange
-          steps: 
+          steps:
             - tag: CarpetOrange
               name: orange carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-orange
-              
+
         - to: TableFancyPurple
-          steps: 
+          steps:
             - tag: CarpetPurple
               name: purple carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-purple
-                
+
         - to: TableFancyPink
-          steps: 
+          steps:
             - tag: CarpetPink
               name: pink carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-pink
-              
+
         - to: TableFancyRed
-          steps: 
+          steps:
             - tag: CarpetRed
               name: red carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-red
-              
+
         - to: TableFancyWhite
-          steps: 
+          steps:
             - tag: CarpetWhite
               name: white carpet
               icon:
@@ -295,7 +299,7 @@
           steps:
             - tool: Prying
               doAfter: 1
-              
+
     - node: TableFancyBlack
       entity: TableFancyBlack
       edges:
@@ -307,7 +311,7 @@
           steps:
             - tool: Prying
               doAfter: 1
-              
+
     - node: TableFancyBlue
       entity: TableFancyBlue
       edges:
@@ -319,7 +323,7 @@
           steps:
             - tool: Prying
               doAfter: 1
-              
+
     - node: TableFancyCyan
       entity: TableFancyCyan
       edges:
