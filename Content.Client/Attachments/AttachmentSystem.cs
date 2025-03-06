@@ -8,4 +8,10 @@ public sealed partial class AttachmentSystem : SharedAttachmentSystem
     {
         // boo
     }
+
+    protected override object? GetComponentFieldInfo(Type type, string field)
+    {
+        // boo
+        return null;
+    }
 }

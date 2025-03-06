@@ -1,13 +1,9 @@
 ﻿using Content.Shared.Attachments.Components;
-using Content.Shared.Fax;
-using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Attachments;
 
@@ -30,10 +26,22 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
 
     private void OnComponentInit(Entity<AttachmentHolderComponent> uid, ref ComponentInit args)
     {
+        if (!_netMan.IsServer || uid.Comp.Fields is null)
+            return;
+        foreach (var (compName, compFields) in uid.Comp.Fields)
+        {
+            if (!_factory.TryGetRegistration(compName, out var registration))
+                continue;
 
+            foreach (var field in compFields)
+            {
+                GetComponentFieldInfo(registration.Type, field);
+            }
+        }
     }
 
     protected abstract void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields) where T : IComponent;
+    protected abstract object? GetComponentFieldInfo(Type type, string field);
 
     private void OnItemInsert(Entity<AttachmentHolderComponent> uid, ref EntInsertedIntoContainerMessage args)
         => AddComponentTo(uid, args.Entity, args.Container.ID);
