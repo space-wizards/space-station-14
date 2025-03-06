@@ -1,4 +1,4 @@
-# species
+### Species
 - type: emoteSounds
   id: MaleHuman
   params:
@@ -401,12 +401,12 @@
   sounds:
     Beep:
       path: /Audio/Machines/twobeep.ogg
-    Chime:
-      path: /Audio/Machines/chime.ogg
     Buzz:
       path: /Audio/Machines/buzz-sigh.ogg
     Buzz-Two:
       path: /Audio/Machines/buzz-two.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
     Honk:
       path: /Audio/Items/bikehorn.ogg
     Ping:
@@ -417,22 +417,22 @@
   params:
     variation: 0.05
   sounds:
-    Laugh:
-      path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
       path: /Audio/Machines/twobeep.ogg
-    Chime:
-      path: /Audio/Machines/chime.ogg
     Buzz:
       path: /Audio/Machines/buzz-sigh.ogg
     Buzz-Two:
       path: /Audio/Machines/buzz-two.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
     Honk:
       path: /Audio/Items/bikehorn.ogg
+    Laugh:
+      path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Ping:
       path: /Audio/Effects/Cargo/ping.ogg
 
-# body emotes
+### Body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes
   sounds:
@@ -440,12 +440,12 @@
       collection: Claps
     ClapSingle:
       collection: ClapSingle
+    Salute:
+      collection: Salutes
     Snap:
       collection: Snaps
       params:
         volume: -6
-    Salute:
-      collection: Salutes
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -455,34 +455,34 @@
     # TODO: Replace this with a similar wood themed single clap
     ClapSingle:
       collection: ClapSingle
-    Snap:
-      path: /Audio/Voice/Diona/diona_snap.ogg
-      params:
-        volume: -10
     Salute:
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
+    Snap:
+      path: /Audio/Voice/Diona/diona_snap.ogg
+      params:
+        volume: -10
 
 - type: emoteSounds
   id: ReptilianBodyEmotes
   sounds:
-    Thump:
-      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
-      params:
-        variation: 0.125
     Clap:
       collection: Claps
     ClapSingle:
       collection: ClapSingle
+    Salute:
+      collection: Salutes
     Snap:
       collection: Snaps
       params:
         volume: -6
-    Salute:
-      collection: Salutes
+    Thump:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+      params:
+        variation: 0.125
 
-# mobs
+### Mob-specific sounds
 - type: emoteSounds
   id: Zombie
   sound:
