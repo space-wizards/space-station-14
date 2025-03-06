@@ -1,5 +1,7 @@
 ### Spam Mail
 
+## TODO: They all should be a localized dataset for PaperComponent
+
 # Advertisements
 - type: entity
   id: MailRobustToolsSpam
