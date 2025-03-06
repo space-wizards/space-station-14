@@ -1,9 +1,8 @@
 using Content.Shared.Storage;
-using Robust.Shared.GameStates;
 
-namespace Content.Shared.Medical.BiomassReclaimer
+namespace Content.Server.Medical.BiomassReclaimer
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]
     public sealed partial class BiomassReclaimerComponent : Component
     {
         /// <summary>
@@ -16,7 +15,7 @@ namespace Content.Shared.Medical.BiomassReclaimer
         /// <summary>
         /// The interval for <see cref="RandomMessTimer"/>.
         /// </summary>
-        [DataField]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public TimeSpan RandomMessInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
@@ -48,31 +47,31 @@ namespace Content.Shared.Medical.BiomassReclaimer
         /// <summary>
         /// How many units of biomass it produces for each unit of mass.
         /// </summary>
-        [DataField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float YieldPerUnitMass = 0.4f;
 
         /// <summary>
         /// How many seconds to take to insert an entity per unit of its mass.
         /// </summary>
-        [DataField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float BaseInsertionDelay = 0.1f;
 
         /// <summary>
         /// How much to multiply biomass yield from botany produce.
         /// </summary>
-        [DataField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float ProduceYieldMultiplier = 0.25f;
 
         /// <summary>
         /// The time it takes to process a mob, per mass.
         /// </summary>
-        [DataField]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float ProcessingTimePerUnitMass = 0.5f;
 
         /// <summary>
         /// Will this refuse to gib a living mob?
         /// </summary>
-        [DataField]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public bool SafetyEnabled = true;
     }
 }
