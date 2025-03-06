@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Vapor tank continues to vaporize water when it's low on water.
-    type: Fix
-  - message: Vapor tank now properly updates the fill visuals as it vaporizes water.
-    type: Fix
-  id: 735
-  time: '2024-12-14T14:49:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1020
 - author: EpicToast
   changes:
   - message: Swapped normal beds with medical beds on Packed.
@@ -4061,3 +4052,11 @@
   id: 1234
   time: '2025-03-05T22:30:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1838
+- author: Sha-Seng
+  changes:
+  - message: PRIbar+ Conversion Kit (from Special Means research) to upgrade the PRIbar
+      with a wrench function
+    type: Add
+  id: 1235
+  time: '2025-03-06T15:14:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1699
