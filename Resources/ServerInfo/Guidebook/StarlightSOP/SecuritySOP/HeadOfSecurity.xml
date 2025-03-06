@@ -1,0 +1,47 @@
+<Document>
+    # Head of Security
+
+     <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="Head of Security"/>
+
+    1 . Standard Code Green equipment is:
+
+    <Box>
+        <GuideEntityEmbed Entity="WeaponSubMachineGunWt550"/>
+        or
+        <GuideEntityEmbed Entity="WeaponLaserCannon"/>
+    </Box>
+
+
+    <Box>
+        <GuideEntityEmbed Entity="Stunbaton"/>
+        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+        <GuideEntityEmbed Entity="FlashlightSeclite"/>
+        <GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="CombatKnife"/>
+        in
+        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="GrenadeFlashBang"/>
+        or
+        <GuideEntityEmbed Entity="TearGasGrenade"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="Handcuffs"/>
+        or
+        <GuideEntityEmbed Entity="Zipties"/>
+    </Box>
+
+    2. When patrolling, the Head of Security must follow all Security Officer protocols as above.
+
+    3. The Head of Security may overrule any sentence that is not assigned by an official NT Magistrate, but not for prisoners who have already had their sentences read to them.
+
+    4. The Head of Security may not utilize the armory for their own personal benefit.
+
+    5. The Head of Security must follow the Warden procedures for distributing any armory equipment, portable flashers, or portable barriers.
+
+    6. If a Code Red is called, the Head of Security must state the reason for the Code Red. The Captain may perform this duty instead, with permission from the Head of Security.
+</Document>

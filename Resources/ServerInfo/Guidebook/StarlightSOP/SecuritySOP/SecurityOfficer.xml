@@ -1,0 +1,37 @@
+<Document>
+    # Security Officer
+
+     <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Security Officer"/>
+    
+    1 . Standard Code Green equipment is:
+
+    <Box>
+        <GuideEntityEmbed Entity="WeaponDisabler"/>
+
+        <GuideEntityEmbed Entity="Stunbaton"/>
+        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+        <GuideEntityEmbed Entity="FlashlightSeclite"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="CombatKnife"/>
+        in
+        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="GrenadeFlashBang"/>
+        or
+        <GuideEntityEmbed Entity="TearGasGrenade"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="Handcuffs"/>
+        or
+        <GuideEntityEmbed Entity="Zipties"/>
+    </Box>
+
+    
+    2. Security Officers are to patrol the station unless an active threat has been recognized.
+    
+    3. Security Officers are permitted to assign sentences up to 15 minutes, but should inform the Warden of the accusation and sentencing if timing exceeds 10 mintues. Sentences over 15 minutes must be approved by the warden or Head of Security.
+    
+    4. It is advised on Code Blue or above that Security Officers patrol the station in pairs.
+</Document>

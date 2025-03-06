@@ -233,7 +233,56 @@
   name: guide-entry-sl-security-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/security-sop-intro.xml"
   priority: 3
+  children:
+  - security-sop-cadet
+  - security-sop-securityofficer
+  - security-sop-detective
+  - security-sop-brigmedic
+  - security-sop-warden
+  - security-sop-headofsecurity
+  - security-sop-prisonertreatment
 
+- type: guideEntry
+  id: security-sop-cadet
+  name: guide-entry-sl-security-sop-cadet
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Cadet.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-securityofficer
+  name: guide-entry-sl-security-sop-securityofficer
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/SecurityOfficer.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-detective
+  name: guide-entry-sl-security-sop-detective
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Detective.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-brigmedic
+  name: guide-entry-sl-security-sop-brigmedic
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Brigmedic.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-warden
+  name: guide-entry-sl-security-sop-warden
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Warden.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-headofsecurity
+  name: guide-entry-sl-security-sop-headofsecurity
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/HeadOfSecurity.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-prisonertreatment
+  name: guide-entry-sl-security-sop-prisonertreatment
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/PrisonerTreatment.xml"
+  priority: 4
 
 
 - type: guideEntry

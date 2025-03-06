@@ -64,6 +64,13 @@ guide-entry-sl-vote-of-no-confidence = Vote of No Confidence
 guide-entry-sl-money-accounts-and-space-credits = Money Accounts and Space Credits
 
 guide-entry-sl-security-sop-intro = Security
+guide-entry-sl-security-sop-cadet = Cadet
+guide-entry-sl-security-sop-securityofficer = Security Officer
+guide-entry-sl-security-sop-detective = Detective
+guide-entry-sl-security-sop-brigmedic = Brigmedic
+guide-entry-sl-security-sop-warden = Warden
+guide-entry-sl-security-sop-headofsecurity = Head of Security
+guide-entry-sl-security-sop-prisonertreatment = Prisoner Treatment
 
 guide-entry-sl-legal-sop-intro = Legal
 
