@@ -361,7 +361,6 @@ namespace Content.Client.Examine
             // If we get it wrong, server will correct us later anyway.
             // This will usually be correct (barring server-only components, which generally only adds, not replaces text)
             message = GetExamineText(entity, playerEnt);
-            UpdateTooltipInfo(playerEnt.Value, entity, message);
 
             if (!IsClientSide(entity))
             {
