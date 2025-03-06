@@ -1,9 +1,8 @@
 - type: entity
   id: LockerCourier
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: courier's locker
   components:
-  - type: Appearance
   - type: Sprite
     sprite: _Impstation/Structures/Storage/couriercloset.rsi
     noRot: true
