@@ -1,0 +1,17 @@
+{
+  "version":1,
+  "size":
+  {
+    "x":32,
+    "y":32
+  },
+  "copyright":"",
+  "license":"CC0-1.0",
+  "states":
+  [
+    {
+      "name":"pipeManifold",
+      "directions":4
+    }
+  ]
+}

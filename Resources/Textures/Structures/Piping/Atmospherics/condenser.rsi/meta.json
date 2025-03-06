@@ -36,6 +36,14 @@
             "directions":4
         },
         {
+            "name":"pipe1",
+            "directions":4
+        },
+        {
+            "name":"pipe2",
+            "directions":4
+        },
+        {
             "name":"display"
         },
         {

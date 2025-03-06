@@ -115,18 +115,6 @@
          "name":"pipeConnector2",
          "directions":4
       },
-	    {
-         "name":"pipeTrinaryConnectors",
-         "directions":4
-      },
-      {
-         "name":"pipeTrinaryConnectors1",
-         "directions":4
-      },
-      {
-         "name":"pipeTrinaryConnectors2",
-         "directions":4
-      },
       {
          "name":"pipeUnaryConnectors",
          "directions":4
@@ -137,6 +125,30 @@
       },
       {
          "name":"pipeUnaryConnectors2",
+         "directions":4
+      },
+      {
+         "name":"pipeBinaryConnectors",
+         "directions":4
+      },
+      {
+         "name":"pipeBinaryConnectors1",
+         "directions":4
+      },
+      {
+         "name":"pipeBinaryConnectors2",
+         "directions":4
+      },
+	    {
+         "name":"pipeTrinaryConnectors",
+         "directions":4
+      },
+      {
+         "name":"pipeTrinaryConnectors1",
+         "directions":4
+      },
+      {
+         "name":"pipeTrinaryConnectors2",
          "directions":4
       },
       {
