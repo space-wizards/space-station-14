@@ -27,7 +27,7 @@
   id: CrateServiceReligious
   parent: CrateChaplain
   name: religious supplies crate
-  description: Contains holy water and a spare bible.
+  description: Contains holy water and a spare holy text.
   components:
     - type: StorageFill
       contents:
