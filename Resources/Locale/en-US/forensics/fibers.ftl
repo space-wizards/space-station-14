@@ -16,6 +16,7 @@ fibers-rubber = rubber
 fibers-purple = purple
 fibers-red = red
 fibers-black = black
+fibers-red-and-black-woven = red and black woven
 fibers-blue = blue
 fibers-teal = teal
 fibers-brown = brown

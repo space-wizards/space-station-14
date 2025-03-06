@@ -11,3 +11,30 @@
   - type: Fiber
     fiberMaterial: fibers-black-nitrile
   - type: FingerprintMask
+
+- type: entity
+  parent: [ClothingHandsButcherable, BaseSecurityContraband]
+  id: ClothingHandsGlovesSecurityRed
+  name: Red Security Gloves
+  description: Black gloves, but slightly red! The detective will LOVE you if you wear these.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesred.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesred.rsi
+  - type: Fiber
+    fiberMaterial: fibers-red-and-black-woven
+  - type: FingerprintMask
+
+- type: entity
+  parent: [ClothingHandsButcherable, BaseSecurityContraband]
+  id: ClothingHandsGlovesSecurityFingerlessRed
+  name: Fingerless Red Security Gloves
+  description: Black gloves, but slightly red! The detective will HATE you if you wear these.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesfingerlessred.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Hands/Gloves/securityglovesfingerlessred.rsi
+  - type: Fiber
+    fiberMaterial: fibers-red-and-black-woven
