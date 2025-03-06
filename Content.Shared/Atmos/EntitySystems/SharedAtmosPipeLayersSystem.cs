@@ -15,6 +15,9 @@ using System.Numerics;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
+/// <summary>
+/// The system responsible for checking and adjusting the connection layering of gas pipes
+/// </summary>
 public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;

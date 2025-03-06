@@ -9,6 +9,9 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Atmos.EntitySystems;
 
+/// <summary>
+/// The system responsible for checking and adjusting the connection layering of gas pipes
+/// </summary>
 public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;

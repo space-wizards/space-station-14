@@ -7,6 +7,9 @@ using System.Numerics;
 
 namespace Content.Client.Atmos.EntitySystems;
 
+/// <summary>
+/// The system responsible for updating the appearance of layered gas pipe
+/// </summary>
 public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;

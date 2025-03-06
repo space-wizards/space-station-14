@@ -8,8 +8,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Contains layer data for atmos pipes. Layers allow multiple atmos pipes with the same orientation
-/// to be anchored to the same tile without their contents mixing.
+/// Contains layer data for atmos pipes. Layers allow multiple atmos pipes with the 
+/// same orientation to be anchored to the same tile without their contents mixing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedAtmosPipeLayersSystem))]
@@ -71,10 +71,15 @@ public sealed partial class AtmosPipeLayersComponent : Component
     public float Delay = 1f;
 }
 
-
+/// <summary>
+/// Raised when a player attempts to cycle a pipe to its next layer
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class TryCyclingPipeLayerCompletedEvent : SimpleDoAfterEvent;
 
+/// <summary>
+/// Raised when a player attempts to set a pipe a specified layer
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class TrySettingPipeLayerCompletedEvent : SimpleDoAfterEvent
 {

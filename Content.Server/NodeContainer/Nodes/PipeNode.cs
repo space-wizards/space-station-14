@@ -22,7 +22,7 @@ namespace Content.Server.NodeContainer.Nodes
         public PipeDirection OriginalPipeDirection;
 
         /// <summary>
-        ///     The layer to which the pipe node is assigned
+        ///     The *current* layer to which the pipe node is assigned.
         /// </summary>
         [DataField("pipeLayer")]
         public byte CurrentPipeLayer = 0;
