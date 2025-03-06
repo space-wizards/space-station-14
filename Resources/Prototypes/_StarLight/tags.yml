@@ -10,7 +10,7 @@
   id: CartridgeBattery
   
 - type: Tag
-  id: CartridgePistolSP8
+  id: CartridgePistolDP
   
 - type: Tag
   id: Diona
@@ -28,7 +28,7 @@
   id: MagazineBattery
   
 - type: Tag
-  id: MagazinePistolSP8
+  id: MagazinePistolDP
   
 - type: Tag
   id: MagazineRifleM52

@@ -14,12 +14,12 @@
         color: "#43c4f7"
         
 - type: entity
-  id: CartridgePistol40NrSP
-  name: cartridge (40 NR SP)
+  id: CartridgePistol40SP
+  name: cartridge (.40 SP)
   parent: BaseCartridgePistol
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolTrace40NrSP
+    hitscan: BulletPistolTrace40SP
   - type: Sprite
     layers:
       - state: base
@@ -30,28 +30,49 @@
   - type: Tag
     tags:
       - Cartridge
-      - CartridgePistolSP8
+      - CartridgePistolDP
       
 - type: entity
-  id: CartridgePistol40NrHP
-  name: cartridge (40 NR HP)
-  parent: CartridgePistol40NrSP
+  id: CartridgePistol40HP
+  name: cartridge (.40 HP)
+  parent: CartridgePistol40SP
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolTrace40NrHP
-    
+    hitscan: BulletPistolTrace40HP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#000000"
+
 - type: entity
-  id: CartridgePistol40NrFMJ
-  name: cartridge (40 NR FMJ)
-  parent: CartridgePistol40NrSP
+  id: CartridgePistol40FMJ
+  name: cartridge (.40 FMJ)
+  parent: CartridgePistol40SP
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolTrace40NrFMJ
-    
+    hitscan: BulletPistolTrace40FMJ
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#B68F0E"
+
 - type: entity
-  id: CartridgePistol40NrAP
-  name: cartridge (40 NR AP)
-  parent: CartridgePistol40NrSP
+  id: CartridgePistol40AP
+  name: cartridge (.40 AP)
+  parent: CartridgePistol40SP
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolTrace40NrAP
+    hitscan: BulletPistolTrace40AP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#1A8C1A"

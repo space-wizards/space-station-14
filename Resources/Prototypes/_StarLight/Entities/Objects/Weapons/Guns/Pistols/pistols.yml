@@ -127,50 +127,44 @@
     - greengrip
     
 - type: entity
-  name: sp-8
+  name: Due Process
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
-  id: WeaponPistolSP8
-  description: Cool pistol for defense.
+  id: WeaponPistolDP
+  description: A pistol that packs a punch for brig defense, just as NanoTransen intended.
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/dp.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/dp.rsi
   - type: Gun
     fireRate: 5
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8.ogg
-  - type: ChamberMagazineAmmoProvider
-    availablePrefixes:
-    - ""
-    - black
-    - green
-    - olive
-    - red
-    - yellow
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/dp.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazinePistol40Nr
+        startingItem: MagazinePistol40SP
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
         priority: 2
         whitelist:
           tags:
-            - MagazinePistolSP8
+            - MagazinePistolDP
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistol40NrSP
+        startingItem: CartridgePistol40SP
         priority: 1
         whitelist:
           tags:
-            - CartridgePistolSP8
+            - CartridgePistolDP
             
 - type: entity
   name: sp-8t
-  parent: WeaponPistolSP8
+  parent: WeaponPistolDP
   id: WeaponPistolSP8T
   components:
   - type: Gun
@@ -185,7 +179,7 @@
     
 - type: entity
   name: sp-8ar
-  parent: WeaponPistolSP8
+  parent: WeaponPistolDP
   id: WeaponPistolSP8AR
   components:
   - type: Gun
