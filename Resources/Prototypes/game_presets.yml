@@ -234,3 +234,27 @@
   - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+
+- type: gamePreset
+  id: VeryBadDay
+  alias:
+  - verybadday
+  - cdda #this is the game where the scenario comes from
+  name: verybadday-title
+  showInVote: true
+  description: verybadday-description
+  rules:
+  - Nukeops
+  - Traitor
+  - Revolutionary
+  - Zombie
+  - SubGamemodesRule
+  - KesslerSyndromeScheduler
+  - RampingStationEventScheduler
+  - TerribleRoundstartVariation
+  # no power
+  # force survivor antag
+  # forcecall shuttle
+  # forceset alert level
+  # everyone is drunk
+  # everyone is hurt
