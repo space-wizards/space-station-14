@@ -12,6 +12,7 @@
   - PrintedDocumentObjectInvestigationReportRecipe
   - PrintedDocumentExperimentReportRecipe
   - PrintedDocumentDisposalReportRecipe
+  - PrintedDocumentArrestReportRecipe
   # Statements
   - PrintedDocumentStatementAppointmentInterimChapterRecipe
   - PrintedDocumentEmploymentStatementRecipe
@@ -30,17 +31,16 @@
   - PrintedDocumentRequestEuthanasiaRecipe
   - PrintedDocumentRequestConstructionWorkRecipe
   - PrintedDocumentRequestModernizationRecipe
-  # Complaintst
+  # Complaints
   - PrintedDocumentComplaintViolationLaborRulesRecipe
   - PrintedDocumentComplaintOffenseRecipe
   # Permissions
   - PrintedDocumentPermissionEquipmentRecipe
-  - PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
   - PrintedDocumentSearchPermissionRecipe
   - PrintedDocumentPermissionToCarryWeaponsRecipe
-  - PrintedDocumentPrescriptionDrugAuthorizationRecipe
   - PrintedDocumentPermissionDisposeBodyRecipe
   - PrintedDocumentConstructionPermitRecipe
+  - PrintedDocumentSurgeryConsentPermitRecipe
   # OrdersAndInstructions
   - PrintedDocumentDismissalOrderRecipe
   - PrintedDocumentAccessRevocationOrderRecipe

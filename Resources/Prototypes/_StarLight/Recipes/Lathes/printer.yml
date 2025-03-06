@@ -99,6 +99,16 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentArrestReportRecipe
+  result: PrintedDocumentArrestReport
+  categories:
+  - Reports
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
     
 # Statements
 
@@ -307,17 +317,7 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
-    
-- type: latheRecipe
-  id: PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
-  result: PrintedDocumentPermissionToTravelInCaseOfThreat
-  categories:
-  - Permissions
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-    
+       
 - type: latheRecipe
   id: PrintedDocumentSearchPermissionRecipe
   result: PrintedDocumentSearchPermission
@@ -339,16 +339,6 @@
     SheetPrinter: 100
     
 - type: latheRecipe
-  id: PrintedDocumentPrescriptionDrugAuthorizationRecipe
-  result: PrintedDocumentPrescriptionDrugAuthorization
-  categories:
-  - Permissions
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-    
-- type: latheRecipe
   id: PrintedDocumentPermissionDisposeBodyRecipe
   result: PrintedDocumentPermissionDisposeBody
   categories:
@@ -361,6 +351,16 @@
 - type: latheRecipe
   id: PrintedDocumentConstructionPermitRecipe
   result: PrintedDocumentConstructionPermit
+  categories:
+  - Permissions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+   
+- type: latheRecipe
+  id: PrintedDocumentSurgeryConsentPermitRecipe
+  result: PrintedDocumentSurgeryConsentPermit
   categories:
   - Permissions
   completetime: 2

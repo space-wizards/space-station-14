@@ -100,6 +100,16 @@
     - type: Paper
       content: doc-text-printer-disposal-report
       
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentArrestReport
+  name: Arrest report
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-arrest-report
+
 # Statements
 
 - type: entity
@@ -286,16 +296,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
-      content: doc-text-printer-permission-equipment
-      
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentPermissionToTravelInCaseOfThreat
-  name: Permission to travel in case of threat
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Paper
-      content: doc-text-printer-permission-to-travel-in-case-of-threat
+      content: doc-text-printer-permission-equipment    
       
 - type: entity
   parent: PrintedDocument
@@ -317,15 +318,6 @@
       
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPrescriptionDrugAuthorization
-  name: Prescription Drug Authorization
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Paper
-      content: doc-text-printer-prescription-drug-authorization
-      
-- type: entity
-  parent: PrintedDocument
   id: PrintedDocumentPermissionDisposeBody
   name: Authorization to dispose of the body
   categories: [ HideSpawnMenu ]
@@ -341,6 +333,15 @@
   components:
     - type: Paper
       content: doc-text-printer-construction-permit
+     
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentSurgeryConsentPermit
+  name: Surgery Consent Permit
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-surgery-consent-permit
       
 # OrdersAndInstructions
 
