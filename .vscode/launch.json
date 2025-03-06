@@ -74,6 +74,15 @@
             "preLaunchTask": "build"
         },
         {
+            "name": "Server/2xClient",
+            "configurations": [
+                "Server",
+                "Client",
+                "Client"
+            ],
+            "preLaunchTask": "build"
+        },
+        {
             "name": "Server/Client (Tools Config)",
             "configurations": [
                 "Server (Tools Config)",

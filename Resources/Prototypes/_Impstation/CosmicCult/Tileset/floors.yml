@@ -2,7 +2,7 @@
   id: FloorCosmicGlyph
   name: tiles-cosmiccult-floor-glyph
   sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_glyph.png
-  baseTurf: FloorGlass
+  baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -13,7 +13,7 @@
   id: FloorCosmicSmooth
   name: tiles-cosmiccult-floor-smooth
   sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_smooth.png
-  baseTurf: FloorGlass
+  baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -24,7 +24,7 @@
   id: FloorCosmicHalf
   name: tiles-cosmiccult-floor-half
   sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_half.png
-  baseTurf: FloorGlass
+  baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -35,7 +35,7 @@
   id: FloorCosmicSplit
   name: tiles-cosmiccult-floor-split
   sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_split.png
-  baseTurf: FloorGlass
+  baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -46,7 +46,35 @@
   id: FloorCosmicNotched
   name: tiles-cosmiccult-floor-notched
   sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_notched.png
-  baseTurf: FloorGlass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicCorruption
+  name: tiles-cosmiccult-floor-malign
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/tile_malign.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCosmic
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorCosmicVoid
+  name: tiles-cosmiccult-floor-void
+  sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicfloor/floor_void.png
+  baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -66,6 +94,8 @@
   - type: SpeedModifierContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
+  - type: Physics
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -112,8 +142,6 @@
   - type: IconSmooth
     key: floor
     base: decay
-  - type: Physics
-    bodyType: Static
   - type: Tag
     tags:
       - HideContextMenu
@@ -122,3 +150,30 @@
     energy: 1.75
     castShadows: false
     color: "#42a4ae"
+
+- type: entity
+  id: FloorCosmicDecayAlt
+  suffix: DO NOT MAP
+  name: "???"
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: FloorOccluder
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicdecayalt.rsi
+  - type: Icon
+    sprite: /Textures/_Impstation/CosmicCult/Tileset/cosmicdecayalt.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: void
+  - type: Tag
+    tags:
+      - HideContextMenu

@@ -1,0 +1,36 @@
+- type: guideEntry
+  id: ImpGhostroles
+  name: guide-entry-impghostroles
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/Ghostroles.xml"
+  children:
+  - ImpGoblins
+  - ImpApids
+  - ImpLuggage
+
+- type: guideEntry
+  id: ImpGoblins
+  name: guide-entry-impgoblins
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/Goblins.xml"
+  children:
+  - ImpGoblinStowaways
+  - ImpGoblinKnight
+
+- type: guideEntry
+  id: ImpGoblinStowaways
+  name: guide-entry-impgoblinstowaway
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/GoblinStowaways.xml"
+
+- type: guideEntry
+  id: ImpGoblinKnight
+  name: guide-entry-impgoblinknight
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/GoblinKnight.xml"
+
+- type: guideEntry
+  id: ImpApids
+  name: guide-entry-impapids
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/Apids.xml"
+
+- type: guideEntry
+  id: ImpLuggage
+  name: guide-entry-impluggage
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/Luggage.xml"

@@ -34,11 +34,14 @@ loadout-group-chef-id = Chef ID
 
 loadout-group-librarian-neck = Librarian neck
 loadout-group-librarian-shoes = Librarian shoes
+
+loadout-group-lawyer-outerclothing = Lawyer outer clothing
 loadout-group-lawyer-shoes = Lawyer shoes
 
 loadout-group-chaplain-belt = Chaplain belt
 loadout-group-chaplain-eyes = Chaplain eye coverings
 loadout-group-chaplain-shoes = Chaplain shoes
+loadout-group-chaplain-books = Chaplain holy text
 
 loadout-group-janitor-mask = Janitor mask
 loadout-group-janitor-neck = Janitor neck
@@ -137,3 +140,4 @@ loadout-group-paramedic-id = Paramedic ID
 
 loadout-group-psychologist-neck = Psychologist neck
 loadout-group-psychologist-shoes = Psychologist shoes
+loadout-group-psychologist-outerclothing = Psychologist outer clothing

@@ -67,7 +67,7 @@ public sealed partial class EditChatPopup : DefaultWindow
 
     private void EditChat()
     {
-        if (!uint.TryParse(NumberInput.Text, out var number))
+        if (ConfirmButton.Disabled || !uint.TryParse(NumberInput.Text, out var number))
             return;
 
         var name = NameInput.Text.Trim();

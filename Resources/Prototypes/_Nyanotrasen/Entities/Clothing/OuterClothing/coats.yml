@@ -1,0 +1,14 @@
+﻿- type: entity
+  parent: [ ClothingOuterStorageBase, BaseCommandContraband ]
+  id: ClothingOuterCoatRndMysta
+  name: research director's other lab coat # Delta V - Mystagogue new coat # imp - no mysta
+  description: Similar to the standard model but with more purple and gold. # Delta V - Mystagogue new coat
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Coats/mystacoat.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Coats/mystacoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75

@@ -1,0 +1,22 @@
+- type: entity
+  name: micro extinguisher
+  parent: FireExtinguisher
+  id: FireExtinguisherTckTck
+  description: It extinguishes fires.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/tcktck_extinguisher.rsi
+    layers:
+    - state: fire_extinguisher_closed
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: MeleeWeapon
+    range: 0.9
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+  - type: Item
+    sprite: _Impstation/Objects/Misc/tcktck_extinguisher.rsi
+    size: Tiny

@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By Allie (allie69 @ discord). Base from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bibble"
+    },
+    {
+      "name": "etb"
+    },
+    {
+      "name": "etb-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "etb-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "greybible"
+    },
+    {
+      "name": "greybible-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "greybible-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "grimoire"
+    },
+    {
+      "name": "grimoire-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "grimoire-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "kojiki"
+    },
+    {
+      "name": "kojiki-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "kojiki-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "principia"
+    },
+    {
+      "name": "principia-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "principia-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "quran"
+    },
+    {
+      "name": "quran-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "quran-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "scroll"
+    },
+    {
+      "name": "scroll-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "scroll-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tablet"
+    },
+    {
+      "name": "tablet-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "tablet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tanakh"
+    },
+    {
+      "name": "tanakh-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "tanakh-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tao"
+    },
+    {
+      "name": "tao-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "tao-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "unitology"
+    }
+  ]
+}

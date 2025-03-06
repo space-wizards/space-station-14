@@ -1,4 +1,4 @@
-﻿# colorful glasses timers - 2h so its like twoish rounds to unlock
+﻿# colorful glasses timers
 - type: loadoutEffectGroup
   id: SecurityGlassesTimer
   effects:
@@ -6,7 +6,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Security
-      time: 7200
+      time: 7200 #2 hrs, ~2 rounds
 
 - type: loadoutEffectGroup
   id: MedicalGlassesTimer
@@ -15,7 +15,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Medical
-      time: 7200
+      time: 7200 #2 hrs, ~2 rounds
 
 - type: loadoutEffectGroup
   id: ScienceGlassesTimer
@@ -24,7 +24,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Science
-      time: 7200
+      time: 7200 #2 hrs, ~2 rounds
 
 - type: loadoutEffectGroup
   id: ServiceGlassesTimer
@@ -33,7 +33,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Civilian
-      time: 7200
+      time: 7200 #2 hrs, ~2 rounds
 
 - type: loadoutEffectGroup
   id: CargoGlassesTimer
@@ -42,7 +42,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Cargo
-      time: 7200
+      time: 7200 #2 hrs, ~2 rounds
 
 - type: loadoutEffectGroup
   id: EngineeringGlassesTimer
@@ -51,7 +51,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Engineering
-      time: 7200
+      time: 7200 #2 hrs, ~2 rounds
 
 # colorful glasses loadouts
 

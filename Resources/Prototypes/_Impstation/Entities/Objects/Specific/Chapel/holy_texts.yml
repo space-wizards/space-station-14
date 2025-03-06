@@ -1,0 +1,159 @@
+- type: entity
+  name: quran
+  description: Printed in both original Arabic and NanoTrasen Standard English.
+  parent: Bible
+  id: HolyTextQuran
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: quran
+  - type: Item
+    size: Small
+    heldPrefix: quran
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: tanakh
+  description: Instructions, Prophets, and Writings.
+  parent: Bible
+  id: HolyTextTanakh
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: tanakh
+  - type: Item
+    size: Small
+    heldPrefix: tanakh
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: holy scroll
+  description: Between these dowels could hide heavenly revelations, devilish secrets, or a really long papercut.
+  parent: Bible
+  id: HolyTextHolyScroll
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: scroll
+  - type: Item
+    size: Small
+    heldPrefix: scroll
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: holy tablet
+  description: Indecipherable to the layperson, only the chaplain knows whence its powers come.
+  parent: Bible
+  id: HolyTextHolyTablet
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: tablet
+  - type: Item
+    size: Small
+    heldPrefix: tablet
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: greybible
+  description: An NT breakthrough, this tome is compatible with all chaplains, regardless of their beliefs. It doesn't say much of anything.
+  parent: Bible
+  id: HolyTextGreybible
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: greybible
+  - type: Item
+    size: Small
+    heldPrefix: greybible
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: kojiki
+  description: A spiritually powerful text detailing yokai and their mythologies, and how to coexist with them.
+  parent: Bible
+  id: HolyTextKojiki
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: kojiki
+  - type: Item
+    size: Small
+    heldPrefix: kojiki
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: tao teachings
+  description: Comprises many spiritually powerful texts, none of which are the true Tao.
+  parent: Bible
+  id: HolyTextTaoTeachings
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: tao
+  - type: Item
+    size: Small
+    heldPrefix: tao
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: principia discordia
+  description: Tenet V - A Discordian is Forbidden of Believing what they Read.
+  parent: Bible
+  id: HolyTextPrincipiaDiscordia
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: principia
+  - type: Item
+    size: Small
+    heldPrefix: principia
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: chaplain's grimoire
+  description: Is it holy? Is it arcane? Wizard Federation lawyers are still wands-deep in the lawsuit.
+  parent: Bible
+  id: HolyTextChaplainsGrimoire
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: grimoire
+  - type: Item
+    size: Small
+    heldPrefix: grimoire
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: unitology tome
+  description: Technically hallowed, this is just six volumes discussing xenoarch and asking for spesos.
+  parent: Bible
+  id: HolyTextUnitologyTome
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: unitology
+
+- type: entity
+  name: extreme teen bible
+  description: Meant for youth pastors, chaplains proselytizing from this are compelled to sit in chairs backwards.
+  parent: Bible
+  id: HolyTextExtremeTeenBible
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: etb
+  - type: Item
+    size: Small
+    heldPrefix: etb
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+
+- type: entity
+  name: bibble
+  description: Self published, like many ancient texts.
+  parent: Bible
+  id: HolyTextBibble
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
+    state: bibble

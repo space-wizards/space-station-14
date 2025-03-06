@@ -58,7 +58,7 @@ knowledge-path-ash-s8-desc =
 knowledge-path-ash-s9-name = Ashlord's Rite
 knowledge-path-ash-s9-desc =
     The ascension ritual of the Path of Ash.
-    Bring 3 burning or husked corpses to a transmutation rune to complete the ritual.
+    Bring 3 burning corpses to a transmutation rune to complete the ritual.
     When completed, you become a harbinger of flames, gaining two abilites.
     Cascade, which causes a massive, growing ring of fire around you,
     and Oath of Flame, causing you to passively create a ring of flames as you walk.

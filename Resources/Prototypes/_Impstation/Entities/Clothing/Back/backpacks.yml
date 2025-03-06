@@ -1,8 +1,8 @@
 - type: entity
   parent: [ClothingBackpack, BaseCommandContraband]
   id: ClothingBackpackCommandveteran
-  name: command veteran backpack
-  description: A sleek backpack, earned through a long career as command.
+  name: command backpack
+  description: A sleek black leather backpack with brass hardware.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Back/Backpacks/commandveteran.rsi

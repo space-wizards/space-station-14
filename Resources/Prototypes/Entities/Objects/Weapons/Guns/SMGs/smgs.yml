@@ -104,7 +104,9 @@
   - type: Gun
     minAngle: 21
     maxAngle: 32
-    shotsPerBurst: 5
+    shotsPerBurst: 2 #imp
+    burstCooldown: 0.15 #imp
+    burstFireRate: 20 #imp
     availableModes:
     - Burst
     - FullAuto
@@ -154,6 +156,7 @@
       - SemiAuto
       shotsPerBurst: 3
       burstCooldown: 0.25
+      selectedMode: Burst #imp
     - type: ItemSlots
       slots:
         gun_magazine:
@@ -257,9 +260,9 @@
     angleIncrease: 1.5
     angleDecay: 6
     selectedMode: FullAuto
-    shotsPerBurst: 5
-    burstCooldown: 0.2
-    burstFireRate: 7
+    shotsPerBurst: 3 #imp
+    burstCooldown: 0.5 #imp
+    burstFireRate: 12
     availableModes:
     - Burst
     - FullAuto

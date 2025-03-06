@@ -1,0 +1,4 @@
+- files: ["dry_fire.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/436ba869ebcd0b60b63973fb7562f447ee655205/sound/items/weapons/gun/general/dry_fire.ogg"

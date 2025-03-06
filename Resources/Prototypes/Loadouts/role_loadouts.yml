@@ -134,6 +134,7 @@
   groups:
   - LawyerNeck
   - LawyerJumpsuit
+  - LawyerOuterClothing # imp
   - LawyerShoes # imp
   - Glasses
   - CommonBackpack
@@ -157,6 +158,7 @@
   - ChaplainBelt # imp
   - Glasses
   - CommonBackpack
+  - ChaplainBook #imp
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -650,6 +652,7 @@
   - PsychologistNeck # imp
   - PsychologistJumpsuit
   - PsychologistShoes # imp
+  - PsychologistOuterClothing # DeltaV
   - Glasses
   - MedicalBackpack
   - Survival

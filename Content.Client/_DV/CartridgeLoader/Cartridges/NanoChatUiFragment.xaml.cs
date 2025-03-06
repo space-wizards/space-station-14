@@ -178,7 +178,7 @@ public sealed partial class NanoChatUiFragment : BoxContainer
     private void SendMessage()
     {
         var activeChat = _pendingChat ?? _currentChat;
-        if (activeChat == null || string.IsNullOrWhiteSpace(MessageInput.Text))
+        if (SendButton.Disabled || activeChat == null || string.IsNullOrWhiteSpace(MessageInput.Text))
             return;
 
         var messageContent = MessageInput.Text;

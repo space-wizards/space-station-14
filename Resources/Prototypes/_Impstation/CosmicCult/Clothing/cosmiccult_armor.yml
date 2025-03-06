@@ -3,7 +3,7 @@
 
 # COSMIC CULT HARDSUIT BODY
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseCosmicCultContraband ]
+  parent: [ ClothingOuterHardsuitBase, TierXContraband ]
   id: ClothingOuterHardsuitCosmicCult
   name: entropic armor
   description: An unsettling hardsuit, numbing to the touch. It pulses with a glow that makes you feel like you've forgotten something..
@@ -18,16 +18,16 @@
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.5
-        Piercing: 0.5
-        Heat: 0.5
-        Radiation: 0.5
-        Caustic: 0.5
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Radiation: 0.7
+        Caustic: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -37,6 +37,7 @@
   - type: Tag
     tags:
     - Hardsuit
+    - WhitelistChameleon
 #Shoulder mounted flashlight
   - type: ToggleableLightVisuals
     spriteLayer: light
@@ -84,7 +85,7 @@
 
 # COSMIC CULT HARDSUIT HELMET
 - type: entity
-  parent: [ ClothingHeadHardsuitBase, BaseCosmicCultContraband ]
+  parent: [ ClothingHeadHardsuitBase ]
   id: ClothingHeadHelmetCosmicCult
   name: entropic headgear
   description: This headpiece seems to extude from the hardsuit it's attached to as if the material is one single, contiguous whole.
@@ -102,7 +103,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Heat: 0.9
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90

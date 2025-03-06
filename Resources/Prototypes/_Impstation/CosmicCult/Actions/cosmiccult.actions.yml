@@ -1,0 +1,145 @@
+- type: entity
+  id: ActionCosmicSiphon
+  name: Siphon Entropy
+  description: Silently siphon entropy from your target, dealing some damage in the process.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 50
+    whitelist:
+      components:
+        - HumanoidAppearance
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: siphon
+    event: !type:EventCosmicSiphon {}
+
+- type: entity
+  id: ActionCosmicBlank
+  name: Shunt Subjectivity
+  description: Shunt your target's mind out of their body and unto the cosmic dark, temporarily rendering their body mindless.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    canTargetSelf: true
+    useDelay: 120
+    whitelist:
+      components:
+        - HumanoidAppearance
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: blank
+    event: !type:EventCosmicBlank {}
+
+- type: entity
+  id: ActionCosmicPlaceMonument
+  name: Beckon The Monument
+  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-spawn-confirm
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument
+    event: !type:EventCosmicPlaceMonument {}
+
+- type: entity
+  id: ActionCosmicReturn
+  name: Return
+  description: Dissipate your astral projection and return to your body.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    useDelay: 0
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: return
+    event: !type:EventCosmicReturn {}
+
+- type: entity
+  id: ActionCosmicLapse
+  name: Abberant Lapse
+  description: Lapse your target's corporeal form, temporarily rendering it immutable, impassible, and frozen in place.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    canTargetSelf: true
+    useDelay: 45
+    whitelist:
+      components:
+        - HumanoidAppearance
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: lapse
+    event: !type:EventCosmicLapse {}
+
+- type: entity
+  id: ActionCosmicGlare
+  name: Null Glare
+  description: Emit a horrific pulse of cosmic light, slowing and disorienting everyone around you.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 50
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: glare
+    event: !type:EventCosmicGlare {}
+
+- type: entity
+  id: ActionCosmicIngress
+  name: Force Ingress
+  description: Use a concentrated blast of power to force a secure doorway open.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 40
+    whitelist:
+      components:
+        - Door
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: ingress
+    event: !type:EventCosmicIngress {}
+
+- type: entity
+  id: ActionCosmicImposition
+  name: Vacuous Imposition
+  description: You negate any incoming damage for a short time.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 160
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: entropic
+    event: !type:EventCosmicImposition {}
+
+- type: entity
+  id: ActionCosmicNova
+  name: Astral Nova
+  description: Hurl a large and disruptive blast of astral energy.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    useDelay: 30
+    raiseOnUser: true
+    range: 60
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: nova
+    event: !type:EventCosmicNova {}
+
+

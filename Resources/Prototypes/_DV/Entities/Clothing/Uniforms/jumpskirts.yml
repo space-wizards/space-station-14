@@ -1,3 +1,70 @@
+# Detective
+
+- type: entity
+  parent: [ ClothingUniformSkirtBase, ClothingUniformRollableBase ] # imp - we dont have rmcrollable so im having this use foldable
+  id: ClothingUniformJumpskirtDetTurtle
+  name: detective's turtleneck
+  description: A comfortable and tight-fitting turtleneck for those with the resolve to reach the position of detective.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/detective_alt.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/detective_alt.rsi
+
+# Warden
+
+- type: entity
+  parent: [ ClothingUniformSkirtBase, ClothingUniformRollableBase ] # imp - we dont have rmcrollable so im having this use foldable
+  id: ClothingUniformJumpskirtWardenTurtle
+  name: warden's turtleneck
+  description: A comfortable and tight-fitting turtleneck for those with the patience to reach the position of Warden.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/armourer_alt.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/armourer_alt.rsi
+
+# Justice
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCJFormal
+  name: chief justice's formal dress
+  description: A fancy double-breasted dress with golden accoutrements. Sharp and authoritative.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/cjformaldress.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/cjformaldress.rsi
+
+# Clerk
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtClerk
+  name: clerk's dress skirt
+  description: A modest dress skirt for the person with the power to notarize anything.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/clerk.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/clerk.rsi
+
+# Prosecutor
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtProsecutor
+  name: prosecutor's dress skirt
+  description: A red suit and skirt with a fancy cravat. Perfect for a prosecutor.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/prosecutorred.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/prosecutorred.rsi
+
+# Admin Assistant
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtAdminAssistant
@@ -8,3 +75,15 @@
     sprite: _DV/Clothing/Uniforms/Jumpskirt/admin_assistant.rsi
   - type: Clothing
     sprite: _DV/Clothing/Uniforms/Jumpskirt/admin_assistant.rsi
+
+# Salvage Specialist
+
+- type: entity
+  parent: ClothingUniformJumpsuitSalvageSpecialistDV
+  id: ClothingUniformJumpskirtSalvageSpecialistDV
+  name: salvage specialist's worn jumpskirt
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/explorer.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpskirt/explorer.rsi

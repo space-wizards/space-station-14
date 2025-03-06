@@ -6,6 +6,7 @@
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
+  canBeAntag: false #imp CULT HOTFIX. #TODO: ANTAG SELECTION REFACTOR
   access:
   - Chapel
   - Maintenance
@@ -21,6 +22,6 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - Bible
+#    - Bible #imp now handled by loadouts
     - RubberStampChaplain
     - NullRodDefault

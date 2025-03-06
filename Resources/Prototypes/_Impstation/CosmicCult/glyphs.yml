@@ -1,0 +1,119 @@
+- type: entity
+  id: CosmicGlyphBase
+  name: base glyph
+  description: A strange, otherworldly marking.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Fixtures
+    fixtures:
+      rune:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+  - type: Physics
+  - type: Clickable
+  - type: CosmicGlyph
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    layers:
+      - state: aid
+  - type: Appearance
+
+- type: entity
+  parent: CosmicGlyphBase
+  id: CosmicGlyphTruth
+  name: Glyph of Truth
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    layers:
+      - state: truth
+  - type: CosmicGlyphConversion
+    negateProtection: true
+  - type: CosmicGlyph
+    glyphName: truth
+    requiredCultists: 3
+    activationDamage: 80
+
+- type: entity
+  parent: CosmicGlyphBase
+  id: CosmicGlyphKnowledge
+  name: Glyph of Knowledge
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    layers:
+      - state: knowledge
+  - type: CosmicGlyphConversion
+  - type: CosmicGlyph
+    glyphName: knowledge
+    requiredCultists: 2
+    activationDamage: 40
+
+- type: entity
+  parent: CosmicGlyphBase
+  id: CosmicGlyphCessation
+  name: Glyph of Cessation
+  components:
+  - type: Sprite
+    layers:
+    - sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+      state: cessation
+  - type: CosmicGlyphTransmuteSpire
+  - type: CosmicGlyph
+    glyphName: cessation
+    requiredCultists: 1
+    activationDamage: 25
+
+- type: entity
+  parent: CosmicGlyphBase
+  id: CosmicGlyphBlades
+  name: Glyph of Blades
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    layers:
+      - state: blades
+  - type: CosmicGlyphTransmuteWeapon
+  - type: CosmicGlyph
+    glyphName: blades
+    requiredCultists: 2
+    activationDamage: 80
+
+- type: entity
+  parent: CosmicGlyphBase
+  id: CosmicGlyphWarding
+  name: Glyph of Warding
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    layers:
+      - state: warding
+  - type: CosmicGlyphTransmuteArmor
+  - type: CosmicGlyph
+    glyphName: warding
+    requiredCultists: 2
+    activationDamage: 80
+
+- type: entity
+  parent: CosmicGlyphBase
+  id: CosmicGlyphProjection
+  name: Glyph of Projection
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    layers:
+      - state: projection
+  - type: CosmicGlyphAstralProjection
+  - type: CosmicGlyph
+    glyphName: projection
+    requiredCultists: 1
+    activationRange: 0.5
+

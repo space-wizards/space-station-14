@@ -89,8 +89,8 @@
       - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
-      - id: HeartLocket
-      - id: CDDogtags
+      - id: HeartLocket # imp
+      - id: CDDogtags # CD
     # Uncommon Group
     - !type:GroupSelector
       weight: 23
@@ -112,8 +112,8 @@
         - id: ClothingNeckCloakGay
         - id: ClothingNeckCloakEnby
         - id: ClothingNeckCloakPan
-        - id: ClothingNeckCloakBear
-        - id: ClothingNeckCloakStraight
+        - id: ClothingNeckCloakBear # imp
+        - id: ClothingNeckCloakStraight # imp
       - id: ToySkeleton
       - id: Basketball
       - id: Football
@@ -157,7 +157,7 @@
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin
-        - id: ClothingNeckStraightPin
+        - id: ClothingNeckStraightPin # imp
     # Rare Group
     - !type:GroupSelector
       weight: 2
@@ -171,7 +171,8 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
-      - id: StraightHandyFlag
+      - id: StraightHandyFlag # imp
+      - id: ClothingBeltFoamSheathFilled # DeltaV - Add small chance of it spawning in maints locker.
 
 - type: entityTable
   id: MaintToolsTable

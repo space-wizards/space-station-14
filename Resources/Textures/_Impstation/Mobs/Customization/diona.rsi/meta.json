@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "flowers_body, flowers_head, leaf_cover, thorns_body, thorns_head from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe, modified by EmoGarbage and other from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi, modified by Doop",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "flowers_body_primary",
+      "directions": 4
+    },
+    {
+      "name": "flowers_body_secondary",
+      "directions": 4
+    },
+    {
+      "name": "flowers_head_primary",
+      "directions": 4
+    },
+    {
+      "name": "flowers_head_secondary",
+      "directions": 4
+    },
+    {
+      "name": "leaf_cover",
+      "directions": 4
+    },
+    {
+      "name": "thorns_body",
+      "directions": 4
+    },
+    {
+      "name": "thorns_head",
+      "directions": 4
+    },
+    {
+      "name": "bloom_primary",
+      "directions": 4
+    },
+    {
+      "name": "bloom_secondary",
+      "directions": 4
+    },
+    {
+      "name": "bracket",
+      "directions": 4
+    },
+    {
+      "name": "brush",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_primary",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_secondary",
+      "directions": 4
+    },
+    {
+      "name": "cornflower_flowers",
+      "directions": 4
+    },
+    {
+      "name": "ficus",
+      "directions": 4
+    },
+    {
+      "name": "garland_primary",
+      "directions": 4
+    },
+    {
+      "name": "garland_secondary",
+      "directions": 4
+    },
+    {
+      "name": "garland_flowers1",
+      "directions": 4
+    },
+    {
+      "name": "garland_flowers2",
+      "directions": 4
+    },
+    {
+      "name": "garland_flowers3",
+      "directions": 4
+    },
+    {
+      "name": "king_primary",
+      "directions": 4
+    },
+    {
+      "name": "king_secondary",
+      "directions": 4
+    },
+    {
+      "name": "laurel",
+      "directions": 4
+    },
+    {
+      "name": "leafy",
+      "directions": 4
+    },
+    {
+      "name": "lotus_primary",
+      "directions": 4
+    },
+    {
+      "name": "lotus_secondary",
+      "directions": 4
+    },
+    {
+      "name": "meadow",
+      "directions": 4
+    },
+    {
+      "name": "oak",
+      "directions": 4
+    },
+    {
+      "name": "overlay",
+      "directions": 4
+    },
+    {
+      "name": "palm",
+      "directions": 4
+    },
+    {
+      "name": "root",
+      "directions": 4
+    },
+    {
+      "name": "rose_primary",
+      "directions": 4
+    },
+    {
+      "name": "rose_secondary",
+      "directions": 4
+     },
+    {
+      "name": "rosey_primary",
+      "directions": 4
+    },
+    {
+      "name": "rosey_secondary",
+      "directions": 4
+    },
+    {
+      "name": "rosey_flowers",
+      "directions": 4
+    },
+    {
+      "name": "shrub",
+      "directions": 4
+    },
+    {
+      "name": "spinner_primary",
+      "directions": 4
+    },
+    {
+      "name": "spinner_secondary",
+      "directions": 4
+    },
+    {
+      "name": "sprout_primary",
+      "directions": 4
+    },
+    {
+      "name": "sprout_secondary",
+      "directions": 4
+    },
+    {
+      "name": "vine_primary",
+      "directions": 4
+    },
+    {
+      "name": "vine_secondary",
+      "directions": 4
+    },
+    {
+      "name": "vinel_primary",
+      "directions": 4
+    },
+    {
+      "name": "vinel_secondary",
+      "directions": 4
+    },
+    {
+      "name": "vines_primary",
+      "directions": 4
+    },
+    {
+      "name": "vines_secondary",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_primary",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_secondary",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers1",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers2",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers3",
+      "directions": 4
+    },
+    {
+      "name": "wildflower_flowers4",
+      "directions": 4
+    }
+  ]
+}

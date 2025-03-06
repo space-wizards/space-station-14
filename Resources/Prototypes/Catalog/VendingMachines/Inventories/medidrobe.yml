@@ -26,5 +26,8 @@
     ClothingNeckScarfStripedLightBlue: 2 # imp
     ClothingShoesBootsWinterMed: 2
   contrabandInventory:
-    ClothingUniformJumpskirtOfLife: 1
+    ClothingHeadHatSurgcapCybersun: 1 # DeltaV
+    ClothingOuterCoatCybersunWindbreaker: 1 # DeltaV
+    ClothingUniformJumpskirtOfLife: 1 # DeltaV
     ClothingMaskClownMedical: 1 # imp
+    UniformScrubsColorCybersun: 1

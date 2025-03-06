@@ -7,12 +7,17 @@ using Content.Shared.Atmos;
 using Content.Server.Polymorph.Systems;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
+using Content.Server.EntityEffects.EffectConditions;
+using Content.Server.Temperature.Components;
+using Content.Shared.Speech.Muting;
+using Content.Server.Temperature.Systems;
 
 namespace Content.Server.Heretic.Abilities;
 
 public sealed partial class HereticAbilitySystem : EntitySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly TemperatureSystem _temperature = default!;
     public SoundSpecifier JauntExitSound = new SoundPathSpecifier("/Audio/Magic/fireball.ogg");
     public const float RebirthRange = 3f;
 
@@ -52,12 +57,19 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         if (TryComp<FlammableComponent>(ent, out var flam))
         {
-            if (!flam.OnFire)
-            {
-                _flammable.AdjustFireStacks(ent, 1, flam, true);
-            }
+            //don't really need this bc of the direct temp change but it looks sick as fuck
+            _flammable.AdjustFireStacks(ent, 1, flam, true);
         }
-        _audio.PlayPvs(JauntExitSound, ent, AudioParams.Default.WithVolume(-2f));
+        if (TryComp<TemperatureComponent>(ent, out var temp))
+        {
+            _temperature.ForceChangeTemperature(ent, temp.CurrentTemperature + 10f, temp);
+        }
+        // play a distinct sound, audible thru walls, so you can track where that slippery fuck went
+        _audio.PlayPvs(JauntExitSound, ent, AudioParams.Default
+            .WithVolume(-2f)
+            .WithMaxDistance(15f)
+            .WithRolloffFactor(0.8f)
+            );
     }
 
     private void OnVolcano(Entity<HereticComponent> ent, ref EventHereticVolcanoBlast args)

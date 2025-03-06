@@ -110,7 +110,8 @@
       - ToyFigurineERTJanitor
       - ToyFigurineERTLeader
       - ToyFigurineERTMedic
-      - ToyFigurineERTSecurity #</imp>
+      - ToyFigurineERTSecurity 
+      - ToyFigurineCosmicCultist #</imp>
       rareChance: 0.05
       prototypes:
       - ToyFigurinePassenger

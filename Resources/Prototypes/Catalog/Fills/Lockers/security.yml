@@ -25,7 +25,6 @@
       - id: RemoteSignaller
         amount: 2
       - id: ClothingHeadsetWarden
-      - id: ClothingOuterHardsuitBrigmedic
       - id: BoxToken #imp
       - id: BaseSeclinkRadio #imp
 
@@ -54,7 +53,6 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
-      - id: ClothingOuterHardsuitBrigmedic
       - id: ClothingHeadsetWarden
       - id: TicketPad #imp special
       - id: BoxToken #imp
@@ -74,6 +72,13 @@
         prob: 0.3
       - id: ClothingHeadHelmetBasic
       - id: ClothingOuterArmorBasic
+        orGroup: OuterArmor
+        prob: 0.33
+      - id: ClothingOuterArmorDuraVest # DeltaV
+        orGroup: OuterArmor
+        prob: 0.33
+      - id: ClothingOuterArmorPlateCarrier # DeltaV
+        orGroup: OuterArmor
       - id: ClothingBeltSecurityFilled
       - id: Flash
         prob: 0.5

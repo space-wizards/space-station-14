@@ -23,6 +23,11 @@
   copyright: "ghostphasemoon"
   source: "https://github.com/impstation/imp-station-14/"
 
+- files: ["Shovel Incident.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Wowls"
+  source: "https://github.com/impstation/imp-station-14/"
+
 - files: ["impstation70snovelcover.webp"]
   license: "CC-BY-SA-4.0"
   copyright: "LandsharkRAWR"
@@ -47,3 +52,13 @@
   license: "CC-BY-SA-4.0"
   copyright: "GooseyTeeth"
   source: "https://x.com/GooseyTeeth/status/1879890513652036062/photo/1" # 18+ content is posted on this account
+
+- files: ["bugsdreamtitlescreen.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Doop"
+  source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["varvara_heretic.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Six-Valentine"
+  source: "https://github.com/impstation/imp-station-14/"
