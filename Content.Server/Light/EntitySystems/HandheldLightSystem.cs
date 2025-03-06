@@ -203,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
             if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
                 !TryComp(uid, out battery))
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid, FunAudioParams.WithUniformPitch());
+                _audio.PlayPvs(_audio.ResolveSound(component.TurnOnFailSound), uid, FunAudioParams.WithUniformPitch());
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), uid, user);
                 return false;
             }
@@ -213,7 +213,7 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid, FunAudioParams.WithUniformPitch());
+                _audio.PlayPvs(_audio.ResolveSound(component.TurnOnFailSound), uid, FunAudioParams.WithUniformPitch());
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), uid, user);
                 return false;
             }

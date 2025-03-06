@@ -14,7 +14,7 @@
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: CrateFunInstrumentsBrass
-  cost: 2500
+  cost: 2000
   category: cargoproduct-category-name-fun
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   product: CrateFunInstrumentsWoodwind
-  cost: 2500
+  cost: 3000
   category: cargoproduct-category-name-fun
   group: market
 
@@ -325,5 +325,15 @@
     state: toms
   product: TomDrumsInstrument
   cost: 1500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: MoproachCrate
+  icon:
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+    state: icon
+  product: CrateFunMoproach
+  cost: 2000
   category: cargoproduct-category-name-fun
   group: market
