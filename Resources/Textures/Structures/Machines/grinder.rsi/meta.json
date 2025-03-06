@@ -8,20 +8,10 @@
     },
     "states":[
         {
-            "name":"grinder_empty",
-            "delays":[
-                [
-                    1.0
-                ]
-            ]
+            "name":"grinder_empty"
         },
         {
-            "name":"grinder_beaker_attached",
-            "delays":[
-                [
-                    1.0
-                ]
-            ]
+            "name":"grinder_beaker_attached"
         }
     ]
 }
