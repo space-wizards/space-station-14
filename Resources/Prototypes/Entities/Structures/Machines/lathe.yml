@@ -327,7 +327,7 @@
     - StarlightSecurityMechs
     - StarlightMechParts
   - type: EmagLatheRecipes
-    emagStaticRecipes:
+    emagStaticPacks:
     - StarlightMechWeapon
   - type: MaterialStorage
     whitelist:

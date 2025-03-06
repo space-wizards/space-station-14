@@ -3886,4 +3886,25 @@ Entries:
   id: 538
   time: '2025-03-06T00:52:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/358
+- author: STARLIGHT TEAM
+  changes:
+  - message: Security SOP in the Guidebook
+    type: Add
+  id: 539
+  time: '2025-03-06T09:55:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/365
+- author: BORTBORTBORT and Grapegrifter
+  changes:
+  - message: Changed document printer templates and logos.
+    type: Tweak
+  id: 540
+  time: '2025-03-06T11:16:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/366
+- author: B1773rm4n
+  changes:
+  - message: Cargo SOP in the Guidebook
+    type: Add
+  id: 541
+  time: '2025-03-06T14:47:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/369
 

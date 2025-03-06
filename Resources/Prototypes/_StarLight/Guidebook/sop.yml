@@ -233,7 +233,56 @@
   name: guide-entry-sl-security-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/security-sop-intro.xml"
   priority: 3
+  children:
+  - security-sop-cadet
+  - security-sop-securityofficer
+  - security-sop-detective
+  - security-sop-brigmedic
+  - security-sop-warden
+  - security-sop-headofsecurity
+  - security-sop-prisonertreatment
 
+- type: guideEntry
+  id: security-sop-cadet
+  name: guide-entry-sl-security-sop-cadet
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Cadet.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-securityofficer
+  name: guide-entry-sl-security-sop-securityofficer
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/SecurityOfficer.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-detective
+  name: guide-entry-sl-security-sop-detective
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Detective.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-brigmedic
+  name: guide-entry-sl-security-sop-brigmedic
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Brigmedic.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-warden
+  name: guide-entry-sl-security-sop-warden
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Warden.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-headofsecurity
+  name: guide-entry-sl-security-sop-headofsecurity
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/HeadOfSecurity.xml"
+  priority: 4
+
+- type: guideEntry
+  id: security-sop-prisonertreatment
+  name: guide-entry-sl-security-sop-prisonertreatment
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/PrisonerTreatment.xml"
+  priority: 4
 
 
 - type: guideEntry
@@ -265,6 +314,78 @@
   name: guide-entry-sl-cargo-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/cargo-sop-intro.xml"
   priority: 7
+  children:
+    - cargo-sop-cargotechnician
+    - cargo-sop-miningspecialist
+    - cargo-sop-salvagespecialist
+    - cargo-sop-quartermaster
+    - cargo-sop-handlingorders
+
+- type: guideEntry
+  id: cargo-sop-cargotechnician
+  name: guide-entry-sl-cargo-sop-cargotechnician
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/CargoTechnician.xml"
+  priority: 1
+
+- type: guideEntry
+  id: cargo-sop-miningspecialist
+  name: guide-entry-sl-cargo-sop-miningspecialist
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/MiningSpecialist.xml"
+  priority: 2
+
+- type: guideEntry
+  id: cargo-sop-salvagespecialist
+  name: guide-entry-sl-cargo-sop-salvagespecialist
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/SalvageSpecialist.xml"
+  priority: 3
+
+- type: guideEntry
+  id: cargo-sop-quartermaster
+  name: guide-entry-sl-cargo-sop-quartermaster
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/Quartermaster.xml"
+  priority: 4
+
+- type: guideEntry
+  id: cargo-sop-handlingorders
+  name: guide-entry-sl-cargo-sop-handlingorders
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/HandlingOrders.xml"
+  priority: 5
+  children:
+    - cargo-sop-handlingorders-engineering
+    - cargo-sop-handlingorders-security
+    - cargo-sop-handlingorders-science
+    - cargo-sop-handlingorders-medical
+    - cargo-sop-handlingorders-service
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-engineering
+  name: guide-entry-sl-cargo-sop-handlingorders-engineering
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/EngineeringOrders.xml"
+  priority: 1
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-security
+  name: guide-entry-sl-cargo-sop-handlingorders-security
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/SecurityOrders.xml"
+  priority: 2
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-science
+  name: guide-entry-sl-cargo-sop-handlingorders-science
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/ScienceOrders.xml"
+  priority: 3
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-medical
+  name: guide-entry-sl-cargo-sop-handlingorders-medical
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/MedicalOrders.xml"
+  priority: 4
+
+- type: guideEntry
+  id: cargo-sop-handlingorders-service
+  name: guide-entry-sl-cargo-sop-handlingorders-service
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/ServiceOrders.xml"
+  priority: 5
 
 
 
