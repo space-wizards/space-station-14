@@ -46,42 +46,42 @@
   params:
     variation: 0.125
   sounds:
-    Scream:
-      collection: FemaleScreams
-    Laugh:
-      collection: FemaleLaugh
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
     CatMeow:
       collection: CatMeows
     CatHisses:
       collection: CatHisses
+    Cough:
+      collection: FemaleCoughs
+    Crying:
+      collection: FemaleCry
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    Gasp:
+      collection: FemaleGasp
+    Hew:
+      collection: Hew
+    Honk:
+      collection: CluwneHorn
+    Laugh:
+      collection: FemaleLaugh
     MonkeyScreeches:
       collection: MonkeyScreeches
     RobotBeep:
       collection: RobotBeeps
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Honk:
-      collection: CluwneHorn
+    Scream:
+      collection: FemaleScreams
     Sigh:
       collection: FemaleSigh
-    Crying:
-      collection: FemaleCry
-    Whistle:
-      collection: Whistles
+    Sneeze:
+      collection: FemaleSneezes
+    Snore:
+      collection: Snores
     Weh:
       collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
+    Whistle:
+      collection: Whistles
+    Yawn:
+      collection: FemaleYawn
 
 - type: emoteSounds
   id: MaleReptilian
