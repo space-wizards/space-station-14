@@ -79,6 +79,16 @@ guide-entry-sl-engineering-sop-intro = Engineering
 guide-entry-sl-medical-sop-intro = Medical
 
 guide-entry-sl-cargo-sop-intro = Cargo
+guide-entry-sl-cargo-sop-cargotechnician = Cargo Technician
+guide-entry-sl-cargo-sop-miningspecialist = Mining Specialist
+guide-entry-sl-cargo-sop-salvagespecialist = SalvageSpecialist
+guide-entry-sl-cargo-sop-quartermaster = Quartermaster (QM)
+guide-entry-sl-cargo-sop-handlingorders = Handling Orders
+guide-entry-sl-cargo-sop-handlingorders-engineering = Engineering Orders
+guide-entry-sl-cargo-sop-handlingorders-security = Security Orders
+guide-entry-sl-cargo-sop-handlingorders-science = Science Orders
+guide-entry-sl-cargo-sop-handlingorders-medical = Medical Orders
+guide-entry-sl-cargo-sop-handlingorders-service = Service Orders
 
 guide-entry-sl-science-sop-intro = Science
 
