@@ -280,6 +280,7 @@
     - !type:GroupSelector
       weight: 2
       children:
+      - id: Binoculars
       - id: LanternFlash
       - id: PowerCellHigh
       - id: NetProbeCartridge

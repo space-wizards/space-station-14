@@ -1,84 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Epinephrine now adds Adrenaline, because it is.
-    type: Tweak
-  id: 7393
-  time: '2024-09-18T23:00:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32076
-- author: ShadowCommander
-  changes:
-  - message: Fixed clicking on chairs and beds with an entity buckled to them not
-      unbuckling them.
-    type: Fix
-  id: 7394
-  time: '2024-09-18T23:55:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29998
-- author: Winkarst-cpu
-  changes:
-  - message: Now fire leaves burn marks on the tiles that were affected by it.
-    type: Add
-  id: 7395
-  time: '2024-09-19T00:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31939
-- author: ArchRBX
-  changes:
-  - message: Mass scanners and shuttle consoles now display coordinates beneath IFF
-      labels
-    type: Add
-  - message: IFF labels that are beyond the viewport extents maintain their heading
-      and don't hug corners
-    type: Fix
-  id: 7396
-  time: '2024-09-19T01:25:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31501
-- author: coffeeware
-  changes:
-  - message: a powered TEG won't produce infinite power when destroyed
-    type: Fix
-  id: 7397
-  time: '2024-09-19T02:15:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29972
-- author: Boaz1111
-  changes:
-  - message: Added plasma and uranium arrows.
-    type: Add
-  id: 7398
-  time: '2024-09-19T08:41:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31241
-- author: Ertanic
-  changes:
-  - message: Wanted list program and its cartridge.
-    type: Add
-  - message: The cartridge has been added to the HOS locker.
-    type: Add
-  - message: Added target to thief on wanted list cartridge.
-    type: Add
-  id: 7399
-  time: '2024-09-19T10:22:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31223
-- author: Errant
-  changes:
-  - message: Crew monitor list can now be filtered by name and job.
-    type: Add
-  id: 7400
-  time: '2024-09-19T10:23:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31659
-- author: deltanedas
-  changes:
-  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
-      in autolathes.
-    type: Remove
-  id: 7401
-  time: '2024-09-19T13:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32303
-- author: deltanedas
-  changes:
-  - message: Increased the thieving beacon's range to 2 tiles.
-    type: Tweak
-  id: 7402
-  time: '2024-09-19T13:55:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31340
 - author: Winkarst-cpu
   changes:
   - message: The first editable line in the dialog window now grabs the keyboard focus
@@ -3906,3 +3826,79 @@
   id: 7892
   time: '2025-02-02T01:38:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34797
+- author: DieselMohawk
+  changes:
+  - message: Renamed ablative shield to laser shield
+    type: Tweak
+  - message: Changed description for laser shield & ballistic shield
+    type: Tweak
+  id: 7893
+  time: '2025-02-03T01:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34841
+- author: keronshb
+  changes:
+  - message: The Hypereutactic Blade has been added to the game as an alternative
+      to the double bladed energy sword. It's a massive sword with high attack power,
+      100% reflect chance, but slow movement and use speed.
+    type: Add
+  id: 7894
+  time: '2025-02-03T21:22:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32414
+- author: AgentSmithRadio
+  changes:
+  - message: Added manager wire hacking menus to nearly all vending machines. Get
+      hacking and see what's hidden!
+    type: Add
+  id: 7895
+  time: '2025-02-03T23:33:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32934
+- author: ps3moira
+  changes:
+  - message: Changed 3D item sprites to cabinet perspective
+    type: Tweak
+  id: 7896
+  time: '2025-02-04T07:52:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34293
+- author: impubbi
+  changes:
+  - message: Bolas will now only be applied once.
+    type: Fix
+  id: 7897
+  time: '2025-02-04T16:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34723
+- author: slarticodefast
+  changes:
+  - message: Added binoculars. You can find them in maints loot and the warden's locker.
+    type: Add
+  id: 7898
+  time: '2025-02-04T21:46:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34687
+- author: Spacemann
+  changes:
+  - message: Added 4 randomized maintenance rooms to in Convex station. These will
+      change every round with a different layout.
+    type: Add
+  id: 7899
+  time: '2025-02-04T22:58:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34866
+- author: Winkarst-cpu
+  changes:
+  - message: Observers now have a personal point light and can toggle it.
+    type: Add
+  id: 7900
+  time: '2025-02-04T23:26:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33607
+- author: whatston3
+  changes:
+  - message: Healing items that reduce bleeding can now be applied to undamaged mobs.
+    type: Tweak
+  id: 7901
+  time: '2025-02-05T03:23:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33526
+- author: DuckManZach
+  changes:
+  - message: Floor pills have some new interesting surprises!
+    type: Add
+  id: 7902
+  time: '2025-02-05T08:42:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34843
