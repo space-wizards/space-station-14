@@ -90,6 +90,11 @@ public sealed class MobsterAccentSystem : EntitySystem
         return msg;
     }
 
+    public string Accentuate(string message)
+    {
+        return Accentuate(message, new MobsterAccentComponent { IsBoss = true });
+    }
+
     private void OnAccentGet(EntityUid uid, MobsterAccentComponent component, AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message, component);

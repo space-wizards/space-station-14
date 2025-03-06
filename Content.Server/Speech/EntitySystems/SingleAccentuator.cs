@@ -4,20 +4,14 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SingleAccentuator
 {
+    private EntitySystem? _accentSystem;
 
-    private readonly EntitySystem? _accentSystem;
+    private readonly IReadOnlyList<EntitySystem> _accentSystems;
 
     public SingleAccentuator()
     {
-        _accentSystem = GetRandomAccentSystem();
-    }
-
-    private EntitySystem GetRandomAccentSystem()
-    {
-        var random = IoCManager.Resolve<IRobustRandom>();
         var entMan = IoCManager.Resolve<IEntityManager>();
-
-        var accentSystems = new List<EntitySystem>
+        _accentSystems = new List<EntitySystem>
         {
             entMan.EntitySysManager.GetEntitySystem<OwOAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<GermanAccentSystem>(),
@@ -25,30 +19,41 @@ public sealed class SingleAccentuator
             entMan.EntitySysManager.GetEntitySystem<FrenchAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<MumbleAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<SlurredSystem>(),
-
+            entMan.EntitySysManager.GetEntitySystem<MobsterAccentSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<PirateAccentSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<MonkeyAccentSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<StutteringSystem>(),
         };
-        return random.Pick(accentSystems);
+        NextSystem();
+    }
+
+    public void NextSystem()
+    {
+        _accentSystem = GetRandomAccentSystem();
+    }
+
+    private EntitySystem GetRandomAccentSystem()
+    {
+        var random = IoCManager.Resolve<IRobustRandom>();
+
+        return random.Pick(_accentSystems);
     }
 
     public string Accentuate(string message)
     {
-        switch (_accentSystem)
+        return _accentSystem switch
         {
-            case OwOAccentSystem owoAccentSystem:
-                return owoAccentSystem.Accentuate(message);
-            case GermanAccentSystem germanAccentSystem:
-                return germanAccentSystem.Accentuate(message);
-            case RussianAccentSystem russianAccentSystem:
-                return russianAccentSystem.Accentuate(message);
-            case FrenchAccentSystem frenchAccentSystem:
-                return frenchAccentSystem.Accentuate(message);
-            case MumbleAccentSystem mumbleAccentSystem:
-                return mumbleAccentSystem.Accentuate(message);
-            case SlurredSystem slurredSystem:
-                return slurredSystem.Accentuate(message);
-
-        }
-
-        return message;
+            OwOAccentSystem owoAccentSystem => owoAccentSystem.Accentuate(message),
+            GermanAccentSystem germanAccentSystem => germanAccentSystem.Accentuate(message),
+            RussianAccentSystem russianAccentSystem => russianAccentSystem.Accentuate(message),
+            FrenchAccentSystem frenchAccentSystem => frenchAccentSystem.Accentuate(message),
+            MumbleAccentSystem mumbleAccentSystem => mumbleAccentSystem.Accentuate(message),
+            SlurredSystem slurredSystem => slurredSystem.Accentuate(message),
+            MobsterAccentSystem mobsterAccentSystem => mobsterAccentSystem.Accentuate(message),
+            PirateAccentSystem pirateAccentSystem => pirateAccentSystem.Accentuate(message),
+            MonkeyAccentSystem monkeyAccentSystem => monkeyAccentSystem.Accentuate(message),
+            StutteringSystem stutteringSystem => stutteringSystem.Accentuate(message),
+            _ => message
+        };
     }
 }
