@@ -56,7 +56,7 @@
       - SpreaderIgnore
 
 - type: entity
-  parent: GasPipeSansVisuals
+  parent: GasPipeSansLayers
   id: GasPipeManifold
   name: gas pipe manifold
   description: This atmospherics device allows gas pipes from different layers to be connected together.
@@ -103,8 +103,9 @@
         nodeGroupID: Pipe
         pipeDirection: North
         pipeLayer: 2
-  #- type: AtmosMonitoringConsoleDevice
-  #  navMapBlip: GasPipeManifold
+  - type: GasPipeManifold
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasPipeManifold
   - type: AtmosDevice
   - type: Tag
     tags:

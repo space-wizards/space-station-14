@@ -54,3 +54,13 @@
   color: LightGray
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_hexagon.png"
+  
+- type: navMapBlip
+  id: GasPipeManifold
+  scale: 0.9
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_rectangle_east_west.png"
+  - "/Textures/Interface/NavMap/beveled_rectangle_north_south.png"
+  - "/Textures/Interface/NavMap/beveled_rectangle_east_west.png"
+  - "/Textures/Interface/NavMap/beveled_rectangle_north_south.png"

@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: GasPipeSansVisuals
+  id: GasPipeSansLayers
   name: pipe
   description: Holds gas.
   placement:
@@ -49,6 +49,9 @@
     visible: false
   - type: Appearance
   - type: NodeContainer
+  - type: AtmosPipeColor
+  - type: PipeAppearance
+  - type: PipeColorVisuals
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
   - type: AtmosMonitoringConsoleDevice
@@ -63,13 +66,10 @@
 
 - type: entity
   abstract: true  
-  parent: GasPipeSansVisuals
+  parent: GasPipeSansLayers
   id: GasPipeBase
-  components:
-  - type: AtmosPipeColor
+  components:  
   - type: AtmosPipeLayers
-  - type: PipeColorVisuals
-  - type: PipeAppearance
   
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
