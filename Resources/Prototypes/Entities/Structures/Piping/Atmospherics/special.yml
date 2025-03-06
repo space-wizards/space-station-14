@@ -59,7 +59,7 @@
   parent: GasPipeSansLayers
   id: GasPipeManifold
   name: gas pipe manifold
-  description: This atmospherics device allows gas pipes from different layers to be connected together.
+  description: Allows gas pipes of different configurations to be connected together.
   placement:
     mode: SnapgridCenter
   components:
@@ -68,9 +68,9 @@
     layers:
     - state: pipeManifold
       map: [ "enum.PipeVisualLayers.Pipe" ]
-  #- type: Construction
-  #  graph: GasBinary
-  #  node: manifold
+  - type: Construction
+    graph: GasPipe
+    node: manifold
   - type: NodeContainer
     nodes:
       south0:

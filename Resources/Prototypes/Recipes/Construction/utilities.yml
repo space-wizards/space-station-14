@@ -451,6 +451,20 @@
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeFourway
+    
+- type: construction
+  name: gas pipe manifold
+  id: GasPipeManifold
+  description: Allows gas pipes of different configurations to be connected together.
+  graph: GasPipe
+  startNode: start
+  targetNode: manifold
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  icon:
+    sprite: Structures/Piping/Atmospherics/manifold.rsi
+    state: pipeManifold
 
 # ATMOS UNARY
 - type: construction

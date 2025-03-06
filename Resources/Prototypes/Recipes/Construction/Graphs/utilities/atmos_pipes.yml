@@ -33,6 +33,12 @@
       - material: Steel
         amount: 1
         doAfter: 1
+        
+    - to: manifold
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
 
   - node: half
     entity: GasPipeHalf
@@ -125,6 +131,22 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: manifold
+    entity: GasPipeManifold
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
