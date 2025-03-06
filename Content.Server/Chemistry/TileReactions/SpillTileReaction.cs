@@ -17,14 +17,14 @@ namespace Content.Server.Chemistry.TileReactions
     [DataDefinition]
     public sealed partial class SpillTileReaction : ITileReaction
     {
-        [DataField("launchForwardsMultiplier")] private float _launchForwardsMultiplier = 1;
-        [DataField("requiredSlipSpeed")] private float _requiredSlipSpeed = 6;
-        [DataField("paralyzeTime")] private float _paralyzeTime = 1;
+        [DataField("launchForwardsMultiplier")] public float LaunchForwardsMultiplier = 1;
+        [DataField("requiredSlipSpeed")] public float RequiredSlipSpeed = 6;
+        [DataField("paralyzeTime")] public float ParalyzeTime = 1;
 
         /// <summary>
         /// <see cref="SlipperyComponent.SuperSlippery"/>
         /// </summary>
-        [DataField("superSlippery")] private bool _superSlippery;
+        [DataField("superSlippery")] public bool SuperSlippery;
 
         public FixedPoint2 TileReact(TileRef tile,
             ReagentPrototype reagent,
@@ -39,13 +39,13 @@ namespace Content.Server.Chemistry.TileReactions
                 .TrySpillAt(tile, new Solution(reagent.ID, reactVolume, data), out var puddleUid, false, false))
             {
                 var slippery = entityManager.EnsureComponent<SlipperyComponent>(puddleUid);
-                slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
-                slippery.ParalyzeTime = _paralyzeTime;
-                slippery.SuperSlippery = _superSlippery;
+                slippery.LaunchForwardsMultiplier = LaunchForwardsMultiplier;
+                slippery.ParalyzeTime = ParalyzeTime;
+                slippery.SuperSlippery = SuperSlippery;
                 entityManager.Dirty(puddleUid, slippery);
 
                 var step = entityManager.EnsureComponent<StepTriggerComponent>(puddleUid);
-                entityManager.EntitySysManager.GetEntitySystem<StepTriggerSystem>().SetRequiredTriggerSpeed(puddleUid, _requiredSlipSpeed, step);
+                entityManager.EntitySysManager.GetEntitySystem<StepTriggerSystem>().SetRequiredTriggerSpeed(puddleUid, RequiredSlipSpeed, step);
 
                 var slow = entityManager.EnsureComponent<SpeedModifierContactsComponent>(puddleUid);
                 var speedModifier = 1 - reagent.Viscosity;

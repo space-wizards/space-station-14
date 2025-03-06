@@ -118,6 +118,11 @@ chat-speech-verb-canine-1 = barks
 chat-speech-verb-canine-2 = woofs
 chat-speech-verb-canine-3 = howls
 
+chat-speech-verb-name-goat = Goat
+chat-speech-verb-goat-1 = bleats
+chat-speech-verb-goat-2 = grunts
+chat-speech-verb-goat-3 = cries
+
 chat-speech-verb-name-small-mob = Mouse
 chat-speech-verb-small-mob-1 = squeaks
 chat-speech-verb-small-mob-2 = pieps
