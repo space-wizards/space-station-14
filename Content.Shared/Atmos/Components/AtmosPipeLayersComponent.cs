@@ -62,7 +62,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Tool quality required to cause a pipe to change layers
     /// </summary>
     [DataField]
-    public ProtoId<ToolQualityPrototype> Tool = "Anchoring";
+    public ProtoId<ToolQualityPrototype> Tool = "Screwing";
 
     /// <summary>
     /// The base delay to use for changing layers.

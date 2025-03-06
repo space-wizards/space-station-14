@@ -10,10 +10,8 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using System.Reflection;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
@@ -25,7 +23,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    private Vector2[] _layerOffsets = { new Vector2(0f, 0f), new Vector2(0.21875f, 0f), new Vector2(-0.21875f, 0f) };
+    // Used to offset the layer sprites listed in AtmosPipeLayersComponent.LayersToOffset
+    private readonly Vector2[] _layerOffsets = { new Vector2(0f, 0f), new Vector2(0.21875f, 0f), new Vector2(-0.21875f, 0f) };
 
     public override void Initialize()
     {
@@ -57,6 +56,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         var user = args.User;
 
+        // The player requires a tool to adjust the pipe layer
         if (!TryGetHeldTool(user, ent.Comp.Tool, out var tool))
         {
             var toolName = Loc.GetString(toolProto.ToolName).ToLower();
@@ -65,7 +65,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var v = new AlternativeVerb
             {
                 Priority = 1,
-                Category = VerbCategory.ChangePipeLayer,
+                Category = VerbCategory.Adjust,
                 Text = label,
                 Disabled = true,
                 Impact = LogImpact.Low,
@@ -76,6 +76,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             return;
         }
 
+        // List all the layers that the pipe can be shifted to
         for (var i = 0; i < AtmosPipeLayersComponent.MaxPipeLayer + 1; i++)
         {
             var index = i;
@@ -85,7 +86,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var v = new AlternativeVerb
             {
                 Priority = 1,
-                Category = VerbCategory.ChangePipeLayer,
+                Category = VerbCategory.Adjust,
                 Text = label,
                 Disabled = index == ent.Comp.CurrentPipeLayer,
                 Impact = LogImpact.Low,
@@ -147,6 +148,11 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         _popup.PopupPredicted(message, ent, args.User);
     }
 
+    /// <summary>
+    /// Increments an entity's pipe layer by 1, wrapping around to 0 if the max pipe layer is reached
+    /// </summary>
+    /// <param name="ent">The pipe entity</param>
+    /// <param name="user">The player entity who adjusting the pipe layer</param>
     public void CyclePipeLayer(Entity<AtmosPipeLayersComponent> ent, EntityUid? user = null)
     {
         var newLayer = ent.Comp.CurrentPipeLayer + 1;
@@ -157,6 +163,12 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         SetPipeLayer(ent, (byte)newLayer, user);
     }
 
+    /// <summary>
+    /// Sets an entity's pipe layer to a specified value
+    /// </summary>
+    /// <param name="ent">The pipe entity</param>
+    /// <param name="layer"> The new layer value
+    /// <param name="user">The player entity who adjusting the pipe layer</param>
     public virtual void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null)
     {
         if (ent.Comp.PipeLayersLocked)
@@ -173,6 +185,13 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Checks a player entity's hands to see if they are holding a tool with a specified quality
+    /// </summary>
+    /// <param name="user">The player entity</param>
+    /// <param name="toolQuality">The tool quality being checked for</param>
+    /// <param name="heldTool">A tool with the specified tool quality</param>
+    /// <returns>True if an appropriate tool was found</returns>
     private bool TryGetHeldTool(EntityUid user, ProtoId<ToolQualityPrototype> toolQuality, [NotNullWhen(true)] out Entity<ToolComponent>? heldTool)
     {
         heldTool = null;

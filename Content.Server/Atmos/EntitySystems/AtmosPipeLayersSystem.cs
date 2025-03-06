@@ -28,6 +28,12 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         SetPipeLayer(ent, ent.Comp.CurrentPipeLayer);
     }
 
+    /// <summary>
+    /// Sets an entity's pipe layer to a specified value
+    /// </summary>
+    /// <param name="ent">The pipe entity</param>
+    /// <param name="layer"> The new layer value
+    /// <param name="user">The player entity who adjusting the pipe layer</param>
     public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null)
     {
         if (ent.Comp.PipeLayersLocked)

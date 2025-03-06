@@ -86,7 +86,7 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory PowerLevel = new("verb-categories-power-level", null);
 
-        public static readonly VerbCategory ChangePipeLayer =
-            new("verb-categories-change-pipe-layer", "/Textures/Interface/VerbIcons/spanner.png");
+        public static readonly VerbCategory Adjust =
+            new("verb-categories-adjust", "/Textures/Interface/VerbIcons/screwdriver.png");
     }
 }

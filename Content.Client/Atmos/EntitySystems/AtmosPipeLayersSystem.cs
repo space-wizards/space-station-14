@@ -43,6 +43,11 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         }
     }
 
+    /// <summary>
+    /// Parses a string for enum references
+    /// </summary>
+    /// <param name="keyString">The string to parse</param>
+    /// <returns>The parsed string</returns>
     private object ParseKey(string keyString)
     {
         if (_reflection.TryParseEnumReference(keyString, out var @enum))
