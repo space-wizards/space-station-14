@@ -2438,7 +2438,7 @@
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: short
   - type: GhostTakeoverAvailable
