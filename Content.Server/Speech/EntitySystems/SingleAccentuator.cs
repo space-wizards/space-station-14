@@ -1,22 +1,17 @@
-using System.Linq;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SingleAccentuator
 {
-    private List<EntitySystem> _activeAccentSystems;
+    private EntitySystem? _accentSystem;
 
-    private readonly IReadOnlyList<EntitySystem> _accentSystemCandidates;
-
-    private const int MaxAccentIterations = 3;
-
-    private const float ReaccentuationChance = 0.5f;
+    private readonly IReadOnlyList<EntitySystem> _accentSystems;
 
     public SingleAccentuator()
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
-        _accentSystemCandidates = new List<EntitySystem>
+        _accentSystems = new List<EntitySystem>
         {
             entMan.EntitySysManager.GetEntitySystem<OwOAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<GermanAccentSystem>(),
@@ -29,45 +24,24 @@ public sealed class SingleAccentuator
             entMan.EntitySysManager.GetEntitySystem<MonkeyAccentSystem>(),
             entMan.EntitySysManager.GetEntitySystem<StutteringSystem>(),
         };
-
-        _activeAccentSystems = new();
-        NextActiveAccentSystemArray();
+        NextSystem();
     }
 
-    public void NextActiveAccentSystemArray()
+    public void NextSystem()
     {
-        _activeAccentSystems.Clear();
+        _accentSystem = GetRandomAccentSystem();
+    }
 
+    private EntitySystem GetRandomAccentSystem()
+    {
         var random = IoCManager.Resolve<IRobustRandom>();
 
-        var accentSystemCandidates = _accentSystemCandidates.ToList();
-
-        for (var i = 0; i < MaxAccentIterations; i++)
-        {
-            if (accentSystemCandidates.Count == 0)
-                break;
-
-            if (!random.Prob(ReaccentuationChance))
-                continue;
-
-            var accentSystem = random.PickAndTake(accentSystemCandidates);
-            _activeAccentSystems.Add(accentSystem);
-        }
+        return random.Pick(_accentSystems);
     }
 
     public string Accentuate(string message)
     {
-        foreach (var accentSystem in _activeAccentSystems)
-        {
-            message = AccentuateSingle(message, accentSystem);
-        }
-
-        return message;
-    }
-
-    private static string AccentuateSingle(string message, EntitySystem accentSystem)
-    {
-        return accentSystem switch
+        return _accentSystem switch
         {
             OwOAccentSystem owoAccentSystem => owoAccentSystem.Accentuate(message),
             GermanAccentSystem germanAccentSystem => germanAccentSystem.Accentuate(message),
@@ -79,7 +53,7 @@ public sealed class SingleAccentuator
             PirateAccentSystem pirateAccentSystem => pirateAccentSystem.Accentuate(message),
             MonkeyAccentSystem monkeyAccentSystem => monkeyAccentSystem.Accentuate(message),
             StutteringSystem stutteringSystem => stutteringSystem.Accentuate(message),
-            _ => message,
+            _ => message
         };
     }
 }
