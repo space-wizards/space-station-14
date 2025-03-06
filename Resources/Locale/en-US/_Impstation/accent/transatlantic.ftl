@@ -29,8 +29,7 @@ accent-transatlantic-words-7-2 = acting crazy
 accent-transatlantic-words-replace-7 = running amuck
 
 accent-transatlantic-words-8 = liar
-accent-transatlantic-words-8-2 = lying
-accent-transatlantic-words-replace-8 = a member of the ananias club
+accent-transatlantic-words-replace-8 = member of the ananias club
 
 accent-transatlantic-words-9 = I agree
 accent-transatlantic-words-replace-9 = and how
@@ -125,6 +124,7 @@ accent-transatlantic-words-30 = brig
 accent-transatlantic-words-replace-30 = can
 
 accent-transatlantic-words-31 = permabrig
+accent-transatlantic-words-31-2 = perma
 accent-transatlantic-words-replace-31 = big house
 
 accent-transatlantic-words-32 = bar
@@ -160,7 +160,7 @@ accent-transatlantic-words-40 = hitwoman
 accent-transatlantic-words-replace-40 = button woman
 
 accent-transatlantic-words-41 = security
-accent-transatlantic-words-replace-41 = the heat
+accent-transatlantic-words-replace-41 = fuzz
 
 accent-transatlantic-words-42 = man
 accent-transatlantic-words-replace-42 = cat
@@ -181,10 +181,10 @@ accent-transatlantic-words-47 = stealing
 accent-transatlantic-words-replace-47 = copping
 
 accent-transatlantic-words-48 = die
-accent-transatlantic-words-replace-49 = croak
+accent-transatlantic-words-replace-48 = croak
 
 accent-transatlantic-words-49 = detective
-accent-transatlantic-words-replace-45 = dick
+accent-transatlantic-words-replace-49 = dick
 
 accent-transatlantic-words-50 = pickpocket
 accent-transatlantic-words-replace-50 = dip

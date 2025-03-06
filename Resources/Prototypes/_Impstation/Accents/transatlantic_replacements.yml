@@ -1,5 +1,5 @@
 - type: accent
-  id: TransatlanticAccent
+  id: transatlantic_accent
   wordReplacements:
     accent-transatlantic-words-1: accent-transatlantic-words-replace-1
     accent-transatlantic-words-2: accent-transatlantic-words-replace-2
