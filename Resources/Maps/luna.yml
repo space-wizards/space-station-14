@@ -6064,7 +6064,7 @@ entities:
       pos: 11.5,-61.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -168507.67
+      secondsUntilStateChange: -187906.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6213,7 +6213,7 @@ entities:
       pos: 23.5,89.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -17130.594
+      secondsUntilStateChange: -36528.95
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6226,7 +6226,7 @@ entities:
       pos: 28.5,86.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36924.805
+      secondsUntilStateChange: -56323.16
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6330,6 +6330,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 13.5,79.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -716.83954
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 11733
     components:
     - type: Transform
@@ -6353,7 +6359,7 @@ entities:
       pos: 0.5,78.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -102155.33
+      secondsUntilStateChange: -121553.69
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6651,7 +6657,7 @@ entities:
       pos: 65.5,82.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -47612.66
+      secondsUntilStateChange: -67011.02
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7097,7 +7103,7 @@ entities:
       pos: 11.5,-27.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5944.3774
+      secondsUntilStateChange: -25342.734
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7115,7 +7121,7 @@ entities:
       pos: 2.5,-7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36.543205
+      secondsUntilStateChange: -19434.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7191,7 +7197,7 @@ entities:
       pos: 4.5,-22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -120992.945
+      secondsUntilStateChange: -140391.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7217,7 +7223,7 @@ entities:
       pos: 12.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -168624.58
+      secondsUntilStateChange: -188022.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7228,7 +7234,7 @@ entities:
       pos: 13.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -168622.81
+      secondsUntilStateChange: -188021.17
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7244,7 +7250,7 @@ entities:
       pos: 20.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33430.74
+      secondsUntilStateChange: -52829.094
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7274,7 +7280,7 @@ entities:
       pos: 9.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -9022.03
+      secondsUntilStateChange: -28420.387
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7383,7 +7389,7 @@ entities:
       pos: -19.5,-59.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4037.313
+      secondsUntilStateChange: -23435.67
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7537,7 +7543,7 @@ entities:
       pos: 6.5,-23.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5807.6777
+      secondsUntilStateChange: -25206.035
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7587,7 +7593,7 @@ entities:
       pos: 11.5,-39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33629.04
+      secondsUntilStateChange: -53027.395
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7627,7 +7633,7 @@ entities:
       pos: 7.5,-48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5725.511
+      secondsUntilStateChange: -25123.87
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7719,7 +7725,7 @@ entities:
       pos: 38.5,-77.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2223.6482
+      secondsUntilStateChange: -21622.006
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7731,7 +7737,7 @@ entities:
       pos: -25.5,70.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -78929.98
+      secondsUntilStateChange: -98328.336
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7908,6 +7914,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 12.5,21.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -18605.287
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 2326
     components:
     - type: Transform
@@ -7942,6 +7954,12 @@ entities:
     - type: Transform
       pos: 9.5,28.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -19360.555
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 2404
     components:
     - type: Transform
@@ -8099,7 +8117,7 @@ entities:
       pos: -11.5,47.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -101613.33
+      secondsUntilStateChange: -121011.69
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8127,7 +8145,7 @@ entities:
       pos: -9.5,53.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5072.3115
+      secondsUntilStateChange: -24470.668
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8210,6 +8228,12 @@ entities:
     - type: Transform
       pos: 7.5,25.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -503.13974
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 3685
     components:
     - type: Transform
@@ -8328,7 +8352,7 @@ entities:
       pos: 20.5,73.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -27361.562
+      secondsUntilStateChange: -46759.918
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8415,7 +8439,7 @@ entities:
       pos: 21.5,-60.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -126670.516
+      secondsUntilStateChange: -146068.88
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8456,7 +8480,7 @@ entities:
       pos: 12.5,41.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -144452.5
+      secondsUntilStateChange: -163850.86
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -8474,7 +8498,7 @@ entities:
       pos: 13.5,41.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -154482.9
+      secondsUntilStateChange: -173881.27
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -9480,13 +9504,15 @@ entities:
       parent: 2
   - uid: 195
     components:
+    - type: MetaData
+      name: Bar A
     - type: Transform
       pos: 8.5,-13.5
       parent: 2
   - uid: 196
     components:
     - type: MetaData
-      name: Bar
+      name: Bar B
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,-23.5
@@ -10799,7 +10825,7 @@ entities:
   - uid: 10953
     components:
     - type: Transform
-      pos: 31.302101,95.54345
+      pos: 31.801163,96.86065
       parent: 2
   - uid: 16911
     components:
@@ -12077,10 +12103,6 @@ entities:
     - type: Transform
       pos: 15.434254,81.67252
       parent: 2
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
   - uid: 8855
     components:
@@ -37104,11 +37126,6 @@ entities:
     - type: Transform
       pos: -8.5,66.5
       parent: 2
-  - uid: 13033
-    components:
-    - type: Transform
-      pos: -7.5,66.5
-      parent: 2
   - uid: 13034
     components:
     - type: Transform
@@ -51676,12 +51693,7 @@ entities:
   - uid: 10954
     components:
     - type: Transform
-      pos: 31.708351,95.809074
-      parent: 2
-  - uid: 10955
-    components:
-    - type: Transform
-      pos: 31.364601,95.965324
+      pos: 31.707413,96.126274
       parent: 2
 - proto: CigPackSyndicate
   entities:
@@ -52870,7 +52882,7 @@ entities:
   - uid: 20127
     components:
     - type: Transform
-      pos: -34.417618,-4.1491246
+      pos: -34.349407,-3.8240612
       parent: 2
     - type: ContainerContainer
       containers:
@@ -54889,7 +54901,7 @@ entities:
       pos: 19.5,48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -139342.17
+      secondsUntilStateChange: -158740.53
       state: Closing
   - uid: 8020
     components:
@@ -54904,7 +54916,7 @@ entities:
       pos: 10.5,80.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -109649.28
+      secondsUntilStateChange: -129047.64
       state: Closing
 - proto: CurtainsGreenOpen
   entities:
@@ -54936,7 +54948,7 @@ entities:
       pos: 25.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -171932.53
+      secondsUntilStateChange: -191330.89
       state: Opening
 - proto: CurtainsRedOpen
   entities:
@@ -67679,6 +67691,8 @@ entities:
     - type: Transform
       pos: 15.5,32.5
       parent: 2
+    - type: FaxMachine
+      name: Morgue
   - uid: 3533
     components:
     - type: Transform
@@ -67689,51 +67703,71 @@ entities:
     - type: Transform
       pos: 31.5,70.5
       parent: 2
+    - type: FaxMachine
+      name: Lawyer
   - uid: 7321
     components:
     - type: Transform
       pos: 3.5,49.5
       parent: 2
+    - type: FaxMachine
+      name: Security
   - uid: 7322
     components:
     - type: Transform
       pos: 17.5,44.5
       parent: 2
+    - type: FaxMachine
+      name: CMO's Office
   - uid: 7323
     components:
     - type: Transform
       pos: 14.5,52.5
       parent: 2
+    - type: FaxMachine
+      name: HoS's Office
   - uid: 7324
     components:
     - type: Transform
       pos: -1.5,65.5
       parent: 2
+    - type: FaxMachine
+      name: Reporter's Office
   - uid: 7325
     components:
     - type: Transform
       pos: -12.5,51.5
       parent: 2
+    - type: FaxMachine
+      name: RD's Office
   - uid: 7326
     components:
     - type: Transform
       pos: -16.5,22.5
       parent: 2
+    - type: FaxMachine
+      name: Chaplain
   - uid: 7329
     components:
     - type: Transform
       pos: -24.5,57.5
       parent: 2
+    - type: FaxMachine
+      name: Science
   - uid: 7331
     components:
     - type: Transform
       pos: 10.5,19.5
       parent: 2
+    - type: FaxMachine
+      name: Medical
   - uid: 7332
     components:
     - type: Transform
       pos: 18.5,-41.5
       parent: 2
+    - type: FaxMachine
+      name: Library
   - uid: 7333
     components:
     - type: Transform
@@ -67744,31 +67778,71 @@ entities:
     - type: Transform
       pos: 21.5,-21.5
       parent: 2
+    - type: FaxMachine
+      name: Service Backroom
+  - uid: 7412
+    components:
+    - type: Transform
+      pos: 35.5,78.5
+      parent: 2
+    - type: FaxMachine
+      name: Mailroom
   - uid: 7888
     components:
     - type: Transform
       pos: 14.5,85.5
       parent: 2
+    - type: FaxMachine
+      name: Bridge
   - uid: 7967
     components:
     - type: Transform
       pos: 6.5,82.5
       parent: 2
+    - type: FaxMachine
+      name: HoP's Office
   - uid: 7997
     components:
     - type: Transform
       pos: 26.5,87.5
       parent: 2
+    - type: FaxMachine
+      name: Captain's Office
   - uid: 10807
     components:
     - type: Transform
       pos: 41.5,81.5
       parent: 2
+    - type: FaxMachine
+      name: Salvage
+  - uid: 10955
+    components:
+    - type: Transform
+      pos: -34.5,-4.5
+      parent: 2
+    - type: FaxMachine
+      name: Engineering
   - uid: 11396
     components:
     - type: Transform
       pos: 43.5,98.5
       parent: 2
+    - type: FaxMachine
+      name: Cargo
+  - uid: 26167
+    components:
+    - type: Transform
+      pos: 37.5,68.5
+      parent: 2
+    - type: FaxMachine
+      name: Psychologist
+  - uid: 26168
+    components:
+    - type: Transform
+      pos: 31.5,95.5
+      parent: 2
+    - type: FaxMachine
+      name: QM's Office
 - proto: FenceWoodSmallGate
   entities:
   - uid: 1819
@@ -68095,7 +68169,7 @@ entities:
       pos: 27.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -81280.04
+      secondsUntilStateChange: -100678.4
       state: Closing
   - uid: 1184
     components:
@@ -69440,7 +69514,7 @@ entities:
       pos: 38.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -88616.875
+      secondsUntilStateChange: -108015.234
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -70349,7 +70423,7 @@ entities:
       pos: 0.5,21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -27963.695
+      secondsUntilStateChange: -47362.05
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -70368,7 +70442,7 @@ entities:
       pos: 1.5,43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -35058.938
+      secondsUntilStateChange: -54457.293
       state: Closing
   - uid: 11304
     components:
@@ -70435,7 +70509,7 @@ entities:
       pos: 3.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -81960.51
+      secondsUntilStateChange: -101358.87
       state: Closing
   - uid: 11315
     components:
@@ -70937,7 +71011,7 @@ entities:
       pos: 8.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2848.2476
+      secondsUntilStateChange: -22246.605
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -71796,11 +71870,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -24.467335,56.75487
       parent: 2
-  - uid: 7412
-    components:
-    - type: Transform
-      pos: 37.58233,68.68053
-      parent: 2
   - uid: 7413
     components:
     - type: Transform
@@ -72428,6 +72497,12 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#FF1212FF'
+  - uid: 13033
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -10.5,70.5
+      parent: 2
   - uid: 18752
     components:
     - type: Transform
@@ -75452,6 +75527,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,-37.5
+      parent: 2
+  - uid: 26166
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -12.5,72.5
       parent: 2
 - proto: GasPipeFourway
   entities:
@@ -112909,7 +112990,7 @@ entities:
       pos: 11.5,50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -101014.39
+      secondsUntilStateChange: -120412.75
       state: Closing
   - uid: 3648
     components:
@@ -116135,7 +116216,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -148463.14
+      secondsUntilStateChange: -167861.5
       state: Opening
     - type: Airlock
       autoClose: False
@@ -128540,7 +128621,7 @@ entities:
       pos: 19.5,50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -133720.75
+      secondsUntilStateChange: -153119.11
       state: Opening
   - uid: 2441
     components:
@@ -128621,7 +128702,7 @@ entities:
   - uid: 19524
     components:
     - type: Transform
-      pos: 31.816277,95.482475
+      pos: 31.457413,96.313774
       parent: 2
   - uid: 19525
     components:
@@ -128633,7 +128714,7 @@ entities:
   - uid: 19523
     components:
     - type: Transform
-      pos: 31.566277,95.576225
+      pos: 31.269913,96.438774
       parent: 2
   - uid: 19526
     components:
@@ -158758,7 +158839,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -122129.78
+      secondsUntilStateChange: -141528.14
       state: Opening
     - type: Airlock
       autoClose: False
