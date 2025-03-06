@@ -3858,3 +3858,32 @@ Entries:
   id: 534
   time: '2025-03-05T09:15:54.452589+00:00'
   url: 'null'
+- author: Killer Tamashi
+  changes:
+  - message: Added .40 Boxes to secfab.
+    type: Add
+  id: 535
+  time: '2025-03-06T00:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/358
+- author: Killer Tamashi
+  changes:
+  - message: Added .40 Magazines to secfab.
+    type: Add
+  id: 536
+  time: '2025-03-06T00:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/358
+- author: Killer Tamashi
+  changes:
+  - message: Changed SP-8's appearance to a pistol more in style.
+    type: Tweak
+  id: 537
+  time: '2025-03-06T00:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/358
+- author: Killer Tamashi
+  changes:
+  - message: Renamed SP-8 to "Due Process" to be more in line with SS14 naming scheme.
+    type: Tweak
+  id: 538
+  time: '2025-03-06T00:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/358
+
