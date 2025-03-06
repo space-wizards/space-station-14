@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Tramstation
+  id: Tram
   mapName: 'Tram'
   mapPath: /Maps/tram.yml
   maxRandomOffset: 0
