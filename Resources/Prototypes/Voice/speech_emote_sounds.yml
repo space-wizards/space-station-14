@@ -375,24 +375,24 @@
   sounds:
     Buzz:
       path: /Audio/Voice/Moth/moth_scream.ogg
-    Scream:
-      path: /Audio/Voice/Moth/moth_scream.ogg
-    Laugh:
-      path: /Audio/Voice/Moth/moth_laugh.ogg
     Chitter:
       path: /Audio/Voice/Moth/moth_chitter.ogg
-    Squeak:
-      path: /Audio/Voice/Moth/moth_squeak.ogg
-    Weh:
-      collection: Weh
+    DefaultDeathgasp:
+      collection: MothDeathGasp
+    Gasp:
+      collection: MaleGasp
     Hew:
       collection: Hew
     Honk:
       collection: BikeHorn
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MothDeathGasp
+    Laugh:
+      path: /Audio/Voice/Moth/moth_laugh.ogg
+    Scream:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+    Squeak:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+    Weh:
+      collection: Weh
 
 - type: emoteSounds
   id: UnisexSilicon
