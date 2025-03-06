@@ -13,13 +13,6 @@ namespace Content.Shared.Delivery;
 public sealed partial class DeliverySpawnerComponent : Component
 {
     /// <summary>
-    /// Whether this spawner is enabled.
-    /// If false, it will not spawn any deliveries.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsEnabled = true;
-
-    /// <summary>
     /// The entity table to select deliveries from.
     /// </summary>
     [DataField(required: true)]

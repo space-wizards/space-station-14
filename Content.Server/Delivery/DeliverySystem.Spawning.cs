@@ -73,7 +73,7 @@ public sealed partial class DeliverySystem
 
         // We take the amount of mail calculated based on player amount or the minimum, whichever is higher.
         // We don't want stations with less than the player ratio to not get mail at all
-        var deliveryCount = Math.Max((records.Records.Keys.Count / ent.Comp.PlayerToDeliveryRatio), ent.Comp.MinimumDeliverySpawn);
+        var deliveryCount = Math.Max(records.Records.Keys.Count / ent.Comp.PlayerToDeliveryRatio, ent.Comp.MinimumDeliverySpawn);
 
         if (!ent.Comp.DistributeRandomly)
         {
@@ -104,9 +104,6 @@ public sealed partial class DeliverySystem
         var spawners = EntityQueryEnumerator<DeliverySpawnerComponent>();
         while (spawners.MoveNext(out var spawnerUid, out var spawnerData))
         {
-            if (!spawnerData.IsEnabled)
-                continue;
-
             var spawnerStation = _station.GetOwningStation(spawnerUid);
 
             if (spawnerStation != ent.Owner)

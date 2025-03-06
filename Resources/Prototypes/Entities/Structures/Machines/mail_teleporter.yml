@@ -9,7 +9,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.40,-0.40,0.40,0.40"
+          bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
         - MachineMask
@@ -17,6 +17,7 @@
         - MachineLayer
   - type: Sprite
     sprite: Structures/mailbox.rsi
+    noRotation: true
     layers:
     - state: icon
     - state: unlit
