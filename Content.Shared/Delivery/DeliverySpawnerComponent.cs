@@ -9,7 +9,7 @@ namespace Content.Shared.Delivery;
 /// Used to mark entities that are valid for spawning deliveries on.
 /// If this requires power, it needs to be powered to count as a valid spawner.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class DeliverySpawnerComponent : Component
 {
     /// <summary>
@@ -23,17 +23,4 @@ public sealed partial class DeliverySpawnerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? SpawnSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg", AudioParams.Default.WithVolume(-7));
-
-    /// <summary>
-    /// The time before the spawning sound can play again.
-    /// Meant to prevent sound spam when the spawner is actively spawning in deliveries.
-    /// </summary>
-    [DataField]
-    public TimeSpan SpawnSoundCooldown = TimeSpan.FromSeconds(10);
-
-    /// <summary>
-    /// The time at which the next sound is able to play.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan NextSoundTime = TimeSpan.Zero;
 }

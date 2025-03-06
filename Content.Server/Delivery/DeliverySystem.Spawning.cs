@@ -34,7 +34,8 @@ public sealed partial class DeliverySystem
 
         var coords = Transform(ent).Coordinates;
 
-        PlaySpawnSound((ent.Owner, ent.Comp));
+        if (ent.Comp.SpawnSound != null)
+            _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
 
         while (amount > 0)
         {
@@ -46,18 +47,6 @@ public sealed partial class DeliverySystem
             }
 
             amount--;
-        }
-    }
-
-    private void PlaySpawnSound(Entity<DeliverySpawnerComponent> ent)
-    {
-        if (ent.Comp.NextSoundTime > _timing.CurTime)
-            return;
-
-        if (ent.Comp.SpawnSound != null)
-        {
-            _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
-            ent.Comp.NextSoundTime = _timing.CurTime + ent.Comp.SpawnSoundCooldown;
         }
     }
 
@@ -85,14 +74,17 @@ public sealed partial class DeliverySystem
         }
         else
         {
-            var deliverySpawnAmount = deliveryCount;
-            while (deliverySpawnAmount > 0)
+            int[] amounts = new int[spawners.Count];
+
+            // Distribute items randomly
+            for (int i = 0; i < deliveryCount; i++)
             {
-                var targetSpawner = _random.Pick(spawners);
-
-                SpawnDelivery(targetSpawner, 1);
-
-                deliverySpawnAmount--;
+                var randomListIndex = _random.Next(spawners.Count);
+                amounts[randomListIndex]++;
+            }
+            for (int j = 0; j < spawners.Count; j++)
+            {
+                SpawnDelivery(spawners[j], amounts[j]);
             }
         }
 
