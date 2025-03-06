@@ -3,7 +3,7 @@
   id: MaleHuman
   params:
     variation: 0.125
-  sounds:
+  sounds: # arrange in alphabetical order
     CatHisses:
       collection: CatHisses
     CatMeow:
