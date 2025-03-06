@@ -39,3 +39,8 @@
   files:
   - /Audio/Announcements/Intern/spanomalies.ogg
   - /Audio/Announcements/Intern/granomalies.ogg
+
+- type: soundCollection
+  id: PowerOn
+  files:
+  - /Audio/Announcements/Intern/poweron.ogg

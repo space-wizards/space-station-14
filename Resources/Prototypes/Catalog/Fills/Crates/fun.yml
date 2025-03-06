@@ -102,8 +102,6 @@
         amount: 2
       - id: FrenchHornInstrument
         amount: 2
-      - id: SaxophoneInstrument
-        amount: 2
       - id: EuphoniumInstrument
       - id: TubaInstrument
 
@@ -139,6 +137,8 @@
       - id: ClarinetInstrument
       - id: FluteInstrument
       - id: HarmonicaInstrument
+        amount: 2
+      - id: SaxophoneInstrument
         amount: 2
       - id: OcarinaInstrument
       - id: PanFluteInstrument
@@ -379,3 +379,12 @@
         amount: 1
         prob: 0.05
 
+- type: entity
+  name: moproach kit crate
+  description: A box with one moproach kit that provides you with two moproaches.
+  id: CrateFunMoproach
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: MoproachBox
