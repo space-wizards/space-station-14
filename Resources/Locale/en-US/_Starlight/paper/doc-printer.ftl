@@ -27,6 +27,8 @@ doc-text-printer-report-station =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
  
 doc-text-printer-report-on-elimination-of-violations =
    ⠀[logo]            [cclogo] 
@@ -55,6 +57,8 @@ doc-text-printer-report-on-elimination-of-violations =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-report-department =
    ⠀[logo]            [cclogo] 
 
@@ -77,6 +81,8 @@ doc-text-printer-report-department =
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-report-employee-performance =
    ⠀[logo]            [cclogo] 
 
@@ -99,6 +105,8 @@ doc-text-printer-report-employee-performance =
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-report-on-the-chapters-meeting =
    ⠀[logo]            [cclogo] 
 
@@ -127,6 +135,8 @@ doc-text-printer-report-on-the-chapters-meeting =
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-internal-affairs-agents-report =
    ⠀[logo]            [cclogo]
 
@@ -146,6 +156,8 @@ doc-text-printer-internal-affairs-agents-report =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-condition-report =
    ⠀[logo]            [cclogo] 
 
@@ -168,6 +180,8 @@ doc-text-printer-condition-report =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-object-investigation-report =
    ⠀[logo]            [cclogo] 
 
@@ -188,6 +202,8 @@ doc-text-printer-object-investigation-report =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-experiment-report =
    ⠀[logo]            [cclogo] 
 
@@ -216,6 +232,8 @@ doc-text-printer-experiment-report =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-disposal-report =
    ⠀[logo]            [cclogo] 
 
@@ -234,6 +252,8 @@ doc-text-printer-disposal-report =
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-arrest-report =
    ⠀[logo]            [cclogo] 
 
@@ -258,6 +278,8 @@ doc-text-printer-arrest-report =
     Additional Punishments:
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 # Statements
 
 doc-text-printer-statement-appointment-interim-chapter =
@@ -285,6 +307,8 @@ doc-text-printer-statement-appointment-interim-chapter =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-employment-statement =
    ⠀[logo]            [cclogo] 
 
@@ -302,12 +326,14 @@ doc-text-printer-employment-statement =
     
     Name of department:
 
-    Name of position
+    Name of position:
 
     I agree to follow the department's Standard Operating Procedures. I agree to surrender my department work gear and equipment upon transfer.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-resignation-statement =
    ⠀[logo]            [cclogo] 
 
@@ -326,6 +352,8 @@ doc-text-printer-resignation-statement =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-access-request-statement =
    ⠀[logo]            [cclogo] 
 
@@ -346,6 +374,8 @@ doc-text-printer-access-request-statement =
     ────────────────────────────────────────
 
    ⠀                                    [italic]Place for stamps[/italic]
+
+
 doc-text-printer-equipment-request-statement =
    ⠀[logo]            [cclogo] 
 
@@ -365,6 +395,9 @@ doc-text-printer-equipment-request-statement =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
 # InquiriesAndAppeals
    
@@ -380,10 +413,8 @@ doc-text-printer-invocation =
     Time and Date:
     Compiler of the document:
     Position of Document Compiler:
-    
-    I, in the position of: 
-    
-    Request to deliver the following person my invocation;
+       
+    I request to deliver the following person my invocation;
 
     Name of the invoked person:
 
@@ -393,6 +424,9 @@ doc-text-printer-invocation =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-evacuation-shuttle-request =
    ⠀[logo]            [cclogo] 
 
@@ -414,6 +448,9 @@ doc-text-printer-evacuation-shuttle-request =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-shuttle-registration-request =
    ⠀[logo]            [cclogo] 
 
@@ -439,6 +476,9 @@ doc-text-printer-shuttle-registration-request =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-call-centcomm-members =
    ⠀[logo]            [cclogo] 
 
@@ -458,6 +498,9 @@ doc-text-printer-request-call-centcomm-members =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-establish-threat-level =
    ⠀[logo]            [cclogo] 
 
@@ -477,6 +520,9 @@ doc-text-printer-request-establish-threat-level =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-change-salary =
    ⠀[logo]            [cclogo] 
 
@@ -500,6 +546,9 @@ doc-text-printer-request-change-salary =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-for-non-listed-employment =
    ⠀[logo]            [cclogo] 
 
@@ -529,6 +578,9 @@ doc-text-printer-request-for-non-listed-employment =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-for-promotion =
    ⠀[logo]            [cclogo] 
 
@@ -542,12 +594,8 @@ doc-text-printer-request-for-promotion =
     Compiler of the document:
     Position of Document Compiler:
     
-    I, in the position of:
-    
-    Request consideration to the promotion of :
-
  
-    I assert that the employee specified has obtained the necessary qualifications to complete the job.
+    I assert that the following employee has obtained the necessary qualifications and experience to be promoted.
 
     Employee to be promoted:
     
@@ -559,6 +607,9 @@ doc-text-printer-request-for-promotion =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-documents =
    ⠀[logo]            [cclogo] 
 
@@ -576,6 +627,9 @@ doc-text-printer-request-documents =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-euthanasia =
    ⠀[logo]            [cclogo] 
 
@@ -589,16 +643,19 @@ doc-text-printer-request-euthanasia =
     Compiler of the document:
     Position of Document Compiler:
     
-    I, in the position of:
-
-    Request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
+    I formally equest the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
 
     I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. 
+
     I have no claims against the medical department in their adherence to euthanasia protocols.
+
     At the end of the procedure, I ask to dispose of the body by (method of disposal) if possible.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-construction-work =
    ⠀[logo]            [cclogo] 
 
@@ -612,7 +669,7 @@ doc-text-printer-request-construction-work =
     Compiler of the document:
     Position of Document Compiler:
     
-    I, formally request construction work at:
+    I formally request construction work at:
 
     Reason for request:
 
@@ -620,6 +677,9 @@ doc-text-printer-request-construction-work =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-request-modernization =
    ⠀[logo]            [cclogo] 
 
@@ -641,6 +701,9 @@ doc-text-printer-request-modernization =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
 # Complaintst
 
@@ -667,6 +730,9 @@ doc-text-printer-complaint-violation-labor-rules =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-offense-complaint =
    ⠀[logo]            [cclogo] 
 
@@ -691,6 +757,9 @@ doc-text-printer-offense-complaint =
 
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
 # Permissions
 
@@ -722,6 +791,9 @@ doc-text-printer-permission-equipment =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-search-permission =
    ⠀[logo]            [cclogo] 
 
@@ -745,6 +817,9 @@ doc-text-printer-search-permission =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-permission-to-carry-weapons =
    ⠀[logo]            [cclogo] 
 
@@ -773,6 +848,9 @@ doc-text-printer-permission-to-carry-weapons =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-permission-dispose-body =
    ⠀[logo]            [cclogo] 
 
@@ -796,6 +874,9 @@ doc-text-printer-permission-dispose-body =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-construction-permit =
    ⠀[logo]            [cclogo] 
 
@@ -817,6 +898,9 @@ doc-text-printer-construction-permit =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 
 doc-text-printer-surgery-consent-permit =
     [logo]            [cclogo] 
@@ -843,6 +927,9 @@ doc-text-printer-surgery-consent-permit =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
 # OrdersAndInstructions
 
@@ -867,6 +954,9 @@ doc-text-printer-dismissal-order =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-access-revocation-order =
    ⠀[logo]            [cclogo] 
 
@@ -884,6 +974,9 @@ doc-text-printer-access-revocation-order =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-incentive-order =
    ⠀[logo]            [cclogo] 
 
@@ -901,6 +994,9 @@ doc-text-printer-incentive-order =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-prisoner-parole-order =
    ⠀[logo]            [cclogo] 
 
@@ -922,6 +1018,9 @@ doc-text-printer-prisoner-parole-order =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-order-recognizing-reasonableness-creature =
    ⠀[logo]            [cclogo] 
 
@@ -947,6 +1046,9 @@ doc-text-printer-order-recognizing-reasonableness-creature =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
+
 doc-text-printer-medical-intervention-order =
    ⠀[logo]            [cclogo] 
 
@@ -960,7 +1062,7 @@ doc-text-printer-medical-intervention-order =
     Compiler of the document:
     Position of Document Compiler: 
     
-    I, in my professional opinion order a medical intervention for the purpose of: 
+    I, in my professional opinion, order a medical intervention effective immediately.
     
     Person to recieve intervention:
 
@@ -968,6 +1070,8 @@ doc-text-printer-medical-intervention-order =
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+
    
 # Orders
 
