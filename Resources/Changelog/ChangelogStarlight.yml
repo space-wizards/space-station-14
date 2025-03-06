@@ -3893,4 +3893,11 @@ Entries:
   id: 539
   time: '2025-03-06T09:55:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/365
+- author: BORTBORTBORT and Grapegrifter
+  changes:
+  - message: Changed document printer templates and logos.
+    type: Tweak
+  id: 540
+  time: '2025-03-06T11:16:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/366
 
