@@ -23,4 +23,4 @@
 - type: guideEntry
   id: AlertProcedure
   name: guide-entry-alertprocedure
-  text: "/ServerInfo/Guidebook/_DV/AlertProcedure.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/AlertProcedure.xml"
