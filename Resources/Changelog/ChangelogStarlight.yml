@@ -3921,4 +3921,19 @@ Entries:
   id: 543
   time: '2025-03-07T02:33:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/364
+- author: Happyrobot33
+  changes:
+  - message: Changed voice selection to allow all voices no matter your characters
+      sex
+    type: Tweak
+  id: 544
+  time: '2025-03-07T02:36:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/368
+- author: Happyrobot33
+  changes:
+  - message: Added the assumed sex of a voice to the voice dropdown
+    type: Add
+  id: 545
+  time: '2025-03-07T02:36:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/368
 
