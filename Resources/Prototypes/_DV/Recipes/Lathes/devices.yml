@@ -1,0 +1,8 @@
+﻿- type: latheRecipe
+  parent: BasePartRecipe
+  id: SignallerDeadMans
+  result: DeadMansSignaler
+  materials:
+    Steel: 100
+    Plastic: 200
+    Plasma: 100

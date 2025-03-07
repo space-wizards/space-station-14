@@ -176,8 +176,8 @@ FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
 # 2024-01-31
 SpyCrewMonitor: null
 SpyCrewMonitorEmpty: null
-SyndiCrewMonitor: null
-SyndiCrewMonitorEmpty: null
+# SyndiCrewMonitor: null # imp
+# SyndiCrewMonitorEmpty: null # imp
 
 SpawnVehicleWheelchair: null
 SpawnVehicleWheelchairFolded: null

@@ -367,6 +367,7 @@
       - CleanerGrenade #imp addition
       - PlantAnalyzer #NF addition
       - FishingRod #imp addition
+      - SignallerDeadMans # DeltaV
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag
