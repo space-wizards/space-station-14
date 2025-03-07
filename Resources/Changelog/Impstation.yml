@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: CrystalClover
-  changes:
-  - message: Altered Grey Wide eyes to make it more visually consistent
-    type: Tweak
-  id: 751
-  time: '2024-12-17T12:01:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1052
 - author: DinnerCalzone
   changes:
   - message: Amber Station has been updated to incorporate changes from upstream.
@@ -4083,3 +4076,10 @@
   id: 1250
   time: '2025-03-07T02:30:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1848
+- author: mqole
+  changes:
+  - message: Code Octarine has been added to your guidebook's Alert Procedure page.
+    type: Add
+  id: 1251
+  time: '2025-03-07T04:20:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1853
