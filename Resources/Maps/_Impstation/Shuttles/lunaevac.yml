@@ -43,12 +43,15 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: OccluderTree
-    - type: SpreaderGrid
     - type: Shuttle
-    - type: GridPathfinding
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -149,13 +152,9 @@ entities:
           - 0
         chunkSize: 4
     - type: GasTileOverlay
-    - type: EmergencyShuttle
+    - type: SpreaderGrid
+    - type: GridPathfinding
     - type: NavMap
-    - type: DeviceNetwork
-      configurators: []
-      deviceLists: []
-      transmitFrequencyId: ShuttleTimer
-      deviceNetID: Wireless
 - proto: AirCanister
   entities:
   - uid: 282
