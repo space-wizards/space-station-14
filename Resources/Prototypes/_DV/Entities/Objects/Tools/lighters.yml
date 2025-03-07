@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: FlippoLighter
+  parent: [ FlippoLighter, Tier2Contraband ] # imp - its not tier 1 because its also a fucking gun lol
   id: SyndicateFlippo
   name: Blood-red flippo
   description: "A 'Valid' choice in lighters. Capable of superheating welding fuel into incendiary shots when lit. Contains no copper."
