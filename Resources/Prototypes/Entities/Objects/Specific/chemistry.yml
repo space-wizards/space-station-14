@@ -386,6 +386,10 @@
     tags:
     - Syringe
     - Trash
+  - type: UserInterface # DS14-transfer-amount-ui-for-injector-component
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
 
 - type: entity
   name: mini syringe
