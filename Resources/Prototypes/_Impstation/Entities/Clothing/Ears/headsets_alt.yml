@@ -1,0 +1,15 @@
+﻿- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltService
+  name: hospitality director's over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: _Impstation/Clothing/Ears/Headsets/service-overear.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Ears/Headsets/service-overear.rsi

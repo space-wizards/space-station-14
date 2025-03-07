@@ -1,0 +1,5 @@
+- type: loadout
+  id: BotanistLeatherGloves
+  equipment:
+    gloves: ClothingHandsGlovesLeather
+

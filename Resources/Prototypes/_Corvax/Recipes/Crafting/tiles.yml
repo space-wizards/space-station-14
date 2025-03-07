@@ -1,0 +1,197 @@
+- type: construction
+  name: parquet wood floor
+  id: TileWoodParquet
+  graph: TileWoodParquet
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_parquet }
+  objectType: Item
+
+- type: construction
+  name: black wood floor
+  id: TileWoodBlack
+  graph: TileWoodBlack
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_black }
+  objectType: Item
+
+- type: construction
+  name: dark wood floor
+  id: TileWoodDark
+  graph: TileWoodDark
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_dark }
+  objectType: Item
+
+- type: construction
+  name: light wood floor
+  id: TileWoodLight
+  graph: TileWoodLight
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_light }
+  objectType: Item
+
+- type: construction
+  name: red wood floor
+  id: TileWoodRed
+  graph: TileWoodRed
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_red }
+  objectType: Item
+
+- type: construction
+  name: large black wood floor
+  id: TileWoodLargeBlack
+  graph: TileWoodLargeBlack
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_large_black }
+  objectType: Item
+
+- type: construction
+  name: large dark wood floor
+  id: TileWoodLargeDark
+  graph: TileWoodLargeDark
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_large_dark }
+  objectType: Item
+
+- type: construction
+  name: large light wood floor
+  id: TileWoodLargeLight
+  graph: TileWoodLargeLight
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_large_light }
+  objectType: Item
+
+- type: construction
+  name: large red wood floor
+  id: TileWoodLargeRed
+  graph: TileWoodLargeRed
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_large_red }
+  objectType: Item
+
+- type: construction
+  name: parquet black wood floor
+  id: TileWoodParquetBlack
+  graph: TileWoodParquetBlack
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_parquet_black }
+  objectType: Item
+
+- type: construction
+  name: parquet dark wood floor
+  id: TileWoodParquetDark
+  graph: TileWoodParquetDark
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_parquet_dark }
+  objectType: Item
+
+- type: construction
+  name: parquet light wood floor
+  id: TileWoodParquetLight
+  graph: TileWoodParquetLight
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_parquet_light }
+  objectType: Item
+
+- type: construction
+  name: parquet red wood floor
+  id: TileWoodParquetRed
+  graph: TileWoodParquetRed
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_parquet_red }
+  objectType: Item
+
+- type: construction
+  name: chess wood floor
+  id: TileWoodChess
+  graph: TileWoodChess
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_chess }
+  objectType: Item
+
+- type: construction
+  name: chess black wood floor
+  id: TileWoodChessBlack
+  graph: TileWoodChessBlack
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_chess_black }
+  objectType: Item
+
+- type: construction
+  name: chess dark wood floor
+  id: TileWoodChessDark
+  graph: TileWoodChessDark
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_chess_dark }
+  objectType: Item
+
+- type: construction
+  name: chess light wood floor
+  id: TileWoodChessLight
+  graph: TileWoodChessLight
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_chess_light }
+  objectType: Item
+
+- type: construction
+  name: chess red wood floor
+  id: TileWoodChessRed
+  graph: TileWoodChessRed
+  startNode: start
+  targetNode: woodtile
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: _Corvax/Objects/Tiles/wood.rsi, state: wood_chess_red }
+  objectType: Item

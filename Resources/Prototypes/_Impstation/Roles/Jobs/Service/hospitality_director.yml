@@ -1,0 +1,45 @@
+- type: job
+  id: HospitalityDirector
+  name: job-name-hd
+  description: job-description-hd
+  playTimeTracker: JobHospitalityDirector
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 18000 #5 hrs
+    - !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 18000 #5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Dining
+      time: 18000 #5 hrs, any combination of chef, bartender, and service worker playtime
+    - !type:DepartmentTimeRequirement
+      department: Service
+      time: 72000 #20 hrs
+    - !type:OverallPlaytimeRequirement
+      time: 144000 #40 hrs
+  weight: 10
+  startingGear: HospitalityDirectorGear
+  icon: JobIconHospitalityDirector
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  accessGroups:
+  - Service #why don't other heads have their accesses set up this way?
+  access:
+  - Maintenance
+  - Command
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: HospitalityDirectorGear
+  equipment:
+    id: HDPDA
+  storage:
+    back:
+    - Flash

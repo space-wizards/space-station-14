@@ -87,3 +87,14 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/driller.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakHd
+  name: hospitality director's cloak
+  description: A lime-green cloak, showing your capacity for service. Sometimes, even with a smile!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/hd.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak

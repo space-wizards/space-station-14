@@ -1,0 +1,13 @@
+- type: entity
+  id: BedsheetHD
+  parent: BedsheetBase
+  name: HD's bedsheet
+  description: It's decorated with a smiley face emblem to represent the happiness of the crew. It's durable and comfortable, perfect after a long day of running around the station.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/bedsheet_hd.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Bedsheets/hd.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet

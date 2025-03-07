@@ -107,9 +107,7 @@
     stealGroup: SecPillCanister
   - type: Objective
     difficulty: 1
-
-# rare but otherwise not notable
-
+    
 - type: entity
   parent: BaseThiefStealObjective
   id: ShiningSpringStealObjective
@@ -119,7 +117,9 @@
   - type: StealCondition
     stealGroup: ShiningSpring
   - type: Objective
-    difficulty: 0.5
+    difficulty: 1
+
+# rare but otherwise not notable
 
 - type: entity
   parent: BaseThiefStealObjective
@@ -132,7 +132,7 @@
     stealGroup: EvilSkullArtifactItem
     descriptionText: objective-condition-thief-evil-skull-description
   - type: Objective
-    difficulty: 0.6 #a little harder than the bible, it glows red and there's only on, and it's an artifact
+    difficulty: 0.6 #a little harder than the bible, it glows red and there's only one, and it's an artifact
 
 # pda cartridges
 

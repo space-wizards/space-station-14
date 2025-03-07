@@ -11,7 +11,7 @@
     shape:
     - 0,0,4,3
   - type: Clothing
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/LMGs/l6.rsi #imp
     quickEquip: false
     slots:
     - Back
@@ -72,7 +72,7 @@
   description: A rather traditionally-made Squad Automatic Weapon with a pleasantly lacquered wooden pistol grip. Lacks an LMG stock, decreasing controllability. Uses .20 rifle ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/LMGs/l6.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

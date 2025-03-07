@@ -18,8 +18,8 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_plasma.yml
         - type: StationJobs
-          availableJobs: #Total of 70 jobs roundstart, max of 100 inc. latejoins and trainees.
-            #command - 8
+          availableJobs: #Total of 73 jobs roundstart, max of 94 inc. latejoins and trainees.
+            #command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             AdministrativeAssistant: [ 1, 1 ] # imp
@@ -27,18 +27,19 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
-            # service - 18-21
+            # service - 19
             Bartender: [ 2, 2 ]
-            Botanist: [ 2, 3 ]
+            Botanist: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Chef: [ 2, 2 ]
-            Clown: [ 1, 2 ] # This might be fun
+            Clown: [ 2, 2 ] # This might be fun
             Janitor: [ 3, 3 ]
             Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            Reporter: [ 2, 3 ]
+            Reporter: [ 2, 2 ]
             ServiceWorker: [ 2, 2 ]
             # engineering - 8-12
             AtmosphericTechnician: [ 4, 4 ]
@@ -55,15 +56,15 @@
             ResearchAssistant: [ 4, 4 ]
             Scientist: [ 4, 4 ]
             StationAi: [ 1, 1 ]
-            # security - 10-18
+            # security - 11-15
             Brigmedic: [ 1, 1 ] # imp
-            Lawyer: [ 1, 2 ]
-            Detective: [ 1, 2 ]
+            Lawyer: [ 2, 2 ]
+            Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            SecurityOfficer: [ 6, 8 ]
+            SecurityOfficer: [ 6, 6 ]
             Warden: [ 1, 1 ]
-            # supply - 10-15
-            CargoTechnician: [ 4, 6 ]
+            # supply - 10-13
+            CargoTechnician: [ 4, 4 ]
             Courier: [ 2, 2 ] # imp
             SalvageSpecialist: [ 4, 4 ]
             SupplyAssistant: [ 3, 3 ] # imp

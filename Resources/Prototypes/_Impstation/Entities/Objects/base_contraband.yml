@@ -1,18 +1,10 @@
 - type: entity
-  id: BaseMinorSecurityCivilianContraband
-  parent: BaseMinorContraband
+  id: BaseRestrictedLawyerContraband
+  parent: BaseRestrictedContraband
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ Security, Civilian ]
-
-- type: entity
-  id: BaseMinorCivilianContraband
-  parent: BaseMinorContraband
-  abstract: true
-  components:
-  - type: Contraband
-    allowedDepartments: [ Civilian ]
+    allowedJobs: [ Lawyer ]
 
 # For non-sanctioned decapoid tech
 - type: entity

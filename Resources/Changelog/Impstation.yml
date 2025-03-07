@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: The brigmedic's hardsuit slows its user down less, and its resistances
-      have received adjustment.
-    type: Tweak
-  id: 733
-  time: '2024-12-14T13:56:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1021
-- author: Saeko-44
-  changes:
-  - message: Added three new vessels able to be purchased from the shipyard console.
-    type: Add
-  id: 734
-  time: '2024-12-14T13:55:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1012
-- author: TGRCdev
-  changes:
-  - message: Vapor tank continues to vaporize water when it's low on water.
-    type: Fix
-  - message: Vapor tank now properly updates the fill visuals as it vaporizes water.
-    type: Fix
-  id: 735
-  time: '2024-12-14T14:49:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1020
-- author: EpicToast
-  changes:
-  - message: Swapped normal beds with medical beds on Packed.
-    type: Tweak
-  id: 736
-  time: '2024-12-14T20:47:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1013
-- author: irismessage
-  changes:
-  - message: Look at my tips boy
-    type: Fix
-  id: 737
-  time: '2024-12-14T20:48:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1027
-- author: Darkmajia, AftrLite
-  changes:
-  - message: 'Changelings can select a new evolution: Mindshield Patterns.'
-    type: Add
-  id: 738
-  time: '2024-12-14T20:47:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1003
-- author: EpicToast
-  changes:
-  - message: Updated Union Station, mostly around the medical department. See GitHub
-      for full changelog.
-    type: Tweak
-  id: 739
-  time: '2024-12-14T20:48:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1026
 - author: mqole
   changes:
   - message: The server rules have been updated! Please use your guidebook to review
@@ -4062,3 +4009,68 @@
   id: 1232
   time: '2025-03-05T14:00:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1831
+- author: RosySaturniidae
+  changes:
+  - message: One new figurine! I'm not sure why NT made this one.
+    type: Add
+  id: 1233
+  time: '2025-03-05T22:20:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1843
+- author: sageu
+  changes:
+  - message: gleep zazz dom-un! More grayspeak words.
+    type: Add
+  id: 1234
+  time: '2025-03-05T22:30:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1838
+- author: Sha-Seng
+  changes:
+  - message: PRIbar+ Conversion Kit (from Special Means research) to upgrade the PRIbar
+      with a wrench function
+    type: Add
+  id: 1235
+  time: '2025-03-06T15:14:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1699
+- author: hivehum
+  changes:
+  - message: You see the correct number of colors for a dog. If you're a dog. If you
+      aren't a dog don't read this message.
+    type: Tweak
+  id: 1236
+  time: '2025-03-06T15:16:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1787
+- author: hivehum
+  changes:
+  - message: The religious supplies crate now supplies from a wider variety of religions.
+    type: Tweak
+  id: 1237
+  time: '2025-03-07T00:49:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1849
+- author: widgetbeck
+  changes:
+  - message: Drones now have fewer toys. It's more fun to find your own supplies.
+    type: Remove
+  id: 1238
+  time: '2025-03-07T01:26:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1846
+- author: DinnerCalzone, EpicToastTM, honeyed_lemons
+  changes:
+  - message: Hospitality Director has been added, the new head of staff for the service
+      department!
+    type: Add
+  - message: Clown, Mime, Reporter, and Librarian access types have been added. The
+      clown locker, mime locker, musician locker (new!), news console, and Curadrobe
+      are now locked by those respective access types.
+    type: Add
+  - message: The janitor closet now has its own sprite. The janitor biohazard and
+      bombsuit closets have been resprited to match it.
+    type: Add
+  - message: Airlocks for service jobs have received a new stripe of paint.
+    type: Tweak
+  - message: The stun Kammerer is now restricted as Security/Bartender contraband.
+    type: Tweak
+  - message: The ninja's bombing objective should be assigned on far more maps.
+    type: Fix
+  id: 1239
+  time: '2025-03-07T01:18:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1732

@@ -81,12 +81,12 @@
     allowedDepartments: [ Medical ]
 
 - type: entity
-  id: BaseCivilianContraband
+  id: BaseServiceContraband #imp edit
   parent: BaseRestrictedContraband
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ Civilian ]
+    allowedDepartments: [ Service ] #imp edit
 
 - type: entity
   id: BaseCargoContraband

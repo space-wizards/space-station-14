@@ -30,20 +30,26 @@
       - Chemistry
       - ChiefEngineer
       - ChiefMedicalOfficer
+      - Clown #Imp
       - Command
       - Courier #Imp
       - Engineering
       - External
       - HeadOfPersonnel
       - HeadOfSecurity
+      - HospitalityDirector #Imp
       - Hydroponics
       - Janitor
       - Kitchen
       - Lawyer
+      - Librarian #Imp
       - Logistics #Imp
       - Maintenance
       - Medical
+      - Mime #Imp
+      - Musician #Imp
       - Quartermaster
+      - Reporter #Imp
       - Research
       - ResearchDirector
       - Salvage
@@ -100,20 +106,26 @@
     - Chemistry
     - ChiefEngineer
     - ChiefMedicalOfficer
-    - Courier #Imp
+    - Clown #Imp
     - Command
+    - Courier #Imp
     - Engineering
     - External
     - HeadOfPersonnel
     - HeadOfSecurity
+    - HospitalityDirector #Imp
     - Hydroponics
     - Janitor
     - Kitchen
     - Lawyer
+    - Librarian #Imp
     - Logistics #Imp
     - Maintenance
     - Medical
+    - Mime #Imp
+    - Musician #Imp
     - Quartermaster
+    - Reporter #Imp
     - Research
     - ResearchDirector
     - Salvage

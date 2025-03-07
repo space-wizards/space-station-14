@@ -35,6 +35,25 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
     state: "assembly"
+    
+#Clown
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyClown
+  suffix: Clown
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/clown.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyClownGlass
+  suffix: Clown, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/clown.rsi
+    state: "assembly"
 
 #Courier
 - type: entity
@@ -110,6 +129,82 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+    state: "assembly"
+    
+#Librarian
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyLibrarian
+  suffix: Librarian
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/librarian.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyLibrarianGlass
+  suffix: Librarian, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/librarian.rsi
+    state: "assembly"
+    
+#Mime
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMime
+  suffix: Mime
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/mime.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMimeGlass
+  suffix: Mime, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/mime.rsi
+    state: "assembly"
+
+#Musician
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMusician
+  suffix: Musician
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/musician.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMusicianGlass
+  suffix: Musician, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/musician.rsi
+    state: "assembly"
+
+#Reporter
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyReporter
+  suffix: Reporter
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/reporter.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyReporterGlass
+  suffix: Reporter, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
     state: "assembly"
 
 #Salvage

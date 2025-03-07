@@ -1,3 +1,5 @@
+using Content.Server.RoundEnd;
+
 namespace Content.Server._Impstation.CosmicCult.Components;
 
 /// <summary>
@@ -6,6 +8,36 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 [RegisterComponent, Access(typeof(CosmicCultRuleSystem))]
 public sealed partial class CosmicCultRuleComponent : Component
 {
+    /// <summary>
+    /// What happens if all of the cultists die.
+    /// </summary>
+    [DataField]
+    public RoundEndBehavior RoundEndBehavior = RoundEndBehavior.ShuttleCall;
+
+    /// <summary>
+    /// Sender for shuttle call.
+    /// </summary>
+    [DataField]
+    public string RoundEndTextSender = "comms-console-announcement-title-centcom";
+
+    /// <summary>
+    /// Text for shuttle call.
+    /// </summary>
+    [DataField]
+    public string RoundEndTextShuttleCall = "cosmiccult-elimination-shuttle-call";
+
+    /// <summary>
+    /// Text for announcement.
+    /// </summary>
+    [DataField]
+    public string RoundEndTextAnnouncement = "cosmiccult-elimination-announcement";
+
+    /// <summary>
+    /// Time for emergency shuttle arrival.
+    /// </summary>
+    [DataField]
+    public TimeSpan EvacShuttleTime = TimeSpan.FromMinutes(5);
+
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField] public HashSet<EntityUid> Cultists = new();
     [DataField] public bool WinLocked = false;
