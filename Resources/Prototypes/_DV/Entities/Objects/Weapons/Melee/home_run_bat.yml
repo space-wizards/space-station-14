@@ -16,7 +16,8 @@
   - type: MeleeRequiresWield # You can't hit a home run with one hand, jimbo.
   - type: MeleeThrowOnHit
     speed: 30
-    distance: 50
+    lifetime: 5 # imp - see below
+    # distance: 50 # imp - needs to be reverted on a future upstream merge i think
   - type: Item
     size: Large
   - type: Tool
