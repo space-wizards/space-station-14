@@ -36,7 +36,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
-    public sealed class BiomassReclaimerSystem : EntitySystem
+    public sealed class BiomassReclaimerSystem : SharedBiomassReclaimerSystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -106,7 +106,6 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<ActiveBiomassReclaimerComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<ActiveBiomassReclaimerComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
             SubscribeLocalEvent<BiomassReclaimerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-            SubscribeLocalEvent<BiomassReclaimerComponent, CanDropTargetEvent>(OnCanDragDrop);
             SubscribeLocalEvent<BiomassReclaimerComponent, DragDropTargetEvent>(OnDragDrop);
             SubscribeLocalEvent<BiomassReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
@@ -165,15 +164,6 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return;
 
             StartDoAfter(reclaimer, args.User, args.Target.Value, args.Used);
-        }
-
-        private void OnCanDragDrop(Entity<BiomassReclaimerComponent> reclaimer, ref CanDropTargetEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            args.CanDrop = HasComp<MobStateComponent>(args.Dragged);
-            args.Handled = true;
         }
 
         private void OnDragDrop(Entity<BiomassReclaimerComponent> reclaimer, ref DragDropTargetEvent args)
@@ -265,7 +255,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             }
 
             var isPlant = HasComp<ProduceComponent>(dragged);
-            if (!isPlant)
+            if (!isPlant && !HasComp<MobStateComponent>(dragged))
                 return false;
 
             if (!Transform(reclaimer).Anchored)
