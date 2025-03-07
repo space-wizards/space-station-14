@@ -136,6 +136,9 @@
       - id: CottonBol
         amount: !type:RangeNumberSelector
           range: 1, 5
+      - id: FoodCoffee # Frontier
+        amount: !type:RangeNumberSelector
+          range: 1, 5
       - id: FoodCocoaBeans
         amount: !type:RangeNumberSelector
           range: 1, 5
