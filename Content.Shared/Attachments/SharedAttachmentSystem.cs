@@ -10,7 +10,6 @@ namespace Content.Shared.Attachments;
 public abstract partial class SharedAttachmentSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly ISerializationManager _serializer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -98,7 +97,7 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
 
                 if (uid.Comp.CopyAllFields?.Contains(componentName) is true)
                 {
-                    _serializer.CopyTo(referenceComp, ref comp, notNullableOverride: true);
+                    CopyComp(reference, uid, referenceComp);
                 }
                 else if (uid.Comp.Fields?[componentName] is {} fields)
                 {
@@ -108,7 +107,7 @@ public abstract partial class SharedAttachmentSystem : EntitySystem
             else
             {
                 if (comp is {})
-                    _serializer.CopyTo(componentEntry.Component, ref comp, notNullableOverride: true);
+                    CopyComp(reference, uid, referenceComp);
             }
         }
     }
