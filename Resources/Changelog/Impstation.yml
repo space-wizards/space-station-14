@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: 50hr Greatcloak and Prestige Labcoat for the CMO to Swagger in.
-    type: Add
-  id: 745
-  time: '2024-12-15T14:54:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1036
-- author: EpicToast
-  changes:
-  - message: Core's vox box no longer siphons all the oxygen from the station.
-    type: Fix
-  id: 746
-  time: '2024-12-16T15:17:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1039
 - author: kipdotnet
   changes:
   - message: Banana has been updated!
@@ -4082,3 +4068,20 @@
   id: 1244
   time: '2025-03-07T01:37:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1850
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: A brand new shipment of Space Blades have arrived at the station.
+    type: Add
+  id: 1245
+  time: '2025-03-07T01:41:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1828
+- author: Sha-Seng
+  changes:
+  - message: Spiders have been given more customization options, including eyes! See
+      GitHub for more
+    type: Add
+  - message: Default spider fluff is now optional as an Overlay marking (called Fluffy)
+    type: Tweak
+  id: 1246
+  time: '2025-03-07T01:41:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1847
