@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Darkmajia, AftrLite
-  changes:
-  - message: 'Changelings can select a new evolution: Mindshield Patterns.'
-    type: Add
-  id: 738
-  time: '2024-12-14T20:47:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1003
-- author: EpicToast
-  changes:
-  - message: Updated Union Station, mostly around the medical department. See GitHub
-      for full changelog.
-    type: Tweak
-  id: 739
-  time: '2024-12-14T20:48:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1026
 - author: mqole
   changes:
   - message: The server rules have been updated! Please use your guidebook to review
@@ -4061,3 +4046,31 @@
   id: 1237
   time: '2025-03-07T00:49:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1849
+- author: widgetbeck
+  changes:
+  - message: Drones now have fewer toys. It's more fun to find your own supplies.
+    type: Remove
+  id: 1238
+  time: '2025-03-07T01:26:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1846
+- author: DinnerCalzone, EpicToastTM, honeyed_lemons
+  changes:
+  - message: Hospitality Director has been added, the new head of staff for the service
+      department!
+    type: Add
+  - message: Clown, Mime, Reporter, and Librarian access types have been added. The
+      clown locker, mime locker, musician locker (new!), news console, and Curadrobe
+      are now locked by those respective access types.
+    type: Add
+  - message: The janitor closet now has its own sprite. The janitor biohazard and
+      bombsuit closets have been resprited to match it.
+    type: Add
+  - message: Airlocks for service jobs have received a new stripe of paint.
+    type: Tweak
+  - message: The stun Kammerer is now restricted as Security/Bartender contraband.
+    type: Tweak
+  - message: The ninja's bombing objective should be assigned on far more maps.
+    type: Fix
+  id: 1239
+  time: '2025-03-07T01:18:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1732
