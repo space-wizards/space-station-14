@@ -22,9 +22,9 @@
     areaInsert: true
     whitelist:
       components:
-        - Paper
-        - Delivery
+      - Paper
+      - Delivery
       tags:
-        - Document
-        - Paper
+      - Document
+      - Paper
   - type: Dumpable
