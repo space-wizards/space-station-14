@@ -7368,7 +7368,6 @@ entities:
   - uid: 1925
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 9.5,8.5
       parent: 2
   - uid: 1926
@@ -26350,6 +26349,81 @@ entities:
     components:
     - type: Transform
       pos: -20.5,31.5
+      parent: 2
+  - uid: 26211
+    components:
+    - type: Transform
+      pos: 11.5,5.5
+      parent: 2
+  - uid: 26212
+    components:
+    - type: Transform
+      pos: 12.5,5.5
+      parent: 2
+  - uid: 26213
+    components:
+    - type: Transform
+      pos: 14.5,5.5
+      parent: 2
+  - uid: 26214
+    components:
+    - type: Transform
+      pos: 13.5,5.5
+      parent: 2
+  - uid: 26215
+    components:
+    - type: Transform
+      pos: 11.5,2.5
+      parent: 2
+  - uid: 26216
+    components:
+    - type: Transform
+      pos: 12.5,2.5
+      parent: 2
+  - uid: 26217
+    components:
+    - type: Transform
+      pos: 13.5,2.5
+      parent: 2
+  - uid: 26218
+    components:
+    - type: Transform
+      pos: 14.5,2.5
+      parent: 2
+  - uid: 26219
+    components:
+    - type: Transform
+      pos: 11.5,-1.5
+      parent: 2
+  - uid: 26220
+    components:
+    - type: Transform
+      pos: 12.5,-1.5
+      parent: 2
+  - uid: 26221
+    components:
+    - type: Transform
+      pos: 13.5,-1.5
+      parent: 2
+  - uid: 26222
+    components:
+    - type: Transform
+      pos: 14.5,-1.5
+      parent: 2
+  - uid: 26223
+    components:
+    - type: Transform
+      pos: 12.5,-4.5
+      parent: 2
+  - uid: 26224
+    components:
+    - type: Transform
+      pos: 13.5,-4.5
+      parent: 2
+  - uid: 26225
+    components:
+    - type: Transform
+      pos: 14.5,-4.5
       parent: 2
 - proto: CableApcStack1
   entities:
@@ -54986,7 +55060,7 @@ entities:
       pos: 19.5,48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -161941.98
+      secondsUntilStateChange: -161990.12
       state: Closing
   - uid: 8020
     components:
@@ -55001,7 +55075,7 @@ entities:
       pos: 10.5,80.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -132249.1
+      secondsUntilStateChange: -132297.23
       state: Closing
 - proto: CurtainsGreenOpen
   entities:
@@ -68249,7 +68323,7 @@ entities:
       pos: 27.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -103879.86
+      secondsUntilStateChange: -103928
       state: Closing
   - uid: 1184
     components:
@@ -69594,7 +69668,7 @@ entities:
       pos: 38.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -111216.695
+      secondsUntilStateChange: -111264.836
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -70060,6 +70134,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,6.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -40.966816
+      state: Closing
   - uid: 19801
     components:
     - type: Transform
@@ -70503,7 +70580,7 @@ entities:
       pos: 0.5,21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50563.51
+      secondsUntilStateChange: -50611.652
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -70522,7 +70599,7 @@ entities:
       pos: 1.5,43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -57658.754
+      secondsUntilStateChange: -57706.895
       state: Closing
   - uid: 11304
     components:
@@ -70589,7 +70666,7 @@ entities:
       pos: 3.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104560.33
+      secondsUntilStateChange: -104608.47
       state: Closing
   - uid: 11315
     components:
@@ -71091,7 +71168,7 @@ entities:
       pos: 8.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -25448.066
+      secondsUntilStateChange: -25496.209
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -113070,7 +113147,7 @@ entities:
       pos: 11.5,50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -123614.21
+      secondsUntilStateChange: -123662.35
       state: Closing
   - uid: 3648
     components:
