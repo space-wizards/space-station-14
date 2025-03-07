@@ -4,8 +4,6 @@
 - type: latheRecipe
   abstract: true
   id: BaseElectronicsRecipe
-  categories:
-  - Circuitry
   completetime: 2
   materials:
     Steel: 100
@@ -63,38 +61,50 @@
     Glass: 500
     Bananium: 100
 
+# Base categories
+
+- type: latheRecipe
+  abstract: true
+  id: BaseCircuitryRecipeCategory
+  categories:
+  - Circuitry
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMechRecipeCategory
+  categories:
+  - Circuitry
+  - Mech
+
 ## Recipes
 
 # Misc
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
-  id: MailingUnitElectronics
-  result: MailingUnitElectronics
-
-- type: latheRecipe
-  parent: BaseCheapElectronicsRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: FreezerElectronics
   result: FreezerElectronics
 
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: MailingUnitElectronics
+  result: MailingUnitElectronics
+
 # Airtight
 - type: latheRecipe
-  parent: BaseCheapElectronicsRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: FirelockElectronics
   result: FirelockElectronics
 
 - type: latheRecipe
-  parent: BaseCheapElectronicsRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: DoorElectronics
   result: DoorElectronics
 
 # Mechs
 - type: latheRecipe
-  parent: BaseGoldCircuitboardRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory ]
   id: RipleyCentralElectronics
   result: RipleyCentralElectronics
-  categories:
-  - Circuitry
-  - Mech
 
 - type: latheRecipe
   parent: RipleyCentralElectronics
@@ -102,12 +112,9 @@
   result: RipleyPeripheralsElectronics
 
 - type: latheRecipe
-  parent: BaseBananiumCircuitboardRecipe
+  parent: [ BaseBananiumCircuitboardRecipe, BaseMechRecipeCategory ]
   id: HonkerCentralElectronics
   result: HonkerCentralElectronics
-  categories:
-  - Circuitry
-  - Mech
 
 - type: latheRecipe
   parent: HonkerCentralElectronics
@@ -120,12 +127,9 @@
   result: HonkerTargetingElectronics
 
 - type: latheRecipe
-  parent: BaseGoldCircuitboardRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory]
   id: HamtrCentralElectronics
   result: HamtrCentralElectronics
-  categories:
-  - Circuitry
-  - Mech
 
 - type: latheRecipe
   parent: HamtrCentralElectronics
@@ -134,43 +138,43 @@
 
 # Power
 - type: latheRecipe
-  parent: BaseCheapCircuitboardRecipe
+  parent: [ BaseCheapCircuitboardRecipe, BaseCircuitryRecipeCategory ]
   id: APCElectronics
   result: APCElectronics
 
 - type: latheRecipe
-  parent: BaseCircuitboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseCircuitryRecipeCategory ]
   id: SolarTrackerElectronics
   result: SolarTrackerElectronics
 
 # Wallmount power
 - type: latheRecipe
-  parent: BaseCircuitboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseCircuitryRecipeCategory ]
   id: WallmountSubstationElectronics
   result: WallmountSubstationElectronics
 
 # Wallmount
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
-  id: AirAlarmElectronics
-  result: AirAlarmElectronics
-
-- type: latheRecipe
-  parent: BaseCheapElectronicsRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: StationMapElectronics
   result: StationMapCircuitboard
 
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: SignalTimerElectronics
+  result: SignalTimerElectronics
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: AirAlarmElectronics
+  result: AirAlarmElectronics
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: IntercomElectronics
   result: IntercomElectronics
 
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
   id: FireAlarmElectronics
   result: FireAlarmElectronics
-
-- type: latheRecipe
-  parent: BaseCheapElectronicsRecipe
-  id: SignalTimerElectronics
-  result: SignalTimerElectronics

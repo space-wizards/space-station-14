@@ -44,11 +44,40 @@
   id: Materials
   name: lathe-category-materials
 
-# Science
+# Circuit imprinter
 - type: latheCategory
   id: Computers
   name: lathe-category-computers
 
+- type: latheCategory
+  id: Cargo
+  name: lathe-category-orange
+
+- type: latheCategory
+  id: Engineering
+  name: lathe-category-yellow
+
+- type: latheCategory
+  id: General
+  name: lathe-category-green
+
+- type: latheCategory
+  id: Medical
+  name: lathe-category-blue
+
+- type: latheCategory
+  id: Research
+  name: lathe-category-purple
+
+- type: latheCategory
+  id: Security
+  name: lathe-category-red
+
+- type: latheCategory
+  id: Service
+  name: lathe-category-light-green
+
+# Science
 - type: latheCategory
   id: Mech
   name: lathe-category-mechs

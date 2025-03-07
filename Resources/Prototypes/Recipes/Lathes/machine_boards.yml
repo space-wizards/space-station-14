@@ -21,7 +21,114 @@
   categories:
   - Machines
 
+# Base categories
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMachineboardRecipeCategory
+  categories:
+  - Machines
+
+- type: latheRecipe
+  abstract: true
+  id: BaseGeneralMachineboardRecipeCategory
+  categories:
+  - Machines
+  - General
+
+- type: latheRecipe
+  abstract: true
+  id: BaseCargoMachineboardRecipeCategory
+  categories:
+  - Machines
+  - Cargo
+
+- type: latheRecipe
+  abstract: true
+  id: BaseEngineeringMachineboardRecipeCategory
+  categories:
+  - Machines
+  - Engineering
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMedicalMachineboardRecipeCategory
+  categories:
+  - Machines
+  - Medical
+
+- type: latheRecipe
+  abstract: true
+  id: BaseResearchMachineboardRecipeCategory
+  categories:
+  - Machines
+  - Research
+
+- type: latheRecipe
+  abstract: true
+  id: BaseSecurityMachineboardRecipeCategory
+  categories:
+  - Machines
+  - Security
+
+- type: latheRecipe
+  abstract: true
+  id: BaseServiceMachineboardRecipeCategory
+  categories:
+  - Machines
+  - Service
+
 ## Recipes
+
+## Non-circuit imprinter (no second category)
+
+# Autolathe
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseMachineboardRecipeCategory ]
+  id: CellRechargerCircuitboard
+  result: CellRechargerCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseMachineboardRecipeCategory ]
+  id: WeaponCapacitorRechargerCircuitboard
+  result: WeaponCapacitorRechargerCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMachineboardRecipeCategory ]
+  id: SubstationMachineCircuitboard
+  result: SubstationMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMachineboardRecipeCategory ]
+  id: SMESMachineCircuitboard
+  result: SMESMachineCircuitboard
+
+# Security techfab
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMachineboardRecipeCategory ]
+  id: ShuttleGunSvalinnMachineGunCircuitboard
+  result: ShuttleGunSvalinnMachineGunCircuitboard
+  completetime: 6
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMachineboardRecipeCategory ]
+  id: ShuttleGunPerforatorCircuitboard
+  result: ShuttleGunPerforatorCircuitboard
+  completetime: 10
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMachineboardRecipeCategory ]
+  id: ShuttleGunFriendshipCircuitboard
+  result: ShuttleGunFriendshipCircuitboard
+  completetime: 8
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMachineboardRecipeCategory ]
+  id: ShuttleGunDusterCircuitboard
+  result: ShuttleGunDusterCircuitboard
+  completetime: 12
+
+## Circuit imprinter
 
 # Misc
 - type: latheRecipe
@@ -76,22 +183,13 @@
   result: GasRecyclerMachineCircuitboard
 
 # Cell chargers
+
 - type: latheRecipe
   parent: BaseCheapElectronicsRecipe
-  id: CellRechargerCircuitboard
-  result: CellRechargerCircuitboard
-  categories:
-  - Machines
-
-- type: latheRecipe
-  parent: CellRechargerCircuitboard
   id: BorgChargerCircuitboard
   result: BorgChargerCircuitboard
-
-- type: latheRecipe
-  parent: CellRechargerCircuitboard
-  id: WeaponCapacitorRechargerCircuitboard
-  result: WeaponCapacitorRechargerCircuitboard
+  categories:
+  - Machines
 
 - type: latheRecipe
   parent: BaseGoldMachineboardRecipe
@@ -273,15 +371,6 @@
   result: StasisBedMachineCircuitboard
 
 # Power
-- type: latheRecipe
-  parent: BaseMachineboardRecipe
-  id: SubstationMachineCircuitboard
-  result: SubstationMachineCircuitboard
-
-- type: latheRecipe
-  parent: BaseMachineboardRecipe
-  id: SMESMachineCircuitboard
-  result: SMESMachineCircuitboard
 
 - type: latheRecipe
   parent: BaseGoldMachineboardRecipe
@@ -403,30 +492,6 @@
 
 - type: latheRecipe
   parent: BaseMachineboardRecipe
-  id: ShuttleGunSvalinnMachineGunCircuitboard
-  result: ShuttleGunSvalinnMachineGunCircuitboard
-  completetime: 6
-
-- type: latheRecipe
-  parent: BaseGoldMachineboardRecipe
-  id: ShuttleGunPerforatorCircuitboard
-  result: ShuttleGunPerforatorCircuitboard
-  completetime: 10
-
-- type: latheRecipe
-  parent: BaseMachineboardRecipe
   id: ShuttleGunKineticCircuitboard
   result: ShuttleGunKineticCircuitboard
   completetime: 6
-
-- type: latheRecipe
-  parent: BaseGoldMachineboardRecipe
-  id: ShuttleGunFriendshipCircuitboard
-  result: ShuttleGunFriendshipCircuitboard
-  completetime: 8
-
-- type: latheRecipe
-  parent: BaseGoldMachineboardRecipe
-  id: ShuttleGunDusterCircuitboard
-  result: ShuttleGunDusterCircuitboard
-  completetime: 12

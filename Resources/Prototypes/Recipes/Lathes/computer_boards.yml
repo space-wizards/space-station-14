@@ -1,16 +1,8 @@
-# Base protoypes
+# Base categories
 
 - type: latheRecipe
-  parent: BaseCircuitboardRecipe
   abstract: true
-  id: BaseComputerboardRecipe
-  categories:
-  - Computers
-
-- type: latheRecipe
-  parent: BaseGoldCircuitboardRecipe
-  abstract: true
-  id: BaseGoldComputerboardRecipe
+  id: BaseComputerRecipeCategory
   categories:
   - Computers
 
@@ -18,56 +10,57 @@
 
 # Cameras
 - type: latheRecipe
-  parent: BaseComputerboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: SurveillanceCameraMonitorCircuitboard
   result: SurveillanceCameraMonitorCircuitboard
 
 - type: latheRecipe
-  parent: BaseComputerboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: SurveillanceWirelessCameraMonitorCircuitboard
   result: SurveillanceWirelessCameraMonitorCircuitboard
 
 # Civilian
 - type: latheRecipe
-  parent: BaseComputerboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: ComputerTelevisionCircuitboard
   result: ComputerTelevisionCircuitboard
 
-- type: latheRecipe
-  parent: BaseComputerboardRecipe
-  id: MassMediaCircuitboard
-  result: ComputerMassMediaCircuitboard
-
 # Engineering
 - type: latheRecipe
-  parent: BaseComputerboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: SolarControlComputerCircuitboard
   result: SolarControlComputerCircuitboard
 
 # Medical
 - type: latheRecipe
-  parent: BaseComputerboardRecipe
-  id: CloningConsoleComputerCircuitboard
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
+  id: CloningConsoleComputerCircuitboard # unused
   result: CloningConsoleComputerCircuitboard
 
 # Science
 - type: latheRecipe
-  parent: BaseGoldComputerboardRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: AnalysisComputerCircuitboard
   result: AnalysisComputerCircuitboard
 
 - type: latheRecipe
-  parent: BaseGoldComputerboardRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: TechDiskComputerCircuitboard
   result: TechDiskComputerCircuitboard
 
+# Service
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
+  id: MassMediaCircuitboard
+  result: ComputerMassMediaCircuitboard
+
 # Shuttle
 - type: latheRecipe
-  parent: BaseGoldComputerboardRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: ShuttleConsoleCircuitboard
   result: ShuttleConsoleCircuitboard
 
 - type: latheRecipe
-  parent: BaseComputerboardRecipe
+  parent: [ BaseCircuitboardRecipe, BaseComputerRecipeCategory ]
   id: RadarConsoleCircuitboard
   result: RadarConsoleCircuitboard
