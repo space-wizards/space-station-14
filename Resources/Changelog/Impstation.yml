@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Riot crates now correctly have stun enforcers in them again
-    type: Tweak
-  id: 742
-  time: '2024-12-15T12:53:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1029
-- author: widgetbeck
-  changes:
-  - message: Fixed Gastropoids being unable to bump-open doors.
-    type: Fix
-  id: 743
-  time: '2024-12-15T12:53:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1031
 - author: DinnerCalzone
   changes:
   - message: Techfabs now play an animation when producing things.
@@ -4075,3 +4061,19 @@
   id: 1241
   time: '2025-03-07T01:32:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1814
+- author: kipdotnet
+  changes:
+  - message: Tck'tck now has a sprite for when its charging a battery, and can build
+      lights.
+    type: Tweak
+  id: 1242
+  time: '2025-03-07T01:34:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1815
+- author: kipdotnet
+  changes:
+  - message: 'Added five new Apids for cargo to order: A scientist, janitor, admin
+      assistant, chaplain, and salvage specialist!'
+    type: Add
+  id: 1243
+  time: '2025-03-07T01:35:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1839
