@@ -136,7 +136,7 @@
   result: MiniGravityGeneratorCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
+  parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
   id: PowerCageRechargerCircuitboard
   result: PowerCageRechargerCircuitboard
 
@@ -464,17 +464,17 @@
   result: SurveillanceCameraRouterCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
+  parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
   id: SurveillanceCameraWirelessRouterCircuitboard
   result: SurveillanceCameraWirelessRouterCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseGeneralMachineRecipeCategory ]
+  parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
   id: SurveillanceWirelessCameraAnchoredCircuitboard
   result: SurveillanceWirelessCameraAnchoredCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseGeneralMachineRecipeCategory ]
+  parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
   id: SurveillanceWirelessCameraMovableCircuitboard
   result: SurveillanceWirelessCameraMovableCircuitboard
 

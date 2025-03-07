@@ -2,13 +2,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseGeneralComputerRecipeCategory
-  categories:
-  - Computers
-  - General
-
-- type: latheRecipe
-  abstract: true
   id: BaseCargoComputerRecipeCategory
   categories:
   - Computers
@@ -49,24 +42,25 @@
   - Computers
   - Service
 
+- type: latheRecipe
+  abstract: true
+  id: BaseGeneralComputerRecipeCategory
+  categories:
+  - Computers
+  - General
+
 ## Recipes
 
-# Cameras
+# Shuttle
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseSecurityComputerRecipeCategory ]
-  id: SurveillanceCameraMonitorCircuitboard
-  result: SurveillanceCameraMonitorCircuitboard
+  parent: [ BaseGoldCircuitboardRecipe, BaseCargoComputerRecipeCategory ]
+  id: ShuttleConsoleCircuitboard
+  result: ShuttleConsoleCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseSecurityComputerRecipeCategory ]
-  id: SurveillanceWirelessCameraMonitorCircuitboard
-  result: SurveillanceWirelessCameraMonitorCircuitboard
-
-# Civilian
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseGeneralComputerRecipeCategory ]
-  id: ComputerTelevisionCircuitboard
-  result: ComputerTelevisionCircuitboard
+  parent: [ BaseCircuitboardRecipe, BaseCargoComputerRecipeCategory ]
+  id: RadarConsoleCircuitboard
+  result: RadarConsoleCircuitboard
 
 # Engineering
 - type: latheRecipe
@@ -91,19 +85,25 @@
   id: TechDiskComputerCircuitboard
   result: TechDiskComputerCircuitboard
 
+# Cameras
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSecurityComputerRecipeCategory ]
+  id: SurveillanceCameraMonitorCircuitboard
+  result: SurveillanceCameraMonitorCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseServiceComputerRecipeCategory ]
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  result: SurveillanceWirelessCameraMonitorCircuitboard
+
 # Service
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseServiceComputerRecipeCategory ]
   id: MassMediaCircuitboard
   result: ComputerMassMediaCircuitboard
 
-# Shuttle
+# Civilian
 - type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseCargoComputerRecipeCategory ]
-  id: ShuttleConsoleCircuitboard
-  result: ShuttleConsoleCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseCargoComputerRecipeCategory ]
-  id: RadarConsoleCircuitboard
-  result: RadarConsoleCircuitboard
+  parent: [ BaseCircuitboardRecipe, BaseGeneralComputerRecipeCategory ]
+  id: ComputerTelevisionCircuitboard
+  result: ComputerTelevisionCircuitboard
