@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Holium can no longer spew out of the vents
-    type: Remove
-  id: 749
-  time: '2024-12-17T11:57:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1050
 - author: Sleiphros
   changes:
   - message: New wrecks of all different available sizes can be pulled in by the salvage
@@ -4087,3 +4080,10 @@
   id: 1248
   time: '2025-03-07T02:15:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1821
+- author: bigsantino1
+  changes:
+  - message: The salvage magnet now tells you what got pulled.
+    type: Tweak
+  id: 1249
+  time: '2025-03-07T02:22:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1836
