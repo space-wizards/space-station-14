@@ -39,3 +39,81 @@
   name: PigeonBeans - Sunset
   path:
     path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: spaceasshole
+  name: Chris Remo - Space Asshole
+  path:
+    path: /Audio/Jukebox/space_asshole.ogg
+
+- type: jukebox
+  id: thewizard
+  name: Chris Remo - The Wizard
+  path:
+    path: /Audio/Jukebox/the_wizard.ogg
+
+- type: jukebox
+  id: laserripapartbulkhead
+  name: Alexander Divine - Lasers Rip Apart the Bulkhead
+  path:
+    path: /Audio/Jukebox/lasers_rip_apart_the_bulkhead.ogg
+
+- type: jukebox
+  id: endlessspace
+  name: SolusLunes - Endless Space
+  path:
+    path: /Audio/Jukebox/endless_space.ogg
+
+- type: jukebox
+  id: thunderdome
+  name: MashedByMachines - Thunderdome
+  path:
+    path: /Audio/Jukebox/thunderdome.ogg
+
+- type: jukebox
+  id: absconditus
+  name: ZhayTee - Absconditus
+  path:
+    path: /Audio/Jukebox/absconditus.ogg
+
+- type: jukebox
+  id: atomicamnesiammx
+  name: Philip Dyer - Atomic Amnesia MMX
+  path:
+    path: /Audio/Jukebox/atomicamnesiammx.ogg
+
+- type: jukebox
+  id: singuloose
+  name: Janis Schiedková - Singuloose
+  path:
+    path: /Audio/Jukebox/singuloose.ogg
+
+- type: jukebox
+  id: title2
+  name: Jonathan Dunn - Robocop 2 Gameboy Title
+  path:
+    path: /Audio/Jukebox/title2.ogg
+
+- type: jukebox
+  id: comet_haley
+  name: Stellardrone - Comet Haley
+  path:
+    path: /Audio/Jukebox/comet_haley.ogg
+
+- type: jukebox
+  id: Spac_Stac
+  name: Hayabusa - Spac Stac
+  path:
+    path: /Audio/Jukebox/Spac_Stac.ogg
+
+- type: jukebox
+  id: pwmur
+  name: Alexander Divine - Phoron Will Make Us Rich
+  path:
+    path: /Audio/Jukebox/pwmur.ogg
+
+- type: jukebox
+  id: every_light_is_blinking_at_once
+  name: Alexander Divine - Every Light is Blinking at Once
+  path:
+    path: /Audio/Jukebox/every_light_is_blinking_at_once.ogg  
