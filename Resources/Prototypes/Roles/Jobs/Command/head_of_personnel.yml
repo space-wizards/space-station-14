@@ -5,17 +5,18 @@
   playTimeTracker: JobHeadOfPersonnel
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 36000 # 10 hours
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 36000 # 10 hours
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 36000 # 10 hrs
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 36000 # 10 hours
+      department: Civilian
+      time: 72000 # 20 hours
+    - !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 10800 # 3 hours
+    - !type:RoleTimeRequirement
+      role: JobChef
+      time: 10800 # 3 hours
+    - !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 10800 # 3 hours
+
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"

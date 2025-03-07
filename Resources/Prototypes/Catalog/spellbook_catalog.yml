@@ -285,7 +285,7 @@
   description: spellbook-event-summon-guns-description
   productAction: ActionSummonGuns
   cost:
-    WizCoin: 2
+    WizCoin: 10
   categories:
   - SpellbookEvents
   conditions:
@@ -299,7 +299,7 @@
   description: spellbook-event-summon-magic-description
   productAction: ActionSummonMagic
   cost:
-    WizCoin: 2
+    WizCoin: 10
   categories:
   - SpellbookEvents
   conditions:
