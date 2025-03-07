@@ -367,11 +367,14 @@
     sprite: Clothing/Head/Hats/party_water_cup.rsi
 
 - type: entity
-  parent: [ DrinkCanBaseFull, DrinkBaseCup ]
+  parent: DrinkBaseCup
   id: DrinkLemonLimeClownJuiceCup
   name: Smite Clown Juice cup
   description: You asked for SMITE. They gave you Clown Juice.
   components:
+  - type: Openable
+  - type: TrashOnSolutionEmpty
+    solution: drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -379,6 +382,7 @@
         reagents:
         - ReagentId: LemonLimeClownJuice
           Quantity: 30
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
@@ -401,6 +405,3 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
-  - type: Tool
-    qualities:
-    - [ ]
