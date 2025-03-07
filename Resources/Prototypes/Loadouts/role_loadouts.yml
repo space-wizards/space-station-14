@@ -116,7 +116,7 @@
   id: JobLawyer
   groups:
   - GroupTankHarness
-  # - LawyerNeck
+  - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
   - Glasses
