@@ -246,14 +246,12 @@
   rules:
   - Nukeops
   - Traitor
-  - Revolutionary
   - Zombie
   - SubGamemodesRule
   - KesslerSyndromeScheduler
   - RampingStationEventScheduler
   - TerribleRoundstartVariation
-  # no power
-  # force survivor antag
+  - HurtDrunkEveryoneGameRule
   # forcecall shuttle
   # forceset alert level
   # everyone is drunk
