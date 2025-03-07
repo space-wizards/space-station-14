@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
+using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
@@ -188,6 +189,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
         {
+            announcementFull = RandomAccentuator.MaybeAccentuate(announcementFull);
             _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
