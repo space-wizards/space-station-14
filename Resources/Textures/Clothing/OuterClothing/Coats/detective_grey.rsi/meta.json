@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Modified from detective coat found in https://github.com/tgstation/tgstation/commit/d90c7e5de6f6d94596c164da78dbc8d3cd35bb99 by Flareguy. vox state modified from detective state found in vgstation13 at https://github.com/vgstation-coders/vgstation13/blob//icons/mob/species/vox/suit.dmi. icon state by Flareguy. ",
+  "copyright": "Modified from detective coat found in https://github.com/tgstation/tgstation/commit/d90c7e5de6f6d94596c164da78dbc8d3cd35bb99 by Flareguy. vox state modified from detective state found in vgstation13 at https://github.com/vgstation-coders/vgstation13/blob//icons/mob/species/vox/suit.dmi. icon state by Flareguy. Resprite by pyfya (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32

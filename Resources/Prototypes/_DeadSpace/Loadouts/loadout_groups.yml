@@ -178,10 +178,30 @@
   - SeniorOfficerDuffel
 
 - type: loadoutGroup
+  id: SeniorOfficerOuterClothing
+  name: loadout-group-senior-officer-outerclothing
+  loadouts:
+  - SeniorOfficerOuterCoatTrench
+
+- type: loadoutGroup
   id: SeniorOfficerPDA
   name: loadout-group-security-id
   loadouts:
   - SeniorOfficerPDA
+
+- type: loadoutGroup
+  id: SeniorOfficerNeck
+  name: loadout-group-senior-officer-neck
+  minLimit: 0
+  loadouts:
+  - SeniorOfficerMantle
+
+- type: loadoutGroup
+  id: SeniorOfficerSocks
+  name: loadout-group-senior-officer-socks
+  loadouts:
+  - UnderwearSocksSeniorOfficer
+  - UnderwearWomenSocksSeniorOfficer
 
 - type: loadoutGroup
   id: SeniorOfficerUnderwear
@@ -204,6 +224,13 @@
   - EmergencyNonBreather
   - EmergencyRobotNonBreather
   - LoadoutSpeciesEVANitrogen
+
+- type: loadoutGroup
+  id: BrigmedicSocks
+  name: loadout-group-brigmedic-socks
+  loadouts:
+  - UnderwearSocksBrigmedic
+  - UnderwearWomenSocksBrigmedic
 
 - type: loadoutGroup
   id: BrigmedicUnderwear

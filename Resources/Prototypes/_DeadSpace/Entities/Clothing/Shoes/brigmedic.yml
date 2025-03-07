@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsBrigmedic
+  name: кроссовки  бригмедика
+  description: Лёгкие кроссовки для спорта и марш бросков, до раннего бойца отдела.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Shoes/Boots/sneakersmedsec.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Shoes/Boots/sneakersmedsec.rsi

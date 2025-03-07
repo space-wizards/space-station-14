@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingOuterHardsuitSecurity
+  id: ClothingOuterHardsuitSeniorOfficer
+  name: скафандр инструктора СБ
+  description: Скафандр инструктора службы безопасности представляет собой усовершенствованную версию стандартного скафандра службы безопасности. На левом наплечнике выбито "Инструктор СБ", а под ним выбиты мелкими буквами "Speysov Weapons Company".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/senior_officer.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/senior_officer.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSeniorOfficer

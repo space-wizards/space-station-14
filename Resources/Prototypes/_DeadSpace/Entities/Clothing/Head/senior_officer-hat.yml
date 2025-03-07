@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSeniorOfficer
+  name: берет инструктора СБ
+  description: Берет показывающий мастерство и доблесть его владельца.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_senior_officer.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_senior_officer.rsi

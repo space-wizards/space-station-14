@@ -1,3 +1,13 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterSeniorOfficer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSeniorOfficer
+      time: 288000 #80 hrs
+
 # Jumpsuit
 - type: loadout
   id: SeniorOfficerJumpsuit
@@ -25,11 +35,37 @@
   equipment:
     back: ClothingBackpackDuffelSecurity
 
+# OuterClothing
+- type: loadout
+  id: SeniorOfficerOuterCoatTrench
+  equipment:
+    outerClothing: ClothingOuterCoatSeniorOfficerTrench
+
 # PDA
 - type: loadout
   id: SeniorOfficerPDA
   equipment:
     id: SeniorOfficerPDA
+
+# Neck
+- type: loadout
+  id: SeniorOfficerMantle
+  equipment:
+    neck: ClothingNeckMantleSeniorOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterSeniorOfficer
+
+# Socks
+- type: loadout
+  id: UnderwearSocksSeniorOfficer
+  equipment:
+    socks: ClothingUnderwearSocksSeniorOfficer
+
+- type: loadout
+  id: UnderwearWomenSocksSeniorOfficer
+  equipment:
+    socks: ClothingUnderwearWomenSocksSeniorOfficer
 
 # Underwear
 - type: loadout

@@ -44,6 +44,12 @@
   equipment:
     head: ClothingHeadHatSecurityTrooper
 
+# Masks
+- type: loadout
+  id: SecurityBandana
+  equipment:
+    mask: ClothingMaskBandSecurity
+
 # Jumpsuit
 - type: loadout
   id: SecurityJumpsuit
@@ -158,6 +164,17 @@
 #     proto: SeniorOfficer
 #   equipment:
 #     id: SeniorOfficerPDA
+
+# Socks
+- type: loadout
+  id: UnderwearSocksSecurityOfficer
+  equipment:
+    socks: ClothingUnderwearSocksSecurityOfficer
+
+- type: loadout
+  id: UnderwearWomenSocksSecurityOfficer
+  equipment:
+    socks: ClothingUnderwearWomenSocksSecurityOfficer
 
 # Underwear
 - type: loadout

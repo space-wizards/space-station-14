@@ -1,0 +1,26 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleSeniorOfficer
+  name: мантия инструктора СБ с подсумками
+  description: Мантия инструктора службы безопасности, украшенная символами власти и мастерства службы безопасности станции, оснащённая подсумками для хранения снаряжение службы безопасности и магазинов. На внутренней части мантии можно заметить 3 буквы производителя, SWC.
+  categories: [ DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/seniormantle_shoulder.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/seniormantle_shoulder.rsi
+  - type: Storage
+    maxItemSize: Normal
+    defaultStorageOrientation: Vertical
+    grid:
+    - 0,0,3,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Item
+    size: Normal

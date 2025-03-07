@@ -35,13 +35,12 @@
   id: BrigmedicGear
   equipment:
     outerClothing: ClothingOuterVestSecurityMedic
-    shoes: ClothingShoesColorRed
+    shoes: ClothingShoesBootsBrigmedic
     eyes: ClothingEyesHudMedical
     head: ClothingHeadHatBeretBrigmedic
     id: BrigmedicPDA
     ears: ClothingHeadsetBrigmedic
-    belt: ClothingBeltMedicalFilled
-    socks: ClothingUnderwearSocksBrigmedic
+    belt: ClothingBeltMedicalSecurityWebbing
   storage:
     back:
     - Flash

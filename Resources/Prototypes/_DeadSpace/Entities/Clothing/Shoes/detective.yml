@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsDetective
+  name: туфли детектива
+  description: Стильные коричневые туфли станционного детектива корпорации NanoTrasen, сделанные из синтетической кожи.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Shoes/Boots/detective_boots.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Shoes/Boots/detective_boots.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsDetectiveGrey
+  name: нуарные туфли детектива
+  description: Стильные чёрные туфли нуарного детектива, сделанные из чёрной синтетической кожи..
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Shoes/Boots/nuar_detective_boots.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Shoes/Boots/nuar_detective_boots.rsi
