@@ -1074,7 +1074,7 @@
   minLimit: 0
   loadouts:
   - HeadofSecurityHead
-  - HeadofSecurityHeadDV
+  - HeadofSecurityHeadDV # DeltaV
   - HeadofSecurityBeret
   - HeadofSecurityPatrolCap # imp
 
