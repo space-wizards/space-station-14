@@ -3950,4 +3950,11 @@ Entries:
   id: 547
   time: '2025-03-07T02:39:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/370
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed bugs, removed delays from surgery.
+    type: Fix
+  id: 548
+  time: '2025-03-07T08:02:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/371
 
