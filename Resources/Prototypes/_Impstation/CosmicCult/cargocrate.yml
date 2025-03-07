@@ -27,11 +27,42 @@
   id: CrateServiceReligious
   parent: CrateChaplain
   name: religious supplies crate
-  description: Contains holy water and a spare bible.
+  description: Contains holy water and a spare holy text.
   components:
     - type: StorageFill
       contents:
         - id: Bible
+          orGroup: HolyText
+        - id: HolyTextQuran
+          orGroup: HolyText
+        - id: HolyTextTanakh
+          orGroup: HolyText
+        - id: HolyTextHolyScroll
+          orGroup: HolyText
+        - id: HolyTextHolyTablet
+          orGroup: HolyText
+        - id: HolyTextGreybible
+          orGroup: HolyText
+          prob: 0.4
+        - id: HolyTextKojiki
+          orGroup: HolyText
+        - id: HolyTextTaoTeachings
+          orGroup: HolyText
+        - id: HolyTextPrincipiaDiscordia
+          orGroup: HolyText
+          prob: 0.4
+        - id: HolyTextChaplainsGrimoire
+          orGroup: HolyText
+          prob: 0.4
+        - id: HolyTextUnitologyTome
+          orGroup: HolyText
+          prob: 0.1
+        - id: HolyTextExtremeTeenBible
+          orGroup: HolyText
+          prob: 0.1
+        - id: HolyTextBibble
+          orGroup: HolyText
+          prob: 0.1
         - id: JugHolywater
           amount: 2
 
