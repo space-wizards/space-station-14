@@ -1642,7 +1642,6 @@ entities:
             id: StandClear
           decals:
             21: 1,4
-            22: 1,-3
         - node:
             color: '#FFFFFFFF'
             id: WarnLineS
@@ -1652,6 +1651,7 @@ entities:
             8: 0,3
             10: 0,-3
             11: 0,-4
+            964: 0,-2
         - node:
             color: '#DE3A3A96'
             id: WarnLineW
@@ -55060,7 +55060,7 @@ entities:
       pos: 19.5,48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -161990.12
+      secondsUntilStateChange: -162071.88
       state: Closing
   - uid: 8020
     components:
@@ -55075,7 +55075,7 @@ entities:
       pos: 10.5,80.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -132297.23
+      secondsUntilStateChange: -132378.98
       state: Closing
 - proto: CurtainsGreenOpen
   entities:
@@ -68323,7 +68323,7 @@ entities:
       pos: 27.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -103928
+      secondsUntilStateChange: -104009.75
       state: Closing
   - uid: 1184
     components:
@@ -69668,7 +69668,7 @@ entities:
       pos: 38.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -111264.836
+      secondsUntilStateChange: -111346.586
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -70135,7 +70135,7 @@ entities:
       pos: 8.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -40.966816
+      secondsUntilStateChange: -122.713524
       state: Closing
   - uid: 19801
     components:
@@ -70580,7 +70580,7 @@ entities:
       pos: 0.5,21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50611.652
+      secondsUntilStateChange: -50693.4
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -70599,7 +70599,7 @@ entities:
       pos: 1.5,43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -57706.895
+      secondsUntilStateChange: -57788.64
       state: Closing
   - uid: 11304
     components:
@@ -70666,7 +70666,7 @@ entities:
       pos: 3.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104608.47
+      secondsUntilStateChange: -104690.22
       state: Closing
   - uid: 11315
     components:
@@ -71168,7 +71168,7 @@ entities:
       pos: 8.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -25496.209
+      secondsUntilStateChange: -25577.955
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -113147,7 +113147,7 @@ entities:
       pos: 11.5,50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -123662.35
+      secondsUntilStateChange: -123744.1
       state: Closing
   - uid: 3648
     components:
@@ -128785,23 +128785,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,-5.5
       parent: 2
-  - uid: 23198
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 15.5,-5.5
-      parent: 2
   - uid: 23199
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,6.5
-      parent: 2
-  - uid: 23200
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 15.5,6.5
       parent: 2
 - proto: ResearchAndDevelopmentServer
   entities:
@@ -139130,11 +139118,8 @@ entities:
   - uid: 11
     components:
     - type: Transform
-      anchored: False
-      pos: -0.5,-3.5
+      pos: 15.5,-5.5
       parent: 2
-    - type: Physics
-      bodyType: Dynamic
   - uid: 12
     components:
     - type: Transform
@@ -139143,11 +139128,8 @@ entities:
   - uid: 23
     components:
     - type: Transform
-      anchored: False
-      pos: -0.5,-1.5
+      pos: 15.5,6.5
       parent: 2
-    - type: Physics
-      bodyType: Dynamic
   - uid: 33
     components:
     - type: Transform
@@ -146842,6 +146824,16 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -16.5,-59.5
+      parent: 2
+  - uid: 23198
+    components:
+    - type: Transform
+      pos: -0.5,-3.5
+      parent: 2
+  - uid: 23200
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
       parent: 2
   - uid: 23629
     components:
