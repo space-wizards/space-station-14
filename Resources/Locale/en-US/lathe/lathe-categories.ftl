@@ -13,8 +13,17 @@ lathe-category-food = Food
 lathe-category-chemicals = Chemicals
 lathe-category-materials = Materials
 
-# Science
+# Circuit imprinter
 lathe-category-computers = Computers
+lathe-category-cargo = Cargo
+lathe-category-engineering = Engineering
+lathe-category-general = General
+lathe-category-medical = Medical
+lathe-category-research = Research
+lathe-category-security = Security
+lathe-category-service = Service
+
+# Science
 lathe-category-mechs = Mechs
 
 # Uniform
