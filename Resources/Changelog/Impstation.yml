@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Techfabs now play an animation when producing things.
-    type: Add
-  id: 744
-  time: '2024-12-15T12:55:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1032
 - author: SixValentine
   changes:
   - message: 50hr Greatcloak and Prestige Labcoat for the CMO to Swagger in.
@@ -4077,3 +4070,15 @@
   id: 1243
   time: '2025-03-07T01:35:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1839
+- author: Iocanthos, whatston3, and Stagnation
+  changes:
+  - message: Coffee seeds are now available for planting.
+    type: Add
+  - message: Coffee beans can be removed from fruit, roasted, ground and added to
+      hot water to make coffee.
+    type: Add
+  - message: Spiced pumpkin lattes can now be mixed by bartenders.
+    type: Add
+  id: 1244
+  time: '2025-03-07T01:37:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1850
