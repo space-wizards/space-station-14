@@ -1,7 +1,7 @@
 ﻿- type: entity # DeltaV - upstream removed this i think?
   id: Observationskit
-  parent: [BoxCardboard, BaseSyndicateContraband]
-  name: observations kit
+  parent: BoxCardboard # imp - nondescript box loses contraband tag
+  # name: observations kit # imp - nondescript box
   suffix: Filled
   components:
   - type: StorageFill
