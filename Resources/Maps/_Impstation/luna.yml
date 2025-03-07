@@ -12077,11 +12077,7 @@ entities:
     - type: Transform
       pos: 15.434254,81.67252
       parent: 2
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
-    - type: ActiveUserInterface
+
   - uid: 8855
     components:
     - type: MetaData
