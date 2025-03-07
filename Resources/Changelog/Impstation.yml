@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Banana has been updated!
-    type: Tweak
-  id: 747
-  time: '2024-12-16T15:20:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1042
 - author: mqole
   changes:
   - message: the imp has become a marketable plushie.
@@ -4085,3 +4078,12 @@
   id: 1246
   time: '2025-03-07T01:41:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1847
+- author: hivehum
+  changes:
+  - message: Command dressers now have a much larger variety of clothing!
+    type: Tweak
+  - message: Command mantles count for a thief's objective to steal Command cloaks.
+    type: Tweak
+  id: 1247
+  time: '2025-03-07T01:42:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1840
