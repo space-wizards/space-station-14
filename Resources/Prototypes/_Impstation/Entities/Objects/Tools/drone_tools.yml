@@ -107,11 +107,6 @@
     pocket1: trayScannerUnremoveable
     pocket2: PinpointerStationUnremoveable
     back: DroneSatchelUnremovable
-  storage:
-    back:
-    - TrashBag
-    - SprayBottleSpaceCleaner
   inhand:
-    - RCDRechargingDrone
     - OmnitoolUnremoveable
     - WelderExperimentalUnremoveable
