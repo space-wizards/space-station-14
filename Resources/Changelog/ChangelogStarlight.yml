@@ -3907,4 +3907,18 @@ Entries:
   id: 541
   time: '2025-03-06T14:47:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/369
+- author: Killer Tamashi & Chim (Mel Marlow)
+  changes:
+  - message: Added Security Gloves and Fingerless variant
+    type: Add
+  id: 542
+  time: '2025-03-07T02:33:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/364
+- author: Killer Tamashi & Chim (Mel Marlow)
+  changes:
+  - message: Removed Black Gloves from security, replaced with Security Gloves.
+    type: Tweak
+  id: 543
+  time: '2025-03-07T02:33:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/364
 
