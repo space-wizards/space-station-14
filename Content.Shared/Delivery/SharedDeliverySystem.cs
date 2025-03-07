@@ -159,10 +159,7 @@ public abstract class SharedDeliverySystem : EntitySystem
             _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
     }
 
-    protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent)
-    {
-
-    }
+    protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
 }
 
 /// <summary>

@@ -1,4 +1,4 @@
-using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.StationRecords;
 using Content.Shared.Delivery;
 using Content.Shared.EntityTable;
@@ -16,6 +16,7 @@ public sealed partial class DeliverySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
 
     private void InitializeSpawning()
     {
@@ -34,8 +35,7 @@ public sealed partial class DeliverySystem
 
         var coords = Transform(ent).Coordinates;
 
-        if (ent.Comp.SpawnSound != null)
-            _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
+        _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
 
         for (int i = 0; i < amount; i++)
         {
@@ -93,14 +93,14 @@ public sealed partial class DeliverySystem
         var validSpawners = new List<EntityUid>();
 
         var spawners = EntityQueryEnumerator<DeliverySpawnerComponent>();
-        while (spawners.MoveNext(out var spawnerUid, out var spawnerData))
+        while (spawners.MoveNext(out var spawnerUid, out _))
         {
             var spawnerStation = _station.GetOwningStation(spawnerUid);
 
             if (spawnerStation != ent.Owner)
                 continue;
 
-            if (TryComp<ApcPowerReceiverComponent>(spawnerUid, out var power) && !power.Powered)
+            if (!_power.IsPowered(spawnerUid))
                 continue;
 
             validSpawners.Add(spawnerUid);
