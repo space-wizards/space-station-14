@@ -118,12 +118,12 @@
   parent: FireAlarm
   suffix: Autolink
   components:
-    - type: AlarmAutoLink
-      autoLinkPrototypes:
-        - AirSensor
-        - Firelock
-        - FirelockGlass
-        - FirelockEdge
+  - type: AlarmAutoLink
+    autoLinkPrototypes:
+    - AirSensor
+    - Firelock
+    - FirelockGlass
+    - FirelockEdge
 
 - type: entity
   id: FireAlarmAssembly
@@ -154,4 +154,3 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
-

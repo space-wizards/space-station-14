@@ -33,12 +33,11 @@
   parent: AirAlarmFreezer
   suffix: Autolink, Freezer Atmosphere, auto mode disabled
   components:
-    - type: AlarmAutoLink
-      autoLinkPrototypes:
-        - GasVentScrubberFreezer
-        - GasVentPumpFreezer
-        - AirSensorFreezer
-        - Firelock
-        - FirelockGlass
-        - FirelockEdge
-
+  - type: AlarmAutoLink
+    autoLinkPrototypes:
+    - GasVentScrubberFreezer
+    - GasVentPumpFreezer
+    - AirSensorFreezer
+    - Firelock
+    - FirelockGlass
+    - FirelockEdge

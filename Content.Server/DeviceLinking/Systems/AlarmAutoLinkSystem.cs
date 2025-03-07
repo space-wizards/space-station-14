@@ -21,6 +21,7 @@ public sealed class AlarmAutoLinkSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<AlarmAutoLinkComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -43,10 +44,10 @@ public sealed class AlarmAutoLinkSystem : EntitySystem
 
         queue.Enqueue(_mapSystem.GetTileRef(grid, seed));
 
-        var directions = new Vector2i[]
+        var directions = new[]
         {
-            new(0, 1), new(0, -1),
-            new (1, 0), new(-1, 0),
+            Vector2i.Up, Vector2i.Down,
+            Vector2i.Left, Vector2i.Right,
         };
 
         // Using flood-fill to iterate room tiles
