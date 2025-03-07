@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: The server rules have been updated! Please use your guidebook to review
-      them. Thank you to the community for submitting feedback!
-    type: Tweak
-  id: 740
-  time: '2024-12-15T01:06:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1028
-- author: AvianMaiden
-  changes:
-  - message: Unique sounds to chain link fence gates!
-    type: Add
-  id: 741
-  time: '2024-12-15T12:20:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1034
 - author: Sha-Seng
   changes:
   - message: Riot crates now correctly have stun enforcers in them again
@@ -4074,3 +4059,19 @@
   id: 1239
   time: '2025-03-07T01:18:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1732
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: bunch of the guns might look a little different
+    type: Tweak
+  id: 1240
+  time: '2025-03-07T01:31:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1833
+- author: Sha-Seng
+  changes:
+  - message: CMO can now select standard or paramedic belt from loadout
+    type: Add
+  - message: CMO can now spawn with loafers if they're the dressy type of doctor
+    type: Add
+  id: 1241
+  time: '2025-03-07T01:32:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1814
