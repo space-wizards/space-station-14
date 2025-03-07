@@ -30,6 +30,15 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
+  parent: MobSalvager
+  id: MobSalvagerDebug
+  suffix: ActionUser
+  components:
+  - type: NPCUseActionOnTarget
+    actions:
+    - actionId: ActionGoliathTentacle
+
+- type: entity
   name: spirate
   parent: BaseMobHuman
   id: MobSpirate

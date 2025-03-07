@@ -695,6 +695,7 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId, action);
         Dirty(performer, comp);
         ActionAdded(performer, actionId, comp, action);
+        // Add a raised added action event here.
         return true;
     }
 
