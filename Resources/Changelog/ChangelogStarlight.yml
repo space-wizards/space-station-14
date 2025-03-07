@@ -3936,4 +3936,18 @@ Entries:
   id: 545
   time: '2025-03-07T02:36:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/368
+- author: STARLIGHT TEAM
+  changes:
+  - message: Increased requirements for command roles.
+    type: Tweak
+  id: 546
+  time: '2025-03-07T02:39:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/370
+- author: STARLIGHT TEAM
+  changes:
+  - message: Event spells now cost 10 WizCoins because they were happening too frequently.
+    type: Tweak
+  id: 547
+  time: '2025-03-07T02:39:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/370
 
