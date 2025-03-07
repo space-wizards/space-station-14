@@ -77,6 +77,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private EntityQuery<PuddleComponent> _puddleQuery;
 
+    private EntityQuery<TransformComponent> _xformQuery;
+
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
      * This would then evaporate into the puddle tile below
@@ -88,6 +90,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         base.Initialize();
 
         _puddleQuery = GetEntityQuery<PuddleComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -627,7 +630,14 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
         }
 
-        var gridUid = _transformSystem.GetGrid(coordinates);
+        if (!_xformQuery.TryGetComponent(coordinates.EntityId, out var transform))
+        {
+            puddleUid = EntityUid.Invalid;
+            return false;
+        }
+
+        var gridUid = _transformSystem.GetGrid((coordinates.EntityId, transform));
+
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
             puddleUid = EntityUid.Invalid;
