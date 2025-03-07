@@ -35,6 +35,12 @@
     sprite: _NF/Objects/Fun/spaceblade.rsi
     state: redorange
     scale: 0.5, 0.5
+  - type: Clothing # imp. like everything regarding space blades this is extremely stupid
+    quickEquip: false
+    sprite: _NF/Objects/Fun/spaceblade.rsi
+    slots:
+    - Back
+    - suitStorage
   - type: DamageOtherOnHit # imp
     soundHit:
       collection: MetalThud
@@ -181,6 +187,18 @@
   - type: Contraband
   - type: StaticPrice
     price: 100
+  - type: GasTank # imp - someone said this should spit out an extremely small amount of plasma. so here you go
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+      - 0 # oxygen
+      - 0 # nitrogen
+      - 0 # CO2
+      - 0.4101137219 # plasma
+      temperature: 293.15
   - type: MeleeWeapon
     damage:
       types:
