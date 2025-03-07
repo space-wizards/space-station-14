@@ -3957,4 +3957,11 @@ Entries:
   id: 548
   time: '2025-03-07T08:02:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/371
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Manor station and its evac shuttle. Fun enjoyers rejoice!
+    type: Tweak
+  id: 549
+  time: '2025-03-07T20:18:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/363
 
