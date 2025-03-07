@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Drone gibs fixed 4 real this time. please.
-    type: Fix
-  id: 753
-  time: '2024-12-18T04:07:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1058
 - author: TheGrimbeeper
   changes:
   - message: artifact gridwide knockdown (too buggy, can't replicate locally)
@@ -4083,3 +4076,11 @@
   id: 1252
   time: '2025-03-07T06:18:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1837
+- author: DinnerCalzone
+  changes:
+  - message: Fixed the Hospitality Director's mantle requiring CE playtime instead
+      of HD playtime.
+    type: Fix
+  id: 1253
+  time: '2025-03-07T08:02:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1855
