@@ -99,7 +99,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, ent.Comp.IsLocked);
 
-        Dirty(ent);
+        DirtyField(ent, ent.Comp, nameof(DeliveryComponent.IsLocked));
 
         var ev = new DeliveryUnlockedEvent(user);
         RaiseLocalEvent(ent, ref ev);
@@ -129,7 +129,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         _tag.AddTags(ent, "Trash", "Recyclable");
         EnsureComp<SpaceGarbageComponent>(ent);
 
-        Dirty(ent);
+        DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
         _popup.PopupPredicted(Loc.GetString("delivery-opened", ("delivery", deliveryName)), user, user);
 

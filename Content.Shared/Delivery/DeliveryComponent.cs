@@ -7,7 +7,7 @@ namespace Content.Shared.Delivery;
 /// Component given to deliveries.
 /// Means the entity is a delivery, which upon opening will grant a reward to cargo.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class DeliveryComponent : Component
 {
     /// <summary>
