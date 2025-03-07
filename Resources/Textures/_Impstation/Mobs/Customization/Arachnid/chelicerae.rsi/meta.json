@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Downwards made by PixelTheKermit (github) for SS14. Inwards made by Nairodian (github) for SS14. Both lightened to match spiders on Impstation and Small made by Sha-Seng (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "small",
+      "directions": 4
+    },
+    {
+      "name": "downwards",
+      "directions": 4
+    },
+    {
+      "name": "inwards",
+      "directions": 4
+    }
+  ]
+}
