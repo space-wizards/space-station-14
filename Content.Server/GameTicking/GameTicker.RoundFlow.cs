@@ -348,6 +348,30 @@ namespace Content.Server.GameTicking
             return total;
         }
 
+        private bool HasEnoughAntagPlayers()
+        {
+            var antagPlayers = 0;
+            foreach (var (userId, status) in _playerGameStatuses)
+            {
+                if (LobbyEnabled && status == PlayerGameStatus.NotReadyToPlay)
+                    continue;
+
+                if (!_playerManager.TryGetSessionById (userId, out var session))
+                    continue;
+
+                if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
+                {
+                    var profile = (HumanoidCharacterProfile) preferences.SelectedCharacter;
+                    if (profile.AntagPreferences.Count > 0)
+                    {
+                        antagPlayers++;
+                    }
+                }
+            }
+
+            return antagPlayers >= CurrentPreset?.MinPlayersForAntag ?? 0;
+        }
+
         public void StartRound(bool force = false)
         {
 #if EXCEPTION_TOLERANCE
@@ -420,6 +444,15 @@ namespace Content.Server.GameTicking
             if (!StartPreset(origReadyPlayers, force))
             {
                 _startingRound = false;
+                return;
+            }
+
+            // Check if there are enough players with the antag role enabled
+            if (!HasEnoughAntagPlayers())
+            {
+                // Reroll the game mode and call StartRound again
+                SetGamePreset(_cfg.GetCVar(CCVars.GameLobbyDefaultPreset));
+                StartRound(force);
                 return;
             }
 
