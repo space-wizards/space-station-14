@@ -1,0 +1,59 @@
+- type: entity
+  name: homunculus
+  parent: SimpleMobBase
+  id: Homunculus
+  description: A wet chunk of synthetic flesh. It's alive.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Impstation/Mobs/Pets/homunculus.rsi/
+    state: homunculus
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-homunculus-name
+    description: ghost-role-information-homunculus-description
+    rules: ghost-role-information-familiar-rules
+    mindRoles:
+      - MindRoleGhostRoleFamiliar
+  - type: Physics
+  - type: UserInterface
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.48
+        density: 1
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Bloodstream
+    bloodMaxVolume: 30
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 0.2
+    baseSprintSpeed : 0.3
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: -6
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      59: Dead
+  - type: Tag
+    tags:
+    - FootstepSound
+    - VimPilot
+  - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: MaleHuman
+      Unsexed: MaleHuman
+  - type: Puller
+    needsHands: false
