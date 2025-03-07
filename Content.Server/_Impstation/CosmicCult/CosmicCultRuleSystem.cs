@@ -312,11 +312,12 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         uid.Comp.CurrentProgress = uid.Comp.TotalEntropy + (TotalCult * _config.GetCVar(ImpCCVars.CosmicCultistEntropyValue));
 
-        if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady)
+        if (uid.Comp.CurrentProgress >= uid.Comp.TargetProgress && CurrentTier == 3 && !finaleComp.FinaleActive && !finaleComp.FinaleReady && uid.Comp.CanTierUp)
         {
             if (!finaleComp.FinaleDelayStarted) //check if we've not already started the finale delay
             {
                 finaleComp.FinaleDelayStarted = true; //set that we've started it
+                uid.Comp.CanTierUp = false; //keep it false, we don't want to take this code path after running it once
                 //do everything else
 
                 var timer = TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultFinaleDelaySeconds));
@@ -335,6 +336,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 Timer.Spawn(timer,
                     () =>
                     {
+                        uid.Comp.CanTierUp = false; //keep it false, we don't want to take this code path after running it once
                         ReadyFinale(uid, finaleComp);
                         UpdateCultData(uid); //duplicated work but it looks nicer than calling updateAppearance on it's own
                     });
