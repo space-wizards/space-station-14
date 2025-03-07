@@ -50,10 +50,6 @@
   name: lathe-category-computers
 
 - type: latheCategory
-  id: Cargo
-  name: lathe-category-cargo
-
-- type: latheCategory
   id: Engineering
   name: lathe-category-engineering
 
@@ -76,6 +72,10 @@
 - type: latheCategory
   id: Service
   name: lathe-category-service
+
+- type: latheCategory
+  id: Supply
+  name: lathe-category-supply
 
 # Science
 - type: latheCategory

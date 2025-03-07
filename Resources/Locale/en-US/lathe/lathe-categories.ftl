@@ -15,13 +15,13 @@ lathe-category-materials = Materials
 
 # Circuit imprinter
 lathe-category-computers = Computers
-lathe-category-cargo = Cargo
 lathe-category-engineering = Engineering
 lathe-category-general = General
 lathe-category-medical = Medical
 lathe-category-research = Research
 lathe-category-security = Security
 lathe-category-service = Service
+lathe-category-supply = Supply
 
 # Science
 lathe-category-mechs = Mechs

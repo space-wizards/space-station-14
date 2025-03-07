@@ -2,13 +2,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseCargoComputerRecipeCategory
-  categories:
-  - Computers
-  - Cargo
-
-- type: latheRecipe
-  abstract: true
   id: BaseEngineeringComputerRecipeCategory
   categories:
   - Computers
@@ -44,23 +37,19 @@
 
 - type: latheRecipe
   abstract: true
+  id: BaseSupplyComputerRecipeCategory
+  categories:
+  - Computers
+  - Supply
+
+- type: latheRecipe
+  abstract: true
   id: BaseGeneralComputerRecipeCategory
   categories:
   - Computers
   - General
 
 ## Recipes
-
-# Shuttle
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseCargoComputerRecipeCategory ]
-  id: ShuttleConsoleCircuitboard
-  result: ShuttleConsoleCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseCargoComputerRecipeCategory ]
-  id: RadarConsoleCircuitboard
-  result: RadarConsoleCircuitboard
 
 # Engineering
 - type: latheRecipe
@@ -97,6 +86,17 @@
   parent: [ BaseCircuitboardRecipe, BaseServiceComputerRecipeCategory ]
   id: MassMediaCircuitboard
   result: ComputerMassMediaCircuitboard
+
+# Shuttle
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyComputerRecipeCategory ]
+  id: ShuttleConsoleCircuitboard
+  result: ShuttleConsoleCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSupplyComputerRecipeCategory ]
+  id: RadarConsoleCircuitboard
+  result: RadarConsoleCircuitboard
 
 # Civilian
 - type: latheRecipe

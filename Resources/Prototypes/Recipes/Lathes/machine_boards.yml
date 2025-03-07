@@ -8,13 +8,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseCargoMachineRecipeCategory
-  categories:
-  - Machines
-  - Cargo
-
-- type: latheRecipe
-  abstract: true
   id: BaseEngineeringMachineRecipeCategory
   categories:
   - Machines
@@ -47,6 +40,13 @@
   categories:
   - Machines
   - Service
+
+- type: latheRecipe
+  abstract: true
+  id: BaseSupplyMachineRecipeCategory
+  categories:
+  - Machines
+  - Supply
 
 - type: latheRecipe
   abstract: true
@@ -106,45 +106,6 @@
   completetime: 12
 
 ## Circuit imprinter
-
-## Cargo
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
-  id: CargoTelepadMachineCircuitboard
-  result: CargoTelepadMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
-  id: SalvageMagnetMachineCircuitboard
-  result: SalvageMagnetMachineCircuitboard
-
-# Shuttle
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
-  id: ThrusterMachineCircuitboard
-  result: ThrusterMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
-  id: GyroscopeMachineCircuitboard
-  result: GyroscopeMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
-  id: MiniGravityGeneratorCircuitboard
-  result: MiniGravityGeneratorCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
-  id: PowerCageRechargerCircuitboard
-  result: PowerCageRechargerCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
-  id: ShuttleGunKineticCircuitboard
-  result: ShuttleGunKineticCircuitboard
-  completetime: 6
 
 ## Engineering
 
@@ -333,6 +294,45 @@
   id: FatExtractorMachineCircuitboard
   result: FatExtractorMachineCircuitboard
 
+## Supply
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: CargoTelepadMachineCircuitboard
+  result: CargoTelepadMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: SalvageMagnetMachineCircuitboard
+  result: SalvageMagnetMachineCircuitboard
+
+# Shuttle
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: ThrusterMachineCircuitboard
+  result: ThrusterMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: GyroscopeMachineCircuitboard
+  result: GyroscopeMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: MiniGravityGeneratorCircuitboard
+  result: MiniGravityGeneratorCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
+  id: PowerCageRechargerCircuitboard
+  result: PowerCageRechargerCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSecurityMachineRecipeCategory ]
+  id: ShuttleGunKineticCircuitboard
+  result: ShuttleGunKineticCircuitboard
+  completetime: 6
+
 ## Miscellaneous
 
 - type: latheRecipe
@@ -402,12 +402,12 @@
   result: BiofabricatorMachineCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
+  parent: [ BaseCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
   id: OreProcessorMachineCircuitboard
   result: OreProcessorMachineCircuitboard
 
 - type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseCargoMachineRecipeCategory ]
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
   id: OreProcessorIndustrialMachineCircuitboard
   result: OreProcessorIndustrialMachineCircuitboard
 
