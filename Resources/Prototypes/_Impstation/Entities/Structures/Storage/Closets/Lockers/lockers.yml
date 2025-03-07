@@ -4,7 +4,6 @@
   parent: LockerBaseSecure
   name: courier's locker
   components:
-  - type: Appearance
   - type: Sprite
     sprite: _Impstation/Structures/Storage/couriercloset.rsi
     noRot: true

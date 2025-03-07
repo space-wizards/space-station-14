@@ -2,7 +2,7 @@
 
 # Command
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockHospitalityDirector
   id: AirlockHospitalityDirectorLocked
   suffix: HospitalityDirector, Locked
   components:
@@ -79,7 +79,7 @@
 
 # Command
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockHospitalityDirectorGlass
   id: AirlockHospitalityDirectorGlassLocked
   suffix: HospitalityDirector, Locked
   components:

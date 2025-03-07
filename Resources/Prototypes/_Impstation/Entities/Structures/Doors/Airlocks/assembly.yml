@@ -17,6 +17,44 @@
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
     state: "assembly"
 
+#Captain
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCaptain
+  suffix: Captain
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/captain.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarCaptain
+  suffix: Captain, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/captain.rsi
+    state: "assembly"
+
+#CE
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyChiefEngineer
+  suffix: ChiefEngineer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/ce.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarChiefEngineer
+  suffix: ChiefEngineer, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/ce.rsi
+    state: "assembly"
+
 #Chapel
 - type: entity
   parent: AirlockAssembly
@@ -55,6 +93,25 @@
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/clown.rsi
     state: "assembly"
 
+#CMO
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyChiefMedicalOfficer
+  suffix: ChiefMedicalOfficer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/cmo.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarChiefMedicalOfficer
+  suffix: ChiefMedicalOfficer, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/cmo.rsi
+    state: "assembly"
+
 #Courier
 - type: entity
   parent: AirlockAssembly
@@ -72,6 +129,63 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
+    state: "assembly"
+
+#HD
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHospitalityDirector
+  suffix: HospitalityDirector
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/hd.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarHospitalityDirector
+  suffix: HospitalityDirector, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/hd.rsi
+    state: "assembly"
+
+#HOP
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHeadOfPersonnel
+  suffix: HeadOfPersonnel
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/hop.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarHeadOfPersonnel
+  suffix: HeadOfPersonnel, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/hop.rsi
+    state: "assembly"
+
+#HOS
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHeadOfSecurity
+  suffix: HeadOfSecurity
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/hos.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarHeadOfSecurity
+  suffix: HeadOfSecurity, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/hos.rsi
     state: "assembly"
 
 #Janitor
@@ -186,6 +300,44 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/musician.rsi
+    state: "assembly"
+
+#QM
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyQuartermaster
+  suffix: Quartermaster
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/qm.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarQuartermaster
+  suffix: Quartermaster, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/qm.rsi
+    state: "assembly"
+
+#RD
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyResearchDirector
+  suffix: ResearchDirector
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/rd.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarResearchDirector
+  suffix: ResearchDirector, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/rd.rsi
     state: "assembly"
 
 #Reporter
