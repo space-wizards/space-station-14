@@ -56,7 +56,6 @@
             CargoTechnician: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
