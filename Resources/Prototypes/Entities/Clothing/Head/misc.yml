@@ -139,22 +139,56 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatCone
-  name: warning cone
-  description: This cone is trying to warn you of something!
+  abstract: true
+  parent: BaseItem
+  id: ConeBase
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/cone.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/cone.rsi
   - type: Item
-    storedRotation: 0
+    sprite: Clothing/Head/Misc/cone.rsi
+  - type: Appearance
   - type: PhysicalComposition #you can't just pass up some free plastic!
     materialComposition:
       Plastic: 100
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: ConeBase
+  id: ConeWarning
+  name: warning cone
+  suffix: Full
+  description: This cone is trying to warn you of something!
+  components:
+  - type: Stack
+    stackType: WarningCone
+    count: 5
+    baseLayer: base
+    layerStates:
+    - icon
+    - icon
+    - cone_2
+    - cone_3
+    - cone_4
+    - cone_5
+  - type: Sprite
+    state: cone_5
+    layers:
+    - state: cone_5
+      map: ["base"]
+
+- type: entity
+  parent: ConeWarning
+  id: ConeWarning1
+  name: warning cone
+  suffix: Single
+  components:
+  - type: Sprite
+    state: icon
+  - type: Stack
+    stackType: WarningCone
+    count: 1
 
 - type: entity
   parent: ClothingHeadBase

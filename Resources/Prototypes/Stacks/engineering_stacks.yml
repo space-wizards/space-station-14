@@ -10,3 +10,9 @@
   name: inflatable door
   spawn: InflatableDoorStack1
   maxCount: 4
+
+- type: stack
+  id: WarningCone
+  name: warning cone
+  spawn: ConeWarning1
+  maxCount: 5
