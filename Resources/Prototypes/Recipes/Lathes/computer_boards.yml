@@ -69,10 +69,6 @@
   result: SolarControlComputerCircuitboard
 
 # Medical
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseMedicalComputerRecipeCategory ]
-  id: CloningConsoleComputerCircuitboard # unused
-  result: CloningConsoleComputerCircuitboard
 
 # Science
 - type: latheRecipe

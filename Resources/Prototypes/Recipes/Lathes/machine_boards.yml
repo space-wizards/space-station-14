@@ -249,26 +249,6 @@
   id: StasisBedMachineCircuitboard
   result: StasisBedMachineCircuitboard
 
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
-  id: CloningPodMachineCircuitboard # unused
-  result: CloningPodMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
-  id: MedicalScannerMachineCircuitboard # unused
-  result: MedicalScannerMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
-  id: VaccinatorMachineCircuitboard # unused
-  result: VaccinatorMachineCircuitboard
-
-- type: latheRecipe
-  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
-  id: DiagnoserMachineCircuitboard # unused
-  result: DiagnoserMachineCircuitboard
-
 ## Science
 
 # Artifact
