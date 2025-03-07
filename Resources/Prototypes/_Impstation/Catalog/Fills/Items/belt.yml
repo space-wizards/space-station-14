@@ -56,3 +56,19 @@
       - id: BruteAutoInjector
       - id: BurnAutoInjector
       - id: EmergencyMedipen
+
+- type: entity
+  id: ClothingBeltSalvageWebbingApid
+  parent: ClothingBeltSalvageWebbing
+  suffix: Apid, Filled
+  components:
+  - type: StorageFill #this may seem excessive. I invite you to try and play a salvage bee without it
+    contents:
+      - id: WeaponTetherGun
+      - id: MiningDrill
+      - id: Wrench
+      - id: WeaponProtoKineticAccelerator
+      - id: EmergencyMedipen
+      - id: SyringeSaline
+      - id: FireExtinguisherMini
+      - id: WeaponGrapplingGun

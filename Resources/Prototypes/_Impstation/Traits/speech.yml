@@ -75,6 +75,15 @@
   - type: Monotonous
 
 - type: trait
+  id: TransatlanticAccent
+  name: trait-transatlantic-name
+  description: trait-transatlantic-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: TransatlanticAccent
+
+- type: trait
   id: BasicFrenchAccent
   name: trait-basicfrench-name
   description: trait-basicfrench-desc

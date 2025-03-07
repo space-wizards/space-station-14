@@ -7,3 +7,14 @@
       amount: 1
   products:
     AquamDivinos: 1
+
+- type: reaction
+  id: Brutoxidone
+  minTemp: 400
+  reactants:
+    SynthFlesh:
+      amount: 1
+    Doxarubixadone:
+      amount: 1
+  products:
+    Brutoxidone: 1

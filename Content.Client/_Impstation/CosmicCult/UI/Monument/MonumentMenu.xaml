@@ -35,6 +35,10 @@
                         <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-next-stage-title'}" Margin="0 0 5 0"  StyleClasses="LabelSmall" />
                         <Label HorizontalAlignment="Center" Name="EntropyUntilNextStage" FontColorOverride="#4CA7AD" StyleClasses="LabelSmall" />
                     </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Center">
+                        <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-seperator'}" Margin="0 0 5 0"  StyleClasses="LabelSmall" />
+                        <Label HorizontalAlignment="Center" Name="OrSeperator" FontColorOverride="#4CA7AD" StyleClasses="LabelSmall" />
+                    </BoxContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label HorizontalAlignment="Center" Text="{Loc 'monument-interface-entropy-crew-convert-title'}" Margin="0 0 5 0"  StyleClasses="LabelSmall" />
                         <Label HorizontalAlignment="Center" Name="CrewToConvertUntilNextStage" FontColorOverride="#4CA7AD" StyleClasses="LabelSmall" />

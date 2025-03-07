@@ -117,6 +117,12 @@
         },
         {
             "name": "station_ai_unshaded"
+        },
+        {
+            "name": "cosmiccultist"
+        },
+        {
+            "name": "cosmiccultist_unshaded"
         }
     ]
 }

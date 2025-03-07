@@ -13,7 +13,7 @@
     maxAngle: -43
   - type: Wieldable
   - type: Gun
-    fireRate: 0.5
+    fireRate: 4 # imp: 0.5 -> 4, fire rate handled with recharge instead
     selectedMode: SemiAuto
     angleDecay: 45
     minAngle: 44
@@ -22,6 +22,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+    soundEmpty: # imp edit
+      path: /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg
   - type: AmmoCounter
   - type: Appearance
   - type: GenericVisualizer
@@ -32,7 +34,7 @@
           False: { visible: True }
         #todo: add other 'empty' animations
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 0.75
+    rechargeCooldown: 2 # imp: 0.75 -> 2
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider

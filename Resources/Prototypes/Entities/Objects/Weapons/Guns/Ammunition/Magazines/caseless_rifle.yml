@@ -69,7 +69,7 @@
   - type: Item
     size: Small
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

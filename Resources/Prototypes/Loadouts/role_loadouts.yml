@@ -158,6 +158,7 @@
   - ChaplainBelt # imp
   - Glasses
   - CommonBackpack
+  - ChaplainBook #imp
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -532,6 +533,7 @@
   - ChiefMedicalOfficerJumpsuit
   - ChiefMedicalOfficerOuterClothing
   - MedicalGloves
+  - ChiefMedicalOfficerBelt #imp
   - ChiefMedicalOfficerShoes
   - ChiefMedicalOfficerHeadset #imp
   - Glasses

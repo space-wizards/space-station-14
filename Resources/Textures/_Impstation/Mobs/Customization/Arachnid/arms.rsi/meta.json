@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Segments made by Sha-Seng (Github) for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "arm_l_segments1",
+      "directions": 4
+    },
+    {
+      "name": "arm_l_segments2",
+      "directions": 4
+    },
+    {
+      "name": "arm_r_segments1",
+      "directions": 4
+    },
+    {
+      "name": "arm_r_segments2",
+      "directions": 4
+    }
+  ]
+}

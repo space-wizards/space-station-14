@@ -1,4 +1,19 @@
 - type: entity
+  name: PRIbar+ conversion kit
+  parent: [ BaseItem, BaseRestrictedContraband ]
+  id: PRIbarPlusConversionKit
+  description: A package of parts and tools for adding a ratchet to a PRIbar.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/conversionkit.rsi
+    state: iconpb
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - ConversionKitPB
+
+- type: entity
   name: full-auto conversion kit
   parent: [ BaseItem, BaseRestrictedContraband ]
   id: FullAutoConversionKit
@@ -21,7 +36,7 @@
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Misc/conversionkit.rsi
-    state: iconhb  
+    state: iconhb
   - type: Item
     size: Normal
   - type: Tag

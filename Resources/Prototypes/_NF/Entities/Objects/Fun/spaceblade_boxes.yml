@@ -36,6 +36,8 @@
         orGroup: SB
       - id: SpaceBladeBlade
         orGroup: SB
+      - id: SpaceBladeGay # imp
+        orGroup: SB
       - id: SpaceBladeCheck
         orGroup: SB
         prob: 0.20
@@ -51,6 +53,9 @@
       - id: SpaceBladeWeh
         orGroup: SB
         prob: 0.20
+      - id: SpaceBladeBROS # imp
+        orGroup: SB
+        prob: 0.20
       - id: SpaceBladeClown
         orGroup: SB
         prob: 0.10
@@ -58,5 +63,8 @@
         orGroup: SB
         prob: 0.10
       - id: SpaceBladeSingularity
+        orGroup: SB
+        prob: 0.10
+      - id: SpaceBladeRatKing # imp
         orGroup: SB
         prob: 0.10

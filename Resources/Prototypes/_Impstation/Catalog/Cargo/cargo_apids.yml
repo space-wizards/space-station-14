@@ -31,3 +31,33 @@
   parent: ApidBotanist
   product: ApidCryopodCourier
   category: cargoproduct-category-name-cargo
+
+- type: cargoProduct
+  id: ApidScientist
+  parent: ApidBotanist
+  product: ApidCryopodScientist
+  category: cargoproduct-category-name-cargo
+
+- type: cargoProduct
+  id: ApidJanitor
+  parent: ApidBotanist
+  product: ApidCryopodJanitor
+  category: cargoproduct-category-name-cargo
+
+- type: cargoProduct
+  id: ApidAdministrativeAssistant
+  parent: ApidBotanist
+  product: ApidCryopodAdministrativeAssistant
+  category: cargoproduct-category-name-cargo
+
+- type: cargoProduct
+  id: ApidChaplain
+  parent: ApidBotanist
+  product: ApidCryopodChaplain
+  category: cargoproduct-category-name-cargo
+  
+- type: cargoProduct
+  id: ApidSalvageSpecialist
+  parent: ApidBotanist
+  product: ApidCryopodSalvageSpecialist
+  category: cargoproduct-category-name-cargo

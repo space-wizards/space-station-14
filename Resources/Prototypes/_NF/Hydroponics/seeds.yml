@@ -1,0 +1,28 @@
+﻿
+- type: seed
+  id: coffee
+  name: seeds-coffee-name
+  noun: seeds-noun-seeds
+  displayName: seeds-coffee-display-name
+  plantRsi: _NF/Objects/Specific/Hydroponics/coffee.rsi
+  packetPrototype: CoffeeSeeds
+  productPrototypes:
+  - FoodCoffee
+  lifespan: 25
+  maturation: 9
+  production: 1
+  yield: 2
+  potency: 5
+  idealLight: 8
+  growthStages: 5
+  harvestRepeat: Repeat
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 2
+      Max: 8
+      PotencyDivisor: 16
+    Theobromine:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25

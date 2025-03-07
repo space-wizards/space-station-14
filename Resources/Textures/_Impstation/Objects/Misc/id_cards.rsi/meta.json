@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcourier made by Honeyed_Lemons_ in the impstation discord",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcourier made by Honeyed_Lemons_ in the impstation discord, idhospitalitydirector by DinnerCalzone(github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,9 @@
     },
     {
       "name": "idcourier"
+    },
+    {
+      "name": "idhospitalitydirector"
     },
     {
       "name": "default-inhand-left",

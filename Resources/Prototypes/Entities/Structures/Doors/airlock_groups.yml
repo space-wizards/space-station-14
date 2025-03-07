@@ -18,9 +18,13 @@
     #begin imp edit
     bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
     chapel:      _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
+    clown:       _Impstation/Structures/Doors/Airlocks/Standard/clown.rsi
     janitor:     _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
     kitchen:     _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
     lawyer:      _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    librarian:   _Impstation/Structures/Doors/Airlocks/Standard/librarian.rsi
+    mime:        _Impstation/Structures/Doors/Airlocks/Standard/mime.rsi
+    reporter:    _Impstation/Structures/Doors/Airlocks/Standard/reporter.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
     salvage:     _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
@@ -47,9 +51,13 @@
     #begin imp edit
     bar:         _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
     chapel:      _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
+    clown:      _Impstation/Structures/Doors/Airlocks/Glass/clown.rsi
     janitor:     _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
     kitchen:     _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
     lawyer:      _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+    librarian:   _Impstation/Structures/Doors/Airlocks/Glass/librarian.rsi
+    mime:        _Impstation/Structures/Doors/Airlocks/Glass/mime.rsi
+    reporter:    _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
     salvage:     _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
@@ -90,26 +98,30 @@
   id: Departments
   departments:
     atmospherics: Engineering
-    service: Civilian #imp edit
     cargo: Cargo
     chemistry: Medical
     command: Command
     engineering: Engineering
-    freezer: Civilian
-    basic: Civilian
-    hydroponics: Civilian
-    maintenance: Civilian
     medical: Medical
     science: Science
     security: Security
     virology: Medical
     #begin imp edit
-    bar: Civilian
-    chapel: Civilian
-    janitor: Civilian
-    kitchen: Civilian
-    lawyer: Civilian
-    theatre: Civilian
+    basic: Civilian #imp edit
+    service: Service #imp edit
+    freezer: Service  
+    hydroponics: Service
+    maintenance: Service
+    bar: Service
+    chapel: Service
+    clown: Service
+    janitor: Service
+    kitchen: Service
+    lawyer: Service
+    librarian: Service
+    mime: Service
+    reporter: Service
+    theatre: Service
     salvage: Cargo
     courier: Cargo
     #end imp edit

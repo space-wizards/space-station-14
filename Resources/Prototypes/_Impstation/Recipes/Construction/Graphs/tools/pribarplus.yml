@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: UpgradeToolPRIbarConversion
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: convert-pribarplus
+          steps:
+            - tag: ConversionKitPB
+              doAfter: 2
+
+    - node: convert-pribarplus
+      entity: PRIbarPlus

@@ -1,5 +1,6 @@
 ﻿department-Cargo-description = Complete bounties, earn Spessos, and order useful supplies for the crew.
-department-Civilian-description = Perform small helpful tasks to keep the station sane and well catered.
+# imp edit for civilian description
+department-Civilian-description = Hang out around the station.
 department-Command-description = Manage the crew and keep them working efficiently.
 department-CentralCommand-description = Manage the crew and keep them working efficiently.
 department-Engineering-description = Keep the power on and the station operational.

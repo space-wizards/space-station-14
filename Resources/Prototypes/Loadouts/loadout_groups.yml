@@ -1074,7 +1074,7 @@
   minLimit: 0
   loadouts:
   - HeadofSecurityHead
-  - HeadofSecurityHeadDV
+  - HeadofSecurityHeadDV # DeltaV
   - HeadofSecurityBeret
   - HeadofSecurityPatrolCap # imp
 
@@ -1333,6 +1333,8 @@
   loadouts:
   - BrownShoes
   - WhiteShoes # imp
+  - LacedShoes #imp
+  - LeatherShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup

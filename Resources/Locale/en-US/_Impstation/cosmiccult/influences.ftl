@@ -3,7 +3,7 @@ influence-type-passive = Passive
 
 ## ACTIVE INFLUENCES
 influence-name-lapse = Aberrant Lapse
-influence-description-lapse = Lapse an individual's form, rendering them unable to move or act for 22 seconds. Lapsed units are invulnerable tile obstructions.
+influence-description-lapse = Lapse an individual's form, rendering them temporarily unable to move or act. Lapsed units are invulnerable tile obstructions.
 
 ## influence-name-glare = Null Glare
 ## influence-description-glare = Emit a horrific pulse of cosmic light, slowing and disorienting everyone around you.
