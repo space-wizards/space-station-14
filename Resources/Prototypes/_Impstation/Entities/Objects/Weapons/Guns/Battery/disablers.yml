@@ -18,6 +18,11 @@
     slots:
       - suitStorage
       - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Gun
     fireRate: 2
     soundGunshot:
@@ -50,6 +55,11 @@
     slots:
       - suitStorage
       - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5 
+    zeroVisible: true
   - type: Battery
     maxCharge: 500
     startingCharge: 500
@@ -81,16 +91,11 @@
     slots:
       - suitStorage
       - Belt
-  - type: Appearance
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: true
   - type: Gun
     minAngle: 2
-    maxAngle: 15
+    maxAngle: 18
     angleIncrease: 3
-    angleDecay: 15
+    angleDecay: 18
     fireRate: 3
     selectedMode: FullAuto
     availableModes:
@@ -129,10 +134,10 @@
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
-    steps: 4
+    steps: 5
     zeroVisible: true
   - type: Gun
-    fireRate: 0.9
+    fireRate: 1.3
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
   - type: HitscanBatteryAmmoProvider
