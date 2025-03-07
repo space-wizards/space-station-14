@@ -96,7 +96,7 @@
     neck: ClothingNeckMantleHD
   effects:
   - !type:GroupLoadoutEffect
-    proto: MasterCE
+    proto: MasterHD
 
 - type: startingGear
   id: HospitalityDirectorMantle
