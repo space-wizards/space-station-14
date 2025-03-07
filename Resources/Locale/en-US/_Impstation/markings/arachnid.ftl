@@ -13,6 +13,18 @@ marking-ArachnidEyesRoundGlowing-eyes_round2 = Upper
 marking-ArachnidEyesRoundGlowing-eyes_round3 = Outer
 marking-ArachnidEyesRoundGlowing-eyes_round4 = Sides
 
+marking-ArachnidEyesJumper = Jumper Eyes
+marking-ArachnidEyesJumper-eyes_jumper1 = Outer Right
+marking-ArachnidEyesJumper-eyes_jumper2 = Inner Right
+marking-ArachnidEyesJumper-eyes_jumper3 = Inner Left
+marking-ArachnidEyesJumper-eyes_jumper4 = Outer Left
+
+marking-ArachnidEyesJumperGlowing = Jumper Glowing Eyes
+marking-ArachnidEyesJumperGlowing-eyes_jumper1 = Outer Right
+marking-ArachnidEyesJumperGlowing-eyes_jumper2 = Inner Right
+marking-ArachnidEyesJumperGlowing-eyes_jumper3 = Inner Left
+marking-ArachnidEyesJumperGlowing-eyes_jumper4 = Outer Left
+
 marking-ArachnidHeadSegments = Segmented Head
 marking-ArachnidHeadSegments-head_segments1 = Head
 marking-ArachnidHeadSegments-head_segments2 = Stripe

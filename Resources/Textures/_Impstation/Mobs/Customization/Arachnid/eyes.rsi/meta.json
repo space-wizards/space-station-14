@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Round eyes made by Sha-Seng (Github) for Impstation",
+  "copyright": "Round eyes made by Sha-Seng (github) and Jumper eyes made by Crekulon (github) for Impstation",
   "size": {
     "x": 32,
     "y": 32
@@ -21,6 +21,22 @@
     },
     {
       "name": "eyes_round4",
+      "directions": 4
+    },
+    {
+      "name": "eyes_jumper1",
+      "directions": 4
+    },
+    {
+      "name": "eyes_jumper2",
+      "directions": 4
+    },
+    {
+      "name": "eyes_jumper3",
+      "directions": 4
+    },
+    {
+      "name": "eyes_jumper4",
       "directions": 4
     }
   ]
