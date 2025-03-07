@@ -48,4 +48,18 @@ public abstract partial class SharedLabelSystem : EntitySystem
         if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel))
             args.AddModifier("comp-label-format", extraArgs: ("label", entity.Comp.CurrentLabel));
     }
+
+    /// <summary>
+    /// Retrieves the current label of the specified entity.
+    /// </summary>
+    /// <param name="entity">The entity with the <see cref="LabelComponent"/>.</param>
+    /// <returns>The current label of the entity, or null if no label exists.</returns>
+    public string? LabelOrNull(Entity<LabelComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+        {
+            return null;
+        }
+        return entity.Comp.CurrentLabel;
+    }
 }

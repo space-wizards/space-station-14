@@ -4,8 +4,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Labels.Components;
-using Content.Shared.NameModifier.Components;
+using Content.Shared.Labels.EntitySystems;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.Containers;
@@ -23,6 +23,8 @@ public sealed class StorageVoiceControlSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StorageSystem _storage = default!;
+    [Dependency] private readonly SharedLabelSystem _label = default!;
+    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
     public override void Initialize()
     {
@@ -81,31 +83,16 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Some items could be labeled, or their names otherwise modified
-            // If they are, we need to check if the original name or the modified name is in the message
-
-            // Check and pull the NameModifierComponent for the original item name and compare
-            // We explicitly check this by itself
-            // and not check both the NameModifierComponent and the LabelComponent
-            // at the same time because something else could have modified the name
-            if (TryComp<NameModifierComponent>(item, out var itemNameModifierComponent) &&
-                args.Message.Contains(itemNameModifierComponent.BaseName, StringComparison.InvariantCultureIgnoreCase))
+            // Check the original name of the entity and compare
+            if (args.Message.Contains(_nameModifier.GetBaseName(item), StringComparison.InvariantCultureIgnoreCase))
             {
                 ExtractItemFromStorage(ent, item, args.Source, hands);
                 break;
             }
 
             // Check and pull the LabelComponent for the current label and compare
-            if (TryComp<LabelComponent>(item, out var itemLabelComponent) &&
-                (itemLabelComponent.CurrentLabel == null || args.Message.Contains(itemLabelComponent.CurrentLabel,
-                    StringComparison.InvariantCultureIgnoreCase)))
-            {
-                ExtractItemFromStorage(ent, item, args.Source, hands);
-                break;
-            }
-
-            // Check the item's regular name. If it matches, extract it from storage
-            if (args.Message.Contains(MetaData(item).EntityName, StringComparison.InvariantCultureIgnoreCase))
+            if (_label.LabelOrNull(item) is { } label && !string.IsNullOrEmpty(label) &&
+                args.Message.Contains(label, StringComparison.InvariantCultureIgnoreCase))
             {
                 ExtractItemFromStorage(ent, item, args.Source, hands);
                 break;
@@ -116,10 +103,10 @@ public sealed class StorageVoiceControlSystem : EntitySystem
     /// <summary>
     /// Extracts an item from storage and places it into the player's hands.
     /// </summary>
-    /// <param name="ent">The entity of the item with the StorageVoiceControlComponent</param>
-    /// <param name="item">The entity of the item to be extracted from the attached storage</param>
-    /// <param name="source">The entity of the person wearing the item</param>
-    /// <param name="hands">The HandsComponent of the person wearing the item</param>
+    /// <param name="ent">The entity with the <see cref="StorageVoiceControlComponent"/></param>
+    /// <param name="item">The entity to be extracted from the attached storage</param>
+    /// <param name="source">The entity wearing the item</param>
+    /// <param name="hands">The <see cref="HandsComponent"/> of the person wearing the item</param>
     private void ExtractItemFromStorage(Entity<StorageVoiceControlComponent> ent,
         EntityUid item,
         EntityUid source,
