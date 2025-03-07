@@ -592,32 +592,32 @@ entities:
             129: 3,-3
             321: -4,6
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteCornerNe
           decals:
             312: -1,10
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteCornerNw
           decals:
             316: -4,10
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteCornerSe
           decals:
             313: -1,8
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteCornerSw
           decals:
             315: -4,8
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteInnerNe
           decals:
             320: -4,6
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteInnerNw
           decals:
             323: -2,6
@@ -627,25 +627,25 @@ entities:
           decals:
             145: 4,-6
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteLineE
           decals:
             314: -1,9
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteLineN
           decals:
             304: -3,6
             310: -3,10
             311: -2,10
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteLineS
           decals:
             307: -3,8
             308: -2,8
         - node:
-            color: '#008CA09E'
+            color: '#2B4652FF'
             id: MiniTileWhiteLineW
           decals:
             309: -4,9

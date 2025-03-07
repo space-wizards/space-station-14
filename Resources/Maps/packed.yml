@@ -4,7 +4,7 @@ meta:
   engineVersion: 247.0.0
   forkId: ""
   forkVersion: ""
-  time: 02/20/2025 22:32:51
+  time: 02/24/2025 04:53:42
   entityCount: 14445
 maps:
 - 1
@@ -81,7 +81,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: Станция Пакед
+      name: Packed
     - type: Transform
       pos: 0.4375,0.484375
       parent: 1
@@ -2094,38 +2094,38 @@ entities:
             2718: 15,-45
             2719: 15,-44
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickCornerOverlayNE
           decals:
             2578: 39,19
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickCornerOverlayNW
           decals:
             2579: 36,19
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickCornerOverlaySE
           decals:
             2583: 39,17
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickCornerOverlaySW
           decals:
             2580: 36,17
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickLineOverlayE
           decals:
             2584: 39,18
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickLineOverlayN
           decals:
             2585: 38,19
             2586: 37,19
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickLineOverlayS
           decals:
             2581: 37,17
@@ -2469,7 +2469,7 @@ entities:
             2730: 16,-43
             2733: 26,-43
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BrickTileWhiteLineE
           decals:
             2707: 10,38
@@ -3104,7 +3104,7 @@ entities:
             140: 2,-33
             141: 3,-29
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: DeliveryGreyscale
           decals:
             2574: 31,18
@@ -3568,7 +3568,7 @@ entities:
             1495: 24,18
             1496: 24,18
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: FullTileOverlayGreyscale
           decals:
             2703: 22,48
@@ -3776,7 +3776,7 @@ entities:
             2897: 76,18
             2900: 76,19
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale
           decals:
             2508: -2,-4
@@ -3921,7 +3921,7 @@ entities:
             403: 20,-39
             404: 22,-39
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale180
           decals:
             2509: -2,-6
@@ -4039,7 +4039,7 @@ entities:
             401: 21,-44
             402: 22,-44
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale270
           decals:
             2507: -3,-5
@@ -4159,7 +4159,7 @@ entities:
             398: 19,-42
             399: 19,-41
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale90
           decals:
             2510: -1,-5
@@ -4349,7 +4349,7 @@ entities:
           decals:
             2761: 47,50
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileDiagonalCheckerAOverlay
           decals:
             2747: 47,50
@@ -4361,7 +4361,7 @@ entities:
           decals:
             1118: -17,-14
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: QuarterTileOverlayGreyscale
           decals:
             2570: 33,24
@@ -4578,7 +4578,7 @@ entities:
             237: 30,-36
             254: 17,-34
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: QuarterTileOverlayGreyscale180
           decals:
             2606: 27,23
@@ -4833,7 +4833,7 @@ entities:
             2395: 102,-20
             2396: 102,-17
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: QuarterTileOverlayGreyscale270
           decals:
             2569: 33,27
@@ -5068,7 +5068,7 @@ entities:
             2399: 107,-18
             2400: 106,-20
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: QuarterTileOverlayGreyscale90
           decals:
             2572: 34,28
@@ -5321,7 +5321,7 @@ entities:
             1332: 8,29
             1333: 9,29
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
             2506: -3,-4
@@ -5382,7 +5382,7 @@ entities:
           decals:
             408: 19,-39
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
             2505: -1,-6
@@ -5438,7 +5438,7 @@ entities:
           decals:
             405: 23,-44
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: ThreeQuarterTileOverlayGreyscale270
           decals:
             2504: -3,-6
@@ -5496,7 +5496,7 @@ entities:
           decals:
             406: 19,-44
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: ThreeQuarterTileOverlayGreyscale90
           decals:
             2503: -1,-4
@@ -6772,7 +6772,7 @@ entities:
         version: 2
         nodes:
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: BotGreyscale
           decals:
             33: -1,-2
@@ -6795,53 +6795,53 @@ entities:
             13: 4,-5
             14: 3,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: DeliveryGreyscale
           decals:
             34: -2,-1
             35: 2,-1
         - node:
-            color: '#008CA0FF'
+            color: '#2B4652FF'
             id: DeliveryGreyscale
           decals:
             41: -1,-4
             46: 2,-6
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale
           decals:
             8: 2,-3
             9: 3,-3
             10: 4,-3
         - node:
-            color: '#008CA0FF'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale
           decals:
             26: 0,0
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale180
           decals:
             11: 3,-5
             12: 4,-5
         - node:
-            color: '#008CA0FF'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale180
           decals:
             28: 0,-2
         - node:
-            color: '#008CA0FF'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale270
           decals:
             25: -1,-1
         - node:
-            color: '#008CA0FF'
+            color: '#2B4652FF'
             id: HalfTileOverlayGreyscale90
           decals:
             27: 1,-1
         - node:
             angle: -3.141592653589793 rad
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: LoadingAreaGreyscale
           decals:
             3: 0,-7
@@ -6882,44 +6882,44 @@ entities:
           decals:
             32: -1,-1
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileInnerOverlayNW
           decals:
             37: 0,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileInnerOverlaySW
           decals:
             38: 0,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileLineOverlayE
           decals:
             4: 0,-3
             36: 0,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileLineOverlayN
           decals:
             39: -1,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileLineOverlayS
           decals:
             40: -1,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: MiniTileLineOverlayW
           decals:
             5: 0,-3
             6: 0,-4
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: QuarterTileOverlayGreyscale180
           decals:
             42: 2,-5
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: QuarterTileOverlayGreyscale90
           decals:
             43: 2,-6
@@ -6939,7 +6939,7 @@ entities:
           decals:
             1: 0,2
         - node:
-            color: '#008CA0C9'
+            color: '#2B4652FF'
             id: WarnLineGreyscaleE
           decals:
             7: 0,-4
@@ -9312,11 +9312,6 @@ entities:
     - type: Transform
       pos: 68.5,-9.5
       parent: 2
-  - uid: 321
-    components:
-    - type: Transform
-      pos: 71.5,-4.5
-      parent: 2
   - uid: 322
     components:
     - type: Transform
@@ -9449,6 +9444,20 @@ entities:
     components:
     - type: Transform
       pos: 63.5,-5.5
+      parent: 2
+- proto: AirlockMedicalMorgueLocked
+  entities:
+  - uid: 372
+    components:
+    - type: Transform
+      pos: 72.5,0.5
+      parent: 2
+- proto: AirlockMedicalMorgueMaintLocked
+  entities:
+  - uid: 321
+    components:
+    - type: Transform
+      pos: 71.5,-4.5
       parent: 2
 - proto: AirlockQuartermasterGlassLocked
   entities:
@@ -9622,13 +9631,6 @@ entities:
     components:
     - type: Transform
       pos: 77.5,-2.5
-      parent: 2
-- proto: AirlockVirologyLocked
-  entities:
-  - uid: 372
-    components:
-    - type: Transform
-      pos: 72.5,0.5
       parent: 2
 - proto: AirSensor
   entities:
@@ -11327,6 +11329,13 @@ entities:
           showEnts: False
           occludes: True
           ent: 7
+- proto: BiomassReclaimer
+  entities:
+  - uid: 9582
+    components:
+    - type: Transform
+      pos: 74.5,-3.5
+      parent: 2
 - proto: BlastDoor
   entities:
   - uid: 655
@@ -35711,67 +35720,67 @@ entities:
       parent: 2
 - proto: ClothingMaskBlushingMime
   entities:
-  - uid: 5327
+  - uid: 5316
     components:
     - type: Transform
       pos: 25.245346,6.3236885
       parent: 2
 - proto: ClothingMaskBreathMedical
   entities:
-  - uid: 5316
+  - uid: 5317
     components:
     - type: Transform
       pos: 67.39722,4.505884
       parent: 2
 - proto: ClothingMaskClown
   entities:
-  - uid: 5317
+  - uid: 5318
     components:
     - type: Transform
       pos: 27.23263,5.6674385
       parent: 2
 - proto: ClothingMaskClownSecurity
   entities:
-  - uid: 5318
+  - uid: 5319
     components:
     - type: Transform
       pos: 45.553947,24.036003
       parent: 2
 - proto: ClothingMaskGas
   entities:
-  - uid: 5319
+  - uid: 5320
     components:
     - type: Transform
       pos: 33.50367,-14.512851
       parent: 2
-  - uid: 5320
+  - uid: 5321
     components:
     - type: Transform
       pos: 27.626308,-29.560211
       parent: 2
-  - uid: 5321
+  - uid: 5322
     components:
     - type: Transform
       pos: 60.54693,25.63966
       parent: 2
-  - uid: 5322
+  - uid: 5323
     components:
     - type: Transform
       pos: 79.33667,-16.51893
       parent: 2
-  - uid: 5323
+  - uid: 5324
     components:
     - type: Transform
       pos: 79.664795,-16.36268
       parent: 2
-  - uid: 5324
+  - uid: 5325
     components:
     - type: Transform
       pos: 81.53254,11.610725
       parent: 2
 - proto: ClothingMaskGasMerc
   entities:
-  - uid: 5325
+  - uid: 5326
     components:
     - type: Transform
       rot: -2.549034357070923 rad
@@ -35781,7 +35790,7 @@ entities:
       linearDamping: 0
 - proto: ClothingMaskMuzzle
   entities:
-  - uid: 5326
+  - uid: 5327
     components:
     - type: Transform
       pos: 29.390707,32.643677
@@ -64298,12 +64307,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 71.5,-2.5
-      parent: 2
-  - uid: 9582
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 74.5,-3.5
       parent: 2
   - uid: 9583
     components:

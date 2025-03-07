@@ -207,7 +207,7 @@ entities:
           decals:
             70: 15,7
         - node:
-            color: '#008CA0FF'
+            color: '#2B4652FF'
             id: DiagonalCheckerAOverlay
           decals:
             171: 1,11
