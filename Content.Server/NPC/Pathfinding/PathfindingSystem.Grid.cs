@@ -271,7 +271,8 @@ public sealed partial class PathfindingSystem
 
     private void OnMoveEvent(ref MoveEvent ev)
     {
-        if (!_fixturesQuery.TryGetComponent(ev.Sender, out var fixtures) ||
+        if (!_xformQuery.TryGetComponent(ev.OldPosition.EntityId, out var transform) ||
+            !_fixturesQuery.TryGetComponent(ev.Sender, out var fixtures) ||
             !IsBodyRelevant(fixtures) ||
             _gridQuery.HasComponent(ev.Sender))
         {
@@ -281,7 +282,7 @@ public sealed partial class PathfindingSystem
         var gridUid = ev.Component.GridUid;
         var oldGridUid = ev.OldPosition.EntityId == ev.NewPosition.EntityId
             ? gridUid
-            : _transform.GetGrid(ev.OldPosition);
+            : _transform.GetGrid((ev.OldPosition.EntityId, transform));
 
         if (oldGridUid != null && oldGridUid != gridUid)
         {
