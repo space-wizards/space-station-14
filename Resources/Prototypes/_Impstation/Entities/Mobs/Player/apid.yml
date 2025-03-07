@@ -94,3 +94,74 @@
     nameSegments:
     - apid_courier
     - names_apid
+
+- type: entity
+  name: apid scientist
+  id: MobApidScientist
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidScientist
+  - type: RandomMetadata
+    nameSegments:
+    - apid_scientist
+    - names_apid
+
+- type: entity
+  name: apid janitor
+  id: MobApidJanitor
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidJanitor
+  - type: RandomMetadata
+    nameSegments:
+    - apid_janitor
+    - names_apid
+
+- type: entity
+  name: apid administrative assistant
+  id: MobApidAdminAssistant
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidAdministrativeAssistant
+  - type: RandomMetadata
+    nameSegments:
+    - apid_adminassistant
+    - names_apid
+
+- type: entity
+  name: apid chaplain
+  id: MobApidChaplain
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidChaplain
+  - type: RandomMetadata
+    nameSegments:
+    - apid_chaplain
+    - names_apid
+  - type: BibleUser #thusd beeble
+
+- type: entity
+  name: apid salvage specialist
+  id: MobApidSalvageSpecialist
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidSalvageSpecialist
+  - type: RandomMetadata
+    nameSegments:
+    - apid_salvager
+    - names_apid
