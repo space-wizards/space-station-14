@@ -58,12 +58,6 @@ namespace Content.Shared.Medical.BiomassReclaimer
         public float BaseInsertionDelay = 0.1f;
 
         /// <summary>
-        /// How many seconds to take to make fake insertion per unit of its mass (i.e. climbDelay).
-        /// </summary>
-        [DataField]
-        public float FakeInsertionDelay = 1.5f;
-
-        /// <summary>
         /// How much to multiply biomass yield from botany produce.
         /// </summary>
         [DataField]

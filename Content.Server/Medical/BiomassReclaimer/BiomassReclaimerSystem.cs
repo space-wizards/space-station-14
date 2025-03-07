@@ -8,7 +8,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -29,6 +28,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
@@ -124,7 +124,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (TryComp<ApcPowerReceiverComponent>(ent, out var power) && !power.Powered)
                 return;
 
-            _popup.PopupPredicted(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), ent, null, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), ent, PopupType.LargeCaution);
             StartProcessing(args.Victim, ent);
             args.Handled = true;
         }
@@ -132,7 +132,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
             _jitteringSystem.AddJitter(uid, -10, 100);
-            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+            _sharedAudioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Machines/reclaimer_startup.ogg"), uid);
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 
@@ -260,7 +260,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
             {
-                _popup.PopupPredicted(Loc.GetString("biomass-reclaimer-busy"), reclaimer.Owner, null);
+                _popup.PopupEntity(Loc.GetString("biomass-reclaimer-busy"), reclaimer.Owner);
                 return false;
             }
 
@@ -278,21 +278,16 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return false;
 
             // Reject souled bodies in easy mode.
-            if (!_configManager.GetCVar(CCVars.BiomassEasyMode)
-                || !HasComp<HumanoidAppearanceComponent>(dragged)
-                || !_minds.TryGetMind(dragged, out _, out var mind)
-                || mind.UserId == null
-                || !_playerManager.TryGetSessionById(mind.UserId.Value, out _))
+            if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
+                !HasComp<HumanoidAppearanceComponent>(dragged) ||
+                !_minds.TryGetMind(dragged, out _, out var mind))
                 return true;
 
-            _popup.PopupPredicted(Loc.GetString("biomass-reclaimer-failed", ("reclaimer", reclaimer.Owner), ("body", dragged)), reclaimer.Owner, null, PopupType.MediumCaution);
-            return false;
-        }
+            if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out _))
+                return true;
 
-        private void ThrowBody(EntityUid dragged)
-        {
-            var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
-            _throwing.TryThrow(dragged, direction, 0.5f);
+            _popup.PopupEntity(Loc.GetString("biomass-reclaimer-failed", ("reclaimer", reclaimer.Owner), ("body", dragged)), reclaimer.Owner, PopupType.MediumCaution);
+            return false;
         }
     }
 }
