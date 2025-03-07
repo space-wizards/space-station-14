@@ -365,3 +365,42 @@
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
+
+- type: entity
+  parent: [ DrinkCanBaseFull, DrinkBaseCup ]
+  id: DrinkLemonLimeClownJuiceCup
+  name: Smite Clown Juice cup
+  description: You asked for SMITE. They gave you Clown Juice.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LemonLimeClownJuice
+          Quantity: 30
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_empty"}
+          False: {state: "icon_empty_closed"}
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/clownjuice.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Consumable/Drinks/clownjuice.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: Tool
+    qualities:
+    - [ ]
