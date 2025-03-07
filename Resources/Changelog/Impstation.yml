@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: the imp has become a marketable plushie.
-    type: Add
-  id: 748
-  time: '2024-12-17T11:44:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1048
 - author: TheGrimbeeper
   changes:
   - message: Holium can no longer spew out of the vents
@@ -4087,3 +4080,10 @@
   id: 1247
   time: '2025-03-07T01:42:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1840
+- author: honeyed-lemons
+  changes:
+  - message: adds Synthflesh and a new Cryo chem, Brutoxidone, which heals brute.
+    type: Add
+  id: 1248
+  time: '2025-03-07T02:15:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1821
