@@ -1431,7 +1431,7 @@
 - type: entity
   parent: BasePlushie
   id: ToyAmongPequeno
-  name: among pequeño
+  name: amoung pequeño  # imp
   description: Sus!
   components:
   - type: Sprite
