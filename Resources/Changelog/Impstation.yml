@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Amber Station has been updated to incorporate changes from upstream.
-    type: Tweak
-  id: 752
-  time: '2024-12-17T12:03:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1053
 - author: FlippenPage
   changes:
   - message: Drone gibs fixed 4 real this time. please.
@@ -4083,3 +4076,10 @@
   id: 1251
   time: '2025-03-07T04:20:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1853
+- author: SixValentine
+  changes:
+  - message: Luna Station
+    type: Add
+  id: 1252
+  time: '2025-03-07T06:18:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1837
