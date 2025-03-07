@@ -9,7 +9,7 @@
     size: Small
     shape: null
   - type: Sprite
-    sprite: _DV/Objects/Weapons/Guns/Pistols/appraisal-gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/appraisal-viper.rsi # imp - appraisal tool resprite
   - type: Gun
     fireRate: 4.5
     showExamineText: false

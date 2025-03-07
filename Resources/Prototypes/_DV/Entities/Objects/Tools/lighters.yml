@@ -22,8 +22,8 @@
   - type: Item
     sprite: _DV/Objects/Tools/syndielighter.rsi
   - type: Welder #removed lighting and upkeep to make it easier to judge how many shots you have
-    fuelConsumption: 0
-    fuelLitCost: 0
+    # fuelConsumption: 0 # imp - free welder from this is crazy. im not doing that
+    # fuelLitCost: 0
     tankSafe: false
   - type: SolutionAmmoProvider
     proto: BulletLighterIncendiary
@@ -66,9 +66,9 @@
     netsync: false
     radius: 2 #much stronger than the other lighters
     color: green
-  - type: SolutionRegeneration
-    solution: Welder
-    generated:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 0.1
+  #- type: SolutionRegeneration # imp
+  #  solution: Welder
+  #  generated:
+  #    reagents:
+  #    - ReagentId: WeldingFuel
+  #      Quantity: 0.1

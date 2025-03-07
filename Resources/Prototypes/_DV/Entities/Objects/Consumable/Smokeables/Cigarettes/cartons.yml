@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CigCartonSyndicate
-  parent: CigCartonGreen
+  parent: [CigCartonGreen, Tier2Contraband] # imp - same contraband tier as interdynes
   name: Interdyne Herbals carton
   description: A carton containing 6 packets of Interdynes, plus an exclusive flippo.
   components:

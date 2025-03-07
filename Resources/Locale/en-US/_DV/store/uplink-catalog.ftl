@@ -14,7 +14,7 @@ uplink-explosive-foam-grenade-name = Explosive Foam Grenade
 uplink-explosive-foam-grenade-desc = An explosive grenade disguised as a regular foam toy grenade.
 
 uplink-appraisal-tool-gun-name = Appraisal Tool Gun
-uplink-appraisal-tool-gun-desc = A modified Viper to appear as an appraisal tool, at the cost of slightly slower firerate
+uplink-appraisal-tool-gun-desc = A modified Viper to appear as an appraisal tool, at the cost of slightly slower firerate.
 
 uplink-dead-mans-signaller-name = Dead Man's Signaller
 uplink-dead-mans-signaller-desc = A device that if armed, will send a signal to any linked devices (such as bombs) when it is dropped or put away.
