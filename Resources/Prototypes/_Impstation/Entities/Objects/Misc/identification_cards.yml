@@ -13,6 +13,29 @@
 
 - type: entity
   parent: IDCardStandard
+  id: IDCardGoblinKnight
+  name: Sir Gollylad's ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: idpassenger
+  - type: PresetIdCard
+    job: Passenger
+    name: Sir Gollylad
+
+- type: entity
+  parent: AgentIDCard
+  id: IDCardPostOpCard
+  name: Listening Post ID Card
+  components:
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+
+- type: entity
+  parent: IDCardStandard
   id: CourierIDCard
   name: courier ID card
   components:
@@ -23,3 +46,16 @@
     - state: idcourier
   - type: PresetIdCard
     job: Courier
+
+- type: entity
+  parent: IDCardStandard
+  id: HDIDCard
+  name: hospitality director ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - sprite: _Impstation/Objects/Misc/id_cards.rsi
+      state: idhospitalitydirector
+  - type: PresetIdCard
+    job: HospitalityDirector

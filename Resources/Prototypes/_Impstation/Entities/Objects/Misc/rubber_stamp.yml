@@ -1,0 +1,13 @@
+- type: entity
+  name: hospitality director's rubber stamp
+  parent: [RubberStampBase, BaseCommandContraband]
+  id: RubberStampHD
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-hd
+    stampedColor: "#40c42e"
+    stampState: "paper_stamp-hd"
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/stamps.rsi
+    state: stamp-hd

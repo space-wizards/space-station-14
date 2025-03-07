@@ -1,0 +1,11 @@
+#Hospitality Director vest
+- type: entity
+  parent: [ClothingOuterBase, BaseCommandContraband]
+  id: ClothingOuterVestHD
+  name: hospitality director's vest
+  description: A thick lime-green vest with a rubbery, water-resistant shell.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Vests/hd_vest.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Vests/hd_vest.rsi

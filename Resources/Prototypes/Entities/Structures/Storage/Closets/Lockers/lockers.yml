@@ -453,7 +453,7 @@
   components:
   - type: Appearance
   - type: AccessReader
-    access: [["Theatre"]]
+    access: [["Clown"]] #imp edit
   - type: EntityStorageVisuals
     stateBaseClosed: clown
     stateDoorOpen: clown_open
@@ -467,7 +467,7 @@
   components:
   - type: Appearance
   - type: AccessReader
-    access: [["Theatre"]]
+    access: [["Mime"]] #imp edit
   - type: EntityStorageVisuals
     stateBaseClosed: mime
     stateDoorOpen: mime_open

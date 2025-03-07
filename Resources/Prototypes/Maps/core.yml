@@ -18,8 +18,8 @@
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargo_core.yml # imp
         - type: StationJobs
-          availableJobs: # Total of 61 jobs roundstart, max of 71 inc. latejoins and trainees.
-            # command - 8
+          availableJobs: # Total of 64 jobs roundstart, max of 76 inc. latejoins and trainees.
+            # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             AdministrativeAssistant: [ 1, 1 ] # imp
@@ -27,6 +27,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
             # service - 19
             Bartender: [ 2, 2 ]
@@ -45,21 +46,21 @@
             StationEngineer: [ 4, 4 ]
             AtmosphericTechnician: [ 2, 2 ]
             TechnicalAssistant: [ 2, 2 ]
-            # medical - 6-9
+            # medical - 8-10
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 3, 4 ]
+            MedicalDoctor: [ 4, 4 ]
             MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 2 ]
-            # science - 7-8
+            Paramedic: [ 2, 2 ]
+            # science - 7-9
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 1, 1 ]
+            ResearchAssistant: [ 2, 2 ]
             Scientist: [ 4, 4 ]
             StationAi: [ 1, 1 ]
-            # security - 8-9
+            # security - 8-11
             Brigmedic: [ 1, 1 ] # imp
             Detective: [ 1, 1 ]
             Lawyer: [ 1, 1 ]
-            SecurityCadet: [ 1, 1 ]
+            SecurityCadet: [ 3, 3 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
             # supply - 7-10
