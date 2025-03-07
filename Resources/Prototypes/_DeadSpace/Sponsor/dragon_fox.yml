@@ -66,7 +66,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDragonFox
   name: чёрный нано-костюм
-  description: Черный нано-костюм, выполненый из очень дорогих тканей.
+  description: Чёрный нано-костюм, выполненый из очень дорогих тканей.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

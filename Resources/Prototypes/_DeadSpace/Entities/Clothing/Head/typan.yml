@@ -2,7 +2,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadTypan
   name: берет офицера телекоммуникаций
-  description: Черный берет с позолоченной вышивкой, предпочитаемый офицерами телекоммуникаций.
+  description: Чёрный берет с позолоченной вышивкой, предпочитаемый офицерами телекоммуникаций.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_hos.rsi

@@ -77,7 +77,7 @@
   parent: ClothingOuterHardsuitBase
   id: ADTClothingOuterHardsuitCerber
   name: скафандр броне отряда "Церберы"
-  description: Специализированный черный скафандр, который использовался в азиатских странах 19 века, центральной полицией.
+  description: Специализированный чёрный скафандр, который использовался в азиатских странах 19 века, центральной полицией.
   components:
   - type: Sprite
     sprite: _ADT/Clothing/OuterClothing/Hardsuits/cerber.rsi

@@ -1,5 +1,5 @@
 - type: entity
-  name: черный диван
+  name: чёрный диван
   suffix: Левая часть
   id: ADTBlackSofaLeftSide
   parent: SeatBase
@@ -19,7 +19,7 @@
     node: adtblacksofaleft
 
 - type: entity
-  name: черный диван
+  name: чёрный диван
   suffix: Середина
   id: ADTBlackSofaMiddle
   parent: SeatBase
@@ -39,7 +39,7 @@
     node: adtblacksofamiddle
 
 - type: entity
-  name: черный диван
+  name: чёрный диван
   suffix: Правая часть
   id: ADTBlackSofaRightSide
   parent: SeatBase

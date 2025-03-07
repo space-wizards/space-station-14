@@ -188,8 +188,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ADTClothingUniformYunaBlackDress
-  name: черное платье
-  description: Черное платье для торжеств.
+  name: чёрное платье
+  description: Чёрное платье для торжеств.
   components:
   - type: Sprite
     sprite: _ADT/Clothing/Uniforms/Jumpskirt/yuna_black_dress.rsi

@@ -50,7 +50,7 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ADTClothingFootWrapsBlack
-  name: черные обмотки для ног
+  name: чёрные обмотки для ног
   description: Пара кусков ткани для тех, кому некомфортно в обычных человеческих ботинках.
   components:
   - type: Sprite
@@ -74,7 +74,7 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ADTClothingFootWrapsHighBlack
-  name: черные высокие обмотки для ног
+  name: чёрные высокие обмотки для ног
   description: Пара кусков ткани для тех, кому некомфортно в обычных человеческих ботинках.
   components:
   - type: Sprite

@@ -1,10 +1,10 @@
-ent-ADTBlackSofaLeftSide = черный диван
+ent-ADTBlackSofaLeftSide = чёрный диван
     .desc = Большой диван, с которого не хочется слезать
     .suffix = Левая часть
-ent-ADTBlackSofaMiddle = черный диван
+ent-ADTBlackSofaMiddle = чёрный диван
     .desc = Большой диван, с которого не хочется слезать
     .suffix = Середина
-ent-ADTBlackSofaRightSide = черный диван
+ent-ADTBlackSofaRightSide = чёрный диван
     .desc = Большой диван, с которого не хочется слезать
     .suffix = Правая часть
 ent-ADTRedSofaLeftSide = красный диван

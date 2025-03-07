@@ -15,7 +15,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterCoroner
   name: роба коронера
-  description: Роба которая помогает не испачкаться для тех, кто считает, что черный – единственный цвет радуги, который они видят каждый день.
+  description: Роба которая помогает не испачкаться для тех, кто считает, что чёрный – единственный цвет радуги, который они видят каждый день.
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/OuterClothing/Coats/coroner.rsi

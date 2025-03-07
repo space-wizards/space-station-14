@@ -12,8 +12,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ADTClothingOuterBlackFurCoat
-  name: черная дорогая шуба
-  description: Это шуба из шкуры черного медведя. Не путайте с космическим!
+  name: чёрная дорогая шуба
+  description: Это шуба из шкуры чёрного медведя. Не путайте с космическим!
   components:
   - type: Sprite
     sprite: _ADT/Clothing/OuterClothing/Coats/black_furcoat.rsi
