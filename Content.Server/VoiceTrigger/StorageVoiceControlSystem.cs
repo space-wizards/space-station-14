@@ -4,8 +4,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Labels.EntitySystems;
-using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.Containers;
@@ -23,8 +21,6 @@ public sealed class StorageVoiceControlSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StorageSystem _storage = default!;
-    [Dependency] private readonly SharedLabelSystem _label = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
     public override void Initialize()
     {
@@ -38,10 +34,6 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If it has slot restrictions, check if the item is in a slot that is allowed
         if (ent.Comp.AllowedSlots != null && _inventory.TryGetContainingSlot(ent.Owner, out var itemSlot) &&
             (itemSlot.SlotFlags & ent.Comp.AllowedSlots) == 0)
-            return;
-
-        // Don't do anything if there is no message
-        if (args.Message == null)
             return;
 
         // Get the storage component
@@ -83,16 +75,10 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Check the original name of the entity and compare
-            if (args.Message.Contains(_nameModifier.GetBaseName(item), StringComparison.InvariantCultureIgnoreCase))
-            {
-                ExtractItemFromStorage(ent, item, args.Source, hands);
-                break;
-            }
-
-            // Check and pull the LabelComponent for the current label and compare
-            if (_label.LabelOrNull(item) is { } label && !string.IsNullOrEmpty(label) &&
-                args.Message.Contains(label, StringComparison.InvariantCultureIgnoreCase))
+            // Check if the name contains the actual command.
+            // This will do comparisons against any length of string which is a little weird, but worth the tradeoff.
+            // E.g "go go s" would give you the screwdriver because "screwdriver" contains "s"
+            if (Name(item).Contains(args.MessageWithoutPhrase))
             {
                 ExtractItemFromStorage(ent, item, args.Source, hands);
                 break;
