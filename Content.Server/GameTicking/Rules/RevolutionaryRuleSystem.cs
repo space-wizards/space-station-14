@@ -70,6 +70,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.Started(uid, component, gameRule, args);
         component.CommandCheck = _timing.CurTime + component.TimerWait;
+
+        // Check if there are any head revs selected
+        var headRevs = EntityQuery<HeadRevolutionaryComponent>().ToList();
+        if (headRevs.Count == 0)
+        {
+            // Reroll the game mode and call StartRound again
+            GameTicker.SetGamePreset(GameTicker.DefaultPreset);
+            GameTicker.StartRound();
+        }
     }
 
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
