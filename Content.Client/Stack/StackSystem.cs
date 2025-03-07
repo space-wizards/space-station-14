@@ -67,9 +67,9 @@ namespace Content.Client.Stack
                 hidden = false;
 
             if (comp.IsComposite)
-                _counterSystem.ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+                _counterSystem.ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, comp.SpriteIndexOffset, sprite: args.Sprite);
             else
-                _counterSystem.ProcessOpaqueSprite(uid, comp.BaseLayer, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+                _counterSystem.ProcessOpaqueSprite(uid, comp.BaseLayer, actual, maxCount, comp.LayerStates, hidden, comp.SpriteIndexOffset, sprite: args.Sprite);
         }
     }
 }
