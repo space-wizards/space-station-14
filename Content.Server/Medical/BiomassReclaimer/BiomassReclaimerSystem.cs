@@ -172,7 +172,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (args.Handled)
                 return;
 
-            args.CanDrop = IsHumanoid(args.Dragged);
+            args.CanDrop = HasComp<MobStateComponent>(args.Dragged);
             args.Handled = true;
         }
 
@@ -265,7 +265,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             }
 
             var isPlant = HasComp<ProduceComponent>(dragged);
-            if (!isPlant && !IsHumanoid(dragged))
+            if (!isPlant)
                 return false;
 
             if (!Transform(reclaimer).Anchored)
@@ -279,6 +279,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             // Reject souled bodies in easy mode.
             if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
+                !HasComp<HumanoidAppearanceComponent>(dragged) ||
                 !_minds.TryGetMind(dragged, out _, out var mind))
                 return true;
 
@@ -287,11 +288,6 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             _popup.PopupEntity(Loc.GetString("biomass-reclaimer-failed", ("reclaimer", reclaimer.Owner), ("body", dragged)), reclaimer.Owner, PopupType.MediumCaution);
             return false;
-        }
-
-        private bool IsHumanoid(EntityUid dragged)
-        {
-            return HasComp<MobStateComponent>(dragged) && HasComp<HumanoidAppearanceComponent>(dragged);
         }
     }
 }
