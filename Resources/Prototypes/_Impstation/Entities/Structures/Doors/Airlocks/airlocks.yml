@@ -1,5 +1,70 @@
 # Airlocks
 
+# Command
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCaptain
+  suffix: Captain
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/captain.rsi
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockChiefMedicalOfficer
+  suffix: ChiefMedicalOfficer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/cmo.rsi
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockChiefEngineer
+  suffix: ChiefEngineer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/ce.rsi
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHeadOfSecurity
+  suffix: HeadOfSecurity
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/hos.rsi
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockResearchDirector
+  suffix: ResearchDirector
+  components:
+   - type: Sprite
+     sprite: _Impstation/Structures/Doors/Airlocks/Standard/rd.rsi 
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHeadOfPersonnel
+  suffix: HeadOfPersonnel
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/hop.rsi
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockQuartermaster
+  suffix: Quartermaster
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/qm.rsi
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHospitalityDirector
+  suffix: HospitalityDirector
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/hd.rsi
+
 # Service
 - type: entity
   parent: Airlock
@@ -117,6 +182,72 @@
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
 
 # Glass Airlocks
+
+# Command
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCaptainGlass
+  suffix: Captain
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/captain.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockChiefMedicalOfficerGlass
+  suffix: ChiefMedicalOfficer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/cmo.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockChiefEngineerGlass
+  suffix: ChiefEngineer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/ce.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHeadOfSecurityGlass
+  suffix: HeadOfSecurity
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/hos.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockResearchDirectorGlass
+  suffix: ResearchDirector
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/rd.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHeadOfPersonnelGlass
+  suffix: HeadOfPersonnel
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/hop.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockQuartermasterGlass
+  suffix: Quartermaster
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/qm.rsi
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHospitalityDirectorGlass
+  suffix: HospitalityDirector 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/hd.rsi
 
 # Service
 - type: entity
