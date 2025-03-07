@@ -1,17 +1,6 @@
 meta:
-  format: 7
-  category: Grid
-  engineVersion: 247.2.0
-  forkId: Starlight
-  forkVersion: 1732131340
-  time: 03/05/2025 20:06:40
-  entityCount: 1052
-maps: []
-grids:
-- 1
-orphans:
-- 1
-nullspace: []
+  format: 6
+  postmapinit: false
 tilemap:
   3: Space
   0: FloorDark
