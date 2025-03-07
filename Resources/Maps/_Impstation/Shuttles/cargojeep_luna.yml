@@ -114,8 +114,73 @@ entities:
     - type: GridAtmosphere
       version: 2
       data:
+        tiles:
+          0,0:
+            0: 4334
+          0,-1:
+            0: 61423
+          0,1:
+            1: 142
+          1,0:
+            0: 95
+          1,1:
+            1: 79
+          1,-1:
+            0: 65535
+          2,0:
+            0: 255
+          2,1:
+            1: 47
+          2,-1:
+            0: 65535
+          3,0:
+            0: 4096
+          0,-3:
+            0: 4096
+          0,-2:
+            0: 61166
+          1,-2:
+            0: 65535
+          2,-2:
+            0: 65535
+          3,-3:
+            0: 4096
+          3,-1:
+            0: 257
+        uniqueMixes:
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          immutable: True
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
     - type: GasTileOverlay
+    - type: CargoShuttle
 - proto: AirCanister
   entities:
   - uid: 156
@@ -133,34 +198,26 @@ entities:
   - uid: 5
     components:
     - type: Transform
-      pos: 0.5,-1.5
+      rot: 1.5707963267948966 rad
+      pos: 12.5,-1.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -1685.2603
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
   - uid: 6
     components:
     - type: Transform
-      pos: 0.5,-3.5
+      rot: 1.5707963267948966 rad
+      pos: 12.5,-3.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -1684.3602
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
   - uid: 244
     components:
     - type: Transform
-      pos: 12.5,-3.5
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-3.5
       parent: 2
   - uid: 245
     components:
     - type: Transform
-      pos: 12.5,-1.5
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-1.5
       parent: 2
 - proto: APCBasic
   entities:

@@ -57,10 +57,105 @@ entities:
     - type: GridAtmosphere
       version: 2
       data:
+        tiles:
+          0,0:
+            0: 80
+            1: 2560
+          0,-1:
+            0: 30311
+          1,0:
+            0: 80
+            1: 512
+          1,-1:
+            0: 65520
+          2,-1:
+            0: 46963
+          2,0:
+            0: 4
+          3,0:
+            1: 10
+          0,-4:
+            0: 20480
+            1: 2560
+          0,-3:
+            0: 26224
+          0,-2:
+            0: 61159
+          1,-4:
+            0: 20480
+            1: 512
+          1,-3:
+            0: 65520
+          1,-2:
+            0: 65520
+          2,-3:
+            0: 30644
+            1: 8
+          2,-2:
+            0: 32627
+          3,-3:
+            0: 61520
+            1: 10
+          3,-2:
+            0: 28527
+          3,-1:
+            0: 20735
+          4,-3:
+            0: 2816
+            1: 64
+          4,-2:
+            0: 61422
+          4,-1:
+            0: 2830
+            1: 16384
+          5,-2:
+            0: 61423
+          5,-1:
+            0: 15
+          6,-3:
+            0: 4096
+          6,-1:
+            0: 16
+        uniqueMixes:
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          immutable: True
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: EmergencyShuttle
     - type: NavMap
+    - type: DeviceNetwork
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
+      deviceNetID: Wireless
 - proto: AirCanister
   entities:
   - uid: 282
@@ -115,11 +210,37 @@ entities:
       pos: 14.5,-4.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2142.0056
+      secondsUntilStateChange: -2611.7056
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
+- proto: AirlockExternalGlassShuttleEmergencyLocked
+  entities:
+  - uid: 2
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-3.5
+      parent: 1
+  - uid: 3
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-0.5
+      parent: 1
+  - uid: 4
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-7.5
+      parent: 1
+  - uid: 154
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-10.5
+      parent: 1
 - proto: AirlockGlass
   entities:
   - uid: 160
@@ -132,31 +253,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 16.5,-5.5
-      parent: 1
-- proto: AirlockGlassShuttle
-  entities:
-  - uid: 2
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-0.5
-      parent: 1
-  - uid: 3
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-3.5
-      parent: 1
-  - uid: 4
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-7.5
-      parent: 1
-  - uid: 154
-    components:
-    - type: Transform
-      pos: 0.5,-10.5
       parent: 1
 - proto: AirlockMedicalGlassLocked
   entities:
