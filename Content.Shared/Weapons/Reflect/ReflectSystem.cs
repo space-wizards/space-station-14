@@ -11,7 +11,6 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -119,7 +118,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioParams.Default.WithVariation(0.05f));
+            _audio.PlayPvs(reflect.SoundOnReflect, user);
         }
 
         if (Resolve(projectile, ref projectileComp, false))
@@ -172,7 +171,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioParams.Default.WithVariation(0.05f));
+            _audio.PlayPvs(reflect.SoundOnReflect, user);
         }
 
         var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);

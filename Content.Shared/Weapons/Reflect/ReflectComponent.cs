@@ -26,7 +26,7 @@ public sealed partial class ReflectComponent : Component
     public Angle Spread = Angle.FromDegrees(45);
 
     [DataField("soundOnReflect")]
-    public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+    public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg", AudioParams.Default.WithVariation(0.05f));
 }
 
 [Flags]
