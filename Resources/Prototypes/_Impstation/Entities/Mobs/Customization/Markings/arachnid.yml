@@ -52,6 +52,45 @@
     state: eyes_round4
   shader: unshaded
 
+- type: marking
+  id: ArachnidEyesJumper
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [Arachnid]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper3
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper4
+
+- type: marking
+  id: ArachnidEyesJumperGlowing
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [Arachnid]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper3
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: eyes_jumper4
+  shader: unshaded
+
 # Head
 - type: marking
   id: ArachnidHeadSegments
