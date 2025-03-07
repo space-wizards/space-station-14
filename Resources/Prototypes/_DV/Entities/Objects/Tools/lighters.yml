@@ -35,7 +35,7 @@
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
       soundEmpty:
-        path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg # imp
       showExamineText: false
   - type: GenericVisualizer
     visuals:

@@ -2,7 +2,7 @@
   id: Observationskit
   parent: BoxCardboard # imp - nondescript box loses contraband tag
   # name: observations kit # imp - nondescript box
-  suffix: Filled
+  suffix: Observation kit, Filled
   components:
   - type: StorageFill
     contents:
