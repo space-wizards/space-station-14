@@ -250,7 +250,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
             {
-                _popup.PopupEntity(Loc.GetString("biomass-reclaimer-busy"), reclaimer.Owner);
+                _popup.PopupEntity(Loc.GetString("biomass-reclaimer-busy", ("reclaimer", reclaimer.Owner)), reclaimer.Owner);
                 return false;
             }
 
