@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 02/27/2025 03:35:50
-  entityCount: 25342
+  time: 03/07/2025 18:47:31
+  entityCount: 25343
 maps:
 - 943
 grids:
@@ -49745,6 +49745,13 @@ entities:
     components:
     - type: Transform
       pos: -45.5,36.5
+      parent: 60
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 23928
+    components:
+    - type: Transform
+      pos: 51.5,6.5
       parent: 60
 - proto: Carpet
   entities:
