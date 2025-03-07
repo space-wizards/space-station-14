@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BriefcaseBrown
+  parent: [ BriefcaseBrown, Tier1Contraband] # imp - contraband
   id: CybersunBriefcase
   name: cybersun briefcase
   description: It's like a brown briefcase, but black.

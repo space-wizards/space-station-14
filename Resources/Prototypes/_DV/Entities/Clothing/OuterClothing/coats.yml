@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ ClothingOuterStorageBase, Tier1Contraband ] # imp - contraband
   id: ClothingOuterCoatCybersunWindbreaker
   name: cybersun windbreaker
   description: A paramedics windbreaker, sporting the official heraldry of Cybersuns meditech division. Its made of sturdy ballistic fiber.
@@ -20,7 +20,7 @@
   - type: AllowSuitStorage #Syndicate Windbreaker, so gun.
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ ClothingOuterStorageBase, Tier1Contraband ] # imp - contraband
   id: ClothingOuterCybersunOvercoat
   name: cybersun overcoat
   description: Heavy black robes with magenta and gold trim. It smells old.
