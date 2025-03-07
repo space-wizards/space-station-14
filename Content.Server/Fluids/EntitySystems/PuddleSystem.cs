@@ -624,13 +624,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     /// <inheritdoc/>
     public override bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)
     {
-        if (solution.Volume == 0)
-        {
-            puddleUid = EntityUid.Invalid;
-            return false;
-        }
-
-        if (!_xformQuery.TryGetComponent(coordinates.EntityId, out var transform))
+        if (solution.Volume == 0 || !_xformQuery.TryGetComponent(coordinates.EntityId, out var transform))
         {
             puddleUid = EntityUid.Invalid;
             return false;
