@@ -9,26 +9,23 @@ public sealed partial class AttachmentSystem : SharedAttachmentSystem
 {
     protected override object? GetComponentFieldInfo(Type type, string field)
     {
-        FieldInfo propInfo;
         if (type.GetField(field) is { } propInfoNormal)
-            propInfo = propInfoNormal;
+            return propInfoNormal;
         else if (type.GetField(char.ToUpper(field[0]) + field[1..]) is { } propInfoUpper) // Try harder
-            propInfo = propInfoUpper;
+            return propInfoUpper;
         else if (type.GetFields() // Try even harder
                      .ToList()
                      .Find(fieldInfo => fieldInfo.HasCustomAttribute<DataFieldAttribute>()) is {} fieldInfoExisting
                  && fieldInfoExisting.GetCustomAttribute<DataFieldAttribute>()?.Tag == field)
         {
 
-            propInfo = fieldInfoExisting;
+            return fieldInfoExisting;
         }
         else
         {
             throw new ArgumentException(
                 $"Field '{field}' does not exist publicly in component type '{type}'");
         }
-
-        return propInfo;
     }
 
     protected override void CopyComponentFields<T>(T source, ref T target, Type ComponentType, List<string> fields)
