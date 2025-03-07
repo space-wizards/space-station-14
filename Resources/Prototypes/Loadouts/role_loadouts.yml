@@ -21,6 +21,7 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
+  - HoPShoes
   # - Glasses
   - Survival
   - Trinkets
@@ -375,7 +376,7 @@
   - SecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
-  - SecurityShoes
+  - HeadofSecurityShoes
   - SurvivalSecurity
   - Trinkets
   - SecurityStar

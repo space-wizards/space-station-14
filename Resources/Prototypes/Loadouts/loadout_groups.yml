@@ -191,6 +191,13 @@
   - HoPWintercoat
 
 - type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - ShoesBootsLaceup
+  - BrownShoes
+  
+- type: loadoutGroup
   id: HoPUnderwear
   name: loadout-group-hop-underwear
   minLimit: 2
@@ -794,6 +801,7 @@
   loadouts:
   - BrownShoes
   - CargoWinterBoots
+  - ShoesBootsLaceup
 
 - type: loadoutGroup
   id: QuartermasterUnderwear
@@ -942,6 +950,7 @@
   loadouts:
   - BrownShoes
   - EngineeringWinterBoots
+  - ShoesBootsLaceup
 
 - type: loadoutGroup
   id: ChiefEngineerUnderwear
@@ -1122,6 +1131,7 @@
   loadouts:
   - BrownShoes
   - ScienceWinterBoots
+  - ShoesBootsLaceup
 
 - type: loadoutGroup
   id: ResearchDirectorUnderwear
@@ -1266,6 +1276,15 @@
   loadouts:
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
+
+- type: loadoutGroup
+  id: HeadofSecurityShoes
+  name: loadout-group-head-of-security-shoes
+  loadouts:
+  - JackSecBoots
+  - CombatBoots
+  - JackBoots
+  - ShoesBootsLaceup
 
 - type: loadoutGroup
   id: HeadofSecuritySocks
@@ -1570,6 +1589,7 @@
   loadouts:
   - BrownShoes
   - MedicalWinterBoots
+  - ShoesBootsLaceup
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerUnderwear
