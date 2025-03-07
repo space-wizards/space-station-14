@@ -335,7 +335,4 @@ ghost-role-information-gingerbread-name = Gingerbread Man
 ghost-role-information-gingerbread-description = A being of pure holiday spirit.
                                      Spread molassesy goodness and to all good cheer.
 
-ghost-role-information-onestar-mecha-name = OneStar Mecha
-ghost-role-information-onestar-mecha-description = You are this station's end.
-
 
