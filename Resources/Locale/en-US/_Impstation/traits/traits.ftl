@@ -61,3 +61,6 @@ trait-properpunctuation-desc = Your sentences end with periods or other punctuat
 
 trait-echolalia-name = Echolalia
 trait-echolalia-desc = You can't help yourself from repeating phrases you've heard.
+
+trait-transatlantic-name = Transatlantic Accent
+trait-transatlantic-desc = You sound like a hardboiled detective, or a peppy newshawk.
