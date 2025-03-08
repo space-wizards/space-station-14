@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargojeep_luna.yml
         - type: StationJobs
-          availableJobs: # Total of 69 (nice) jobs roundstart, max of 84 inc. latejoins and trainees.
+          availableJobs: # Total of 66 jobs. 
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -64,9 +64,9 @@
             SecurityCadet: [ 3, 3 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            # supply - 7
+            # supply - 8
             CargoTechnician: [ 2, 2 ]
-            Courier: [ 1, 1 ]
+            Courier: [ 2, 2 ]
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 2, 2 ]
             # civilian
