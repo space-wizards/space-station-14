@@ -18,13 +18,13 @@ public sealed partial class CargoDeliveryDataComponent : Component
     /// Minimum cooldown after a delivery spawns.
     /// </summary>
     [DataField]
-    public TimeSpan MinDeliveryCooldown = TimeSpan.FromMinutes(3);
+    public TimeSpan MinDeliveryCooldown = TimeSpan.FromMinutes(4);
 
     /// <summary>
     /// Maximum cooldown after a delivery spawns.
     /// </summary>
     [DataField]
-    public TimeSpan MaxDeliveryCooldown = TimeSpan.FromMinutes(7);
+    public TimeSpan MaxDeliveryCooldown = TimeSpan.FromMinutes(6);
 
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed partial class CargoDeliveryDataComponent : Component
     /// 1 delivery per X players.
     /// </summary>
     [DataField]
-    public int PlayerToDeliveryRatio = 7;
+    public float PlayerToDeliveryRatio = 7;
 
     /// <summary>
     /// The minimum amount of deliveries that will spawn.
