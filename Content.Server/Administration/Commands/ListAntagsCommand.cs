@@ -4,11 +4,6 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Roles;
 using Robust.Shared.Console;
-using Content.Server.Administration;
-using Content.Shared.Administration;
-using Content.Shared.Mind;
-using Content.Shared.Objectives.Systems;
-using Robust.Server.Player;
 
 namespace Content.Server.Administration.Commands;
 
@@ -16,12 +11,10 @@ namespace Content.Server.Administration.Commands;
 public sealed class ListAntagsCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedObjectivesSystem _sharedObjectivesSystem = default!;
     [Dependency] private readonly SharedRoleSystem _sharedRoleSystem = default!;
 
     public override string Command => "lsantags";
-    public override string Description => Loc.GetString("lsantags-command-description");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -34,8 +27,8 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
             if (!_sharedRoleSystem.MindIsAntagonist(mindId))
                 continue;
 
-            var playerName = mind.Session?.Name ?? Loc.GetString("lsantags-command-unknown");
-            var icName = mind.CharacterName ?? Loc.GetString("lsantags-command-nameless");
+            var playerName = mind.Session?.Name ?? Loc.GetString("cmd-lsantags-unknown");
+            var icName = mind.CharacterName ?? Loc.GetString("cmd-lsantags-nameless");
             var antagRoles = _sharedRoleSystem.MindGetAllRoleInfo(mindId)
                 .Where(role => role.Antagonist)
                 .Select(role => Loc.GetString(role.Name))
@@ -44,7 +37,7 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
             var entityInfo = _entityManager.ToPrettyString(mindId);
 
             var antagInfo = Loc.GetString(
-                "lsantags-command-list-info",
+                "cmd-lsantags-list-info",
                 ("playerName", playerName),
                 ("entityInfo", entityInfo),
                 ("antagRoles", antagRolesStr)
@@ -81,11 +74,11 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
         if (antagList.Count == 0)
         {
-            shell.WriteLine(Loc.GetString("lsantags-command-no-antags"));
+            shell.WriteLine(Loc.GetString("cmd-lsantags-no-antags"));
             return;
         }
 
-        shell.WriteLine($"{Loc.GetString("lsantags-command-list-antags")}\n{string.Join("\n", antagList)}");
+        shell.WriteLine($"{Loc.GetString("cmd-lsantags-list-antags")}\n{string.Join("\n", antagList)}");
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -94,11 +87,11 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
         {
             var option = new CompletionOption[]
             {
-                new("true", Loc.GetString("lsantags-command-auto-completion-true")),
-                new("false", Loc.GetString("lsantags-command-auto-completion-false"))
+                new("true", Loc.GetString("cmd-lsantags-auto-completion-true")),
+                new("false", Loc.GetString("cmd-lsantags-auto-completion-false"))
             };
 
-            return CompletionResult.FromHintOptions(option, Loc.GetString("lsantags-command-auto-completion"));
+            return CompletionResult.FromHintOptions(option, Loc.GetString("cmd-lsantags-auto-completion"));
         }
 
         return CompletionResult.Empty;
