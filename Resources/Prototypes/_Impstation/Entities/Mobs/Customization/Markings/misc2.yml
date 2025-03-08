@@ -177,7 +177,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [ Human, Dwarf ]
-  followHairColor: true
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
     state: eyebrowsthick
@@ -187,7 +186,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [ Human, Dwarf ]
-  followHairColor: true
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
     state: eyebrowsultra
@@ -197,7 +195,6 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [ Human, Dwarf ]
-  followHairColor: true
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
     state: eyebrowsunibrow
