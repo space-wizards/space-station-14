@@ -21,6 +21,7 @@
   - type: Tag
     tags:
     - Wall
+  - type: IsRoof
   - type: Sprite
     drawdepth: Walls
   - type: Icon
@@ -50,6 +51,7 @@
   - type: RadiationBlocker
     resistance: 2
   - type: BlockWeather
+  - type: SunShadowCast
 
 - type: entity
   parent: BaseWall
