@@ -8,7 +8,7 @@
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
     id: WizardPDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetAltWizard
     belt: ClothingBeltWand
     # pocket1: TODO: Include wizard teleport scroll
     pocket2: WizardsGrimoire

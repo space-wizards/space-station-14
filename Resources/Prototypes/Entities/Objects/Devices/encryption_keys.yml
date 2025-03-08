@@ -258,3 +258,26 @@
       layers:
         - state: crypt_rusted
         - state: pirate_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseMagicalContraband]
+  id: EncryptionKeyWizard
+  name: arcane encryption key
+  description: A miraculous encryption key capable of picking up numerous channels, used by space wizards. It crackles with magical energy.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Wizard
+    defaultChannel: Common
+  - type: Sprite
+    layers:
+    - state: crypt_wiz
+    - state: wizard_label
