@@ -81,6 +81,8 @@
     - type: NoSlip
     - type: ZombieImmune
     - type: Food
+    - type: Absorbable # bros bite sized
+      biomassRestored: 0.05
     - type: Extractable
       grindableSolutionName: food
     - type: SolutionContainerManager
@@ -149,6 +151,8 @@
     name: ghost-role-information-raccoon-name
     description: ghost-role-information-raccoon-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Vocal
     sounds:
@@ -176,6 +180,8 @@
     name: ghost-role-information-possum-name
     description: ghost-role-information-possum-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Vocal
     sounds:

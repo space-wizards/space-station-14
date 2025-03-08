@@ -1,0 +1,59 @@
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: JugCaramexinin
+  name: caramexinin jug
+  suffix: For Drinks, Full
+  description: A small portion of galaxythistle-derived sweetener. 5u in a coffee cup will prevent poisoning in animals!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Caramexinin
+          Quantity: 40
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-caramexinin
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: JugCocoa
+  name: cocoa powder jug
+  suffix: For Drinks, Full
+  description: A jug of cocoa powder.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: CocoaPowder
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-cocoapowder
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkDisposableCup
+  name: disposable cup
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 25
+  - type: ExaminableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Tag
+    tags:
+      - DrinkGlass
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Drinks/coffeecup.rsi
+    state: icon
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30

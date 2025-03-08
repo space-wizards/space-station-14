@@ -11,16 +11,3 @@
     Telecrystal: 2
   categories:
   - UplinkAllies
-
-- type: listing
-  id: UplinkDoorjack
-  name: uplink-doorjack-name
-  description: uplink-doorjack-desc
-  productEntity: Doorjack
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 3
-  cost:
-    Telecrystal: 5
-  categories:
-  - UplinkDisruption

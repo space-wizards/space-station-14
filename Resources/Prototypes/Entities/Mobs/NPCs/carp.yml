@@ -53,6 +53,8 @@
         Dead:
           Base: dead
           BaseUnshaded: dead_mouth
+    - type: Absorbable # imp - im just going off vibes here
+      biomassRestored: 0.4
     - type: Butcherable
       spawned:
         - id: FoodMeatFish
@@ -252,6 +254,8 @@
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
       rules: ghost-role-information-space-dragon-summoned-carp-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
     - type: GhostTakeoverAvailable

@@ -8,7 +8,6 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
-    maxAccumuluator: 180
     spawnAccumulator: 15
     spawnCooldown: 15
     spawn: DinosaurSpawnerRandom
@@ -41,7 +40,6 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
-    maxAccumuluator: 180
     spawnAccumulator: 15
     spawnCooldown: 15
     spawn: DinosaurSpawnerEasy
@@ -55,7 +53,6 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
-    maxAccumuluator: 180
     spawnAccumulator: 15
     spawnCooldown: 15
     spawn: DinosaurSpawnerMedium
@@ -69,7 +66,6 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
-    maxAccumuluator: 180
     spawnAccumulator: 15
     spawnCooldown: 15
     spawn: DinosaurSpawnerHard
@@ -83,8 +79,7 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
-    maxAccumuluator: 300
-    spawnAccumulator: 0
+    spawnAccumulator: 16
     spawnCooldown: 8
     spawn: DinosaurSpawnerRandom
     announcement: dino-rift-warning

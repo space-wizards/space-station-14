@@ -258,7 +258,7 @@
 - type: entity
   id: ActionStingBlind
   name: Blind Sting
-  description: We sting a target, blinding them temporarily. Costs a medium amount of chemicals.
+  description: We sting a target, blinding them temporarily. Costs a sizeable amount of chemicals. Stinging multiple times won't intensify the effect.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -273,7 +273,7 @@
       state: sting_blind
     event: !type:StingBlindEvent {}
   - type: ChangelingAction
-    chemicalCost: 35
+    chemicalCost: 50
     useInLesserForm: true
 
 - type: entity
@@ -583,6 +583,25 @@
   - type: ChangelingAction
     chemicalCost: 0
     useInLesserForm: true
+
+    # imp edit ↓
+- type: entity
+  id: ActionToggleTentacle
+  name: Toggle Tentacle
+  description: We shape one of our arms into a Tendon Fishing rod. We may retract our Rod in the same manner as we form it. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: tentacle
+    event: !type:ToggleTentacleEvent {}
+  - type: ChangelingAction
+    chemicalCost: 15
+    requireAbsorbed: 1
+#imp edit ^
 
 - type: entity
   id: ActionToggleSpacesuit

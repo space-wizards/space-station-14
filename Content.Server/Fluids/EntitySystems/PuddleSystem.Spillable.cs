@@ -69,7 +69,9 @@ public sealed partial class PuddleSystem
         if (totalSplit == 0)
             return;
 
-        args.Handled = true;
+        // Skips handling the MeleeHitEvent here to allow spillable melee weapons to also deal damage. Imp addition. 
+        if (!entity.Comp.AllowMeleeDamage)
+            args.Handled = true;
 
         // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)

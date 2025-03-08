@@ -38,3 +38,9 @@
   license: "Custom"
   copyright: "Barry, 63"
   source: "https://en.wikipedia.org/wiki/Pub"
+
+- files:
+  - blink.png
+  license: "CC0-1.0"
+  copyright: "Created by Rarenth for Impstation"
+  source: "https://github.com/impstation/imp-station-14"

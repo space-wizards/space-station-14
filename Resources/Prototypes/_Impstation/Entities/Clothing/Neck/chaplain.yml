@@ -1,0 +1,71 @@
+﻿- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckChaplainDragon
+  name: dragonpriest stole
+  description: Let them know who you really serve.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/dragonstole.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/dragonstole.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckClayshaper
+  name: clayshaper's mantle
+  description: Hidden among the river reeds.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/clayshapermantle.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Cloaks/clayshapermantle.rsi
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Voice/Diona/diona_rustle3.ogg
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckDruid
+  name: druid's cape
+  description: Perfect for frolicking or possibly skipping.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/druidcape.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Cloaks/druidcape.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckDruidMantle
+  name: druid's mantle
+  description: Freshly crafted and vivid green.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/druidmantle.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Cloaks/druidmantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSun
+  name: sun stole
+  description: The material is warm, heat radiates out from each thread.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/sunoraclestole.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/sunoraclestole.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1 # same as a winter coat
+    coolingCoefficient: 0.1
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTidal
+  name: tidal mantle
+  description: The material hangs heavy on your shoulders.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/tidalmantle.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Cloaks/tidalmantle.rsi

@@ -12,3 +12,17 @@
     sprite: _Impstation/Objects/Misc/heartlocket.rsi
   - type: Appearance
   - type: Engraveable
+  - type: Storage
+    grid:
+    - 0,0,0,0
+    maxItemSize: Tiny
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: Tag
+    tags:
+    - WhitelistChameleon

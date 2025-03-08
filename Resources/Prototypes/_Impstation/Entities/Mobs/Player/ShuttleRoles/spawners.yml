@@ -1,0 +1,41 @@
+- type: entity
+  name: visiting brigmedic spawner
+  id: VisitorBrigmedicSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBrigmedic
+
+- type: entity
+  name: visiting courier spawner
+  id: VisitorCourierSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCourier
+
+- type: entity
+  name: visiting roboticist spawner
+  id: VisitorRoboticistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorRoboticist

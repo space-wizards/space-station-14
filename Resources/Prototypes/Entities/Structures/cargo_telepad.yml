@@ -22,7 +22,7 @@
           - MachineMask
   - type: Sprite
     sprite: _Impstation/Structures/cargo_telepad.rsi #imp edits begin
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     layers:
       - state: offline
       - state: idle

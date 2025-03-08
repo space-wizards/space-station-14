@@ -1,0 +1,81 @@
+
+- type: entity
+  id: FishingHookBase
+  name: fishing hook
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: FishingProjectile #The component that's used for joint stuff
+    - type: EmbeddableProjectile #The component that tells the item to embed onto things
+      autoRemoveDuration: 20
+      removalTime: 0.5
+      deleteOnRemove: true
+      sound: 
+        path: /Audio/_Impstation/Effects/grapple_impact.ogg
+    - type: Clickable #The component that lets the item be picked up when embedded
+    - type: InteractionOutline #The component that gives the item a highlight when hovered
+    - type: Projectile #The component that handles the fact that this was fired from something
+      deleteOnCollide: false
+      damage:
+        types:
+          Piercing: 5
+    - type: Physics #The component that handles movement upon firing
+      bodyType: Dynamic
+      linearDamping: 0
+      angularDamping: 0
+    - type: Fixtures #The component that handles the hitbox and what it can connect to
+      fixtures:
+        projectile:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.1,-0.1,0.1,0.1"
+          hard: false
+          mask:
+            - BulletImpassable
+    - type: Sprite #The component that handles basic visuals
+      noRot: false
+      sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+      layers:
+        - state: hook
+
+- type: entity
+  id: FishingHookPlasma
+  name: fishing hook
+  parent: FishingHookBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Projectile #The component that handles the fact that this was fired from something
+      deleteOnCollide: false
+      damage:
+        types:
+          Piercing: 5
+          Heat: 10
+    - type: Sprite #The component that handles basic visuals
+      noRot: false
+      sprite: _Impstation/Objects/Fishing/fishingrod_plasma.rsi
+      layers:
+        - state: hook
+
+- type: entity
+  id: FishingHookLing
+  name: Flesh Sucker
+  parent: FishingHookBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: FishingProjectile #The component that's used for joint stuff
+      jointLength: 1.5
+    - type: EmbeddableProjectile #The component that tells the item to embed onto things
+      autoRemoveDuration: 7
+      removalTime: 1
+      deleteOnRemove: true
+      sound: 
+        path: /Audio/Effects/Fluids/splat.ogg
+    - type: Projectile #The component that handles the fact that this was fired from something
+      deleteOnCollide: false
+      damage:
+        types:
+          Piercing: 7.5
+    - type: Sprite #The component that handles basic visuals
+      noRot: false
+      sprite: _Impstation/Objects/Fishing/fishingrod_Ling.rsi
+      layers:
+        - state: hook

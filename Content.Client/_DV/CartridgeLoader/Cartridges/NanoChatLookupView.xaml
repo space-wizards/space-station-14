@@ -1,0 +1,15 @@
+<cartridges:NanoChatLookupView
+    xmlns="https://spacestation14.io"
+    xmlns:cartridges="clr-namespace:Content.Client._DV.CartridgeLoader.Cartridges"
+    HorizontalExpand="True"
+    VerticalExpand="True"
+    StyleClasses="AngleRect">
+    <ScrollContainer Margin="-10"
+                     VerticalExpand="True"
+                     HorizontalExpand="True">
+        <BoxContainer Name="ContactsList"
+                      Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True" />
+    </ScrollContainer>
+</cartridges:NanoChatLookupView>

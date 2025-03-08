@@ -30,6 +30,8 @@
     name: ghost-role-information-listeningop-name
     description: ghost-role-information-listeningop-description
     rules: ghost-role-information-listeningop-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleTeamAntagonist
     requirements: # Worth considering these numbers for the goal of making sure someone willing to MRP takes this.
     - !type:DepartmentTimeRequirement
       department: Command
@@ -49,6 +51,8 @@
     name: ghost-role-information-recruiter-name
     description: ghost-role-information-recruiter-description
     rules: ghost-role-information-recruiter-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleSoloAntagonist
   - type: Sprite
     layers:
     - state: green
@@ -64,6 +68,8 @@
     name: ghost-role-information-synthesis-name
     description: ghost-role-information-synthesis-description
     rules: ghost-role-information-synthesis-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleSoloAntagonist
     requirements: # keep in sync with the antag prototype
     - !type:OverallPlaytimeRequirement
       time: 86400 # 24h so you probably know some general lore or something
@@ -82,6 +88,8 @@
     name: ghost-role-information-fugitive-name
     description: ghost-role-information-fugitive-description
     rules: ghost-role-information-fugitive-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleSoloAntagonist
     requirements:
     - !type:DepartmentTimeRequirement
       department: Security

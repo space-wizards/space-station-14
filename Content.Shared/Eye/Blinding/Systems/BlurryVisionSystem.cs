@@ -1,16 +1,11 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Eye.Blinding.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Lens;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
 public sealed class BlurryVisionSystem : EntitySystem
 {
-
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -18,29 +13,12 @@ public sealed class BlurryVisionSystem : EntitySystem
         SubscribeLocalEvent<VisionCorrectionComponent, GotEquippedEvent>(OnGlassesEquipped);
         SubscribeLocalEvent<VisionCorrectionComponent, GotUnequippedEvent>(OnGlassesUnequipped);
         SubscribeLocalEvent<VisionCorrectionComponent, InventoryRelayedEvent<GetBlurEvent>>(OnGetBlur);
-
-        SubscribeLocalEvent<LensSlotComponent, GotEquippedEvent>(OnLensEquipped);
-        SubscribeLocalEvent<LensSlotComponent, GotUnequippedEvent>(OnLensUnequipped);
-        SubscribeLocalEvent<LensSlotComponent, LensChangedEvent>(OnLensChanged);
-        SubscribeLocalEvent<LensSlotComponent, InventoryRelayedEvent<GetBlurEvent>>(OnGetBlurLens);
     }
 
     private void OnGetBlur(Entity<VisionCorrectionComponent> glasses, ref InventoryRelayedEvent<GetBlurEvent> args)
     {
         args.Args.Blur += glasses.Comp.VisionBonus;
         args.Args.CorrectionPower *= glasses.Comp.CorrectionPower;
-    }
-
-        private void OnGetBlurLens(Entity<LensSlotComponent> glasses, ref InventoryRelayedEvent<GetBlurEvent> args)
-    {
-        if (!_itemSlots.TryGetSlot(glasses.Owner, glasses.Comp.LensSlotId, out var itemSlot))
-            return;
-
-        if (!TryComp<VisionCorrectionComponent>(itemSlot.Item, out var component))
-            return;
-
-        args.Args.Blur += component.VisionBonus;
-        args.Args.CorrectionPower *= component.CorrectionPower;
     }
 
     public void UpdateBlurMagnitude(Entity<BlindableComponent?> ent)
@@ -72,21 +50,6 @@ public sealed class BlurryVisionSystem : EntitySystem
     private void OnGlassesUnequipped(Entity<VisionCorrectionComponent> glasses, ref GotUnequippedEvent args)
     {
         UpdateBlurMagnitude(args.Equipee);
-    }
-
-        private void OnLensEquipped(Entity<LensSlotComponent> glasses, ref GotEquippedEvent args)
-    {
-        UpdateBlurMagnitude(args.Equipee);
-    }
-
-    private void OnLensUnequipped(Entity<LensSlotComponent> glasses, ref GotUnequippedEvent args)
-    {
-        UpdateBlurMagnitude(args.Equipee);
-    }
-
-    private void OnLensChanged(Entity<LensSlotComponent> glasses, ref LensChangedEvent args)
-    {
-        UpdateBlurMagnitude(Transform(glasses.Owner).ParentUid);
     }
 }
 

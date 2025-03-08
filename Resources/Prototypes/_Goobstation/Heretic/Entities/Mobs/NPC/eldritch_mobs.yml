@@ -58,6 +58,8 @@
     rules: ghostrole-ghoul-rules
     raffle:
       settings: short
+    mindRoles: # imp
+    - MindRoleGhostRoleFamiliar
   - type: ActiveRadio
     channels:
     - Mansus
@@ -81,6 +83,8 @@
   - type: GhostRole
     name: ghostrole-stalker-name
     description: ghostrole-stalker-desc
+    mindRoles: # imp
+    - MindRoleGhostRoleFamiliar
   - type: ActionsProvider
     actions:
     - ActionHereticJaunt
@@ -116,6 +120,8 @@
   - type: GhostRole
     name: ghostrole-prophet-name
     description: ghostrole-prophet-desc
+    mindRoles: # imp
+    - MindRoleGhostRoleFamiliar
   - type: ActionsProvider
     actions:
     - ActionHereticJaunt

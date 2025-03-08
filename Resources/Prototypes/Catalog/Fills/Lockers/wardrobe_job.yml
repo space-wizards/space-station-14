@@ -161,6 +161,13 @@
        - id: ClothingEyesGlassesSunglasses
        - id: ClothingHeadHelmetBasic
        - id: ClothingOuterArmorBasic
+         orGroup: OuterArmor
+         prob: 0.33
+       - id: ClothingOuterArmorDuraVest # DeltaV
+         orGroup: OuterArmor
+         prob: 0.33
+       - id: ClothingOuterArmorPlateCarrier # DeltaV
+         orGroup: OuterArmor
        - id: ClothingUniformJumpskirtSec
 
  - type: entity
@@ -191,8 +198,19 @@
          amount: 2
        - id: ClothingUniformJumpsuitSalvageSpecialist
          amount: 2
+         orGroup: SalvJumpsuit
+         prob: 0.5
+       - id: ClothingUniformJumpsuitSalvageSpecialistDV # DeltaV
+         amount: 2
+         orGroup: SalvJumpsuit
        - id: ClothingUniformJumpskirtSalvageSpecialist #imp
          amount: 2
+         orGroup: SalvJumpskirt
+         prob: 0.5
+       - id: ClothingUniformJumpskirtSalvageSpecialistDV # DeltaV
+         amount: 2
+         orGroup: SalvJumpskirt
+
 
  - type: entity
    id: WardrobeAtmosphericsFilled

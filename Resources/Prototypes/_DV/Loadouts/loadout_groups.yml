@@ -1,3 +1,31 @@
+# Supply
+## Supply Assistant
+- type: loadoutGroup
+  id: SupplyAssistantJumpsuit
+  name: loadout-group-supply-assistant-jumpsuit
+  loadouts:
+  - LightBrownJumpsuit
+  - LightBrownJumpskirt
+
+- type: loadoutGroup
+  id: SupplyAssistantBackpack
+  name: loadout-group-supply-assistant-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+# Medical
+## Psychologist
+- type: loadoutGroup
+  id: PsychologistOuterClothing
+  name: loadout-group-psychologist-outerclothing
+  minLimit: 0
+  loadouts:
+  - MedicalDoctorWintercoat
+  - PsychologistSweater
+
+## Chemist
 - type: loadoutGroup
   id: ChemistGloves
   name: loadout-group-chemistry-gloves
@@ -6,3 +34,50 @@
   - LatexGloves
   - NitrileGloves
   - ChemistryGloves
+
+# Command
+## Administrative Assistant
+- type: loadoutGroup
+  id: AdminAssistantJumpsuit
+  name: loadout-group-admin-assistant-jumpsuit
+  loadouts:
+  - AdminAssistantJumpsuit
+  - AdminAssistantJumpskirt
+  - ClerkJumpskirt # imp - no clerk
+  - ClerkJumpsuit # imp - no clerk
+  - ClothingUniformNightclubSuit #imp
+  - ClothingUniformNightclubSuitSkirt #imp
+
+- type: loadoutGroup
+  id: AdminAssistantShoes
+  name: loadout-group-admin-assistant-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - WhiteDressShoes #imp
+  - BlackHeels #imp
+
+- type: loadoutGroup
+  id: AdminAssistantOuter
+  name: loadout-group-admin-assistant-outerclothing
+  minLimit: 0
+  loadouts:
+  - BartenderVest
+  - WinterCoatBlack
+  - WinterCoatBrown
+
+- type: loadoutGroup
+  id: AdminAssistantEar
+  name: loadout-group-admin-assistant-headset
+  loadouts:
+  - AdminAssistantHeadset
+  - AdminAssistantAltHeadset
+
+- type: loadoutGroup
+  id: AdminAssistantGloves
+  name: loadout-group-admin-assistant-gloves
+  minLimit: 0
+  loadouts:
+  - BlackGloves
+  - WhiteGloves

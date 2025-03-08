@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: SeedBase
+  name: packet of coffee seeds
+  description: Perfect for any self-respecting coffee roaster.
+  id: CoffeeSeeds
+  components:
+  - type: Seed
+    seedId: coffee
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Hydroponics/coffee.rsi

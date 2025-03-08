@@ -1,8 +1,13 @@
 - type: soundCollection
   id: HollowPlastic
-  files: 
+  files:
   - /Audio/_Impstation/Effects/hollow_plastic1.ogg
   - /Audio/_Impstation/Effects/hollow_plastic2.ogg
   - /Audio/_Impstation/Effects/hollow_plastic3.ogg
   - /Audio/_Impstation/Effects/hollow_plastic4.ogg
   - /Audio/_Impstation/Effects/hollow_plastic5.ogg
+
+- type: soundCollection
+  id: Ronck
+  files:
+  - /Audio/Effects/break_stone.ogg

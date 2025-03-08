@@ -1,0 +1,325 @@
+- type: marking
+  id: FeatheredLegL
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: featheredlegl
+
+- type: marking
+  id: FeatheredLegR
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: featheredlegr
+
+- type: marking
+  id: SpotsArmL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: spotsarml
+
+- type: marking
+  id: SpotsArmR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: spotsarmr
+
+- type: marking
+  id: SpotsChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: spotschest1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: spotschest2
+
+- type: marking
+  id: SpotsTail
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: spotstail
+
+- type: marking
+  id: VoxStreamers
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: streamers1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: streamers2
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: streamers3
+
+- type: marking
+  id: VChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: vchest1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: vchest2
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: vchest3
+
+- type: marking
+  id: VoxBald
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: balding
+
+- type: marking
+  id: LargeWattle
+  bodyPart: FacialHair
+  markingCategory: HeadSide
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: beardlargewattle
+
+- type: marking
+  id: BeardPadovana
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: beardpadovana
+
+- type: marking
+  id: HairPadovana
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: hairpadovana
+
+- type: marking
+  id: SmallWattle
+  bodyPart: FacialHair
+  markingCategory: HeadSide
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: beardsmallwattle
+
+- type: marking
+  id: VoxEmover
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: hairemover
+
+- type: marking
+  id: VoxPolish
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: hairpolish
+
+- type: marking
+  id: VoxWindswept
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: hairwindswept
+
+- type: marking
+  id: LargeComb
+  bodyPart: Hair
+  markingCategory: HeadSide
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: largecomb
+
+- type: marking
+  id: VoxEarhole
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: earhole
+
+- type: marking
+  id: FriendsOfAFeather
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: friendsfeather1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: friendsfeather2
+
+- type: marking
+  id: VoxNeckband
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: neckband
+
+- type: marking
+  id: VoxScarBlasted
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: scarheadblasted
+
+- type: marking
+  id: VoxScarIncision
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: scarincision
+
+- type: marking
+  id: VoxScarMangled
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: scarmangled
+
+- type: marking
+  id: VoxScarSpinal
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: scarspinal
+
+- type: marking
+  id: SideQuills
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: sidequills1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: sidequills2
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: sidequills3
+
+- type: marking
+  id: TailBloom
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: tailbloom1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: tailbloom2
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: tailbloom3
+
+- type: marking
+  id: UnderwearIxixSpecial
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: underwearixixspecial1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: underwearixixspecial2
+
+- type: marking
+  id: UnderwearStrappy
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: understrappy1
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: understrappy2
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: understrappy3
+
+- type: marking
+  id: UnderwearBriefsVox
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: underwearbriefs
+
+- type: marking
+  id: UnderwearHighWaisted
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Vox ]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
+    state: underwearhighwaisted

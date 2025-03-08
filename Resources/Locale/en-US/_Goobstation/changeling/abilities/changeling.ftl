@@ -13,6 +13,7 @@ changeling-absorb-start-target = You feel a sharp stabbing pain!
 changeling-absorb-start-others = {CAPITALIZE($user)} hunches over {THE($target)}!
 changeling-absorb-fail-incapacitated = We cannot consume {THE($target)} until {SUBJECT($target)} {CONJUGATE-BE($target)} incapacitated.
 changeling-absorb-fail-absorbed = We have already consumed {THE($target)}.
+changeling-absorb-fail-diminishing-returns = We can gain no more sustenence from {THE($target)}. We must consume a more complex being.
 changeling-absorb-fail-unabsorbable = We cannot consume {THE($target)}.
 changeling-absorb-fail-extremely-bloated = {CAPITALIZE(THE($target))} is too rotten to consume.
 changeling-absorb-end-self = We have consumed {THE($target)}.
@@ -44,7 +45,8 @@ changeling-sting-extract-fail = {CAPITALIZE(THE($target))} lacks extractable DNA
 changeling-sting-extract-max = We cannot extract more DNA until we assume a new form.
 
 changeling-stasis-enter = We enter regenerative stasis.
-changeling-stasis-enter-fail = We cannot enter stasis.
+changeling-stasis-enter-fail-already = We are already in stasis.
+changeling-stasis-enter-fail-eaten = We have been consumed, and cannot enter stasis.
 changeling-stasis-exit = We rise from stasis.
 changeling-stasis-exit-fail = We are not in stasis.
 changeling-stasis-exit-fail-dead = We have been hollowed, and cannot rise from stasis.

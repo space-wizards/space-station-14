@@ -7,3 +7,6 @@ contraband-examine-text-Syndicate = [color={$color}]This item is highly illegal 
 
 contraband-examine-text-avoid-carrying-around = [color=red][italic]You probably want to avoid having this in your possession without a good reason.[/italic][/color]
 contraband-examine-text-in-the-clear = [color=green][italic]You should be in the clear to have possession of this.[/italic][/color]
+
+contraband-department-plural = {$department}
+contraband-job-plural = {MAKEPLURAL($job)}

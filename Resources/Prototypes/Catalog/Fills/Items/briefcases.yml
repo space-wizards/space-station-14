@@ -30,7 +30,7 @@
 
 - type: entity
   id: BriefcaseSyndieLobbyingBundleFilled
-  parent: BriefcaseSyndie
+  parent: CybersunBriefcase # DeltaV
   suffix: Syndicate, Spesos
   components:
   - type: StorageFill
@@ -41,8 +41,12 @@
       - id: EncryptionKeySyndie
       - id: RubberStampTrader
       - id: PhoneInstrumentSyndicate
-      - id: ClothingUniformJumpsuitTacticool
-      - id: ClothingOuterCoatJensen
+      # begin DeltaV
+      #- id: ClothingUniformJumpsuitTacticool
+      #- id: ClothingOuterCoatJensen
+      - id: ClothingOuterCybersunOvercoat
+      - id: ClothingUniformCybersunAttorney
+      # end DeltaV
       - id: ClothingHandsGlovesCombat
       - id: ClothingMaskNeckGaiter
       - id: SyndieHandyFlag

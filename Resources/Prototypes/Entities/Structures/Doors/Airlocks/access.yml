@@ -63,6 +63,15 @@
       board: [ DoorElectronicsBar ]
 
 - type: entity
+  parent: AirlockServiceLocked
+  id: AirlockBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
+- type: entity
   parent: AirlockHydroponics
   id: AirlockHydroponicsLocked
   suffix: Hydroponics, Locked
@@ -302,7 +311,7 @@
       board: [ DoorElectronicsCommand ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockCaptain #imp edit
   id: AirlockCaptainLocked
   suffix: Captain, Locked
   components:
@@ -311,7 +320,7 @@
       board: [ DoorElectronicsCaptain ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockChiefMedicalOfficer #imp edit
   id: AirlockChiefMedicalOfficerLocked
   suffix: ChiefMedicalOfficer, Locked
   components:
@@ -320,7 +329,7 @@
       board: [ DoorElectronicsChiefMedicalOfficer ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockChiefEngineer #imp edit
   id: AirlockChiefEngineerLocked
   suffix: ChiefEngineer, Locked
   components:
@@ -329,7 +338,7 @@
       board: [ DoorElectronicsChiefEngineer ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockHeadOfSecurity #imp edit
   id: AirlockHeadOfSecurityLocked
   suffix: HeadOfSecurity, Locked
   components:
@@ -338,7 +347,7 @@
       board: [ DoorElectronicsHeadOfSecurity ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockResearchDirector #imp edit
   id: AirlockResearchDirectorLocked
   suffix: ResearchDirector, Locked
   components:
@@ -347,7 +356,7 @@
       board: [ DoorElectronicsResearchDirector ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockHeadOfPersonnel #imp edit
   id: AirlockHeadOfPersonnelLocked
   suffix: HeadOfPersonnel, Locked
   components:
@@ -356,7 +365,7 @@
       board: [ DoorElectronicsHeadOfPersonnel ]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockQuartermaster #imp edit
   id: AirlockQuartermasterLocked
   suffix: Quartermaster, Locked
   components:
@@ -465,6 +474,16 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockBarKitchenGlassLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
 
 - type: entity
   parent: AirlockExternalGlass
@@ -684,7 +703,7 @@
       board: [ DoorElectronicsCommand ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockCaptainGlass #imp edit
   id: AirlockCaptainGlassLocked
   suffix: Captain, Locked
   components:
@@ -693,7 +712,7 @@
       board: [ DoorElectronicsCaptain ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockChiefMedicalOfficerGlass #imp edit
   id: AirlockChiefMedicalOfficerGlassLocked
   suffix: ChiefMedicalOfficer, Locked
   components:
@@ -702,7 +721,7 @@
       board: [ DoorElectronicsChiefMedicalOfficer ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockChiefEngineerGlass #imp edit
   id: AirlockChiefEngineerGlassLocked
   suffix: ChiefEngineer, Locked
   components:
@@ -711,7 +730,7 @@
       board: [ DoorElectronicsChiefEngineer ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockHeadOfSecurityGlass #imp edit
   id: AirlockHeadOfSecurityGlassLocked
   suffix: HeadOfSecurity, Locked
   components:
@@ -720,7 +739,7 @@
       board: [ DoorElectronicsHeadOfSecurity ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockResearchDirectorGlass #imp edit
   id: AirlockResearchDirectorGlassLocked
   suffix: ResearchDirector, Locked
   components:
@@ -729,7 +748,7 @@
       board: [ DoorElectronicsResearchDirector ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockHeadOfPersonnelGlass #imp edit
   id: AirlockHeadOfPersonnelGlassLocked
   suffix: HeadOfPersonnel, Locked
   components:
@@ -738,7 +757,7 @@
       board: [ DoorElectronicsHeadOfPersonnel ]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockQuartermasterGlass #imp edit
   id: AirlockQuartermasterGlassLocked
   suffix: Quartermaster, Locked
   components:
@@ -899,6 +918,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
+
+- type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
 
 - type: entity
   parent: AirlockMaintServiceLocked

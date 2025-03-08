@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobQuartermaster
-      time: 180000 #50 hrs
+      time: 108000 #30 hrs, ~20 rounds
 
 - type: loadout
   id: QuartermasterVeteranHeadset
@@ -23,3 +23,8 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: VeteranQM
+
+- type: loadout
+  id: QuartermasterWintercoatXXXL
+  equipment:
+    outerClothing: ClothingOuterCoatQmHuge

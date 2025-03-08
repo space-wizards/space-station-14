@@ -45,3 +45,28 @@
         reagent: Theobromine
         amount: 0.1
   fizziness: 0.1
+
+- type: reagent
+  id: OrangeCoffee
+  name: reagent-name-orangecoffee
+  parent: BaseDrink
+  desc: reagent-desc-orangecoffee
+  physicalDesc: reagent-physical-desc-citric
+  flavor: orangecoffee
+  color: "#f8af41"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/orangecoffee.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
+  fizziness: 0.1

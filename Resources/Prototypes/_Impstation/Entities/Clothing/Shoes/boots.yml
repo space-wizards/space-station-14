@@ -21,3 +21,335 @@
     sprite: _Impstation/Clothing/Shoes/Boots/winterbootscourier.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Shoes/Boots/winterbootscourier.rsi
+
+# Colorable winter boots
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorBlack
+  name: black winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#3f3f3f"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#3f3f3f"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#3f3f3f"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#3f3f3f"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorPurple
+  name: purple winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#9C0DE1"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#9C0DE1"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#9C0DE1"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#9C0DE1"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorRed
+  name: red winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#940000"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#940000"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#940000"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#940000"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorBlue
+  name: blue winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#0089EF"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#0089EF"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#0089EF"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#0089EF"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorBrown
+  name: brown winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#723A02"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#723A02"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#723A02"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#723A02"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorGray
+  name: gray winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#999999"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#999999"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#999999"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#999999"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorGreen
+  name: green winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#5ABF2F"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#5ABF2F"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#5ABF2F"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#5ABF2F"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorLightBrown
+  name: light brown winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#C09F72"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#C09F72"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#C09F72"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#C09F72"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorOrange
+  name: orange winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#EF8100"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#EF8100"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#EF8100"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#EF8100"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorWhite
+  name: white winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#EAE8E8"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#EAE8E8"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#EAE8E8"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#EAE8E8"
+      - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterColorYellow
+  name: yellow winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    layers:
+    - state: bootbits-icon
+      color: "#EBE216"
+    - state: winterbits-icon
+  - type: Item
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    inhandVisuals:
+      left:
+      - state: bootbits-inhand-left
+        color: "#EBE216"
+      - state: winterbits-inhand-left
+      right:
+      - state: bootbits-inhand-right
+        color: "#EBE216"
+      - state: winterbits-inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscolor.rsi
+    clothingVisuals:
+      shoes:
+      - state: bootbits-equipped-FEET
+        color: "#EBE216"
+      - state: winterbits-equipped-FEET

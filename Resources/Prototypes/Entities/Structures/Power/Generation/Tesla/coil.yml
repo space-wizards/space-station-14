@@ -101,8 +101,11 @@
               SheetSteel1:
                 min: 2
                 max: 4
+  - type: GuideHelp
+    guides:
+    - TeslaEngine
+    - SingularityTeslaEngine
   - type: SupermatterImmune # imp
-  #- type: GuideHelp # TODO - add Tesla Guide
 
 - type: entity
   id: TeslaGroundingRod
@@ -185,6 +188,9 @@
               SheetSteel1:
                 min: 2
                 max: 4
+  - type: GuideHelp
+    guides:
+    - TeslaEngine
+    - SingularityTeslaEngine
   - type: SupermatterImmune # imp
-  #- type: GuideHelp # TODO - add Tesla Guide
 

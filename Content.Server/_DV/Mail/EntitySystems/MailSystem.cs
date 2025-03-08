@@ -16,6 +16,7 @@ using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Radio.EntitySystems; // imp
 using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared._DV.CCVars;
@@ -36,6 +37,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.PDA;
+using Content.Shared.Radio; // imp
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
@@ -45,6 +47,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 
@@ -72,8 +75,9 @@ public sealed class MailSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-
     [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
+    [Dependency] private readonly RadioSystem _radioSystem = default!; // imp
+    [Dependency] private readonly IGameTiming _timing = default!; // imp
 
     private ISawmill _sawmill = default!;
 
@@ -99,21 +103,25 @@ public sealed class MailSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var interval = _config.GetCVar(DCCVars.MailTeleportIntervalInMinutes);
         var query = EntityQueryEnumerator<MailTeleporterComponent>();
 
         while (query.MoveNext(out var uid, out var mailTeleporter))
         {
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 continue;
-
-            mailTeleporter.Accumulator += frameTime;
-
-            if (mailTeleporter.Accumulator < TimeSpan.FromMinutes(interval).TotalSeconds)
+            var curTime = _timing.CurTime;
+            // imp. replacing the CCVar
+            if (curTime < mailTeleporter.NextDelivery)
                 continue;
 
-            mailTeleporter.Accumulator -= (float)TimeSpan.FromMinutes(interval).TotalSeconds;
-            SpawnMail(uid, mailTeleporter);
+            TimeSpan nextTimeToAdd;
+            if (_random.Prob(0.5f)) // weight the result towards the average. 
+                nextTimeToAdd = _random.Next(mailTeleporter.MinInterval, mailTeleporter.MaxInterval);
+            else
+                nextTimeToAdd = mailTeleporter.AverageInterval;
+
+            mailTeleporter.NextDelivery = _timing.CurTime + nextTimeToAdd;
+            SpawnMail(uid, nextTimeToAdd, mailTeleporter);
         }
     }
 
@@ -636,7 +644,7 @@ public sealed class MailSystem : EntitySystem
     /// <summary>
     /// Handle the spawning of all the mail for a mail teleporter.
     /// </summary>
-    private void SpawnMail(EntityUid uid, MailTeleporterComponent? component = null)
+    private void SpawnMail(EntityUid uid, TimeSpan nextDelivery, MailTeleporterComponent? component = null)
     {
         if (!Resolve(uid, ref component))
         {
@@ -662,7 +670,7 @@ public sealed class MailSystem : EntitySystem
         }
 
         var deliveryCount = 1 + candidateList.Count / _config.GetCVar(DCCVars.MailCandidatesPerDelivery);
-
+        List<string> chosenParcels = [];
         for (var i = 0; i < deliveryCount; i++)
         {
             var candidate = _random.Pick(candidateList);
@@ -719,6 +727,16 @@ public sealed class MailSystem : EntitySystem
         Spawn(component.BeamInFx, Transform(uid).Coordinates);
 
         _audio.PlayPvs(component.TeleportSound, uid);
+
+        if (component.RadioNotification) // imp
+            Report(uid, component.RadioChannel, component.ShipmentRecievedMessage, ("timeLeft", Math.Round(nextDelivery.TotalMinutes)));
+    }
+
+    private void Report(EntityUid source, string channelName, string messageKey, params (string, object)[] args) // imp
+    {
+        var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
+        var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
+        _radioSystem.SendRadioMessage(source, message, channel, source);
     }
 
     private void OpenMail(EntityUid uid, MailComponent? component = null, EntityUid? user = null)

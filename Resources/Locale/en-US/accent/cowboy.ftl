@@ -112,8 +112,8 @@ accent-cowboy-replacement-37 = hog tie
 accent-cowboy-words-38 = handcuffed
 accent-cowboy-replacement-38 = hog tied
 
-accent-cowboy-words-39 = hell
-accent-cowboy-replacement-39 = tarnation
+accent-cowboy-words-39 = what the hell
+accent-cowboy-replacement-39 = what in tarnation
 
 accent-cowboy-words-40 = hello
 accent-cowboy-replacement-40 = howdy
@@ -191,7 +191,7 @@ accent-cowboy-words-64 = please tell me
 accent-cowboy-replacement-64 = pray tell,
 
 accent-cowboy-words-65 = punch
-accent-cowboy-replacement-65 = lick
+accent-cowboy-replacement-65 = slug
 
 accent-cowboy-words-66 = punched
 accent-cowboy-replacement-66 = slogged
@@ -250,8 +250,8 @@ accent-cowboy-replacement-83 = yarn
 accent-cowboy-words-84 = thank you
 accent-cowboy-replacement-84 = much obliged
 
-accent-cowboy-words-85 = thanks
-accent-cowboy-replacement-85 = much obliged
+accent-cowboy-words-85 = hold on
+accent-cowboy-replacement-85 = hold your horses
 
 accent-cowboy-words-86 = thief
 accent-cowboy-replacement-86 = rustler

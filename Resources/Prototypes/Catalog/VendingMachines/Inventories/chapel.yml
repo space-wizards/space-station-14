@@ -1,34 +1,61 @@
 - type: vendingMachineInventory
   id: PietyVendInventory
   startingInventory:
-    ClothingUniformJumpsuitChaplain: 2
-    ClothingUniformJumpskirtChaplain: 2
-    ClothingUniformFuneralSuit: 4 #imp
-    ClothingUniformFuneralSuitSkirt: 4 #imp
-    ClothingUniformJumpsuitMonasticRobeDark: 1
-    ClothingUniformJumpsuitMonasticRobeLight: 1
-    ClothingNeckStoleChaplain: 1
-    ClothingOuterHoodieChaplain: 1
-    ClothingOuterHoodieBlack: 1
-    ClothingHeadHatHoodNunHood: 1
-    ClothingOuterNunRobe: 1
+    ClothingBeltChaplainDragon: 1 # imp
+    ClothingEyesChaplainBlindfold: 1 # imp
+    ClothingHeadHatDruid: 1 # imp
     ClothingHeadHatFez: 1
+    ClothingHeadHatHoodNunHood: 1
+    ClothingHeadHatKippahBlueAndGold: 1 # imp
+    ClothingHeadHatKippahSimple: 3 # imp
+    ClothingHeadHatKippahWhiteAndBlue: 1 # imp
+    ClothingHeadHatMoon: 1 # imp
     ClothingHeadHatPlaguedoctor: 1
+    ClothingHeadHatShrineMaidenWig: 2 # imp edit - giving this religious outfit the sanctity it deserves
+    ClothingHeadHatSun: 1 # imp
+    ClothingHeadHatTidal: 1 # imp
+    ClothingHeadHatVeil: 1 # imp
     ClothingHeadHatWitch: 1
     ClothingHeadHatWitch1: 1
-    ClothingOuterPlagueSuit: 1
-    ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    ClothingMaskClayshaper: 1 # imp
+    ClothingMaskFire: 1 # imp
+    ClothingMaskPlague: 1
+    ClothingNeckChaplainDragon: 1 # imp
+    ClothingNeckClayshaper: 1 # imp
+    ClothingNeckDruid: 1 # imp
+    ClothingNeckDruidMantle: 1 # imp
+    ClothingNeckStoleChaplain: 1
+    ClothingNeckSun: 1 # imp
+    ClothingNeckTidal: 1 # imp
+    ClothingOuterHoodieBlack: 1
+    ClothingOuterHoodieChaplain: 1
+    ClothingOuterMoon: 1 # imp
+    ClothingOuterNunRobe: 1
+    ClothingOuterPlagueSuit: 1
+    ClothingOuterSuitShrineMaiden: 2 # imp
+    ClothingUniformFuneralSuit: 4 # imp
+    ClothingUniformFuneralSuitSkirt: 4 # imp
+    ClothingUniformJumpskirtChaplain: 2
+    ClothingUniformJumpsuitChaplain: 2
+    ClothingUniformJumpsuitMonasticRobeDark: 1
+    ClothingUniformJumpsuitMonasticRobeLight: 1
+    ClothingUniformSkirtClayshaper: 1 # imp
+    ClothingUniformSkirtDruid: 1 # imp
+    ClothingUniformSkirtMoon: 1 # imp
+    ClothingUniformSkirtTidal: 1 # imp
+    ClothingUniformSun: 1 # imp
+    ClothingUniformTech: 1 # imp
     Bible: 1
     BoxCandle: 2
     BoxCandleSmall: 2
+    Gohei: 2 # imp
     Urn: 5
-    ClothingHeadHatKippahSimple: 3 #imp
-    ClothingHeadHatKippahWhiteAndBlue: 1 #imp
-    ClothingHeadHatKippahBlueAndGold: 1 #imp
-  contrabandInventory:
-    ClothingMaskClownChaplin: 1
+  contrabandInventory: # all imp edits
+    ClothingMaskClownChaplain: 1
     ClothingOuterClownPriest: 1
+    ClothingMaskSilent: 1
+    ClothingOuterSilent: 1
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1

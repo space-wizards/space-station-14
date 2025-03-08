@@ -55,7 +55,7 @@
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
   - type: Item
-    size: Tiny
+    size: Small #imp
     sprite: Objects/Specific/Chemistry/vial.rsi
     shape:
     - 0,0,0,0
@@ -149,6 +149,21 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
+
+- type: entity
+  id: PlasmaChemistryVial
+  parent: BaseChemistryEmptyVial
+  suffix: plasma
+  components:
+  - type: Label
+    currentLabel: reagent-name-plasma
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 10
+        reagents:
+          - ReagentId: Plasma
+            Quantity: 10
 
 - type: entity
   id: SubjuzineChemistryVial

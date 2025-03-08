@@ -46,6 +46,52 @@
   - type: StealTarget
     stealGroup: SecPillCanister
 
+- type: entity
+  name: head of security's pill refill # sent through the mail
+  parent: [PillCanister, BaseCommandContraband]
+  description: They keep sending these. God, you can't live without them at this point. Are there less than there were yesterday? # change this if it's too depressing?
+  id: PillCanisterHOSRefill
+  suffix: Psicodine 18u Happiness 2u, 2
+  components:
+  - type: Label
+    currentLabel: psicodine 20u
+  - type: StorageFill
+    contents:
+    - id: PillLacedPsicodine
+      amount: 2
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
+    state: pill_canister # while it would make sense within contect, we shouldn't use the hos bottle sprite, given that the refill is NOT a thief target.
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+
+- type: entity
+  name: special pill sampler
+  parent: [PillCanister, BaseSecurityContraband]
+  description: A special pill, guaranteed to make any rough shift better. Try it out! # get em hooked early
+  id: PillCanisterWardenSample
+  suffix: Psicodine 18u Happiness 2u, 1
+  components:
+  - type: Label
+    currentLabel: psicodine 20u
+  - type: StorageFill
+    contents:
+    - id: PillLacedPsicodine
+      amount: 1
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
+    state: pill_canister
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+
 # Pure happy pills & pillbottle
 
 - type: entity

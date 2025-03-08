@@ -1,0 +1,26 @@
+- type: job
+  id: SupplyAssistant
+  name: job-name-supply-assistant
+  description: job-description-supply-assistant
+  startingGear: SupplyAssistantGear
+  playTimeTracker: JobSupplyAssistant
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Cargo
+    time: 54000 #15 hrs
+    inverted: true # stop playing intern if you're good at cargo!
+  icon: "JobIconSupplyAssistant"
+  supervisors: job-supervisors-qm
+  canBeAntag: false # imp. lol
+  access:
+  - Cargo
+  - Maintenance
+  - Logistics #imp
+
+- type: startingGear
+  id: SupplyAssistantGear
+  equipment:
+    shoes: ClothingShoesColorBlack
+    id: SupplyAssistantPDA
+    ears: ClothingHeadsetCargo
+    pocket1: BookLogistics

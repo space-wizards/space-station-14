@@ -1,0 +1,123 @@
+
+### ACTIVE INFLUENCES
+- type: influence
+  id: InfluenceAberrantLapse
+  name: influence-name-lapse
+  influenceType: influence-type-active
+  cost: 10
+  description: influence-description-lapse
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: lapse
+  action: ActionCosmicLapse
+  tier: 1
+
+# - type: influence
+#   id: InfluenceNullGlare
+#   name: influence-name-glare
+#   influenceType: influence-type-active
+#   cost: 10
+#   description: influence-description-glare
+#   icon:
+#     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+#     state: glare
+#   action: ActionCosmicGlare
+
+- type: influence
+  id: InfluenceNullGlare #Yeah it's actually shunt right now but we give it the same slot
+  name: influence-name-shunt
+  influenceType: influence-type-active
+  cost: 10
+  description: influence-description-shunt
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: blank
+  action: ActionCosmicBlank
+  tier: 1 #remember to update when this gets set back to what it should be
+
+- type: influence
+  id: InfluenceForceIngress
+  name: influence-name-ingress
+  influenceType: influence-type-active
+  cost: 14
+  description: influence-description-ingress
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: ingress
+  action: ActionCosmicIngress
+  tier: 2
+
+- type: influence
+  id: InfluenceVacuousImposition
+  name: influence-name-imposition
+  influenceType: influence-type-active
+  cost: 20
+  description: influence-description-imposition
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: entropic
+  action: ActionCosmicImposition
+  tier: 3
+
+- type: influence
+  id: InfluenceAstralNova
+  name: influence-name-nova
+  influenceType: influence-type-active
+  cost: 20
+  description: influence-description-nova
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: nova
+  action: ActionCosmicNova
+  tier: 3
+
+
+### PASSIVE INFLUENCES
+
+- type: influence
+  id: InfluenceEschewMetabolism
+  name: influence-name-eschew
+  influenceType: influence-type-passive
+  cost: 10
+  description: influence-description-eschew
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: metabolism
+  passiveName: eschew
+  tier: 1
+
+- type: influence
+  id: InfluenceUnboundStep
+  name: influence-name-step
+  influenceType: influence-type-passive
+  cost: 14
+  description: influence-description-step
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: step
+  passiveName: step
+  tier: 2
+
+- type: influence
+  id: InfluenceAstralStride
+  name: influence-name-stride
+  influenceType: influence-type-passive
+  cost: 20
+  description: influence-description-stride
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: stride
+  passiveName: stride
+  tier: 3
+
+- type: influence
+  id: InfluenceVacuousVitality
+  name: influence-name-vitality
+  influenceType: influence-type-passive
+  cost: 20
+  description: influence-description-vitality
+  icon:
+    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+    state: astral
+  passiveName: vitality
+  tier: 3

@@ -1,0 +1,16 @@
+- type: entity
+  id: DresserHospitalityDirectorFilled
+  parent: Dresser
+  suffix: Filled, Hospitality Director
+  components:
+  - type: StorageFill 
+    contents:
+      - id: ClothingHeadBandHD
+      - id: ClothingHeadHatBeretHD
+      - id: ClothingHeadHatHDsoft
+      - id: ClothingUniformJumpsuitHDTurtle
+      - id: ClothingUniformJumpskirtHDTurtle
+      - id: ClothingUniformJumpsuitHospitalityDirectorJanitor
+      - id: ClothingUniformJumpskirtHospitalityDirectorJanitor
+      - id: ClothingOuterWinterHD
+      - id: ClothingNeckCloakHd

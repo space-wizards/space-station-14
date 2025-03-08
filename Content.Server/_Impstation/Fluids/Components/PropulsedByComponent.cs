@@ -7,6 +7,5 @@ namespace Content.Server._Impstation.Fluids;
 public sealed partial class PropulsedByComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
     public HashSet<Entity<PropulsionComponent>> Sources = new();
 }

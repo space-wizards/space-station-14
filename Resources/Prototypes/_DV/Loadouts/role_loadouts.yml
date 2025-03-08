@@ -1,0 +1,24 @@
+- type: roleLoadout
+  id: JobSupplyAssistant
+  groups:
+  - GroupTankHarness
+  - SupplyAssistantJumpsuit
+  - SupplyAssistantBackpack
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobAdministrativeAssistant
+  groups:
+  - AdminAssistantJumpsuit
+  - AdminAssistantOuter
+  - AdminAssistantGloves
+  - AdminAssistantShoes
+  - AdminAssistantEar
+  - AdminAssistantBackpack #imp
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool

@@ -8,24 +8,52 @@ namespace Content.Server.GameTicking;
 public sealed partial class GameTicker
 {
     [ViewVariables]
-    public string? LobbyBackground { get; private set; }
+    public string? LobbyBackgroundImage { get; private set; } // imp edit
 
     [ViewVariables]
-    private List<ResPath>? _lobbyBackgrounds;
+    public string? LobbyBackgroundName { get; private set; } // imp edit
+
+    [ViewVariables]
+    public string? LobbyBackgroundArtist { get; private set; } // imp edit
+
+    [ViewVariables]
+    private List<LobbyBackgroundPrototype> _lobbyBackgrounds = []; // imp edit
 
     private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg", "webp"};
 
     private void InitializeLobbyBackground()
     {
-        _lobbyBackgrounds = _prototypeManager.EnumeratePrototypes<LobbyBackgroundPrototype>()
-            .Select(x => x.Background)
-            .Where(x => WhitelistedBackgroundExtensions.Contains(x.Extension))
-            .ToList();
+        // imp edit
+        foreach (var prototype in _prototypeManager.EnumeratePrototypes<LobbyBackgroundPrototype>())
+        {
+            if (!WhitelistedBackgroundExtensions.Contains(prototype.Background.Extension))
+            {
+                _sawmill.Warning($"Lobby background '{prototype.ID}' has an invalid extension '{prototype.Background.Extension}' and will be ignored.");
+                continue;
+            }
+
+            _lobbyBackgrounds.Add(prototype);
+        }
 
         RandomizeLobbyBackground();
     }
 
-    private void RandomizeLobbyBackground() {
-        LobbyBackground = _lobbyBackgrounds!.Any() ? _robustRandom.Pick(_lobbyBackgrounds!).ToString() : null;
+    private void RandomizeLobbyBackground()
+    {
+        // imp edit
+        if (_lobbyBackgrounds.Count > 0)
+        {
+            var background = _robustRandom.Pick(_lobbyBackgrounds);
+
+            LobbyBackgroundImage = background.Background.ToString();
+            LobbyBackgroundName = background.Name;
+            LobbyBackgroundArtist = background.Artist;
+        }
+        else
+        {
+            LobbyBackgroundImage = null;
+            LobbyBackgroundName = null;
+            LobbyBackgroundArtist = null;
+        }
     }
 }

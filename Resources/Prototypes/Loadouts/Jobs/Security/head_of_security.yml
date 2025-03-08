@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 36000 # Imp, 10 hrs
+      time: 18000 #5 hrs, ~4 rounds, half the standard due to HoS having an extreme unlock requirement #imp
 
 # Jumpsuit
 - type: loadout

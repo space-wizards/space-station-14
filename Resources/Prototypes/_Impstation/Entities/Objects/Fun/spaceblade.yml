@@ -1,0 +1,56 @@
+﻿- type: entity
+  id: SpaceBladeBROS
+  parent: SpaceBlade
+  suffix: bros
+  description: Let it UNGH
+  components:
+  - type: Sprite
+    state: brosblade
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Animals/bros_hurt.ogg
+  - type: UseDelay
+    delay: 2.0
+  - type: DamageOtherOnHit
+    soundHit:
+      path: /Audio/_Impstation/Animals/bros_hit.ogg
+
+- type: entity
+  id: SpaceBladeGay
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: gayblade
+
+- type: entity
+  id: SpaceBladeRatKing
+  parent: SpaceBlade
+  suffix: rat king
+  description: # this was carousels idea
+    "Blade of the Rat King covenant.
+
+    Join this covenant and wield this blade
+    to lure trespassers of the Rat King's territory
+    into your world.
+
+    If you receive this blade,
+    rejoice in the opportunity to demonstrate
+    your allegiance to an eminently noble being."
+  components:
+  - type: Sprite
+    state: ratking
+  - type: GasTank
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+      - 0 # oxygen
+      - 0 # nitrogen
+      - 0 # CO2
+      - 0 # plasma
+      - 0 # tritium
+      - 0 # water vapor
+      - 0.4101137219 # miasma
+      temperature: 293.15

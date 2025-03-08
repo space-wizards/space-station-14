@@ -60,7 +60,7 @@ steal-target-groups-animal-named-cat = CMO's pet
 
 steal-target-groups-animal-ian = Ian
 steal-target-groups-animal-mc-griff = McGriff
-steal-target-groups-animal-walter = Walter
+steal-target-groups-animal-walter = Chemist's dog
 steal-target-groups-animal-morty = Morty
 steal-target-groups-animal-renault = Renault
 steal-target-groups-animal-shiva = Shiva

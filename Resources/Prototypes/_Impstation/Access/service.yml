@@ -1,0 +1,23 @@
+- type: accessLevel
+  id: HospitalityDirector
+  name: id-card-access-level-hospitality-director
+
+- type: accessLevel
+  id: Clown
+  name: id-card-access-level-clown
+
+- type: accessLevel
+  id: Librarian
+  name: id-card-access-level-librarian
+
+- type: accessLevel
+  id: Mime
+  name: id-card-access-level-mime
+
+- type: accessLevel
+  id: Musician
+  name: id-card-access-level-musician
+  
+- type: accessLevel
+  id: Reporter
+  name: id-card-access-level-reporter

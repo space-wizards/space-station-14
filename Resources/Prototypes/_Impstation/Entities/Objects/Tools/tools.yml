@@ -104,7 +104,7 @@
   - type: StaticPrice
     price: 100
   - type: MeleeWeapon
-    wideAnimationRotation: 0 #youre just hitting people with the backside of it
+    wideAnimationRotation: 180 #youre just hitting people with the backside of it
     attackRate: 1
     damage:
       types:
@@ -112,3 +112,34 @@
     soundHit:
       collection: WeakHit
   
+- type: entity
+  id: RCDRechargingTckTck
+  parent: RCD
+  name: micro RCD
+  description: A bite-sized construction device for cyborgs. Uses an internal battery charge to construct wiring and connective devices.
+  suffix: AutoRecharge
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/tckrcd.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: Clothing
+    sprite: _Impstation/Objects/Tools/tckrcd.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: LimitedCharges
+    maxCharges: 20
+    charges: 20
+  - type: AutoRecharge
+    rechargeDuration: 10
+  - type: RCD
+    availablePrototypes:
+    - LVCable
+    - MVCable
+    - SignalButton
+    - TwoWayLever
+    - ClothingHeadHatCone
+    - PowerCellSmall
+    - Decalamp

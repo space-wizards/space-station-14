@@ -29,3 +29,12 @@
   inhand:
     - GoblinClaymore
     - WoodenBuckler
+
+- type: startingGear
+  id: DinoCommanderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTacticool
+    outerClothing: ClothingOuterHardsuitDinoUnremoveable
+    ears: ClothingHeadsetCommand
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJack

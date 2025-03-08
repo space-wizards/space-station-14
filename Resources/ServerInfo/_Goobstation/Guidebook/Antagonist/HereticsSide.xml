@@ -9,6 +9,14 @@
 
   Eldritch Armor provides great protection while also acting as a focus when hooded.
 
+  ## Priest’s Ritual
+  <Box>
+    <GuideEntityEmbed Entity="HereticEldritchFlask" Caption=""/>
+  </Box>
+  Allows you to transmute a water tank and a shard of glass into an Eldritch Flask.
+
+  This flask contains Omnizine as well as anti-bleeding chemicals.
+ 
   ## Ritual of Knowledge
   You learn a special, one-time-only ritual that requires 4 different items, from various organs to candles and stun batons.
 

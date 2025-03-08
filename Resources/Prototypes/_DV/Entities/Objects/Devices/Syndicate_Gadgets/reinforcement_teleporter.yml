@@ -12,6 +12,9 @@
     name: ghost-role-information-nukie-mouse-name
     description: ghost-role-information-nukie-mouse-description
     rules: ghost-role-information-familiar-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleFamiliar
   - type: GhostRoleMobSpawner
     prototype: MobNukieMouse
   - type: EmitSoundOnUse

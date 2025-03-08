@@ -8,8 +8,8 @@ knowledge-path-side-s3-armor-desc =
 
 knowledge-path-side-s3-flask-name = Priest's Ritual
 knowledge-path-side-s3-flask-desc =
-    Transmute a tank of water into a Flask of Eldritch Water.
-    When consumed, the water will heal a bit of everything for Heretics, and hurt a bit of everything for Heathens.
+    Transmute a tank of water and a glass shard into a Flask of Eldritch Water.
+    The flask contains a mixture of potent medicines.
 
 ## stage 5
 knowledge-path-side-s5-name = Ritual of Knowledge

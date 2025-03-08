@@ -1,0 +1,40 @@
+# coffee
+- type: constructionGraph
+  id: Coffee
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: light roasted coffee
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 365 # ~92 C - arbitrarily set to take a while
+      # - minTemperature: 453 # 180 C
+
+  - node: light roasted coffee
+    entity: FoodCoffeeBeansRoastedLight
+    edges:
+    - to: medium roasted coffee
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 375 # ~102 C - arbitrarily set to take a while
+      # - minTemperature: 477 # 204 C
+
+  - node: medium roasted coffee
+    entity: FoodCoffeeBeansRoastedMedium
+    edges:
+    - to: dark roasted coffee
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 385 # ~112 C - arbitrarily set to take a while
+      #- minTemperature: 493 # 220 C
+
+  - node: dark roasted coffee
+    entity: FoodCoffeeBeansRoastedDark

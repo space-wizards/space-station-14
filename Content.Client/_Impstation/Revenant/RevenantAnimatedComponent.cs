@@ -9,7 +9,7 @@ public sealed partial class RevenantAnimatedComponent : Component
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float Accumulator = 0f;
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public Entity<PointLightComponent>? LightOverlay;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]

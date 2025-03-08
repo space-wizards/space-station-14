@@ -21,7 +21,7 @@
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: "torso_m"
+    state: "torso"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -37,7 +37,7 @@
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: "head_m"
+    state: "head"
   - type: Extractable
     juiceSolution:
       reagents:

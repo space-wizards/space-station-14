@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "Made by Stagnation (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon_empty"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        }
+    ]
+}

@@ -25,6 +25,8 @@
       collection: MetalThud
   - type: Spillable
     solution: absorbed
+    allowMeleeDamage: true #imp edit
+    spillWhenThrown: false #imp edit
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -57,6 +59,8 @@
       types:
         Blunt: 6
     staminaCost: 8
+  - type: DrainableSolution #imp edit, lets mop splash contents on melee attack
+    solution: absorbed
 
 - type: entity
   parent: BaseItem
@@ -85,6 +89,8 @@
          collection: MetalThud
     - type: Spillable
       solution: absorbed
+      allowMeleeDamage: true #imp edit
+      spillWhenThrown: false #imp edit
     - type: Wieldable
     - type: IncreaseDamageOnWield
       damage:
@@ -123,6 +129,8 @@
         types:
           Blunt: 6
       staminaCost: 8
+    - type: DrainableSolution #imp edit, lets mop splash contents on melee attack
+      solution: absorbed
 
 - type: entity
   name: wet floor sign

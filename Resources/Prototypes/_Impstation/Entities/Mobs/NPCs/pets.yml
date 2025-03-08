@@ -241,3 +241,100 @@
     interactFailureString: petting-failure-bear
     interactSuccessSound:
       path: /Audio/Animals/sloth_squeak.ogg
+
+- type: entity
+  name: Poly
+  parent: [ MobParrot ]
+  id: MobParrotPoly
+  description: The Chief Engineer's beloved snitch.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
+  - type: Sprite # wearable on shoulder :)
+    sprite: _NF/Mobs/NPC/Animals/parrot.rsi
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+  - type: CanEscapeInventory
+  - type: ActiveListener
+    range: 5
+  - type: ParrotSpeech # this is by default tuned to frontier 6 hour shift numbers, so im ramping it up kind of high to compensate
+    minimumWait: 60
+    maximumWait: 180
+    learnChance: 0.5
+    blacklist:
+      components:
+      - ParrotSpeech # Stop parrots repeating their own speech
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-avian
+  - type: StealTarget
+    stealGroup: AnimalPoly
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
+  name: Dolby
+  parent: MobCorgiPuppy
+  id: MobDolby
+  description: Dobie Digital.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Impstation/Mobs/Pets/dolby.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: dolby
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 12
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: dolby
+      Critical:
+        Base: dolby_dead
+      Dead:
+        Base: dolby_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-dolby
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalWalter

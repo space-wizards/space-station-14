@@ -15,7 +15,7 @@
     capacity: 5
     proto: CartridgeRifle #imp
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/light_rifle_speed_loader.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/light_rifle_speed_loader.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

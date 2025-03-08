@@ -51,8 +51,9 @@ uplink-beenade-desc = The ultimate in distraction, this foaming grenade contains
 uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.
 
+# imp
 uplink-penguin-grenade-name = Grenade Penguin
-uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Trained to ignore Syndicate agents and relentlessly pursue a single target.
 
 uplink-c4-name = C-4
 uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
@@ -124,9 +125,11 @@ uplink-animal-friends-kit-desc = A box containing 4 doses of subjuzine, an alter
 uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
 
-# DV - Correct Emag name, Emag no longer breaks doors
 uplink-emag-name = Cryptographic Sequencer
-uplink-emag-desc = The business card of the Syndicate, this sequencer is able to tamper with a variety of station devices. Rendered obsolete against airlocks.
+uplink-emag-desc = The business card of the syndicate, this sequencer is able to tamper with a variety of station devices. Recharges automatically.
+
+uplink-access-breaker-name = Access Breaker
+uplink-access-breaker-desc = A hacked access configurator and a good friend of the emag. This device is able to force airlocks open as well as erase access requirements from station equipment. Recharges automatically.
 
 uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.
@@ -212,6 +215,9 @@ uplink-death-acidifier-implant-desc = Completely melts the user and their equipm
 
 uplink-micro-bomb-implanter-name = Micro Bomb Implanter
 uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
+
+uplink-radio-implanter-name = Radio Implanter
+uplink-radio-implanter-desc = Implants a Syndicate radio, allowing covert communication without a headset.
 
 # Bundles
 uplink-observation-kit-name = Observation Kit
@@ -422,7 +428,7 @@ uplink-costume-pyjama-name = Syndicate Pyjama Duffel Bag
 uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 4 plushies for the ultimate sleepover.
 
 uplink-costume-clown-name = Clown Costume Duffel Bag
-uplink-costume-clown-desc = Contains a complete Clown outfit. Includes PDA and service radio.
+uplink-costume-clown-desc = Contains a complete Clown outfit.
 
 uplink-carp-suit-bundle-name = Carp Suit Duffel Bag
 uplink-carp-suit-bundle-desc = Contains a carp suit and some friends to play with.
@@ -466,8 +472,14 @@ uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a bague
 uplink-business-card-name = Syndicate Business Card
 uplink-business-card-desc = A business card that you can give to someone to demonstrate your involvement in the syndicate... or leave at the crime scene in order to make fun of the detective. You can buy no more than three of them.
 
+uplink-fake-mindshield-name = Fake Mindshield
+uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same transmissions a real mindshield puts out when on, tricking capable Heads-up displays into thinking you have a mindshield (Nanotrasen brand implanter not provided.)
+
 uplink-pin-straight-name = Straight Pride Pin
 uplink-pin-straight-desc = Demonstrate your support for the heterosexual community with this straight pride pin.
 
 uplink-cloak-straight-name = Straight Pride Cloak
 uplink-cloak-straight-desc = Demonstrate your support for the heterosexual community (and the hamburglar) with this stripy, black-and-white cloak.
+
+
+

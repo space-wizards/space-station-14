@@ -1,0 +1,47 @@
+﻿# prosecutor
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckProsecutorbadge
+  name: prosecutor badge
+  description: A badge to show that the owner is a 'legitimate' prosecutor who passed the NT bar exam required to practice law.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Neck/Misc/prosecutorbadge.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Neck/Misc/prosecutorbadge.rsi
+  - type: TypingIndicatorClothing
+    proto: lawyer
+
+# ponchos
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCWPSec
+  name: security cold weather poncho
+  description: The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy - but at least it's not cold. This one is grey with Station Security markings.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Neck/Misc/cwpsec.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Neck/Misc/cwpsec.rsi
+  - type: Item
+    size: Normal
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+
+- type: entity
+  parent: ClothingNeckCWPSec
+  id: ClothingNeckCWPArctic
+  name: cold weather poncho
+  description: The Cold Weather Poncho, advertised as a masterpiece of elemental protection. The truth is that it's itchy, stuffy, and a little baggy - but at least it's not cold.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Neck/Misc/cwparctic.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Neck/Misc/cwparctic.rsi

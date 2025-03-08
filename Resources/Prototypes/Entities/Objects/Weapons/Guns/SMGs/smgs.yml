@@ -9,7 +9,7 @@
   - type: Item
     size: Large
   - type: Clothing
-    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/atreides.rsi #imp
     quickEquip: false
     slots:
     - Back
@@ -65,7 +65,7 @@
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/atreides.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -88,14 +88,14 @@
   description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/c20r.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/c20r.rsi #imp
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
@@ -106,9 +106,9 @@
     maxAngle: 32
     shotsPerBurst: 5
     availableModes:
-    - SemiAuto
     - Burst
     - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
@@ -126,14 +126,14 @@
   description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo. #imp
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+      sprite: _Impstation/Objects/Weapons/Guns/SMGs/drozd.rsi #imp
       layers:
         - state: base
           map: ["enum.GunVisualLayers.Base"]
         - state: mag-0
           map: ["enum.GunVisualLayers.Mag"]
     - type: Clothing
-      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+      sprite: _Impstation/Objects/Weapons/Guns/SMGs/drozd.rsi #imp
     - type: Wieldable
       unwieldOnUse: false
     - type: GunWieldBonus
@@ -142,13 +142,14 @@
     - type: Gun
       minAngle: 21
       maxAngle: 32
-      fireRate: 12
+      fireRate: 6
       burstFireRate: 12
-      selectedMode: Burst
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
       availableModes:
-        - Burst
+      - Burst
+      - FullAuto
+      - SemiAuto
       shotsPerBurst: 3
       burstCooldown: 0.25
     - type: ItemSlots
@@ -231,7 +232,7 @@
   description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/wt550.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -244,7 +245,7 @@
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/wt550.rsi #imp
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
@@ -258,9 +259,9 @@
     burstCooldown: 0.2
     burstFireRate: 7
     availableModes:
-    - SemiAuto
     - Burst
     - FullAuto
+    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:

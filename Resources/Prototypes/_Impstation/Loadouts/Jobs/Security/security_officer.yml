@@ -1,4 +1,10 @@
+# Outer Clothing
 - type: loadout
   id: ArmorVestCompact
   equipment:
     outerClothing: ClothingOuterArmorBasicCompact
+
+- type: loadout
+  id: BomberSecurity
+  equipment:
+    outerClothing: ClothingOuterCoatBomberSecurity

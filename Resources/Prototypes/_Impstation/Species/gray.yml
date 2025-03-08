@@ -76,37 +76,37 @@
   id: MobGrayHead
   baseSprite:
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: head_m
+    state: head
 
 - type: humanoidBaseSprite
   id: MobGrayHeadMale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: head_m
+    state: head
 
 - type: humanoidBaseSprite
   id: MobGrayHeadFemale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: head_f
+    state: head
 
 - type: humanoidBaseSprite
   id: MobGrayTorso
   baseSprite:
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: torso_m
+    state: torso
 
 - type: humanoidBaseSprite
   id: MobGrayTorsoMale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: torso_m
+    state: torso
 
 - type: humanoidBaseSprite
   id: MobGrayTorsoFemale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Gray/parts.rsi
-    state: torso_f
+    state: torso
 
 - type: humanoidBaseSprite
   id: MobGrayLLeg

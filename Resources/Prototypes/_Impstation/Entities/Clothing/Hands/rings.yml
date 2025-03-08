@@ -1,0 +1,17 @@
+﻿- type: entity
+  parent: GoldRing
+  id: GoldRingTrinket
+  name: sentimental gold ring
+  description: A precious ring, for its owner only.
+  components:
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: SilverRing
+  id: SilverRingTrinket
+  name: sentimental silver ring
+  description: Looks slightly less valuable than a gold one, and worthless to anyone but its owner.
+  components:
+  - type: StaticPrice
+    price: 1

@@ -23,6 +23,7 @@
                                 Text="{Loc 'ui-options-announcer-disable-multiple-sounds'}"
                                 ToolTip="{Loc 'ui-options-announcer-disable-multiple-sounds-tooltip'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
+                <CheckBox Name="BwoinkSoundCheckBox" Text="{Loc 'ui-options-bwoink-sound'}" />
             </BoxContainer>
         </BoxContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

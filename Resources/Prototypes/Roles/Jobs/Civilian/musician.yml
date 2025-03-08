@@ -8,6 +8,7 @@
   supervisors: job-supervisors-hire
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
+  - Musician # imp edit
   - Theatre
   special:
   - !type:GiveItemOnHolidaySpecial

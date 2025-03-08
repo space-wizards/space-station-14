@@ -17,3 +17,24 @@
   cost: 5000
   category: cargoproduct-category-name-service
   group: market
+
+- type: cargoProduct
+  id: ServiceBarKit
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: service
+  product: CrateServiceMaintBarKit
+  cost: 3000
+  category: cargoproduct-category-name-service
+  group: market
+
+#- type: cargoProduct # come back next february
+#  name: romantic crate
+#  id: CrateValentines
+#  icon:
+#    sprite: _Impstation/Objects/Fun/bouquet.rsi
+#    state: icon
+#  product: CrateValentinesFilled
+#  cost: 750
+#  category: cargoproduct-category-name-fun
+#  group: market

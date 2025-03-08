@@ -35,11 +35,11 @@ public sealed class StandingStateSystem : EntitySystem
     public bool Down(EntityUid uid,
         bool playSound = true,
         bool dropHeldItems = true,
-        bool force = true,
+        bool force = false,
         StandingStateComponent? standingState = null,
         AppearanceComponent? appearance = null,
         HandsComponent? hands = null,
-        bool intentional = true)
+        bool intentional = false)
     {
         // TODO: This should actually log missing comps...
         if (!Resolve(uid, ref standingState, false))
@@ -115,9 +115,6 @@ public sealed class StandingStateSystem : EntitySystem
 
         if (standingState.CurrentState is StandingState.Standing)
             return true;
-
-        if (TryComp(uid, out BuckleComponent? buckle) && buckle.Buckled && !_buckle.TryUnbuckle(uid, uid, buckleComp: buckle)) // WD EDIT
-            return false;
 
         if (!force)
         {

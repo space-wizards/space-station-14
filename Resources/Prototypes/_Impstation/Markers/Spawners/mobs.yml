@@ -52,3 +52,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobKobold
+
+- type: entity
+  name: Poly Spawner
+  id: SpawnMobPoly
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sit
+      sprite: _NF/Mobs/NPC/Animals/parrot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobParrotPoly

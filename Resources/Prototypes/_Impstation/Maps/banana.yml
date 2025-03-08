@@ -18,41 +18,44 @@
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargo_banana.yml
         - type: StationJobs
-          availableJobs:
-            #command
+          availableJobs: # Total of 26 jobs roundstart, max of 30 inc. latejoins and trainees.
+            # command - 8
             Captain: [ 1, 1 ]
-            HeadOfSecurity: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            Quartermaster: [ 1, 1 ]
-            ChiefMedicalOfficer: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
-            #security
-            SecurityOfficer: [ 1, 1 ]
-            #cargo
-            CargoTechnician: [ 1, 1 ]
-            SalvageSpecialist: [ 1, 1 ]
-            AtmosphericTechnician: [ 1, 1 ]
-            Courier: [ 1, 1 ]
-            #service
+            HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            # service - 7
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
+            Clown: [ 1, 1 ]
             Janitor: [ 1, 1 ]
-            #medical
-            MedicalDoctor: [ 1, 1 ]
-            MedicalIntern: [ 1, 1 ]
-            Chemist: [ 1, 1 ]
-            #engineering
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            # engineering - 2-3
+            AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 1 ]
             TechnicalAssistant: [ 1, 1 ]
-            #sci
-            Scientist: [ 1, 1 ]
-            ResearchAssistant: [ 1, 1 ]
-            #other
+            # medical - 2-3
+            Chemist: [ 1, 1 ]
+            MedicalDoctor: [ 1, 1 ]
+            MedicalIntern: [ 1, 1 ]
+            # science - 2-3
             Borg: [ 1, 1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
+            ResearchAssistant: [ 1, 1 ]
+            Scientist: [ 1, 1 ]
+            # security - 1-2
+            SecurityCadet: [ 1, 1 ]
+            SecurityOfficer: [ 1, 1 ]
+            # cargo - 3-4
+            CargoTechnician: [ 1, 1 ]
+            Courier: [ 1, 1 ]
+            SalvageSpecialist: [ 1, 1 ]
+            SupplyAssistant: [ 1, 1 ]
+            # civilian
             Passenger: [ -1, -1 ]
-            Musician: [ 1, 1 ]
-

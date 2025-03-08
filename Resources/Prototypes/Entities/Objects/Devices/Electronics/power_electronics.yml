@@ -80,7 +80,7 @@
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
-      state: generic
+      state: engineering
     - type: StaticPrice
       price: 85
     - type: Tag

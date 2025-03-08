@@ -18,4 +18,17 @@ public sealed partial class LobbyBackgroundPrototype : IPrototype
     /// </summary>
     [DataField("background", required: true)]
     public ResPath Background = default!;
+
+    // imp edits
+    /// <summary>
+    /// The name of the background art.
+    /// </summary>
+    [DataField]
+    public string? Name;
+
+    /// <summary>
+    /// The artist of the background art.
+    /// </summary>
+    [DataField]
+    public string? Artist;
 }

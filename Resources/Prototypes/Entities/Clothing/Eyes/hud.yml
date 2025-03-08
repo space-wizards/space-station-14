@@ -5,7 +5,6 @@
   components:
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
-  - type: ShowFakeMindShieldIcons
   - type: ShowCriminalRecordIcons
 
 - type: entity

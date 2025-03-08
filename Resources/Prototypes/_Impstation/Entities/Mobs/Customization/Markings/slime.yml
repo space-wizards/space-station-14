@@ -29,7 +29,7 @@
   - sprite: _Impstation/Mobs/Customization/slime_parts.rsi
     state: brain
 
-- type: marking # TODO: If we ever figure out how to make markings use shaders, make this unshaded! For now, this at least gives the right impression.
+- type: marking
   id: SlimeEyeglow
   bodyPart: Eyes
   markingCategory: Head

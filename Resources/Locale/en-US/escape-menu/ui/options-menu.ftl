@@ -40,6 +40,7 @@ ui-options-event-music = Event Music
 ui-options-announcer-disable-multiple-sounds = Disable Overlapping Announcer Sounds
 ui-options-announcer-disable-multiple-sounds-tooltip = Some announcements will not sound right, this setting isn't recommended
 ui-options-admin-sounds = Play Admin Sounds
+ui-options-bwoink-sound = Play AHelp Notification Sound
 ui-options-volume-label = Volume
 
 ## Graphics menu
@@ -289,3 +290,10 @@ ui-options-reduced-motion = Reduce motion of visual effects
 ui-options-disable-singulo-warp = Disable the singularity's screen warping effect
 ui-options-chat-window-opacity = Chat window opacity
 ui-options-screen-shake-intensity = Screen shake intensity
+
+## DeltaV NanoChat keybinds
+ui-options-header-nano-chat = NanoChat
+ui-options-function-nano-chat-navigate-up = Navigate up
+ui-options-function-nano-chat-navigate-down = Navigate down
+ui-options-function-nano-chat-navigate-up-unread = Navigate up to next unread
+ui-options-function-nano-chat-navigate-down-unread = Navigate down to next unread

@@ -1,6 +1,6 @@
 - type: announcer
   id: Sinister
-  basePath: /Audio/_Impstation/Announcers/
+  basePath: /Audio/_Impstation/Announcers/Sinister
   baseAudioParams:
     volume: -12
   announcements:
@@ -128,8 +128,6 @@
     - id: slimesSpawn # Some simple slimes are appearing in vents
       collection: SinisterVentcrittersAnnouncements
     - id: spiderSpawn # Some simple spiders are appearing in vents
-      collection: SinisterVentcrittersAnnouncements
-    - id: trashAnimalMigration # Trash-eating critters are appearing in vents
       collection: SinisterVentcrittersAnnouncements
     - id: snailMigration # Adorable little snails are appearing in vents
       collection: SinisterVentcrittersAnnouncements

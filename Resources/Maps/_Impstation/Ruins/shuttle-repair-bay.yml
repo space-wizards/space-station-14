@@ -257,6 +257,28 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+- proto: AirCanister
+  entities:
+  - uid: 586
+    components:
+    - type: Transform
+      pos: -3.5,6.5
+      parent: 1
+  - uid: 587
+    components:
+    - type: Transform
+      pos: -3.5,5.5
+      parent: 1
+  - uid: 588
+    components:
+    - type: Transform
+      pos: 1.5,16.5
+      parent: 1
+  - uid: 589
+    components:
+    - type: Transform
+      pos: 0.5,16.5
+      parent: 1
 - proto: AirlockEngineeringLocked
   entities:
   - uid: 55
@@ -1928,6 +1950,20 @@ entities:
     - type: Transform
       pos: -3.5,16.5
       parent: 1
+- proto: ClosetEmergencyFilledRandom
+  entities:
+  - uid: 584
+    components:
+    - type: Transform
+      pos: 4.5,6.5
+      parent: 1
+- proto: ClosetEmergencyN2FilledRandom
+  entities:
+  - uid: 585
+    components:
+    - type: Transform
+      pos: 4.5,5.5
+      parent: 1
 - proto: ClosetToolFilled
   entities:
   - uid: 213
@@ -2578,6 +2614,62 @@ entities:
     - type: Transform
       pos: -2.5,12.5
       parent: 1
+- proto: PosterContrabandAtmosiaDeclarationIndependence
+  entities:
+  - uid: 595
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,17.5
+      parent: 1
+- proto: PosterContrabandHackingGuide
+  entities:
+  - uid: 594
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,8.5
+      parent: 1
+- proto: PosterContrabandPower
+  entities:
+  - uid: 590
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,5.5
+      parent: 1
+- proto: PosterContrabandTools
+  entities:
+  - uid: 593
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,11.5
+      parent: 1
+- proto: PosterLegitBuild
+  entities:
+  - uid: 582
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,8.5
+      parent: 1
+- proto: PosterLegitJustAWeekAway
+  entities:
+  - uid: 592
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,10.5
+      parent: 1
+- proto: PosterLegitSafetyMothHardhat
+  entities:
+  - uid: 591
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,5.5
+      parent: 1
 - proto: Poweredlight
   entities:
   - uid: 380
@@ -2783,6 +2875,14 @@ entities:
     components:
     - type: Transform
       pos: -1.6664095,10.576264
+      parent: 1
+- proto: SignAtmos
+  entities:
+  - uid: 583
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,13.5
       parent: 1
 - proto: SMESBasic
   entities:

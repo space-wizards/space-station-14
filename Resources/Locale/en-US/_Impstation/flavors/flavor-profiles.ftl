@@ -1,6 +1,7 @@
 flavor-base-kingsoda = like you're a champion
 flavor-base-drinkdrink = like dogshit
 flavor-base-unholy = unholy
+flavor-base-evil = evil
 
 flavor-complex-raktaccino = fantastically bitter
 flavor-complex-moscowmule = like a kick in the teeth
@@ -8,6 +9,7 @@ flavor-complex-cottonbool = like an angry cloud
 flavor-complex-genderfluid = transitional
 flavor-complex-thavenbad = like you need to pretend you like it
 flavor-complex-zombieslushie = like frostbitten meat
+flavor-complex-lovepotion = like love
 
 flavor-complex-apple-martini-crystal-lite = tastes like imitation appletini
 flavor-complex-horsepussy = tastes like death and a subsequent memorial
@@ -27,3 +29,5 @@ flavor-complex-secticket = like rotten eggs
 flavor-complex-medium = like your vision expanded
 
 flavor-complex-rodent = like rodents
+
+flavor-complex-orangecoffee = excitingly acidic

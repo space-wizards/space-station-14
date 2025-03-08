@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi, Courier by Honeyed_Lemons_ from the impstation discord, CBURN, Deathsquadron icons by RosySaturniidae (github), Admin, ERT, and NT icon edits also by RosySaturniidae (github)",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi, Courier by Honeyed_Lemons_ from the impstation discord. CBURN, Deathsquadron icons by RosySaturniidae (github), Admin, ERT, and NT icon edits also by RosySaturniidae (github). HospitalityDirector by DinnerCalzone(github) using icon from service techfab sprite by EmoGarbage.",
     "size": {
         "x": 8,
         "y": 8
@@ -15,6 +15,12 @@
         },
         {
             "name": "CBURN"
+        },
+        {
+            "name": "Courier"
+        },
+        {
+            "name": "HospitalityDirector"
         },
         {
             "name": "Deathsquad"
@@ -36,9 +42,6 @@
         },
         {
             "name": "ERTChaplain"
-        },
-        {
-            "name": "Courier"
         }
     ]
 }

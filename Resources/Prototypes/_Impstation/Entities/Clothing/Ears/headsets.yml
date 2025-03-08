@@ -14,7 +14,7 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranqm.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranqm.rsi
-  - type: StealTarget #imp
+  - type: StealTarget
     stealGroup: CommandHeadset
 
 - type: entity
@@ -31,7 +31,7 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteran.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteran.rsi
-  - type: StealTarget #imp
+  - type: StealTarget
     stealGroup: CommandHeadset
 
 - type: entity
@@ -50,7 +50,7 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterance.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterance.rsi
-  - type: StealTarget #imp
+  - type: StealTarget
     stealGroup: CommandHeadset
 
 - type: entity
@@ -69,7 +69,7 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterancmo.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterancmo.rsi
-  - type: StealTarget #imp
+  - type: StealTarget
     stealGroup: CommandHeadset
 
 - type: entity
@@ -88,7 +88,7 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranrd.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranrd.rsi
-  - type: StealTarget #imp
+  - type: StealTarget
     stealGroup: CommandHeadset
 
 - type: entity
@@ -107,7 +107,7 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhos.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhos.rsi
-  - type: StealTarget #imp
+  - type: StealTarget
     stealGroup: CommandHeadset
 
 - type: entity
@@ -126,3 +126,54 @@
     sprite: _Impstation/Clothing/Ears/Headsets/securitywarden.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/securitywarden.rsi
+
+- type: entity
+  parent: [ClothingHeadsetService, BaseCommandContraband]
+  id: ClothingHeadsetHD
+  name: hospitality director's headset
+  description: A headset used by the hospitality director to make sure the service staff are doing their jobs.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: StealTarget
+    stealGroup: CommandHeadset
+
+- type: entity
+  parent: [ClothingHeadsetService, BaseCommandContraband]
+  id: ClothingHeadsetHDveteran
+  name: hospitality director's veteran headset
+  description: A sleek headset, earned through a long career as hospitality director.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+      - EncryptionKeyCommand
+  - type: Sprite
+    sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhd.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhd.rsi
+  - type: StealTarget
+    stealGroup: CommandHeadset
+    
+- type: entity
+  parent: [ClothingHeadset, BaseRestrictedLawyerContraband]
+  id: ClothingHeadsetLawyer
+  name: lawyer headset
+  description: Lets you shout at security while also letting your boss shout at you.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi

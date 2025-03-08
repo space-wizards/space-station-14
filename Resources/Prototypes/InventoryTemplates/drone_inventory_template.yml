@@ -8,3 +8,28 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0, -0.45
+  - name: pocket1
+    slotTexture: pocket
+    fullTextureName: template_small
+    slotFlags: POCKET
+    slotGroup: MainHotbar
+    uiWindowPos: 0,3
+    strippingWindowPos: 0,4
+    displayName: Pocket 1
+  - name: pocket2
+    slotTexture: pocket
+    fullTextureName: template_small
+    slotFlags: POCKET
+    slotGroup: MainHotbar
+    uiWindowPos: 2,3
+    strippingWindowPos: 1,4
+    displayName: Pocket 2
+  - name: back
+    slotTexture: back
+    fullTextureName: template_small
+    slotFlags: BACK
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,0
+    strippingWindowPos: 0,5
+    displayName: Back

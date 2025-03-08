@@ -570,6 +570,9 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
+      - id: GoldPersonalAI #imp
+        orGroup: GiftPool
+        prob: 0.01
       - id: CrayonBox
         orGroup: GiftPool
       - id: ToySword
@@ -776,6 +779,9 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
+      - id: GoldPersonalAI #imp
+        orGroup: GiftPool
+        prob: 0.01
       - id: CrayonBox
         orGroup: GiftPool
       - id: ToySword
@@ -792,3 +798,25 @@
         orGroup: GiftPool
       - id: SpaceBladeMc #imp
         orGroup: GiftPool
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxCloth
+  name: box of FlutterSoft-brand cloth
+  description: Fiber is the most important moth meal of the day! Don't skip it or use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth instead.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: cloth-box
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    maxItemSize: Normal
+    whitelist:
+      tags:
+      - ClothMade
+  - type: Item
+    size: Normal
+  - type: StorageFill
+    contents:
+    - id: MaterialCloth10

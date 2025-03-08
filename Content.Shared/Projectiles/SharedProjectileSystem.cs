@@ -25,7 +25,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared._EinsteinEngines.Supermatter.Components;
+using Content.Shared._EE.Supermatter.Components;
 
 namespace Content.Shared.Projectiles;
 
@@ -154,7 +154,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             projectile.Shooter = null;
             projectile.Weapon = null;
-            projectile.DamagedEntity = false;
+            projectile.ProjectileSpent = false;
         }
 
         // Land it just coz uhhh yeah

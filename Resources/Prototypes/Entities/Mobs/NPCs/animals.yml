@@ -40,6 +40,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: Absorbable # imp edit - mouse bite sized
+    biomassRestored: 0.1
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-soft-floofy
@@ -218,6 +220,8 @@
     spawned:
     - id: FoodMeatChicken
       amount: 1
+  - type: Absorbable # imp edit - a good meal
+    biomassRestored: 0.2
   - type: InteractionPopup
     successChance: 0.8
     interactSuccessString: petting-success-bird
@@ -354,6 +358,8 @@
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
   - type: Food
+  - type: Absorbable # imp edit
+    biomassRestored: 0.1
   - type: FlavorProfile
     flavors:
     - horrible
@@ -445,6 +451,8 @@
     name: ghost-role-information-mothroach-name
     description: ghost-role-information-mothroach-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: Fixtures
     fixtures:
       fix1:
@@ -652,6 +660,8 @@
     spawned:
     - id: FoodMeatDuck
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bird
@@ -836,6 +846,8 @@
     spawned:
     - id: FoodMeat
       amount: 5
+  - type: Absorbable # imp edit
+    biomassRestored: 0.7
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
@@ -911,6 +923,8 @@
     spawned:
     - id: FoodMeatCrab
       amount: 2
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-crab
@@ -999,6 +1013,8 @@
   - type: FlavorProfile
     flavors:
     - fiber
+  - type: Absorbable # imp edit
+    biomassRestored: 0.5
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1006,6 +1022,15 @@
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
+  - type: Speech
+    speechSounds: Goat
+    speechVerb: Goat
+  - type: Vocal
+    sounds:
+      Female: Goat
+      Male: Goat
+      Unsexed: Goat
+  - type: BleatingAccent
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-goat
@@ -1061,6 +1086,8 @@
     spawned:
     - id: FoodMeatChicken
       amount: 2
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
     successChance: 0.1 # Yeah, good luck with that.
     interactSuccessString: petting-success-goose
@@ -1110,6 +1137,8 @@
     spawned:
     - id: FoodMeat
       amount: 4
+  - type: Absorbable # imp edit
+    biomassRestored: 0.8
   - type: Bloodstream
     bloodMaxVolume: 300
     # if you fuck with the gorilla he will harambe you
@@ -1167,6 +1196,8 @@
   - type: Butcherable
     spawned:
     - id: FoodMeat
+  - type: Absorbable # imp edit
+    biomassRestored: 0.8
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1379,6 +1410,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.4
   - type: Puller
     needsHands: false
   - type: CanHostGuardian
@@ -1486,6 +1519,9 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -1646,7 +1682,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Critical
+      100: Critical
       200: Dead
   - type: NpcFactionMember
     factions:
@@ -1696,6 +1732,8 @@
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -1768,6 +1806,8 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: Absorbable # imp edit
+    biomassRestored: 0.1
   - type: FlavorProfile
     flavors:
     - meaty
@@ -2040,6 +2080,8 @@
     spawned:
     - id: FoodMeatLizard
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
   - type: InteractionPopup
     successChance: 0.3
     interactSuccessString: petting-success-reptile
@@ -2099,6 +2141,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.1
   - type: InteractionPopup
     successChance: 0.3
     interactSuccessString: petting-success-generic
@@ -2158,6 +2202,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.1
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-frog
@@ -2211,6 +2257,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
   - type: Speech
     speechSounds: Parrot
     speechVerb: Parrot
@@ -2264,6 +2312,8 @@
     spawned:
     - id: FoodMeatPenguin
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-bird
@@ -2302,7 +2352,7 @@
   - type: MobMover
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: GrenadePenguinCompound # imp
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -2340,7 +2390,7 @@
   - type: Item
     size: Normal
   - type: OnUseTimerTrigger
-    delay: 10
+    delay: 15 # imp
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
       params:
@@ -2348,7 +2398,7 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    maxIntensity: 20
+    maxIntensity: 10 # imp
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger
@@ -2399,6 +2449,8 @@
     spawned:
     - id: FoodMeatSnake
       amount: 1
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-reptile
@@ -2514,6 +2566,8 @@
       groups:
         Brute: -0.07
         Burn: -0.07
+  - type: Absorbable # imp edit - big enough to restore a good amount of biomass
+    biomassRestored: 0.7
 
 - type: entity
   parent: MobSpiderBase
@@ -2533,6 +2587,8 @@
     name: ghost-role-information-giant-spider-name
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: short
   - type: GhostTakeoverAvailable
@@ -2589,9 +2645,16 @@
     - type: Sprite
       drawdepth: Mobs
       layers:
-      - map: ["enum.DamageStateVisualLayers.Base"]
+      - map: ["enum.DamageStateVisualLayers.Base", "movement"]
         state: clown
         sprite: Mobs/Animals/clownspider.rsi
+    - type: SpriteMovement
+      movementLayers:
+        movement:
+          state: clown
+      noMovementLayers:
+        movement:
+          state: clown
     - type: Butcherable
       spawned:
         - id: MaterialBananium1
@@ -2679,6 +2742,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-possum # Possums don't really make much noise when they're happy. They make clicking noises as a mating call, but that is NOT the same thing!
@@ -2752,6 +2817,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-soft-floofy
@@ -2812,6 +2879,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-soft-floofy
@@ -2843,6 +2912,7 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: DogVision # imp
 
 - type: entity
   name: corgi
@@ -2885,6 +2955,8 @@
     spawned:
     - id: FoodMeat
       amount: 2
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: ReplacementAccent
     accent: dog
   - type: InteractionPopup
@@ -2903,6 +2975,7 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: DogVision # imp
 
 - type: entity
   name: corrupted corgi
@@ -3040,6 +3113,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: ReplacementAccent
     accent: cat
   - type: InteractionPopup
@@ -3110,6 +3185,9 @@
     allowMovement: true
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleFamiliar #imp
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -3132,6 +3210,13 @@
         Slash: 6
         Piercing: 6
         Structural: 15
+  - type: IntrinsicRadioReceiver #imp
+  - type: IntrinsicRadioTransmitter #imp
+    channels:
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
 
 - type: entity
   name: space cat
@@ -3270,6 +3355,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-sloth
@@ -3325,6 +3412,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.8
     interactDelay: 1.5 # Avoids overlapping SFX due to spam - these SFX are a little longer than the typical 1 second.
@@ -3417,6 +3506,8 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
   - type: FlavorProfile
     flavors:
     - meaty
@@ -3536,6 +3627,8 @@
     spawned:
     - id: FoodMeatBacon
       amount: 6
+  - type: Absorbable # imp edit
+    biomassRestored: 0.7
   - type: Grammar
     attributes:
       gender: epicene
@@ -3599,6 +3692,8 @@
     spawned:
     - id: MaterialWoodPlank1
       amount: 2
+  - type: Absorbable # imp edit
+    biomassRestored: 0.3
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-nymph
@@ -3700,6 +3795,8 @@
     spawned:
     - id: FoodMeat
       amount: 4
+  - type: Absorbable # imp edit
+    biomassRestored: 0.5
   - type: Bloodstream
     bloodMaxVolume: 300
     # Horns though

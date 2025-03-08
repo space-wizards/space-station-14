@@ -2,18 +2,20 @@
   name: r'tck t'rc
   parent: [ BaseItem, DecapoidEmpireContraband ]
   id: WeaponPistolTckTck
-  description: 'A viper pistol for use by cyborgs, "reclaimed" from its previous owners. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.'
+  description: 'A bite-sized autopistol for cyborgs. Creates .22 ammo on the fly from an internal ammo fabricator, which slowly self-charges.'
   components:
+  - type: Item
+    size: Tiny
   - type: Gun
-    fireRate: 5
-    selectedMode: SemiAuto
+    fireRate: 3
+    selectedMode: FullAuto
     availableModes:
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/tckpistol.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -23,12 +25,12 @@
     containers:
       ballistic-ammo: !type:Container
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletPistol
+    proto: BulletLPistol
     fireCost: 100
   - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
+    maxCharge: 800
+    startingCharge: 800
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 25
+    autoRechargeRate: 40
   - type: AmmoCounter

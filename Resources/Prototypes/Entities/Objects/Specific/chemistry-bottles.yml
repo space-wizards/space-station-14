@@ -49,8 +49,10 @@
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
   - type: Item
-    size: Tiny
+    size: Small #imp
     sprite: Objects/Specific/Chemistry/beaker.rsi
+    shape: #imp
+    - 0,0,0,0
   - type: Spillable
     solution: drink
   - type: MeleeWeapon

@@ -8,6 +8,7 @@
   - type: MindRole
     antagPrototype: Changeling
     exclusiveAntag: true
+    roleType: SoloAntagonist # imp edit
     primaryCurrency: EvolutionPoint #imp edit
   - type: ChangelingRole
 
@@ -20,5 +21,6 @@
   - type: MindRole
     antagPrototype: Heretic
     exclusiveAntag: true
+    roleType: SoloAntagonist # imp edit
     primaryCurrency: KnowledgePoint #imp edit
   - type: HereticRole

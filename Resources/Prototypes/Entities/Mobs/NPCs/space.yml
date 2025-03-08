@@ -37,6 +37,8 @@
       100: Dead
   - type: Stamina
     critThreshold: 150
+  - type: Absorbable # imp - im just going off vibes here
+    biomassRestored: 0.6
   - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
@@ -437,6 +439,8 @@
     name: ghost-role-information-snail-name
     description: ghost-role-information-snail-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite
@@ -583,6 +587,8 @@
     name: ghost-role-information-snailspeed-name
     description: ghost-role-information-snailspeed-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleFreeAgent
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -612,6 +618,8 @@
     name: ghost-role-information-snoth-name
     description: ghost-role-information-snoth-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles: # imp
+    - MindRoleGhostRoleFreeAgent
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]

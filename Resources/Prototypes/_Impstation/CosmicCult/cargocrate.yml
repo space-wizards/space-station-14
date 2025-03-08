@@ -1,0 +1,77 @@
+- type: entity
+  parent: Jug
+  suffix: holywater
+  id: JugHolywater
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-holywater
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Holywater
+          Quantity: 200
+
+- type: entity
+  parent: CratePlastic
+  id: CrateChaplain
+  name: religious crate
+  components:
+  - type: Icon
+    sprite: _Impstation/Structures/Storage/Crates/religious.rsi
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/Crates/religious.rsi
+
+- type: entity
+  id: CrateServiceReligious
+  parent: CrateChaplain
+  name: religious supplies crate
+  description: Contains holy water and a spare holy text.
+  components:
+    - type: StorageFill
+      contents:
+        - id: Bible
+          orGroup: HolyText
+        - id: HolyTextQuran
+          orGroup: HolyText
+        - id: HolyTextTanakh
+          orGroup: HolyText
+        - id: HolyTextHolyScroll
+          orGroup: HolyText
+        - id: HolyTextHolyTablet
+          orGroup: HolyText
+        - id: HolyTextGreybible
+          orGroup: HolyText
+          prob: 0.4
+        - id: HolyTextKojiki
+          orGroup: HolyText
+        - id: HolyTextTaoTeachings
+          orGroup: HolyText
+        - id: HolyTextPrincipiaDiscordia
+          orGroup: HolyText
+          prob: 0.4
+        - id: HolyTextChaplainsGrimoire
+          orGroup: HolyText
+          prob: 0.4
+        - id: HolyTextUnitologyTome
+          orGroup: HolyText
+          prob: 0.1
+        - id: HolyTextExtremeTeenBible
+          orGroup: HolyText
+          prob: 0.1
+        - id: HolyTextBibble
+          orGroup: HolyText
+          prob: 0.1
+        - id: JugHolywater
+          amount: 2
+
+- type: cargoProduct
+  id: ServiceReligiousSupplies
+  icon:
+    sprite: _Impstation/Structures/Storage/Crates/religious.rsi
+    state: icon
+  product: CrateServiceReligious
+  cost: 2000
+  category: cargoproduct-category-name-service
+  group: market

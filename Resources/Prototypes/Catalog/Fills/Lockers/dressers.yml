@@ -4,14 +4,38 @@
   suffix: Filled, Captain
   components:
   - type: StorageFill
-    contents:
+    contents: # imp edit - diversifying dressers
       - id: ClothingHeadHatCaptain
+        orGroup: CapHat
       - id: ClothingHeadHatCapcap
-      - id: ClothingUniformJumpsuitCapFormal
-      - id: ClothingUniformJumpskirtCapFormalDress
-      - id: ClothingHandsGlovesCaptain
-      - id: ClothingOuterWinterCap
+        orGroup: CapHat
+      - id: ClothingHeadHatBeretCaptain
+        orGroup: CapHat
+      - id: ClothingHeadHatCaptaincrushercap
+        orGroup: CapHat
       - id: ClothingNeckCloakCap
+        orGroup: CapNeck
+      - id: ClothingNeckCloakCapFormal
+        orGroup: CapNeck
+      - id: ClothingNeckMantleCap
+        orGroup: CapNeck
+      - id: ClothingNeckCloakCaptaingreatcoat
+        orGroup: CapNeck
+      - id: ClothingUniformJumpsuitCaptain
+        orGroup: CapJumpsuit
+      - id: ClothingUniformJumpsuitCapFormal
+        orGroup: CapJumpsuit
+      - id: ClothingUniformJumpsuitCaptaineveningattire
+        orGroup: CapJumpsuit
+      - id: ClothingUniformJumpskirtCaptain
+        orGroup: CapJumpskirt
+      - id: ClothingUniformJumpskirtCapFormalDress
+        orGroup: CapJumpskirt
+      - id: ClothingOuterWinterCap
+      - id: ClothingHandsGlovesCaptain
+        orGroup: CapGloves
+      - id: ClothingHandsGlovesCaptainflightgloves
+        orGroup: CapGloves
 
 - type: entity
   id: DresserChiefEngineerFilled
@@ -19,12 +43,24 @@
   suffix: Filled, Chief Engineer
   components:
   - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitChiefEngineerTurtle
-      - id: ClothingUniformJumpskirtChiefEngineerTurtle
+    contents: # imp edit - diversifying dressers
       - id: ClothingHeadHatBeretEngineering
-      - id: ClothingOuterWinterCE
+        orGroup: CEHat
+      - id: ClothingHeadHatHardhatWhite
+        orGroup: CEHat
       - id: ClothingNeckCloakCe
+        orGroup: CENeck
+      - id: ClothingNeckMantleCE
+        orGroup: CENeck
+      - id: ClothingUniformJumpsuitChiefEngineer
+        orGroup: CEJumpsuit
+      - id: ClothingUniformJumpsuitChiefEngineerTurtle
+        orGroup: CEJumpsuit
+      - id: ClothingUniformJumpskirtChiefEngineer
+        orGroup: CEJumpskirt
+      - id: ClothingUniformJumpskirtChiefEngineerTurtle
+        orGroup: CEJumpskirt
+      - id: ClothingOuterWinterCE
 
 - type: entity
   id: DresserChiefMedicalOfficerFilled
@@ -32,15 +68,32 @@
   suffix: Filled, Chief Medical Officer
   components:
   - type: StorageFill
-    contents:
-      - id: ClothingOuterCoatLabCmo
-      - id: ClothingUniformJumpsuitCMOTurtle
-      - id: ClothingUniformJumpskirtCMOTurtle
+    contents: # imp edit - diversifying dressers
       - id: ClothingHeadHatBeretCmo
+        orGroup: CMOHat
       - id: ClothingHeadMirror
-      - id: ClothingEyesGlasses
-      - id: ClothingOuterWinterCMO
+        orGroup: CMOHat
       - id: ClothingCloakCmo
+        orGroup: CMONeck
+      - id: ClothingNeckMantleCMO
+        orGroup: CMONeck
+      - id: ClothingNeckCloakCmosGreatcloak
+        orGroup: CMONeck
+      - id: ClothingUniformJumpsuitCMOTurtle
+        orGroup: CMOJumpsuit
+      - id: ClothingUniformJumpsuitCMO
+        orGroup: CMOJumpsuit
+      - id: ClothingUniformJumpskirtCMOTurtle
+        orGroup: CMOJumpskirt
+      - id: ClothingUniformJumpskirtCMO
+        orGroup: CMOJumpskirt
+      - id: ClothingOuterCoatLabCmo
+        orGroup: CMOOuter
+      - id: ClothingOuterWinterCMO
+        orGroup: CMOOuter
+      - id: ClothingOuterCoatCMO
+        orGroup: CMOOuter
+      - id: ClothingEyesGlasses
 
 - type: entity
   id: DresserHeadOfPersonnelFilled
@@ -48,11 +101,20 @@
   suffix: Filled, Head Of Personnel
   components:
   - type: StorageFill
-    contents:
+    contents: # imp edit - diversifying dressers. also hop didnt have jumpsuits in here for some reason
       - id: ClothingHeadHatHopcap
+      - id: ClothingNeckCloakHop
+        orGroup: HoPNeck
+      - id: ClothingNeckMantleHOP
+        orGroup: HoPNeck
+      - id: ClothingUniformJumpsuitHoP
+        orGroup: HoPJumpsuit
+      - id: ClothingUniformJumpsuitBoatswain
+        orGroup: HoPJumpsuit
+      - id: ClothingUniformJumpskirtHoP
+        orGroup: HoPJumpskirt
       - id: ClothingOuterWinterHoP
       - id: ClothingEyesGlasses
-      - id: ClothingNeckCloakHop
 
 - type: entity
   id: DresserHeadOfSecurityFilled
@@ -60,15 +122,42 @@
   suffix: Filled, Head Of Security
   components:
   - type: StorageFill
-    contents:
+    contents: # imp edit - diversifying dressers
       - id: ClothingHeadHatBeretHoS
+        orGroup: HoSHat
       - id: ClothingHeadHatHoshat
-      - id: ClothingUniformJumpskirtHoSAlt
-      - id: ClothingUniformJumpsuitHoSAlt
-      - id: ClothingUniformJumpskirtHosFormal
-      - id: ClothingUniformJumpsuitHosFormal
-      - id: ClothingOuterWinterHoS
+        orGroup: HoSHat
+      - id: ClothingHeadHatHoshatDV
+        orGroup: HoSHat
+      - id: ClothingHeadHatHOSsoft
+        orGroup: HoSHat
       - id: ClothingNeckCloakHos
+        orGroup: HoSCloak
+      - id: ClothingNeckMantleHOS
+        orGroup: HoSCloak
+      - id: ClothingNeckCloakHosgreatcoat
+        orGroup: HoSCloak
+      - id: ClothingUniformJumpsuitHoS
+        orGroup: HoSJumpsuit
+      - id: ClothingUniformJumpsuitHoSAlt
+        orGroup: HoSJumpsuit
+      - id: ClothingUniformJumpsuitHoSGrey
+        orGroup: HoSJumpsuit
+      - id: ClothingUniformJumpsuitHosFormal
+        orGroup: HoSJumpsuit
+      - id: ClothingUniformJumpsuitHoSPro
+        orGroup: HoSJumpsuit
+      - id: ClothingUniformJumpskirtHoS
+        orGroup: HoSJumpskirt
+      - id: ClothingUniformJumpskirtHoSAlt
+        orGroup: HoSJumpskirt
+      - id: ClothingUniformJumpskirtHoSGrey
+        orGroup: HoSJumpskirt
+      - id: ClothingUniformJumpskirtHosFormal
+        orGroup: HoSJumpskirt
+      - id: ClothingUniformJumpskirtHoSPro
+        orGroup: HosJumpskirt
+      - id: ClothingOuterWinterHoS
 
 - type: entity
   id: DresserQuarterMasterFilled
@@ -76,14 +165,32 @@
   suffix: Filled, Quarter Master
   components:
   - type: StorageFill
-    contents:
+    contents: # imp edit - diversifying dressers
       - id: ClothingHeadHatBeretQM
-      - id: ClothingUniformJumpsuitQMFormal
-      - id: ClothingUniformJumpsuitQMTurtleneck
-      - id: ClothingUniformJumpskirtQMTurtleneck
-      - id: ClothingHandsGlovesColorBrown
-      - id: ClothingOuterWinterQM
+        orGroup: QMHat
+      - id: ClothingHeadHatQMsoft
+        orGroup: QMHat
       - id: ClothingNeckCloakQm
+        orGroup: QMNeck
+      - id: ClothingNeckMantleQM
+        orGroup: QMNeck
+      - id: ClothingNeckCloakQmgreatcoat
+        orGroup: QMNeck
+      - id: ClothingUniformJumpsuitQM
+        orGroup: QMJumpsuit
+      - id: ClothingUniformJumpsuitQMFormal
+        orGroup: QMJumpsuit
+      - id: ClothingUniformJumpsuitQMTurtleneck
+        orGroup: QMJumpsuit
+      - id: ClothingUniformJumpskirtQM
+        orGroup: QMJumpskirt
+      - id: ClothingUniformJumpskirtQMTurtleneck
+        orGroup: QMJumpskirt
+      - id: ClothingOuterWinterQM
+        orGroup: QMOuter
+      - id: ClothingOuterCoatQmHuge
+        orGroup: QMOuter
+      - id: ClothingHandsGlovesColorBrown # idk why this is in here since it isnt part of the qm loadouts but whatever
 
 - type: entity
   id: DresserResearchDirectorFilled
@@ -91,13 +198,27 @@
   suffix: Filled, Research Director
   components:
   - type: StorageFill
-    contents:
+    contents: # imp edit - diversifying dressers. RD didnt have jumpsuits either for some reason
       - id: ClothingHeadHatBeretRND
-      - id: ClothingHandsGlovesColorPurple
-      - id: ClothingEyesGlasses
-      - id: ClothingOuterWinterRD
-      - id: ClothingOuterCoatRD
+        orGroup: RDHat
+      - id: ClothingHeadHoodMysta
+        orGroup: RDHat
       - id: ClothingNeckCloakRd
+        orGroup: RDNeck
+      - id: ClothingNeckCloakMystagogue
+        orGroup: RDNeck
+      - id: ClothingNeckMantleRD
+        orGroup: RDNeck
+      - id: ClothingUniformJumpsuitResearchDirector
+      - id: ClothingUniformJumpskirtResearchDirector
+      - id: ClothingOuterWinterRD
+        orGroup: RDOuter
+      - id: ClothingOuterCoatRD
+        orGroup: RDOuter
+      - id: ClothingOuterCoatRndMysta
+        orGroup: RDOuter
+      - id: ClothingHandsGlovesColorPurple # not part of the rd loadout but okay
+      - id: ClothingEyesGlasses
 
 - type: entity
   id: DresserWardenFilled
@@ -105,6 +226,25 @@
   suffix: Filled, Warden
   components:
   - type: StorageFill
-    contents:
+    contents: # imp edit - diversifying dressers
       - id: ClothingHeadHatWarden
+        orGroup: WardenHead
       - id: ClothingHeadHatBeretWarden
+        orGroup: WardenHead
+      - id: ClothingUniformJumpsuitWarden
+        orGroup: WardenJumpsuit
+      - id: ClothingUniformJumpsuitWardenTurtle
+        orGroup: WardenJumpsuit
+      - id: ClothingUniformJumpsuitSecBlue
+        orGroup: WardenJumpsuit
+      - id: ClothingUniformJumpsuitChiefJusticeFormal
+        orGroup: WardenJumpsuit
+      - id: ClothingUniformJumpsuitChiefJusticeWhite
+        orGroup: WardenJumpsuit
+      - id: ClothingUniformJumpskirtWarden
+        orGroup: WardenJumpskirt
+      - id: ClothingUniformJumpskirtWardenTurtle
+        orGroup: WardenJumpskirt
+      - id: ClothingUniformJumpskirtCJFormal
+        orGroup: WardenJumpskirt
+      - id: ClothingOuterWinterWardenUnarmored

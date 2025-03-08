@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "The sprite base is taken from  tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039, separated into layers and added new ones by TheShuEd (github), business layers added in by MintyTheBinty",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base_leg_business",
+      "directions": 4
+    },
+    {
+      "name": "base_torso_business",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_belt",
+      "directions": 4
+    },
+    {
+      "name": "decor_torso_tie",
+      "directions": 4
+    },
+	{
+      "name": "base_leg_businessskirt",
+      "directions": 4
+    },
+	{
+      "name": "decor_leg_stocking",
+      "directions": 4
+    },
+	{
+      "name": "decor_torso_belt2-gray",
+      "directions": 4
+    },
+	{
+      "name": "decor_torso_belt2",
+      "directions": 4
+    }
+  ]
+}

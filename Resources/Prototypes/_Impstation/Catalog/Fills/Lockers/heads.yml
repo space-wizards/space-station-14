@@ -1,0 +1,24 @@
+- type: entityTable
+  id: LockerFillHospitalityDirector
+  table: !type:AllSelector
+    children:
+    - id: BoxEncryptionKeyService
+    - id: ClothingBeltChefFilled
+    - id: ClothingBeltJanitorFilled
+    - id: ClothingBeltPlantFilled
+    - id: ClothingHeadsetAltService
+    - id: ClothingShoesGaloshes
+    - id: DoorRemoteService
+    - id: RubberStampHD
+    - id: ServiceTechFabCircuitboard
+    - id: WeaponLauncherCleanerLake
+
+- type: entity
+  id: LockerHospitalityDirectorFilled
+  suffix: Filled
+  parent: LockerHospitalityDirector
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: LockerFillHospitalityDirector

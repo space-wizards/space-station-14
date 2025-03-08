@@ -17,3 +17,8 @@
   id: ClothingUniformDetectiveSuitSkirt
   equipment:
     jumpsuit: ClothingUniformDetectiveSuitSkirt #imp
+
+- type: loadout
+  id: ClothingOuterCoatFieldJacket
+  equipment:
+    outerClothing: ClothingOuterCoatFieldJacket #imp

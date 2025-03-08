@@ -72,6 +72,7 @@
       - DrinkWaterBottleEmpty #imp recipe
       - Pitcher #imp recipe
       - BarSpoon #imp recipe
+      - DrinkDisposableCup #imp recipe
       #food      
       - KitchenKnife
       - FoodPlate
@@ -108,6 +109,7 @@
       - CleanerGrenade #imp recipe
       #service
       - PlantAnalyzer #NF recipe
+      - FishingRod #imp recipe
       #misc.
       - FauxTileAstroGrass
       - FauxTileMowedAstroGrass

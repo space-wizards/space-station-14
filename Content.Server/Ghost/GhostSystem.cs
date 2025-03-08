@@ -8,6 +8,7 @@ using Content.Server.Mind;
 using Content.Server.Polymorph.Components;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
+using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.Ghost;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
@@ -26,6 +27,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -36,6 +38,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -64,6 +67,8 @@ namespace Content.Server.Ghost
         [Dependency] private readonly SharedMindSystem _mind = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -148,7 +153,9 @@ namespace Content.Server.Ghost
             if (args.Handled)
                 return;
 
-            var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius);
+            var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius).ToList();
+            // Shuffle the possible targets so we don't favor any particular entities
+            _random.Shuffle(entities);
 
             var booCounter = 0;
             foreach (var ent in entities)
@@ -161,6 +168,9 @@ namespace Content.Server.Ghost
                 if (booCounter >= component.BooMaxTargets)
                     break;
             }
+
+            if (booCounter == 0)
+                _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
 
             args.Handled = true;
         }
@@ -199,7 +209,7 @@ namespace Content.Server.Ghost
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
-            SetCanSeeGhosts(uid, true);
+            SetCanSeeGhosts(uid, true, false);
 
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
@@ -217,7 +227,7 @@ namespace Content.Server.Ghost
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
-            SetCanSeeGhosts(uid, true);
+            SetCanSeeGhosts(uid, true, true);
 
             var time = _gameTiming.CurTime;
         }
@@ -237,7 +247,7 @@ namespace Content.Server.Ghost
             }
 
             // Entity can't see ghosts anymore.
-            SetCanSeeGhosts(uid, false);
+            SetCanSeeGhosts(uid, false, false);
             _actions.RemoveAction(uid, component.BooActionEntity);
         }
 
@@ -256,16 +266,19 @@ namespace Content.Server.Ghost
             }
 
             // Entity can't see ghosts anymore.
-            SetCanSeeGhosts(uid, false);
+            SetCanSeeGhosts(uid, false, false);
         }
 
-        private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
+        private void SetCanSeeGhosts(EntityUid uid, bool canSee, bool medium, EyeComponent? eyeComponent = null)
         {
             if (!Resolve(uid, ref eyeComponent, false))
                 return;
 
             if (canSee)
+            {
                 _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask | (int) VisibilityFlags.Ghost, eyeComponent);
+                if (!medium) _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask | MonumentComponent.LayerMask); // IMP EDIT
+            }
             else
                 _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask & ~(int) VisibilityFlags.Ghost, eyeComponent);
         }

@@ -1,4 +1,4 @@
-﻿<ui:RadialMenu xmlns="https://spacestation14.io"
+<ui:RadialMenu xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 BackButtonStyleClass="RadialMenuBackButton"
                 CloseButtonStyleClass="RadialMenuCloseButton"
@@ -8,25 +8,25 @@
 
     <!-- Main -->
     <!-- Impstation edit - changed all pngs to new assets-->
-    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" Radius="64" ReserveSpaceForHiddenChildren="False">
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-general'}" TargetLayer="General" Visible="False">
+    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" InitialRadius="100" ReserveSpaceForHiddenChildren="False">
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'emote-menu-category-general'}" TargetLayer="General" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/_Impstation/Interface/Emotes/general.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-vocal'}" TargetLayer="Vocal" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'emote-menu-category-vocal'}" TargetLayer="Vocal" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/_Impstation/Interface/Emotes/vocal.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/_Impstation/Interface/Emotes/hand.png"/>
-        </ui:RadialMenuTextureButton>
+        </ui:RadialMenuTextureButtonWithSector>
     </ui:RadialContainer>
 
     <!-- General -->
-    <ui:RadialContainer Name="General"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="General"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Vocal -->
-    <ui:RadialContainer Name="Vocal"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Vocal"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Hands -->
-    <ui:RadialContainer Name="Hands"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Hands"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
 </ui:RadialMenu>

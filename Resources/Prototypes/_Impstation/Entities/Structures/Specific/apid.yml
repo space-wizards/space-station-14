@@ -108,3 +108,83 @@
       settings: default
   - type: GhostRoleMobSpawner
     prototype: MobApidCourier
+
+- type: entity
+  id: ApidCryopodScientist
+  parent: ApidCryopodBotanist
+  name: apid scientist cryopod
+  suffix: Ghost role
+  description: A small, hexagonal cryopod containing a Beefolk scientist. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-scientist-name
+    description: ghost-role-information-apid-scientist-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidScientist
+
+- type: entity
+  id: ApidCryopodJanitor
+  parent: ApidCryopodBotanist
+  name: apid janitor cryopod
+  suffix: Ghost role
+  description: A small, hexagonal cryopod containing a Beefolk janitor. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-janitor-name
+    description: ghost-role-information-apid-janitor-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidJanitor
+
+- type: entity
+  id: ApidCryopodAdministrativeAssistant
+  parent: ApidCryopodBotanist
+  name: apid administrative assistant cryopod
+  suffix: Ghost role
+  description: A small, hexagonal cryopod containing a Beefolk administrative assistant. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-adminassistant-name
+    description: ghost-role-information-apid-adminassistant-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidAdminAssistant
+
+- type: entity
+  id: ApidCryopodChaplain
+  parent: ApidCryopodBotanist
+  name: apid chaplain cryopod
+  suffix: Ghost role
+  description: A small, hexagonal cryopod containing a Beefolk chaplain. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-chaplain-name
+    description: ghost-role-information-apid-chaplain-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidChaplain
+
+- type: entity
+  id: ApidCryopodSalvageSpecialist
+  parent: ApidCryopodBotanist
+  name: apid salvage specialist cryopod
+  suffix: Ghost role
+  description: A small, hexagonal cryopod containing a Beefolk salvage specialist. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-salvager-name
+    description: ghost-role-information-apid-salvager-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidSalvageSpecialist

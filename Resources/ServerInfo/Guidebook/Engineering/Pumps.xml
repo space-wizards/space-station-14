@@ -1,0 +1,48 @@
+﻿<Document>
+# Pumps
+  Pumps are the primary way of actively moving gasses through a [textlink="pipenet." link="PipeNetworks"]
+  They take gas from one side, and push it to the other.
+  There are two different types of pumps:
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="pressure pump"/>
+    <GuideEntityEmbed Entity="GasVolumePump" Caption="volumetric pump"/>
+  </Box>
+
+  Some important things to note about pumps:
+  - Pumps [color=#a4885c]require power[/color] through a nearby LV cable to function.
+  - Pumps output on the side with the red stripe.
+  - Gas cannot move backwards through pumps (although if you are using a pump to do solely this, you should use the [textlink="passive gate" link="PassiveGate"] instead).
+  - Pumps cannot move gasses into pipes with pressures or volumes exceeding their [color=#a4885c]limit[/color]. This causes them to be [color=red]blocked[/color].
+
+  Pumps will show a colorful animation when they are doing work.
+  If they have no gas to pump, or they are blocked, they will show a blinking [color=red]red[/color] animation.
+  Pumps that are off, have no power, or are unanchored will show no animation.
+
+  ## Pressure Pumps
+  Pressure pumps are the most common type of pump.
+  They move gas based on [color=#a4885c]pressure[/color], making them useful for controlling the exact pressure of a pipe, or for drawing a vacuum.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="pressure pump"/>
+  </Box>
+
+  A pressure pump [color=red]cannot[/color] move gas to a pipe that has a pressure higher or equal to the pressure set on the pump.
+
+  For example, a pressure pump cannot pump gas to a pipe that is currently at 500 kPa, if the pressure pump is set at 500 kPa.
+
+  Pressure pumps can pump up to a maximum pressure of [color=orange][protodata="GasPressurePump" comp="GasPressurePump" member="MaxTargetPressure"/] kPa[/color].
+  They will become [color=red]blocked[/color] if they try to push gas into a pipe higher than this pressure.
+
+  ## Volumetric Pumps
+  Volumetric pumps are an alternative pump, moving gas based on [color=#a4885c]volume[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="GasVolumePump" Caption="volumetric pump"/>
+  </Box>
+
+  They are extremely useful for moving large amounts of gas quickly.
+  They can typically achieve higher pressures than a pressure pump.
+
+  While volumetric pumps work off of the principle of volume, they will become [color=red]blocked[/color] if they try to push gas into a pipe higher than [color=orange][protodata="GasVolumePump" comp="GasVolumePump" member="HigherThreshold"/] kPa[/color].
+</Document>

@@ -156,6 +156,12 @@
     - ClothingNeckPansexualPin
 
 - type: loadout
+  id: ClothingNeckOmnisexualPin
+  storage:
+    back:
+    - ClothingNeckOmnisexualPin
+
+- type: loadout
   id: ClothingNeckTransPin
   storage:
     back:
@@ -249,7 +255,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
-      department: Civilian
+      department: Service #imp edit
       time: 360000 # 100hr
   storage:
     back:

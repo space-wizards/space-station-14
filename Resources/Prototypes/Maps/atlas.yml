@@ -14,49 +14,52 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
         - type: StationJobs
-          availableJobs:
-            #service
+          availableJobs: # total of 44 jobs roundstart, max of 58 inc. latejoins and trainees.
+            # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ] # imp
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
+            Quartermaster: [ 1, 1 ]
+            # service - 11
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
-            Chef: [ 1, 1 ]
-            Janitor: [ 1, 1 ]
             Chaplain: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
             Librarian: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
             ServiceWorker: [ 1, 1 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
+            # engineering - 4-7
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 2, 2 ]
             TechnicalAssistant: [ 3, 3 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
+            # medical - 4-7
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
-            Scientist: [ 2, 2 ]
-            ResearchAssistant: [ 3, 3 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SecurityOfficer: [ 3, 3 ]
-            SecurityCadet: [ 3, 3 ]
-            Detective: [ 1, 1 ]
-            Brigmedic: [ 1, 1 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 2 ]
-            CargoTechnician: [ 2, 2 ]
-            Courier: [ 1, 1 ]
-            #civillian
-            Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            #silicon
-            StationAi: [ 1, 1 ]
+            # science - 5-8
             Borg: [ 2, 2 ]
+            ResearchAssistant: [ 3, 3 ]
+            Scientist: [ 2, 2 ]
+            StationAi: [ 1, 1 ]
+            # security - 6-9
+            Brigmedic: [ 1, 1 ] # imp
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 3, 3 ]
+            SecurityOfficer: [ 3, 3 ]
+            Warden: [ 1, 1 ]
+            # supply - 5-7
+            CargoTechnician: [ 2, 2 ]
+            Courier: [ 1, 1 ] # imp
+            SalvageSpecialist: [ 2, 2 ]
+            SupplyAssistant: [ 2, 2 ] # imp
+            # civilian
+            Passenger: [ -1, -1 ]

@@ -2,6 +2,7 @@
   id: Thief
   name: roles-antag-thief-name
   antagonist: true
+  playTimeTracker: AntagThief # imp
   setPreference: true
   objective: roles-antag-thief-objective
   guides: [ Thieves ]
@@ -10,7 +11,7 @@
   id: ThiefGear
   storage:
     back:
+    - ThiefBeacon
     - ToolboxThief
     - ClothingHandsChameleonThief
-    - ThiefBeacon
     - ThiefBusinessCard #imp

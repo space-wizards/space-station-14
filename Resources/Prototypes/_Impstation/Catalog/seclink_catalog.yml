@@ -90,17 +90,17 @@
   categories:
     - SeclinkDisabler
 
+#Utility Options
 - type: listing
   id: SeclinkSpaceBladeSec
   name: seclink-spaceblade-name
   description: seclink-spaceblade-desc
   productEntity: SpaceBladeSec
   cost:
-    DisablerToken: 1
+    UtilityToken: 1
   categories:
-    - SeclinkDisabler
+    - SeclinkUtility
 
-#Utility Options
 - type: listing
   id: SeclinkCrowbar
   name: seclink-crowbar-name

@@ -4,9 +4,21 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "horns_nubby by pinkbat5, all other markings by starlighthowls",
+    "copyright": "horns_nubby by pinkbat5, all other markings by starlighthowls, head_flat/snout_tall/beard by rainyatrium",
     "license": "CC-BY-SA-3.0",
     "states": [
+	  {
+        "name": "snout_tall",
+        "directions": 4
+      },
+	  {
+        "name": "head_flat",
+        "directions": 4
+      },
+	  {
+        "name": "beard",
+        "directions": 4
+      },
       {
         "name": "fangs",
         "directions": 4

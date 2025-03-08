@@ -7,7 +7,6 @@
     - id: SnailMigrationLowPop
     - id: CockroachMigration
     - id: MouseMigration
-    - id: TrashAnimalMigration
     - id: LuggageMigration # imp special
 
 - type: entityTable
@@ -116,23 +115,6 @@
       prob: 0.002
     - id: MobSnailInstantDeath
       prob: 0.00001 #  ~ 1:2000 snails
-
-- type: entity
-  id: TrashAnimalMigration
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 15
-    weight: 6
-    duration: 50
-  - type: VentCrittersRule
-    entries:
-    - id: MobRaccoonGhost
-      prob: 0.02
-    - id: MobPossumGhost
-      prob: 0.02
-    - id: MobMouse
-      prob: 0.02
 
 - type: entity
   id: SlimesSpawn

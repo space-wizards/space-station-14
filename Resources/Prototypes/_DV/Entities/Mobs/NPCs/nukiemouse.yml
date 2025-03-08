@@ -11,6 +11,9 @@
     allowMovement: true
     name: ghost-role-information-nukie-mouse-name
     description: ghost-role-information-nukie-mouse-description
+    mindRoles: # imp
+    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleFamiliar
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [names_mouse_death_commando]
@@ -72,6 +75,8 @@
       Dead:
         Base: splat
   - type: Food
+  - type: Absorbable # imp edit - mouse bite sized
+    biomassRestored: 0.1
   - type: Hunger
     baseDecayRate: 0.1
   - type: Extractable

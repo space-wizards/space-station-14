@@ -12,3 +12,6 @@
     sprite: _Impstation/Objects/Misc/dogtags.rsi
   - type: Appearance
   - type: Engraveable
+  - type: Tag
+    tags:
+    - WhitelistChameleon

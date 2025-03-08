@@ -9,6 +9,8 @@ heretic-ritual-noritual = No ritual chosen!
 heretic-ritual-basic-sacrifice = Heartbeat of the Mansus
 heretic-ritual-basic-focus = Amber Focus
 heretic-ritual-basic-heart = Relentless Heartbeat
+heretic-ritual-basic-codex = Codex Cicatrix
+
 
 heretic-ritual-fail-sacrifice = There is no corpse to sacrifice.
 heretic-ritual-fail-sacrifice-ineligible = The rune refuses to accept this sacrifice.

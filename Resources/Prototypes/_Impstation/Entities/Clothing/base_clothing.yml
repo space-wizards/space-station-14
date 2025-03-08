@@ -4,7 +4,7 @@
   id: BaseLensSlot
   components:
   - type: LensSlot
-    LensSlotId: lens_slot
+    lensSlotId: lens_slot
   - type: ItemSlots
     slots:
       lens_slot:

@@ -87,8 +87,8 @@
   components:
   - type: StorageFill
     contents:
-    - id: ClothingUniformJumpskirtPerformer
-    - id: ClothingShoesBootsPerformer
+    # - id: ClothingUniformJumpskirtPerformer # imp - death to vocaloid
+    # - id: ClothingShoesBootsPerformer # imp - death to vocaloid
     - id: ClothingOuterSuitMonkey
     - id: ClothingHeadHatAnimalMonkey
     - id: ClothingNeckCloakMoth

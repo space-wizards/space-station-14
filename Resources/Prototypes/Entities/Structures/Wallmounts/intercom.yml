@@ -338,3 +338,16 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyStationMaster
+
+- type: entity
+  id: IntercomFreelance
+  parent: Intercom
+  suffix: Freelance
+  components:
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyFreelance

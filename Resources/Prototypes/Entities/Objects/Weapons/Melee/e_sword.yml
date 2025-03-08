@@ -85,7 +85,7 @@
     embedOnThrow: false
   - type: EmbedPassiveDamage
   - type: ItemToggleSignatureWriter
-    activatedFont: /Fonts/_DV/AndTheDoorCreeeaked/AndTheDoorCreeeaked-Regular.otf
+    activatedFont: AndTheDoorCreeeaked
     activatedColor: black
   # end imp edits #
 
@@ -213,7 +213,6 @@
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
-      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:

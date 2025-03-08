@@ -349,13 +349,14 @@ marking-VoxTailSplit-voxtailsplit = Twinned
 
 # upstream vox markings dont have localized names. lmfao
 # these are just straight up broken and shouldnt be visible from the markings menu period but ALAS im not skilled enough to remove them so you get this stupid botch job instead
+# moving this furniture a few inches to the left -cc
 marking-VoxBeak = Default Beak [DO NOT USE]
-marking-VoxLArmScales = Default Arm [DO NOT USE]
-marking-VoxLHandScales = Default Left Hand [DO NOT USE]
-marking-VoxRArmScales = Default Right Arm [DO NOT USE]
-marking-VoxRHandScales = Default Right Hand [DO NOT USE]
+marking-VoxLArmScales = Arm Scales L
+marking-VoxLHandScales = Hand Scales L
+marking-VoxRArmScales = Arm Scales R
+marking-VoxRHandScales = Hand Scales R
 marking-VoxTail = Default Tail [DO NOT USE]
-marking-VoxLFootScales = Default Left Foot [DO NOT USE]
-marking-VoxLLegScales = Default Left Leg [DO NOT USE]
-marking-VoxRFootScales = Default Right Foot [DO NOT USE]
-marking-VoxRLegScales = Default Right Leg [DO NOT USE]
+marking-VoxLFootScales = Foot Scales L
+marking-VoxLLegScales = Leg Scales L
+marking-VoxRFootScales = Foot Scales R
+marking-VoxRLegScales = Leg Scales R

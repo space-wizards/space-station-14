@@ -53,25 +53,6 @@
         Blunt: 10
 
 - type: entity
-  parent: ClothingEyesBase
-  id: ClothingEyesGlassesGarMecha
-  name: mecha gar glasses
-  description: Believe in me! Believe in the me who believes in you!
-  components:
-  - type: Sprite
-    sprite: Clothing/Eyes/Glasses/gar.rsi
-    state: icon-mecha
-  - type: Clothing
-    sprite: Clothing/Eyes/Glasses/gar.rsi
-    equippedPrefix: mecha
-  - type: Item
-    heldPrefix: mecha
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-
-- type: entity
   parent: [ClothingEyesBase, BaseLensSlot, BaseEngineeringContraband] # BaseLensSlot from imp
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion
@@ -92,19 +73,28 @@
   parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlasses
   name: glasses
-  description: A pair of spectacular spectacles with removable prescription lenses.
+  description: A pair of spectacular spectacles with removable prescription lenses. # imp
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
-  - type: ItemSlots # imp
+  # imp start
+  - type: ItemSlots
     slots:
       lens_slot:
         startingItem: PrescriptionLens
         whitelist:
           tags:
           - Lens
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      lens:
+        whitelist:
+          tags:
+          - Lens
+  # imp end
   - type: Tag
     tags:
     - HamsterWearable
@@ -152,6 +142,22 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: IdentityBlocker
+  # imp start
+  - type: ItemSlots
+    slots:
+      lens_slot:
+        startingItem: PrescriptionLens
+        whitelist:
+          tags:
+          - Lens
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      lens:
+        whitelist:
+          tags:
+          - Lens
+  # imp end
 
 - type: entity
   parent: ClothingEyesBase

@@ -1518,6 +1518,16 @@ entities:
     - type: Transform
       pos: 1.5,10.5
       parent: 1
+  - uid: 654
+    components:
+    - type: Transform
+      pos: 7.5,5.5
+      parent: 1
+  - uid: 655
+    components:
+    - type: Transform
+      pos: 8.5,5.5
+      parent: 1
 - proto: CableApcExtension
   entities:
   - uid: 205
@@ -2051,66 +2061,66 @@ entities:
     - type: Transform
       pos: 3.411498,5.504635
       parent: 1
-- proto: FloraRockSolid02
+- proto: FloraRockSolid
   entities:
   - uid: 390
     components:
     - type: Transform
       pos: 1.4954431,-3.4608064
       parent: 1
-- proto: FloraRockSolid03
-  entities:
   - uid: 391
     components:
     - type: Transform
       pos: 1.5266931,0.49231863
       parent: 1
-- proto: FloraTreeConifer01
-  entities:
-  - uid: 103
-    components:
-    - type: Transform
-      pos: -6.1648893,7.491646
-      parent: 1
-  - uid: 112
-    components:
-    - type: Transform
-      pos: 5.535765,-6.5426564
-      parent: 1
-- proto: FloraTreeConifer02
-  entities:
-  - uid: 104
-    components:
-    - type: Transform
-      pos: 7.5564733,7.976021
-      parent: 1
-- proto: FloraTreeConifer03
+- proto: FloraTreeConifer
   entities:
   - uid: 102
     components:
     - type: Transform
       pos: -6.4029756,-5.1642146
       parent: 1
-- proto: FloraTreeSnow01
-  entities:
-  - uid: 388
+  - uid: 103
     components:
     - type: Transform
-      pos: 3.916739,7.8591757
+      pos: -6.1648893,7.491646
       parent: 1
-- proto: FloraTreeSnow02
+  - uid: 104
+    components:
+    - type: Transform
+      pos: 7.5564733,7.976021
+      parent: 1
+  - uid: 112
+    components:
+    - type: Transform
+      pos: 5.535765,-6.5426564
+      parent: 1
+- proto: FloraTreeSnow
   entities:
+  - uid: 2
+    components:
+    - type: Transform
+      pos: 8.2727165,-4.126254
+      parent: 1
+  - uid: 105
+    components:
+    - type: Transform
+      pos: -8.563887,-0.14195466
+      parent: 1
+  - uid: 106
+    components:
+    - type: Transform
+      pos: -6.3138866,3.4898095
+      parent: 1
   - uid: 107
     components:
     - type: Transform
       pos: -1.6871753,8.34718
       parent: 1
-- proto: FloraTreeSnow03
-  entities:
-  - uid: 105
+  - uid: 109
     components:
     - type: Transform
-      pos: -8.563887,-0.14195466
+      pos: 9.400868,3.8586073
       parent: 1
   - uid: 147
     components:
@@ -2118,26 +2128,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.9080772,1.8336542
       parent: 1
-- proto: FloraTreeSnow04
-  entities:
-  - uid: 2
+  - uid: 388
     components:
     - type: Transform
-      pos: 8.2727165,-4.126254
-      parent: 1
-- proto: FloraTreeSnow05
-  entities:
-  - uid: 106
-    components:
-    - type: Transform
-      pos: -6.3138866,3.4898095
-      parent: 1
-- proto: FloraTreeSnow06
-  entities:
-  - uid: 109
-    components:
-    - type: Transform
-      pos: 9.400868,3.8586073
+      pos: 3.916739,7.8591757
       parent: 1
 - proto: FoodBoxDonut
   entities:
@@ -2872,19 +2866,29 @@ entities:
     - type: Transform
       pos: -12.5,-5.5
       parent: 1
-- proto: LiquidNitrogenCanister
+- proto: NitrogenCanister
   entities:
   - uid: 152
     components:
     - type: Transform
       pos: 6.5,-0.5
       parent: 1
-- proto: LiquidOxygenCanister
+  - uid: 651
+    components:
+    - type: Transform
+      pos: 5.5,-0.5
+      parent: 1
+- proto: OxygenCanister
   entities:
   - uid: 40
     components:
     - type: Transform
       pos: 7.5,-1.5
+      parent: 1
+  - uid: 650
+    components:
+    - type: Transform
+      pos: 7.5,-0.5
       parent: 1
 - proto: PosterContrabandBeachStarYamamoto
   entities:
@@ -3186,6 +3190,18 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,5.5
+      parent: 1
+- proto: SpaceHeater
+  entities:
+  - uid: 652
+    components:
+    - type: Transform
+      pos: 1.5,-5.5
+      parent: 1
+  - uid: 653
+    components:
+    - type: Transform
+      pos: 1.5,-6.5
       parent: 1
 - proto: StairWood
   entities:
@@ -3806,26 +3822,41 @@ entities:
     - type: Transform
       pos: 3.5,-4.5
       parent: 1
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 53
     components:
     - type: Transform
       pos: -2.5,-0.5
       parent: 1
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 76
     components:
     - type: Transform
       pos: -0.5,4.5
       parent: 1
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 124
     components:
     - type: Transform
       pos: 2.5,1.5
       parent: 1
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 129
     components:
     - type: Transform
       pos: 2.5,-2.5
       parent: 1
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: WoodenBench
   entities:
   - uid: 90

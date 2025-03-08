@@ -11,6 +11,8 @@
     name: ghost-role-information-luggage-name
     description: ghost-role-information-luggage-description
     rules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true

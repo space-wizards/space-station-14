@@ -2,6 +2,7 @@
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
+  playTimeTracker: AntagChangeling
   setPreference: true
   objective: roles-antag-changeling-description
   guides: [ Changelings ]

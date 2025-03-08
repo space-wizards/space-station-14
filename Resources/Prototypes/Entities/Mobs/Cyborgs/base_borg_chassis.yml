@@ -167,7 +167,6 @@
     - cell_slot
   - type: Lock
     locked: true
-    breakOnEmag: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
@@ -275,7 +274,7 @@
     maxIntensity: 20
     canCreateVacuum: false # its for killing the borg not the station
   - type: SignatureFont # imp
-    font: "/Fonts/_DV/Sixtyfour/Sixtyfour-Regular.ttf"
+    font: Sixtyfour
 
 - type: entity
   id: BaseBorgChassisNT
@@ -315,6 +314,7 @@
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: SiliconLawProvider
     laws: SyndicateStatic
+    subverted: true
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary

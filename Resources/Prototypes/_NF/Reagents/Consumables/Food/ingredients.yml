@@ -1,0 +1,17 @@
+﻿- type: reagent
+  id: CoffeeGrounds
+  name: reagent-name-coffeegrounds
+  group: Foods
+  desc: reagent-desc-coffeegrounds
+  flavor: bitter
+  color: "#4B382A"
+  physicalDesc: reagent-physical-desc-powdery
+  slippery: false
+  recognizable: true # "Waiter, there seems to be grounds in my coffee."
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateHunger
+        factor: 0.1
+      - !type:SatiateThirst
+        factor: -0.25

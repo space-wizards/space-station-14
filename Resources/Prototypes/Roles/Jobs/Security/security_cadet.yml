@@ -28,8 +28,9 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
+    eyes: ClothingEyesGlassesSunglasses # imp
     shoes: ClothingShoesBootsJackFilled
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorDuraVest # DeltaV - ClothingOuterArmorBasic replaced in favour of stab vest. Sucks to suck, cadets
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
@@ -39,7 +40,4 @@
     back:
     - Flash
     - MagazinePistol
-    - BatonToken1  #imp
-    - DisablerToken1  #imp
-    - UtilityToken1  #imp
     - WeaponPistolMk58

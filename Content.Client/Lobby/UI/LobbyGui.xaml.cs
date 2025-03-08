@@ -20,6 +20,7 @@ namespace Content.Client.Lobby.UI
             SetAnchorPreset(Background, LayoutPreset.Wide);
 
             LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
+            LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text")); // imp edit
 
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();

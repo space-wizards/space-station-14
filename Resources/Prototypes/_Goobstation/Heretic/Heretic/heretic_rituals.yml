@@ -47,7 +47,7 @@
   requiredTags:
     Eyes: 1
     Book: 1
-    Pen: 1
+    Write: 1
   output:
     CodexCicatrix: 1
 
@@ -76,6 +76,7 @@
     Mask: 1
     Candle: 4
     Stunbaton: 1
+    Liver: 1
   output:
     ClothingMaskMadHeretic: 1
 
@@ -234,7 +235,7 @@
 ### side knowledge
 - type: hereticRitual
   id: RitualOfKnowledge
-  locName: knowledge-path-side-knowledge-name
+  locName: heretic-ritual-side-knowledge
   locDesc: knowledge-path-side-knowledge-desc
   icon: 
     sprite: _Goobstation/Heretic/book.rsi

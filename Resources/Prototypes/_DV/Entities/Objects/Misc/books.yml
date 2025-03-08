@@ -1,0 +1,22 @@
+- type: entity
+  id: BookLogistics
+  parent: BaseGuidebook
+  name: logistics 101
+  description: A Nanotrasen guide book for a supply assistant still in training.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#785214"
+    - state: decor_wingette
+      color: "#a8741e"
+    - state: decor_spine
+      color: "#a8741e"
+    - state: icon_diamond
+    - state: icon_text3
+      color: "#ffffff"
+  - type: GuideHelp
+    guides:
+    - Cargo
+    - Salvage

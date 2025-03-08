@@ -33,6 +33,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
+  - type: Appearance
+  - type: PowerChargerVisuals
   - type: Sprite
     sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
     layers:
@@ -45,6 +47,11 @@
       shader: unshaded
       map: ["light","enum.BorgVisualLayers.LightStatus"]
       visible: false
+    - state: empty
+      map: ["enum.PowerChargerVisualLayers.Base"]
+    - state: light-empty
+      map: ["enum.PowerChargerVisualLayers.Light"]
+      shader: unshaded
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -150,7 +157,7 @@
     accent: silicon
   - type: Lock
     locked: true
-    breakOnEmag: false
+    breakOnAccessBreaker: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
@@ -283,8 +290,10 @@
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
-    description: Charge APCs, help with power, and keep everyone's batteries topped up.
+    description: Help with power, charge batteries, and go on adventures.
     rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
   - type: GhostTakeoverAvailable
   - type: GenericVisualizer
     visuals:
@@ -303,3 +312,9 @@
     tags:
     - Engineering
     - External
+    - Salvage
+    - Cargo
+    - Maintenance
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral

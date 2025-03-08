@@ -27,5 +27,5 @@ public sealed partial class ShipyardConsoleComponent : Component
     /// Radio channel to send the purchase announcement to.
     /// </summary>
     [DataField]
-    public ProtoId<RadioChannelPrototype> Channel = "Command";
+    public ProtoId<RadioChannelPrototype> Channel = "Supply";
 }

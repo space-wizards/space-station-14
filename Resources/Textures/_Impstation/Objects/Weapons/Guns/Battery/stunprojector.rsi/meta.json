@@ -10,6 +10,9 @@
         {
             "name": "base"
         },
+	    {
+            "name": "mag-unshaded-4"
+        },
         {
             "name": "mag-unshaded-3"
         },
@@ -44,6 +47,9 @@
         {
             "name": "inhand-left-3"
         },
+		{
+            "name": "inhand-left-4"
+        },
         {
             "name": "inhand-right",
             "directions": 4
@@ -59,6 +65,9 @@
         },
         {
             "name": "inhand-right-3"
+        },
+		{
+            "name": "inhand-right-4"
         },
 		{
 			"name": "equipped-BELT",

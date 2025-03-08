@@ -20,7 +20,7 @@
     tags:
     - Sidearm
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/viper.rsi #imp
     quickEquip: false
     slots:
     - suitStorage
@@ -75,7 +75,7 @@
   description: A small, easily-concealable but somewhat underpowered handgun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/viper.rsi #imp
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -116,7 +116,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/viper.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -143,14 +143,14 @@
   description: A rugged, integrally-suppressed handgun. Perfect for the robust operator who wants to leave no trace. Uses .25 caseless ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/cobra.rsi #imp
     layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/cobra.rsi #imp
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
@@ -192,14 +192,14 @@
   description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk58.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk58.rsi #imp
   - type: Gun
     fireRate: 5
     availableModes:
@@ -217,7 +217,7 @@
   description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/N1984.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

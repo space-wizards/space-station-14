@@ -23,6 +23,13 @@ public sealed partial class SpillableComponent : Component
     [DataField]
     public FixedPoint2 MaxMeleeSpillAmount = FixedPoint2.New(20);
 
+    /// Imp addition
+    /// <summary>
+    ///     Should this item be allowed to deal melee damage when spilling?
+    /// </summary>
+    [DataField]
+    public bool AllowMeleeDamage = false;
+
     /// <summary>
     ///     Should this item be spilled when thrown?
     /// </summary>

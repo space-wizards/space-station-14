@@ -5,6 +5,3 @@ hostname = "[EN] Wizard's Den Vulture [US East 2]"
 
 [hub]
 tags = "lang:en,region:am_n_e,rp:low"
-
-[worldgen]
-enabled = true

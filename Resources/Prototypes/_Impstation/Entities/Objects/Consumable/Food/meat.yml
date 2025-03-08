@@ -82,3 +82,33 @@
   - type: FoodSequenceElement
     entries:
       Burger: FriedFinfinBurger
+
+- type: entity
+  name: heart carpaccio
+  parent: FoodMealBase
+  id: MealHeartCarpaccio
+  description: So fresh, the heart is still beating.
+  components:
+  - type: Tag
+    tags:
+    - Raw # ITS FOOKIN RAW
+    - Meat
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 5
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    state: heartcarpaccio
+  - type: Item
+    size: Normal

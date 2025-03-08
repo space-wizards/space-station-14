@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "courier compiled(??) by honeyed_lemons_",
+  "copyright": "courier compiled(??) by honeyed_lemons_. hd compiled by DinnerCalzone",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,9 @@
     },
     {
         "name": "courier"
+    },
+    {
+        "name": "hd"
     }
   ]
 }

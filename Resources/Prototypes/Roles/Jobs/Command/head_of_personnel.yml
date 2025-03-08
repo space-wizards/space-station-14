@@ -54,6 +54,15 @@
   - Cargo
   - Atmospherics
   - Medical
+  #imp edit start
+  - Courier
+  - Logistics
+  - Clown
+  - Librarian
+  - Mime
+  - Musician
+  - Reporter
+  #imp edit end
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

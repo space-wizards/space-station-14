@@ -480,6 +480,15 @@ namespace Content.Server.GameTicking
                 payload.AllowedMentions.AllowRoleMentions();
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+
+                if (_webhookIdentifierPostround == null)
+                    return;
+
+                content = Loc.GetString("discord-round-postround-end",
+                    ("id", RoundId));
+                payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifierPostround.Value, payload);
             }
             catch (Exception e)
             {

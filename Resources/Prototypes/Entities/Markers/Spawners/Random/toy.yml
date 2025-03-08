@@ -12,6 +12,11 @@
       rarePrototypes:
         - FoamBlade
         - PlushieGhost
+        #imp edits
+        - PlushieImp
+        - PlushieApid
+        - PlushieGoblin
+        #imp edits end
       rareChance: 0.03
       prototypes:
         - PlushieBee
@@ -30,6 +35,11 @@
         - PlushieSharkBlue
         - PlushieSharkPink
         - PlushieSharkGrey
+        #imp edits
+        - PlushieSnail
+        - PlushieDecapoid
+        - PlushieThaven
+        #imp edits end
         - ToyAmongPequeno
         - ToyMouse
         - PlushieDiona
@@ -86,6 +96,22 @@
       rarePrototypes:
       - ToyFigurineNukieElite
       - ToyFigurineNukieCommander
+      - ToyFigurineNukieAgent #<imp>
+      - ToyFigurineNukieJuggernaut
+      - ToyFigurineCyborgAssault
+      - ToyFigurineCyborgCorpsman
+      - ToyFigurineCyborgSaboteur
+      - ToyFigurineCBURNQuarantineOfficer
+      - ToyFigurineCentCommOfficial
+      - ToyFigurineChronologyAgent
+      - ToyFigurineDeathsquadAgent
+      - ToyFigurineERTChaplain
+      - ToyFigurineERTEngineer
+      - ToyFigurineERTJanitor
+      - ToyFigurineERTLeader
+      - ToyFigurineERTMedic
+      - ToyFigurineERTSecurity 
+      - ToyFigurineCosmicCultist #</imp>
       rareChance: 0.05
       prototypes:
       - ToyFigurinePassenger
@@ -101,7 +127,7 @@
       - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
-      - ToyFigurineQuartermaster   
+      - ToyFigurineQuartermaster
       - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
       - ToyFigurineEngineer
@@ -134,5 +160,14 @@
       - ToyFigurineMouse
       - ToyFigurineHamlet
       - ToyFigurineThief
+      - ToyFigurineCourier #<imp>
+      - ToyFigurineBrigmedic
+      - ToyFigurineCyborgDefault
+      - ToyFigurineCyborgEngineering
+      - ToyFigurineCyborgJanitorial
+      - ToyFigurineCyborgMedical
+      - ToyFigurineCyborgSalvage
+      - ToyFigurineCyborgService
+      - ToyFigurineStationAI #</imp>
       chance: 0.90
       offset: 0.2

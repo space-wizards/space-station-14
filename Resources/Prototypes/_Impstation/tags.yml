@@ -21,6 +21,9 @@
   id: ConversionKitHB
 
 - type: Tag
+  id: ConversionKitPB
+
+- type: Tag
   id: DecapoidClaw
 
 - type: Tag
@@ -81,6 +84,9 @@
   id: SprayPainter
 
 - type: Tag
+  id: VapeCart
+
+- type: Tag
   id: Vaporizer
 
 - type: Tag
@@ -94,3 +100,9 @@
 
 - type: Tag
   id: EvidenceMarker
+
+- type: Tag
+  id: Pribar
+
+- type: Tag
+  id: HandheldCriminalRecords

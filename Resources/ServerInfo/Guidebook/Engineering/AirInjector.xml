@@ -1,0 +1,15 @@
+﻿<Document>
+  #Air Injector
+  The air injector is a special vent that forces gasses into the atmosphere it's exposed to.
+  <Box>
+    <GuideEntityEmbed Entity="GasOutletInjector"/>
+  </Box>
+  It is primarily used to force gasses into high-pressure rooms like the station's [textlink="gas storage rooms" link="GasMiningAndStorage"], or a burn chamber.
+
+  The air injector does not require [textlink="power" link="Power"] to function.
+
+  The air injector will inject gasses into the atmosphere it's exposed to until the atmosphere reaches [color=orange][protodata="GasOutletInjector" comp="GasOutletInjector" member="MaxPressure"/] kPa[/color].
+
+  The air injector's speed is proportional to the amount of gas in the injector.
+  The more gas in the injector, the faster it will inject gas into the exposed atmosphere.
+</Document>

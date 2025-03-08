@@ -2,6 +2,7 @@
   id: SpaceNinja
   name: roles-antag-space-ninja-name
   antagonist: true
+  playTimeTracker: AntagNinja # imp
   setPreference: false
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]

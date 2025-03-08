@@ -106,6 +106,12 @@ public sealed partial class ChangelingComponent : Component
     [DataField, AutoNetworkedField]
     public int MaxEvolutionPoints = 10;
 
+    /// <summary>
+    /// Number of "lesser" entities absorbed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MinorAbsorbs = 0;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public List<TransformData> AbsorbedDNA = new();
     /// <summary>

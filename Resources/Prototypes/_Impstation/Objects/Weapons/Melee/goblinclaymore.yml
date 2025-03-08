@@ -20,3 +20,78 @@
     slots:
     - back
   - type: DisarmMalus
+
+- type: entity
+  name: Utilibrand
+  parent: BaseSword
+  id: UtilitySword
+  description: Blade of the legendary goblin engineer-knight, Lady Igsa Greasyfingers. It gleams with mischievous intent.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 15 # a little worse than the Captain's Sabre. It's super hard to get, so it's gonna be pretty good.
+  - type: Item
+  - type: DisarmMalus
+  - type: Tag
+    tags:
+    - Multitool
+  - type: Prying
+    enabled: false
+  - type: Tool
+    qualities:
+      - Slicing
+    useSound: /Audio/Weapons/bladeslice.ogg
+  - type: ToolTileCompatible
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Slicing
+        sprite:
+          sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+          state: icon
+        useSound:
+          path: /Audio/Weapons/bladeslice.ogg
+        changeSound: 
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Screwing
+        sprite:
+          sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+          state: utilisword-screwing
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound: 
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Prying
+        sprite:
+          sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+          state: utilisword-prying
+        useSound:
+          path: /Audio/Items/jaws_pry.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+          state: utilisword-wrenching
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+          state: utilisword-cutting
+        useSound:
+          path: /Audio/Items/jaws_cut.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Pulsing
+        sprite:
+          sprite: _Impstation/Objects/Weapons/Melee/utilisword.rsi
+          state: utilisword-pulsing
+        changeSound:
+          path: /Audio/Items/change_drill.ogg

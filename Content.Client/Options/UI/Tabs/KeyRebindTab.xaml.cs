@@ -239,6 +239,12 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.EscapeMenu);
             AddButton(ContentKeyFunctions.EscapeContext);
 
+            AddHeader("ui-options-header-nano-chat");
+            AddButton(ContentKeyFunctions.NanoChatNavigateUp); // DeltaV - NanoChat keybinds
+            AddButton(ContentKeyFunctions.NanoChatNavigateDown); // DeltaV - NanoChat keybinds
+            AddButton(ContentKeyFunctions.NanoChatNavigateUpUnread); // DeltaV - NanoChat keybinds
+            AddButton(ContentKeyFunctions.NanoChatNavigateDownUnread); // DeltaV - NanoChat keybinds
+
             AddHeader("ui-options-header-misc");
             AddButton(ContentKeyFunctions.TakeScreenshot);
             AddButton(ContentKeyFunctions.TakeScreenshotNoUI);

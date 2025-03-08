@@ -5,6 +5,7 @@
 petting-success-nicecarp = You pet {THE($target)} on {POSS-ADJ($target)} friendly wet head.
 petting-success-finfin = You pet {THE($target)} on {POSS-ADJ($target)} friendly little head.
 petting-success-pipi = You pet {THE($target)} on {POSS-ADJ($target)} empty little head.
+petting-success-dolby = You pet {THE($target)} on {POSS-ADJ($target)} fluffy little head.
 petting-success-tomato = You reach out to pet {THE($target)}, but it jumps up and kisses your hand first.
 petting-success-cargorilla = You give {THE($target)} a big hug.
 

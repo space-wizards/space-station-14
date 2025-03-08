@@ -7,7 +7,7 @@
   - type: Item
     size: Huge
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_retro.rsi #imp
     quickEquip: false
     slots:
     - Back
@@ -80,7 +80,7 @@
     tags:
     - Sidearm
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/taser.rsi #imp
     quickEquip: false
     slots:
     - Belt
@@ -97,7 +97,7 @@
     tags:
     - Sidearm
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/taser.rsi #imp
     quickEquip: false
     slots:
     - Belt
@@ -130,7 +130,7 @@
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_retro.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -153,7 +153,7 @@
   description: Better pray it won't burn your hands off.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/makeshift.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -161,7 +161,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/makeshift.rsi #imp
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
@@ -205,7 +205,7 @@
   description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -213,7 +213,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi #imp
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -243,7 +243,7 @@
   description: A state-of-the-art energy pistol favored as a sidearm by NT operatives.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_pistol.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -251,7 +251,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_pistol.rsi #imp
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -272,7 +272,7 @@
   description: A high-tech energy carbine favored by the NT-ERT operatives.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_carbine.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -280,7 +280,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_carbine.rsi #imp
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 3
@@ -303,7 +303,7 @@
   description: A weapon that is almost as infamous as its users.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_rifle.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -311,7 +311,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_rifle.rsi #imp
   - type: Gun
     fireRate: 1.5
     soundGunshot:
@@ -330,7 +330,7 @@
   description: A heavy-duty, high-powered laser weapon.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_cannon.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -338,7 +338,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_cannon.rsi #imp
   - type: Gun
     fireRate: 1.5
     soundGunshot:
@@ -385,7 +385,7 @@
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/xray.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -393,7 +393,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/xray.rsi #imp
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -402,7 +402,7 @@
     fireCost: 100
   - type: MagazineVisuals
     magState: mag
-    steps: 5
+    steps: 6 #impstation
     zeroVisible: true
   - type: Appearance
 
@@ -413,7 +413,7 @@
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -421,14 +421,14 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi #imp
     quickEquip: false
     slots:
     - Belt
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
-    steps: 5
+    steps: 6 #impstation
     zeroVisible: true
   - type: StaticPrice
     price: 100
@@ -451,7 +451,7 @@
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -459,7 +459,7 @@
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi #imp
     quickEquip: false
     slots:
       - suitStorage
@@ -484,7 +484,7 @@
     tags:
       - Taser
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler_smg.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -520,7 +520,7 @@
     - Taser
     - Sidearm
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/taser.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -552,7 +552,7 @@
   description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/antiquelasergun.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -560,7 +560,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/antiquelasergun.rsi #imp
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -598,7 +598,7 @@
   - type: Item
     size: Normal  # Intentionally larger than other pistols
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/advancedlasergun.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -606,7 +606,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/advancedlasergun.rsi #imp
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -725,7 +725,7 @@
   description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/energy_shotgun.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -733,27 +733,27 @@
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/energy_shotgun.rsi #imp
   - type: Gun
     fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserSpread
-    fireCost: 150 #imp revert
+    fireCost: 150
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpread
-      fireCost: 150 #imp revert
-    - proto: BulletLaserHeavySpread #imp revert
-      fireCost: 150 #imp revert
+      fireCost: 150
+    - proto: BulletLaserSpreadNarrow
+      fireCost: 200
     - proto: BulletDisablerSmgSpread
-      fireCost: 150 #imp revert
+      fireCost: 120
   - type: Item
     size: Large
     shape:
     - 0,0,3,1
-    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/inhands_64x.rsi #imp
     heldPrefix: energy
   - type: Tag
     tags:
@@ -761,9 +761,11 @@
   - type: StealTarget
     stealGroup: WeaponEnergyShotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: Battery # THE WORLD RESET
-    maxCharge: 1050
-    startingCharge: 1050
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 25 #takes 42 seconds to fully recharge, the answer to life, the universe and everything
+    autoRechargeRate: 24
+    autoRechargePause: true
+    autoRechargePauseTime: 30

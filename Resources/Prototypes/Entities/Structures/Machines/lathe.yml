@@ -148,10 +148,11 @@
       - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
-      - UvLightTube
+      - UvLightTube # imp
       - LightBulb
       - LedLightBulb
       - DimLightBulb
+      - WarmLightBulb
       - Bucket
       - DrinkMug
       - DrinkMugMetal
@@ -171,7 +172,7 @@
       - MopItem
       - Holoprojector
       - Mousetrap
-      - DeskBell
+      - DeskBell # imp
       - LightReplacer
       - TrashBag
       - PowerCellSmall
@@ -196,7 +197,6 @@
       - SubstationMachineCircuitboard
       - WallmountSubstationElectronics
       - CellRechargerCircuitboard
-      - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
       - HandheldStationMap
       - ClothingHeadHatWelding
@@ -204,9 +204,8 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
-      # Delta-V ports
-      - TapeRecorder
-      - CassetteTape
+      - TapeRecorder # DV
+      - CassetteTape # DV
     dynamicRecipes:
       - Fulton
 
@@ -261,7 +260,7 @@
 
 - type: entity
   id: Protolathe
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -318,8 +317,8 @@
       - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial
-      - Drone
+      - BaseChemistryEmptyVial # imp
+      - Drone # imp
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -362,10 +361,12 @@
       - FauxTileJungleAstroGrass
       - FauxTileAstroIce
       - FauxTileAstroSnow
+      - FauxTileAstroAsteroidSand
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
       - CleanerGrenade #imp addition
       - PlantAnalyzer #NF addition
+      - FishingRod #imp addition
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag
@@ -373,12 +374,12 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ExplosivePayload
-      - FullAutoConversionKit
+      - FullAutoConversionKit # imp
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit
+      - HyperBurstConversionKit # imp
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumIncendiary
@@ -405,6 +406,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - PRIbarPlusConversionKit #imp
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
       - TelescopicShield
@@ -427,7 +429,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -471,11 +473,12 @@
     - SodaDispenserMachineCircuitboard
     - SpaceHeaterMachineCircuitBoard
     - CutterMachineCircuitboard
-    - StationAnchorCircuitboard
     - SalvageMagnetMachineCircuitboard
+    - BorgChargerCircuitboard
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
     - SupermatterComputerCircuitboard # imp
+    - ImpCoffeeMachineCircuitboard #imp
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -573,7 +576,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -696,7 +699,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ]
+  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -725,16 +728,18 @@
       - BoxShotgunPractice
       - BoxShotgunSlug
       - ClothingEyesHudSecurity
+      - ClothingOuterArmorDuraVest # DeltaV - stabproof vest body armour
+      - ClothingOuterArmorPlateCarrier # DeltaV - plate carrier body armour
       - CombatKnife
       - Flash
       - ForensicPad
       - Handcuffs
       - MagazineBoxLightRifle
       - MagazineBoxLightRiflePractice
-      - MagazineBoxMagnum
-      - MagazineBoxMagnumPractice
       - MagazineBoxLPistol #imp
       - MagazineBoxLPistolPractice #imp
+      - MagazineBoxMagnum
+      - MagazineBoxMagnumPractice
       - MagazineBoxPistol
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
@@ -770,18 +775,18 @@
       - Zipties
     dynamicRecipes:
       - BoxBeanbag
+      - BoxShellTranquilizer
       - BoxShotgunIncendiary
       - BoxShotgunUranium
-      - BoxShellTranquilizer
       - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
-      - FullAutoConversionKit
+      - FullAutoConversionKit # imp
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit
+      - HyperBurstConversionKit # imp
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxLPistolIncendiary #imp
@@ -809,6 +814,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - PRIbarPlusConversionKit #imp
       - ShuttleGunDusterCircuitboard
       - ShuttleGunFriendshipCircuitboard
       - ShuttleGunPerforatorCircuitboard
@@ -824,10 +830,10 @@
       - WeaponAdvancedLaser
       - WeaponDisabler
       - WeaponDisablerSMG
-      - WeaponShotgunKammererBeanbag
-      - WeaponShotgunEnforcerBeanbag
       - WeaponLaserCannon
       - WeaponLaserCarbine
+      - WeaponShotgunEnforcerBeanbag # imp
+      - WeaponShotgunKammererBeanbag # imp
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
@@ -838,7 +844,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ]
+  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -869,6 +875,7 @@
         - MagazineBoxLightRifle
         - MagazineBoxMagnum
         - MagazineBoxPistol
+        - MagazineBoxLPistol #imp
         - MagazineBoxRifle
         - MagazineDMR #imp
         - MagazineDMREmpty #imp
@@ -885,6 +892,10 @@
         - MagazineShotgunSlug
         - SpeedLoaderMagnum
         - SpeedLoaderMagnumEmpty
+        - MagazinePistolSubMachineGun #imp
+        - MagazinePistolSubMachineGunEmpty #imp
+        - MagazinePistolSubMachineGunTopMounted #imp
+        - MagazinePistolSubMachineGunTopMountedEmpty #imp
     - type: MaterialStorage
       whitelist:
         tags:
@@ -894,7 +905,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: [ BaseLatheLube, BaseMedicalContraband ]
+  parent: [ BaseLatheLube, BaseMedicalContraband ] # imp
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -936,7 +947,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial
+      - BaseChemistryEmptyVial # imp
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -958,6 +969,7 @@
       - WhiteCane
       - PrescriptionLens # imp
       - PrescriptionLensStrong # imp
+      - BlindingLens # imp
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker
@@ -990,198 +1002,241 @@
     idleState: icon
     runningState: building
     staticRecipes:
-      - ClothingUniformJumpsuitColorGrey
-      - ClothingUniformJumpskirtColorGrey
-      - ClothingUniformJumpsuitBartender
-      - ClothingUniformJumpskirtBartender
+      - ClothingBeltPaperwork # DeltaV
+      - ClothingHeadHatBeretBrigmedic
+      - ClothingHeadHatBeretCaptain # imp
+      - ClothingHeadHatBeretCmo
+      - ClothingHeadHatBeretEngineering
+      - ClothingHeadHatBeretHoS
+      - ClothingHeadHatBeretQM
+      - ClothingHeadHatBeretRND
+      - ClothingHeadHatBeretSecurity
+      - ClothingHeadHatBeretSeniorPhysician
+      - ClothingHeadHatBeretWarden
       - ClothingHeadHatCapcap
       - ClothingHeadHatCaptain
-      - ClothingHeadHatBeretCaptain # imp
-      - ClothingUniformJumpsuitCaptain
-      - ClothingUniformJumpskirtCaptain
-      - ClothingUniformJumpsuitCapFormal
-      - ClothingUniformJumpskirtCapFormalDress
-      - ClothingUniformJumpsuitCargo
-      - ClothingUniformJumpskirtCargo
-      - ClothingUniformJumpsuitSalvageSpecialist
-      - ClothingUniformJumpskirtSalvageSpecialist # imp
-      - ClothingHeadHatBeretEngineering
-      - ClothingUniformJumpsuitChiefEngineer
-      - ClothingUniformJumpskirtChiefEngineer
-      - ClothingUniformJumpsuitChiefEngineerTurtle
-      - ClothingUniformJumpskirtChiefEngineerTurtle
-      - ClothingUniformJumpsuitChaplain
-      - ClothingUniformJumpskirtChaplain
-      - ClothingUniformJumpsuitChef
-      - ClothingUniformJumpskirtChef
-      - ClothingUniformJumpsuitChemistry
-      - ClothingUniformJumpskirtChemistry
-      - ClothingUniformJumpsuitClown
-      - ClothingHeadHatBeretCmo
-      - ClothingUniformJumpsuitCMO
-      - ClothingUniformJumpskirtCMO
-      - ClothingUniformJumpsuitCMOTurtle
-      - ClothingUniformJumpskirtCMOTurtle
-      - ClothingUniformJumpsuitDetective
-      - ClothingUniformJumpskirtDetective
-      - ClothingUniformJumpsuitEngineering
-      - ClothingUniformJumpskirtEngineering
-      - ClothingUniformJumpsuitSeniorEngineer
-      - ClothingUniformJumpskirtSeniorEngineer
+      - ClothingHeadHatCouriersoft #Imp
       - ClothingHeadHatHopcap
-      - ClothingUniformJumpsuitHoP
-      - ClothingUniformJumpskirtHoP
-      - ClothingHeadHatBeretHoS
       - ClothingHeadHatHoshat
-      - ClothingUniformJumpsuitHoS
+      - ClothingHeadHatParamedicsoft
+      - ClothingHeadHatQMsoft
+      - ClothingHeadHatWarden
+      - ClothingHeadHoodMysta # DeltaV
+      - ClothingOuterClerkVest # DeltaV
+      - ClothingUniformJumpskirtBartender
+      - ClothingUniformJumpskirtBrigmedic
+      - ClothingUniformJumpskirtCapFormalDress
+      - ClothingUniformJumpskirtCaptain
+      - ClothingUniformJumpskirtCargo
+      - ClothingUniformJumpskirtChaplain
+      - ClothingUniformJumpskirtChef
+      - ClothingUniformJumpskirtChemistry
+      - ClothingUniformJumpskirtChiefEngineer
+      - ClothingUniformJumpskirtChiefEngineerTurtle
+      - ClothingUniformJumpskirtCJFormal # DeltaV
+      - ClothingUniformJumpskirtCMO
+      - ClothingUniformJumpskirtCMOTurtle
+      - ClothingUniformJumpskirtColorGrey
+      - ClothingUniformJumpskirtColorLightBrown
+      - ClothingUniformJumpskirtCourier #Imp
+      - ClothingUniformJumpskirtDetective
+      - ClothingUniformJumpskirtEngineering
+      - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpskirtHoS
-      - ClothingUniformJumpsuitHosFormal
-      - ClothingUniformJumpskirtHosFormal
-      - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
+      - ClothingUniformJumpskirtHosFormal
+      - ClothingUniformJumpskirtHoSParadeMale
+      - ClothingUniformJumpskirtHydroponics
+      - ClothingUniformJumpskirtJanitor
+      - ClothingUniformJumpskirtMedicalDoctor
+      - ClothingUniformJumpskirtMime
+      - ClothingUniformJumpskirtParamedic
+      - ClothingUniformJumpskirtPrisoner
+      - ClothingUniformJumpskirtQM
+      - ClothingUniformJumpskirtQMTurtleneck
+      - ClothingUniformJumpskirtResearchDirector
+      - ClothingUniformJumpskirtSalvageSpecialist # imp
+      - ClothingUniformJumpskirtSalvageSpecialistDV # DeltaV
+      - ClothingUniformJumpskirtScientist
+      - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpskirtSeniorEngineer
+      - ClothingUniformJumpskirtSeniorOfficer
+      - ClothingUniformJumpskirtSeniorPhysician
+      - ClothingUniformJumpskirtSeniorResearcher
+      - ClothingUniformJumpskirtWarden
+      - ClothingUniformJumpsuitBartender
+      - ClothingUniformJumpsuitBrigmedic
+      - ClothingUniformJumpsuitCapFormal
+      - ClothingUniformJumpsuitCaptain
+      - ClothingUniformJumpsuitCargo
+      - ClothingUniformJumpsuitChaplain
+      - ClothingUniformJumpsuitChef
+      - ClothingUniformJumpsuitChemistry
+      - ClothingUniformJumpsuitChiefEngineer
+      - ClothingUniformJumpsuitChiefEngineerTurtle
+      - ClothingUniformJumpsuitChiefJusticeFormal # DeltaV
+      - ClothingUniformJumpsuitChiefJusticeWhite # DeltaV
+      - ClothingUniformJumpsuitClerk # DeltaV
+      - ClothingUniformJumpsuitClown
+      - ClothingUniformJumpsuitCMO
+      - ClothingUniformJumpsuitCMOTurtle
+      - ClothingUniformJumpsuitColorGrey
+      - ClothingUniformJumpsuitCourier #Imp
+      - ClothingUniformJumpsuitDetective
+      - ClothingUniformJumpsuitEngineering
+      - ClothingUniformJumpsuitHoP
+      - ClothingUniformJumpsuitHoS
+      - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpsuitHoSBlue
+      - ClothingUniformJumpsuitHosFormal
       - ClothingUniformJumpsuitHoSGrey
       - ClothingUniformJumpsuitHoSParadeMale
-      - ClothingUniformJumpskirtHoSParadeMale
       - ClothingUniformJumpsuitHydroponics
-      - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
-      - ClothingUniformJumpskirtJanitor
       - ClothingUniformJumpsuitLawyerBlack
       - ClothingUniformJumpsuitLibrarian
-      - ClothingUniformJumpskirtColorLightBrown
-      - ClothingHeadHatBeretSeniorPhysician
       - ClothingUniformJumpsuitMedicalDoctor
-      - ClothingUniformJumpskirtMedicalDoctor
-      - ClothingUniformJumpsuitSeniorPhysician
-      - ClothingUniformJumpskirtSeniorPhysician
       - ClothingUniformJumpsuitMime
-      - ClothingUniformJumpskirtMime
       - ClothingUniformJumpsuitMusician
       - ClothingUniformJumpsuitParamedic
-      - ClothingUniformJumpskirtParamedic
-      - ClothingUniformJumpsuitSeniorOfficer
-      - ClothingUniformJumpskirtSeniorOfficer
       - ClothingUniformJumpsuitPrisoner
-      - ClothingUniformJumpskirtPrisoner
-      - ClothingHeadHatQMsoft
-      - ClothingHeadHatBeretQM
+      - ClothingUniformJumpsuitProsecutor # DeltaV
       - ClothingUniformJumpsuitQM
-      - ClothingUniformJumpskirtQM
-      - ClothingUniformJumpsuitQMTurtleneck
-      - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitQMFormal
-      - ClothingHeadHatBeretRND
+      - ClothingUniformJumpsuitQMTurtleneck
       - ClothingUniformJumpsuitResearchDirector
-      - ClothingUniformJumpskirtResearchDirector
+      - ClothingUniformJumpsuitSalvageSpecialist
+      - ClothingUniformJumpsuitSalvageSpecialistDV # DeltaV
       - ClothingUniformJumpsuitScientist
-      - ClothingUniformJumpskirtScientist
-      - ClothingUniformJumpsuitSeniorResearcher
-      - ClothingUniformJumpskirtSeniorResearcher
-      - ClothingHeadHatBeretSecurity
       - ClothingUniformJumpsuitSec
-      - ClothingUniformJumpskirtSec
-      - ClothingHeadHatBeretBrigmedic
-      - ClothingUniformJumpsuitBrigmedic
-      - ClothingUniformJumpskirtBrigmedic
-      - ClothingHeadHatBeretWarden
-      - ClothingHeadHatWarden
+      - ClothingUniformJumpsuitSeniorEngineer
+      - ClothingUniformJumpsuitSeniorOfficer
+      - ClothingUniformJumpsuitSeniorPhysician
+      - ClothingUniformJumpsuitSeniorResearcher
       - ClothingUniformJumpsuitWarden
-      - ClothingUniformJumpskirtWarden
-      - ClothingHeadHatParamedicsoft
-      - ClothingUniformJumpsuitCourier #Imp
-      - ClothingUniformJumpskirtCourier #Imp
-      - ClothingHeadHatCouriersoft #Imp
       # Winter outfits
+      - ClothingNeckCWPArctic # DeltaV
+      - ClothingNeckCWPSec # DeltaV
+      - ClothingOuterStasecSweater # DeltaV
+      - ClothingOuterWinterAtmos
+      - ClothingOuterWinterBar
+      - ClothingOuterWinterBrigmedic
       - ClothingOuterWinterCap
+      - ClothingOuterWinterCargo
       - ClothingOuterWinterCE
+      - ClothingOuterWinterChef
+      - ClothingOuterWinterChem
+      - ClothingOuterWinterClown
       - ClothingOuterWinterCMO
+      - ClothingOuterWinterCoat
+      - ClothingOuterWinterCourier #Imp
+      - ClothingOuterWinterEngi
+      - ClothingOuterWinterGen
       - ClothingOuterWinterHoP
       - ClothingOuterWinterHoSUnarmored
-      - ClothingOuterWinterWardenUnarmored
+      - ClothingOuterWinterHydro
+      - ClothingOuterWinterJani
+      - ClothingOuterWinterMed
+      - ClothingOuterWinterMime
+      - ClothingOuterWinterMiner
+      - ClothingOuterWinterMusician
+      - ClothingOuterWinterPara
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-      - ClothingOuterWinterMusician
-      - ClothingOuterWinterClown
-      - ClothingOuterWinterMime
-      - ClothingOuterWinterCoat
-      - ClothingOuterWinterJani
-      - ClothingOuterWinterBar
-      - ClothingOuterWinterChef
-      - ClothingOuterWinterHydro
-      - ClothingOuterWinterAtmos
-      - ClothingOuterWinterEngi
-      - ClothingOuterWinterCargo
-      - ClothingOuterWinterMiner
-      - ClothingOuterWinterMed
-      - ClothingOuterWinterPara
-      - ClothingOuterWinterChem
-      - ClothingOuterWinterGen
-      - ClothingOuterWinterViro
-      - ClothingOuterWinterSci
       - ClothingOuterWinterRobo
+      - ClothingOuterWinterSci
       - ClothingOuterWinterSec
-      - ClothingOuterWinterBrigmedic
-      - ClothingOuterWinterCourier #Imp
+      - ClothingOuterWinterViro
+      - ClothingOuterWinterWardenUnarmored
       # Ties
-      - ClothingNeckTieRed
       - ClothingNeckTieDet
+      - ClothingNeckTieRed
       - ClothingNeckTieSci
-      # Scarfs - All scarfs avaible in winterdrobe
-      - ClothingNeckScarfStripedGreen
+      # Scarfs - All scarfs available in winterdrobe
+      - ClothingNeckScarfStripedBlack
       - ClothingNeckScarfStripedBlue
-      - ClothingNeckScarfStripedRed
       - ClothingNeckScarfStripedBrown
+      - ClothingNeckScarfStripedGreen
       - ClothingNeckScarfStripedLightBlue
       - ClothingNeckScarfStripedOrange
-      - ClothingNeckScarfStripedBlack
       - ClothingNeckScarfStripedPurple
+      - ClothingNeckScarfStripedRed
       # Carpets
       - Carpet
       - CarpetBlack
-      - CarpetPink
       - CarpetBlue
+      - CarpetCyan
       - CarpetGreen
       - CarpetOrange
+      - CarpetPink
       - CarpetPurple
-      - CarpetCyan
       - CarpetWhite
-      # Pride Cloaks
-      - ClothingNeckCloakTrans
+      # Pride Cloaks - all imp additions
       - ClothingNeckCloakAce
       - ClothingNeckCloakAro
+      - ClothingNeckCloakBear
       - ClothingNeckCloakBi
+      - ClothingNeckCloakEnby
+      - ClothingNeckCloakGay
       - ClothingNeckCloakIntersex
       - ClothingNeckCloakLesbian
-      - ClothingNeckCloakGay
-      - ClothingNeckCloakEnby
       - ClothingNeckCloakPan
-      - ClothingNeckCloakBear
+      - ClothingNeckCloakTrans
+      # Bedsheets
+      - BedsheetBlack
+      - BedsheetBlue
+      - BedsheetBrigmedic
+      - BedsheetBrown
+      - BedsheetClown
+      - BedsheetCosmos
+      - BedsheetGreen
+      - BedsheetGrey
+      - BedsheetIan
+      - BedsheetMedical
+      - BedsheetMime
+      - BedsheetNT
+      - BedsheetOrange
+      - BedsheetPurple
+      - BedsheetRainbow
+      - BedsheetRed
+      - BedsheetWhite
+      - BedsheetYellow
   - type: EmagLatheRecipes
     emagStaticRecipes:
-      - ClothingHeadHatCentcomcap
+      # Clothing
       - ClothingHeadHatCentcom
-      - ClothingUniformJumpsuitCentcomAgent
-      - ClothingUniformJumpsuitCentcomFormal
-      - ClothingUniformJumpskirtCentcomFormalDress
-      - ClothingUniformJumpsuitCentcomOfficer
-      - ClothingUniformJumpsuitCentcomOfficial
-      - ClothingHeadHatSyndieMAA
+      - ClothingHeadHatCentcomcap
+      - ClothingHeadHatSurgcapCybersun # DeltaV
       - ClothingHeadHatSyndie
-      - ClothingUniformJumpsuitOperative
-      - ClothingUniformJumpskirtOperative
-      - ClothingUniformJumpsuitSyndieFormal
-      - ClothingUniformJumpskirtSyndieFormalDress
+      - ClothingHeadHatSyndieMAA
       - ClothingHeadPyjamaSyndicateBlack
-      - ClothingUniformJumpsuitPyjamaSyndicateBlack
       - ClothingHeadPyjamaSyndicatePink
-      - ClothingUniformJumpsuitPyjamaSyndicatePink
       - ClothingHeadPyjamaSyndicateRed
-      - ClothingUniformJumpsuitPyjamaSyndicateRed
+      - ClothingNeckCloakStraight # imp
+      - ClothingOuterCybersunOvercoat # DeltaV
+      - ClothingOuterCoatCybersunWindbreaker # DeltaV
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
-      - ClothingNeckCloakStraight
+      - ClothingUniformCybersunAttorney # DeltaV
+      - ClothingUniformCybersunCasual # DeltaV
+      - ClothingUniformCybersunHazard # DeltaV
+      - ClothingUniformCybersunRND # DeltaV
+      - ClothingUniformJumpskirtCentcomFormalDress
+      - ClothingUniformJumpskirtOperative
+      - ClothingUniformJumpskirtSyndieFormalDress
+      - ClothingUniformJumpsuitCentcomAgent
+      - ClothingUniformJumpsuitCentcomFormal
+      - ClothingUniformJumpsuitCentcomOfficer
+      - ClothingUniformJumpsuitCentcomOfficial
+      - ClothingUniformJumpsuitOperative
+      - ClothingUniformJumpsuitPyjamaSyndicateBlack
+      - ClothingUniformJumpsuitPyjamaSyndicatePink
+      - ClothingUniformJumpsuitPyjamaSyndicateRed
+      - ClothingUniformJumpsuitSyndieFormal
+      - UniformScrubsColorCybersun # DeltaV
+      # Bedsheets
+      - BedsheetSyndie
   - type: MaterialStorage
     whitelist:
       tags:

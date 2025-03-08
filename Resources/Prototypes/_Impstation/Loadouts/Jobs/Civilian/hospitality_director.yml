@@ -1,0 +1,139 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterHD
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHospitalityDirector
+      time: 72000 #10 hrs ~7 rounds
+
+# For the veteran hospitality director cosmetics
+- type: loadoutEffectGroup
+  id: VeteranHD
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHospitalityDirector
+      time: 108000 #30 hrs ~20 rounds
+
+# Jumpsuit
+- type: loadout
+  id: HospitalityDirectorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHD
+
+- type: loadout
+  id: HospitalityDirectorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHD
+ 
+- type: loadout
+  id: HospitalityDirectorTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHDTurtle
+
+- type: loadout
+  id: HospitalityDirectorTurtleneckSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHDTurtle
+    
+- type: loadout
+  id: HospitalityDirectorJanitorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHospitalityDirectorJanitor
+
+- type: loadout
+  id: HospitalityDirectorJanitorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHospitalityDirectorJanitor
+
+- type: loadout
+  id: HospitalityDirectorBartenderJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHospitalityDirectorBartender
+
+- type: loadout
+  id: HospitalityDirectorBartenderJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHospitalityDirectorBartender
+
+- type: loadout
+  id: HospitalityDirectorBotanyJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHospitalityDirectorBotany
+
+# Head
+- type: loadout
+  id: HospitalityDirectorHead
+  equipment:
+    head: ClothingHeadHatHDsoft
+
+- type: loadout
+  id: HospitalityDirectorBandana
+  equipment:
+    head: ClothingHeadBandHD
+
+- type: startingGear
+  id: ServiceBeret
+  equipment:
+    head: ClothingHeadHatBeretHD
+
+- type: loadout
+  id: HospitalityDirectorBeret
+  startingGear: ServiceBeret
+
+# Neck
+- type: loadout
+  id: HospitalityDirectorCloak
+  equipment:
+    neck: ClothingNeckCloakHd
+
+- type: loadout
+  id: HospitalityDirectorMantle
+  equipment:
+    neck: ClothingNeckMantleHD
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHD
+
+- type: startingGear
+  id: HospitalityDirectorMantle
+  equipment:
+    neck: ClothingNeckMantleHD
+
+# OuterClothing
+- type: loadout
+  id: HospitalityDirectorApron
+  equipment:
+    outerClothing: ClothingOuterApronHD
+
+- type: loadout
+  id: HospitalityDirectorVest
+  equipment:
+    outerClothing: ClothingOuterVestHD
+
+- type: loadout
+  id: HospitalityDirectorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterHD
+
+# Headset
+- type: loadout
+  id: HospitalityDirectorHeadsetBasic
+  equipment:
+    ears: ClothingHeadsetHD
+
+- type: loadout
+  id: HospitalityDirectorHeadset
+  equipment:
+    ears: ClothingHeadsetAltService
+
+- type: loadout
+  id: HospitalityDirectorVeteranHeadset
+  equipment:
+    ears: ClothingHeadsetHDveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHD

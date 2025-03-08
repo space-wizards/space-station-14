@@ -1,0 +1,82 @@
+- type: entity
+  parent: [BaseItem, BaseRock]
+  id: SlightlySmallerRock
+  name: rock
+  description: It's a rock. You should know what to do with this.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Impstation/Objects/Weapons/Melee/bigrock.rsi
+    state: bigrock
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: rock-inhand-left
+      right:
+      - state: rock-inhand-right
+  - type: Appearance
+  - type: MeleeWeapon
+    soundHit:
+      collection: Ronck
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10
+        Structural: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      collection: Ronck
+  - type: StaminaDamageOnHit
+    damage: 4
+  - type: UseDelay
+    delay: 1
+
+- type: entity
+  parent: [BaseItem, BaseRock]
+  id: BigRock
+  name: big rock
+  description: It's a rock. You should know what to do with this.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Impstation/Objects/Weapons/Melee/bigrock.rsi
+    state: bigrock
+  - type: Item
+    size: Ginormous
+    inhandVisuals:
+      left:
+      - state: bigrock-inhand
+      right:
+      - state: bigrock-inhand
+  - type: MeleeWeapon
+    soundHit:
+      collection: Ronck
+    wideAnimationRotation: 45
+    attackRate: 0.5
+    damage:
+      types:
+        Blunt: 25 # one must imagine cain happy
+        Structural: 5
+  - type: Appearance
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 25
+    staminaCost: 50
+    soundHit:
+      collection: Ronck
+  - type: StaminaDamageOnHit
+    damage: 4
+  - type: MultiHandedItem
+  - type: HeldSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5

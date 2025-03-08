@@ -1,17 +1,31 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem]
   id: BaseHandheldCriminalRecords
   name: portable criminal records
-  description: All the power of a criminal records computer, but it fits in your pocket.
+  description: All the power of a criminal records computer, but it fits in your pocket, or on your back!
   abstract: true
   components:
   - type: CriminalRecordsConsole
   - type: Sprite
     sprite: _Impstation/Objects/Devices/tablets.rsi
     layers:
-      - state: portable_criminal
-      - state: screen-criminal
+    - state: portable_criminal
+    - state: screen-criminal
+      shader: unshaded
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Devices/tablets.rsi
+    equippedPrefix: criminal
+    slots:
+    - suitstorage
+    clothingVisuals:
+      suitstorage:
+      - state: criminal-equipped-SUITSTORAGE
+      - state: criminal-equipped-SUITSTORAGE-unshaded
         shader: unshaded
+  - type: Tag
+    tags:
+    - HandheldCriminalRecords
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
   - type: UserInterface

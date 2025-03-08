@@ -1,0 +1,14 @@
+- type: entity
+  parent: Supermatter
+  id: SupermatterNoAnnouncement
+  name: supermatter crystal
+  description: A strangely translucent and iridescent crystal. It lacks the NanoTrasen integrated delamination detection announcement system.
+  suffix: no announcement
+  components:
+    - type: Speech
+      enabled: false
+    - type: Supermatter
+      suppressAnnouncements: true
+    - type: EmitSoundOnSpawn
+      sound:
+        path: /Audio/Effects/teleport_arrival.ogg

@@ -14,7 +14,7 @@
   id: PoorVision
   name: trait-poor-vision-name
   description: trait-poor-vision-desc
-  traitGear: ClothingEyesGlassesStrong # imp
+  traitGear: PrescriptionLensStrong # imp
   category: Disabilities
   whitelist:
     components:
@@ -64,3 +64,11 @@
       maxSoundDistance: 7
       sounds:
         collection: Paracusia
+
+- type: trait
+  id: PainNumbness
+  name: trait-painnumbness-name
+  description: trait-painnumbness-desc
+  category: Disabilities
+  components:
+  - type: PainNumbness
