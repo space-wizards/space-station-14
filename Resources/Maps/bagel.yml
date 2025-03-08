@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/08/2025 03:27:46
-  entityCount: 25516
+  time: 03/08/2025 03:39:25
+  entityCount: 25523
 maps:
 - 943
 grids:
@@ -11937,10 +11937,10 @@ entities:
       pos: 7.5,36.5
       parent: 60
     - type: DeviceLinkSink
-      invokeCounter: 2
+      invokeCounter: 3
     - type: DeviceLinkSource
       linkedPorts:
-        25469:
+        13987:
         - DoorStatus: InputB
   - uid: 13982
     components:
@@ -11949,11 +11949,11 @@ entities:
       pos: 7.5,37.5
       parent: 60
     - type: DeviceLinkSink
-      invokeCounter: 4
+      invokeCounter: 5
     - type: DeviceLinkSource
       linkedPorts:
-        25469:
-        - DoorStatus: InputB
+        13987:
+        - DoorStatus: InputA
   - uid: 15525
     components:
     - type: MetaData
@@ -12027,10 +12027,10 @@ entities:
       pos: 9.5,38.5
       parent: 60
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
-        13987:
+        20427:
         - DoorStatus: InputB
   - uid: 25515
     components:
@@ -12038,10 +12038,10 @@ entities:
       pos: 8.5,38.5
       parent: 60
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
-        13987:
+        20427:
         - DoorStatus: InputA
 - proto: AirlockExternalGlassLocked
   entities:
@@ -33057,10 +33057,25 @@ entities:
     - type: Transform
       pos: -4.5,34.5
       parent: 60
+  - uid: 24148
+    components:
+    - type: Transform
+      pos: 4.5,40.5
+      parent: 60
+  - uid: 24152
+    components:
+    - type: Transform
+      pos: 2.5,40.5
+      parent: 60
   - uid: 24153
     components:
     - type: Transform
       pos: -7.5,43.5
+      parent: 60
+  - uid: 24155
+    components:
+    - type: Transform
+      pos: 3.5,40.5
       parent: 60
   - uid: 24316
     components:
@@ -33906,6 +33921,46 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-59.5
+      parent: 60
+  - uid: 25469
+    components:
+    - type: Transform
+      pos: 5.5,40.5
+      parent: 60
+  - uid: 25516
+    components:
+    - type: Transform
+      pos: 1.5,40.5
+      parent: 60
+  - uid: 25517
+    components:
+    - type: Transform
+      pos: 0.5,40.5
+      parent: 60
+  - uid: 25518
+    components:
+    - type: Transform
+      pos: -0.5,40.5
+      parent: 60
+  - uid: 25519
+    components:
+    - type: Transform
+      pos: -1.5,40.5
+      parent: 60
+  - uid: 25520
+    components:
+    - type: Transform
+      pos: -2.5,40.5
+      parent: 60
+  - uid: 25521
+    components:
+    - type: Transform
+      pos: -3.5,40.5
+      parent: 60
+  - uid: 25522
+    components:
+    - type: Transform
+      pos: -4.5,40.5
       parent: 60
 - proto: CableApcStack
   entities:
@@ -54829,7 +54884,6 @@ entities:
   - uid: 16426
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 9.5,36.5
       parent: 60
   - uid: 16431
@@ -107279,11 +107333,6 @@ entities:
     - type: Transform
       pos: 15.5,37.5
       parent: 60
-  - uid: 20427
-    components:
-    - type: Transform
-      pos: 15.5,38.5
-      parent: 60
   - uid: 20428
     components:
     - type: Transform
@@ -112791,9 +112840,26 @@ entities:
         - 0
         - 0
         - 0
-- proto: LogicGateAnd
+- proto: LogicGateOr
   entities:
   - uid: 13987
+    components:
+    - type: Transform
+      anchored: True
+      pos: 9.5,36.5
+      parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        25515:
+        - Output: DoorBolt
+        25514:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 20427
     components:
     - type: Transform
       anchored: True
@@ -112806,23 +112872,6 @@ entities:
         13982:
         - Output: DoorBolt
         13829:
-        - Output: DoorBolt
-    - type: Physics
-      canCollide: False
-      bodyType: Static
-  - uid: 25469
-    components:
-    - type: Transform
-      anchored: True
-      pos: 9.5,36.5
-      parent: 60
-    - type: DeviceLinkSink
-      invokeCounter: 3
-    - type: DeviceLinkSource
-      linkedPorts:
-        25515:
-        - Output: DoorBolt
-        25514:
         - Output: DoorBolt
     - type: Physics
       canCollide: False
@@ -119093,12 +119142,6 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
-  - uid: 24148
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 8.5,48.5
-      parent: 60
   - uid: 24149
     components:
     - type: Transform
@@ -119117,21 +119160,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,52.5
       parent: 60
-  - uid: 24152
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -7.5,48.5
-      parent: 60
   - uid: 24154
     components:
     - type: Transform
       pos: -3.5,55.5
-      parent: 60
-  - uid: 24155
-    components:
-    - type: Transform
-      pos: 0.5,55.5
       parent: 60
   - uid: 24156
     components:
