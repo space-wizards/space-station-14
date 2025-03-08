@@ -71,11 +71,11 @@ public sealed partial class CCVars
     /// The maximum range (in tiles) at which admin overlay entries still merge to form a stack
     /// </summary>
     public static readonly CVarDef<float> AdminOverlayMergeDistance =
-        CVarDef.Create("ui.admin_overlay_ghost_hide_distance", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_merge_distance", 0.95f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// The maximum size that an overlay stack can reach. Additional overlays will be superimposed over the last one.
     /// </summary>
     public static readonly CVarDef<int> AdminOverlayStackMax =
-        CVarDef.Create("ui.admin_overlay_ghost_hide_distance", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_stack_max", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

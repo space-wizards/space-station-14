@@ -111,6 +111,7 @@ internal sealed class AdminNameOverlay : Overlay
             var screenCoordinates = info.Item4;
             var alpha = 1f;
 
+            //TODO make a smarter system where the starting offset can be modified by the predicted position and size of already-drawn overlays/stacks?
             var currentOffset = Vector2.Zero;
 
             //  Ghosts near the cursor are made transparent/invisible
