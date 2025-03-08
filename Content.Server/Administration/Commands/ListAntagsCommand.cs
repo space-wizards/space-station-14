@@ -49,7 +49,7 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
                 var objectives = mind.Objectives.ToList();
                 if (objectives.Count > 0)
                 {
-                    antagInfo += "\n  Objectives:";
+                    antagInfo += $"\n  {Loc.GetString("cmd-lsantags-headers-objectives")}";
                     foreach (var obj in objectives)
                     {
                         var info = _sharedObjectivesSystem.GetInfo(obj, mindId, mind);

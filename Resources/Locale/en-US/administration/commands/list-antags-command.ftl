@@ -9,5 +9,6 @@ cmd-lsantags-list-info = { $playerName } { $entityInfo } - Roles: { $antagRoles 
 cmd-lsantags-auto-completion = Show antag objectives?
 cmd-lsantags-auto-completion-true = Provides a list of objectives for each antagonist.
 cmd-lsantags-auto-completion-false = Will simply output a list of antags.
+cmd-lsantags-headers-objectives = Objectives:
 cmd-lsantags-invalid-objecive = INVALID OBJECTIVE
 cmd-lsantags-no-objectives = No objectives.
