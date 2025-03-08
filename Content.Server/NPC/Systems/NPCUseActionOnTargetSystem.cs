@@ -15,24 +15,15 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NPCUseActionOnTargetComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<NPCUseActionOnTargetComponent, ActionAddedEvent>(OnActionAdded);
     }
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
         foreach (var action in ent.Comp.Actions)
         {
-            if (action.Reference)
-                //TODO: This should have logic to find the action or create a listener for if the action gets added but currently does nothing
-                action.ActionEnt = _actions.AddAction(ent, action.ActionId);
-            else
-                action.ActionEnt = _actions.AddAction(ent, action.ActionId);
+            //TODO: This should have a way to differentiate between needing to add an action or reference an action
+            action.ActionEnt = _actions.AddAction(ent, action.ActionId);
         }
-    }
-
-    private void OnActionAdded(EntityUid uid, NPCUseActionOnTargetComponent component, ActionAddedEvent args)
-    {
-        Log.Error($"Rawr!");
     }
 
     public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, Components.NPCActionsData action, EntityUid target)

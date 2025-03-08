@@ -23,7 +23,7 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
 public sealed partial class NPCActionsData
 {
     [DataField(required: true)]
-    public EntProtoId<EntityWorldTargetActionComponent> ActionId;
+    public EntProtoId ActionId;
     /// <summary>
     /// HTN blackboard key for the target entity
     /// </summary>
