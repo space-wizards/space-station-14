@@ -113,7 +113,7 @@
     sprite: _DV/Clothing/Uniforms/Jumpsuit/prosecutorred.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, Tier1Contraband ] # imp - contraband
   id: ClothingUniformCybersunAttorney
   name: cybersun attorney suit
   description: This durable Suit Jacket and Turtleneck Combo doubles as an Accounting suit, and includes an extra button. Take that, Nerd-otrasen!
@@ -150,7 +150,7 @@
     sprite: _DV/Clothing/Uniforms/Jumpsuit/explorer.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, Tier1Contraband ] # imp - contraband
   id: ClothingUniformCybersunHazard
   name: cybersun hazard suit
   description: This high-visibility jumpsuit prevents you from getting run over, yet keeps you dark enough to stay unnoticed!
@@ -161,7 +161,7 @@
     sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunhazard.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, Tier1Contraband ] # imp - contraband
   id: ClothingUniformCybersunCasual
   name: cybersun casual jumpsuit
   description: With all the non-descript gizmos they shoved in this thing, are you sure it's even safe to put on?
@@ -172,7 +172,7 @@
     sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersuncasual.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, Tier1Contraband ] # imp - contraband
   id: ClothingUniformCybersunRND
   name: cybersun research turtleneck
   description: It's another Turtleneck. What'd you expect?
