@@ -126,14 +126,12 @@ public abstract class SharedWieldableSystem : EntitySystem
 
     private void OnSpeedModifierWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ItemWieldedEvent args)
     {
-        if (args.User != null)
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
     private void OnSpeedModifierUnwielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ItemUnwieldedEvent args)
     {
-        if (args.User != null)
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
     private void OnRefreshSpeedWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ref HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
