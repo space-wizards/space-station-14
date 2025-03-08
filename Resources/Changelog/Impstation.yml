@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: artifact gridwide knockdown (too buggy, can't replicate locally)
-    type: Remove
-  id: 754
-  time: '2024-12-18T18:37:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1054
-- author: honeyed-lemons
-  changes:
-  - message: Sending PDA messages is map based instead of station based
-    type: Tweak
-  id: 755
-  time: '2024-12-18T18:37:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1055
-- author: ATDoop
-  changes:
-  - message: Added a new clown outfit! Includes a neck ruffle and clown nose, have
-      fun mixing and matching!!
-    type: Add
-  id: 756
-  time: '2024-12-18T18:36:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1045
 - author: DinnerCalzone
   changes:
   - message: Amber Station's emergency shuttle should no longer arrive with no power.
@@ -4084,3 +4062,30 @@
   id: 1253
   time: '2025-03-07T08:02:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1855
+- author: honeyed-lemons
+  changes:
+  - message: Update Xeno's medbay, xenoarch room, and Bar
+    type: Tweak
+  id: 1254
+  time: '2025-03-08T06:15:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1867
+- author: hivehum
+  changes:
+  - message: More Syndicate uniforms are considered minor contraband.
+    type: Tweak
+  id: 1255
+  time: '2025-03-08T06:15:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1858
+- author: DinnerCalzone
+  changes:
+  - message: Command airlocks have received new sprites to differentiate which heads
+      may access them.
+    type: Add
+  - message: The Administrative Assistant locker has received a new sprite to match
+      the current style of lockers.
+    type: Add
+  - message: The Musician airlock can now be selected in the spray painter tool.
+    type: Fix
+  id: 1256
+  time: '2025-03-07T22:20:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1860
