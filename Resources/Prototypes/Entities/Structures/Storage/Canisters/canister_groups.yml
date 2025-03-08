@@ -9,16 +9,16 @@
     storage:               StorageCanister
     air:                   AirCanister
     oxygen:                OxygenCanister
-    liquid_oxygen:         LiquidOxygenCanister
+    liquid-oxygen:         LiquidOxygenCanister
     nitrogen:              NitrogenCanister
-    liquid_nitrogen:       LiquidNitrogenCanister
-    carbon_dioxide:        CarbonDioxideCanister
-    liquid_carbon_dioxide: LiquidCarbonDioxideCanister
+    liquid-nitrogen:       LiquidNitrogenCanister
+    carbon-dioxide:        CarbonDioxideCanister
+    liquid-carbon-dioxide: LiquidCarbonDioxideCanister
     plasma:                PlasmaCanister
     tritium:               TritiumCanister
-    water_vapor:           WaterVaporCanister
+    water-vapor:           WaterVaporCanister
     ammonia:               AmmoniaCanister
-    nitrous_oxide:         NitrousOxideCanister
+    nitrous-oxide:         NitrousOxideCanister
     frezon:                FrezonCanister
 
 - type: paintableGroup
@@ -30,13 +30,13 @@
     air:                   AirCanisterBroken
     oxygen:                OxygenCanisterBroken
     nitrogen:              NitrogenCanisterBroken
-    carbon_dioxide:        CarbonDioxideCanisterBroken
-    liquid_oxygen:         LiquidOxygenCanisterBroken
-    liquid_nitrogen:       LiquidNitrogenCanisterBroken
-    liquid_carbon_dioxide: LiquidCarbonDioxideCanisterBroken
+    carbon-dioxide:        CarbonDioxideCanisterBroken
+    liquid-oxygen:         LiquidOxygenCanisterBroken
+    liquid-nitrogen:       LiquidNitrogenCanisterBroken
+    liquid-carbon-dioxide: LiquidCarbonDioxideCanisterBroken
     plasma:                PlasmaCanisterBroken
     tritium:               TritiumCanisterBroken
-    water_vapor:           WaterVaporCanisterBroken
+    water-vapor:           WaterVaporCanisterBroken
     ammonia:               AmmoniaCanisterBroken
-    nitrous_oxide:         NitrousOxideCanisterBroken
+    nitrous-oxide:         NitrousOxideCanisterBroken
     frezon:                FrezonCanisterBroken

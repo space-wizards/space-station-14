@@ -130,7 +130,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Horizontal };
         var protoView = new EntityPrototypeView();
         protoView.SetPrototype(spriteListData.Prototype?.ID);
-        var label = new Label() { Text = spriteListData.Text };
+        var label = new Label() { Text = Loc.GetString($"spray-painter-style-{spriteListData.Category.ToLower()}-{spriteListData.Style}") };
 
         box.AddChild(protoView);
         box.AddChild(label);
@@ -142,4 +142,4 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     }
 }
 
-record SpriteListData(string Category, string Text, EntityPrototype? Prototype, int SelectedIndex) : ListData;
+record SpriteListData(string Category, string Style, EntityPrototype? Prototype, int SelectedIndex) : ListData;
