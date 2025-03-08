@@ -2,7 +2,7 @@
   id: SyndiCrewMonitor
   name: syndicate crew monitor
   description: The syndicated version of crew monitor, intercepts information from the server.
-  parent: HandheldCrewMonitor
+  parent: BaseHandheldComputer # imp - unparenting from handheld crew monitor so this doesnt count for the steal objective
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
@@ -13,6 +13,25 @@
     useRate: 0 # DeltaV - Changed to zero with the removal of the microreactor in observations kit
   - type: CrewMonitoringConsole # DeltaV - disable crew crit / dead beeping alerts
 #    alertsEnabled: false  # imp - our crewmons dont do that lmao
+  # imp edits below - unparenting from crew monitor
+  - type: ActivatableUI
+    key: enum.CrewMonitoringUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: StationLimitedNetwork
+  - type: StaticPrice
+    price: 500
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   id: SyndiCrewMonitorEmpty

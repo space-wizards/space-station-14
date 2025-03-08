@@ -220,7 +220,7 @@ FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
 SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack
 AmePartStealObjective: AmePartFlatpackStealObjective
-Observationskit: null
+# Observationskit: null # imp
 
 # 2024-02-26
 CrateBaseWeldable: CrateGenericSteel

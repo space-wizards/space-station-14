@@ -25,6 +25,11 @@
     Telecrystal: 6 # DeltaV - Price Goes up, but the goods are better!
   categories:
   - UplinkDeception
+  conditions: # imp - this is expensive for a traitor but cheap for nukies and arguably too strong
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: BaseBallBatHomeRun

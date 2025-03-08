@@ -8,8 +8,8 @@
     contents:
     - id: SyndiCrewMonitorEmpty
       amount: 1
-    - id: PowerCellHigh # DeltaV - Reverted to high with removal of the monitor's power drain
-      amount: 1
+    #- id: PowerCellHigh # imp - source a power cell or die
+    #  amount: 1
     - id: ClothingEyesGlassesHiddenSecurity
       amount: 1
     - id: CameraBug # DeltaV - Way better than that board
