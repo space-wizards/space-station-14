@@ -1,3 +1,5 @@
+using Content.Server.AlertLevel;
+using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -10,19 +12,24 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class HurtDrunkEveryoneRule : StationEventSystem<HurtDrunkEveryoneRuleComponent>
+public sealed class VeryBadDayRule : StationEventSystem<VeryBadDayRuleComponent>
 {
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
 
     protected override void Started(EntityUid uid,
-        HurtDrunkEveryoneRuleComponent component,
+        VeryBadDayRuleComponent component,
         GameRuleComponent gameRule,
         GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
+
+        if (!TryGetRandomStation(out var station))
+            return;
 
         var query = EntityQueryEnumerator<MindContainerComponent, HumanoidAppearanceComponent>();
 
@@ -32,5 +39,9 @@ public sealed class HurtDrunkEveryoneRule : StationEventSystem<HurtDrunkEveryone
             _damageableSystem.TryChangeDamage(ent,
                 new DamageSpecifier(_protoMan.Index<DamageGroupPrototype>("Brute"), _random.Next(5, 50)));
         }
+
+        _roundEndSystem.DefaultCooldownDuration = TimeSpan.FromHours(1); // disable recalls
+        _roundEndSystem.RequestRoundEnd(TimeSpan.FromHours(1));
+        _alertLevelSystem.SetLevel((EntityUid)station, "red", false, true, true);
     }
 }

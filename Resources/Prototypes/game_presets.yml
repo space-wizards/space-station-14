@@ -247,12 +247,9 @@
   - Nukeops
   - Traitor
   - Zombie
+  - Revolutionary
   - SubGamemodesRule
   - KesslerSyndromeScheduler
   - RampingStationEventScheduler
   - TerribleRoundstartVariation
-  - HurtDrunkEveryoneGameRule
-  # forcecall shuttle
-  # forceset alert level
-  # everyone is drunk
-  # everyone is hurt
+  - VeryBadDayGameRule
