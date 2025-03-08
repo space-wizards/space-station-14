@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Roles;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -59,13 +60,13 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
                         }
                         else
                         {
-                            antagInfo += "\n  - INVALID OBJECTIVE";
+                            antagInfo += $"\n  - {Loc.GetString("cmd-lsantags-invalid-objecive")}";
                         }
                     }
                 }
                 else
                 {
-                    antagInfo += "\n  No objectives.";
+                    antagInfo += $"\n  {Loc.GetString("cmd-lsantags-no-objectives")}";
                 }
             }
 
