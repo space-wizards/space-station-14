@@ -47,6 +47,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckAroacePin
+  name: aroace pin
+  description: Be aroace do crime.
+  components:
+  - type: Sprite
+    state: aroace
+  - type: Clothing
+    equippedPrefix: aroace
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckAsexualPin
   name: asexual pin
   description: Be ace do crime.

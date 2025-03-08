@@ -32,7 +32,7 @@
   - type: RandomMetadata # No metagaming these, jimbo.
     nameSegments:
     - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
   - type: Damageable
     damageContainer: Inorganic
   - type: ToggleableLightVisuals
