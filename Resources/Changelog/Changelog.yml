@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: insoPL
-  changes:
-  - message: Zombies once again have zombie blood.
-    type: Fix
-  id: 7537
-  time: '2024-10-19T15:31:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32532
-- author: Beck Thompson
-  changes:
-  - message: When MMIs and positronic brains are inserted into plushies, their names
-      will be updated to the plushies name (Exactly the same way pAIs do).
-    type: Add
-  id: 7538
-  time: '2024-10-20T02:46:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32914
-- author: Calecute
-  changes:
-  - message: wide attacks that deal blunt damage will now deal stamina damage.
-    type: Fix
-  id: 7539
-  time: '2024-10-20T03:41:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32422
-- author: Thatonestomf
-  changes:
-  - message: Mute toxin now mutes even after is metabolized, similar to glue
-    type: Tweak
-  - message: Mute toxin is now even more powerful at muting people
-    type: Tweak
-  id: 7540
-  time: '2024-10-21T03:43:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32915
-- author: MendaxxDev
-  changes:
-  - message: Fixed typing sound playing when AI or admin ghosts interacted with consoles.
-    type: Fix
-  id: 7541
-  time: '2024-10-21T03:50:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32906
-- author: NoElkaTheGod
-  changes:
-  - message: Station AI can now interact with long range fax machines.
-    type: Tweak
-  id: 7542
-  time: '2024-10-21T12:44:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32929
-- author: Southbridge
-  changes:
-  - message: Box Station's window between the containment room and TEG has been upgraded
-      to plasma.
-    type: Fix
-  - message: Box Station's Engineering storage room air alarm has been properly connected
-      to nearby devices.
-    type: Fix
-  - message: Box Station's Janitorial disposal chute has been replaced with a working
-      one.
-    type: Fix
-  id: 7543
-  time: '2024-10-22T05:39:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32950
 - author: Moomoobeef
   changes:
   - message: Ammo-boxes no longer appear empty when only one bullet is removed.
@@ -3903,3 +3844,59 @@
   id: 8036
   time: '2025-03-03T16:37:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35643
+- author: DuckManZach
+  changes:
+  - message: Butter is now cheaper to produce!
+    type: Tweak
+  id: 8037
+  time: '2025-03-03T22:04:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35650
+- author: SlamBamActionman
+  changes:
+  - message: Top and bottom undergarments can now be found in the Markings tab of
+      the character creator.
+    type: Add
+  - message: The Accessibility tab of Options now has a Censor Nudity Toggle, which
+      adds undergarments to all characters on your client. Undergarments selected
+      in the character creator take priority.
+    type: Add
+  id: 8038
+  time: '2025-03-05T09:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33185
+- author: Boaz1111, Ktyria
+  changes:
+  - message: 'Added five new scars for humans and dwarves: Three for the face, two
+      for the chest.'
+    type: Add
+  id: 8039
+  time: '2025-03-05T10:26:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35644
+- author: ScarKy0, MilonPL
+  changes:
+  - message: Added deliveries! Cargo now has access to mail teleporters, which periodically
+      spawn mail. Deliver it to the correct recipients for bonus spesos!
+    type: Add
+  id: 8040
+  time: '2025-03-07T13:51:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35429
+- author: Lukasz825700516
+  changes:
+  - message: Text related keybinds can now be changed in Controls.
+    type: Add
+  id: 8041
+  time: '2025-03-08T02:42:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35630
+- author: metalgearsloth
+  changes:
+  - message: Walls now emit shadows on planets.
+    type: Add
+  id: 8042
+  time: '2025-03-08T05:07:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35145
+- author: momochitters
+  changes:
+  - message: Aroace pins, scarves, and cloaks can now be obtained.
+    type: Add
+  id: 8043
+  time: '2025-03-08T15:21:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35718
