@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: NoElkaTheGod
-  changes:
-  - message: Station AI can now interact with long range fax machines.
-    type: Tweak
-  id: 7542
-  time: '2024-10-21T12:44:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32929
 - author: Southbridge
   changes:
   - message: Box Station's window between the containment room and TEG has been upgraded
@@ -3907,3 +3900,10 @@
   id: 8041
   time: '2025-03-08T02:42:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35630
+- author: metalgearsloth
+  changes:
+  - message: Walls now emit shadows on planets.
+    type: Add
+  id: 8042
+  time: '2025-03-08T05:07:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35145
