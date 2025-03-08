@@ -47,10 +47,10 @@ names-diona-last-dataset-45 = Love
 names-diona-last-dataset-46 = Hope
 names-diona-last-dataset-47 = Honesty
 names-diona-last-dataset-48 = Generosity
-names-diona-last-dataset-49 = Oppritunity
+names-diona-last-dataset-49 = Opportunity
+names-diona-last-dataset-50 = Motivation
 
 # Neutral
-names-diona-last-dataset-50 = Motivation
 names-diona-last-dataset-51 = Urgency
 names-diona-last-dataset-52 = Vitality
 names-diona-last-dataset-53 = Hardiness
