@@ -30,7 +30,7 @@
 
 # Toys
 - type: loadout
-  id: PlushieLizard
+  id: PlushieLizard # weh!
   storage:
     back:
     - PlushieLizard
