@@ -143,7 +143,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                         {
                             KeyFrames =
                             {
-                                new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(unit.FlushSound), 0)
+                                new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(unit.FlushSound), 0)
                             }
                         });
                 }

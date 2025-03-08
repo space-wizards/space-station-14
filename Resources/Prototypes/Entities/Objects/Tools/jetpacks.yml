@@ -226,7 +226,7 @@
 #Empty security
 - type: entity
   id: JetpackSecurity
-  parent: [BaseJetpack, BaseRestrictedContraband]
+  parent: [BaseJetpack, BaseSecurityContraband]
   name: security jetpack
   suffix: Empty
   components:

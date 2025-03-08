@@ -129,6 +129,10 @@
       components:
       - Artifact
   - type: InternalAir
+  - type: Tag
+    tags:
+      - CanPilot # People
+      - VimPilot # Pets
   - type: Appearance
   - type: GenericVisualizer
     visuals:
