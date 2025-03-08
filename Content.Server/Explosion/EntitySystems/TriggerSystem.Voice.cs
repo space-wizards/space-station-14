@@ -18,10 +18,10 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnVoiceComponent, ListenEvent>(OnListen);
         }
 
-        private void OnMapInit(EntityUid uid, TriggerOnVoiceComponent component, MapInitEvent args)
+        private void OnMapInit(Entity<TriggerOnVoiceComponent> ent, ref MapInitEvent args)
         {
-            if (!string.IsNullOrEmpty(component.DefaultKeyPhrase))
-                component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+            if (!string.IsNullOrEmpty(ent.Comp.DefaultKeyPhrase))
+                ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
         }
 
         private void OnVoiceInit(EntityUid uid, TriggerOnVoiceComponent component, ComponentInit args)
@@ -151,19 +151,19 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid source)
         {
-            var component = ent.Comp;
+            if (string.IsNullOrEmpty(ent.Comp.DefaultKeyPhrase))
+                return;
 
-            if (!string.IsNullOrEmpty(component.DefaultKeyPhrase))
-                component.KeyPhrase = Loc.GetString(component.DefaultKeyPhrase);
+            ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
 
-            EnsureComp<ActiveListenerComponent>(ent).Range = component.ListenRange;
+            EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
 
             _adminLogger.Add(
                 LogType.Trigger,
                 LogImpact.Low,
-                $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{component.KeyPhrase}'. User: {ToPrettyString(source):speaker}");
+                $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {ToPrettyString(source):speaker}");
 
-            _popupSystem.PopupEntity(Loc.GetString("popup-trigger-voice-set-default", ("keyphrase", component.KeyPhrase!)), ent);
+            _popupSystem.PopupEntity(Loc.GetString("popup-trigger-voice-set-default", ("keyphrase", ent.Comp.KeyPhrase!)), ent);
         }
 
         private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
