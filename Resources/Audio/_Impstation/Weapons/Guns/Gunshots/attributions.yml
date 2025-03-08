@@ -24,9 +24,9 @@
   source: "https://opengameart.org/content/futuristic-weapons-assault-rifle"
   
 - files: ["light-pistol2"]
-  license: "CC0-1.0"
-  copyright: "Made by michorvath on Freesound"
-  source: "https://freesound.org/people/michorvath/sounds/427594/"
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Q009 on opengameart"
+  source: "https://opengameart.org/content/q009s-weapon-sounds"
   
 - files: ["nemesis"]
   license: "CC-BY-4.0"
