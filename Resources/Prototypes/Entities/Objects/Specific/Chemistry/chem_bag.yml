@@ -5,10 +5,10 @@
   description: A bag for storing chemistry products, such as pills, pill canisters, bottles, and syringes.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/chem_bag.rsi
+    sprite: _Starlight/Objects/Specific/Chemistry/chem_bag.rsi
     state: icon
   - type: Clothing
-    sprite: Objects/Specific/Chemistry/chem_bag.rsi
+    sprite: _Starlight/Objects/Specific/Chemistry/chem_bag.rsi
     quickEquip: false
     slots:
     - belt
