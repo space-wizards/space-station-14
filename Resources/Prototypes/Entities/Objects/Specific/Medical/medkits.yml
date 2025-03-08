@@ -5,7 +5,7 @@
   id: Medkit
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
   - type: Storage
     maxItemSize: Small
@@ -13,7 +13,7 @@
     - 0,0,3,1
   - type: Item
     size: Large
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
   - type: PhysicalComposition
     materialComposition:
@@ -24,11 +24,12 @@
 
 - type: entity
   name: burn treatment kit
-  description: "A specialized medical kit for when the toxins lab spontaneously burns down."
+  description: "A specialized medical kit for when somone wants to smoke in the plasma flood."
   parent: Medkit
   id: MedkitBurn
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: burnkit
   - type: Item
     heldPrefix: burnkit
@@ -40,6 +41,7 @@
   id: MedkitToxin
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: toxinkit
   - type: Item
     heldPrefix: toxinkit
@@ -51,6 +53,7 @@
   id: MedkitO2
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: o2kit
   - type: Item
     heldPrefix: o2kit
@@ -62,6 +65,7 @@
   id: MedkitBrute
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: brutekit
   - type: Item
     heldPrefix: brutekit
@@ -73,6 +77,7 @@
   id: MedkitAdvanced
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: advkit
   - type: Item
     heldPrefix: advkit
@@ -84,6 +89,7 @@
   id: MedkitRadiation
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: radkit
   - type: Item
     heldPrefix: radkit
@@ -95,6 +101,7 @@
   id: MedkitCombat
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
     state: blackkit
   - type: Item
     heldPrefix: blackkit
