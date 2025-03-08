@@ -3964,4 +3964,11 @@ Entries:
   id: 549
   time: '2025-03-07T20:18:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/363
+- author: Conflee
+  changes:
+  - message: Resprite of Chemical Bag, Plant Bag, Ore Bag, and Ore Bag of Holding
+    type: Tweak
+  id: 550
+  time: '2025-03-08T03:35:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/373
 
