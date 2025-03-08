@@ -82,6 +82,15 @@
   - type: SpanishAccent
 
 - type: trait
+  id: ScandinavianAccent
+  name: trait-scandinavian-name
+  description: trait-scandinavian-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ScandinavianAccent
+
+- type: trait
   id: Liar
   name: trait-liar-name
   description: trait-liar-desc
