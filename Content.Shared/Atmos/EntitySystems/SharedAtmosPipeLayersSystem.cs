@@ -182,9 +182,14 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
         {
-            _appearance.SetData(ent, PipeVisualLayers.Pipe, ent.Comp.LayerVisualStates[ent.Comp.CurrentPipeLayer], appearance);
-            _appearance.SetData(ent, PipeVisualLayers.Connector, ent.Comp.ConnectorVisualStates[ent.Comp.CurrentPipeLayer], appearance);
-            _appearance.SetData(ent, PipeVisualLayers.Device, _layerOffsets[ent.Comp.CurrentPipeLayer], appearance);
+            if (ent.Comp.CurrentPipeLayer < ent.Comp.LayerVisualStates.Length)
+                _appearance.SetData(ent, PipeVisualLayers.Pipe, ent.Comp.LayerVisualStates[ent.Comp.CurrentPipeLayer], appearance);
+
+            if (ent.Comp.CurrentPipeLayer < ent.Comp.ConnectorVisualStates.Length)
+                _appearance.SetData(ent, PipeVisualLayers.Connector, ent.Comp.ConnectorVisualStates[ent.Comp.CurrentPipeLayer], appearance);
+
+            if (ent.Comp.CurrentPipeLayer < _layerOffsets.Length)
+                _appearance.SetData(ent, PipeVisualLayers.Device, _layerOffsets[ent.Comp.CurrentPipeLayer], appearance);
         }
     }
 

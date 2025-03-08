@@ -31,7 +31,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// An array containing the state names of the different pipe layers.
     /// </summary>
     /// <remarks>
-    /// Note: there must be an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
+    /// Assumes that there is an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
     /// </remarks>
     [DataField]
     public string[] LayerVisualStates = new string[MaxPipeLayer + 1];
@@ -53,7 +53,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// An array containing the state names of the connectors for the different pipe layers.
     /// </summary>
     /// /// <remarks>
-    /// Note: there must be an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
+    /// Assumes that there is an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
     /// </remarks>
     [DataField]
     public string[] ConnectorVisualStates = { "pipeConnector", "pipeConnector1", "pipeConnector2" };
