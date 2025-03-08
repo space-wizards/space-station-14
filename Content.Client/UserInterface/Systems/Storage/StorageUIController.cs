@@ -5,12 +5,14 @@ using Content.Client.Interaction;
 using Content.Client.Storage;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Client.UserInterface.Systems.Info;
 using Content.Client.UserInterface.Systems.Storage.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
+using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -36,7 +38,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly CloseRecentWindowUIController _closeRecentWindowUIController = default!;
     [UISystemDependency] private readonly StorageSystem _storage = default!;
+    [UISystemDependency] private readonly UserInterfaceSystem _ui = default!;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
 
@@ -59,37 +63,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     {
         base.Initialize();
 
-        UIManager.OnScreenChanged += OnScreenChange;
-
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
         _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
         _configuration.OnValueChanged(CCVars.StorageWindowTitle, OnStorageWindowTitle, true);
-    }
-
-    private void OnScreenChange((UIScreen? Old, UIScreen? New) obj)
-    {
-        // Handle reconnects with hotbargui.
-
-        // Essentially HotbarGui / the screen gets loaded AFTER gamestates at the moment (because clientgameticker manually changes it via event)
-        // and changing this may be a massive change.
-        // So instead we'll just manually reload it for now.
-        if (!StaticStorageUIEnabled ||
-            obj.New == null ||
-            !EntityManager.TryGetComponent(_player.LocalEntity, out UserInterfaceUserComponent? userComp))
-        {
-            return;
-        }
-
-        // UISystemDependency not injected at this point so do it the old fashion way, I love ordering issues.
-        var uiSystem = EntityManager.System<SharedUserInterfaceSystem>();
-
-        foreach (var bui in uiSystem.GetActorUis((_player.LocalEntity.Value, userComp)))
-        {
-            if (!uiSystem.TryGetOpenUi<StorageBoundUserInterface>(bui.Entity, StorageComponent.StorageUiKey.Key, out var storageBui))
-                continue;
-
-            storageBui.ReOpen();
-        }
     }
 
     private void OnStorageWindowTitle(bool obj)
@@ -107,7 +83,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         StaticStorageUIEnabled = obj;
     }
 
-    public StorageWindow CreateStorageWindow(EntityUid uid)
+    public StorageWindow CreateStorageWindow(StorageBoundUserInterface sBui)
     {
         var window = new StorageWindow();
         window.MouseFilter = Control.MouseFilterMode.Pass;
@@ -124,12 +100,29 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (StaticStorageUIEnabled)
         {
             UIManager.GetActiveUIWidgetOrNull<HotbarGui>()?.StorageContainer.AddChild(window);
+            _closeRecentWindowUIController.SetMostRecentlyInteractedWindow(window);
         }
         else
         {
-            window.OpenCenteredLeft();
+            // Open at parent position if it's open.
+            if (_ui.TryGetOpenUi<StorageBoundUserInterface>(EntityManager.GetComponent<TransformComponent>(sBui.Owner).ParentUid,
+                    StorageComponent.StorageUiKey.Key, out var bui) && bui.Position != null)
+            {
+                window.Open(bui.Position.Value);
+            }
+            // Open at the saved position if it exists.
+            else if (_ui.TryGetPosition(sBui.Owner, StorageComponent.StorageUiKey.Key, out var pos))
+            {
+                window.Open(pos);
+            }
+            // Open at the default position.
+            else
+            {
+                window.OpenCenteredLeft();
+            }
         }
 
+        _ui.RegisterControl(sBui, window);
         return window;
     }
 
