@@ -71,7 +71,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
             var text = GetExamineText(entity, player.AttachedEntity);
-            text = RandomAccentuator.MaybeAccentuate(text, reaccentuationChance: 0.3f);
+            text = RandomAccentuator.MaybeAccentuate(text, 0.2f);
 
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);

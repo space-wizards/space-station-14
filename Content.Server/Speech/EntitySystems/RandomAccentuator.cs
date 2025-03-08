@@ -5,9 +5,11 @@ namespace Content.Server.Speech.EntitySystems;
 
 public static class RandomAccentuator
 {
-    private const float DefaultAccentuationChance = 1.0f;
+    private const float DefaultAccentuationChance = 0.5f;
 
     private const float DefaultReaccentuationChance = 0.5f;
+
+    private const float MaxReaccentuations = 4;
 
     public static string MaybeAccentuate(string message, float chance = DefaultAccentuationChance, float reaccentuationChance = DefaultReaccentuationChance)
     {
@@ -19,8 +21,6 @@ public static class RandomAccentuator
     public static FormattedMessage MaybeAccentuate(FormattedMessage message, float chance = DefaultAccentuationChance, float reaccentuationChance = DefaultReaccentuationChance)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
-        if (!random.Prob(chance))
-            return message;
 
 
         var singleAccentuator = new SingleAccentuator();
@@ -28,7 +28,7 @@ public static class RandomAccentuator
 
         foreach (var node in message)
         {
-            if (node.Name is null && node.Value.TryGetString(out var text))
+            if (random.Prob(chance) && node.Name is null && node.Value.TryGetString(out var text) && !string.IsNullOrWhiteSpace(text))
             {
                 var accentedText = MaybeAccentuateInternal(text, singleAccentuator, random, reaccentuationChance);
                 newMessage.PushTag(new MarkupNode(accentedText));
@@ -44,8 +44,11 @@ public static class RandomAccentuator
 
     private static string MaybeAccentuateInternal(string message, SingleAccentuator singleAccentuator, IRobustRandom random, float reaccentuationChance)
     {
-        for (var i = 0; i < 3 && random.Prob(reaccentuationChance); i++)
+        for (var i = 0; i < MaxReaccentuations ; i++)
         {
+            if (i > 0 && !random.Prob(reaccentuationChance))
+                continue;
+
             singleAccentuator.NextSystem();
             message = singleAccentuator.Accentuate(message);
         }
