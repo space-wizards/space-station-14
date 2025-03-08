@@ -3971,4 +3971,12 @@ Entries:
   id: 550
   time: '2025-03-08T03:35:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/373
+- author: Conflee
+  changes:
+  - message: Resprite of all Medkits to a new style, undoing Cabinetification in the
+      process
+    type: Tweak
+  id: 551
+  time: '2025-03-08T17:47:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/375
 
