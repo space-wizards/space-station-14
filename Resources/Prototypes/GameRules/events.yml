@@ -277,8 +277,8 @@
         - Wizard
       - type: RandomMetadata
         nameSegments:
-        - names_wizard_first
-        - names_wizard_last
+        - NamesWizardFirst
+        - NamesWizardLast
       mindRoles:
       - MindRoleWizard
 
