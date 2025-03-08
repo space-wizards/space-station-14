@@ -327,7 +327,7 @@
   name: laser cannon
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCannon
-  description: A heavy-duty, high-powered laser weapon. #imp
+  description: A heavy-duty, high-powered laser weapon.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_cannon.rsi #imp
