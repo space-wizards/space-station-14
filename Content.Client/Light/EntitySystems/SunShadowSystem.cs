@@ -1,8 +1,13 @@
-using System.Diagnostics.Contracts;
 using System.Numerics;
 using Content.Client.GameTicking.Managers;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
+using JetBrains.Annotations;
+using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Shapes;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -13,6 +18,12 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
     [Dependency] private readonly ClientGameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly FixtureSystem _fixture = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+
+    private readonly HashSet<Entity<SunShadowCastComponent>> _shadows = new();
 
     public override void Update(float frameTime)
     {
@@ -88,5 +99,33 @@ public sealed class SunShadowSystem : SharedSunShadowSystem
         }
 
         throw new InvalidOperationException();
+    }
+
+    [PublicAPI]
+    public bool CheckShadowCastOnPosition(MapId mapId, Vector2 worldPosition, SunShadowComponent? shadow = null)
+    {
+        if (!Resolve(_map.GetMap(mapId), ref shadow))
+            return false;
+
+        _lookup.GetEntitiesInRange(mapId, worldPosition, shadow.Direction.Length(), _shadows, LookupFlags.Static);
+
+        var indices = new Vector2[PhysicsConstants.MaxPolygonVertices * 2];
+
+        foreach (var cast in _shadows)
+        {
+            var pointCount = cast.Comp.Points.Length;
+
+            Array.Copy(cast.Comp.Points, indices, pointCount);
+            for (var i = 0; i < pointCount; i++)
+            {
+                indices[pointCount + i] = indices[i] + shadow.Direction;
+            }
+            var poly = new Polygon(indices);
+
+            if (_fixture.TestPoint(poly, new Transform(0f), worldPosition))
+                return true;
+        }
+
+        return false;
     }
 }
