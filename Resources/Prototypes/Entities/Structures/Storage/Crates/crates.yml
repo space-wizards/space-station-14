@@ -14,6 +14,8 @@
     spread: 90
   - type: Paintable
     group: CrateSteel
+  - type: RadiationBlockingContainer
+    resistance: 2.5
 
 - type: entity
   parent: CrateBaseWeldable
@@ -180,7 +182,7 @@
 # Secure Crates
 
 - type: entity
-  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   id: CrateSecgear
   name: secgear crate
   components:
@@ -296,7 +298,7 @@
     access: [["Armory"]]
 
 - type: entity
-  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   suffix: Armory, Secure
   id: CrateContrabandStorageSecure
   name: contraband storage crate
