@@ -24,10 +24,10 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
-    private float _ghostFadeDistance = 6f;
-    private float _ghostHideDistance = 2f;
-    private int _overlayStackMax = 3;
-    private float _overlayMergeDistance = 1f;
+    private float _ghostFadeDistance;
+    private float _ghostHideDistance;
+    private int _overlayStackMax;
+    private float _overlayMergeDistance;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
@@ -91,12 +91,8 @@ internal sealed class AdminNameOverlay : Overlay
             if (!aabb.Intersects(in viewport))
                 continue;
 
-            // Calculate screen coordinates
-            // counteracts rotational misalignment to world
-            var rotate = new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(aabb.TopRight - aabb.Center);
-            // Slight offset to not overlap with the job icon overlay?
-            var offset = new Vector2(1f, 7f);
-            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center + rotate) + offset;
+            // Get on-screen coordinates of player
+            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center);
 
             sortable.Add((info, aabb, entity.Value, screenCoordinates));
         }
@@ -108,7 +104,10 @@ internal sealed class AdminNameOverlay : Overlay
             var playerInfo = info.Item1;
             var aabb = info.Item2;
             var entity = info.Item3;
-            var screenCoordinates = info.Item4;
+            var screenCoordinatesCenter = info.Item4;
+            //the center position is kept separately, for simpler position comparison later
+            var centerOffset = new Vector2(28f, -18f) * uiScale;
+            var screenCoordinates = screenCoordinatesCenter + centerOffset;
             var alpha = 1f;
 
             //TODO make a smarter system where the starting offset can be modified by the predicted position and size of already-drawn overlays/stacks?
@@ -123,8 +122,6 @@ internal sealed class AdminNameOverlay : Overlay
                 var mousePosition = _eyeManager
                     .ScreenToMap(_userInterfaceManager.MousePositionScaled.Position * uiScale)
                     .Position;
-                //TODO:ERRANT Am I dumb? Why do I need to multiply the scaled position with the UI Scale to get the correct value? Feels the opposite of what should be happening
-
                 var dist = Vector2.Distance(mobPosition, mousePosition);
                 if (dist < _ghostHideDistance)
                     continue;
@@ -139,7 +136,7 @@ internal sealed class AdminNameOverlay : Overlay
                 Vector2.Distance(_eyeManager.ScreenToMap(x.Item1).Position, aabb.Center) <= _overlayMergeDistance);
             if (stack.Count > 0)
             {
-                screenCoordinates = stack.First().Item1;
+                screenCoordinates = stack.First().Item1 + centerOffset;
 
                 var i = 1;
                 foreach (var s in stack)
@@ -201,7 +198,7 @@ internal sealed class AdminNameOverlay : Overlay
             }
 
             //Save the coordinates and size of the text block, for stack merge check
-            drawnOverlays.Add((screenCoordinates, currentOffset));
+            drawnOverlays.Add((screenCoordinatesCenter, currentOffset));
         }
     }
 }
