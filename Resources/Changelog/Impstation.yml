@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Amber Station's emergency shuttle should no longer arrive with no power.
-    type: Fix
-  id: 757
-  time: '2024-12-18T18:40:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1060
 - author: TGRCdev & suyo
   changes:
   - message: new trait! pain insensitivity
@@ -4089,3 +4082,10 @@
   id: 1256
   time: '2025-03-07T22:20:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1860
+- author: SixValentine
+  changes:
+  - message: Fixed Embryo
+    type: Fix
+  id: 1257
+  time: '2025-03-08T07:20:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1868
