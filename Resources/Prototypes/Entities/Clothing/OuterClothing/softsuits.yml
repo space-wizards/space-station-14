@@ -12,7 +12,7 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
+#    - MonkeyWearable #imp
     - WhitelistChameleon
 
 #Syndicate EVA
@@ -29,7 +29,7 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
+#    - MonkeyWearable #imp
     - WhitelistChameleon
 
 #Emergency EVA
@@ -56,9 +56,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-  - type: Tag
-    tags:
-    - MonkeyWearable
+#  - type: Tag #imp
+#    tags:
+#    - MonkeyWearable 
 
 #Prisoner EVA
 - type: entity
@@ -74,7 +74,7 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
+#    - MonkeyWearable #imp
     - WhitelistChameleon
 
 #NTSRA Voidsuit / Ancient Voidsuit

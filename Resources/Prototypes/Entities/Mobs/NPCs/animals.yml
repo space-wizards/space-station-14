@@ -1277,61 +1277,11 @@
           32:
             sprite: _Impstation/Mobs/Animals/Monkey/displacement.rsi
             state: jumpsuit
-      head:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: head
-      eyes:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: glasses
-      ears:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: ears
-      mask:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: mask
-      neck:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: neck
       outerClothing:
         sizeMaps:
           32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            sprite: _Impstation/Mobs/Animals/Monkey/displacement.rsi
             state: outerClothing
-      gloves:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: hands
-      shoes:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: feet
-      belt:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: belt
-      back:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: back
-      suitstorage:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: suitstorage
   - type: Deathgasp
     prototype: MonkeyDeathgasp
   - type: Blindable

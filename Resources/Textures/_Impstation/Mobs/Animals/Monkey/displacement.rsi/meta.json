@@ -11,27 +11,7 @@
   },
   "states": [
 	{
-      "name": "belt",
-	  "directions": 4
-	},
-	{
-	  "name": "ears",
-	  "directions": 4
-	},
-	{
-	  "name": "glasses",
-      "directions": 4
-	},
-	{
 	  "name": "jumpsuit",
-	  "directions": 4
-	},
-	{
-	  "name": "mask",
-	  "directions": 4
-	},
-	{
-	  "name": "head",
 	  "directions": 4
 	},
 	{
