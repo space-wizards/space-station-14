@@ -37,6 +37,8 @@ namespace Content.Server.Examine
             if (getVerbs)
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
+            message = RandomAccentuator.MaybeAccentuate(message, 0.2f);
+
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
                 GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
             );
