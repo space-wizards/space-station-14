@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Systems;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -23,10 +24,9 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
-    //TODO make these be read from cvars (with/after #35538 moves iConfigurationManager to the constructor)
-    private float _ghostHideDistance = 2f;
     private float _ghostFadeDistance = 6f;
-    private int _maxOverlayStack = 3;
+    private float _ghostHideDistance = 2f;
+    private int _overlayStackMax = 3;
     private float _overlayMergeDistance = 1f;
 
     //TODO make this adjustable via GUI
@@ -34,7 +34,14 @@ internal sealed class AdminNameOverlay : Overlay
         ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
     private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
 
-    public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
+    public AdminNameOverlay(
+        AdminSystem system,
+        IEntityManager entityManager,
+        IEyeManager eyeManager,
+        IResourceCache resourceCache,
+        EntityLookupSystem entityLookup,
+        IUserInterfaceManager userInterfaceManager,
+        IConfigurationManager config)
     {
         IoCManager.InjectDependencies(this);
 
@@ -45,6 +52,11 @@ internal sealed class AdminNameOverlay : Overlay
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
+
+        config.OnValueChanged(CCVars.AdminOverlayGhostHideDistance, (f) => { _ghostHideDistance = f; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayGhostFadeDistance, (f) => { _ghostFadeDistance = f; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayStackMax, (i) => { _overlayStackMax = i; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayMergeDistance, (f) => { _overlayMergeDistance = f; }, true);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -60,41 +72,49 @@ internal sealed class AdminNameOverlay : Overlay
         var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
         var playTime = _config.GetCVar(CCVars.AdminOverlayPlaytime);
         var startingJob = _config.GetCVar(CCVars.AdminOverlayStartingJob);
-        var drawnOverlays = new List<(Vector2,Vector2)>() ;
+        var drawnOverlays = new List<(Vector2,Vector2)>() ; // A saved list of the overlays already drawn
 
-        foreach (var playerInfo in _system.PlayerList)
+        // Get all player positions before drawing overlays, so they can be sorted before iteration
+        var sortable = new List<(PlayerInfo, Box2, EntityUid, Vector2)>();
+        foreach (var info in _system.PlayerList)
         {
-            var entity = _entityManager.GetEntity(playerInfo.NetEntity);
-            var alpha = 1f;
+            var entity = _entityManager.GetEntity(info.NetEntity);
 
-            // Otherwise the entity can not exist yet
-            if (entity == null || !_entityManager.EntityExists(entity))
-            {
+            // If entity does not exist or is on a different map, skip
+            if (entity == null
+                || !_entityManager.EntityExists(entity)
+                || _entityManager.GetComponent<TransformComponent>(entity.Value).MapID != args.MapId)
                 continue;
-            }
-
-            // if not on the same map, continue
-            if (_entityManager.GetComponent<TransformComponent>(entity.Value).MapID != args.MapId)
-            {
-                continue;
-            }
 
             var aabb = _entityLookup.GetWorldAABB(entity.Value);
-
-            // if not on screen, continue
+            // if not on screen, skip
             if (!aabb.Intersects(in viewport))
-            {
                 continue;
-            }
 
-            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
-                                                              new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
-                                                                  aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
+            // Calculate screen coordinates
+            // counteracts rotational misalignment to world
+            var rotate = new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(aabb.TopRight - aabb.Center);
+            // Slight offset to not overlap with the job icon overlay?
+            var offset = new Vector2(1f, 7f);
+            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center + rotate) + offset;
+
+            sortable.Add((info, aabb, entity.Value, screenCoordinates));
+        }
+
+        // Draw overlays for visible players
+        // starting from the top of the screen, so stacks are more logical (where applicable)
+        foreach (var info in sortable.OrderBy(s => s.Item4.Y).ToList())
+        {
+            var playerInfo = info.Item1;
+            var aabb = info.Item2;
+            var entity = info.Item3;
+            var screenCoordinates = info.Item4;
+            var alpha = 1f;
 
             var currentOffset = Vector2.Zero;
 
             //  Ghosts near the cursor are made transparent/invisible
-            //  TODO would be "cheaper" if playerinfo already contained a ghost bool, and ghosts could then be ordered to the bottom of any stack
+            //  TODO would be "cheaper" if playerinfo already contained a ghost bool, this gets called every frame for every onscreen player!
             if (_entityManager.HasComponent<GhostComponent>(entity))
             {
                 // We want the map positions here, so we don't have to worry about resolution and such shenanigans
@@ -102,7 +122,7 @@ internal sealed class AdminNameOverlay : Overlay
                 var mousePosition = _eyeManager
                     .ScreenToMap(_userInterfaceManager.MousePositionScaled.Position * uiScale)
                     .Position;
-                //TODO Am I dumb? Why do I need to multiply Scaled with the UI Scale to get the correct value? Feels the opposite of what should be happening
+                //TODO:ERRANT Am I dumb? Why do I need to multiply the scaled position with the UI Scale to get the correct value? Feels the opposite of what should be happening
 
                 var dist = Vector2.Distance(mobPosition, mousePosition);
                 if (dist < _ghostHideDistance)
@@ -114,7 +134,6 @@ internal sealed class AdminNameOverlay : Overlay
 
             // If the new overlay text block is within merge distance of any previous ones
             // merge them into a stack so they don't hide each other
-            // additional entries after maximum stack size is reached will be drawn over the last entry
             var stack = drawnOverlays.FindAll(x =>
                 Vector2.Distance(_eyeManager.ScreenToMap(x.Item1).Position, aabb.Center) <= _overlayMergeDistance);
             if (stack.Count > 0)
@@ -124,22 +143,26 @@ internal sealed class AdminNameOverlay : Overlay
                 var i = 1;
                 foreach (var s in stack)
                 {
-                    if (i <= _maxOverlayStack - 1)
+                    // additional entries after maximum stack size is reached will be drawn over the last entry
+                    if (i <= _overlayStackMax - 1)
                         currentOffset = lineoffset + s.Item2 ;
                     i++;
                 }
             }
 
+            // Draw Username
             var color = Color.Yellow;
             color.A = alpha;
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? color : colorDisconnected);
             currentOffset += lineoffset;
 
+            // Draw Character name
             color = Color.Aquamarine;
             color.A = alpha;
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? color : Color.White);
             currentOffset += lineoffset;
 
+            // Draw Playtime
             if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && playTime)
             {
                 color = Color.Orange;
@@ -148,6 +171,7 @@ internal sealed class AdminNameOverlay : Overlay
                 currentOffset += lineoffset;
             }
 
+            // Draw Job
             if (!string.IsNullOrEmpty(playerInfo.StartingJob) && startingJob)
             {
                 color = Color.GreenYellow;
@@ -156,6 +180,7 @@ internal sealed class AdminNameOverlay : Overlay
                 currentOffset += lineoffset;
             }
 
+            // Draw Classic Antag Label
             if (classic && playerInfo.Antag)
             {
                 color = Color.OrangeRed;
@@ -163,6 +188,7 @@ internal sealed class AdminNameOverlay : Overlay
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, color);
                 currentOffset += lineoffset;
             }
+            // Draw Role Type
             else if (!classic && _filter.Contains(playerInfo.RoleProto))
             {
                 color =  playerInfo.RoleProto.Color;
@@ -173,7 +199,7 @@ internal sealed class AdminNameOverlay : Overlay
                 currentOffset += lineoffset;
             }
 
-            //Save the coordinates and size of the text block, to merge with nearby blocks that are too close
+            //Save the coordinates and size of the text block, for stack merge check
             drawnOverlays.Add((screenCoordinates, currentOffset));
         }
     }
