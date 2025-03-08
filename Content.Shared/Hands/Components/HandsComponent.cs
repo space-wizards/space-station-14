@@ -80,6 +80,12 @@ public sealed partial class HandsComponent : Component
 
     [DataField]
     public DisplacementData? HandDisplacement;
+
+    /// <summary>
+    /// If false, hands cannot be stripped, and they do not show up in the stripping menu.
+    /// </summary>
+    [DataField]
+    public bool CanBeStripped = true;
 }
 
 [Serializable, NetSerializable]

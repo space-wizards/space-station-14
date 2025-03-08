@@ -22,6 +22,9 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    // How much the cell score should be increased per 1 AutoRechargeRate.
+    private const int AutoRechargeValue = 100;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -59,21 +62,42 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
             return;
 
         // no power cell for some reason??? allow it
-        if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
+        if (!_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery))
             return;
 
-        // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
-        if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting) || inserting.MaxCharge <= battery.MaxCharge)
+        if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting))
+        {
             args.Cancel();
+            return;
+        }
+
+        var user = Transform(uid).ParentUid;
+
+        // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
+        if (GetCellScore(inserting.Owner, inserting) <= GetCellScore(battery.Owner, battery))
+        {
+            args.Cancel();
+            Popup.PopupEntity(Loc.GetString("ninja-cell-downgrade"), user, user);
+            return;
+        }
 
         // tell ninja abilities that use battery to update it so they don't use charge from the old one
-        var user = Transform(uid).ParentUid;
         if (!_ninja.IsNinja(user))
             return;
 
         var ev = new NinjaBatteryChangedEvent(args.EntityUid, uid);
         RaiseLocalEvent(uid, ref ev);
         RaiseLocalEvent(user, ref ev);
+    }
+
+    // this function assigns a score to a power cell depending on the capacity, to be used when comparing which cell is better.
+    private float GetCellScore(EntityUid uid, BatteryComponent battcomp)
+    {
+        // if a cell is able to automatically recharge, boost the score drastically depending on the recharge rate,
+        // this is to ensure a ninja can still upgrade to a micro reactor cell even if they already have a medium or high.
+        if (TryComp<BatterySelfRechargerComponent>(uid, out var selfcomp) && selfcomp.AutoRecharge)
+            return battcomp.MaxCharge + (selfcomp.AutoRechargeRate*AutoRechargeValue);
+        return battcomp.MaxCharge;
     }
 
     private void OnEmpAttempt(EntityUid uid, NinjaSuitComponent comp, EmpAttemptEvent args)

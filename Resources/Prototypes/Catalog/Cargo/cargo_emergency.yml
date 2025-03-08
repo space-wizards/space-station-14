@@ -63,7 +63,7 @@
   icon:
     sprite: Objects/Tanks/red.rsi
     state: icon
-  product: CrateSlimepersonLifeSupport
+  product: CrateNitrogenInternals
   cost: 350
   category: cargoproduct-category-name-emergency
   group: market

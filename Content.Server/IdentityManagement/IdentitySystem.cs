@@ -103,6 +103,8 @@ public sealed class IdentitySystem : SharedIdentitySystem
             // If presumed name is null and we're using that, we set proper noun to be false ("the old woman")
             if (name != representation.TrueName && representation.PresumedName == null)
                 identityGrammar.ProperNoun = false;
+
+            Dirty(ident, identityGrammar);
         }
 
         if (name == Name(ident))
@@ -166,7 +168,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
         if (_idCard.TryFindIdCard(target, out var id))
         {
             presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
-            presumedJob = id.Comp.JobTitle?.ToLowerInvariant();
+            presumedJob = id.Comp.LocalizedJobTitle?.ToLowerInvariant();
         }
 
         // If it didn't find a job, that's fine.

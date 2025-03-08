@@ -1,0 +1,89 @@
+## Static
+
+- type: latheRecipePack
+  id: ToolsStatic
+  recipes:
+  - Wirecutter
+  - Screwdriver
+  - Welder
+  - Wrench
+  - CrowbarGreen
+  - Multitool
+  - NetworkConfigurator
+  - Signaller
+  - SprayPainter
+  - FlashlightLantern
+  - HandheldGPSBasic
+  - TRayScanner
+  - UtilityBelt
+  - HandheldStationMap
+  - ClothingHeadHatWelding
+  - ClothingHeadHatCone
+
+- type: latheRecipePack
+  id: AtmosStatic
+  recipes:
+  - AirTank
+  - GasAnalyzer
+
+- type: latheRecipePack
+  id: ElectronicsStatic
+  recipes:
+  - IntercomElectronics
+  - FirelockElectronics
+  - DoorElectronics
+  - AirAlarmElectronics
+  - StationMapElectronics
+  - FireAlarmElectronics
+  - MailingUnitElectronics
+  - SignalTimerElectronics
+  - APCElectronics
+  - SMESMachineCircuitboard
+  - SubstationMachineCircuitboard
+  - WallmountSubstationElectronics
+  - CellRechargerCircuitboard
+  - WeaponCapacitorRechargerCircuitboard
+  - FreezerElectronics
+
+- type: latheRecipePack
+  id: EngineeringBoardsStatic
+  recipes:
+  - SpaceHeaterMachineCircuitBoard
+
+## Dynamic
+
+- type: latheRecipePack
+  id: AdvancedTools
+  recipes:
+  - PowerDrill
+  - WelderExperimental
+  - JawsOfLife
+  - Fulton
+  - FultonBeacon
+
+- type: latheRecipePack
+  id: AtmosTools
+  recipes:
+  - HolofanProjector
+
+- type: latheRecipePack
+  id: EngineeringWeapons
+  recipes:
+  - WeaponParticleDecelerator
+
+- type: latheRecipePack
+  id: EngineeringBoards
+  recipes:
+  - ThermomachineFreezerMachineCircuitBoard
+  - HellfireFreezerMachineCircuitBoard
+  - PortableScrubberMachineCircuitBoard
+  - SolarControlComputerCircuitboard
+  - SolarTrackerElectronics
+  - GasRecyclerMachineCircuitboard
+  - PortableGeneratorPacmanMachineCircuitboard
+  - PortableGeneratorSuperPacmanMachineCircuitboard
+  - PortableGeneratorJrPacmanMachineCircuitboard
+  - EmitterCircuitboard
+  - TelecomServerCircuitboard
+  - SMESAdvancedMachineCircuitboard
+  - HolopadMachineCircuitboard

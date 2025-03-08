@@ -87,6 +87,7 @@ reagent-physical-desc-exotic-smelling = exotic smelling
 reagent-physical-desc-energizing = energizing
 reagent-physical-desc-exhilarating = exhilarating
 reagent-physical-desc-vibrant = vibrant
+reagent-physical-desc-inversed = inversed
 reagent-physical-desc-fluffy = fluffy
 reagent-physical-desc-funny = funny
 reagent-physical-desc-alkaline = alkaline

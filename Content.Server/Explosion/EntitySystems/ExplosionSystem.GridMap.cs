@@ -29,7 +29,7 @@ public sealed partial class ExplosionSystem
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.EntityUid] = edges;
 
-        foreach (var tileRef in grid.GetAllTiles())
+        foreach (var tileRef in _map.GetAllTiles(ev.EntityUid, grid))
         {
             if (IsEdge(grid, tileRef.GridIndices, out var dir))
                 edges.Add(tileRef.GridIndices, dir);
@@ -71,8 +71,7 @@ public sealed partial class ExplosionSystem
         {
             var targetGrid = Comp<MapGridComponent>(referenceGrid.Value);
             var xform = Transform(referenceGrid.Value);
-            targetAngle = xform.WorldRotation;
-            targetMatrix = xform.InvWorldMatrix;
+            (_, targetAngle, targetMatrix) = _transformSystem.GetWorldPositionRotationInvMatrix(xform);
             tileSize = targetGrid.TileSize;
         }
 

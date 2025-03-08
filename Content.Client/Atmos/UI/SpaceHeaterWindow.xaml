@@ -1,6 +1,6 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               MinSize="280 160" Title="Temperature Control Unit">
+               MinSize="280 160" Title="{Loc comp-space-heater-ui-title}">
 
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
 

@@ -4,29 +4,11 @@
   graph:
     - node: start
       edges:
-        - to: windowDiagonal
-          steps:
-            - material: Glass
-              amount: 2
-              doAfter: 2
-
         - to: plasmaWindowDiagonal
           steps:
             - material: PlasmaGlass
               amount: 2
               doAfter: 2
-
-        - to: uraniumWindowDiagonal
-          steps:
-            - material: UraniumGlass
-              amount: 2
-              doAfter: 2
-
-        - to: clockworkWindowDiagonal
-          steps:
-            - material: ClockworkGlass
-              amount: 2
-              doAfter: 3
 
         - to: reinforcedWindowDiagonal
           steps:
@@ -40,9 +22,27 @@
               amount: 2
               doAfter: 3
 
+        - to: uraniumWindowDiagonal
+          steps:
+            - material: UraniumGlass
+              amount: 2
+              doAfter: 2
+
         - to: reinforcedUraniumWindowDiagonal
           steps:
             - material: ReinforcedUraniumGlass
+              amount: 2
+              doAfter: 3
+
+        - to: clockworkWindowDiagonal
+          steps:
+            - material: ClockworkGlass
+              amount: 2
+              doAfter: 3
+
+        - to: windowDiagonal
+          steps:
+            - material: Glass
               amount: 2
               doAfter: 3
 
@@ -56,97 +56,6 @@
               amount: 2
             - !type:DeleteEntity {}
           steps:
-            - tool: Screwing
-              doAfter: 1
-            - tool: Anchoring
-              doAfter: 2
-        - to: plasmaWindowDiagonal
-          steps:
-            - material: Plasma
-              amount: 2
-              doAfter: 1
-        - to: uraniumWindowDiagonal
-          steps:
-            - material: Uranium
-              amount: 2
-              doAfter: 1
-        - to: clockworkWindowDiagonal
-          steps:
-            - material: Brass
-              amount: 2
-              doAfter: 2
-        - to: reinforcedWindowDiagonal
-          steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 2
-
-    - node: plasmaWindowDiagonal
-      entity: PlasmaWindowDiagonal
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetPGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
-              doAfter: 3
-        - to: reinforcedPlasmaWindowDiagonal
-          steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 1
-
-    - node: uraniumWindowDiagonal
-      entity: UraniumWindowDiagonal
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetUGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
-              doAfter: 3
-        - to: reinforcedUraniumWindowDiagonal
-          steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 1
-
-    - node: clockworkWindowDiagonal
-      entity: ClockworkWindowDiagonal
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetClockworkGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 1
-            - tool: Prying
-              doAfter: 2
-            - tool: Welding
-              doAfter: 5
             - tool: Screwing
               doAfter: 1
             - tool: Anchoring
@@ -174,16 +83,48 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
-        - to: reinforcedPlasmaWindowDiagonal
-          steps:
-            - material: Plasma
+
+    - node: clockworkWindowDiagonal
+      entity: ClockworkWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetClockworkGlass1
               amount: 2
-              doAfter: 1
-        - to: reinforcedUraniumWindowDiagonal
+            - !type:DeleteEntity {}
           steps:
-            - material: Uranium
-              amount: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
               doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: plasmaWindowDiagonal
+      entity: PlasmaWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
 
     - node: reinforcedPlasmaWindowDiagonal
       entity: ReinforcedPlasmaWindowDiagonal
@@ -203,6 +144,25 @@
               doAfter: 3
             - tool: Welding
               doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: uraniumWindowDiagonal
+      entity: UraniumWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
             - tool: Screwing
               doAfter: 2
             - tool: Anchoring

@@ -10,6 +10,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
@@ -103,7 +104,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (userHands.ActiveHandEntity != null && !hasEnt)
             StartStripInsertInventory((user, userHands), strippable.Owner, userHands.ActiveHandEntity.Value, args.Slot);
-        else if (userHands.ActiveHandEntity == null && hasEnt)
+        else if (hasEnt)
             StartStripRemoveInventory(user, strippable.Owner, held!.Value, args.Slot);
     }
 
@@ -116,6 +117,9 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!Resolve(user, ref user.Comp) ||
             !Resolve(target, ref target.Comp) ||
             !Resolve(target, ref targetStrippable))
+            return;
+
+        if (!target.Comp.CanBeStripped)
             return;
 
         if (!_handsSystem.TryGetHand(target.Owner, handId, out var handSlot))
@@ -132,7 +136,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (user.Comp.ActiveHandEntity != null && handSlot.HeldEntity == null)
             StartStripInsertHand(user, target, user.Comp.ActiveHandEntity.Value, handId, targetStrippable);
-        else if (user.Comp.ActiveHandEntity == null && handSlot.HeldEntity != null)
+        else if (handSlot.HeldEntity != null)
             StartStripRemoveHand(user, target, handSlot.HeldEntity.Value, handId, targetStrippable);
     }
 
@@ -291,7 +295,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!stealth)
         {
-            if (slotDef.StripHidden)
+            if (IsStripHidden(slotDef, user))
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), target, target, PopupType.Large);
             else
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target, PopupType.Large);
@@ -347,6 +351,9 @@ public abstract class SharedStrippableSystem : EntitySystem
     {
         if (!Resolve(user, ref user.Comp) ||
             !Resolve(target, ref target.Comp))
+            return false;
+
+        if (!target.Comp.CanBeStripped)
             return false;
 
         if (user.Comp.ActiveHand == null)
@@ -447,6 +454,9 @@ public abstract class SharedStrippableSystem : EntitySystem
         string handName)
     {
         if (!Resolve(target, ref target.Comp))
+            return false;
+
+        if (!target.Comp.CanBeStripped)
             return false;
 
         if (!_handsSystem.TryGetHand(target, handName, out var handSlot, target.Comp))
@@ -650,5 +660,16 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (args.CanDrop)
             args.Handled = true;
+    }
+
+    public bool IsStripHidden(SlotDefinition definition, EntityUid? viewer)
+    {
+        if (!definition.StripHidden)
+            return false;
+
+        if (viewer == null)
+            return true;
+
+        return !HasComp<BypassInteractionChecksComponent>(viewer);
     }
 }

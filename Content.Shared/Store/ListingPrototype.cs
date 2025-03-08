@@ -39,7 +39,8 @@ public partial class ListingData : IEquatable<ListingData>
         other.Categories,
         other.OriginalCost,
         other.RestockTime,
-        other.DiscountDownTo
+        other.DiscountDownTo,
+        other.DisableRefund
     )
     {
 
@@ -63,7 +64,8 @@ public partial class ListingData : IEquatable<ListingData>
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
         TimeSpan restockTime,
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo,
+        bool disableRefund
     )
     {
         Name = name;
@@ -84,6 +86,7 @@ public partial class ListingData : IEquatable<ListingData>
         OriginalCost = originalCost;
         RestockTime = restockTime;
         DiscountDownTo = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(dataDiscountDownTo);
+        DisableRefund = disableRefund;
     }
 
     [ViewVariables]
@@ -194,6 +197,12 @@ public partial class ListingData : IEquatable<ListingData>
     [DataField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
 
+    /// <summary>
+    /// Whether or not to disable refunding for the store when the listing is purchased from it.
+    /// </summary>
+    [DataField]
+    public bool DisableRefund = false;
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)
@@ -287,7 +296,8 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.Categories,
             listingData.OriginalCost,
             listingData.RestockTime,
-            listingData.DiscountDownTo
+            listingData.DiscountDownTo,
+            listingData.DisableRefund
         )
     {
     }
