@@ -18,6 +18,11 @@ public sealed class ScandinavianAccentSystem : EntitySystem
         { 'o',  ['ö','ø'] },
     };
 
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<ScandinavianAccentComponent, AccentGetEvent>(OnAccent);
+    }
+
     public string Accentuate(string message)
     {
         var msg = message;
