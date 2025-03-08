@@ -775,7 +775,7 @@
     - proto: BulletLaserSpreadNarrow
       fireCost: 200
     - proto: BulletDisablerSmgSpread
-      fireCost: 120
+      fireCost: 80
   - type: Item
     size: Large
     shape:

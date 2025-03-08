@@ -16,7 +16,7 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
-  
+
 - type: entity
   parent: MuzzleFlashEffect
   id: MuzzleFlashEffectOmnilaser
@@ -30,7 +30,7 @@
       map: ["enum.EffectLayers.Unshaded"]
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       state: omnilaser_flash
-  
+
 - type: entity
   parent: MuzzleFlashEffect
   id: MuzzleFlashEffectHeavyLaser
@@ -1132,7 +1132,7 @@
   - type: ProjectileSpread
     proto: BulletLaser
     count: 5 #65 heat damage if you hit all your shots, but wide spread
-    spread: 30
+    spread: 25
 
 - type: entity
   name: narrow laser barrage
@@ -1143,7 +1143,7 @@
   - type: ProjectileSpread
     proto: BulletLaser
     count: 4 #52 heat damage if you hit all your shots, but narrower spread
-    spread: 10
+    spread: 9
 
 - type: entity
   name: disabling laser barrage
@@ -1154,4 +1154,4 @@
   - type: ProjectileSpread
     proto: BulletDisablerSmg
     count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
-    spread: 9
+    spread: 8
