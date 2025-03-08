@@ -17,6 +17,10 @@
 	{
 	  "name": "outerClothing",
 	  "directions": 4
+	},
+	{
+	  "name": "mask",
+	  "directions": 4
 	}
   ]
 }
