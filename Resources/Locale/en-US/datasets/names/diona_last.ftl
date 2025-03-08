@@ -94,7 +94,7 @@ names-diona-last-dataset-90 = Knowledge
 names-diona-last-dataset-91 = Modification
 
 # Negative
-# These should be something a diona would still realistically name themselves, i.e not inherintly self deprecating.
+# These should be something a diona would still realistically name themselves, i.e not inherently self deprecating.
 names-diona-last-dataset-92 = Envy
 names-diona-last-dataset-93 = Ineptitude
 names-diona-last-dataset-94 = Ignorance
