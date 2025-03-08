@@ -37,11 +37,54 @@
 #Service
 - type: entity
   parent: DefaultStationBeaconService
+  id: DefaultStationBeaconClown
+  suffix: Clown
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-clown
+    color: "#FF2FFF"
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconHD
+  suffix: HD's Room
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-hd
+    
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconMime
+  suffix: Mime
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-mime
+    color: "#FFFFFF"
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconMusician
+  suffix: Musician
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-musician
+    color: "#5C4A9E"
+
+- type: entity
+  parent: DefaultStationBeaconService
   id: DefaultStationBeaconNews
   suffix: News
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-news
+
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconServiceStoreroom
+  suffix: Service Storeroom
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-service-storeroom
 
 #Portals
 - type: entity

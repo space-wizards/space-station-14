@@ -2,7 +2,7 @@
   name: PRIbar
   parent: BaseCrowbar
   id: Pribar
-  description: A purpose built crowbar for prying open firelocks. Collapses to fit in a pocket.
+  description: A purpose-built crowbar for prying open firelocks. Collapses to fit in a pocket.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Tools/pribar.rsi
@@ -25,3 +25,40 @@
         Piercing: 8
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
+  - type: Construction
+    graph: UpgradeToolPRIbarConversion
+    node: start
+
+- type: entity
+  name: PRIbar+
+  parent: Pribar
+  id: PRIbarPlus
+  description: A purpose-built crowbar for prying open firelocks, upgraded with a wrench on the back side. Collapses to fit in a pocket.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/pribarplus.rsi
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Tools/pribarplus.rsi
+    size: Small
+    storedSprite:
+      sprite: _Impstation/Objects/Tools/pribarplus.rsi
+      state: storage
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _Impstation/Objects/Tools/pribarplus.rsi
+        state: icon
+      useSound: /Audio/Items/crowbar.ogg
+      changeSound: /Audio/_Impstation/Items/toolslap.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _Impstation/Objects/Tools/pribarplus.rsi
+        state: wrench
+      useSound: /Audio/Items/ratchet.ogg
+      changeSound: /Audio/_Impstation/Items/toolslap.ogg
+  - type: Construction
+    graph: UpgradeToolPRIbarConversion
+    node: convert-pribarplus

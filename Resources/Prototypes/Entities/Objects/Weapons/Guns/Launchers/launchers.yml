@@ -27,12 +27,12 @@
   description: THOOMP. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/china_lake.rsi #imp
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/china_lake.rsi #imp
     slots:
     - Back
     - suitStorage

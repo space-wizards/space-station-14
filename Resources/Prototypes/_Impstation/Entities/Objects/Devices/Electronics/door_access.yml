@@ -48,3 +48,57 @@
   components:
   - type: AccessReader
     access: [["Logistics"]]
+
+# Clown
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsClown
+  suffix: Clown, Locked
+  components:
+  - type: AccessReader
+    access: [["Clown"]]
+
+# Librarian
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsLibrarian
+  suffix: Librarian, Locked
+  components:
+  - type: AccessReader
+    access: [["Librarian"]]
+
+# Mime
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMime
+  suffix: Mime, Locked
+  components:
+  - type: AccessReader
+    access: [["Mime"]]
+
+# Musician
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMusician
+  suffix: Musician, Locked
+  components:
+  - type: AccessReader
+    access: [["Musician"]]
+
+# Reporter
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsReporter
+  suffix: Reporter, Locked
+  components:
+  - type: AccessReader
+    access: [["Reporter"]]
+
+# Hospitality Director
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsHospitalityDirector
+  suffix: HospitalityDirector, Locked
+  components:
+  - type: AccessReader
+    access: [["HospitalityDirector"]]

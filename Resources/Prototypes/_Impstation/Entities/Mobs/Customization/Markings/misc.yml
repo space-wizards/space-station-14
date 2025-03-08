@@ -817,10 +817,14 @@
 - type: marking
   id: SpiderGlowEyes
   bodyPart: Eyes
-  markingCategory: Head
+  markingCategory: Eyes
   speciesRestriction: [ Arachnid ]
-  forcedColoring: false
+  forcedColoring: true
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: spidergloweyes
@@ -829,10 +833,14 @@
 - type: marking
   id: SpiderEyesMulti
   bodyPart: Eyes
-  markingCategory: Head
+  markingCategory: Eyes
   speciesRestriction: [ Arachnid ]
   forcedColoring: false
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: spidereyesmulti1

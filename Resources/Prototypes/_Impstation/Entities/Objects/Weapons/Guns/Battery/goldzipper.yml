@@ -5,7 +5,7 @@
   description: Legends tell of a gun that can kill anything with a single shot.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Pistols/gzipper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/gzipper.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -13,7 +13,7 @@
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Clothing
-    sprite: _Impstation/Objects/Weapons/Guns/Pistols/gzipper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/gzipper.rsi
     quickEquip: false
     slots:
       - suitStorage

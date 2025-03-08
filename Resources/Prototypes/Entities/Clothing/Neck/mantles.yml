@@ -8,6 +8,8 @@
     sprite: Clothing/Neck/mantles/capmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/capmantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -19,6 +21,8 @@
     sprite: Clothing/Neck/mantles/cemantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cemantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -30,6 +34,8 @@
     sprite: Clothing/Neck/mantles/cmomantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cmomantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -41,6 +47,8 @@
     sprite: Clothing/Neck/mantles/hopmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hopmantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -52,6 +60,8 @@
     sprite: Clothing/Neck/mantles/hosmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hosmantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -63,6 +73,8 @@
     sprite: Clothing/Neck/mantles/rdmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/rdmantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -74,6 +86,8 @@
     sprite: Clothing/Neck/mantles/qmmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/qmmantle.rsi
+  - type: StealTarget # imp
+    stealGroup: HeadCloak
 
 - type: entity
   parent: ClothingNeckBase
@@ -84,23 +98,4 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/mantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/mantle.rsi 
-
-- type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckMantleWeb
-  name: web mantle
-  description: A soft silk mantle, made with similar weaving to the web winter coat. Gets dirty way too quickly.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/mantles/webmantle.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/mantles/webmantle.rsi
-  - type: Construction
-    graph: WebObjects
-    node: mantle
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialWebSilk1
-      amount: 6
+    sprite: Clothing/Neck/mantles/mantle.rsi

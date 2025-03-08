@@ -66,7 +66,36 @@ ghost-role-information-apid-chef-description = A Beefolk chef, called in as back
 ghost-role-information-apid-courier-name = Apid Courier
 ghost-role-information-apid-courier-description = A Beefolk courier, called in as backup to help a crew in need.
 
+ghost-role-information-apid-scientist-name = Apid Scientist
+ghost-role-information-apid-scientist-description = A Beefolk scientist, called in as backup to help a crew in need.
+
+ghost-role-information-apid-janitor-name = Apid Janitor
+ghost-role-information-apid-janitor-description = A Beefolk janitor, called in as backup to help a crew in need.
+
+ghost-role-information-apid-adminassistant-name = Apid Administrative Assistant
+ghost-role-information-apid-adminassistant-description = A Beefolk administrative assistant, called in as backup to help a crew in need.
+
+ghost-role-information-apid-chaplain-name = Apid Chaplain
+ghost-role-information-apid-chaplain-description = A Beefolk chaplain, called in as backup to help a crew in need.
+
+ghost-role-information-apid-salvager-name = Apid Salvage Specialist
+ghost-role-information-apid-salvager-description = A Beefolk salvage specialist, called in as backup to help a crew in need.
+
 ghost-role-information-apid-name = Apid
 ghost-role-information-apid-description = A Beefolk worker, called in as backup to help a crew in need.
 
 ghost-role-information-tutorial-rules = You are a [color=#39f5ab][bold]special Tutorial pAI[/bold][/color]. This pAI is only available to those either new to the game generally, or to those in trainee roles. By taking this ghost role, you will be expected to know how your master's role works, be on hand to help them learn, and generally be welcoming and helpful. [color=red][bold]Failure to do so may result in administrator action.[/bold][/color]
+
+ghost-role-information-homunculus-name = homunculus
+ghost-role-information-homunculus-description = A homunculi created by someone who does not appreciate life. It lives to serve.
+
+ghost-role-information-onestar-mecha-name = OneStar Mecha
+ghost-role-information-onestar-mecha-description = You are this station's end.
+
+ghost-role-information-drone-name = Maintenance Drone
+ghost-role-information-drone-description = Maintain the station. Ignore other beings except drones.
+ghost-role-information-drone-rules = You are bound by these laws both in-game and out-of-character:
+
+     1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
+     2. Your goal is to maintain or improve the station to the best of your ability.
+     3. You may not take any action which causes damage or harm to the station or its inhabitants.

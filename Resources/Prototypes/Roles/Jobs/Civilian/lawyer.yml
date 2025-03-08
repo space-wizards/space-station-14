@@ -8,7 +8,7 @@
       time: 36000 # 10 hrs
   startingGear: LawyerGear
   icon: "JobIconLawyer"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-hd
   access:
   - Service
   - Lawyer
@@ -19,7 +19,7 @@
   id: LawyerGear
   equipment:
     id: LawyerPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer # imp edit
   inhand:
     - BriefcaseBrownFilled
   storage:

@@ -502,7 +502,7 @@
       name: job-name-bartender
       requirements: # imp
         - !type:DepartmentTimeRequirement
-          department: Civilian
+          department: Service
           time: 1800
     - type: Loadout
       prototypes: [ VisitorBartender, VisitorBartenderAlt, VisitorBartenderAltA, VisitorBartenderAltB ] # imp
@@ -547,7 +547,7 @@
       name: job-name-chef
       requirements: # imp
         - !type:DepartmentTimeRequirement
-          department: Civilian
+          department: Service
           time: 1800
     - type: Loadout
       prototypes: [ VisitorChef, VisitorChefAlt ]

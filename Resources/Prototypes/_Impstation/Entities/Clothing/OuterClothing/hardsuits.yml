@@ -1,6 +1,6 @@
 #Janitor Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCivilianContraband]
+  parent: [ClothingOuterHardsuitBase, BaseServiceContraband]
   id: ClothingOuterHardsuitJanitor
   name: janitorial hardsuit
   description: For your spill-cleaning, light-changing, and trash-picking needs in the vacuum of space!

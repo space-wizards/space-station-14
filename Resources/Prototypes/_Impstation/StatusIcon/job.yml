@@ -8,6 +8,14 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconHospitalityDirector
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: HospitalityDirector
+  jobName: job-name-courier
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconDeathsquad
   icon:
     sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi

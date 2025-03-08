@@ -1,0 +1,38 @@
+- type: entity
+  id: Decalamp
+  description: Uk'tck'ta. Helps you see in the dark.
+  suffix: Always Powered
+  name: emergency light
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Transform
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _Impstation/Structures/decalight.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: base
+      - state: glow
+        shader: unshaded
+  - type: PointLight
+    color: "#ff0043"
+    radius: 1.6
+    offset: "0.4, -0.4"
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+  placement:
+    mode: SnapgridCenter

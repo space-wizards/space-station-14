@@ -48,28 +48,34 @@ public sealed partial class IdCardConsoleComponent : Component
         "Atmospherics",
         "Bar",
         "Brig",
-        "Detective",
         "Captain",
         "Cargo",
         "Chapel",
         "Chemistry",
         "ChiefEngineer",
         "ChiefMedicalOfficer",
+        "Clown", // Imp
         "Command",
         "Courier", // Imp
         "Cryogenics",
+        "Detective",
         "Engineering",
         "External",
         "HeadOfPersonnel",
         "HeadOfSecurity",
+        "HospitalityDirector", // Imp
         "Hydroponics",
         "Janitor",
         "Kitchen",
         "Lawyer",
+        "Librarian", // Imp
         "Logistics", //Imp
         "Maintenance",
         "Medical",
+        "Mime", // Imp
+        "Musician", // Imp
         "Quartermaster",
+        "Reporter", // Imp
         "Research",
         "ResearchDirector",
         "Salvage",

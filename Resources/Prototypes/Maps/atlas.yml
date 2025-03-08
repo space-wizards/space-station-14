@@ -14,15 +14,16 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
         - type: StationJobs
-          availableJobs: # total of 43 jobs roundstart, max of 57 inc. latejoins and trainees.
-            # command - 8
+          availableJobs: # total of 44 jobs roundstart, max of 58 inc. latejoins and trainees.
+            # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            AdministrativeAssistant : [ 1, 1 ] # imp
+            AdministrativeAssistant: [ 1, 1 ] # imp
             ChiefEngineer: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
             # service - 11
             Bartender: [ 1, 1 ]

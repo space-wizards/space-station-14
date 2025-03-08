@@ -16,15 +16,16 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
-          availableJobs: # Total of 45 jobs roundstart, max of 55 inc. latejoins and trainees.
-            # command - 8
+          availableJobs: # Total of 46 jobs roundstart, max of 56 inc. latejoins and trainees.
+            # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            AdministrativeAssistant : [ 1, 1 ] # imp
+            AdministrativeAssistant: [ 1, 1 ] # imp
             ChiefEngineer: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
             # service - 11
             Bartender: [ 1, 1 ]

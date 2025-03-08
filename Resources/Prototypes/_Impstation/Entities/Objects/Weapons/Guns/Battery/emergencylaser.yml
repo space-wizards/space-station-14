@@ -5,13 +5,15 @@
   description: An emergency laser rifle, for use when getting timely clearance isn't an option. Hand this in to security once the coast is clear.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun_two.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun_two.rsi
   - type: StaticPrice
     price: 420
   - type: HitscanBatteryAmmoProvider

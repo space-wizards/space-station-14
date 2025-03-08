@@ -1,0 +1,26 @@
+﻿- type: reaction
+  id: Coffee
+  minTemp: 353 # ~80 deg C
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Water:
+      amount: 3
+    CoffeeGrounds:
+      amount: 1
+  products:
+    Coffee: 4
+
+- type: reaction
+  id: PumpkinSpiceLatte
+  reactants:
+    CafeLatte:
+      amount: 3
+    PumpkinFlesh:
+      amount: 1
+    Sugar:
+      amount: 1
+    Blackpepper:
+      amount: 1
+  products:
+    PumpkinSpiceLatte: 6

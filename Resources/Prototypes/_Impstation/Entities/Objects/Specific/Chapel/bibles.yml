@@ -1,0 +1,68 @@
+- type: entity #thusd beeble. bible without a summon
+  name: beeble
+  description: New Interstellar Verzzzion 2340.
+  parent: BaseItem
+  id: Beeble
+  components:
+  - type: UseDelay
+    delay: 10.0
+  - type: Bible
+    damage:
+      groups:
+        Brute: -15
+        Burn: -15
+    damageOnFail:
+      groups:
+        Brute: 15
+        Airloss: 15
+    damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
+      groups:
+        Burn: 10
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Holy: 10 #imp edit. Get rebalanced lol
+        # Holy: 25 #imp edit. 25 Holy? WE HAVE A NULL ROD FOR THAT.
+        Blunt: 1
+  - type: Prayable
+    bibleUserOnly: true
+  - type: RevealRevenantOnCollide
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Holy
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chapel/beeble.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: _Impstation/Objects/Specific/Chapel/beeble.rsi
+  - type: Clothing
+    slots:
+    - Belt
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-book
+    blacklist:
+      components:
+      - SecretStash 
+      - NukeDisk 
+      tags:
+      - QuantumSpinInverter 
+      - FakeNukeDisk 
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: null # can't exactly un-cut a book
+    hasVerbs: false
+    name: secret-stash-book
+  - type: Tag
+    tags:
+    - Book
+  - type: StealTarget
+    stealGroup: Bible

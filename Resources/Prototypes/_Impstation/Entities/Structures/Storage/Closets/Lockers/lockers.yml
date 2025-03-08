@@ -1,9 +1,9 @@
+# Courier
 - type: entity
   id: LockerCourier
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: courier's locker
   components:
-  - type: Appearance
   - type: Sprite
     sprite: _Impstation/Structures/Storage/couriercloset.rsi
     noRot: true
@@ -29,3 +29,69 @@
     stateDoorClosed: courier_door
   - type: AccessReader
     access: [["Courier"]]
+
+# HD
+- type: entity
+  id: LockerHospitalityDirector
+  parent: LockerBaseSecure
+  name: hospitality director's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/hdcloset.rsi
+    noRot: true
+    layers:
+    - state: hd
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: hd_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: hd
+    stateDoorOpen: hd_open
+    stateDoorClosed: hd_door
+  - type: AccessReader
+    access: [["HospitalityDirector"]]
+
+# Musician
+- type: entity
+  id: LockerMusician
+  parent: LockerBaseSecure
+  name: musician locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/musiciancloset.rsi
+    noRot: true
+    layers:
+    - state: musician
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: musician_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: musician
+    stateDoorOpen: musician_open
+    stateDoorClosed: musician_door
+  - type: AccessReader
+    access: [["Musician"]]
