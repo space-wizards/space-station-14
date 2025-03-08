@@ -74,7 +74,7 @@
 
 - type: entity
   id: ShellShotgun
-  name: shell (.50)
+  name: shell (.50 buckshot)
   parent: BaseShellShotgun
   components:
   - type: Sprite
