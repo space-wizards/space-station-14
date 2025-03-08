@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Box Station's window between the containment room and TEG has been upgraded
-      to plasma.
-    type: Fix
-  - message: Box Station's Engineering storage room air alarm has been properly connected
-      to nearby devices.
-    type: Fix
-  - message: Box Station's Janitorial disposal chute has been replaced with a working
-      one.
-    type: Fix
-  id: 7543
-  time: '2024-10-22T05:39:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32950
 - author: Moomoobeef
   changes:
   - message: Ammo-boxes no longer appear empty when only one bullet is removed.
@@ -3907,3 +3893,10 @@
   id: 8042
   time: '2025-03-08T05:07:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35145
+- author: momochitters
+  changes:
+  - message: Aroace pins, scarves, and cloaks can now be obtained.
+    type: Add
+  id: 8043
+  time: '2025-03-08T15:21:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35718
