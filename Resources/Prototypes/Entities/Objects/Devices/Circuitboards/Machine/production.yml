@@ -33,6 +33,8 @@
   name: protolathe machine board
   description: A machine printed circuit board for a protolathe.
   components:
+  - type: Sprite
+    state: science
   - type: MachineBoard
     prototype: Protolathe
     stackRequirements:
@@ -49,6 +51,8 @@
   name: hyper convection protolathe machine board
   description: A machine printed circuit board for a hyper convection protolathe.
   components:
+  - type: Sprite
+    state: science
   - type: MachineBoard
     prototype: ProtolatheHyperConvection
     stackRequirements:
@@ -67,6 +71,8 @@
   name: biocube fabricator machine board
   description: A machine printed circuit board for a biocube fabricator.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: Biofabricator
     stackRequirements:
@@ -573,6 +579,8 @@
   name: biomass reclaimer machine board
   description: A machine printed circuit board for a biomass reclaimer.
   components:
+  - type: Sprite
+    state: medical
   - type: MachineBoard
     prototype: BiomassReclaimer
     stackRequirements:
@@ -792,6 +800,8 @@
   id: DawInstrumentMachineCircuitboard
   name: digital audio workstation machine board
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: DawInstrument
     stackRequirements:
@@ -845,6 +855,8 @@
   parent: BaseMachineCircuitboard
   name: thruster machine board
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: Thruster
     stackRequirements:
@@ -856,6 +868,8 @@
   parent: BaseMachineCircuitboard
   name: gyroscope machine board
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: Gyroscope
     stackRequirements:
@@ -925,6 +939,8 @@
   name: hotplate machine board
   description: A machine printed circuit board for a hotplate.
   components:
+  - type: Sprite
+    state: medical
   - type: MachineBoard
     prototype: ChemistryHotplate
     stackRequirements:
@@ -937,6 +953,8 @@
   name: electric grill machine board
   description: A machine printed circuit board for an electric grill.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: KitchenElectricGrill
     stackRequirements:
@@ -1106,6 +1124,8 @@
   name: surveillance camera router board
   description: A machine printed circuit board for a surveillance camera router.
   components:
+  - type: Sprite
+    state: security
   - type: MachineBoard
     prototype: SurveillanceCameraRouterConstructed
     stackRequirements:
@@ -1117,6 +1137,8 @@
   name: surveillance camera wireless router board
   description: A machine printed circuit board for a surveillance camera wireless router.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: SurveillanceCameraWirelessRouterConstructed
     stackRequirements:
@@ -1129,6 +1151,8 @@
   name: movable wireless camera board
   description: A machine printed circuit board for a movable wireless camera.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: SurveillanceWirelessCameraMovableConstructed
     stackRequirements:
@@ -1141,6 +1165,8 @@
   name: wireless camera board
   description: A machine printed circuit board for a wireless camera.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: SurveillanceWirelessCameraAnchoredConstructed
     stackRequirements:
@@ -1153,6 +1179,8 @@
   name: gas recycler board
   description: A printed circuit board for a gas recycler.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasRecycler
     stackRequirements:
@@ -1229,6 +1257,8 @@
   name: telecommunication server machine board
   description: A machine printed circuit board for an telecommunication server.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: TelecomServer
     stackRequirements:
@@ -1257,6 +1287,8 @@
   name: mini gravity generator machine board
   description: A machine printed circuit board for a mini gravity generator.
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: GravityGeneratorMini
     stackRequirements:
@@ -1300,6 +1332,8 @@
   name: jukebox machine board
   description: A machine printed circuit board for a jukebox.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: Jukebox
     stackRequirements:
