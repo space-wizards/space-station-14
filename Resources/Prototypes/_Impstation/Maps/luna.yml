@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Luna Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: '06'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Impstation/Shuttles/lunaevac.yml
         - type: StationCargoShuttle
