@@ -39,60 +39,61 @@ public sealed class AlarmAutoLinkSystem : EntitySystem
         // We indent one tile in the direction of rotation of the entity
         var seed = (indices + xform.LocalRotation.ToWorldVec()).Floored();
 
-        var queue = new Queue<TileRef>();
-        var visited = new HashSet<Vector2i>();
+        var queue = new Queue<(TileRef, AtmosDirection)>();
+        var visited = new HashSet<(Vector2i, AtmosDirection)>();
 
-        queue.Enqueue(_mapSystem.GetTileRef(grid, seed));
+        queue.Enqueue((_mapSystem.GetTileRef(grid, seed), xform.LocalRotation.ToAtmosDirectionCardinal()));
 
-        var directions = new[]
+        var directions = new HashSet<(Vector2i, AtmosDirection)>
         {
-            Vector2i.Up, Vector2i.Down,
-            Vector2i.Left, Vector2i.Right,
+            (Vector2i.Up, AtmosDirection.North),
+            (Vector2i.Down, AtmosDirection.South),
+            (Vector2i.Left, AtmosDirection.West),
+            (Vector2i.Right, AtmosDirection.East),
         };
 
         // Using flood-fill to iterate room tiles
         while (queue.TryDequeue(out var node))
         {
-            if (!visited.Add(node.GridIndices))
+            var (tileRef, direction) = node;
+            if (!visited.Add((tileRef.GridIndices, direction)))
                 continue;
 
-            var isBorder = false;
-            var worldCoord = _mapSystem.LocalToWorld(grid.Owner, grid.Comp, node.GridIndices);
+            var blockedDirections = AtmosDirection.Invalid;
+            var worldCoord = _mapSystem.LocalToWorld(grid.Owner, grid.Comp, tileRef.GridIndices);
             var worldAABB = new Box2(worldCoord, worldCoord + grid.Comp.TileSizeVector).Enlarged(-0.1f);
-            var entities = _entityLookupSystem.GetEntitiesIntersecting(gridUid, worldAABB);
+            var entities = _entityLookupSystem.GetEntitiesIntersecting(gridUid, worldAABB, LookupFlags.StaticSundries);
 
             foreach (var entity in entities)
             {
+                // Using AirtightComponent to detect room borders
+                if (TryComp(entity, out AirtightComponent? airtight)
+                    && (airtight.AirBlocked || TryComp(entity, out FirelockComponent? _)))
+                {
+                    blockedDirections = blockedDirections.WithFlag(airtight.AirBlockedDirection);
+                }
+
                 if (MetaData(entity).EntityPrototype is not { } proto)
                     continue;
-
-                // Using AirtightComponent to detect room borders
-                if (!isBorder && TryComp(entity, out AirtightComponent? airtight))
-                {
-                    if (airtight.AirBlocked)
-                    {
-                        if (((AtmosDirection) airtight.CurrentAirBlockedDirection).HasFlag(AtmosDirection.All))
-                            isBorder = true;
-                    }
-                    // Firelocks are always considered as room borders
-                    else if (TryComp(entity, out FirelockComponent? _))
-                    {
-                        isBorder = true;
-                    }
-                }
 
                 if (ent.Comp.AutoLinkPrototypes.Contains(proto))
                     _deviceListSystem.UpdateDeviceList(ent, new List<EntityUid> { entity }, true, list);
             }
 
-            if (isBorder)
+            // Skip if the direction from which the check is performed is blocked
+            if (blockedDirections.HasFlag(AtmosDirection.All)
+                || blockedDirections.HasFlag(direction.GetOpposite()))
                 continue;
 
-            foreach (var offset in directions)
+            // Iterate 4 neighboring tiles if they are not blocked
+            foreach (var (offset, offsetDir) in directions)
             {
-                var nextTile = _mapSystem.GetTileRef(grid, node.GridIndices + offset);
+                if (blockedDirections.HasFlag(offsetDir))
+                    continue;
+
+                var nextTile = _mapSystem.GetTileRef(grid, tileRef.GridIndices + offset);
                 if (!nextTile.IsSpace())
-                    queue.Enqueue(nextTile);
+                    queue.Enqueue((nextTile, offsetDir));
             }
         }
     }
