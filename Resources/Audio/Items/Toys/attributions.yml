@@ -58,6 +58,11 @@
   copyright: "Created by BlackMajor (github) for ss14, muffled_weh.ogg modified from weh.ogg by Slorkito (ss14 discord)"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/weh.ogg"
 
+- files: ["hew.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from weh.ogg by ArtisticRoomba"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/weh.ogg"
+
 - files: ["skub.ogg", "skub3.ogg"]
   license: "CC0-1.0"
   copyright: "Created by BlackMajor (github) for ss14"
