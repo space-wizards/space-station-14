@@ -36,5 +36,5 @@ public sealed partial class NPCActionsData
     /// If true, will not give the entity a new action but will instead try to find a matching action the entity can use. If false, the entity will get a new usable action.
     /// Currently doesn't have logic behind it :^)
     /// </summary>
-    [DataField] public bool Reference;
+    [DataField] public bool Ref;
 }

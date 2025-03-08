@@ -1,7 +1,6 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
-using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -19,8 +18,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NPCUseActionOnTargetComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<NPCUseActionOnTargetComponent, ActionAddedEvent>(OnActionAdded);
-        SubscribeLocalEvent<NPCUseActionOnTargetComponent, ContainerIsInsertingAttemptEvent>(OnContainerInserted);
+        SubscribeLocalEvent<NPCUseActionOnTargetComponent, AddedActionEvent>(OnAddedAction);
     }
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
@@ -28,28 +26,23 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         //EnsureComp<ActionsContainerComponent>(ent.Owner, out var comp);
         foreach (var action in ent.Comp.Actions)
         {
-            if (action.Reference)
-                //TODO: This should have logic to find the action or create a listener for if the action gets added but currently does nothing
-                action.ActionEnt = _actions.AddAction(ent, action.ActionId);
-            else
+            if (!action.Ref)
                 action.ActionEnt = _actions.AddAction(ent, action.ActionId);
         }
     }
 
-    private void OnActionAdded(EntityUid uid, NPCUseActionOnTargetComponent component, ActionAddedEvent args)
+    private void OnAddedAction(EntityUid uid, NPCUseActionOnTargetComponent component, AddedActionEvent args)
     {
+        var protoId = MetaData(args.Action).EntityPrototype;
         Log.Debug($"NPC: {ToPrettyString(uid)} has added an action {ToPrettyString(args.Action)}.");
-        // This only works on an entity with the component, if that entity picks up an item it doesn't detect it
+        foreach (var action in component.Actions)
+        {
+            if (action.Ref && protoId?.ID == action.ActionId.Id)
+                action.ActionEnt = args.Action;
+        }
     }
 
-    private void OnContainerInserted(EntityUid uid, NPCUseActionOnTargetComponent component, ContainerIsInsertingAttemptEvent args)
-    {
-        Log.Debug($"Weh");
-        // Slart said this might be what we want, although we'll need to filter to only care about actions
-        // Didn't work sad
-    }
-
-    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, Components.NPCActionsData action, EntityUid target)
+    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, NPCActionsData action, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
             return;

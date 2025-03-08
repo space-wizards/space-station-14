@@ -194,3 +194,16 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// </summary>
     public bool Toggle;
 }
+
+[ByRefEvent]
+public readonly struct AddedActionEvent
+{
+    public readonly EntityUid Action;
+    public readonly BaseActionComponent Component;
+
+    public AddedActionEvent(EntityUid action, BaseActionComponent component)
+    {
+        Action = action;
+        Component = component;
+    }
+}
