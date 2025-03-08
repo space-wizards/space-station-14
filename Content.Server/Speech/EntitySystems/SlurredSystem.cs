@@ -54,7 +54,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
         args.Message = Accentuate(args.Message, scale);
     }
 
-    private string Accentuate(string message, float scale)
+    public string Accentuate(string message, float scale = 0.3f)
     {
         var sb = new StringBuilder();
 
@@ -107,10 +107,5 @@ public sealed class SlurredSystem : SharedSlurredSystem
         }
 
         return sb.ToString();
-    }
-
-    public string Accentuate(string message)
-    {
-        return Accentuate(message, 0.3f);
     }
 }

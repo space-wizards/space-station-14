@@ -25,7 +25,12 @@ public sealed class MobsterAccentSystem : EntitySystem
         SubscribeLocalEvent<MobsterAccentComponent, AccentGetEvent>(OnAccentGet);
     }
 
-    public string Accentuate(string message, MobsterAccentComponent component)
+    private string Accentuate(string message, MobsterAccentComponent component)
+    {
+        return Accentuate(message, component.IsBoss);
+    }
+
+    public string Accentuate(string message, bool isBoss = true)
     {
         // Order:
         // Do text manipulations first
@@ -72,7 +77,7 @@ public sealed class MobsterAccentSystem : EntitySystem
             //So the suffix can be allcapped
             var lastWordAllCaps = !RegexLastWord.Match(msg).Value.Any(char.IsLower);
             var suffix = "";
-            if (component.IsBoss)
+            if (isBoss)
             {
                 var pick = _random.Next(1, 4);
                 suffix = Loc.GetString($"accent-mobster-suffix-boss-{pick}");
@@ -90,10 +95,6 @@ public sealed class MobsterAccentSystem : EntitySystem
         return msg;
     }
 
-    public string Accentuate(string message)
-    {
-        return Accentuate(message, new MobsterAccentComponent { IsBoss = true });
-    }
 
     private void OnAccentGet(EntityUid uid, MobsterAccentComponent component, AccentGetEvent args)
     {
