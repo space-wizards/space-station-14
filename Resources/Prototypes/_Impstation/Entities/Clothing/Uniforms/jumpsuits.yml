@@ -279,7 +279,7 @@
   parent: [ClothingUniformBase]
   id: ClothingUniformPositivityForce
   name: positivity force jumpsuit
-  description: An outfit that signals to the world you're like the Deathsquads but for being nice. 
+  description: An outfit that signals to the world you're like the death squads but for being nice. 
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/positivityforce.rsi

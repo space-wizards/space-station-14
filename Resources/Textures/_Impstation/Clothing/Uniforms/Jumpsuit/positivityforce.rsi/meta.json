@@ -25,6 +25,10 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-vox",
+      "directions": 4
     }
   ]
 }
