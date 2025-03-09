@@ -25,14 +25,23 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
     }
 
-    private void OnAccent(EntityUid uid, DamagedSiliconAccentComponent component, ref AccentGetEvent args)
+    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent,  ref AccentGetEvent args)
     {
-        TryComp<DamageableComponent>(uid, out var damageable);
-        var damage = damageable?.TotalDamage ?? 0;
+        var uid = ent.Owner;
 
-        _powerCell.TryGetBatteryFromSlot(uid, out var battery);
-        var currentCharge = battery?.CurrentCharge ?? 0.0f;
-        var maxCharge = battery?.MaxCharge ?? 1.0f;
+        FixedPoint2 damage = 0.0;
+        if (TryComp<DamageableComponent>(uid, out var damageable))
+        {
+            damage = damageable.TotalDamage;
+        }
+
+        var currentCharge = 0.0f;
+        var maxCharge = 1.0f;
+        if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
+        {
+            currentCharge = battery.CurrentCharge;
+            maxCharge = battery.MaxCharge;
+        }
 
         // Charge level from 0 to 1
         var currentChargeLevel = Math.Clamp(currentCharge / maxCharge, 0.0f, 1.0f);
