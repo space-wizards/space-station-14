@@ -1,0 +1,125 @@
+﻿- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
+
+- type: startingGear
+  id: MobWaWaGear
+  equipment:
+    head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
+    id: PunPunIDCard # Wa doesn't get a PDA. Go bug the HOP.
+
+- type: startingGear
+  id: ScurretHoPGear
+  equipment:
+    head: ClothingHeadHatHopcap
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretCMOGear
+  equipment:
+    head: ClothingHeadHatBeretCmo
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretFloppaGear
+  equipment:
+    head: ClothingHeadHatStrawHat
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretRDGear
+  equipment:
+    head: ClothingHeadHatBeretRND
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretFishGear
+  equipment:
+    head: ClothingHeadFishCap
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretWardenGear
+  equipment:
+    head: ClothingHeadHatBeretSecurity
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretLibrarianGear
+  equipment:
+    head: ClothingHeadHatWizardFake # Getting prepped for DnD night
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretChemGear
+  equipment:
+    head: ClothingHeadHatBeretSeniorPhysician
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretMorgueGear
+  equipment:
+    head: ClothingHeadHatCowboyBlack
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretQMGear
+  equipment:
+    head: ClothingHeadHatBeretQM
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretChefGear
+  equipment:
+    head: ClothingHeadHatChef
+    id: ScurretPDA
+  inhand:
+    - KitchenKnife # needs all the help he can
+
+- type: startingGear
+  id: ScurretCapGear
+  equipment:
+    head: ClothingHeadHatCapcap
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretSpiderGear
+  equipment:
+    head: ClothingHeadHatHoshat
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretBoxerGear
+  equipment:
+    head: ClothingHeadHatCardborg # Boxing protection. Get it?
+    id: ScurretPDA
+  inhand:
+    - ClothingHandsGlovesBoxingRed
+
+- type: startingGear
+  id: ScurretScientistGear
+  equipment:
+    head: ClothingHeadHatBowlerHat
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretAtmosGear
+  equipment:
+    head: ClothingHeadHatBeretEngineering
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretChappieGear
+  equipment:
+    head: ClothingHeadHatSquid
+    id: ScurretPDA
+
+- type: startingGear
+  id: ScurretEvilChappieGear
+  equipment:
+    head: ClothingHeadHatWelding # Summoning an evil spirit wearing a welding mask? What is this, an AGS adventure game?
+    id: ScurretPDA
+  inhand:
+    - KitchenKnife # See above.
