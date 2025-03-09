@@ -1046,6 +1046,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams # Imp addition
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
