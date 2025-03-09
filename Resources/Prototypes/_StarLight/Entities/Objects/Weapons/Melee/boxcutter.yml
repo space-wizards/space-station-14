@@ -1,0 +1,43 @@
+- type: entity
+  name: boxcutter
+  parent: [CombatKnife, BaseSecurityCargoContraband]
+  id: WeaponMeleeBoxcutter
+  description: Always accidentally cuts whatever is inside the box.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
+    state: boxcutter
+  - type: ItemSwitch
+    state: sheathed
+    states:
+      sheathed: !type:ItemSwitchState
+        verb: unsheath
+        sprite:
+          sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
+          state: boxcutter
+        components:
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          attackRate: 1
+          damage:
+            types:
+              Blunt: 1
+
+      unsheathed: !type:ItemSwitchState
+        verb: sheathe
+        sprite:
+          sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
+          state: icon
+        components:
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          attackRate: 1
+          damage:
+            types:
+              Slash: 8
+  - type: Tool
+    qualities:
+      - Screwing
+    speedModifier: 0.7
+    useSound:
+      collection: Screwdriver
