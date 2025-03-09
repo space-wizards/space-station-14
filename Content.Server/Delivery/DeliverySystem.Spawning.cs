@@ -59,9 +59,14 @@ public sealed partial class DeliverySystem
         if (spawners.Count == 0)
             return;
 
+        // Skip if there's nobody in crew manifest
+        if (records.Records.Keys.Count == 0)
+            return;
+
         // We take the amount of mail calculated based on player amount or the minimum, whichever is higher.
         // We don't want stations with less than the player ratio to not get mail at all
-        var deliveryCount = Math.Max(records.Records.Keys.Count / ent.Comp.PlayerToDeliveryRatio, ent.Comp.MinimumDeliverySpawn);
+        var initialDeliveryCount = (int)Math.Ceiling(records.Records.Keys.Count / ent.Comp.PlayerToDeliveryRatio);
+        var deliveryCount = Math.Max(initialDeliveryCount, ent.Comp.MinimumDeliverySpawn);
 
         if (!ent.Comp.DistributeRandomly)
         {
