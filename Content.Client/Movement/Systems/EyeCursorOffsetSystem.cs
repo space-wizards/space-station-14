@@ -10,7 +10,7 @@ using Robust.Client.Player;
 
 namespace Content.Client.Movement.Systems;
 
-public partial class EyeCursorOffsetSystem : EntitySystem
+public sealed partial class EyeCursorOffsetSystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;

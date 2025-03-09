@@ -493,9 +493,6 @@
     state: box
     layers:
     - state: box
-      map: ["closeLayer"]
-    - state: box-open
-      map: ["openLayer"]
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
