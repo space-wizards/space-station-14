@@ -283,7 +283,7 @@
     - type: ContainerFill
       containers:
         key_slots:
-          - EncryptionKeyFreelance
+        - EncryptionKeyFreelance
     - type: Sprite
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing

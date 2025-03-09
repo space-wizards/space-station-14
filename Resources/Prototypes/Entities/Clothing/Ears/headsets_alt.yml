@@ -167,7 +167,7 @@
     - type: ContainerFill
       containers:
         key_slots:
-          - EncryptionKeyWizard
+        - EncryptionKeyWizard
     - type: Sprite
       sprite: Clothing/Ears/Headsets/wizard.rsi
     - type: Clothing
