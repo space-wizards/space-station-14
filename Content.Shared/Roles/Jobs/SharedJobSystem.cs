@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -16,8 +18,12 @@ public abstract class SharedJobSystem : EntitySystem
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
+
+    private ISawmill _sawmill = default!;
+
 
     public override void Initialize()
     {
@@ -106,19 +112,38 @@ public abstract class SharedJobSystem : EntitySystem
     }
 
     //imp addition
-    public bool MindsHaveSameJobDept(EntityUid mindID1, EntityUid mindID2)
+    public bool MindsHaveSameJobDept(EntityUid entID1, EntityUid entID2)
     {
-        MindTryGetJob(mindID1, out var job1);
-        MindTryGetJob(mindID2, out var job2);
+
+        if (!_mindSystem.TryGetMind(entID1, out var mindId1, out var mind1))
+        {
+            Log.Debug($"trygetmind for entid 1 {ToPrettyString(entID1)}  - failed, no Mind found");
+            return false;
+        }
+        if (!_mindSystem.TryGetMind(entID2, out var mindId2, out var mind2))
+        {
+            Log.Debug($"trygetmind for entid 2 {ToPrettyString(entID1)}  - failed, no Mind found");
+            return false;
+        }
+        MindTryGetJob(mindId1, out var job1);
+        MindTryGetJob(mindId2, out var job2);
+
+
         return JobsHaveSameDept(job1, job2);
     }
 
     public bool JobsHaveSameDept(JobPrototype? job1, JobPrototype? job2)
     {
         if (job1 == null || job2 == null) return false;
+
+        //_sawmill.Debug("checking job " + job1.Name);
+        //_sawmill.Debug("checking job " + job2.Name);
         TryGetPrimaryDepartment(job1.ID, out var dept1);
         TryGetPrimaryDepartment(job2.ID, out var dept2);
         if (dept1 == null || dept2 == null) return false;
+        //_sawmill.Debug("got 1 dept " + dept1.ID);
+        //_sawmill.Debug("got 2 dept " + dept2.ID);
+
         if (dept1.Equals(dept2))
         {
             return true;
@@ -128,13 +153,23 @@ public abstract class SharedJobSystem : EntitySystem
 
     }
 
-    public bool MindHasJobDept(EntityUid mindID, JobPrototype? givenJob)
+    public bool MindHasJobDept(EntityUid entID, JobPrototype? givenJob)
     {
-        MindTryGetJob(mindID, out var mindJob);
+        if (!_mindSystem.TryGetMind(entID, out var mindId, out var mind1))
+        {
+            Log.Debug($"trygetmind for entid{ToPrettyString(entID)}  - failed, no Mind found");
+            return false;
+        }
+
+        if (!MindTryGetJob(mindId, out var mindJob)) return false;
         if (mindJob == null || givenJob == null) return false;
+        //_sawmill.Debug("checking mind job " + mindJob.Name);
+        //_sawmill.Debug("checking given job " + givenJob.Name);
         TryGetPrimaryDepartment(mindJob.ID, out var dept1);
         TryGetPrimaryDepartment(givenJob.ID, out var dept2);
         if (dept1 == null || dept2 == null) return false;
+        //_sawmill.Debug("got mind dept " + dept1.ID);
+        //.Debug("got given dept " + dept2.ID);
         if (dept1.Equals(dept2))
         {
             return true;
