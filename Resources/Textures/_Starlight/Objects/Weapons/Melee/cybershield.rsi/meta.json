@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original Arm taken from TGStation, shield and everything else (including arm modifcations) done by Killer Tamashi.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cybershield",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "cybershieldoff",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

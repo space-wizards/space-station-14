@@ -230,3 +230,50 @@
         - CrowbarCyber
         - WirecutterCyber
         - WelderCyber
+
+#Bulwark 
+- type: entity
+  id: LeftArmCyberBulwark
+  name: "Left Bulwark Arm"
+  parent: [PartCyber, BaseLeftArm, BaseSecurityContraband]
+  components:
+    - type: BaseLayerId
+      layer: CyberLArmBulwark
+    - type: BaseLayerIdToggled
+      layer: CyberLArmBulwarkToggled
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_bulwark_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_bulwark_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandLeft
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - EnergyShieldCyber
+        - CyberEnergyChainsaw
+
+- type: entity
+  id: RightArmCyberBulwark
+  name: "Right Bulwark Arm"
+  parent: [PartCyber, BaseRightArm, BaseSecurityContraband]
+  components:
+    - type: BaseLayerId
+      layer: CyberRArmBulwark
+    - type: BaseLayerIdToggled
+      layer: CyberRArmBulwarkToggled
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_bulwark_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_bulwark_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandRight
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - EnergyShieldCyber
+        - CyberEnergyChainsaw

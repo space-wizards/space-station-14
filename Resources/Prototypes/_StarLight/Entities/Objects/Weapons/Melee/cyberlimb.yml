@@ -1,0 +1,53 @@
+- type: entity
+  name: Energy Chainsaw
+  parent: [BaseMeleeWeaponEnergy, BaseSecurityContraband]
+  id: CyberEnergyChainsaw
+  description: Slam this into the individual you wish to destroy, mentally and physically.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/cyberchainsaw.rsi
+    layers:
+    - state: cyberchainsawoff
+    - state: cyberchainsaw
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: ItemToggleMeleeWeapon   
+    activatedSoundOnHit:
+     path: /Audio/Weapons/chainsaw.ogg
+     params:
+       variation: 0.250
+    activatedSoundOnHitNoDamage:
+     path: /Audio/Weapons/chainsaw.ogg
+     params:
+       variation: 0.250
+       volume: -10
+    activatedSoundOnSwing:
+     path: /Audio/Weapons/eblademiss.ogg
+     params:
+       variation: 0.125   
+    activatedDamage:
+      types:
+        Slash: 4
+        Heat: 4
+        Structural: 6
+  - type: MeleeWeapon
+    angle: 0
+    wideAnimationRotation: -135
+    attackRate: 4    
+    autoAttack: true 
+    damage:
+      types:
+        Blunt: 0.5
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Melee/cyberchainsaw.rsi
+  - type: Scalpel
+  - type: SurgeryTool
+    successRate: 0.2
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  - type: Reflect
+    reflectProb: 0.1

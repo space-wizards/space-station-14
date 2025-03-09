@@ -415,7 +415,7 @@
     - StarlightSecurityAmmoDynamic
     - StarlightSecurityWeapons
     - SecurityDisablers
-
+    - SecurityCyberLimbs
     - StarlightSecurityMechsWeapons
   - type: MaterialStorage
     whitelist:

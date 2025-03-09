@@ -111,3 +111,36 @@
   baseSprite:
     sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
     state: r_steel_arm_TOOLS
+
+#Security Red
+- type: humanoidBaseSprite
+  id: CyberLArmBulwark
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_bulwark_arm
+
+- type: humanoidBaseSprite
+  id: CyberLArmBulwarkToggled
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_bulwark_arm_TOOLS
+
+- type: humanoidBaseSprite
+  id: CyberRArmBulwark
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_bulwark_arm
+
+- type: humanoidBaseSprite
+  id: CyberRArmBulwarkToggled
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_bulwark_arm_TOOLS
