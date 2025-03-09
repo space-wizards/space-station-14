@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Objectives.Components;
@@ -5,7 +6,7 @@ namespace Content.Shared.Objectives.Components;
 /// <summary>
 /// Allows an object to become the target of a steal objective
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class StealTargetComponent : Component
 {
     /// <summary>
