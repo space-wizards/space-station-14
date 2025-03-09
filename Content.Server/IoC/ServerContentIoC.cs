@@ -5,6 +5,7 @@ using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.V2.Repository;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.Discord;
@@ -27,9 +28,11 @@ using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
+using Content.Shared.Chat.ContentMarkupTags;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Robust.Shared.Utility;
 
 namespace Content.Server.IoC
 {
@@ -38,6 +41,7 @@ namespace Content.Server.IoC
         public static void Register()
         {
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<IChatRepository, ChatRepository>();
             IoCManager.Register<ISharedChatManager, ChatManager>();
             IoCManager.Register<IChatSanitizationManager, ChatSanitizationManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
@@ -74,7 +78,12 @@ namespace Content.Server.IoC
             IoCManager.Register<PlayerRateLimitManager>();
             IoCManager.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             IoCManager.Register<MappingManager>();
-            IoCManager.Register<SharedContentMarkupTagManagerBase, ContentMarkupTagManager>();
+            IoCManager.RegisterInstance<ContentMarkupTagFactory>(
+                new ContentMarkupTagFactory(
+                    new Dictionary<string, Func<MarkupNode, ContentMarkupTagProcessorBase>>()
+                )
+            );
+            IoCManager.Register<SharedContentMarkupTagManager>();
             IoCManager.Register<IWatchlistWebhookManager, WatchlistWebhookManager>();
             IoCManager.Register<ConnectionManager>();
             IoCManager.Register<MultiServerKickManager>();

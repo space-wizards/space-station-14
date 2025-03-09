@@ -4,9 +4,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ContentMarkupTags;
 
-public sealed class SpeechVerbContentTag : ContentMarkupTagBase
+public sealed class SpeechVerbContentTagProcessor : ContentMarkupTagProcessorBase
 {
-    public override string Name => "SpeechVerb";
+    public const string SupportedNodeName = "SpeechVerb";
+
+    public override string Name => SupportedNodeName;
 
     public override IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node, int randomSeed)
     {

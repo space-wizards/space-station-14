@@ -33,26 +33,7 @@ namespace Content.Server.Chat.Managers
             bool logMessage = true
         );
 
-        public void SendChannelMessage(
-            FormattedMessage message,
-            string communicationChannel,
-            ICommonSession? senderSession,
-            EntityUid? senderEntity,
-            List<CommunicationChannelPrototype> usedCommsTypes,
-            HashSet<ICommonSession>? targetSessions = null,
-            ChatMessageContext? channelParameters = null,
-            bool logMessage = true
-        );
-
-        public void SendChannelMessage(
-            FormattedMessage message,
-            CommunicationChannelPrototype communicationChannel,
-            ICommonSession? senderSession,
-            EntityUid? senderEntity,
-            List<CommunicationChannelPrototype> usedCommsChannels,
-            HashSet<ICommonSession>? targetSessions = null,
-            ChatMessageContext? channelParameters = null,
-            bool logMessage = true);
+        public void SendChannelMessage(ChatMessageWrapper chatMessage, bool logMessage = true);
 
         void SendAdminAnnouncement(string message, AdminFlags? requiredFlags = null);
         void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true);
@@ -67,7 +48,7 @@ namespace Content.Server.Chat.Managers
 
         void SendAdminAlert(EntityUid player, string message);
 
-        void ChatFormattedMessageToHashset(FormattedMessage message, CommunicationChannelPrototype channel, IEnumerable<INetChannel> clients, EntityUid? source, bool hideChat, bool recordReplay, NetUserId? author = null);
+        void ChatFormattedMessageToHashset(uint messageId, FormattedMessage message, CommunicationChannelPrototype channel, IEnumerable<INetChannel> clients, EntityUid? source, bool hideChat, bool recordReplay, NetUserId? author = null);
 
         bool MessageCharacterLimit(ICommonSession player, string message);
 

@@ -19,8 +19,7 @@ internal sealed class ChatManager : IChatManager
 
     private ISawmill _sawmill = default!;
 
-    [ValidatePrototypeId<RadioChannelPrototype>]
-    private const string DefaultRadioChannel = "Common";
+    private static readonly ProtoId<RadioChannelPrototype> DefaultRadioChannel = "Common";
 
     public void Initialize()
     {

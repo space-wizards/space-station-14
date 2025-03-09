@@ -12,6 +12,8 @@ namespace Content.Shared.Chat
     [Serializable, NetSerializable]
     public sealed class ChatMessage
     {
+        public uint MessageId { get; }
+
         /// <summary>
         /// Which channel this message is being sent on.
         /// </summary>
@@ -43,8 +45,16 @@ namespace Content.Shared.Chat
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(ProtoId<CommunicationChannelPrototype> communicationChannel, FormattedMessage message, NetEntity source, int? senderKey, bool hideChat = false)
+        public ChatMessage(
+            uint messageId,
+            ProtoId<CommunicationChannelPrototype> communicationChannel,
+            FormattedMessage message,
+            NetEntity source,
+            int? senderKey,
+            bool hideChat = false
+        )
         {
+            MessageId = messageId;
             CommunicationChannel = communicationChannel;
             Message = message;
             SenderEntity = source;

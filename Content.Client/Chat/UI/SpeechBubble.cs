@@ -16,7 +16,6 @@ namespace Content.Client.Chat.UI
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] protected readonly ISharedChatManager _chatManager = default!;
         [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
         private readonly SharedTransformSystem _transformSystem;
 
@@ -266,9 +265,8 @@ namespace Content.Client.Chat.UI
                 StyleClasses = { "bubbleContent" },
             };
 
-            // CHAT-TODO: Replace with FormattedMessage API
-            if (_chatManager.TryGetMessageInsideTag(message.Message, out var bubbleHeaderMsg, BubbleHeaderTagName) &&
-                _chatManager.TryGetMessageInsideTag(message.Message, out var bubbleMessageMsg, BubbleBodyTagName))
+            if (message.Message.TryGetMessageInsideTag(BubbleHeaderTagName, out var bubbleHeaderMsg) &&
+                message.Message.TryGetMessageInsideTag(BubbleBodyTagName, out var bubbleMessageMsg))
             {
                 bubbleHeader.SetMessage(bubbleHeaderMsg);
                 bubbleContent.SetMessage(bubbleMessageMsg);
