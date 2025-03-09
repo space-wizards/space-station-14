@@ -20,34 +20,34 @@
   id: RandomSnackTable
   table: !type:GroupSelector
     children:
+    - id: FoodFrozenCornuto
+    - id: FoodFrozenFreezy
+    - id: FoodFrozenPopsicleBerry
+    - id: FoodFrozenPopsicleJumbo
+    - id: FoodFrozenPopsicleOrange
+    - id: FoodFrozenSandwich
+    - id: FoodFrozenSandwichStrawberry
+    - id: FoodFrozenSnowcone
+    - id: FoodFrozenSnowconeBerry
+    - id: FoodFrozenSnowconeClown
+    - id: FoodFrozenSnowconeFruit
+    - id: FoodFrozenSnowconeMime
+    - id: FoodFrozenSnowconeRainbow
+    - id: FoodFrozenSundae
     - id: FoodSnackBoritos
     - id: FoodSnackCheesie
     - id: FoodSnackChips
     - id: FoodSnackChocolate
-    - id: FoodSnackEnergy
     - id: FoodSnackChocolateBar
+    - id: FoodSnackChowMein
+    - id: FoodSnackCookieFortune
+    - id: FoodSnackDanDanNoodles
+    - id: FoodSnackEnergy
+    - id: FoodSnackMREBrownie
+    - id: FoodSnackNutribrick
+    - id: FoodSnackPistachios
     - id: FoodSnackPopcorn
     - id: FoodSnackRaisins
+    - id: FoodSnackSemki
     - id: FoodSnackSus
     - id: FoodSnackSyndi
-    - id: FoodSnackChowMein
-    - id: FoodSnackDanDanNoodles
-    - id: FoodSnackCookieFortune
-    - id: FoodSnackNutribrick
-    - id: FoodSnackMREBrownie
-    - id: FoodFrozenSandwich
-    - id: FoodFrozenSandwichStrawberry
-    - id: FoodFrozenFreezy
-    - id: FoodFrozenSundae
-    - id: FoodFrozenCornuto
-    - id: FoodFrozenPopsicleOrange
-    - id: FoodFrozenPopsicleBerry
-    - id: FoodFrozenPopsicleJumbo
-    - id: FoodFrozenSnowcone
-    - id: FoodFrozenSnowconeBerry
-    - id: FoodFrozenSnowconeFruit
-    - id: FoodFrozenSnowconeClown
-    - id: FoodFrozenSnowconeMime
-    - id: FoodFrozenSnowconeRainbow
-    - id: FoodSnackPistachios
-    - id: FoodSnackSemki

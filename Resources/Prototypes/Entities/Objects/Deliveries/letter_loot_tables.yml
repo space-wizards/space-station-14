@@ -5,19 +5,18 @@
   id: SpamMailTable
   table: !type:GroupSelector
     children:
-      - id: MailRobustToolsSpam
-      - id: MailNanotrasenSpam
-      - id: MailSyndicateSpam
-      - id: MailScienceSpiderClanSpam
       - id: MailAllAccessSpam
-      - id: MailCentcommRetributionSpam
       - id: MailAlternativeDimensionSpam
-      - id: MailNarsieCultSpam
-      - id: MailRageCageSpam
-      - id: MailVoyageAdvertisementSpam
+      - id: MailCentcommRetributionSpam
       - id: MailEvilLizardSpam
+      - id: MailNanotrasenSpam
+      - id: MailNarsieCultSpam
       - id: MailParentsNeedMoneySpam
-
+      - id: MailRageCageSpam
+      - id: MailRobustToolsSpam
+      - id: MailScienceSpiderClanSpam
+      - id: MailSyndicateSpam
+      - id: MailVoyageAdvertisementSpam
 
 # Letter Bundles
 ## Basically items that should always spawn together, specific to letters
@@ -34,10 +33,10 @@
   id: LetterBundleDarts
   table: !type:AllSelector
     children:
+    - id: Dart
+    - id: DartBlue
     - id: DartPurple
     - id: DartYellow
-    - id: DartBlue
-    - id: Dart
 
 - type: entityTable
   id: LetterBundleLetter
@@ -45,4 +44,3 @@
     children:
     - id: Paper
     - id: Pen
-

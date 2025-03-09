@@ -1,6 +1,6 @@
 - type: entity
-  id: BookshelfFilled
   parent: Bookshelf
+  id: BookshelfFilled
   suffix: random filled
   components:
   - type: EntityTableContainerFill

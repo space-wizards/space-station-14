@@ -1055,10 +1055,10 @@
     - id: PillCopper
     - id: PillDermaline
     - id: PillDexalin
-    - id: PillKelotane
-    - id: PillIron
     - id: PillDylovene
     - id: PillHyronalin
+    - id: PillIron
+    - id: PillKelotane
     - id: PillPotassiumIodide
     - id: PillTricordrazine
     - id: StrangePill

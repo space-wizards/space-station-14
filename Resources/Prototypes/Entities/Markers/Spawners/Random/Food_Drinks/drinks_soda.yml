@@ -30,35 +30,35 @@
   id: RandomCommonSodaTable
   table: !type:GroupSelector
     children:
+    - id: DrinkBeerCan
+    - id: DrinkCafeLatte
+    - id: DrinkChangelingStingCan
     - id: DrinkColaBottleFull
-    - id: DrinkSpaceMountainWindBottleFull
-    - id: DrinkSpaceUpBottleFull
-    - id: DrinkWaterBottleFull
     - id: DrinkColaCan
+    - id: DrinkDrGibbCan
+    - id: DrinkEnergyDrinkCan
+    - id: DrinkFourteenLokoCan
+    - id: DrinkGrapeCan
+    - id: DrinkGreenTea
+    - id: DrinkHotCoco
+    - id: DrinkHotCoffee
     - id: DrinkIcedTeaCan
     - id: DrinkLemonLimeCan
     - id: DrinkLemonLimeCranberryCan
-    - id: DrinkGrapeCan
+    - id: DrinkPwrGameCan
     - id: DrinkRootBeerCan
+    - id: DrinkShamblersJuiceCan
     - id: DrinkSodaWaterCan
+    - id: DrinkSolDryCan
+    - id: DrinkSpaceMountainWindBottleFull
     - id: DrinkSpaceMountainWindCan
+    - id: DrinkSpaceUpBottleFull
     - id: DrinkSpaceUpCan
     - id: DrinkStarkistCan
-    - id: DrinkTonicWaterCan
-    - id: DrinkFourteenLokoCan
-    - id: DrinkChangelingStingCan
-    - id: DrinkDrGibbCan
-    - id: DrinkEnergyDrinkCan
-    - id: DrinkShamblersJuiceCan
-    - id: DrinkSolDryCan
-    - id: DrinkPwrGameCan
-    - id: DrinkHotCoco
-    - id: DrinkHotCoffee
-    - id: DrinkCafeLatte
     - id: DrinkTeacup
-    - id: DrinkGreenTea
+    - id: DrinkTonicWaterCan
+    - id: DrinkWaterBottleFull
     - id: DrinkWaterCup
-    - id: DrinkBeerCan
     - id: DrinkWineCan
 
 - type: entityTable
