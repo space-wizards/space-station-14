@@ -333,12 +333,12 @@
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatHoshat
   name: head of security cap
-  description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
+  description: The robust hat of the Head of Security. For showing the officers who's the real sheriff 
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: _Starlight/Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: _Starlight/Clothing/Head/Hats/hoshat.rsi
   - type: Tag
     tags:
     - ClothMade
