@@ -5,10 +5,12 @@ using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -31,6 +33,7 @@ public abstract class SharedDeliverySystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedToolSystem _tools = default!;
 
     public override void Initialize()
     {
@@ -40,7 +43,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
 
-        SubscribeLocalEvent<TearableDeliveryComponent, GetVerbsEvent<ActivationVerb>>(OnGetTearableVerbs);
+        SubscribeLocalEvent<TearableDeliveryComponent, InteractUsingEvent>(OnTearableInteractUsing);
         SubscribeLocalEvent<TearableDeliveryComponent, TearableDeliveryDoAfterEvent>(OnTornDoAfter);
     }
 
@@ -70,9 +73,9 @@ public abstract class SharedDeliverySystem : EntitySystem
             OpenDelivery(ent, args.User);
     }
 
-    private void OnGetTearableVerbs(Entity<TearableDeliveryComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    private void OnTearableInteractUsing(Entity<TearableDeliveryComponent> ent, ref InteractUsingEvent args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (args.Handled)
             return;
 
         if (!TryComp<DeliveryComponent>(ent, out var delivery))
@@ -81,23 +84,21 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (delivery.IsOpened || !delivery.IsLocked)
             return;
 
+        if (!_tools.HasQuality(args.Used, ent.Comp.ToolQuality))
+            return;
+
         var user = args.User;
 
-        args.Verbs.Add(new ActivationVerb()
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new TearableDeliveryDoAfterEvent(), ent, ent)
         {
-            Act = () =>
-            {
-                var doAfterEventArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new TearableDeliveryDoAfterEvent(), ent, ent)
-                {
-                    NeedHand = true,
-                    BreakOnDamage = true,
-                    BreakOnMove = true
-                };
+            NeedHand = true,
+            BreakOnDamage = true,
+            BreakOnMove = true
+        };
 
-                _doAfter.TryStartDoAfter(doAfterEventArgs);
-            },
-            Text = Loc.GetString(ent.Comp.TearVerb),
-        });
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
+
+        args.Handled = true;
     }
 
     private void OnTornDoAfter(Entity<TearableDeliveryComponent> ent, ref TearableDeliveryDoAfterEvent args)

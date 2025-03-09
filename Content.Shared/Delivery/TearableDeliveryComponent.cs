@@ -29,10 +29,10 @@ public sealed partial class TearableDeliveryComponent : Component
     public LocId? TearMessage = "delivery-tearable-message";
 
     /// <summary>
-    /// The verb used to tear the delivery open.
+    /// The tool quality needed to force open this delivery.
     /// </summary>
     [DataField]
-    public LocId TearVerb = "delivery-tearable-verb";
+    public string ToolQuality = "Slicing";
 
     /// <summary>
     /// Duration of the doAfter to tear the delivery open.
