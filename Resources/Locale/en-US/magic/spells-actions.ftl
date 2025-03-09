@@ -8,3 +8,5 @@ action-speech-spell-summon-magic = RYGOIN FEMA-VERECO
 action-speech-spell-mind-swap = GIN'YU CAPAN!
 action-speech-spell-cluwne = !KNOH
 action-speech-spell-slip = SLEE PARRI!
+action-speech-spell-petrify = ENOTS D'NA KCOR!
+action-speech-spell-animate = H'TAN IE!

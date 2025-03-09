@@ -1,0 +1,24 @@
+- type: entity
+  id: ActionPetrifySpell
+  name: Flesh To Stone
+  description: Poke someone with this magic to find out how statues are made!
+  components:
+  - type: EntityTargetAction
+    useDelay: 60
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/break_stone.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: flesh_to_stone
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: Petrified
+      - type: Animateable
+      speech: action-speech-spell-petrify
+      doSpeech: true

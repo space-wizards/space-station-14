@@ -202,3 +202,18 @@
     polymorphSound: /Audio/Magic/ethereal_enter.ogg
     exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
     duration: 3
+
+# Petrification
+- type: polymorph
+  id: PetrifyStoneStatue
+  configuration:
+    entity: MobHuman
+    forced: true
+    transferDamage: false
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnEat: false
+    allowRepeatedMorphs: false

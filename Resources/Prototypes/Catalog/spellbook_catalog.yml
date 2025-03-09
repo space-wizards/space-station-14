@@ -65,6 +65,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookPetrify
+  name: spellbook-petrify-name
+  description: spellbook-petrify-desc
+  productAction: ActionPetrifySpell
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Defensive
 - type: listing
   id: SpellbookForceWall
