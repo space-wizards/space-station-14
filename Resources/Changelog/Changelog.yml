@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Ammo-boxes no longer appear empty when only one bullet is removed.
-    type: Fix
-  id: 7544
-  time: '2024-10-22T09:00:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32930
 - author: ScarKy0
   changes:
   - message: Added the syringe gun and it's respective ammo. Currently Admeme only.
@@ -3900,3 +3893,10 @@
   id: 8043
   time: '2025-03-08T15:21:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35718
+- author: Emisse
+  changes:
+  - message: Core Station
+    type: Remove
+  id: 8044
+  time: '2025-03-09T08:48:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35740
