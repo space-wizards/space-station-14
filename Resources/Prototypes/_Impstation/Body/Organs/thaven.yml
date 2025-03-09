@@ -33,7 +33,7 @@
   id: OrganThavenEyes
   parent: BaseHumanOrgan
   name: eyes
-  description: "I see you!"
+  description: "The dark sclera have a faint, iridescent coating."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
@@ -114,7 +114,7 @@
   id: OrganThavenHeart
   parent: BaseHumanOrgan
   name: heart
-  description: ""
+  description: "The toxic heart of a thaven. You're wearing gloves, right?"
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
@@ -157,7 +157,7 @@
   id: OrganThavenStomach
   parent: OrganAnimalStomach
   name: stomach
-  description: ""
+  description: "Surprisingly similar to the stomach of a sharkminnow."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
@@ -193,7 +193,7 @@
   id: OrganThavenLiver
   parent: BaseHumanOrgan
   name: liver
-  description: ""
+  description: "It resembles a slab of dragon flesh."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
@@ -235,7 +235,7 @@
   id: OrganThavenKidneys
   parent: BaseHumanOrgan
   name: kidneys
-  description: ""
+  description: "Shiny, coppery veins make these the most ornate kidneys known to modern science."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
