@@ -4,8 +4,8 @@ meta:
   engineVersion: 248.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/09/2025 02:39:24
-  entityCount: 17840
+  time: 03/09/2025 05:40:17
+  entityCount: 17841
 maps:
 - 1
 grids:
@@ -7421,7 +7421,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54834.945
+      secondsUntilStateChange: -54924.203
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -34793,6 +34793,13 @@ entities:
     - type: Transform
       pos: 10.5,22.5
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 17841
+    components:
+    - type: Transform
+      pos: 1.5,69.5
+      parent: 2
 - proto: Carpet
   entities:
   - uid: 15027
@@ -43778,7 +43785,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -302590.5
+      secondsUntilStateChange: -302679.75
       state: Opening
   - uid: 6747
     components:
@@ -43786,7 +43793,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -302591.22
+      secondsUntilStateChange: -302680.47
       state: Opening
   - uid: 6749
     components:
@@ -43794,7 +43801,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -302589.78
+      secondsUntilStateChange: -302679.03
       state: Opening
   - uid: 6750
     components:
@@ -43802,7 +43809,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -302589.16
+      secondsUntilStateChange: -302678.4
       state: Opening
   - uid: 9721
     components:
