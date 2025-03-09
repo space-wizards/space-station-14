@@ -710,11 +710,11 @@ namespace Content.Shared.Cuffs
             if (cuffable.CuffedHandCount == 0)
             {
                 if (user != null)
-                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+                    _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
 
                 if (target != user && user != null)
                 {
-                    _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
+                    _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
                         ("otherName", Identity.Name(user.Value, EntityManager, user))), target, target);
                     _adminLog.Add(LogType.Action, LogImpact.Medium,
                         $"{ToPrettyString(user):player} has successfully uncuffed {ToPrettyString(target):player}");
