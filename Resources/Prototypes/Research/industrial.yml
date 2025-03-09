@@ -14,7 +14,7 @@
   - MineralScannerEmpty
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
-  - BorgModuleMining
+  - BorgModuleMining # imp
 
 - type: technology
   id: SpaceScanning
