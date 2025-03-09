@@ -37,11 +37,10 @@
     capacity: 1
     airtight: false
     itemCanStoreMobs: true
-  - type: InternalAir
-  - type: Tag
     whitelist:
       tags:
         - VimPilot # If it can fit in a Vim it can fit in a pet carrier.
+  - type: InternalAir
   - type: Weldable
   - type: ResistLocker
   - type: PlaceableSurface
