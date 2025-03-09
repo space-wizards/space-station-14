@@ -224,7 +224,7 @@ public abstract class SharedDeliverySystem : EntitySystem
             _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
     }
 
-    protected virtual void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int? amount = null) { }
+    protected virtual void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int amount = 0) { }
 
     protected virtual void AnnounceTearPenalty(Entity<TearableDeliveryComponent?> ent) { }
 }
