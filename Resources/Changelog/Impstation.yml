@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Drones are no longer blocked from interacting with items when near any
-      mob - Instead, they will receive a proximity warning popup. They also have a
-      small blacklist of items that are potentially harmful.
-    type: Tweak
-  - message: Changed the wording of Drone laws.
-    type: Tweak
-  - message: Fixed Drones failing to spawn with their tools.
-    type: Fix
-  - message: Drones can no longer be Emagged.
-    type: Remove
-  id: 759
-  time: '2024-12-18T18:41:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1063
 - author: AftrLite
   changes:
   - message: Cosmic Cult Assets for ongoing dev.
@@ -4090,3 +4075,11 @@
   id: 1258
   time: '2025-03-09T07:49:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1877
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Changed cargorilla to be able to roll on low-pop, as well as earlier
+      in the shift.
+    type: Tweak
+  id: 1259
+  time: '2025-03-09T07:50:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1878
