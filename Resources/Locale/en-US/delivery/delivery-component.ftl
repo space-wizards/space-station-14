@@ -8,7 +8,8 @@ delivery-opened-self = You open the {$delivery}.
 delivery-unlocked-others = {CAPITALIZE($recipient)} unlocked the {$delivery} with {POSS-ADJ($possadj)} fingerprint.
 delivery-opened-others = {CAPITALIZE($recipient)} opened the {$delivery}.
 
-delivery-tearable-verb = Tear Open
+delivery-tearable-verb = Slice Open
+delivery-tearable-need-sharp-object = You need a sharp object to do this.
 delivery-tearable-message = INTEGRITY COMPROMISED! INVOKING A PENALTY OF {$spesos} SPESOS TO THE STATION ACCOUNT.
 
 delivery-unlock-verb = Unlock

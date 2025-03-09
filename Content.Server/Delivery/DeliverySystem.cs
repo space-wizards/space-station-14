@@ -67,7 +67,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         Dirty(ent);
     }
 
-    protected override void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int amount = 0)
+    protected override void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int? amountOverride = null)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -75,7 +75,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var account))
             return;
 
-        var spesoAmount = amount != 0 ? amount : ent.Comp.SpesoReward;
+        var spesoAmount = amountOverride ?? ent.Comp.SpesoReward;
 
         // Do you want to bring cargo into debt???
         if (spesoAmount < 0 && account.Balance + spesoAmount < 0)

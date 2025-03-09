@@ -43,6 +43,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
 
+        SubscribeLocalEvent<TearableDeliveryComponent, GetVerbsEvent<InteractionVerb>>(OnGetTearableVerbs);
         SubscribeLocalEvent<TearableDeliveryComponent, InteractUsingEvent>(OnTearableInteractUsing);
         SubscribeLocalEvent<TearableDeliveryComponent, TearableDeliveryDoAfterEvent>(OnTornDoAfter);
     }
@@ -73,9 +74,9 @@ public abstract class SharedDeliverySystem : EntitySystem
             OpenDelivery(ent, args.User);
     }
 
-    private void OnTearableInteractUsing(Entity<TearableDeliveryComponent> ent, ref InteractUsingEvent args)
+    private void OnGetTearableVerbs(Entity<TearableDeliveryComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (args.Handled)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         if (!TryComp<DeliveryComponent>(ent, out var delivery))
@@ -84,7 +85,44 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (delivery.IsOpened || !delivery.IsLocked)
             return;
 
+
+        var disabled = args.Using == null || !_tools.HasQuality(args.Using.Value, ent.Comp.ToolQuality) || args.Hands == null;
+
+        var user = args.User;
+
+        args.Verbs.Add(new InteractionVerb()
+        {
+            Act = () =>
+            {
+                var doAfterEventArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new TearableDeliveryDoAfterEvent(), ent, ent)
+                {
+                    NeedHand = true,
+                    BreakOnDamage = true,
+                    BreakOnMove = true
+                };
+
+                if (!disabled)
+                    _doAfter.TryStartDoAfter(doAfterEventArgs);
+
+            },
+            Disabled = disabled,
+            Message = Loc.GetString("delivery-tearable-need-sharp-object"),
+            Text = Loc.GetString(ent.Comp.TearVerb),
+        });
+    }
+
+    private void OnTearableInteractUsing(Entity<TearableDeliveryComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
         if (!_tools.HasQuality(args.Used, ent.Comp.ToolQuality))
+            return;
+
+        if (!TryComp<DeliveryComponent>(ent, out var delivery))
+            return;
+
+        if (delivery.IsOpened || !delivery.IsLocked)
             return;
 
         var user = args.User;
@@ -224,7 +262,7 @@ public abstract class SharedDeliverySystem : EntitySystem
             _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
     }
 
-    protected virtual void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int amount = 0) { }
+    protected virtual void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int? amountOverride = null) { }
 
     protected virtual void AnnounceTearPenalty(Entity<TearableDeliveryComponent?> ent) { }
 }

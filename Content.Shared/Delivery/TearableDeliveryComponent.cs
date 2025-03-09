@@ -29,6 +29,12 @@ public sealed partial class TearableDeliveryComponent : Component
     public LocId? TearMessage = "delivery-tearable-message";
 
     /// <summary>
+    /// The message this delivery will speak out once it's torn open.
+    /// </summary>
+    [DataField]
+    public LocId TearVerb = "delivery-tearable-verb";
+
+    /// <summary>
     /// The tool quality needed to force open this delivery.
     /// </summary>
     [DataField]
