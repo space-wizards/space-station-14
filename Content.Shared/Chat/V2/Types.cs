@@ -58,23 +58,34 @@ public enum MessageType : byte
 /// </summary>
 public interface IChatEvent
 {
-    /// <summary>
-    /// The sender of the chat message.
-    /// </summary>
-    public EntityUid Sender { get; }
+    public EntityUid Sender
+    {
+        get;
+    }
 
     /// <summary>
     /// The ID of the message. This is overwritten when saved into a repository.
     /// </summary>
-    public ulong Id { get; set; }
+    public uint Id
+    {
+        get;
+        set;
+    }
 
     /// <summary>
     /// The sent message.
     /// </summary>
-    public string Message { get; set; }
+    public string Message
+    {
+        get;
+        set;
+    }
 
     /// <summary>
     /// The type of sent message.
     /// </summary>
-    public MessageType Type { get; }
+    public MessageType Type
+    {
+        get;
+    }
 }
