@@ -64,6 +64,18 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumIncendiary
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: incendiary-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: incendiary
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
 
 - type: entity
   id: SpeedLoaderMagnumPractice

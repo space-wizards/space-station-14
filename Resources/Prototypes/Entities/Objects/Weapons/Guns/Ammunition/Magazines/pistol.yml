@@ -114,7 +114,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
     layers:
-      - state: base
+      - state: red
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-unshaded-1
         map: ["enum.GunVisualLayers.MagUnshaded"]
@@ -135,14 +135,13 @@
   components:
   - type: BallisticAmmoProvider
     proto: null
-
-- type: entity
-  id: MagazinePistolSubMachineGunTopMountedIncendiary
-  name: WT550 magazine (.35 auto top-mounted incendiary)
-  parent: MagazinePistolSubMachineGunTopMounted
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedUranium
@@ -151,6 +150,43 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+
+- type: entity
+  id: MagazinePistolSubMachineGunTopMountedIncendiary
+  name: WT550 magazine (.35 auto top-mounted incendiary)
+  parent: MagazinePistolSubMachineGunTopMounted
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+
+- type: entity
+  id: MagazinePistolSubMachineGunTopMountedPractice
+  name: WT550 magazine (.35 auto top-mounted practice)
+  parent: MagazinePistolSubMachineGunTopMounted
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
 
 - type: entity
   id: MagazinePistol
@@ -189,6 +225,12 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolPractice
@@ -331,3 +373,9 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
