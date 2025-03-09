@@ -38,3 +38,15 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 6
     baseWalkSpeed: 4
+
+- type: entity
+  parent: [Incorporeal, BaseMob]
+  id: DesyncronizedPocket
+  name: desyncronized pocket
+  description: A pocket in spacetime, keeping the user a fraction of a second in the future.
+  suffix: Desynchronizer
+  components:
+  - type: Spectral
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 0
+    baseWalkSpeed: 0
