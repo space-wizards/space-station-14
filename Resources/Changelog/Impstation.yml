@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev & suyo
-  changes:
-  - message: new trait! pain insensitivity
-    type: Add
-  id: 758
-  time: '2024-12-18T18:39:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1056
 - author: widgetbeck
   changes:
   - message: Drones are no longer blocked from interacting with items when near any
@@ -4089,3 +4082,11 @@
   id: 1257
   time: '2025-03-08T07:20:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1868
+- author: SixValentine
+  changes:
+  - message: Luna wiring should no longer output a Gorbillion Kw requirement to engie
+      monitors (Only a zillion)
+    type: Fix
+  id: 1258
+  time: '2025-03-09T07:49:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1877
