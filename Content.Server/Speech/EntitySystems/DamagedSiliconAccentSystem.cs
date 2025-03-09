@@ -22,27 +22,36 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
     {
         var uid = ent.Owner;
 
-        FixedPoint2 damage = 0.0;
-        if (TryComp<DamageableComponent>(uid, out var damageable))
+        if (ent.Comp.EnableChargeCorruption)
         {
-            damage = damageable.TotalDamage;
+            var currentChargeLevel = 0.0f;
+            if (ent.Comp.OverrideChargeLevel)
+            {
+                currentChargeLevel = ent.Comp.OverriddenChargeLevel;
+            }
+            else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
+            {
+                currentChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+            }
+            currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
+            // Corrupt due to low power (drops characters on longer messages)
+            args.Message = CorruptPower(args.Message, currentChargeLevel, ref ent.Comp);
         }
 
-        var currentCharge = 0.0f;
-        var maxCharge = 1.0f;
-        if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
+        if (ent.Comp.EnableDamageCorruption)
         {
-            currentCharge = battery.CurrentCharge;
-            maxCharge = battery.MaxCharge;
+            var damage = FixedPoint2.Zero;
+            if (ent.Comp.OverrideTotalDamage)
+            {
+                damage = ent.Comp.OverriddenTotalDamageValue;
+            }
+            else if (TryComp<DamageableComponent>(uid, out var damageable))
+            {
+                damage = damageable.TotalDamage;
+            }
+            // Corrupt due to damage (drop, repeat, replace with symbols)
+            args.Message = CorruptDamage(args.Message, damage, ref ent.Comp);
         }
-
-        // Charge level from 0 to 1
-        var currentChargeLevel = Math.Clamp(currentCharge / maxCharge, 0.0f, 1.0f);
-
-        // Corrupt due to low power (drops characters on longer messages)
-        args.Message = CorruptPower(args.Message, currentChargeLevel, ref ent.Comp);
-        // Corrupt due to damage (drop, repeat, replace with symbols)
-        args.Message = CorruptDamage(args.Message, damage, ref ent.Comp);
     }
 
     public string CorruptPower(string message, float chargeLevel, ref DamagedSiliconAccentComponent comp)

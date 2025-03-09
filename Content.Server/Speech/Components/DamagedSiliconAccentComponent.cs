@@ -5,6 +5,24 @@ namespace Content.Server.Speech.Components;
 public sealed partial class DamagedSiliconAccentComponent : Component
 {
     /// <summary>
+    ///     Enable damage corruption effects
+    /// </summary>
+    [DataField]
+    public bool EnableDamageCorruption = true;
+
+    /// <summary>
+    ///     Override total damage for damage corruption effects
+    /// </summary>
+    [DataField]
+    public bool OverrideTotalDamage = false;
+
+    /// <summary>
+    ///     Value of total damage to use for damage corruption effects if <see cref="OverrideTotalDamage" /> is true.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 OverriddenTotalDamageValue = 0;
+
+    /// <summary>
     ///     The probability that a character will be corrupted when total damage at or above <see cref="MaxDamageCorruption" />.
     /// </summary>
     [DataField]
@@ -16,6 +34,25 @@ public sealed partial class DamagedSiliconAccentComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 DamageAtMaxCorruption = 300;
+
+    /// <summary>
+    ///     Enable charge level corruption effects
+    /// </summary>
+    [DataField]
+    public bool EnableChargeCorruption = true;
+
+    /// <summary>
+    ///     Override charge level for charge level corruption effects
+    /// </summary>
+    [DataField]
+    public bool OverrideChargeLevel = false;
+
+    /// <summary>
+    ///     Value of charge level to use for charge level corruption effects if <see cref="OverrideChargeLevel" /> is true.
+    /// </summary>
+    [DataField]
+    public float OverriddenChargeLevel = 0.0f;
+
 
     /// <summary>
     ///     If the power cell charge is below this value (as a fraction of maximum charge),
