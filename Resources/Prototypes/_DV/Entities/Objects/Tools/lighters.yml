@@ -5,7 +5,7 @@
   description: "A 'Valid' choice in lighters. Capable of superheating welding fuel into incendiary shots when lit. Contains no copper."
   components:
   - type: Sprite
-    sprite: _DV/Objects/Tools/syndielighter.rsi
+    sprite: _Impstation/Objects/Tools/syndielighter.rsi # imp resprite
     layers:
     - state: icon
       map: ["base"]
