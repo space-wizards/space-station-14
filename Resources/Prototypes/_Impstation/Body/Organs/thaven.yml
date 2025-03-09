@@ -1,12 +1,11 @@
 - type: entity
   id: OrganThavenBrain
-  parent: [BaseItem, OrganHumanBrain]
+  parent: OrganHumanBrain
   name: thaven brain
   description: "An organic positronic brain. Quite remarkable, really."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-    state: brain-thaven
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -14,12 +13,12 @@
         - ReagentId: Nutriment
           Quantity: 10
       food:
-        maxVol: 10
+        maxVol: 20
         reagents:
         - ReagentId: GreyMatter
-          Quantity: 5
+          Quantity: 3
         - ReagentId: CarpoToxin
-          Quantity: 5
+          Quantity: 12
   - type: Extractable
     juiceSolution:
       reagents:
@@ -31,30 +30,21 @@
 
 - type: entity
   id: OrganThavenEyes
-  parent: BaseHumanOrgan
-  name: eyes
+  parent: OrganHumanEyes
+  name: thaven eyes
   description: "The dark sclera have a faint, iridescent coating."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-    layers:
-      - state: eyeball-l
-      - state: eyeball-r
-  - type: Tag # goob edit
-    tags:
-    - Meat
-    - Organ
-    - Eyes
-  - type: Item
-    size: Small
-    heldPrefix: eyeballs
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
         reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 4
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
@@ -68,25 +58,14 @@
 
 - type: entity
   id: OrganThavenLungs
-  parent: BaseHumanOrgan
-  name: lungs
-  description: "Durable amphibious lungs that can draw oxygen from air or water."
+  parent: OrganHumanLungs
+  name: thaven lungs
+  description: "Technically not lungs since they don't draw chemicals from the air, these strange, durable organs use the motion of respiration to provide energy for cell maintenance."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-    layers:
-    - state: lung-l
-    - state: lung-r
-  - type: Organ
-  - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [Human, Thaven]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
+    metabolizerTypes: [Thaven]
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -96,8 +75,10 @@
       food:
         maxVol: 10
         reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 4
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
@@ -111,36 +92,23 @@
 
 - type: entity
   id: OrganThavenHeart
-  parent: BaseHumanOrgan
-  name: heart
+  parent: OrganHumanHeart
+  name: thaven heart
   description: "The toxic heart of a thaven. You're wearing gloves, right?"
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-    state: heart-on
-  - type: Item
-    size: Small
-    heldPrefix: heart
   - type: Metabolizer
-    updateInterval: 1.5
-    maxReagents: 2
     metabolizerTypes: [Human, Thaven]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
-  - type: Tag # goob edit
-    tags:
-    - Meat
-    - Organ
-    - Heart
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
         reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 4
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
@@ -155,7 +123,7 @@
 - type: entity
   id: OrganThavenStomach
   parent: OrganAnimalStomach
-  name: stomach
+  name: thaven stomach
   description: "Surprisingly similar to the stomach of a sharkminnow."
   components:
   - type: Sprite
@@ -175,8 +143,10 @@
       food:
         maxVol: 10
         reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 4
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
@@ -190,35 +160,23 @@
 
 - type: entity
   id: OrganThavenLiver
-  parent: BaseHumanOrgan
-  name: liver
-  description: "It resembles a slab of dragon flesh."
+  parent: OrganHumanLiver
+  name: thaven liver
+  description: "It loosely resembles a slab of dragon flesh."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-    state: liver
-  - type: Item
-    size: Small
-    heldPrefix: liver
   - type: Metabolizer
-    updateInterval: 1.5
-    maxReagents: 1
     metabolizerTypes: [Animal, Thaven]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
-  - type: Tag # goob edit
-    tags:
-    - Meat
-    - Organ
-    - Liver
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
         reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 4
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
@@ -232,35 +190,23 @@
 
 - type: entity
   id: OrganThavenKidneys
-  parent: BaseHumanOrgan
-  name: kidneys
+  parent: OrganHumanKidneys
+  name: thaven kidneys
   description: "Shiny, coppery veins make these the most ornate kidneys known to modern science."
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-    layers:
-      - state: kidney-l
-      - state: kidney-r
-  - type: Item
-    size: Small
-    heldPrefix: kidneys
   - type: Metabolizer
-    updateInterval: 1.5
-    maxReagents: 5
     metabolizerTypes: [Animal, Thaven]
-    removeEmpty: true
-  - type: Tag # goob edit
-    tags:
-    - Meat
-    - Organ
-    - Kidneys
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
         reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 4
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable

@@ -460,18 +460,16 @@
         ratios:
           Ammonia: 1.0
           WaterVapor: -1.0
-      - !type:Oxygenate # thaven CAN breathe water vapor, but don't really need to - sounds fun with the vox sympathizer mood
+      - !type:SatiateThirst # decapoids don't need to drink water because they're constantly inhaling it
+        conditions:
+        - !type:OrganType
+          type: Decapoid
+        factor: 2
+      - !type:Oxygenate # thaven can breathe all gases safely
         conditions:
         - !type:OrganType
           type: Thaven
-      - !type:ModifyLungGas
-        conditions:
-        - !type:OrganType
-          type: Thaven
-        ratios:
-          CarbonDioxide: 0.5
-          WaterVapor: -1.0
-      - !type:SatiateThirst # if thaven actually go through the trouble of getting a tank of water vapor, it hydrates them a tiny bit so they get thirsty slower
+      - !type:SatiateThirst # thaven breathing water vapor get thirsty slower
         conditions:
         - !type:OrganType
           type: Thaven

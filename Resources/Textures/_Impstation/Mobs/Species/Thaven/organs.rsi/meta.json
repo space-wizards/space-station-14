@@ -1,14 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by Nimfar11 (Github) for Space Station 14, brain modified by Widgetbeck, others modified by Sha-Seng (github)",
+  "copyright": "Sprited by Nimfar11 (Github) for Space Station 14, brain made by Widgetbeck, all modified by Sha-Seng (github)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
         {
-            "name": "brain-thaven"
+            "name": "brain"
         },
         {
             "name": "brain-inhand-left",
