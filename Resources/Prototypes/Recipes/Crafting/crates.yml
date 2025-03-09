@@ -98,25 +98,3 @@
   description: A coffin for storing corpses.
   icon: { sprite: Structures/Storage/Crates/coffin.rsi, state: base }
   objectType: Structure
-
-- type: construction
-  name: trash bin
-  id: CrateTrashBin
-  graph: TrashBin
-  startNode: start
-  targetNode: trashbin
-  category: construction-category-storage
-  description: A trash bin for storing trash in.
-  icon: { sprite: Structures/Storage/trash_bin.rsi, state: icon }
-  objectType: Structure
-
-- type: construction
-  name: secure trash bin
-  id: CrateTrashBinSecure
-  graph: TrashBinSecure
-  startNode: start
-  targetNode: trashbinsecure
-  category: construction-category-storage
-  description: A secure trash bin for storing trash in. Requires no special access, can be configured with an Access Configurator.
-  icon: { sprite: Structures/Storage/trash_bin.rsi, state: icon_secure }
-  objectType: Structure
