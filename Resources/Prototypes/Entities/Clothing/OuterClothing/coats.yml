@@ -48,6 +48,16 @@
     - id: FlippoLighter #Not the steal objective, only difference from normal detective trenchcoat
 
 - type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatDetectiveLoadoutNiko
+  name: brown outer coat that was definitely not owned by a cat
+  description: There's a note sewn into the inner lining - "I fucking hate it her"
+  components:
+  - type: StorageFill
+    contents:
+    - id: WarmLightBulb
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatGentle
   name: gentle coat

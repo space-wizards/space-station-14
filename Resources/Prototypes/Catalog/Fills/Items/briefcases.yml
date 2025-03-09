@@ -11,7 +11,7 @@
 - type: entity
   id: BriefcaseSyndieSniperBundleFilled
   parent: BriefcaseSyndie
-  suffix: Syndicate, Sniper Bundle
+  suffix: Syndicate, One Shot Bundle
   components:
   - type: Item
     size: Ginormous
@@ -23,10 +23,9 @@
     contents:
       - id: WeaponSniperHristov
       - id: MagazineBoxAntiMateriel
-      - id: ClothingNeckTieRed
-      - id: ClothingHandsGlovesLatex
-      - id: ClothingUniformJumpsuitLawyerBlack
-      - id: BarberScissors
+      - id: ClothingNeckScarfStripedPurple
+      - id: ClothingOuterCoatDetectiveLoadoutNiko
+      - id: ClothingHeadHatNiko
 
 - type: entity
   id: BriefcaseSyndieLobbyingBundleFilled
