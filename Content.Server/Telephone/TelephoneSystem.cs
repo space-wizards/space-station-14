@@ -359,7 +359,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("message", content));
 
         // CHAT-TODO: This probably needs reworking eh?
-        var chat = new ChatMessage("ICSpeech", FormattedMessage.FromMarkupPermissive(wrappedMessage), NetEntity.Invalid, null, false);
+        var chat = new ChatMessage(1, "ICSpeech", FormattedMessage.FromMarkupPermissive(wrappedMessage), NetEntity.Invalid, null, false);
 
         var chatMsg = new MsgChatMessage { Message = chat };
 

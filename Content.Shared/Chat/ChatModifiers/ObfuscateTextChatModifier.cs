@@ -26,10 +26,9 @@ public sealed partial class ObfuscateTextChatModifier : ChatModifier
 
         _random.SetSeed(seed);
 
-        using var nodeEnumerator = message.GetEnumerator();
-        while (nodeEnumerator.MoveNext())
+        for (int i = 0; i < message.Count; i++)
         {
-            var node = nodeEnumerator.Current;
+            var node = message.Nodes[i];
             if (node.Name == null && node.Value.TryGetString(out var text))
             {
                 var obfuscated = ObfuscateMessageReadability(text, ObfuscationChance);

@@ -80,6 +80,17 @@ public sealed class ChatMessageContext : Dictionary<Enum, object>
     {
     }
 
+    public ChatMessageContext(Dictionary<Enum, object> dictionary, ChatMessageContext? otherContext) : this(dictionary)
+    {
+        if (otherContext == null)
+            return;
+
+        foreach (var (key, value) in otherContext)
+        {
+            this[key] = value;
+        }
+    }
+
     public bool TryGet<T>(Enum key, [NotNullWhen(true)] out T? value)
     {
         if (TryGetValue(key, out var val))

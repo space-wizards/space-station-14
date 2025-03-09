@@ -6,9 +6,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
 
-public sealed class PlayAudioContentTag : ContentMarkupTagBase
+public sealed class PlayAudioContentTagProcessor : ContentMarkupTagProcessorBase
 {
-    public override string Name => "PlayAudio";
+    public const string SupportedNodeName = "PlayAudio";
+
+    public override string Name => SupportedNodeName;
 
     [Dependency] private readonly IEntityManager _entManager = default!;
 
@@ -22,7 +24,10 @@ public sealed class PlayAudioContentTag : ContentMarkupTagBase
             volume = volumeParam.LongValue.Value;
 
         if (node.Value.StringValue != null)
-            _entManager.System<AudioSystem>().PlayGlobal(audioSystem.ResolveSound(new SoundPathSpecifier(node.Value.StringValue, null)), Filter.Local(), false, AudioParams.Default.WithVolume(volume));
+        {
+            var soundSpecifier = audioSystem.ResolveSound(new SoundPathSpecifier(node.Value.StringValue, null));
+            _entManager.System<AudioSystem>().PlayGlobal(soundSpecifier, Filter.Local(), false, AudioParams.Default.WithVolume(volume));
+        }
 
         return [];
     }

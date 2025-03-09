@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Content.Server.Administration;
 using Content.Server.Chat.V2.Repository;
 using Content.Shared.Administration;
@@ -11,12 +11,12 @@ namespace Content.Server.Chat.V2.Commands;
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class DeleteChatMessageCommand : ToolshedCommand
 {
-    [Dependency] private readonly IEntitySystemManager _manager = default!;
+    [Dependency] private readonly IChatRepository _repository = default!;
 
     [CommandImplementation("id")]
     public void DeleteChatMessage(IInvocationContext ctx, uint messageId)
     {
-        if (!_manager.GetEntitySystem<ChatRepositorySystem>().Delete(messageId))
+        if (!_repository.Delete(messageId))
         {
              ctx.ReportError(new MessageIdDoesNotExist());
         }

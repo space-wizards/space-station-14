@@ -2,12 +2,37 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ContentMarkupTags;
 
-public abstract class ContentMarkupTagBase
+public abstract class ContentMarkupTagProcessorBase
 {
     /// <summary>
     /// The string used as the tags name when writing rich text
     /// </summary>
     public abstract string Name { get; }
+
+    public bool Process(MarkupNode node, int seed, bool isTopLevelProcessor, out IReadOnlyList<MarkupNode> markupNodes)
+    {
+        if (node.Name == null)
+        {
+            markupNodes = ProcessTextNode(node, seed);
+            return true;
+        }
+
+        if (node.Name == Name && node.Closing && isTopLevelProcessor)
+        {
+            markupNodes = ProcessCloser(node, seed);
+            return false;
+        }
+
+        if (node.Name == Name && !node.Closing && isTopLevelProcessor)
+        {
+            markupNodes = ProcessOpeningTag(node, seed);
+            return true;
+        }
+
+        markupNodes = ProcessMarkupNode(node, seed);
+
+        return true;
+    }
 
     /// <summary>
     /// Processes another markup node with this content tag.
@@ -44,4 +69,5 @@ public abstract class ContentMarkupTagBase
     {
         return [];
     }
+
 }

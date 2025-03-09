@@ -6,15 +6,16 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
 
-public sealed class CodewordsContentTag : ContentMarkupTagBase
+public sealed class CodewordsContentTagProcessor : ContentMarkupTagProcessorBase
 {
+    public const string SupportedNodeName = "Codewords";
     // This can, in the future, be refactored into a generalized word highlighting tag.
-
-    public override string Name => "Codewords";
 
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
+
+    public override string Name => SupportedNodeName;
 
     public override IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node, int randomSeed)
     {
@@ -36,6 +37,7 @@ public sealed class CodewordsContentTag : ContentMarkupTagBase
             }
             return baseMsg.Nodes;
         }
+
         return new List<MarkupNode> { node } ;
     }
 }

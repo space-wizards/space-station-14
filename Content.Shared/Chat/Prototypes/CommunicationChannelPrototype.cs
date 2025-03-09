@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Chat.Prototypes;
@@ -75,29 +75,19 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     public ChatChannelMedium ChatMedium = ChatChannelMedium.None;
 
     /// <summary>
-    /// If true, the same message may not be published twice on the same channel.
-    /// Useful to be true for radio channels but false for whispers, to allow relaying via intercoms without looping.
-    /// EXTREME ATTENTION TO AVOID LOOPING must be paid if this value is set to false, as improper message relay can cause an infinite loop.
-    /// If someone knows how to make a good check to avoid that, please implement it!
-    /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public bool NonRepeatable = true;
-
-    /// <summary>
     /// If set, a message published on the current channel will also try to publish to these communication channels.
     /// Channels are evaluated separately.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public List<ProtoId<CommunicationChannelPrototype>>? AlwaysRelayedToChannels;
+    public List<ProtoId<CommunicationChannelPrototype>> AlwaysRelayedToChannels = [];
 
     /// <summary>
     /// If set, a message that fails the conditions to publish on the current channel will try to publish to these communication channels instead.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public List<ProtoId<CommunicationChannelPrototype>>? FallbackChannels;
+    public List<ProtoId<CommunicationChannelPrototype>> FallbackChannels = [];
 
     /// <summary>
     /// If true, any message published to this channel won't show up in the chatbox.

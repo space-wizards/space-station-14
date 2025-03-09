@@ -5,9 +5,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
 
-public sealed class ColorValueContentTag : ContentMarkupTagBase
+public sealed class ColorValueContentTagProcessor : ContentMarkupTagProcessorBase
 {
-    public override string Name => "ColorValue";
+    public const string SupportedNodeName = "ColorValue";
+
+    public override string Name => SupportedNodeName;
 
     // CHAT-TODO: These values should probably be retrieved via yaml, and be customizable in options! This solution works for now but should be reworked before release.
     private readonly IReadOnlyDictionary<string, Color> _colors = new Dictionary<string, Color>
