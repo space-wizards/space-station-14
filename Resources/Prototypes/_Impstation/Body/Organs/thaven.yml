@@ -4,6 +4,271 @@
   name: thaven brain
   description: "An organic positronic brain. Quite remarkable, really."
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-      state: brain-thaven
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    state: brain-thaven
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenEyes
+  parent: BaseHumanOrgan
+  name: eyes
+  description: "I see you!"
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Eyes
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenLungs
+  parent: BaseHumanOrgan
+  name: lungs
+  description: "Durable amphibious lungs that can draw oxygen from air or water."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Organ
+    removable: false
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [Human, Thaven]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenHeart
+  parent: BaseHumanOrgan
+  name: heart
+  description: ""
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    state: heart-on
+  - type: Item
+    size: Small
+    heldPrefix: heart
+  - type: Metabolizer
+    updateInterval: 1.5
+    maxReagents: 2
+    metabolizerTypes: [Human, Thaven]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenStomach
+  parent: OrganAnimalStomach
+  name: stomach
+  description: ""
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    state: stomach
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [Animal, Thaven]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenLiver
+  parent: BaseHumanOrgan
+  name: liver
+  description: ""
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    state: liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
+  - type: Metabolizer
+    updateInterval: 1.5
+    maxReagents: 1
+    metabolizerTypes: [Animal, Thaven]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Liver
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenKidneys
+  parent: BaseHumanOrgan
+  name: kidneys
+  description: ""
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
+  - type: Metabolizer
+    updateInterval: 1.5
+    maxReagents: 5
+    metabolizerTypes: [Animal, Thaven]
+    removeEmpty: true
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Kidneys
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh

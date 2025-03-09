@@ -59,7 +59,7 @@
         layer:
         - MobLayer
   - type: TypingIndicator
-    proto: guardian
+    proto: thaven # DeltaV unique typing indicator
   - type: Vocal
     sounds:
       Male: MaleThaven

@@ -132,3 +132,8 @@
   id: orangecoffee
   flavorType: Complex
   description: flavor-complex-orangecoffee
+
+- type: flavor
+  id: thavenflesh
+  flavorType: Complex
+  description: flavor-complex-thavenflesh
