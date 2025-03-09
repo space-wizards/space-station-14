@@ -856,5 +856,13 @@ Entries:
   id: 106
   time: '2025-03-05T16:25:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35648
+- author: slarticodefast
+  changes:
+  - message: Added the 'forceghost < player >' command which forces someone to become
+      an observer.
+    type: Add
+  id: 107
+  time: '2025-03-08T02:39:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35518
 Name: Admin
 Order: 1
