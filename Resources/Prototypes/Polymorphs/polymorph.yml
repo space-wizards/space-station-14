@@ -22,6 +22,27 @@
     revertOnDeath: true
 
 - type: polymorph
+  id: CorgiMorph
+  configuration:
+    entity: SmartCorgi
+    forced: false
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+- type: polymorph
+  id: PermanentCorgiMorph
+  configuration:
+    entity: SmartCorgi
+    forced: true
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+
+- type: polymorph
   id: WizardForcedCarp
   configuration:
     entity: MobCarpMagic
