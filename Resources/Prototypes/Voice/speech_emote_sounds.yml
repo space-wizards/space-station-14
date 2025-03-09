@@ -1066,6 +1066,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams # Imp addition
     Laugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
