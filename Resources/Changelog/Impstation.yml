@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Cosmic Cult Assets for ongoing dev.
-    type: Add
-  id: 760
-  time: '2024-12-18T18:41:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1061
 - author: honeyed-lemons
   changes:
   - message: Holopads!
@@ -4083,3 +4076,10 @@
   id: 1259
   time: '2025-03-09T07:50:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1878
+- author: crocodilecarousel
+  changes:
+  - message: Added 33 new markings, including underwear for grays and tails for thaven.
+    type: Add
+  id: 1260
+  time: '2025-03-09T08:05:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1876
