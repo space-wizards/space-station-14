@@ -107,8 +107,10 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical
             };
 
-            // Starlight-edit: Search filter Box
-            // Starlight-edit: This adds the filter input box. Skip this part if you only want to know how the list gets populated.
+            // <summary>
+            // Starlight-start: Search filter Box
+            // This adds the filter input box. Skip this part if you only want to know how the list gets populated.
+            // </summary>
             var searchContainer = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal,
@@ -137,7 +139,7 @@ namespace Content.Client.RoundEnd
             searchContainer.AddChild(searchInput);
 
             playerManifestTab.AddChild(searchContainer);
-            // Starlight-edit: End of search box
+            // End of search box
 
             populatePlayManifestList(playerInfoContainer, playersInfo);
 
@@ -206,28 +208,30 @@ namespace Content.Client.RoundEnd
 
         private void OnSearchTextChanged(LineEdit.LineEditEventArgs searchTerm, BoxContainer playerInfoContainer, RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
         {
-            // Starlight-edit: Empty the result box when we star typing            
+            // Empty the result box when we star typing            
             playerInfoContainer.RemoveAllChildren();
 
             string newText = searchTerm.Text;
             if (string.IsNullOrWhiteSpace(newText))
             {
-                // Starlight-edit: If search is empty, show all text and all players
+                // If search is empty, show all text and all players
                 populatePlayManifestList(playerInfoContainer, playersInfo);
                 return;
             }
 
-            // Starlight-edit: Filter the player list based on search term
-            // Starlight-edit: Searches: Player OOC Name, Player IC Name, and Player Role
+            // Filter the player list based on search term
+            // Searches: Player OOC Name, Player IC Name, and Player Role
             var filteredPlayersInfo = playersInfo.Where(player =>
                 player.PlayerOOCName.ToLowerInvariant().Contains(newText.ToLowerInvariant()) ||
                 (player.PlayerICName != null && player.PlayerICName.ToLowerInvariant().Contains(newText.ToLowerInvariant())) ||
                 Loc.GetString(player.Role).ToLowerInvariant().Contains(newText.ToLowerInvariant())
             ).ToArray();
 
-            // Starlight-edit: Populate the player list with filtered results
+            // Populate the player list with filtered results
             populatePlayManifestList(playerInfoContainer, filteredPlayersInfo);
         }
+        
+        // Starlight-end
     }
 
 }
