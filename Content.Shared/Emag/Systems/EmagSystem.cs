@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
@@ -76,7 +77,7 @@ public sealed class EmagSystem : EntitySystem
 
         _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
 
-        _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent);
+        _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent, FunAudioParams.WithUniformPitch());
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
 

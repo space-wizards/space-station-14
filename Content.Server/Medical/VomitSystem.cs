@@ -4,6 +4,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -100,7 +101,7 @@ namespace Content.Server.Medical
             }
 
             // Force sound to play as spill doesn't work if solution is empty.
-            _audio.PlayPvs(_vomitSound, uid);
+            _audio.PlayPvs(_vomitSound, uid, FunAudioParams.WithUniformPitch());
             _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
         }
     }

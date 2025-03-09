@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee.Events;
@@ -32,7 +33,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
 
         args.BonusDamage += component.Damage;
         RemCompDeferred<DamageMarkerComponent>(uid);
-        _audio.PlayPredicted(component.Sound, uid, args.User);
+        _audio.PlayPredicted(component.Sound, uid, args.User, FunAudioParams.WithUniformPitch());
 
         if (TryComp<LeechOnMarkerComponent>(args.Used, out var leech))
         {

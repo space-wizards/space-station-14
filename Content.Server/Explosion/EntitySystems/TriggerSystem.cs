@@ -7,6 +7,7 @@ using Content.Server.Pinpointer;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Flash.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
@@ -116,11 +117,11 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.RemoveOnTrigger) // if the component gets removed when it's triggered
             {
                 var xform = Transform(uid);
-                _audio.PlayPvs(component.Sound, xform.Coordinates); // play the sound at its last known coordinates
+                _audio.PlayPvs(component.Sound, xform.Coordinates, FunAudioParams.WithUniformPitch()); // play the sound at its last known coordinates
             }
             else // if the component doesn't get removed when triggered
             {
-                _audio.PlayPvs(component.Sound, uid); // have the sound follow the entity itself
+                _audio.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch()); // have the sound follow the entity itself
             }
         }
 
@@ -390,7 +391,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
 
                 timer.TimeUntilBeep += timer.BeepInterval;
-                _audio.PlayPvs(timer.BeepSound, uid, timer.BeepSound.Params);
+                _audio.PlayPvs(timer.BeepSound, uid, FunAudioParams.WithUniformPitch(timer.BeepSound.Params));
             }
 
             foreach (var uid in toRemove)

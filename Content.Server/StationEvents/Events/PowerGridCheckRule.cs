@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Audio;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
@@ -59,7 +60,7 @@ namespace Content.Server.StationEvents.Events
             component.AnnounceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                Audio.PlayGlobal(component.PowerOnSound, Filter.Broadcast(), true);
+                Audio.PlayGlobal(component.PowerOnSound, Filter.Broadcast(), true, FunAudioParams.WithUniformPitch());
             }, component.AnnounceCancelToken.Token);
             component.Unpowered.Clear();
         }

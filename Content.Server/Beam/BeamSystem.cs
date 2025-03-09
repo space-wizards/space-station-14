@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Content.Server.Beam.Components;
+using Content.Shared.Audio;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Content.Shared.Physics;
@@ -111,7 +112,7 @@ public sealed class BeamSystem : SharedBeamSystem
             var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
             beam.VirtualBeamController = controllerEnt;
 
-            _audio.PlayPvs(beam.Sound, ent);
+            _audio.PlayPvs(beam.Sound, ent, FunAudioParams.WithUniformPitch());
 
             var beamControllerCreatedEvent = new BeamControllerCreatedEvent(ent, controllerEnt);
             RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent);

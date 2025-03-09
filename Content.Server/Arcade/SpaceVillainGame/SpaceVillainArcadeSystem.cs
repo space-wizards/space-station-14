@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Advertise;
 using Content.Server.Advertise.Components;
+using Content.Shared.Audio;
 using Content.Shared.Power;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
@@ -88,7 +89,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
                     _speakOnUIClosed.TrySetFlag((uid, speakComponent));
                 break;
             case PlayerAction.NewGame:
-                _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(component.NewGameSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-4f)));
 
                 component.Game = new SpaceVillainGame(uid, component, this);
                 _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());

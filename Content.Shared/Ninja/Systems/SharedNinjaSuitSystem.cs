@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -117,7 +118,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             return;
 
         // previously cloaked, disable abilities for a short time
-        _audio.PlayPredicted(comp.RevealSound, uid, user);
+        _audio.PlayPredicted(comp.RevealSound, uid, user, FunAudioParams.WithUniformPitch());
         Popup.PopupClient(Loc.GetString("ninja-revealed"), user, user, PopupType.MediumCaution);
         _useDelay.TryResetDelay(uid, id: comp.DisableDelayId);
     }

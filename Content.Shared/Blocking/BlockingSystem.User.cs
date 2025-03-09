@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
@@ -65,7 +66,7 @@ public sealed partial class BlockingSystem
 
             if (blocking.IsBlocking && !args.Damage.Equals(args.OriginalDamage))
             {
-                _audio.PlayPvs(blocking.BlockSound, uid);
+                _audio.PlayPvs(blocking.BlockSound, uid, FunAudioParams.WithUniformPitch());
             }
         }
     }

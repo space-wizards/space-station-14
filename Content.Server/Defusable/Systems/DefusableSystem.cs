@@ -4,6 +4,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Defusable;
@@ -192,7 +193,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         }
         RemComp<ActiveTimerTriggerComponent>(uid);
 
-        _audio.PlayPvs(comp.DefusalSound, uid);
+        _audio.PlayPvs(comp.DefusalSound, uid, FunAudioParams.WithUniformPitch());
 
         RaiseLocalEvent(uid, new BombDefusedEvent(uid));
 
@@ -346,7 +347,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
             return true;
 
         SetBolt(comp, true);
-        _audio.PlayPvs(comp.BoltSound, wire.Owner);
+        _audio.PlayPvs(comp.BoltSound, wire.Owner, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
 
         return true;
@@ -358,7 +359,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
             return true;
 
         SetBolt(comp, false);
-        _audio.PlayPvs(comp.BoltSound, wire.Owner);
+        _audio.PlayPvs(comp.BoltSound, wire.Owner, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
 
         return true;

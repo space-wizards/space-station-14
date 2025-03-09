@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
@@ -73,7 +74,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
             _adminLogger.Add(LogType.Teleport, $"{ToPrettyString(ent)} has been teleported to {pos} by the supercritical {ToPrettyString(uid)} at {mapPos}");
 
             _xform.SetWorldPosition(ent, pos);
-            _audio.PlayPvs(component.TeleportSound, ent);
+            _audio.PlayPvs(component.TeleportSound, ent, FunAudioParams.WithUniformPitch());
         }
     }
 

@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -99,7 +100,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
             QueueDel(uid);
         }
 
-        _audio.PlayPredicted(comp.UnpackSound, args.Used, args.User);
+        _audio.PlayPredicted(comp.UnpackSound, args.Used, args.User, FunAudioParams.WithUniformPitch());
     }
 
     private void OnFlatpackExamined(Entity<FlatpackComponent> ent, ref ExaminedEvent args)

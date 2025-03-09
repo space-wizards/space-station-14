@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;
@@ -25,7 +26,7 @@ public sealed class WeaponRandomSystem : EntitySystem
     {
         if (_random.Prob(component.RandomDamageChance))
         {
-            _audio.PlayPvs(component.DamageSound, uid);
+            _audio.PlayPvs(component.DamageSound, uid, FunAudioParams.WithUniformPitch());
             args.BonusDamage = component.DamageBonus;
         }
     }

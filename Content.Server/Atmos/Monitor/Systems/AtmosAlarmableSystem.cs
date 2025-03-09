@@ -6,6 +6,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -306,7 +307,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     {
         if (alarm == AtmosAlarmType.Danger)
         {
-            _audioSystem.PlayPvs(alarmable.AlarmSound, uid, AudioParams.Default.WithVolume(alarmable.AlarmVolume));
+            _audioSystem.PlayPvs(alarmable.AlarmSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(alarmable.AlarmVolume)));
         }
     }
 

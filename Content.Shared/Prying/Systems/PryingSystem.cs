@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
@@ -170,7 +171,7 @@ public sealed class PryingSystem : EntitySystem
 
         if (args.Used != null && comp != null)
         {
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, FunAudioParams.WithUniformPitch());
         }
 
         var ev = new PriedEvent(args.User);

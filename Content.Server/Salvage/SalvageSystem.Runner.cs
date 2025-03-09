@@ -3,6 +3,7 @@ using Content.Server.Salvage.Expeditions;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
+using Content.Shared.Audio;
 using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
@@ -154,7 +155,7 @@ public sealed partial class SalvageSystem
             }
             else if (comp.Stream == null && remaining < audioLength)
             {
-                var audio = _audio.PlayPvs(comp.Sound, uid);
+                var audio = _audio.PlayPvs(comp.Sound, uid, FunAudioParams.WithUniformPitch());
                 comp.Stream = audio?.Entity;
                 _audio.SetMapAudio(audio);
                 comp.Stage = ExpeditionStage.MusicCountdown;

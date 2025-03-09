@@ -1,6 +1,7 @@
 using Content.Server.Polymorph.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Audio;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio.Systems;
@@ -37,7 +38,7 @@ public sealed class PolyOthersArtifactSystem : EntitySystem
             if (_mob.IsAlive(target))
             {
                 _poly.PolymorphEntity(target, ent.Comp.PolymorphPrototypeName);
-                _audio.PlayPvs(ent.Comp.PolySound, ent);
+                _audio.PlayPvs(ent.Comp.PolySound, ent, FunAudioParams.WithUniformPitch());
             }
         }
     }

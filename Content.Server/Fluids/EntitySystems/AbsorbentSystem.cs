@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -144,7 +145,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 return false;
         }
 
-        _audio.PlayPvs(component.TransferSound, target);
+        _audio.PlayPvs(component.TransferSound, target, FunAudioParams.WithUniformPitch());
         if (useDelay != null)
             _useDelay.TryResetDelay((used, useDelay));
         return true;
@@ -311,7 +312,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _solutionContainerSystem.AddSolution(puddle.Solution.Value, absorberSplit);
         _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
-        _audio.PlayPvs(absorber.PickupSound, target);
+        _audio.PlayPvs(absorber.PickupSound, target, FunAudioParams.WithUniformPitch());
         if (useDelay != null)
             _useDelay.TryResetDelay((used, useDelay));
 

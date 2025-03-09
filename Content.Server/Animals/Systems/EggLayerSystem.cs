@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
+using Content.Shared.Audio;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -99,7 +100,7 @@ public sealed class EggLayerSystem : EntitySystem
         }
 
         // Sound + popups
-        _audio.PlayPvs(egglayer.EggLaySound, uid);
+        _audio.PlayPvs(egglayer.EggLaySound, uid, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, uid);
         _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid), true);
 

@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Systems;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;

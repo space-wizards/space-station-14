@@ -3,6 +3,7 @@ using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
@@ -187,7 +188,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
 
         if (component.SoundDeath != null)
-            _audio.PlayPvs(component.SoundDeath, uid);
+            _audio.PlayPvs(component.SoundDeath, uid, FunAudioParams.WithUniformPitch());
 
         // objective is explicitly not reset so that it will show how many you got before dying in round end text
         DeleteRifts(uid, false, component);
@@ -202,7 +203,7 @@ public sealed partial class DragonSystem : EntitySystem
     private void Roar(EntityUid uid, DragonComponent comp)
     {
         if (comp.SoundRoar != null)
-            _audio.PlayPvs(comp.SoundRoar, uid);
+            _audio.PlayPvs(comp.SoundRoar, uid, FunAudioParams.WithUniformPitch());
     }
 
     /// <summary>

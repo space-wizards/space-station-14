@@ -121,7 +121,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflect.SoundOnReflect, user, FunAudioParams.WithUniformPitch(AudioHelpers.WithVariation(0.05f, _random)));
         }
 
         if (Resolve(projectile, ref projectileComp, false))
@@ -174,7 +174,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_netManager.IsServer)
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflect.SoundOnReflect, user, FunAudioParams.WithUniformPitch(AudioHelpers.WithVariation(0.05f, _random)));
         }
 
         var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);

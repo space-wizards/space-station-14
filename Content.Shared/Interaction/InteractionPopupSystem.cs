@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
@@ -132,7 +133,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             _popupSystem.PopupEntity(msg, uid, user);
 
             if (component.SoundPerceivedByOthers)
-                _audio.PlayPvs(sfx, target);
+                _audio.PlayPvs(sfx, target, FunAudioParams.WithUniformPitch());
             else
                 _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
             return;
@@ -145,7 +146,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         if (component.SoundPerceivedByOthers)
         {
-            _audio.PlayPredicted(sfx, target, user);
+            _audio.PlayPredicted(sfx, target, user, FunAudioParams.WithUniformPitch());
             return;
         }
 

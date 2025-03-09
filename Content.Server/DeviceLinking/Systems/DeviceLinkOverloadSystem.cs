@@ -1,6 +1,7 @@
 ﻿using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceLinking.Components.Overload;
 using Content.Server.DeviceLinking.Events;
+using Content.Shared.Audio;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -19,7 +20,7 @@ public sealed class DeviceLinkOverloadSystem : EntitySystem
     private void OnOverloadSound(EntityUid uid, SoundOnOverloadComponent component, ref DeviceLinkOverloadedEvent args)
     {
 
-        _audioSystem.PlayPvs(component.OverloadSound, uid, AudioParams.Default.WithVolume(component.VolumeModifier));
+        _audioSystem.PlayPvs(component.OverloadSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(component.VolumeModifier)));
     }
 
 

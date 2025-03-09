@@ -2,6 +2,7 @@ using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Roles;
 using Content.Server.Thief.Components;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Foldable;
 using Content.Shared.Popups;
@@ -74,7 +75,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
         if (!TryComp<StealAreaComponent>(beacon, out var area))
             return;
 
-        _audio.PlayPvs(beacon.Comp.LinkSound, beacon);
+        _audio.PlayPvs(beacon.Comp.LinkSound, beacon, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("thief-fulton-set"), beacon);
         area.Owners.Clear(); //We only reconfigure the beacon for ourselves, we don't need multiple thieves to steal from the same beacon.
         area.Owners.Add(mind);
@@ -88,7 +89,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
         if (area.Owners.Count == 0)
             return;
 
-        _audio.PlayPvs(beacon.Comp.UnlinkSound, beacon);
+        _audio.PlayPvs(beacon.Comp.UnlinkSound, beacon, FunAudioParams.WithUniformPitch());
         _popup.PopupEntity(Loc.GetString("thief-fulton-clear"), beacon);
         area.Owners.Clear();
     }

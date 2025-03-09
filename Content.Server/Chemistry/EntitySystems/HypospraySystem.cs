@@ -14,6 +14,7 @@ using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Server.Body.Components;
 using System.Linq;
+using Content.Shared.Audio;
 using Robust.Server.Audio;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -141,7 +142,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
             // meleeSys.SendLunge(angle, user);
         }
 
-        _audio.PlayPvs(component.InjectSound, user);
+        _audio.PlayPvs(component.InjectSound, user, FunAudioParams.WithUniformPitch());
 
         // Medipens and such use this system and don't have a delay, requiring extra checks
         // BeginDelay function returns if item is already on delay

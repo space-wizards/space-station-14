@@ -358,7 +358,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
+                Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, FunAudioParams.WithUniformPitch());
                 return;
             }
 
@@ -477,7 +477,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-1f));
+            Audio.PlayPvs(cartridge.EjectSound, entity, FunAudioParams.WithUniformPitch(FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation)).WithVolume(-1f)));
         }
     }
 

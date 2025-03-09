@@ -1,6 +1,7 @@
 using Content.Server.Physics.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.Events;
+using Content.Shared.Audio;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Events;
@@ -152,9 +153,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.PlayPvs(comp.FormationSound, uid);
+            _audio.PlayPvs(comp.FormationSound, uid, FunAudioParams.WithUniformPitch());
 
-        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid)?.Entity;
+        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid, FunAudioParams.WithUniformPitch())?.Entity;
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -190,7 +191,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
             // I feel like IsValid should be checking this or something idk.
             if (!TerminatingOrDeleted(coordinates.EntityId))
-                _audio.PlayPvs(comp.DissipationSound, coordinates);
+                _audio.PlayPvs(comp.DissipationSound, coordinates, FunAudioParams.WithUniformPitch());
         }
     }
 

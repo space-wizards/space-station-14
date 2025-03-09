@@ -2,6 +2,7 @@
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
@@ -184,7 +185,7 @@ public sealed partial class AnomalySystem
             else //it's not unstable
                 continue;
 
-            Audio.PlayPvs(vessel.BeepSound, vesselEnt);
+            Audio.PlayPvs(vessel.BeepSound, vesselEnt, FunAudioParams.WithUniformPitch());
             var beepInterval = (vessel.MaxBeepInterval - vessel.MinBeepInterval) * (1 - timerPercentage) + vessel.MinBeepInterval;
             vessel.NextBeep = beepInterval + Timing.CurTime;
         }

@@ -14,6 +14,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared.Audio;
 using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -160,7 +161,7 @@ public sealed class SpraySystem : EntitySystem
             }
         }
 
-        _audio.PlayPvs(entity.Comp.SpraySound, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));
+        _audio.PlayPvs(entity.Comp.SpraySound, entity, FunAudioParams.WithUniformPitch(entity.Comp.SpraySound.Params.WithVariation(0.125f)));
 
         if (useDelay != null)
             _useDelay.TryResetDelay((entity, useDelay));

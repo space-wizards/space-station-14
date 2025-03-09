@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Audio;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Database;
@@ -102,12 +103,12 @@ public sealed class NewsSystem : SharedNewsSystem
                 );
 
             articles.RemoveAt(msg.ArticleNum);
-            _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+            _audio.PlayPvs(ent.Comp.ConfirmSound, ent, FunAudioParams.WithUniformPitch());
         }
         else
         {
             _popup.PopupEntity(Loc.GetString("news-write-no-access-popup"), ent, PopupType.SmallCaution);
-            _audio.PlayPvs(ent.Comp.NoAccessSound, ent);
+            _audio.PlayPvs(ent.Comp.NoAccessSound, ent, FunAudioParams.WithUniformPitch());
         }
 
         var args = new NewsArticleDeletedEvent();
@@ -154,7 +155,7 @@ public sealed class NewsSystem : SharedNewsSystem
             ShareTime = _ticker.RoundDuration()
         };
 
-        _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+        _audio.PlayPvs(ent.Comp.ConfirmSound, ent, FunAudioParams.WithUniformPitch());
 
         _adminLogger.Add(
             LogType.Chat,

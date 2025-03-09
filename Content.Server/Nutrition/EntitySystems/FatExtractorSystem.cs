@@ -4,6 +4,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Storage.Components;
+using Content.Shared.Audio;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Nutrition.Components;
@@ -78,7 +79,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
         component.Processing = true;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, true);
-        component.Stream = _audio.PlayPvs(component.ProcessSound, uid)?.Entity;
+        component.Stream = _audio.PlayPvs(component.ProcessSound, uid, FunAudioParams.WithUniformPitch())?.Entity;
         component.NextUpdate = _timing.CurTime + component.UpdateTime;
     }
 
