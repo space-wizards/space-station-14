@@ -91,7 +91,7 @@
 - type: entity
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
-  description: A shotgun shell loaded with pellets containing a pyrophoric compound, setting targets ablaze.
+  description: A shotgun shell loaded with soft pellets containing a pyrophoric compound, setting targets ablaze.
   parent: BaseShellShotgun
   components:
   - type: Sprite
