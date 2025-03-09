@@ -259,7 +259,4 @@ internal sealed partial class ChatManager
         messageContext[DefaultChannelParameters.RandomSeed] = message.GetHashCode();
         return messageContext;
     }
-
-    
-
 }

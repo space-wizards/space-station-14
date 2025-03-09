@@ -9,7 +9,7 @@ namespace Content.Server.Chat.V2;
 /// </summary>
 public sealed class CommsAnnouncementCreatedEvent(EntityUid sender, EntityUid console, string message) : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = sender;
     public string Message { get; set; } = message;
     public MessageType Type => MessageType.Announcement;
@@ -21,7 +21,7 @@ public sealed class CommsAnnouncementCreatedEvent(EntityUid sender, EntityUid co
 /// </summary>
 public sealed class DeadChatCreatedEvent(EntityUid speaker, string message, bool isAdmin) : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
     public string Message { get; set; } = message;
     public MessageType Type => MessageType.DeadChat;
@@ -33,7 +33,7 @@ public sealed class DeadChatCreatedEvent(EntityUid speaker, string message, bool
 /// </summary>
 public sealed class EmoteCreatedEvent(EntityUid sender, string message, float range) : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = sender;
     public string Message { get; set; } = message;
     public MessageType Type => MessageType.Emote;
@@ -45,7 +45,7 @@ public sealed class EmoteCreatedEvent(EntityUid sender, string message, float ra
 /// </summary>
 public sealed class LocalChatCreatedEvent(EntityUid speaker, string message, float range) : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
     public string Message { get; set; } = message;
     public MessageType Type => MessageType.Local;
@@ -57,7 +57,7 @@ public sealed class LocalChatCreatedEvent(EntityUid speaker, string message, flo
 /// </summary>
 public sealed class LoocCreatedEvent(EntityUid speaker, string message) : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
     public string Message { get; set; } = message;
     public MessageType Type => MessageType.Looc;
@@ -72,7 +72,7 @@ public sealed class RadioCreatedEvent(
     RadioChannelPrototype channel)
     : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
     public string Message { get; set; } = message;
     public RadioChannelPrototype Channel = channel;
@@ -84,7 +84,7 @@ public sealed class RadioCreatedEvent(
 /// </summary>
 public sealed class WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange) : IChatEvent
 {
-    public ulong Id { get; set; }
+    public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
     public string Message { get; set; } = message;
     public MessageType Type => MessageType.Whisper;

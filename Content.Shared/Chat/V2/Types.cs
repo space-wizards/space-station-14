@@ -58,6 +58,9 @@ public enum MessageType : byte
 /// </summary>
 public interface IChatEvent
 {
+    /// <summary>	
+    /// The sender of the chat message.	
+    /// </summary>
     public EntityUid Sender
     {
         get;

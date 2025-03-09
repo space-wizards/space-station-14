@@ -54,20 +54,6 @@ public sealed class ChatRepository : IChatRepository
 
         _nextMessageId++;
 
-        if (senderSession == null)
-        {
-            return new ChatMessageWrapper(
-                messageId,
-                messageContent,
-                communicationChannel,
-                senderSession,
-                senderEntity,
-                parent,
-                targetSessions,
-                context
-            );
-        }
-
         var result = new ChatMessageWrapper(
             messageId,
             messageContent,
@@ -78,6 +64,11 @@ public sealed class ChatRepository : IChatRepository
             targetSessions,
             context
         );
+
+        if (senderSession == null)
+        {
+            return result;
+        }
 
         _messages[messageId] = result;
 
