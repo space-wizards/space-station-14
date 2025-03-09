@@ -1,0 +1,538 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "sprites by carousel for impstation",
+
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bellygem1",
+      "directions": 4
+    },
+    {
+      "name": "graytattoocar1",
+      "directions": 4
+    },
+    {
+      "name": "graytattoocar2",
+      "directions": 4
+    },
+    {
+      "name": "graytattooplane1",
+      "directions": 4
+    },
+    {
+      "name": "graytattooplane2",
+      "directions": 4
+    },
+    {
+      "name": "grayunderwearclassic",
+      "directions": 4
+    },
+    {
+      "name": "grayunderwearstriped1",
+      "directions": 4
+    },
+    {
+      "name": "grayunderwearstriped2",
+      "directions": 4
+    },
+    {
+      "name": "grayunderweartoga",
+      "directions": 4
+    },
+    {
+      "name": "messyponytail",
+      "directions": 4
+    },
+    {
+      "name": "thavenmessyponytail",
+      "directions": 4
+    },
+    {
+      "name": "radiumglowbrain",
+      "directions": 4
+    },
+    {
+      "name": "radiumglowcheeks",
+      "directions": 4
+    },
+    {
+      "name": "weewoo1",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weewoo2",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weewoo3",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weewoosmall1",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weewoosmall2",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weewoosmall3",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "eyebags",
+      "directions": 4
+    },
+    {
+      "name": "muscular",
+      "directions": 4
+    },
+    {
+      "name": "muscularthaven",
+      "directions": 4
+    },
+    {
+      "name": "eyebrowsthick",
+      "directions": 4
+    },
+    {
+      "name": "eyebrowsunibrow",
+      "directions": 4
+    },
+    {
+      "name": "eyebrowsultra",
+      "directions": 4
+    },
+    {
+      "name": "abdomenbasic1",
+      "directions": 4
+    },
+    {
+      "name": "abdomenbasic2",
+      "directions": 4
+    },
+    {
+      "name": "badmoltchest",
+      "directions": 4
+    },
+    {
+      "name": "badmolthead",
+      "directions": 4
+    },
+    {
+      "name": "badmoltlarm",
+      "directions": 4
+    },
+    {
+      "name": "badmoltrarm",
+      "directions": 4
+    },
+    {
+      "name": "lizardsnoutscar",
+      "directions": 4
+    },
+    {
+      "name": "lizardtalonscar",
+      "directions": 4
+    },
+    {
+      "name": "luna1",
+      "directions": 4
+    },
+    {
+      "name": "luna2",
+      "directions": 4
+    },
+    {
+      "name": "tail_dropped",
+      "directions": 4
+    },
+    {
+      "name": "tail_dropped_wagging",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "tail_gecko1",
+      "directions": 4
+    },
+    {
+      "name": "tail_gecko2",
+      "directions": 4
+    },
+    {
+      "name": "tail_snizard1",
+      "directions": 4
+    },
+    {
+      "name": "tail_snizard2",
+      "directions": 4
+    },
+    {
+      "name": "tail_snizard3",
+      "directions": 4
+    },
+    {
+      "name": "widow1",
+      "directions": 4
+    },
+    {
+      "name": "widow2",
+      "directions": 4
+    },
+    {
+      "name": "creepy",
+      "directions": 4
+    },
+    {
+      "name": "thavenbasictail",
+      "directions": 4
+    },
+    {
+      "name": "thavenbigtail1",
+      "directions": 4
+    },
+    {
+      "name": "thavenbigtail2",
+      "directions": 4
+    },
+    {
+      "name": "thaventadpole1",
+      "directions": 4
+    },
+    {
+      "name": "thaventadpole2",
+      "directions": 4
+    }
+  ]
+}
