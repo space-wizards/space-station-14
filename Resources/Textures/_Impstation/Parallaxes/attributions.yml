@@ -1,0 +1,4 @@
+- files: ["hummingbird_space.png"]
+  license: "Custom"
+  copyright: "edit done by DinnerCalzone (github) of space_map2 in the base parallaxes folder, which does not have any attributions. The source links to the original PR that it was added in."
+  source: "https://github.com/space-wizards/space-station-14/pull/24430"
