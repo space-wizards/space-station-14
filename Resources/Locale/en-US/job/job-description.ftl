@@ -2,8 +2,9 @@ job-description-technical-assistant = Learn the basics of managing the station's
 job-description-atmostech = Optimize the station's atmospherics setup, and synthesize rare gases to use or sell.
 job-description-bartender = Manage the bar and keep it lively, give out drinks, and listen to the crew's stories.
 job-description-botanist = Grow food for the chef, drugs for medbay, and other plants to keep yourself entertained.
-job-description-borg = Half-human, Half-machine. Follow your laws, serve the crew, and hound the science team for upgrades.
-job-description-boxer = Fight your way to the top! Challenge the head of personnel and get brigged when you win. Currently available on Core, Convex and Cog.
+#imp edit zookeeper to remove currently on section; borg now includes more than just humans
+job-description-borg = Half-brain, half-machine. Follow your laws, serve the crew, and hound the science team for upgrades.
+job-description-boxer = Fight your way to the top! Challenge the head of personnel and get brigged when you win.
 job-description-brigmedic = Fight in the rear of the security service, for the lives of your comrades! You are the first and last hope of your squad. Hippocrates bless you.
 job-description-cadet = Learn the basics of arresting criminals and managing the brig. Listen to your supervisors and feel free to ask them for any help.
 job-description-captain = Keep the station running, delegate work to the other heads of staff, and exert your will.
@@ -39,7 +40,8 @@ job-description-psychologist = Provide emotional support to traumatized crew. Cu
 job-description-qm = Manage the supplies of the station & the cargo department, keep the salvage specialists working, make sure all orders are fulfilled, and keep the money flowing.
 job-description-rd = Manage the science department, unlocking technologies, acquiring & researching artifacts, and performing experiments.
 job-description-research-assistant = Learn the basics of how to research various artifacts, anomalies and robotics.
-job-description-reporter = Entertain & inform the crew with your vibrant journalism through wireless cameras, the radio and the news. Currently available on Bagel Station, Cog, Convex, Core, Train and Oasis.
+#imp edit reporter to remove currently on section
+job-description-reporter = Entertain & inform the crew with your vibrant journalism through wireless cameras, the radio and the news.
 job-description-salvagespec = Use the salvage magnet to draw in detatched scraps & asteroids to loot and enrich the station, build a salvage ship and then travel to new planets, while fighting off any space fauna along the way.
 job-description-scientist = Research alien artifacts, unlock new technologies, build newer and better machines around the station, and make everything run more efficiently.
 job-description-security = Catch criminals and enemies of the station, enforce the law, and ensure that the station does not fall into disarray.
@@ -47,4 +49,5 @@ job-description-serviceworker = Learn the basics of bartending, cooking, and gro
 job-description-station-ai = Follow your laws, serve the crew.
 job-description-visitor = Enjoy your visit to the station.
 job-description-warden = Patrol the security department, ensure that no one is stealing from the armory, and make sure that all prisoners are processed and let out when their time is up.
-job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see. Currently available on Cog and Oasis.
+#imp edit zookeeper to remove currently on section
+job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see.

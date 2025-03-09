@@ -2,6 +2,7 @@
   parent: [ BaseCartridge, BaseMajorContraband ]
   id: CartridgeAntiMateriel
   name: cartridge (.60 anti-materiel)
+  description: A round of impressive power with a dense penetrator. As the dust settles, all that will remain is the echo. #imp
   components:
   - type: Tag
     tags:
