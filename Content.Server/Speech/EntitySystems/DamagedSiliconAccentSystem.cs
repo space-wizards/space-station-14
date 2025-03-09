@@ -9,15 +9,8 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class DamagedSiliconAccentSystem : EntitySystem
 {
-
-
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-
-    // Max corruption chance per character due to damage
-    private const float MaxCorruption = 0.45f;
-    // TotalDamage level that will result in MaxCorruption
-    private const int DamageAtMaxCorruption = 300;
 
     public override void Initialize()
     {
@@ -25,7 +18,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
     }
 
-    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent,  ref AccentGetEvent args)
+    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
     {
         var uid = ent.Owner;
 
@@ -47,32 +40,27 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         var currentChargeLevel = Math.Clamp(currentCharge / maxCharge, 0.0f, 1.0f);
 
         // Corrupt due to low power (drops characters on longer messages)
-        args.Message = CorruptPower(args.Message, currentChargeLevel);
+        args.Message = CorruptPower(args.Message, currentChargeLevel, ref ent.Comp);
         // Corrupt due to damage (drop, repeat, replace with symbols)
-        args.Message = CorruptDamage(args.Message, damage);
+        args.Message = CorruptDamage(args.Message, damage, ref ent.Comp);
     }
 
-    public string CorruptPower(string message, float chargeLevel)
+    public string CorruptPower(string message, float chargeLevel, ref DamagedSiliconAccentComponent comp)
     {
         // The first idxMin characters are SAFE
-        const int idxMin = 8;
+        var idxMin = comp.StartPowerCorruptionAtCharIdx;
         // Probability will max at idxMax
-        const int idxMax = 40;
-        // With no/empty battery, probability to drop will be this value at idxMax
-        const float maxDropProbWithEmptyBattery = 0.5f;
-        // This will have no effect when charge level is greater than chargeThreshold
-        const float chargeThreshold = 0.15f;
-        const float probToReplaceWithDot = 0.6f;
+        var idxMax = comp.MaxPowerCorruptionAtCharIdx;
 
         // Fast bails, would not have an effect
-        if (chargeLevel > chargeThreshold || message.Length < idxMin)
+        if (chargeLevel > comp.ChargeThresholdForPowerCorruption || message.Length < idxMin)
         {
             return message;
         }
 
         var outMsg = new StringBuilder();
 
-        var maxDropProb = maxDropProbWithEmptyBattery * (1.0f - chargeLevel / chargeThreshold);
+        var maxDropProb = comp.MaxDropProbFromPower * (1.0f - chargeLevel / comp.ChargeThresholdForPowerCorruption);
 
         var idx = -1;
         foreach (var letter in message)
@@ -94,7 +82,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             if (_random.Prob(probToDrop)) // Lose a character
             {
                 // Additional chance to change to dot for flavor instead of full drop
-                if (_random.Prob(probToReplaceWithDot))
+                if (_random.Prob(comp.ProbToCorruptDotFromPower))
                 {
                     outMsg.Append('.');
                 }
@@ -107,12 +95,12 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         return outMsg.ToString();
     }
 
-    public string CorruptDamage(string message, FixedPoint2 totalDamage)
+    private string CorruptDamage(string message, FixedPoint2 totalDamage, ref DamagedSiliconAccentComponent comp)
     {
         var outMsg = new StringBuilder();
         // Linear interpolation of character damage probability
-        var damagePercent = Math.Clamp((float)totalDamage / DamageAtMaxCorruption, 0, 1);
-        var chanceToCorruptLetter = damagePercent * MaxCorruption;
+        var damagePercent = Math.Clamp((float)totalDamage / (float)comp.DamageAtMaxCorruption, 0, 1);
+        var chanceToCorruptLetter = damagePercent * comp.MaxDamageCorruption;
         foreach (var letter in message)
         {
             if (_random.Prob(chanceToCorruptLetter)) // Corrupt!
