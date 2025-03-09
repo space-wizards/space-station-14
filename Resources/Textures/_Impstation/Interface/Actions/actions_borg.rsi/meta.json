@@ -23,6 +23,9 @@
             "name": "tcktck-tools-module"
         },
         {
+            "name": "basic-mining-module"
+        },
+        {
             "name": "mining-module"
         }
     ]

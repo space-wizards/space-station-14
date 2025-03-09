@@ -1,4 +1,4 @@
-#TchTch modules
+#TckTck modules
 - type: entity
   id: BorgModuleTckTck
   parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
@@ -125,11 +125,11 @@
   - type: Sprite
     layers:
     - state: cargo
-    - state: icon-mining
+    - state: icon-mining-basic
   - type: ItemBorgModule
     items:
     - BorgPickaxe
     - OreBag
     - RadioHandheld
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: basic-mining-module }
