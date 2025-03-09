@@ -1,12 +1,18 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Basic hand and neck by Sha-Seng (github)",
+    "copyright": "Created by Beck Thompson for SS14, basic hand and neck by Sha-Seng (github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+        {
+          "name": "ring"
+        },
+        {
+          "name": "gem"
+        },
         {
             "name": "equipped-HAND",
             "directions": 4
