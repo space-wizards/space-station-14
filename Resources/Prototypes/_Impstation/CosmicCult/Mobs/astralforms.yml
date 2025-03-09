@@ -119,12 +119,18 @@
   parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   id: MobRogueAscended
   name: rogue ascended
-  suffix: EVENTSPAWN
+  suffix: MidRoundAntag
   description: An entity from beyond the borders of bluespace. Its contours continuously blur and blend together, unnerving to the eye.
   components:
+  - type: RogueAscended # for the rogue ascended's MidRoundAntag Systems
+  - type: ActionsProvider
+    actions:
+    - ActionRogueInfection
+    - ActionRogueCosmicBeam
+    - ActionRogueCosmicNova
   - type: Bloodstream
     bloodMaxVolume: 650
-    bloodReagent: Fresium
+    bloodReagent: Entropy
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -245,7 +251,7 @@
     nameSegments:
     - ascended_names
     - ascended_titles
-  - type: Flammable
+  - type: Flammable # Not flammable
     damage:
       types: {}
   - type: StatusEffects # Overwriting status effects
@@ -253,3 +259,30 @@
     - SlowedDown
     - RadiationProtection
     - Adrenaline
+  - type: MeleeWeapon
+    angle: 90
+    range: 2
+    animation: WeaponArcCosmic
+    attackRate: 1
+    clickDamageModifier: 1
+    damage:
+      types:
+        Slash: 11
+        Asphyxiation: 12
+        Cold: 12
+        Structural: 15
+    soundHit:
+      path: /Audio/_Impstation/CosmicCult/cosmicsword_hit.ogg
+      params:
+        variation: 0.2
+        volume: 1
+    soundSwing:
+      path: /Audio/_Impstation/CosmicCult/cosmicweapon_swing.ogg
+      params:
+        variation: 0.125
+        volume: -4
+    soundNoDamage:
+      path: /Audio/_Impstation/CosmicCult/cosmicsword_glance.ogg
+      params:
+        variation: 0.2
+        volume: -11

@@ -16,6 +16,12 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RogueAscendedInfectionComponent, ComponentStartup>(OnAscendedInfectionAdded);
+        SubscribeLocalEvent<RogueAscendedInfectionComponent, ComponentShutdown>(OnAscendedInfectionRemoved);
+
+        SubscribeLocalEvent<RogueAscendedAuraComponent, ComponentStartup>(OnAscendedAuraAdded);
+        SubscribeLocalEvent<RogueAscendedAuraComponent, ComponentShutdown>(OnAscendedAuraRemoved);
+
         SubscribeLocalEvent<CosmicStarMarkComponent, ComponentStartup>(OnCosmicStarMarkAdded);
         SubscribeLocalEvent<CosmicStarMarkComponent, ComponentShutdown>(OnCosmicStarMarkRemoved);
 
@@ -27,6 +33,26 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         SubscribeLocalEvent<CosmicMarkBlankComponent, GetStatusIconsEvent>(GetCosmicSSDIcon);
     }
 
+    private void OnAscendedInfectionAdded(Entity<RogueAscendedInfectionComponent> uid, ref ComponentStartup args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(AscendedInfectionKey.Key, out _))
+            return;
+
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(uid.Comp.RsiPath, uid.Comp.States));
+
+        sprite.LayerMapSet(AscendedInfectionKey.Key, layer);
+        sprite.LayerSetShader(layer, "unshaded");
+    }
+    private void OnAscendedAuraAdded(Entity<RogueAscendedAuraComponent> uid, ref ComponentStartup args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(AscendedAuraKey.Key, out _))
+            return;
+
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(uid.Comp.RsiPath, uid.Comp.States));
+
+        sprite.LayerMapSet(AscendedAuraKey.Key, layer);
+        sprite.LayerSetShader(layer, "unshaded");
+    }
     private void OnCosmicStarMarkAdded(Entity<CosmicStarMarkComponent> uid, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(CosmicRevealedKey.Key, out _))
@@ -37,7 +63,6 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         sprite.LayerMapSet(CosmicRevealedKey.Key, layer);
         sprite.LayerSetShader(layer, "unshaded");
     }
-
     private void OnCosmicImpositionAdded(Entity<CosmicImposingComponent> uid, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(CosmicImposingKey.Key, out _))
@@ -47,6 +72,23 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 
         sprite.LayerMapSet(CosmicImposingKey.Key, layer);
         sprite.LayerSetShader(layer, "unshaded");
+    }
+
+
+
+    private void OnAscendedInfectionRemoved(Entity<RogueAscendedInfectionComponent> uid, ref ComponentShutdown args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite) || !sprite.LayerMapTryGet(AscendedInfectionKey.Key, out var layer))
+            return;
+
+        sprite.RemoveLayer(layer);
+    }
+    private void OnAscendedAuraRemoved(Entity<RogueAscendedAuraComponent> uid, ref ComponentShutdown args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite) || !sprite.LayerMapTryGet(AscendedAuraKey.Key, out var layer))
+            return;
+
+        sprite.RemoveLayer(layer);
     }
     private void OnCosmicStarMarkRemoved(Entity<CosmicStarMarkComponent> uid, ref ComponentShutdown args)
     {
@@ -62,6 +104,8 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 
         sprite.RemoveLayer(layer);
     }
+
+
 
 
 

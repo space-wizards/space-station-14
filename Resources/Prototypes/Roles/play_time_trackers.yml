@@ -226,3 +226,6 @@
 
 - type: playTimeTracker
   id: AntagCosmicCultLead
+
+- type: playTimeTracker
+  id: AntagRogueAscended

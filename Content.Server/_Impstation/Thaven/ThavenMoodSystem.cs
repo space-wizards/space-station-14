@@ -104,6 +104,21 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         return true;
     }
 
+    public void ToggleEmaggable(ThavenMoodsComponent component)
+    {
+        if (!component.CanBeEmagged) component.CanBeEmagged = true;
+        else component.CanBeEmagged = false;
+    }
+    public void ToggleSharedMoods(ThavenMoodsComponent component)
+    {
+        if (!component.FollowsSharedMoods) component.FollowsSharedMoods = true;
+        else component.FollowsSharedMoods = false;
+    }
+    public void ClearMoods(ThavenMoodsComponent component)
+    {
+        component.Moods = new List<ThavenMood>();
+    }
+
     private void OnBoundUIOpened(EntityUid uid, ThavenMoodsComponent component, BoundUIOpenedEvent args)
     {
         UpdateBUIState(uid, component);
@@ -249,14 +264,14 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         return true;
     }
 
-    public bool TryAddRandomMood(EntityUid uid, string datasetProto, ThavenMoodsComponent? comp = null)
+    public bool TryAddRandomMood(EntityUid uid, string datasetProto, ThavenMoodsComponent? comp = null, bool notify = true)
     {
         if (!Resolve(uid, ref comp))
             return false;
 
         if (TryPick(datasetProto, out var moodProto, GetActiveMoods(uid, comp)))
         {
-            AddMood(uid, RollMood(moodProto), comp);
+            AddMood(uid, RollMood(moodProto), comp, notify);
             return true;
         }
 

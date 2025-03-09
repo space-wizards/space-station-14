@@ -93,27 +93,6 @@ public sealed partial class CosmicCultComponent : Component
     /// A string for storing what damage container this cultist had upon conversion.
     /// </summary>
     [DataField, AutoNetworkedField] public ProtoId<DamageContainerPrototype> StoredDamageContainer = "Biological";
-
-    /// <summary>
-    /// The asphyx damage to apply upon a successful Siphon Entropy
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier SiphonAsphyxDamage = new()
-    {
-        DamageDict = new() {
-            { "Asphyxiation", 15 }
-        }
-    };
-    /// <summary>
-    /// The cold damage to apply upon a successful Siphon Entropy. WTF IS THE CORRECT WAY TO INVOKE A DAMAGEDICT WITH MULTIPLE TYPES!? AAGH. This would save one line of code and this damage specifier entry.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier SiphonColdDamage = new()
-    {
-        DamageDict = new() {
-            { "Cold", 6 }
-        }
-    };
     #endregion
 
     #region VFX & SFX

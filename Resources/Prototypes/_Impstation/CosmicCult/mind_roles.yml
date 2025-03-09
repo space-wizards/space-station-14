@@ -27,9 +27,7 @@
   name: Rogue Ascended Role
   components:
   - type: MindRole
-    antagPrototype: RogueAscendedSpawn
+    antagPrototype: RogueAscended
     roleType: TeamAntagonist
     exclusiveAntag: true
   - type: RogueAscendedRole
-  - type: RoleBriefing
-    briefing: dragon-role-briefing

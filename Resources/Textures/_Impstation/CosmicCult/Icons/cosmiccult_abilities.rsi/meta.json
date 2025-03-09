@@ -48,6 +48,15 @@
         },
         {
             "name": "stride"
+        },
+
+
+
+        {
+            "name": "infect"
+        },
+        {
+            "name": "usurpednova"
         }
     ]
 }

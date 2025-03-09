@@ -4,6 +4,7 @@
   id: AscendedDendrite
   description: A bundle of semi-ephemeral tissue extracted from the unravelling husk of an astral ascendant. A faint malign light pulses within.
   components:
+  - type: RogueAscendedDendrite
   - type: Item
     size: Normal
   - type: Food
@@ -23,12 +24,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 15
         reagents:
-        - ReagentId: Fresium
-          Quantity: 15
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fresium
-        Quantity: 10
+        - ReagentId: Entropy
+          Quantity: 10

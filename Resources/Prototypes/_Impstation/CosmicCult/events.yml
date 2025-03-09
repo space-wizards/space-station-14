@@ -3,31 +3,48 @@
   id: RogueAscendedSpawn
   components:
   - type: StationEvent
-    weight: 6
+    weight: 6.5
     earliestStart: 30
     reoccurrenceDelay: 20
     minimumPlayers: 30
     duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
-  - type: AntagSpawner
-    prototype: MobRogueAscended
+  - type: RandomSpawnRule
+    prototype: SpawnPointRogueAscended
   - type: AntagObjectives
     objectives:
-    - CarpRiftsObjective
-    - DragonSurviveObjective
+    - RogueAscendedInfectionObjective
+    - RogueAscendedSurviveObjective
   - type: AntagSelection
-    agentName: dragon-round-end-agent-name
+    agentName: rogue-ascended-round-end-agent-name
     definitions:
-    - spawnerPrototype: SpawnPointGhostDragon
+    - spawnerPrototype: SpawnPointRogueAscended
       min: 1
       max: 1
       pickPlayer: false
       mindRoles:
       - MindRoleCosmicAscendant
       briefing:
-        text: ninja-role-greeting
-        color: Green
-        sound: /Audio/Misc/ninja_greeting.ogg
+        text: rogue-ascended-role-greeting
+        color: CadetBlue
+        sound: /Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg
       components:
       - type: RogueAscended
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointRogueAscended
+  components:
+  - type: GhostRole
+    name: ghost-role-information-rogue-ascended-name
+    description: ghost-role-information-rogue-ascended-description
+    rules: ghost-role-information-rogue-ascended-rules
+    mindRoles:
+    - MindRoleCosmicAscendant
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Mobs/astralrogue.rsi
+    layers:
+    - state: underlay
+      shader: unshaded
+    - state: base
+      shader: unshaded

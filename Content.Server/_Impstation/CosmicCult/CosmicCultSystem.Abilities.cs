@@ -23,6 +23,8 @@ using Content.Shared.NPC;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Doors.Components;
+using Content.Shared.Chemistry.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -136,6 +138,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         _stun.TryParalyze(args.OtherEntity, TimeSpan.FromSeconds(2f), false);
         _damageable.TryChangeDamage(args.OtherEntity, uid.Comp.CosmicNovaDamage); // This'll probably trigger two or three times because of how collision works. I'm not being lazy here, it's a feature (kinda /s)
+        _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { args.OtherEntity }, Filter.Pvs(args.OtherEntity, entityManager: EntityManager));
     }
     #endregion
 
@@ -192,8 +195,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
             return;
         args.Handled = true;
 
-        _damageable.TryChangeDamage(args.Target, uid.Comp.SiphonAsphyxDamage, origin: uid);
-        _damageable.TryChangeDamage(args.Target, uid.Comp.SiphonColdDamage, origin: uid);
+        var solution = new Solution(); // begin solution garbage. all of this needs replacing with GenericDebuff
+        solution.AddReagent("Entropy", 10f);
+        if (!_solution.TryGetInjectableSolution(target, out var targetSolution, out var _))
+            return;
+        _solution.TryAddSolution(targetSolution.Value, solution); // end solution garbage
+
         _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
 
         var entropyMote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
@@ -237,7 +244,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         args.Handled = true;
         _doAfter.TryStartDoAfter(doargs);
         _popup.PopupEntity(Loc.GetString("cosmicability-blank-begin", ("target", Identity.Entity(uid, EntityManager))), uid, args.Target);
-
     }
 
     private void OnCosmicBlankDoAfter(Entity<CosmicCultComponent> uid, ref EventCosmicBlankDoAfter args)
@@ -279,6 +285,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _stun.TryKnockdown(target, comp.CosmicBlankDuration, true);
         _popup.PopupEntity(Loc.GetString("cosmicability-blank-transfer"), mobUid, mobUid);
         _audio.PlayPvs(comp.BlankSFX, spawnTgt, AudioParams.Default.WithVolume(6f));
+        _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { target }, Filter.Pvs(target, entityManager: EntityManager));
         Spawn(comp.BlankVFX, spawnTgt);
         MalignEcho(uid);
     }

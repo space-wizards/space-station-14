@@ -72,7 +72,7 @@ public sealed partial class MonumentComponent : Component
     /// the timer used for ticking healing from vacuous vitality
     /// </summary>
     [AutoPausedField, DataField]
-    public TimeSpan VitalityCheckTimer = default!;
+    public TimeSpan CheckTimer = default!;
 
     /// <summary>
     /// the amount of time between the above timer's ticks

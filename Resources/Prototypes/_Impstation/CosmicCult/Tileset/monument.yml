@@ -189,6 +189,41 @@
         layer:
         - WallLayer
 
+ ########### TIER 3 SUPPRESSION AURA #############
+
+- type: entity
+  id: MonumentSlowZone
+  suffix: Debug, DO NOT MAP
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    anchored: true
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.65
+    sprintSpeedModifier: 0.7
+    ignoreWhitelist:
+      components:
+      - CosmicCult
+      - MindShield
+      - BibleUser
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-8.5,-8.5,8.5,8.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+
  ########### STAGE 1 #############
 
 - type: entity
