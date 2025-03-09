@@ -215,7 +215,7 @@
   - type: Sprite
     layers:
     - state: cargo
-    - state: icon-mining
+    - state: icon-mining-adv #imp edit
   - type: ItemBorgModule
     items:
     - MiningDrill
@@ -225,7 +225,7 @@
     - Crowbar
     - RadioHandheld
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: mining-module } #imp edit
 
 - type: entity
   id: BorgModuleGrapplingGun
