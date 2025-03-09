@@ -234,6 +234,28 @@ entities:
     - type: Transform
       pos: 5.7688336,0.009467065
       parent: 2
+- proto: AtmosDeviceFanTiny
+  entities:
+  - uid: 74
+    components:
+    - type: Transform
+      pos: 0.5,-1.5
+      parent: 2
+  - uid: 79
+    components:
+    - type: Transform
+      pos: 0.5,-3.5
+      parent: 2
+  - uid: 80
+    components:
+    - type: Transform
+      pos: 12.5,-3.5
+      parent: 2
+  - uid: 86
+    components:
+    - type: Transform
+      pos: 12.5,-1.5
+      parent: 2
 - proto: BlastDoor
   entities:
   - uid: 229
