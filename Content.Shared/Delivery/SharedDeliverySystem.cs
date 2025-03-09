@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.DoAfter;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
@@ -11,6 +12,7 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Delivery;
 
@@ -28,6 +30,7 @@ public abstract class SharedDeliverySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -36,6 +39,9 @@ public abstract class SharedDeliverySystem : EntitySystem
         SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+
+        SubscribeLocalEvent<TearableDeliveryComponent, GetVerbsEvent<ActivationVerb>>(OnGetTearableVerbs);
+        SubscribeLocalEvent<TearableDeliveryComponent, TearableDeliveryDoAfterEvent>(OnTornDoAfter);
     }
 
     private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
@@ -64,6 +70,60 @@ public abstract class SharedDeliverySystem : EntitySystem
             OpenDelivery(ent, args.User);
     }
 
+    private void OnGetTearableVerbs(Entity<TearableDeliveryComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (!TryComp<DeliveryComponent>(ent, out var delivery))
+            return;
+
+        if (delivery.IsOpened || !delivery.IsLocked)
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new ActivationVerb()
+        {
+            Act = () =>
+            {
+                var doAfterEventArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new TearableDeliveryDoAfterEvent(), ent, ent)
+                {
+                    NeedHand = true,
+                    BreakOnDamage = true,
+                    BreakOnMove = true
+                };
+
+                _doAfter.TryStartDoAfter(doAfterEventArgs);
+            },
+            Text = Loc.GetString(ent.Comp.TearVerb),
+        });
+    }
+
+    private void OnTornDoAfter(Entity<TearableDeliveryComponent> ent, ref TearableDeliveryDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!TryComp<DeliveryComponent>(ent, out var delivery))
+            return;
+
+        if (delivery.IsOpened || !delivery.IsLocked)
+            return;
+
+        TryUnlockDelivery((ent.Owner, delivery), args.User, false, true);
+
+        var isHeld = _hands.IsHolding(args.User, ent);
+
+        OpenDelivery((ent.Owner, delivery), args.User, isHeld, true);
+
+        _audio.PlayPredicted(ent.Comp.TearSound, args.User, args.User);
+
+        AnnounceTearPenalty((ent.Owner, ent.Comp));
+
+        ModifySpesoAmount((ent.Owner, delivery), ent.Comp.SpesoPenalty);
+    }
+
     private void OnGetVerbs(Entity<DeliveryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.IsOpened)
@@ -87,15 +147,16 @@ public abstract class SharedDeliverySystem : EntitySystem
         });
     }
 
-    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true)
+    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true, bool force = false)
     {
         // Check fingerprint access if there is a reader on the mail
-        if (TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
+        if (!force && TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
             return false;
 
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
-        _audio.PlayPredicted(ent.Comp.UnlockSound, user, user);
+        if (!force)
+            _audio.PlayPredicted(ent.Comp.UnlockSound, user, user);
 
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, ent.Comp.IsLocked);
@@ -106,14 +167,14 @@ public abstract class SharedDeliverySystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
 
         if (rewardMoney)
-            GrantSpesoReward(ent.AsNullable());
+            ModifySpesoAmount(ent.AsNullable());
 
-        _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
-            Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+        if (!force)
+            _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)), Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
         return true;
     }
 
-    private void OpenDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool attemptPickup = true)
+    private void OpenDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool attemptPickup = true, bool force = false)
     {
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
@@ -133,8 +194,8 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
-        _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
-            Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+        if (!force)
+            _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)), Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
@@ -162,8 +223,16 @@ public abstract class SharedDeliverySystem : EntitySystem
             _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
     }
 
-    protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
+    protected virtual void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int? amount = null) { }
+
+    protected virtual void AnnounceTearPenalty(Entity<TearableDeliveryComponent?> ent) { }
 }
+
+/// <summary>
+/// Event raised on the entity after the Tear verb is complete.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class TearableDeliveryDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
 /// Event raised on the delivery when it is unlocked.

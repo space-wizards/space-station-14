@@ -1,5 +1,6 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Delivery;
@@ -25,6 +26,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
     [Dependency] private readonly SharedLabelSystem _label = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -65,7 +67,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         Dirty(ent);
     }
 
-    protected override void GrantSpesoReward(Entity<DeliveryComponent?> ent)
+    protected override void ModifySpesoAmount(Entity<DeliveryComponent?> ent, int? amount = null)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -73,7 +75,24 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var account))
             return;
 
-        _cargo.UpdateBankAccount(ent, account, ent.Comp.SpesoReward);
+        var spesoAmount = amount ?? ent.Comp.SpesoReward;
+
+        // Do you want to bring cargo into debt???
+        if (spesoAmount < 0 && account.Balance + spesoAmount < 0)
+            spesoAmount = account.Balance * -1;
+
+        _cargo.UpdateBankAccount(ent, account, spesoAmount);
+    }
+
+    protected override void AnnounceTearPenalty(Entity<TearableDeliveryComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.TearMessage == null)
+            return;
+
+        _chat.TrySendInGameICMessage(ent, Loc.GetString(ent.Comp.TearMessage, ("spesos", ent.Comp.SpesoPenalty)), InGameICChatType.Speak, true);
     }
 
     public override void Update(float frameTime)
