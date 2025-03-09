@@ -18,7 +18,6 @@ entities:
       name: SO "Stone" 2A-Q3572
     - type: Transform
       pos: -0.453125,-0.203125
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
