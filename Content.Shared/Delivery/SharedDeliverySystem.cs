@@ -3,6 +3,7 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
@@ -107,7 +108,8 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (rewardMoney)
             GrantSpesoReward(ent.AsNullable());
 
-        _popup.PopupPredicted(Loc.GetString("delivery-unlocked", ("delivery", deliveryName)), user, user);
+        _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
+            Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
         return true;
     }
 
@@ -131,7 +133,8 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
-        _popup.PopupPredicted(Loc.GetString("delivery-opened", ("delivery", deliveryName)), user, user);
+        _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
+            Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
