@@ -7,7 +7,7 @@
         <!-- Id current status header -->
         <BoxContainer Orientation="Horizontal" Margin="0 12 0 4">
                 <TextureRect Name="CurrentJobIcon" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="60 60" />
+                        VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
             <BoxContainer Margin="8 4 0 0" Orientation="Vertical">
                 <Label Name="CurrentName" SetHeight="24" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig" />
                 <Label Name="CurrentJob" Margin="8 4 0 0" />
@@ -31,10 +31,10 @@
         <!-- Job icon box -->
         <Label Text="{Loc 'agent-id-card-job-icon-label'}" />
         <BoxContainer Orientation="Horizontal">
-            <GridContainer Name="JobGroupGrid" Columns="2">
+            <GridContainer Name="JobGroupGrid" Columns="6">
                 <!-- Group buttons are generated in code -->
             </GridContainer>
-            <BoxContainer Margin="4 0 0 0" MinWidth="98">
+            <BoxContainer Margin="4 0 0 0" SetWidth="104">
                 <GridContainer Name="IconGrid" Columns="3">
                     <!-- Job icon buttons are generated in code -->
                 </GridContainer>

@@ -8,7 +8,6 @@ job-icon-group-service = Service
 job-icon-group-entertainer = Entertainer
 job-icon-group-civilian = Civilian
 job-icon-group-silicon = Silicon
-job-icon-group-centcom = Centcom
 job-icon-group-blank = Blank
 job-icon-group-threat = Threat
 job-icon-group-admin = Admin

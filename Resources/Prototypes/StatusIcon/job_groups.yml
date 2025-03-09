@@ -16,6 +16,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Captain
   icons:
+  - JobIconNanotrasen
   - JobIconCaptain
   - JobIconChiefEngineer
   - JobIconChiefMedicalOfficer
@@ -129,15 +130,6 @@
   icons:
   - JobIconStationAi
   - JobIconBorg
-
-- type: jobIconGroup
-  id: CentcomIconGroup
-  groupName: job-icon-group-centcom
-  sprite:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Nanotrasen
-  icons:
-  - JobIconNanotrasen
 
 - type: jobIconGroup
   id: BlankIconGroup

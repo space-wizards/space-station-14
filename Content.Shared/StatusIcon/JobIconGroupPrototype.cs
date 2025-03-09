@@ -29,5 +29,5 @@ public sealed partial class JobIconGroupPrototype : IPrototype
     ///     Sprite used to represent the group.
     /// </summary>
     [DataField]
-    public SpriteSpecifier? Sprite;
+    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/job_icons.rsi"), "NoId");
 }

@@ -64,61 +64,43 @@ namespace Content.Client.Access.UI
         //TODO rename, remove currentJobIconId, summary
         public void SetAllowedIcons(string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> jobGroups)
         {
+            // TODO move currentJobIconId to a general startup function
             CurrentJobIcon.Texture = _spriteSystem.Frame0(_prototypeManager.Index<JobIconPrototype>(currentJobIconId).Icon);
             JobGroupGrid.DisposeAllChildren();
             IconGrid.DisposeAllChildren();
 
             var jobGroupButtonGroup = new ButtonGroup();
-            var i = 0;
 
             foreach (var group in jobGroups)
             {
                 if (!_prototypeManager.TryIndex<JobIconGroupPrototype>(group, out var groupProto))
                     continue;
 
-                // Alternate button styles
-                var styleBase = StyleBase.ButtonOpenBoth;
-                var modulo = i % JobGroupColumnCount;
-                if (modulo == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
-                else if (modulo == JobGroupColumnCount - 1)
-                    styleBase = StyleBase.ButtonOpenLeft;
-
                 // Create new button
                 var groupButton = new Button
                 {
                     Access = AccessLevel.Public,
-                    ToolTip = Loc.GetString(groupProto.GroupName),
-                    StyleClasses = { styleBase },
-                    SetSize = new Vector2(150, 28),
-                    Group = jobGroupButtonGroup
-                };
-
-                // Add button texture
-                if (groupProto.Sprite != null)
-                {
-                    var groupTexture = new TextureRect
-                    {
-                        Texture = _spriteSystem.Frame0(groupProto.Sprite),
-                        SetSize = new Vector2(20, 20),
-                        Stretch = TextureRect.StretchMode.KeepAspect
-                    };
-                    groupButton.AddChild(groupTexture);
-                }
-
-                // Add button label
-                var groupLabel = new Label
-                {
+                    Group = jobGroupButtonGroup,
                     Text = Loc.GetString(groupProto.GroupName),
-                    Margin = new Thickness(27, 0, 0, 0),
-                    Align = Label.AlignMode.Center
+                    ToolTip = Loc.GetString(groupProto.GroupName),
+                    StyleClasses = { StyleBase.ButtonOpenLeft },
+                    SetSize = new Vector2(150, 32)
                 };
-                groupButton.AddChild(groupLabel);
+
+                // Add texture button
+                var groupTextureButton = new TextureButton
+                {
+                    Access = AccessLevel.Public,
+                    TextureNormal = _spriteSystem.Frame0(groupProto.Sprite),
+                    Scale = new Vector2(4f, 4f),
+                    SetSize = new Vector2(32, 32)
+                };
 
                 // Finish button and add to UI
                 groupButton.OnPressed += _ => SetJobIcons(groupProto.Icons);
+                // TODO clicking texture button clicks main button
+                JobGroupGrid.AddChild(groupTextureButton);
                 JobGroupGrid.AddChild(groupButton);
-                i++;
             }
         }
 
@@ -134,14 +116,14 @@ namespace Content.Client.Access.UI
 
                 var texture = _spriteSystem.Frame0(iconProto.Icon);
 
-                // TODO figure out uneven pixels
                 // Create new button
                 var jobIconButton = new TextureButton
                 {
-                    TextureNormal = texture,
                     Access = AccessLevel.Public,
-                    SetSize = new Vector2(30, 30),
-                    ToolTip = iconProto.LocalizedJobName
+                    ToolTip = Loc.GetString(iconProto.JobName),
+                    TextureNormal = texture,
+                    Scale = new Vector2(4f, 4f),
+                    SetSize = new Vector2(32, 32)
                 };
 
                 // Finish button and add to UI

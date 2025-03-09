@@ -606,7 +606,6 @@
     - EntertainerIconGroup
     - CivilianIconGroup
     - SiliconIconGroup
-    - CentcomIconGroup
     - BlankIconGroup
     - ThreatIconGroup
   - type: ActivatableUI
