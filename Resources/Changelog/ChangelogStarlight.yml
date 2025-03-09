@@ -3979,4 +3979,18 @@ Entries:
   id: 551
   time: '2025-03-08T17:47:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/375
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the old Head of Security (cowboy) hat!
+    type: Add
+  id: 552
+  time: '2025-03-09T17:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/380
+- author: PubliclyExecutedPig
+  changes:
+  - message: Removed the HoS cap
+    type: Remove
+  id: 553
+  time: '2025-03-09T17:19:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/380
 
