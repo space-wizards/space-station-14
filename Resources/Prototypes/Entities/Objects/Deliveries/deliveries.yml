@@ -39,6 +39,8 @@
   - type: ContainerContainer
     containers:
       delivery: !type:Container
+  - type: StealTarget
+    stealGroup: Mail
 
 - type: entity
   parent: BaseDelivery
