@@ -137,6 +137,22 @@
     proto: null
 
 - type: entity
+  id: MagazinePistolSubMachineGunTopMountedIncendiary
+  name: WT550 magazine (.35 auto top-mounted incendiary)
+  parent: MagazinePistolSubMachineGunTopMounted
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+
+- type: entity
+  id: MagazinePistolSubMachineGunTopMountedUranium
+  name: WT550 magazine (.35 auto top-mounted uranium)
+  parent: MagazinePistolSubMachineGunTopMounted
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+
+- type: entity
   id: MagazinePistol
   name: pistol magazine (.35 auto)
   parent: BaseMagazinePistol
