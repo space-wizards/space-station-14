@@ -53,15 +53,18 @@
                     <!-- Vertical Padding-->
                     <Control VerticalExpand="True" />
                     <!-- Left Bot Panel -->
-                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                        <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
-                        <PanelContainer StyleClasses="AngleRect" Margin="0 0 3 0">
-                            <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
-                        </PanelContainer>
+                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <!-- Lobby background credits, imp edit -->
-                        <PanelContainer StyleClasses="AngleRect">
+                        <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Margin="0 0 0 3">
                             <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Center" />
                         </PanelContainer>
+                        <!-- End imp edit -->
+                        <BoxContainer Orientation="Horizontal">
+                            <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
+                            <PanelContainer StyleClasses="AngleRect">
+                                <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
+                            </PanelContainer>
+                        </BoxContainer>
                     </BoxContainer>
                 </Control>
                 <!-- Character setup state -->
