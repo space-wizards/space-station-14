@@ -710,9 +710,9 @@
           Quantity: 10
 
 - type: entity
-  name: pill canister
   parent: PillCanister
   id: PillCanisterDesoxyephedrine
+  name: pill canister
   suffix: Desoxyephedrine 10u, 5
   components:
   - type: Label
@@ -723,10 +723,10 @@
       amount: 5
 
 - type: entity
-  name: pill
-  suffix: Desoxyephedrine 10u
   parent: Pill
   id: PillDesoxyephedrine
+  name: pill
+  suffix: Desoxyephedrine 10u
   components:
   - type: Pill
     pillType: 20

@@ -1,0 +1,78 @@
+# Base trash bin
+- type: entity
+  abstract: true
+  id: TrashBinBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.13,-0.5,0.13,0.28"
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30 # Trash bins are less expensive to make & generally smaller
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 45
+
+# Trash bin
+- type: entity
+  parent: [TrashBinBase, CrateBaseWeldable]
+  id: CrateTrashBin
+  name: trash bin
+  description: A low-tech trash bin. You shudder to imagine the kinds of things that transpired in the archaic days of having non-centralized trash systems.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/trash_bin.rsi
+  - type: Sprite
+    sprite: Structures/Storage/trash_bin.rsi
+  - type: Construction
+    graph: TrashBin
+    node: trashbin
+    containers:
+    - entity_storage
+
+# Secure trash bin
+- type: entity
+  parent: [TrashBinBase, CrateBaseSecure]
+  id: CrateTrashBinSecure
+  name: secure trash bin
+  description: A fancy, secure trash bin. It's useful for disposing of sensitive documents.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/trash_bin.rsi
+    state: icon_secure
+  - type: Sprite
+    sprite: Structures/Storage/trash_bin.rsi
+    layers:
+    - state: base_secure
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Construction
+    graph: TrashBinSecure
+    node: trashbinsecure
+    containers:
+    - entity_storage
