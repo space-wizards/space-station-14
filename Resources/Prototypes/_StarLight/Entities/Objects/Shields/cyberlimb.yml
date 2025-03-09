@@ -1,5 +1,5 @@
 - type: entity
-  name: The Bulwark
+  name: bulwark
   parent: [BaseItem, BaseSecurityContraband]
   id: EnergyShieldCyber
   description: The true shield for warriors, made out of hard-light materials making it lightweight and portable.
@@ -91,7 +91,7 @@
       price: 350
 
 - type: entity
-  name: Broken Bulwark
+  name: broken bulwark
   parent: BaseItem
   id: BrokenEnergyShieldCyber
   description: Too damaged to effectively protect. Time to get a new one!

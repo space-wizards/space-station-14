@@ -1,7 +1,7 @@
 - type: entity
-  name: Energy Chainsaw
+  name: energy chainsword
   parent: [BaseMeleeWeaponEnergy, BaseSecurityContraband]
-  id: CyberEnergyChainsaw
+  id: CyberEnergyChainsword
   description: Slam this into the individual you wish to destroy, mentally and physically.
   components:
   - type: Sprite
@@ -44,10 +44,10 @@
     sprite: _Starlight/Objects/Weapons/Melee/cyberchainsaw.rsi
   - type: Scalpel
   - type: SurgeryTool
-    successRate: 0.2
+    successRate: 0.01
     startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+      path: /Audio/Weapons/chainsaw.ogg
     endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+      path: /Audio/Weapons/chainsaw.ogg
   - type: Reflect
     reflectProb: 0.1

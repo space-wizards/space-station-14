@@ -234,7 +234,7 @@
 #Bulwark 
 - type: entity
   id: LeftArmCyberBulwark
-  name: "Left Bulwark Arm"
+  name: "left bulwark arm"
   parent: [PartCyber, BaseLeftArm, BaseSecurityContraband]
   components:
     - type: BaseLayerId
@@ -253,11 +253,11 @@
         path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
       items:
         - EnergyShieldCyber
-        - CyberEnergyChainsaw
+        - CyberEnergyChainsword
 
 - type: entity
   id: RightArmCyberBulwark
-  name: "Right Bulwark Arm"
+  name: "right bulwark arm"
   parent: [PartCyber, BaseRightArm, BaseSecurityContraband]
   components:
     - type: BaseLayerId
@@ -276,4 +276,4 @@
         path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
       items:
         - EnergyShieldCyber
-        - CyberEnergyChainsaw
+        - CyberEnergyChainsword
