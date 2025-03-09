@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Server.Chat.Systems;
 using Content.Server.EntityEffects.EffectConditions;
 using Content.Server.EntityEffects.Effects;
@@ -47,11 +48,19 @@ public sealed class RespiratorSystem : EntitySystem
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RespiratorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<RespiratorComponent, ToggleBreathingAlertEvent>(OnToggleBreathingAlert);
+        SubscribeLocalEvent<RespiratorComponent, ComponentShutdown>(OnRepiratorShutdown);
     }
 
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        _alertsSystem.ShowAlert(ent, ent.Comp.BreathingAlert, (short)0, showCooldown: false, autoRemove: false);
+    }
+
+    private void OnRepiratorShutdown(Entity<RespiratorComponent> ent, ref ComponentShutdown args)
+    {
+        _alertsSystem.ClearAlert(ent, ent.Comp.BreathingAlert);
     }
 
     private void OnUnpaused(Entity<RespiratorComponent> ent, ref EntityUnpausedEvent args)
@@ -66,7 +75,7 @@ public sealed class RespiratorSystem : EntitySystem
         var query = EntityQueryEnumerator<RespiratorComponent, BodyComponent>();
         while (query.MoveNext(out var uid, out var respirator, out var body))
         {
-            if (_gameTiming.CurTime < respirator.NextUpdate)
+            if(_gameTiming.CurTime < respirator.NextUpdate)
                 continue;
 
             respirator.NextUpdate += respirator.UpdateInterval;
@@ -76,7 +85,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
 
-            if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+            if (!_mobState.IsIncapacitated(uid) && respirator.Breathing) // cannot breathe in crit or if you don't want to.
             {
                 switch (respirator.Status)
                 {
@@ -107,6 +116,15 @@ public sealed class RespiratorSystem : EntitySystem
             StopSuffocation((uid, respirator));
             respirator.SuffocationCycles = 0;
         }
+    }
+
+    private void OnToggleBreathingAlert(Entity<RespiratorComponent> ent, ref ToggleBreathingAlertEvent args)
+    {
+        if (args.Handled)
+            return;
+        ent.Comp.Breathing = !ent.Comp.Breathing;
+        _alertsSystem.ShowAlert(ent, ent.Comp.BreathingAlert, (short?)(ent.Comp.Breathing ? 0 : 1));
+        args.Handled = true;
     }
 
     public void Inhale(EntityUid uid, BodyComponent? body = null)
