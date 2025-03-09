@@ -30,7 +30,7 @@ public sealed class ListAntagsCommand : LocalizedEntityCommands
 
             var playerName = mind.Session?.Name ?? Loc.GetString("cmd-lsantags-unknown");
             var icName = mind.CharacterName ?? Loc.GetString("cmd-lsantags-nameless");
-            var antagRoles = _sharedRoleSystem.MindGetAllRoleInfo(mindId)
+            var antagRoles = _sharedRoleSystem.MindGetAllRoleInfo((mindId, mind))
                 .Where(role => role.Antagonist)
                 .Select(role => Loc.GetString(role.Name))
                 .ToList();
