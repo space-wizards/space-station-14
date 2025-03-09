@@ -78,7 +78,7 @@
 - type: entity
   id: ShellShotgun
   name: shell (.50 buckshot)
-  description: The default of shotgun shells: double-ought buckshot. Delivers a spread of lethal pellets.
+  description: Double-ought buckshot, the default of shotgun shells. Delivers a spread of lethal pellets.
   parent: BaseShellShotgun
   components:
   - type: Sprite
