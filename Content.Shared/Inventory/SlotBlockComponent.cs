@@ -12,5 +12,5 @@ public sealed partial class SlotBlockComponent : Component
     /// Slots that this entity should block.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public string[] Slots = [];
+    public SlotFlags Slots = SlotFlags.NONE;
 }

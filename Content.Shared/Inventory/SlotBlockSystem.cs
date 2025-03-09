@@ -22,7 +22,7 @@ public sealed class SlotBlockSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var blocker = GetBlocker(ent, args.Slot);
+        var blocker = GetBlocker(ent, args.SlotFlags);
 
         // Don't do anything if nothing is blocking the entity from equipping.
         if (blocker == null)
@@ -37,7 +37,7 @@ public sealed class SlotBlockSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var blocker = GetBlocker(ent, args.Slot);
+        var blocker = GetBlocker(ent, args.SlotFlags);
 
         // Don't do anything if nothing is blocking the entity from unequipping.
         if (blocker == null)
@@ -50,14 +50,14 @@ public sealed class SlotBlockSystem : EntitySystem
     /// <summary>
     /// Used to get an entity that is blocking item from being equipped or unequipped.
     /// </summary>
-    private EntityUid? GetBlocker(Entity<InventoryComponent> ent, string slot)
+    private EntityUid? GetBlocker(Entity<InventoryComponent> ent, SlotFlags slot)
     {
         foreach (var slotDef in ent.Comp.Slots)
         {
             if (!_inventorySystem.TryGetSlotEntity(ent, slotDef.Name, out var entity))
                 continue;
 
-            if (!TryComp<SlotBlockComponent>(entity, out var blockComponent) || Array.IndexOf(blockComponent.Slots, slot) == -1)
+            if (!TryComp<SlotBlockComponent>(entity, out var blockComponent) || (slot & blockComponent.Slots) == 0)
                 continue;
 
             return entity;

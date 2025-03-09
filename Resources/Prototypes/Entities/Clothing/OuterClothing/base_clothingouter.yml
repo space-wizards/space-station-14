@@ -106,9 +106,7 @@
   name: base hardsuit
   components:
   - type: SlotBlock
-    slots:
-    - jumpsuit
-    - shoes
+    slots: [innerclothing, feet]
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -154,9 +152,7 @@
   name: base EVA Suit
   components:
   - type: SlotBlock
-    slots:
-    - jumpsuit
-    - shoes
+    slots: [innerclothing, feet]
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
