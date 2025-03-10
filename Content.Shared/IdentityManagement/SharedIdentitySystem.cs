@@ -37,7 +37,7 @@ public abstract class SharedIdentitySystem : EntitySystem
 
     private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
-        ent.Comp.Enabled = !args.IsToggled;
+        ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
     }
 }
 /// <summary>
