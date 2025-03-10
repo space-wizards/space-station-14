@@ -131,6 +131,7 @@
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/speedboots.rsi
+  - type: SpeedBootsVisuals
   - type: ToggleClothing
     action: ActionToggleSpeedBoots
   - type: ClothingSpeedModifier
@@ -154,6 +155,50 @@
         name: power-cell-slot-component-slot-name-default
   - type: Tag
     tags: []
+
+- type: entity
+  parent: [ClothingShoesBase, PowerCellSlotSmallItem, BaseToggleClothing, BaseSyndicateContraband]
+  id: ClothingShoesBootsSpeedSyndicate
+  name: blood-red speed boots
+  description: Accelerates you to speeds that makes it look like you're blood-red shifting.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/speedboots-syndicate.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/speedboots-syndicate.rsi
+  - type: SpeedBootsVisuals
+  - type: ToggleClothing
+    action: ActionToggleSpeedBoots
+  - type: ClothingSpeedModifier
+    walkModifier: 1.75
+    sprintModifier: 1.75
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon-on}
+          False: {state: icon}
+  - type: StaticPrice
+    price: 500
+  - type: PowerCellDraw
+    drawRate: 4
+  - type: ToggleCellDraw
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+  - type: Tag
+    tags: []
+  - type: Skates
+    friction: 20
+    frictionNoInput: 20
+    acceleration: 20
+    minimumSpeed: 2.5
 
 - type: entity
   id: ActionToggleSpeedBoots
