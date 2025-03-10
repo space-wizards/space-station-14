@@ -1047,7 +1047,7 @@
   id: PosterLegitVacation
   name: "Nanotrasen Corporate Perks: Vacation"
   description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
-  components:s
+  components:
     - type: Sprite
       state: poster48_legit
 
@@ -1113,7 +1113,6 @@
   components:
   - type: Sprite
     state: poster55_legit
-
 
 
 #maps
