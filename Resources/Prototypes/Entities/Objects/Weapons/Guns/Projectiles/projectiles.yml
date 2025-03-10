@@ -501,7 +501,7 @@
   components:
   - type: PointLight
     enabled: true
-    color: "#c2385d"
+    color: "#38c24f"
     radius: 2.0
     energy: 7.0
   - type: AnomalousParticle
@@ -509,7 +509,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm_red
+      - state: magicm_green
         shader: unshaded
   - type: Ammo
     muzzleFlash: null
@@ -615,13 +615,13 @@
   components:
   - type: PointLight
     enabled: true
-    color: "#38c24f"
+    color: "#c2385d"
     radius: 2.0
     energy: 7.0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm_green
+      - state: magicm_red
         shader: unshaded
   - type: AnomalousParticle
     particleType: Default
@@ -634,7 +634,8 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Heat: 20
+        Heat: 15
+        Shock: 8
 
 - type: entity
   parent: AnomalousParticleDelta
