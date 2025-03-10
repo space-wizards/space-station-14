@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Updated Banana to have holopads!
-    type: Tweak
-  id: 767
-  time: '2024-12-19T17:40:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1073
 - author: widgetbeck
   changes:
   - message: Drones are now unable to use any item with the Contraband component.
@@ -4095,3 +4088,10 @@
   id: 1266
   time: '2025-03-10T19:12:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1884
+- author: MintyTheBinty
+  changes:
+  - message: New uniforms and medals for the recent wing of the ERT Positivity Force.
+    type: Add
+  id: 1267
+  time: '2025-03-10T22:04:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1866
