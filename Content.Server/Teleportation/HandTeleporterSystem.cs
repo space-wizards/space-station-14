@@ -114,7 +114,12 @@ public sealed class HandTeleporterSystem : EntitySystem
             timeout.EnteredPortal = null;
             component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
-            _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
+
+            //we link the first and second portal only if the first portal is not linked to anything
+            //(this can happen if you link the first portal through the teleporters console)
+            if (!_link.GetLink(component.FirstPortal!.Value, out _))
+                _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value);
+
             _audio.PlayPvs(component.NewPortalSound, uid);
         }
         else
