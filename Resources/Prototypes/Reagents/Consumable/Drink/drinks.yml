@@ -460,11 +460,6 @@
         ratios:
           Ammonia: 1.0
           WaterVapor: -1.0
-      - !type:SatiateThirst # decapoids don't need to drink water because they're constantly inhaling it
-        conditions:
-        - !type:OrganType
-          type: Decapoid
-        factor: 2
       - !type:Oxygenate # thaven can breathe all gases safely
         conditions:
         - !type:OrganType
