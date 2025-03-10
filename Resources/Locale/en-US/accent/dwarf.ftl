@@ -195,230 +195,230 @@ accent-dwarf-words-replace-63 = be
 accent-dwarf-words-64 = am
 accent-dwarf-words-replace-64 = be
 
-accent-dwarf-words-66 = food
-accent-dwarf-words-replace-66 = grub
+accent-dwarf-words-65 = food
+accent-dwarf-words-replace-65 = grub
 
-accent-dwarf-words-67 = have
-accent-dwarf-words-replace-67 = hae
+accent-dwarf-words-66 = have
+accent-dwarf-words-replace-66 = hae
 
-accent-dwarf-words-68 = hey
-accent-dwarf-words-replace-68 = oi
+accent-dwarf-words-67 = hey
+accent-dwarf-words-replace-67 = oi
 
-accent-dwarf-words-69 = what
-accent-dwarf-words-replace-69 = wot
+accent-dwarf-words-68 = what
+accent-dwarf-words-replace-68 = wot
 
-accent-dwarf-words-70 = where
-accent-dwarf-words-replace-70 = whaur
+accent-dwarf-words-69 = where
+accent-dwarf-words-replace-69 = whaur
 
-accent-dwarf-words-71 = when
-accent-dwarf-words-replace-71 = wen
+accent-dwarf-words-70 = when
+accent-dwarf-words-replace-70 = wen
 
-accent-dwarf-words-72 = myself
-accent-dwarf-words-replace-72 = mesel
+accent-dwarf-words-71 = myself
+accent-dwarf-words-replace-71 = mesel
 
-accent-dwarf-words-73 = himself
-accent-dwarf-words-replace-73 = hesel
+accent-dwarf-words-72 = himself
+accent-dwarf-words-replace-72 = hesel
 
-accent-dwarf-words-74 = herself
-accent-dwarf-words-replace-74 = shesel
+accent-dwarf-words-73 = herself
+accent-dwarf-words-replace-73 = shesel
 
-accent-dwarf-words-75 = move
-accent-dwarf-words-replace-75 = moev
+accent-dwarf-words-74 = move
+accent-dwarf-words-replace-74 = moev
 
-accent-dwarf-words-76 = moving
-accent-dwarf-words-replace-76 = moeven
+accent-dwarf-words-75 = moving
+accent-dwarf-words-replace-75 = moeven
 
-accent-dwarf-words-77 = wasn't
-accent-dwarf-words-replace-77 = wis'nae
+accent-dwarf-words-76 = wasn't
+accent-dwarf-words-replace-76 = wis'nae
 
-accent-dwarf-words-78 = wasnt
-accent-dwarf-words-replace-78 = wisnae
+accent-dwarf-words-77 = wasnt
+accent-dwarf-words-replace-77 = wisnae
 
-accent-dwarf-words-79 = wizard
-accent-dwarf-words-replace-79 = wizer
+accent-dwarf-words-78 = wizard
+accent-dwarf-words-replace-78 = wizer
 
-accent-dwarf-words-80 = fool
-accent-dwarf-words-replace-80 = wazzok
+accent-dwarf-words-79 = fool
+accent-dwarf-words-replace-79 = wazzok
 
-accent-dwarf-words-81 = have
-accent-dwarf-words-replace-81 = hae
+accent-dwarf-words-80 = have
+accent-dwarf-words-replace-80 = hae
 
-accent-dwarf-words-82 = for
-accent-dwarf-words-replace-82 = fer
+accent-dwarf-words-81 = for
+accent-dwarf-words-replace-81 = fer
 
-accent-dwarf-words-83 = about
-accent-dwarf-words-replace-83 = abut
+accent-dwarf-words-82 = about
+accent-dwarf-words-replace-82 = abut
 
-accent-dwarf-words-84 = ow
-accent-dwarf-words-replace-84 = och
+accent-dwarf-words-83 = ow
+accent-dwarf-words-replace-83 = och
 
-accent-dwarf-words-85 = small
-accent-dwarf-words-replace-85 = wee
+accent-dwarf-words-84 = small
+accent-dwarf-words-replace-84 = wee
 
-accent-dwarf-words-86 = tiny
-accent-dwarf-words-replace-86 = tinnae
+accent-dwarf-words-85 = tiny
+accent-dwarf-words-replace-85 = tinnae
 
-accent-dwarf-words-87 = baby
-accent-dwarf-words-replace-87 = babee
+accent-dwarf-words-86 = baby
+accent-dwarf-words-replace-86 = babee
 
-accent-dwarf-words-88 = after
-accent-dwarf-words-replace-88 = efter
+accent-dwarf-words-87 = after
+accent-dwarf-words-replace-87 = efter
 
-accent-dwarf-words-90 = gonna
-accent-dwarf-words-replace-90 = gaun'ae
+accent-dwarf-words-88 = gonna
+accent-dwarf-words-replace-88 = gaun'ae
 
-accent-dwarf-words-91 = going to
-accent-dwarf-words-replace-91 = gaun'ae
+accent-dwarf-words-89 = going to
+accent-dwarf-words-replace-89 = gaun'ae
 
-accent-dwarf-words-92 = gone
-accent-dwarf-words-replace-92 = gaun
+accent-dwarf-words-90 = gone
+accent-dwarf-words-replace-90 = gaun
 
-accent-dwarf-words-93 = talk
-accent-dwarf-words-replace-93 = blather
+accent-dwarf-words-91 = talk
+accent-dwarf-words-replace-91 = blather
 
-accent-dwarf-words-94 = talking
-accent-dwarf-words-replace-94 = blatherin'
+accent-dwarf-words-92 = talking
+accent-dwarf-words-replace-92 = blatherin'
 
-accent-dwarf-words-95 = now
-accent-dwarf-words-replace-95 = nou
+accent-dwarf-words-93 = now
+accent-dwarf-words-replace-93 = nou
 
-accent-dwarf-words-96 = talked
-accent-dwarf-words-replace-96 = blathered
+accent-dwarf-words-94 = talked
+accent-dwarf-words-replace-94 = blathered
 
-accent-dwarf-words-97 = give
-accent-dwarf-words-replace-97 = gie
+accent-dwarf-words-95 = give
+accent-dwarf-words-replace-95 = gie
 
-accent-dwarf-words-98 = gimme
-accent-dwarf-words-replace-98 = gie's
+accent-dwarf-words-96 = gimme
+accent-dwarf-words-replace-96 = gie's
 
-accent-dwarf-words-99 = give me
-accent-dwarf-words-replace-99 = gie's
+accent-dwarf-words-97 = give me
+accent-dwarf-words-replace-97 = gie's
 
-accent-dwarf-words-100 = do you
-accent-dwarf-words-replace-100 = d'ye
+accent-dwarf-words-98 = do you
+accent-dwarf-words-replace-98 = d'ye
 
-accent-dwarf-words-101 = with
-accent-dwarf-words-replace-101 = wi
+accent-dwarf-words-99 = with
+accent-dwarf-words-replace-99 = wi
 
-accent-dwarf-words-102 = without
-accent-dwarf-words-replace-102 = wi'ou
+accent-dwarf-words-100 = without
+accent-dwarf-words-replace-100 = wi'ou
 
-accent-dwarf-words-103 = whether
-accent-dwarf-words-replace-103 = we'er
+accent-dwarf-words-101 = whether
+accent-dwarf-words-replace-101 = we'er
 
-accent-dwarf-words-104 = ever
-accent-dwarf-words-replace-104 = e'er
+accent-dwarf-words-102 = ever
+accent-dwarf-words-replace-102 = e'er
 
-accent-dwarf-words-105 = whenever
-accent-dwarf-words-replace-105 = wen'er
+accent-dwarf-words-103 = whenever
+accent-dwarf-words-replace-103 = wen'er
 
-accent-dwarf-words-106 = whatever
-accent-dwarf-words-replace-106 = wot'er
+accent-dwarf-words-104 = whatever
+accent-dwarf-words-replace-104 = wot'er
 
-accent-dwarf-words-107 = how
-accent-dwarf-words-replace-107 = hou
+accent-dwarf-words-105 = how
+accent-dwarf-words-replace-105 = hou
 
-accent-dwarf-words-108 = however
-accent-dwarf-words-replace-108 = hou'er
+accent-dwarf-words-106 = however
+accent-dwarf-words-replace-106 = hou'er
 
-accent-dwarf-words-109 = think
-accent-dwarf-words-replace-109 = reckon
+accent-dwarf-words-107 = think
+accent-dwarf-words-replace-107 = reckon
 
-accent-dwarf-words-111 = hamlet
-accent-dwarf-words-replace-111 = hammy
+accent-dwarf-words-108 = hamlet
+accent-dwarf-words-replace-108 = hammy
 
-accent-dwarf-words-112 = hampster
-accent-dwarf-words-replace-112 = hammy
+accent-dwarf-words-109 = hampster
+accent-dwarf-words-replace-109 = hammy
 
-accent-dwarf-words-113 = nukie
+accent-dwarf-words-110 = nukie
+accent-dwarf-words-replace-110 = reddie
+
+accent-dwarf-words-111 = nuclear op
+accent-dwarf-words-replace-111 = reddie
+
+accent-dwarf-words-112 = nuclear operative
+accent-dwarf-words-replace-112 = reddie
+
+accent-dwarf-words-113 = nuclear agent
 accent-dwarf-words-replace-113 = reddie
 
-accent-dwarf-words-114 = nuclear op
-accent-dwarf-words-replace-114 = reddie
+accent-dwarf-words-114 = more
+accent-dwarf-words-replace-114 = maer
 
-accent-dwarf-words-115 = nuclear operative
-accent-dwarf-words-replace-115 = reddie
+accent-dwarf-words-115 = moreover
+accent-dwarf-words-replace-115 = maero'er
 
-accent-dwarf-words-116 = nuclear agent
-accent-dwarf-words-replace-116 = reddie
+accent-dwarf-words-116 = over
+accent-dwarf-words-replace-116 = o'er
 
-accent-dwarf-words-121 = more
-accent-dwarf-words-replace-121 = maer
+accent-dwarf-words-117 = human
+accent-dwarf-words-replace-117 = humi
 
-accent-dwarf-words-122 = moreover
-accent-dwarf-words-replace-122 = maero'er
+accent-dwarf-words-118 = dwarf
+accent-dwarf-words-replace-118 = dorf
 
-accent-dwarf-words-123 = over
-accent-dwarf-words-replace-123 = o'er
+accent-dwarf-words-119 = slime
+accent-dwarf-words-replace-119 = oozi
 
-accent-dwarf-words-125 = human
-accent-dwarf-words-replace-125 = humi
+accent-dwarf-words-120 = rat
+accent-dwarf-words-replace-120 = raki
 
-accent-dwarf-words-126 = dwarf
-accent-dwarf-words-replace-126 = dorf
+accent-dwarf-words-121 = arachnid
+accent-dwarf-words-replace-121 = aranaki
 
-accent-dwarf-words-127 = slime
-accent-dwarf-words-replace-127 = oozi
+accent-dwarf-words-122 = spider
+accent-dwarf-words-replace-122 = hisser
 
-accent-dwarf-words-128 = rat
-accent-dwarf-words-replace-128 = raki
+accent-dwarf-words-123 = isn't
+accent-dwarf-words-replace-123 = be'nae
 
-accent-dwarf-words-129 = arachnid
-accent-dwarf-words-replace-129 = aranaki
+accent-dwarf-words-124 = aren't
+accent-dwarf-words-replace-124 = be'nae
 
-accent-dwarf-words-130 = spider
-accent-dwarf-words-replace-130 = hisser
+accent-dwarf-words-125 = ain't
+accent-dwarf-words-replace-125 = be'nae
 
-accent-dwarf-words-131 = isn't
-accent-dwarf-words-replace-131 = be'nae
+accent-dwarf-words-126 = isnt
+accent-dwarf-words-replace-126 = benae
 
-accent-dwarf-words-132 = aren't
-accent-dwarf-words-replace-132 = be'nae
+accent-dwarf-words-127 = arent
+accent-dwarf-words-replace-127 = benae
 
-accent-dwarf-words-133 = ain't
-accent-dwarf-words-replace-133 = be'nae
+accent-dwarf-words-128 = aint
+accent-dwarf-words-replace-128 = benae
 
-accent-dwarf-words-134 = isnt
-accent-dwarf-words-replace-134 = benae
+accent-dwarf-words-129 = zombie
+accent-dwarf-words-replace-129 = rotter
 
-accent-dwarf-words-135 = arent
-accent-dwarf-words-replace-135 = benae
+accent-dwarf-words-130 = zomb
+accent-dwarf-words-replace-130 = rotter
 
-accent-dwarf-words-136 = aint
-accent-dwarf-words-replace-136 = benae
+accent-dwarf-words-131 = clown
+accent-dwarf-words-replace-131 = honki
 
-accent-dwarf-words-137 = zombie
-accent-dwarf-words-replace-137 = rotter
+accent-dwarf-words-132 = cluwn
+accent-dwarf-words-replace-132 = hunki
 
-accent-dwarf-words-138 = zomb
-accent-dwarf-words-replace-138 = rotter
+accent-dwarf-words-133 = carp
+accent-dwarf-words-replace-133 = fin
 
-accent-dwarf-words-139 = clown
-accent-dwarf-words-replace-139 = honki
+accent-dwarf-words-134 = crusher
+accent-dwarf-words-replace-134 = axe
 
-accent-dwarf-words-140 = cluwn
-accent-dwarf-words-replace-140 = hunki
+accent-dwarf-words-135 = coward
+accent-dwarf-words-replace-135 = leaflover
 
-accent-dwarf-words-141 = carp
-accent-dwarf-words-replace-141 = fin
+accent-dwarf-words-136 = idiot
+accent-dwarf-words-replace-136 = dobber
 
-accent-dwarf-words-142 = crusher
-accent-dwarf-words-replace-142 = axe
+accent-dwarf-words-137 = stupid
+accent-dwarf-words-replace-137 = diteit
 
-accent-dwarf-words-143 = coward
-accent-dwarf-words-replace-143 = leaflover
+accent-dwarf-words-138 = officer
+accent-dwarf-words-replace-138 = bobby
 
-accent-dwarf-words-144 = idiot
-accent-dwarf-words-replace-144 = dobber
+accent-dwarf-words-149 = seccie
+accent-dwarf-words-replace-149 = bobby
 
-accent-dwarf-words-145 = stupid
-accent-dwarf-words-replace-145 = diteit
-
-accent-dwarf-words-146 = officer
-accent-dwarf-words-replace-146 = bobby
-
-accent-dwarf-words-147 = seccie
-accent-dwarf-words-replace-147 = bobby
-
-accent-dwarf-words-148 = a
-accent-dwarf-words-replace-148 = ae
+accent-dwarf-words-150 = a
+accent-dwarf-words-replace-150 = ae
