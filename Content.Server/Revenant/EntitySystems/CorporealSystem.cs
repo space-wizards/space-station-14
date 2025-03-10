@@ -15,7 +15,7 @@ public sealed class CorporealSystem : SharedCorporealSystem
     {
         base.OnStartup(uid, component, args);
 
-        if (TryComp<VisibilityComponent>(uid, out var visibility))
+        if (TryComp<Robust.Shared.GameObjects.VisibilityComponent>(uid, out var visibility))
         {
             _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
             _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
@@ -27,7 +27,7 @@ public sealed class CorporealSystem : SharedCorporealSystem
     {
         base.OnShutdown(uid, component, args);
 
-        if (TryComp<VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
+        if (TryComp<Robust.Shared.GameObjects.VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
         {
             _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
             _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);

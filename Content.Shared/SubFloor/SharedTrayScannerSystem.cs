@@ -1,17 +1,16 @@
+using Content.Shared.Eye;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
-using Robust.Shared.Containers;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.SubFloor;
 
 public abstract class SharedTrayScannerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     public const float SubfloorRevealAlpha = 0.8f;
 
@@ -22,6 +21,56 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         SubscribeLocalEvent<TrayScannerComponent, ComponentGetState>(OnTrayScannerGetState);
         SubscribeLocalEvent<TrayScannerComponent, ComponentHandleState>(OnTrayScannerHandleState);
         SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
+
+        SubscribeLocalEvent<TrayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
+        SubscribeLocalEvent<TrayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
+        SubscribeLocalEvent<TrayScannerComponent, GotEquippedEvent>(OnTrayEquipped);
+        SubscribeLocalEvent<TrayScannerComponent, GotUnequippedEvent>(OnTrayUnequipped);
+    }
+
+    private void OnEquip(EntityUid user)
+    {
+        if (!TryComp(user, out EyeComponent? eyeComp))
+            return;
+
+        var userComp = EnsureComp<TrayScannerUserComponent>(user);
+        userComp.OriginalVisMask = eyeComp.VisibilityMask;
+        _eye.SetVisibilityMask(user, eyeComp.VisibilityMask | (int) VisibilityFlags.Subfloor, eyeComp);
+    }
+
+    private void OnUnequip(EntityUid user)
+    {
+        if (!TryComp(user, out EyeComponent? eyeComp))
+            return;
+
+        var visMask = (int) VisibilityFlags.Normal;
+
+        if (TryComp(user, out TrayScannerUserComponent? userComp))
+        {
+            visMask = userComp.OriginalVisMask;
+        }
+
+        _eye.SetVisibilityMask(user, visMask & (int) ~VisibilityFlags.Subfloor, eyeComp);
+    }
+
+    private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)
+    {
+        OnUnequip(args.User);
+    }
+
+    private void OnTrayHandEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedHandEvent args)
+    {
+        OnEquip(args.User);
+    }
+
+    private void OnTrayUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedEvent args)
+    {
+        OnUnequip(args.Equipee);
+    }
+
+    private void OnTrayEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedEvent args)
+    {
+        OnEquip(args.Equipee);
     }
 
     private void OnTrayScannerActivate(EntityUid uid, TrayScannerComponent scanner, ActivateInWorldEvent args)
