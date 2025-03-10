@@ -1,0 +1,164 @@
+- type: entity
+  parent: BaseItem
+  id: CoinNanotransen
+  name: coin
+  description: An old, metal, worthless Nanotransen spendie. Flipping heads after finding one is good luck.
+  components:
+  - type: UseDelay
+  - type: Sprite
+    sprite: Objects/Fun/coins.rsi
+    state: coin_nanotransen_tails
+    noRot: true # Much easier to see the outcome when not rotated
+  - type: Item
+    size: Tiny
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 4
+      Diamond: 1
+  - type: StaticPrice
+    price: 75
+  - type: CoinFlippable
+    currentValue: 1 # Starts on Tails
+    canLandOnItsSide: true
+    usesWeightedChances: true
+    weightedChances:
+      "heads": 49.95
+      "tails": 49.95
+      "side": 0.1 # 1 in 1000 probability
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinAdamantium
+  description: A flat bit of metal. Originally dubbed the Adamantine Coin, it has a small bit of diamond melted in the mix.
+  components:
+  - type: Sprite
+    state: coin_adamantium_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3
+      Diamond: 2
+  - type: StaticPrice
+    price: 250
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinBananium
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_bananium_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Bananium: 5
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinCopper
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_copper_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 5
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinDiamond
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_diamond_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 2 # Diluted - It's partially fake
+      Diamond: 3
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinGold
+  description: One doubloon.
+  components:
+  - type: Sprite
+    state: coin_gold_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 4 # Diluted - It's mostly fake
+      Gold: 1
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinIron
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_iron_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 5
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinPlasma
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_plasma_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3 # Diluted - It's mostly fake
+      Plasma: 2
+  - type: StaticPrice
+    price: 150
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinSilver
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_silver_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3 # Diluted - It's half fake
+      Silver: 2
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  parent: CoinNanotransen
+  id: CoinUranium
+  description: A flat bit of metal associated with a long dead currency. Its worth now is primarily sentimental.
+  components:
+  - type: Sprite
+    state: coin_uranium_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3 # Diluted - It's mostly fake
+      Uranium: 2
+  - type: StaticPrice
+    price: 150
+
+# Found in the Good Clean Fun Vendor and intended for games
+- type: entity
+  parent: CoinNanotransen
+  id: CoinGame
+  description: A flippable metal token not good enough to be called a D2.
+  components:
+  - type: Sprite
+    state: coin_game_tails
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 5
+  - type: StaticPrice
+    price: 50
