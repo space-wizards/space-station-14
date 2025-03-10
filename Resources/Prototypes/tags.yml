@@ -949,10 +949,13 @@
   id: Packet
 
 - type: Tag
+  id: Pancake
+
+- type: Tag
   id: Paper
 
 - type: Tag
-  id: Pancake
+  id: ParcelWrapBlacklist
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
