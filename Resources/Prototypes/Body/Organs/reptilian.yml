@@ -21,3 +21,7 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Metabolizer
+    metabolizerTypes:
+    - O2Oxygenate
+    - TheobromineIntolerance

@@ -67,7 +67,9 @@
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
-    metabolizerTypes: [ Human ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Arachnid
     groups:
     - id: Gas
       rateModifier: 100.0
@@ -100,7 +102,9 @@
   - type: Metabolizer
     updateInterval: 1.5
     maxReagents: 2
-    metabolizerTypes: [Arachnid]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Arachnid
     groups:
     - id: Medicine
     - id: Poison
@@ -121,7 +125,8 @@
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     updateInterval: 1.5
     maxReagents: 1
-    metabolizerTypes: [Animal]
+    metabolizerTypes:
+    - Animal
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
@@ -144,7 +149,8 @@
   - type: Metabolizer
     updateInterval: 1.5
     maxReagents: 5
-    metabolizerTypes: [Animal]
+    metabolizerTypes:
+    - Animal
     removeEmpty: true
 
 - type: entity
