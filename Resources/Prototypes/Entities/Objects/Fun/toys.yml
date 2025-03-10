@@ -840,13 +840,13 @@
       path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg #imp
   - type: EmitSoundOnLand #imp
     sound:
-      path: /Audio/Voice/Vox/shriek1.ogg #imp
+      path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnActivate #imp
     sound:
-      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg #imp
+      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
