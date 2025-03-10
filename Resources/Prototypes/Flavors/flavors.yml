@@ -1343,3 +1343,8 @@
   id: zombiecocktail
   flavorType: Complex
   description: flavor-complex-zombiecocktail
+
+- type: flavor
+  id: trashy
+  flavorType: Base
+  description: flavor-base-trashy
