@@ -68,6 +68,8 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             return;
         }
+        if (Prototype(Transform(user).ParentUid)?.ID == "PlayerStationAi")
+            return;
 
         args.Handled = true;
 
