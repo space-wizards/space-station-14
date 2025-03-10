@@ -74,13 +74,13 @@
   id: ChatsanOriginal
   values:
     prefix: chatsan-word-
-    count: 67
+    count: 66
 
 - type: localizedDataset
   id: ChatsanReplace
   values:
     prefix: chatsan-replacement-
-    count: 67
+    count: 66
 
 - type: localizedDataset
   id: LiarOriginal
