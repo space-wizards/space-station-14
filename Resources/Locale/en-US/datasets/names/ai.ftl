@@ -120,8 +120,7 @@ names-ai-dataset-88 = Samaritan
 names-ai-dataset-89 = Shrike
 names-ai-dataset-90 = Solo
 names-ai-dataset-91 = Station Control Program
-# (AI's Not Unix) (this is so bad)
-names-ai-dataset-92 = AINU
+names-ai-dataset-92 = AINU (AI's Not Unix)
 names-ai-dataset-93 = Super 35
 names-ai-dataset-94 = Surgeon General
 names-ai-dataset-95 = TWA
