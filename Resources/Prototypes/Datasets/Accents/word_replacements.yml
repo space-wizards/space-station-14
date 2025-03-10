@@ -14,13 +14,13 @@
   id: ItalianOriginal
   values:
     prefix: accent-italian-words-
-    count: 49
+    count: 48
 
 - type: localizedDataset
   id: ItalianReplace
   values:
     prefix: accent-italian-words-replace-
-    count: 49
+    count: 48
 
 - type: localizedDataset
   id: DwarfOriginal
