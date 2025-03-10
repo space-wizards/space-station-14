@@ -41,6 +41,7 @@
   components:
   - type: ConfirmableAction
     popup: cosmicability-monument-spawn-confirm
+    primeTime: 10 #increased to give you more time to figure out where you want to put it
   - type: InstantAction
     useDelay: 999
     itemIconStyle: NoItem
@@ -48,6 +49,7 @@
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: monument
     event: !type:EventCosmicPlaceMonument {}
+  - type: MonumentPlacementMarker
 
 - type: entity
   id: ActionCosmicReturn

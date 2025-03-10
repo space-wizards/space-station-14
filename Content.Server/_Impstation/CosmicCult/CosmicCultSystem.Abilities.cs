@@ -339,6 +339,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-grid"), uid, uid);
             return;
         }
+
         /// CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
         foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, spaceDistance)))
         {
