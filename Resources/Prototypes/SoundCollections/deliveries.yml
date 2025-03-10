@@ -12,3 +12,8 @@
   id: DeliverySpawnSounds
   files:
   - /Audio/Effects/Lightning/lightningbolt.ogg
+
+- type: soundCollection
+  id: DeliveryTearSounds
+  files:
+  - /Audio/Effects/Cargo/buzz_sigh.ogg

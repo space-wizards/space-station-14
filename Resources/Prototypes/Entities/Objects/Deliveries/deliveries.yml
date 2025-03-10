@@ -32,10 +32,12 @@
           False: { visible: false }
   - type: Label
     examinable: false
+  - type: Speech
   - type: FingerprintReader
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
+  - type: TearableDelivery
   - type: ContainerContainer
     containers:
       delivery: !type:Container
@@ -77,6 +79,9 @@
     size: Huge
   - type: Delivery
     spesoReward: 800
+  - type: TearableDelivery
+    doAfter: 6
+    deltaSpesos: -500
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
