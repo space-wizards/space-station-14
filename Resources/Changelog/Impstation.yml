@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Immovable Fin-Fin now has a custom kill message. Added support for custom
-      kill messages to ImmovableRodComponent.
-    type: Tweak
-  id: 769
-  time: '2024-12-19T17:40:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1072
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: new Improvised Pistol that can be hand-crafted. It can use a variety
@@ -4090,3 +4082,11 @@
   id: 1268
   time: '2025-03-10T22:58:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1880
+- author: hivehum
+  changes:
+  - message: Removed the 'ensure fellow traitor stays alive' objective outside of
+      Spy vs Spy.
+    type: Remove
+  id: 1269
+  time: '2025-03-10T23:05:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1875
