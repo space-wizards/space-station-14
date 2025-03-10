@@ -9,31 +9,43 @@
     <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" Name="TreeBox">
-            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                <Label Text="{Loc 'guidebook-pages-header'}" StyleClasses="LabelKeyText" Margin="2"/>
+                <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+            </BoxContainer>
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer Name="SearchContainer" Visible="False" HorizontalExpand="True">
-                <LineEdit
-                    Name="SearchBar"
-                    PlaceHolder="{Loc 'guidebook-filter-placeholder-text'}"
-                    HorizontalExpand="True"
-                    Margin="0 5 10 5">
-                </LineEdit>
+        <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Subpplit">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Name="SearchContainer" Visible="False" HorizontalExpand="True">
+                    <LineEdit
+                        Name="SearchBar"
+                        PlaceHolder="{Loc 'guidebook-filter-placeholder-text'}"
+                        HorizontalExpand="True"
+                        Margin="0 5 10 5">
+                    </LineEdit>
+                </BoxContainer>
+                <BoxContainer Access="Internal" Name="ReturnContainer" Orientation="Horizontal" HorizontalAlignment="Right" Visible="False">
+                    <Button Name="HomeButton" Text="{Loc 'ui-rules-button-home'}" Margin="0 0 10 0"/>
+                </BoxContainer>
+                <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+                    <Control>
+                        <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5" Visible="False">
+                        </BoxContainer>
+                        <BoxContainer Orientation="Vertical" Name="Placeholder" Margin="5 5 5 5">
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text'}"/>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text-2'}"/>
+                        </BoxContainer>
+                    </Control>
+                </ScrollContainer>
             </BoxContainer>
-            <BoxContainer Access="Internal" Name="ReturnContainer" Orientation="Horizontal" HorizontalAlignment="Right" Visible="False">
-                <Button Name="HomeButton" Text="{Loc 'ui-rules-button-home'}" Margin="0 0 10 0"/>
+            <BoxContainer Orientation="Horizontal" Name="TableOfContentsBox">
+                <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label Text="{Loc 'guidebook-toc-header'}" StyleClasses="LabelKeyText" Margin="2"/>
+                    <fancyTree:FancyTree Name="TableOfContents" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
+                </BoxContainer>
             </BoxContainer>
-            <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
-                <Control>
-                    <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5" Visible="False">
-                    </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Name="Placeholder" Margin="5 5 5 5">
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text'}"/>
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text-2'}"/>
-                    </BoxContainer>
-                </Control>
-            </ScrollContainer>
-        </BoxContainer>
+        </SplitContainer>
     </SplitContainer>
 </controls:FancyWindow>
