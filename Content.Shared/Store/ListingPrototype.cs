@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
@@ -29,6 +30,7 @@ public partial class ListingData : IEquatable<ListingData>
         other.Icon,
         other.Priority,
         other.ProductEntity,
+        other.ProductEntityTable,
         other.ProductAction,
         other.ProductUpgradeId,
         other.ProductActionEntity,
@@ -54,6 +56,7 @@ public partial class ListingData : IEquatable<ListingData>
         SpriteSpecifier? icon,
         int priority,
         EntProtoId? productEntity,
+        EntityTableSelector? productEntityTable,
         EntProtoId? productAction,
         ProtoId<ListingPrototype>? productUpgradeId,
         EntityUid? productActionEntity,
@@ -75,6 +78,7 @@ public partial class ListingData : IEquatable<ListingData>
         Icon = icon;
         Priority = priority;
         ProductEntity = productEntity;
+        ProductEntityTable = productEntityTable;
         ProductAction = productAction;
         ProductUpgradeId = productUpgradeId;
         ProductActionEntity = productActionEntity;
@@ -149,6 +153,12 @@ public partial class ListingData : IEquatable<ListingData>
     /// </summary>
     [DataField]
     public EntProtoId? ProductEntity;
+
+    /// <summary>
+    /// The entity table that is picked from when the listing is purchased.
+    /// </summary>
+    [DataField]
+    public EntityTableSelector? ProductEntityTable;
 
     /// <summary>
     /// The action that is given when the listing is purchased.
@@ -286,6 +296,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.Icon,
             listingData.Priority,
             listingData.ProductEntity,
+            listingData.ProductEntityTable,
             listingData.ProductAction,
             listingData.ProductUpgradeId,
             listingData.ProductActionEntity,
