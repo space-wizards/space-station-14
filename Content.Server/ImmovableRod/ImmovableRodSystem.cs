@@ -75,7 +75,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             }
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            xform.LocalRotation = (vel - worldPos).ToWorldAngle() + MathHelper.PiOver2;
+            _transform.SetLocalRotationNoLerp(uid, (vel - worldPos).ToWorldAngle() + MathHelper.PiOver2, xform);
         }
     }
 
