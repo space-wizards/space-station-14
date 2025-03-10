@@ -5,6 +5,7 @@
   components:
   - type: Transform
     noRot: true
+    gridTraversal: false
   - type: FtlVisualizer
     sprite:
       sprite: /Textures/Effects/medi_holo.rsi
