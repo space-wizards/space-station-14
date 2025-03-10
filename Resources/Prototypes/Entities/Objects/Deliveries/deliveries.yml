@@ -120,7 +120,7 @@
   - type: Item
     storedRotation: 90
   - type: Delivery
-    deltaSpesos: 400
+    spesoReward: 400
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
