@@ -666,7 +666,7 @@
   - type: SpawnArtifact
     maxSpawns: 1
     spawns:
-    - id: Singularity
+    - id: SingularityXenoArch
 
 - type: artifactEffect
   id: EffectTesla
@@ -676,4 +676,4 @@
   - type: SpawnArtifact
     maxSpawns: 1
     spawns:
-    - id: TeslaEnergyBall
+    - id: TeslaEnergyBallXenoArch
