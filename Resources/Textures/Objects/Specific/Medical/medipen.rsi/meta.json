@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "tgstation at 986af32e22a88dae14fd147d812a5a4d27c1bc30 | stimpen sprites made by PuroSlavKing (Github) for Space Station 14. Nearly all resprited by joshepvodka",
+  "copyright": "tgstation at 986af32e22a88dae14fd147d812a5a4d27c1bc30 | stimpen sprites made by PuroSlavKing (Github) for Space Station 14. Nearly all resprited by joshepvodka, in-hand sprites by SeamLesss (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -23,10 +23,26 @@
       "name": "hypovolemic"
     },
     {
+      "name": "hypovolemic-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "hypovolemic-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "hypovolemic_empty"
     },
     {
       "name": "stimpen"
+    },
+    {
+      "name": "stimpen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "stimpen-inhand-right",
+      "directions": 4
     },
     {
       "name": "stimpen_empty"
@@ -41,6 +57,14 @@
       "name": "morphen"
     },
     {
+      "name": "morphen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "morphen-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "morphen_empty"
     },
     {
@@ -53,6 +77,14 @@
       "name": "penacid"
     },
     {
+      "name": "penacid-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "penacid-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "penacid_empty"
     },
     {
@@ -62,10 +94,26 @@
       "name": "bicpen"
     },
     {
+      "name": "bicpen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bicpen-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "bicpen_empty"
     },
     {
       "name": "dermpen"
+    },
+    {
+      "name": "dermpen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "dermpen-inhand-right",
+      "directions": 4
     },
     {
       "name": "dermpen_empty"
@@ -89,16 +137,34 @@
       "name": "arithpen"
     },
     {
-      "name": "arithpen_empty"
-    },
-	{
-      "name": "medipen-inhand-left"
+      "name": "arithpen-inhand-left",
+      "directions": 4
     },
     {
-      "name": "medipen-inhand-right"
+      "name": "arithpen-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "arithpen_empty"
+    },
+    {
+      "name": "medipen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "medipen-inhand-right",
+      "directions": 4
     },
     {
       "name": "punctpen"
+    },
+    {
+      "name": "punctpen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "punctpen-inhand-right",
+      "directions": 4
     },
     {
       "name": "punctpen_empty"
@@ -107,10 +173,26 @@
       "name": "pyrapen"
     },
     {
+      "name": "pyrapen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pyrapen-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "pyrapen_empty"
     },
     {
       "name": "dexpen"
+    },
+    {
+      "name": "dexpen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "dexpen-inhand-right",
+      "directions": 4
     },
     {
       "name": "dexpen_empty"
