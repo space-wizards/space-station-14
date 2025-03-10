@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             if (!filter.Enabled
                 || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
-                || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
+                || (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure && filterNode.Air.Pressure >= Atmospherics.MaxOutputPressure)) // No need to transfer if targets are full.
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
@@ -74,17 +74,34 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (filter.FilteredGas.HasValue)
             {
-                var filteredOut = new GasMixture() { Temperature = removed.Temperature };
+                // Make sure we don't pump over the pressure limit. The formula is derived from the ideal gas law and
+                // the general Richman's law, under the simplification that all the specific heat capacities are equal.
+                // The full derivation can be found at: https://github.com/space-wizards/space-station-14/pull/35211/files/a0ae787fe07a4e792570f55b49d9dd8038eb6e4d#r1961183456
+                var pressureDeltaFilter = Atmospherics.MaxOutputPressure - filterNode.Air.Pressure;
+                var limitMolesFilter = (pressureDeltaFilter * filterNode.Air.Volume) / (removed.Temperature * Atmospherics.R);
 
-                filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
+                var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
+                var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);
+
+                filterNode.Air.AdjustMoles(filter.FilteredGas.Value, filteredMoles);
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
+                inletNode.Air.AdjustMoles(filter.FilteredGas.Value, availableMoles - filteredMoles);
 
-                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
-                _atmosphereSystem.Merge(target.Air, filteredOut);
-                _ambientSoundSystem.SetAmbience(uid, filteredOut.TotalMoles > 0f);
+                _ambientSoundSystem.SetAmbience(uid, filteredMoles > 0f);
             }
 
-            _atmosphereSystem.Merge(outletNode.Air, removed);
+            // Make sure we don't pump over the pressure limit. The formula is derived from the ideal gas law and the
+            // general Richman's law, under the simplification that all the specific heat capacities are equal. The full
+            // derivation can be found at: https://github.com/space-wizards/space-station-14/pull/35211/files/a0ae787fe07a4e792570f55b49d9dd8038eb6e4d#r1961183456
+            var pressureDeltaOutlet = Atmospherics.MaxOutputPressure - outletNode.Air.Pressure;
+            var limitMolesOutlet = (pressureDeltaOutlet * outletNode.Air.Volume) / (removed.Temperature * Atmospherics.R);
+            // This might end up negative, but such cases are handled correctly by the `RemoveRatio` method
+            var limitRatioOutlet = limitMolesOutlet / removed.TotalMoles;
+
+            var passthrough = removed.RemoveRatio(limitRatioOutlet);
+
+            _atmosphereSystem.Merge(outletNode.Air, passthrough);
+            _atmosphereSystem.Merge(inletNode.Air, removed);
         }
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
