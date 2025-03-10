@@ -51,6 +51,8 @@
     criteria:
       components:
       - Anomaly
+      - InnerBodyAnomalyInjector
+      requireAll: false
   - type: Beeper
     isMuted: true
     minBeepInterval: 0.15
