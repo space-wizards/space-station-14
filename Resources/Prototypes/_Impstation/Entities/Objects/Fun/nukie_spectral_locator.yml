@@ -2,7 +2,7 @@
   id: NukieSpectralLocatorUnpowered
   parent: [BaseItem, Tier2Contraband]
   name: R.A.D.
-  description: Stands for Reinforcement Availability Detector. Strangly, it also detects spectral beings.
+  description: Stands for Reinforcement Availability Detector. Strangely, it also detects spectral beings.
   suffix: Unpowered
   components:
   - type: Sprite
