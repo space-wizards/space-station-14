@@ -727,7 +727,24 @@
 # Misc
 
 ### Syndicate & Hostiles
-
+- type: randomHumanoidSettings
+  id: SyndieCommunicationAgent
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: Pacified # talker not a fighter
+    - type: GhostRole
+      name: ghost-role-information-syndie-communication-agent-name
+      description: ghost-role-information-syndie-communication-agent-description
+      rules: ghost-role-information-syndie-communication-agent-rules
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ SyndicateCommunicationAgentGear ]
+      roleLoadout: [ RoleSurvivalSyndicate ]
+  
 - type: randomHumanoidSettings
   id: SyndieSoldierTeamLeader
   parent: EventHumanoid

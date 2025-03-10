@@ -28,6 +28,34 @@
     id: SyndiPDA
     ears: ClothingHeadsetAltSyndicate
 
+# Syndicate Communication Agent Gear
+- type: startingGear
+  id: SyndicateCommunicationAgentGear
+  parent: SyndicateOperativeGearCivilian
+  equipment:
+    mask: ClothingMaskGasVoiceChameleon
+    ears: ClothingHeadsetAltSyndicateCommunication
+    belt: SyndiPDA
+    id: AgentIDCard
+    pocket1: BoxFolderClipboard # for the important papers
+  storage:
+    pocket1:
+    - TraitorCodePaper # one of the codewords
+    - Paper # make the hop do paperwork
+    - PaperCargoInvoice # fun
+    - PaperCargoBountyManifest # extra fun
+    - DiagnosisReportPaper # screw with medbay
+    back:
+    # can't do paperwork without it
+    - RubberStampSyndicate
+    # deniability
+    - MicroBombImplant
+    # i know when cap is sleeping
+    - CameraBug
+    # a fax machine for sending messages
+    - FaxMachineFlatpack
+    - Multitool
+
 # Syndicate Footsoldier Gear - No Headset
 - type: startingGear
   id: SyndicateFootsoldierGearRuin
