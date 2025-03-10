@@ -8,3 +8,14 @@
     func: NotEqual
   params:
     displacementSize: 127
+    
+- type: shader
+  id: DisplacedStencilDrawUnshaded
+  kind: source
+  path: "/Textures/Shaders/displacement_unshaded.swsl"
+  stencil:
+    ref: 1
+    op: Keep
+    func: NotEqual
+  params:
+    displacementSize: 127
