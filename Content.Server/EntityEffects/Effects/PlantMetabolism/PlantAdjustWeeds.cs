@@ -11,7 +11,7 @@ public sealed partial class PlantAdjustWeeds : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))
+        if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager, mustHaveAlivePlant: false))
             return;
 
         plantHolderComp.WeedLevel += Amount;
