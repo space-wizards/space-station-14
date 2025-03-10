@@ -280,6 +280,17 @@
         amount: 4
 
 - type: entity
+  id: CrateWaterBalloons
+  parent: CratePlastic
+  name: water balloons crate
+  description: Bring forth the splashing war with these silly balloons!
+  components:
+  - type: StorageFill
+    contents:
+     - id: BoxWaterBalloon
+       amount: 2
+
+- type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
   name: boxing crate
