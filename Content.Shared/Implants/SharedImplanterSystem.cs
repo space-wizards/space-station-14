@@ -8,6 +8,7 @@ using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -28,6 +29,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
     public override void Initialize()
     {
@@ -40,18 +42,43 @@ public abstract class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ImplanterComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ImplanterComponent, DeimplantChangeVerbMessage>(OnSelected);
+        SubscribeLocalEvent<ImplanterComponent, RefreshNameModifiersEvent>(OnNameModifiersRefresh);
+        SubscribeLocalEvent<ImplanterComponent, ForensicsCleanedEvent>(OnForensicsClean);
+    }
+    private void OnForensicsClean(Entity<ImplanterComponent> ent, ref ForensicsCleanedEvent args)
+    {
+        ent.Comp.CurrentImplanterLoc = null;
+        _nameModifier.RefreshNameModifiers(ent.Owner);
+    }
+    private void OnNameModifiersRefresh(Entity<ImplanterComponent> ent, ref RefreshNameModifiersEvent args)
+    {
+        if (ent.Comp.CurrentImplanterLoc != null)
+            args.AddModifier(ent.Comp.CurrentImplanterLoc.Value);
     }
 
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
     {
         if (component.Implant != null)
+        {
             component.ImplanterSlot.StartingItem = component.Implant;
+        }
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
 
-        component.DeimplantChosen ??= component.DeimplantWhitelist.FirstOrNull();
 
+        component.DeimplantChosen ??= component.DeimplantWhitelist.FirstOrNull();
         Dirty(uid, component);
+
+        if (!TryComp<ItemSlotsComponent>(uid, out var itemSlot))
+            return;
+
+        var item = _itemSlots.GetItemOrNull(uid, ImplanterComponent.ImplanterSlotId, itemSlot);
+
+        if (item == null || !TryComp<SubdermalImplantComponent>(item, out var subdermal))
+            return;
+
+        component.CurrentImplanterLoc = subdermal.ImplantLoc;
+        _nameModifier.RefreshNameModifiers(uid);
     }
 
     private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
@@ -67,6 +94,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", component.ImplantData.Item2)));
     }
+
     public bool CheckSameImplant(EntityUid target, EntityUid implant)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
