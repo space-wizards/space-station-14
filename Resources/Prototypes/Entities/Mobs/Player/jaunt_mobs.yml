@@ -50,3 +50,5 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 0
     baseWalkSpeed: 0
+  - type: SpawnOnDespawn
+    prototype: EffectDesynchronizer

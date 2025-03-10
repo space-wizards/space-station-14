@@ -60,7 +60,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
 
-        InitializeCollide();
         InitializeMap();
         InitializeTrigger();
     }
@@ -90,7 +89,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
-        UpdateCollide();
+        UpdateTrigger();
     }
 
     private void OnComponentStartup(Entity<PolymorphableComponent> ent, ref ComponentStartup args)
