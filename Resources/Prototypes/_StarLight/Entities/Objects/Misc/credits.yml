@@ -9,7 +9,7 @@
   parent: BaseItem
   id: NTCredit
   name: credit
-  description: You gotta have real money.
+  description: You gotta have real money. Can be used in place of Spesos, at a 1:1 conversion rate.
   components:
   - type: NTCash
   - type: Cash
