@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Holopads!
-    type: Add
-  id: 761
-  time: '2024-12-18T18:43:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1065
-- author: Darkmajia
-  changes:
-  - message: Lowpop rounds with thief as a main antagonist can roll additional thieves
-      and a potential heretic with enough population.
-    type: Add
-  id: 762
-  time: '2024-12-18T19:08:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1033
 - author: Darkmajia
   changes:
   - message: Gastropoids can fly shuttles again.
@@ -4083,3 +4068,18 @@
   id: 1260
   time: '2025-03-09T08:05:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1876
+- author: Sha-Seng
+  changes:
+  - message: Spider Fluffy and Fuzzy overlay markings are now colorable
+    type: Tweak
+  id: 1261
+  time: '2025-03-10T18:07:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1856
+- author: TheGrimbeeper
+  changes:
+  - message: Sentient artifacts can no longer re-appear in the ghost role list after
+      having been taken, if someone is still inside it.
+    type: Fix
+  id: 1262
+  time: '2025-03-10T18:06:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1854
