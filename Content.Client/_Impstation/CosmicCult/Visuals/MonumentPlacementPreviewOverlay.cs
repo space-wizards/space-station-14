@@ -1,10 +1,8 @@
 using System.Numerics;
-using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -16,10 +14,8 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     private readonly IEntityManager _entityManager;
     private readonly IPlayerManager _playerManager;
     private readonly SpriteSystem _spriteSystem;
-    private readonly TransformSystem _transformSystem;
     private readonly SharedMapSystem _mapSystem;
-    private readonly ITileDefinitionManager _tileDef;
-    private readonly EntityLookupSystem _lookup;
+    private readonly MonumentPlacementPreviewSystem _preview;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
 
@@ -28,16 +24,14 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     private Vector2 _lastPos = Vector2.Zero;
 
     //evil huge ctor because doing iocmanager stuff was killing the client for some reason
-    public MonumentPlacementPreviewOverlay(IEntityManager entityManager, IPlayerManager playerManager, SpriteSystem spriteSystem, TransformSystem transformSystem, SharedMapSystem mapSystem, ITileDefinitionManager tileDef, EntityLookupSystem lookup, IPrototypeManager protoMan)
+    public MonumentPlacementPreviewOverlay(IEntityManager entityManager, IPlayerManager playerManager, SpriteSystem spriteSystem, SharedMapSystem mapSystem, IPrototypeManager protoMan, MonumentPlacementPreviewSystem preview)
     {
         _entityManager = entityManager;
         _playerManager = playerManager;
         _spriteSystem = spriteSystem;
-        _transformSystem = transformSystem;
         _mapSystem = mapSystem;
-        _tileDef = tileDef;
-        _lookup = lookup;
         _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
+        _preview = preview;
 
         ZIndex = (int) Shared.DrawDepth.DrawDepth.Mobs; //make the overlay render at the same depth as the actual sprite. might want to make it 1 lower if things get wierd with it.
     }
@@ -73,11 +67,11 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
             _lastPos = snappedCoords.Position; //update the position
 
             //set the colour based on if the target tile is valid or not todo make this something else? like a toggle in a shader or so? that's for later anyway
-            color = VerifyPlacement(transformComp) ? Color.Green : Color.Red;
+            color = _preview.VerifyPlacement(transformComp) ? Color.Green : Color.Red;
         }
         else
         {
-            //if the position is locked, then it has has to be valid so always use green
+            //if the position is locked, then it has to be valid so always use green
             color = Color.Green;
         }
 
@@ -88,6 +82,8 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     }
 
     //copied out from the ability code todo update this & the ability to check the snapped position instead of the raw position
+    //this might be slightly desynced from the ability detection code?
+    /*
     public bool VerifyPlacement(TransformComponent xform)
     {
         var spaceDistance = 3;
@@ -131,4 +127,5 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         //if all of those aren't false, return true
         return true;
     }
+    */
 }
