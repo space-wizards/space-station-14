@@ -635,6 +635,37 @@ namespace Content.Server.Database.Migrations.Postgres
                         });
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ExtraLoadoutData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("extra_loadout_data_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("key");
+
+                    b.Property<int>("ProfileRoleLoadoutId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_role_loadout_id");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("PK_extra_loadout_data");
+
+                    b.HasIndex("ProfileRoleLoadoutId");
+
+                    b.ToTable("extra_loadout_data", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
                 {
                     b.Property<int>("Id")
@@ -1696,6 +1727,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Server");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ExtraLoadoutData", b =>
+                {
+                    b.HasOne("Content.Server.Database.ProfileRoleLoadout", "RoleLoadout")
+                        .WithMany("ExtraData")
+                        .HasForeignKey("ProfileRoleLoadoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_extra_loadout_data_profile_role_loadout_profile_role_loadou~");
+
+                    b.Navigation("RoleLoadout");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2082,6 +2125,8 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.ProfileRoleLoadout", b =>
                 {
+                    b.Navigation("ExtraData");
+
                     b.Navigation("Groups");
                 });
 
