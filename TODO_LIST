@@ -6,6 +6,8 @@
 
 - Special Drink Ingredients:
 - Add Sulphuric Acid, for Acidspit
+- Blood packs: "Something-brand Floor Juice! Now with extra hemoglobin! There's a picture of a reptile fella happily lapping some out of a bowl with a forked tongue."
+-- Plus a syringe? I assume you can pull blood from one of those with a syringe?
 
 - Make sure musician stage railings don't block barstools
 
@@ -18,6 +20,7 @@
 - Command Meeting Room: Camera to execution chamber, maybe even a button to open the blast doors.
 
 - Graytider Shop: Bolt cafeteria-side door
+- Also a button for un-bolting it.
 
 - Law Office: Direct lawyers wrt "defense" and "prosecution."
 - Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar...
@@ -120,6 +123,8 @@
 - Maints "Bar": Two papers - one explaining the maints bar contest, the second responding to the tiny little maints bar and encouraging people to do better.
 	"Yes, I suppose that water does technically count as a drink, but you know that's not what we meant when we said 'able to serve drinks'!"
 
+- Put 'white' bandana into grave under tree
+
 
 - Wall maps
 - Borg rechargers
@@ -206,3 +211,6 @@ THINGS I COULD MAKE:
 -- Also a toupee for when they're feeling payne.
 -- And a dang gavel
 - Huge thrusters?
+
+
+[ERRO] entity_serializer: Encountered a reference to a missing entity: 25704 while serializing dresser (107910/n107910, Dresser).
