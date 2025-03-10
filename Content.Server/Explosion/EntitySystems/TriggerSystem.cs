@@ -1,24 +1,19 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
+using Content.Server.Electrocution;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
-using Content.Server.Electrocution;
-using Content.Server.Pinpointer;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Flash.Components;
-using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.Components.OnTrigger;
+using Content.Shared.Flash.Components;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Payload.Components;
-using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
@@ -29,12 +24,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Player;
-using Content.Shared.Coordinates;
-using Robust.Shared.Utility;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -71,10 +61,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly NavMapSystem _navMap = default!;
-        [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
@@ -108,7 +95,6 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
             SubscribeLocalEvent<ShockOnTriggerComponent, TriggerEvent>(HandleShockTrigger);
-            SubscribeLocalEvent<RattleComponent, TriggerEvent>(HandleRattleTrigger);
         }
 
         private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
@@ -199,32 +185,6 @@ namespace Content.Server.Explosion.EntitySystems
                 }
             }
             _body.GibBody(xform.ParentUid, true);
-            args.Handled = true;
-        }
-
-
-        private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
-        {
-            if (!TryComp<SubdermalImplantComponent>(uid, out var implanted))
-                return;
-
-            if (implanted.ImplantedEntity == null)
-                return;
-
-            // Gets location of the implant
-            var posText = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(uid));
-            var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
-            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
-
-            if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate))
-                return;
-
-            // Sends a message to the radio channel specified by the implant
-            if (mobstate.CurrentState == MobState.Critical)
-                _radioSystem.SendRadioMessage(uid, critMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
-            if (mobstate.CurrentState == MobState.Dead)
-                _radioSystem.SendRadioMessage(uid, deathMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
-
             args.Handled = true;
         }
 
