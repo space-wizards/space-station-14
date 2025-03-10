@@ -124,7 +124,7 @@
   - WeaponParticleDecelerator
   - HoloprojectorField
 
- type: technology
+- type: technology
   id: GravityManipulation
   name: research-technology-gravity-manipulation
   icon:
