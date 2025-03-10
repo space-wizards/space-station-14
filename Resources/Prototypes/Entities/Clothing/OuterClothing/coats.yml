@@ -25,6 +25,9 @@
     - id: FlippoEngravedLighter
   - type: ExplosionResistance
     damageCoefficient: 1 #its a coat. it doesnt do shit
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-brown
 
 - type: entity
   parent: [ClothingOuterCoatDetectiveLoadout]
@@ -36,7 +39,9 @@
     sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
-
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-grey
 
 - type: entity
   parent: ClothingOuterCoatDetective
@@ -99,6 +104,9 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-cotton
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
@@ -112,6 +120,9 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodChaplainHood
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -139,6 +150,9 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 20
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-brown
 
 - type: entity
   parent: ClothingOuterStorageFoldableBase
@@ -154,6 +168,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLab]
@@ -174,6 +191,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabChem]
@@ -194,6 +214,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabViro]
@@ -214,6 +237,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabGene]
@@ -236,6 +262,9 @@
         Slash: 0.95
         Heat: 0.95
         Caustic: 0.65
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabCmo]
@@ -256,6 +285,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRnd]
@@ -276,6 +308,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRobo]
@@ -297,6 +332,9 @@
       coefficients:
         Caustic: 0.75
         Radiation: 0.9
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-demron
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatRD]
@@ -313,6 +351,9 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-brown
 
 - type: entity
   parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase, BaseSecurityContraband]
@@ -324,6 +365,9 @@
     sprite: Clothing/OuterClothing/Coats/warden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/warden.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-cotton
+    microFiberColor: micro-fibers-red
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -335,6 +379,9 @@
     sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-silver
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -346,6 +393,9 @@
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-red
 
 - type: entity
   parent: [ClothingOuterStorageBase, BaseMajorContraband]
@@ -363,6 +413,9 @@
         Blunt: 0.8
         Slash: 0.65
         Piercing: 0.85
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-black
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -374,6 +427,9 @@
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-blue
 
 - type: entity
   parent: [ClothingOuterStorageBase, BaseSyndicateContraband]
@@ -385,6 +441,9 @@
     sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-red
 
 - type: entity
   parent: [BaseSyndicateContraband, ClothingOuterCoatHoSTrench] # BaseSyndicateContraband as first parent so contraband system takes that as priority, yeah I know
@@ -396,6 +455,9 @@
     sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-cotton
+    microFiberColor: micro-fibers-red
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -415,6 +477,9 @@
         Piercing: 0.65
         Heat: 0.85
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-reinforced-cotton
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -430,6 +495,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -445,6 +513,9 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-spunbond
+    microFiberColor: micro-fibers-white
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -456,6 +527,9 @@
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-cotton
+    microFiberColor: micro-fibers-light-brown
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -467,3 +541,6 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+  - type: MicroFiber
+    microFiberMaterial: micro-fibers-fur
+    microFiberColor: micro-fibers-pink
