@@ -315,8 +315,7 @@ namespace Content.Server.Forensics
 
         private void OnEntInserted(Entity<MicroFiberComponent> ent, ref EntInsertedIntoContainerMessage args)
         {
-            if (!TryComp<ForensicsComponent>(args.Entity, out var targetComp))
-                return;
+            var targetComp = EnsureComp<ForensicsComponent>(args.Entity);
 
             targetComp.MicroFibers.Add(string.IsNullOrEmpty(ent.Comp.MicroFiberColor) ? Loc.GetString("forensic-fibers", ("material", ent.Comp.MicroFiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", ent.Comp.MicroFiberColor), ("material", ent.Comp.MicroFiberMaterial)));
         }
