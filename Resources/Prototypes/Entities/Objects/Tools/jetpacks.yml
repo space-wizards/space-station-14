@@ -49,6 +49,7 @@
         - Back
     - type: GasTank
       outputPressure: 21.3
+    - type: InternalAir
       air:
         volume: 5
         temperature: 293.15
@@ -96,6 +97,7 @@
   components:
   - type: GasTank
     outputPressure: 42.6
+  - type: InternalAir
     air:
       # 13 minutes of thrust
       volume: 5
@@ -129,6 +131,7 @@
   components:
   - type: GasTank
     outputPressure: 42.6
+  - type: InternalAir
     air:
       # 13 minutes of thrust
       volume: 5
@@ -169,6 +172,7 @@
   components:
   - type: GasTank
     outputPressure: 42.6
+  - type: InternalAir
     air:
       # 13 minutes of thrust
       volume: 5
@@ -197,6 +201,7 @@
         - Belt
     - type: GasTank
       outputPressure: 42.6
+    - type: InternalAir
       air:
         volume: 1.5
 
@@ -209,6 +214,7 @@
   components:
   - type: GasTank
     outputPressure: 42.6
+  - type: InternalAir
     air:
       # 4 minutes of thrust
       volume: 1.5
@@ -242,6 +248,7 @@
   components:
   - type: GasTank
     outputPressure: 42.6
+  - type: InternalAir
     air:
       # 13 minutes thrust
       volume: 5
@@ -277,6 +284,7 @@
   components:
   - type: GasTank
     outputPressure: 42.6
+  - type: InternalAir
     air:
       # 13 minutes of thrust
       volume: 5

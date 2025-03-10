@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Storage.Components;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
@@ -31,7 +30,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
     }
 
-    public override bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component)
+    public override bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref EntityStorageComponent? component)
     {
         if (component != null)
             return true;

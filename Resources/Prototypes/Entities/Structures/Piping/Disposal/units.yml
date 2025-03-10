@@ -64,6 +64,9 @@
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
+  - type: InternalAir
+    air:
+      volume: 2500 # Atmospherics.CellVolume
 
 - type: entity
   id: DisposalUnit
@@ -116,7 +119,7 @@
     graph: DisposalMachine
     node: mailing_unit
   - type: DisposalUnit
-    autoEngageEnabled: false
+    automaticEngage: false
     whitelist:
       components:
       - Item

@@ -27,6 +27,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 31 minutes
       volume: 5
@@ -41,6 +42,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 4 minutes
       volume: 0.66
@@ -55,6 +57,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 4 minutes
       volume: 0.66
@@ -71,6 +74,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 9 minutes
       volume: 1.5
@@ -85,6 +89,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 9 minutes
       volume: 1.5
@@ -101,6 +106,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 15 minutes
       volume: 2.5
@@ -115,6 +121,7 @@
   components:
   - type: GasTank
     outputPressure: 21.3
+  - type: InternalAir
     air:
       # 15 minutes
       volume: 2.5
@@ -130,6 +137,7 @@
   components:
   - type: GasTank
     outputPressure: 22.4
+  - type: InternalAir
     air:
       # 4 minutes
       volume: 0.66
@@ -152,6 +160,7 @@
   components:
   - type: GasTank
     outputPressure: 101.3
+  - type: InternalAir
     air:
       # 6 minutes due to output pressure
       volume: 5
@@ -168,6 +177,7 @@
   name: nitrogen tank
   components:
   - type: GasTank
+  - type: InternalAir
     air:
       # 31 minutes
       volume: 5
@@ -189,6 +199,7 @@
     # __________
     #    30.3975   optimal output pressure
     outputPressure: 30.4
+  - type: InternalAir
     air:
       # only 22 minutes due to pressure
       volume: 5
@@ -212,6 +223,7 @@
   components:
   - type: GasTank
     outputPressure: 101.3
+  - type: InternalAir
     air:
       # 6 minutes of agony
       volume: 5
