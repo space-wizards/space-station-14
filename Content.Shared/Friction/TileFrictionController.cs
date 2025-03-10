@@ -33,6 +33,7 @@ namespace Content.Shared.Friction
         private float _stopSpeed;
         private float _frictionModifier;
         public const float DefaultFriction = 0.3f;
+        public const float DefaultOffGridLinearDamping = 0.05f;
 
         public override void Initialize()
         {
@@ -45,6 +46,20 @@ namespace Content.Shared.Friction
             _pullerQuery = GetEntityQuery<PullerComponent>();
             _pullableQuery = GetEntityQuery<PullableComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
+
+            _physics.OnGetLinearDampingOverride += OnGetLinearDampingOverride;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _physics.OnGetLinearDampingOverride -= OnGetLinearDampingOverride;
+        }
+
+        private void OnGetLinearDampingOverride(ref Entity<PhysicsComponent, TransformComponent> entity, ref float? lineardampingoverride)
+        {
+            if (entity.Comp2.GridUid == null)
+                lineardampingoverride = DefaultOffGridLinearDamping;
         }
 
         public override void UpdateBeforeMapSolve(bool prediction, PhysicsMapComponent mapComponent, float frameTime)
