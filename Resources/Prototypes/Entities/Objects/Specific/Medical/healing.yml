@@ -56,7 +56,7 @@
     count: 1
 
 - type: entity
-  id: Ointment10Lingering
+  id: OintmentLingering10
   parent: Ointment
   suffix: 10, Lingering
   components:
@@ -107,6 +107,15 @@
     count: 1
 
 - type: entity
+  id: RegenerativeMeshLingering0
+  parent: RegenerativeMesh
+  suffix: 0, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -144,7 +153,7 @@
     count: 1
 
 - type: entity
-  id: Brutepack10Lingering
+  id: BrutepackLingering10
   parent: Brutepack
   suffix: 10, Lingering
   components:
@@ -194,6 +203,15 @@
     count: 1
 
 - type: entity
+  id: MedicatedSutureLingering0
+  parent: MedicatedSuture
+  suffix: 0, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   name: blood pack
   description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
   parent: BaseHealingItem
@@ -224,11 +242,12 @@
 
 - type: entity
   parent: Bloodpack
-  id: Bloodpack10Lingering
+  id: BloodpackLingering10
   suffix: 10, Lingering
   components:
   - type: Stack
     lingering: true
+    count: 10
 
 - type: entity
   parent: BaseHealingItem
@@ -298,7 +317,7 @@
     count: 1
 
 - type: entity
-  id: Gauze10Lingering
+  id: GauzeLingering10
   parent: Gauze
   suffix: 10, Lingering
   components:
