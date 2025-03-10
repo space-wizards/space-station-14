@@ -10,4 +10,4 @@
               doAfter: 2
 
     - node: upgraded
-      entity: WeaponPistolCHIMPUpgraded
+      entity: WeaponPistolCHIMPUpgradedUnpowered
