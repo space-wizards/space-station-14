@@ -388,6 +388,12 @@
       "name": "poster53_legit"
     },
     {
+      "name": "poster54_legit"
+    },
+    {
+      "name": "poster55_legit"
+    },
+    {
       "name": "random_legit"
     },
     {
@@ -404,6 +410,12 @@
     },
     {
       "name": "poster54_contraband"
+    {
+      "name": "poster64_contraband"
+    },
+    {
+      "name": "poster65_contraband"
+    },
     },
     {
       "name": "bagelmap"
