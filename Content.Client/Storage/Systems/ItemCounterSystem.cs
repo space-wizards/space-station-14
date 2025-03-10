@@ -38,23 +38,30 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
             ProcessOpaqueSprite(uid, comp.BaseLayer, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
     }
 
-    public void ProcessOpaqueSprite(EntityUid uid, string layer, int count, int maxCount, List<string> states, bool hide = false, SpriteComponent? sprite = null)
+    public void ProcessOpaqueSprite(EntityUid uid, string layer, int count, int maxCount, List<string> states, bool hide = false, int spriteIndexOffset = 0, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite)
         ||  !sprite.LayerMapTryGet(layer, out var layerKey, logError: true))
             return;
-        
+
         var activeState = ContentHelpers.RoundToEqualLevels(count, maxCount, states.Count);
+
+        // Apply the offset
+        activeState = Math.Clamp(activeState + spriteIndexOffset, 0, states.Count - 1);
+
         sprite.LayerSetState(layerKey, states[activeState]);
         sprite.LayerSetVisible(layerKey, !hide);
     }
 
-    public void ProcessCompositeSprite(EntityUid uid, int count, int maxCount, List<string> layers, bool hide = false, SpriteComponent? sprite = null)
+    public void ProcessCompositeSprite(EntityUid uid, int count, int maxCount, List<string> layers, bool hide = false, int spriteIndexOffset = 0, SpriteComponent? sprite = null)
     {
         if(!Resolve(uid, ref sprite))
             return;
-        
+
         var activeTill = ContentHelpers.RoundToNearestLevels(count, maxCount, layers.Count);
+
+        activeTill = Math.Clamp(activeTill + spriteIndexOffset, 0, layers.Count);
+
         for(var i = 0; i < layers.Count; ++i)
         {
             sprite.LayerSetVisible(layers[i], !hide && i < activeTill);
