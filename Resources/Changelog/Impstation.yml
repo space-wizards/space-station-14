@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Atmos Monitoring Computer
-    type: Add
-  - message: Advanced SMES
-    type: Add
-  id: 765
-  time: '2024-12-19T17:38:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1070
 - author: DinnerCalzone
   changes:
   - message: A high velocity hollow plastic barrel has been detected on a collision
@@ -4092,3 +4083,10 @@
   id: 1264
   time: '2025-03-10T18:47:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1872
+- author: FlippenPage
+  changes:
+  - message: Monkeys can now wear most clothing. It also fits them properly!
+    type: Tweak
+  id: 1265
+  time: '2025-03-10T18:54:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1874
