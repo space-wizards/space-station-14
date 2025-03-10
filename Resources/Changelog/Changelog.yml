@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The Space Ninja Suit will now give an error popup if you are trying to
-      install a cell that is not better compared to the current cell.
-    type: Add
-  - message: When comparing which power cell is better when trying to swap them, the
-      Space Ninja's Suit will now also consider if the power cells have self-recharge
-      capability.
-    type: Tweak
-  - message: You can no longer fit weapons-grade power cages into the space ninja
-      suit.
-    type: Fix
-  id: 7548
-  time: '2024-10-22T23:36:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32902
 - author: UBlueberry
   changes:
   - message: The appraisal tool now has in-hand sprites!
@@ -3897,3 +3882,11 @@
   id: 8047
   time: '2025-03-10T04:38:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35758
+- author: RedBookcase
+  changes:
+  - message: Added about a dozen new cocktails for the Bartender to mix up, and polished
+      some of the sprites for older drinks.
+    type: Add
+  id: 8048
+  time: '2025-03-10T23:08:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33570
