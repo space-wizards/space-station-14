@@ -7,44 +7,44 @@
     "y": 32
   },
   "states": [
-    {
-      "name": "icon"
-    },
-    {
-      "name": "base"
-    },
-    {
-      "name": "icon_secure"
-    },
-    {
-      "name": "base_secure"
-    },
-    {
-      "name": "closed"
-    },
-    {
-      "name": "open"
-    },
-    {
-      "name": "locked"
-    },
-    {
-      "name": "unlocked"
-    },
-    {
-      "name": "welded"
-    },
-    {
-      "name": "sparking",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+      {
+        "name": "icon"
+      },
+      {
+        "name": "base"
+      },
+      {
+        "name": "icon_secure"
+      },
+      {
+        "name": "base_secure"
+      },
+      {
+        "name": "closed"
+      },
+      {
+        "name": "open"
+      },
+      {
+        "name": "locked"
+      },
+      {
+        "name": "unlocked"
+      },
+      {
+        "name": "welded"
+      },
+      {
+        "name": "sparking",
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
         ]
-      ]
-    }
-  ]
-}
+      }
+    ]
+  }
