@@ -79,7 +79,13 @@
 - type: localizedDataset
   id: RobustSoftdrinksAds
   values:
-    prefix: advertisement-cola-
+    prefix: advertisement-robust-
+    count: 8
+
+- type: localizedDataset
+  id: BodaAds
+  values:
+    prefix: advertisement-sovietsoda-
     count: 8
 
 - type: localizedDataset
@@ -89,9 +95,39 @@
     count: 8
 
 - type: localizedDataset
+  id: PwrGameAds
+  values:
+    prefix: advertisement-pwr-
+    count: 8
+
+- type: localizedDataset
+  id: ShamblerAds
+  values:
+    prefix: advertisement-shambler-
+    count: 8
+
+- type: localizedDataset
   id: SmiteAds
   values:
     prefix: advertisement-smite-
+    count: 8
+
+- type: localizedDataset
+  id: SpaceColaAds
+  values:
+    prefix: advertisement-cola-
+    count: 8
+
+- type: localizedDataset
+  id: SpaceUpAds
+  values:
+    prefix: advertisement-spaceup-
+    count: 8
+
+- type: localizedDataset
+  id: StarkistAds
+  values:
+    prefix: advertisement-starkist-
     count: 8
 
 - type: localizedDataset
@@ -249,12 +285,6 @@
   values:
     prefix: advertisement-snack-
     count: 15
-
-- type: localizedDataset
-  id: BodaAds
-  values:
-    prefix: advertisement-sovietsoda-
-    count: 6
 
 - type: localizedDataset
   id: SyndieDrobeAds

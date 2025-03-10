@@ -490,6 +490,10 @@
   name: Space Cola Vendor
   description: It vends cola, in space.
   components:
+  - type: Advertise
+    pack: SpaceColaAds
+  - type: SpeakOnUIClosed
+    pack: SpaceColaGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
     layers:
@@ -513,6 +517,10 @@
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
+  - type: Advertise
+    pack: SpaceUpAds
+  - type: SpeakOnUIClosed
+    pack: SpaceUpGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -553,11 +561,15 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineStarkist
-  name: Star-kist Vendor
+  name: Starkist Vendor
   description: The taste of a star in liquid form.
   components:
   - type: VendingMachine
     pack: StarkistInventory
+  - type: Advertise
+    pack: StarkistAds
+  - type: SpeakOnUIClosed
+    pack: StarkistGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
@@ -574,24 +586,17 @@
     color: "#D3A44D"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachineShamblersJuice
   name: Shambler's Juice Vendor
   description: ~Shake me up some of that Shambler's Juice!~
   components:
   - type: VendingMachine
     pack: ShamblersJuiceInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
-    ejectDelay: 1.9
-    initialStockQuality: 0.33
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: ShamblerAds
+  - type: SpeakOnUIClosed
+    pack: ShamblerGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
     layers:
@@ -608,26 +613,19 @@
     color: "#66538F"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachinePwrGame
-  name: Pwr Game Vendor
+  name: PWR Game Vendor
   description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
   components:
   - type: VendingMachine
     pack: PwrGameInventory
-    dispenseOnHitChance: 0.25
+    dispenseOnHitChance: 0.35 # Power through with PWR Game!
     dispenseOnHitThreshold: 2
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
-    ejectDelay: 1.9
-    initialStockQuality: 0.33
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: PwrGameAds
   - type: SpeakOnUIClosed
-    pack: GenericVendGoodbyes
+    pack: PwrGameGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/pwrgame.rsi
     layers:
@@ -644,22 +642,13 @@
     color: "#6927C5"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachineDrGibb
   name: Dr. Gibb Vendor
   description: Canned explosion of different flavors in this very vendor!
   components:
   - type: VendingMachine
     pack: DrGibbInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
-    ejectDelay: 1.9
-    initialStockQuality: 0.33
   - type: Advertise
     pack: DrGibbAds
   - type: SpeakOnUIClosed
@@ -680,7 +669,7 @@
     color: "#D82929"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachineSmite
   name: Smite Vendor
   description: Popular with the administration.
@@ -697,15 +686,6 @@
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: VendingMachine
     pack: SmiteInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
-    ejectDelay: 1.9
-    initialStockQuality: 0.33
   - type: Advertise
     pack: SmiteAds
   - type: SpeakOnUIClosed
