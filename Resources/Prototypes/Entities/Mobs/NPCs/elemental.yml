@@ -263,7 +263,6 @@
       50: 0.4
   - type: Bloodstream
     bloodReagent: Water
-    chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
     - SlowedDown

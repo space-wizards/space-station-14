@@ -115,7 +115,7 @@
     - type: Input
       context: "human"
     - type: Bloodstream
-      bloodMaxVolume: 300
+      bloodReferenceVolume: 300
       bloodReagent: Laughter
 
 - type: entity
