@@ -1,26 +1,20 @@
-using Content.Server.Administration.Logs;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
 using Content.Server.Ghost;
-using Content.Server.Light.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory;
 using Content.Shared.Light;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Damage.Systems;
@@ -32,7 +26,7 @@ namespace Content.Server.Light.EntitySystems
     /// <summary>
     ///     System for the PoweredLightComponents
     /// </summary>
-    public sealed class PoweredLightSystem : EntitySystem
+    public sealed class PoweredLightSystem : SharedPoweredLightSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
