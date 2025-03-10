@@ -38,6 +38,6 @@
   - type: Tool
     qualities:
       - Screwing
-    speedModifier: 0.7
+    speedModifier: 0.5
     useSound:
       collection: Screwdriver
