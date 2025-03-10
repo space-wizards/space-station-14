@@ -24,6 +24,10 @@
   name: lathe-category-robotics
 
 - type: latheCategory
+  id: Tiles
+  name: lathe-category-tiles
+
+- type: latheCategory
   id: Tools
   name: lathe-category-tools
 
@@ -43,6 +47,31 @@
 - type: latheCategory
   id: Materials
   name: lathe-category-materials
+
+# Cutter machine
+- type: latheCategory
+  id: Concrete
+  name: lathe-category-concrete
+
+- type: latheCategory
+  id: Dark
+  name: lathe-category-dark
+
+- type: latheCategory
+  id: Maints
+  name: lathe-category-maints
+
+- type: latheCategory
+  id: Steel
+  name: lathe-category-steel
+
+- type: latheCategory
+  id: White
+  name: lathe-category-white
+
+- type: latheCategory
+  id: Wood
+  name: lathe-category-wood
 
 # Uniform printer
 - type: latheCategory
