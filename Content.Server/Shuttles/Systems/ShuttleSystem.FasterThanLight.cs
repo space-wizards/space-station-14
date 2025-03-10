@@ -365,8 +365,6 @@ public sealed partial class ShuttleSystem
         _audio.SetGridAudio(audio);
         component.StartupStream = audio?.Entity;
 
-        // TODO: Play previs here for docking arrival.
-
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         EnsureFTLMap();
         return true;
@@ -450,7 +448,8 @@ public sealed partial class ShuttleSystem
 
         if (entity.Comp1.VisualizerProto != null)
         {
-            comp.VisualizerEntity = SpawnAtPosition(entity.Comp1.VisualizerProto, entity.Comp1.TargetCoordinates);
+            comp.VisualizerEntity = SpawnAttachedTo(entity.Comp1.VisualizerProto, entity.Comp1.TargetCoordinates);
+            DebugTools.Assert(Transform(comp.VisualizerEntity.Value).ParentUid == entity.Comp1.TargetCoordinates.EntityId);
             var visuals = Comp<FtlVisualizerComponent>(comp.VisualizerEntity.Value);
             visuals.Grid = entity.Owner;
             Dirty(comp.VisualizerEntity.Value, visuals);
