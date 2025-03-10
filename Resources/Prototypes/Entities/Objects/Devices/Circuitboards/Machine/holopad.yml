@@ -2,11 +2,32 @@
   id: HolopadMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: holopad machine board
-  description: A machine printed circuit board for a holopad.
+  description: A machine printed circuit board for a holopad. Looks like you could use a screwdriver to change the board type.
   components:
     - type: MachineBoard
       prototype: Holopad
       stackRequirements:
-        Capacitor: 4
+        Capacitor: 2
         Cable: 4
         Glass: 2
+    - type: Construction
+      deconstructionTarget: null
+      graph: HolopadBoard
+      node: normal
+
+- type: entity
+  id: HolopadLongRangeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: long-range holopad machine board
+  description: A machine printed circuit board for a long-range holopad. Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: MachineBoard
+    prototype: HolopadLongRange
+    stackRequirements:
+      Capacitor: 4
+      Cable: 4
+      Glass: 2
+  - type: Construction
+    deconstructionTarget: null
+    graph: HolopadBoard
+    node: long-range
