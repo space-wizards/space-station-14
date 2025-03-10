@@ -149,14 +149,13 @@
     sprite: _Impstation/Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi #imp
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
-#commenting out this one since we already have stun enforcers; Imp edit
-#- type: entity
-#  parent: WeaponShotgunEnforcer
-#  id: WeaponShotgunEnforcerRubber
-#  suffix: Non-Lethal
-#  components:
-#  - type: BallisticAmmoProvider
-#    proto: ShellShotgunBeanbag
+- type: entity
+  parent: WeaponShotgunEnforcer
+  id: WeaponShotgunEnforcerRubber
+  suffix: Non-Lethal DEPRECATED DO NOT MAP
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
 
 - type: entity
   name: Kammerer
