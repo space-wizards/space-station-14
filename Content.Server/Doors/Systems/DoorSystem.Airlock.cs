@@ -10,27 +10,22 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems;
 
-public sealed class AirlockSystem : SharedAirlockSystem
+public partial class DoorSystem
 {
-    [Dependency] private readonly WiresSystem _wiresSystem = default!;
-
-    public override void Initialize()
+    public void InitializeAirlocksServer()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
-
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate);
     }
 
     private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
     {
-        if (args.Port == component.AutoClosePort && component.AutoClose)
-        {
-            component.AutoClose = false;
-            Dirty(uid, component);
-        }
+        if (args.Port != component.AutoClosePort || !component.AutoClose)
+            return;
+
+        component.AutoClose = false;
+        Dirty(uid, component);
     }
 
     private void OnPowerChanged(EntityUid uid, AirlockComponent component, ref PowerChangedEvent args)
@@ -71,11 +66,11 @@ public sealed class AirlockSystem : SharedAirlockSystem
             return;
         }
 
-        if (component.KeepOpenIfClicked && component.AutoClose)
-        {
-            // Disable auto close
-            component.AutoClose = false;
-            Dirty(uid, component);
-        }
+        if (!component.KeepOpenIfClicked || !component.AutoClose)
+            return;
+
+        // Disable auto close
+        component.AutoClose = false;
+        Dirty(uid, component);
     }
 }
