@@ -182,3 +182,37 @@
     containers:
       entity_storage: !type:NestedSelector
         tableId: MaintenanceLockerLoot
+
+- type: entity
+  id: CrateTrashBinFilledRandom
+  suffix: Filled, Random
+  parent: CrateTrashBin
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: TrashBinLoot
+
+- type: entityTable
+  id: TrashBinLoot # A version of MaintenanceLockerLoot, but with lower probabilities
+  table: !type:AllSelector
+    children:
+    - id: StrangePill
+      prob: 0.1
+    - !type:NestedSelector
+      tableId: GenericTrashItems
+      prob: 0.7
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+    # Tools
+    - !type:NestedSelector
+      tableId: MaintToolsTable
+      prob: 0.025
+    # Fluff
+    - !type:NestedSelector
+      tableId: MaintFluffTable
+      prob: 0.025
+    # Syndie Loot
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      prob: 0.001
