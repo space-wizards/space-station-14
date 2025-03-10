@@ -62,6 +62,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         InitializeCollide();
         InitializeMap();
+        InitializeTrigger();
     }
 
     public override void Update(float frameTime)
