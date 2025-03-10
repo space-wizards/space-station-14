@@ -37,7 +37,7 @@
         steps:
         - tag: TimerSignalElectronics
           store: board
-          name: "signal timer electronics"
+          name: construction-graph-tag-signal-timer-electronics
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
@@ -46,7 +46,7 @@
         steps:
         - tag: TimerScreenElectronics
           store: board
-          name: "screen timer electronics"
+          name: construction-graph-tag-screen-timer-electronics
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
@@ -55,7 +55,7 @@
         steps:
         - tag: TimerBrigElectronics
           store: board
-          name: "brig timer electronics"
+          name: construction-graph-tag-brig-timer-electronics
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
