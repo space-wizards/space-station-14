@@ -61,7 +61,7 @@ namespace Content.Shared.Humanoid
 
         public string GetLastName(SpeciesPrototype speciesProto)
         {
-            return Loc.GetString(_random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.LastNames).Values));
+            return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.LastNames));
         }
     }
 }

@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Ammo-boxes no longer appear empty when only one bullet is removed.
-    type: Fix
-  id: 7544
-  time: '2024-10-22T09:00:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32930
-- author: ScarKy0
-  changes:
-  - message: Added the syringe gun and it's respective ammo. Currently Admeme only.
-    type: Add
-  id: 7545
-  time: '2024-10-22T13:03:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32112
-- author: ScarKy0, Fildrance
-  changes:
-  - message: Using an intellicard on the AI core now swaps the AI between the core
-      and intellicard. (You can evac with the AI!)
-    type: Add
-  - message: Added an intellicard to the RD's locker.
-    type: Add
-  id: 7546
-  time: '2024-10-22T13:49:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32347
-- author: Southbridge
-  changes:
-  - message: Nuclear Cola can now be broken down in a centrifuge.
-    type: Add
-  id: 7547
-  time: '2024-10-22T17:01:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32441
 - author: BramvanZijp
   changes:
   - message: The Space Ninja Suit will now give an error popup if you are trying to
@@ -3900,3 +3869,31 @@
   id: 8043
   time: '2025-03-08T15:21:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35718
+- author: Emisse
+  changes:
+  - message: Core Station
+    type: Remove
+  id: 8044
+  time: '2025-03-09T08:48:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35740
+- author: slarticodefast
+  changes:
+  - message: Added a mail stealing objective for thieves.
+    type: Add
+  id: 8045
+  time: '2025-03-09T19:41:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35746
+- author: metalgearsloth
+  changes:
+  - message: Fix sun shadows not rendering when ANGLE is used.
+    type: Fix
+  id: 8046
+  time: '2025-03-10T04:17:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35757
+- author: metalgearsloth
+  changes:
+  - message: Fix sun shadow rotations not always being accurate.
+    type: Fix
+  id: 8047
+  time: '2025-03-10T04:38:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35758
