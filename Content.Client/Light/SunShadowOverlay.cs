@@ -134,7 +134,7 @@ public sealed class SunShadowOverlay : Overlay
                 Color.Transparent);
 
             // Slightly blur it just to avoid aliasing issues on the later viewport-wide blur.
-            _clyde.BlurRenderTarget(viewport, _target, _target, eye, 1f);
+            _clyde.BlurRenderTarget(viewport, _target, _blurTarget!, eye, 1f);
 
             // Draw stencil (see roofoverlay).
             args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
