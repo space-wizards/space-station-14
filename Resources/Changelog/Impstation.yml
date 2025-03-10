@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: A high velocity hollow plastic barrel has been detected on a collision
-      course with the station.
-    type: Add
-  id: 766
-  time: '2024-12-19T17:39:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1071
 - author: kipdotnet
   changes:
   - message: Updated Banana to have holopads!
@@ -4090,3 +4082,16 @@
   id: 1265
   time: '2025-03-10T18:54:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1874
+- author: Tyranex
+  changes:
+  - message: Added a new basic mining module for salvage cyborg!
+    type: Add
+  - message: Cyborgs can now scream! And syndicate assault cyborgs can now laugh.
+      Go give the crew a heart attack.
+    type: Add
+  - message: The mining module is no longer given to the salvage chassis, it must
+      instead be researched and crafted.
+    type: Tweak
+  id: 1266
+  time: '2025-03-10T19:12:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1884
