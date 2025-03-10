@@ -26,13 +26,13 @@
   id: DwarfOriginal
   values:
     prefix: accent-dwarf-words-
-    count: 150
+    count: 140
 
 - type: localizedDataset
   id: DwarfReplace
   values:
     prefix: accent-dwarf-words-replace-
-    count: 150
+    count: 140
 
 - type: localizedDataset
   id: PirateOriginal

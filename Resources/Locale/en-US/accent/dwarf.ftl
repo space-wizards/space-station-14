@@ -417,8 +417,8 @@ accent-dwarf-words-replace-137 = diteit
 accent-dwarf-words-138 = officer
 accent-dwarf-words-replace-138 = bobby
 
-accent-dwarf-words-149 = seccie
-accent-dwarf-words-replace-149 = bobby
+accent-dwarf-words-139 = seccie
+accent-dwarf-words-replace-139 = bobby
 
-accent-dwarf-words-150 = a
-accent-dwarf-words-replace-150 = ae
+accent-dwarf-words-140 = a
+accent-dwarf-words-replace-140 = ae
