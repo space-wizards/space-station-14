@@ -105,6 +105,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookEMP
+  name: spellbook-item-emp-name
+  description: spellbook-item-emp-description
+  productAction: ActionEmp
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Utility
 - type: listing
   id: SpellbookPolymorphSpider
