@@ -1067,6 +1067,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RemoteSignaller
+
+- type: Tag
   id: ReptilianFood
 
 - type: Tag
