@@ -1,19 +1,12 @@
 - type: entity
+  parent: BaseWallmountMachine
   id: SignalTimer
   name: signal timer
   description: It's a timer for sending timed signals to things.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
   - type: StationAiWhitelist
-  - type: Transform
-    anchored: true
   - type: WallMount
     arc: 360
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
@@ -35,12 +28,9 @@
     interfaces:
       enum.SignalTimerUiKey.Key:
         type: SignalTimerBoundUserInterface
-  - type: ApcPowerReceiver
-    powerLoad: 100
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
   - type: Construction
     graph: Timer
@@ -102,17 +92,10 @@
 # Construction Frame
 
 - type: entity
-  categories: [ HideSpawnMenu ]
   id: TimerFrame
   name: timer frame
   description: A construction frame for a timer.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
@@ -121,3 +104,4 @@
     graph: Timer
     node: frame
   - type: WallMount
+    arc: 360
