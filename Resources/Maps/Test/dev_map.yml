@@ -6701,13 +6701,6 @@ entities:
     - type: Transform
       pos: 3.5,8.5
       parent: 179
-- proto: SpawnMobCrabAtmos
-  entities:
-  - uid: 729
-    components:
-    - type: Transform
-      pos: 15.5,-10.5
-      parent: 179
 - proto: SpawnMobHuman
   entities:
   - uid: 138

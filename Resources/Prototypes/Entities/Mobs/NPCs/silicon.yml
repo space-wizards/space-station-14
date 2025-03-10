@@ -31,6 +31,9 @@
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
+  - type: Access
+    tags:
+    - BasicSilicon
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
@@ -351,6 +354,7 @@
     pack: MedibotAds
   - type: Inventory
     templateId: medibot
+  - type: DoAfter
 
 - type: entity
   parent:

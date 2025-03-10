@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1. Rad, toxin, o2, fire and adv by peptide",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1. Rad, toxin, o2, fire and adv by peptide, modified by ps3moira (github)",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -71,17 +71,6 @@
     },
     {
       "name": "toxinkit-inhand-left",
-      "directions": 4
-    },
-    {
-			"name": "purplekit"
-		},
-		{
-      "name": "purplekit-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "purplekit-inhand-left",
       "directions": 4
     },
     {

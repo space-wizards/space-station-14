@@ -1,0 +1,122 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseDelivery
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DeliveryVisuals.IsFragile:
+        enum.DeliveryVisualLayers.FragileStamp:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsLocked:
+        enum.DeliveryVisualLayers.Lock:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsPriority:
+        enum.DeliveryVisualLayers.PriorityTape:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsPriorityInactive:
+        enum.DeliveryVisualLayers.PriorityTape:
+          True: { shader: shaded, state: priority_inactive }
+          False: { shader: unshaded, state: priority }
+      enum.DeliveryVisuals.IsBroken:
+        enum.DeliveryVisualLayers.Breakage:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsTrash:
+        enum.DeliveryVisualLayers.Trash:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Label
+    examinable: false
+  - type: FingerprintReader
+    failPopup: fingerprint-reader-fail
+    failGlovesPopup: fingerprint-reader-fail-gloves
+  - type: Delivery
+  - type: ContainerContainer
+    containers:
+      delivery: !type:Container
+  - type: StealTarget
+    stealGroup: Mail
+
+- type: entity
+  parent: BaseDelivery
+  id: PackageDelivery
+  name: package
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Cargo/mail_large.rsi
+    scale: 0.85,0.85
+    layers:
+    - state: icon
+      map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      scale: 0.6, 0.6
+      offset: -0.23, -0.23
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
+    - state: priority
+      map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
+      visible: false
+      shader: unshaded
+    - state: broken
+      map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+  - type: MultiHandedItem
+  - type: Item
+    size: Huge
+  - type: Delivery
+    spesoReward: 800
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: PackageDeliveryRewards
+
+- type: entity
+  parent: BaseDelivery
+  id: LetterDelivery
+  name: letter
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Cargo/mail.rsi
+    scale: 0.8,0.8
+    layers:
+    - state: icon
+      map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      scale: 0.8, 0.8
+      offset: 0.225, 0.165
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
+    - state: priority
+      map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
+      visible: false
+      shader: unshaded
+    - state: broken
+      map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+  - type: Item
+    storedRotation: 90
+  - type: Delivery
+    spesoReward: 400
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: LetterDeliveryRewards
