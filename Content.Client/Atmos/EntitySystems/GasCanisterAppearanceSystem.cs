@@ -1,4 +1,5 @@
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -9,10 +10,7 @@ public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterCo
 {
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {
-        if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var protoName, args.Component))
-            return;
-
-        if (args.Sprite is not { } old)
+        if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var protoName, args.Component) || args.Sprite is not { } old)
             return;
 
         var proto = Spawn(protoName);
@@ -20,8 +18,7 @@ public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterCo
         if (!TryComp<SpriteComponent>(proto, out var sprite))
             return;
 
-        foreach (var layer in old.AllLayers)
-            layer.Rsi = sprite.BaseRSI;
+        old.LayerSetState(0, sprite.LayerGetState(0));
 
         Del(proto);
     }
