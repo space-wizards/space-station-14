@@ -1,9 +1,27 @@
-# non-projectile / "gun" staves
+# staves will automatically recharge while wands require the recharge spell
 
-# wand that gives lights an RGB effect.
+- type: entity
+  id: BaseStaff
+  abstract: true
+  parent: [ BaseItem, BaseMagicalContraband ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+  - type: Item
+    heldPrefix: staff
+    size: Normal
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 5
+  - type: AutoRecharge
+    rechargeDuration: 30
+  - type: Tag
+    tags:
+    - WizardStaff
+
 - type: entity
   id: RGBStaff
-  parent: BaseItem
+  parent: BaseStaff
   name: RGB staff
   description: Helps fix the underabundance of RGB gear on the station.
   components:
@@ -31,10 +49,13 @@
   - type: PointLight
     enabled: true
     radius: 2
+  - type: LimitedCharges
+    maxCharges: 25
+    charges: 25
 
 - type: entity
   id: AnimationStaff
-  parent: [ BaseItem, BaseMagicalContraband ]
+  parent: BaseStaff
   name: staff of animation
   description: Brings inanimate objects to life!
   components:
@@ -52,16 +73,12 @@
       - state: animation-inhand-left
       right:
       - state: animation-inhand-right
-  - type: Tag
-    tags:
-    - WizardWand
 
 - type: entity
   id: ActionRgbLight
   components:
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }
-    charges: 25
     sound: /Audio/Magic/blink.ogg
     event: !type:ChangeComponentsSpellEvent
       toAdd:
