@@ -143,6 +143,8 @@
   packetPrototype: CarrotSeeds
   productPrototypes:
     - FoodCarrot
+  mutationPrototypes:
+    - flarrot
   lifespan: 25
   maturation: 10
   production: 3
@@ -1989,3 +1991,38 @@
       Min: 1
       Max: 2
       PotencyDivisor: 40
+
+- type: seed
+  id: flarrots
+  name: seeds-flarrots-name
+  noun: seeds-noun-seeds
+  displayName: seeds-flarrots-display-name
+  plantRsi: Objects/Specific/Hydroponics/flarrot.rsi
+  packetPrototype: FlarrotSeeds
+  productPrototypes:
+    - FoodFlarrot
+  lifespan: 20
+  maturation: 7
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.50
+  nutrientConsumption: 0.80
+  chemicals:
+    Pyrazine:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 5
+    Ash:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 30
+    Phlogiston:
+      Min: 1
+      Max: 1
+      PotencyDivisor: 5
+    Napalm:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 10

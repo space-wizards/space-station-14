@@ -2593,3 +2593,50 @@
     entries:
       Taco: AnomalyBerry
       Burger: AnomalyBerryBurger
+
+- type: entity
+  name: flarrot
+  parent: FoodProduceBase
+  id: FoodFlarrot
+  description: It's a flaming carrot. Why shouldn't you eat it?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pyrotton
+  - type: Tag
+    tags:
+    - Carrot
+    - Vegetable
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ash
+          Quantity: 5
+        - ReagentId: Phlogiston
+          Quantity: 1
+        - ReagentId: Pyrazine
+          Quantity: 4
+        - ReagentId: Napalm
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/flarrot.rsi
+    layers:
+    - state: produce
+    - state: produce_burn
+      shader: unshaded
+  - type: Produce
+    seedId: flarrots
+  - type: IgnitionSource
+    ignited: true
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: produce-inhand-left
+      - state: produce-inhand-left-flame
+        shader: unshaded
+      right:
+      - state: produce-inhand-right
+      - state: produce-inhand-right-flame
+        shader: unshaded
