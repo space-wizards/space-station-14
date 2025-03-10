@@ -33,7 +33,7 @@ public record struct BeforeExplodeEvent(DamageSpecifier Damage, string Id, List<
     /// The damage that will be received by this entity. Note that the entity's explosion resistance has already been
     /// used to modify this damage.
     /// </summary>
-    public readonly DamageSpecifier Damage = Damage;
+    public DamageSpecifier Damage = Damage;
 
     /// <summary>
     /// ID of the explosion prototype.
