@@ -32,7 +32,7 @@
   name: chat-radio-medical
   keycode: 'm'
   frequency: 1355
-  color: "#57b8f0"
+  color: "#981F1C"
 
 - type: radioChannel
   id: Science
@@ -46,7 +46,7 @@
   name: chat-radio-security
   keycode: 's'
   frequency: 1359
-  color: "#ff4242"
+  color: "#006ACB"
 
 - type: radioChannel
   id: Service
