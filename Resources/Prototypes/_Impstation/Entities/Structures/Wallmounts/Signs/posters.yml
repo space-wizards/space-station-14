@@ -7,6 +7,7 @@
   components:
     - type: Sprite
       sprite: _Impstation/Structures/Wallmounts/posters.rsi/poster64_contraband
+      state: poster64_contraband
 
 - type: entity
   parent: PosterBase
@@ -15,7 +16,8 @@
   description: "Seems like someone isn't a fan of the book."
   components:
     - type: Sprite
-      sprite: _Impstation/Structures/Wallmounts/posters.rsi/poster65_contraband
+      sprite: _Impstation/Structures/Wallmounts/posters.rsi
+      state: poster65_contraband
 
 #Legit Imp Posters
 
@@ -26,7 +28,8 @@
   description: "A poster from an old recruitment drive for Medical featuring a doctor with white buns, fingers crossed behind his back."
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Wallmounts/posters.rsi/poster54_legit
+    sprite: _Impstation/Structures/Wallmounts/posters.rsi
+    state: poster54_legit
 
 - type: entity
   parent: PosterBase
@@ -35,4 +38,5 @@
   description: "A motivational medical poster featuring the author of the book 'Guide To Medical'"
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Wallmounts/posters.rsi/poster55_legit
+    sprite: _Impstation/Structures/Wallmounts/posters.rsi
+    state: poster55_legit
