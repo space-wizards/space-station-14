@@ -54,4 +54,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayStartingJob =
         CVarDef.Create("ui.admin_overlay_starting_job", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// A comma-separated list of recipe prototype IDs that have been favorited in the construction menu.
+    /// </summary>
+    public static readonly CVarDef<string> ConstructionFavorites =
+        CVarDef.Create("ui.construction_favorites", "", CVar.CLIENTONLY | CVar.ARCHIVE);
 }
