@@ -83,7 +83,8 @@
   equipment:
     neck: SyndicateWhistle
     outerClothing: ClothingOuterHardsuitSyndieCommander
-    pocket1: NukieSpectralLocator # Imp special!!
+  storage:
+    back: NukieSpectralLocator # Imp special!!
   inhand:
   - NukeOpsDeclarationOfWar
 
@@ -114,5 +115,6 @@
   id: SyndicateLoneOperativeGearFull
   parent: SyndicateOperativeGearFull
   equipment:
-    pocket1: NukieSpectralLocator #Imp special!!
     pocket2: BaseUplinkRadio60TC
+  storage:
+    back: NukieSpectralLocator # Imp special!!
