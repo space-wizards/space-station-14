@@ -31,6 +31,12 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  - type: IgnitionSource
+    ignited: true
+  - type: AtmosDevice
+  - type: RadiantTemperature
+    goalTemperature: 305
+    energyChangedPerSecond: 2500
 
 - type: entity
   id: LegionnaireBonfire
