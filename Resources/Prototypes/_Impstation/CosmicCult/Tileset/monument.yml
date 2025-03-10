@@ -202,8 +202,8 @@
   - type: Transform
     anchored: true
   - type: SpeedModifierContacts
-    walkSpeedModifier: 0.65
-    sprintSpeedModifier: 0.7
+    walkSpeedModifier: 0.7
+    sprintSpeedModifier: 0.75
     ignoreWhitelist:
       components:
       - CosmicCult

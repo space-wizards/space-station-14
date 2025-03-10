@@ -51,12 +51,17 @@
         },
 
 
-
         {
-            "name": "infect"
+            "name": "rogueinfect"
         },
         {
-            "name": "usurpednova"
+            "name": "roguenova"
+        },
+        {
+            "name": "rogueshatter"
+        },
+        {
+            "name": "rogueshunt"
         }
     ]
 }

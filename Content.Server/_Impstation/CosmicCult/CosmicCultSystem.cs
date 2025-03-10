@@ -42,6 +42,8 @@ using Content.Shared.Effects;
 using Content.Shared.Mindshield.Components;
 using Content.Server.Bible.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Popups;
+using Content.Shared.StatusEffect;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -86,6 +88,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly SharedInteractionSystem _interact = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
     public int CultistCount;
 
@@ -163,24 +167,25 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var finaleQuery = EntityQueryEnumerator<CosmicFinaleComponent, MonumentComponent>(); // Enumerator for The Monument's Finale
         while (finaleQuery.MoveNext(out var uid, out var comp, out var monuComp))
         {
+            // if (comp.CurrentState != FinaleState.Unavailable && _timing.CurTime >= monuComp.CheckTimer) // degen anyone that isn't shielded or a cultist || disabled for balance testing
+            // {
+            //     var targets = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
+            //     targets.RemoveWhere(target => !HasComp<HumanoidAppearanceComponent>(target)
+            //     || HasComp<MindShieldComponent>(target)
+            //     || HasComp<BibleUserComponent>(target)
+            //     || HasComp<CosmicCultComponent>(target));
+            //     foreach (var target in targets)
+            //     {
+            //         _damageable.TryChangeDamage(target, comp.FinaleDegen * 0.5);
+            //         _popup.PopupEntity(Loc.GetString("cosmiccult-finale-degen"), target, target, PopupType.MediumCaution);
+            //     }
+            // }
             if (_timing.CurTime >= monuComp.CheckTimer)
             {
                 var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
                 entities.RemoveWhere(entity => !HasComp<InfluenceVitalityComponent>(entity));
                 foreach (var entity in entities) _damageable.TryChangeDamage(entity, monuComp.MonumentHealing * -1);
                 monuComp.CheckTimer = _timing.CurTime + monuComp.CheckWait;
-            }
-            if (_timing.CurTime >= monuComp.CheckTimer && comp.CurrentState != FinaleState.Unavailable) // degen anyone that isn't shielded or a cultist
-            {
-                var targets = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
-                targets.RemoveWhere(target => !HasComp<HumanoidAppearanceComponent>(target)
-                || HasComp<MindShieldComponent>(target)
-                || HasComp<BibleUserComponent>(target)
-                || HasComp<CosmicCultComponent>(target));
-                foreach (var target in targets)
-                {
-                    _damageable.TryChangeDamage(target, comp.FinaleDegen * 0.5);
-                }
             }
 
             if (comp.CurrentState == FinaleState.ActiveBuffer && _timing.CurTime >= comp.BufferTimer) // swap everything over when buffer timer runs out

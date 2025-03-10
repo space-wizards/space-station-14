@@ -59,4 +59,4 @@ public sealed class ImpCCVars : CVars
 
     public static readonly CVarDef<int> CosmicCultFinaleDelaySeconds =
         CVarDef.Create<int>("cosmiccult.extra_entropy_for_finale", 5, CVar.SERVER, "The delay between the monument getting upgraded to tier 3 and the finale starting");
-}
+} // todo: set cosmic cult CCvars to: t2-120, t3-60, finale-150. Currently set to 5 for debugging.

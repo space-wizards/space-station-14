@@ -34,15 +34,10 @@ public sealed partial class CosmicFinaleComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", 1},
-            { "Slash", 1},
-            { "Piercing", 1},
-            { "Heat", 1},
-            { "Shock", 1},
-            { "Cold", 1},
-            { "Poison", 1},
-            { "Radiation", 1},
-            { "Asphyxiation", 1}
+            { "Blunt", 2.25},
+            { "Cold", 2.25},
+            { "Radiation", 2.25},
+            { "Asphyxiation", 2.25}
         }
     };
 }

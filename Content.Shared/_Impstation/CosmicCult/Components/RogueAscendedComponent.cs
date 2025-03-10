@@ -19,6 +19,8 @@ public sealed partial class RogueAscendedComponent : Component
     [DataField, AutoNetworkedField] public TimeSpan RogueInfectionTime = TimeSpan.FromSeconds(15);
 
     [DataField] public SoundSpecifier InfectionSfx = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_nova_impact.ogg");
+    [DataField] public SoundSpecifier ShatterSfx = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_shatter.ogg");
+    [DataField] public SoundSpecifier MobSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_noise.ogg");
     [DataField] public EntProtoId Vfx = "CosmicGenericVFX";
     [DataField, AutoNetworkedField] public TimeSpan StunTime = TimeSpan.FromSeconds(7);
     public DamageSpecifier InfectionHeal = new()
@@ -30,7 +32,7 @@ public sealed partial class RogueAscendedComponent : Component
             { "Piercing", 50},
             { "Heat", 50},
             { "Shock", 50},
-            { "Cold", 50},
+            { "Cold", 99},
             { "Poison", 50},
             { "Radiation", 50},
             { "Asphyxiation", 50}

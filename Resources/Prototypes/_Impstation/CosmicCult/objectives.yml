@@ -80,8 +80,8 @@
   components:
   - type: Objective
     icon:
-      sprite: Objects/Tools/emag.rsi
-      state: icon
+      sprite: _Impstation/CosmicCult/Icons/objectives.rsi
+      state: infection
   - type: NumberObjective
     min: 5
     max: 10
@@ -93,9 +93,9 @@
   parent: [BaseRogueAscendedObjective, BaseSurviveObjective]
   id: RogueAscendedSurviveObjective
   name: Survive
-  description: You wouldn't be a very good ninja if you died, now would you?
+  description: Survive until the end of all things.
   components:
   - type: Objective
     icon:
-      sprite: Clothing/Mask/ninja.rsi
-      state: icon
+      sprite: _Impstation/CosmicCult/Icons/objectives.rsi
+      state: summon

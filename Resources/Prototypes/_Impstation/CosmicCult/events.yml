@@ -8,8 +8,9 @@
     reoccurrenceDelay: 20
     minimumPlayers: 30
     duration: null
-  - type: RandomSpawnRule
-    prototype: SpawnPointRogueAscended
+  - type: OutsideStationAntagSpawn
+  - type: AntagSpawner
+    prototype: MobRogueAscended
   - type: AntagObjectives
     objectives:
     - RogueAscendedInfectionObjective
@@ -22,7 +23,7 @@
       max: 1
       pickPlayer: false
       mindRoles:
-      - MindRoleCosmicAscendant
+      - MindRoleCosmicAscended
       briefing:
         text: rogue-ascended-role-greeting
         color: CadetBlue
@@ -40,7 +41,7 @@
     description: ghost-role-information-rogue-ascended-description
     rules: ghost-role-information-rogue-ascended-rules
     mindRoles:
-    - MindRoleCosmicAscendant
+    - MindRoleCosmicAscended
   - type: Sprite
     sprite: _Impstation/CosmicCult/Mobs/astralrogue.rsi
     layers:

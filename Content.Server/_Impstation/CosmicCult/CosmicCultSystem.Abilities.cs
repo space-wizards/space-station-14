@@ -25,11 +25,17 @@ using Content.Shared.Mobs;
 using Content.Shared.Doors.Components;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Player;
+using Content.Shared.Physics;
+using System.Linq;
+using Content.Shared.Flash.Components;
+using Content.Shared.StatusEffect;
 
 namespace Content.Server._Impstation.CosmicCult;
 
 public sealed partial class CosmicCultSystem : EntitySystem
 {
+    [ValidatePrototypeId<StatusEffectPrototype>]
+    private const string FlashedId = "Flashed";
     public void SubscribeAbilities()
     {
         SubscribeLocalEvent<CosmicImposingComponent, BeforeDamageChangedEvent>(OnImpositionDamaged);
@@ -81,32 +87,26 @@ public sealed partial class CosmicCultSystem : EntitySystem
         Spawn(uid.Comp.GlareVFX, Transform(uid).Coordinates);
         MalignEcho(uid);
         args.Handled = true;
-        var mapPos = _transform.GetMapCoordinates(args.Performer);
-        var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10); // static range of 10. because.
-        entities.RemoveWhere(entity => HasComp<CosmicCultComponent>(entity) || _container.IsEntityInContainer(entity));
-        foreach (var entity in entities)
-        {
-            var hitPos = _transform.GetMapCoordinates(entity).Position;
-            var delta = hitPos - mapPos.Position;
-            if (delta == Vector2.Zero)
-                continue;
-            if (delta.EqualsApprox(Vector2.Zero))
-                delta = new(.01f, 0);
-
-            if (!uid.Comp.CosmicEmpowered)
-            {
-                _recoil.KickCamera(entity, -delta.Normalized());
-                _flash.Flash(entity, uid, args.Action, 8 * 1000f, 0.3f);
-            }
-            else
-            {
-                _recoil.KickCamera(entity, -delta.Normalized());
-                _flash.Flash(entity, uid, args.Action, 10 * 1000f, 0.2f);
-            }
-        }
+        var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, uid.Comp.CosmicGlareRange);
         entities.RemoveWhere(entity => !HasComp<PoweredLightComponent>(entity));
         foreach (var entity in entities)
             _poweredLight.TryDestroyBulb(entity);
+
+        var targetFilter = Filter.Pvs(uid).RemoveWhere(player =>
+        {
+            if (player.AttachedEntity == null)
+                return true;
+            var ent = player.AttachedEntity.Value;
+            if (!HasComp<MobStateComponent>(ent) || !HasComp<HumanoidAppearanceComponent>(ent) || HasComp<CosmicCultComponent>(ent) || HasComp<BibleUserComponent>(ent))
+                return true;
+            return !_interact.InRangeUnobstructed((uid, Transform(uid)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
+        });
+        var targets = new HashSet<NetEntity>(targetFilter.RemovePlayerByAttachedEntity(uid).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
+        foreach (var target in targets)
+        {
+            _flash.Flash(GetEntity(target), uid, args.Action, uid.Comp.CosmicGlareDuration, uid.Comp.CosmicGlarePenalty, false, false, uid.Comp.CosmicGlareStun);
+            _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { GetEntity(target) }, Filter.Pvs(GetEntity(target), entityManager: EntityManager));
+        }
     }
     #endregion
 
@@ -133,12 +133,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
     private void OnNovaCollide(Entity<CosmicAstralNovaComponent> uid, ref StartCollideEvent args)
     {
-        if (HasComp<CosmicCultComponent>(args.OtherEntity) || HasComp<BibleUserComponent>(args.OtherEntity))
+        if (HasComp<CosmicCultComponent>(args.OtherEntity) || HasComp<BibleUserComponent>(args.OtherEntity) || !HasComp<MobStateComponent>(args.OtherEntity))
             return;
 
         _stun.TryParalyze(args.OtherEntity, TimeSpan.FromSeconds(2f), false);
         _damageable.TryChangeDamage(args.OtherEntity, uid.Comp.CosmicNovaDamage); // This'll probably trigger two or three times because of how collision works. I'm not being lazy here, it's a feature (kinda /s)
-        _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { args.OtherEntity }, Filter.Pvs(args.OtherEntity, entityManager: EntityManager));
+        _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.OtherEntity }, Filter.Pvs(args.OtherEntity, entityManager: EntityManager));
     }
     #endregion
 

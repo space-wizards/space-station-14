@@ -149,13 +149,13 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: WorldTargetAction
-    useDelay: 20
+    useDelay: 10
     raiseOnUser: true
     range: 60
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-      state: usurpednova
+      state: roguenova
     event: !type:EventRogueCosmicNova {}
 
 - type: entity
@@ -169,24 +169,42 @@
     whitelist:
       components:
         - HumanoidAppearance
+        - CosmicCult
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-      state: infect
+      state: rogueinfect
     event: !type:EventRogueInfection {}
 
 - type: entity
-  id: ActionRogueCosmicBeam
-  name: Usurped Astral Beam
-  description: Channel a destructive beam of astral energy.
+  id: ActionRogueShatter
+  name: Shatter Shell
+  description: Instantly shatter a target's mortal shell, mortally wounding them and preparing them for Malign Corruption.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
-    useDelay: 20
-    raiseOnUser: true
-    range: 60
+    useDelay: 60
+    whitelist:
+      components:
+        - HumanoidAppearance
+        - CosmicCult
+        - BibleUser
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-      state: usurpednova
-    event: !type:EventRogueCosmicBeam {}
+      state: rogueshatter
+    event: !type:EventRogueShatter {}
+
+- type: entity
+  id: ActionRogueGrandShunt
+  name: Malign Mindspike
+  description: Shunt the minds of all nearby out of their body and unto the cosmic dark, temporarily rendering their body mindless.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 90 ## todo: 90 second CD
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueshunt
+    event: !type:EventRogueGrandShunt {}

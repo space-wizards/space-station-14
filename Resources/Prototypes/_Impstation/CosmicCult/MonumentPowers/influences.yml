@@ -22,6 +22,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: glare
   action: ActionCosmicGlare
+  tier: 1 #remember to update when this gets set back to what it should be
 
 - type: influence
   id: InfluenceShuntSubjectivity

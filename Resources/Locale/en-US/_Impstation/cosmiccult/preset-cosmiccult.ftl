@@ -30,6 +30,7 @@ cosmiccult-finale-cultist-count = {$COUNT ->
     *[other] The summoning is hastened by {$COUNT} cultists present!
 }
 
+cosmiccult-finale-degen = You feel yourself unravelling!
 cosmiccult-finale-location = Scanners are detecting an enormous Λ-CDM spike {$location}!
 cosmiccult-finale-cancel-begin = You begin to disrupt The Monument's energies..
 cosmiccult-finale-beckon-begin = You begin to Beckon The Unknown..
