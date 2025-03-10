@@ -838,6 +838,8 @@
 
 - type: reaction
   id: RedMead
+  requiredMixerCategories:
+  - Stir
   reactants:
     Mead:
       amount: 1
