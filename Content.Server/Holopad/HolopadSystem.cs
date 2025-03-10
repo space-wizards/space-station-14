@@ -790,6 +790,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         var sourceTelephoneEntity = new Entity<TelephoneComponent>(source, sourceTelephone);
+        var isDirty = false;
 
         var query = AllEntityQuery<HolopadComponent, TelephoneComponent>();
         while (query.MoveNext(out var receiver, out var receiverHolopad, out var receiverTelephone))
@@ -800,10 +801,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 continue;
 
             if (receiverHolopad.ControlLockoutStartTime > source.Comp.ControlLockoutStartTime)
+            {
                 source.Comp.ControlLockoutStartTime = receiverHolopad.ControlLockoutStartTime;
+                isDirty = true;
+            }
         }
 
-        Dirty(source);
+        if (isDirty)
+            Dirty(source);
     }
 
     private void SetHolopadAmbientState(Entity<HolopadComponent> entity, bool isEnabled)
