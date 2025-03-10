@@ -78,8 +78,8 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         var spesoAmount = amountOverride ?? ent.Comp.SpesoReward;
 
         // Do you want to bring cargo into debt???
-        if (spesoAmount < 0 && account.Balance + spesoAmount < 0)
-            spesoAmount = account.Balance * -1;
+        if (spesoAmount < 0)
+            spesoAmount = Math.Max(spesoAmount, -account.Balance);
 
         _cargo.UpdateBankAccount((ent.Comp.RecipientStation.Value, account), spesoAmount);
     }
@@ -92,7 +92,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.TearMessage == null)
             return;
 
-        _chat.TrySendInGameICMessage(ent, Loc.GetString(ent.Comp.TearMessage, ("spesos", ent.Comp.SpesoPenalty)), InGameICChatType.Speak, true);
+        _chat.TrySendInGameICMessage(ent, Loc.GetString(ent.Comp.TearMessage, ("spesos", -ent.Comp.DeltaSpesos)), InGameICChatType.Speak, true);
     }
 
     public override void Update(float frameTime)

@@ -81,7 +81,7 @@
     spesoReward: 800
   - type: TearableDelivery
     doAfter: 6
-    spesoPenalty: -500
+    deltaSpesos: -500
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -120,7 +120,7 @@
   - type: Item
     storedRotation: 90
   - type: Delivery
-    spesoReward: 400
+    deltaSpesos: 400
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector

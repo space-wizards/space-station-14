@@ -86,7 +86,6 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (delivery.IsOpened || !delivery.IsLocked)
             return;
 
-
         var disabled = args.Using == null || !_tools.HasQuality(args.Using.Value, ent.Comp.ToolQuality) || args.Hands == null;
 
         var user = args.User;
@@ -107,7 +106,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
             },
             Disabled = disabled,
-            Message = Loc.GetString("delivery-tearable-need-sharp-object"),
+            Message = Loc.GetString(ent.Comp.TearNeedObject),
             Text = Loc.GetString(ent.Comp.TearVerb),
         });
     }
@@ -161,7 +160,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         AnnounceTearPenalty((ent.Owner, ent.Comp));
 
-        ModifySpesoAmount((ent.Owner, delivery), ent.Comp.SpesoPenalty);
+        ModifySpesoAmount((ent.Owner, delivery), ent.Comp.DeltaSpesos);
     }
 
     private void OnGetVerbs(Entity<DeliveryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
