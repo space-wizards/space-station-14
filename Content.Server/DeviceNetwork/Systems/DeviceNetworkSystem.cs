@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Server.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Examine;
 
@@ -364,7 +365,11 @@ namespace Content.Server.DeviceNetwork.Systems
                 if (!beforeEv.Cancelled)
                     RaiseLocalEvent(connection.Owner, packet, false);
                 else
+                {
                     beforeEv.Uncancel();
+                    var eventArgs = new SignalFailedEvent(packet.Sender); // event so signallers throw an error if they're out of range
+                    RaiseLocalEvent(packet.Sender, ref eventArgs, false);
+                }
             }
         }
     }
