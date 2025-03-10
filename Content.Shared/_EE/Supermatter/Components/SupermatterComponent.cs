@@ -145,6 +145,12 @@ public sealed partial class SupermatterComponent : Component
     public float GasEfficiency = 0.15f;
 
     /// <summary>
+    /// Divisor on the amount of gas absorbed by the supermatter during the roundstart grace period.
+    /// </summary>
+    [DataField]
+    public float GasEfficiencyGraceModifier = 10f;
+
+    /// <summary>
     /// Uses <see cref="PowerlossDynamicScaling"/> and <see cref="GasStorage"/> to lessen the effects of our powerloss functions
     /// </summary>
     [DataField]
