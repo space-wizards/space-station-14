@@ -205,7 +205,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     private IEnumerable<EntityUid> GetNearbyFactions(EntityUid entity, float range, HashSet<ProtoId<NpcFactionPrototype>> factions)
     {
         var xform = Transform(entity);
-        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(_xform.GetMapCoordinates((entity, xform)), range))
+        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(_xform.GetMapCoordinates((entity, xform)), range, LookupFlags.Uncontained))
         {
             if (ent.Owner == entity)
                 continue;
