@@ -2,3 +2,13 @@
   parent: BaseBorgModuleRecipe
   id: BorgModuleArtistic
   result: BorgModuleArtistic
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleMining
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 500
+    Gold: 100
+  result: BorgModuleMining

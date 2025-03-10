@@ -1,0 +1,35 @@
+- type: entity
+  name: Pickaxe
+  parent: BaseItem
+  id: BorgPickaxe
+  description: Notched to perfection, for jamming it into rocks.
+  suffix: DO NOT MAP
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
+  - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: -135
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+      params:
+        volume: -3
+    damage:
+      groups:
+        Brute: 10
+      types:
+        Structural: 30
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    storedRotation: -45
+  - type: UseDelay
+  - type: DamageOtherOnHit
+    staminaCost: 5
