@@ -4001,4 +4001,12 @@ Entries:
   id: 554
   time: '2025-03-10T16:29:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/376
+- author: Killer Tamashi
+  changes:
+  - message: Added "Bulwark" Cyber arms. Comes with riot-sized shield and fast hitting,
+      but low damage sword.
+    type: Add
+  id: 555
+  time: '2025-03-10T16:30:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/379
 
