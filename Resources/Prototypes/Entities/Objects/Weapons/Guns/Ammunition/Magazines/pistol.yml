@@ -139,7 +139,7 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
+    - state: mag-unshaded-1
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
 
@@ -154,7 +154,7 @@
     layers:
     - state: uranium
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
+    - state: mag-unshaded-1
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
 
@@ -169,7 +169,7 @@
     layers:
     - state: incendiary
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
+    - state: mag-unshaded-1
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
 
@@ -184,7 +184,7 @@
     layers:
     - state: practice
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
+    - state: mag-unshaded-1
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
 
