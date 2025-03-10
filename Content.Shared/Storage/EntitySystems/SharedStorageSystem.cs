@@ -22,6 +22,7 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Storage.Events;
 using Content.Shared.Verbs;
@@ -66,6 +67,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] private   readonly TagSystem _tag = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -276,7 +278,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!UI.IsUiOpen(uid, args.UiKey))
         {
             UpdateAppearance((uid, storageComp, null));
-            Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Actor);
+            if (!_tag.HasTag(args.Actor, storageComp.SilentStorageUserTag))
+                Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Actor);
         }
     }
 
@@ -357,7 +360,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!UI.TryOpenUi(uid, StorageComponent.StorageUiKey.Key, entity))
             return;
 
-        if (!silent)
+        if (!silent && !_tag.HasTag(entity, storageComp.SilentStorageUserTag))
         {
             Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity);
 
@@ -602,7 +605,8 @@ public abstract class SharedStorageSystem : EntitySystem
         // If we picked up at least one thing, play a sound and do a cool animation!
         if (successfullyInserted.Count > 0)
         {
-            Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, _audioParams);
+            if (!_tag.HasTag(args.User, component.SilentStorageUserTag))
+                Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, _audioParams);
             EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(
                 GetNetEntity(uid),
                 GetNetEntityList(successfullyInserted),
@@ -645,7 +649,8 @@ public abstract class SharedStorageSystem : EntitySystem
                 $"{ToPrettyString(player):player} is attempting to take {ToPrettyString(item):item} out of {ToPrettyString(storage):storage}");
 
             if (_sharedHandsSystem.TryPickupAnyHand(player, item, handsComp: player.Comp)
-                && storage.Comp.StorageRemoveSound != null)
+                && storage.Comp.StorageRemoveSound != null
+                && !_tag.HasTag(player, storage.Comp.SilentStorageUserTag))
             {
                 Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, _audioParams);
             }

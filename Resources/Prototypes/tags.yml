@@ -1154,6 +1154,9 @@
   id: SignalTrigger
 
 - type: Tag
+  id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
