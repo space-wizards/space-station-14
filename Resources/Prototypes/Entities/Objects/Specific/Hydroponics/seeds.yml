@@ -761,3 +761,13 @@
       seedId: anomalyBerry
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of flarrot seeds
+  id: FlarrotSeeds
+  components:
+    - type: Seed
+      seedId: flarrots
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/flarrot.rsi
