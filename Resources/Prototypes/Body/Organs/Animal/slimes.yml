@@ -10,7 +10,9 @@
     - type: Stomach
     - type: Metabolizer
       maxReagents: 3
-      metabolizerTypes: [ Slime ]
+      metabolizerTypes:
+      - N2Oxygenate
+      - Slime
       removeEmpty: true
       groups:
         - id: Food
@@ -42,7 +44,9 @@
       removeEmpty: true
       solutionOnBody: false
       solution: "Lung"
-      metabolizerTypes: [ Slime ]
+      metabolizerTypes:
+      - N2Oxygenate
+      - Slime
       groups:
       - id: Gas
         rateModifier: 100.0

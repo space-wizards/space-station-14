@@ -62,3 +62,6 @@ reagent-effect-condition-guidebook-has-tag =
                 } the tag {$tag}
 
 reagent-effect-condition-guidebook-this-reagent = this reagent
+
+reagent-effect-condition-guidebook-not-bloodstream-reagent =
+    the mob's bloodstream reagent is not the same as this reagent
