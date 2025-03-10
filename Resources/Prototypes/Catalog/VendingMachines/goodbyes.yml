@@ -37,7 +37,13 @@
 - type: localizedDataset
   id: RobustSoftdrinksGoodbyes
   values:
-    prefix: thankyou-cola-
+    prefix: thankyou-robust-
+    count: 4
+
+- type: localizedDataset
+  id: BodaGoodbyes
+  values:
+    prefix: thankyou-sovietsoda-
     count: 4
 
 - type: localizedDataset
@@ -47,9 +53,39 @@
     count: 4
 
 - type: localizedDataset
+  id: PwrGameGoodbyes
+  values:
+    prefix: thankyou-pwr-
+    count: 4
+
+- type: localizedDataset
+  id: ShamblerGoodbyes
+  values:
+    prefix: thankyou-shambler-
+    count: 4
+
+- type: localizedDataset
   id: SmiteGoodbyes
   values:
     prefix: thankyou-smite-
+    count: 4
+
+- type: localizedDataset
+  id: SpaceColaGoodbyes
+  values:
+    prefix: thankyou-cola-
+    count: 4
+
+- type: localizedDataset
+  id: SpaceUpGoodbyes
+  values:
+    prefix: thankyou-spaceup-
+    count: 4
+
+- type: localizedDataset
+  id: StarkistGoodbyes
+  values:
+    prefix: thankyou-starkist-
     count: 4
 
 - type: localizedDataset
@@ -105,12 +141,6 @@
   values:
     prefix: thankyou-snack-
     count: 6
-
-- type: localizedDataset
-  id: BodaGoodbyes
-  values:
-    prefix: thankyou-sovietsoda-
-    count: 3
 
 - type: localizedDataset
   id: SyndieDrobeGoodbyes
