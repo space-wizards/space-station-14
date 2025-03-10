@@ -18,13 +18,19 @@ public sealed partial class VoiceMaskComponent : Component
     ///     The name that will override an entities default name. If null, it will use the default override.
     /// </summary>
     [DataField]
-    public string? VoiceMaskName = null;
+    public string? VoiceMaskName;
 
     /// <summary>
     ///     The speech verb that will override an entities default one. If null, it will use the entities default verb.
     /// </summary>
     [DataField]
     public ProtoId<SpeechVerbPrototype>? VoiceMaskSpeechVerb;
+
+    /// <summary>
+    ///     The speech sound that will override an entities default one. If null, it will use the entities default sound.
+    /// </summary>
+    [DataField]
+    public ProtoId<SpeechSoundsPrototype>? VoiceMaskSpeechSound;
 
     /// <summary>
     ///     The action that gets displayed when the voice mask is equipped.
@@ -37,4 +43,13 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? ActionEntity;
+
+    [DataField]
+    public LocId DefaultNameOverride = "voice-mask-default-name-override";
+
+    [DataField]
+    public LocId SuccessPopup = "voice-mask-popup-success";
+
+    [DataField]
+    public LocId FailurePopup = "voice-mask-popup-failure";
 }
