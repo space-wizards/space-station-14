@@ -83,6 +83,11 @@ namespace Content.MapRenderer.Painters
                 {
                     continue;
                 }
+                if (prototype.ID.StartsWith("Effect"))
+                {
+                    Console.WriteLine($"Skipping unrenderable entity {prototype.ID}; please remove it from the map");
+                    continue;
+                }
 
                 var transform = _sEntityManager.GetComponent<TransformComponent>(serverEntity);
                 if (_sEntityManager.TryGetComponent(transform.GridUid, out MapGridComponent? grid))
