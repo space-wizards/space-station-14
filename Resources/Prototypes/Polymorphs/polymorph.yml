@@ -207,7 +207,7 @@
 - type: polymorph
   id: PetrifyStoneStatue
   configuration:
-    entity: MobHuman
+    entity: StoneStatuePetrify
     forced: true
     transferDamage: false
     transferName: true

@@ -19,6 +19,5 @@
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Petrified
-      - type: Animateable
       speech: action-speech-spell-petrify
       doSpeech: true

@@ -10,12 +10,12 @@ public sealed class ServerPetrifySpellSystem : PetrifySpellSystem
 
     protected override void OnPetrify(Entity<PetrifiedComponent> ent, ref MapInitEvent args)
     {
-        _poly.PolymorphEntity(ent, ent.Comp.PolymorphPrototypeName);
+        _poly.PolymorphEntity(ent, ent.Comp.PolymorphPrototypeName, false, false);
 
         base.OnPetrify(ent, ref args);
     }
 
-    protected override void OnAnimate(Entity<PetrifiedComponent> ent, ref AnimateSpellEvent args)
+    protected override void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
     {
         base.OnAnimate(ent, ref args);
     }
