@@ -103,7 +103,7 @@ accent-german-words-replace-34 = poltergeist
 accent-german-words-32 = weed
 accent-german-words-replace-32 = kraut
 
-accent-german-words-33
+accent-german-words-33 = cabbage
 accent-german-words-replace-33 = kraut
 
 accent-german-words-34 = vodka
