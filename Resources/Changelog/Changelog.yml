@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: UBlueberry
-  changes:
-  - message: The appraisal tool now has in-hand sprites!
-    type: Fix
-  id: 7549
-  time: '2024-10-22T23:51:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32849
 - author: chromiumboy
   changes:
   - message: The atmospheric alerts computer has been upgraded to visually indicate
@@ -3890,3 +3883,10 @@
   id: 8048
   time: '2025-03-10T23:08:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33570
+- author: Velken
+  changes:
+  - message: Performers can now find that their clothing set is more complete!
+    type: Add
+  id: 8049
+  time: '2025-03-10T23:17:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35764
