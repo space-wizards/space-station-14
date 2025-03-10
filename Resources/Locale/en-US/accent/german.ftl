@@ -100,128 +100,128 @@ accent-german-words-replace-33 = flammenwerfer
 accent-german-words-34 = ghost
 accent-german-words-replace-34 = poltergeist
 
-accent-german-words-32 = weed
-accent-german-words-replace-32 = kraut
+accent-german-words-35 = weed
+accent-german-words-replace-35 = kraut
 
-accent-german-words-33 = cabbage
-accent-german-words-replace-33 = kraut
+accent-german-words-36 = cabbage
+accent-german-words-replace-36 = kraut
 
-accent-german-words-34 = vodka
-accent-german-words-replace-34 = wodka
+accent-german-words-37 = vodka
+accent-german-words-replace-37 = wodka
 
-accent-german-words-35 = backpack
-accent-german-words-replace-35 = rucksack
+accent-german-words-38 = backpack
+accent-german-words-replace-38 = rucksack
 
-accent-german-words-36 = medicine
-accent-german-words-replace-36 = medizin
+accent-german-words-39 = medicine
+accent-german-words-replace-39 = medizin
 
-accent-german-words-37 = accent
-accent-german-words-replace-37 = akzent
+accent-german-words-40 = accent
+accent-german-words-replace-40 = akzent
 
-accent-german-words-38 = anomaly
-accent-german-words-replace-38 = anomalie
+accent-german-words-41 = anomaly
+accent-german-words-replace-41 = anomalie
 
-accent-german-words-39 = artifact
-accent-german-words-replace-39 = artefakt
+accent-german-words-42 = artifact
+accent-german-words-replace-42 = artefakt
 
-accent-german-words-40 = artefact
-accent-german-words-replace-40 = artefakt
+accent-german-words-43 = artefact
+accent-german-words-replace-43 = artefakt
 
-accent-german-words-41 = dumb
-accent-german-words-replace-41 = dumm
+accent-german-words-44 = dumb
+accent-german-words-replace-44 = dumm
 
-accent-german-words-42 = stupid
-accent-german-words-replace-42 = doof
+accent-german-words-45 = stupid
+accent-german-words-replace-45 = doof
 
-accent-german-words-43 = wonderful
-accent-german-words-replace-43 = wunderbar
+accent-german-words-46 = wonderful
+accent-german-words-replace-46 = wunderbar
 
-accent-german-words-44 = warning
-accent-german-words-replace-44 = warnung
+accent-german-words-47 = warning
+accent-german-words-replace-47 = warnung
 
-accent-german-words-45 = warnings
-accent-german-words-replace-45 = warnungen
+accent-german-words-48 = warnings
+accent-german-words-replace-48 = warnungen
 
-accent-german-words-46 = and
-accent-german-words-replace-46 = und
+accent-german-words-49 = and
+accent-german-words-replace-49 = und
 
-accent-german-words-47 = carp
-accent-german-words-replace-47 = karpfen
+accent-german-words-50 = carp
+accent-german-words-replace-50 = karpfen
 
-accent-german-words-48 = commander
-accent-german-words-replace-48 = kommandant
+accent-german-words-51 = commander
+accent-german-words-replace-51 = kommandant
 
-accent-german-words-49 = beer
-accent-german-words-replace-49 = bier
+accent-german-words-52 = beer
+accent-german-words-replace-52 = bier
 
-accent-german-words-50 = beers
-accent-german-words-replace-50 = bier
+accent-german-words-53 = beers
+accent-german-words-replace-53 = bier
 
-accent-german-words-51 = hi
-accent-german-words-replace-51 = hallo
+accent-german-words-54 = hi
+accent-german-words-replace-54 = hallo
 
-accent-german-words-52 = hello
-accent-german-words-replace-52 = guten Tag
+accent-german-words-55 = hello
+accent-german-words-replace-55 = guten Tag
 
-accent-german-words-53 = ambulance
-accent-german-words-replace-53 = krankenwagen
+accent-german-words-56 = ambulance
+accent-german-words-replace-56 = krankenwagen
 
-accent-german-words-54 = goodbye
-accent-german-words-replace-54 = auf Wiedersehen
+accent-german-words-57 = goodbye
+accent-german-words-replace-57 = auf Wiedersehen
 
-accent-german-words-55 = bye
-accent-german-words-replace-55 = tschüss
+accent-german-words-58 = bye
+accent-german-words-replace-58 = tschüss
 
-accent-german-words-56 = bye bye
-accent-german-words-replace-56 = tschau
+accent-german-words-59 = bye bye
+accent-german-words-replace-59 = tschau
 
-accent-german-words-57 = bye-bye
-accent-german-words-replace-57 = tschau
+accent-german-words-60 = bye-bye
+accent-german-words-replace-60 = tschau
 
-accent-german-words-58 = fantastic
-accent-german-words-replace-58 = fantastisch
+accent-german-words-61 = fantastic
+accent-german-words-replace-61 = fantastisch
 
-accent-german-words-59 = changeling
-accent-german-words-replace-59 = doppelgänger
+accent-german-words-62 = changeling
+accent-german-words-replace-62 = doppelgänger
 
-accent-german-words-60 = forbidden
-accent-german-words-replace-60 = verboten
+accent-german-words-63 = forbidden
+accent-german-words-replace-63 = verboten
 
-accent-german-words-61 = prohibited
-accent-german-words-replace-61 = verboten
+accent-german-words-64 = prohibited
+accent-german-words-replace-64 = verboten
 
-accent-german-words-62 = banned
-accent-german-words-replace-62 = verboten
+accent-german-words-65 = banned
+accent-german-words-replace-65 = verboten
 
-accent-german-words-63 = quick
-accent-german-words-replace-63 = schnell
+accent-german-words-66 = quick
+accent-german-words-replace-66 = schnell
 
-accent-german-words-64 = quickly
-accent-german-words-replace-64 = schnell
+accent-german-words-67 = quickly
+accent-german-words-replace-67 = schnell
 
-accent-german-words-65 = hospital
-accent-german-words-replace-65 = krankenhaus
+accent-german-words-68 = hospital
+accent-german-words-replace-68 = krankenhaus
 
-accent-german-words-66 = tesla coil
-accent-german-words-replace-66 = tesla coil
+accent-german-words-69 = tesla coil
+accent-german-words-replace-69 = tesla coil
 
-accent-german-words-67 = tesla coils
-accent-german-words-replace-67 = tesla coils
+accent-german-words-70 = tesla coils
+accent-german-words-replace-70 = tesla coils
 
-accent-german-words-68 = teslaloose
-accent-german-words-replace-68 = kugelblitz
-
-accent-german-words-69 = tesloose
-accent-german-words-replace-69 = kugelblitz
-
-accent-german-words-70 = lightning ball
-accent-german-words-replace-70 = kugelblitz
-
-accent-german-words-71 = ball lightning
+accent-german-words-71 = teslaloose
 accent-german-words-replace-71 = kugelblitz
 
-accent-german-words-72 = tesla
+accent-german-words-72 = tesloose
 accent-german-words-replace-72 = kugelblitz
 
-accent-german-words-73 = car
-accent-german-words-replace-73 = auto
+accent-german-words-73 = lightning ball
+accent-german-words-replace-73 = kugelblitz
+
+accent-german-words-74 = ball lightning
+accent-german-words-replace-74 = kugelblitz
+
+accent-german-words-75 = tesla
+accent-german-words-replace-75 = kugelblitz
+
+accent-german-words-76 = car
+accent-german-words-replace-76 = auto

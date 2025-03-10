@@ -98,13 +98,13 @@
   id: GermanOriginal
   values:
     prefix: accent-german-words-
-    count: 73
+    count: 76
 
 - type: localizedDataset
   id: GermanReplace
   values:
     prefix: accent-german-words-replace-
-    count: 73
+    count: 76
 
 - type: localizedDataset
   id: RussianOriginal
