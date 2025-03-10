@@ -1,18 +1,13 @@
 ﻿using System.Text.RegularExpressions;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Client.Configurable.UI
 {
-    public sealed class ConfigurationBoundUserInterface : BoundUserInterface
+    public sealed class ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         [ViewVariables]
         private ConfigurationMenu? _menu;
-
-        public ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
 
         protected override void Open()
         {
