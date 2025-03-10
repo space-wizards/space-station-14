@@ -2301,6 +2301,32 @@
     FoodButterSlice: 1
 
 - type: microwaveMealRecipe
+  id: RecipeKnafeh
+  name: knafeh recipe
+  result: FoodKnafeh
+  time: 5
+  reagents:
+    Water: 5
+    Sugar: 5
+  solids:
+    FoodCheeseSlice: 1
+    FoodButterSlice: 1
+    FoodSnackPistachios: 1 #i'd rather use a botany crop but we don't have nuts yet
+
+- type: microwaveMealRecipe
+  id: RecipeMothfeh
+  name: mothfeh recipe
+  result: FoodMothfeh
+  time: 5
+  reagents:
+    Water: 5
+    Sugar: 5
+    Fiber: 5
+    OilOlive: 5
+  solids:
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
   id: RecipeThrowingCroissant
   name: throwing croissant recipe
   result: WeaponCroissant
