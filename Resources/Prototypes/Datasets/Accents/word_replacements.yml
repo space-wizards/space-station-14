@@ -122,10 +122,10 @@
   id: SkeletonOriginal
   values:
     prefix: accent-skeleton-words-
-    count: 12
+    count: 15
 
 - type: localizedDataset
   id: SkeletonReplace
   values:
     prefix: accent-skeleton-words-replace-
-    count: 12
+    count: 15
