@@ -226,7 +226,7 @@
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterVestArmorSec # DS14
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
   inhand:
@@ -261,7 +261,7 @@
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterVestArmorSec # DS14
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
   inhand:

@@ -18,7 +18,8 @@
     ClothingUniformJumpsuitSecBlue: 4
     ClothingHeadsetSecurity: 4
     ClothingOuterWinterSec: 4
-    ClothingOuterArmorBasic: 4
+    # ClothingOuterArmorBasic: 4 # DS14-disabled
+    ClothingOuterVestArmorSec: 4 # DS14
     ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasicSlim: 4
     ClothingEyesBlindfold: 2

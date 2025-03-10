@@ -123,7 +123,7 @@
 - type: loadout
   id: ArmorVest
   equipment:
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterVestArmorSec # DS14
 
 - type: loadout
   id: ArmorVestSlim

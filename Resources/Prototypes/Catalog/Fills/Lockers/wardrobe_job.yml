@@ -162,7 +162,8 @@
        - id: ClothingShoesBootsJack
        - id: ClothingEyesGlassesSunglasses
        - id: ClothingHeadHelmetBasic
-       - id: ClothingOuterArmorBasic
+      #  - id: ClothingOuterArmorBasic # DS14-disabled
+       - id: ClothingOuterVestArmorSec # DS14
        - id: ClothingUniformJumpskirtSec
 
  - type: entity
