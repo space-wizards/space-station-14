@@ -1470,8 +1470,6 @@
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
   components:
     - type: EnergySword
-      colorOptions:
-        - DodgerBlue
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
@@ -1481,7 +1479,7 @@
       activeSound:
         path: /Audio/Weapons/ebladehum.ogg
     - type: Sprite
-      sprite: Objects/Fun/toy_sword.rsi
+      sprite: Objects/Weapons/Melee/e_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -1491,7 +1489,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      sprite: Objects/Fun/toy_sword.rsi
+      sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight
