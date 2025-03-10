@@ -36,10 +36,6 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             (itemSlot.SlotFlags & ent.Comp.AllowedSlots) == 0)
             return;
 
-        // Don't do anything if there is no message
-        if (args.Message == null)
-            return;
-
         // Get the storage component
         if (!TryComp<StorageComponent>(ent, out var storage))
             return;
@@ -79,20 +75,33 @@ public sealed class StorageVoiceControlSystem : EntitySystem
         // If otherwise, we're retrieving an item, so check all the items currently in the attached storage
         foreach (var item in storage.Container.ContainedEntities)
         {
-            // Get the item's name
-            var itemName = MetaData(item).EntityName;
-            // The message doesn't match the item name the requestor requested, skip and move on to the next item
-            if (!args.Message.Contains(itemName, StringComparison.InvariantCultureIgnoreCase))
-                continue;
-
-            // We found the item we want, so draw it from storage and place it into the player's hands
-            if (storage.Container.ContainedEntities.Count != 0)
+            // Check if the name contains the actual command.
+            // This will do comparisons against any length of string which is a little weird, but worth the tradeoff.
+            // E.g "go go s" would give you the screwdriver because "screwdriver" contains "s"
+            if (Name(item).Contains(args.MessageWithoutPhrase))
             {
-                _container.RemoveEntity(ent, item);
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
-                _hands.TryPickup(args.Source, item, handsComp: hands);
+                ExtractItemFromStorage(ent, item, args.Source, hands);
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// Extracts an item from storage and places it into the player's hands.
+    /// </summary>
+    /// <param name="ent">The entity with the <see cref="StorageVoiceControlComponent"/></param>
+    /// <param name="item">The entity to be extracted from the attached storage</param>
+    /// <param name="source">The entity wearing the item</param>
+    /// <param name="hands">The <see cref="HandsComponent"/> of the person wearing the item</param>
+    private void ExtractItemFromStorage(Entity<StorageVoiceControlComponent> ent,
+        EntityUid item,
+        EntityUid source,
+        HandsComponent hands)
+    {
+        _container.RemoveEntity(ent, item);
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(source)} retrieved {ToPrettyString(item)} from {ToPrettyString(ent)} via voice control");
+        _hands.TryPickup(source, item, handsComp: hands);
     }
 }
