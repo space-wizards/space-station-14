@@ -1,625 +1,730 @@
 ﻿- type: stack
   id: FloorTileDark
-  name: dark tile
+  name: stack-name-dark-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark }
   spawn: FloorTileItemDark
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkDiagonalMini
-  name: dark steel diagonal mini tile
+  name: stack-name-dark-steel-diagonal-mini-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-diagonal-mini }
   spawn: FloorTileItemDarkDiagonalMini
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkDiagonal
-  name: dark steel diagonal tile
+  name: stack-name-dark-steel-diagonal-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-diagonal }
   spawn: FloorTileItemDarkDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkHerringbone
-  name: dark steel herringbone
+  name: stack-name-dark-steel-herringbone-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-herringbone }
   spawn: FloorTileItemDarkHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkMini
-  name: dark steel mini tile
+  name: stack-name-dark-steel-mini-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-mini }
   spawn: FloorTileItemDarkMini
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkMono
-  name: dark steel mono tile
+  name: stack-name-dark-steel-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-mono }
   spawn: FloorTileItemDarkMono
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkPavement
-  name: dark steel pavement
+  name: stack-name-dark-steel-pavement-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-pavement }
   spawn: FloorTileItemDarkPavement
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkPavementVertical
-  name: dark steel vertical pavement
+  name: stack-name-dark-steel-vertical-pavement-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-pavement-vertical }
   spawn: FloorTileItemDarkPavementVertical
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkOffset
-  name: offset dark steel tile
+  name: stack-name-offset-dark-steel-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dark-offset }
   spawn: FloorTileItemDarkOffset
   maxCount: 30
 
 - type: stack
   id: FloorTileSteel
-  name: steel tile
+  name: stack-name-steel-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel }
   spawn: FloorTileItemSteel
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelOffset
-  name: offset steel tile
+  name: stack-name-offset-steel-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-offset }
   spawn: FloorTileItemSteelOffset
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelDiagonalMini
-  name: steel diagonal mini tile
+  name: stack-name-steel-diagonal-mini-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-diagonal-mini }
   spawn: FloorTileItemSteelDiagonalMini
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelDiagonal
-  name: steel diagonal tile
+  name: stack-name-steel-diagonal-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-diagonal }
   spawn: FloorTileItemSteelDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelHerringbone
-  name: steel herringbone
+  name: stack-name-steel-herringbone-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-herringbone }
   spawn: FloorTileItemSteelHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelMini
-  name: steel mini tile
+  name: stack-name-steel-mini-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-mini }
   spawn: FloorTileItemSteelMini
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelMono
-  name: steel mono tile
+  name: stack-name-steel-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-mono }
   spawn: FloorTileItemSteelMono
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelPavement
-  name: steel pavement
+  name: stack-name-steel-pavement-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-pavement }
   spawn: FloorTileItemSteelPavement
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelPavementVertical
-  name: steel vertical pavement
+  name: stack-name-steel-vertical-pavement-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel-pavement-vertical }
   spawn: FloorTileItemSteelPavementVertical
   maxCount: 30
 
 - type: stack
   id: FloorTileWhite
-  name: white tile
+  name: stack-name-white-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white }
   spawn: FloorTileItemWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteOffset
-  name: offset white steel tile
+  name: stack-name-offset-white-steel-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-offset }
   spawn: FloorTileItemWhiteOffset
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteDiagonalMini
-  name: white steel diagonal mini tile
+  name: stack-name-white-steel-diagonal-mini-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-diagonal-mini }
   spawn: FloorTileItemWhiteDiagonalMini
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteDiagonal
-  name: white steel diagonal tile
+  name: stack-name-white-steel-diagonal-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-diagonal }
   spawn: FloorTileItemWhiteDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteHerringbone
-  name: white steel herringbone
+  name: stack-name-white-steel-herringbone-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-herringbone }
   spawn: FloorTileItemWhiteHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteMini
-  name: white steel mini tile
+  name: stack-name-white-steel-mini-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-mini }
   spawn: FloorTileItemWhiteMini
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteMono
-  name: white steel mono tile
+  name: stack-name-white-steel-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-mono }
   spawn: FloorTileItemWhiteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileWhitePavement
-  name: white steel pavement
+  name: stack-name-white-steel-pavement-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-pavement }
   spawn: FloorTileItemWhitePavement
   maxCount: 30
 
 - type: stack
   id: FloorTileWhitePavementVertical
-  name: white steel vertical pavement
+  name: stack-name-white-steel-vertical-pavement-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: white-pavement-vertical }
   spawn: FloorTileItemWhitePavementVertical
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelCheckerDark
-  name: steel dark checker tile
+  name: stack-name-steel-dark-checker-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: checker-dark }
   spawn: FloorTileItemSteelCheckerDark
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelCheckerLight
-  name: steel light checker tile
+  name: stack-name-steel-light-checker-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: checker-light }
   spawn: FloorTileItemSteelCheckerLight
   maxCount: 30
 
 - type: stack
   id: FloorTileMetalDiamond
-  name: steel tile
+  name: stack-name-metal-diamond-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: metaldiamond }
   spawn: FloorTileItemMetalDiamond
   maxCount: 30
 
 - type: stack
   id: FloorTileWood
-  name: wood floor
+  name: stack-name-wood-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: wood }
   spawn: FloorTileItemWood
   maxCount: 30
 
 - type: stack
   id: FloorTileTechmaint
-  name: techmaint floor
+  name: stack-name-techmaint-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: techfloor }
   spawn: FloorTileItemTechmaint
   maxCount: 30
 
 - type: stack
   id: FloorTileFreezer
-  name: freezer tile
+  name: stack-name-freezer-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: freezer }
   spawn: FloorTileItemFreezer
   maxCount: 30
 
 - type: stack
   id: FloorTileShowroom
-  name: showroom tile
+  name: stack-name-showroom-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: showroom }
   spawn: FloorTileItemShowroom
   maxCount: 30
 
 - type: stack
   id: FloorTileGCircuit
-  name: green-circuit floor
+  name: stack-name-green-circuit-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: gcircuit }
   spawn: FloorTileItemGCircuit
   maxCount: 30
 
 - type: stack
   id: FloorTileGold
-  name: gold floor
+  name: stack-name-gold-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: gold }
   spawn: FloorTileItemGold
   maxCount: 30
 
 - type: stack
   id: FloorTileMono
-  name: mono tile
+  name: stack-name-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: monofloor }
   spawn: FloorTileItemMono
   maxCount: 30
 
 - type: stack
   id: FloorTileBrassFilled
-  name: filled brass plate
+  name: stack-name-filled-brass-plate-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: brass-filled }
   spawn: FloorTileItemBrassFilled
   maxCount: 30
 
 - type: stack
   id: FloorTileBrassReebe
-  name: smooth brass plate
+  name: stack-name-smooth-brass-plate-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: brass }
   spawn: FloorTileItemBrassReebe
   maxCount: 30
 
 - type: stack
   id: FloorTileLino
-  name: linoleum floor
+  name: stack-name-linoleum-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: lino }
   spawn: FloorTileItemLino
   maxCount: 30
 
 - type: stack
   id: FloorTileHydro
-  name: hydro tile
+  name: stack-name-hydro-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: hydro }
   spawn: FloorTileItemHydro
   maxCount: 30
 
 - type: stack
   id: FloorTileLime
-  name: lime tile
+  name: stack-name-lime-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: lime }
   spawn: FloorTileItemLime
   maxCount: 30
 
 - type: stack
   id: FloorTileDirty
-  name: dirty tile
+  name: stack-name-dirty-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: dirty }
   spawn: FloorTileItemDirty
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleWhite
-  name: white shuttle tile
+  name: stack-name-white-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttlewhite }
   spawn: FloorTileItemShuttleWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleBlue
-  name: blue shuttle tile
+  name: stack-name-blue-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttleblue }
   spawn: FloorTileItemShuttleBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleOrange
-  name: orange shuttle tile
+  name: stack-name-orange-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttleorange }
   spawn: FloorTileItemShuttleOrange
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttlePurple
-  name: purple shuttle tile
+  name: stack-name-purple-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttlepurple }
   spawn: FloorTileItemShuttlePurple
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleRed
-  name: red shuttle tile
+  name: stack-name-red-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttlered }
   spawn: FloorTileItemShuttleRed
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleGrey
-  name: grey shuttle tile
+  name: stack-name-grey-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttlegrey }
   spawn: FloorTileItemShuttleGrey
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleBlack
-  name: black shuttle tile
+  name: stack-name-black-shuttle-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: shuttleblack }
   spawn: FloorTileItemShuttleBlack
   maxCount: 30
 
 - type: stack
   id: FloorTileStackEighties
-  name: eighties floor tile
+  name: stack-name-eighties-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: eighties }
   spawn: FloorTileItemEighties
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeBlue
-  name: blue arcade tile
+  name: stack-name-blue-arcade-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: arcadeblue }
   spawn: FloorTileItemArcadeBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeBlue2
-  name: blue arcade tile
+  name: stack-name-blue-arcade-tile2
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: arcadeblue2 }
   spawn: FloorTileItemArcadeBlue2
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeRed
-  name: red arcade tile
+  name: stack-name-red-arcade-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: arcadered }
   spawn: FloorTileItemArcadeRed
   maxCount: 30
 
 - type: stack
   id: FloorCarpetRed
-  name: red carpet tile
+  name: stack-name-red-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-red }
   spawn: FloorCarpetItemRed
   maxCount: 30
 
 - type: stack
   id: FloorCarpetBlack
-  name: block carpet tile
+  name: stack-name-black-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-black }
   spawn: FloorCarpetItemBlack
   maxCount: 30
 
 - type: stack
   id: FloorCarpetBlue
-  name: blue carpet tile
+  name: stack-name-blue-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-blue }
   spawn: FloorCarpetItemBlue
   maxCount: 30
 
 - type: stack
   id: FloorCarpetGreen
-  name: green carpet tile
+  name: stack-name-green-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-green }
   spawn: FloorCarpetItemGreen
   maxCount: 30
 
 - type: stack
   id: FloorCarpetOrange
-  name: orange carpet tile
+  name: stack-name-orange-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-orange }
   spawn: FloorCarpetItemOrange
   maxCount: 30
 
 - type: stack
   id: FloorCarpetSkyBlue
-  name: skyblue carpet tile
+  name: stack-name-skyblue-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-skyblue }
   spawn: FloorCarpetItemSkyBlue
   maxCount: 30
 
 - type: stack
   id: FloorCarpetPurple
-  name: purple carpet tile
+  name: stack-name-purple-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-purple }
   spawn: FloorCarpetItemPurple
   maxCount: 30
 
 - type: stack
   id: FloorCarpetPink
-  name: pink carpet tile
+  name: stack-name-pink-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-pink }
   spawn: FloorCarpetItemPink
   maxCount: 30
 
 - type: stack
   id: FloorCarpetCyan
-  name: cyan carpet tile
+  name: stack-name-cyan-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-cyan }
   spawn: FloorCarpetItemCyan
   maxCount: 30
 
 - type: stack
   id: FloorCarpetWhite
-  name: white carpet tile
+  name: stack-name-white-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-white }
   spawn: FloorCarpetItemWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileStackCarpetClown
-  name: clown carpet tile
+  name: stack-name-clown-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpetclown }
   spawn: FloorTileItemCarpetClown
   maxCount: 30
 
 - type: stack
   id: FloorTileStackCarpetOffice
-  name: office carpet tile
+  name: stack-name-office-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpetoffice }
   spawn: FloorTileItemCarpetOffice
   maxCount: 30
 
 - type: stack
   id: FloorTileStackBoxing
-  name: boxing ring tile
+  name: stack-name-boxing-ring-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: boxing }
   spawn: FloorTileItemBoxing
   maxCount: 30
 
 - type: stack
   id: FloorTileStackGym
-  name: gym floor tile
+  name: stack-name-gym-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: gym }
   spawn: FloorTileItemGym
   maxCount: 30
 
 - type: stack
   id: FloorTileElevatorShaft
-  name: elevator shaft tile
+  name: stack-name-elevator-shaft-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: elevator-shaft }
   spawn: FloorTileItemElevatorShaft
   maxCount: 30
 
 - type: stack
   id: FloorTileRockVault
-  name: rock vault tile
+  name: stack-name-rock-vault-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: rockvault }
   spawn: FloorTileItemRockVault
   maxCount: 30
 
 - type: stack
   id: FloorTileBlue
-  name: blue floor tile
+  name: stack-name-blue-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: blue }
   spawn: FloorTileItemBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileMining
-  name: mining floor tile
+  name: stack-name-mining-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: mining }
   spawn: FloorTileItemMining
   maxCount: 30
 
 - type: stack
   id: FloorTileMiningDark
-  name: dark mining floor tile
+  name: stack-name-dark-mining-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: miningdark }
   spawn: FloorTileItemMiningDark
   maxCount: 30
 
 - type: stack
   id: FloorTileMiningLight
-  name: light mining floor tile
+  name: stack-name-light-mining-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: mininglight }
   spawn: FloorTileItemMiningLight
   maxCount: 30
 
 - type: stack
   id: FloorTileBar
-  name: item bar floor tile
+  name: stack-name-bar-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: bar }
   spawn: FloorTileItemBar
   maxCount: 30
 
 - type: stack
   id: FloorTileClown
-  name: clown floor tile
+  name: stack-name-clown-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: clown }
   spawn: FloorTileItemClown
   maxCount: 30
 
 - type: stack
   id: FloorTileMime
-  name: mime floor tile
+  name: stack-name-mime-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: mime }
   spawn: FloorTileItemMime
   maxCount: 30
 
 - type: stack
   id: FloorTileKitchen
-  name: kitchen floor tile
+  name: stack-name-kitchen-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: kitchen }
   spawn: FloorTileItemKitchen
   maxCount: 30
 
 - type: stack
   id: FloorTileLaundry
-  name: laundry floor tile
+  name: stack-name-laundry-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: laundry }
   spawn: FloorTileItemLaundry
   maxCount: 30
 
 - type: stack
   id: FloorTileConcrete
-  name: concrete tile
+  name: stack-name-concrete-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: concrete }
   spawn: FloorTileItemGrayConcrete
   maxCount: 30
 
 - type: stack
   id: FloorTileConcreteMono
-  name: concrete mono tile
+  name: stack-name-concrete-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: concrete-mono }
   spawn: FloorTileItemConcreteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileConcreteSmooth
-  name: concrete smooth
+  name: stack-name-concrete-smooth-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: concrete-smooth }
   spawn: FloorTileItemConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileGrayConcrete
-  name: gray concrete tile
+  name: stack-name-gray-concrete-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: grayconcrete }
   spawn: FloorTileItemGrayConcrete
   maxCount: 30
 
 - type: stack
   id: FloorTileGrayConcreteMono
-  name: gray concrete mono tile
+  name: stack-name-gray-concrete-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: grayconcrete-mono }
   spawn: FloorTileItemGrayConcreteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileGrayConcreteSmooth
-  name: gray concrete smooth
+  name: stack-name-gray-concrete-smooth-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: grayconcrete-smooth }
   spawn: FloorTileItemGrayConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcrete
-  name: old concrete tile
+  name: stack-name-old-concrete-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: oldconcrete }
   spawn: FloorTileItemOldConcrete
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcreteMono
-  name: old concrete mono tile
+  name: stack-name-old-concrete-mono-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: oldconcrete-mono }
   spawn: FloorTileItemOldConcreteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcreteSmooth
-  name: old concrete smooth
+  name: stack-name-old-concrete-smooth-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: oldconcrete-smooth }
   spawn: FloorTileItemOldConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileSilver
-  name: silver floor tile
+  name: stack-name-silver-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: silver }
   spawn: FloorTileItemSilver
   maxCount: 30
 
 - type: stack
   id: FloorTileBCircuit
-  name: bcircuit floor tile
+  name: stack-name-blue-circuit-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: bcircuit }
   spawn: FloorTileItemBCircuit
   maxCount: 30
 
 - type: stack
   id: FloorTileRCircuit
-  name: red-circuit floor
+  name: stack-name-red-circuit-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: rcircuit }
   spawn: FloorTileItemRCircuit
   maxCount: 30
 
 - type: stack
   id: FloorTileGrass
-  name: grass floor tile
+  name: stack-name-grass-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: grass }
   spawn: FloorTileItemGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileGrassJungle
-  name: grass jungle floor tile
+  name: stack-name-grass-jungle-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: grassjungle }
   spawn: FloorTileItemGrassJungle
   maxCount: 30
 
 - type: stack
   id: FloorTileSnow
-  name: snow floor tile
+  name: stack-name-snow-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: snow }
   spawn: FloorTileItemSnow
   maxCount: 30
 
 - type: stack
   id: FloorTileWoodPattern
-  name: wood pattern floor
+  name: stack-name-wood-pattern-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: woodpatternfloor }
   spawn: FloorTileItemWoodPattern
   maxCount: 30
 
 - type: stack
   id: FloorTileFlesh
-  name: flesh floor
+  name: stack-name-flesh-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: flesh }
   spawn: FloorTileItemFlesh
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelMaint
-  name: steel maint floor
+  name: stack-name-steel-maint-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steelmaintfloor }
   spawn: FloorTileItemSteelMaint
   maxCount: 30
 
 - type: stack
   id: FloorTileGratingMaint
-  name: grating maint floor
+  name: stack-name-grating-maint-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: gratingmaintfloor }
   spawn: FloorTileItemGratingMaint
   maxCount: 30
 
 - type: stack
   id: FloorTileWeb
-  name: web tile
+  name: stack-name-web-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: web }
   spawn: FloorTileItemWeb
   maxCount: 30
 
-# Faux science tiles
+# faux science tiles
+
 - type: stack
   id: FloorTileAstroGrass
-  name: astro-grass floor
+  name: stack-name-astro-grass-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: astrograss }
   spawn: FloorTileItemAstroGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileMowedAstroGrass
-  name: mowed astro-grass floor
+  name: stack-name-mowed-astro-grass-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: astrograss-mowed }
   spawn: FloorTileItemMowedAstroGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileJungleAstroGrass
-  name: jungle astro-grass floor
+  name: stack-name-jungle-astro-grass-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: astrograss-jungle }
   spawn: FloorTileItemJungleAstroGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileAstroIce
-  name: astro-ice floor
+  name: stack-name-astro-ice-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: astroice }
   spawn: FloorTileItemAstroIce
   maxCount: 30
 
 - type: stack
   id: FloorTileAstroSnow
-  name: astro-snow floor
+  name: stack-name-astro-snow-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: astrosnow }
   spawn: FloorTileItemAstroSnow
   maxCount: 30
 
@@ -631,6 +736,7 @@
 
 - type: stack
   id: FloorTileWoodLarge
-  name: large wood floor
+  name: stack-name-large-wood-floor-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: wood-large }
   spawn: FloorTileItemWoodLarge
   maxCount: 30
