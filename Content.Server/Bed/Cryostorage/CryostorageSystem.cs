@@ -12,11 +12,13 @@ using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
+using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
@@ -24,6 +26,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Mind.Components;
 using Content.Shared.StationRecords;
+using Content.Shared.Strip;
 using Content.Shared.UserInterface;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
@@ -41,7 +44,6 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
@@ -113,6 +115,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
                 if (entity == null)
                     return;
 
+                // Is the item handcuffs? If so, Uncuff the target.
                 if (TryComp<VirtualItemComponent>(entity, out var virtualItem) &&
                     TryComp<CuffableComponent>(cryoContained, out var cuffable) &&
                     _cuffable.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
@@ -341,6 +344,10 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         var enumerator = _inventory.GetSlotEnumerator(uid);
         while (enumerator.NextItem(out var item, out var slotDef))
         {
+            // Check to see if the item can be unequipped. This would be false if say the item was a hardsuit helmet.
+            if (!_inventorySystem.CanUnequip(uid, slotDef.Name, out var _))
+                continue;
+
             data.ItemSlots.Add(slotDef.Name, Name(item));
         }
 
@@ -349,8 +356,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             if (hand.HeldEntity == null)
                 continue;
 
-            if (_entityManager.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
-                data.HeldItems.Add(hand.Name, Name(virt.BlockingEntity));
+            // If the item is a virtual item, lets check if they're cuffs. If they are, add em to the list. If they're not,
+            // they should already be in the list as a non-virtual item.
+            if (TryComp<VirtualItemComponent>(hand.HeldEntity, out var virtualItem))
+            {
+                if (TryComp<CuffableComponent>(uid, out var cuffable) && _cuffable.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
+                    data.HeldItems.Add(hand.Name, Name(virtualItem.BlockingEntity));
+            }
             else
                 data.HeldItems.Add(hand.Name, Name(hand.HeldEntity.Value));
         }
