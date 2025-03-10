@@ -7,7 +7,7 @@ head-rev-role-greeting =
     You are a Head Revolutionary.
     You are tasked with removing all of Command from station via conversion, death or imprisonment.
     The Syndicate has sponsored you with a flash that converts the crew to your side.
-    Beware, this won't work those with mindshields or wearing eye protection.
+    Beware, this won't work on those with a mindshield or wearing eye protection.
     Viva la revolución!
 
 head-rev-briefing =
