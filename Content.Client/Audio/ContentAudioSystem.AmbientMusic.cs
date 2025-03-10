@@ -206,12 +206,18 @@ public sealed partial class ContentAudioSystem
 
         var track = tracks[^1];
         tracks.RemoveAt(tracks.Count - 1);
+        var volume = _musicProto.Sound.Params.Volume + _volumeSlider;
+        (EntityUid Entity, AudioComponent Component)? strim = null;
 
-        var strim = _audio.PlayGlobal(
-            track.ToString(),
-            Filter.Local(),
-            false,
-            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
+        // If volume slider is 0 gain then ignore ambience.
+        if (!float.IsNegativeInfinity(volume))
+        {
+            strim = _audio.PlayGlobal(
+                track.ToString(),
+                Filter.Local(),
+                false,
+                AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
+        }
 
         _ambientMusicStream = strim?.Entity;
 
