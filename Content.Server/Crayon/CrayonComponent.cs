@@ -24,5 +24,11 @@ namespace Content.Server.Crayon
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("deleteEmpty")]
         public bool DeleteEmpty = true;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Rotation { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool PreviewMode { get; set; }
     }
 }
