@@ -106,7 +106,7 @@
 - type: entity
   id: ShellShotgunPractice
   name: shell (.50 practice)
-  description: A shotgun shell loaded with wax pellets to simulate the real deal. Can be used for force-on-force training but still stings like a bitch. Eye protection recommended.
+  description: A shotgun shell loaded with wax pellets to simulate the real deal. Can be used for force-on-force training, but still stings like a bitch. Eye protection recommended.
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -121,7 +121,7 @@
 - type: entity
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
-  description: A shotgun shell loaded with a single hypodermic needle, designed to deliver a regent to its target.
+  description: A shotgun shell loaded with a single hypodermic needle, designed to deliver a reagent to its target.
   parent: BaseShellShotgun
   components:
   - type: Tag
@@ -173,7 +173,7 @@
 - type: entity
   id: ShellShotgunUranium
   name: shell (.50 uranium)
-  description: A shotgun shell loaded with dense depleted uranium. The heavier pellets tighten the spread of the shot and deliver radiation poisoning at the cost of worse penetration.
+  description: A shotgun shell loaded with dense depleted uranium. The heavier pellets tighten the spread of the shot and deliver radiation poisoning, at the cost of worse penetration.
   parent: BaseShellShotgun
   components:
     - type: Sprite
