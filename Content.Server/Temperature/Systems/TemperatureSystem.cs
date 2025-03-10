@@ -135,7 +135,7 @@ public sealed class TemperatureSystem : EntitySystem
 
         if (!ignoreHeatResistance)
         {
-            var ev = new ModifyChangedTemperatureEvent(heatAmount);
+            var ev = new ModifyChangedTemperatureEvent(heatAmount, temperature.CurrentTemperature);
             RaiseLocalEvent(uid, ev);
             heatAmount = ev.TemperatureDelta;
         }
@@ -299,9 +299,15 @@ public sealed class TemperatureSystem : EntitySystem
     private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
         InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
     {
-        var coefficient = args.Args.TemperatureDelta < 0
-            ? component.CoolingCoefficient
-            : component.HeatingCoefficient;
+        var isCooling = args.Args.TemperatureDelta < 0;
+
+        var coefficient = isCooling ? component.CoolingCoefficient : component.HeatingCoefficient;
+
+        var maxTemp = isCooling ? component.CoolingCoefficientMaxTemp : component.HeatingCoefficientMaxTemp;
+        var minTemp = isCooling ? component.CoolingCoefficientMinTemp : component.HeatingCoefficientMinTemp;
+
+        if (args.Args.CurrentTemperature <= minTemp || args.Args.CurrentTemperature >= maxTemp)
+            coefficient = 1.0f;
 
         var ev = new GetTemperatureProtectionEvent(coefficient);
         RaiseLocalEvent(uid, ref ev);

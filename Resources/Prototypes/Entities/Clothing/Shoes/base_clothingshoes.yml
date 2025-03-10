@@ -70,4 +70,6 @@
   components:
   - type: TemperatureProtection
     heatingCoefficient: 1.025
+    heatingCoefficientMaxTemp: 325
     coolingCoefficient: 0.5
+    coolingCoefficientMaxTemp: 325
