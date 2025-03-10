@@ -251,7 +251,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <param name="list">The list of the entities</param>
     /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them missing in action. (Won't check when emergency shuttle arrives just in case)</param>
     /// <param name="countCuffed">Bool for if you don't want to count cuffed entities.</param>
-    /// /// <param name="countRevolutionaries">Bool for if you want to count revolutionaries.</param>
+    /// <param name="countRevolutionaries">Bool for if you want to count revolutionaries.</param>
     /// <returns></returns>
     private bool IsGroupDetainedOrDead(List<EntityUid> list, bool checkOffStation, bool countCuffed, bool countRevolutionaries)
     {
