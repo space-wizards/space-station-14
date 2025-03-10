@@ -1,6 +1,7 @@
 - type: reagent
   id: Acetone
   name: reagent-name-acetone
+  group: Unknown # An organic compound
   desc: reagent-desc-acetone
   physicalDesc: reagent-physical-desc-acidic
   flavor: bitter
@@ -9,58 +10,9 @@
   meltingPoint: -50.0
 
 - type: reagent
-  id: Phenol
-  name: reagent-name-phenol
-  desc: reagent-desc-phenol
-  physicalDesc: reagent-physical-desc-acidic
-  flavor: bitter
-  color: "#E7EA91"
-  boilingPoint: 55.5
-  meltingPoint: -50.0
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Caustic: 1
-            Poison: 2 # Phenol is definitely not safe
-
-- type: reagent
-  id: Charcoal
-  name: reagent-name-charcoal
-  desc: reagent-desc-charcoal
-  physicalDesc: reagent-physical-desc-porous
-  color: "#22282b"
-  boilingPoint: 4200.0
-  meltingPoint: 3550.0
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: -1
-      - !type:ChemCleanBloodstream
-        cleanseRate: 3
-
-- type: reagent
-  id: Ash
-  name: reagent-name-ash
-  desc: reagent-desc-ash
-  physicalDesc: reagent-physical-desc-powdery
-  color: white
-
-- type: reagent
-  id: SodiumCarbonate
-  name: reagent-name-sodium-carbonate
-  desc: reagent-desc-sodium-carbonate
-  physicalDesc: reagent-physical-desc-powdery
-  color: white
-
-- type: reagent
   id: Artifexium
   name: reagent-name-artifexium
+  group: Special # Also a toxin
   desc: reagent-desc-artifexium
   flavor: metallic
   physicalDesc: reagent-physical-desc-crystalline
@@ -78,12 +30,21 @@
       effects:
       - !type:ActivateArtifact
         conditions:
-        - !type:ReagentThreshold
-          min: 5
+          - !type:ReagentThreshold
+            min: 5
+
+- type: reagent
+  id: Ash
+  name: reagent-name-ash
+  group: Unknown # Could probably be classed as an organic compound
+  desc: reagent-desc-ash
+  physicalDesc: reagent-physical-desc-powdery
+  color: white
 
 - type: reagent
   id: Benzene
   name: reagent-name-benzene
+  group: Toxins
   desc: reagent-desc-benzene
   physicalDesc: reagent-physical-desc-acidic
   color: "#E7EA91"
@@ -98,8 +59,49 @@
             Cellular: 1 #it's a carcinogen, reckon this is fine
 
 - type: reagent
+  id: Cellulose
+  name: reagent-name-cellulose
+  group: Biological
+  desc: reagent-desc-cellulose
+  flavor: bitter
+  color: "#E6E6DA"
+  physicalDesc: reagent-physical-desc-crystalline
+  slippery: false
+
+- type: reagent
+  id: Charcoal
+  name: reagent-name-charcoal
+  group: Medicine # One of the oldest cures for poisoning
+  desc: reagent-desc-charcoal
+  physicalDesc: reagent-physical-desc-porous
+  color: "#22282b"
+  boilingPoint: 4200.0
+  meltingPoint: 3550.0
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:ChemCleanBloodstream
+        cleanseRate: 3
+
+- type: reagent
+  id: Fersilicite
+  name: reagent-name-fersilicite # The official name for this in RL is Naquite
+  group: Unknown # An iron silicate
+  desc: reagent-desc-fersilicite
+  physicalDesc: reagent-physical-desc-crystalline
+  flavor: metallic
+  color: "#434b4d"
+  boilingPoint: 2962.0
+  meltingPoint: 1638.0
+
+- type: reagent
   id: Hydroxide
   name: reagent-name-hydroxide
+  group: Unknown # Used to make lye in RL
   desc: reagent-desc-hydroxide
   physicalDesc: reagent-physical-desc-alkaline
   color: "white"
@@ -107,8 +109,56 @@
   meltingPoint: 596.0
 
 - type: reagent
+  id: Phenol
+  name: reagent-name-phenol
+  group: Toxins
+  desc: reagent-desc-phenol
+  physicalDesc: reagent-physical-desc-acidic
+  flavor: bitter
+  color: "#E7EA91"
+  boilingPoint: 55.5
+  meltingPoint: -50.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 1
+            Poison: 2 # Phenol is definitely not safe
+
+- type: reagent
+  id: Rororium
+  name: reagent-name-rororium
+  group: Special # Also a medicine
+  desc: reagent-desc-rororium
+  flavor: tingly
+  physicalDesc: reagent-physical-desc-refreshing
+  color: "#bf1365"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -4
+      - !type:GenericStatusEffect
+        key: Adrenaline
+        component: IgnoreSlowOnDamage
+        time: 120
+
+- type: reagent
+  id: SodiumCarbonate
+  name: reagent-name-sodium-carbonate
+  group: Domestic # AKA Washing soda. Commonly used as a food additive
+  desc: reagent-desc-sodium-carbonate
+  physicalDesc: reagent-physical-desc-powdery
+  color: white
+
+- type: reagent
   id: SodiumHydroxide
   name: reagent-name-sodium-hydroxide
+  group: Medicine # Well, technically a hermetic is a type of medicine
   desc: reagent-desc-sodium-hydroxide
   physicalDesc: reagent-physical-desc-alkaline
   color: "white"
@@ -130,18 +180,9 @@
         probability: 0.1
 
 - type: reagent
-  id: Fersilicite
-  name: reagent-name-fersilicite
-  desc: reagent-desc-fersilicite
-  physicalDesc: reagent-physical-desc-crystalline
-  flavor: metallic
-  color: "#434b4d"
-  boilingPoint: 2962.0
-  meltingPoint: 1638.0
-
-- type: reagent
   id: SodiumPolyacrylate
   name: reagent-name-sodium-polyacrylate
+  group: Unknown # Not really a toxin, it just makes you thirsty
   desc: reagent-desc-sodium-polyacrylate
   flavor: bitter
   physicalDesc: reagent-physical-desc-grainy
@@ -156,33 +197,3 @@
         type: Local
         messages: [ "generic-reagent-effect-parched" ]
         probability: 0.1
-
-- type: reagent
-  id: Cellulose
-  name: reagent-name-cellulose
-  group: Biological
-  desc: reagent-desc-cellulose
-  flavor: bitter
-  color: "#E6E6DA"
-  physicalDesc: reagent-physical-desc-crystalline
-  slippery: false
-
-- type: reagent
-  id: Rororium
-  name: reagent-name-rororium
-  desc: reagent-desc-rororium
-  group: Biological
-  flavor: tingly
-  physicalDesc: reagent-physical-desc-refreshing
-  color: "#bf1365"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Brute: -4
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
-        time: 120

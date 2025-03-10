@@ -1,204 +1,7 @@
 - type: reagent
-  id: EZNutrient
-  name: reagent-name-e-z-nutrient
-  group: Botanical
-  desc: reagent-desc-e-z-nutrient
-  flavor: bitter
-  color: "#664330"
-  physicalDesc: reagent-physical-desc-thick
-  plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 2
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        conditions:
-        - !type:OrganType
-          type: Plant
-
-- type: reagent
-  id: Left4Zed
-  name: reagent-name-left4-zed
-  group: Botanical
-  desc: reagent-desc-left4-zed
-  flavor: bitter
-  color: "#5b406c"
-  physicalDesc: reagent-physical-desc-heterogeneous
-  plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 1
-    - !type:PlantAdjustHealth
-      amount: -0.5
-    - !type:PlantAdjustMutationMod
-      probability: 0.3
-      amount: 0.4
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:SatiateHunger
-        conditions:
-        - !type:OrganType
-          type: Plant
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 1
-        conditions:
-        - !type:OrganType
-          type: Plant
-
-- type: reagent
-  id: PestKiller
-  name: reagent-name-pest-killer
-  group: Botanical
-  desc: reagent-desc-pest-killer
-  flavor: bitter
-  color: "#9e9886"
-  physicalDesc: reagent-physical-desc-bubbling
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustPests
-      amount: -6
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 3
-        conditions:
-        - !type:OrganType
-          type: Plant
-
-- type: reagent
-  id: PlantBGone
-  name: reagent-name-plant-b-gone
-  group: Botanical
-  desc: reagent-desc-plant-b-gone
-  flavor: bitter
-  color: "#49002E"
-  physicalDesc: reagent-physical-desc-bubbling
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 6
-    - !type:PlantAdjustWeeds
-      amount: -8
-    - !type:PlantAdjustHealth
-      amount: -20
-    - !type:PlantAdjustMutationMod
-      amount: 0.1
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: -4
-            Blunt: 2
-            Slash: 1
-            Piercing: 1
-        conditions:
-        - !type:OrganType
-          type: Plant
-
-- type: reagent
-  id: RobustHarvest
-  name: reagent-name-robust-harvest
-  group: Botanical
-  desc: reagent-desc-robust-harvest
-  flavor: bitter
-  color: "#3e901c"
-  physicalDesc: reagent-physical-desc-robust
-  plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.05
-    - !type:PlantAdjustWeeds
-      probability: 0.025
-      amount: 1
-    - !type:PlantAdjustPests
-      probability: 0.025
-      amount: 1
-    - !type:RobustHarvest {}
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: -2
-            Blunt: -3
-            Slash: -3
-            Piercing: -3
-        conditions:
-        - !type:OrganType
-          type: Plant
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Plant
-        - !type:ReagentThreshold
-          min: 30
-        damage:
-          types:
-            Asphyxiation: 1
-            Heat: 2
-            Poison: 1
-    Medicine:
-      effects:
-      - !type:Polymorph
-        prototype: TreeMorph
-        conditions:
-          - !type:OrganType
-            type: Plant
-          - !type:ReagentThreshold
-            min: 80
-
-- type: reagent
-  id: Sedin
-  name: reagent-name-sedin
-  group: Botanical
-  desc: reagent-desc-sedin
-  flavor: bitter
-  color: "#3CB371"
-  physicalDesc: reagent-physical-desc-sickly
-  plantMetabolism:
-    - !type:PlantAdjustHealth
-      amount: -2
-    - !type:PlantRestoreSeeds
-      probability: 0.20
-    - !type:PlantAdjustPotency
-      amount: -3 # Match this with current rate of Robust Harvest potency increase
-
-- type: reagent
-  id: WeedKiller
-  name: reagent-name-weed-killer
-  group: Botanical
-  desc: reagent-desc-weed-killer
-  flavor: bitter
-  color: "#968395"
-  physicalDesc: reagent-physical-desc-bubbling
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustWeeds
-      amount: -6
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 4
-        conditions:
-        - !type:OrganType
-          type: Plant
-
-- type: reagent
   id: Ammonia
   name: reagent-name-ammonia
-  group: Botanical
+  group: Botanical # Also a Toxin
   desc: reagent-desc-ammonia
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
@@ -221,12 +24,12 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:ReagentThreshold
-          reagent: Ammonia
-          min: 1
+          - !type:OrganType
+            type: Rat
+            shouldHave: false
+          - !type:ReagentThreshold
+            reagent: Ammonia
+            min: 1
         ignoreResistances: true
         damage:
           types:
@@ -273,11 +76,10 @@
           type: Vox
         factor: -4
 
-
 - type: reagent
   id: Diethylamine
   name: reagent-name-diethylamine
-  group: Botanical
+  group: Botanical # Also a Toxin
   desc: reagent-desc-diethylamine
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
@@ -303,3 +105,200 @@
         damage:
           types:
             Caustic: 1
+
+- type: reagent
+  id: EZNutrient
+  name: reagent-name-e-z-nutrient
+  group: Botanical
+  desc: reagent-desc-e-z-nutrient
+  flavor: bitter
+  color: "#664330"
+  physicalDesc: reagent-physical-desc-thick
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 2
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Plant
+
+- type: reagent
+  id: Left4Zed
+  name: reagent-name-left4-zed
+  group: Botanical
+  desc: reagent-desc-left4-zed
+  flavor: bitter
+  color: "#5b406c"
+  physicalDesc: reagent-physical-desc-heterogeneous
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: -0.5
+  - !type:PlantAdjustMutationMod
+    probability: 0.3
+    amount: 0.4
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Plant
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+        conditions:
+        - !type:OrganType
+          type: Plant
+
+- type: reagent
+  id: PestKiller
+  name: reagent-name-pest-killer
+  group: Botanical # For some reason this is only toxic to plants
+  desc: reagent-desc-pest-killer
+  flavor: bitter
+  color: "#9e9886"
+  physicalDesc: reagent-physical-desc-bubbling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustPests
+    amount: -6
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+        conditions:
+        - !type:OrganType
+          type: Plant
+
+- type: reagent
+  id: PlantBGone
+  name: reagent-name-plant-b-gone
+  group: Botanical # For some reason this is only toxic to plants
+  desc: reagent-desc-plant-b-gone
+  flavor: bitter
+  color: "#49002E"
+  physicalDesc: reagent-physical-desc-bubbling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 6
+  - !type:PlantAdjustWeeds
+    amount: -8
+  - !type:PlantAdjustHealth
+    amount: -20
+  - !type:PlantAdjustMutationMod
+    amount: 0.1
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -4
+            Blunt: 2
+            Slash: 1
+            Piercing: 1
+        conditions:
+        - !type:OrganType
+          type: Plant
+
+- type: reagent
+  id: RobustHarvest
+  name: reagent-name-robust-harvest
+  group: Botanical
+  desc: reagent-desc-robust-harvest
+  flavor: bitter
+  color: "#3e901c"
+  physicalDesc: reagent-physical-desc-robust
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.05
+  - !type:PlantAdjustWeeds
+    probability: 0.025
+    amount: 1
+  - !type:PlantAdjustPests
+    probability: 0.025
+    amount: 1
+  - !type:RobustHarvest {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -2
+            Blunt: -3
+            Slash: -3
+            Piercing: -3
+        conditions:
+        - !type:OrganType
+          type: Plant
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Heat: 2
+            Poison: 1
+    Medicine:
+      effects:
+      - !type:Polymorph
+        prototype: TreeMorph
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 80
+
+- type: reagent
+  id: Sedin
+  name: reagent-name-sedin
+  group: Botanical
+  desc: reagent-desc-sedin
+  flavor: bitter
+  color: "#3CB371"
+  physicalDesc: reagent-physical-desc-sickly
+  plantMetabolism:
+  - !type:PlantAdjustHealth
+    amount: -2
+  - !type:PlantRestoreSeeds
+    probability: 0.20
+  - !type:PlantAdjustPotency
+    amount: -3 # Match this with current rate of Robust Harvest potency increase
+
+- type: reagent
+  id: WeedKiller
+  name: reagent-name-weed-killer
+  group: Botanical # For some reason this is only toxic to plants
+  desc: reagent-desc-weed-killer
+  flavor: bitter
+  color: "#968395"
+  physicalDesc: reagent-physical-desc-bubbling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustWeeds
+    amount: -6
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+        conditions:
+        - !type:OrganType
+          type: Plant
