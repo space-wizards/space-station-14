@@ -14,9 +14,4 @@ public sealed class ServerPetrifySpellSystem : PetrifySpellSystem
 
         base.OnPetrify(ent, ref args);
     }
-
-    protected override void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
-    {
-        base.OnAnimate(ent, ref args);
-    }
 }

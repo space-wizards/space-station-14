@@ -28,12 +28,23 @@ namespace Content.Server.Inventory
             if (!Resolve(source.Owner, ref source.Comp) || !Resolve(target.Owner, ref target.Comp))
                 return;
 
+            var entityList = new List<EntityUid>();
+            var slotList = new List<SlotDefinition>();
+
             var enumerator = new InventorySlotEnumerator(source.Comp);
             while (enumerator.NextItem(out var item, out var slot))
             {
-                if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp))
-                    TryEquip(target, item, slot.Name , true, true, inventory: target.Comp);
+                entityList.Add(item);
+                slotList.Add(slot);
             }
+
+            /*
+            var enumerator = new InventorySlotEnumerator(source.Comp);
+            while (enumerator.NextItem(out var item, out var slot))
+            {
+                TryUnequip(source, slot.Name, true, true, inventory: source.Comp);
+                TryEquip(target, item, slot.Name, true, true, inventory: target.Comp);
+            }*/
         }
     }
 }

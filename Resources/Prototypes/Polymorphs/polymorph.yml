@@ -210,7 +210,7 @@
     entity: StoneStatuePetrify
     forced: true
     transferDamage: false
-    transferName: true
+    transferName: false
     transferHumanoidAppearance: true
     inventory: Transfer
     revertOnCrit: false

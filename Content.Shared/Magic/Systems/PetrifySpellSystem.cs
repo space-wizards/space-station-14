@@ -1,7 +1,9 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Magic.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Pointing;
 
 namespace Content.Shared.Magic.Systems;
 
@@ -12,12 +14,14 @@ public abstract class PetrifySpellSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PetrifiedComponent, MapInitEvent>(OnPetrify);
-        SubscribeLocalEvent<PetrifiedStatueComponent, ComponentStartup>(UpdateCanMove);
-        SubscribeLocalEvent<PetrifiedStatueComponent, ComponentShutdown>(UpdateCanMove);
+        SubscribeLocalEvent<PetrifiedStatueComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<PetrifiedStatueComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PetrifiedStatueComponent, AnimateSpellEvent>(OnAnimate);
 
         SubscribeLocalEvent<PetrifiedStatueComponent, ChangeDirectionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, UpdateCanMoveEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, PointAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, InteractionAttemptEvent>(OnAttemptInteract);
     }
 
     protected virtual void OnPetrify(Entity<PetrifiedComponent> ent, ref MapInitEvent args)
@@ -26,12 +30,17 @@ public abstract class PetrifySpellSystem : EntitySystem
         RaiseLocalEvent(ref ev);
     }
 
-    private void UpdateCanMove(EntityUid ent, PetrifiedStatueComponent comp, EntityEventArgs args)
+    protected virtual void OnStartup(EntityUid ent, PetrifiedStatueComponent comp, ComponentStartup args)
     {
         _blocker.UpdateCanMove(ent);
     }
 
-    protected virtual void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
+    protected virtual void OnShutdown(EntityUid ent, PetrifiedStatueComponent comp, ComponentShutdown args)
+    {
+        _blocker.UpdateCanMove(ent);
+    }
+
+    private void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
     {
         // TODO: Stone golem
     }
@@ -39,6 +48,11 @@ public abstract class PetrifySpellSystem : EntitySystem
     private void OnAttempt(EntityUid ent, PetrifiedStatueComponent comp, CancellableEntityEventArgs args)
     {
         args.Cancel();
+    }
+
+    private void OnAttemptInteract(Entity<PetrifiedStatueComponent> ent, ref InteractionAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 }
 

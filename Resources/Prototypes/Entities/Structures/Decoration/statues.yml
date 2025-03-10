@@ -117,3 +117,4 @@
         - LowImpassable
   - type: InputMover
     canMove: false
+  - type: Hands
