@@ -1,7 +1,7 @@
 # Implanters
 
 - type: entity
-  name: implanter
+  name: implanter item
   description: A syringe exclusively designed for the injection and extraction of subdermal implants. Use care when extracting implants, as incorrect draw settings may injure the user.
   id: BaseImplanter
   parent: BaseItem
@@ -11,6 +11,8 @@
     - type: ContainerContainer
       containers:
         implanter_slot: !type:ContainerSlot { }
+    - type: NameModifier
+      baseName: implanter
     - type: Implanter
       whitelist:
         components:
@@ -108,6 +110,7 @@
   description: A disposable syringe exclusively designed for the injection of subdermal implants.
   abstract: true
   components:
+
     - type: Sprite
       sprite: Objects/Specific/Medical/implanter.rsi
       state: implanter0
@@ -124,10 +127,11 @@
 - type: entity
   id: BaseImplantOnlyImplanterSyndi
   parent: [BaseImplantOnlyImplanter, BaseSyndicateContraband]
-  name: syndicate implanter
-  description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
+  description: A compact disposable syringe exclusively designed for the injection of subdermal implants. Remember to use soap to clean the evidence!
   abstract: true
   components:
+    - type: NameModifier
+      baseName: syndicate implanter
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
     - type: Sprite

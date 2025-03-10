@@ -263,6 +263,9 @@ namespace Content.Server.Forensics
 
             if (TryComp<ResidueComponent>(args.Used, out var residue))
                 targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
+;
+            var foresnicsCleanedEvent = new ForensicsCleanedEvent();
+            RaiseLocalEvent(args.Target!.Value, ref foresnicsCleanedEvent);
         }
 
         public string GenerateFingerprint()

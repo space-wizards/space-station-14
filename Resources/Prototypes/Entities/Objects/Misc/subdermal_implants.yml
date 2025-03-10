@@ -20,6 +20,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: sad-trombone-implant
       whitelist:
         components:
         - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
@@ -40,6 +41,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: light-implant
       implantAction: ActionToggleLight
     - type: PointLight
       enabled: false
@@ -62,6 +64,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: bike-horn-implant
       implantAction: ActionActivateHonkImplant
     - type: TriggerImplantAction
     - type: EmitSoundOnTrigger
@@ -83,6 +86,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: tracking-implant
       whitelist:
         components:
         - MobState # admeme implanting a chair with tracking implant needs to give the chair mobstate so it can die first
@@ -113,6 +117,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: storage-implant
       implantAction: ActionOpenStorageImplant
       whitelist:
         components:
@@ -137,6 +142,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: freedom-implant
       implantAction: ActionActivateFreedomImplant
       whitelist:
         components:
@@ -150,6 +156,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    implantLoc: radio-implant
   - type: RadioImplant
     radioChannels:
     - Syndicate
@@ -162,6 +169,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    implantLoc: uplink-implant
     implantAction: ActionOpenUplinkImplant
     whitelist:
       components:
@@ -182,6 +190,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: emp-implant
       implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
@@ -197,6 +206,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: scram-implant
       implantAction: ActionActivateScramImplant
     - type: TriggerImplantAction
     - type: ScramImplant
@@ -209,6 +219,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: dna-scrambler-implant
       implantAction: ActionActivateDnaScramblerImplant
       whitelist:
         components:
@@ -224,6 +235,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: micro-bomb-implant
       permanent: true
       implantAction: ActionActivateMicroBomb
     - type: TriggerOnMobstateChange
@@ -254,6 +266,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: macro-bomb-implant
       permanent: true
     - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
       mobState:
@@ -289,6 +302,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    implantLoc: death-acidifier-implant
     permanent: true
     implantAction: ActionActivateDeathAcidifier
   - type: TriggerOnMobstateChange
@@ -313,6 +327,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      implantLoc: death-rattle-implant
       permanent: true
       whitelist:
         components:
@@ -331,6 +346,7 @@
   categories: [ HideSpawnMenu ]
   components:
       - type: SubdermalImplant
+        implantLoc: fake-mindshield-implant
         implantAction: FakeMindShieldToggleAction
       - type: FakeMindShieldImplant
 
@@ -344,6 +360,7 @@
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
+     implantLoc: mindshield-implant
      permanent: true
    - type: Tag
      tags:
@@ -359,6 +376,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    implantLoc: radio-centcomm-implant
   - type: RadioImplant
     radioChannels:
     - CentCom
