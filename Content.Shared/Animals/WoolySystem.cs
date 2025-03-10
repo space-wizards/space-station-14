@@ -3,6 +3,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Animals;
@@ -24,11 +25,22 @@ public sealed class WoolySystem : EntitySystem
 
         SubscribeLocalEvent<WoolyComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
         SubscribeLocalEvent<WoolyComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<WoolyComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
     private void OnMapInit(EntityUid uid, WoolyComponent component, MapInitEvent args)
     {
         component.NextGrowth = _timing.CurTime + component.GrowthDelay;
+    }
+
+    private void OnEntRemoved(Entity<WoolyComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        // Make sure the removed entity was our contained solution
+        if (entity.Comp.Solution == null || args.Entity != entity.Comp.Solution.Value.Owner)
+            return;
+
+        // Clear our cached reference to the solution entity
+        entity.Comp.Solution = null;
     }
 
     public override void Update(float frameTime)
