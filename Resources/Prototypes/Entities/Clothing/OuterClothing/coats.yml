@@ -339,7 +339,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterClownPriest
-  name: robes of the honkmother
+  name: honkmother coat
   description: Meant for a clown of the cloth.
   components:
   - type: Sprite
@@ -467,3 +467,14 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatBishop
+  name: bishop coat
+  description: bishop
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/bishop.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/bishop.rsi
