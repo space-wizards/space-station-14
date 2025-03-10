@@ -138,7 +138,7 @@
         Piercing: 15
         Slash: 15
   - type: Devourer
-    foodPreference: Humanoid
+    foodPreference: Picky
     shouldStoreDevoured: true
     chemical: Ichor
     healRate: 15.0
@@ -148,6 +148,10 @@
       - Door
       tags:
       - Wall
+    storageWhitelist:
+      components:
+      - HumanoidAppearance
+      - BorgChassis
   - type: Tag
     tags:
     - CannotSuicide
