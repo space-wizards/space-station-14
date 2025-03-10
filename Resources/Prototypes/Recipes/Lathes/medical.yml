@@ -216,3 +216,8 @@
   materials:
     Steel: 100
     Plastic: 100
+
+- type: latheRecipe
+  parent: ForensicPad
+  id: ReagentPad
+  result: ReagentPad
