@@ -71,6 +71,12 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = { 1f };
 
+        /// <summary>
+        /// If true, the tile can be rotated/mirrored when placed.
+        /// </summary>
+        [DataField]
+        public bool AllowRotationMirror { get; set; }
+
         [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 
         // Heat capacity is opt-in, not opt-out.
