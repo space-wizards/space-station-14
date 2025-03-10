@@ -7,9 +7,9 @@ namespace Content.Client.Chat.MarkupTags;
 public sealed class AccentContentTagProcessor : ContentMarkupTagProcessorBase
 {
     public const string SupportedNodeName = "Accent";
-
-
+    
     [Dependency] private readonly IEntityManager _entManager = default!;
+
     private readonly string? _accent;
 
     /// <inheritdoc />
