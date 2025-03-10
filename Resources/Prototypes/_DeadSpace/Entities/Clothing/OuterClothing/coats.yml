@@ -81,6 +81,6 @@
   description: Шинель из плотной ткани с вшитым под ней кевларом, так же виден бронежилет первого класса защиты.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/senior_officer_leather.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/senior_officer_leather.rsi
