@@ -7,7 +7,7 @@
     - to: vim
       steps:
       - tag: VoiceTrigger
-        name: a voice trigger
+        name: construction-graph-tag-voice-trigger
         icon:
           sprite: "Objects/Devices/voice.rsi"
           state: "voice"
@@ -16,7 +16,7 @@
           key: "enum.MechAssemblyVisuals.State"
           data: 1
       - component: PowerCell
-        name: a power cell
+        name: construction-graph-component-power-cell
         store: battery-container
         icon:
           sprite: Objects/Power/power_cells.rsi

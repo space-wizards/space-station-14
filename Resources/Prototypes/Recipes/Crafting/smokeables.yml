@@ -1,91 +1,67 @@
 - type: construction
-  name: joint
   id: smokeableJoint
   graph: smokeableJoint
   startNode: start
   targetNode: joint
   category: construction-category-misc
-  description: "A roll of dried plant matter wrapped in thin paper."
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
-  
+
 - type: construction
-  name: rainbow joint
   id: smokeableJointRainbow
   graph: smokeableJointRainbow
   startNode: start
   targetNode: jointRainbow
   category: construction-category-misc
-  description: "A roll of dried plant matter wrapped in thin paper."
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
-  name: blunt
   id: smokeableBlunt
   graph: smokeableBlunt
   startNode: start
   targetNode: blunt
   category: construction-category-misc
-  description: "A roll of dried plant matter wrapped in a dried tobacco leaf."
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
-  name: rainbow blunt
   id: smokeableBluntRainbow
   graph: smokeableBluntRainbow
   startNode: start
   targetNode: bluntRainbow
   category: construction-category-misc
-  description: "A roll of dried plant matter wrapped in a dried tobacco leaf."
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
-  name: cigarette
   id: smokeableCigarette
   graph: smokeableCigarette
   startNode: start
   targetNode: cigarette
   category: construction-category-misc
-  description: "A roll of tobacco and nicotine."
-  icon: { sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi, state: unlit-icon }
   objectType: Item
 
 # I wanted to put a hand-grinder here but we need construction graphs that use non-consumed catalysts first.
 
 - type: construction
-  name: ground cannabis
   id: smokeableGroundCannabis
   graph: smokeableGroundCannabis
   startNode: start
   targetNode: ground
   category: construction-category-misc
-  description: "Ground cannabis, ready to take you on a trip."
-  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: darkgreen
   objectType: Item
 
 - type: construction
-  name: ground rainbow cannabis
   id: smokeableGroundCannabisRainbow
   graph: smokeableGroundCannabisRainbow
   startNode: start
   targetNode: groundRainbow
   category: construction-category-misc
-  description: "Ground rainbow cannabis, ready to take you on a trip."
-  icon: { sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
   objectType: Item
 
 - type: construction
-  name: ground tobacco
   id: smokeableGroundTobacco
   graph: smokeableGroundTobacco
   startNode: start
   targetNode: ground
   category: construction-category-misc
-  description: "Ground tobacco, perfect for hand-rolled cigarettes."
-  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: brown
   objectType: Item
