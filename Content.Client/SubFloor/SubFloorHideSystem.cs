@@ -64,9 +64,15 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
         args.Sprite.Visible = hasVisibleLayer || revealed;
 
-        // allows a t-ray to show wires/pipes above carpets/puddles
-        if (scannerRevealed)
+        if (ShowAll)
         {
+            // Allows sandbox mode to make wires visible over other stuff.
+            component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
+            args.Sprite.DrawDepth = (int)Shared.DrawDepth.DrawDepth.Overdoors;
+        }
+        else if (scannerRevealed)
+        {
+            // Allows a t-ray to show wires/pipes above carpets/puddles.
             if (component.OriginalDrawDepth is not null)
                 return;
             component.OriginalDrawDepth = args.Sprite.DrawDepth;
