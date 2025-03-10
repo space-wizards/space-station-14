@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Gastropoids can fly shuttles again.
-    type: Fix
-  id: 763
-  time: '2024-12-19T12:59:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1074
 - author: honeyed-lemons
   changes:
   - message: Add Holopads to Fland, Box, Xeno, and the Reclaimer
@@ -4083,3 +4076,11 @@
   id: 1262
   time: '2025-03-10T18:06:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1854
+- author: DinnerCalzone
+  changes:
+  - message: The Station Specific and Dining Services departments no longer appear
+      in the crew manifest.
+    type: Tweak
+  id: 1263
+  time: '2025-03-10T18:44:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1870
