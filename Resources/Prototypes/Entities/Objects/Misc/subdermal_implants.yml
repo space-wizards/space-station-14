@@ -191,6 +191,22 @@
 
 - type: entity
   parent: BaseSubdermalImplant
+  id: SmokeScreenImplant
+  name: smoke screen implant
+  description: This implant creates a cloud of smoke when activated.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionActivateSmokeGrenadeImplant
+  - type: TriggerImplantAction
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 30
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+
+- type: entity
+  parent: BaseSubdermalImplant
   id: ScramImplant
   name: scram implant
   description: This implant randomly teleports the user within a large radius when activated.
