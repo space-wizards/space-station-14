@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: new Improvised Pistol that can be hand-crafted. It can use a variety
-      of magazines and ammo types!
-    type: Add
-  - message: 1 conversion kit of each type added to the Mk58 Safe, now called the
-      Pistol Safe
-    type: Add
-  - message: adjusted Research and Cargo costs for the .22 Auto Pistol items
-    type: Tweak
-  - message: .22 auto Security Techfab recipes have been adjusted. "Advanced Pistol
-      Munitions" has been removed.
-    type: Tweak
-  id: 770
-  time: '2024-12-20T15:39:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1076
 - author: honeyed-lemons
   changes:
   - message: Mapping Changes to Xeno, Box, and Fland, and all cargo shuttles
@@ -4090,3 +4074,10 @@
   id: 1269
   time: '2025-03-10T23:05:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1875
+- author: Ecramox
+  changes:
+  - message: Added the R.A.D, and put it in the Nuclear Commander and Lone Op's loadouts
+    type: Add
+  id: 1270
+  time: '2025-03-10T23:43:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1889
