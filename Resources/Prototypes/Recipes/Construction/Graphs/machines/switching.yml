@@ -204,3 +204,95 @@
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: ButtonFrameGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ButtonFrameGreyNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+        - to: ButtonFrameCautionNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+        - to: ButtonFrameCautionSecurityNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+        - to: ButtonFrameExitNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+        - to: ButtonFrameJanitorNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+    - node: ButtonFrameGreyNode
+      entity: ButtonFrameGrey
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+    - node: ButtonFrameCautionSecurityNode
+      entity: ButtonFrameCautionSecurity
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+    - node: ButtonFrameCautionNode
+      entity: ButtonFrameCaution
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+    - node: ButtonFrameExitNode
+      entity: ButtonFrameExit
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+    - node: ButtonFrameJanitorNode
+      entity: ButtonFrameJanitor
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
