@@ -1,3 +1,4 @@
+using Content.Shared._Impstation.CosmicCult;
 using Robust.Shared.Timing;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared.Actions;
@@ -25,7 +26,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    private Overlay? _cachedOverlay = null;
+    private MonumentPlacementPreviewOverlay? _cachedOverlay = null;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,19 +34,33 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MonumentPlacementMarkerComponent, ActionAttemptEvent>(OnAttemptMonumentPlacement);
+        SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicPlaceMonument>(OnCosmicPlaceMonument);
     }
 
-    //todo figure out a better system for this, this doesn't properly remove the overlay when the monument is placed
+    private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> ent, ref EventCosmicPlaceMonument args)
+    {
+        //_overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
+        if (_cachedOverlay == null)
+            return;
+
+        _cachedOverlay.LockPlacement = true;
+        //remove the overlay automatically after the primeTime expires
+        Timer.Spawn(TimeSpan.FromSeconds(3.8), //anim takes 3.8s, might want to have the ghost disappear earlier but eh
+            () =>
+            {
+                _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
+                _cachedOverlay = null;
+            }
+        );
+    }
+
     private void OnAttemptMonumentPlacement(Entity<MonumentPlacementMarkerComponent> ent, ref ActionAttemptEvent args)
     {
         if (!TryComp<ConfirmableActionComponent>(ent, out var confirmableActionComponent))
             return; //return if the action somehow doesn't have a confirmableAction comp
 
-        if (_cachedOverlay != null) //if we've already got a cached overlay, we've triggered the action and should remove the overlay todo just move this into a separate method that listens for the monument spawn?
-        {
-            _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
-            _cachedOverlay = null;
-        }
+        if (_cachedOverlay != null) //if we've already got a cached overlay, just return early
+            return;
 
         _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _transformSystem, _mapSystem, _tileDef, _lookup, _protoMan); //it's probably inefficient to make a new one every time, but this'll be happening like four times a round maybe
         _overlay.AddOverlay(_cachedOverlay);

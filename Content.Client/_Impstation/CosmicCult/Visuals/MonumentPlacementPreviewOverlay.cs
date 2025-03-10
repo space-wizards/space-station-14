@@ -6,7 +6,6 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -23,7 +22,10 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     private readonly EntityLookupSystem _lookup;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
+
     private readonly ShaderInstance _shader;
+    public bool LockPlacement = false;
+    private Vector2 _lastPos = Vector2.Zero;
 
     //evil huge ctor because doing iocmanager stuff was killing the client for some reason
     public MonumentPlacementPreviewOverlay(IEntityManager entityManager, IPlayerManager playerManager, SpriteSystem spriteSystem, TransformSystem transformSystem, SharedMapSystem mapSystem, ITileDefinitionManager tileDef, EntityLookupSystem lookup, IPrototypeManager protoMan)
@@ -36,8 +38,13 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         _tileDef = tileDef;
         _lookup = lookup;
         _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
+
+        ZIndex = (int) Shared.DrawDepth.DrawDepth.Mobs; //make the overlay render at the same depth as the actual sprite. might want to make it 1 lower if things get wierd with it.
     }
 
+    //this might get wierd if the player managed to leave the grid they put the monument on? theoretically not a concern because it can't be placed too close to space.
+    //shouldn't crash due to the comp checks, though.
+    //todo make the overlay fade in / out? that's for the ensaucening later though
     protected override void Draw(in OverlayDrawArgs args)
     {
         if (!_entityManager.TryGetComponent<TransformComponent>(_playerManager.LocalEntity, out var transformComp))
@@ -49,22 +56,34 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         if (!_entityManager.TryGetComponent<TransformComponent>(transformComp.ParentUid, out var parentTransform))
             return;
 
+        //todo make this get passed in from somewhere else?
+        //and / or make it not use the raw path but I hate RSIs with a probably unhealthy passion
         var tex = new SpriteSpecifier.Texture(new ("_Impstation/CosmicCult/Tileset/monument.rsi/stage1.png"));
 
         var worldHandle = args.WorldHandle;
 
-        //snap the preview to the tile we'll be spawning the monument on
-        var localTile = _mapSystem.GetTileRef(transformComp.GridUid.Value, grid, transformComp.Coordinates);
-        var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
-        var snappedCoords = _mapSystem.ToCenterCoordinates(transformComp.GridUid.Value, targetIndices, grid);
+        //stuff to make the monument preview stick in place once the monument
+        Color color;
+        if (!LockPlacement)
+        {
+            //snap the preview to the tile we'll be spawning the monument on
+            var localTile = _mapSystem.GetTileRef(transformComp.GridUid.Value, grid, transformComp.Coordinates);
+            var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
+            var snappedCoords = _mapSystem.ToCenterCoordinates(transformComp.GridUid.Value, targetIndices, grid);
+            _lastPos = snappedCoords.Position; //update the position
 
-        //set the colour based on if the target tile is valid or not todo make this something else? like a toggle in a shader or so? that's for later anyway
-        var color = VerifyPlacement(transformComp) ? Color.Green : Color.Red;
+            //set the colour based on if the target tile is valid or not todo make this something else? like a toggle in a shader or so? that's for later anyway
+            color = VerifyPlacement(transformComp) ? Color.Green : Color.Red;
+        }
+        else
+        {
+            //if the position is locked, then it has has to be valid so always use green
+            color = Color.Green;
+        }
 
         worldHandle.SetTransform(parentTransform.LocalMatrix);
-
         worldHandle.UseShader(_shader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(tex), snappedCoords.Position - new Vector2(1.5f, 0.5f), color); //needs the offset to render in the proper position
+        worldHandle.DrawTexture(_spriteSystem.Frame0(tex), _lastPos - new Vector2(1.5f, 0.5f), color); //needs the offset to render in the proper position
         worldHandle.UseShader(null);
     }
 
