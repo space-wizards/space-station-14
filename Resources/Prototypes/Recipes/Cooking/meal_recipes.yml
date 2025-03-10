@@ -718,6 +718,15 @@
     FoodDoughCottonFlat: 1
     CottonBol: 4
 
+- type: microwaveMealRecipe
+  id: RecipeWorldpeasPizza
+  name: world peazza recipe
+  result: FoodPizzaWorldpeas
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodWorldPeas: 3
+
 #Italian
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
