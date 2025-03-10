@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: honeyed-lemons
   changes:
-  - message: Add Holopads to Fland, Box, Xeno, and the Reclaimer
-    type: Add
-  id: 764
-  time: '2024-12-19T17:36:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1068
-- author: honeyed-lemons
-  changes:
   - message: Atmos Monitoring Computer
     type: Add
   - message: Advanced SMES
@@ -4084,3 +4077,18 @@
   id: 1263
   time: '2025-03-10T18:44:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1870
+- author: AvianMaiden
+  changes:
+  - message: All Kammerer models now make an iconic rack sound when you shoot. Pump-action
+      shotguns live forever!
+    type: Add
+  - message: A few weapons have slightly tweaked descriptions for wording or to match
+      their new sprites!
+    type: Tweak
+  - message: Unique weapon rack sounds, C20-R empty beeps, special disabler tweaks,
+      stun kammerers matching their lethal counterparts, and burstfire on SMGs should
+      once again be back in the game.
+    type: Fix
+  id: 1264
+  time: '2025-03-10T18:47:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1872
