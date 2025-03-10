@@ -53,7 +53,9 @@ namespace Content.Shared.ActionBlocker
             RaiseLocalEvent(uid, ev);
 
             if (component.CanMove == ev.Cancelled)
-                Dirty(uid, component);
+            {
+                DirtyField(uid, component, nameof(InputMoverComponent.CanMove));
+            }
 
             component.CanMove = !ev.Cancelled;
             return !ev.Cancelled;
