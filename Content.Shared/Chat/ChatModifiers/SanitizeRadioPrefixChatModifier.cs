@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.ChatModifiers;
 
@@ -11,32 +11,16 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
 {
     public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-        if (!message.Nodes.TryFirstOrDefault(x => x.Name == null, out var firstTextNode))
-            return message;
-
-        using var nodeEnumerator = message.GetEnumerator();
-
-        var returnMessage = new FormattedMessage();
-        while (nodeEnumerator.MoveNext())
+        foreach (var messageNode in message.Nodes)
         {
-            var node = nodeEnumerator.Current;
-            if (node == firstTextNode)
+            if (messageNode.Name == null && messageNode.Value.TryGetString(out var textNodeValue))
             {
-                if (firstTextNode.Value.TryGetString(out var textNodeValue))
-                {
-                    returnMessage.AddText(SanitizeRadioPrefix(textNodeValue));
-                }
-            }
-            else
-            {
-                if (!node.Closing)
-                    returnMessage.PushTag(node);
-                else
-                    returnMessage.Pop();
+                message.Replace(messageNode, new MarkupNode(SanitizeRadioPrefix(textNodeValue)));
+                break;
             }
         }
 
-        return returnMessage;
+        return message;
     }
 
     private string SanitizeRadioPrefix(string text)

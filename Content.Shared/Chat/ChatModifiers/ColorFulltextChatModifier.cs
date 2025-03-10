@@ -15,7 +15,6 @@ public sealed partial class ColorFulltextChatModifier : ChatModifier
 
     public override FormattedMessage ProcessChatModifier(FormattedMessage message, ChatMessageContext chatMessageContext)
     {
-
         var colorKey = DefaultColorKey;
         if (chatMessageContext.TryGet<string>(ColorFulltextMarkupParameter.Color, out var color))
             colorKey = color;

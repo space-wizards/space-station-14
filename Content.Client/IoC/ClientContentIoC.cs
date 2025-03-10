@@ -1,6 +1,8 @@
+using System.Collections.Frozen;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
+using Content.Client.Chat.MarkupTags;
 using Content.Client.Clickable;
 using Content.Client.DebugMon;
 using Content.Client.Eui;
@@ -22,8 +24,10 @@ using Content.Client.Lobby;
 using Content.Client.Players.RateLimiting;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
+using Content.Shared.Chat.ContentMarkupTags;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Robust.Shared.Utility;
 
 namespace Content.Client.IoC
 {
@@ -59,7 +63,22 @@ namespace Content.Client.IoC
             collection.Register<PlayerRateLimitManager>();
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
-            collection.Register<ISharedContentMarkupTagManager, ContentMarkupTagManager>();
+            collection.RegisterInstance<ContentMarkupTagFactory>(
+                new ContentMarkupTagFactory(
+                    new Dictionary<string, Func<MarkupNode, ContentMarkupTagProcessorBase>>
+                    {
+                        [SpeechVerbContentTagProcessor.SupportedNodeName] = node => new SpeechVerbContentTagProcessor(),
+                        [ColorValueContentTagProcessor.SupportedNodeName] = node => new ColorValueContentTagProcessor(),
+                        [EntityNameHeaderContentTagProcessor.SupportedNodeName] = node => new EntityNameHeaderContentTagProcessor(node),
+                        [SessionNameHeaderContentTagProcessor.SupportedNodeName] = node => new SessionNameHeaderContentTagProcessor(node),
+                        [CodewordsContentTagProcessor.SupportedNodeName] = node => new CodewordsContentTagProcessor(),
+                        [PlayAudioContentTagProcessor.SupportedNodeName] = node => new PlayAudioContentTagProcessor(),
+                        [AccentContentTagProcessor.SupportedNodeName] = node => new AccentContentTagProcessor(node),
+
+                    }.ToFrozenDictionary()
+                )
+            );
+            collection.Register<SharedContentMarkupTagManager>();
         }
     }
 }

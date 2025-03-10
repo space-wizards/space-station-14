@@ -60,7 +60,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
-    [Dependency] private readonly ISharedContentMarkupTagManager _contentMarkupTagManager = default!;
+    [Dependency] private readonly SharedContentMarkupTagManager _contentMarkupTagManager = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -835,7 +835,8 @@ public sealed class ChatUIController : UIController
         }
 
         // Process any remaining clientside content markups.
-        msg.Message = _contentMarkupTagManager.ProcessMessage(msg.Message);
+        var postProcessedNodes = _contentMarkupTagManager.ProcessMessage(msg.Message, unchecked((int)msg.MessageId));
+        msg.Message = FormattedMessage.FromNodes(postProcessedNodes);
 
         // Create a bubble, should the communication channel expect one.
         if (proto.ClientModifiers.Any(x => x is BubbleProviderChatModifier))

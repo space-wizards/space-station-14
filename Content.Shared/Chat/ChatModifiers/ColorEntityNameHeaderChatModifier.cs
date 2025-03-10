@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Robust.Shared.Configuration;
@@ -31,8 +30,8 @@ public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
         if (name == null)
             return message;
 
-        var color = Color.TryFromHex(GetNameColor(name));
-        if (color != null)
+        var color = GetNameColor(name);
+        if (color != default)
         {
             message.InsertOutsideTag(new MarkupNode("color", new MarkupParameter(color), null),
                 "EntityNameHeader");
@@ -41,18 +40,19 @@ public sealed partial class ColorEntityNameHeaderChatModifier : ChatModifier
         return message;
     }
 
-    // CHAT-TODO: This whole thing needs to be remade such that it doesn't get the whole prototype list every time a message is sent.
-    // Ask someone who knows better how to implement this. An IColorPaletteManager perhaps?
-    public string GetNameColor(string name)
+    public Color GetNameColor(string name)
     {
-        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values.ToArray();
-        var chatNameColors = new string[nameColors.Length];
-        for (var i = 0; i < nameColors.Length; i++)
+        var nameColors = _prototypeManager.Index<ColorPalettePrototype>(_chatNamePalette).Colors.Values;
+        var colorIdx = Math.Abs(name.GetHashCode() % nameColors.Count);
+        // simplified ElementAt, required to find element from ICollection without any allocations
+        var i = 0;
+        foreach (var nameColor in nameColors) 
         {
-            chatNameColors[i] = nameColors[i].ToHex();
+            if (i == colorIdx)
+                return nameColor;
+            i++;
         }
 
-        var colorIdx = Math.Abs(name.GetHashCode() % chatNameColors.Length);
-        return chatNameColors[colorIdx];
+        return default;
     }
 }
