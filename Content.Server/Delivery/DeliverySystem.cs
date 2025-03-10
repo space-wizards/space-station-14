@@ -81,7 +81,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (spesoAmount < 0 && account.Balance + spesoAmount < 0)
             spesoAmount = account.Balance * -1;
 
-        _cargo.UpdateBankAccount(ent.Comp.RecipientStation.Value, account, spesoAmount);
+        _cargo.UpdateBankAccount((ent.Comp.RecipientStation.Value, account), spesoAmount);
     }
 
     protected override void AnnounceTearPenalty(Entity<TearableDeliveryComponent?> ent)
