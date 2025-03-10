@@ -14,13 +14,7 @@ public sealed partial class DamagedSiliconAccentComponent : Component
     ///     Override total damage for damage corruption effects
     /// </summary>
     [DataField]
-    public bool OverrideTotalDamage = false;
-
-    /// <summary>
-    ///     Value of total damage to use for damage corruption effects if <see cref="OverrideTotalDamage" /> is true.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 OverriddenTotalDamageValue = 0;
+    public FixedPoint2? OverrideTotalDamage;
 
     /// <summary>
     ///     The probability that a character will be corrupted when total damage at or above <see cref="MaxDamageCorruption" />.
@@ -45,14 +39,7 @@ public sealed partial class DamagedSiliconAccentComponent : Component
     ///     Override charge level for charge level corruption effects
     /// </summary>
     [DataField]
-    public bool OverrideChargeLevel = false;
-
-    /// <summary>
-    ///     Value of charge level to use for charge level corruption effects if <see cref="OverrideChargeLevel" /> is true.
-    /// </summary>
-    [DataField]
-    public float OverriddenChargeLevel = 0.0f;
-
+    public float? OverrideChargeLevel;
 
     /// <summary>
     ///     If the power cell charge is below this value (as a fraction of maximum charge),

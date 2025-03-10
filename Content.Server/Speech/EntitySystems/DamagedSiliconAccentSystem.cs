@@ -25,9 +25,9 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         if (ent.Comp.EnableChargeCorruption)
         {
             var currentChargeLevel = 0.0f;
-            if (ent.Comp.OverrideChargeLevel)
+            if (ent.Comp.OverrideChargeLevel.HasValue)
             {
-                currentChargeLevel = ent.Comp.OverriddenChargeLevel;
+                currentChargeLevel = ent.Comp.OverrideChargeLevel.Value;
             }
             else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
@@ -41,9 +41,9 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
         if (ent.Comp.EnableDamageCorruption)
         {
             var damage = FixedPoint2.Zero;
-            if (ent.Comp.OverrideTotalDamage)
+            if (ent.Comp.OverrideTotalDamage.HasValue)
             {
-                damage = ent.Comp.OverriddenTotalDamageValue;
+                damage = ent.Comp.OverrideTotalDamage.Value;
             }
             else if (TryComp<DamageableComponent>(uid, out var damageable))
             {
