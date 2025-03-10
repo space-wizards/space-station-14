@@ -6,3 +6,8 @@
   - /Audio/_Harmony/Announcements/RoundEnd/freesteel.ogg
   - /Audio/_Harmony/Announcements/RoundEnd/tortilla.ogg
   - /Audio/_Harmony/Announcements/RoundEnd/unacceptable.ogg
+
+- type: soundCollection
+  id: PowerOn
+  files:
+  - /Audio/Announcements/power_on.ogg

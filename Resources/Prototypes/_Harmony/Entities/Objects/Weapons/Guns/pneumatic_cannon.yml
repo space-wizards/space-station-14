@@ -1,6 +1,6 @@
 - type: entity
   name: brigmedic's syringe gun
-  parent: [BaseStorageItem, BaseRestrictedContraband]
+  parent: [BaseStorageItem, BaseSecurityContraband]
   id: LauncherSyringeHarmony
   description: Load full of poisoned syringes for optimal fun.
   components:

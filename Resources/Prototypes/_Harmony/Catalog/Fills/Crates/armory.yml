@@ -1,6 +1,6 @@
 - type: entity
   id: CrateArmoryRSC
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: bolt-action rifle crate
   description:  Contains several high-powered, bolt-action rifles with sufficient ammunition. Packaging is questionable, your mileage will vary. Requires Armory, Security or Supply access to open.
   components:

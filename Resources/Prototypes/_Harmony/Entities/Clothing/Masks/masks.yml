@@ -35,7 +35,7 @@
     - Snout
 
 - type: entity
-  parent: [ClothingMaskGasSecurity, BaseRestrictedContraband]
+  parent: [ClothingMaskGasSecurity, BaseSecurityContraband]
   id: ClothingMaskNTEnforcer
   name: nanotrasen enforcer gasmask
   description: The mask of the dreaded Shoal Enforcers now in Nanotrasen blue

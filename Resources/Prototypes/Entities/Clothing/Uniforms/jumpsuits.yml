@@ -356,7 +356,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
 
 #Harmony Change: Updated the name and sprite for bluesec update
-- type: entity 
+- type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHoSBlue
   name: head of security's blue suit
@@ -456,7 +456,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband] # Harmony Change: Added Contraband Level
+  parent: [ClothingUniformBase, BaseSecurityContraband] # Harmony Change: Added Contraband Level
   id: ClothingUniformJumpsuitBrigmedic
   name: brigmedic jumpsuit
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
@@ -588,21 +588,21 @@
 
 #Harmony Change: Updated Pathing and Name for security resprite update
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSec
   name: security jumpsuit
   description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/security.rsi 
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/security.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/security.rsi
 
 #Harmony Change: Updated the name, sprite, and contraband level for bluesec update
-- type: entity 
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+- type: entity
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSecBlue
-  name: security blue suit 
+  name: security blue suit
   description: I'm a little busy right now, Calhoun.
   components:
   - type: Sprite
@@ -611,7 +611,7 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/security_blue.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSecGrey
   name: grey security jumpsuit
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
@@ -622,7 +622,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformSecurityTrooper
   name: trooper uniform
   description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
@@ -634,7 +634,7 @@
 
 #Harmony Change: Updated Pathing and Name for security resprite update
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitWarden
   name: warden's jumpsuit
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
@@ -1171,7 +1171,7 @@
 
 #Harmony Change: Updated Pathing for security resprite update
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSeniorOfficer
   name: senior officer jumpsuit
   description: A sign of skill and prestige within the security department.

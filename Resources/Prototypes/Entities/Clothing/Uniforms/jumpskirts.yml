@@ -192,7 +192,7 @@
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtHoSAlt
-  name: head of security's assault jumpskirt 
+  name: head of security's assault jumpskirt
   description: It's an assault suit worn by those strong and disciplined enough to achieve the position of Head of Security.
   components:
   - type: Sprite
@@ -267,7 +267,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband] # Harmony Change: Added Contraband Level
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband] # Harmony Change: Added Contraband Level
   id: ClothingUniformJumpskirtBrigmedic
   name: brigmedic jumpskirt
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
@@ -377,7 +377,7 @@
 
 #Harmony Change: Updated Pathing and Name for security resprite update
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtSec
   name: security jumpskirt
   description: A jumpskirt made of strong material, providing robust protection.
@@ -389,7 +389,7 @@
 
 #Harmony Change: Updated Pathing and Name for security resprite update
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtWarden
   name: warden's jumpskirt
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
@@ -647,7 +647,7 @@
 
 #Harmony Change: Updated Pathing for security resprite update
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtSeniorOfficer
   name: senior officer jumpskirt
   description: A sign of skill and prestige within the security department.
@@ -658,7 +658,7 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/senior_officer.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtSecGrey
   name: grey security jumpskirt
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.

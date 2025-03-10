@@ -3,7 +3,8 @@ using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -53,12 +54,11 @@ public sealed class LoadFarGridRule : StationEventSystem<LoadFarGridRuleComponen
         var options = new MapLoadOptions
         {
             Offset = aabb.Center + offset,
-            LoadMap = false
         };
 
-        var path = comp.Path.ToString();
+        var path = comp.Path;
         Log.Debug($"Loading far grid {path} at {options.Offset}");
-        if (!_mapLoader.TryLoad(map, path, out var grids, options))
+        if (!_mapLoader.TryLoadGrid(map, path, out var grident, null, options.Offset))
         {
             Log.Error($"{ToPrettyString(uid):rule} failed to load grid {path}!");
             ForceEndSelf(uid, rule);
@@ -66,6 +66,7 @@ public sealed class LoadFarGridRule : StationEventSystem<LoadFarGridRuleComponen
         }
 
         // let other systems do stuff
+        var grids = new List<EntityUid> { grident.Value.Owner };
         var ev = new RuleLoadedGridsEvent(map, grids);
         RaiseLocalEvent(uid, ref ev);
     }

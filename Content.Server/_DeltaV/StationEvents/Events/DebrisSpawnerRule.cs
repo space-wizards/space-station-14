@@ -10,8 +10,9 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Configuration;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -61,11 +62,10 @@ public sealed class DebrisSpawnerRule : StationEventSystem<DebrisSpawnerRuleComp
             var options = new MapLoadOptions
             {
                 Offset = aabb.Center + offset + randomer,
-                LoadMap = false,
             };
 
             var salvage = RobustRandom.PickAndTake(salvageMaps);
-            _mapLoader.Load(args.Map, salvage.MapPath.ToString(), options);
+            _mapLoader.TryLoadGrid(args.Map, salvage.MapPath, out var _, null, options.Offset);
         }
     }
 }
