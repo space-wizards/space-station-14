@@ -241,6 +241,7 @@
         Brute: -0.07
   - type: Fingerprint
   - type: Blindable
+  - type: DarkenedVision
   # Other
   - type: Temperature
     heatDamageThreshold: 325
