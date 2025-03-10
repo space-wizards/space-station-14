@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Nuclear Cola can now be broken down in a centrifuge.
-    type: Add
-  id: 7547
-  time: '2024-10-22T17:01:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32441
 - author: BramvanZijp
   changes:
   - message: The Space Ninja Suit will now give an error popup if you are trying to
@@ -3897,3 +3890,10 @@
   id: 8046
   time: '2025-03-10T04:17:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35757
+- author: metalgearsloth
+  changes:
+  - message: Fix sun shadow rotations not always being accurate.
+    type: Fix
+  id: 8047
+  time: '2025-03-10T04:38:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35758
