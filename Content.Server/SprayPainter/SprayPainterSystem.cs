@@ -9,7 +9,7 @@ namespace Content.Server.SprayPainter;
 
 /// <summary>
 /// Handles spraying pipes using a spray painter.
-/// Airlocks are handled in shared.
+/// Other are handled in shared.
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {

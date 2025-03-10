@@ -1,4 +1,6 @@
 using Content.Shared.DoAfter;
+using Content.Shared.SprayPainter.Components;
+using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SprayPainter;
@@ -12,10 +14,12 @@ public enum SprayPainterUiKey
 [Serializable, NetSerializable]
 public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 {
+    public readonly string Category;
     public readonly int Index;
 
-    public SprayPainterSpritePickedMessage(int index)
+    public SprayPainterSpritePickedMessage(string category, int index)
     {
+        Category = category;
         Index = index;
     }
 }
@@ -32,24 +36,37 @@ public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
+public sealed class SprayPainterBoundUserInterfaceState : BoundUserInterfaceState
 {
-    /// <summary>
-    /// Base RSI path to set for the door sprite.
-    /// </summary>
-    [DataField]
-    public string Sprite;
+    public Dictionary<string, int> SelectedStyles { get; }
+    public string? SelectedColorKey { get; }
+    public Dictionary<string, Color> Palette { get; }
 
-    /// <summary>
-    /// Department id to set for the door, if the style has one.
-    /// </summary>
-    [DataField]
-    public string? Department;
-
-    public SprayPainterDoorDoAfterEvent(string sprite, string? department)
+    public SprayPainterBoundUserInterfaceState(Dictionary<string, int> selectedStyles, string? selectedColorKey, Dictionary<string, Color> palette)
     {
-        Sprite = sprite;
-        Department = department;
+        SelectedStyles = selectedStyles;
+        SelectedColorKey = selectedColorKey;
+        Palette = palette;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
+{
+    [DataField]
+    public string Prototype;
+
+    [DataField]
+    public string Category;
+
+    [DataField]
+    public PaintableVisuals Visuals;
+
+    public SprayPainterDoAfterEvent(string prototype, string category, PaintableVisuals visuals)
+    {
+        Prototype = prototype;
+        Category = category;
+        Visuals = visuals;
     }
 
     public override DoAfterEvent Clone() => this;
@@ -58,9 +75,6 @@ public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
 [Serializable, NetSerializable]
 public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 {
-    /// <summary>
-    /// Color of the pipe to set.
-    /// </summary>
     [DataField]
     public Color Color;
 
