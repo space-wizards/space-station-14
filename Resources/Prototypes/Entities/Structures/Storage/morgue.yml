@@ -44,6 +44,7 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+  - type: InternalAir
   - type: EntityStorageLayingDownOverride
   - type: Morgue
   - type: ContainerContainer
@@ -121,6 +122,7 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+  - type: InternalAir
   - type: EntityStorageLayingDownOverride
   - type: Crematorium
   - type: ContainerContainer

@@ -1,4 +1,4 @@
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue;

@@ -1,6 +1,6 @@
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Storage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;

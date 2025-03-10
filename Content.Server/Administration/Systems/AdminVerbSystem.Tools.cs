@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Storage.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -240,7 +241,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Oxygen, tank);
+                        RefillGasTank(args.Target, Gas.Oxygen);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
@@ -255,7 +256,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Nitrogen, tank);
+                        RefillGasTank(args.Target, Gas.Nitrogen);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
@@ -270,7 +271,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Plasma, tank);
+                        RefillGasTank(args.Target, Gas.Plasma);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
@@ -745,16 +746,16 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent = null)
+    private void RefillGasTank(EntityUid tank, Gas gasType)
     {
-        if (!Resolve(tank, ref tankComponent, false))
+        if (!TryComp<InternalAirComponent>(tank, out var internalAir))
             return;
 
-        var mixSize = tankComponent.Air.Volume;
+        var mixSize = internalAir.Air.Volume;
         var newMix = new GasMixture(mixSize);
         newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
         newMix.Temperature = Atmospherics.T20C;
-        tankComponent.Air = newMix;
+        internalAir.Air = newMix;
     }
 
     private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)
