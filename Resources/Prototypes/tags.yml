@@ -447,6 +447,27 @@
   id: Debug
 
 - type: Tag
+  id: DevoterChaos
+
+- type: Tag
+  id: DevoterDruid
+
+- type: Tag
+  id: DevoterNanotrasen
+
+- type: Tag
+  id: DevoterSatana
+
+- type: Tag
+  id: DevoterSpaceChristian
+
+- type: Tag
+  id: DevoterTechnology
+
+- type: Tag
+  id: DevoterToolbox
+
+- type: Tag
   id: Diagonal
 
 - type: Tag
