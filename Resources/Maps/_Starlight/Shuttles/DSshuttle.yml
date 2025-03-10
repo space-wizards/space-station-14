@@ -18,6 +18,7 @@ entities:
       name: SO "Stone" 2A-Q3572
     - type: Transform
       pos: -0.453125,-0.203125
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -264,8 +265,6 @@ entities:
 - proto: ActionToggleInternals
   entities:
   - uid: 218
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 217
@@ -273,8 +272,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 217
   - uid: 220
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 219
@@ -282,8 +279,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 219
   - uid: 223
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 222
@@ -291,8 +286,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 222
   - uid: 225
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 224
@@ -300,8 +293,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 224
   - uid: 229
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 227
@@ -309,8 +300,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 227
   - uid: 233
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 232
@@ -318,8 +307,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 232
   - uid: 235
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 234
@@ -327,8 +314,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 234
   - uid: 237
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 236
@@ -336,8 +321,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 236
   - uid: 239
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 238
@@ -347,8 +330,6 @@ entities:
 - proto: ActionToggleJetpack
   entities:
   - uid: 228
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 227
@@ -3857,50 +3838,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponPistolCobra
+- proto: WeaponPDW9
   entities:
   - uid: 325
-    mapInit: true
-    paused: true
     components:
-    - type: MetaData
-      desc: A modified cobra, with a burst firemode, self recharge, and the silencer removed
-      name: leader's modified cobra
     - type: Transform
-      pos: -3.4212098,1.5327256
+      pos: -3.453125,1.578125
       parent: 1
-    - type: Battery
-      startingCharge: 1000
-      maxCharge: 1000
-    - type: Gun
-      lastFire: 1837.8814957
-      currentAngle: 0.03490658503988659 rad
-      burstFireRate: 15
-      projectileSpeedModified: 25
-      nextFire: -4.9833281
-      availableModes: Burst
-      selectedMode: Burst
-      soundGunshot: !type:SoundPathSpecifier
-        params:
-          variation: null
-          playOffsetSeconds: 0
-          loop: False
-          referenceDistance: 1
-          rolloffFactor: 1
-          maxDistance: 15
-          pitch: 1
-          volume: 0
-        path: /Audio/_Starlight/Weapons/Guns/Gunshots/colt.ogg
-    - type: EmitSoundOnCollide
-      nextSound: -1842.8648238
-    - type: BatterySelfRecharger
-      autoRechargeRate: 1000
-      autoRecharge: True
-    - type: ProjectileBatteryAmmoProvider
-      proto: BulletPistol
-    - type: AdminMinigun
-    missingComponents:
-    - ChamberMagazineAmmoProvider
 - proto: WeaponPulseRifle
   entities:
   - uid: 199
