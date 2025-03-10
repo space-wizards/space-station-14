@@ -90,6 +90,8 @@
     - RightArmCyberReaper
     - LeftArmCyberMechwright
     - RightArmCyberMechwright
+    - LeftArmCyberBulwark
+    - RightArmCyberBulwark
   technologyPrerequisites:
     - CyberLimbsTech
 

@@ -264,3 +264,9 @@
   - DurandCentralElectronics
   - DurandPeripheralsElectronics
   - DurandTargetingElectronics
+
+- type: latheRecipePack
+  id: SecurityCyberLimbs
+  recipes:
+  - LeftArmCyberBulwark
+  - RightArmCyberBulwark
