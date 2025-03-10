@@ -1,20 +1,6 @@
 ﻿Entries:
 - author: widgetbeck
   changes:
-  - message: Drones are now unable to use any item with the Contraband component.
-    type: Tweak
-  - message: Fixed the wrong popup appearing when a Drone attempts to use a blacklisted
-      item.
-    type: Fix
-  - message: Fixed Drone proximity warnings appearing when using whitelisted items.
-    type: Fix
-  - message: My real-life human brain is now fully functional.
-    type: Fix
-  id: 768
-  time: '2024-12-19T17:38:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1069
-- author: widgetbeck
-  changes:
   - message: Immovable Fin-Fin now has a custom kill message. Added support for custom
       kill messages to ImmovableRodComponent.
     type: Tweak
@@ -4095,3 +4081,12 @@
   id: 1267
   time: '2025-03-10T22:04:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1866
+- author: Sha-Seng
+  changes:
+  - message: Silver Heart Locket for style choices
+    type: Add
+  - message: Rings have hand and neck sprites now
+    type: Tweak
+  id: 1268
+  time: '2025-03-10T22:58:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1880
