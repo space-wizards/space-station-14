@@ -46,6 +46,24 @@
 
 - type: entity
   parent: InflatableWallStack
+  id: InflatableWallStackLingering10
+  suffix: Lingering, 10
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
+  parent: InflatableDoorStack 
+  id: InflatableDoorStackLingering4
+  suffix: Lingering, 4
+  components:
+  - type: Stack
+    lingering: true
+    count: 4
+
+- type: entity
+  parent: InflatableWallStack
   id: InflatableWallStack5
   suffix: 5
   components:
