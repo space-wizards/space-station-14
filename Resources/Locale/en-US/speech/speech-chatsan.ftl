@@ -58,7 +58,9 @@ chatsan-replacement-20 = in my opinion
 chatsan-word-21 = pls
 chatsan-word-22 = plz
 chatsan-word-23 = plox
-chatsan-replacement-please = please
+chatsan-replacement-21 = please
+chatsan-replacement-22 = please
+chatsan-replacement-23 = please
 
 chatsan-word-24 = fr
 chatsan-replacement-24 = for real
@@ -107,7 +109,8 @@ chatsan-replacement-38 = motherfucker
 
 chatsan-word-39 = etc
 chatsan-word-40 = etc.
-chatsan-replacement-etcetera = etcetera
+chatsan-replacement-39 = etcetera
+chatsan-replacement-40 = etcetera
 
 chatsan-word-41 = wyd
 chatsan-replacement-41 = what are you doing

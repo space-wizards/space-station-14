@@ -1,3 +1,4 @@
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.Prototypes;
@@ -14,14 +15,14 @@ public sealed partial class ReplacementAccentPrototype : IPrototype
     ///     If this array is non-null, the full text of anything said will be randomly replaced with one of these words.
     /// </summary>
     [DataField]
-    public string[]? FullReplacements;
+    public ProtoId<LocalizedDatasetPrototype>[]? FullReplacements;
 
     /// <summary>
     ///     If this dictionary is non-null and <see cref="FullReplacements"/> is null, any keys surrounded by spaces
-    ///     (words) will be replaced by the value, attempting to intelligently keep capitalization.
+    ///     (words) will be replaced by the localized string, attempting to intelligently keep capitalization.
     /// </summary>
     [DataField]
-    public Dictionary<string, string>? WordReplacements;
+    public Dictionary<ProtoId<LocalizedDatasetPrototype>, ProtoId<LocalizedDatasetPrototype>>? WordReplacements;
 
     /// <summary>
     /// Allows you to substitute words, not always, but with some chance

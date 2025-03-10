@@ -1,0 +1,131 @@
+- type: localizedDataset
+  id: MobsterOriginal
+  values:
+    prefix: accent-mobster-words-
+    count: 17
+
+- type: localizedDataset
+  id: MobsterReplace
+  values:
+    prefix: accent-mobster-words-replace-
+    count: 17
+
+- type: localizedDataset
+  id: ItalianOriginal
+  values:
+    prefix: accent-italian-words-
+    count: 49
+
+- type: localizedDataset
+  id: ItalianReplace
+  values:
+    prefix: accent-italian-words-replace-
+    count: 49
+
+- type: localizedDataset
+  id: DwarfOriginal
+  values:
+    prefix: accent-dwarf-words-
+    count: 148
+
+- type: localizedDataset
+  id: DwarfReplace
+  values:
+    prefix: accent-dwarf-words-replace-
+    count: 148
+
+- type: localizedDataset
+  id: PirateOriginal
+  values:
+    prefix: accent-pirate-replaced-
+    count: 32
+
+- type: localizedDataset
+  id: PirateReplace
+  values:
+    prefix: accent-pirate-replacement-
+    count: 32
+
+- type: localizedDataset
+  id: CowboyOriginal
+  values:
+    prefix: accent-cowboy-words-
+    count: 99
+
+- type: localizedDataset
+  id: CowboyReplace
+  values:
+    prefix: accent-cowboy-replacement-
+    count: 99
+
+- type: localizedDataset
+  id: SouthernOriginal
+  values:
+    prefix: accent-southern-words-
+    count: 6
+
+- type: localizedDataset
+  id: SouthernReplace
+  values:
+    prefix: accent-southern-words-replace-
+    count: 6
+
+- type: localizedDataset
+  id: ChatsanOriginal
+  values:
+    prefix: chatsan-word-
+    count: 67
+
+- type: localizedDataset
+  id: ChatsanReplace
+  values:
+    prefix: chatsan-replacement-
+    count: 67
+
+- type: localizedDataset
+  id: LiarOriginal
+  values:
+    prefix: liar-word-
+    count: 45
+
+- type: localizedDataset
+  id: LiarReplace
+  values:
+    prefix: liar-word-replacement-
+    count: 45
+
+- type: localizedDataset
+  id: GermanOriginal
+  values:
+    prefix: accent-german-words-
+    count: 73
+
+- type: localizedDataset
+  id: GermanReplace
+  values:
+    prefix: accent-german-words-replace-
+    count: 73
+
+- type: localizedDataset
+  id: RussianOriginal
+  values:
+    prefix: accent-russian-words-
+    count: 8
+
+- type: localizedDataset
+  id: RussianReplace
+  values:
+    prefix: accent-russian-words-replace-
+    count: 8
+
+- type: localizedDataset
+  id: SkeletonOriginal
+  values:
+    prefix: accent-skeleton-words-
+    count: 12
+
+- type: localizedDataset
+  id: SkeletonReplace
+  values:
+    prefix: accent-skeleton-words-replace-
+    count: 12

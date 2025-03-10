@@ -99,6 +99,10 @@ accent-words-slimes-5 = Blabl blump!
 
 # Mothroach
 accent-words-mothroach-1 = Chirp!
+accent-words-mothroach-2 = Squeak!
+accent-words-mothroach-3 = Piep!
+accent-words-mothroach-4 = Chuu!
+accent-words-mothroach-5 = Eeee!
 
 # Crab
 accent-words-crab-1 = Click.

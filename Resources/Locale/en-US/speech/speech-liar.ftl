@@ -98,35 +98,37 @@ liar-word-33 = "didn't"
 liar-word-replacement-33 = did
 
 liar-word-34 = ye
-liar-word-34-2 = ya
 liar-word-replacement-34 = na
 
-liar-word-35 = na
-liar-word-replacement-35 = ye
+liar-word-35 = ya
+liar-word-replacement-35 = na
 
-liar-word-36 = yuh
-liar-word-replacement-36 = nuh
+liar-word-36 = na
+liar-word-replacement-36 = ye
 
-liar-word-37 = nuh
-liar-word-replacement-37 = yuh
+liar-word-37 = yuh
+liar-word-replacement-37 = nuh
 
-liar-word-38 = love
-liar-word-replacement-38 = hate
+liar-word-38 = nuh
+liar-word-replacement-38 = yuh
 
-liar-word-39 = hate
-liar-word-replacement-39 = love
+liar-word-39 = love
+liar-word-replacement-39 = hate
 
-liar-word-40 = like
-liar-word-replacement-40 = don't like
+liar-word-40 = hate
+liar-word-replacement-40 = love
 
-liar-word-41 = good
-liar-word-replacement-41 = bad
+liar-word-41 = like
+liar-word-replacement-41 = don't like
 
-liar-word-42 = bad
-liar-word-replacement-42 = good
+liar-word-42 = good
+liar-word-replacement-42 = bad
 
-liar-word-43 = want
-liar-word-replacement-43 = "don't want"
+liar-word-43 = bad
+liar-word-replacement-43 = good
 
-liar-word-44 = not
-liar-word-replacement-44 = ""
+liar-word-44 = want
+liar-word-replacement-44 = "don't want"
+
+liar-word-45 = not
+liar-word-replacement-45 = ""
