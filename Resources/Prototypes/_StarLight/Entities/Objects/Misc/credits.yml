@@ -12,6 +12,7 @@
   description: You gotta have real money.
   components:
   - type: NTCash
+  - type: Cash
   - type: Item
     shape:
     - 0,0,1,0
