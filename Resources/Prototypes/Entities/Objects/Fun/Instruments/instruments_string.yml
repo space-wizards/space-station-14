@@ -26,6 +26,16 @@
   - type: Tag
     tags:
     - StringInstrument
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 6
+  - type: Wieldable
+  - type: IncreaseDamageOnWield 
+    damage:
+      types:
+        Blunt: 4
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -56,6 +66,16 @@
   - type: Tag
     tags:
     - StringInstrument
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 6
+  - type: Wieldable
+  - type: IncreaseDamageOnWield 
+    damage:
+      types:
+        Blunt: 4
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -187,6 +207,7 @@
   - type: Tag
     tags:
     - StringInstrument
+  - type: Wieldable
 
 - type: entity
   parent: BaseHandheldInstrument
