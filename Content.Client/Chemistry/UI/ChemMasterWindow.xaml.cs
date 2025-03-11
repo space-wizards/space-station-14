@@ -249,9 +249,6 @@ namespace Content.Client.Chemistry.UI
             };
             bufferHBox.AddChild(bufferVol);
 
-            // initialises rowCount to allow for striped rows
-            var rowCount = 0;
-
             // This sets up the needed data for sorting later in a list
             // Its done this way to not repeat having to use same code twice (once for sorting
             // and once for displaying)
