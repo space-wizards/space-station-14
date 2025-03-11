@@ -8,11 +8,12 @@ namespace Content.Client._Starlight.Overlay;
 
 public sealed class FlashImmunityCheck : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly Night.NightVisionSystem _nightVision = default!;
+    [Dependency] private readonly Cyclorites.CycloritesVisionSystem _cycloritesVision = default!;
+    [Dependency] private readonly Thermal.ThermalVisionSystem _thermalVision = default!;
     public override void Initialize()
     {
         base.Initialize();
-        IoCManager.InjectDependencies(this);
 
         SubscribeLocalEvent<FlashImmunityComponent, GotEquippedEvent>(OnFlashImmunityAdded);
         SubscribeLocalEvent<FlashImmunityComponent, GotUnequippedEvent>(OnFlashImmunityRemoved);
@@ -25,20 +26,20 @@ public sealed class FlashImmunityCheck : EntitySystem
             if (nightVisionComponent.Effect != null)
             {
                 nightVisionComponent.blockedByFlashImmunity = true;
-                _entityManager.System<Night.NightVisionSystem>().RemoveNightVision(nightVisionComponent);
+                _nightVision.RemoveNightVision(nightVisionComponent);
             }
         }
 
         if (TryComp<CycloritesVisionComponent>(args.Equipee, out var cycloritesVisionComponent))
         {
             cycloritesVisionComponent.blockedByFlashImmunity = true;
-            _entityManager.System<Cyclorites.CycloritesVisionSystem>().RemoveNightVision();
+            _cycloritesVision.RemoveNightVision();
         }
 
         if (TryComp<ThermalVisionComponent>(args.Equipee, out var thermalVisionComponent))
         {
             thermalVisionComponent.blockedByFlashImmunity = true;
-            _entityManager.System<Thermal.ThermalVisionSystem>().RemoveNightVision();
+            _thermalVision.RemoveNightVision();
         }
     }
 
@@ -49,20 +50,20 @@ public sealed class FlashImmunityCheck : EntitySystem
             if (nightVisionComponent.Effect == null)
             {
                 nightVisionComponent.blockedByFlashImmunity = false;
-                _entityManager.System<Night.NightVisionSystem>().AddNightVision(args.Equipee, nightVisionComponent);
+                _nightVision.AddNightVision(args.Equipee, nightVisionComponent);
             }
         }
 
         if (TryComp<CycloritesVisionComponent>(args.Equipee, out var cycloritesVisionComponent))
         {
             cycloritesVisionComponent.blockedByFlashImmunity = false;
-            _entityManager.System<Cyclorites.CycloritesVisionSystem>().AddNightVision(args.Equipee);
+            _cycloritesVision.AddNightVision(args.Equipee);
         }
 
         if (TryComp<ThermalVisionComponent>(args.Equipee, out var thermalVisionComponent))
         {
             thermalVisionComponent.blockedByFlashImmunity = false;
-            _entityManager.System<Thermal.ThermalVisionSystem>().AddNightVision(args.Equipee);
+            _thermalVision.AddNightVision(args.Equipee);
         }
     }
 }
