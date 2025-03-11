@@ -44,7 +44,7 @@
     price: 500
 
 - type: entity
-  name: Mamba-Bulldog #imp
+  name: Hydra #imp
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, Tier3Contraband]
   id: WeaponShotgunBulldog

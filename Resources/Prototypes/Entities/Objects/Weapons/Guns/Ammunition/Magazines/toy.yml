@@ -11,3 +11,7 @@
         - BulletFoam
     proto: BulletFoam
     capacity: 100
+    - type: Sprite #imp
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+    layers:
+    - state: base
