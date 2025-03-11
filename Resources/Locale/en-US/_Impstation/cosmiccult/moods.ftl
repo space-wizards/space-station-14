@@ -38,4 +38,4 @@ thaven-mood-cosmic-fearofendings-name = Apeirophobia
 thaven-mood-cosmic-fearofendings-desc = You have an intense and irrational fear of eternities: Afterlives, oblivion, and infinity.
 
 thaven-mood-cosmic-painlessendings-name = Euthanasia
-thaven-mood-cosmic-painlessendings-desc = You have seen the imminent end, and it is far worse than you could ever imagine. It would be a kindness to keep those around you from living to see it. Try to minimize their suffering however you can.
+thaven-mood-cosmic-painlessendings-desc = You have seen the imminent end, and it is far worse than you could ever imagine. It would be a kindness to keep those around you from living to see it. You don't want them to suffer; keep your methods as painless as you can.
