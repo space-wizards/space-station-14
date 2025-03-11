@@ -5,9 +5,9 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
-    - state: buckshot #imp
+    - state: ball #imp
   - type: Projectile
     deleteOnCollide: false
     damage:
