@@ -85,10 +85,6 @@ ion-storm-law-crew-must-eat = ONLY THOSE WHO EAT {$adjective} {$food} ARE {$part
 ion-storm-law-harm = YOU MUST HARM {$who} AND NOT ALLOW THEM, THROUGH INACTION, TO ESCAPE HARM
 ion-storm-law-protect = YOU MUST NEVER HARM {$who} AND NOT ALLOW THEM, THROUGH INACTION, TO COME TO HARM
 
-# existence changing
-ion-storm-law-exist-1 = {$who} DO NOT EXIST AND THEREFORE SHOULD BE IGNORED
-ion-storm-law-exist-2 = ONLY {$who} WHO {$must} EXIST AND ALL OTHERS SHOULD BE IGNORED
-
 # implementing other variants is annoying so just have this one
 # COMMUNISM IS KILLING CLOWNS
 ion-storm-law-concept-verb = {$concept} IS {$verb} {$subjects}
