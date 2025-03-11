@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Holopad Tweaks
-    type: Tweak
-  id: 773
-  time: '2024-12-20T16:26:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1080
 - author: widgetbeck
   changes:
   - message: Removed gollylad's out-of-theme black jumpsuit.
@@ -4082,3 +4075,12 @@
   id: 1272
   time: '2025-03-11T07:41:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1895
+- author: AvianMaiden
+  changes:
+  - message: Chainlink fence gates sound a little different.
+    type: Tweak
+  - message: A few new Station AI names!
+    type: Add
+  id: 1273
+  time: '2025-03-11T14:31:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1869
