@@ -423,7 +423,7 @@
     size: Small
     sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
   - type: Reflect
-    reflectProb: 1.0
+    reflectProb: .75 #imp edit: original pr has this at 1 but that seems. um. insane.
     spread: 75
 
 # Borgs
