@@ -7,6 +7,7 @@
     RatKing: 2
     UristSwarm: 1
     ImmovableFriend: 1
+    RogueAscended: 1
 
 - type: ninjaHackingThreat
   id: Dragon
@@ -32,3 +33,8 @@
   id: ImmovableFriend
   announcement: terror-finfin
   rule: ImmovableFriendSpawn
+
+- type: ninjaHackingThreat
+  id: RogueAscended
+  announcement: terror-rogueascended
+  rule: RogueAscendedSpawn

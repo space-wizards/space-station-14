@@ -118,12 +118,16 @@
 - type: entity
   id: MobRogueAscended
   parent:
-  - Incorporeal
   - BaseMob
   name: rogue ascended
   suffix: MidRoundAntag
   description: An entity from beyond the borders of bluespace. Its contours continuously blur and blend together, unnerving to the eye.
   components:
+  - type: FTLSmashImmune
+  - type: Physics
+    bodyStatus: InAir
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
   - type: CombatMode
   - type: Bloodstream
     bloodMaxVolume: 650
@@ -136,12 +140,12 @@
         Bloodloss: -1
         Asphyxiation: -4
         Cold: -4
-  - type: Input
-    context: "ghost"
-  - type: Spectral
   - type: MovementSpeedModifier
     baseWalkSpeed: 4.7
     baseSprintSpeed: 4.7
+    weightlessAcceleration: 2 # Move around more easily in space.
+    weightlessFriction: 1
+    weightlessModifier: 1
   - type: Sprite
     sprite: _Impstation/CosmicCult/Mobs/astralrogue.rsi
     noRot: true
@@ -181,7 +185,7 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: RogueAscended # for the rogue ascended's MidRoundAntag Systems
-  - type: ActionsProvider
+  - type: ActionGrant
     actions:
     - ActionRogueInfection
     - ActionRogueGrandShunt

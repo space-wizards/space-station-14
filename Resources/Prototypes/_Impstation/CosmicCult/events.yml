@@ -8,7 +8,7 @@
     reoccurrenceDelay: 20
     minimumPlayers: 30
     duration: null
-  - type: OutsideStationAntagSpawn
+  - type: SpaceSpawnRule
   - type: AntagSpawner
     prototype: MobRogueAscended
   - type: AntagObjectives

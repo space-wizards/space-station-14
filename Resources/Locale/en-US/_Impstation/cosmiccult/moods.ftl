@@ -1,11 +1,11 @@
 thaven-mood-cosmic-nihilism-name = Astral Nihilism
-thaven-mood-cosmic-nihilism-desc = You reject all religious and moral principles, and believe that all life is inherently meaningless.
+thaven-mood-cosmic-nihilism-desc = Life doesn't mean anything to you anymore. Nothing does. Nothing brings you joy, and nothing matters.
 
 thaven-mood-cosmic-insignificance-name = Astral insignificance
 thaven-mood-cosmic-insignificance-desc = You are at all times painfully aware of your insignificance within the great scope of the universe.
 
 thaven-mood-cosmic-unfamiliarity-name = Vacuous Unfamiliarity
-thaven-mood-cosmic-unfamiliarity-desc = Both the environment and people around you are unfamiliar to you. You neither recognize nor recall a single voice or face of those you know.
+thaven-mood-cosmic-unfamiliarity-desc = The world around you is strange and unfamiliar, and everyone you meet is unrecognizable to you. You can't bring yourself to trust anything they say.
 
 thaven-mood-cosmic-fakemonument-name = Malign Monument
 thaven-mood-cosmic-fakemonument-desc = A great shadow fills your minds' eye, the silhouette of a looming structure. A Monument. You must find it or make one yourself, at all costs.
@@ -32,7 +32,7 @@ thaven-mood-cosmic-disregardoftheself-name = Disregard Of The Self
 thaven-mood-cosmic-disregardoftheself-desc = You have no care for your own needs, no matter how dire. You're going to die, anyway.
 
 thaven-mood-cosmic-fearofbeingforgotten-name = Lethophobia
-thaven-mood-cosmic-fearofbeingforgotten-desc = You have an intense and irrational fear of forgetting: Being forogtten, forgetting something, and forgetting someone.
+thaven-mood-cosmic-fearofbeingforgotten-desc = You have an intense and irrational fear of forgetting: Being forgotten, forgetting something, and forgetting someone. You must do everything you can to be remembered.
 
 thaven-mood-cosmic-fearofendings-name = Apeirophobia
 thaven-mood-cosmic-fearofendings-desc = You have an intense and irrational fear of eternities: Afterlives, oblivion, and infinity.

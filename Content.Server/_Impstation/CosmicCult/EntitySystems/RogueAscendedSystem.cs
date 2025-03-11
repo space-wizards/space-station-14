@@ -9,6 +9,8 @@ using Content.Server.Interaction;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared._Impstation.CosmicCult;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
@@ -17,6 +19,7 @@ using Content.Shared.Damage;
 using Content.Shared.Dataset;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
+using Content.Shared.Friction;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -29,9 +32,11 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -59,6 +64,9 @@ public sealed class RogueAscendedSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly ThrowingSystem _throw = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ThavenMoodsSystem _moodSystem = default!; //impstation
 
     [ValidatePrototypeId<DatasetPrototype>]
@@ -75,6 +83,7 @@ public sealed class RogueAscendedSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<RogueAscendedComponent, ComponentInit>(OnSpawn);
         SubscribeLocalEvent<RogueAscendedComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RogueAscendedDendriteComponent, BeforeFullyEatenEvent>(OnDendriteConsumed);
 
@@ -86,6 +95,16 @@ public sealed class RogueAscendedSystem : EntitySystem
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueInfection>(OnAttemptInfection);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueInfectionDoAfter>(OnInfectionDoAfter);
         SubscribeLocalEvent<RogueAscendedInfectionComponent, ComponentShutdown>(OnInfectionCleansed);
+    }
+
+    private void OnSpawn(Entity<RogueAscendedComponent> uid, ref ComponentInit args) // I WANT THIS DINGUS YEETED TOWARDS THE STATION AT MACH JESUS
+    {
+        var station = _station.GetStationInMap(Transform(uid).MapID);
+        if (TryComp<StationDataComponent>(station, out var stationData) && stationData is not null)
+        {
+            var stationGrid = _station.GetLargestGrid(stationData);
+            _throw.TryThrow(uid, Transform(stationGrid!.Value).Coordinates, baseThrowSpeed: 90 * 1000f, null, 0, 0, false, false, false, false, false);
+        }
     }
 
     #region Death
@@ -147,7 +166,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         _damageable.TryChangeDamage(args.Target, dspec, true, origin: uid);
         _audio.PlayPvs(uid.Comp.ShatterSfx, args.Target);
         args.Handled = true;
-        Spawn("CosmicLapseAbilityVFX", Transform(args.Target).Coordinates);
+        Spawn(uid.Comp.Vfx, Transform(args.Target).Coordinates);
     }
     #endregion
     #region Ability - Infection

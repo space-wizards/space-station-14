@@ -35,9 +35,10 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
-    - id: ChangelingAwakening
+    - id: ChangelingAwakening # goob
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
+    - id: RogueAscendedSpawn # imp
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -53,9 +54,10 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
-    - id: ChangelingAwakening
+    - id: ChangelingAwakening # goob
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
+    - id: RogueAscendedSpawn # imp
 
 - type: entity
   id: BaseStationEvent
