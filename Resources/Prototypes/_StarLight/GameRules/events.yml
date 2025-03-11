@@ -102,3 +102,12 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+
+    #Pig's DS Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: DeathsquadShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
