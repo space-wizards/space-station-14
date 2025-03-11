@@ -125,6 +125,7 @@
   components:
   - type: FTLSmashImmune
   - type: Physics
+
     bodyStatus: InAir
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
@@ -141,8 +142,8 @@
         Asphyxiation: -4
         Cold: -4
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4.7
-    baseSprintSpeed: 4.7
+    baseWalkSpeed: 4.9
+    baseSprintSpeed: 4.9
     weightlessAcceleration: 2 # Move around more easily in space.
     weightlessFriction: 1
     weightlessModifier: 1
@@ -199,8 +200,8 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.40
-        density: 100
+          radius: 0.49
+        density: 999
         mask:
         - SmallMobMask
         layer:
