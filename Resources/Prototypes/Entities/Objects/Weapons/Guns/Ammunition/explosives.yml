@@ -16,7 +16,8 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: rpg
+    layers:
+    - state: rpg #imp
   - type: StaticPrice
     price: 20
   - type: Engraveable # imp
