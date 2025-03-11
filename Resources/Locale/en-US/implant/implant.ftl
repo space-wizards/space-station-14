@@ -34,3 +34,6 @@ scramble-implant-activated-popup = Your appearance shifts and changes!
 
 deathrattle-implant-dead-message = {$user} has died {$position}.
 deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required {$position}.
+
+action-name-toggle-fake-mindshield = [color=green]Toggle Fake Mindshield[/color]
+action-description-toggle-fake-mindshield = Turn the Fake Mindshield implants transmission on/off
