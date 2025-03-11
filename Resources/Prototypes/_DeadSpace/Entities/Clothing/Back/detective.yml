@@ -10,7 +10,7 @@
 - type: entity
   parent: [ClothingBackpackSatchel, BaseRestrictedContraband]
   id: ClothingBackpackSatchelDetectiveGrey
-  name: наурная сумка детектива
+  name: нуарная сумка детектива
   description: Стильная и функциональная сумка из чёрной синтетической кожи, с удобными отделениями для инструментов расследования.
   components:
   - type: Sprite
