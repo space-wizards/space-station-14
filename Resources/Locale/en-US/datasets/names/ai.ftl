@@ -99,10 +99,8 @@ names-ai-dataset-70 = Max 404
 names-ai-dataset-71 = Metalhead
 names-ai-dataset-72 = M.I.M.I
 names-ai-dataset-73 = MK ULTRA
-
 # Imp special: originally was MoMMI but well, cooler Alien reference and was already killed by AirFryer
 names-ai-dataset-74 = MU-TH-ER 6000
-names-ai-dataset-74 = Monarch
 names-ai-dataset-75 = Mugsy3000
 names-ai-dataset-76 = Multivac
 names-ai-dataset-77 = NCH
@@ -178,3 +176,11 @@ names-ai-dataset-141 = High Ground
 names-ai-dataset-142 = Seven Red Suns
 names-ai-dataset-143 = Spark
 names-ai-dataset-144 = Unregistered Hypercam 2
+names-ai-dataset-145 = MU-TH-ER 6000
+names-ai-dataset-146 = HAL 9000
+names-ai-dataset-147 = Overwatch
+names-ai-dataset-148 = Durandal
+names-ai-dataset-149 = Leela
+names-ai-dataset-150 = Basilisk
+names-ai-dataset-151 = Orion
+names-ai-dataset-152 = Blue Heron

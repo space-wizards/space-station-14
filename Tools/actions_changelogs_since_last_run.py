@@ -189,8 +189,9 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
 
                 message_lines.append(line)
 
-    # add ping
-    if DISCORD_ROLE_ID:
+    # add ping if role id is configured
+    # don't add it if the message is empty, in that case we want to skip send
+    if message_lines and DISCORD_ROLE_ID:
         ping_line = f"<@&{DISCORD_ROLE_ID}>\n"
         message_lines.insert(0, ping_line)
 

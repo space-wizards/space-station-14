@@ -146,7 +146,7 @@
   - type: PointLight
     enabled: true
     color: "#ff4300"
-    radius: 2.0
+    radius: 1.4 #imp
     energy: 7.0
   - type: IgniteOnCollide
     fireStacks: 0.25

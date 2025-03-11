@@ -156,7 +156,7 @@
 - type: entity
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerRubber
-  suffix: Non-Lethal
+  suffix: Non-Lethal DEPRECATED DO NOT MAP
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
