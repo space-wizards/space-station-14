@@ -1,0 +1,51 @@
+- type: entity
+  name: Suppy
+  id: PetSuppy
+  suffix: Steal target
+  description: Engineering's pet suppermatter chunk. He dreams of causing station-wide destruction some day, but his bark is bigger than his bite.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 300
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: suppermatter
+    noRot: true
+    drawdepth: Mobs
+  - type: Appearance
+  - type: Body # for letting someone use the pet carrier on it
+  - type: Climbing
+  - type: Pullable
+  - type: Damageable
+  - type: PointLight
+    color: "#FFFF00"
+    radius: 2
+    energy: 1.4
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: InteractionPopup
+    successChance: .1
+    interactSuccessString: petting-success-suppy
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      collection: SupermatterAccentNormal
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.1
+    baseSprintSpeed: 0.2
+  - type: StealTarget
+    stealGroup: PetSuppy
