@@ -1,6 +1,6 @@
 - type: entity
   name: ascendant's dendrite
-  parent: BaseAnimalOrgan
+  parent: [ BaseAnimalOrgan, TierXContraband ]
   id: AscendedDendrite
   description: A bundle of semi-ephemeral tissue extracted from the unravelling husk of an astral ascendant. A faint malign light pulses within.
   components:
@@ -10,7 +10,7 @@
   - type: Food
   - type: FlavorProfile
     flavors:
-      - strange
+      - entropic
   - type: Tag
     tags:
     - Raw
