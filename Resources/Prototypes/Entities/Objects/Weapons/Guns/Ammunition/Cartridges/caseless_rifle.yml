@@ -12,7 +12,7 @@
     deleteOnSpawn: true
   - type: Sprite
     noRot: false
-    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/caseless.rsi #imp
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
