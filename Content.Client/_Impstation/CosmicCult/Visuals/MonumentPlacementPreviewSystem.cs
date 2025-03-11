@@ -82,7 +82,8 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
     }
 
     //duplicated from the ability check
-    //todo make this check the actual position where the monument will be spawned instead of exactly 1 tile up from the player ent
+    //this is technically wrong as it checks exactly 1 tile up from the player ent instead of where the monument will spawn, causing valid locations to sometimes be invalid & vice-versa
+    //todo fix that?
     public bool VerifyPlacement(TransformComponent xform)
     {
         var spaceDistance = 3;

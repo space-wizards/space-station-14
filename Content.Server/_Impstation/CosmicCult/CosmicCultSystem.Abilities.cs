@@ -326,8 +326,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region MonumentSpawn
     private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicPlaceMonument args)
     {
-        //todo move validating the position out into an onActionAttempt event subscription?
-        //wouldn't massively change the structure of the code but it would be the "proper" way to do things
         var spaceDistance = 3;
         var xform = Transform(uid);
         var user = Transform(args.Performer);
