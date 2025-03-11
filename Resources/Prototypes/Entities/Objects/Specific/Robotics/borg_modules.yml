@@ -564,6 +564,7 @@
     - ClownRecorder
     - BikeHornInstrument
     - HoloprojectorClownBorg
+    - BorgLauncherCreamPie
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 

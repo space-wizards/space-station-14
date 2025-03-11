@@ -54,7 +54,7 @@
   parent: Holoprojector
   id: HoloprojectorClownBorg
   name: holopeel projector
-  description: A holopeel projector that summons a slippery hard light banana peel.
+  description: A holopeel projector that creates a slippery, hard light banana peel.
   suffix: borg
   components:
   - type: HolosignProjector
