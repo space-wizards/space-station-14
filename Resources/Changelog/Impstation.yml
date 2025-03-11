@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Removed gollylad's out-of-theme black jumpsuit.
-    type: Remove
-  - message: Some changes to the Goblin Castaways event to give it its own identity.
-    type: Tweak
-  id: 774
-  time: '2024-12-20T16:28:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1083
 - author: RosySaturniidae
   changes:
   - message: tweaked the colors on the cmo's jumpsuit/skirt
@@ -4084,3 +4075,18 @@
   id: 1273
   time: '2025-03-11T14:31:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1869
+- author: AvianMaiden
+  changes:
+  - message: Unique sprites for all types of shotgun shell projectiles! Stun slugs
+      now look different from buckshot!
+    type: Add
+  - message: Descriptions to each type of shotgun shell. (Shotgun shell naming conventions
+      are now all the same too!)
+    type: Add
+  - message: Slightly lowered the light given off by incendiary projectiles.
+    type: Tweak
+  - message: The cargo Enforcer order now lists the correct number of shell boxes.
+    type: Fix
+  id: 1274
+  time: '2025-03-11T14:32:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1885
