@@ -549,7 +549,7 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
-    - type: entity
+- type: entity
   id: BorgModuleAdvancedClowning
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: advanced clowning cyborg module
@@ -563,7 +563,7 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
-    - HoloprojectorBorg
+    - HoloprojectorClownBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 

@@ -47,6 +47,32 @@
     noAirWhenFullyAirBlocked: false
 
 - type: entity
+  id: HoloPeel
+  parent: HolosignWetFloor
+  name: holopeel
+  description: A banana peel made of slippery hard light.
+  components:
+  - type: Sprite
+    sprite: Structures/Holo/holofan.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+  - type: TimedDespawn
+    lifetime: 30
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
   id: HolosignSecurity
   parent: HolosignWetFloor
   name: holographic barrier
