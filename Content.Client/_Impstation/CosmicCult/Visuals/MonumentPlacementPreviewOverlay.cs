@@ -144,7 +144,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
 
         //for the desaturated monument "shadow"
         worldHandle.UseShader(_saturationShader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(mainTex), _lastPos - new Vector2(1.5f, 0.5f), Color.White.WithAlpha(alpha)); //needs the offset to render in the proper position
+        worldHandle.DrawTexture(_spriteSystem.Frame0(mainTex), _lastPos - new Vector2(1.5f, 0.5f), Color.White.WithAlpha(alpha)); //needs the offset to render in the proper position. does not inherit the extra modulate
 
         //for the outline to pop
         worldHandle.UseShader(_unshadedShader);
@@ -152,7 +152,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
 
         //some fancy schmancy things for the inside of the monument
         worldHandle.UseShader(_starsShader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos - new Vector2(1.5f, 0.5f), color);
+        worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos - new Vector2(1.5f, 0.5f), color.WithAlpha(alpha)); //don't inherit the alpha mult on the inside bit
         worldHandle.UseShader(null);
     }
 }
