@@ -4009,4 +4009,12 @@ Entries:
   id: 555
   time: '2025-03-10T16:30:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/379
+- author: Happyrobot33
+  changes:
+  - message: Made ATM Credits able to be treated as direct Spesos in things like the
+      Cargo Order Terminal
+    type: Tweak
+  id: 556
+  time: '2025-03-11T01:24:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/381
 
