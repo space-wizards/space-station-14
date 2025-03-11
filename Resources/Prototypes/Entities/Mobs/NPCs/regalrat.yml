@@ -134,7 +134,7 @@
   - type: Puller
     needsHands: false
   - type: Food #imp start
-    delay: 8
+    delay: 16
     transferAmount: 50
     trash:
     - ClothingHeadHatFancyCrown
