@@ -8,6 +8,8 @@ using Robust.Client.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Flash.Components;
 
 namespace Content.Client._Starlight.Overlay.Thermal;
 
@@ -37,7 +39,7 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
 
     private void OnPlayerAttached(Entity<ThermalVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        if (_effect == null)
+        if (_effect == null && !ent.Comp.blockedByFlashImmunity)
             AddNightVision(ent.Owner);
     }
 
@@ -59,14 +61,14 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
         RemoveNightVision();
     }
 
-    private void AddNightVision(EntityUid uid)
+    public void AddNightVision(EntityUid uid)
     {
         _overlayMan.AddOverlay(_throughWallsOverlay);
         _overlayMan.AddOverlay(_overlay);
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
-    private void RemoveNightVision()
+    public void RemoveNightVision()
     {
         _overlayMan.RemoveOverlay(_throughWallsOverlay);
         _overlayMan.RemoveOverlay(_overlay);

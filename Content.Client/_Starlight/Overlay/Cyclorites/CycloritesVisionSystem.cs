@@ -1,7 +1,9 @@
 using Content.Client.Eye.Blinding;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Flash.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -34,9 +36,12 @@ public sealed class CycloritesVisionSystem : EntitySystem
 
     private void OnPlayerAttached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        _overlayMan.AddOverlay(_overlay);
-        if (_effect == null)
-            AddNightVision(ent.Owner);
+        if (!ent.Comp.blockedByFlashImmunity)
+        {
+            _overlayMan.AddOverlay(_overlay);
+            if (_effect == null)
+                AddNightVision(ent.Owner);
+        }
     }
 
     private void OnPlayerDetached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerDetachedEvent args)
@@ -62,12 +67,12 @@ public sealed class CycloritesVisionSystem : EntitySystem
         RemoveNightVision();
     }
 
-    private void AddNightVision(EntityUid uid)
+    public void AddNightVision(EntityUid uid)
     {
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
-    private void RemoveNightVision()
+    public void RemoveNightVision()
     {
         Del(_effect);
         _effect = null;

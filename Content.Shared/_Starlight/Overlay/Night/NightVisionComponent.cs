@@ -13,4 +13,7 @@ public sealed partial class NightVisionComponent : Component
     
     [DataField]
     public EntProtoId EffectPrototype = "EffectNightVision";
+
+    [DataField]
+    public bool blockedByFlashImmunity = false;
 }

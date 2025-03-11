@@ -20,6 +20,7 @@ using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Flash.Components;
 
 namespace Content.Server.Changeling;
 

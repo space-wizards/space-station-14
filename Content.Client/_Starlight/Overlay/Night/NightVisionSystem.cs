@@ -6,7 +6,9 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
+using Content.Shared.Flash.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Inventory.Events;
 
 namespace Content.Client._Starlight.Overlay.Night;
 
@@ -35,8 +37,10 @@ public sealed class NightVisionSystem : EntitySystem
 
     private void OnPlayerAttached(Entity<NightVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        if (ent.Comp.Effect == null)
+        if (ent.Comp.Effect == null && !ent.Comp.blockedByFlashImmunity)
+        {
             AddNightVision(ent.Owner, ent.Comp);
+        }
     }
 
     private void OnPlayerDetached(Entity<NightVisionComponent> ent, ref LocalPlayerDetachedEvent args)
@@ -84,6 +88,7 @@ public sealed class NightVisionSystem : EntitySystem
         else
             _xformSys.SetParent(component.Effect.Value, uid);
     }
+
     public void RemoveNightVision(NightVisionComponent component)
     {
         _overlayMan.RemoveOverlay(_overlay);
