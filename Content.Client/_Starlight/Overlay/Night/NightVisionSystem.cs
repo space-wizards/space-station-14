@@ -75,7 +75,7 @@ public sealed class NightVisionSystem : EntitySystem
         RemoveNightVision(ent.Comp);
     }
 
-    private void AddNightVision(EntityUid uid, NightVisionComponent component)
+    public void AddNightVision(EntityUid uid, NightVisionComponent component)
     {
         _overlayMan.AddOverlay(_overlay);
         component.Effect = SpawnAttachedTo(component.EffectPrototype, Transform(uid).Coordinates);
@@ -84,7 +84,7 @@ public sealed class NightVisionSystem : EntitySystem
         else
             _xformSys.SetParent(component.Effect.Value, uid);
     }
-    private void RemoveNightVision(NightVisionComponent component)
+    public void RemoveNightVision(NightVisionComponent component)
     {
         _overlayMan.RemoveOverlay(_overlay);
         Del(component.Effect);
