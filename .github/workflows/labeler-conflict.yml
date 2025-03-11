@@ -10,7 +10,7 @@ on:
 
 jobs:
   Label:
-    if: ( github.event.pull_request.draft == false ) && ( github.actor != 'PJBot' )
+    if: ( github.event.pull_request.draft == false ) && ( github.actor != 'ImpstationBot' )
     runs-on: ubuntu-latest
     steps:
       - name: Check for Merge Conflicts
