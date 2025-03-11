@@ -2,6 +2,7 @@
   parent: MagazineLightRifleBox # It goes in a saw, its funny.
   id: MagazineFoamBox
   name: ammunition box (foam)
+  description: Give 'em hell! #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true

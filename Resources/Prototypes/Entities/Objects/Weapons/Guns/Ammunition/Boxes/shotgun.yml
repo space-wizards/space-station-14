@@ -34,7 +34,8 @@
 - type: entity
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  name: shell box (.50 stun slug)
+  name: shell box (.50 stun slug) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as stun slugs. #imp
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -51,7 +52,8 @@
       - state: beanbag
 
 - type: entity
-  name: shell box (lethal)
+  name: shell box (.50 buckshot) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as buckshot. #imp
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   components:
@@ -66,7 +68,8 @@
       - state: lethal
 
 - type: entity
-  name: shell box (slug)
+  name: shell box (.50 slug) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as slugs. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
   components:
@@ -85,7 +88,8 @@
       - state: slug
 
 - type: entity
-  name: shell box (flare)
+  name: shell box (.50 flare) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as flares. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
   components:
@@ -100,7 +104,8 @@
       - state: flare
 
 - type: entity
-  name: shell box (incendiary)
+  name: shell box (.50 incendiary) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as incendiary pellets. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
   components:
@@ -115,7 +120,8 @@
       - state: incendiary
 
 - type: entity
-  name: shell box (uranium)
+  name: shell box (.50 uranium) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as uranium pellets. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
   components:
@@ -134,7 +140,8 @@
       - state: uranium
 
 - type: entity
-  name: shell box (practice)
+  name: shell box (.50 practice) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as practice ammo. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   components:
@@ -149,7 +156,8 @@
       - state: practice
 
 - type: entity
-  name: shell box (tranquilizer)
+  name: shell box (.50 tranquilizer) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as tranquilizer darts. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   components:

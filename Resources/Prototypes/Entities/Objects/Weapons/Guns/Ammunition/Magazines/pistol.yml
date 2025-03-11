@@ -1,6 +1,7 @@
 - type: entity
   id: BaseMagazinePistol
   name: pistol magazine (.35 auto)
+  description: A 10-round .35 auto pistol magazine. #imp
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -34,6 +35,7 @@
 - type: entity
   id: BaseMagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
+  description: A 16-round .35 auto extended pistol magazine. #imp
   parent: BaseItem
   abstract: true
   components:
@@ -65,8 +67,10 @@
   - type: Appearance
 
 - type: entity
-  id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
+  id: BaseMagazinePistolSubMachineGun # Yeah it's weird but it's pistol caliber 
+  #Hi. AvianMaiden here. Avid gun enthusiast and queer American. It's a sub-caliber. SMGs use sub-caliber ammunition, also known as pistol ammo. If only that was in the name or something. If you read the first line of the Wikipedia page "Submachine gun", it tells you directly: "A submachine gun (SMG) is a magazine-fed automatic carbine designed to fire handgun cartridges." It's not fucking weird at all, it's by DESIGN to use a pistol caliber. Yes I'm responding to something made upstream and probably written years ago. Imp edit.
   name: SMG magazine (.35 auto)
+  description: A 35-round .35 auto SMG magazine. #imp
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -100,6 +104,7 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
+  description: A 35-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
   parent: [ BaseItem, BaseRestrictedContraband ]
   components:
   - type: Tag
@@ -131,6 +136,7 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedEmpty
   name: WT550 magazine (.35 auto top-mounted any)
+  description: A 35-round .35 auto top-mounted SMG magazine with no apparent markings. #imp
   parent: MagazinePistolSubMachineGunTopMounted
   components:
   - type: BallisticAmmoProvider
@@ -139,6 +145,7 @@
 - type: entity
   id: MagazinePistol
   name: pistol magazine (.35 auto)
+  description: A 10-round .35 auto pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
@@ -153,6 +160,7 @@
 - type: entity
   id: MagazinePistolEmpty
   name: pistol magazine (.35 auto any)
+  description: A 10-round .35 auto pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: MagazinePistol
   components:
@@ -167,6 +175,7 @@
 - type: entity
   id: MagazinePistolIncendiary
   name: pistol magazine (.35 auto incendiary)
+  description: A 10-round .35 auto pistol magazine, marked as incendiary ammo. #imp
   parent: MagazinePistol
   components:
   - type: BallisticAmmoProvider
@@ -175,6 +184,7 @@
 - type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
+  description: A 10-round .35 auto pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
@@ -189,6 +199,7 @@
 - type: entity
   id: MagazinePistolUranium
   name: pistol magazine (.35 auto uranium)
+  description: A 10-round .35 auto pistol magazine, marked as uranium ammo. #imp
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
@@ -203,6 +214,7 @@
 - type: entity
   id: MagazinePistolHighCapacityEmpty
   name: machine pistol magazine (.35 auto any)
+  description: A 16-round .35 auto extended pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -216,6 +228,7 @@
 - type: entity
   id: MagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
+  description: A 16-round .35 auto extended pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -230,6 +243,7 @@
 - type: entity
   id: MagazinePistolHighCapacityPractice
   name: machine pistol magazine (.35 auto practice)
+  description: A 16-round .35 auto extended pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -244,6 +258,7 @@
 - type: entity
   id: MagazinePistolHighCapacityRubber
   name: machine pistol magazine (.35 auto rubber)
+  description: A 16-round .35 auto extended pistol magazine, marked as rubber ammo. #imp
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -258,6 +273,7 @@
 - type: entity
   id: MagazinePistolSubMachineGun
   name: SMG magazine (.35 auto)
+  description: A 30-round .35 auto SMG magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -278,10 +294,12 @@
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
   name: SMG magazine (.35 auto any)
+  description: A 30-round .35 auto SMG magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
+    capacity: 30 #imp
     proto: null
   - type: Sprite
     layers:
@@ -291,9 +309,11 @@
 - type: entity
   id: MagazinePistolSubMachineGunPractice
   name: SMG magazine (.35 auto practice)
+  description: A 30-round .35 auto SMG magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
+    capacity: 30 #imp
     proto: CartridgePistolPractice
   - type: Sprite
     layers:
@@ -305,9 +325,11 @@
 - type: entity
   id: MagazinePistolSubMachineGunUranium
   name: SMG magazine (.35 auto uranium)
+  description: A 30-round .35 auto SMG magazine, marked as uranium ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
+    capacity: 30 #imp
     proto: CartridgePistolUranium
   - type: Sprite
     layers:
