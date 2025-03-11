@@ -6,7 +6,7 @@
   description: "Someone took red paint to this old recruitment drive poster."
   components:
     - type: Sprite
-      sprite: _Impstation/Structures/Wallmounts/posters.rsi/poster64_contraband
+      sprite: _Impstation/Structures/Wallmounts/posters.rsi
       state: poster64_contraband
 
 - type: entity
