@@ -31,13 +31,29 @@ public sealed class CycloritesVisionSystem : EntitySystem
         SubscribeLocalEvent<CycloritesVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<CycloritesVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
+        SubscribeLocalEvent<CycloritesVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
+
         _overlay = new();
+    }
+
+    private void OnFlashImmunityChanged(Entity<CycloritesVisionComponent> ent, ref FlashImmunityChangedEvent args)
+    {
+        if (args.IsImmune)
+        {
+            ent.Comp.blockedByFlashImmunity = true;
+            RemoveNightVision();
+        }
+        else
+        {
+            ent.Comp.blockedByFlashImmunity = false;
+            AddNightVision(ent.Owner);
+        }
     }
 
     private void OnPlayerAttached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
-        
+
         if (!ent.Comp.blockedByFlashImmunity)
         {
             if (_effect == null)
@@ -68,12 +84,12 @@ public sealed class CycloritesVisionSystem : EntitySystem
         RemoveNightVision();
     }
 
-    public void AddNightVision(EntityUid uid)
+    private void AddNightVision(EntityUid uid)
     {
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
-    public void RemoveNightVision()
+    private void RemoveNightVision()
     {
         Del(_effect);
         _effect = null;

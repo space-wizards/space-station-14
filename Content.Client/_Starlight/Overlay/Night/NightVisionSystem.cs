@@ -32,7 +32,29 @@ public sealed class NightVisionSystem : EntitySystem
         SubscribeLocalEvent<NightVisionComponent, BeforePilotInsertEvent>(OnPlayerMechInsert);
         SubscribeLocalEvent<NightVisionComponent, BeforePilotEjectEvent>(OnPlayerMechEject);
 
+        SubscribeLocalEvent<NightVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
+
         _overlay = new();
+    }
+
+    private void OnFlashImmunityChanged(Entity<NightVisionComponent> ent, ref FlashImmunityChangedEvent args)
+    {
+        if (args.IsImmune)
+        {
+            if (ent.Comp.Effect != null)
+            {
+                ent.Comp.blockedByFlashImmunity = true;
+                RemoveNightVision(ent.Comp);
+            }
+        }
+        else
+        {
+            if (ent.Comp.Effect == null)
+            {
+                ent.Comp.blockedByFlashImmunity = false;
+                AddNightVision(ent.Owner, ent.Comp);
+            }
+        }
     }
 
     private void OnPlayerAttached(Entity<NightVisionComponent> ent, ref LocalPlayerAttachedEvent args)
@@ -79,7 +101,7 @@ public sealed class NightVisionSystem : EntitySystem
         RemoveNightVision(ent.Comp);
     }
 
-    public void AddNightVision(EntityUid uid, NightVisionComponent component)
+    private void AddNightVision(EntityUid uid, NightVisionComponent component)
     {
         _overlayMan.AddOverlay(_overlay);
         component.Effect = SpawnAttachedTo(component.EffectPrototype, Transform(uid).Coordinates);
@@ -89,7 +111,7 @@ public sealed class NightVisionSystem : EntitySystem
             _xformSys.SetParent(component.Effect.Value, uid);
     }
 
-    public void RemoveNightVision(NightVisionComponent component)
+    private void RemoveNightVision(NightVisionComponent component)
     {
         _overlayMan.RemoveOverlay(_overlay);
         Del(component.Effect);

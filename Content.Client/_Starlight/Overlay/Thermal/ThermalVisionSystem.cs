@@ -22,7 +22,7 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
 
     private ThroughWallsVisionOverlay _throughWallsOverlay = default!;
     private ThermalVisionOverlay _overlay = default!;
-    
+
     private EntityUid? _effect = null;
     private readonly EntProtoId _effectPrototype = "EffectThermalVision";
     protected override bool IsPredict() => !_timing.IsFirstTimePredicted;
@@ -33,8 +33,24 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
+        SubscribeLocalEvent<ThermalVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
+
         _throughWallsOverlay = new();
         _overlay = new();
+    }
+
+    private void OnFlashImmunityChanged(Entity<ThermalVisionComponent> ent, ref FlashImmunityChangedEvent args)
+    {
+        if (args.IsImmune)
+        {
+            ent.Comp.blockedByFlashImmunity = true;
+            RemoveNightVision();
+        }
+        else
+        {
+            ent.Comp.blockedByFlashImmunity = false;
+            AddNightVision(ent.Owner);
+        }
     }
 
     private void OnPlayerAttached(Entity<ThermalVisionComponent> ent, ref LocalPlayerAttachedEvent args)
@@ -43,7 +59,7 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
             AddNightVision(ent.Owner);
     }
 
-    private void OnPlayerDetached(Entity<ThermalVisionComponent> ent, ref LocalPlayerDetachedEvent args) 
+    private void OnPlayerDetached(Entity<ThermalVisionComponent> ent, ref LocalPlayerDetachedEvent args)
         => RemoveNightVision();
 
     protected override void ToggleOn(Entity<ThermalVisionComponent> ent)
@@ -61,14 +77,14 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
         RemoveNightVision();
     }
 
-    public void AddNightVision(EntityUid uid)
+    private void AddNightVision(EntityUid uid)
     {
         _overlayMan.AddOverlay(_throughWallsOverlay);
         _overlayMan.AddOverlay(_overlay);
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
-    public void RemoveNightVision()
+    private void RemoveNightVision()
     {
         _overlayMan.RemoveOverlay(_throughWallsOverlay);
         _overlayMan.RemoveOverlay(_overlay);
