@@ -7,16 +7,8 @@ public sealed class ReadyManifestEui : BaseEui
 {
     private readonly ReadyManifestSystem _readyManifest;
 
-    /// <summary>
-    ///     Current owner of this UI, if it has one. This is
-    ///     to ensure that if a BUI is closed, the EUIs related
-    ///     to the BUI are closed as well.
-    /// </summary>
-    public readonly EntityUid? Owner;
-
-    public ReadyManifestEui(EntityUid? owner, ReadyManifestSystem readyManifestSystem)
+    public ReadyManifestEui(ReadyManifestSystem readyManifestSystem)
     {
-        Owner = owner;
         _readyManifest = readyManifestSystem;
     }
 
@@ -30,6 +22,6 @@ public sealed class ReadyManifestEui : BaseEui
     {
         base.Closed();
 
-        _readyManifest.CloseEui(Player, Owner);
+        _readyManifest.CloseEui(Player);
     }
 }

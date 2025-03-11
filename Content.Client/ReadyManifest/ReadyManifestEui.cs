@@ -42,6 +42,7 @@ public sealed class ReadyManifestEui : BaseEui
         {
             return;
         }
+
         _window.RebuildUI(cast.JobCounts);
     }
 }

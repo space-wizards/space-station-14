@@ -153,9 +153,9 @@ namespace Content.Server.GameTicking
             var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             foreach (var playerUserId in _playerGameStatuses.Keys)
             {
-                _playerGameStatuses[playerUserId] = status;
-                if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession))
+                if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession) || _playerGameStatuses[playerUserId] == status)
                     continue;
+                _playerGameStatuses[playerUserId] = status;
                 RaiseNetworkEvent(GetStatusMsg(playerSession), playerSession.Channel);
                 RaiseLocalEvent(new PlayerToggleReadyEvent(playerSession));
             }
@@ -175,6 +175,7 @@ namespace Content.Server.GameTicking
             }
 
             var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
+            // No need to update anything or raise events if the player is already (un)readied
             if (_playerGameStatuses[player.UserId] == status)
             {
                 return;

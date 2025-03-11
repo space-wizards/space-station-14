@@ -1,29 +1,26 @@
 using System.Linq;
 using Content.Server.EUI;
-using Content.Shared.CCVar;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
+using Content.Server.Preferences.Managers;
 using Content.Shared.GameTicking;
-using Content.Shared.Roles;
 using Content.Shared.Preferences;
-using Robust.Shared.Configuration;
+using Content.Shared.ReadyManifest;
+using Content.Shared.Roles;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.ReadyManifest;
-using Content.Server.GameTicking;
-using Content.Server.Preferences.Managers;
-using Content.Server.GameTicking.Events;
 
 namespace Content.Server.ReadyManifest;
 
 public sealed class ReadyManifestSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
 
-    private readonly Dictionary<ICommonSession, ReadyManifestEui> _openEuis = new();
-    private Dictionary<ProtoId<JobPrototype>, int> _jobCounts = new();
+    private readonly Dictionary<ICommonSession, ReadyManifestEui> _openEuis = [];
+    private Dictionary<ProtoId<JobPrototype>, int> _jobCounts = [];
 
     public override void Initialize()
     {
@@ -44,13 +41,12 @@ public sealed class ReadyManifestSystem : EntitySystem
 
     private void OnRequestReadyManifest(RequestReadyManifestMessage message, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not { } sessionCast
-            || !_configManager.GetCVar(CCVars.CrewManifestWithoutEntity))
+        if (args.SenderSession is not { } sessionCast)
         {
             return;
         }
         BuildReadyManifest();
-        OpenEui(sessionCast, args.SenderSession.AttachedEntity);
+        OpenEui(sessionCast);
     }
 
     private void OnPlayerToggleReady(PlayerToggleReadyEvent ev)
@@ -62,30 +58,24 @@ public sealed class ReadyManifestSystem : EntitySystem
             return;
         }
 
-        HumanoidCharacterProfile profile = (HumanoidCharacterProfile) preferences.SelectedCharacter;
+        var profile = (HumanoidCharacterProfile)preferences.SelectedCharacter;
         var profileJobs = FilterPlayerJobs(profile);
 
         if (_gameTicker.PlayerGameStatuses[userId] == PlayerGameStatus.ReadyToPlay)
         {
             foreach (var job in profileJobs)
             {
-                if (_jobCounts.ContainsKey(job))
-                {
-                    _jobCounts[job]++;
-                }
-                else
-                {
-                    _jobCounts.Add(job, 1);
-                }
+                _jobCounts.TryGetValue(job, out var value);
+                _jobCounts[job] = ++value;
             }
         }
         else
         {
             foreach (var job in profileJobs)
             {
-                if (_jobCounts.ContainsKey(job))
+                if (_jobCounts.TryGetValue(job, out var value))
                 {
-                    _jobCounts[job]--;
+                    _jobCounts[job] = --value;
                 }
             }
         }
@@ -104,18 +94,12 @@ public sealed class ReadyManifestSystem : EntitySystem
                 HumanoidCharacterProfile profile;
                 if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
                 {
-                    profile = (HumanoidCharacterProfile) preferences.SelectedCharacter;
+                    profile = (HumanoidCharacterProfile)preferences.SelectedCharacter;
                     var profileJobs = FilterPlayerJobs(profile);
                     foreach (var jobId in profileJobs)
                     {
-                        if (jobCounts.ContainsKey(jobId))
-                        {
-                            jobCounts[jobId]++;
-                        }
-                        else
-                        {
-                            jobCounts.Add(jobId, 1);
-                        }
+                        jobCounts.TryGetValue(jobId, out var value);
+                        jobCounts[jobId] = ++value;
                     }
                 }
             }
@@ -123,15 +107,15 @@ public sealed class ReadyManifestSystem : EntitySystem
         _jobCounts = jobCounts;
     }
 
-
     private List<ProtoId<JobPrototype>> FilterPlayerJobs(HumanoidCharacterProfile profile)
     {
         var jobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
-        List<ProtoId<JobPrototype>> priorityJobs = new();
+        List<ProtoId<JobPrototype>> priorityJobs = [];
         foreach (var job in jobs)
         {
             var priority = profile.JobPriorities[job];
-            if (priority == JobPriority.High || (_prototypeManager.Index(job).Weight >= 10 && priority > JobPriority.Never))
+            // For jobs that are rolled before others, such as Command, we want to check for any priority since they'll always be filled
+            if (priority == JobPriority.High || _prototypeManager.Index(job).Weight >= 10 && priority > JobPriority.Never)
             {
                 priorityJobs.Add(job);
             }
@@ -144,16 +128,14 @@ public sealed class ReadyManifestSystem : EntitySystem
         return _jobCounts;
     }
 
-    public void OpenEui(ICommonSession session, EntityUid? owner = null)
+    public void OpenEui(ICommonSession session)
     {
-
-
         if (_openEuis.ContainsKey(session))
         {
             return;
         }
 
-        var eui = new ReadyManifestEui(owner, this);
+        var eui = new ReadyManifestEui(this);
         _openEuis.Add(session, eui);
         _euiManager.OpenEui(eui, session);
         eui.StateDirty();
@@ -167,22 +149,14 @@ public sealed class ReadyManifestSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    ///     Closes an EUI for a given player.
-    /// </summary>
-    /// <param name="session">The player's session.</param>
-    /// <param name="owner">The owner of this EUI, if there was one.</param>
-    public void CloseEui(ICommonSession session, EntityUid? owner = null)
+    public void CloseEui(ICommonSession session)
     {
         if (!_openEuis.TryGetValue(session, out var eui))
         {
             return;
         }
 
-        if (eui.Owner == owner)
-        {
-            _openEuis.Remove(session);
-            eui.Close();
-        }
+        _openEuis.Remove(session);
+        eui.Close();
     }
 }

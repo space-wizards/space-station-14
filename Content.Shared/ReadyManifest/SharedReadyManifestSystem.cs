@@ -5,16 +5,15 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.ReadyManifest;
 
-
+/// <summary>
+///     A message to send to the server when requesting a ready manifest.
+///     ReadyManifestSystem will open an EUI that will be updated whenever
+///     a player changes their ready status.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class RequestReadyManifestMessage : EntityEventArgs
 {
-    public NetEntity Id { get; }
-
-    public RequestReadyManifestMessage()
-    {
-        //Id = id;
-    }
+    public RequestReadyManifestMessage() { }
 }
 
 [Serializable, NetSerializable]
