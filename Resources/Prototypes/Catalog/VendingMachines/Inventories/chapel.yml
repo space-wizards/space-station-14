@@ -51,11 +51,14 @@
     BoxCandleSmall: 2
     Gohei: 2 # imp
     Urn: 5
-  contrabandInventory: # all imp edits
-    ClothingMaskClownChaplain: 1
-    ClothingOuterClownPriest: 1
-    ClothingMaskSilent: 1
-    ClothingOuterSilent: 1
+  contrabandInventory:
+    FoodBakedBunHotX: 2
+    DrinkWineBottleFull: 1
+    ToyFigurineChaplain: 1
+    ClothingMaskClownChaplain: 1 # imp
+    ClothingOuterClownPriest: 1 # imp
+    ClothingMaskSilent: 1 # imp
+    ClothingOuterSilent: 1 # imp
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1

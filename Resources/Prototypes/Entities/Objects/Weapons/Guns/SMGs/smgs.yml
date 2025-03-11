@@ -121,7 +121,7 @@
 
 - type: entity
   name: Drozd
-  parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
   description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo. #imp
   components:
@@ -227,7 +227,7 @@
 
 - type: entity
   name: WT550
-  parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
+  parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
   id: WeaponSubMachineGunWt550
   description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:

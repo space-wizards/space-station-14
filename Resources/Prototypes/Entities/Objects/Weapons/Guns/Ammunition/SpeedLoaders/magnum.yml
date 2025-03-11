@@ -1,7 +1,7 @@
 - type: entity
   id: BaseSpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -51,6 +51,11 @@
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
+      # TODO: This is actually a issue with all the speed loaders:
+      #       You can mix different ammo types, but it will always
+      #       use the one it was printed for.
+      - state: base-6
+        map: [ "enum.GunVisualLayers.Mag" ]
 
 - type: entity
   id: SpeedLoaderMagnumIncendiary

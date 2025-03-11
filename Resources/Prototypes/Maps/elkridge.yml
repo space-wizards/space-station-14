@@ -47,7 +47,7 @@
             TechnicalAssistant: [ 2, 2 ]
             # medical - 7-9
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 3, 3 ]
+            MedicalDoctor: [ 2, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]

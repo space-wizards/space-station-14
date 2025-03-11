@@ -28,6 +28,7 @@
   - MagazineDMRIncendiary
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
+  - MagazinePistolSubMachineGunIncendiary
   - MagazineLightRifleIncendiary
   - MagazineLPistolIncendiary
   - SpeedLoaderMagnumIncendiary
@@ -81,6 +82,7 @@
   - MagazineLPistolUranium #imp
   - MagazinePistolUranium
   - MagazineDMRUranium
+  - MagazinePistolSubMachineGunUranium
   - MagazineLightRifleUranium
   - SpeedLoaderMagnumUranium
   - MagazineBoxLPistolUranium #imp

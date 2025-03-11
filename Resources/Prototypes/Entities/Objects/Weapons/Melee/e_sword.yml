@@ -59,7 +59,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableLightVisuals # Add support for multiple layers
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -423,7 +423,7 @@
     size: Small
     sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
   - type: Reflect
-    reflectProb: .75 #imp edit: original pr has this at 1 but that seems. um. insane.
+    reflectProb: 1.0
     spread: 75
 
 # Borgs

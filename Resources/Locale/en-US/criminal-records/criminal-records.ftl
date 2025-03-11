@@ -35,6 +35,7 @@ criminal-records-permission-denied = Permission denied
 ## Security channel notifications
 
 criminal-records-console-wanted = {$name} ({$job}) was made wanted by {$officer} for: {$reason}.
+criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$name} ({$job}).
 criminal-records-console-suspected = {$officer} marked {$name} ({$job}) as suspicious because of: {$reason}
 criminal-records-console-not-suspected = {$name} ({$job}) has been cleared of suspicion by {$officer}.
 criminal-records-console-detained = {$name} ({$job}) has been detained by {$officer}.

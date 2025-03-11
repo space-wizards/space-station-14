@@ -14,5 +14,6 @@
     ClothingBeltChef: 2
     ClothingNeckScarfStripedRed: 2
   contrabandInventory:
-    ClothingMaskClownService: 1
-    ClothingOuterApronClown: 1
+    ToyFigurineChef: 1
+    ClothingMaskClownService: 1 # imp
+    ClothingOuterApronClown: 1 # imp

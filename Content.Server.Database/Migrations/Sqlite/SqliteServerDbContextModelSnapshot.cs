@@ -921,6 +921,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_role_loadout_id");
 
+                    b.Property<string>("EntityName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("entity_name");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");

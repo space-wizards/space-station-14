@@ -274,6 +274,17 @@
 
 - type: entity
   parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedLesbianLong
+  name: long bacon
+  description: Long bacon! Perfect for sharing with your girlfriend!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/lesbian-long.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/lesbian-long.rsi
+
+- type: entity
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedZebraWeb
   name: short web scarf
   description: A short, striped web scarf. Feels like an unfinished cocoon.

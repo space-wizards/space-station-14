@@ -179,7 +179,7 @@
   # end imp edits #
 
 - type: entity
-  parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband]
+  parent: [ BaseKnife, BaseWeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherDagger
   name: crusher dagger
   description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.

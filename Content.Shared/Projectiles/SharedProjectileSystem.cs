@@ -33,7 +33,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
 
-    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -76,13 +76,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
     }
 
-    private void OnEmbedActivate(EntityUid uid, EmbeddableProjectileComponent component, ActivateInWorldEvent args)
+    private void OnEmbedActivate(Entity<EmbeddableProjectileComponent> embeddable, ref ActivateInWorldEvent args)
     {
-        // Nuh uh
-        if (component.RemovalTime == null)
+        // Unremovable embeddables moment
+        if (embeddable.Comp.RemovalTime == null)
             return;
 
-        if (args.Handled || !args.Complex || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
+        if (args.Handled || !args.Complex || !TryComp<PhysicsComponent>(embeddable, out var physics) ||
+            physics.BodyType != BodyType.Static)
             return;
 
         args.Handled = true;
@@ -142,6 +143,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
 
+        if (component.EmbeddedIntoUid is not null)
+        {
+            if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
+                embeddedContainer.EmbeddedObjects.Remove(uid);
+        }
+
         var xform = Transform(uid);
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
@@ -155,6 +162,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             projectile.Shooter = null;
             projectile.Weapon = null;
             projectile.ProjectileSpent = false;
+
+            Dirty(uid, projectile);
+        }
+
+        if (user != null)
+        {
+            // Land it just coz uhhh yeah
+            var landEv = new LandEvent(user, true);
+            RaiseLocalEvent(uid, ref landEv);
         }
 
         // Land it just coz uhhh yeah
@@ -189,15 +205,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         Embed(uid, args.Target, null, component);
     }
 
-    private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
+    public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
     {
-        Embed(uid, args.Target, args.Shooter, component);
-
-        // Raise a specific event for projectiles.
-        if (TryComp(uid, out ProjectileComponent? projectile))
+        foreach (var embedded in container.Comp.EmbeddedObjects)
         {
-            var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
-            RaiseLocalEvent(uid, ref ev);
+            if (!TryComp<EmbeddableProjectileComponent>(embedded, out var embeddedComp))
+                continue;
+
+            EmbedDetach(embedded, embeddedComp);
         }
     }
 

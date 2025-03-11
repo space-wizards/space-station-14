@@ -1,7 +1,7 @@
 - type: entity
   id: SpeedLoaderLightRifle
   name: "speed loader (.20 rifle)" #imp
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   components:
   - type: Tag
     tags:

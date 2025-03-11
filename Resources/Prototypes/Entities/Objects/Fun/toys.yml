@@ -137,7 +137,7 @@
   parent: PlushieGhost
   id: PlushieGhostRevenant
   name: revenant soft toy
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   description: So soft it almost makes you want to take a nap...
   components:
     - type: Item
@@ -203,6 +203,9 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: Food
@@ -291,6 +294,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -323,6 +329,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -353,6 +362,9 @@
     - HEAD
   - type: Speech
     speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+      - PlushieLizard
 
 - type: entity
   parent: PlushieLizard
@@ -397,6 +409,8 @@
   name: space lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
+  - type: Item
+    heldPrefix: spacelizard
   - type: Sprite
     state: plushie_spacelizard
   - type: EmitSoundOnUse
@@ -409,6 +423,9 @@
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: Food
@@ -518,6 +535,9 @@
     - type: EmitSoundOnTrigger
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnCollide
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
     - type: MeleeWeapon
       wideAnimationRotation: 180
       soundHit:
@@ -539,6 +559,7 @@
     - type: RefillableSolution
       solution: plushie
     - type: SolutionContainerVisuals
+      solutionName: plushie
       maxFillLevels: 1
       fillBaseName: plushie_diona
       changeColor: false
@@ -588,6 +609,9 @@
     sound:
       path: /Audio/Items/Toys/rawr.ogg
   - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/rawr.ogg
   - type: MeleeWeapon
@@ -679,6 +703,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/bite.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -718,7 +745,6 @@
   - type: RgbLightController
     layers: [ 0 ]
   - type: Item
-    heldPrefix: rainbowcarpplush
     inhandVisuals:
       left:
       - state: rainbowcarpplush-inhand-left
@@ -744,6 +770,22 @@
   components:
   - type: Sprite
     state: plushie_slime
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Slime/slime_squish.ogg
 
 - type: entity
   parent: BasePlushie
@@ -756,7 +798,16 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: Food
@@ -779,7 +830,16 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: Food
@@ -816,7 +876,16 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/quack.ogg
   - type: Food
@@ -841,12 +910,18 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnActivate #imp
     sound:
       path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -887,6 +962,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -921,6 +999,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Human/malescream_3.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Human/malescream_4.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -950,6 +1031,9 @@
     sound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
   - type: MeleeWeapon
@@ -1034,7 +1118,16 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/ian.ogg
   - type: MeleeWeapon
@@ -1338,7 +1431,7 @@
         volume: -10
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   id: PonderingOrb
   name: pondering orb
   description: Ponderous, man... Really ponderous.
@@ -1356,6 +1449,28 @@
     heldPrefix: orb
   - type: TileFrictionModifier
     modifier: 0.001
+
+- type: entity
+  parent: PonderingOrb
+  id: PonderingOrbWizard
+  name: pondering orb
+  description: Ponderous, man... Really ponderous. Magically shows the station's camera network.
+  suffix: Wizard
+  components:
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
 
 - type: entity
   parent: BaseItem
@@ -1477,10 +1592,16 @@
   - type: EmitSoundOnUse
     sound:
       collection: ClownRecorder
+  - type: EmitSoundOnLand
+    sound:
+      collection: ClownRecorder
   - type: EmitSoundOnActivate
     sound:
       collection: ClownRecorder
   - type: EmitSoundOnTrigger
+    sound:
+      collection: ClownRecorder
+  - type: EmitSoundOnCollide
     sound:
       collection: ClownRecorder
   - type: UseDelay
@@ -1512,6 +1633,7 @@
     - type: DisarmMalus
       malus: 0
     - type: MeleeWeapon
+      wideAnimationRotation: -135
       soundHit:
         collection: RubberHammer
         params:
@@ -1540,6 +1662,21 @@
     tags:
       - Payload
   - type: EmitSoundOnUse
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
     sound:
       collection: Parp
       params:
