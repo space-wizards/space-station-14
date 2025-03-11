@@ -36,9 +36,10 @@ public sealed class CycloritesVisionSystem : EntitySystem
 
     private void OnPlayerAttached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
+        _overlayMan.AddOverlay(_overlay);
+        
         if (!ent.Comp.blockedByFlashImmunity)
         {
-            _overlayMan.AddOverlay(_overlay);
             if (_effect == null)
                 AddNightVision(ent.Owner);
         }
