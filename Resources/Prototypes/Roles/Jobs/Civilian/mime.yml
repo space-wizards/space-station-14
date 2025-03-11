@@ -8,10 +8,11 @@
       time: 14400 #4 hrs
   startingGear: MimeGear
   icon: "JobIconMime"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-hd
   access:
   - Theatre
   - Maintenance
+  - Mime #Imp
   special:
   - !type:AddComponentSpecial
     components:

@@ -46,6 +46,7 @@
   - HarmonicaInstrument #imp
   - Headphones
   - HeartLocket #imp
+  - HeartLocketSilver #imp
   - Lighter
   - NewtonCradle #imp
   - PlushieDoll #imp
@@ -1074,7 +1075,7 @@
   minLimit: 0
   loadouts:
   - HeadofSecurityHead
-  - HeadofSecurityHeadDV
+  - HeadofSecurityHeadDV # DeltaV
   - HeadofSecurityBeret
   - HeadofSecurityPatrolCap # imp
 
@@ -1333,6 +1334,8 @@
   loadouts:
   - BrownShoes
   - WhiteShoes # imp
+  - LacedShoes #imp
+  - LeatherShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup

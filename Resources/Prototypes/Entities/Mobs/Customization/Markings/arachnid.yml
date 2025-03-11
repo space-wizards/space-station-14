@@ -5,7 +5,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chelicerae.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chelicerae.rsi #imp, redirects to our lighter version
     state: downwards
 
 - type: marking
@@ -14,7 +14,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chelicerae.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chelicerae.rsi #imp, redirects to our lighter version
     state: inwards
 
 # Appendages
@@ -24,9 +24,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: long_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: long_secondary
 
 - type: marking
@@ -35,9 +35,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: sharp_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: sharp_secondary
 
 - type: marking
@@ -46,9 +46,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: stingers_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: stingers_secondary
 
 - type: marking
@@ -57,9 +57,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: zigzag_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: zigzag_secondary
 
 - type: marking
@@ -68,9 +68,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: curled_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: curled_secondary
 
 - type: marking
@@ -79,9 +79,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: chipped_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: chipped_secondary
 
 - type: marking
@@ -90,9 +90,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: harvest_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: harvest_secondary
 
 - type: marking
@@ -101,9 +101,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: short_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: short_secondary
 
 - type: marking
@@ -112,9 +112,9 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: freaky_primary
-  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/appendages.rsi #imp, redirects to our lighter version
     state: freaky_secondary
 
 # Chest
@@ -124,7 +124,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: stripes
   coloring:
     default:
@@ -137,7 +137,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: slashes
   coloring:
     default:
@@ -150,7 +150,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: x
   coloring:
     default:
@@ -163,7 +163,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: cross
   coloring:
     default:
@@ -176,7 +176,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: heart
   coloring:
     default:
@@ -189,7 +189,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: hourglass
   coloring:
     default:
@@ -202,7 +202,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: nail-and-hammer
   coloring:
     default:
@@ -215,7 +215,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: star
   coloring:
     default:
@@ -241,7 +241,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: core
   coloring:
     default:
@@ -267,7 +267,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: skull
   coloring:
     default:
@@ -280,7 +280,7 @@
   markingCategory: Chest
   speciesRestriction: [Arachnid]
   sprites:
-  - sprite: Mobs/Customization/Arachnid/chest.rsi
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi #imp, redirects to our version with east/west sprites
     state: target
   coloring:
     default:
@@ -346,7 +346,7 @@
   id: ArachnidOverlayFuzzy
   bodyPart: Chest
   markingCategory: Overlay
-  forcedColoring: true
+  #forcedColoring: true #imp
   speciesRestriction: [Arachnid]
   sprites:
   - sprite: Mobs/Customization/Arachnid/overlay.rsi

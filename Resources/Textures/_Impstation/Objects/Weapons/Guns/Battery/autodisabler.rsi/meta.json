@@ -47,15 +47,6 @@
         {
             "name": "inhand-left-2"
         },
-		{
-			"name": "inhand-left-3"
-		},
-		{
-			"name": "inhand-left-4"
-		},
-		{
-			"name": "inhand-left-5"
-		},
         {
             "name": "inhand-right",
             "directions": 4
@@ -69,15 +60,6 @@
         {
             "name": "inhand-right-2"
         },
-		{
-			"name": "inhand-right-3"
-		},
-		{
-			"name": "inhand-right-4"
-		},
-		{
-			"name": "inhand-right-5"
-		},
 		{
 			"name": "equipped-BELT",
 			"directions": 4

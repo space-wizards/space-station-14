@@ -313,3 +313,23 @@
     - NanoChatCartridge
     - MailMetricsCartridge
     - SOSCartridge # Imp
+
+#Hospitality Director
+- type: entity
+  parent: BasePDA
+  id: HDPDA
+  name: hospitality director PDA
+  description: Looks recently cleaned.
+  components:
+  - type: Pda
+    id: HDIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-hd
+  - type: PdaBorderColor
+    borderColor: "#77b861"
+    accentHColor: "#447987"
+  - type: Icon
+    state: pda-hd

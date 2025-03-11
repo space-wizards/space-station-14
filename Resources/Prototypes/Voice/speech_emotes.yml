@@ -7,9 +7,11 @@
   whitelist:
     components:
     - Vocal
-  blacklist:
-    components:
-    - BorgChassis
+
+  # Imp, commenting out redundant blacklisting to allow people to not go crazy wondering why their implementation of any borg emote sounds aren't working. (Who did this???)
+  # blacklist:
+  #  components:
+  #  - BorgChassis
   chatMessages: ["chat-emote-msg-scream"]
   chatTriggers:
     - scream
@@ -37,9 +39,9 @@
   whitelist:
     components:
     - Vocal
-  blacklist:
-    components:
-    - BorgChassis
+  # blacklist:
+  #  components:
+  #  - BorgChassis
   chatMessages: ["chat-emote-msg-laugh"]
   chatTriggers:
     - laugh

@@ -41,6 +41,36 @@
   - Messenger
   - Carrier
 
+- type: dataset
+  id: apid_scientist
+  values:
+  - Researcher
+  - Notekeeper
+
+- type: dataset
+  id: apid_janitor
+  values:
+  - Scrubber
+  - Housekeeper
+
+- type: dataset
+  id: apid_adminassistant
+  values:
+  - Attendant
+  - Secretary
+
+- type: dataset
+  id: apid_chaplain
+  values:
+  - Herald
+  - Witness
+
+- type: dataset
+  id: apid_salvager
+  values:
+  - Forager
+  - Breaker
+
 - type: dataset #ANGRY BEE NOISES
   id: names_apid
   values:

@@ -24,9 +24,20 @@ loadout-group-hop-shoes = Head of Personnel shoes
 # service
 loadout-group-service-mask = Service mask
 
+loadout-group-hospitality-director-head = Hospitality Director head
+loadout-group-hospitality-director-neck = Hospitality Director neck
+loadout-group-hospitality-director-jumpsuit = Hospitality Director jumpsuit
+loadout-group-hospitality-director-gloves = Hospitality Director gloves
+loadout-group-hospitality-director-outerclothing = Hospitality Director outer clothing
+loadout-group-hospitality-director-shoes = Hospitality Director shoes
+loadout-group-hospitality-director-backpack = Hospitality Director backpack
+loadout-group-hospitality-director-headset = Hospitality Director headset
+
 loadout-group-bartender-neck = Bartender neck
 loadout-group-bartender-shoes = Bartender shoes
 loadout-group-bartender-id = Bartender ID
+
+loadout-group-botanist-gloves = Botanist gloves
 
 loadout-group-chef-neck = Chef neck
 loadout-group-chef-shoes = Chef shoes
@@ -127,6 +138,7 @@ loadout-group-brigmedic-backpack = Brigmedic backpack
 # medical
 loadout-group-chief-medical-officer-backpack = Chief Medical Officer backpack
 loadout-group-chief-medical-officer-headset = Chief Medical Officer headset
+loadout-group-chief-medical-officer-belt = Chief Medical Officer belt
 
 loadout-group-medical-doctor-neck = Medical Doctor neck
 

@@ -55,8 +55,9 @@ Content under these subdirectories either originate from their respective fork, 
 |--------------|-----------|-----------------|---------|
 | `_Impstation` | Impstation | https://github.com/impstation/imp-station-14/ | AGPL 3.0 |
 | `_CD` | Cosmatic Drift | https://github.com/cosmatic-drift-14/cosmatic-drift | MIT |
+| `_Corvax` | Corvax | https://github.com/space-syndicate/space-station-14 | MIT |
 | `_DV` | Delta-V | https://github.com/DeltaV-Station/Delta-v/ | AGPL 3.0 |
-| `_EinsteinEngine` | Einstein Engines | https://github.com/Simple-Station/Einstein-Engines/ | AGPL 3.0 |
+| `_EE` | Einstein Engines | https://github.com/Simple-Station/Einstein-Engines/ | AGPL 3.0 |
 | `_EstacaoPirata` | Estacao Pirata | https://github.com/Day-OS/estacao-pirata-14/ | AGPL 3.0 |
 | `_Goobstation` | Goob Station | https://github.com/Goob-Station/Goob-Station/ | AGPL 3.0 |
 | `_Harmony` | Harmony | https://github.com/ss14-harmony/ss14-harmony | AGPL 3.0 |

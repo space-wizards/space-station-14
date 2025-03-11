@@ -1,0 +1,37 @@
+- type: department
+  id: Service
+  name: department-Service
+  description: department-Service-description
+  color: "#9FED58" #imp edit, grey for the greytide
+  weight: -10
+  roles:
+  - HospitalityDirector
+  - Bartender
+  - Botanist
+  - Boxer
+  - Chaplain
+  - Chef
+  - Clown
+  - Janitor
+  - Lawyer
+  - Librarian
+  - Mime
+  - Musician
+  - Reporter
+  - Visitor
+  - Zookeeper
+  - ServiceWorker
+
+#Used for HD playtime requirments
+- type: department
+  id: Dining
+  name: department-Dining
+  description: department-Dining-description
+  color: "#9FED58"
+  roles:
+  - Bartender
+  - Chef
+  - ServiceWorker
+  primary: false
+  editorHidden: true
+  manifestHidden: true

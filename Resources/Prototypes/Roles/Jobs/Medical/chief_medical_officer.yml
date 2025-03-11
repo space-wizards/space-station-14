@@ -42,7 +42,7 @@
   id: CMOGear
   equipment:
     id: CMOPDA
-    belt: ClothingBeltMedicalFilled
+    #belt: ClothingBeltMedicalFilled #imp
   storage:
     back:
     - Flash

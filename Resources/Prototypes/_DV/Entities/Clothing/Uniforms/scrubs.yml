@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, Tier1Contraband ] # imp - contraband
   id: UniformScrubsColorCybersun
   name: cybersun scrubs
   description: The official uniform of Cybersun's biotechnology division.

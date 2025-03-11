@@ -1271,6 +1271,17 @@
   - type: Inventory
     templateId: monkey
     speciesId: monkey
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Monkey/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Monkey/displacement.rsi
+            state: outerClothing
   - type: Deathgasp
     prototype: MonkeyDeathgasp
   - type: Blindable
@@ -2851,6 +2862,7 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: DogVision # imp
 
 - type: entity
   name: corgi
@@ -2913,6 +2925,7 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: DogVision # imp
 
 - type: entity
   name: corrupted corgi

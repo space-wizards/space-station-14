@@ -218,3 +218,70 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/courier.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/courier.rsi
+
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHD
+  name: hospitality director's jumpsuit
+  description: A uniform of splendid sartorial make, fit for the lead of the service department.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_uniform.rsi
+    - type: Clothing
+      sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_uniform.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHDTurtle
+  name: hospitality director's turtleneck
+  description: This turtleneck gives you an air of class and authority over the service department while still being pretty dang comfy.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_turtle.rsi
+    - type: Clothing
+      sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHospitalityDirectorBartender
+  name: lead bartending uniform
+  description: This uniform lets the people know you can make a really mean raktaccino.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_bartender.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_bartender.rsi
+    
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHospitalityDirectorBotany
+  name: lead botanical overalls
+  description: Nice sturdy overalls, great for working in the dirt and cultivating tritium-producing cocoa.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_botany.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_botany.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHospitalityDirectorJanitor
+  name: lead custodial jumpsuit
+  description: This uniform shows that if anyone should get the janitor trolley, it's you.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_janitor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_janitor.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformPositivityForce
+  name: positivity force jumpsuit
+  description: An outfit that signals to the world you're like the death squads but for being nice. 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/positivityforce.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/positivityforce.rsi

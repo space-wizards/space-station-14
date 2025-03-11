@@ -406,6 +406,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - PRIbarPlusConversionKit #imp
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
       - TelescopicShield
@@ -620,6 +621,7 @@
     - BorgModuleHarvesting
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
+    - BorgModuleMining #imp
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
@@ -813,6 +815,7 @@
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
+      - PRIbarPlusConversionKit #imp
       - ShuttleGunDusterCircuitboard
       - ShuttleGunFriendshipCircuitboard
       - ShuttleGunPerforatorCircuitboard

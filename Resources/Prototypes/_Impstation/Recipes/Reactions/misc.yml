@@ -1,0 +1,28 @@
+- type: reaction
+  id: CreateSynthFlesh
+  impact: Low
+  quantized: true
+  conserveEnergy: true
+  reactants:
+    Lacerinol:
+      amount: 1
+    Blood:
+      amount: 1
+    Saline:
+      amount: 1
+  products:
+    SynthFlesh: 3
+
+- type: reaction
+  id: CreateSynthFleshBlob
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    SynthFlesh:
+      amount: 30
+    Cognizine:
+      amount: 5
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: Homunculus

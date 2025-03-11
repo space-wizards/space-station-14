@@ -28,6 +28,12 @@
   equipment:
     neck: ClothingNeckScarfStripedLightBlue
 
+# Light Green
+- type: loadout
+  id: ScarfLightGreen
+  equipment:
+    neck: ClothingNeckScarfStripedLimeGreen
+
 # Orange
 - type: loadout
   id: ScarfOrange

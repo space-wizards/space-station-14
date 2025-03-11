@@ -12,7 +12,7 @@
   - type: Item
     size: Huge
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi #imp
     quickEquip: false
     slots:
     - Back
@@ -52,7 +52,7 @@
     availableModes:
     - SemiAuto
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi #imp
 #  - type: MeleeWeapon
 #    range: 2
 #    wideAnimationRotation: -135
@@ -90,9 +90,9 @@
   description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi #imp
   - type: GunRequiresWield
   - type: Gun
     fireRate: 0.4
@@ -125,10 +125,14 @@
   - type: Item
     size: Large
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/musket.rsi #imp
     state: base
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/musket.rsi #imp
+    quickEquip: false #imp
+    slots: #imp
+    - Back
+    - suitStorage
   - type: Gun
     selectedMode: SemiAuto
     availableModes:

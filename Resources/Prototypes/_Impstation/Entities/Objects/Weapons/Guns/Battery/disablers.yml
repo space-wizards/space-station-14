@@ -18,6 +18,11 @@
     slots:
       - suitStorage
       - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Gun
     fireRate: 2
     soundGunshot:
@@ -50,6 +55,11 @@
     slots:
       - suitStorage
       - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5 
+    zeroVisible: true
   - type: Battery
     maxCharge: 500
     startingCharge: 500
@@ -81,11 +91,6 @@
     slots:
       - suitStorage
       - Belt
-  - type: Appearance
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: true
   - type: Gun
     minAngle: 2
     maxAngle: 15

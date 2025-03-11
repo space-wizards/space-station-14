@@ -1,0 +1,29 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleWeb
+  name: web mantle
+  description: A soft silk mantle, made with similar weaving to the web winter coat. Gets dirty way too quickly.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/webmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/webmantle.rsi
+  - type: Construction
+    graph: WebObjects
+    node: mantle
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 6
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckMantleHD
+  name: hospitality director's mantle
+  description: This mantle shows you really know your stuff when it comes to growing plants, mopping puddles, and all those other things that makes this station hospitable.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Mantles/hdmantle.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Mantles/hdmantle.rsi

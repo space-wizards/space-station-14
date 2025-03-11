@@ -187,6 +187,73 @@
     ears: ClothingHeadsetCargo
     #eyes:
 
+- type: startingGear #science
+  id: StartingGearApidScientist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    id: SciencePDA
+    belt: ClothingBeltUtilityBlackFilled
+    outerClothing: ClothingOuterWinterSci
+    #head:
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+
+- type: startingGear #janitor
+  id: StartingGearApidJanitor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    id: JanitorPDA
+    belt: ClothingBeltJanitorFilled
+    outerClothing: ClothingOuterWinterJani
+    head: ClothingHeadHatPurplesoftFlipped
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesGlassesChemical
+  inhand:
+  - AdvMopItem
+
+- type: startingGear #AA
+  id: StartingGearApidAdministrativeAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAdminAssistant
+    id: AdminAssistantPDA
+    belt: ClothingBeltPaperworkFilled
+    outerClothing: ClothingOuterWinterColorBlue
+    #head:
+    pocket1: EmergencyOxygenTankCommandFilled
+    pocket2: ClothingMaskBreathCommand
+    ears: ClothingHeadsetAdminAssistant
+    eyes: ClothingEyesHudCommand
+
+- type: startingGear #Chaplain
+  id: StartingGearApidChaplain
+  equipment:
+    jumpsuit: ClothingUniformSkirtDruid
+    id: ChaplainPDA
+    belt: Beeble #thusd beeble
+    #outerClothing: ClothingOuterCoatGentle
+    head: ClothingHeadHatFlowerWreath
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+    #eyes:
+
+- type: startingGear #Salvage
+  id: StartingGearApidSalvageSpecialist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    id: SalvagePDA
+    belt: ClothingBeltSalvageWebbingApid
+    outerClothing: ClothingOuterHardsuitSpatio
+    #head: 
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: SurvivalKnife
+    ears: ClothingHeadsetCargo
+    eyes: ClothingEyesGlassesMeson
+
 # command
 
 - type: loadoutGroup
@@ -279,6 +346,88 @@
   minLimit: 0
   loadouts:
   - ServiceClown
+
+- type: loadoutGroup
+  id: HospitalityDirectorHead
+  name: loadout-group-hospitality-director-head
+  minLimit: 0
+  loadouts:
+  - HospitalityDirectorHead
+  - HospitalityDirectorBandana
+  - BartenderHead
+  - HospitalityDirectorBeret
+
+- type: loadoutGroup
+  id: HospitalityDirectorNeck
+  name: loadout-group-hospitality-director-neck
+  minLimit: 0
+  loadouts:
+  - HospitalityDirectorCloak
+  - HospitalityDirectorMantle
+  - ScarfLightGreen
+
+- type: loadoutGroup
+  id: HospitalityDirectorJumpsuit
+  name: loadout-group-hospitality-director-jumpsuit
+  loadouts:
+  - HospitalityDirectorJumpsuit
+  - HospitalityDirectorJumpskirt
+  - HospitalityDirectorTurtleneck
+  - HospitalityDirectorTurtleneckSkirt
+  - HospitalityDirectorJanitorJumpsuit
+  - HospitalityDirectorJanitorJumpskirt
+  - HospitalityDirectorBartenderJumpsuit
+  - HospitalityDirectorBartenderJumpskirt
+  - HospitalityDirectorBotanyJumpsuit
+
+- type: loadoutGroup
+  id: HospitalityDirectorGloves
+  name: loadout-group-hospitality-director-gloves
+  minLimit: 0
+  loadouts:
+  - JanitorRubberGloves
+  - BotanistLeatherGloves
+
+
+- type: loadoutGroup
+  id: HospitalityDirectorOuterClothing
+  name: loadout-group-hospitality-director-outerclothing
+  minLimit: 0
+  loadouts:
+  - HospitalityDirectorApron
+  - HospitalityDirectorVest
+  - HospitalityDirectorWintercoat
+  
+- type: loadoutGroup
+  id: HospitalityDirectorShoes
+  name: loadout-group-hospitality-director-shoes
+  loadouts:
+  - BlackShoes
+  - LacedShoes
+  - LeatherShoes
+  - BlackHeels
+  - GreenWinterBoots
+  - ClownShoesExpert
+
+- type: loadoutGroup
+  id: HospitalityDirectorBackpack
+  name: loadout-group-hospitality-director-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - LeatherSatchel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HospitalityDirectorHeadset
+  name: loadout-group-hospitality-director-headset
+  loadouts:
+  - HospitalityDirectorHeadsetBasic
+  - HospitalityDirectorHeadset
+  - HospitalityDirectorVeteranHeadset
 
 - type: loadoutGroup
   id: BartenderNeck
@@ -432,6 +581,14 @@
   loadouts:
   - ScarfBrown
   - ScarfGreen
+  - ScarfLightGreen
+
+- type: loadoutGroup
+  id: BotanistGloves
+  name: loadout-group-botanist-gloves
+  minLimit: 0
+  loadouts:
+  - BotanistLeatherGloves
 
 - type: loadoutGroup
   id: BotanistShoes
@@ -897,6 +1054,13 @@
   - CommandVeteranBackpack
   - CommandVeteranSatchel
   - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBelt
+  name: loadout-group-chief-medical-officer-belt
+  loadouts:
+  - BeltMedical
+  - BeltMedicalEMT
 
 - type: loadoutGroup
   id: MedicalDoctorNeck

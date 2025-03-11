@@ -2,14 +2,14 @@
   name: stun Enforcer
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerBeanbag
-  description: A premium combat shotgun with a pistol grip and a built-in silencer, modified to only accept .50 stun slugs.
+  description: A premium combat shotgun with a pistol grip and built-in silencer, modified to only accept .50 stun slugs.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcertwo.rsi
   - type: Clothing
-    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcertwo.rsi
   - type: Item
-    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer_inhands_64x.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcertwo_inhands_64x.rsi
   - type: Gun
     fireRate: 2
     selectedMode: SemiAuto
@@ -30,7 +30,7 @@
 
 - type: entity
   name: stun Kammerer
-  parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseMinorSecurityCivilianContraband]
+  parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderContraband]
   id: WeaponShotgunKammererBeanbag
   description: A pump shotgun with a built-in silencer, modified to only accept .50 stun slugs.
   components:
@@ -38,18 +38,18 @@
     size: Normal
     shape:
     - 0,0,4,0
-    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpump_inhands_64x.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpumptwo_inhands_64x.rsi
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpump.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpumptwo.rsi
   - type: Clothing
-    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpump.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpumptwo.rsi
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/_Impstation/Weapons/Guns/Gunshots/silenced2.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/sil_kammerer.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider

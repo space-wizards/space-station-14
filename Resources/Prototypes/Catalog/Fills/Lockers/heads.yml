@@ -118,7 +118,7 @@
     children:
     - id: AccessConfigurator
     - id: BoxEncryptionKeyPassenger
-    - id: BoxEncryptionKeyService
+    # - id: BoxEncryptionKeyService imp edit
     - id: BoxHeadset
     - id: BoxID
     - id: BoxPDA
@@ -130,7 +130,7 @@
       prob: 0.5
     - id: ClothingHeadsetCommand
     - id: ClothingNeckGoldmedal
-    - id: DoorRemoteService
+    - id: DoorRemoteCommand #imp edit
     - id: HoPIDCard
     - id: IDComputerCircuitboard
     - id: RubberStampApproved

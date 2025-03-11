@@ -11,7 +11,12 @@ station-beacon-mailroom = Mail
 station-beacon-smengine = Supermatter
 
 # Service
+station-beacon-clown = Clown
+station-beacon-hd = HD
+station-beacon-mime = Mime
+station-beacon-musician = Musician
 station-beacon-news = News
+station-beacon-service-storeroom = Storeroom
 
 # Portals
 station-beacon-portal-engineering = Engineering Portal

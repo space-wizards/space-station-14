@@ -41,3 +41,14 @@
   delay: 3
   rotation: Fixed
   fx: EffectRCDConstruct3
+
+- type: rcd
+  id: Decalamp
+  category: Electrical
+  sprite: /Textures/_Impstation/Interface/Radial/RCD/decalamp.png
+  mode: ConstructObject
+  prototype: Decalamp
+  cost: 2
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1

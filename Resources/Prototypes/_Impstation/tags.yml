@@ -21,6 +21,9 @@
   id: ConversionKitHB
 
 - type: Tag
+  id: ConversionKitPB
+
+- type: Tag
   id: DecapoidClaw
 
 - type: Tag

@@ -55,13 +55,13 @@
   description: A modified flare gun originally designed to be used by security to launch non-lethal shotgun shells, however it can also fire lethal shells without risk.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/flaregun_security.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/flaregun_security.rsi #imp
   - type: ItemSlots
     slots:
       gun_chamber:

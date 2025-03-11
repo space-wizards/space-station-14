@@ -33,6 +33,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
+  - type: Appearance
+  - type: PowerChargerVisuals
   - type: Sprite
     sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
     layers:
@@ -45,6 +47,11 @@
       shader: unshaded
       map: ["light","enum.BorgVisualLayers.LightStatus"]
       visible: false
+    - state: empty
+      map: ["enum.PowerChargerVisualLayers.Base"]
+    - state: light-empty
+      map: ["enum.PowerChargerVisualLayers.Light"]
+      shader: unshaded
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -144,7 +151,7 @@
     speechSounds: Borg
   - type: Vocal
     sounds:
-      Unsexed: UnisexSilicon
+      Unsexed: TckTck
   - type: UnblockableSpeech
   - type: ReplacementAccent
     accent: silicon

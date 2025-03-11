@@ -1,3 +1,52 @@
+# Windoor
+
+# Service
+- type: entity
+  parent: WindoorServiceLocked
+  id: WindoorClownLocked
+  suffix: Clown, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsClown ]
+
+- type: entity
+  parent: WindoorServiceLocked
+  id: WindoorLibrarianLocked
+  suffix: Librarian, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLibrarian ]
+
+- type: entity
+  parent: WindoorServiceLocked
+  id: WindoorMimeLocked
+  suffix: Mime, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMime ]
+
+- type: entity
+  parent: WindoorServiceLocked
+  id: WindoorMusicianLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
+
+- type: entity
+  parent: WindoorServiceLocked
+  id: WindoorReporterLocked
+  suffix: Reporter, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsReporter ]
+
+# Supply
 - type: entity
   parent: Windoor
   id: WindoorCourierLocked
@@ -9,6 +58,65 @@
   - type: Wires
     layoutId: AirlockCargo
 
+# Secure
+
+# Command
+- type: entity
+  parent: WindoorSecureCommandLocked
+  id: WindoorSecureHospitalityDirectorLocked
+  suffix: HospitalityDirector, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsHospitalityDirector ]
+
+# Service
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureClownLocked
+  suffix: Clown, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsClown ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureLibrarianLocked
+  suffix: Librarian, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLibrarian ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureMimeLocked
+  suffix: Mime, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMime ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureMusicianLocked
+  suffix: Musician, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMusician ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureReporterLocked
+  suffix: Reporter, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsReporter ]
+      
+# Supply
 - type: entity
   parent: WindoorSecure
   id: WindoorSecureCourierLocked

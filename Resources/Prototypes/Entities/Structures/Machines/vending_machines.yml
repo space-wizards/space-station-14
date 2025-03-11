@@ -1819,7 +1819,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Librarian"]] #imp edit
   - type: StealTarget #imp
     stealGroup: CuraDrobe
 

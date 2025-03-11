@@ -26,6 +26,44 @@
     {
       "name": "anchored",
       "directions": 4
+    },
+    {
+      "name": "empty",
+      "directions": 4
+    },
+    {
+      "name": "full",
+      "directions": 4
+    },
+    {
+      "name": "light-charging",
+      "directions": 4,
+      "delays": [
+          [
+              0.3,
+              0.3
+          ],
+          [
+              0.3,
+              0.3
+          ],
+          [
+              0.3,
+              0.3
+          ],
+          [
+              0.3,
+              0.3
+          ]
+      ]
+    },
+    {
+      "name": "light-charged",
+      "directions": 4
+    },
+    {
+      "name": "light-empty",
+      "directions": 4
     }
   ]
 }

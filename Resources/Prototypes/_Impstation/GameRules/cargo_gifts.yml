@@ -11,8 +11,8 @@
   - type: StationEvent
     weight: 1
     duration: 120
-    earliestStart: 20
-    minimumPlayers: 40
+    earliestStart: 5
+    minimumPlayers: 10
   - type: CargoGiftsRule
     description: cargo-gift-cargorilla
     dest: cargo-gift-dest-cargo

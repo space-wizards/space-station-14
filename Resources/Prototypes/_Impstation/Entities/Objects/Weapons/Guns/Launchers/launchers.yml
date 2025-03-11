@@ -1,6 +1,6 @@
 - type: entity
   name: shining spring
-  parent: [BaseWeaponLauncher, BaseGunWieldable]
+  parent: [BaseWeaponLauncher, BaseGunWieldable, BaseJanitorContraband]
   id: WeaponLauncherCleanerLake
   description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
   components:
