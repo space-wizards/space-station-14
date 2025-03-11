@@ -72,6 +72,15 @@ uplink-exploding-syndicate-bomb-desc = A big, anchored bomb that can create a hu
 uplink-exploding-syndicate-bomb-fake-name = Decoy Syndicate Bomb
 uplink-exploding-syndicate-bomb-fake-desc = A training bomb carefully made to look just like the real thing. In all ways similar to a syndicate bomb, but only creates a tiny explosion.
 
+uplink-evil-sad-trombone-implant-name = Evil Sad Trombone Implant
+uplink-evil-sad-trombone-implant-desc = Cybersun's most junior clown says this is essential to all successful infiltration ops. That seems doubtful, but maybe it'll confuse the Security team (or at least make your failure a little funnier).
+
+uplink-evil-light-implant-name = Evil Light Implant
+uplink-evil-light-implant-desc = An experimental implant that creates a blinding flash, toned down after it was discovered that it tended to microwave the implantee's brain. This version is of limited use, but, hey, it might confuse a Security officer or two.
+
+uplink-evil-bike-horn-implant-name = Evil... Bike Horn Implant? Seriously?
+uplink-evil-bike-horn-implant-desc = Look, we've got nothing here. It was Craig's first day at the office and it seemed like a good idea at the time. Honour Craig's memory with a little clowning, and maybe confuse the Security team while you're at it.
+
 uplink-cluster-grenade-name = Cluster Grenade
 uplink-cluster-grenade-desc = Three explosive grenades bundled together. The cluster splits after 3.5 seconds.
 

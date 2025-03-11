@@ -1867,6 +1867,36 @@
   - !type:ListingLimitedStockCondition
     stock: 3
 
+- type: listing
+  id: UplinkEvilSadTromboneImplant
+  name: uplink-evil-sad-trombone-implant-name
+  description: uplink-evil-sad-trombone-implant-desc
+  productEntity: EvilSadTromboneImplanter
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkEvilLightImplant
+  name: uplink-evil-light-implant-name
+  description: uplink-evil-light-implant-desc
+  productEntity: EvilLightImplanter
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkEvilBikeHornImplant
+  name: uplink-evil-bike-horn-implant-name
+  description: uplink-evil-bike-horn-implant-desc
+  productEntity: EvilBikeHornImplanter
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
 # Job Specific
 
 - type: listing

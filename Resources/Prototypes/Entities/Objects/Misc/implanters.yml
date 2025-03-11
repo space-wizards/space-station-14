@@ -307,3 +307,29 @@
   components:
   - type: Implanter
     implant: RadioImplantCentcomm
+
+# Evil fun implanters OF DOOM!! Used as decoys to throw Sec off the scent.
+
+- type: entity
+  id: EvilSadTromboneImplanter
+  suffix: sad trombone (evil!)
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: SadTromboneImplant
+
+- type: entity
+  id: EvilLightImplanter
+  suffix: light (monstrous!)
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: LightImplant
+
+- type: entity
+  id: EvilBikeHornImplanter
+  suffix: bike horn (dastardly!)
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: BikeHornImplant
