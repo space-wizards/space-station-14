@@ -108,6 +108,7 @@
       - id: ClothingUniformJumpskirtOfLife
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingHeadHatBeretSecurityMedic
+      - id: ClothingHeadHelmetSecurityMedic
       - id: ClothingOuterVestArmorMedSec
       - id: ClothingOuterVestSecurityMedic
       - id: ClothingOuterCoatLabSecurityMedic
