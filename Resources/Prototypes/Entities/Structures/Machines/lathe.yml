@@ -117,15 +117,6 @@
     runningState: building
     unlitIdleState: unlit
     unlitRunningState: unlit-building
-    # Need to Readd In Packs
-    # staticRecipes:
-    #   - Flare
-    #   - DeskBell # imp
-    #   - UvLightTube # imp
-    #   - TapeRecorder # DV
-    #   - CassetteTape # DV
-    # dynamicRecipes:
-    #   - Fulton
     staticPacks:
     - ToolsStatic
     - PartsStatic
@@ -139,6 +130,9 @@
     - ServiceStatic
     - PowerCellsStatic
     - ElectronicsStatic
+    - ImpAutoStatic # Imp
+    dynamicPacks:
+    - ImpAutoDynamic # Imp
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SecurityAmmoStatic
@@ -198,27 +192,10 @@
     runningState: building
     unlitIdleState: unlit
     unlitRunningState: unlit-building
-  # Need to Readd In Packs
-  #   staticRecipes:
-  #   - SGDRecipe #imp special
-  #   dynamicRecipes:
-  #     - BaseChemistryEmptyVial # imp
-  #     - Drone # imp
-  #     - CleanerGrenade #imp addition
-  #     - PlantAnalyzer #NF addition
-  #     - FishingRod #imp addition
-  # - type: EmagLatheRecipes
-  #   emagDynamicRecipes:
-  #     - FullAutoConversionKit # imp
-  #     - HyperBurstConversionKit # imp
-  #     - MagazineDMRIncendiary #imp
-  #     - MagazineDMRUranium #imp
-  #     - MagazineLPistolIncendiary #imp
-  #     - MagazineLPistolUranium #imp
-  #     - PRIbarPlusConversionKit #imp
     staticPacks:
     - ChemistryStatic
     - SurgeryStatic
+    - ImpProtoStatic # Imp
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
@@ -234,12 +211,14 @@
     - Instruments
     - Equipment
     - FauxTiles
+    - ImpProtoDynamic # Imp
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityAmmo
     - SecurityExplosives
     - SecurityEquipment
     - SecurityWeapons
+    - ImpProtoEmagged # Imp
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -275,11 +254,6 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
-    #  Readd in packs
-    # - ServiceTechFabCircuitboard #imp addition
-    # - SupermatterComputerCircuitboard # imp
-    # - ImpCoffeeMachineCircuitboard #imp
-    # - MiniGyroscopeMachineCircuitboard
     staticPacks:
     - ScienceBoardsStatic
     - ServiceBoardsStatic
@@ -287,6 +261,7 @@
     - MedicalBoardsStatic
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
+    - ImpCircuitStatic # Imp
     dynamicPacks:
     - EngineeringBoards
     - CargoBoards
@@ -338,8 +313,6 @@
   - type: Lathe
     idleState: fab-idle
     runningState: fab-active
-    # Readd in Pack
-    # - BorgModuleArtistic #imp special
     staticPacks:
     - RoboticsStatic
     - BorgModulesStatic
@@ -424,33 +397,12 @@
     runningState: icon
     unlitIdleState: unlit
     unlitRunningState: unlit-building
-    # Readd in packs
-    #   - ClothingOuterArmorDuraVest # DeltaV - stabproof vest body armour
-    #   - ClothingOuterArmorPlateCarrier # DeltaV - plate carrier body armour
-    #   - MagazineBoxLPistol #imp
-    #   - MagazineBoxLPistolPractice #imp
-    #   - MagazineDMR #imp
-    #   - MagazineDMREmpty #imp
-    #   - MagazineLPistol #imp
-    #   - MagazineLPistolEmpty #imp
-    #   - MagazineLPistolPractice #imp
-    # dynamicRecipes:
-    #   - FullAutoConversionKit # imp
-    #   - HyperBurstConversionKit # imp
-    #   - MagazineBoxLPistolIncendiary #imp
-    #   - MagazineBoxLPistolUranium #imp
-    #   - MagazineDMRIncendiary #imp
-    #   - MagazineDMRUranium #imp
-    #   - MagazineLPistolIncendiary #imp
-    #   - MagazineLPistolUranium #imp
-    #   - PRIbarPlusConversionKit #imp
-    #   - WeaponShotgunEnforcerBeanbag # imp
-    #   - WeaponShotgunKammererBeanbag # imp
     staticPacks:
     - SecurityEquipmentStatic
     - SecurityPracticeStatic
     - SecurityAmmoStatic
     - SecurityWeaponsStatic
+    - ImpSecStatic # Imp
     dynamicPacks:
     - SecurityEquipment
     - SecurityBoards
@@ -458,6 +410,7 @@
     - SecurityAmmo
     - SecurityWeapons
     - SecurityDisablers
+    - ImpSecDynamic # Imp
   - type: MaterialStorage
     whitelist:
       tags:
@@ -491,18 +444,9 @@
       runningState: icon
       unlitIdleState: unlit
       unlitRunningState: unlit-building
-      # Readd in packs
-      #   - MagazineBoxLPistol #imp
-      #   - MagazineDMR #imp
-      #   - MagazineDMREmpty #imp
-      #   - MagazineLPistol #imp
-      #   - MagazineLPistolEmpty #imp
-      #   - MagazinePistolSubMachineGun #imp
-      #   - MagazinePistolSubMachineGunEmpty #imp
-      #   - MagazinePistolSubMachineGunTopMounted #imp
-      #   - MagazinePistolSubMachineGunTopMountedEmpty #imp
       staticPacks:
       - SecurityAmmoStatic
+      - ImpAmmoStatic # Imp
     - type: MaterialStorage
       whitelist:
         tags:
@@ -534,11 +478,6 @@
     runningState: icon
     unlitIdleState: unlit
     unlitRunningState: unlit-building
-    # Readd in Packs
-    #   - BaseChemistryEmptyVial # imp
-    #   - PrescriptionLens # imp
-    #   - PrescriptionLensStrong # imp
-    #   - BlindingLens # imp
     staticPacks:
     - TopicalsStatic
     - ChemistryStatic
@@ -547,6 +486,7 @@
     - MedicalClothingStatic
     - EmptyMedkitsStatic
     - SurgeryStatic
+    - ImpMedStatic # Imp
     dynamicPacks:
     - Chemistry
   - type: Machine
@@ -574,41 +514,6 @@
     producingSound: /Audio/Machines/uniformprinter.ogg
     idleState: icon
     runningState: building
-  # Readd with packs
-  #   staticRecipes:
-  #     - ClothingBeltPaperwork # DeltaV
-  #     - ClothingHeadHatBeretCaptain # imp
-  #     - ClothingHeadHatCouriersoft #Imp
-  #     - ClothingHeadHoodMysta # DeltaV
-  #     - ClothingOuterClerkVest # DeltaV
-  #     - ClothingUniformJumpskirtCJFormal # DeltaV
-  #     - ClothingUniformJumpskirtCourier #Imp
-  #     - ClothingUniformJumpskirtSalvageSpecialist # imp
-  #     - ClothingUniformJumpskirtSalvageSpecialistDV # DeltaV
-  #     - ClothingUniformJumpsuitChiefJusticeFormal # DeltaV
-  #     - ClothingUniformJumpsuitChiefJusticeWhite # DeltaV
-  #     - ClothingUniformJumpsuitClerk # DeltaV
-  #     - ClothingUniformJumpsuitCourier #Imp
-  #     - ClothingUniformJumpsuitProsecutor # DeltaV
-  #     - ClothingUniformJumpsuitSalvageSpecialistDV # DeltaV
-
-  #     # Winter outfits
-  #     - ClothingNeckCWPArctic # DeltaV
-  #     - ClothingNeckCWPSec # DeltaV
-  #     - ClothingOuterStasecSweater # DeltaV
-  #     - ClothingOuterWinterCourier #Imp
-  # - type: EmagLatheRecipes
-  #   emagStaticRecipes:
-  #     # Clothing
-  #     - ClothingHeadHatSurgcapCybersun # DeltaV
-  #     - ClothingNeckCloakStraight # imp
-  #     - ClothingOuterCybersunOvercoat # DeltaV
-  #     - ClothingOuterCoatCybersunWindbreaker # DeltaV
-  #     - ClothingUniformCybersunAttorney # DeltaV
-  #     - ClothingUniformCybersunCasual # DeltaV
-  #     - ClothingUniformCybersunHazard # DeltaV
-  #     - ClothingUniformCybersunRND # DeltaV
-  #     - UniformScrubsColorCybersun # DeltaV
     staticPacks:
     - ClothingCivilian
     - ClothingCargo
@@ -623,10 +528,12 @@
     - Scarves
     - Carpets
     - Bedsheets
+    - ImpClothesStatic # Imp
   - type: EmagLatheRecipes
     emagStaticPacks:
     - ClothingCentComm
     - ClothingSyndie
+    - ImpClothesEmagged # Imp
   - type: MaterialStorage
     whitelist:
       tags:

@@ -1,0 +1,47 @@
+# Static
+
+- type: latheRecipePack
+  id: ImpClothesStatic
+  recipes:
+  - ClothingBeltPaperwork # DeltaV
+  - ClothingHeadHatBeretCaptain
+  - ClothingHeadHatCouriersoft
+  - ClothingHeadHoodMysta # DeltaV
+  - ClothingOuterClerkVest # DeltaV
+  - ClothingUniformJumpskirtCJFormal # DeltaV
+  - ClothingUniformJumpskirtCourier
+  - ClothingUniformJumpskirtSalvageSpecialist
+  - ClothingUniformJumpskirtSalvageSpecialistDV # DeltaV
+  - ClothingUniformJumpsuitChiefJusticeFormal # DeltaV
+  - ClothingUniformJumpsuitChiefJusticeWhite # DeltaV
+  - ClothingUniformJumpsuitClerk # DeltaV
+  - ClothingUniformJumpsuitCourier
+  - ClothingUniformJumpsuitProsecutor # DeltaV
+  - ClothingUniformJumpsuitSalvageSpecialistDV # DeltaV
+
+  # Winter outfits
+  - ClothingNeckCWPArctic # DeltaV
+  - ClothingNeckCWPSec # DeltaV
+  - ClothingOuterStasecSweater # DeltaV
+  - ClothingOuterWinterCourier
+
+# Dynamic
+
+# - type: latheRecipePack
+#   id: ImpClothesDynamic
+#   recipes:
+
+# Emagged
+
+- type: latheRecipePack
+  id: ImpClothesEmagged
+  recipes:
+  - ClothingHeadHatSurgcapCybersun # DeltaV
+  - ClothingNeckCloakStraight
+  - ClothingOuterCybersunOvercoat # DeltaV
+  - ClothingOuterCoatCybersunWindbreaker # DeltaV
+  - ClothingUniformCybersunAttorney # DeltaV
+  - ClothingUniformCybersunCasual # DeltaV
+  - ClothingUniformCybersunHazard # DeltaV
+  - ClothingUniformCybersunRND # DeltaV
+  - UniformScrubsColorCybersun # DeltaV

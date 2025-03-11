@@ -1,0 +1,21 @@
+# Static
+
+- type: latheRecipePack
+  id: ImpMedStatic
+  recipes:
+  - BaseChemistryEmptyVial
+  - PrescriptionLens
+  - PrescriptionLensStrong
+  - BlindingLens
+
+# Dynamic
+
+# - type: latheRecipePack
+#   id: ImpSecDynamic
+#   recipes:
+
+# Emagged
+
+# - type: latheRecipePack
+#   id: ImpSecEmagged
+#   recipes:
