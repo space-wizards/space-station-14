@@ -11,6 +11,7 @@ using Robust.Client.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client._Impstation.CosmicCult.Visuals;
 
@@ -19,6 +20,7 @@ namespace Content.Client._Impstation.CosmicCult.Visuals;
 /// </summary>
 public sealed class MonumentPlacementPreviewSystem : EntitySystem
 {
+    //most of these aren't used by this system, see MonumentPlacementPreviewOverlay for a note on why they're here
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -28,6 +30,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private MonumentPlacementPreviewOverlay? _cachedOverlay = null;
     private CancellationTokenSource? _cancellationTokenSource = null;
@@ -37,16 +40,26 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
     {
         base.Initialize();
 
+        _cancellationTokenSource = null; //reset these to make 100% sure that they're safe
+        _cachedOverlay = null;
+
         SubscribeLocalEvent<MonumentPlacementMarkerComponent, ActionAttemptEvent>(OnAttemptMonumentPlacement);
-        //commented out because idrk if it's nece
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicPlaceMonument>(OnCosmicPlaceMonument);
     }
 
-    //todo this needs to check for validity before starting the timer?
-    //could also just remove the early overlay killing? it's technically not needed as it'll get 100% covered by the monument so ???
+    //reasoning about this in my head
+    //from default state (both null)
+    //attempt event fires
+    //sets to both a real value
+    //starts timer
+    //after that
+    //further failed attempts get caught by cachedOverlay not being null, another timer won't stack w/ an existing one
+    //successful attempts also don't re-start the timer due to making cachedOverlay real
+    //when the monumentPlaced event fires, the old timer gets cancelled an a new one appears in it's place
+    //I'm like 90% sure that this works good but I need some of the chumps in the discord to bugtest this with hammers
+
     private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> ent, ref EventCosmicPlaceMonument args)
     {
-        //_overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
         if (_cachedOverlay == null || _cancellationTokenSource == null)
             return;
 
@@ -63,12 +76,13 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
             {
                 _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
                 _cachedOverlay = null;
-                _cancellationTokenSource = null;
+                _cancellationTokenSource = null; //technically doesn't need to be nulled out as it's not checked against but let's be sane about this
             }
         );
     }
 
-    //duplicate code bad but also I cba to extract it from the overlay & make this work for both of them
+    //duplicated from the ability check
+    //todo make this check the actual position where the monument will be spawned instead of exactly 1 tile up from the player ent
     public bool VerifyPlacement(TransformComponent xform)
     {
         var spaceDistance = 3;
@@ -122,7 +136,9 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
             return;
 
         _cancellationTokenSource = new CancellationTokenSource();
-        _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _mapSystem, _protoMan, this); //it's probably inefficient to make a new one every time, but this'll be happening like four times a round maybe
+        //it's probably inefficient to make a new one every time, but this'll be happening like four times a round maybe
+        //massive ctor because iocmanager hates me
+        _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _mapSystem, _protoMan, this, _timing);
         _overlay.AddOverlay(_cachedOverlay);
 
         //remove the overlay automatically after the primeTime expires
@@ -131,6 +147,16 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
             {
                 _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
                 _cachedOverlay = null;
+                _cancellationTokenSource = null;
+            },
+            _cancellationTokenSource.Token
+        );
+
+        //start a timer to start the fade out as well, with the same cancellation token
+        Robust.Shared.Timing.Timer.Spawn(confirmableActionComponent.PrimeTime + confirmableActionComponent.ConfirmDelay - TimeSpan.FromSeconds(_cachedOverlay.fadeOutTime),
+            () =>
+            {
+                _cachedOverlay.fadingOut = true;
             },
             _cancellationTokenSource.Token
         );
