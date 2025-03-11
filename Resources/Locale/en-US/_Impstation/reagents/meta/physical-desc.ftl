@@ -1,2 +1,2 @@
 reagent-physical-desc-unholy = unholy
-reagent-physical-desc-shimmering = nacreous
+reagent-physical-desc-shimmering-blood = nacreous

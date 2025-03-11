@@ -86,11 +86,11 @@
   id: ShimmeringBlood
   name: reagent-name-shimmering-blood
   group: Biological
-  desc: reagent-desc-shimmeringblood
-  flavor: brackish
+  desc: reagent-desc-shimmering-blood
+  flavor: shimmeringblood
   color: "#FF7F50" # we picked coral orange, which appropriately is a slightly lighter ichor color, since dragons have this blood
   recognizable: true
-  physicalDesc: reagent-physical-desc-shimmering
+  physicalDesc: reagent-physical-desc-shimmering-blood
   slippery: false
   metabolisms:
     Drink:
@@ -105,20 +105,6 @@
         type: Add
         time: 5
         refresh: false
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 1
-        conditions:
-          - !type:OrganType
-            type: Snail
-      - !type:ChemVomit
-        probability: 0.25
-        conditions:
-          - !type:OrganType
-            type: Snail
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5
