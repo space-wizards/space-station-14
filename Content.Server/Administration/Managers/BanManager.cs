@@ -44,6 +44,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
+    public const string AntagPrefix = "Antag:";
 
     private readonly Dictionary<ICommonSession, List<ServerRoleBanDef>> _cachedRoleBans = new();
     // Cached ban exemption flags are used to handle
@@ -237,12 +238,14 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
+        if (!_prototypeManager.TryIndex<JobPrototype>(role, out var job) && !_prototypeManager.TryIndex<AntagPrototype>(role, out var antag))
         {
             throw new ArgumentException($"Invalid role '{role}'", nameof(role));
         }
 
-        role = string.Concat(JobPrefix, role);
+        //TODO: create an integration test that screams if a jobPrototype and antagPrototype have the same ID
+        role = job is not null ? string.Concat(JobPrefix, role) : string.Concat(AntagPrefix, role);
+
         DateTimeOffset? expires = null;
         if (minutes > 0)
         {
