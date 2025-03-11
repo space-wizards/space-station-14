@@ -576,7 +576,7 @@
   name: antique laser pistol
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
-  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. #imp
+  description: All craftsmanship is of the highest quality. It is decorated with carp leather and chrome. The object menaces with spikes of energy. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/antiquelasergun.rsi #imp

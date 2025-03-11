@@ -560,7 +560,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
   - type: Tag
     tags:
-    - MonkeyWearable
+#    - MonkeyWearable #imp
     - Hardsuit
     - WhitelistChameleon
 

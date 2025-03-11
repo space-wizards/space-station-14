@@ -1,169 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: artifact gridwide knockdown (too buggy, can't replicate locally)
-    type: Remove
-  id: 754
-  time: '2024-12-18T18:37:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1054
-- author: honeyed-lemons
-  changes:
-  - message: Sending PDA messages is map based instead of station based
-    type: Tweak
-  id: 755
-  time: '2024-12-18T18:37:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1055
-- author: ATDoop
-  changes:
-  - message: Added a new clown outfit! Includes a neck ruffle and clown nose, have
-      fun mixing and matching!!
-    type: Add
-  id: 756
-  time: '2024-12-18T18:36:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1045
-- author: DinnerCalzone
-  changes:
-  - message: Amber Station's emergency shuttle should no longer arrive with no power.
-    type: Fix
-  id: 757
-  time: '2024-12-18T18:40:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1060
-- author: TGRCdev & suyo
-  changes:
-  - message: new trait! pain insensitivity
-    type: Add
-  id: 758
-  time: '2024-12-18T18:39:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1056
-- author: widgetbeck
-  changes:
-  - message: Drones are no longer blocked from interacting with items when near any
-      mob - Instead, they will receive a proximity warning popup. They also have a
-      small blacklist of items that are potentially harmful.
-    type: Tweak
-  - message: Changed the wording of Drone laws.
-    type: Tweak
-  - message: Fixed Drones failing to spawn with their tools.
-    type: Fix
-  - message: Drones can no longer be Emagged.
-    type: Remove
-  id: 759
-  time: '2024-12-18T18:41:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1063
-- author: AftrLite
-  changes:
-  - message: Cosmic Cult Assets for ongoing dev.
-    type: Add
-  id: 760
-  time: '2024-12-18T18:41:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1061
-- author: honeyed-lemons
-  changes:
-  - message: Holopads!
-    type: Add
-  id: 761
-  time: '2024-12-18T18:43:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1065
-- author: Darkmajia
-  changes:
-  - message: Lowpop rounds with thief as a main antagonist can roll additional thieves
-      and a potential heretic with enough population.
-    type: Add
-  id: 762
-  time: '2024-12-18T19:08:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1033
-- author: Darkmajia
-  changes:
-  - message: Gastropoids can fly shuttles again.
-    type: Fix
-  id: 763
-  time: '2024-12-19T12:59:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1074
-- author: honeyed-lemons
-  changes:
-  - message: Add Holopads to Fland, Box, Xeno, and the Reclaimer
-    type: Add
-  id: 764
-  time: '2024-12-19T17:36:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1068
-- author: honeyed-lemons
-  changes:
-  - message: Atmos Monitoring Computer
-    type: Add
-  - message: Advanced SMES
-    type: Add
-  id: 765
-  time: '2024-12-19T17:38:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1070
-- author: DinnerCalzone
-  changes:
-  - message: A high velocity hollow plastic barrel has been detected on a collision
-      course with the station.
-    type: Add
-  id: 766
-  time: '2024-12-19T17:39:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1071
-- author: kipdotnet
-  changes:
-  - message: Updated Banana to have holopads!
-    type: Tweak
-  id: 767
-  time: '2024-12-19T17:40:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1073
-- author: widgetbeck
-  changes:
-  - message: Drones are now unable to use any item with the Contraband component.
-    type: Tweak
-  - message: Fixed the wrong popup appearing when a Drone attempts to use a blacklisted
-      item.
-    type: Fix
-  - message: Fixed Drone proximity warnings appearing when using whitelisted items.
-    type: Fix
-  - message: My real-life human brain is now fully functional.
-    type: Fix
-  id: 768
-  time: '2024-12-19T17:38:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1069
-- author: widgetbeck
-  changes:
-  - message: Immovable Fin-Fin now has a custom kill message. Added support for custom
-      kill messages to ImmovableRodComponent.
-    type: Tweak
-  id: 769
-  time: '2024-12-19T17:40:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1072
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: new Improvised Pistol that can be hand-crafted. It can use a variety
-      of magazines and ammo types!
-    type: Add
-  - message: 1 conversion kit of each type added to the Mk58 Safe, now called the
-      Pistol Safe
-    type: Add
-  - message: adjusted Research and Cargo costs for the .22 Auto Pistol items
-    type: Tweak
-  - message: .22 auto Security Techfab recipes have been adjusted. "Advanced Pistol
-      Munitions" has been removed.
-    type: Tweak
-  id: 770
-  time: '2024-12-20T15:39:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1076
-- author: honeyed-lemons
-  changes:
-  - message: Mapping Changes to Xeno, Box, and Fland, and all cargo shuttles
-    type: Add
-  - message: Fixed atmos monitoring computer locale
-    type: Fix
-  id: 771
-  time: '2024-12-20T16:21:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1075
-- author: DinnerCalzone
-  changes:
-  - message: All immovable rod types now have a custom kill message.
-    type: Add
-  id: 772
-  time: '2024-12-20T16:25:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1079
 - author: honeyed-lemons
   changes:
   - message: Holopad Tweaks
@@ -4084,3 +3919,166 @@
   id: 1253
   time: '2025-03-07T08:02:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1855
+- author: honeyed-lemons
+  changes:
+  - message: Update Xeno's medbay, xenoarch room, and Bar
+    type: Tweak
+  id: 1254
+  time: '2025-03-08T06:15:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1867
+- author: hivehum
+  changes:
+  - message: More Syndicate uniforms are considered minor contraband.
+    type: Tweak
+  id: 1255
+  time: '2025-03-08T06:15:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1858
+- author: DinnerCalzone
+  changes:
+  - message: Command airlocks have received new sprites to differentiate which heads
+      may access them.
+    type: Add
+  - message: The Administrative Assistant locker has received a new sprite to match
+      the current style of lockers.
+    type: Add
+  - message: The Musician airlock can now be selected in the spray painter tool.
+    type: Fix
+  id: 1256
+  time: '2025-03-07T22:20:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1860
+- author: SixValentine
+  changes:
+  - message: Fixed Embryo
+    type: Fix
+  id: 1257
+  time: '2025-03-08T07:20:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1868
+- author: SixValentine
+  changes:
+  - message: Luna wiring should no longer output a Gorbillion Kw requirement to engie
+      monitors (Only a zillion)
+    type: Fix
+  id: 1258
+  time: '2025-03-09T07:49:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1877
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Changed cargorilla to be able to roll on low-pop, as well as earlier
+      in the shift.
+    type: Tweak
+  id: 1259
+  time: '2025-03-09T07:50:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1878
+- author: crocodilecarousel
+  changes:
+  - message: Added 33 new markings, including underwear for grays and tails for thaven.
+    type: Add
+  id: 1260
+  time: '2025-03-09T08:05:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1876
+- author: Sha-Seng
+  changes:
+  - message: Spider Fluffy and Fuzzy overlay markings are now colorable
+    type: Tweak
+  id: 1261
+  time: '2025-03-10T18:07:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1856
+- author: TheGrimbeeper
+  changes:
+  - message: Sentient artifacts can no longer re-appear in the ghost role list after
+      having been taken, if someone is still inside it.
+    type: Fix
+  id: 1262
+  time: '2025-03-10T18:06:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1854
+- author: DinnerCalzone
+  changes:
+  - message: The Station Specific and Dining Services departments no longer appear
+      in the crew manifest.
+    type: Tweak
+  id: 1263
+  time: '2025-03-10T18:44:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1870
+- author: AvianMaiden
+  changes:
+  - message: All Kammerer models now make an iconic rack sound when you shoot. Pump-action
+      shotguns live forever!
+    type: Add
+  - message: A few weapons have slightly tweaked descriptions for wording or to match
+      their new sprites!
+    type: Tweak
+  - message: Unique weapon rack sounds, C20-R empty beeps, special disabler tweaks,
+      stun kammerers matching their lethal counterparts, and burstfire on SMGs should
+      once again be back in the game.
+    type: Fix
+  id: 1264
+  time: '2025-03-10T18:47:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1872
+- author: FlippenPage
+  changes:
+  - message: Monkeys can now wear most clothing. It also fits them properly!
+    type: Tweak
+  id: 1265
+  time: '2025-03-10T18:54:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1874
+- author: Tyranex
+  changes:
+  - message: Added a new basic mining module for salvage cyborg!
+    type: Add
+  - message: Cyborgs can now scream! And syndicate assault cyborgs can now laugh.
+      Go give the crew a heart attack.
+    type: Add
+  - message: The mining module is no longer given to the salvage chassis, it must
+      instead be researched and crafted.
+    type: Tweak
+  id: 1266
+  time: '2025-03-10T19:12:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1884
+- author: MintyTheBinty
+  changes:
+  - message: New uniforms and medals for the recent wing of the ERT Positivity Force.
+    type: Add
+  id: 1267
+  time: '2025-03-10T22:04:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1866
+- author: Sha-Seng
+  changes:
+  - message: Silver Heart Locket for style choices
+    type: Add
+  - message: Rings have hand and neck sprites now
+    type: Tweak
+  id: 1268
+  time: '2025-03-10T22:58:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1880
+- author: hivehum
+  changes:
+  - message: Removed the 'ensure fellow traitor stays alive' objective outside of
+      Spy vs Spy.
+    type: Remove
+  id: 1269
+  time: '2025-03-10T23:05:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1875
+- author: Ecramox
+  changes:
+  - message: Added the R.A.D, and put it in the Nuclear Commander and Lone Op's loadouts
+    type: Add
+  id: 1270
+  time: '2025-03-10T23:43:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1889
+- author: DinnerCalzone
+  changes:
+  - message: All job icons for the Service department jobs have been resprited to
+      be matching. Except for the jobs in the Theatre sub-department, which have been
+      resprited to not be matching.
+    type: Tweak
+  id: 1271
+  time: '2025-03-11T05:04:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1871
+- author: Darkmajia
+  changes:
+  - message: The supermatter has a grace period at roundstart, absorbing 10x less
+      gas until it's powered.
+    type: Tweak
+  id: 1272
+  time: '2025-03-11T07:41:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1895

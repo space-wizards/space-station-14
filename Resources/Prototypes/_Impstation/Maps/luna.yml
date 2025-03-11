@@ -1,6 +1,6 @@
 - type: gameMap
   id: Luna
-  mapName: 'Luna'
+  mapName: 'Embryo'
   mapPath: /Maps/_Impstation/luna.yml
   minPlayers: 35
   maxPlayers: 70
@@ -12,14 +12,14 @@
           mapNameTemplate: '{0} Luna Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: '06'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Impstation/Shuttles/lunaevac.yml
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargojeep_luna.yml
         - type: StationJobs
-          availableJobs: # 65 total jobs
-            # command - 8
+          availableJobs: # Total of 66 jobs. 
+            # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             AdministrativeAssistant: [ 1, 1 ]
@@ -27,14 +27,14 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-
             # service - 18
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 2 ]
             Boxer: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Chef: [ 1, 1 ]
+            Chef: [ 1, 1]
             Clown: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Librarian: [ 1, 1 ]
@@ -42,25 +42,21 @@
             Musician: [ 1, 1 ]
             Reporter: [ 2, 2 ]
             ServiceWorker: [ 2, 2 ]
-
-            # engineering - 6
+            # engineering - 7-10
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 3, 3 ]
             TechnicalAssistant: [ 1, 1 ]
-
-            # medical - 8
+            # medical - 8-11
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
-
-            # science - 8
+            # science - 7
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 2, 2 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             StationAi: [ 1, 1 ]
-
             # security - 11
             Brigmedic: [ 1, 1 ]
             Detective: [ 1, 1 ]
@@ -68,12 +64,10 @@
             SecurityCadet: [ 3, 3 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-
-            # supply - 7
+            # supply - 8
             CargoTechnician: [ 2, 2 ]
-            Courier: [ 1, 1 ]
+            Courier: [ 2, 2 ]
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 2, 2 ]
-
             # civilian
             Passenger: [ -1, -1 ]

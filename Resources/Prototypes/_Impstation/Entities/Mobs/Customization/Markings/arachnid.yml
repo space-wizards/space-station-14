@@ -183,7 +183,6 @@
   id: ArachnidOverlayFluffy
   bodyPart: Chest
   markingCategory: Overlay
-  forcedColoring: true
   speciesRestriction: [Arachnid]
   sprites:
   - sprite: _Impstation/Mobs/Customization/Arachnid/overlay.rsi

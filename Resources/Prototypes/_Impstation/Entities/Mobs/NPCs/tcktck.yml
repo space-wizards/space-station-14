@@ -151,7 +151,7 @@
     speechSounds: Borg
   - type: Vocal
     sounds:
-      Unsexed: UnisexSilicon
+      Unsexed: TckTck
   - type: UnblockableSpeech
   - type: ReplacementAccent
     accent: silicon
