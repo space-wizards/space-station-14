@@ -24,5 +24,9 @@ public sealed class DockingConfig
     public Box2 Area;
 
     public EntityCoordinates Coordinates;
+
+    /// <summary>
+    /// Local angle of the docking grid relative to the target grid.
+    /// </summary>
     public Angle Angle;
 }
