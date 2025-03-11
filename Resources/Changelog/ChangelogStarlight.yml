@@ -4017,4 +4017,11 @@ Entries:
   id: 556
   time: '2025-03-11T01:24:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/381
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added an admeme only Deathsquad Shuttle! Event staff rejoice!
+    type: Add
+  id: 557
+  time: '2025-03-11T01:24:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/378
 
