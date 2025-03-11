@@ -28,17 +28,13 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     public bool LockPlacement = false;
     private Vector2 _lastPos = Vector2.Zero;
 
-    //for the pulse lines effect
-    private float _pulseProgress = 0;
-    private readonly float _pulseTime = 5;
-
     //for a slight fade in / out
     public float fadeInProgress = 0;
-    public float fadeInTime = 0.5f;
+    public float fadeInTime = 0.25f;
     public bool fadingIn = true;
 
     public float fadeOutProgress = 0;
-    public float fadeOutTime = 0.5f;
+    public float fadeOutTime = 0.25f;
     public bool fadingOut = false;
 
     public float alpha = 0;
@@ -62,7 +58,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         _saturationShader.SetParameter("hsv", new Robust.Shared.Maths.Vector3(1.0f, 0.25f, 0.2f));
 
         _starsShader = protoMan.Index<ShaderPrototype>("MonumentPulse").InstanceUnique(); //todo make this shader
-        _saturationShader.SetParameter("tileSize", new Vector2(96, 96));
+        _starsShader.SetParameter("tileSize", new Vector2(96, 96));
 
         _unshadedShader = protoMan.Index<ShaderPrototype>("unshaded").Instance(); //doesn't need a unique instance
 
@@ -121,29 +117,27 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
             alpha = 1 - fadeOutProgress / fadeOutTime;
         }
 
-        //make the pulsing lines progress
-        _pulseProgress += time;
-        if (_pulseProgress >= _pulseTime)
-            _pulseProgress -= _pulseTime;
-        _starsShader.SetParameter("pulseProgress", _pulseProgress / _pulseTime);
+        //have the outline's alpha slightly "breathe"
+        var outlineAlphaModulate = 0.65f + (0.35f * (float) Math.Sin(_timing.CurTime.TotalSeconds));
 
         //stuff to make the monument preview stick in place once the ability is confirmed
         Color color;
         if (!LockPlacement)
         {
             //snap the preview to the tile we'll be spawning the monument on
+            //todo repeating myself but copy this over into the monument location validation code as well
             var localTile = _mapSystem.GetTileRef(transformComp.GridUid.Value, grid, transformComp.Coordinates);
             var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
             var snappedCoords = _mapSystem.ToCenterCoordinates(transformComp.GridUid.Value, targetIndices, grid);
             _lastPos = snappedCoords.Position; //update the position
 
             //set the colour based on if the target tile is valid or not todo make this something else? like a toggle in a shader or so? that's for later anyway
-            color = _preview.VerifyPlacement(transformComp) ? Color.White.WithAlpha(alpha) : Color.Gray.WithAlpha(0.5f * alpha);
+            color = _preview.VerifyPlacement(transformComp) ? Color.White.WithAlpha(outlineAlphaModulate * alpha) : Color.Gray.WithAlpha(outlineAlphaModulate * 0.5f * alpha);
         }
         else
         {
-            //if the position is locked, then it has to be valid so always use green
-            color = Color.White;
+            //if the position is locked, then it has to be valid so always use the valid colour
+            color = Color.White.WithAlpha(outlineAlphaModulate * alpha);
         }
 
         worldHandle.SetTransform(parentTransform.LocalMatrix);
@@ -156,7 +150,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         worldHandle.UseShader(_unshadedShader);
         worldHandle.DrawTexture(_spriteSystem.Frame0(outlineTex), _lastPos - new Vector2(1.5f, 0.5f), color);
 
-        //todo make this shader
+        //some fancy schmancy things for the inside of the monument
         worldHandle.UseShader(_starsShader);
         worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos - new Vector2(1.5f, 0.5f), color);
         worldHandle.UseShader(null);

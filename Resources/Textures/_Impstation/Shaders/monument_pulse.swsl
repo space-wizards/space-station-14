@@ -1,20 +1,24 @@
 light_mode unshaded;
 
 uniform highp vec2 tileSize; //this can probably just be TEXTURE_PIXEL_SIZE instead?
-uniform highp float pulseProgress;
+
+const highp float pulseTime = 4;
 
 void fragment() {
     highp vec2 crunched = quantiseVecDown(UV);
     highp float aMultPulse = sin(TIME);
     highp vec4 baseCol = vec4(texture(TEXTURE, UV).rgb, texture(TEXTURE, UV).a * (0.6 + (0.4 * aMultPulse)));
 
-    highp float distA = pulseProgress - UV.y;
-    highp float distB = UV.y - pulseProgress;
+    highp float pulseProgress = mod(TIME, pulseTime) / pulseTime;
+    highp float distA = pulseProgress - crunched.y;
+    highp float distB = crunched.y - pulseProgress;
     highp float distReal = min(abs(distA), 1.0 - abs(distB));
 
-    COLOR = vec4(baseCol.rgb, 1.0 * (distReal * distReal * distReal));
+    COLOR = vec4(baseCol.rgb, 1.0 * (distReal * distReal * distReal * distReal));
 }
 
+//something might have become fucked with this between copying it over?
+//want to investigate
 highp vec2 quantiseVecDown(highp vec2 v) {
     highp vec2 multiple = vec2(1.0, 1.0) / tileSize;
     highp vec2 rem = mod(v, multiple);
