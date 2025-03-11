@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Mapping Changes to Xeno, Box, and Fland, and all cargo shuttles
-    type: Add
-  - message: Fixed atmos monitoring computer locale
-    type: Fix
-  id: 771
-  time: '2024-12-20T16:21:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1075
 - author: DinnerCalzone
   changes:
   - message: All immovable rod types now have a custom kill message.
@@ -4081,3 +4072,12 @@
   id: 1270
   time: '2025-03-10T23:43:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1889
+- author: DinnerCalzone
+  changes:
+  - message: All job icons for the Service department jobs have been resprited to
+      be matching. Except for the jobs in the Theatre sub-department, which have been
+      resprited to not be matching.
+    type: Tweak
+  id: 1271
+  time: '2025-03-11T05:04:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1871
