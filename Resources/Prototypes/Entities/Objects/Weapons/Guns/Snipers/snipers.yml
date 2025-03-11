@@ -82,7 +82,7 @@
 #  - type: MeleeRequiresWield
 
 - type: entity
-  name: Hristov
+  name: Copperhead-Hristov #imp
   parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo. #imp

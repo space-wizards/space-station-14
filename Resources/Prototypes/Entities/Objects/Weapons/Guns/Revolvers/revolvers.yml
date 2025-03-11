@@ -112,7 +112,7 @@
   name: Python
   parent: [BaseWeaponRevolver, Tier3Contraband]
   id: WeaponRevolverPython
-  description: A robust revolver favored by Syndicate agents. Uses .45 magnum ammo.
+  description: Power without question; authority without asking. Uses .45 magnum ammo. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Revolvers/python.rsi #imp
