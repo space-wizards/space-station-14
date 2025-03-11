@@ -1,7 +1,6 @@
 using Content.Client.Markers;
 using Content.Client.Popups;
 using Content.Client.SubFloor;
-using Content.Shared.Administration;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;

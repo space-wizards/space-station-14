@@ -176,9 +176,9 @@ namespace Content.Server.Pointing.EntitySystems
             }
 
             var layer = (int) VisibilityFlags.Normal;
-            if (TryComp(player, out Robust.Shared.GameObjects.VisibilityComponent? playerVisibility))
+            if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
-                var arrowVisibility = EntityManager.EnsureComponent<Robust.Shared.GameObjects.VisibilityComponent>(arrow);
+                var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
                 _visibilitySystem.SetLayer((arrow, arrowVisibility), (ushort) layer);
             }
