@@ -1,7 +1,10 @@
 ﻿using Content.Shared.FixedPoint;
-namespace Content.Server.Speech.Components;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Speech.Components;
 
 [RegisterComponent]
+[NetworkedComponent]
 public sealed partial class DamagedSiliconAccentComponent : Component
 {
     /// <summary>
