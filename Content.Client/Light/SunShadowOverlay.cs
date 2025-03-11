@@ -114,7 +114,9 @@ public sealed class SunShadowOverlay : Overlay
                     foreach (var ent in _shadows)
                     {
                         var xform = _entManager.GetComponent<TransformComponent>(ent.Owner);
-                        var worldMatrix = _xformSys.GetWorldMatrix(xform);
+                        var (worldPos, worldRot) = _xformSys.GetWorldPositionRotation(xform);
+                        // Need no rotation on matrix as sun shadow direction doesn't care.
+                        var worldMatrix = Matrix3x2.CreateTranslation(worldPos);
                         var renderMatrix = Matrix3x2.Multiply(worldMatrix, invMatrix);
                         var pointCount = ent.Comp.Points.Length;
 
@@ -122,6 +124,10 @@ public sealed class SunShadowOverlay : Overlay
 
                         for (var i = 0; i < pointCount; i++)
                         {
+                            // Update point based on entity rotation.
+                            indices[i] = worldRot.RotateVec(indices[i]);
+
+                            // Add the offset point by the sun shadow direction.
                             indices[pointCount + i] = indices[i] + direction;
                         }
 
@@ -134,7 +140,7 @@ public sealed class SunShadowOverlay : Overlay
                 Color.Transparent);
 
             // Slightly blur it just to avoid aliasing issues on the later viewport-wide blur.
-            _clyde.BlurRenderTarget(viewport, _target, _target, eye, 1f);
+            _clyde.BlurRenderTarget(viewport, _target, _blurTarget!, eye, 1f);
 
             // Draw stencil (see roofoverlay).
             args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
