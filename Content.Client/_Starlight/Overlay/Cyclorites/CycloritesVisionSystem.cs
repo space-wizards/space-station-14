@@ -54,11 +54,8 @@ public sealed class CycloritesVisionSystem : EntitySystem
     {
         _overlayMan.AddOverlay(_overlay);
 
-        if (!ent.Comp.blockedByFlashImmunity)
-        {
-            if (_effect == null)
-                AddNightVision(ent.Owner);
-        }
+        if (_effect == null && !ent.Comp.blockedByFlashImmunity)
+            AddNightVision(ent.Owner);
     }
 
     private void OnPlayerDetached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerDetachedEvent args)
