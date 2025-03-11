@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: All immovable rod types now have a custom kill message.
-    type: Add
-  id: 772
-  time: '2024-12-20T16:25:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1079
 - author: honeyed-lemons
   changes:
   - message: Holopad Tweaks
@@ -4081,3 +4074,11 @@
   id: 1271
   time: '2025-03-11T05:04:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1871
+- author: Darkmajia
+  changes:
+  - message: The supermatter has a grace period at roundstart, absorbing 10x less
+      gas until it's powered.
+    type: Tweak
+  id: 1272
+  time: '2025-03-11T07:41:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1895
