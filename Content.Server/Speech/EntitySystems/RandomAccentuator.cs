@@ -17,9 +17,9 @@ public static class RandomAccentuator
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var singleAccentuator = new SingleAccentuator();
-        return !random.Prob(chance)
-            ? message
-            : MaybeAccentuateInternal(message, singleAccentuator, random, reaccentuationChance);
+        return random.Prob(chance)
+            ? MaybeAccentuateDirect(message, singleAccentuator, random, reaccentuationChance)
+            : message;
     }
 
     public static FormattedMessage MaybeAccentuate(FormattedMessage message,
@@ -35,7 +35,7 @@ public static class RandomAccentuator
             if (random.Prob(chance) && node.Name is null && node.Value.TryGetString(out var text) &&
                 !string.IsNullOrWhiteSpace(text))
             {
-                var accentedText = MaybeAccentuateInternal(text, singleAccentuator, random, reaccentuationChance);
+                var accentedText = MaybeAccentuateDirect(text, singleAccentuator, random, reaccentuationChance);
                 newMessage.PushTag(new MarkupNode(accentedText));
             }
             else
@@ -47,7 +47,7 @@ public static class RandomAccentuator
         return newMessage;
     }
 
-    private static string MaybeAccentuateInternal(string message,
+    private static string MaybeAccentuateDirect(string message,
         SingleAccentuator singleAccentuator,
         IRobustRandom random,
         float reaccentuationChance)
