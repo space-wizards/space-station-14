@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: The atmospheric alerts computer has been upgraded to visually indicate
-      the rooms of the station that are being monitored by its air and fire alarm
-      systems
-    type: Tweak
-  id: 7550
-  time: '2024-10-23T12:49:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31910
 - author: hyphenationc
   changes:
   - message: Snake meat is now properly considered Meat, so Lizards can eat it.
@@ -3890,3 +3881,12 @@
   id: 8049
   time: '2025-03-10T23:17:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35764
+- author: ScarKy0
+  changes:
+  - message: Mindshield implants can now be removed using an empty implanter.
+    type: Tweak
+  - message: Revolutionaries can now win by converting all command members.
+    type: Add
+  id: 8050
+  time: '2025-03-11T09:41:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35769
