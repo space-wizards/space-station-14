@@ -99,8 +99,8 @@ names-ai-dataset-70 = Max 404
 names-ai-dataset-71 = Metalhead
 names-ai-dataset-72 = M.I.M.I
 names-ai-dataset-73 = MK ULTRA
-# Imp special: originally was MoMMI but well, cooler Alien reference and was already killed by AirFryer
-names-ai-dataset-74 = MU-TH-ER 6000
+# Imp - There was a gap here with the duplicate and I will fill it
+names-ai-dataset-74 = Universal Will
 names-ai-dataset-75 = Mugsy3000
 names-ai-dataset-76 = Multivac
 names-ai-dataset-77 = NCH
