@@ -9992,7 +9992,7 @@ entities:
       pos: 10.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2284.453
+      secondsUntilStateChange: -2314.5015
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10244,7 +10244,7 @@ entities:
       pos: 30.5,-49.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8589.748
+      secondsUntilStateChange: -8619.797
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10391,7 +10391,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -155782.58
+      secondsUntilStateChange: -155812.62
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10402,7 +10402,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -155784.45
+      secondsUntilStateChange: -155814.5
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11157,7 +11157,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -351353.53
+      secondsUntilStateChange: -351383.6
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11693,7 +11693,7 @@ entities:
       pos: 44.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26550.166
+      secondsUntilStateChange: -26580.215
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -65630,7 +65630,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -80102.26
+      secondsUntilStateChange: -80132.305
       state: Opening
   - uid: 18653
     components:
@@ -76682,7 +76682,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -382691.8
+      secondsUntilStateChange: -382721.88
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -133473,6 +133473,13 @@ entities:
     components:
     - type: Transform
       pos: 1.5,84.5
+      parent: 2
+- proto: SpawnPointHospitalityDirector
+  entities:
+  - uid: 21234
+    components:
+    - type: Transform
+      pos: 8.5,86.5
       parent: 2
 - proto: SpawnPointJanitor
   entities:
