@@ -23,13 +23,12 @@
     difficulty: 2.5 # this thing will not shut the fuck up
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealStructureObjective
   id: PetSuppyStealObjective #engineering pet by supermatter
   components:
   - type: NotJobRequirement
     job: StationEngineer
   - type: StealCondition
-    verifyMapExistence: true
     stealGroup: PetSuppy
     descriptionText: objective-condition-thief-suppy-description
   - type: Objective
