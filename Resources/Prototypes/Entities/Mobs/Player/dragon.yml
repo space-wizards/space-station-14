@@ -156,6 +156,8 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
+  - type: Body
+    prototype: AnimalCarp #imp
 
 - type: entity
   parent: BaseMobDragon

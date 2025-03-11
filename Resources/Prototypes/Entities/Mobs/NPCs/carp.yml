@@ -87,6 +87,8 @@
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: Body
+      prototype: AnimalCarp #imp
 
 - type: entity
   name: nice space carp
@@ -169,6 +171,8 @@
       interactFailureString: petting-failure-nicecarp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: Body
+      prototype: AnimalCarp #imp
 
 - type: entity
   parent: BaseMobCarp

@@ -137,7 +137,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+      - carpflesh #imp
   - type: Tag
     tags:
     - Raw
@@ -388,6 +388,9 @@
   - type: FoodSequenceElement
     entries:
       Burger: DragonBurger
+  - type: FlavorProfile #imp
+    flavors:
+      - carpflesh
 
 - type: entity
   name: raw rat meat

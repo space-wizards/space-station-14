@@ -81,3 +81,48 @@
       - !type:ChemVomit
         probability: 0.75
       - !type:Jitter
+
+- type: reagent # can't parent it to blood because anybody besides snails should be able to drink it, the flesh/organs are the toxic parts
+  id: ShimmeringBlood
+  name: reagent-name-shimmering-blood
+  group: Biological
+  desc: reagent-desc-shimmeringblood
+  flavor: brackish
+  color: "#FF7F50" # we picked coral orange, which appropriately is a slightly lighter ichor color, since dragons have this blood
+  recognizable: true
+  physicalDesc: reagent-physical-desc-shimmering
+  slippery: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.0
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+        conditions:
+          - !type:OrganType
+            type: Snail
+      - !type:ChemVomit
+        probability: 0.25
+        conditions:
+          - !type:OrganType
+            type: Snail
+  plantMetabolism:
+    - !type:PlantAdjustWater
+      amount: 0.5
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

@@ -72,6 +72,8 @@
     hideLayersOnEquip:
     - Hair
     - Snout
+  - type: Bloodstream
+    bloodReagent: ShimmeringBlood
   - type: Inventory
     templateId: thaven
     displacements:

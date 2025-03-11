@@ -592,7 +592,7 @@
   - type: FlavorProfile
     flavors:
       - bun
-      - fishy
+      - carpflesh #imp
   - type: Sprite
     state: fish
   - type: Tag

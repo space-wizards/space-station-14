@@ -272,7 +272,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+      - carpflesh #imp
       - batter
       - spicy
   - type: Sprite
@@ -327,7 +327,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - fishy
+      - carpflesh #imp
   - type: Sprite
     state: bearsteak
   - type: SolutionContainerManager
@@ -568,7 +568,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+      - carpflesh #imp
   - type: Sprite
     state: sashimi
   - type: SolutionContainerManager
@@ -593,7 +593,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+      - carpflesh #imp
       - finfin
   - type: Sprite
     state: sashimi
