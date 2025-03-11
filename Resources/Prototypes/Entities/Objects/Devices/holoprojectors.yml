@@ -58,8 +58,11 @@
   suffix: borg
   components:
   - type: HolosignProjector
-    signproto: HoloPeel
+    signProto: HoloPeel
     chargeUse: 240
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/peel.rsi
+    state: icon
   - type: ItemSlots
     slots:
       cell_slot:
