@@ -41,7 +41,7 @@
       "name": "folder-sec-doc"
     },
     {
-        "name": "folder-stamp-inverse"
+      "name": "folder-stamp-inverse"
     },
     {
       "name": "label_cart"
@@ -247,16 +247,13 @@
       "name": "paper_stamp-signature"
     },
     {
+      "name": "paper_stamp-wizard"
+    },
+    {
       "name": "syndicate_card"
     },
     {
       "name": "thief_card"
-    },
-    {
-      "name": "paper_stamp-psychologist"
-    },
-    {
-      "name": "paper_stamp-wizard"
     }
   ]
 }
