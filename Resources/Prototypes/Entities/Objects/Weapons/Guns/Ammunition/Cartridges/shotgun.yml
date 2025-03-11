@@ -22,6 +22,7 @@
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (.50 stun slug)
+  description: A shotgun shell with a slug designed to subdue targets, knocking the wind out of them and delivering a nasty shock.
   parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
@@ -42,6 +43,7 @@
 - type: entity
   id: ShellShotgunSlug
   name: shell (.50 slug)
+  description: A shotgun shell loaded with a single large projectile. Acts like a really big bullet.
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -56,6 +58,7 @@
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
+  description: A shotgun shell loaded with an illumination flare, much like a flare gun.
   parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
@@ -74,7 +77,8 @@
 
 - type: entity
   id: ShellShotgun
-  name: shell (.50)
+  name: shell (.50 buckshot)
+  description: Double-ought buckshot, the default of shotgun shells. Delivers a spread of lethal pellets.
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -87,6 +91,7 @@
 - type: entity
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
+  description: A shotgun shell loaded with soft pellets containing a pyrophoric compound, setting targets ablaze.
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -101,6 +106,7 @@
 - type: entity
   id: ShellShotgunPractice
   name: shell (.50 practice)
+  description: A shotgun shell loaded with wax pellets to simulate the real deal. Can be used for force-on-force training, but still stings like a bitch. Eye protection recommended.
   parent: BaseShellShotgun
   components:
   - type: Sprite
@@ -115,6 +121,7 @@
 - type: entity
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
+  description: A shotgun shell loaded with a single hypodermic needle, designed to deliver a reagent to its target.
   parent: BaseShellShotgun
   components:
   - type: Tag
@@ -142,7 +149,7 @@
 
 - type: entity
   id: ShellShotgunImprovised
-  name: improvised shotgun shell
+  name: shell (.50 improvised)
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
   parent: BaseShellShotgun
   components:
@@ -165,7 +172,8 @@
 
 - type: entity
   id: ShellShotgunUranium
-  name: uranium shotgun shell
+  name: shell (.50 uranium)
+  description: A shotgun shell loaded with dense depleted uranium. The heavier pellets tighten the spread of the shot and deliver radiation poisoning, at the cost of worse penetration.
   parent: BaseShellShotgun
   components:
     - type: Sprite
