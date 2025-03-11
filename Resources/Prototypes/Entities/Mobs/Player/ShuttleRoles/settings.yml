@@ -929,8 +929,6 @@
       - MindRoleGhostRoleFreeAgent
       raffle:
         settings: short
-      mindRoles: # imp
-      - MindRoleGhostRoleFreeAgent
     - type: Loadout
       prototypes: [ SyndicateOperativeGearCivilian ]
       roleLoadout: [ RoleSurvivalSyndicate ]

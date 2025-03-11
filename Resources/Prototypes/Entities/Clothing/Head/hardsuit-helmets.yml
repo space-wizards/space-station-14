@@ -131,8 +131,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
-  - type: PointLight
-    radius: 6
+
 # The original components are here, but commented out since doing it this way prevents vox from using their custom sprite for it and because the unshaded pixels didn't seem to work anyway
 #   components:
 #   - type: Sprite
@@ -650,7 +649,7 @@
 
 #Makeshift Hardsuit Helmet
 - type: entity
-  parent: [ BaseMajorContraband, ClothingHeadHardsuitWithLightBase ]
+  parent: [ BaseMajorContraband, ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetProspector
   name: makeshift hardsuit helmet
   description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. It'll do.

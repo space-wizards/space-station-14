@@ -199,6 +199,13 @@
   id: AntagInitialInfected
 
 - type: playTimeTracker
+  id: Survivor
+
+
+- type: playTimeTracker
+  id: AntagWizard
+
+- type: playTimeTracker
   id: AntagZombie
 
 # non-upstream antagonists:

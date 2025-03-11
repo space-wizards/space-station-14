@@ -225,7 +225,7 @@
 - type: entity
   name: whitehole grenade
   description: Grenade that repulses everything around for some time.
-  parent: SingularityGrenade
+  parent: SupermatterGrenade
   id: WhiteholeGrenade
   components:
   - type: Sprite

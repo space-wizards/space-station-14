@@ -810,14 +810,13 @@
   - type: Tag
     tags:
     - Trash
+    - MultitoolDefibrillatorTarget
   - type: Bloodstream
     bloodReagent: InsectBlood
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
-  - type: Tag
-    tags:
-    - MultitoolDefibrillatorTarget
+
 
 - type: entity
   name: cow

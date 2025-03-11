@@ -1,7 +1,7 @@
 ﻿using Content.Server.Antag;
 using Content.Server.Communications;
-using Content.Server.Forensics;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Hands.EntitySystems;

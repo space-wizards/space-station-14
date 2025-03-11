@@ -910,9 +910,6 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg

@@ -27,11 +27,10 @@
     pocket2: Paper
     shoes: ClothingShoesColorWhite
     id: MimePDA
-    pocket1: CrayonMime
     ears: ClothingHeadsetService
   storage:
     back:
-    - RubberStampMime
+    - RubberStampMimeSledgehammer
 
 - type: entity
   id: ActionMimeInvisibleWall

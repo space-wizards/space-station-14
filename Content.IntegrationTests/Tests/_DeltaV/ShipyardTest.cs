@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Components;
 using Content.Shared._DV.Shipyard.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.DV;
 
@@ -28,7 +29,7 @@ public sealed class ShipyardTest
             {
                 foreach (var vessel in proto.EnumeratePrototypes<VesselPrototype>())
                 {
-                    var shuttle = shipyard.TryCreateShuttle(vessel.Path.ToString());
+                    var shuttle = shipyard.TryCreateShuttle(new ResPath(vessel.Path.ToString()));
                     Assert.That(shuttle, Is.Not.Null, $"Failed to spawn shuttle {vessel.ID}!");
                     var value = pricing.AppraiseGrid(shuttle.Value);
                     Assert.That(value, Is.AtMost(vessel.Price), $"Found arbitrage on shuttle {vessel.ID}! Price is {vessel.Price} but value is {value}!");
@@ -56,7 +57,7 @@ public sealed class ShipyardTest
             {
                 foreach (var vessel in proto.EnumeratePrototypes<VesselPrototype>())
                 {
-                    var shuttle = shipyard.TryCreateShuttle(vessel.Path.ToString());
+                    var shuttle = shipyard.TryCreateShuttle(new ResPath(vessel.Path.ToString()));
                     Assert.That(shuttle, Is.Not.Null, $"Failed to spawn shuttle {vessel.ID}!");
                     var console = FindComponent<ShuttleConsoleComponent>(entities, shuttle.Value);
                     Assert.That(console, Is.True, $"Shuttle {vessel.ID} had no shuttle console!");
