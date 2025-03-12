@@ -18,6 +18,7 @@ using System.Collections.Immutable;
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Server.Light.Components;
+using Content.Shared._Impstation.Cosmiccult;
 using Robust.Shared.Physics.Events;
 using Content.Shared.NPC;
 using Content.Shared.Mobs.Components;
@@ -327,9 +328,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region MonumentSpawn
     private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicPlaceMonument args)
     {
-        //todo make the cancellation use the actionAttemptEvent instead of the event?
-        //todo also make this check the actual position
-        //todo also also deduplicate this between the clientside & serverside checks? everything except the grid check can be in the shared system, then just have the grid check in here
+        //todo make this check the actual position
+        //todo also deduplicate this between the clientside & serverside checks? everything except the grid check can be in the shared system, then just have the grid check in here
         var spaceDistance = 3;
         var xform = Transform(uid);
         var user = Transform(args.Performer);
@@ -385,7 +385,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region MonumentMove
     private void OnCosmicMoveMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicMoveMonument args)
     {
-        //todo make this force-close the monument UI for those w/ it open
         var spaceDistance = 3;
         var xform = Transform(uid);
         var user = Transform(args.Performer);
@@ -446,9 +445,18 @@ public sealed partial class CosmicCultSystem : EntitySystem
         //move the monument
         //not my problem if there's more than one monument in a round
         var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
-        while (monumentQuery.MoveNext(out var monument, out _))
+        while (monumentQuery.MoveNext(out var monument, out var monumentComp))
         {
             _transform.SetCoordinates(monument, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
+
+            if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph
+                QueueDel(monumentComp.CurrentGlyph);
+        }
+
+        //close the UI for everyone who has it open
+        if (TryComp<UserInterfaceComponent>(uid, out var uiComp))
+        {
+            _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
         }
     }
 
