@@ -25,8 +25,8 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
@@ -53,7 +53,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         if (_cachedOverlay == null || _cancellationTokenSource == null)
             return;
 
-        if (!VerifyPlacement(Transform(args.Performer)))
+        if (!VerifyPlacement(Transform(args.Performer), out _))
             return;
 
         _cachedOverlay.LockPlacement = true;
@@ -87,7 +87,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         if (_cachedOverlay == null || _cancellationTokenSource == null)
             return;
 
-        if (!VerifyPlacement(Transform(args.Performer)))
+        if (!VerifyPlacement(Transform(args.Performer), out _))
             return;
 
         _cachedOverlay.LockPlacement = true;
@@ -105,44 +105,35 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         );
     }
 
-    //duplicated from the ability check
-    //this is technically wrong as it checks exactly 1 tile up from the player ent instead of where the monument will spawn, causing valid locations to sometimes be invalid & vice-versa
-    //todo fix that?
-    public bool VerifyPlacement(TransformComponent xform)
+    //duplicated from the ability check, minus the station check because that can't be done clientside afaik?
+    public bool VerifyPlacement(TransformComponent xform, out EntityCoordinates outPos)
     {
+        outPos = new EntityCoordinates();
+
+        //MAKE SURE WE'RE STANDING ON A GRID
+        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
+        {
+            return false;
+        }
+
+        //CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
         var spaceDistance = 3;
-        var worldPos = _transformSystem.GetWorldPosition(xform);
-        var pos = xform.LocalPosition + new Vector2(0, 1f);
-        var box = new Box2(pos + new Vector2(-1.4f, -0.4f), pos + new Vector2(1.4f, 0.4f));
-
-        // MAKE SURE WE'RE STANDING ON A GRID
-        if (!_entityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
+        var worldPos = _transform.GetWorldPosition(xform); //this is technically wrong but basically fine; if
+        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, spaceDistance)))
         {
-            return false;
+            if (tile.IsSpace(_tileDef))
+            {
+                return false;
+            }
         }
 
-        // CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
-        foreach (var tile in _mapSystem.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, spaceDistance)))
-        {
-            if (!tile.IsSpace(_tileDef))
-                continue;
-            return false;
-        }
+        var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
+        var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
+        var pos = _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid);
+        outPos = pos;
+        var box = new Box2(pos.Position + new Vector2(-1.4f, -0.4f), pos.Position + new Vector2(1.4f, 0.4f));
 
-        // cannot do this check clientside todo fix this? not sure if that's even possible
-        // CHECK IF WE'RE ON THE STATION OR IF SOMEONE'S TRYING TO SNEAK THIS ONTO SOMETHING SMOL
-        //var station = _station.GetStationInMap(xform.MapID);
-        //EntityUid? stationGrid = null;
-
-        //if (!_entityManager.TryGetComponent<StationDataComponent>(station, out var stationData))
-        //    stationGrid = _station.GetLargestGrid(stationData);
-
-        //if (stationGrid is not null && stationGrid != xform.GridUid)
-        //{
-        //    return false;
-        //}
-
-        // CHECK FOR ENTITY AND ENVIRONMENTAL INTERSECTIONS
+        //CHECK FOR ENTITY AND ENVIRONMENTAL INTERSECTIONS
         if (_lookup.AnyLocalEntitiesIntersecting(xform.GridUid.Value, box, LookupFlags.Dynamic | LookupFlags.Static, _playerManager.LocalEntity))
         {
             return false;
@@ -163,7 +154,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         _cancellationTokenSource = new CancellationTokenSource();
         //it's probably inefficient to make a new one every time, but this'll be happening like four times a round maybe
         //massive ctor because iocmanager hates me
-        _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _mapSystem, _protoMan, this, _timing, ent.Comp.Tier);
+        _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _map, _protoMan, this, _timing, ent.Comp.Tier);
         _overlay.AddOverlay(_cachedOverlay);
 
         //remove the overlay automatically after the primeTime expires

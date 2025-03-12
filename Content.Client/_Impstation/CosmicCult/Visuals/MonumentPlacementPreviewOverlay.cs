@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -25,7 +26,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     private readonly ShaderInstance _starsShader;
 
     public bool LockPlacement = false;
-    private Vector2 _lastPos = Vector2.Zero;
+    private EntityCoordinates _lastPos = new();
 
     //for a slight fade in / out
     //ss14's formatting settings can take my needlessly pulbic variables away from my cold, dead hands
@@ -125,15 +126,9 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         Color color;
         if (!LockPlacement)
         {
-            //snap the preview to the tile we'll be spawning the monument on
-            //todo repeating myself but copy this over into the monument location validation code as well
-            var localTile = _mapSystem.GetTileRef(transformComp.GridUid.Value, grid, transformComp.Coordinates);
-            var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
-            var snappedCoords = _mapSystem.ToCenterCoordinates(transformComp.GridUid.Value, targetIndices, grid);
-            _lastPos = snappedCoords.Position; //update the position
-
             //set the colour based on if the target tile is valid or not todo make this something else? like a toggle in a shader or so? that's for later anyway
-            color = _preview.VerifyPlacement(transformComp) ? Color.White.WithAlpha(outlineAlphaModulate * alpha) : Color.Gray.WithAlpha(outlineAlphaModulate * 0.5f * alpha);
+            color = _preview.VerifyPlacement(transformComp, out var snappedCoords) ? Color.White.WithAlpha(outlineAlphaModulate * alpha) : Color.Gray.WithAlpha(outlineAlphaModulate * 0.5f * alpha);
+            _lastPos = snappedCoords; //update the position
         }
         else
         {
@@ -145,15 +140,15 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
 
         //for the desaturated monument "shadow"
         worldHandle.UseShader(_saturationShader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(mainTex), _lastPos - new Vector2(1.5f, 0.5f), Color.White.WithAlpha(alpha)); //needs the offset to render in the proper position. does not inherit the extra modulate
+        worldHandle.DrawTexture(_spriteSystem.Frame0(mainTex), _lastPos.Position - new Vector2(1.5f, 0.5f), Color.White.WithAlpha(alpha)); //needs the offset to render in the proper position. does not inherit the extra modulate
 
         //for the outline to pop
         worldHandle.UseShader(_unshadedShader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(outlineTex), _lastPos - new Vector2(1.5f, 0.5f), color);
+        worldHandle.DrawTexture(_spriteSystem.Frame0(outlineTex), _lastPos.Position - new Vector2(1.5f, 0.5f), color);
 
         //some fancy schmancy things for the inside of the monument
         worldHandle.UseShader(_starsShader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos - new Vector2(1.5f, 0.5f), color.WithAlpha(alpha)); //don't inherit the alpha mult on the inside bit
+        worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos.Position - new Vector2(1.5f, 0.5f), color.WithAlpha(alpha)); //don't inherit the alpha mult on the inside bit
         worldHandle.UseShader(null);
     }
 }
