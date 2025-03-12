@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Interaction;
@@ -71,7 +72,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
 
         comp.Mixing = true;
         if (_net.IsServer)
-            comp.MixingSoundEntity = _audio.PlayPvs(comp.MixingSound, entity, comp.MixingSound?.Params.WithLoop(true));
+            comp.MixingSoundEntity = _audio.PlayPvs(comp.MixingSound, entity, FunAudioParams.WithUniformPitch(comp.MixingSound?.Params.WithLoop(true)));
         comp.MixTimeEnd = _timing.CurTime + comp.MixDuration;
         _appearance.SetData(entity, SolutionContainerMixerVisuals.Mixing, true);
         Dirty(uid, comp);

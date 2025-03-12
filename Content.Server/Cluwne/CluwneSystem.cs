@@ -12,6 +12,7 @@ using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
@@ -74,7 +75,7 @@ public sealed class CluwneSystem : EntitySystem
         EnsureComp<ClumsyComponent>(uid);
 
         _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
-        _audio.PlayPvs(component.SpawnSound, uid);
+        _audio.PlayPvs(component.SpawnSound, uid, FunAudioParams.WithUniformPitch());
 
         _nameMod.RefreshNameModifiers(uid);
 
@@ -92,13 +93,13 @@ public sealed class CluwneSystem : EntitySystem
 
         if (_robustRandom.Prob(component.GiggleRandomChance))
         {
-            _audio.PlayPvs(component.SpawnSound, uid);
+            _audio.PlayPvs(component.SpawnSound, uid, FunAudioParams.WithUniformPitch());
             _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
 
         else if (_robustRandom.Prob(component.KnockChance))
         {
-            _audio.PlayPvs(component.KnockSound, uid);
+            _audio.PlayPvs(component.KnockSound, uid, FunAudioParams.WithUniformPitch());
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }

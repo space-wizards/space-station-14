@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
@@ -298,7 +299,7 @@ public sealed partial class SleepingSystem : EntitySystem
         {
             if (user != null)
             {
-                _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user);
+                _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user, FunAudioParams.WithUniformPitch());
                 _popupSystem.PopupClient(Loc.GetString("wake-other-failure", ("target", Identity.Entity(ent, EntityManager))), ent, user, PopupType.SmallCaution);
             }
             return false;
@@ -306,7 +307,7 @@ public sealed partial class SleepingSystem : EntitySystem
 
         if (user != null)
         {
-            _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user);
+            _audio.PlayPredicted(ent.Comp.WakeAttemptSound, ent, user, FunAudioParams.WithUniformPitch());
             _popupSystem.PopupClient(Loc.GetString("wake-other-success", ("target", Identity.Entity(ent, EntityManager))), ent, user);
         }
 

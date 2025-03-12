@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Cargo.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Timing;
@@ -34,7 +35,7 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
                 user);
         }
 
-        _audio.PlayPvs(entity.Comp.AppraisalSound, entity.Owner);
+        _audio.PlayPvs(entity.Comp.AppraisalSound, entity.Owner, FunAudioParams.WithUniformPitch());
         _useDelay.TryResetDelay((entity.Owner, useDelay));
         return true;
     }

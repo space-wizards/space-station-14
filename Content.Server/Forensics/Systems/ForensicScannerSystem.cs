@@ -16,6 +16,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Audio;
+
 // todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
@@ -148,7 +150,7 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
+                    _audioSystem.PlayPvs(component.SoundMatch, uid, FunAudioParams.WithUniformPitch());
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
                     return;
                 }
@@ -158,13 +160,13 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
+                    _audioSystem.PlayPvs(component.SoundMatch, uid, FunAudioParams.WithUniformPitch());
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
                     return;
                 }
             }
 
-            _audioSystem.PlayPvs(component.SoundNoMatch, uid);
+            _audioSystem.PlayPvs(component.SoundNoMatch, uid, FunAudioParams.WithUniformPitch());
             _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
         }
 

@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
@@ -52,7 +53,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     {
         var reagent = GetRandomReagentType(entity, severity);
         entity.Comp.ProducingReagent = reagent;
-        _audio.PlayPvs(entity.Comp.ChangeSound, entity);
+        _audio.PlayPvs(entity.Comp.ChangeSound, entity, FunAudioParams.WithUniformPitch());
     }
 
     //reagent realtime generation

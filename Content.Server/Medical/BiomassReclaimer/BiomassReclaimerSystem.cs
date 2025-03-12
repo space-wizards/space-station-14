@@ -130,7 +130,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
             _jitteringSystem.AddJitter(uid, -10, 100);
-            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid, FunAudioParams.WithUniformPitch());
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 

@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
@@ -95,7 +96,7 @@ public sealed class EntityHeaterSystem : EntitySystem
         comp.Setting = setting;
         power.Load = SettingPower(setting, comp.Power);
         _appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
-        _audio.PlayPvs(comp.SettingSound, uid);
+        _audio.PlayPvs(comp.SettingSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private float SettingPower(EntityHeaterSetting setting, float max)

@@ -1,4 +1,5 @@
 using Content.Server.Polymorph.Components;
+using Content.Shared.Audio;
 using Content.Shared.Polymorph;
 using Content.Shared.Projectiles;
 using Content.Shared.Whitelist;
@@ -32,7 +33,7 @@ public partial class PolymorphSystem
 
             var ent = PolymorphEntity(data.Ent, data.Polymorph);
             if (ent != null)
-                _audio.PlayPvs(data.Sound, ent.Value);
+                _audio.PlayPvs(data.Sound, ent.Value, FunAudioParams.WithUniformPitch());
         }
     }
 

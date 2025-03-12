@@ -4,6 +4,7 @@ using Content.Shared.Flash.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
+using Content.Shared.Audio;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Eye.Blinding.Components;
@@ -87,7 +88,7 @@ namespace Content.Server.Flash
                 return false;
 
             _charges.UseCharge(uid, charges);
-            _audio.PlayPvs(comp.Sound, uid);
+            _audio.PlayPvs(comp.Sound, uid, FunAudioParams.WithUniformPitch());
             comp.Flashing = true;
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
 
@@ -177,7 +178,7 @@ namespace Content.Server.Flash
                 Flash(entity, user, source, duration, slowTo, displayPopup);
             }
 
-            _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));
+            _audio.PlayPvs(sound, source, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(1f)).WithMaxDistance(3f));
         }
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)

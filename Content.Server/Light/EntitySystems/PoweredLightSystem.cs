@@ -275,7 +275,7 @@ namespace Content.Server.Light.EntitySystems
                         if (time > light.LastThunk + ThunkDelay)
                         {
                             light.LastThunk = time;
-                            _audio.PlayPvs(light.TurnOnSound, uid, light.TurnOnSound.Params.AddVolume(-10f));
+                            _audio.PlayPvs(light.TurnOnSound, uid, FunAudioParams.WithUniformPitch(light.TurnOnSound.Params.AddVolume(-10f)));
                         }
                     }
                     else

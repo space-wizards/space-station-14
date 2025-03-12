@@ -10,6 +10,7 @@ using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Cloning;
@@ -317,7 +318,7 @@ namespace Content.Server.Cloning
 
             if (_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                _audio.PlayPvs(clonePod.ScreamSound, uid);
+                _audio.PlayPvs(clonePod.ScreamSound, uid, FunAudioParams.WithUniformPitch());
                 Spawn(clonePod.MobSpawnId, transform.Coordinates);
             }
 

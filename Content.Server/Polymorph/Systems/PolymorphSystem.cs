@@ -4,6 +4,7 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -200,7 +201,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         var targetTransformComp = Transform(uid);
 
         if (configuration.PolymorphSound != null)
-            _audio.PlayPvs(configuration.PolymorphSound, targetTransformComp.Coordinates);
+            _audio.PlayPvs(configuration.PolymorphSound, targetTransformComp.Coordinates, FunAudioParams.WithUniformPitch());
 
         var child = Spawn(configuration.Entity, _transform.GetMapCoordinates(uid, targetTransformComp), rotation: _transform.GetWorldRotation(uid));
 
@@ -296,7 +297,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         var parentXform = Transform(parent);
 
         if (component.Configuration.ExitPolymorphSound != null)
-            _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates);
+            _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates, FunAudioParams.WithUniformPitch());
 
         _transform.SetParent(parent, parentXform, uidXform.ParentUid);
         _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates, uidXform.LocalRotation);

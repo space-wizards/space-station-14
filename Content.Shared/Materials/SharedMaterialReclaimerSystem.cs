@@ -114,7 +114,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
         if (Timing.CurTime > component.NextSound)
         {
-            component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
+            component.Stream = _audio.PlayPredicted(component.Sound, uid, user, FunAudioParams.WithUniformPitch())?.Entity;
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
 

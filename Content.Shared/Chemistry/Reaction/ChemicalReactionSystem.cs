@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Linq;
+using Content.Shared.Audio;
 
 
 namespace Content.Shared.Chemistry.Reaction
@@ -220,7 +221,7 @@ namespace Content.Shared.Chemistry.Reaction
                 effect.Effect(args);
             }
 
-            _audio.PlayPvs(reaction.Sound, soln);
+            _audio.PlayPvs(reaction.Sound, soln, FunAudioParams.WithUniformPitch());
         }
 
         /// <summary>

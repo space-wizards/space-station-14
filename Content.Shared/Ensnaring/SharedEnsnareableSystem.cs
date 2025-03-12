@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Alert;
+using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.CombatMode.Pacification;
@@ -240,7 +241,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         if (TryEnsnare(args.Target, uid, component))
         {
-            _audio.PlayPvs(component.EnsnareSound, uid);
+            _audio.PlayPvs(component.EnsnareSound, uid, FunAudioParams.WithUniformPitch());
         }
     }
 

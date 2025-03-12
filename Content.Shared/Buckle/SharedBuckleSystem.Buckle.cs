@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Alert;
+using Content.Shared.Audio;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -360,7 +361,7 @@ public abstract partial class SharedBuckleSystem
         else if (user != null)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckle)} to {ToPrettyString(strap)}");
 
-        _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user);
+        _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user, FunAudioParams.WithUniformPitch());
 
         SetBuckledTo(buckle, strap!);
         Appearance.SetData(strap, StrapVisuals.State, true);
@@ -451,7 +452,7 @@ public abstract partial class SharedBuckleSystem
         else if (user != null)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user} unbuckled {buckle} from {strap}");
 
-        _audio.PlayPredicted(strap.Comp.UnbuckleSound, strap, user);
+        _audio.PlayPredicted(strap.Comp.UnbuckleSound, strap, user, FunAudioParams.WithUniformPitch());
 
         SetBuckledTo(buckle, null);
 

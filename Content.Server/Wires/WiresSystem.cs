@@ -4,6 +4,7 @@ using System.Threading;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
@@ -767,7 +768,7 @@ public sealed class WiresSystem : SharedWiresSystem
                 wire.Action?.Pulse(user, wire);
 
                 UpdateUserInterface(used);
-                Audio.PlayPvs(wires.PulseSound, used);
+                Audio.PlayPvs(wires.PulseSound, used, FunAudioParams.WithUniformPitch());
                 break;
         }
 

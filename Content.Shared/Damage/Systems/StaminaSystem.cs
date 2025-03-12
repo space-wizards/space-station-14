@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
@@ -306,7 +307,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         if (_net.IsServer)
         {
-            _audio.PlayPvs(sound, uid);
+            _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
         }
     }
 

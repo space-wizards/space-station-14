@@ -1,4 +1,5 @@
 using Content.Server.Thief.Components;
+using Content.Shared.Audio;
 using Content.Shared.Item;
 using Content.Shared.Thief;
 using Robust.Server.GameObjects;
@@ -47,7 +48,7 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
                     _transform.DropNextTo(ent, backpack.Owner);
             }
         }
-        _audio.PlayPvs(backpack.Comp.ApproveSound, backpack.Owner);
+        _audio.PlayPvs(backpack.Comp.ApproveSound, backpack.Owner, FunAudioParams.WithUniformPitch());
         QueueDel(backpack);
     }
     private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)

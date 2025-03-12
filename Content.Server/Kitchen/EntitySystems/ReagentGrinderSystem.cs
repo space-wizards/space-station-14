@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Server.Jittering;
+using Content.Shared.Audio;
 using Content.Shared.Jittering;
 using Content.Shared.Power;
 
@@ -316,7 +317,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
         {
-            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
         }
 
         private Solution? GetGrindSolution(EntityUid uid)

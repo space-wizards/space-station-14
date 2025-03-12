@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
@@ -58,7 +59,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (makeNoise)
         {
             var sound = component.Activated ? component.TurnOnSound : component.TurnOffSound;
-            _audio.PlayPvs(sound, uid);
+            _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
         }
 
         Dirty(uid, component);

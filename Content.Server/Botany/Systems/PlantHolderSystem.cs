@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server.Labels.Components;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 
 namespace Content.Server.Botany.Systems;
@@ -337,7 +338,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
     private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
     {
-        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
+        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner, FunAudioParams.WithUniformPitch());
     }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
@@ -719,7 +720,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (seed == null || seed.CanScream == false)
             return false;
 
-        _audio.PlayPvs(seed.ScreamSound, plantholder);
+        _audio.PlayPvs(seed.ScreamSound, plantholder, FunAudioParams.WithUniformPitch());
         return true;
     }
 

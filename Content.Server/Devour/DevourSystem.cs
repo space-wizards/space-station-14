@@ -1,5 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
@@ -45,9 +46,9 @@ public sealed class DevourSystem : SharedDevourSystem
             QueueDel(args.Args.Target.Value);
         }
 
-        _audioSystem.PlayPvs(component.SoundDevour, uid);
+        _audioSystem.PlayPvs(component.SoundDevour, uid, FunAudioParams.WithUniformPitch());
     }
-    
+
     private void OnGibContents(EntityUid uid, DevourerComponent component, ref BeingGibbedEvent args)
     {
         if (!component.ShouldStoreDevoured)

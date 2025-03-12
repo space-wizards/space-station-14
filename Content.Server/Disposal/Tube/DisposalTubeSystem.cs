@@ -6,6 +6,7 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
 using Robust.Server.GameObjects;
@@ -92,7 +93,7 @@ namespace Content.Server.Disposal.Tube
             if (msg.Action == SharedDisposalTaggerComponent.UiAction.Ok && SharedDisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
             {
                 tagger.Tag = msg.Tag.Trim();
-                _audioSystem.PlayPvs(tagger.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+                _audioSystem.PlayPvs(tagger.ClickSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
             }
         }
 
@@ -123,7 +124,7 @@ namespace Content.Server.Disposal.Tube
                     router.Tags.Add(trimmed);
                 }
 
-                _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+                _audioSystem.PlayPvs(router.ClickSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
             }
         }
 

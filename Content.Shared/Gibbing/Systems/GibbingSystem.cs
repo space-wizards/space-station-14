@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
 using Robust.Shared.Audio.Systems;
@@ -184,7 +185,7 @@ public sealed class GibbingSystem : EntitySystem
 
         if (playAudio)
         {
-            _audioSystem.PlayPredicted(gibbable.Comp.GibSound, parentXform.Coordinates, null);
+            _audioSystem.PlayPredicted(gibbable.Comp.GibSound, parentXform.Coordinates, null, FunAudioParams.WithUniformPitch());
         }
 
         if (gibType == GibType.Gib)
@@ -333,7 +334,7 @@ public sealed class GibbingSystem : EntitySystem
                 ? coords
                 : coords.Offset(_random.NextVector2(gibbable.GibScatterRange * randomSpreadModifier.Value)));
         if (playSound)
-            _audioSystem.PlayPredicted(gibbable.GibSound, coords, null);
+            _audioSystem.PlayPredicted(gibbable.GibSound, coords, null, FunAudioParams.WithUniformPitch());
         _transformSystem.SetWorldRotation(gibletEntity.Value, _random.NextAngle());
         return true;
     }

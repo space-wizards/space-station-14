@@ -55,6 +55,6 @@ public sealed partial class ShuttleSystem
         var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
         var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
 
-        _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
+        _audio.PlayPvs(_shuttleImpactSound, coordinates, FunAudioParams.WithUniformPitch(audioParams));
     }
 }

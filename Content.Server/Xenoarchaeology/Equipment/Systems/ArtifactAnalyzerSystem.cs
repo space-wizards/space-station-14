@@ -373,7 +373,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         _research.ModifyServerPoints(server.Value, pointValue, serverComponent);
         _artifact.AdjustConsumedPoints(artifact.Value, pointValue);
 
-        _audio.PlayPvs(component.ExtractSound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
+        _audio.PlayPvs(component.ExtractSound, component.AnalyzerEntity.Value, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(2f)));
 
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
             component.AnalyzerEntity.Value, PopupType.Large);
@@ -415,7 +415,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (!Resolve(component.Scanner, ref analyzer))
             return;
 
-        _audio.PlayPvs(component.ScanFailureSound, component.Scanner, AudioParams.Default.WithVolume(3f));
+        _audio.PlayPvs(component.ScanFailureSound, component.Scanner, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(3f)));
 
         RemComp<ActiveArtifactAnalyzerComponent>(component.Scanner);
         if (analyzer.Console != null)
@@ -434,7 +434,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
 
         component.ReadyToPrint = true;
-        _audio.PlayPvs(component.ScanFinishedSound, uid);
+        _audio.PlayPvs(component.ScanFinishedSound, uid, FunAudioParams.WithUniformPitch());
         component.LastAnalyzedArtifact = active.Artifact;
         UpdateAnalyzerInformation(uid, component);
 

@@ -2,6 +2,7 @@ using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
+using Content.Shared.Audio;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
@@ -67,7 +68,7 @@ public sealed class SignalTimerSystem : EntitySystem
     {
         RemComp<ActiveSignalTimerComponent>(uid);
 
-        _audio.PlayPvs(signalTimer.DoneSound, uid);
+        _audio.PlayPvs(signalTimer.DoneSound, uid, FunAudioParams.WithUniformPitch());
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
         if (_ui.HasUi(uid, SignalTimerUiKey.Key))

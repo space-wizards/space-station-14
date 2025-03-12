@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Armor;
+using Content.Shared.Audio;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -187,7 +188,7 @@ public abstract partial class InventorySystem
 
         if (!silent && clothing != null)
         {
-            _audio.PlayPredicted(clothing.EquipSound, target, actor);
+            _audio.PlayPredicted(clothing.EquipSound, target, actor, FunAudioParams.WithUniformPitch());
         }
 
         Dirty(target, inventory);
@@ -473,7 +474,7 @@ public abstract partial class InventorySystem
 
         if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null)
         {
-            _audio.PlayPredicted(clothing.UnequipSound, target, actor);
+            _audio.PlayPredicted(clothing.UnequipSound, target, actor, FunAudioParams.WithUniformPitch());
         }
 
         Dirty(target, inventory);

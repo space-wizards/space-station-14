@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Audio;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -339,7 +340,7 @@ namespace Content.Shared.Cuffs
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
                 component.Used = true;
-                _audio.PlayPredicted(component.EndCuffSound, uid, user);
+                _audio.PlayPredicted(component.EndCuffSound, uid, user, FunAudioParams.WithUniformPitch());
 
                 _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-observer-success-message",
                         ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
@@ -538,7 +539,7 @@ namespace Content.Shared.Cuffs
                     ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
-            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user);
+            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user, FunAudioParams.WithUniformPitch());
             return true;
         }
 
@@ -667,7 +668,7 @@ namespace Content.Shared.Cuffs
                     target);
             }
 
-            _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user);
+            _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user, FunAudioParams.WithUniformPitch());
         }
 
         public void Uncuff(EntityUid target, EntityUid? user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
@@ -688,7 +689,7 @@ namespace Content.Shared.Cuffs
 
             cuff.Removing = true;
             cuff.Used = false;
-            _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
+            _audio.PlayPredicted(cuff.EndUncuffSound, target, user, FunAudioParams.WithUniformPitch());
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 

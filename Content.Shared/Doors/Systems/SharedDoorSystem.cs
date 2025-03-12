@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
@@ -284,9 +285,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.DenySound, uid, user, AudioParams.Default.WithVolume(-3));
+            Audio.PlayPredicted(door.DenySound, uid, user, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-3)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.DenySound, uid, AudioParams.Default.WithVolume(-3));
+            Audio.PlayPvs(door.DenySound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-3)));
     }
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -364,9 +365,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.OpenSound, uid, user, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPredicted(door.OpenSound, uid, user, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-5)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPvs(door.OpenSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-5)));
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
@@ -457,9 +458,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.CloseSound, uid, user, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPredicted(door.CloseSound, uid, user, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-5)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.CloseSound, uid, AudioParams.Default.WithVolume(-5));
+            Audio.PlayPvs(door.CloseSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-5)));
     }
 
     /// <summary>

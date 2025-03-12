@@ -6,6 +6,7 @@ using Content.Server.Forensics;
 using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -320,7 +321,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
         }
 
-        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
+        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)).WithVariation(0.25f));
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(firstStomach.Value.Owner, drained, firstStomach.Value.Comp1);
