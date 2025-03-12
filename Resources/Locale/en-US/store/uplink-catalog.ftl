@@ -312,6 +312,9 @@ uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
 
+uplink-chameleon-hardsuit-name = Chameleon Hardsuit
+uplink-chameleon-hardsuit-desc = A spacefaring suit with chameleon technology. Carry on your mission in space in a variety of disguises!
+
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
 
