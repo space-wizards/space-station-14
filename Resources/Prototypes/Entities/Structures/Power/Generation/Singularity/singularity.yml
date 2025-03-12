@@ -70,36 +70,36 @@
     follow: true
     location: singularity
   - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
+    sprite: Objects/Fun/toys.rsi
     shader: unshaded
     layers:
     - map: [ "VisualLevel" ]
-      state: singularity_1
+      state: plushie_lizard
   - type: GenericVisualizer
     visuals:
       enum.SingularityAppearanceKeys.Singularity:
        VisualLevel:
           1:
-            sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-            state: singularity_1
-            scale: 1.0,1.0
+            sprite: Objects/Fun/toys.rsi
+            state: plushie_spacelizard
+            scale: 3.0,3.0
           2:
-            sprite: Structures/Power/Generation/Singularity/singularity_2.rsi
-            state: singularity_2
-            scale: 1.0,1.0
+            sprite: Objects/Fun/toys.rsi
+            state: plushie_lizard
+            scale: 5.0,5.0
           3:
-            sprite: Structures/Power/Generation/Singularity/singularity_3.rsi
-            state: singularity_3
-            scale: 1.0,1.0
+            sprite: Objects/Fun/toys.rsi
+            state: plushie_lizard
+            scale: 7.0,7.0
           4:
-            sprite: Structures/Power/Generation/Singularity/singularity_4.rsi
-            state: singularity_4
-            scale: 1.0,1.0
+            sprite: Objects/Fun/toys.rsi
+            state: plushie_lizard
+            scale: 10.0,10.0
           5:
-            sprite: Structures/Power/Generation/Singularity/singularity_5.rsi
-            state: singularity_5
-            scale: 1.5,1.5
+            sprite: Objects/Fun/toys.rsi
+            state: plushie_lizard
+            scale: 15.0,15.0
           6:
-            sprite: Structures/Power/Generation/Singularity/singularity_6.rsi
-            state: singularity_6
-            scale: .9,.9
+            sprite: Objects/Fun/toys.rsi
+            state: plushie_lizard_inversed
+            scale: 20.0,20.0
