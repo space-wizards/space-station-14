@@ -1,26 +1,24 @@
-﻿- type: entity
+- type: entity
   id: CrewMonitoringServer
-  parent: BaseMachinePowered
-  name: crew monitoring server
+  parent: [ BaseMachinePowered, ConstructibleMachine ] 
+  name: Crew Monitoring Server
   description: Receives and relays the status of all active suit sensors on the station.
   components:
     - type: Sprite
       sprite: Structures/Machines/server.rsi
       layers:
         - state: server
-        - state: variant-crew
-    - type: Construction
-      graph: Machine
-      node: machine
-      containers:
-        - machine_board
-        - machine_parts
-    - type: Machine
-      board: CrewMonitoringServerMachineCircuitboard
-    - type: ContainerContainer
-      containers:
-        machine_board: !type:Container
-        machine_parts: !type:Container
+        - state: server-nopower-crew
+        - state: server-on-crew
+          shader: unshaded
+          visible: false
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: server_o
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#22b14c"
     - type: CrewMonitoringServer
     - type: SingletonDeviceNetServer
     - type: DeviceNetwork
@@ -34,6 +32,10 @@
     - type: ApcPowerReceiver
       powerLoad: 200
     - type: ExtensionCableReceiver
+    - type: WiresPanel
+    - type: WiresVisuals
+    - type: Machine
+      board: CrewMonitoringServerMachineCircuitboard
     - type: Destructible
       thresholds:
         - trigger:
@@ -56,9 +58,19 @@
                 SheetSteel1:
                   min: 1
                   max: 2
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: {visible: true}
+            False: {visible: false}
     - type: AmbientOnPowered
     - type: AmbientSound
       volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: GuideHelp
+      guides:
+      - Medical

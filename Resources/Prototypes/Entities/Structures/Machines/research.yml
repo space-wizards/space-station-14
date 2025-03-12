@@ -1,16 +1,24 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: R&D server
+  name: R&D Server
   description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
   components:
   - type: Sprite
     sprite: Structures/Machines/server.rsi
     layers:
       - state: server
-      - state: variant-research
+      - state: server-nopower-research
+      - state: server-on-research
+        shader: unshaded
+        visible: false
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       - state: server_o
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b211b2"
   - type: ResearchServer
   - type: TechnologyDatabase
     supportedDisciplines:
@@ -48,6 +56,12 @@
             min: 1
             max: 2
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: {visible: true}
+            False: {visible: false}
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
