@@ -13,6 +13,8 @@ public sealed class VendingInteractionTest : InteractionTest
 
     private const string RestockBoxProtoId = "InteractionTestRestockBox";
 
+    private const string RestockBoxOtherProtoId = "InteractionTestRestockBoxOther";
+
     [TestPrototypes]
     private const string TestPrototypes = $@"
 - type: entity
@@ -25,6 +27,11 @@ public sealed class VendingInteractionTest : InteractionTest
   startingInventory:
     {VendedItemProtoId}: 5
 
+- type: vendingMachineInventory
+  id: InteractionTestVendingInventoryOther
+  startingInventory:
+    {VendedItemProtoId}: 5
+
 - type: entity
   parent: BaseVendingMachineRestock
   id: {RestockBoxProtoId}
@@ -32,6 +39,14 @@ public sealed class VendingInteractionTest : InteractionTest
   - type: VendingMachineRestock
     canRestock:
     - InteractionTestVendingInventory
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: {RestockBoxOtherProtoId}
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - InteractionTestVendingInventoryOther
 
 - type: entity
   id: {VendingMachineProtoId}
@@ -134,6 +149,11 @@ public sealed class VendingInteractionTest : InteractionTest
 
         // Open the maintenance panel
         await InteractUsing(Screw);
+
+        // Try to restock using the wrong restock box (nothing happens)
+        await InteractUsing(RestockBoxOtherProtoId);
+
+        Assert.That(items.First().Amount, Is.EqualTo(5), "Restocked with wrong restock box.");
 
         // Restock the machine
         await InteractUsing(RestockBoxProtoId);
