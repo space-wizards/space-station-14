@@ -3,7 +3,6 @@
 - Add ipecac? Syringe, or pills?
 - Add Haloperidol
 - Diphenhydramine? Diphenylmethylamine?
-
 - Special Drink Ingredients:
 - Add Sulphuric Acid, for Acidspit
 - Blood packs: "Something-brand Floor Juice! Now with extra hemoglobin! There's a picture of a reptile fella happily lapping some out of a bowl with a forked tongue."
@@ -21,16 +20,17 @@
 
 - Graytider Shop: Bolt cafeteria-side door
 - Also a button for un-bolting it.
+- Somehow secure those shutters?
 
-- Law Office: Direct lawyers wrt "defense" and "prosecution."
+/* - Law Office: Direct lawyers wrt "defense" and "prosecution." */
 - Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar...
 
-- Weapons Room: Make sure I can't actually fall into the chasms through the railings.
+/* - Weapons Room: Make sure I can't actually fall into the chasms through the railings. */
 /* - Check that "radar" computer board. What does it actually do? (Literally the Mass Scanner.) */
-- Make "Duster" cannons be broken
+/* - Make "Duster" cannons be broken */
 
 - Science: Hook up gas stuff in arti room
-- Also put the cans in the cans room
+/* - Also put the cans in the cans room */ No more cans room :C
 - Research server needs to be hooked up?
 - Big floor decal in Shield room space
 
@@ -38,16 +38,17 @@
 - Morgue: Give morgues a spooky speaking component? Might make a good general PR, actually.
 - Doctors' Nap Room station beacon: Make sure it's right
 
-- Engineering: Make sure all the solars rooms have their stuff
+/* - Engineering: Make sure all the solars rooms have their stuff */
 - Figure out how much power the AMEs generate, how much the tesla/singulo generates, how much solars generate,
 	and how much the station will actually need.
-	I'd like to have an actual reason for two AMEs and for there to be pressure to keep them running long-term.
-	Guess no TEG on this station.
+	/* I'd like to have an actual reason for two AMEs and for there to be pressure to keep them running long-term. */
+	/* Guess no TEG on this station. */
+	Second AME is now unused (but could be made to work with a bit of help from Cargo?)
 - Relabel holopads to AME North and AME South
 - Atmo: Make the cabbage sentientable? Brassica Oleracea Ambulatora?
 -- Adding walking cabbages would also be a great PR. Especially if it can be a wizard spell.
-- Empty trit and plasma disposal cans
-- Do I put a gateway from atmos to engineering?
+/* - Empty trit and plasma disposal cans */
+/* - Do I put a gateway from atmos to engineering? */ No.
 
 /* - Disposals: Make the windoors and the blast doors have good logic for not spacing disposals whenever the lever is pulled. */
 - Execution chamber door access
@@ -57,9 +58,9 @@
 
 - Check perms: Musician's secure locker
 
-- Actually tile clown and mime rooms (under the carpet)
+/* - Actually tile clown and mime rooms (under the carpet) */
 
-- Bridge: Hamlet. Does he spawn in the cage, or do I have to set that up?
+/* - Bridge: Hamlet. Does he spawn in the cage, or do I have to set that up? */
 - Cap's office: Make fax machine sentientable
 - Vault: Fill syringe with 1 dose of cogni (unlabeled)
 -	Remove water from survival kit water bottle
@@ -79,7 +80,7 @@
 
 - Cargo: Give QM's escargot the ability to scream if sentient
 - ...and figure out the 'flavor' tag in the component for sentience
-- Mime's too
+/* - Mime's too */
 - Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
 /* - Re-label the quartermaster's quarters that belong in the quartermaster's quarters */
 - Re-label (and add) station beacon
@@ -88,7 +89,7 @@
 
 - Engineering: Give Command, Security encryption keys to CE
 
-- Evac: Make the shuttle like the Amogus lobby.
+/* - Evac: Make the shuttle like the Amogus lobby. */
 -	Rename + fill ore crates
 -	Decals, of course
 
@@ -165,17 +166,18 @@
 - Fax machines - and make sure they have the right names or whatever
 - Evac countdown monitors
 - Name buttons and levers(?) for clarity
+- Mail Teleporter
 
 - Make the station move forward!
 
-- Cargo, Salvage, and Evac
-- Vault
-- Perma
-- Cap's Office
-- AI
-- PA: Facing towards the front from the very rear of the ship
-	Let 'em choose between tesla and singulo
-- Solars
+/* - Cargo, Salvage, and Evac */
+/* - Vault */
+/* - Perma */
+/* - Cap's Office */
+/* - AI */
+/* - PA: Facing towards the front from the very rear of the ship */
+/* 	Let 'em choose between tesla and singulo */
+/* - Solars */
 - Other exterior stuff
 /* - Put pizza or whatever on the same cafeteria table that has it in Amogus */
 
@@ -192,9 +194,9 @@ What I currently have left:
 /* -Evac Shuttle */
 -Latejoin shuttle place?
 --Can I change the arrivals shuttle?
--Electrical wiring
+/* -Electrical wiring */
 --Wanna try to make it especially easy to sabotage lights
--Gas pipes
+/* -Gas pipes */
 -Disposal/Mail/Toilet networks
 -Lighting
 -Decals

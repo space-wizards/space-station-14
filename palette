@@ -3,3 +3,48 @@
 138 140 119 90 - Cafeteria Floor Dark
 211 214 182 75 - Cafeteria Floor Light
 125 127 108 100 - Cafeteria Path Edges
+
+181 228 242 15 - Hallway Floors
+31 66 77 100 - Hallway Edges
+	MiniTileWhiteLine
+31 66 77 100 - Hallway Ends
+	/* HalfTileOverlayGreyscale + Warn Line Greyscale non-snapped to tile (same color) */
+	MarkupRectangle1x2 + Arrows Greyscale
+	/* Rotate 90 degree warn lines to get diagonal other direction */
+195 40 95 100 - Hallway Edge Ovals
+	Two footprints, one rotated 180
+
+49 28 95 50 (HSV) - Weapons Floor
+
+192 229 183 50 - O2 Floor
+	BrickTileSteelLine (A 50) - siding
+
+0 98 118 50 - Nav Floor Outer
+190 43 81 50 (HSV) - Nav Floor Inner
+		+ Inner Siding (WoodTrimThin A 75)
+190 50 40 50 - Pilot Seat Front
+223 82 99 40 - Outer Siding
+
+48 28 85 50 (HSV) - Shields Siding
+	BrickTileSteelLine
+
+48 25 57 100 - Electrical Siding
+	BrickTileWhiteLine
+
+Departmental->neutral - Medbay Outer Siding
+		Upper: MiniTileLineSteel
+		Lower: MiniTileLineWhite
+128 160 145 45 - Medbay Floor Wash
+		MonoOverlay/PavementOverlay
+
+158 134 102 65 - Sec/Reactor Hallway Floor
+189 178 171 100 - Sec/Reactor Hallway Siding
+Advanced->SalvageDark  - Reactor Hallway Writing
+Advanced->serviceblack  - Security Hallway Writing
+
+178 163 204 65 - Reactor Floor Light
+115 90 155 65 - Reactor Floor Dark
+		Siding: (A 100) BrickTileWhiteLine, 
+100 90 180 35 - Nuke Room Floor
+
+191 129 63 100 - Engine Room Floor Cables
