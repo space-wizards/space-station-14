@@ -8,13 +8,17 @@ using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using System.Numerics;
 using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
+using Robust.Client.Audio;
+using Robust.Shared.Audio;
 
 namespace Content.Client._Impstation.CosmicCult;
 
 public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     private readonly ResPath _rsiPath = new("/Textures/_Impstation/CosmicCult/Effects/ability_siphonvfx.rsi");
+    private readonly SoundSpecifier _siphonSFX = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_siphon.ogg");
     public override void Initialize()
     {
         base.Initialize();
@@ -49,6 +53,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
             sprite.LayerSetShader(layer, "unshaded");
 
             Timer.Spawn(TimeSpan.FromSeconds(2), () => sprite.RemoveLayer(CultSiphonedVisuals.Key));
+            _audio.PlayLocal(_siphonSFX, ent, ent, AudioParams.Default.WithVariation(0.1f));
         }
     }
 
@@ -123,9 +128,6 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 
         sprite.RemoveLayer(layer);
     }
-
-
-
 
 
 

@@ -13,7 +13,6 @@ using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Content.Shared.Mind.Components;
-using Content.Server.Antag.Components;
 using System.Collections.Immutable;
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
@@ -23,11 +22,9 @@ using Content.Shared.NPC;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Doors.Components;
-using Content.Shared.Chemistry.Components;
 using Robust.Shared.Player;
 using Content.Shared.Physics;
 using System.Linq;
-using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
 
 namespace Content.Server._Impstation.CosmicCult;
@@ -195,13 +192,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
             return;
         args.Handled = true;
 
-        _statusEffects.TryAddStatusEffect<CosmicEntropyDebuffComponent>(target, "EntropicDegen", TimeSpan.FromSeconds(21), true);
-        _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
-
         if (_mind.TryGetMind(uid, out var _, out var mind) && mind.Session != null)
             RaiseNetworkEvent(new CosmicSiphonIndicatorEvent(GetNetEntity(target!)), mind.Session);
 
         var entropyMote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
+        _statusEffects.TryAddStatusEffect<CosmicEntropyDebuffComponent>(target, "EntropicDegen", TimeSpan.FromSeconds(21), true);
+        _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
         _hands.TryForcePickupAnyHand(uid, entropyMote1);
         _cultRule.IncrementCultObjectiveEntropy(uid);
 

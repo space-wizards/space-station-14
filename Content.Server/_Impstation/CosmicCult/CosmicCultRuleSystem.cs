@@ -93,6 +93,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     public readonly SoundSpecifier DeconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
     public readonly SoundSpecifier StageAlertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/tier_up.ogg");
     public Entity<MonumentComponent> MonumentInGame; // the monument in the current round.
+    public EntityUid MonumentSlowZone; // the monument in the current round.
     public int CurrentTier; // current cult tier
     public int TotalCrew; // total connected players
     public int TotalCult; // total cultists
@@ -155,6 +156,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                 _body.GibBody(noncult); // Die
             }
             QueueDel(MonumentInGame); // The monument doesn't need to stick around postround! Into the bin with you.
+            QueueDel(MonumentSlowZone); // cease exist
         }
     }
     private static void SetWinType(Entity<CosmicCultRuleComponent> uid, WinType type)
@@ -402,7 +404,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
                     if (TryComp<VisibilityComponent>(uid, out var visComp))
                         _visibility.SetLayer((uid, visComp), 1);
 
-                    Spawn("MonumentSlowZone", Transform(uid).Coordinates); // spawn The Monument's slowing fixture entity that supresses non-cult / non-mindshielded / non-chaplain crew.
+                    MonumentSlowZone = Spawn("MonumentSlowZone", Transform(uid).Coordinates); // spawn The Monument's slowing fixture entity that supresses non-cult / non-mindshielded / non-chaplain crew.
                     uid.Comp.CanTierUp = true;
                     UpdateCultData(uid); //instantly go up a tier if they manage it.
                     _ui.SetUiState(uid.Owner, MonumentKey.Key, new MonumentBuiState(uid.Comp)); //not sure if this is needed but I'll be safe
@@ -643,7 +645,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
         TotalCult++;
 
-        cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value; //todo: nullable?
+        cultComp.StoredDamageContainer = Comp<DamageableComponent>(uid).DamageContainerID!.Value; // nullable?
 
         Dirty(uid, cultComp);
 
