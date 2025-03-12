@@ -156,29 +156,17 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (!component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
             return;
 
-        ICommonSession? session = null;
-        if (component.User is not null && !component.BroadcastAudio)
-        {
-            if (!_player.TryGetSessionByEntity(component.User.Value, out session))
-                return;
-        }
-
         var sound = _audio.ResolveSound(sounds);
         var param = sounds.Params.WithLoop(true).WithVolume(component.Volume);
 
-        switch (component.BroadcastAudio)
+        if (component.BroadcastAudio)
         {
-            case true:
-                // For some reason PlayPvs sounds quieter even at distance 0, so we need to boost the volume a bit for consistency
-                param = sounds.Params.WithLoop(true).WithVolume(component.Volume + 1.5f).WithMaxDistance(component.BroadcastRange);
-                component.Stream = _audio.PlayPvs(sound, uid, param)?.Entity;
-                break;
-            case false:
-                if(session is not null)
-                    component.Stream = _audio.PlayGlobal(sound, session, param)?.Entity;
-                break;
+            // For some reason PlayPvs sounds quieter even at distance 0, so we need to boost the volume a bit for consistency
+            param = sounds.Params.WithLoop(true).WithVolume(component.Volume + 1.5f).WithMaxDistance(component.BroadcastRange);
+            component.Stream = _audio.PlayPvs(sound, uid, param)?.Entity;
         }
-
+        else if(component.User is not null && _player.TryGetSessionByEntity(component.User.Value, out var session))
+                    component.Stream = _audio.PlayGlobal(sound, session, param)?.Entity;
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)
