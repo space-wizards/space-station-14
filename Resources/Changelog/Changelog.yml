@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Added a warning about unrevivability in the health analyzer UI.
-    type: Add
-  id: 7555
-  time: '2024-10-26T17:22:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32636
 - author: slarticodefast
   changes:
   - message: Fixed pie throwing sound not playing.
@@ -3891,3 +3884,10 @@
   id: 8054
   time: '2025-03-12T22:45:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34809
+- author: onesch
+  changes:
+  - message: Added handheld sprites to some items
+    type: Add
+  id: 8055
+  time: '2025-03-12T22:46:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33689
