@@ -195,13 +195,11 @@ public sealed partial class CosmicCultSystem : EntitySystem
             return;
         args.Handled = true;
 
-        var solution = new Solution(); // begin solution garbage. all of this needs replacing with GenericDebuff
-        solution.AddReagent("Entropy", 10f);
-        if (!_solution.TryGetInjectableSolution(target, out var targetSolution, out var _))
-            return;
-        _solution.TryAddSolution(targetSolution.Value, solution); // end solution garbage
-
+        _statusEffects.TryAddStatusEffect<CosmicEntropyDebuffComponent>(target, "EntropicDegen", TimeSpan.FromSeconds(21), true);
         _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
+
+        if (_mind.TryGetMind(uid, out var _, out var mind) && mind.Session != null)
+            RaiseNetworkEvent(new CosmicSiphonIndicatorEvent(GetNetEntity(target!)), mind.Session);
 
         var entropyMote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
         _hands.TryForcePickupAnyHand(uid, entropyMote1);

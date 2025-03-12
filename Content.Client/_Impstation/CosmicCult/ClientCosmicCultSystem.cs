@@ -5,13 +5,16 @@ using Robust.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
+using System.Numerics;
+using System.Threading;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client._Impstation.CosmicCult;
 
 public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-
+    private readonly ResPath _rsiPath = new("/Textures/_Impstation/CosmicCult/Effects/ability_siphonvfx.rsi");
     public override void Initialize()
     {
         base.Initialize();
@@ -31,6 +34,22 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         SubscribeLocalEvent<CosmicCultComponent, GetStatusIconsEvent>(GetCosmicCultIcon);
         SubscribeLocalEvent<CosmicCultLeadComponent, GetStatusIconsEvent>(GetCosmicCultLeadIcon);
         SubscribeLocalEvent<CosmicMarkBlankComponent, GetStatusIconsEvent>(GetCosmicSSDIcon);
+
+        SubscribeNetworkEvent<CosmicSiphonIndicatorEvent>(OnSiphon);
+    }
+    private void OnSiphon(CosmicSiphonIndicatorEvent args)
+    {
+        var ent = GetEntity(args.Target);
+        if (TryComp<SpriteComponent>(ent, out var sprite))
+        {
+            var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(_rsiPath, "vfx"));
+            sprite.LayerMapSet(CultSiphonedVisuals.Key, layer);
+            sprite.LayerSetOffset(layer, new Vector2(0, 0.8f));
+            sprite.LayerSetScale(layer, new Vector2(0.65f, 0.65f));
+            sprite.LayerSetShader(layer, "unshaded");
+
+            Timer.Spawn(TimeSpan.FromSeconds(2), () => sprite.RemoveLayer(CultSiphonedVisuals.Key));
+        }
     }
 
     private void OnAscendedInfectionAdded(Entity<RogueAscendedInfectionComponent> uid, ref ComponentStartup args)
@@ -130,4 +149,8 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
             args.StatusIcons.Add(iconPrototype);
     }
+}
+public enum CultSiphonedVisuals : byte
+{
+    Key
 }

@@ -44,6 +44,10 @@ using Content.Server.Bible.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
+using Content.Shared.Item;
+using Content.Shared.Throwing;
+using Content.Shared.IdentityManagement;
+using Robust.Shared.Audio;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -90,6 +94,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
     private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
     public int CultistCount;
 
@@ -103,6 +108,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentInit>(OnStartCultLead);
         SubscribeLocalEvent<MonumentComponent, ComponentInit>(OnStartMonument);
         SubscribeLocalEvent<MonumentComponent, InteractUsingEvent>(OnInfuseEntropy);
+        SubscribeLocalEvent<CosmicEquipmentComponent, GettingPickedUpAttemptEvent>(OnGearPickup);
 
         SubscribeLocalEvent<InfluenceStrideComponent, ComponentInit>(OnStartInfluenceStride);
         SubscribeLocalEvent<InfluenceStrideComponent, ComponentRemove>(OnEndInfluenceStride);
@@ -293,6 +299,22 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _audio.PlayEntity("/Audio/_Impstation/CosmicCult/insert_entropy.ogg", cultist, monument);
         QueueDel(entropy);
         return true;
+    }
+    #endregion
+
+    #region Equipment Pickup
+    private void OnGearPickup(Entity<CosmicEquipmentComponent> gear, ref GettingPickedUpAttemptEvent args)
+    {
+        if (!HasComp<CosmicCultComponent>(args.User))
+        {
+            args.Cancel();
+            var gearpos = _transform.GetWorldPosition(gear);
+            var userpos = _transform.GetWorldPosition(args.User);
+            _popup.PopupCoordinates(Loc.GetString("cosmiccult-gear-pickup-rejection", ("TARGET", Identity.Entity(args.User, EntityManager)), ("ITEM", Identity.Entity(gear, EntityManager))), Transform(gear).Coordinates);
+            _audio.PlayPvs("/Audio/_Impstation/CosmicCult/cosmicsword_glance.ogg", gear, AudioParams.Default.WithVariation(0.1f));
+            _damageable.TryChangeDamage(args.User, gear.Comp.RepelDamage);
+            _throwing.TryThrow(gear, gearpos - userpos);
+        }
     }
     #endregion
 

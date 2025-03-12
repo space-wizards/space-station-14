@@ -62,7 +62,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         StartFinale(uid);
     }
 
-    public void StartFinale(Entity<CosmicFinaleComponent> uid)
+    private void StartFinale(Entity<CosmicFinaleComponent> uid)
     {
         var comp = uid.Comp;
         if (!TryComp<MonumentComponent>(uid, out var monument) || !TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))

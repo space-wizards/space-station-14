@@ -17,6 +17,9 @@
             "name": "monument"
         },
         {
+            "name": "monument-relocate"
+        },
+        {
             "name": "lapse"
         },
         {

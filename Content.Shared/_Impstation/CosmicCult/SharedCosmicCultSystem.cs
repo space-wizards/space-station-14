@@ -2,6 +2,11 @@ using Content.Shared._Impstation.CosmicCult.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
+using Content.Shared.Item;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Damage;
+using Robust.Shared.Audio.Systems;
+using Content.Shared.Popups;
 
 namespace Content.Shared._Impstation.CosmicCult;
 
@@ -15,6 +20,14 @@ public abstract class SharedCosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentGetStateAttemptEvent>(OnCosmicCultCompGetStateAttempt);
         SubscribeLocalEvent<CosmicCultComponent, ComponentStartup>(DirtyCosmicCultComps);
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentStartup>(DirtyCosmicCultComps);
+        SubscribeLocalEvent<CosmicEquipmentComponent, GettingPickedUpAttemptEvent>(OnGearPickup);
+    }
+    private void OnGearPickup(Entity<CosmicEquipmentComponent> gear, ref GettingPickedUpAttemptEvent args)
+    {
+        if (!HasComp<CosmicCultComponent>(args.User))
+        {
+            args.Cancel();
+        }
     }
 
     /// <summary>
