@@ -11993,7 +11993,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -90115.83
+      secondsUntilStateChange: -90156.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15173,16 +15173,6 @@ entities:
     components:
     - type: Transform
       pos: -36.5,20.5
-      parent: 8364
-  - uid: 28085
-    components:
-    - type: Transform
-      pos: -1.2996117,-80.357025
-      parent: 8364
-  - uid: 28099
-    components:
-    - type: Transform
-      pos: 0.49151492,-78.45183
       parent: 8364
 - proto: AsimovCircuitBoard
   entities:
@@ -73261,7 +73251,7 @@ entities:
       pos: 35.5,-0.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -5526.239
+      secondsUntilStateChange: -5566.444
       state: Closing
 - proto: d10Dice
   entities:
@@ -85565,7 +85555,7 @@ entities:
       pos: -8.5,-70.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -41840.85
+      secondsUntilStateChange: -41881.055
       state: Closing
   - uid: 5277
     components:
@@ -86356,7 +86346,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -84304.36
+      secondsUntilStateChange: -84344.56
       state: Closing
   - uid: 15010
     components:
@@ -125570,7 +125560,7 @@ entities:
       pos: 28.5,-34.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -64074.71
+      secondsUntilStateChange: -64114.914
       state: Closing
 - proto: hydroponicsSoil
   entities:
