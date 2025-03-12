@@ -143,6 +143,18 @@
     exclusiveAntag: true
   - type: NinjaRole
 
+# Paradox Clone
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleParadoxClone
+  name: Paradox Clone Role
+  components:
+  - type: MindRole
+    antagPrototype: ParadoxClone
+    roleType: SoloAntagonist
+    exclusiveAntag: true
+  - type: ParadoxCloneRole
+
 # Nukies
 - type: entity
   parent: BaseMindRoleAntag

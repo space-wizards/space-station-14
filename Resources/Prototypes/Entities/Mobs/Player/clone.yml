@@ -78,7 +78,7 @@
   suffix: Non-Antag
   components:
   - type: Sprite
-    sprite: Markers/paradox_clone.rsi
+    sprite: Mobs/Aliens/paradox_clone.rsi
     state: preview
   - type: RandomCloneSpawner
     settings: BaseClone
