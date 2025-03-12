@@ -237,7 +237,7 @@
   id: ParadoxCloneSpawn
   components:
   - type: StationEvent
-    weight: 3 # should not happen every round
+    weight: 4 # should not happen every round
     duration: null
     earliestStart: 30
     reoccurrenceDelay: 20
