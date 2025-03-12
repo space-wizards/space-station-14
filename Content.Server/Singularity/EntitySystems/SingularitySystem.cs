@@ -270,9 +270,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that changed in level.</param>
     /// <param name="comp">The component of the singularity that changed in level.</param>
     /// <param name="args">The event arguments.</param>
-    public void UpdateEnergyDrain(EntityUid uid, SingularityComponent comp, SingularityLevelChangedEvent args)
+    public void UpdateEnergyDrain(Entity<SingularityComponent> singularity, ref SingularityLevelChangedEvent args)
     {
-        comp.EnergyDrain = args.NewValue switch
+        singularity.Comp.EnergyDrain = args.NewValue switch
         {
             6 => 0,
             5 => 0,
@@ -282,6 +282,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
             1 => 1,
             _ => 0
         };
+
+        Dirty(singularity);
     }
 
     /// <summary>
@@ -290,11 +292,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity.</param>
     /// <param name="comp">The random walk component component sharing the entity with the singulo component.</param>
     /// <param name="args">The event arguments.</param>
-    private void UpdateRandomWalk(EntityUid uid, RandomWalkComponent comp, SingularityLevelChangedEvent args)
+    private void UpdateRandomWalk(Entity<RandomWalkComponent> drunkard, ref SingularityLevelChangedEvent args)
     {
         var scale = MathF.Max(args.NewValue, 4);
-        comp.MinSpeed = 7.5f / scale;
-        comp.MaxSpeed = 10f / scale;
+
+        drunkard.Comp.MinSpeed = 7.5f / scale;
+        drunkard.Comp.MaxSpeed = 10f / scale;
     }
 
     /// <summary>
@@ -303,11 +306,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity.</param>
     /// <param name="comp">The gravity well component sharing the entity with the singulo component.</param>
     /// <param name="args">The event arguments.</param>
-    private void UpdateGravityWell(EntityUid uid, GravityWellComponent comp, SingularityLevelChangedEvent args)
+    private void UpdateGravityWell(Entity<GravityWellComponent> gravityWell, ref SingularityLevelChangedEvent args)
     {
         var singulos = args.Singularity;
-        comp.MaxRange = GravPulseRange(singulos);
-        (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
+
+        gravityWell.Comp.MaxRange = GravPulseRange(singulos);
+        (gravityWell.Comp.BaseRadialAcceleration, gravityWell.Comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
     }
 
 #endregion Event Handlers
