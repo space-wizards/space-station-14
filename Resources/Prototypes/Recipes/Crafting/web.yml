@@ -1,111 +1,76 @@
 - type: construction
-  name: web tile
   id: TileWeb
   graph: WebObjects
   startNode: start
   targetNode: tile
   category: construction-category-tiles
-  description: "Nice and smooth."
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Objects/Tiles/web.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: web winter coat
   id: ClothingOuterWinterWeb
   graph: WebObjects
   startNode: start
   targetNode: coat
   category: construction-category-clothing
-  description: "Surprisingly warm and durable."
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
-    state: WEB-icon
   objectType: Item
 
 - type: construction
-  name: web jumpsuit
   id: ClothingUniformJumpsuitWeb
   graph: WebObjects
   startNode: start
   targetNode: jumpsuit
   category: construction-category-clothing
-  description: "At least it's something."
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: web jumpskirt
   id: ClothingUniformJumpskirtWeb
   graph: WebObjects
   startNode: start
   targetNode: jumpskirt
   category: construction-category-clothing
-  description: "At least it's something."
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Clothing/Uniforms/Jumpskirt/web.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: silk woven cloth
   id: SilkWovenCloth
   graph: WebObjects
   startNode: start
   targetNode: cloth
   category: construction-category-materials
-  description: "Feels just like cloth, strangely enough."
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Objects/Materials/materials.rsi
-    state: cloth_3
   objectType: Item
 
 - type: construction
-  name: web shield
   id: WebShield
   graph: WebObjects
   startNode: start
   targetNode: shield
   category: construction-category-clothing
-  description: "It's thick enough to handle a few blows, but probably not heat."
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Objects/Weapons/Melee/web-shield.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: web winter boots
   id: ClothingShoesBootsWinterWeb
   graph: WebObjects
   startNode: start
   targetNode: boots
   category: construction-category-clothing
-  description: "Tightly woven web should protect against the cold"
   entityWhitelist:
     tags:
     - SpiderCraft
-  icon:
-    sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
-    state: icon
   objectType: Item

@@ -80,6 +80,15 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
     }
 }
 
+[Serializable, NetSerializable]
+public sealed class RequestConstructionRecipes : EntityEventArgs;
+
+[Serializable, NetSerializable]
+public sealed class ResponseConstructionRecipes(Dictionary<string, string> metadata) : EntityEventArgs
+{
+    public readonly Dictionary<string, string> Metadata = metadata;
+}
+
 /// <summary>
 /// Sent client -> server to request a specific construction guide.
 /// </summary>
