@@ -2,261 +2,204 @@
 #1D2L3U4R
 
 - type: entity
-  name: Ian
-  parent: MobCorgi
+  name: "\"Ian\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobCorgiIan
-  description: Favorite pet corgi.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ian
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: ian
-      Critical:
-        Base: ian_dead
-      Dead:
-        Base: ian_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-    - id: MaterialHideCorgi
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalIan
-
-- type: entity
-  name: Old Ian
-  parent: MobCorgiIan
-  id: MobCorgiIanOld
-  description: Still the favorite pet corgi. Love his wheels.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: old_ian
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: old_ian
-      Critical:
-        Base: old_ian_dead
-      Dead:
-        Base: old_ian_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-    - id: SheetSteel1
-    - id: MaterialHideCorgi
-
-- type: entity
-  name: Lisa
-  parent: MobCorgiIan
-  id: MobCorgiLisa
-  description: Ian's favorite corgi.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: lisa
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: lisa
-      Critical:
-        Base: lisa_dead
-      Dead:
-        Base: lisa_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-
-- type: entity
-  name: real mouse
-  parent: MobCorgiIan
-  id: MobCorgiMouse
-  description: It's 100% a real hungry mouse.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: real_mouse
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: real_mouse
-      Critical:
-        Base: real_mouse_dead
-      Dead:
-        Base: real_mouse_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-
-- type: entity
-  name: Puppy Ian
-  parent: MobCorgiPuppy
-  id: MobCorgiIanPup
-  description: Favourite puppy corgi. Awww.
+  description: This scurret is here to emotionally support the HOP whilst Ian is taking a break at a farm upstate. He's gone barking mad, you see.
   components:
   - type: Grammar
     attributes:
       proper: true
       gender: male
-  - type: Butcherable # A puppy? You monster...
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-    - id: MaterialHideCorgi
-  - type: StealTarget
-    stealGroup: AnimalIan
-
-- type: entity
-  name: Runtime
-  parent: MobCat
-  id: MobCatRuntime
-  description: Professional mouse hunter. Escape artist.
-  components:
-  - type: NpcFactionMember
-    factions:
-      - PetsNT
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalNamedCat
-
-- type: entity
-  name: Exception
-  id: MobCatException
-  parent: MobCatCalico
-  description: Ask nicely, and maybe they'll give you one of their spare lives.
-  components:
-  - type: NpcFactionMember
-    factions:
-      - PetsNT
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalNamedCat
-
-- type: entity
-  name: Floppa
-  id: MobCatFloppa
-  parent: MobCatCaracal
-  description: He out here.
-  components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 40
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Grammar
-    attributes:
-      gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalNamedCat
-
-- type: entity
-  name: Bandito
-  parent: MobFerret
-  id: MobBandito
-  description: Just a silly little guy!
-  components:
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-
-- type: entity
-  name: Bingus
-  parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobBingus
-  description: Bingus my beloved...
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/bingus.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: bingus
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 12
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Inventory
-    speciesId: cat
-    templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: bingus
-      Critical:
-        Base: bingus_dead
-      Dead:
-        Base: bingus_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
+      amount: 4
+    - id: FoodMeatCorgi  # Ian was delicious.
       amount: 2
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-bingus
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
+    - id: MaterialHideCorgi
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalIan
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#feae62"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretHoPGear ]
+
+- type: entity
+  name: "\"Old Ian\""
+  parent: MobCorgiIan
+  id: MobCorgiIanOld
+  description: This scurret is here to emotionally support the HOP whilst Ian is taking a break at a farm upstate. He's been feeling a bit ruff recently.
+
+- type: entity
+  name: "\"Lisa\""
+  parent: MobCorgiIan
+  id: MobCorgiLisa
+  description: This scurret is here to emotionally support the HOP whilst Lisa is taking a break at a farm upstate. She's been hounded for time recently.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: "\"real mouse\""
+  parent: MobCorgiIan
+  id: MobCorgiMouse
+  description: It's 100% a real hungry mouse. Wawa!
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: "\"Puppy Ian\""
+  parent: MobCorgiIan
+  id: MobCorgiIanPup
+  description: This scurret is here to emotionally support the HOP whilst Ian is taking a break at a farm upstate. He needs to grow up.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
+  name: "\"Runtime\""
+  parent: MobBaseEmotionalSupportScurret
+  id: MobCatRuntime
+  description: This scurret is here to emotionally support the CMO whilst Runtime is taking a break at a farm upstate. She's having a catnap.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#505050"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretCMOGear ]
+
+- type: entity
+  name: "\"Exception\""
+  id: MobCatException
+  parent: MobBaseEmotionalSupportScurret
+  description: This scurret is here to emotionally support the CMO whilst Exception is taking a break at a farm upstate. He's been in a loop recently and needs to crash.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#845324"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretCMOGear ]
+
+- type: entity
+  name: "\"Floppa\""
+  id: MobCatFloppa
+  parent: MobBaseEmotionalSupportScurret
+  description: This scurret is not here to emotionally support anyone. He's just vibin'. Look at him.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#b17c4a"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretFloppaGear ]
+
+- type: entity
+  name: "\"Bandito\""
+  parent: MobBaseEmotionalSupportScurret
+  id: MobBandito
+  description: A legally distinct space ferret.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#4e4e4e"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretRDGear ]
+
+- type: entity
+  name: "\"Bingus\""
+  parent: MobBaseEmotionalSupportScurret
+  id: MobBingus
+  description: This scurret is here to get their photos printed.
+  components:
   - type: Grammar
     attributes:
       proper: true
@@ -267,151 +210,80 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
-
-- type: entity
-  name: McGriff
-  parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobMcGriff
-  description: This dog can tell something smells around here, and that something is CRIME!
-  components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/mcgriff.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: mcgriff
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 20
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Inventory
-    speciesId: puppy
-    templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: mcgriff
-      Critical:
-        Base: mcgriff_dead
-      Dead:
-        Base: mcgriff_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 2
-  - type: ReplacementAccent
-    accent: dog
-  - type: InteractionPopup
-    successChance: 0.5
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#f3b6b6"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretFishGear ]
+
+- type: entity
+  name: "\"McGriff\""
+  parent: MobBaseEmotionalSupportScurret
+  id: MobMcGriff
+  description: This scurret is here to emotionally support the Warden after the real McGriff was shockingly exposed to be a Syndicate agent. Don't give them an L6, no matter how cool they look holding it.
+  components:
   - type: Grammar
     attributes:
       proper: true
       gender: male
-  - type: Speech
-    speechVerb: Canine
-    speechSounds: Dog
   - type: Tag
     tags:
     - CannotSuicide
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMcGriff
-
-- type: entity
-  name: Paperwork
-  parent: MobSloth
-  id: MobPaperwork
-  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
-  components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/paperwork.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: paperwork
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: paperwork
-      Critical:
-        Base: paperwork_dead
-      Dead:
-        Base: paperwork_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-sloth
-    interactFailureString: petting-failure-sloth
-    interactSuccessSpawn: EffectHearts
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#f9f3c3"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretWardenGear ]
+
+- type: entity
+  name: "\"Paperwork\""
+  parent: MobBaseEmotionalSupportScurret
+  id: MobPaperwork
+  description: This scurret likes pearls more than books, but is here to help out the librarian anyway whilst Paperwork is in rehab due to his crippling addiction to stimulants.
+  components:
   - type: Grammar
     attributes:
       proper: true
       gender: male
-
-- type: entity
-  name: Walter
-  parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobWalter
-  description: He likes chems and treats. Walter.
-  components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/walter.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: walter
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Inventory
-    speciesId: dog
-    templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: walter
-      Critical:
-        Base: walter_dead
-      Dead:
-        Base: walter_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: ReplacementAccent
-    accent: dog
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#7aea7b"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretLibrarianGear ]
+
+- type: entity
+  name: "\"Walter\""
+  parent: MobBaseEmotionalSupportScurret
+  id: MobWalter
+  description: This scurret claims to be here to emotionally support the chemists, but has been eyeing the door the whole time. He'd rather be in the kitchen. He needs to cook.
+  components:
   - type: Grammar
     attributes:
       proper: true
@@ -422,23 +294,27 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
-  - type: Speech
-    speechVerb: Canine
-    speechSounds: Dog
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#ffffff"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretChemGear ]
+
 
 - type: entity
-  name: Morty
-  parent: MobPossum
+  name: "\"Morty\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobPossumMorty
-  description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
+  description: This scurret is here to fill in for the real Morty whilst he's off having fun adventures in a time machine. At least, that's where they said he's gone.
   components:
-  - type: InteractionPopup
-    successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
-    interactSuccessString: petting-success-possum
-    interactFailureString: petting-failure-possum
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/snake_hiss.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -449,62 +325,43 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMorty
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#f56c43"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretMorgueGear ]
 
 - type: entity
-  name: Morty
+  name: "\"Morty\""
   parent: MobPossumMorty
   id: MobPossumMortyOld
   suffix: Old sprite
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Animals/possum_old.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: possum_old
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: possum_old
-      Dead:
-        Base: possum_dead_old
 
 - type: entity
-  name: Poppy # the Safety Possum
+  name: "\"Poppy\"" # the Safety Scurret
   parent: MobPossumMorty
   id: MobPossumPoppy
-  description: It's an opossum, a small scavenging marsupial. It's wearing appropriate personal protective equipment.
+  description: This scurret is here to fill in for Poppy after something REALLY bad happened last shift. Like, seriously. I'd tell you, but Nanotrasen doesn't want anyone to know about it.
   components:
   - type: Grammar
     attributes:
       proper: true
       gender: female
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Animals/possum.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: poppy
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: poppy
-      Dead:
-        Base: poppy_dead
 
 - type: entity
-  name: Morticia
-  parent: MobRaccoon
+  name: "\"Morticia\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobRaccoonMorticia
-  description: A powerful creature of the night. Her eyeshadow is always on point.
+  description: This scurret showed up a little while ago. It's just... watching.
   components:
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-raccoon
-    interactFailureString: petting-failure-raccoon
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/raccoon_chatter.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -513,20 +370,33 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#dc5864"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretQMGear ]
 
 - type: entity
-  name: Alexander
-  parent: MobPig
+  name: "\"Alexander\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobAlexander
-  description: Chef's finest colleague.
+  description: This scurret is here to fill in for Alexander. It isn't aware what kind of sacrifice that usually entails. A real gourmand.
   components:
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-pig
-    interactFailureString: petting-failure-pig
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/pig_oink.ogg
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 5 # fat
+    - id: FoodPizzaArnold # ate it whole, in one bite
+      amount: 1
   - type: Grammar
     attributes:
       proper: true
@@ -535,25 +405,31 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#f890b1"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretChefGear ]
 
 - type: entity
-  name: Renault
-  parent: MobFox
+  name: "\"Renault\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobFoxRenault
-  description: The captain's trustworthy fox.
+  description: This scurret is here to emotionally support the captain (who, let's be honest here, really, really needs the help) whilst Renault is off at her daughter's graduation.
   components:
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-soft-floofy
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      collection: Fox
   - type: Butcherable
     spawned:
     - id: FoodMeat
-      amount: 3
-    - id: Telecrystal5
+      amount: 4
+    - id: Telecrystal5 # How has this even happened again
       amount: 1
   - type: Grammar
     attributes:
@@ -565,6 +441,22 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalRenault
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#fe6818"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretCapGear ]
+
+# The only pet that IS NOT A SCURRET IS A SENTIENT NUCLEAR AUTHENTICATION DISK
+# APRIL FOOLS BITCHES
 
 - type: entity
   name: nuclear authentication disk
@@ -627,57 +519,11 @@
     - sadness
 
 - type: entity
-  name: Shiva
-  parent: MobGiantSpider
+  name: "\"Shiva\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobSpiderShiva
-  description: The first defender of the station.
+  description: Spider-Scurret, Spider-Scurret. Goes as fast as a spider-bullet. Adorable, big suprise, shouts "wawa!" and makes pleading eyes. Look out, here comes the Spider-Scurret.
   components:
-  - type: InteractionPopup
-    successChance: 0.5 # spider is mean
-    interactSuccessString: petting-success-tarantula
-    interactFailureString: petting-failure-hamster
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/snake_hiss.ogg
-  - type: NpcFactionMember
-    factions:
-      - PetsNT
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: shiva
-      sprite: Mobs/Pets/shiva.rsi
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: shiva-moving
-    noMovementLayers:
-      movement:
-        state: shiva
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: Physics
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: shiva
-      Dead:
-        Base: shiva_dead
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      150: Dead
-  - type: MeleeWeapon
-    angle: 0
-    animation: WeaponArcBite
-    soundHit:
-      path: /Audio/Effects/bite.ogg
-    damage:
-      types:
-        Piercing: 8
-        Poison: 8
   - type: Grammar
     attributes:
       proper: true
@@ -686,116 +532,57 @@
     tags:
     - CannotSuicide
     - VimPilot
-    - DoorBumpOpener
-    - FootstepSound
   - type: StealTarget
     stealGroup: AnimalShiva
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#464646"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretSpiderGear ]
 
 - type: entity
-  name: Willow
-  parent: MobKangaroo
+  name: "\"Willow\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobKangarooWillow
-  description: Willow the boxing kangaroo.
+  description: Look, I know she's like, a sixth of the height, isn't Australian and bites people, but this is the best we had whilst Willow is in a coma. Just play along, OK?
   components:
-  - type: InteractionPopup
-    successChance: 0.8
-    interactSuccessString: petting-success-kangaroo
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/kangaroo_grunt.ogg
   - type: Grammar
     attributes:
       proper: true
       gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - DoorBumpOpener
-    - FootstepSound
   - type: GhostRole
-    prob: 0.25
     name: ghost-role-information-willow-name
     description: ghost-role-information-willow-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
-  - type: Loadout
-    prototypes: [ BoxingKangarooGear ]
-
-- type: entity
-  name: Smile
-  id: MobSlimesPet
-  parent: [MobAdultSlimes, StripableInventoryBase]
-  description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
-  components:
   - type: Sprite
     layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: rainbow_baby_slime
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: aslime-_3
-      shader: unshaded
-    - map: [ "head" ]
-  - type: Inventory
-    speciesId: slime
-    templateId: head
-    displacements:
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Pets/Smile/smile_displacement.rsi
-            state: head
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      200: Dead
-  - type: FootstepModifier
-    footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/slime1.ogg
-      params:
-        volume: -6
-  - type: Tag
-    tags:
-    - FootstepSound
-    - DoorBumpOpener
-    - CannotSuicide
-    - VimPilot
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: rainbow_baby_slime
-        BaseUnshaded: aslime-_3
-      Dead:
-        Base: rainbow_baby_slime_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatSlime
-      amount: 1
-    - id: MaterialSmileExtract
-      amount: 1
-  - type: Damageable
-    damageModifierSet: SlimePet
-  - type: Bloodstream
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.8
-  - type: Temperature
-    heatDamageThreshold: 800
-    coldDamageThreshold: 0
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 1
-        Caustic: 1
-  - type: MultiHandedItem
-  - type: Item
-    sprite: Mobs/Pets/Smile/smile.rsi
-    size: Huge
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-slime
-  - type: MobPrice
-    price: 3000 # it is a truly valuable creature
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#675fe7"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretBoxerGear ]
+
+- type: entity
+  name: "\"Smile\""
+  id: MobSlimesPet
+  parent: MobBaseEmotionalSupportScurret
+  description: This scurret is worryingly exicted to be a member of the science team whilst Smile is away receiving her Nobel Prize for Literature. A bit crusty.
+  components:
   - type: GhostRole
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
@@ -805,12 +592,25 @@
     attributes:
       proper: true
       gender: female
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#c7c4ecaa" # slightly see-through!
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretScientistGear ]
 
 - type: entity
-  name: Pun Pun
-  parent: MobMonkey
+  name: Wa Wa
+  parent: MobBaseEmotionalSupportScurret
   id: MobMonkeyPunpun
-  description: A prominent representative of monkeys with unlimited access to alcohol.
+  description: A junior barkeeping assistant. Look at it. Don't those vast, black eyes just want to make you order dangerously large amounts of alcohol? Here to fill in for Pun for a day.
   components:
   - type: GhostRole
     prob: 1
@@ -825,8 +625,8 @@
     butcheringType: Spike
     spawned:
     - id: FoodMeat
-      amount: 3
-    - id: DrinkTequilaBottleFull
+      amount: 4
+    - id: DrinkVodkaBottleFull # Wa Wa has a problem.
       amount: 1
   - type: Tag
     tags:
@@ -835,27 +635,29 @@
     - VimPilot
     - AnomalyHost
   - type: Loadout
-    prototypes: [ MobMonkeyGear ]
+    prototypes: [ MobWaWaGear ]
   - type: Grammar
     attributes:
       proper: true
       gender: male
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#cccccc"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
 
 - type: entity
-  name: Tropico
-  parent: MobCrab
+  name: "\"Tropico\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobCrabAtmos
-  description: The noble and stalwart defender of Atmosia. Viva!
+  description: They say crabs have evolved at least four separate times. Judging by the station at the moment, you suspect the same is true for scurrets. Viva!
   components:
-#  - type: GhostRole
-#    prob: 1
-#    makeSentient: true
-#    allowSpeech: true
-#    allowMovement: true
-#    name: ghost-role-information-tropico-name
-#    description: ghost-role-information-tropico-description
-#    rules: ghost-role-information-nonantagonist-rules
-#  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
     - VimPilot
@@ -864,6 +666,18 @@
     attributes:
       proper: true
       gender: male
-#  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
     stealGroup: AnimalTropico
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#c24738"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretAtmosGear ]

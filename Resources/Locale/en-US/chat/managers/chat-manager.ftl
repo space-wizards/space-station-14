@@ -162,3 +162,9 @@ chat-speech-verb-vulpkanin-2 = barks
 chat-speech-verb-vulpkanin-3 = rurs
 chat-speech-verb-vulpkanin-4 = yaps
 chat-speech-verb-vulpkanin = Vulpkanin
+
+chat-speech-verb-name-wawa = Wawa
+chat-speech-verb-wawa-1 = intones
+chat-speech-verb-wawa-2 = states
+chat-speech-verb-wawa-3 = declares
+chat-speech-verb-wawa-4 = ponders
