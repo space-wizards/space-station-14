@@ -1,7 +1,7 @@
 - type: entity
   id: OrganCarpLungs
   parent: OrganAnimalLungs
-  name: space fauna lungs
+  name: astrofauna lungs
   description: "Practically vestigial, now only used for vocalization."
   components:
   - type: Sprite
@@ -27,7 +27,7 @@
 - type: entity
   id: OrganCarpHeart
   parent: OrganAnimalHeart
-  name: space fauna heart
+  name: astrofauna heart
   description: "A toxic heart torn from the void."
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
 - type: entity
   id: OrganCarpStomach
   parent: OrganAnimalStomach
-  name: space fauna stomach
+  name: astrofauna stomach
   description: "Unfortunately capable of digesting metal, limited only by its owner's jaw strength."
   components:
   - type: Sprite
@@ -79,7 +79,7 @@
 - type: entity
   id: OrganCarpLiver
   parent: OrganAnimalLiver
-  name: space fauna liver
+  name: astrofauna liver
   description: "Dense, glossy, and toxic. A source of ichor, but only in vivo. Too late for that now."
   components:
   - type: Sprite
@@ -105,7 +105,7 @@
 - type: entity
   id: OrganCarpKidneys
   parent: OrganAnimalKidneys
-  name: space fauna kidneys
+  name: astrofauna kidneys
   description: "Like your kidneys, except mostly used to process blood from devoured prey."
   components:
   - type: Sprite

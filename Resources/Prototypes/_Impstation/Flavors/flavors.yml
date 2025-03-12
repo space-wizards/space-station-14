@@ -142,3 +142,13 @@
   id: carpflesh
   flavorType: Complex
   description: flavor-complex-carpflesh
+
+- type: flavor
+  id: shimmeringblood
+  flavorType: Complex
+  description: flavor-complex-shimmeringblood
+
+- type: flavor
+  id: feverdream
+  flavorType: Complex
+  description: flavor-complex-feverdream

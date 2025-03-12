@@ -34,4 +34,5 @@ flavor-complex-orangecoffee = excitingly acidic
 
 flavor-complex-thavenflesh = like salt and suffering
 flavor-complex-carpflesh = like alkali and ozone
-flavor-complex-shimmeringblood = sweet but slightly brackish
+flavor-complex-shimmeringblood = sweet, and slightly creamy
+flavor-complex-feverdream = you're losing your mind

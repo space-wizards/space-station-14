@@ -70,3 +70,30 @@
         time: 2.0
         type: Remove
   fizziness: 0.1
+
+- type: reagent
+  id: FeverDream
+  name: reagent-name-feverdream
+  parent: BaseDrink
+  desc: reagent-desc-feverdream
+  physicalDesc: reagent-physical-desc-shimmering-blood
+  flavor: feverdream
+  color: "#ff624a"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/feverdream.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+  fizziness: 0.1

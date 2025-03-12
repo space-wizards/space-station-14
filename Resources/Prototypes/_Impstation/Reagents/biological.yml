@@ -82,21 +82,23 @@
         probability: 0.75
       - !type:Jitter
 
-- type: reagent # can't parent it to blood because anybody besides snails should be able to drink it, the flesh/organs are the toxic parts
+- type: reagent # can't parent it to blood because anybody should be able to drink it, the flesh/organs are the toxic parts (fugu moment)
   id: ShimmeringBlood
   name: reagent-name-shimmering-blood
   group: Biological
   desc: reagent-desc-shimmering-blood
   flavor: shimmeringblood
-  color: "#FF7F50" # we picked coral orange, which appropriately is a slightly lighter ichor color, since dragons have this blood
+  color: "#ff624a" # a slightly warmer color than the ichor extracted from dragon flesh
   recognizable: true
   physicalDesc: reagent-physical-desc-shimmering-blood
   slippery: false
   metabolisms:
-    Drink:
+    Food:
       effects:
+      - !type:SatiateHunger
+        factor: 1
       - !type:SatiateThirst
-        factor: 1.0
+        factor: 1
     Narcotic:
       effects:
       - !type:GenericStatusEffect
