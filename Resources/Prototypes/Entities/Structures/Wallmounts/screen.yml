@@ -35,6 +35,7 @@
   - type: ExtensionCableReceiver
   - type: Screen
   - type: DeviceNetwork
+    deviceNetId: Wireless
     receiveFrequencyId: ShuttleTimer
 
 - type: entity
@@ -43,4 +44,5 @@
   name: arrivals screen
   components:
   - type: DeviceNetwork
+    deviceNetId: Private
     receiveFrequencyId: ArrivalsShuttleTimer

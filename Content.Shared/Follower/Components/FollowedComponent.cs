@@ -10,6 +10,8 @@ namespace Content.Shared.Follower.Components;
 [Access(typeof(FollowerSystem))]
 public sealed partial class FollowedComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     [DataField, AutoNetworkedField]
     public HashSet<EntityUid> Following = new();
 }

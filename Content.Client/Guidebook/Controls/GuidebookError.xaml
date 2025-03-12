@@ -1,0 +1,41 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Margin="5 5 5 5"
+              MinHeight="200">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="2" BorderColor="White" />
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+
+            <PanelContainer>
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BorderThickness="0 0 0 1" BackgroundColor="DarkRed" BorderColor="Black" />
+                </PanelContainer.PanelOverride>
+                <Label Margin="5" StyleClasses="bold" Text="{Loc 'guidebook-parser-error'}" />
+            </PanelContainer>
+
+            <OutputPanel Margin="5" MinHeight="75" VerticalExpand="True" Name="Original">
+                <OutputPanel.StyleBoxOverride>
+                    <gfx:StyleBoxFlat BorderThickness="0 0 0 1" BorderColor="Gray"
+                                      ContentMarginLeftOverride="3" ContentMarginRightOverride="3"
+                                      ContentMarginBottomOverride="3" ContentMarginTopOverride="3" />
+                </OutputPanel.StyleBoxOverride>
+            </OutputPanel>
+
+            <Collapsible Margin="5" MinHeight="75" VerticalExpand="True">
+                <CollapsibleHeading Title="{Loc 'guidebook-error-message' }" />
+                <CollapsibleBody VerticalExpand="True">
+                    <OutputPanel Name="Error" VerticalExpand="True" MinHeight="100">
+                        <OutputPanel.StyleBoxOverride>
+                            <gfx:StyleBoxFlat
+                                ContentMarginLeftOverride="3" ContentMarginRightOverride="3"
+                                ContentMarginBottomOverride="3" ContentMarginTopOverride="3" />
+                        </OutputPanel.StyleBoxOverride>
+                    </OutputPanel>
+                </CollapsibleBody>
+            </Collapsible>
+
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

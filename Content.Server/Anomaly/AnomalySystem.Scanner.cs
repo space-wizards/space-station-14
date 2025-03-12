@@ -217,7 +217,7 @@ public sealed partial class AnomalySystem
         msg.PushNewline();
 
         if (secret != null && secret.Secret.Contains(AnomalySecretData.Behavior))
-            msg.AddMarkup(Loc.GetString("anomaly-behavior-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-behavior-unknown"));
         else
         {
             if (anomalyComp.CurrentBehavior != null)

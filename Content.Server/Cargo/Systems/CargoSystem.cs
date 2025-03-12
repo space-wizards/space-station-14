@@ -1,7 +1,5 @@
-using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Stack;
@@ -13,6 +11,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Paper;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -31,7 +30,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly DeviceLinkSystem _linker = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -78,19 +76,23 @@ public sealed partial class CargoSystem : SharedCargoSystem
     }
 
     [PublicAPI]
-    public void UpdateBankAccount(EntityUid uid, StationBankAccountComponent component, int balanceAdded)
+    public void UpdateBankAccount(Entity<StationBankAccountComponent?> ent, int balanceAdded)
     {
-        component.Balance += balanceAdded;
-        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
+        if (!Resolve(ent, ref ent.Comp))
+            return;
 
-        var ev = new BankBalanceUpdatedEvent(uid, component.Balance);
+        ent.Comp.Balance += balanceAdded;
+
+        var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Balance);
+
+        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
         while (query.MoveNext(out var client, out var comp, out var xform))
         {
             var station = _station.GetOwningStation(client, xform);
-            if (station != uid)
+            if (station != ent)
                 continue;
 
-            comp.Balance = component.Balance;
+            comp.Balance = ent.Comp.Balance;
             Dirty(client, comp);
             RaiseLocalEvent(client, ref ev);
         }

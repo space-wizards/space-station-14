@@ -80,6 +80,12 @@ namespace Content.Server.Guardian
             if (args.Handled)
                 return;
 
+            if (_container.IsEntityInContainer(uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("guardian-inside-container"), uid, uid);
+                return;
+            }
+
             if (component.HostedGuardian != null)
                 ToggleGuardian(uid, component);
 
@@ -263,6 +269,7 @@ namespace Content.Server.Guardian
                 component.Host,
                 args.DamageDelta * component.DamageShare,
                 origin: args.Origin,
+                ignoreResistances: true,
                 interruptsDoAfters: false);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host.Value, component.Host.Value);
 

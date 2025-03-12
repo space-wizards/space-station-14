@@ -7,6 +7,8 @@
     folded: true
   - type: Mask
     isToggled: true
+    enabled: false
+    disableOnFolded: true
   - type: IngestionBlocker
     enabled: false
   - type: IdentityBlocker
@@ -25,6 +27,7 @@
   - type: Tag
     tags:
     - Bandana
+    - ClothMade
 
 - type: entity
   parent: [ClothingHeadBandBase, ClothingMaskBandBlack]

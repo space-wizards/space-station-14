@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
@@ -11,6 +10,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
+using Content.Shared.Temperature;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
@@ -287,7 +287,7 @@ namespace Content.Server.Construction
                         {
                             BreakOnDamage = false,
                             BreakOnMove = true,
-                            NeedHand = true
+                            NeedHand = true,
                         };
 
                         var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs);

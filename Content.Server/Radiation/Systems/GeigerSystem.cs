@@ -163,7 +163,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
                 return;
         }
 
-        var sound = _audio.GetSound(sounds);
+        var sound = _audio.ResolveSound(sounds);
         var param = sounds.Params.WithLoop(true).WithVolume(component.Volume);
 
         switch (component.BroadcastAudio)

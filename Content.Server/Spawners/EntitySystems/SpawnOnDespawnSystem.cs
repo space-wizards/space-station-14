@@ -1,4 +1,5 @@
 using Content.Server.Spawners.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
 
 namespace Content.Server.Spawners.EntitySystems;
@@ -18,5 +19,10 @@ public sealed class SpawnOnDespawnSystem : EntitySystem
             return;
 
         Spawn(comp.Prototype, xform.Coordinates);
+    }
+
+    public void SetPrototype(Entity<SpawnOnDespawnComponent> entity, EntProtoId prototype)
+    {
+        entity.Comp.Prototype = prototype;
     }
 }

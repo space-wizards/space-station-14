@@ -22,7 +22,7 @@ public sealed class GhostRoleRadioBoundUserInterface : BoundUserInterface
         _ghostRoleRadioMenu.SendGhostRoleRadioMessageAction += SendGhostRoleRadioMessage;
     }
 
-    public void SendGhostRoleRadioMessage(ProtoId<GhostRolePrototype> protoId)
+    private void SendGhostRoleRadioMessage(ProtoId<GhostRolePrototype> protoId)
     {
         SendMessage(new GhostRoleRadioMessage(protoId));
     }

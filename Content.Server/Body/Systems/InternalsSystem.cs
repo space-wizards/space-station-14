@@ -38,6 +38,7 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<InternalsComponent, ToggleInternalsAlertEvent>(OnToggleInternalsAlert);
 
         SubscribeLocalEvent<InternalsComponent, StartingGearEquippedEvent>(OnStartingGear);
     }
@@ -70,6 +71,9 @@ public sealed class InternalsSystem : EntitySystem
         ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands is null)
+            return;
+
+        if (!AreInternalsWorking(ent) && ent.Comp.BreathTools.Count == 0)
             return;
 
         var user = args.User;
@@ -155,6 +159,14 @@ public sealed class InternalsSystem : EntitySystem
 
         ToggleInternals(ent, args.User, force: true, ent);
 
+        args.Handled = true;
+    }
+
+    private void OnToggleInternalsAlert(Entity<InternalsComponent> ent, ref ToggleInternalsAlertEvent args)
+    {
+        if (args.Handled)
+            return;
+        ToggleInternals(ent, ent, false, internals: ent.Comp);
         args.Handled = true;
     }
 

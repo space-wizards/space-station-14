@@ -82,6 +82,24 @@ public sealed partial class NpcFactionSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether an entity is a member of any listed faction.
+    /// If the list is empty this returns false.
+    /// </summary>
+    public bool IsMemberOfAny(Entity<NpcFactionMemberComponent?> ent, IEnumerable<ProtoId<NpcFactionPrototype>> factions)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        foreach (var faction in factions)
+        {
+            if (ent.Comp.Factions.Contains(faction))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Adds this entity to the particular faction.
     /// </summary>
     public void AddFaction(Entity<NpcFactionMemberComponent?> ent, string faction, bool dirty = true)
@@ -95,6 +113,28 @@ public sealed partial class NpcFactionSystem : EntitySystem
         ent.Comp ??= EnsureComp<NpcFactionMemberComponent>(ent);
         if (!ent.Comp.Factions.Add(faction))
             return;
+
+        if (dirty)
+            RefreshFactions((ent, ent.Comp));
+    }
+
+    /// <summary>
+    /// Adds this entity to the particular faction.
+    /// </summary>
+    public void AddFactions(Entity<NpcFactionMemberComponent?> ent, HashSet<ProtoId<NpcFactionPrototype>> factions, bool dirty = true)
+    {
+        ent.Comp ??= EnsureComp<NpcFactionMemberComponent>(ent);
+
+        foreach (var faction in factions)
+        {
+            if (!_proto.HasIndex(faction))
+            {
+                Log.Error($"Unable to find faction {faction}");
+                continue;
+            }
+
+            ent.Comp.Factions.Add(faction);
+        }
 
         if (dirty)
             RefreshFactions((ent, ent.Comp));

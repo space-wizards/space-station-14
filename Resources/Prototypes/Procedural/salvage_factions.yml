@@ -1,5 +1,6 @@
 - type: salvageFaction
   id: Xenos
+  desc: salvage-faction-xenos
   entries:
     - proto: MobXeno
     - proto: MobXenoDrone
@@ -24,6 +25,7 @@
 
 - type: salvageFaction
   id: Carps
+  desc: salvage-faction-carps
   entries:
     - proto: MobCarpDungeon
     # These do too much damage for salvage, need nerfs
