@@ -1,74 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Added the syringe gun and it's respective ammo. Currently Admeme only.
-    type: Add
-  id: 7545
-  time: '2024-10-22T13:03:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32112
-- author: ScarKy0, Fildrance
-  changes:
-  - message: Using an intellicard on the AI core now swaps the AI between the core
-      and intellicard. (You can evac with the AI!)
-    type: Add
-  - message: Added an intellicard to the RD's locker.
-    type: Add
-  id: 7546
-  time: '2024-10-22T13:49:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32347
-- author: Southbridge
-  changes:
-  - message: Nuclear Cola can now be broken down in a centrifuge.
-    type: Add
-  id: 7547
-  time: '2024-10-22T17:01:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32441
-- author: BramvanZijp
-  changes:
-  - message: The Space Ninja Suit will now give an error popup if you are trying to
-      install a cell that is not better compared to the current cell.
-    type: Add
-  - message: When comparing which power cell is better when trying to swap them, the
-      Space Ninja's Suit will now also consider if the power cells have self-recharge
-      capability.
-    type: Tweak
-  - message: You can no longer fit weapons-grade power cages into the space ninja
-      suit.
-    type: Fix
-  id: 7548
-  time: '2024-10-22T23:36:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32902
-- author: UBlueberry
-  changes:
-  - message: The appraisal tool now has in-hand sprites!
-    type: Fix
-  id: 7549
-  time: '2024-10-22T23:51:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32849
-- author: chromiumboy
-  changes:
-  - message: The atmospheric alerts computer has been upgraded to visually indicate
-      the rooms of the station that are being monitored by its air and fire alarm
-      systems
-    type: Tweak
-  id: 7550
-  time: '2024-10-23T12:49:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31910
-- author: hyphenationc
-  changes:
-  - message: Snake meat is now properly considered Meat, so Lizards can eat it.
-    type: Fix
-  id: 7551
-  time: '2024-10-24T03:41:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32965
-- author: slarticodefast
-  changes:
-  - message: Mix 1u aluminium, 1u potassium and 1u sulfur for a flash reaction effect.
-      The radius scales with the reagent amount.
-    type: Add
-  id: 7552
-  time: '2024-10-25T22:47:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32377
 - author: BramvanZijp
   changes:
   - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
@@ -3900,3 +3830,63 @@
   id: 8044
   time: '2025-03-09T08:48:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35740
+- author: slarticodefast
+  changes:
+  - message: Added a mail stealing objective for thieves.
+    type: Add
+  id: 8045
+  time: '2025-03-09T19:41:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35746
+- author: metalgearsloth
+  changes:
+  - message: Fix sun shadows not rendering when ANGLE is used.
+    type: Fix
+  id: 8046
+  time: '2025-03-10T04:17:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35757
+- author: metalgearsloth
+  changes:
+  - message: Fix sun shadow rotations not always being accurate.
+    type: Fix
+  id: 8047
+  time: '2025-03-10T04:38:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35758
+- author: RedBookcase
+  changes:
+  - message: Added about a dozen new cocktails for the Bartender to mix up, and polished
+      some of the sprites for older drinks.
+    type: Add
+  id: 8048
+  time: '2025-03-10T23:08:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33570
+- author: Velken
+  changes:
+  - message: Performers can now find that their clothing set is more complete!
+    type: Add
+  id: 8049
+  time: '2025-03-10T23:17:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35764
+- author: ScarKy0
+  changes:
+  - message: Mindshield implants can now be removed using an empty implanter.
+    type: Tweak
+  - message: Revolutionaries can now win by converting all command members.
+    type: Add
+  id: 8050
+  time: '2025-03-11T09:41:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35769
+- author: SlamBamActionman
+  changes:
+  - message: Chameleon PDAs no longer change your name in the station records.
+    type: Fix
+  id: 8051
+  time: '2025-03-11T13:52:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35782
+- author: Reisama
+  changes:
+  - message: Borgs will no longer get laws to prevent the shuttle from being called
+      when Ion Stormed, and may get laws to call the shuttle instead.
+    type: Fix
+  id: 8052
+  time: '2025-03-12T01:21:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35751
