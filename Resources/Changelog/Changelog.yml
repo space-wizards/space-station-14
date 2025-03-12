@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: The atmospheric alerts computer has been upgraded to visually indicate
-      the rooms of the station that are being monitored by its air and fire alarm
-      systems
-    type: Tweak
-  id: 7550
-  time: '2024-10-23T12:49:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31910
-- author: hyphenationc
-  changes:
-  - message: Snake meat is now properly considered Meat, so Lizards can eat it.
-    type: Fix
-  id: 7551
-  time: '2024-10-24T03:41:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32965
-- author: slarticodefast
-  changes:
-  - message: Mix 1u aluminium, 1u potassium and 1u sulfur for a flash reaction effect.
-      The radius scales with the reagent amount.
-    type: Add
-  id: 7552
-  time: '2024-10-25T22:47:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32377
 - author: BramvanZijp
   changes:
   - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
@@ -3890,3 +3866,27 @@
   id: 8049
   time: '2025-03-10T23:17:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35764
+- author: ScarKy0
+  changes:
+  - message: Mindshield implants can now be removed using an empty implanter.
+    type: Tweak
+  - message: Revolutionaries can now win by converting all command members.
+    type: Add
+  id: 8050
+  time: '2025-03-11T09:41:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35769
+- author: SlamBamActionman
+  changes:
+  - message: Chameleon PDAs no longer change your name in the station records.
+    type: Fix
+  id: 8051
+  time: '2025-03-11T13:52:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35782
+- author: Reisama
+  changes:
+  - message: Borgs will no longer get laws to prevent the shuttle from being called
+      when Ion Stormed, and may get laws to call the shuttle instead.
+    type: Fix
+  id: 8052
+  time: '2025-03-12T01:21:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35751
