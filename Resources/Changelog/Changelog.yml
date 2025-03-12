@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Bowls no longer make an eating sound when drinking from them.
-    type: Fix
-  id: 7554
-  time: '2024-10-26T04:00:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32819
 - author: SaphireLattice
   changes:
   - message: Added a warning about unrevivability in the health analyzer UI.
@@ -3889,3 +3882,12 @@
   id: 8053
   time: '2025-03-12T22:36:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35313
+- author: Firewars763
+  changes:
+  - message: Added gold and coal rock anomalies and ore crab enemies.
+    type: Add
+  - message: Added yellow and black crystals, crystal shards, and light tubes.
+    type: Add
+  id: 8054
+  time: '2025-03-12T22:45:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34809
