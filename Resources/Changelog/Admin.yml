@@ -798,5 +798,86 @@ Entries:
   id: 99
   time: '2025-02-18T10:26:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35239
+- author: Winkarst-cpu
+  changes:
+  - message: Added admin only messages in AHelp.
+    type: Add
+  id: 100
+  time: '2025-02-22T17:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35283
+- author: sowelipililimute
+  changes:
+  - message: Added the ability to use tertiary headers in the guidebook
+    type: Add
+  id: 101
+  time: '2025-02-23T18:48:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35315
+- author: Schrodinger71
+  changes:
+  - message: Added autocompletion for player usernames in setmind command.
+    type: Add
+  id: 102
+  time: '2025-02-24T21:29:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35477
+- author: ScarKy0
+  changes:
+  - message: Admin IDs can now freely change their name, job and icon, like the agent
+      ID. Not chameleon though.
+    type: Add
+  id: 103
+  time: '2025-02-25T14:25:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35345
+- author: Errant
+  changes:
+  - message: Some admin settings are now configurable from the Options menu's new
+      Admin tab.
+    type: Add
+  id: 104
+  time: '2025-02-26T22:32:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35543
+- author: Schrodinger71
+  changes:
+  - message: For the admin overlay, new configs have been added to display the starting
+      position and total time.
+    type: Add
+  id: 105
+  time: '2025-02-28T20:51:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35520
+- author: Beck Thompson, Errant
+  changes:
+  - message: Brand new players with NULL playtime data are no longer missing the clock
+      icon in the Bwoink menu. Disconnected new players also no longer lose their
+      clock icon.
+    type: Fix
+  - message: Connected players who have entered the round are now sorted above connected
+      players who are still in the lobby. Players still in the lobby have a half-full
+      symbol.
+    type: Tweak
+  id: 106
+  time: '2025-03-05T16:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35648
+- author: slarticodefast
+  changes:
+  - message: Added the 'forceghost < player >' command which forces someone to become
+      an observer.
+    type: Add
+  id: 107
+  time: '2025-03-08T02:39:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35518
+- author: Errant
+  changes:
+  - message: It is no longer impossible to resize the player list in the ahelp window,
+      when at small window sizes.
+    type: Fix
+  id: 108
+  time: '2025-03-10T09:40:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35747
+- author: Errant
+  changes:
+  - message: The admin overlay once again shows the character name in the top line.
+    type: Fix
+  id: 109
+  time: '2025-03-11T16:47:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35783
 Name: Admin
 Order: 1

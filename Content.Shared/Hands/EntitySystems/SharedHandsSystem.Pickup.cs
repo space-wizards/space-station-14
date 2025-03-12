@@ -115,7 +115,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
                 && (itemPos.Position - TransformSystem.GetMapCoordinates(uid, xform: xform).Position).Length() <= MaxAnimationRange
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
-                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, TransformSystem, EntityManager);
+                var initialPosition = TransformSystem.ToCoordinates(coordinateEntity, itemPos);
                 _storage.PlayPickupAnimation(entity, initialPosition, xform.Coordinates, itemXform.LocalRotation, uid);
             }
         }
