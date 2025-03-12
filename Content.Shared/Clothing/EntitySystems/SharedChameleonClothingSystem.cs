@@ -117,7 +117,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Check if this entity prototype is valid target for chameleon item.
     /// </summary>
-    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, string? requiredTag = null)
+    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, HashSet<ProtoId<TagPrototype>>? requiredTags = null)
     {
         // check if entity is valid
         if (proto.Abstract || proto.HideSpawnMenu)
@@ -127,7 +127,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (!proto.TryGetComponent(out TagComponent? tag, _factory) || !_tag.HasTag(tag, "WhitelistChameleon"))
             return false;
 
-        if (requiredTag != null && !_tag.HasTag(tag, requiredTag))
+        if (requiredTags != null && requiredTags.All(requiredTag => !_tag.HasTag(tag, requiredTag)))
             return false;
 
         // check if it's valid clothing
