@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Interaction.Events;
+namespace Content.Shared.Interaction.Events;
 
 /// <summary>
 /// Event raised on an item when attempting to use it in your hands. Cancelling it stops the interaction.

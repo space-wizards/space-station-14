@@ -33,7 +33,6 @@
 
 # Needs testing
 - type: entity
-  abstract: true
   parent: BaseWizardRule
   id: SubWizard
   components:
@@ -60,7 +59,7 @@
         - Wizard
       - type: RandomMetadata
         nameSegments:
-        - names_wizard_first
-        - names_wizard_last
+        - NamesWizardFirst
+        - NamesWizardLast
       mindRoles:
       - MindRoleWizard
