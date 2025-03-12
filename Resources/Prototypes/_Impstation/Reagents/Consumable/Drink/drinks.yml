@@ -85,7 +85,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   metabolisms:
-    Drink:
+    Narcotic:
       effects:
       - !type:SatiateThirst
         factor: 2
@@ -95,4 +95,15 @@
         type: Add
         time: 5
         refresh: false
+  plantMetabolism:
+    - !type:PlantAdjustNutrition
+      amount: 0.5
+    - !type:PlantAdjustWater
+      amount: 0.5
+    - !type:PlantAdjustToxins
+      amount: 1
+    - !type:PlantAdjustWeeds
+      amount: -1
+    - !type:PlantAdjustPests
+      amount: -1
   fizziness: 0.1

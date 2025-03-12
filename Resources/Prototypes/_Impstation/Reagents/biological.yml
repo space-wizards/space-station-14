@@ -108,8 +108,12 @@
         time: 5
         refresh: false
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: 0.5
+    - !type:PlantAdjustToxins
+      amount: 2
+    - !type:PlantAdjustWeeds
+      amount: -2
+    - !type:PlantAdjustPests
+      amount: -2
   footstepSound:
     collection: FootstepBlood
     params:
