@@ -13,7 +13,7 @@
 - type: techDiscipline
   id: Arsenal
   name: research-discipline-arsenal
-  color: "#dc373b"
+  color: "#006ACB"
   icon:
     sprite: Interface/Misc/research_disciplines.rsi
     state: arsenal
