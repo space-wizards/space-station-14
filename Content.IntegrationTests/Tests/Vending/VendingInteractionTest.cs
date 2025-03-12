@@ -9,12 +9,17 @@ public sealed class VendingInteractionTest : InteractionTest
 {
     private const string VendingMachineProtoId = "InteractionTestVendingMachine";
 
-    private const string VendedItemProtoId = "PassengerPDA";
+    private const string VendedItemProtoId = "InteractionTestItem";
 
     private const string RestockBoxProtoId = "InteractionTestRestockBox";
 
     [TestPrototypes]
     private const string TestPrototypes = $@"
+- type: entity
+  parent: BaseItem
+  id: {VendedItemProtoId}
+  name: {VendedItemProtoId}
+
 - type: vendingMachineInventory
   id: InteractionTestVendingInventory
   startingInventory:
@@ -27,12 +32,6 @@ public sealed class VendingInteractionTest : InteractionTest
   - type: VendingMachineRestock
     canRestock:
     - InteractionTestVendingInventory
-  - type: Sprite
-    layers:
-    - state: base
-    - state: green_bit
-      shader: unshaded
-    - state: refill_ptech
 
 - type: entity
   id: {VendingMachineProtoId}
@@ -41,21 +40,8 @@ public sealed class VendingInteractionTest : InteractionTest
   - type: VendingMachine
     pack: InteractionTestVendingInventory
     ejectDelay: 0 # no delay to speed up tests
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cart.rsi
-    layers:
-    - state: off
-      map: [ enum.VendingMachineVisualLayers.Base ]
-    - state: off
-      map: [ enum.VendingMachineVisualLayers.BaseUnshaded ]
-      shader: unshaded
-    - state: panel
-      map: [ enum.WiresVisualLayers.MaintenancePanel ]
+    sprite: error.rsi
 ";
 
     [Test]
