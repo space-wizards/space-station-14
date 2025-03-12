@@ -30,6 +30,11 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Thaven
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#ff624a"
   - type: MeleeWeapon
     attackRate: 0.55
     soundHit:
