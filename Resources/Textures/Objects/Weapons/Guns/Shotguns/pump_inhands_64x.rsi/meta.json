@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-4.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34, wield sprites by ps3moira, colors edited by GaussiArson",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34, wield sprites by ps3moira",
     "size": {
         "x": 64,
         "y": 64
