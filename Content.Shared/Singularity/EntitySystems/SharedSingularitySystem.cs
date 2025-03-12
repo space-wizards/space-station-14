@@ -14,13 +14,15 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedSingularitySystem : EntitySystem
 {
-#region Dependencies
+    #region Dependencies
+
     [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
-#endregion Dependencies
+
+    #endregion Dependencies
 
     /// <summary>
     /// The minimum level a singularity can be set to.
@@ -67,7 +69,7 @@ public abstract class SharedSingularitySystem : EntitySystem
         base.Shutdown();
     }
 
-#region Getters/Setters
+    #region Getters/Setters
 
     /// <summary>
     /// Setter for <see cref="SingularityComponent.Level"/>
@@ -78,7 +80,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity to change the level of.</param>
     public void SetLevel(EntityUid uid, byte value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         value = MathHelper.Clamp(value, MinSingularityLevel, MaxSingularityLevel);
@@ -101,7 +103,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity to change the radioactivity of.</param>
     public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         var oldValue = singularity.RadsPerLevel;
@@ -121,7 +123,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity which's level has changed.</param>
     public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
@@ -149,14 +151,15 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
     private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
     {
-        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
+        if (!Resolve(uid, ref singularity, ref rads, logMissing: false))
             return;
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }
 
-#endregion Getters/Setters
+    #endregion Getters/Setters
 
-#region Derivations
+    #region Derivations
+
     /// <summary>
     /// The scaling factor for the size of a singularities gravity well.
     /// </summary>
@@ -211,7 +214,8 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <returns>The distortion shader falloff the singularity should have given its state.</returns>
     public float GetFalloff(float level)
     {
-        return level switch {
+        return level switch
+        {
             0 => 9999f,
             1 => MathF.Sqrt(6.4f),
             2 => MathF.Sqrt(7.0f),
@@ -230,7 +234,8 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <returns>The distortion shader intensity the singularity should have given its state.</returns>
     public float GetIntensity(float level)
     {
-        return level switch {
+        return level switch
+        {
             0 => 0.0f,
             1 => 3645f,
             2 => 103680f,
@@ -241,9 +246,11 @@ public abstract class SharedSingularitySystem : EntitySystem
             _ => -1.0f
         };
     }
-#endregion Derivations
 
-#region Serialization
+    #endregion Derivations
+
+    #region Serialization
+
     /// <summary>
     /// A state wrapper used to sync the singularity between the server and client.
     /// </summary>
@@ -260,9 +267,11 @@ public abstract class SharedSingularitySystem : EntitySystem
             Level = singulo.Level;
         }
     }
-#endregion Serialization
 
-#region EventHandlers
+    #endregion Serialization
+
+    #region EventHandlers
+
     /// <summary>
     /// Syncs other components with the state of the singularity via event on startup.
     /// </summary>
@@ -380,6 +389,5 @@ public abstract class SharedSingularitySystem : EntitySystem
         UpdateRadiation(uid, args.Singularity, comp);
     }
 
-#endregion EventHandlers
-
+    #endregion EventHandlers
 }
