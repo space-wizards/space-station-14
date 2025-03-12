@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Mix 1u aluminium, 1u potassium and 1u sulfur for a flash reaction effect.
-      The radius scales with the reagent amount.
-    type: Add
-  id: 7552
-  time: '2024-10-25T22:47:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32377
 - author: BramvanZijp
   changes:
   - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
@@ -3890,3 +3882,11 @@
   id: 8051
   time: '2025-03-11T13:52:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35782
+- author: Reisama
+  changes:
+  - message: Borgs will no longer get laws to prevent the shuttle from being called
+      when Ion Stormed, and may get laws to call the shuttle instead.
+    type: Fix
+  id: 8052
+  time: '2025-03-12T01:21:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35751
