@@ -2,8 +2,14 @@
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   id: BulletAntiMateriel
-  name: bullet (.60 anti-materiel)
+  name: light bulbet
   components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Power/light_bulb.rsi
+    layers:
+    - state: normal
+      shader: unshaded
   - type: Projectile
     damage:
       types:
