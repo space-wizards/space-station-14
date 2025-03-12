@@ -21,7 +21,7 @@
         ents: []
 
 - type: entity
-  name: china lake
+  name: China Lake #imp, capitalized proper noun
   parent: [BaseWeaponLauncher, BaseGunWieldable, Tier3Contraband]
   id: WeaponLauncherChinaLake
   description: THOOMP. #imp

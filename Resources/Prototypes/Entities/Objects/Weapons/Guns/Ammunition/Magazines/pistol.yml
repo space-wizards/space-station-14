@@ -70,7 +70,7 @@
   id: BaseMagazinePistolSubMachineGun # Yeah it's weird but it's pistol caliber 
   #Hi. AvianMaiden here. Avid gun enthusiast and queer American. It's a sub-caliber. SMGs use sub-caliber ammunition, also known as pistol ammo. If only that was in the name or something. If you read the first line of the Wikipedia page "Submachine gun", it tells you directly: "A submachine gun (SMG) is a magazine-fed automatic carbine designed to fire handgun cartridges." It's not fucking weird at all, it's by DESIGN to use a pistol caliber. Yes I'm responding to something made upstream and probably written years ago. Imp edit.
   name: SMG magazine (.35 auto)
-  description: A 35-round .35 auto SMG magazine. #imp
+  description: A 30-round .35 auto SMG magazine. #imp
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -82,7 +82,7 @@
     whitelist:
       tags:
         - CartridgePistol
-    capacity: 35
+    capacity: 30 #imp
   - type: Item
     size: Small
   - type: ContainerContainer
@@ -104,7 +104,7 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
-  description: A 35-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
+  description: A 30-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
   parent: [ BaseItem, BaseRestrictedContraband ]
   components:
   - type: Tag
@@ -299,7 +299,6 @@
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
-    capacity: 30 #imp
     proto: null
   - type: Sprite
     layers:
@@ -313,7 +312,6 @@
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
-    capacity: 30 #imp
     proto: CartridgePistolPractice
   - type: Sprite
     layers:
@@ -329,7 +327,6 @@
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
-    capacity: 30 #imp
     proto: CartridgePistolUranium
   - type: Sprite
     layers:
