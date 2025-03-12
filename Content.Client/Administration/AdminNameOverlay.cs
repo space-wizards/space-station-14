@@ -148,16 +148,16 @@ internal sealed class AdminNameOverlay : Overlay
                 }
             }
 
-            // Draw Username
-            var color = Color.Yellow;
+            // Draw Character name
+            var color = Color.Aquamarine;
             color.A = alpha;
-            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? color : colorDisconnected);
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? color : colorDisconnected);
             currentOffset += lineoffset;
 
-            // Draw Character name
-            color = Color.Aquamarine;
+            // Draw Username
+            color = Color.Yellow;
             color.A = alpha;
-            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? color : Color.White);
+            args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? color : colorDisconnected);
             currentOffset += lineoffset;
 
             // Draw Playtime

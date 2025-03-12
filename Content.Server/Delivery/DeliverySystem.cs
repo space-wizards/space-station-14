@@ -73,7 +73,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var account))
             return;
 
-        _cargo.UpdateBankAccount(ent, account, ent.Comp.SpesoReward);
+        _cargo.UpdateBankAccount((ent.Comp.RecipientStation.Value, account), ent.Comp.SpesoReward);
     }
 
     public override void Update(float frameTime)
