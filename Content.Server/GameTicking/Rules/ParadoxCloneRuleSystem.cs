@@ -2,7 +2,6 @@ using Content.Server.Antag;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
-using Content.Server.Polymorph.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Mind;
@@ -18,15 +17,12 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
-    [Dependency] private readonly PolymorphSystem _polymorph = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ParadoxCloneRuleComponent, AntagSelectEntityEvent>(OnAntagSelectEntity);
-        // don't polymorph before the objectives are assigned
-        SubscribeLocalEvent<ParadoxCloneRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagEntitySelected, after: new[] { typeof(AntagObjectivesSystem), typeof(AntagRandomObjectivesSystem) });
     }
 
     protected override void Started(EntityUid uid, ParadoxCloneRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -83,14 +79,5 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         gibComp.PreventGibbingObjectives = new() { "ParadoxCloneKillObjective" }; // don't gib them if they killed the original.
 
         args.Entity = clone;
-    }
-    private void AfterAntagEntitySelected(Entity<ParadoxCloneRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
-    {
-        // visual effect on spawn
-        // we might have to remove this part again in case it turns out problematic because it makes the clone valid when someone observes it
-        // but the sprite is cool and I want to keep it
-        // ideally we just make them spawn out of sight in maints or allow the player to choose their spawn point
-        if (ent.Comp.Polymorph != null)
-            _polymorph.PolymorphEntity(args.EntityUid, ent.Comp.Polymorph.Value);
     }
 }

@@ -23,7 +23,7 @@
   id: MobParadoxTimed # visual effect when gibbing on round end
   components:
   - type: TimedDespawn
-    lifetime: 5
+    lifetime: 10
 
 # guidebook dummy
 
@@ -35,15 +35,3 @@
   - type: Sprite
     sprite: Mobs/Aliens/paradox_clone.rsi
     state: preview
-
-# visual effect when spawning
-
-- type: polymorph
-  id: ParadoxClone
-  configuration:
-    entity: MobParadox
-    transferDamage: false
-    forced: true
-    duration: 8
-    polymorphPopup: null # don't show the popups
-    exitPolymorphPopup: null

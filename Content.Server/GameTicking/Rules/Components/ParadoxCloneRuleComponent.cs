@@ -1,5 +1,4 @@
 using Content.Shared.Cloning;
-using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -15,12 +14,6 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<CloningSettingsPrototype> Settings = "BaseClone";
-
-    /// <summary>
-    ///     Visual effect to polymorph into on spawn.
-    /// </summary>
-    [DataField]
-    public ProtoId<PolymorphPrototype>? Polymorph = "ParadoxClone";
 
     /// <summary>
     ///     Visual effect spawned when gibbing at round end.
