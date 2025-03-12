@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RosySaturniidae
-  changes:
-  - message: tweaked the colors on the cmo's jumpsuit/skirt
-    type: Tweak
-  id: 775
-  time: '2024-12-20T16:36:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1077
 - author: Pinkbat5, AftrLite
   changes:
   - message: Heads of Security now start with extra-strength antidepressants in their
@@ -4090,3 +4083,17 @@
   id: 1274
   time: '2025-03-11T14:32:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1885
+- author: AvianMaiden
+  changes:
+  - message: Descriptions to all magazines and bullets! (Naming conventions should
+      be standardized too!)
+    type: Add
+  - message: Unique sprites for .25 caseless ammo and grenade projectiles! The L6
+      SAW also now sports a bloodred magazine!
+    type: Add
+  - message: 'New names for Syndicate long guns! Introducing: the L6 "Nidhogg" SAW,
+      C-20R "Gorgon", the Basilisk-11, the Lindwyrm (Hristov), and the Hydra (Bulldog)!'
+    type: Add
+  id: 1275
+  time: '2025-03-12T02:43:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1904
