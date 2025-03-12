@@ -2,6 +2,7 @@
 
 ui-options-title = Game Options
 ui-options-tab-accessibility = Accessibility
+ui-options-tab-admin = Admin
 ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
@@ -117,6 +118,11 @@ ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
+ui-options-header-text-cursor = Text cursor
+ui-options-header-text-cursor-select = Text selecting
+ui-options-header-text-edit = Text editing
+ui-options-header-text-chat = Chat
+ui-options-header-text-other = Text input other
 
 ui-options-hotkey-keymap = Use US QWERTY Keys
 ui-options-hotkey-toggle-walk = Toggle Walk
@@ -240,6 +246,42 @@ ui-options-function-shuttle-rotate-left = Rotate left
 ui-options-function-shuttle-rotate-right = Rotate right
 ui-options-function-shuttle-brake = Brake
 
+ui-options-function-text-cursor-left = Move cursor left
+ui-options-function-text-cursor-right = Move cursor right
+ui-options-function-text-cursor-up = Move cursor up
+ui-options-function-text-cursor-down = Move cursor down
+ui-options-function-text-cursor-word-left = Move cursor left by word
+ui-options-function-text-cursor-word-right = Move cursor right by word
+ui-options-function-text-cursor-begin = Move cursor to beginning
+ui-options-function-text-cursor-end = Move cursor to end
+ui-options-function-text-cursor-select = Select text
+ui-options-function-text-cursor-select-left = Expand selection left
+ui-options-function-text-cursor-select-right = Expand selection right
+ui-options-function-text-cursor-select-up = Expand selection up
+ui-options-function-text-cursor-select-down = Expand selection down
+ui-options-function-text-cursor-select-word-left = Expand selection left by word
+ui-options-function-text-cursor-select-word-right = Expand selection right by word
+ui-options-function-text-cursor-select-begin = Expand selection to beginning
+ui-options-function-text-cursor-select-end = Expand selection to end
+ui-options-function-text-backspace = Backspace
+ui-options-function-text-delete = Delete
+ui-options-function-text-word-backspace = Backspace word
+ui-options-function-text-word-delete = Delete word
+ui-options-function-text-newline = Newline
+ui-options-function-text-submit = Submit
+ui-options-function-multiline-text-submit = Submit multiline
+ui-options-function-text-select-all = Select all
+ui-options-function-text-copy = Copy
+ui-options-function-text-cut = Cut
+ui-options-function-text-paste = Paste
+ui-options-function-text-history-prev = Previous from history
+ui-options-function-text-history-next = Next from history
+ui-options-function-text-release-focus = Release focus
+ui-options-function-text-scroll-to-bottom = Scroll to bottom
+ui-options-function-text-tab-complete = Tab completion
+ui-options-function-text-complete-next = Complete next
+ui-options-function-text-complete-prev = Complete previous
+
 ## Network menu
 
 ui-options-net-predict = Client-side prediction
@@ -278,11 +320,21 @@ cmd-options-help = Usage: options [tab]
 
 ## Accessibility menu
 
+ui-options-accessability-header-visuals = Visuals
+ui-options-accessability-header-content = Content
+
 ui-options-enable-color-name = Add colors to character names
 ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
 ui-options-screen-shake-intensity = Screen shake intensity
+
 ui-options-chat-window-opacity = Chat window opacity
 ui-options-speech-bubble-text-opacity = Speech bubble text opacity
 ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
+
+ui-options-censor-nudity = Censor character nudity
+
+## Admin menu
+
+ui-options-enable-classic-overlay = Revert antag overlay to classic mode
