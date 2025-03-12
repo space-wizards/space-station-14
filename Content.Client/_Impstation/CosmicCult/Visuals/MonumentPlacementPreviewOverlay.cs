@@ -2,7 +2,6 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -29,6 +28,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
     private Vector2 _lastPos = Vector2.Zero;
 
     //for a slight fade in / out
+    //ss14's formatting settings can take my needlessly pulbic variables away from my cold, dead hands
     public float fadeInProgress = 0;
     public float fadeInTime = 0.25f;
     public bool fadingIn = true;
@@ -39,12 +39,16 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
 
     public float alpha = 0;
 
+    private SpriteSpecifier mainTex;
+    private SpriteSpecifier outlineTex;
+    private SpriteSpecifier starTex;
+
     //todo arbitrary sprite drawing overlay at some point
     //I don't want to have to make a new overlay for every "draw a sprite at x" thing
     //also I kinda want wrappers around the dog ass existing arbitrary rendering methods
 
     //evil huge ctor because doing iocmanager stuff was killing the client for some reason
-    public MonumentPlacementPreviewOverlay(IEntityManager entityManager, IPlayerManager playerManager, SpriteSystem spriteSystem, SharedMapSystem mapSystem, IPrototypeManager protoMan, MonumentPlacementPreviewSystem preview, IGameTiming timing)
+    public MonumentPlacementPreviewOverlay(IEntityManager entityManager, IPlayerManager playerManager, SpriteSystem spriteSystem, SharedMapSystem mapSystem, IPrototypeManager protoMan, MonumentPlacementPreviewSystem preview, IGameTiming timing, int tier)
     {
         _entityManager = entityManager;
         _playerManager = playerManager;
@@ -63,17 +67,19 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         _unshadedShader = protoMan.Index<ShaderPrototype>("unshaded").Instance(); //doesn't need a unique instance
 
         ZIndex = (int) Shared.DrawDepth.DrawDepth.Mobs; //make the overlay render at the same depth as the actual sprite. might want to make it 1 lower if things get wierd with it.
+
+        //I should probably make it not use the raw path but I hate RSIs with an unhealthy passion
+        //will fuck up if the wrong tier is passed in but it's not my problem if that happens
+        mainTex = new SpriteSpecifier.Texture(new ResPath($"_Impstation/CosmicCult/Tileset/monument.rsi/stage{tier}.png"));
+        outlineTex = new SpriteSpecifier.Texture(new ResPath($"_Impstation/CosmicCult/Tileset/monument.rsi/stage{tier}-placement-ghost-1.png"));
+        starTex = new SpriteSpecifier.Texture(new ResPath($"_Impstation/CosmicCult/Tileset/monument.rsi/stage{tier}-placement-ghost-2.png"));
     }
 
     //this might get wierd if the player managed to leave the grid they put the monument on? theoretically not a concern because it can't be placed too close to space.
     //shouldn't crash due to the comp checks, though.
-    //todo make the overlay fade in / out? that's for the ensaucening later though
-    //todo make a shader for this
-    //want it to be like, a shadow of the monument w/ an outline & field of stars over it
-    //if invalid, the stars are darker, else they twinkle
-    //maybe some softly pulsing lines as well?
-        //from a base texture etc etc
-    //much to think about
+    //todo monument teleport effect
+    //no idea how I'll do it on the technical end tbh
+    //move monument to nullspace -> spawn collider at dest & dummy animation entities -> delete entities & move the monument into place when anim is finished?
     protected override void Draw(in OverlayDrawArgs args)
     {
         if (!_entityManager.TryGetComponent<TransformComponent>(_playerManager.LocalEntity, out var transformComp))
@@ -85,11 +91,6 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         if (!_entityManager.TryGetComponent<TransformComponent>(transformComp.ParentUid, out var parentTransform))
             return;
 
-        //I should really make it not use the raw path but I hate RSIs with a probably unhealthy passion
-        //these should probably also be in the ctor instead of here
-        var mainTex = new SpriteSpecifier.Texture(new ResPath("_Impstation/CosmicCult/Tileset/monument.rsi/stage1.png"));
-        var outlineTex = new SpriteSpecifier.Texture(new ResPath("_Impstation/CosmicCult/Tileset/monument.rsi/stage1-placement-ghost-1.png"));
-        var starTex = new SpriteSpecifier.Texture(new ResPath("_Impstation/CosmicCult/Tileset/monument.rsi/stage1-placement-ghost-2-2.png"));
         var worldHandle = args.WorldHandle;
 
         //make effects look more nicer

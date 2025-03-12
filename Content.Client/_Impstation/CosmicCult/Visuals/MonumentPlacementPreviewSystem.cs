@@ -45,6 +45,30 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
 
         SubscribeLocalEvent<MonumentPlacementMarkerComponent, ActionAttemptEvent>(OnAttemptMonumentPlacement);
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicPlaceMonument>(OnCosmicPlaceMonument);
+        SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicMoveMonument>(OnCosmicMoveMonument);
+    }
+
+    private void OnCosmicMoveMonument(Entity<CosmicCultLeadComponent> ent, ref EventCosmicMoveMonument args)
+    {
+        if (_cachedOverlay == null || _cancellationTokenSource == null)
+            return;
+
+        if (!VerifyPlacement(Transform(args.Performer)))
+            return;
+
+        _cachedOverlay.LockPlacement = true;
+        _cancellationTokenSource.Cancel(); //cancel the previous timer
+
+        //remove the overlay automatically after the primeTime expires
+        //no cancellation token for this one as this'll never need to get cancelled afaik
+        Robust.Shared.Timing.Timer.Spawn(TimeSpan.FromSeconds(3.8), //anim takes 3.8s, might want to have the ghost disappear earlier but eh todo tune this to whatever anim I end up on for the move
+            () =>
+            {
+                _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
+                _cachedOverlay = null;
+                _cancellationTokenSource = null; //technically doesn't need to be nulled out as it's not checked against but let's be sane about this
+            }
+        );
     }
 
     //reasoning about this in my head
@@ -139,7 +163,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         _cancellationTokenSource = new CancellationTokenSource();
         //it's probably inefficient to make a new one every time, but this'll be happening like four times a round maybe
         //massive ctor because iocmanager hates me
-        _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _mapSystem, _protoMan, this, _timing);
+        _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _mapSystem, _protoMan, this, _timing, ent.Comp.Tier);
         _overlay.AddOverlay(_cachedOverlay);
 
         //remove the overlay automatically after the primeTime expires

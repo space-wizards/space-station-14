@@ -50,6 +50,26 @@
       state: monument
     event: !type:EventCosmicPlaceMonument {}
   - type: MonumentPlacementMarker
+    tier: 1
+
+- type: entity
+  id: ActionCosmicMoveMonument
+  name: Relocate The Monument
+  description: Relocate the monument within realspace. Make sure to keep it hidden this time.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-move-confirm
+    primeTime: 10 #increased to give you more time to figure out where you want to put it
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument
+    event: !type:EventCosmicMoveMonument {}
+  - type: MonumentPlacementMarker
+    tier: 2
 
 - type: entity
   id: ActionCosmicReturn

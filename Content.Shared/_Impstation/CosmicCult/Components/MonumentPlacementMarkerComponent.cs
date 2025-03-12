@@ -7,5 +7,9 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 [RegisterComponent]
 public sealed partial class MonumentPlacementMarkerComponent : Component
 {
-
+    /// <summary>
+    /// the tier of the monument that the overlay added by the event with this comp should render
+    /// </summary>
+    [DataField]
+    public int Tier = 1;
 }

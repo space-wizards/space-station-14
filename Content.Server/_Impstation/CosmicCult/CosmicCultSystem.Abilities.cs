@@ -41,6 +41,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicBlank>(OnCosmicBlank);
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicLapse>(OnCosmicLapse);
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicPlaceMonument>(OnCosmicPlaceMonument);
+        SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicMoveMonument>(OnCosmicMoveMonument);
         SubscribeLocalEvent<CosmicAstralBodyComponent, EventCosmicReturn>(OnCosmicReturn);
     }
 
@@ -326,6 +327,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region MonumentSpawn
     private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicPlaceMonument args)
     {
+        //todo make the cancellation use the actionAttemptEvent instead of the event?
+        //todo also make this check the actual position
+        //todo also also deduplicate this between the clientside & serverside checks? everything except the grid check can be in the shared system, then just have the grid check in here
         var spaceDistance = 3;
         var xform = Transform(uid);
         var user = Transform(args.Performer);
@@ -333,14 +337,14 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var pos = xform.LocalPosition + new Vector2(0, 1f);
         var box = new Box2(pos + new Vector2(-1.4f, -0.4f), pos + new Vector2(1.4f, 0.4f));
 
-        /// MAKE SURE WE'RE STANDING ON A GRID
+        //MAKE SURE WE'RE STANDING ON A GRID
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-grid"), uid, uid);
             return;
         }
 
-        /// CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
+        //CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
         foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, spaceDistance)))
         {
             if (!tile.IsSpace(_tileDef))
@@ -349,7 +353,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-space", ("DISTANCE", spaceDistance)), uid, uid);
             return;
         }
-        /// CHECK IF WE'RE ON THE STATION OR IF SOMEONE'S TRYING TO SNEAK THIS ONTO SOMETHING SMOL
+
+        //CHECK IF WE'RE ON THE STATION OR IF SOMEONE'S TRYING TO SNEAK THIS ONTO SOMETHING SMOL
         var station = _station.GetStationInMap(xform.MapID);
         EntityUid? stationGrid = null;
         if (TryComp<StationDataComponent>(station, out var stationData))
@@ -359,18 +364,94 @@ public sealed partial class CosmicCultSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-station"), uid, uid);
             return;
         }
-        ///CHECK FOR ENTITY AND ENVIRONMENTAL INTERSECTIONS
+
+        //HECK FOR ENTITY AND ENVIRONMENTAL INTERSECTIONS
         if (_lookup.AnyLocalEntitiesIntersecting(xform.GridUid.Value, box, LookupFlags.Dynamic | LookupFlags.Static, uid))
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-intersection"), uid, uid);
             return;
         }
-        _actions.RemoveAction(uid, uid.Comp.CosmicMonumentActionEntity);
+
+        _actions.RemoveAction(uid, uid.Comp.CosmicMonumentPlaceActionEntity);
+
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
+
         Spawn("MonumentCollider", _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
         Spawn(uid.Comp.MonumentPrototype, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
     }
+    #endregion
+
+    #region MonumentMove
+    private void OnCosmicMoveMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicMoveMonument args)
+    {
+        //todo make this force-close the monument UI for those w/ it open
+        var spaceDistance = 3;
+        var xform = Transform(uid);
+        var user = Transform(args.Performer);
+        var worldPos = _transform.GetWorldPosition(xform);
+        var pos = xform.LocalPosition + new Vector2(0, 1f);
+        var box = new Box2(pos + new Vector2(-1.4f, -0.4f), pos + new Vector2(1.4f, 0.4f));
+
+        //MAKE SURE WE'RE STANDING ON A GRID
+        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-grid"), uid, uid);
+            return;
+        }
+
+        //CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
+        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, spaceDistance)))
+        {
+            if (!tile.IsSpace(_tileDef))
+                continue;
+
+            _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-space", ("DISTANCE", spaceDistance)), uid, uid);
+            return;
+        }
+
+        //CHECK IF WE'RE ON THE STATION OR IF SOMEONE'S TRYING TO SNEAK THIS ONTO SOMETHING SMOL
+        var station = _station.GetStationInMap(xform.MapID);
+        EntityUid? stationGrid = null;
+        if (TryComp<StationDataComponent>(station, out var stationData))
+            stationGrid = _station.GetLargestGrid(stationData);
+        if (stationGrid is not null && stationGrid != xform.GridUid)
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-station"), uid, uid);
+            return;
+        }
+
+        //CHECK FOR ENTITY AND ENVIRONMENTAL INTERSECTIONS
+        if (_lookup.AnyLocalEntitiesIntersecting(xform.GridUid.Value, box, LookupFlags.Dynamic | LookupFlags.Static, uid))
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-intersection"), uid, uid);
+            return;
+        }
+
+        _actions.RemoveAction(uid, uid.Comp.CosmicMonumentMoveActionEntity);
+
+        var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
+        var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
+
+        //delete all old monument colliders for 100% safety
+        var colliderQury = EntityQueryEnumerator<MonumentCollisionComponent>();
+        while (colliderQury.MoveNext(out var collider, out _))
+        {
+            QueueDel(collider);
+        }
+
+        //spawn a new monument collider
+        Spawn("MonumentCollider", _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
+
+        //move the monument
+        //not my problem if there's more than one monument in a round
+        var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
+        while (monumentQuery.MoveNext(out var monument, out _))
+        {
+            _transform.SetCoordinates(monument, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
+        }
+    }
+
     #endregion
 
     #region Return (for Glyph)

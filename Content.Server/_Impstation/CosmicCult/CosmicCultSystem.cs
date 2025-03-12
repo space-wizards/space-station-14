@@ -254,7 +254,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     /// </summary>
     private void OnStartCultLead(Entity<CosmicCultLeadComponent> uid, ref ComponentInit args)
     {
-        _actions.AddAction(uid, ref uid.Comp.CosmicMonumentActionEntity, uid.Comp.CosmicMonumentAction, uid);
+        _actions.AddAction(uid, ref uid.Comp.CosmicMonumentPlaceActionEntity, uid.Comp.CosmicMonumentPlaceAction, uid);
     }
 
     /// <summary>
