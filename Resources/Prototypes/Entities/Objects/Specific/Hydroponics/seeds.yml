@@ -323,6 +323,26 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of pomegranate seeds
+  id: PomegranateSeeds
+  components:
+    - type: Seed
+      seedId: pomegranate
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pomegranate.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of bombegranate seeds
+  id: BombegranateSeeds
+  components:
+    - type: Seed
+      seedId: bombegranate
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/bombegranate.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of corn seeds
   id: CornSeeds
   components:

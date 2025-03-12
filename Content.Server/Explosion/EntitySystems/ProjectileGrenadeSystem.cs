@@ -1,5 +1,6 @@
-﻿using Content.Server.Explosion.Components;
+using Content.Server.Explosion.Components;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -59,6 +60,8 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
         var shootCount = 0;
         var totalCount = component.Container.ContainedEntities.Count + component.UnspawnedCount;
         var segmentAngle = 360 / totalCount;
+        // To trigger projectile fired event. This enables things like chemical injection shrapnel.
+        var shotProjectiles = new List<EntityUid>(component.UnspawnedCount);
 
         while (TrySpawnContents(grenadeCoord, component, out var contentUid))
         {
@@ -78,7 +81,15 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
             var direction = angle.ToVec().Normalized();
             var velocity = _random.NextVector2(component.MinVelocity, component.MaxVelocity);
             _gun.ShootProjectile(contentUid, direction, velocity, uid, null);
+            // add the projectile to the shot projectile list
+            shotProjectiles.Add(contentUid);
         }
+
+        // raise event for projectiles being shot.
+        RaiseLocalEvent(uid, new AmmoShotEvent()
+        {
+            FiredProjectiles = shotProjectiles,
+        });
     }
 
     /// <summary>

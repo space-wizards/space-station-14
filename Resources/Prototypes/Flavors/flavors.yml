@@ -1,4 +1,3 @@
-
 - type: flavor
   id: savory
   flavorType: Base
@@ -1398,3 +1397,13 @@
   id: zombiecocktail
   flavorType: Complex
   description: flavor-complex-zombiecocktail
+
+- type: flavor
+  id: pomegranate
+  flavorType: Complex
+  description: flavor-complex-pomegranate
+
+- type: flavor
+  id: bombegranate
+  flavorType: Complex
+  description: flavor-complex-bombegranate
