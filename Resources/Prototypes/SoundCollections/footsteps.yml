@@ -83,6 +83,11 @@
   - /Audio/Items/Toys/quack.ogg
 
 - type: soundCollection
+  id: FootstepLizardSlippers
+  files:
+  - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
   id: FootstepHeavy
   files:
   - /Audio/Effects/Footsteps/suitstep1.ogg
@@ -211,3 +216,12 @@
   id: FootstepHoverBorg
   files:
   - /Audio/Effects/Footsteps/borgwalk2.ogg
+
+- type: soundCollection
+  id: FootstepHighHeels
+  files:
+  - /Audio/Effects/Footsteps/heelsclack1.ogg
+  - /Audio/Effects/Footsteps/heelsclack2.ogg
+  - /Audio/Effects/Footsteps/heelsclack3.ogg
+  - /Audio/Effects/Footsteps/heelsclack4.ogg
+  - /Audio/Effects/Footsteps/heelsclack5.ogg

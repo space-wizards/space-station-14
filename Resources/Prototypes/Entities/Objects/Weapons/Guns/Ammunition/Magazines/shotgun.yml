@@ -2,7 +2,7 @@
   id: BaseMagazineShotgun
   name: shell drum (.50 shells) #imp
   description: A .50 shell 8-shot drum magazine. #imp
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag

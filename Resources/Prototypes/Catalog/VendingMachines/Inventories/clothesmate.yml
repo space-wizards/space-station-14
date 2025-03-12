@@ -119,5 +119,6 @@
     ClothingUniformJumpskirtTacticool: 1
     ClothingShoesSwat: 2 # imp
     ClothingMaskGas: 1 # imp
-
+    ToyFigurinePassenger: 1
+    ToyFigurineGreytider: 1
   # DO NOT ADD MORE, USE UNIFORM DYING

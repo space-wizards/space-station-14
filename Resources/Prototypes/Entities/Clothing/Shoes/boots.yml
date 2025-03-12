@@ -11,7 +11,7 @@
   - type: Matchbox
 
 - type: entity
-  parent: [ClothingShoesMilitaryBase, BaseRestrictedContraband]
+  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
   id: ClothingShoesBootsJack
   name: jackboots
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -47,7 +47,7 @@
     sprite: Clothing/Shoes/Boots/performer.rsi
 
 - type: entity
-  parent: [ClothingShoesMilitaryBase, BaseRestrictedContraband]
+  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
   id: ClothingShoesBootsCombat
   name: combat boots
   description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -74,6 +74,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHighheels
+      params:
+        variation: 0.09
 
 - type: entity
   parent: [ ClothingShoesMilitaryBase ]
@@ -168,7 +170,7 @@
     sprite: Clothing/Shoes/Boots/winterbootsrobo.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseRestrictedContraband]
+  parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseSecurityContraband]
   id: ClothingShoesBootsWinterSec
   name: security winter boots
   components:

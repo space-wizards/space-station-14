@@ -122,6 +122,9 @@
       components:
       - Item
       - Goblin # NF
+    blacklist:
+      components:
+      - EntityStorage
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired

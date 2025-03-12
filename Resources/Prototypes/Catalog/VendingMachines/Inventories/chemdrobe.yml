@@ -23,3 +23,5 @@
     ClothingEyesGlassesChemist: 2 # Safety glasses
     ClothingHandsGlovesChemist: 2 # Heavy duty chemistry gloves
     # End of modified code
+  contrabandInventory:
+    ToyFigurineChemist: 1

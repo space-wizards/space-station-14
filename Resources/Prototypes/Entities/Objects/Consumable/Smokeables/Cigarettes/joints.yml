@@ -34,6 +34,8 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
+  - type: RandomMetadata
+    nameSegments: [names_rollie]
 
 - type: entity
   id: JointRainbow
@@ -114,6 +116,8 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
+  - type: RandomMetadata
+    nameSegments: [names_rollie]
 
 - type: entity
   id: BluntRainbow
