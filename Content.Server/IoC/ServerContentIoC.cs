@@ -80,7 +80,7 @@ namespace Content.Server.IoC
             IoCManager.Register<MappingManager>();
             IoCManager.RegisterInstance<ContentMarkupTagFactory>(
                 new ContentMarkupTagFactory(
-                    new Dictionary<string, Func<MarkupNode, ContentMarkupTagProcessorBase>>()
+                    new Dictionary<string, ContentMarkupTagProcessorProvider>()
                 )
             );
             IoCManager.Register<SharedContentMarkupTagManager>();
