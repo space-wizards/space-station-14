@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-beer by aada.",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-beer by aada. Mining module by LazyRiverfolk",
   "size": {
     "x": 32,
     "y": 32
@@ -129,6 +129,9 @@
     },
     {
       "name": "syndicate"
+    },
+    {
+      "name": "icon-mining-basic"
     }
   ]
 }

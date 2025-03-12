@@ -837,8 +837,8 @@
     state: plushie_vox
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg
-  - type: EmitSoundOnLand
+      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg #imp
+  - type: EmitSoundOnLand #imp
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
@@ -850,11 +850,11 @@
   - type: Food
     requiresSpecialDigestion: true
     useSound:
-      path: /Audio/_Impstation/Voice/Vox/voxcry.ogg
+      path: /Audio/_Impstation/Voice/Vox/voxcry.ogg #imp
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: /Audio/_Impstation/Voice/Vox/voxchitter2.ogg
+      path: /Audio/_Impstation/Voice/Vox/voxchitter2.ogg #imp
 
 - type: entity
   parent: BasePlushie

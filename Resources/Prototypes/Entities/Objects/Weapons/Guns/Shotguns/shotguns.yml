@@ -36,6 +36,8 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    soundRack:
+      path: /Audio/_Impstation/Weapons/Guns/Cock/shotgun_cock.ogg #imp
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -44,7 +46,7 @@
     price: 500
 
 - type: entity
-  name: Bulldog
+  name: Hydra #imp
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, Tier3Contraband]
   id: WeaponShotgunBulldog
@@ -120,6 +122,8 @@
     fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg #imp
   - type: Construction
     graph: ShotgunSawn
     node: start
@@ -139,7 +143,7 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: A premium semi-automatic combat shotgun, featuring a pistol grip and full-length magazine tube for those nasty close-quarters engagements. Uses .50 shotgun shells. #imp
+  description: A premium semi-automatic combat shotgun, featuring a pistol grip and sleek profile for those nasty close-quarters engagements. Uses .50 shotgun shells. #imp
   components: # intend for Enforcer to have wider choke for semi-auto function
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Shotguns/enforcer.rsi #imp
@@ -152,7 +156,7 @@
 - type: entity
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerRubber
-  suffix: Non-Lethal
+  suffix: Non-Lethal DEPRECATED DO NOT MAP
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
@@ -161,7 +165,7 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: Even centuries after his time, the legacy of John Moses Browning lives on. This pump-action shotgun is a favorite of hunters and militia forces throughout many worlds. Uses .50 shotgun shells. #imp
+  description: Even centuries after his time, the legacy of John Moses Browning lives on. This pump-action shotgun is a favorite of hunters and militia forces across many worlds. Uses .50 shotgun shells. #imp
   components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
   - type: Item
     size: Normal
@@ -175,6 +179,8 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 1
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg
   - type: Tag
     tags:
     - WeaponShotgunKammerer
@@ -196,6 +202,8 @@
     fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg #imp
   - type: Construction
     graph: ShotgunSawn
     node: shotgunsawn
@@ -232,6 +240,8 @@
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 1
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg #imp
   - type: Construction
     graph: ShotgunSawn
     node: shotgunsawn
@@ -257,6 +267,8 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg #imp
   - type: StaticPrice
     price: 0
 
@@ -281,6 +293,8 @@
   - type: BallisticAmmoProvider
     capacity: 1
     proto: null
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg #imp
   - type: Construction
     graph: ImprovisedShotgunGraph
     node: shotgun

@@ -104,6 +104,12 @@
     - HeartLocket
 
 - type: loadout
+  id: HeartLocketSilver
+  storage:
+    back:
+    - HeartLocketSilver
+
+- type: loadout
   id: GoldRingTrinket
   storage:
     back:

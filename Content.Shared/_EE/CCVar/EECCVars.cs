@@ -143,6 +143,12 @@ public sealed partial class EECCVars : CVars
         CVarDef.Create("supermatter.matter_power_conversion", 10f, CVar.SERVER);
 
     /// <summary>
+    ///     Divisor on the amount of gas absorbed by the supermatter during the roundstart grace period.
+    /// </summary>
+    public static readonly CVarDef<float> SupermatterGasEfficiencyGraceModifier =
+        CVarDef.Create("supermatter.gas_efficiency_grace_modifier", 10f, CVar.SERVER);
+
+    /// <summary>
     ///     Divisor on the amount of damage that the supermatter takes from absorbing hot gas.
     /// </summary>
     public static readonly CVarDef<float> SupermatterMoleHeatPenalty =

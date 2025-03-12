@@ -29,7 +29,7 @@ on:
 jobs:
   build:
     name: Test Packaging
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: github.actor != 'ImpstationBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
 
     steps:
