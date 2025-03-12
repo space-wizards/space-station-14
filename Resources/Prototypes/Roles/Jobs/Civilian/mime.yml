@@ -30,7 +30,7 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - RubberStampMimeSledgehammer
+    - RubberStampMime
 
 - type: entity
   id: ActionMimeInvisibleWall

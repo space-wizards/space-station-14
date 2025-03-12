@@ -199,8 +199,7 @@
   id: AntagInitialInfected
 
 - type: playTimeTracker
-  id: Survivor
-
+  id: AntagSurvivor
 
 - type: playTimeTracker
   id: AntagWizard

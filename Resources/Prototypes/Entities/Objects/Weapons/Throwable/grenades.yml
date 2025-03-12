@@ -165,10 +165,10 @@
 
 
 - type: entity
-  name: supermatter grenade
-  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
-  parent: [GrenadeBase, BaseSyndicateContraband]
-  id: SupermatterGrenade
+  parent: [ GrenadeBase, BaseSyndicateContraband ]
+  id: SingularityGrenade
+  name: singularity grenade
+  description: Grenade that simulates the power of a singularity, pulling things in a heap.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
@@ -225,7 +225,7 @@
 - type: entity
   name: whitehole grenade
   description: Grenade that repulses everything around for some time.
-  parent: SupermatterGrenade
+  parent: SingularityGrenade
   id: WhiteholeGrenade
   components:
   - type: Sprite
