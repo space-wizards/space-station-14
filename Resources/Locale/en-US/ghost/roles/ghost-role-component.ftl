@@ -46,7 +46,7 @@ ghost-role-information-snoth-description = A little snoth who doesn't mind a bit
 
 ghost-role-information-giant-spider-name = Giant Spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
-ghost-role-information-giant-spider-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders.
+ghost-role-information-giant-spider-rules = You are a [color=yellow][bold]Free Agent[/bold][/color] with all other giant spiders.
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 

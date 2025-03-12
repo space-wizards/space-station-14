@@ -15,9 +15,9 @@ The Authors retain all copyright to their respective work submitted here.
 > If you can not figure out the license of something, or who the author(s) of a feature are, please ask in our [Discord](https://discord.gg/q9vm8tfxc9).
 
 All content (except for content from https://github.com/space-wizards/space-station-14, which are licensed under MIT) contributed to this repository after commit db9c5e44db22155e7a9e2d99ae33310bef8d1b0c is licensed under GNU Affero General Public License version 3.0, unless otherwise stated.
-See [LICENSE-AGPLv3](./LICENSE-AGPLv3.txt).
+See [LICENSE-AGPLv3](./LICENSE-AGPLv3.TXT).
 Content contributed to this repository before the aforementioned commit is licensed under MIT, unless otherwise stated.
-See [LICENSE-MIT](./LICENSE-MIT.txt).
+See [LICENSE-MIT](./LICENSE-MIT.TXT).
 
 ### Assets
 

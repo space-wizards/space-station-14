@@ -21,7 +21,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
-    - id: SpiderClownSpawn
+#    - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
 
@@ -159,10 +159,10 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 6.5
+    weight: 4.5 # Ronstation - Made even more rarer.
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 27 # Ronstation - Made even more rarer.
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
@@ -227,8 +227,8 @@
         - DeathAcidifierImplant
       - type: RandomMetadata
         nameSegments:
-        - names_ninja_title
-        - names_ninja
+        - NamesNinjaTitle
+        - NamesNinja
       mindRoles:
       - MindRoleNinja
 
@@ -277,8 +277,8 @@
         - Wizard
       - type: RandomMetadata
         nameSegments:
-        - names_wizard_first
-        - names_wizard_last
+        - NamesWizardFirst
+        - NamesWizardLast
       mindRoles:
       - MindRoleWizard
 
@@ -406,17 +406,17 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 15
+    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
     weight: 5
-    duration: 60
+    duration: 30 # Ronstation - needs a reduction.
   - type: VentCrittersRule
     entries:
     - id: MobPurpleSnake
-      prob: 0.02
+      prob: 0.01
     - id: MobSmallPurpleSnake
-      prob: 0.02
+      prob: 0.01
     - id: MobCobraSpace
-      prob: 0.02
+      prob: 0.01
 
 - type: entity
   id: SpiderSpawn
@@ -427,30 +427,30 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 15
+    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
     weight: 5
-    duration: 60
+    duration: 30 # Ronstation - needs a reduction.
   - type: VentCrittersRule
     entries:
     - id: MobGiantSpiderAngry
-      prob: 0.05
+      prob: 0.03
 
-- type: entity
-  id: SpiderClownSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 20
-    weight: 1.5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobClownSpider
-      prob: 0.05
+#- type: entity
+#  id: SpiderClownSpawn
+#  parent: BaseStationEventShortDelay
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-vent-creatures-start-announcement
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#    earliestStart: 20
+#    minimumPlayers: 20
+#    weight: 1.5
+#    duration: 60
+#  - type: VentCrittersRule
+#    entries:
+#    - id: MobClownSpider
+#      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
@@ -513,7 +513,7 @@
       - type: RandomMetadata
         nameSegments:
         - SyndicateNamesPrefix
-        - SyndicateNamesNormal
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
