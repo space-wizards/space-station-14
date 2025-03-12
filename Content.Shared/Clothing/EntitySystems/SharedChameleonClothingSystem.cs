@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
@@ -83,6 +84,17 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             _appearance.AppendData(appearanceOther, uid);
             Dirty(uid, appearance);
         }
+
+        // toggleable clothing logic for the chameleon hardsuit
+        if (TryComp(uid, out ToggleableClothingComponent? toggleableClothing) && toggleableClothing?.ClothingUid != null &&
+            proto.TryGetComponent("ToggleableClothing", out ToggleableClothingComponent? toggleableClothingOther))
+        {
+            if (TryComp(toggleableClothing?.ClothingUid, out ChameleonClothingComponent? chamaleonClothingComponent))
+            {
+                UpdateVisuals((EntityUid)toggleableClothing!.ClothingUid!, chamaleonClothingComponent);
+            }
+        }
+
 
         // properly mark contraband
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
