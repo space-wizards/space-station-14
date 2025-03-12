@@ -78,7 +78,6 @@
   desc: reagent-desc-feverdream
   physicalDesc: reagent-physical-desc-shimmering-blood
   flavor: feverdream
-  color: "#ff624a"
   metamorphicSprite:
     sprite: _Impstation/Objects/Consumable/Drinks/feverdream.rsi
     state: icon_empty
