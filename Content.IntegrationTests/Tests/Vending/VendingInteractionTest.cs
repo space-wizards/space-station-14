@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.VendingMachines;
+using Content.Shared.VendingMachines;
 
 namespace Content.IntegrationTests.Tests.Vending;
 
@@ -53,6 +54,42 @@ public sealed class VendingInteractionTest : InteractionTest
     - state: panel
       map: [ enum.WiresVisualLayers.MaintenancePanel ]
 ";
+
+    [Test]
+    public async Task InteractUITest()
+    {
+        await SpawnTarget(VendingMachineProtoId);
+
+        // Should start with no BUI open
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), Is.False, "BUI was open unexpectedly.");
+
+        // Unpowered vending machine does not open BUI
+        await Activate();
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), Is.False, "BUI opened without power.");
+
+        // Power the vending machine
+        var apc = await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        await RunTicks(1);
+
+        // Interacting with powered vending machine opens BUI
+        await Activate();
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), "BUI failed to open.");
+
+        // Interacting with it again closes the BUI
+        await Activate();
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), Is.False, "BUI failed to close on interaction.");
+
+        // Reopen BUI for the next check
+        await Activate();
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), "BUI failed to reopen.");
+
+        // Remove power
+        await Delete(apc);
+        await RunTicks(1);
+
+        // The BUI should close when power is lost
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), Is.False, "BUI failed to close on power loss.");
+    }
 
     [Test]
     public async Task RestockTest()
