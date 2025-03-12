@@ -151,9 +151,7 @@
     - GeigerCounter
     - SprayPainter
     - CrayonRainbowInfinite
-    - ClothingEyesHudSecurity
-    - ClothingEyesHudMedical
-    - ClothingEyesHudMedSec
+    - ClothingEyesHudOmni
     # imp edit end
 
 #Gladiator with spear
