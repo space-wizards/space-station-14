@@ -26,14 +26,6 @@
     - state: pai-off-overlay
       shader: unshaded
       map: ["screen"]
-  - type: ContainerContainer
-    containers:
-      key_slots: !type:Container
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyCommon
-  - type: EncryptionKeyHolder
   - type: Input
     context: "human"
   - type: PAI
