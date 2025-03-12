@@ -5,7 +5,7 @@ namespace Content.Shared.Salvage.Expeditions.Modifiers;
 /// <summary>
 /// Generic modifiers with no additional data
 /// </summary>
-[Prototype]
+[Prototype("salvageMod")]
 public sealed partial class SalvageMod : IPrototype, ISalvageMod
 {
     [IdDataField] public string ID { get; private set; } = default!;
