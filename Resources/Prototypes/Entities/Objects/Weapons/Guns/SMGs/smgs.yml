@@ -82,7 +82,7 @@
   - type: Appearance
 
 - type: entity
-  name: C-20r submachine gun
+  name: C-20R Gorgon #imp
   parent: [BaseWeaponSubMachineGun, Tier3Contraband]
   id: WeaponSubMachineGunC20r
   description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo. #imp

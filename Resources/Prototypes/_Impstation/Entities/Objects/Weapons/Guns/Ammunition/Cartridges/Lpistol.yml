@@ -1,6 +1,7 @@
 - type: entity
   id: BaseCartridgeLPistol
   name: cartridge (.22 auto)
+  description: A pistol cartridge that is smaller than most. Incredibly cheap and somewhat underpowered.
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -21,6 +22,7 @@
 - type: entity
   id: CartridgeLPistol
   name: cartridge (.22 auto)
+  description: A pistol cartridge that is smaller than most. Incredibly cheap and somewhat underpowered, but it'll do.
   parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
@@ -29,6 +31,7 @@
 - type: entity
   id: CartridgeLPistolPractice
   name: cartridge (.22 auto practice)
+  description: A smaller pistol cartridge with a wax projectile to simulate the real deal. Can be used for force-on-force training but still stings like a bitch. Eye protection recommended.
   parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
@@ -44,6 +47,7 @@
 - type: entity
   id: CartridgeLPistolIncendiary
   name: cartridge (.22 auto incendiary)
+  description: A smaller pistol cartridge tipped with a softer projectile containing a pyrophoric compound, setting targets ablaze.
   parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
@@ -59,6 +63,7 @@
 - type: entity
   id: CartridgeLPistolAP
   name: cartridge (.22 Auto APDSFS)
+  description: Gunner, sabot, infantry!
   parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
@@ -74,6 +79,7 @@
 - type: entity
   id: CartridgeLPistolUranium
   name: cartridge (.22 auto uranium)
+  description: A smaller pistol cartridge with a heavier depleted uranium projectile, delivering radiation poisoning at the cost of worse penetration.
   parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
@@ -89,6 +95,7 @@
 - type: entity
   id: CartridgeLPistolSpent
   name: cartridge (.22 auto)
+  description: A pistol cartridge that is smaller than most. Incredibly cheap and somewhat underpowered, but it'll do. Well, this one did.
   suffix: spent
   parent: BaseCartridgeLPistol
   components:

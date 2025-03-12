@@ -3,6 +3,7 @@
   parent: BaseItem
   id: BaseMagazineBoxLPistol
   name: ammunition box (.22 auto)
+  description: A box made for 100 rounds of .22 auto ammunitions.
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -29,6 +30,7 @@
   parent: BaseMagazineBoxLPistol
   id: MagazineBoxLPistol
   name: ammunition box (.22 auto)
+  description: A box made for 100 rounds of .22 auto ammunition, labeled as live-fire bullets.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistol
@@ -43,6 +45,7 @@
   parent: BaseMagazineBoxLPistol
   id: MagazineBoxLPistolPractice
   name: ammunition box (.22 auto practice)
+  description: A box made for 100 rounds of .22 auto ammunition, labeled as practice bullets.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistolPractice
@@ -58,6 +61,7 @@
   id: MagazineBoxLPistolIncendiary
   parent: BaseMagazineBoxLPistol
   name: ammunition box (.22 auto incendiary)
+  description: A box made for 100 rounds of .22 auto ammunition, labeled as incendiary bullets.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistolIncendiary
@@ -73,6 +77,7 @@
   id: MagazineBoxLPistolUranium
   parent: BaseMagazineBoxLPistol
   name: ammunition box (.22 auto uranium)
+  description: A box made for 100 rounds of .22 auto ammunition, labeled as uranium bullets.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistolUranium

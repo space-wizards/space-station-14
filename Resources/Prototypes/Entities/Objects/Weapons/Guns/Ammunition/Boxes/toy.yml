@@ -18,6 +18,7 @@
   parent: BoxDonkSoftBase
   id: BoxDonkSoftBox
   name: box of foam darts
+  description: A box made for 40 of only the finest. #imp
   components:
   - type: BallisticAmmoProvider
     whitelist:
@@ -35,6 +36,7 @@
   parent: BaseMagazineBoxMagnum
   id: BoxCartridgeCap
   name: cap gun cartridge box
+  description: A box made for 20 pew pew shots. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCap
