@@ -1,0 +1,127 @@
+# Static
+
+- type: latheRecipePack
+  id: LightPack
+  recipes:
+    - FlashlightLantern
+    - LightReplacer
+    - LightTube
+    - LedLightTube
+    - SodiumLightTube
+    - ExteriorLightTube
+    - UvLightTube
+    - LightBulb
+    - LedLightBulb
+    - DimLightBulb
+
+- type: latheRecipePack
+  id: CleanPack
+  recipes:
+    - Bucket
+    - SprayBottle
+    - Plunger
+    - MopItem
+    - MopBucket
+    - Holoprojector
+    - TrashBag
+    - Mousetrap
+    - WetFloorSign
+    - SoapNT #imp recipe
+
+- type: latheRecipePack
+  id: BotanyPack
+  recipes:
+    - DiseaseSwab
+    - HydroponicsToolMiniHoe
+    - HydroponicsToolScythe
+    - HydroponicsToolHatchet
+    - HydroponicsToolSpade
+    - HydroponicsToolClippers
+    - Shovel
+    - PlantBag #imp recipe
+
+- type: latheRecipePack
+  id: BarPack
+  recipes:
+    - DrinkMug
+    - DrinkMugMetal
+    - DrinkGlass
+    - DrinkShotGlass
+    - DrinkGlassCoupeShaped
+    - CustomDrinkJug
+    - DrinkShaker #imp recipe
+    - DrinkJigger #imp recipe
+    - DrinkFlaskBar #imp recipe
+    - DrinkVacuumFlask #imp recipe
+    - DrinkTeapotEmpty # imp recipe
+    - DrinkTeacupEmpty #imp recipe
+    - DrinkWaterBottleEmpty #imp recipe
+    - Pitcher #imp recipe
+    - BarSpoon #imp recipe
+    - DrinkDisposableCup #imp recipe
+
+- type: latheRecipePack
+  id: KitchenPack
+  recipes:
+    - KitchenKnife
+    - FoodPlate
+    - FoodPlateSmall
+    - FoodPlatePlastic
+    - FoodPlateSmallPlastic
+    - FoodBowlBig
+    - FoodPlateTin
+    - FoodPlateMuffinTin
+    - FoodKebabSkewer
+    - RollingPin #imp recipe
+    - Fork #imp recipe
+    - Spoon #imp recipe
+    - ForkPlastic #imp recipe
+    - SpoonPlastic #imp recipe
+    - PairedChopsticks #imp recipe
+
+- type: latheRecipePack
+  id: ServiceMiscPack
+  recipes:
+    - Beaker
+    - LargeBeaker
+    - Dropper
+    - Syringe
+    - DeskBell
+    - ClothingHeadHatCone
+    - SprayPainter
+    - HandLabeler
+    - TapeRecorder
+    - CassetteTape
+
+# Dynamic
+
+- type: latheRecipePack
+  id: CleanPackDynamic
+  recipes:
+    - MegaSprayBottle
+    - AdvMopItem
+    - WeaponSprayNozzle
+    - ClothingBackpackWaterTank
+    - CleanerGrenade #imp recipe
+
+- type: latheRecipePack
+  id: ServiceMiscPackDynamic
+  recipes:
+    - PlantAnalyzer #NF recipe
+    - FishingRod #imp recipe
+
+- type: latheRecipePack
+  id: TilePackDynamic
+  recipes:
+    - FauxTileAstroGrass
+    - FauxTileMowedAstroGrass
+    - FauxTileJungleAstroGrass
+    - FauxTileAstroIce
+    - FauxTileAstroSnow
+
+# Emagged
+
+- type: latheRecipePack
+  id: ServiceEmagged
+  recipes:
+    - ButchCleaver
