@@ -9,6 +9,8 @@ public sealed class VendingInteractionTest : InteractionTest
 {
     private const string VendingMachineProtoId = "InteractionTestVendingMachine";
 
+    private const string VendedItemProtoId = "PassengerPDA";
+
     private const string RestockBoxProtoId = "InteractionTestRestockBox";
 
     [TestPrototypes]
@@ -16,7 +18,7 @@ public sealed class VendingInteractionTest : InteractionTest
 - type: vendingMachineInventory
   id: InteractionTestVendingInventory
   startingInventory:
-    PassengerPDA: 5
+    {VendedItemProtoId}: 5
 
 - type: entity
   parent: BaseVendingMachineRestock
@@ -38,6 +40,7 @@ public sealed class VendingInteractionTest : InteractionTest
   components:
   - type: VendingMachine
     pack: InteractionTestVendingInventory
+    ejectDelay: 0 # no delay to speed up tests
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -89,6 +92,40 @@ public sealed class VendingInteractionTest : InteractionTest
 
         // The BUI should close when power is lost
         Assert.That(IsUiOpen(VendingMachineUiKey.Key), Is.False, "BUI failed to close on power loss.");
+    }
+
+    [Test]
+    public async Task DispenseItemTest()
+    {
+        await SpawnTarget(VendingMachineProtoId);
+        var vendorEnt = SEntMan.GetEntity(Target.Value);
+
+        var vendingSystem = SEntMan.System<VendingMachineSystem>();
+        var items = vendingSystem.GetAllInventory(vendorEnt);
+
+        // Verify initial item count
+        Assert.That(items, Is.Not.Empty, $"{VendingMachineProtoId} spawned with no items.");
+        Assert.That(items.First().Amount, Is.EqualTo(5), $"{VendingMachineProtoId} spawned with unexpected item count.");
+
+        // Power the vending machine
+        await SpawnEntity("APCBasic", SEntMan.GetCoordinates(TargetCoords));
+        await RunTicks(1);
+
+        // Open the BUI
+        await Activate();
+        Assert.That(IsUiOpen(VendingMachineUiKey.Key), "BUI failed to open.");
+
+        // Request an item be dispensed
+        var ev = new VendingMachineEjectMessage(InventoryType.Regular, VendedItemProtoId);
+        await SendBui(VendingMachineUiKey.Key, ev);
+
+        // Make sure the stock decreased
+        Assert.That(items.First().Amount, Is.EqualTo(4), "Stocked item count did not decrease.");
+        // Make sure the dispensed item was spawned in to the world
+        await AssertEntityLookup(
+            ("APCBasic", 1),
+            (VendedItemProtoId, 1)
+        );
     }
 
     [Test]
