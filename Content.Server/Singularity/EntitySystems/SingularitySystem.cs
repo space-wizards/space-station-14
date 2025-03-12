@@ -21,11 +21,11 @@ namespace Content.Server.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
 {
-#region Dependencies
+    #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
-#endregion Dependencies
+    #endregion Dependencies
 
     /// <summary>
     /// The amount of energy singulos accumulate when they eat a tile.
@@ -70,7 +70,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="frameTime">The amount of time since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
         var query = EntityQueryEnumerator<SingularityComponent>();
@@ -80,7 +80,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         }
     }
 
-#region Getters/Setters
+    #region Getters/Setters
 
     /// <summary>
     /// Setter for <see cref="SingularityComponent.Energy"/>.
@@ -91,7 +91,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="singularity">The state of the singularity to set the energy of.</param>
     public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         var oldValue = singularity.Energy;
@@ -101,8 +101,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
         singularity.Energy = value;
         SetLevel(uid, value switch
         {
-			// Normally, a level 6 singularity requires the supermatter + 3000 energy.
-			// The required amount of energy has been bumped up to compensate for the lack of the supermatter.
+            // Normally, a level 6 singularity requires the supermatter + 3000 energy.
+            // The required amount of energy has been bumped up to compensate for the lack of the supermatter.
             >= 5000 => 6,
             >= 2000 => 5,
             >= 1000 => 4,
@@ -125,20 +125,20 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
     public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         var newValue = singularity.Energy + delta;
-        if((!snapMin && newValue < min)
+        if ((!snapMin && newValue < min)
         || (!snapMax && newValue > max))
             return;
         SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
     }
 
 
-#endregion Getters/Setters
+    #endregion Getters/Setters
 
-#region Event Handlers
+    #region Event Handlers
 
     /// <summary>
     /// Handles playing the startup sounds when a singulo forms.
@@ -314,5 +314,5 @@ public sealed class SingularitySystem : SharedSingularitySystem
         (gravityWell.Comp.BaseRadialAcceleration, gravityWell.Comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
     }
 
-#endregion Event Handlers
+    #endregion Event Handlers
 }
