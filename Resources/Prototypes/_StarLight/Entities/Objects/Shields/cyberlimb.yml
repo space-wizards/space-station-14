@@ -82,24 +82,24 @@
             - !type:PlaySoundBehavior
               sound:
                 collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                BrokenEnergyShieldCyber:
-                  min: 1
-                  max: 1
+            #- !type:SpawnEntitiesBehavior - Breaks arm. Who'da thunk?
+              #spawn:
+                #BrokenEnergyShieldCyber:
+                  #min: 1
+                  #max: 1
     - type: StaticPrice
       price: 350
 
-- type: entity
-  name: broken bulwark
-  parent: BaseItem
-  id: BrokenEnergyShieldCyber
-  description: Too damaged to effectively protect. Time to get a new one!
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/e_shield.rsi
-      state: eshield-icon
-    - type: Item
-      sprite: Objects/Weapons/Melee/e_shield.rsi
-      size: Small
-      heldPrefix: eshield
+#- type: entity
+  #name: broken bulwark
+  #parent: BaseItem
+  #id: BrokenEnergyShieldCyber
+  #description: Too damaged to effectively protect. Time to get a new one!
+  #components:
+    #- type: Sprite
+      #sprite: Objects/Weapons/Melee/e_shield.rsi
+      #state: eshield-icon
+    #- type: Item
+      #sprite: Objects/Weapons/Melee/e_shield.rsi
+      #size: Small
+      #heldPrefix: eshield
