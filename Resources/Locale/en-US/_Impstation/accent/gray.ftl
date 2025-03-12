@@ -1124,7 +1124,7 @@ accent-gray-words-375 = undeads
 accent-gray-words-replace-375 = sombiis
 
 accent-gray-words-376 = zombies
-accent-gray-words-replace-374 = dediis
+accent-gray-words-replace-376 = dediis
 
 accent-gray-words-377 = werewolves
 accent-gray-words-replace-377 = baats
