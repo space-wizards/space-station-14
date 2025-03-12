@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
-[Prototype("salvageTemperatureMod")]
+[Prototype]
 public sealed partial class SalvageTemperatureMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; private set; } = default!;

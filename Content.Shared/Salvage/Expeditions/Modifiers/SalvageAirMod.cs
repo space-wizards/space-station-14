@@ -9,7 +9,7 @@ namespace Content.Shared.Salvage.Expeditions.Modifiers;
 /// Used when creating the planet for a salvage expedition.
 /// Which one is selected depends on the mission difficulty, different weightedRandoms are picked from.
 /// </summary>
-[Prototype("salvageAirMod")]
+[Prototype]
 public sealed partial class SalvageAirMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField]
