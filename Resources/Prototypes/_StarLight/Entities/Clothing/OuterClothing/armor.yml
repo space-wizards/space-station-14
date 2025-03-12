@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterArmorBasic, BaseCommandContraband]
+  parent: [ClothingOuterArmorBase, BaseCommandContraband]
   id: ClothingOuterArmorBlueShield
   name: blueshield officer's bulletproof vest
   description: Much better than a standard type-1 security vest. Don't lose it, you will NOT get a replacement.
@@ -81,3 +81,43 @@
           staminaModifier: 0.5
         - type: ExplosionResistance
           damageCoefficient: 0.5
+
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
+  id: ClothingOuterArmorPlate
+  name: plate carrier
+  description: A standard Type II armored vest that provides good protection against bullets and lasers with the help of a plate inserted in the back and front, but not much else.
+  components:
+  - type: Pierceable
+    level: Metal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/platecarrier.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/platecarrier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.6
+        Heat: 0.7
+
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
+  id: ClothingOuterArmorStab
+  name: stabproof vest
+  description: Contrary to it's name, it's just a Type II armored vest that provides good protection against stabs and punches, but not much else.
+  components:
+  - type: Pierceable
+    level: Metal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/stabvest.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/stabvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.8
+        Heat: 0.9

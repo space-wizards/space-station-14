@@ -125,6 +125,16 @@
     outerClothing: ClothingOuterArmorBasicSlim
 
 - type: loadout
+  id: ArmorVestPlate
+  equipment:
+    outerClothing: ClothingOuterArmorPlate
+
+- type: loadout
+  id: ArmorVestStab
+  equipment:
+    outerClothing: ClothingOuterArmorStab
+
+- type: loadout
   id: SecurityOfficerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterSec
