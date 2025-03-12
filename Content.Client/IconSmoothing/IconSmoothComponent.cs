@@ -30,7 +30,7 @@ namespace Content.Client.IconSmoothing
         ///     Additional keys to smooth with.
         /// </summary>
         [DataField]
-        public List<string> AdditionalKeys { get; private set; } = new();
+        public List<string> AdditionalKeys = new();
 
         /// <summary>
         ///     Prepended to the RSI state.
