@@ -181,7 +181,7 @@
     
 - type: entity
   parent: AirlockAssembly
-  id: AirlockAssemblyCourierGlass
+  id: AirlockAssemblyDetectiveGlass
   suffix: Detective, Glass
   components:
   - type: Sprite
