@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
-      rare.
-    type: Fix
-  id: 7553
-  time: '2024-10-26T02:16:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32942
 - author: Moomoobeef
   changes:
   - message: Bowls no longer make an eating sound when drinking from them.
@@ -3890,3 +3882,10 @@
   id: 8052
   time: '2025-03-12T01:21:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35751
+- author: Winkarst-cpu
+  changes:
+  - message: The warden job now rolls before security officer/cadet/detective.
+    type: Tweak
+  id: 8053
+  time: '2025-03-12T22:36:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35313
