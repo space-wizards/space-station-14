@@ -1,10 +1,13 @@
 using Content.Shared.Explosion;
 using Content.Shared.Inventory;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Inventory
 {
     public sealed class ServerInventorySystem : InventorySystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -28,23 +31,25 @@ namespace Content.Server.Inventory
             if (!Resolve(source.Owner, ref source.Comp) || !Resolve(target.Owner, ref target.Comp))
                 return;
 
-            var entityList = new List<EntityUid>();
+            // Since jumpsuit/clothing is before PDA/pockets in inventory list, this means the enumerator doesn't iterate over
+            // those slots at all if they get unequipped. Thus we need to get a list of all the equipped items before we begin to
+            // unequip them from the source and equip them to the target.
+
+            var itemList = new List<EntityUid>();
             var slotList = new List<SlotDefinition>();
 
             var enumerator = new InventorySlotEnumerator(source.Comp);
             while (enumerator.NextItem(out var item, out var slot))
             {
-                entityList.Add(item);
+                itemList.Add(item);
                 slotList.Add(slot);
             }
 
-            /*
-            var enumerator = new InventorySlotEnumerator(source.Comp);
-            while (enumerator.NextItem(out var item, out var slot))
+            for (var i = 0; i < itemList.Count; i++)
             {
-                TryUnequip(source, slot.Name, true, true, inventory: source.Comp);
-                TryEquip(target, item, slot.Name, true, true, inventory: target.Comp);
-            }*/
+                TryUnequip(source, slotList[i].Name, true, true, inventory: source.Comp);
+                TryEquip(target, itemList[i], slotList[i].Name, true, true, inventory: target.Comp);
+            }
         }
     }
 }
