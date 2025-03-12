@@ -282,7 +282,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (session == null)
                 MakeAntag(ent, null, def); // This is for spawner antags
             else
+            {
                 ent.Comp.PreSelectedSessions.Add(session); // Selection done!
+                Log.Debug($"Selected {session.Name} as antagonist: {ToPrettyString(ent)}");
+            }
         }
     }
 
@@ -419,7 +422,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             ent.Comp.AssignedMinds.Add((curMind.Value, Name(player)));
             SendBriefing(session, def.Briefing);
 
-            Log.Debug($"Selected {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
+            Log.Debug($"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
         }
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
