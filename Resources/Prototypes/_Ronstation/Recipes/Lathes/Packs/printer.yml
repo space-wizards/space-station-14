@@ -1,0 +1,7 @@
+## Static
+
+- type: latheRecipePack
+  id: PrinterGeneralBasic
+  recipes:
+  - PrinterPaperWrittenFormGeneralJobApplication
+  - PrinterPaperWrittenFormGeneralFormalComplaint

@@ -1,0 +1,14 @@
+# General
+- type: latheRecipe
+  id: PrinterPaperWrittenFormGeneralJobApplication
+  result: PaperWrittenFormGeneralJobApplication
+  completetime: 1
+  materials:
+    Paper: 1
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormGeneralFormalComplaint
+  result: PaperWrittenFormGeneralFormalComplaint
+  completetime: 1
+  materials:
+    Paper: 1
