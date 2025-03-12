@@ -116,7 +116,7 @@ public abstract class SharedStunSystem : EntitySystem
     private void OnStunOnContactStartup(Entity<StunOnContactComponent> ent, ref ComponentStartup args)
     {
         if (TryComp<PhysicsComponent>(ent, out var body))
-            _broadphase.RegenerateContacts(ent, body);
+            _broadphase.RegenerateContacts((ent, body));
     }
 
     private void OnStunOnContactCollide(Entity<StunOnContactComponent> ent, ref StartCollideEvent args)

@@ -9,14 +9,14 @@ namespace Content.Shared.Humanoid.Prototypes;
 [Prototype("randomHumanoidSettings")]
 public sealed partial class RandomHumanoidSettingsPrototype : IPrototype, IInheritingPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     [ParentDataField(typeof(PrototypeIdArraySerializer<RandomHumanoidSettingsPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     [AbstractDataField]
     [NeverPushInheritance]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     ///     Whether the humanoid's name should take from the randomized profile or not.

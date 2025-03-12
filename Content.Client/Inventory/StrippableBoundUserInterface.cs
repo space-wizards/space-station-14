@@ -64,11 +64,9 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            _strippingMenu = this.CreateWindow<StrippingMenu>();
+            _strippingMenu = this.CreateWindowCenteredLeft<StrippingMenu>();
             _strippingMenu.OnDirty += UpdateMenu;
             _strippingMenu.Title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
-
-            _strippingMenu?.OpenCenteredLeft();
         }
 
         protected override void Dispose(bool disposing)
@@ -191,9 +189,15 @@ namespace Content.Client.Inventory
                 return;
 
             if (ev.Function == ContentKeyFunctions.ExamineEntity)
+            {
                 _examine.DoExamine(slot.Entity.Value);
+                ev.Handle();
+            }
             else if (ev.Function == EngineKeyFunctions.UseSecondary)
+            {
                 _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value);
+                ev.Handle();
+            }
         }
 
         private void AddInventoryButton(EntityUid invUid, string slotId, InventoryComponent inv)
