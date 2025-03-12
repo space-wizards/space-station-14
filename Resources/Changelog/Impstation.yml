@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5, AftrLite
-  changes:
-  - message: Heads of Security now start with extra-strength antidepressants in their
-      locker.
-    type: Add
-  - message: Pill canisters now have a new sprite.
-    type: Tweak
-  id: 776
-  time: '2024-12-20T16:38:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1084
 - author: Darkmajia
   changes:
   - message: Captains have a new regal blue beret.
@@ -4097,3 +4087,10 @@
   id: 1275
   time: '2025-03-12T02:43:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1904
+- author: sageu111
+  changes:
+  - message: woke shit IDK
+    type: Add
+  id: 1276
+  time: '2025-03-12T03:26:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1907
