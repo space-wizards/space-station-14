@@ -560,13 +560,13 @@
     - state: icon-clown
   - type: ItemBorgModule
     items:
-    - BikeHorn
+    - BananiumHorn
     - ClownRecorder
     - BikeHornInstrument
     - HoloprojectorClownBorg
     - BorgLauncherCreamPie
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-clowning-module }
 
 #syndicate modules
 - type: entity
