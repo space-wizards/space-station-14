@@ -864,5 +864,20 @@ Entries:
   id: 107
   time: '2025-03-08T02:39:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35518
+- author: Errant
+  changes:
+  - message: It is no longer impossible to resize the player list in the ahelp window,
+      when at small window sizes.
+    type: Fix
+  id: 108
+  time: '2025-03-10T09:40:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35747
+- author: Errant
+  changes:
+  - message: The admin overlay once again shows the character name in the top line.
+    type: Fix
+  id: 109
+  time: '2025-03-11T16:47:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35783
 Name: Admin
 Order: 1
