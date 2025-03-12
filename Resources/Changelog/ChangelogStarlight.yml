@@ -4024,4 +4024,11 @@ Entries:
   id: 557
   time: '2025-03-11T01:24:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/378
+- author: Killer Tamashi
+  changes:
+  - message: Fixed Bulwark arm breaking when shield is destroyed.
+    type: Fix
+  id: 558
+  time: '2025-03-12T15:04:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/386
 
