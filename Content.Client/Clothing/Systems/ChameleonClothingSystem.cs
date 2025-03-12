@@ -1,8 +1,11 @@
 ﻿using System.Linq;
+using Content.Client.Light;
 using Content.Client.PDA;
+using Content.Client.Toggleable;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +16,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly HandheldLightSystem _handheldLightSystem = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
     {
@@ -41,6 +45,23 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref AfterAutoHandleStateEvent args)
     {
+        if (!string.IsNullOrEmpty(component.Default) &&
+        _proto.TryIndex(component.Default, out EntityPrototype? proto))
+        {
+            RemComp<HandheldLightComponent>(uid);
+            if (proto.TryGetComponent("HandheldLight", out HandheldLightComponent? handheldLight))
+            {
+                AddComp(uid, handheldLight);
+                _handheldLightSystem.UpdateVisuals(uid, handheldLight);
+            }
+
+            RemComp<ToggleableLightVisualsComponent>(uid);
+            if (proto.TryGetComponent("ToggleableLightVisuals", out ToggleableLightVisualsComponent? toggleableLightVisuals))
+            {
+                AddComp(uid, toggleableLightVisuals);
+            }
+        }
+
         UpdateVisuals(uid, component);
     }
 
