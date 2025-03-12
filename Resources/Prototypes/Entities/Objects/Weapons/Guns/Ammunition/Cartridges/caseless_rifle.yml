@@ -12,7 +12,7 @@
     deleteOnSpawn: true
   - type: Sprite
     noRot: false
-    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/caseless.rsi #imp
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
@@ -24,6 +24,7 @@
 - type: entity
   id: CartridgeCaselessRifle
   name: cartridge (.25 caseless)
+  description: A sub-caliber cartridge of odd design, but with effective application. .25 caseless ammo has propellent encasing the bullet, making the cartridge appear rectangular. #imp
   parent: BaseCartridgeCaselessRifle
   components:
   - type: CartridgeAmmo
@@ -32,6 +33,7 @@
 - type: entity
   id: CartridgeCaselessRiflePractice
   name: cartridge (.25 caseless practice)
+  description: An oddly-shaped cartridge with a wax projectile to simulate the real deal. Can be used for force-on-force training, but still stings like a bitch. Eye protection recommended. #imp
   parent: BaseCartridgeCaselessRifle
   components:
   - type: CartridgeAmmo

@@ -21,7 +21,7 @@
         ents: []
 
 - type: entity
-  name: china lake
+  name: China Lake #imp, capitalized proper noun
   parent: [BaseWeaponLauncher, BaseGunWieldable, Tier3Contraband]
   id: WeaponLauncherChinaLake
   description: THOOMP. #imp
@@ -54,10 +54,10 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
-  name: RPG-7
+  name: RPG-7V9 #imp
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
-  description: A modified ancient rocket-propelled grenade launcher.
+  description: An old anti-tank rocket-propelled grenade launcher, remade for the modern age. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
@@ -90,7 +90,7 @@
   name: multiple rocket launcher
   parent: BaseWeaponLauncher
   id: WeaponLauncherMultipleRocket
-  description: A modified ancient rocket-propelled grenade launcher.
+  description: A handheld MRL. With great power comes great fun! #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi

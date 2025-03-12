@@ -3,6 +3,7 @@
   id: BaseMagazineRifle
   name: "magazine (.20 rifle)"
   parent: [ BaseItem, BaseSecurityContraband ]
+  description: A 25-round .20 rifle magazine. #imp
   abstract: true
   components:
   - type: Tag
@@ -36,6 +37,7 @@
 - type: entity
   id: MagazineRifle
   name: "magazine (.20 rifle)"
+  description: A 25-round .20 rifle magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -50,6 +52,7 @@
 - type: entity
   id: MagazineRifleEmpty
   name: "magazine (.20 rifle any)"
+  description: A 25-round .20 rifle magazine with no apparent markings. #imp
   suffix: empty
   parent: MagazineRifle
   components:
@@ -65,6 +68,7 @@
 - type: entity
   id: MagazineRifleIncendiary
   name: "magazine (.20 rifle incendiary)"
+  description: A 25-round .20 rifle magazine, marked as incendiary ammo. #imp
   parent: MagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -73,6 +77,7 @@
 - type: entity
   id: MagazineRiflePractice
   name: "magazine (.20 rifle practice)"
+  description: A 25-round .20 rifle magazine, marked as practice ammo. #imp
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
@@ -87,6 +92,7 @@
 - type: entity
   id: MagazineRifleUranium
   name: "magazine (.20 rifle uranium)"
+  description: A 25-round .20 rifle magazine, marked as uranium ammo. #imp
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider

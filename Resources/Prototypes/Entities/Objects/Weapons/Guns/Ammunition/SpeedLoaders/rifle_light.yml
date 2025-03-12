@@ -1,6 +1,7 @@
 - type: entity
   id: SpeedLoaderLightRifle
   name: "speed loader (.20 rifle)" #imp
+  description: A 5-round .20 rifle speed loader.
   parent: [ BaseItem, BaseSecurityContraband ]
   components:
   - type: Tag
