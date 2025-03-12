@@ -75,88 +75,126 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// Setter for <see cref="SingularityComponent.Level"/>
     /// Also sends out an event alerting that the singularities level has changed.
     /// </summary>
-    /// <param name="uid">The uid of the singularity to change the level of.</param>
+    /// <param name="singularity">The singularity to change the level of.</param>
     /// <param name="value">The new level the singularity should have.</param>
-    /// <param name="singularity">The state of the singularity to change the level of.</param>
-    public void SetLevel(EntityUid uid, byte value, SingularityComponent? singularity = null)
+    public void SetLevel(Entity<SingularityComponent?> singularity, byte value)
     {
-        if (!Resolve(uid, ref singularity))
+        if (!Resolve(singularity, ref singularity.Comp))
             return;
 
         value = MathHelper.Clamp(value, MinSingularityLevel, MaxSingularityLevel);
-        var oldValue = singularity.Level;
+
+        var oldValue = singularity.Comp.Level;
         if (oldValue == value)
             return;
 
-        singularity.Level = value;
-        UpdateSingularityLevel(uid, oldValue, singularity);
-        if (!Deleted(uid))
-            Dirty(uid, singularity);
+        singularity.Comp.Level = value;
+        UpdateSingularityLevel(singularity, oldValue);
+
+        if (!TerminatingOrDeleted(singularity))
+            Dirty(singularity);
     }
 
     /// <summary>
     /// Setter for <see cref="SingularityComponent.RadsPerLevel"/>
     /// Also updates the radiation output of the singularity according to the new values.
     /// </summary>
-    /// <param name="uid">The uid of the singularity to change the radioactivity of.</param>
+    /// <param name="singularity">The singularity to change the radioactivity of.</param>
     /// <param name="value">The new radioactivity the singularity should have.</param>
-    /// <param name="singularity">The state of the singularity to change the radioactivity of.</param>
-    public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent? singularity = null)
+    public void SetRadsPerLevel(Entity<SingularityComponent?> singularity, float value)
     {
-        if (!Resolve(uid, ref singularity))
+        if (!Resolve(singularity, ref singularity.Comp))
             return;
 
-        var oldValue = singularity.RadsPerLevel;
+        var oldValue = singularity.Comp.RadsPerLevel;
         if (oldValue == value)
             return;
 
-        singularity.RadsPerLevel = value;
-        UpdateRadiation(uid, singularity);
+        singularity.Comp.RadsPerLevel = value;
+        UpdateRadiation(singularity);
     }
 
     /// <summary>
     /// Alerts the entity hosting the singularity that the level of the singularity has changed.
     /// Usually follows a SharedSingularitySystem.SetLevel call, but is also used on component startup to sync everything.
     /// </summary>
-    /// <param name="uid">The uid of the singularity which's level has changed.</param>
+    /// <param name="singularity">The singularity to propagate level updates for.</param>
     /// <param name="oldValue">The old level of the singularity. May be equal to <see cref="SingularityComponent.Level"/> if the component is starting.</param>
-    /// <param name="singularity">The state of the singularity which's level has changed.</param>
-    public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
+    public void UpdateSingularityLevel(Entity<SingularityComponent?> singularity, byte oldValue)
     {
-        if (!Resolve(uid, ref singularity))
+        if (!Resolve(singularity, ref singularity.Comp))
             return;
 
-        var ev = new SingularityLevelChangedEvent((uid, singularity), oldValue);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new SingularityLevelChangedEvent((singularity.Owner, singularity.Comp), oldValue);
+        RaiseLocalEvent(singularity, ref ev);
 
-        if (singularity.Level <= 0)
-            QueueDel(uid);
+        if (singularity.Comp.Level <= 0)
+            QueueDel(singularity);
     }
 
     /// <summary>
     /// Alerts the entity hosting the singularity that the level of the singularity has changed without the level actually changing.
     /// Used to sync components when the singularity component is added to an entity.
     /// </summary>
-    /// <param name="uid">The uid of the singularity.</param>
-    /// <param name="singularity">The state of the singularity.</param>
-    public void UpdateSingularityLevel(EntityUid uid, SingularityComponent? singularity = null)
+    /// <param name="singularity">The singularity.</param>
+    public void UpdateSingularityLevel(Entity<SingularityComponent?> singularity)
     {
-        if (Resolve(uid, ref singularity))
-            UpdateSingularityLevel(uid, singularity.Level, singularity);
+        if (Resolve(singularity, ref singularity.Comp))
+            UpdateSingularityLevel(singularity, singularity.Comp.Level);
     }
 
     /// <summary>
     /// Updates the amount of radiation the singularity emits to reflect a change in the level or radioactivity per level of the singularity.
     /// </summary>
-    /// <param name="uid">The uid of the singularity to update the radiation of.</param>
-    /// <param name="singularity">The state of the singularity to update the radiation of.</param>
-    /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
+    /// <param name="singularity">The singularity to update the radiation of.</param>
+    private void UpdateRadiation(Entity<SingularityComponent?, RadiationSourceComponent?> singularity)
+    {
+        var (uid, singulo, rads) = singularity;
+
+        if (!Resolve(uid, ref singulo, ref rads, logMissing: false))
+            return;
+
+        rads.Intensity = singulo.Level * singulo.RadsPerLevel;
+    }
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="SetLevel(Entity{SingularityComponent?}, byte)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetLevel(EntityUid uid, byte value, SingularityComponent? singularity = null)
+    {
+        SetLevel((uid, singularity), value);
+    }
+
+    /// <inheritdoc cref="SetRadsPerLevel(Entity{SingularityComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent? singularity = null)
+    {
+        SetRadsPerLevel((uid, singularity), value);
+    }
+
+    /// <inheritdoc cref="UpdateSingularityLevel(Entity{SingularityComponent?}, byte)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
+    {
+        UpdateSingularityLevel((uid, singularity), oldValue);
+    }
+
+    /// <inheritdoc cref="UpdateSingularityLevel(Entity{SingularityComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void UpdateSingularityLevel(EntityUid uid, SingularityComponent? singularity = null)
+    {
+        UpdateSingularityLevel((uid, singularity));
+    }
+
+    /// <inheritdoc cref="UpdateRadiation(Entity{SingularityComponent?, RadiationSourceComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
     private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
     {
-        if (!Resolve(uid, ref singularity, ref rads, logMissing: false))
-            return;
-        rads.Intensity = singularity.Level * singularity.RadsPerLevel;
+        UpdateRadiation((uid, singularity, rads));
     }
+
+    #endregion Obsolete API
 
     #endregion Getters/Setters
 
