@@ -30,9 +30,9 @@
   name: Fix the space-time paradox.
   description: Replace your original to fix the paradox. Remember, your mission is to blend in, do not kill anyone else unless you have to!
   components:
+  - type: PickSpecificPerson
   - type: KillPersonCondition
     requireDead: true # don't count missing evac as killing
   - type: TargetObjective
     title: objective-condition-kill-head-title # kill <name>, <job>
-  - type: TargetObjectiveOverride
 
