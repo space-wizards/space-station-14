@@ -604,7 +604,8 @@
   - type: ChameleonClothing
     slot: [idcard]
     default: PassengerIDCard
-    requireTag: WhitelistChameleonIdCard
+    requireTags:
+    - WhitelistChameleonIdCard
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:
