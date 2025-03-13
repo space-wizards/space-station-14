@@ -1,0 +1,23 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc bug-report-window-name}"
+            MinSize="600 325">
+    <BoxContainer Orientation="Vertical" Margin="10 0 20 0">
+        <RichTextLabel Name="DisabledLabel" HorizontalAlignment="Center" Visible="False" ReservesSpace="False" />
+        <BoxContainer Orientation="Vertical" Name="BugReportContainer">
+            <RichTextLabel Name="BugReportExplanation" HorizontalAlignment="Center" Margin="0 0 0 10" Text="{Loc bug-report-window-explanation}" />
+            <LineEdit Name="BugReportTitle" PlaceHolder="{Loc bug-report-window-title-place-holder}" HorizontalExpand="True" Margin="0 0 0 10"  />
+            <TextEdit Name="BugReportDescription" MaxHeight="300" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="200" >
+                <!-- This is a little weird, but it's the best I can do for now without making engine update! -->
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc bug-report-window-description-place-holder}" StyleClasses="PlaceholderText" />
+            </TextEdit>
+            <BoxContainer HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Name="TitleCharacterCounter" StyleClasses="LabelSmall"/>
+                <Label Text= " - " HorizontalAlignment="Center" StyleClasses="LabelSmall"/>
+                <Label Name="DescriptionCharacterCounter" StyleClasses="LabelSmall"/>
+            </BoxContainer>
+            <controls:ConfirmButton Name="SubmitButton" ConfirmationText="{Loc bug-report-window-submit-button-confirm-text}" Text="{Loc bug-report-window-submit-button-text}" Margin="0 10 0 0" />
+            <Label HorizontalAlignment="Center" Text="{Loc bug-report-window-submit-button-disclaimer}" StyleClasses="LabelSmall" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
