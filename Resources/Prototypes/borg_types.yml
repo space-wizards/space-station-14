@@ -45,13 +45,19 @@
 
   defaultModules:
   - BorgModuleTool
-  - BorgModuleConstruction
-  - BorgModuleRCD
   - BorgModuleCable
+  - BorgModuleRCD
+  - BorgModuleConstruction
 
   radioChannels:
   - Engineering
   - Science
+
+  addComponents:
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
 
   # Visual
   inventoryTemplateId: borgShort
