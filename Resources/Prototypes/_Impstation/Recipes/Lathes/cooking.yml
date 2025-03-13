@@ -23,7 +23,8 @@
   result: Pitcher
   completetime: 2
   materials:
-    Steel: 150
+    Steel: 300
+  applyMaterialDiscount: false
 
 - type: latheRecipe
   id: DrinkShaker
@@ -31,7 +32,7 @@
   completetime: 2
   materials:
     Steel: 200
-    
+
 - type: latheRecipe
   id: DrinkJigger
   result: DrinkJigger
@@ -44,14 +45,16 @@
   result: DrinkFlaskBar
   completetime: .4
   materials:
-    Steel: 100
+    Steel: 300
+  applyMaterialDiscount: false
 
 - type: latheRecipe
   id: DrinkVacuumFlask
   result: DrinkVacuumFlask
   completetime: .4
   materials:
-    Steel: 100
+    Steel: 300
+  applyMaterialDiscount: false
 
 - type: latheRecipe
   id: BarSpoon
@@ -87,7 +90,7 @@
   completetime: .4
   materials:
     Plastic: 50
-    
+
 - type: latheRecipe
   id: PairedChopsticks
   result: PairedChopsticks
@@ -109,3 +112,4 @@
   result: DrinkDisposableCup
   materials:
     Cardboard: 25
+  applyMaterialDiscount: false
