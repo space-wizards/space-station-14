@@ -60,9 +60,7 @@ public sealed class NightVisionSystem : EntitySystem
     private void OnPlayerAttached(Entity<NightVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         if (ent.Comp.Effect == null && !ent.Comp.blockedByFlashImmunity)
-        {
             AddNightVision(ent.Owner, ent.Comp);
-        }
     }
 
     private void OnPlayerDetached(Entity<NightVisionComponent> ent, ref LocalPlayerDetachedEvent args)
