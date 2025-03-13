@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Beer is no longer 5x as alcoholic as it was meant to be.
-    type: Fix
-  id: 784
-  time: '2024-12-21T15:12:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1094
-- author: honeyed-lemons
-  changes:
-  - message: Fixes Ventcrawling
-    type: Fix
-  id: 785
-  time: '2024-12-22T10:40:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1099
 - author: Saeko-44
   changes:
   - message: Medium, a new chemical that allows one to see ghosts
@@ -4088,3 +4074,17 @@
   id: 1283
   time: '2025-03-13T05:05:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1899
+- author: honeyed-lemons
+  changes:
+  - message: Fixes the human male body being a pixel high on the side sprites
+    type: Fix
+  id: 1284
+  time: '2025-03-13T05:06:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1921
+- author: jtfg-dev
+  changes:
+  - message: Added ticket pads into the SecTech vending machine.
+    type: Tweak
+  id: 1285
+  time: '2025-03-13T05:06:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1912
