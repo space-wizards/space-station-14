@@ -1,12 +1,10 @@
 using System.Numerics;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Ghost;
 using Content.Shared.Physics;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
@@ -237,20 +235,6 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
         GravPulse(mapPos, maxRange, minRange, new Matrix3x2(baseRadialDeltaV, -baseTangentialDeltaV, baseTangentialDeltaV, baseRadialDeltaV, 0.0f, 0.0f));
     }
 
-    /// <inheritdoc cref="GravPulse(Entity{TransformComponent?}, float, float, in Matrix3x2)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> variant")]
-    public void GravPulse(EntityUid uid, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV, TransformComponent? xform = null)
-    {
-        GravPulse((uid, xform), minRange, maxRange, baseMatrixDeltaV);
-    }
-
-    /// <inheritdoc cref="GravPulse(Entity{TransformComponent?}, float, float, float, float)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> variant")]
-    public void GravPulse(EntityUid uid, float maxRange, float minRange, float baseRadialDeltaV = 0.0f, float baseTangentialDeltaV = 0.0f, TransformComponent? xform = null)
-    {
-        GravPulse((uid, xform), minRange, maxRange, baseRadialDeltaV, baseTangentialDeltaV);
-    }
-
     #endregion GravPulse
 
     #region Getters/Setters
@@ -278,6 +262,24 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             Update((gravWell.Owner, gravWell.Comp), curTime - gravWell.Comp.LastPulseTime);
     }
 
+    #endregion Getters/Setters
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="GravPulse(Entity{TransformComponent?}, float, float, in Matrix3x2)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> variant")]
+    public void GravPulse(EntityUid uid, float maxRange, float minRange, in Matrix3x2 baseMatrixDeltaV, TransformComponent? xform = null)
+    {
+        GravPulse((uid, xform), minRange, maxRange, baseMatrixDeltaV);
+    }
+
+    /// <inheritdoc cref="GravPulse(Entity{TransformComponent?}, float, float, float, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> variant")]
+    public void GravPulse(EntityUid uid, float maxRange, float minRange, float baseRadialDeltaV = 0.0f, float baseTangentialDeltaV = 0.0f, TransformComponent? xform = null)
+    {
+        GravPulse((uid, xform), minRange, maxRange, baseRadialDeltaV, baseTangentialDeltaV);
+    }
+
     /// <inheritdoc cref="SetPulsePeriod(Entity{GravityWellComponent?}, TimeSpan)"/>
     [Obsolete("This method is obsolete, use the Entity<T> overload.")]
     public void SetPulsePeriod(EntityUid uid, TimeSpan value, GravityWellComponent? gravWell = null)
@@ -285,5 +287,5 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
         SetPulsePeriod((uid, gravWell), value);
     }
 
-    #endregion Getters/Setters
+    #endregion Obsolete API
 }

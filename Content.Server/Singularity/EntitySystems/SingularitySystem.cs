@@ -135,24 +135,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
         SetEnergy(singularity, MathHelper.Clamp(oldValue + delta, min, max));
     }
 
-    #region Obsolete API
-
-    /// <inheritdoc cref="SetEnergy(Entity{SingularityComponent?}, float)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
-    {
-        SetEnergy((uid, singularity), value);
-    }
-
-    /// <inheritdoc cref="AdjustEnergy(Entity{SingularityComponent?}, float, float, float, bool, bool)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
-    {
-        AdjustEnergy((uid, singularity), delta, min, max, snapMin, snapMax);
-    }
-
-    #endregion Obsolete API
-
     #endregion Getters/Setters
 
     #region Event Handlers
@@ -328,4 +310,22 @@ public sealed class SingularitySystem : SharedSingularitySystem
     }
 
     #endregion Event Handlers
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="SetEnergy(Entity{SingularityComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
+    {
+        SetEnergy((uid, singularity), value);
+    }
+
+    /// <inheritdoc cref="AdjustEnergy(Entity{SingularityComponent?}, float, float, float, bool, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
+    {
+        AdjustEnergy((uid, singularity), delta, min, max, snapMin, snapMax);
+    }
+
+    #endregion Obsolete API
 }

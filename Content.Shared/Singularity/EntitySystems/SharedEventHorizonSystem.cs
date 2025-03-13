@@ -194,45 +194,6 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         EntityManager.Dirty(uid, fixtures);
     }
 
-    #region Obsolete API
-
-    /// <inheritdoc cref="SharedEventHorizonSystem.SetRadius(Entity{EventHorizonComponent?}, float, bool)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
-    {
-        SetRadius((uid, eventHorizon), value, updateFixture);
-    }
-
-    /// <inheritdoc cref="SharedEventHorizonSystem.SetCanBreachContainment(Entity{EventHorizonComponent?}, bool, bool)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
-    {
-        SetCanBreachContainment((uid, eventHorizon), value, updateFixture);
-    }
-
-    /// <inheritdoc cref="SharedEventHorizonSystem.SetColliderFixtureId(Entity{EventHorizonComponent?}, string?, bool)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetColliderFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
-    {
-        SetColliderFixtureId((uid, eventHorizon), value, updateFixture);
-    }
-
-    /// <inheritdoc cref="SharedEventHorizonSystem.SetConsumerFixtureId(Entity{EventHorizonComponent?}, string?, bool)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetConsumerFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
-    {
-        SetConsumerFixtureId((uid, eventHorizon), value, updateFixture);
-    }
-
-    /// <inheritdoc cref="SharedEventHorizonSystem.UpdateEventHorizonFixture(Entity{FixturesComponent?, EventHorizonComponent?})"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
-    {
-        UpdateEventHorizonFixture((uid, fixtures, eventHorizon));
-    }
-
-    #endregion Obsolete API
-
     #endregion Getters/Setters
 
     #region EventHandlers
@@ -295,4 +256,43 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     }
 
     #endregion EventHandlers
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="SetRadius(Entity{EventHorizonComponent?}, float, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetRadius((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SetCanBreachContainment(Entity{EventHorizonComponent?}, bool, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetCanBreachContainment((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SetColliderFixtureId(Entity{EventHorizonComponent?}, string?, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetColliderFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetColliderFixtureId((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SetConsumerFixtureId(Entity{EventHorizonComponent?}, string?, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetConsumerFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetConsumerFixtureId((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="UpdateEventHorizonFixture(Entity{FixturesComponent?, EventHorizonComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
+    {
+        UpdateEventHorizonFixture((uid, fixtures, eventHorizon));
+    }
+
+    #endregion Obsolete API
 }

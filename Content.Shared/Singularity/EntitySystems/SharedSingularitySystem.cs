@@ -157,45 +157,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         rads.Intensity = singulo.Level * singulo.RadsPerLevel;
     }
 
-    #region Obsolete API
-
-    /// <inheritdoc cref="SetLevel(Entity{SingularityComponent?}, byte)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetLevel(EntityUid uid, byte value, SingularityComponent? singularity = null)
-    {
-        SetLevel((uid, singularity), value);
-    }
-
-    /// <inheritdoc cref="SetRadsPerLevel(Entity{SingularityComponent?}, float)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent? singularity = null)
-    {
-        SetRadsPerLevel((uid, singularity), value);
-    }
-
-    /// <inheritdoc cref="UpdateSingularityLevel(Entity{SingularityComponent?}, byte)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
-    {
-        UpdateSingularityLevel((uid, singularity), oldValue);
-    }
-
-    /// <inheritdoc cref="UpdateSingularityLevel(Entity{SingularityComponent?})"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    public void UpdateSingularityLevel(EntityUid uid, SingularityComponent? singularity = null)
-    {
-        UpdateSingularityLevel((uid, singularity));
-    }
-
-    /// <inheritdoc cref="UpdateRadiation(Entity{SingularityComponent?, RadiationSourceComponent?})"/>
-    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
-    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
-    {
-        UpdateRadiation((uid, singularity, rads));
-    }
-
-    #endregion Obsolete API
-
     #endregion Getters/Setters
 
     #region Derivations
@@ -439,4 +400,36 @@ public abstract class SharedSingularitySystem : EntitySystem
     }
 
     #endregion EventHandlers
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="SetLevel(Entity{SingularityComponent?}, byte)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetLevel(EntityUid uid, byte value, SingularityComponent? singularity = null)
+    {
+        SetLevel((uid, singularity), value);
+    }
+
+    /// <inheritdoc cref="SetRadsPerLevel(Entity{SingularityComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent? singularity = null)
+    {
+        SetRadsPerLevel((uid, singularity), value);
+    }
+
+    /// <inheritdoc cref="UpdateSingularityLevel(Entity{SingularityComponent?}, byte)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
+    {
+        UpdateSingularityLevel((uid, singularity), oldValue);
+    }
+
+    /// <inheritdoc cref="UpdateSingularityLevel(Entity{SingularityComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void UpdateSingularityLevel(EntityUid uid, SingularityComponent? singularity = null)
+    {
+        UpdateSingularityLevel((uid, singularity));
+    }
+
+    #endregion Obsolete API
 }

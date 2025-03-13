@@ -54,12 +54,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<ContainerManagerComponent, EventHorizonConsumedEntityEvent>(OnContainerConsumed);
 
         var vvHandle = Vvm.GetTypeHandler<EventHorizonComponent>();
-        vvHandle.AddPath(nameof(EventHorizonComponent.TargetConsumePeriod), (_, comp) => comp.TargetConsumePeriod, SetConsumePeriod);
-    }
-
-    private void OnHorizonMapInit(EntityUid uid, EventHorizonComponent component, MapInitEvent args)
-    {
-        component.NextConsumeWaveTime = _timing.CurTime;
+        vvHandle.AddPath(nameof(EventHorizonComponent.TargetConsumePeriod), (_, comp) => comp.TargetConsumePeriod, (uid, value, comp) => SetConsumePeriod((uid, comp), value));
     }
 
     public override void Shutdown()
@@ -112,14 +107,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
 
         if (eventHorizon.Radius > 0.0f)
-            ConsumeEverythingInRange(uid, eventHorizon.Radius, xform, eventHorizon);
-    }
-
-    /// <inheritdoc cref="Update(Entity{EventHorizonComponent?, TransformComponent?})"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override")]
-    public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
-    {
-        Update((uid, eventHorizon, xform));
+            ConsumeEverythingInRange((uid, eventHorizon, xform), eventHorizon.Radius);
     }
 
     #region Consume
@@ -149,13 +137,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         RaiseLocalEvent(morsel, ref evEaten);
     }
 
-    /// <inheritdoc cref="ConsumeEntity(Entity{EventHorizonComponent?}, EntityUid, BaseContainer?)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
-    {
-        ConsumeEntity((hungry, eventHorizon), morsel, outerContainer);
-    }
-
     /// <summary>
     /// Makes an event horizon attempt to consume a given entity.
     /// </summary>
@@ -168,13 +149,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         return true;
     }
 
-    /// <inheritdoc cref="AttemptConsumeEntity(Entity{EventHorizonComponent?}, EntityUid, BaseContainer?)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public bool AttemptConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
-    {
-        return AttemptConsumeEntity((hungry, eventHorizon), morsel, outerContainer);
-    }
-
     /// <summary>
     /// Checks whether an event horizon can consume a given entity.
     /// </summary>
@@ -183,13 +157,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var ev = new EventHorizonAttemptConsumeEntityEvent(hungry, uid);
         RaiseLocalEvent(uid, ref ev);
         return !ev.Cancelled;
-    }
-
-    /// <inheritdoc cref="CanConsumeEntity(Entity{EventHorizonComponent?}, EntityUid)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public bool CanConsumeEntity(EntityUid hungry, EntityUid uid, EventHorizonComponent eventHorizon)
-    {
-        return CanConsumeEntity((hungry, eventHorizon), uid);
     }
 
     /// <summary>
@@ -215,13 +182,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
             AttemptConsumeEntity((uid, eventHorizon), entity);
         }
-    }
-
-    /// <inheritdoc cref="ConsumeEntitiesInRange(Entity{EventHorizonComponent?, PhysicsComponent?}, float)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeEntitiesInRange(EntityUid uid, float range, PhysicsComponent? body = null, EventHorizonComponent? eventHorizon = null)
-    {
-        ConsumeEntitiesInRange((uid, eventHorizon, body), range);
     }
 
     /// <summary>
@@ -264,13 +224,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
     }
 
-    /// <inheritdoc cref="ConsumeEntitiesInContainer(Entity{EventHorizonComponent?}, BaseContainer, BaseContainer)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeEntitiesInContainer(EntityUid hungry, BaseContainer container, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
-    {
-        ConsumeEntitiesInContainer((hungry, eventHorizon), container, outerContainer);
-    }
-
     #endregion Consume Entities
 
     #region Consume Tiles
@@ -283,26 +236,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         ConsumeTiles(eventHorizon, (tile.GridUid, Comp<MapGridComponent>(tile.GridUid)), [(tile.GridIndices, Tile.Empty)]);
     }
 
-    /// <inheritdoc cref="ConsumeTile(Entity{EventHorizonComponent}, TileRef)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
-    {
-        ConsumeTile((hungry, eventHorizon), tile);
-    }
-
     /// <summary>
     /// Makes an event horizon attempt to consume a specific tile on a grid.
     /// </summary>
     public void AttemptConsumeTile(Entity<EventHorizonComponent> eventHorizon, TileRef tile)
     {
         AttemptConsumeTiles(eventHorizon, (tile.GridUid, Comp<MapGridComponent>(tile.GridUid)), [tile]);
-    }
-
-    /// <inheritdoc cref="AttemptConsumeTile(Entity{EventHorizonComponent}, TileRef)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void AttemptConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
-    {
-        AttemptConsumeTile((hungry, eventHorizon), tile);
     }
 
     /// <summary>
@@ -316,13 +255,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var ev = new TilesConsumedByEventHorizonEvent(hungry, grid, tiles);
         RaiseLocalEvent(hungry, ref ev);
         _mapSystem.SetTiles(grid, tiles);
-    }
-
-    /// <inheritdoc cref="ConsumeTiles(Entity{EventHorizonComponent}, Entity{MapGridComponent}, List{ValueTuple{Vector2i, Tile}})"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeTiles(EntityUid hungry, List<(Vector2i, Tile)> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
-    {
-        ConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
     }
 
     /// <summary>
@@ -344,13 +276,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         return result;
     }
 
-    /// <inheritdoc cref="AttemptConsumeTiles(Entity{EventHorizonComponent}, Entity{MapGridComponent}, IEnumerable{TileRef})"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public int AttemptConsumeTiles(EntityUid hungry, IEnumerable<TileRef> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
-    {
-        return AttemptConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
-    }
-
     /// <summary>
     /// Checks whether an event horizon can consume a given tile.
     /// This is only possible if it can also consume all entities anchored to the tile.
@@ -364,13 +289,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
 
         return true;
-    }
-
-    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, TileRef, MapGridComponent)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
-    {
-        return CanConsumeTile((hungry, eventHorizon), grid, tile);
     }
 
     /// <summary>
@@ -394,13 +312,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
     }
 
-    /// <inheritdoc cref="ConsumeTilesInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeTilesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
-    {
-        ConsumeTilesInRange((uid, eventHorizon, xform), range);
-    }
-
     #endregion Consume Tiles
 
     /// <summary>
@@ -419,13 +330,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             ConsumeTilesInRange(eventHorizon, range);
     }
 
-    /// <inheritdoc cref="ConsumeEverythingInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
-    [Obsolete("This method is obsolete, use the Entity<T> override.")]
-    public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
-    {
-        ConsumeEverythingInRange((uid, eventHorizon, xform), range);
-    }
-
     #endregion Consume
 
     #region Getters/Setters
@@ -435,26 +339,36 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// The value is specifically how long the subsystem should wait between scans.
     /// If the new scanning period would have already prompted a scan given the previous scan time one is prompted immediately.
     /// </summary>
-    public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
+    public void SetConsumePeriod(Entity<EventHorizonComponent?> horizon, TimeSpan value)
     {
+        var (uid, eventHorizon) = horizon;
+
         if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         if (MathHelper.CloseTo(eventHorizon.TargetConsumePeriod.TotalSeconds, value.TotalSeconds))
             return;
 
-        var diff = (value - eventHorizon.TargetConsumePeriod);
+        var diff = value - eventHorizon.TargetConsumePeriod;
         eventHorizon.TargetConsumePeriod = value;
         eventHorizon.NextConsumeWaveTime += diff;
 
         var curTime = _timing.CurTime;
         if (eventHorizon.NextConsumeWaveTime < curTime)
-            Update(uid, eventHorizon);
+            Update((uid, eventHorizon, null));
     }
 
     #endregion Getters/Setters
 
     #region Event Handlers
+
+    /// <summary>
+    /// Initializes the event horizon scan time.
+    /// </summary>
+    private void OnHorizonMapInit(Entity<EventHorizonComponent> eventHorizon, ref MapInitEvent args)
+    {
+        eventHorizon.Comp.NextConsumeWaveTime = _timing.CurTime;
+    }
 
     /// <summary>
     /// Prevents a singularity from colliding with anything it is incapable of consuming.
@@ -580,4 +494,106 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     }
 
     #endregion Event Handlers
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="Update(Entity{EventHorizonComponent?, TransformComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override")]
+    public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
+    {
+        Update((uid, eventHorizon, xform));
+    }
+
+    /// <inheritdoc cref="ConsumeEntity(Entity{EventHorizonComponent?}, EntityUid, BaseContainer?)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    {
+        ConsumeEntity((hungry, eventHorizon), morsel, outerContainer);
+    }
+
+    /// <inheritdoc cref="AttemptConsumeEntity(Entity{EventHorizonComponent?}, EntityUid, BaseContainer?)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public bool AttemptConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    {
+        return AttemptConsumeEntity((hungry, eventHorizon), morsel, outerContainer);
+    }
+
+    /// <inheritdoc cref="CanConsumeEntity(Entity{EventHorizonComponent?}, EntityUid)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public bool CanConsumeEntity(EntityUid hungry, EntityUid uid, EventHorizonComponent eventHorizon)
+    {
+        return CanConsumeEntity((hungry, eventHorizon), uid);
+    }
+
+    /// <inheritdoc cref="ConsumeEntitiesInRange(Entity{EventHorizonComponent?, PhysicsComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEntitiesInRange(EntityUid uid, float range, PhysicsComponent? body = null, EventHorizonComponent? eventHorizon = null)
+    {
+        ConsumeEntitiesInRange((uid, eventHorizon, body), range);
+    }
+
+    /// <inheritdoc cref="ConsumeEntitiesInContainer(Entity{EventHorizonComponent?}, BaseContainer, BaseContainer)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEntitiesInContainer(EntityUid hungry, BaseContainer container, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    {
+        ConsumeEntitiesInContainer((hungry, eventHorizon), container, outerContainer);
+    }
+
+    /// <inheritdoc cref="ConsumeTile(Entity{EventHorizonComponent}, TileRef)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
+    {
+        ConsumeTile((hungry, eventHorizon), tile);
+    }
+
+    /// <inheritdoc cref="AttemptConsumeTile(Entity{EventHorizonComponent}, TileRef)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void AttemptConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
+    {
+        AttemptConsumeTile((hungry, eventHorizon), tile);
+    }
+
+    /// <inheritdoc cref="ConsumeTiles(Entity{EventHorizonComponent}, Entity{MapGridComponent}, List{ValueTuple{Vector2i, Tile}})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeTiles(EntityUid hungry, List<(Vector2i, Tile)> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        ConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
+    }
+
+    /// <inheritdoc cref="AttemptConsumeTiles(Entity{EventHorizonComponent}, Entity{MapGridComponent}, IEnumerable{TileRef})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public int AttemptConsumeTiles(EntityUid hungry, IEnumerable<TileRef> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        return AttemptConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
+    }
+
+    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, TileRef, MapGridComponent)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        return CanConsumeTile((hungry, eventHorizon), grid, tile);
+    }
+
+    /// <inheritdoc cref="ConsumeTilesInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeTilesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
+    {
+        ConsumeTilesInRange((uid, eventHorizon, xform), range);
+    }
+
+    /// <inheritdoc cref="ConsumeEverythingInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
+    {
+        ConsumeEverythingInRange((uid, eventHorizon, xform), range);
+    }
+
+    /// <inheritdoc cref="SetConsumePeriod(Entity{EventHorizonComponent?}, TimeSpan)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
+    {
+        SetConsumePeriod((uid, eventHorizon), value);
+    }
+
+    #endregion Obsolete API
 }
