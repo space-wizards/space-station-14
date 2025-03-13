@@ -8,6 +8,10 @@ using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
+/// <summary>
+/// Handles assinging a target to an objective entity with <see cref="TargetObjectiveComponent"/> using different components.
+/// These can be combined with condition components for objective completions in order to create a variety of objectives.
+/// </summary>
 public sealed class PickObjectiveTargetSystem : EntitySystem
 {
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
