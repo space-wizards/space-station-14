@@ -1,6 +1,8 @@
+using Content.Shared.Prototypes;
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Slippery
 {
@@ -13,8 +15,6 @@ namespace Content.Shared.Slippery
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class SlipperyComponent : Component
     {
-        public const float DefaultParalyzeTime = 1.5f;
-        public const float DefaultLaunchForwardsMultiplier = 1.5f;
         /// <summary>
         /// Path to the sound to be played when a mob slips.
         /// </summary>
@@ -27,21 +27,27 @@ namespace Content.Shared.Slippery
         /// </summary>
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
-        public float ParalyzeTime = DefaultParalyzeTime;
+        public float ParalyzeTime = 1.5f;
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
-        public float LaunchForwardsMultiplier = DefaultLaunchForwardsMultiplier;
+        public float LaunchForwardsMultiplier = 1.5f;
 
         /// <summary>
         /// If this is true, any slipping entity loses its friction until
         /// it's not colliding with any SuperSlippery entities anymore.
+        /// They also will fail any attempts to stand up unless they have no-slips.
         /// </summary>
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
         public bool SuperSlippery;
+
+        [DataField, AutoNetworkedField]
+        [Access(Other = AccessPermissions.ReadWrite)]
+        public bool Enabled = true;
+
     }
 }

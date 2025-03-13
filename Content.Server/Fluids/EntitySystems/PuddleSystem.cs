@@ -68,7 +68,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
 
-    public static readonly float PuddleVolume = 1000;
+    //public static readonly float PuddleVolume = 1000;
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
@@ -80,6 +80,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
      * This would then evaporate into the puddle tile below
      */
+    // I think blood and vomit already do this unless I'm mistaken
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -91,7 +92,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
-        SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
+        //SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
 
@@ -99,7 +100,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         InitializeTransfers();
     }
-
+    // For my sanity, puddle spread currently has an issue where if all four sides of a puddle are covered will full puddles you can stack infinite reagents in the center puddle.
+    // This shouldn't be how this works it's very dumb
     private void OnPuddleSpread(Entity<PuddleComponent> entity, ref SpreadNeighborsEvent args)
     {
         // Overflow is the source of the overflowing liquid. This contains the excess fluid above overflow limit (20u)
@@ -324,10 +326,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         TickEvaporation();
     }
 
-    private void OnPuddleInit(Entity<PuddleComponent> entity, ref ComponentInit args)
+    /*private void OnPuddleInit(Entity<PuddleComponent> entity, ref ComponentInit args)
     {
         _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out _, FixedPoint2.New(PuddleVolume));
-    }
+    }*/
 
     private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
     {
@@ -341,7 +343,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         _deletionQueue.Remove(entity);
-        UpdateSlip(entity, entity.Comp, args.Solution);
+        UpdateSlip((entity, entity.Comp), args.Solution);
         UpdateSlow(entity, args.Solution);
         UpdateEvaporation(entity, args.Solution);
         UpdateAppearance(entity, entity.Comp);
@@ -386,18 +388,23 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
-    private void UpdateSlip(EntityUid entityUid, PuddleComponent component, Solution solution)
+    private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
     {
-        var isSlippery = false;
-        var isSuperSlippery = false;
+        if (!TryComp<SlipperyComponent>(entity, out var slipComp))
+            return;
+        foreach (var (reagent, _) in solution.Contents)
+        {
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+        }
         // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
-        var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
+        var amountRequired = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
-
+        /*
         // Utilize the defaults from their relevant systems... this sucks, and is a bandaid
         var launchForwardsMultiplier = SlipperyComponent.DefaultLaunchForwardsMultiplier;
         var paralyzeTime = SlipperyComponent.DefaultParalyzeTime;
         var requiredSlipSpeed = StepTriggerComponent.DefaultRequiredTriggeredSpeed;
+        */
 
         foreach (var (reagent, quantity) in solution.Contents)
         {
@@ -409,9 +416,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (slipperyAmount <= amountRequired)
                 continue;
-            isSlippery = true;
+            slipComp.Enabled = true;
 
-            foreach (var tileReaction in reagentProto.TileReactions)
+            /*foreach (var tileReaction in reagentProto.TileReactions)
             {
                 if (tileReaction is not SpillTileReaction spillTileReaction)
                     continue;
@@ -419,10 +426,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 launchForwardsMultiplier = launchForwardsMultiplier < spillTileReaction.LaunchForwardsMultiplier ? spillTileReaction.LaunchForwardsMultiplier : launchForwardsMultiplier;
                 requiredSlipSpeed = requiredSlipSpeed > spillTileReaction.RequiredSlipSpeed ? spillTileReaction.RequiredSlipSpeed : requiredSlipSpeed;
                 paralyzeTime = paralyzeTime < spillTileReaction.ParalyzeTime ? spillTileReaction.ParalyzeTime : paralyzeTime;
-            }
+            }*/
         }
 
-        if (isSlippery)
+        /*if (isSlippery)
         {
             var comp = EnsureComp<StepTriggerComponent>(entityUid);
             _stepTrigger.SetActive(entityUid, true, comp);
@@ -441,7 +448,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         {
             _stepTrigger.SetActive(entityUid, false, comp);
             RemCompDeferred<TileFrictionModifierComponent>(entityUid);
-        }
+        }*/
     }
 
     private void UpdateSlow(EntityUid uid, Solution solution)

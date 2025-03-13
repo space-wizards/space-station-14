@@ -101,7 +101,7 @@ public sealed class SlipperySystem : EntitySystem
         if (attemptEv.SlowOverSlippery)
             _speedModifier.AddModifiedEntity(other);
 
-        if (attemptEv.NoSlip)
+        if (attemptEv.NoSlip || !component.Enabled)
             return;
 
         var attemptCausingEv = new SlipCausingAttemptEvent();

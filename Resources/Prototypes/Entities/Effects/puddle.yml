@@ -113,6 +113,7 @@
   components:
   - type: Clickable
   - type: Slippery
+    enabled: false
   - type: Transform
     noRot: true
     anchored: true

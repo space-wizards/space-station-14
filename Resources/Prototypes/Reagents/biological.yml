@@ -69,8 +69,8 @@
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
   viscosity: 0.25
-  tileReactions:
-    - !type:SpillTileReaction
+  #tileReactions:
+    #- !type:SpillTileReaction
   metabolisms:
     Food:
       # Delicious!
@@ -93,8 +93,8 @@
   physicalDesc: reagent-physical-desc-sticky
   slippery: false
   viscosity: 0.10
-  tileReactions:
-    - !type:SpillTileReaction
+  #tileReactions:
+    #- !type:SpillTileReaction
   metabolisms:
     Food:
       # Sweet!
