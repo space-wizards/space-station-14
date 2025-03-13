@@ -329,7 +329,11 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region MonumentSpawn & MonumentMove
     //todo attack this with a debugger at some point, it seems to un-prime before it should sometimes?
     //no idea why, might be something to do with verifying placement inside the action's execution instead of in an attemptEvent beforehand?
-    //works fine:tm: for now though
+    //yeah it is - if the action is primed but fails at this step, then the action becomes un-primed but does not properly go through, requiring it to be primed again
+    //works fine:tm: for now with a slightly jank fix on the client end of things, will probably want to dig deeper?
+    //actually might not want to fix it?
+    //I've got the client stuff working well & this works out to making the ghost stay up so long as you consistently try (& fail) to place the monument
+    //guess I should ask for specific feedback for this one tiny feature?
     private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicPlaceMonument args)
     {
         if (!VerifyPlacement(uid, out var pos))

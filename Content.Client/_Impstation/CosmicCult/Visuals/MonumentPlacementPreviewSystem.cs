@@ -58,6 +58,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
 
         _cachedOverlay.LockPlacement = true;
         _cancellationTokenSource.Cancel(); //cancel the previous timer
+        _cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary
 
         //remove the overlay automatically after the primeTime expires
         //no cancellation token for this one as this'll never need to get cancelled afaik
@@ -66,7 +67,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
             {
                 _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
                 _cachedOverlay = null;
-                _cancellationTokenSource = null; //technically doesn't need to be nulled out as it's not checked against but let's be sane about this
+                _cancellationTokenSource = null;
             }
         );
     }
@@ -92,6 +93,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
 
         _cachedOverlay.LockPlacement = true;
         _cancellationTokenSource.Cancel(); //cancel the previous timer
+        _cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary
 
         //remove the overlay automatically after the primeTime expires
         //no cancellation token for this one as this'll never need to get cancelled afaik
@@ -100,7 +102,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
             {
                 _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
                 _cachedOverlay = null;
-                _cancellationTokenSource = null; //technically doesn't need to be nulled out as it's not checked against but let's be sane about this
+                _cancellationTokenSource = null;
             }
         );
     }
@@ -149,8 +151,22 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         if (!TryComp<ConfirmableActionComponent>(ent, out var confirmableActionComponent))
             return; //return if the action somehow doesn't have a confirmableAction comp
 
-        if (_cachedOverlay != null) //if we've already got a cached overlay, just return early
+        //if we've already got a cached overlay, reset the timers & bump alpha back up to 1.
+        //should probably smoothly transition alpha back up to 1 but idrc (this will bother me a lot I'm lying) it's an incredibly specific thing that occurs in a .25s window at the end of a 10s wait
+        //not a great solution but I'm not sure if a Real:tm: (also not entirely sure what a Real:tm: fix would be here tbh? hooking into ActionAttemptEvent?) fix would actually work here? need to investigate.
+        if (_cachedOverlay != null && _cancellationTokenSource != null)
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            StartTimers(confirmableActionComponent, _cancellationTokenSource, _cachedOverlay);
+
+            _cachedOverlay.fadingOut = false;
+            _cachedOverlay.fadeInProgress = _cachedOverlay.fadeInTime;
+            _cachedOverlay.fadeOutProgress = 0;
             return;
+        }
 
         _cancellationTokenSource = new CancellationTokenSource();
         //it's probably inefficient to make a new one every time, but this'll be happening like four times a round maybe
@@ -158,24 +174,29 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
         _cachedOverlay = new MonumentPlacementPreviewOverlay(_entityManager, _playerManager, _spriteSystem, _map, _protoMan, this, _timing, ent.Comp.Tier);
         _overlay.AddOverlay(_cachedOverlay);
 
+        StartTimers(confirmableActionComponent, _cancellationTokenSource, _cachedOverlay);
+    }
+
+    private void StartTimers(ConfirmableActionComponent comp, CancellationTokenSource tokenSource, MonumentPlacementPreviewOverlay overlay)
+    {
         //remove the overlay automatically after the primeTime expires
-        Robust.Shared.Timing.Timer.Spawn(confirmableActionComponent.PrimeTime + confirmableActionComponent.ConfirmDelay,
+        Robust.Shared.Timing.Timer.Spawn(comp.PrimeTime + comp.ConfirmDelay,
             () =>
             {
                 _overlay.RemoveOverlay<MonumentPlacementPreviewOverlay>();
                 _cachedOverlay = null;
                 _cancellationTokenSource = null;
             },
-            _cancellationTokenSource.Token
+            tokenSource.Token
         );
 
         //start a timer to start the fade out as well, with the same cancellation token
-        Robust.Shared.Timing.Timer.Spawn(confirmableActionComponent.PrimeTime + confirmableActionComponent.ConfirmDelay - TimeSpan.FromSeconds(_cachedOverlay.fadeOutTime),
+        Robust.Shared.Timing.Timer.Spawn(comp.PrimeTime + comp.ConfirmDelay - TimeSpan.FromSeconds(overlay.fadeOutTime),
             () =>
             {
-                _cachedOverlay.fadingOut = true;
+                overlay.fadingOut = true;
             },
-            _cancellationTokenSource.Token
+            tokenSource.Token
         );
     }
 }
