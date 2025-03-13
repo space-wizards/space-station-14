@@ -1,15 +1,12 @@
 using Content.Shared.Construction.Components;
 using Content.Shared.Eye;
 using Content.Shared.SubFloor;
-using Robust.Server.Console;
-using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
-    [Dependency] private readonly IConGroupController _console = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     public override void Initialize()

@@ -43,14 +43,14 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         if (!TryComp(user, out EyeComponent? eyeComp))
             return;
 
-        var visMask = (int) VisibilityFlags.Normal;
+        var visMask = (int)VisibilityFlags.Normal;
 
         if (TryComp(user, out TrayScannerUserComponent? userComp))
         {
             visMask = userComp.OriginalVisMask;
         }
 
-        _eye.SetVisibilityMask(user, visMask & (int) ~VisibilityFlags.Subfloor, eyeComp);
+        _eye.SetVisibilityMask(user, visMask & (int)~VisibilityFlags.Subfloor, eyeComp);
     }
 
     private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)
