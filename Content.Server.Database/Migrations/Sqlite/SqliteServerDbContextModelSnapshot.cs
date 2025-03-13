@@ -264,7 +264,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime>("LastEditedAt")
+                    b.Property<DateTime?>("LastEditedAt")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");
@@ -393,7 +393,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime>("LastEditedAt")
+                    b.Property<DateTime?>("LastEditedAt")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");

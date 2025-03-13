@@ -46,5 +46,12 @@
                Text="{Loc player-tab-playtime}"
                MouseFilter="Pass"
                ToolTip="{Loc player-tab-entry-tooltip}"/>
+        <cc:VSeparator/>
+        <Label Name="RegionLabel"
+               SizeFlagsStretchRatio="1"
+               HorizontalExpand="True"
+               ClipText="True"
+               Text="{Loc player-tab-playtime}"
+               MouseFilter="Pass"/>
     </BoxContainer>
 </Control>

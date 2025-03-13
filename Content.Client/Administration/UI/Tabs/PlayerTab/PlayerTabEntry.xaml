@@ -33,5 +33,10 @@
                SizeFlagsStretchRatio="1"
                HorizontalExpand="True"
                ClipText="True"/>
+        <customControls:VSeparator/>
+        <Label Name="RegionLabel"
+               SizeFlagsStretchRatio="1"
+               HorizontalExpand="True"
+               ClipText="True"/>
     </BoxContainer>
 </PanelContainer>
