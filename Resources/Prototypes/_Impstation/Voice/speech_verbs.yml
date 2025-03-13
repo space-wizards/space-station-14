@@ -1,0 +1,49 @@
+﻿- type: speechVerb
+  id: FinfinExclamation
+  name: chat-speech-verb-name-finfin-exclamation
+  speechVerbStrings:
+  - chat-speech-verb-finfin-exclamation-1
+  - chat-speech-verb-finfin-exclamation-2
+
+- type: speechVerb
+  id: FinfinExclamationStrong
+  name: chat-speech-verb-name-finfin-exclamation
+  bold: true
+  speechVerbStrings:
+  - chat-speech-verb-finfin-exclamation-1
+  - chat-speech-verb-finfin-exclamation-2
+
+- type: speechVerb
+  id: FinfinStutter
+  name: chat-speech-verb-name-finfin-stutter
+  speechVerbStrings:
+  - chat-speech-verb-finfin-stutter-1
+  - chat-speech-verb-finfin-stutter-2
+
+- type: speechVerb
+  id: FinfinMumble
+  name: chat-speech-verb-name-finfin-mumble
+  speechVerbStrings:
+  - chat-speech-verb-finfin-mumble-1
+
+- type: speechVerb
+  id: Finfin
+  name: chat-speech-verb-name-finfin
+  speechVerbStrings:
+  - chat-speech-verb-finfin-1
+  - chat-speech-verb-finfin-2
+
+- type: speechVerb
+  id: Bros
+  name: chat-speech-verb-name-bros
+  speechVerbStrings:
+  - chat-speech-verb-bros
+
+- type: speechVerb
+  id: Suppy
+  name: chat-speech-verb-name-suppy
+  speechVerbStrings:
+  - chat-speech-verb-electricity-1
+  - chat-speech-verb-suppy1
+  - chat-speech-verb-suppy2
+
