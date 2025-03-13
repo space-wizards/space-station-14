@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Blackern5000
   changes:
-  - message: Proto-kitentic crushers, glaives, and daggers now have more accurate
-      inhand sprites.
-    type: Tweak
-  id: 7561
-  time: '2024-10-30T07:38:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32212
-- author: Blackern5000
-  changes:
   - message: Security belts now contain a holobarrier projector and a handheld security
       radio by default rather than tear gas and a flashbang.
     type: Tweak
@@ -3896,3 +3888,12 @@
   id: 8060
   time: '2025-03-13T17:09:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35794
+- author: SlamBamActionman
+  changes:
+  - message: All roundstart antags now roll before job selection. You are now able
+      to ready up with antag-immune job preferences (Sec/Command/interns) set to High,
+      and if selected for antag you will get an non-antag-immune job instead.
+    type: Tweak
+  id: 8061
+  time: '2025-03-13T20:21:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35823
