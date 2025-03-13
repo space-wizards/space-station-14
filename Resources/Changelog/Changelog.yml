@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed lava planet expeditions not working.
-    type: Fix
-  id: 7559
-  time: '2024-10-29T05:00:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33042
 - author: metalgearsloth
   changes:
   - message: Fix separated game screen bumping slightly.
@@ -3890,3 +3883,16 @@
   id: 8058
   time: '2025-03-13T12:49:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35819
+- author: ScarKy0
+  changes:
+  - message: Singularity and Whitehole grenades are now in the Disruption category
+      of uplinks.
+    type: Tweak
+  - message: Singularity and Whitehole grenades have had their prices reduced to 2TC
+      each.
+    type: Tweak
+  - message: Whitehole grenade no longer has extremely overtuned strength.
+    type: Fix
+  id: 8059
+  time: '2025-03-13T13:12:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35821
