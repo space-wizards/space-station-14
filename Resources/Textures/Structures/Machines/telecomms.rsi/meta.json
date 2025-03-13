@@ -8,27 +8,26 @@
   },
   "states": [
     {
-      "name": "unlit",
+      "name": "tele-server-on",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+          0.3,
+          0.3,
+          0.3
         ]
       ]
     },
     {
-      "name": "icon"
+      "name": "tele-server-nopower"
     },
     {
-      "name": "panel"
+      "name": "tele-stripe"
+    },
+    {
+      "name": "cams-stripe"
+    },
+    {
+      "name": "tele_o"
     }
   ]
 }
