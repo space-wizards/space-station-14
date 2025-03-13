@@ -280,9 +280,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Checks whether an event horizon can consume a given tile.
     /// This is only possible if it can also consume all entities anchored to the tile.
     /// </summary>
-    public bool CanConsumeTile(Entity<EventHorizonComponent> hungry, MapGridComponent grid, TileRef tile)
+    public bool CanConsumeTile(Entity<EventHorizonComponent> hungry, Entity<MapGridComponent> grid, TileRef tile)
     {
-        foreach (var blockingEntity in grid.GetAnchoredEntities(tile.GridIndices))
+        foreach (var blockingEntity in _mapSystem.GetAnchoredEntities(grid, tile.GridIndices))
         {
             if (!CanConsumeEntity(hungry, blockingEntity))
                 return false; // Please don't eat the hull out from under the field generators.
@@ -487,7 +487,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (drop_container is null)
             _containerSystem.TryGetContainingContainer((containerEntity, null, null), out drop_container);
 
-        foreach (var container in containerEntity.Comp.GetAllContainers())
+        foreach (var container in _containerSystem.GetAllContainers(containerEntity))
         {
             ConsumeEntitiesInContainer(args.EventHorizon, container, drop_container);
         }
@@ -567,11 +567,11 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         return AttemptConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
     }
 
-    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, TileRef, MapGridComponent)"/>
+    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, Entity{MapGridComponent}, TileRef)"/>
     [Obsolete("This method is obsolete, use the Entity<T> override.")]
     public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
-        return CanConsumeTile((hungry, eventHorizon), grid, tile);
+        return CanConsumeTile((hungry, eventHorizon), (grid.Owner, grid), tile);
     }
 
     /// <inheritdoc cref="ConsumeTilesInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
