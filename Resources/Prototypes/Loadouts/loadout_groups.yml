@@ -784,6 +784,7 @@
   loadouts:
   - SalvageSpecialistWintercoat
   - BomberCargo #imp
+  - SalvageSpecialistDecapoidCoat #imp
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes
