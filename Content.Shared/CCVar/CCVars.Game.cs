@@ -261,7 +261,7 @@ public sealed partial class CCVars
         CVarDef.Create("game.ipintel_oflags", "c", CVar.SERVERONLY);
 
     /// <summary>
-    /// Regions are in two character ISO-3166 format seperated by commands. EX: "US,GB"
+    /// Regions are in two character ISO-3166 format seperated by commas. EX: "US,GB"
     /// Acts as a blacklist by default, see <see cref="GameIPIntelRegionWhitelist"/> to change this behaviour.
     /// </summary>
     public static readonly CVarDef<string> GameIPIntelRegions =
