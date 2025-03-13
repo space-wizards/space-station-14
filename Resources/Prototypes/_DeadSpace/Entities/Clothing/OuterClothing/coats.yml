@@ -75,7 +75,7 @@
     damageCoefficient: 1 #its a coat. it doesnt do shit
 
 - type: entity
-  parent: [ClothingOuterArmorBasic, ClothingOuterStorageBase]
+  parent: ClothingOuterCoatSecurityOvercoat
   id: ClothingOuterCoatSeniorOfficerTrench
   name: шинель инструктора СБ
   description: Шинель из плотной ткани с вшитым под ней кевларом, так же виден бронежилет первого класса защиты.
