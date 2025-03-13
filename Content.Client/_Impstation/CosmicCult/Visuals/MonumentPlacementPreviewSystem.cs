@@ -58,7 +58,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
 
         _cachedOverlay.LockPlacement = true;
         _cancellationTokenSource.Cancel(); //cancel the previous timer
-        _cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary
+        //_cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary. ok this was causing crashes so I probably don't need to.
 
         //remove the overlay automatically after the primeTime expires
         //no cancellation token for this one as this'll never need to get cancelled afaik
@@ -93,7 +93,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
 
         _cachedOverlay.LockPlacement = true;
         _cancellationTokenSource.Cancel(); //cancel the previous timer
-        _cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary
+        //_cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary. ok this was causing crashes so I probably don't need to.
 
         //remove the overlay automatically after the primeTime expires
         //no cancellation token for this one as this'll never need to get cancelled afaik
@@ -152,19 +152,27 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
             return; //return if the action somehow doesn't have a confirmableAction comp
 
         //if we've already got a cached overlay, reset the timers & bump alpha back up to 1.
+        //todo do that
         //should probably smoothly transition alpha back up to 1 but idrc (this will bother me a lot I'm lying) it's an incredibly specific thing that occurs in a .25s window at the end of a 10s wait
         //not a great solution but I'm not sure if a Real:tm: (also not entirely sure what a Real:tm: fix would be here tbh? hooking into ActionAttemptEvent?) fix would actually work here? need to investigate.
         if (_cachedOverlay != null && _cancellationTokenSource != null)
         {
             _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary
+            //_cancellationTokenSource.Dispose(); //I have no idea if I need to do this but memory leaks are scary. ok this was causing crashes so I probably don't need to.
 
             _cancellationTokenSource = new CancellationTokenSource();
             StartTimers(confirmableActionComponent, _cancellationTokenSource, _cachedOverlay);
 
-            _cachedOverlay.fadingOut = false;
-            _cachedOverlay.fadeInProgress = _cachedOverlay.fadeInTime;
-            _cachedOverlay.fadeOutProgress = 0;
+            if (_cachedOverlay.fadingOut) //if we're fading out
+            {
+                _cachedOverlay.fadingOut = false; //stop it
+
+                var progress = (1 - (_cachedOverlay.fadeOutProgress / _cachedOverlay.fadeOutTime)) * _cachedOverlay.fadeInTime; //set fade in progress to 1 - fade out progress (so 70% out becomes 30% in)
+                _cachedOverlay.fadeInProgress = progress;
+                _cachedOverlay.fadingIn = true; //start fading in again
+                _cachedOverlay.fadeOutProgress = 0; //stop the fadeout entirely
+            } //no need for a special fade in case as well, that can go as normal
+
             return;
         }
 

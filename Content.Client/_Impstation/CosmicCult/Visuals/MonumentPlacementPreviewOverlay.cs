@@ -69,18 +69,14 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
 
         ZIndex = (int) Shared.DrawDepth.DrawDepth.Mobs; //make the overlay render at the same depth as the actual sprite. might want to make it 1 lower if things get wierd with it.
 
-        //I should probably make it not use the raw path but I hate RSIs with an unhealthy passion
         //will fuck up if the wrong tier is passed in but it's not my problem if that happens
-        mainTex = new SpriteSpecifier.Texture(new ResPath($"_Impstation/CosmicCult/Tileset/monument.rsi/stage{tier}.png"));
-        outlineTex = new SpriteSpecifier.Texture(new ResPath($"_Impstation/CosmicCult/Tileset/monument.rsi/stage{tier}-placement-ghost-1.png"));
-        starTex = new SpriteSpecifier.Texture(new ResPath($"_Impstation/CosmicCult/Tileset/monument.rsi/stage{tier}-placement-ghost-2.png"));
+        mainTex = new SpriteSpecifier.Rsi(new ResPath("_Impstation/CosmicCult/Tileset/monument.rsi"), $"stage{tier}");
+        outlineTex = new SpriteSpecifier.Rsi(new ResPath("_Impstation/CosmicCult/Tileset/monument.rsi"), $"stage{tier}-placement-ghost-1");
+        starTex = new SpriteSpecifier.Rsi(new ResPath("_Impstation/CosmicCult/Tileset/monument.rsi"), $"stage{tier}-placement-ghost-2");
     }
 
     //this might get wierd if the player managed to leave the grid they put the monument on? theoretically not a concern because it can't be placed too close to space.
     //shouldn't crash due to the comp checks, though.
-    //todo monument teleport effect
-    //no idea how I'll do it on the technical end tbh
-    //move monument to nullspace -> spawn collider at dest & dummy animation entities -> delete entities & move the monument into place when anim is finished?
     protected override void Draw(in OverlayDrawArgs args)
     {
         if (!_entityManager.TryGetComponent<TransformComponent>(_playerManager.LocalEntity, out var transformComp))

@@ -87,7 +87,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
+
+    private EntityUid? monumentStorageMap;
+
     public int CultistCount;
 
     public override void Initialize()

@@ -24,6 +24,7 @@ using Content.Shared.NPC;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
 using Robust.Shared.Map;
+using Robust.Shared.Spawners;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -44,6 +45,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicLapse>(OnCosmicLapse);
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicPlaceMonument>(OnCosmicPlaceMonument);
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicMoveMonument>(OnCosmicMoveMonument);
+        SubscribeLocalEvent<MonumentMoveDestinationComponent, TimedDespawnEvent>(OnMoveDestinationDespawn);
         SubscribeLocalEvent<CosmicAstralBodyComponent, EventCosmicReturn>(OnCosmicReturn);
     }
 
@@ -353,6 +355,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         _actions.RemoveAction(uid, uid.Comp.CosmicMonumentMoveActionEntity);
 
+        //ok so I'm gonna replace this with the map teleport thing
+        //chain of actions
+        //delete all colliders, spawn both effects
+        //move the monument into the storage map
+        //hook into the timedDespawn event to move it instead of manually timing it or w/e
+        //no need to manually delete the effects, timedDespawn should have that covered
+
         //delete all old monument colliders for 100% safety
         var colliderQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
         while (colliderQuery.MoveNext(out var collider, out _))
@@ -360,17 +369,23 @@ public sealed partial class CosmicCultSystem : EntitySystem
             QueueDel(collider);
         }
 
-        //spawn a new monument collider
-        Spawn("MonumentCollider", pos);
+        //spawn the destination effect first because we only need one
+        var destEnt = Spawn("MonumentCosmicCultMoveEnd", pos);
+        var destComp = EnsureComp<MonumentMoveDestinationComponent>(destEnt);
+        Spawn("MonumentCollider", pos); //spawn a new collider
 
-        //move the monument
-        //not my problem if there's more than one monument in a round
+        //move the monument to the storage map
         var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
         while (monumentQuery.MoveNext(out var monument, out var monumentComp))
         {
-            _transform.SetCoordinates(monument, pos);
+            Spawn("MonumentCosmicCultMoveStart", Transform(monument).Coordinates);
+            Spawn("MonumentCollider", Transform(monument).Coordinates); //spawn a new collider
 
-            if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph
+            //todo check if anything gets messed up by doing this to the monument?
+            _transform.SetParent(monument, EnsureStorageMapExists());
+            destComp.monument = monument; //only get the first monument
+
+            if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph as well
                 QueueDel(monumentComp.CurrentGlyph);
         }
 
@@ -379,6 +394,34 @@ public sealed partial class CosmicCultSystem : EntitySystem
         {
             _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
         }
+    }
+
+    private void OnMoveDestinationDespawn(Entity<MonumentMoveDestinationComponent> ent, ref TimedDespawnEvent args)
+    {
+        //delete all old monument colliders for 100% safety
+        var colliderQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
+        while (colliderQuery.MoveNext(out var collider, out _))
+        {
+            QueueDel(collider);
+        }
+
+        if (ent.Comp.monument is null)
+            return;
+
+        var xform = Transform(ent);
+        _transform.SetCoordinates(ent.Comp.monument.Value, xform.Coordinates);
+        _transform.AnchorEntity(ent.Comp.monument.Value); //no idea if this does anything but let's be safe about it
+        Spawn("MonumentCollider", xform.Coordinates);
+    }
+
+    private EntityUid EnsureStorageMapExists()
+    {
+        if (monumentStorageMap != null && Exists(monumentStorageMap))
+            return monumentStorageMap.Value;
+
+        monumentStorageMap = _map.CreateMap();
+        _map.SetPaused(monumentStorageMap.Value, true);
+        return monumentStorageMap.Value;
     }
 
     //todo this can probably be mostly moved to shared but my brain isn't cooperating w/ that rn
