@@ -13,7 +13,12 @@
   copyright: "Sonic AdventureQuest DX SUBATHON - Day 4 [SA2 End, CONCERT, SHADOW THE HEDGEHOG] (WAYNERADIOTV)"
   source: "https://www.youtube.com/watch?v=eihA21zOHdM"
 
-- files: ["slog.ogg"]
+- files: ["dead.ogg"]
+  license: "Custom"
+  copyright: "Sonic Heroes - Tails voice clips (William Corkery)"
+  source: "https://www.youtube.com/watch?v=xtPLstoHiwo"
+
+- files: ["slog.ogg", "slog2.ogg"]
   license: "Custom"
   copyright: "TIER TIME *2*: RTVS Community Curated Tier Lists (WAYNERADIOTV)"
   source: "https://www.youtube.com/watch?v=vphU1U1WqtE"
