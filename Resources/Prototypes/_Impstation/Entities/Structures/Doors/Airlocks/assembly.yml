@@ -1,3 +1,22 @@
+#Armory
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyArmory
+  suffix: Armory
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/warden.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyArmoryGlass
+  suffix: Armory, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/warden.rsi
+    state: "assembly"
+
 #Bar
 - type: entity
   parent: AirlockAssembly
@@ -15,6 +34,25 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
+    state: "assembly"
+
+#Brig
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBrig
+  suffix: Brig
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBrigGlass
+  suffix: Brig, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/security.rsi
     state: "assembly"
 
 #Captain
@@ -129,6 +167,25 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
+    state: "assembly"
+
+#Detective
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyDetective
+  suffix: Detective
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/detective.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyDetectiveGlass
+  suffix: Detective, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/detective.rsi
     state: "assembly"
 
 #HD
@@ -263,6 +320,25 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/librarian.rsi
     state: "assembly"
+
+#Med/Sci
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMedicalScience
+  suffix: Medical/Science
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/medsci.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMedicalScienceGlass
+  suffix: Medical/Science, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/medsci.rsi
+    state: "assembly"
     
 #Mime
 - type: entity
@@ -281,6 +357,25 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/mime.rsi
+    state: "assembly"
+
+#Morgue
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMorgue
+  suffix: Morgue
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/morgue.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyMorgueGlass
+  suffix: Morgue, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/morgue.rsi
     state: "assembly"
 
 #Musician
