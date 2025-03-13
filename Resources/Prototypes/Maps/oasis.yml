@@ -15,7 +15,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_accordia.yml
         - type: StationJobs
-          availableJobs: # Total of 82 jobs roundstart, max of 100 inc. latejoins and trainees.
+          availableJobs: # Total of 80 jobs roundstart, max of 98 inc. latejoins and trainees.
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]

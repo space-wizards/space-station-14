@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_amber.yml
         - type: StationJobs
-          availableJobs: # total of 56 jobs roundstart, max of 66 inc. latejoins and trainees.
+          availableJobs: # total of 55 jobs roundstart, max of 65 inc. latejoins and trainees.
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
