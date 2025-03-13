@@ -17,7 +17,7 @@
   abstract: true
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi #imp
     - type: BallisticAmmoProvider
       mayTransfer: true
       whitelist:
@@ -76,14 +76,14 @@
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
     - type: MagazineVisuals
-      magState: mag-slug
+      magState: mag-alt #imp
       steps: 5
       zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-slug-1
+      - state: mag-alt-1 #imp
         map: ["enum.GunVisualLayers.Mag"]
       - state: slug
 
@@ -95,15 +95,16 @@
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
-    - type: MagazineVisuals
-      magState: mag-flare
-      steps: 5
-      zeroVisible: false
+#imp edit to fix our shotgun box sprites; goes for all type:MagazineVisuals in this file
+#    - type: MagazineVisuals
+#      magState: mag-flare
+#      steps: 5
+#      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-flare-1
+      - state: mag-1 #imp
         map: ["enum.GunVisualLayers.Mag"]
       - state: flare
 
@@ -115,15 +116,15 @@
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
-    - type: MagazineVisuals
-      magState: mag-incend
-      steps: 5
-      zeroVisible: false
+#    - type: MagazineVisuals
+#      magState: mag-incend
+#      steps: 5
+#      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-incend-1
+      - state: mag-1 #imp
         map: ["enum.GunVisualLayers.Mag"]
       - state: incendiary
 
@@ -136,14 +137,14 @@
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
     - type: MagazineVisuals
-      magState: mag-uranium
+      magState: mag-alt-1 #imp
       steps: 5
       zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-uranium-1
+      - state: mag-alt-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: uranium
 
@@ -155,15 +156,15 @@
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
-    - type: MagazineVisuals
-      magState: mag-practice
-      steps: 5
-      zeroVisible: false
+#    - type: MagazineVisuals
+#      magState: mag-practice
+#      steps: 5
+#      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-practice-1
+      - state: mag-1 #imp
         map: ["enum.GunVisualLayers.Mag"]
       - state: practice
 
@@ -175,14 +176,14 @@
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
-    - type: MagazineVisuals
-      magState: mag-tranq
-      steps: 5
-      zeroVisible: false
+#    - type: MagazineVisuals
+#      magState: mag-tranq
+#      steps: 5
+#      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-tranq-1
+      - state: mag-1 #imp
         map: ["enum.GunVisualLayers.Mag"]
       - state: tranquilizer
