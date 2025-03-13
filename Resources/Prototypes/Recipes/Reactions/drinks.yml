@@ -201,6 +201,20 @@
     BlackRussian: 3
 
 - type: reaction
+  id: BloodRedBooze
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Beer:
+      amount: 2
+    DrGibb:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    BloodRedBooze: 4
+
+- type: reaction
   id: BloodyMary
   requiredMixerCategories:
   - Stir

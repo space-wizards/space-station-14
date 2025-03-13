@@ -429,6 +429,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkBloodRedBooze
+  suffix: blood red booze
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BloodRedBooze
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/bloodredbooze.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkBlueCuracaoGlass
   suffix: blue curacao
   components:

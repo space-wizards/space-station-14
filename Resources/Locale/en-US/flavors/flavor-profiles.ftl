@@ -245,6 +245,7 @@ flavor-complex-tequila-sunrise = like a mexican morning
 flavor-complex-irish-coffee = like an alcoholic wakeup call
 flavor-complex-iced-beer = like ice cold piss
 flavor-complex-gargle-blaster = like somebody smashed your head with a lemon-covered brick of gold
+flavor-complex-blood-red-booze = like a fiery explosion
 flavor-complex-bloody-mary = like a bad hangover
 flavor-complex-beepsky = like oil and whiskey
 flavor-complex-banana-honk = like a banana milkshake
