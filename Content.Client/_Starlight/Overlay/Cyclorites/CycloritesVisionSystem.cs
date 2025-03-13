@@ -1,7 +1,9 @@
 using Content.Client.Eye.Blinding;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Flash.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -29,13 +31,30 @@ public sealed class CycloritesVisionSystem : EntitySystem
         SubscribeLocalEvent<CycloritesVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<CycloritesVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
+        SubscribeLocalEvent<CycloritesVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
+
         _overlay = new();
+    }
+
+    private void OnFlashImmunityChanged(Entity<CycloritesVisionComponent> ent, ref FlashImmunityChangedEvent args)
+    {
+        if (args.IsImmune)
+        {
+            ent.Comp.blockedByFlashImmunity = true;
+            RemoveNightVision();
+        }
+        else
+        {
+            ent.Comp.blockedByFlashImmunity = false;
+            AddNightVision(ent.Owner);
+        }
     }
 
     private void OnPlayerAttached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
-        if (_effect == null)
+
+        if (_effect == null && !ent.Comp.blockedByFlashImmunity)
             AddNightVision(ent.Owner);
     }
 

@@ -8,6 +8,8 @@ using Robust.Client.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Flash.Components;
 
 namespace Content.Client._Starlight.Overlay.Thermal;
 
@@ -20,7 +22,7 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
 
     private ThroughWallsVisionOverlay _throughWallsOverlay = default!;
     private ThermalVisionOverlay _overlay = default!;
-    
+
     private EntityUid? _effect = null;
     private readonly EntProtoId _effectPrototype = "EffectThermalVision";
     protected override bool IsPredict() => !_timing.IsFirstTimePredicted;
@@ -31,17 +33,33 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
+        SubscribeLocalEvent<ThermalVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
+
         _throughWallsOverlay = new();
         _overlay = new();
     }
 
+    private void OnFlashImmunityChanged(Entity<ThermalVisionComponent> ent, ref FlashImmunityChangedEvent args)
+    {
+        if (args.IsImmune)
+        {
+            ent.Comp.blockedByFlashImmunity = true;
+            RemoveNightVision();
+        }
+        else
+        {
+            ent.Comp.blockedByFlashImmunity = false;
+            AddNightVision(ent.Owner);
+        }
+    }
+
     private void OnPlayerAttached(Entity<ThermalVisionComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        if (_effect == null)
+        if (_effect == null && !ent.Comp.blockedByFlashImmunity)
             AddNightVision(ent.Owner);
     }
 
-    private void OnPlayerDetached(Entity<ThermalVisionComponent> ent, ref LocalPlayerDetachedEvent args) 
+    private void OnPlayerDetached(Entity<ThermalVisionComponent> ent, ref LocalPlayerDetachedEvent args)
         => RemoveNightVision();
 
     protected override void ToggleOn(Entity<ThermalVisionComponent> ent)
