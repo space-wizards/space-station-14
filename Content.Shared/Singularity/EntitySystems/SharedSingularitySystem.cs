@@ -221,7 +221,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singulo">A singularity.</param>
     /// <returns>The gravity well radius the singularity should have given its state.</returns>
     public float GravPulseRange(SingularityComponent singulo)
-        => BaseGravityWellRadius * (singulo.Level + 1);
+    {
+        return BaseGravityWellRadius * (singulo.Level + 1);
+    }
 
     /// <summary>
     /// Derives the proper base gravitational acceleration for a singularity from its state.
@@ -229,7 +231,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singulo">A singularity.</param>
     /// <returns>The base gravitational acceleration the singularity should have given its state.</returns>
     public (float, float) GravPulseAcceleration(SingularityComponent singulo)
-        => (BaseGravityWellAcceleration * singulo.Level, 0f);
+    {
+        return (BaseGravityWellAcceleration * singulo.Level, 0f);
+    }
 
     /// <summary>
     /// Derives the proper event horizon radius for a singularity from its state.
@@ -237,7 +241,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singulo">A singularity.</param>
     /// <returns>The event horizon radius the singularity should have given its state.</returns>
     public float EventHorizonRadius(SingularityComponent singulo)
-        => singulo.Level - 0.5f;
+    {
+        return singulo.Level - 0.5f;
+    }
 
     /// <summary>
     /// Derives whether a singularity should be able to breach containment from its state.
@@ -245,7 +251,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singulo">A singularity.</param>
     /// <returns>Whether the singularity should be able to breach containment.</returns>
     public bool CanBreachContainment(SingularityComponent singulo)
-        => singulo.Level >= SingularityBreachThreshold;
+    {
+        return singulo.Level >= SingularityBreachThreshold;
+    }
 
     /// <summary>
     /// Derives the proper distortion shader falloff for a singularity from its state.
