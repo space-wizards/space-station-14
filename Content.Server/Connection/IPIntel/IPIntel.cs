@@ -181,9 +181,6 @@ public sealed class IPIntel
 
         var parts = response.Split(',');
 
-        if (parts.Length < 2)
-            return new IPIntelResult(0, null, IPIntelResultCode.Errored);
-
         var score = float.Parse(parts[0], CultureInfo.InvariantCulture);
         var countryCode = parts[1].Trim();
 
