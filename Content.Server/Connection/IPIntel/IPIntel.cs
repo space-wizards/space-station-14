@@ -178,6 +178,7 @@ public sealed class IPIntel
         }
 
         var response = await request.Content.ReadAsStringAsync();
+        _sawmill.Info($"Response generated: {response}");
         var parts = response.Split(',');
 
         if (parts.Length < 2)
