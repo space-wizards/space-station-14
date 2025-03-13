@@ -147,6 +147,11 @@
   id: BorgModuleTool
   result: BorgModuleTool
 
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleInflatable
+  result: BorgModuleInflatable
+
 # Engineering Modules
 
 - type: latheRecipe
