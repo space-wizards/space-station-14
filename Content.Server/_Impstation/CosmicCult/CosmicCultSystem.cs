@@ -21,7 +21,6 @@ using Content.Shared.Damage;
 using Content.Server.AlertLevel;
 using Content.Server.Announcements.Systems;
 using Content.Server.Pinpointer;
-using Content.Shared.Roles;
 using Content.Server.Ghost;
 using Content.Server.Polymorph.Systems;
 using Robust.Shared.Map;
@@ -32,17 +31,12 @@ using Content.Shared.Stunnable;
 using Content.Server.Doors.Systems;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Flash;
-using Content.Shared.Camera;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Effects;
 using Content.Shared.StatusEffect;
-using Content.Shared.Item;
-using Content.Shared.Throwing;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Hands;
@@ -70,7 +64,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly AlertLevelSystem _alert = default!;
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
@@ -83,16 +76,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly FlashSystem _flash = default!;
-    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
     public int CultistCount;
 
@@ -164,19 +153,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var finaleQuery = EntityQueryEnumerator<CosmicFinaleComponent, MonumentComponent>(); // Enumerator for The Monument's Finale
         while (finaleQuery.MoveNext(out var uid, out var comp, out var monuComp))
         {
-            // if (comp.CurrentState != FinaleState.Unavailable && _timing.CurTime >= monuComp.CheckTimer) // degen anyone that isn't shielded or a cultist || disabled for balance testing
-            // {
-            //     var targets = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
-            //     targets.RemoveWhere(target => !HasComp<HumanoidAppearanceComponent>(target)
-            //     || HasComp<MindShieldComponent>(target)
-            //     || HasComp<BibleUserComponent>(target)
-            //     || HasComp<CosmicCultComponent>(target));
-            //     foreach (var target in targets)
-            //     {
-            //         _damageable.TryChangeDamage(target, comp.FinaleDegen * 0.5);
-            //         _popup.PopupEntity(Loc.GetString("cosmiccult-finale-degen"), target, target, PopupType.MediumCaution);
-            //     }
-            // }
             if (_timing.CurTime >= monuComp.CheckTimer)
             {
                 var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);

@@ -12,17 +12,17 @@
   action: ActionCosmicLapse
   tier: 1
 
-- type: influence
-  id: InfluenceNullGlare
-  name: influence-name-glare
-  influenceType: influence-type-active
-  cost: 10
-  description: influence-description-glare
-  icon:
-    sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-    state: glare
-  action: ActionCosmicGlare
-  tier: 1 #remember to update when this gets set back to what it should be
+# - type: influence
+#   id: InfluenceNullGlare
+#   name: influence-name-glare
+#   influenceType: influence-type-active
+#   cost: 10
+#   description: influence-description-glare
+#   icon:
+#     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+#     state: glare
+#   action: ActionCosmicGlare
+#   tier: 1
 
 - type: influence
   id: InfluenceShuntSubjectivity
@@ -34,7 +34,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: blank
   action: ActionCosmicBlank
-  tier: 1 #remember to update when this gets set back to what it should be
+  tier: 1
 
 - type: influence
   id: InfluenceForceIngress
