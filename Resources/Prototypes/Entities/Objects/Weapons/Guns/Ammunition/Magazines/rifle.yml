@@ -2,8 +2,8 @@
 - type: entity
   id: BaseMagazineRifle
   name: "magazine (.20 rifle)"
+  parent: [ BaseItem, BaseSecurityContraband ]
   description: A 25-round .20 rifle magazine. #imp
-  parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag
@@ -62,6 +62,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineRifleIncendiary

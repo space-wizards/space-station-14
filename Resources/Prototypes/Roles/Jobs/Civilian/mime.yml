@@ -25,6 +25,7 @@
     gloves: ClothingHandsGlovesColorWhite
     pocket1: CrayonMime
     pocket2: Paper
+    # shoes: ClothingShoesColorWhite # Imp - we let you pick your shoes here
     id: MimePDA
     ears: ClothingHeadsetService
   storage:

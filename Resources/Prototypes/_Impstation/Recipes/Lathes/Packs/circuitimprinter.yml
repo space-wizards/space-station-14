@@ -1,0 +1,21 @@
+# Static
+
+- type: latheRecipePack
+  id: ImpCircuitStatic
+  recipes:
+  - ServiceTechFabCircuitboard
+  - SupermatterComputerCircuitboard
+  - ImpCoffeeMachineCircuitboard
+  - MiniGyroscopeMachineCircuitboard
+
+# Dynamic
+
+# - type: latheRecipePack
+#   id: ImpCircuitDynamic
+#   recipes:
+
+# Emagged
+
+# - type: latheRecipePack
+#   id: ImpCircuitEmagged
+#   recipes:

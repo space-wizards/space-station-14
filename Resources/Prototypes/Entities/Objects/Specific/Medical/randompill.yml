@@ -11,10 +11,15 @@
       weight: 5
       reagents:
       - Ichor
+      - Necrosol
     - quantity: 5
-      weight: 5
+      weight: 4
       reagents:
       - Cognizine
+    - quantity: 10
+      weight: 1
+      reagents:
+      - Vestine
   # Good - weight: 25
     - quantity: 20
       weight: 25
@@ -24,6 +29,8 @@
       - Omnizine
       - Tricordrazine
       - Vitamin
+      - PolypyryliumOligomers
+      - Charcoal
   # Neutral - weight: 20
     - quantity: 20
       weight: 17.5
@@ -36,6 +43,12 @@
       - JuiceThatMakesYouWeh
       - JuiceThatMakesYouUngh
       - Lipozine
+      - Carpetium
+      - Bananadine
+      - THC
+      - MindbreakerToxin
+      - Mustard
+      - HorseradishSauce
     - quantity: 5
       weight: 2.5
       reagents:
@@ -47,12 +60,15 @@
       - MuteToxin
       - Pax
       - Fresium
+      - Cryptobiolin
     - quantity: 10
       weight: 10.5
       reagents:
       - Uranium
       - Licoxide
       - Razorium
+      - Potassium
+      - Phlogiston
     - quantity: 5
       weight: 4
       reagents:
@@ -61,7 +77,7 @@
     - quantity: 20
       weight: 2.5
       reagents:
-      - ChloralHydrate
+      - Nocturine
     - quantity: 10
       weight: 10
       reagents:
@@ -70,10 +86,12 @@
       - BuzzochloricBees
       - BrosochloricBros
       - Amatoxin
+      - Tazinide
     - quantity: 5
       weight: 2.5
       reagents:
       - Lexorin
+      - Lead
 
 - type: entity
   name: strange pill

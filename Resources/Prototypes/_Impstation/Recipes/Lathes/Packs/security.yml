@@ -1,0 +1,50 @@
+# Static
+
+- type: latheRecipePack
+  id: ImpSecStatic
+  recipes:
+  - ClothingOuterArmorDuraVest # DeltaV - stabproof vest body armour
+  - ClothingOuterArmorPlateCarrier # DeltaV - plate carrier body armour
+  - MagazineBoxLPistol
+  - MagazineBoxLPistolPractice
+  - MagazineDMR
+  - MagazineDMREmpty
+  - MagazineLPistol
+  - MagazineLPistolEmpty
+  - MagazineLPistolPractice
+
+- type: latheRecipePack
+  id: ImpAmmoStatic
+  recipes:
+  - MagazineBoxLPistol
+  - MagazineDMR
+  - MagazineDMREmpty
+  - MagazineLPistol
+  - MagazineLPistolEmpty
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGunEmpty
+  - MagazinePistolSubMachineGunTopMounted
+  - MagazinePistolSubMachineGunTopMountedEmpty
+
+# Dynamic
+
+- type: latheRecipePack
+  id: ImpSecDynamic
+  recipes:
+  - FullAutoConversionKit
+  - HyperBurstConversionKit
+  - MagazineBoxLPistolIncendiary
+  - MagazineBoxLPistolUranium
+  - MagazineDMRIncendiary
+  - MagazineDMRUranium
+  - MagazineLPistolIncendiary
+  - MagazineLPistolUranium
+  - PRIbarPlusConversionKit
+  - WeaponShotgunEnforcerBeanbag
+  - WeaponShotgunKammererBeanbag
+
+# Emagged
+
+# - type: latheRecipePack
+#   id: ImpSecEmagged
+#   recipes:

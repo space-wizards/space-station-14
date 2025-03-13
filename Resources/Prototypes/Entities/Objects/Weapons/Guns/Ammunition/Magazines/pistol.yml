@@ -1,8 +1,8 @@
 - type: entity
   id: BaseMagazinePistol
   name: pistol magazine (.35 auto)
+  parent: [ BaseItem, BaseSecurityContraband ]
   description: A 10-round .35 auto pistol magazine. #imp
-  parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag
@@ -28,7 +28,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
-    steps: 5
+    steps: 6
     zeroVisible: false
   - type: Appearance
 
@@ -67,11 +67,11 @@
   - type: Appearance
 
 - type: entity
-  id: BaseMagazinePistolSubMachineGun # Yeah it's weird but it's pistol caliber 
+  id: BaseMagazinePistolSubMachineGun # Yeah it's weird but it's pistol caliber
   #Hi. AvianMaiden here. Avid gun enthusiast and queer American. It's a sub-caliber. SMGs use sub-caliber ammunition, also known as pistol ammo. If only that was in the name or something. If you read the first line of the Wikipedia page "Submachine gun", it tells you directly: "A submachine gun (SMG) is a magazine-fed automatic carbine designed to fire handgun cartridges." It's not fucking weird at all, it's by DESIGN to use a pistol caliber. Yes I'm responding to something made upstream and probably written years ago. Imp edit.
   name: SMG magazine (.35 auto)
   description: A 30-round .35 auto SMG magazine. #imp
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -105,7 +105,7 @@
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
   description: A 30-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   components:
   - type: Tag
     tags:
@@ -170,6 +170,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 
 - type: entity
@@ -224,6 +226,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolHighCapacity
@@ -304,6 +308,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice
@@ -334,3 +340,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGunIncendiary
+  name: SMG magazine (.35 auto incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary

@@ -51,3 +51,8 @@
     proto: SeniorSalvager
   equipment:
     eyes: ClothingEyesGlassesGarMecha
+
+- type: loadout
+  id: SalvageSpecialistDecapoidCoat
+  equipment:
+    outerClothing: ClothingOuterDecapoidCoatSanctioned
