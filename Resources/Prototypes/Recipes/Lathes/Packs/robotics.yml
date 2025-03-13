@@ -45,6 +45,7 @@
   - BorgModuleHarvesting
   - BorgModuleDefibrillator
   - BorgModuleAdvancedTreatment
+  - BorgModuleAdvancedClowning
 
 - type: latheRecipePack
   id: MechParts

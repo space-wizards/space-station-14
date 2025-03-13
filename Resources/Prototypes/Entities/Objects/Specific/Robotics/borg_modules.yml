@@ -557,7 +557,7 @@
   - type: Sprite
     layers:
     - state: service
-    - state: icon-clown
+    - state: icon-clown-adv
   - type: ItemBorgModule
     items:
     - BananiumHorn
