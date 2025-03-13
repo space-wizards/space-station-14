@@ -84,9 +84,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// Setter for <see cref="SingularityComponent.Energy"/>.
     /// Also updates the level of the singularity accordingly.
     /// </summary>
-    /// <param name="uid">The uid of the singularity to set the energy of.</param>
+    /// <param name="singularity">The singularity to set the energy of.</param>
     /// <param name="value">The amount of energy for the singularity to have.</param>
-    /// <param name="singularity">The state of the singularity to set the energy of.</param>
     public void SetEnergy(Entity<SingularityComponent?> singularity, float value)
     {
         if (!Resolve(singularity, ref singularity.Comp))
@@ -115,13 +114,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <summary>
     /// Adjusts the amount of energy the singularity has accumulated.
     /// </summary>
-    /// <param name="uid">The uid of the singularity to adjust the energy of.</param>
+    /// <param name="singularity">The singularity to adjust the energy of.</param>
     /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
     /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
     /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
     /// <param name="snapMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
     /// <param name="snapMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
-    /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
     public void AdjustEnergy(Entity<SingularityComponent?> singularity, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true)
     {
         if (!Resolve(singularity, ref singularity.Comp))
@@ -134,36 +132,19 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if (!snapMax && oldValue > max)
             max = oldValue;
 
-        var newValue = oldValue + delta;
-
-        SetEnergy(singularity, MathHelper.Clamp(newValue, min, max));
+        SetEnergy(singularity, MathHelper.Clamp(oldValue + delta, min, max));
     }
 
     #region Obsolete API
 
-    /// <summary>
-    /// Setter for <see cref="SingularityComponent.Energy"/>.
-    /// Also updates the level of the singularity accordingly.
-    /// </summary>
-    /// <param name="uid">The uid of the singularity to set the energy of.</param>
-    /// <param name="value">The amount of energy for the singularity to have.</param>
-    /// <param name="singularity">The state of the singularity to set the energy of.</param>
+    /// <inheritdoc cref="SetEnergy(Entity{SingularityComponent?}, float)"/>
     [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
     public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
     {
         SetEnergy((uid, singularity), value);
     }
 
-    /// <summary>
-    /// Adjusts the amount of energy the singularity has accumulated.
-    /// </summary>
-    /// <param name="uid">The uid of the singularity to adjust the energy of.</param>
-    /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
-    /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
-    /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
-    /// <param name="snapMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
-    /// <param name="snapMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
-    /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
+    /// <inheritdoc cref="AdjustEnergy(Entity{SingularityComponent?}, float, float, float, bool, bool)"/>
     [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
     public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
     {
