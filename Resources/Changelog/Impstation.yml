@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Updates to Atlas, Cluster, Saltern and Train. See PR for full changelog.
-    type: Add
-  id: 796
-  time: '2024-12-24T09:49:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1110
 - author: DinnerCalzone
   changes:
   - message: Bagel, Cog, Hummingbird, Marathon, Omega, and Origin have been updated
@@ -4087,3 +4080,12 @@
   id: 1295
   time: '2025-03-13T22:39:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1886
+- author: jtfg-dev
+  changes:
+  - message: Adjusted wording on cyborg and cyborg-related descriptions to reflect
+      the wonderful spectrum of different cultures that can be unceremoniously preserved
+      in a metal skin.
+    type: Tweak
+  id: 1296
+  time: '2025-03-13T22:59:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1913
