@@ -4040,4 +4040,25 @@ Entries:
   id: 559
   time: '2025-03-13T14:41:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/382
+- author: Killer Tamashi
+  changes:
+  - message: Added Bulletproof Helmet
+    type: Add
+  id: 560
+  time: '2025-03-13T15:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/385
+- author: Killer Tamashi
+  changes:
+  - message: Added Plate Carrier
+    type: Add
+  id: 561
+  time: '2025-03-13T15:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/385
+- author: Killer Tamashi
+  changes:
+  - message: Added Stabproof Vest (Both can be picked at loadout or found in the secdrobe)
+    type: Add
+  id: 562
+  time: '2025-03-13T15:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/385
 
