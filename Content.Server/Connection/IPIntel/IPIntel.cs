@@ -178,7 +178,7 @@ public sealed class IPIntel
         }
 
         var response = await request.Content.ReadAsStringAsync();
-        _sawmill.Info($"Response generated: {response}");
+
         var parts = response.Split(',');
 
         if (parts.Length < 2)
@@ -261,7 +261,7 @@ public sealed class IPIntel
         if (cache.CountryCode != null && _regions != null)
         {
             var countryCheck = _regions.Contains(cache.CountryCode);
-            _sawmill.Info($"{username} attempted to connect from region: {cache.CountryCode}. Their data was cached.");
+
             if (_regionWhitelist && !countryCheck)
             {
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
@@ -307,7 +307,7 @@ public sealed class IPIntel
         if (result.CountryCode != null && _regions != null)
         {
             var countryCheck = _regions.Contains(result.CountryCode);
-            _sawmill.Info($"{username} attempted to connect from region: {result.CountryCode}");
+
             if (_regionWhitelist && !countryCheck)
             {
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",

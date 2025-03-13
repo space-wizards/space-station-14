@@ -265,13 +265,13 @@ public sealed partial class CCVars
     /// Acts as a blacklist by default, see <see cref="GameIPIntelRegionWhitelist"/> to change this behaviour.
     /// </summary>
     public static readonly CVarDef<string> GameIPIntelRegions =
-        CVarDef.Create("game.regions", string.Empty, CVar.SERVERONLY);
+        CVarDef.Create("game.ipintel_regions", string.Empty, CVar.SERVERONLY);
 
     /// <summary>
     /// Only allows certain regions allowed to connect, defaults to false.
     /// </summary>
     public static readonly CVarDef<bool> GameIPIntelRegionWhitelist =
-        CVarDef.Create("game.regionwhitelist", false, CVar.SERVERONLY);
+        CVarDef.Create("game.ipintel_region_whitelist", false, CVar.SERVERONLY);
 
     /// <summary>
     /// Maximum amount of requests per Minute. For free you get 15.
