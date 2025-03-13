@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Communications;
 using Content.Server.Speech.Components;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -14,6 +15,7 @@ public sealed class ListeningSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<EntitySpokeEvent>(OnSpeak);
+        SubscribeLocalEvent<CommunicationConsoleAnnouncementEvent>(OnAnnouncement);
     }
 
     private void OnSpeak(EntitySpokeEvent ev)
@@ -21,7 +23,12 @@ public sealed class ListeningSystem : EntitySystem
         PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage);
     }
 
-    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage)
+    private void OnAnnouncement(ref CommunicationConsoleAnnouncementEvent ev)
+    {
+        PingListeners(ev.Uid, ev.Text, null, true);
+    }
+
+    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage, bool bypassRange = false)
     {
         // TODO whispering / audio volume? Microphone sensitivity?
         // for now, whispering just arbitrarily reduces the listener's max range.
@@ -43,7 +50,7 @@ public sealed class ListeningSystem : EntitySystem
             // range checks
             // TODO proper speech occlusion
             var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared();
-            if (distance > listener.Range * listener.Range)
+            if (distance > listener.Range * listener.Range && !bypassRange)
                 continue;
 
             RaiseLocalEvent(listenerUid, attemptEv);
