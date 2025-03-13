@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Listening Post and Box mapping changes
-    type: Tweak
-  - message: Listening Post Operatives spawn with an Agent ID
-    type: Tweak
-  id: 793
-  time: '2024-12-24T09:42:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1104
 - author: TheGrimbeeper
   changes:
   - message: Rat Servants will no longer be smart enough to understand that pointing
@@ -4084,3 +4075,12 @@
   id: 1292
   time: '2025-03-13T14:24:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1928
+- author: Kandiyaki
+  changes:
+  - message: The guidebook now actually tells you that you can make extra codex cicatrix.
+    type: Tweak
+  - message: heretic's target selection should now work as described in the guidebook.
+    type: Fix
+  id: 1293
+  time: '2025-03-13T19:49:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1785
