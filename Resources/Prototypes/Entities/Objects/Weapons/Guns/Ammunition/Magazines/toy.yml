@@ -2,6 +2,7 @@
   parent: MagazineLightRifleBox # It goes in a saw, its funny.
   id: MagazineFoamBox
   name: ammunition box (foam)
+  description: Give 'em hell! #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -10,3 +11,7 @@
         - BulletFoam
     proto: BulletFoam
     capacity: 100
+  - type: Sprite #imp
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+    layers:
+    - state: base

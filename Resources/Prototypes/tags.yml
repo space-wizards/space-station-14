@@ -19,6 +19,9 @@
   id: Aloe
 
 - type: Tag
+  id: AllowGhostShownByEvent
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag
@@ -795,6 +798,12 @@
   id: IntercomElectronics
 
 - type: Tag
+  id: InvalidForGlobalSpawnSpell
+
+- type: Tag
+  id: InvalidForSurvivorAntag
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -911,6 +920,9 @@
 
 - type: Tag # goob edit
   id: Mask
+
+- type: Tag
+  id: Maints
 
 - type: Tag
   id: Matchstick
@@ -1073,6 +1085,9 @@
 
 - type: Tag
   id: PlushieGhost
+
+- type: Tag
+  id: PlushieLizard
 
 - type: Tag
   id: PlushieSharkBlue
@@ -1275,6 +1290,9 @@
 
 - type: Tag
   id: Spray
+
+- type: Tag
+  id: SprayNozzle
 
 - type: Tag
   id: SpreaderIgnore

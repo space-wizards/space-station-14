@@ -16,5 +16,6 @@
     ClothingUniformBrownSuitSkirt: 2 #imp
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
-    
+  contrabandInventory:
+    ToyFigurineLibrarian: 1
 

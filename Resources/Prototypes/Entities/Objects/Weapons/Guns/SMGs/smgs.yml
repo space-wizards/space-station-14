@@ -82,7 +82,7 @@
   - type: Appearance
 
 - type: entity
-  name: C-20r submachine gun
+  name: C-20R Gorgon #imp
   parent: [BaseWeaponSubMachineGun, Tier3Contraband]
   id: WeaponSubMachineGunC20r
   description: An SMG often used by the infamous Nuclear Operatives... allegedly. Automatically ejects empty magazines. Uses .35 auto ammo. #imp
@@ -125,7 +125,7 @@
 
 - type: entity
   name: Drozd
-  parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
   description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo. #imp
   components:
@@ -183,56 +183,8 @@
     - type: Appearance
 
 - type: entity
-  name: Vector
-  parent: BaseWeaponSubMachineGun
-  id: WeaponSubMachineGunVector
-  suffix: Deprecated use Drozd
-  description: An excellent fully-automatic Heavy SMG. Uses .45 magnum ammo.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/SMGs/vector.rsi
-  - type: Gun
-    fireRate: 6
-    selectedMode: FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-    availableModes:
-    - FullAuto
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineMagnumSubMachineGun
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineMagnumSubMachineGun
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeMagnum
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeMagnum
-        whitelistFailPopup: gun-magazine-whitelist-fail
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
-
-- type: entity
   name: WT550
-  parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
+  parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
   id: WeaponSubMachineGunWt550
   description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:

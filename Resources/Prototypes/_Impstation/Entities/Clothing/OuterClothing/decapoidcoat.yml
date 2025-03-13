@@ -2,19 +2,50 @@
   parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks, DecapoidEmpireContraband]
   id: ClothingOuterDecapoidCoat
   name: outrigger's coat
-  description: A lightweight coat for spacewalking without a hardsuit.
+  description: An armoured coat for spacewalking without a hardsuit.
   components:
   - type: Item
-    size: Small
+    size: Huge
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat.rsi
-#  - type: ToggleableClothing
-#    clothingPrototype: ClothingNeckCloakDecapoid
-#    requiredSlot:
-#    - outerClothing
-#    slot: neck
-#  - type: ContainerContainer
-#    containers:
-#      toggleable-clothing: !type:ContainerSlot {}
+  - type: Armor # this is the ballistic vest a bartender gets but with a slowdown like a hardsuit
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+
+- type: entity #I have to define these differently for contraband reasons. suck's
+  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks, BaseCargoContraband]
+  id: ClothingOuterDecapoidCoatSanctioned
+  name: decapoid salvager's coat
+  description: An armoured coat for spacewalking without a hardsuit. This one is sanctioned for all Decapoid workers aboard Nanotrasen stations.
+  components:
+  - type: Item
+    size: Huge
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat-sanctioned.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat-sanctioned.rsi
+  - type: Armor # this is the ballistic vest a bartender gets but with a slowdown like a hardsuit
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier

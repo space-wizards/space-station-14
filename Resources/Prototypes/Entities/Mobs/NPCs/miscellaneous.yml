@@ -39,6 +39,10 @@
       thresholds:
         0: Alive
         100: Dead
+    - type: Butcherable
+      spawned:
+      - id: FoodMeatChicken
+        amount: 2
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
       baseSprintSpeed: 5

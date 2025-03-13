@@ -1,0 +1,41 @@
+- type: entity # Upstream got rid of it and I want both
+  name: supermatter grenade
+  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
+  parent: [SingularityGrenade, BaseSyndicateContraband]
+  id: SupermatterGrenade
+  components:
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 30
+    maxIntensity: 120
+  - type: TwoStageTrigger
+    triggerDelay: 10.45
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+      - type: GravityWell
+        maxRange: 8
+        baseRadialAcceleration: 145
+        baseTangentialAcceleration: 5
+        gravPulsePeriod: 0.01
+      - type: SingularityDistortion
+        intensity: 150
+        falloffPower: 1.5
+      - type: PointLight
+        enabled: true
+        color: "#ffaa44"
+        energy: 8
+        radius: 6
+        softness: 1
+        offset: "0, 0"
+      - type: SoundOnTrigger
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+          params:
+            volume: 5
+      - type: ExplodeOnTrigger

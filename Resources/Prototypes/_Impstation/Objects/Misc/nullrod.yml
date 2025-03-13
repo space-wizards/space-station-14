@@ -172,7 +172,6 @@
     mustBeEquippedToUse: true
   - type: MeleeThrowOnHit
     speed: 7
-    lifetime: 0.2
   - type: Reflect
     reflectProb: .22
     spread: 120

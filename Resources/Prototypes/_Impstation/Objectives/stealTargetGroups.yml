@@ -14,6 +14,13 @@
     sprite: _NF/Mobs/NPC/Animals/parrot.rsi
     state: sit
 
+- type: stealTargetGroup
+  id: PetSuppy
+  name: steal-target-groups-suppy
+  sprite:
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: suppermatter
+
 # critical infrastructure
 
 - type: stealTargetGroup

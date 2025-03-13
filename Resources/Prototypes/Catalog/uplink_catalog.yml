@@ -19,11 +19,11 @@
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPythonAP
-  discountCategory: usualDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 2
   cost:
-    Telecrystal: 8 # Originally was 13 TC but was not used due to high cost
+    Telecrystal: 4 # Originally was 13 and then 8 TC but was not used due to high cost
   categories:
   - UplinkWeaponry
 
@@ -277,10 +277,10 @@
     - UplinkExplosives
 
 - type: listing
-  id: UplinkSupermatterGrenade
-  name: uplink-supermatter-grenade-name
-  description: uplink-supermatter-grenade-desc
-  productEntity: SupermatterGrenade
+  id: UplinkSingularityGrenade
+  name: uplink-singularity-grenade-name
+  description: uplink-singularity-grenade-desc
+  productEntity: SingularityGrenade
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3
@@ -909,11 +909,11 @@
   name: uplink-access-breaker-name
   description: uplink-access-breaker-desc
   productEntity: AccessBreaker
-  discountCategory: veryRareDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 3
+    Telecrystal: 2
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkDisruption
 
@@ -922,11 +922,11 @@
   name: uplink-emag-name
   description: uplink-emag-desc
   productEntity: Emag
-  discountCategory: rareDiscounts
+  discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 2
+    Telecrystal: 3
   cost:
-    Telecrystal: 4
+    Telecrystal: 5
   categories:
   - UplinkDisruption
 
@@ -1218,7 +1218,7 @@
   productEntity: ReinforcementRadioSyndicateNukeops
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-nukeop }
   cost:
-    Telecrystal: 35
+    Telecrystal: 30
   categories:
   - UplinkAllies
   conditions:
@@ -2046,11 +2046,11 @@
   name: uplink-revolver-cap-gun-fake-name
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
-  discountCategory: usualDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 3
   cost:
-    Telecrystal: 9
+    Telecrystal: 5
   categories:
   - UplinkJob
   conditions:
@@ -2219,8 +2219,11 @@
   description: uplink-combat-bakery-desc
   icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
   productEntity: CombatBakeryKit
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
   cost:
-    Telecrystal: 6
+    Telecrystal: 4
   categories:
   - UplinkJob
   conditions:

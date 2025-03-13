@@ -687,7 +687,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterSec
   name: security winter coat
   components:
@@ -741,7 +741,7 @@
 
 ################################################################
 - type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
+  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterWarden
   name: warden's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
@@ -755,7 +755,7 @@
 ################################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterWardenUnarmored
   name: warden's winter coat
   description: A sturdy coat, a warm coat, but not an armored coat.

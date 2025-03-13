@@ -53,6 +53,8 @@ JobNinja = Space Ninja
 AntagNinja = Space Ninja
 AntagDragon = Space Dragon
 AntagSubvertedSilicon = Subverted Silicon
+AntagSurvivor = Survivor
+AntagWizard = Wizard
 
 # non-upstream role timers
 

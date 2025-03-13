@@ -374,3 +374,7 @@ accent-transatlantic-words-replace-105 = wise guy
 
 accent-transatlantic-words-106 = gun
 accent-transatlantic-words-replace-106 = roscoe
+
+accent-transatlantic-words-107 = woman
+accent-transatlantic-words-107-2 = lady
+accent-transatlantic-words-replace-107 = dame

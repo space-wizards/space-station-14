@@ -139,6 +139,7 @@
   id: ClosetJanitorBombFilled
   parent: ClosetJanitorBomb
   suffix: DO NOT MAP, Filled
+  categories: [ DoNotMap ]
   components:
   - type: StorageFill
     contents:

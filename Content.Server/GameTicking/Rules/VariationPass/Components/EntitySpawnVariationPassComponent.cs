@@ -24,4 +24,10 @@ public sealed partial class EntitySpawnVariationPassComponent : Component
     /// </summary>
     [DataField(required: true)]
     public List<EntitySpawnEntry> Entities = default!;
+
+    /// <summary>
+    ///     Imp: Skip spawning an entity if another entity with one of these components exists on the tile.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry? ComponentBlacklist;
 }

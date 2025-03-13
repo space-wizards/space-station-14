@@ -2,3 +2,43 @@
   license: "CC0-1.0"
   copyright: "Made by Carlfnf on Freesound"
   source: "https://freesound.org/s/690099/"
+  
+- files: ["autodisabler"]
+  license: "CC-BY-3.0"
+  copyright: "Made by flyingsaucerinvasion on Freesound and edited by DVD Player"
+  source: "https://freesound.org/people/flyingsaucerinvasion/sounds/615811/"
+ 
+- files: ["daito"]
+  license: "CC0-1.0"
+  copyright: "Made by SuperPhat on Freesound"
+  source: "https://freesound.org/people/SuperPhat/sounds/404561/"
+ 
+- files: ["goldlaser"]
+  license: "CC0-1.0"
+  copyright: "Made by JakeAMT on Freesound"
+  source: "https://freesound.org/people/JakeAMT/sounds/681960/"
+  
+- files: ["light-pistol"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Michael Klier on opengameart"
+  source: "https://opengameart.org/content/futuristic-weapons-assault-rifle"
+  
+- files: ["light-pistol2"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Q009 on opengameart"
+  source: "https://opengameart.org/content/q009s-weapon-sounds"
+  
+- files: ["nemesis"]
+  license: "CC-BY-4.0"
+  copyright: "Made by keybal on Freesound and edited by DVD Player"
+  source: "https://freesound.org/people/keybal/sounds/564282/"
+  
+- files: ["stunprojector"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Little Robot Sound Factory on opengameart"
+  source: "https://opengameart.org/content/sci-fi-sound-effects-library"
+  
+- files: ["zipper"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Michael Klier on opengameart"
+  source: "https://opengameart.org/content/futuristic-weapons-assault-rifle"
