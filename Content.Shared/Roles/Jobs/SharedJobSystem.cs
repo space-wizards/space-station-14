@@ -22,9 +22,6 @@ public abstract class SharedJobSystem : EntitySystem
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
-    private ISawmill _sawmill = default!;
-
-
     public override void Initialize()
     {
         base.Initialize();
@@ -148,7 +145,8 @@ public abstract class SharedJobSystem : EntitySystem
             return false;
         }
 
-        if (!MindTryGetJob(mindId, out var mindJob)) return false;
+        if (!MindTryGetJob(mindId, out var mindJob))
+            return false;
         if (mindJob == null || givenJob == null)
             return false;
         TryGetPrimaryDepartment(mindJob.ID, out var dept1);
