@@ -307,18 +307,16 @@ public sealed class IPIntel
         {
             var countryCheck = _regions.Contains(result.CountryCode);
 
-            if (_regionWhitelist)
+            if (_regionWhitelist && !countryCheck)
             {
-                decisionIsReject |= !countryCheck;
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
                     ("player", username),
                     ("region", result.CountryCode)));
                 return (true, Loc.GetString("ipintel-region-whitelist",
                     ("regions", _regions)));
             }
-            else
+            else if (countryCheck)
             {
-                decisionIsReject |= countryCheck;
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
                     ("player", username),
                     ("region", result.CountryCode)));

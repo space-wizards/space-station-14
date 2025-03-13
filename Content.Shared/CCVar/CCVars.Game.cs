@@ -273,7 +273,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> GameIPIntelRegionWhitelist =
         CVarDef.Create("game.regionwhitelist", false, CVar.SERVERONLY);
 
-
     /// <summary>
     /// Maximum amount of requests per Minute. For free you get 15.
     /// </summary>
