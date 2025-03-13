@@ -10,6 +10,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using System.Globalization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Connection.IPIntel;
 
@@ -184,7 +185,7 @@ public sealed class IPIntel
         if (parts.Length < 2)
             return new IPIntelResult(0, null, IPIntelResultCode.Errored);
 
-        var score = float.Parse(parts[0], CultureInfo.InvariantCulture);
+        var score = Parse.Float(parts[0]);
         var countryCode = parts[1].Trim();
 
         if (request.StatusCode == HttpStatusCode.OK)
@@ -254,19 +255,33 @@ public sealed class IPIntel
         return ratelimits.RateLimited && _gameTiming.RealTime >= ratelimits.LastRatelimited + liftingTime;
     }
 
-    private (bool, string Empty) BlockCheck(IPIntelCache cache, string username)
+    /// <summary>
+    /// Checks whether a user meets the requirements to connect.
+    /// </summary>
+    /// <param name="data">The data used to determine if the connection should be blocked. Expected types: <see cref="IPIntelResult"/> or <see cref="IPIntelCache"/>.</param>
+    /// <param name="username">The player's username.</param>
+    /// <returns>Returns <c>true</c> if the user is blocked, along with the reason.</returns>
+    private (bool, string Empty) BlockCheck(object data, string username)
     {
-        var decisionIsReject = cache.Score > _rating;
 
-        if (cache.CountryCode != null && _regions != null)
+        (float score, string countryCode) = data switch
         {
-            var countryCheck = _regions.Contains(cache.CountryCode);
+            IPIntelResult result => (result.Score, result.CountryCode ?? string.Empty),
+            IPIntelCache cache => (cache.Score, cache.CountryCode ?? string.Empty),
+            _ => (0, string.Empty)
+        };
+
+        var decisionIsReject = score > _rating;
+
+        if (countryCode != null && _regions != null)
+        {
+            var countryCheck = _regions.Contains(countryCode);
 
             if (_regionWhitelist && !countryCheck)
             {
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
                     ("player", username),
-                    ("region", cache.CountryCode)));
+                    ("region", countryCode)));
                 return (true, Loc.GetString("ipintel-region-whitelist",
                     ("regions", _regions)));
             }
@@ -274,17 +289,17 @@ public sealed class IPIntel
             {
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
                     ("player", username),
-                    ("region", cache.CountryCode)));
+                    ("region", countryCode)));
                 return (true, Loc.GetString("ipintel-region-blacklist",
                     ("regions", _regions)));
             }
         }
 
-        if (_alertAdminWarn != 0f && _alertAdminWarn < cache.Score && !decisionIsReject)
+        if (_alertAdminWarn != 0f && _alertAdminWarn < score && !decisionIsReject)
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-warning",
                 ("player", username),
-                ("percent", Math.Round(cache.Score))));
+                ("percent", Math.Round(score))));
         }
 
         if (!decisionIsReject)
@@ -294,54 +309,7 @@ public sealed class IPIntel
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked",
                 ("player", username),
-                ("percent", Math.Round(cache.Score))));
-        }
-
-        return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
-    }
-
-    private (bool, string Empty) BlockCheck(IPIntelResult result, string username)
-    {
-        var decisionIsReject = result.Score > _rating;
-
-        if (result.CountryCode != null && _regions != null)
-        {
-            var countryCheck = _regions.Contains(result.CountryCode);
-
-            if (_regionWhitelist && !countryCheck)
-            {
-                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
-                    ("player", username),
-                    ("region", result.CountryCode)));
-                return (true, Loc.GetString("ipintel-region-whitelist",
-                    ("regions", _regions)));
-            }
-            else if (!_regionWhitelist && countryCheck)
-            {
-                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
-                    ("player", username),
-                    ("region", result.CountryCode)));
-                return (true, Loc.GetString("ipintel-region-blacklist",
-                    ("regions", _regions)));
-            }
-        }
-
-        // Admin warning if score is high but not rejected
-        if (_alertAdminWarn != 0f && _alertAdminWarn < result.Score && !decisionIsReject)
-        {
-            _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-warning",
-                ("player", username),
-                ("percent", Math.Round(result.Score))));
-        }
-
-        if (!decisionIsReject)
-            return (false, string.Empty);
-
-        if (_alertAdminReject)
-        {
-            _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked",
-                ("player", username),
-                ("percent", Math.Round(result.Score))));
+                ("percent", Math.Round(score))));
         }
 
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
