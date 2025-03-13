@@ -39,10 +39,12 @@ public sealed class IPIntel
         _sawmill = logManager.GetSawmill("ipintel");
 
         cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelRegions, b => _regions = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelEnabled, b => _enabled = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectUnknown, b => _rejectUnknown = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectBad, b => _rejectBad = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelRegionWhitelist, b => _regionWhitelist = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _minute.Limit = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _day.Limit = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelBackOffSeconds, b => _backoffSeconds = b, true);
@@ -52,8 +54,6 @@ public sealed class IPIntel
         cfg.OnValueChanged(CCVars.GameIPIntelExemptPlaytime, b => _exemptPlaytime = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminReject, b => _alertAdminReject = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
-        cfg.OnValueChanged(CCVars.GameIPIntelRegions, b => _regions = b, true);
-        cfg.OnValueChanged(CCVars.GameIPIntelRegionWhitelist, b => _regionWhitelist = b, true);
     }
 
     internal struct Ratelimits
@@ -78,19 +78,19 @@ public sealed class IPIntel
 
     // CCVars
     private string? _contactEmail;
+    private string? _regions;
     private bool _enabled;
     private bool _rejectUnknown;
     private bool _rejectBad;
     private bool _rejectLimited;
     private bool _alertAdminReject;
+    private bool _regionWhitelist;
     private int _backoffSeconds;
     private int _cleanupMins;
     private TimeSpan _cacheDays;
     private TimeSpan _exemptPlaytime;
     private float _rating;
     private float _alertAdminWarn;
-    private string? _regions;
-    private bool _regionWhitelist;
 
     public async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
     {
@@ -279,17 +279,21 @@ public sealed class IPIntel
 
             if (_regionWhitelist && !countryCheck)
             {
-                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
-                    ("player", username),
-                    ("region", countryCode)));
+                if(_alertAdminReject)
+                    _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                        ("player", username),
+                        ("region", countryCode)));
+
                 return (true, Loc.GetString("ipintel-region-whitelist",
                     ("regions", _regions)));
             }
             else if (!_regionWhitelist && countryCheck)
             {
-                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
-                    ("player", username),
-                    ("region", countryCode)));
+                if(_alertAdminReject)
+                    _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                        ("player", username),
+                        ("region", countryCode)));
+
                 return (true, Loc.GetString("ipintel-region-blacklist",
                     ("regions", _regions)));
             }
