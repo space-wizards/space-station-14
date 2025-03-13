@@ -1,15 +1,14 @@
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Components;
+namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 /// Component for controlling an occluder via device linking signals.
 /// Allows enabling, disabling, or toggling the occluder state.
-/// <seealso cref="OccluderSignalControlSystem"/>
+/// <seealso cref="SharedOccluderSignalControlSystem"/>
 /// </summary>
-[RegisterComponent, Access(typeof(OccluderSignalControlSystem))]
+[RegisterComponent, Access(typeof(SharedOccluderSignalControlSystem))]
 public sealed partial class OccluderSignalControlComponent : Component
 {
     /// <summary>

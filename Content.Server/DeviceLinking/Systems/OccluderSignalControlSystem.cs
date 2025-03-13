@@ -1,17 +1,17 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceNetwork;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.DeviceLinking.Systems;
 
 /// <summary>
-/// Controls an <see cref="OccluderComponent"/> through device signals.
-/// <seealso cref="OccluderSignalControlComponent"/>
+/// Server-side logic for <see cref="SharedOccluderSignalControlSystem"/>.
 /// </summary>
-public sealed class OccluderSignalControlSystem : EntitySystem
+public sealed class OccluderSignalControlSystem : SharedOccluderSignalControlSystem
 {
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly ServerOccluderSystem _occluder = default!;
 
     /// <inheritdoc/>
@@ -19,13 +19,7 @@ public sealed class OccluderSignalControlSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<OccluderSignalControlComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OccluderSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
-    }
-
-    private void OnInit(Entity<OccluderSignalControlComponent> ent, ref ComponentInit args)
-    {
-        _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.EnablePort, ent.Comp.DisablePort, ent.Comp.TogglePort);
     }
 
     private void OnSignalReceived(Entity<OccluderSignalControlComponent> ent, ref SignalReceivedEvent args)
