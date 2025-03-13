@@ -38,7 +38,7 @@ public sealed partial class SingularityComponent : Component
     /// <summary>
     /// The rate at which this singularity loses energy over time.
     /// </summary>
-    [DataField]
+    [DataField("energyLoss")]
     public float EnergyDrain;
 
     #region Audio
