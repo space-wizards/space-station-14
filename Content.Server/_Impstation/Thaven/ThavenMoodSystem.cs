@@ -106,8 +106,10 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     public void ToggleEmaggable(ThavenMoodsComponent component)
     {
-        if (!component.CanBeEmagged) component.CanBeEmagged = true;
-        else component.CanBeEmagged = false;
+        if (!component.CanBeEmagged)
+            component.CanBeEmagged = true;
+        else
+            component.CanBeEmagged = false;
     }
     public void ToggleSharedMoods(ThavenMoodsComponent component)
     {

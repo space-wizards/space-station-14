@@ -7,7 +7,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.UserInterface;
-using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
 namespace Content.Server._Impstation.CosmicCult;
@@ -66,6 +65,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void StartFinale(Entity<CosmicFinaleComponent> uid)
     {
         var comp = uid.Comp;
+        var indicatedLocation = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid))));
+
         if (!TryComp<MonumentComponent>(uid, out var monument) || !TryComp<CosmicCorruptingComponent>(uid, out var corruptingComp))
             return;
 
@@ -77,7 +78,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             comp.SelectedSong = comp.BufferMusic;
             _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
             _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
-            Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
+            Loc.GetString("cosmiccult-finale-location", ("location", indicatedLocation)),
             null,
             Color.FromHex("#cae8e8"));
 
@@ -91,7 +92,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             comp.SelectedSong = comp.FinaleMusic;
             _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
             _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
-            Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
+            Loc.GetString("cosmiccult-finale-location", ("location", indicatedLocation)),
             null,
             Color.FromHex("#cae8e8"));
 

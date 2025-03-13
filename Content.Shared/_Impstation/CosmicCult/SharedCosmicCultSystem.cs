@@ -2,16 +2,12 @@ using Content.Shared._Impstation.CosmicCult.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
-using Content.Shared.Inventory.Events;
-using Content.Shared.Hands;
 using Content.Shared.StatusEffect;
 
 namespace Content.Shared._Impstation.CosmicCult;
 
 public abstract class SharedCosmicCultSystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -21,8 +17,6 @@ public abstract class SharedCosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultComponent, ComponentStartup>(DirtyCosmicCultComps);
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentStartup>(DirtyCosmicCultComps);
     }
-
-
 
     /// <summary>
     /// Determines if a Cosmic Cult Lead component should be sent to the client.

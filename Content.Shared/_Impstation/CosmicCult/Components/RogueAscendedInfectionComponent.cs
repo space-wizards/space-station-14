@@ -12,7 +12,7 @@ public sealed partial class RogueAscendedInfectionComponent : Component
 {
     public ResPath RsiPath = new("/Textures/_Impstation/CosmicCult/Effects/ascendantinfection.rsi");
     public readonly string States = "vfx";
-    [DataField] public bool HadMoods = false;
+    [DataField] public bool HadMoods;
 }
 
 [Serializable, NetSerializable]

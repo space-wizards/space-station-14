@@ -1,17 +1,26 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
 
 namespace Content.Server._Impstation.CosmicCult.Components;
 
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class CosmicFinaleComponent : Component
 {
-    [DataField] public FinaleState CurrentState = FinaleState.Unavailable;
-    [DataField] public bool FinaleDelayStarted = false;
-    [DataField] public bool FinaleActive = false;
-    [DataField] public bool Occupied = false;
-    [DataField] public bool MusicBool = false;
+    [DataField]
+    public FinaleState CurrentState = FinaleState.Unavailable;
+
+    [DataField]
+    public bool FinaleDelayStarted = false;
+
+    [DataField]
+    public bool FinaleActive = false;
+
+    [DataField]
+    public bool Occupied = false;
+
+    [DataField]
+    public bool MusicBool = false;
+
     [AutoPausedField] public TimeSpan FinaleTimer = default!;
     [AutoPausedField] public TimeSpan BufferTimer = default!;
     [AutoPausedField] public TimeSpan CultistsCheckTimer = default!;

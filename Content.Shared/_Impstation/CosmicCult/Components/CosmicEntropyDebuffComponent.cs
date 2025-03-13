@@ -1,5 +1,4 @@
 using Content.Shared.Damage;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared._Impstation.CosmicCult.Components;
 
@@ -12,7 +11,16 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 public sealed partial class CosmicEntropyDebuffComponent : Component
 {
     [AutoPausedField] public TimeSpan CheckTimer = default!;
-    [DataField, AutoNetworkedField] public TimeSpan CheckWait = TimeSpan.FromSeconds(1);
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan CheckWait = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// The chance to recieve a message popup while under the effects of Entropic Degen.
+    /// </summary>
+    [DataField]
+    public float PopupChance = 0.05f;
+    
     /// <summary>
     /// The debuff applied while the component is present.
     /// </summary>

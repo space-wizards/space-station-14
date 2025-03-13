@@ -19,7 +19,6 @@ using Content.Shared.Damage;
 using Content.Shared.Dataset;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
-using Content.Shared.Friction;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
@@ -36,7 +35,6 @@ using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -78,6 +76,7 @@ public sealed class RogueAscendedSystem : EntitySystem
     [DataField] private EntProtoId _glareVFX = "CosmicGlareAbilityVFX";
     [DataField] private SoundSpecifier _blankSFX = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_blank.ogg");
     [DataField] private SoundSpecifier _ascendantSFX = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_shunt.ogg");
+    [DataField] private SoundSpecifier _novaSFX = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_nova_cast.ogg");
 
     public override void Initialize()
     {
@@ -99,7 +98,7 @@ public sealed class RogueAscendedSystem : EntitySystem
     private void OnSpawn(Entity<RogueAscendedComponent> uid, ref ComponentInit args) // I WANT THIS DINGUS YEETED TOWARDS THE STATION AT MACH JESUS
     {
         var station = _station.GetStationInMap(Transform(uid).MapID);
-        if (TryComp<StationDataComponent>(station, out var stationData) && stationData is not null)
+        if (TryComp<StationDataComponent>(station, out var stationData))
         {
             var stationGrid = _station.GetLargestGrid(stationData);
             _throw.TryThrow(uid, Transform(stationGrid!.Value).Coordinates, baseThrowSpeed: 50, null, 0, 0, false, false, false, false, false);
@@ -119,7 +118,8 @@ public sealed class RogueAscendedSystem : EntitySystem
     #region Consume Dendrite
     private void OnDendriteConsumed(Entity<RogueAscendedDendriteComponent> uid, ref BeforeFullyEatenEvent args)
     {
-        if (!HasComp<HumanoidAppearanceComponent>(args.User) || HasComp<RogueAscendedAuraComponent>(args.User)) return; // if it ain't human, or already ate, nvm
+        if (!HasComp<HumanoidAppearanceComponent>(args.User) || HasComp<RogueAscendedAuraComponent>(args.User))
+            return; // if it ain't human, or already ate, nvm
         if (TryComp<CosmicCultComponent>(args.User, out var cultComp))
         {
             cultComp.EntropyBudget += 30; //if they're a cultist, make them very very rich
@@ -148,7 +148,8 @@ public sealed class RogueAscendedSystem : EntitySystem
             _moodSystem.TryAddRandomMood(uid, RandomThavenMoodDataset, moodComp, false);
             _moodSystem.TryAddRandomMood(uid, moodComp);
         }
-        else RemComp<ThavenMoodsComponent>(uid);
+        else
+            RemComp<ThavenMoodsComponent>(uid);
     }
     #endregion
     #region Ability - Shatter
@@ -213,12 +214,15 @@ public sealed class RogueAscendedSystem : EntitySystem
             infectionComp.HadMoods = true; // make note that they already had moods
         EnsureComp<ThavenMoodsComponent>(target, out var moodComp);
         Spawn(uid.Comp.Vfx, Transform(target).Coordinates);
+
         _moodSystem.ToggleEmaggable(moodComp); // can't emag an infected thavenmood
         _moodSystem.ClearMoods(moodComp); // wipe those moods
         _moodSystem.ToggleSharedMoods(moodComp); // disable shared moods
         _moodSystem.TryAddRandomMood(target, AscendantDataset, moodComp, false); // we don't need to notify them twice
         _moodSystem.TryAddRandomMood(target, AscendantDataset, moodComp);
+
         _damageable.TryChangeDamage(target, uid.Comp.InfectionHeal * -1);
+
         _stun.TryStun(target, uid.Comp.StunTime, false);
         _audio.PlayPvs(uid.Comp.InfectionSfx, target);
 
@@ -240,7 +244,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         args.Handled = true;
         var ent = Spawn("ProjectileCosmicNova", startPos);
         _gun.ShootProjectile(ent, delta, userVelocity, args.Performer, args.Performer, 5f);
-        _audio.PlayPvs(new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_nova_cast.ogg"), uid, AudioParams.Default.WithVariation(0.1f));
+        _audio.PlayPvs(_novaSFX, uid, AudioParams.Default.WithVariation(0.1f));
     }
     private void OnRogueNova(Entity<RogueAscendedComponent> uid, ref EventRogueCosmicNova args)
     {
@@ -291,15 +295,19 @@ public sealed class RogueAscendedSystem : EntitySystem
             var newSpawn = _random.Pick(spawnPoints);
             var spawnTgt = Transform(newSpawn.Uid).Coordinates;
             var mobUid = Spawn(_spawnWisp, spawnTgt);
+
             EnsureComp<CosmicMarkBlankComponent>(subject);
             EnsureComp<InVoidComponent>(mobUid, out var inVoid);
+
             inVoid.OriginalBody = subject;
             inVoid.ExitVoidTime = _timing.CurTime + TimeSpan.FromSeconds(14);
+
             _mind.TransferTo(mindEnt, mobUid);
             _stun.TryKnockdown(subject, TimeSpan.FromSeconds(16), true);
             _popup.PopupEntity(Loc.GetString("cosmicability-blank-transfer"), mobUid, mobUid);
             _audio.PlayLocal(_blankSFX, mobUid, mobUid, AudioParams.Default.WithVolume(6f));
             _color.RaiseEffect(Color.CadetBlue, new List<EntityUid>() { subject }, Filter.Pvs(subject, entityManager: EntityManager));
+
             Spawn(_blankVFX, tgtpos);
             Spawn(_blankVFX, spawnTgt);
         }

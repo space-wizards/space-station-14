@@ -1,5 +1,4 @@
 using Content.Server._Impstation.CosmicCult.Components;
-using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Shared.Objectives.Components;
 

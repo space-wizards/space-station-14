@@ -56,6 +56,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         }
     }
 
+    #region Additions
     private void OnAscendedInfectionAdded(Entity<RogueAscendedInfectionComponent> uid, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(AscendedInfectionKey.Key, out _))
@@ -66,6 +67,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         sprite.LayerMapSet(AscendedInfectionKey.Key, layer);
         sprite.LayerSetShader(layer, "unshaded");
     }
+
     private void OnAscendedAuraAdded(Entity<RogueAscendedAuraComponent> uid, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(AscendedAuraKey.Key, out _))
@@ -96,9 +98,9 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         sprite.LayerMapSet(CosmicImposingKey.Key, layer);
         sprite.LayerSetShader(layer, "unshaded");
     }
+    #endregion
 
-
-
+    #region Removals
     private void OnAscendedInfectionRemoved(Entity<RogueAscendedInfectionComponent> uid, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !sprite.LayerMapTryGet(AscendedInfectionKey.Key, out var layer))
@@ -127,9 +129,9 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
 
         sprite.RemoveLayer(layer);
     }
+    #endregion
 
-
-
+    #region Icons
     private void GetCosmicCultIcon(Entity<CosmicCultComponent> ent, ref GetStatusIconsEvent args)
     {
         if (HasComp<CosmicCultLeadComponent>(ent))
@@ -150,6 +152,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         if (_prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
             args.StatusIcons.Add(iconPrototype);
     }
+    #endregion
 }
 public enum CultSiphonedVisuals : byte
 {
