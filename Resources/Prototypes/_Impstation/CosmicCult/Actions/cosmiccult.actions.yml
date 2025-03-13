@@ -1,4 +1,36 @@
 - type: entity
+  id: ActionCosmicPlaceMonument
+  name: Beckon The Monument
+  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-spawn-confirm
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument
+    event: !type:EventCosmicPlaceMonument {}
+
+- type: entity
+  id: ActionCosmicRelocateMonument ## RUDDY PLEASE OVERWRITE THIS ONE THANK YOU (the icon and description are correct, feel free to change the rest)
+  name: Relocate The Monument
+  description: Your work is imperative, and the end is inevitable. Ensure that it is completed under your watch.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-spawn-confirm
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument-relocate
+    event: !type:EventCosmicPlaceMonument {}
+
+- type: entity
   id: ActionCosmicSiphon
   name: Siphon Entropy
   description: Silently siphon entropy from your target, dealing some damage in the process.
@@ -32,22 +64,6 @@
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: blank
     event: !type:EventCosmicBlank {}
-
-- type: entity
-  id: ActionCosmicPlaceMonument
-  name: Beckon The Monument
-  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists!
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: ConfirmableAction
-    popup: cosmicability-monument-spawn-confirm
-  - type: InstantAction
-    useDelay: 999
-    itemIconStyle: NoItem
-    icon:
-      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-      state: monument
-    event: !type:EventCosmicPlaceMonument {}
 
 - type: entity
   id: ActionCosmicReturn
@@ -142,6 +158,8 @@
       state: nova
     event: !type:EventCosmicNova {}
 
+#################################### ROGUE ASCENDANT ACTIONS ######################################
+
 - type: entity
   id: ActionRogueCosmicNova
   name: Usurped Astral Nova
@@ -183,7 +201,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
-    useDelay: 60
+    useDelay: 180
     whitelist:
       components:
         - HumanoidAppearance
@@ -202,7 +220,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
-    useDelay: 90 ## todo: 90 second CD
+    useDelay: 90
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi

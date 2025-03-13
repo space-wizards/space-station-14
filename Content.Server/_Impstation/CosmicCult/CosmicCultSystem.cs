@@ -189,7 +189,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             {
                 comp.CurrentState = FinaleState.ActiveFinale;
                 comp.FinaleTimer = _timing.CurTime + comp.FinaleRemainingTime;
-                comp.SelectedSong = _audio.ResolveSound(comp.FinaleMusic);
+                comp.SelectedSong = comp.FinaleMusic;
                 _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
                 _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
                 _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);

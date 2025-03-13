@@ -74,7 +74,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(3);
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, 2);
             comp.BufferTimer = _timing.CurTime + comp.BufferRemainingTime;
-            comp.SelectedSong = _audio.ResolveSound(comp.BufferMusic);
+            comp.SelectedSong = comp.BufferMusic;
             _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
             _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
             Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
@@ -88,7 +88,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(1);
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);
             comp.FinaleTimer = _timing.CurTime + comp.FinaleRemainingTime;
-            comp.SelectedSong = _audio.ResolveSound(comp.FinaleMusic);
+            comp.SelectedSong = comp.FinaleMusic;
             _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
             _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
             Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),

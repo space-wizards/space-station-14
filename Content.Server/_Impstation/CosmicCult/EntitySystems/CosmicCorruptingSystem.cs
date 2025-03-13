@@ -6,6 +6,7 @@ using System.Numerics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Tag;
+using Content.Server._Impstation.CosmicCult.Components;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicCorruptingSystem : EntitySystem
