@@ -18,15 +18,15 @@ public sealed class MumbleAccentSystem : EntitySystem
         SubscribeLocalEvent<MumbleAccentComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem)]);
     }
 
-    private void OnEmote(EntityUid uid, MumbleAccentComponent component, ref EmoteEvent args)
+    private void OnEmote(Entity<MumbleAccentComponent> ent, ref EmoteEvent args)
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;
 
-        if (TryComp<VocalComponent>(uid, out var vocalComp))
+        if (TryComp<VocalComponent>(ent.Owner, out var vocalComp))
         {
             // play a muffled version of the vocal emote
-            args.Handled = _chat.TryPlayEmoteSound(uid, vocalComp.EmoteSounds, args.Emote, component.EmoteAudioParams);
+            args.Handled = _chat.TryPlayEmoteSound(ent.Owner, vocalComp.EmoteSounds, args.Emote, ent.Comp.EmoteAudioParams);
         }
     }
 
