@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Added three new bounties.
-    type: Add
-  id: 790
-  time: '2024-12-22T15:17:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1081
 - author: kipdotnet
   changes:
   - message: Added the artistic borg module. Please be nice with this so I dont have
@@ -4084,3 +4077,10 @@
   id: 1289
   time: '2025-03-13T05:24:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1897
+- author: AvianMaiden
+  changes:
+  - message: Shotgun shell boxes now look correct
+    type: Fix
+  id: 1290
+  time: '2025-03-13T06:05:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1918
