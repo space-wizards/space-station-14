@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Fixed Freezer/Heater sprites, which got accidentally reverted.
-    type: Fix
-  id: 782
-  time: '2024-12-21T15:08:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1095
-- author: kipdotnet
-  changes:
-  - message: Added the Mini Television for mapping.
-    type: Add
-  - message: Added the handheld quantum camera for mapping.
-    type: Add
-  - message: Updated banana.
-    type: Tweak
-  id: 783
-  time: '2024-12-21T15:09:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1092
 - author: Darkmajia
   changes:
   - message: Beer is no longer 5x as alcoholic as it was meant to be.
@@ -4085,3 +4067,24 @@
   id: 1281
   time: '2025-03-12T23:03:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1864
+- author: DinnerCalzone
+  changes:
+  - message: The final (I think) batch of unique airlock sprites have been added to
+      differentiate them by who may access them.
+    type: Add
+  id: 1282
+  time: '2025-03-13T05:04:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1908
+- author: DinnerCalzone
+  changes:
+  - message: Hummingbird Station now features the supermatter engine.
+    type: Add
+  - message: Suppy, engineering's pet suppermatter chunk, has been added to maps with
+      supermatter.
+    type: Add
+  - message: The default supermatter setup has been changed, which will keep the supermatter
+      crystal stable for far longer.
+    type: Tweak
+  id: 1283
+  time: '2025-03-13T05:05:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1899
