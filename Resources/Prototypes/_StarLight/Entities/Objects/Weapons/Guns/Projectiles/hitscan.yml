@@ -438,7 +438,7 @@
   damage:
     types:
       Piercing: 15 #- 20%
-  armorPenetration: 0.35
+  armorPenetration: 0.25
   pierceChance: 0.69
   derivation: 0.05
   ricochetChance: 0.80
