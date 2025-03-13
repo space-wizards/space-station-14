@@ -21,7 +21,6 @@ public sealed partial class PlayerTabHeader : Control
         AntagonistLabel.OnKeyBindDown += AntagonistClicked;
         RoleTypeLabel.OnKeyBindDown += RoleTypeClicked;
         PlaytimeLabel.OnKeyBindDown += PlaytimeClicked;
-        PlaytimeLabel.OnKeyBindDown += RegionClicked;
     }
 
     public Label GetHeader(Header header)
@@ -34,7 +33,6 @@ public sealed partial class PlayerTabHeader : Control
             Header.Antagonist => AntagonistLabel,
             Header.RoleType => RoleTypeLabel,
             Header.Playtime => PlaytimeLabel,
-            Header.Region => RegionLabel,
             _ => throw new ArgumentOutOfRangeException(nameof(header), header, null)
         };
     }
@@ -47,7 +45,6 @@ public sealed partial class PlayerTabHeader : Control
         AntagonistLabel.Text = Loc.GetString("player-tab-antagonist");
         RoleTypeLabel.Text = Loc.GetString("player-tab-roletype");
         PlaytimeLabel.Text = Loc.GetString("player-tab-playtime");
-        RegionLabel.Text = Loc.GetString("player-tab-region");
     }
 
     private void HeaderClicked(GUIBoundKeyEventArgs args, Header header)
@@ -91,11 +88,6 @@ public sealed partial class PlayerTabHeader : Control
         HeaderClicked(args, Header.Playtime);
     }
 
-    private void RegionClicked(GUIBoundKeyEventArgs args)
-    {
-        HeaderClicked(args, Header.Region);
-    }
-
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -108,7 +100,6 @@ public sealed partial class PlayerTabHeader : Control
             AntagonistLabel.OnKeyBindDown -= AntagonistClicked;
             RoleTypeLabel.OnKeyBindDown -= RoleTypeClicked;
             PlaytimeLabel.OnKeyBindDown -= PlaytimeClicked;
-            RegionLabel.OnKeyBindDown -= RegionClicked;
         }
     }
 
@@ -119,7 +110,6 @@ public sealed partial class PlayerTabHeader : Control
         Job,
         Antagonist,
         RoleType,
-        Playtime,
-        Region
+        Playtime
     }
 }

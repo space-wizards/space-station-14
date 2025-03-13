@@ -5,7 +5,6 @@ player-tab-job = Job
 player-tab-antagonist = Antagonist
 player-tab-roletype = Role Type
 player-tab-playtime = Playtime
-player-tab-region = Region
 player-tab-show-disconnected = Show Disconnected
 player-tab-overlay = Overlay
 player-tab-entry-tooltip = Playtime is displayed in days:hours:minutes.

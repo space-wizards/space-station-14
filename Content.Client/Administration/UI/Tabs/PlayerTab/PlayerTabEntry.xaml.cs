@@ -28,6 +28,5 @@ public sealed partial class PlayerTabEntry : PanelContainer
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
         PlayerEntity = player.NetEntity;
-        RegionLabel.Text = player.Region;
     }
 }

@@ -16,8 +16,7 @@ public sealed record PlayerInfo(
     NetUserId SessionId,
     bool Connected,
     bool ActiveThisRound,
-    TimeSpan? OverallPlaytime,
-    string? Region)
+    TimeSpan? OverallPlaytime)
 {
     private string? _playtimeString;
 
