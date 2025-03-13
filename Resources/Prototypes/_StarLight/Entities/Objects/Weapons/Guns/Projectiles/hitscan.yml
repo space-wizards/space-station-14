@@ -427,6 +427,7 @@
       Piercing: 25 #+ 30%
   pierceLevel: Wood
   armorPenetration: -1
+  staminaDamage: 6
   pierceChance: 0.03
   derivation: 0.05
   ricochetChance: 0.15
