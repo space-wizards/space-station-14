@@ -2150,11 +2150,11 @@
     - Mime
 
 - type: listing
-  id: UplinkGondola
-  name: uplink-gondola-name
-  description: uplink-gondola-desc
-  icon: { sprite: Mobs/Animals/gondola.rsi, state: old-radio-gondola }
-  productEntity: MobGondola
+  id: UplinkBearfoot
+  name: uplink-bearfoot-name
+  description: uplink-bearfoot-desc
+  icon: { sprite: Mobs/Animals/bearfoot.rsi, state: old-radio-bearfoot }
+  productEntity: MobBearfoot
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3

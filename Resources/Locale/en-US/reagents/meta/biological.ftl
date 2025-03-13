@@ -32,4 +32,4 @@ reagent-name-grey-matter = grey matter
 reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
 
 reagent-name-bearfootium = bearfootium
-reagent-desc-bearfootium = Juicy and metamorphic liquid, which can transfer you to another gondola.
+reagent-desc-bearfootium = Juicy and metamorphic liquid, which can transfer you to another bearfoot.
