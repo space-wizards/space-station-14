@@ -32,7 +32,7 @@ thaven-mood-very-religious-name = You Are Very Religious
 thaven-mood-very-religious-desc = You should attend the chapel regularly to pray, and speak with the Chaplain if possible.
 
 thaven-mood-only-speak-to-command-name = VIP
-thaven-mood-only-speak-to-command-desc = You are too important to speak to the rabble. You will only speak to command.
+thaven-mood-only-speak-to-command-desc = Problems you encounter are too complex to be solved by your peers. Escalate them to your higher-ups for advice instead.
 
 thaven-mood-scheduler-name = Punctual
 thaven-mood-scheduler-desc = You believe that time must be strictly managed. Everything should be scheduled in advance, and tardiness is exceptionally rude.
@@ -81,9 +81,6 @@ thaven-mood-sacred-blood-desc = It must be returned to your body if it is ever s
 
 thaven-mood-gift-reciever-name = Proper Compensation
 thaven-mood-gift-reciever-desc = You expect to receive a gift before following any orders or performing any favors.
-
-thaven-mood-new-job-name = Jobhopping
-thaven-mood-new-job-desc = Your current job is disgusting to you. You must endeavor to get a new one.
 
 thaven-mood-no-department-title-name = Extremely Personable
 thaven-mood-no-department-title-desc = Calling out the name of a department to summon someone is impersonal and rude. It's better to use the name of a specific person from that department.
