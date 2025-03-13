@@ -5,10 +5,8 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Events;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -145,29 +143,26 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// Always sets up the ambient singularity rumble.
     /// The formation sound only plays if the singularity is being created.
     /// </summary>
-    /// <param name="uid">The entity UID of the singularity that is forming.</param>
-    /// <param name="comp">The component of the singularity that is forming.</param>
+    /// <param name="singularity">The singularity that is forming.</param>
     /// <param name="args">The event arguments.</param>
-    protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
+    protected override void OnSingularityStartup(Entity<SingularityComponent> singularity, ref ComponentStartup args)
     {
-        MetaDataComponent? metaData = null;
-        if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.PlayPvs(comp.FormationSound, uid);
+        if (TryComp(singularity, out MetaDataComponent? metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
+            _audio.PlayPvs(singularity.Comp.FormationSound, singularity);
 
-        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid)?.Entity;
-        UpdateSingularityLevel(uid, comp);
+        singularity.Comp.AmbientSoundStream = _audio.PlayPvs(singularity.Comp.AmbientSound, singularity)?.Entity;
+        UpdateSingularityLevel(singularity.AsNullable());
     }
 
     /// <summary>
     /// Makes entities that have the singularity distortion visual warping always get their state shared with the client.
     /// This prevents some major popin with large distortion ranges.
     /// </summary>
-    /// <param name="uid">The entity UID of the entity that is gaining the shader.</param>
-    /// <param name="comp">The component of the shader that the entity is gaining.</param>
+    /// <param name="distortion">The entity that is gaining the shader.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
+    public void OnDistortionStartup(Entity<SingularityDistortionComponent> distortion, ref ComponentStartup args)
     {
-        _pvs.AddGlobalOverride(uid);
+        _pvs.AddGlobalOverride(distortion);
     }
 
     /// <summary>
@@ -175,22 +170,21 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// Always stops the ambient singularity rumble.
     /// The dissipations sound only plays if the singularity is being destroyed.
     /// </summary>
-    /// <param name="uid">The entity UID of the singularity that is dissipating.</param>
+    /// <param name="singularity">The singularity that is dissipating.</param>
     /// <param name="comp">The component of the singularity that is dissipating.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)
+    public void OnSingularityShutdown(Entity<SingularityComponent> singularity, ref ComponentShutdown args)
     {
-        comp.AmbientSoundStream = _audio.Stop(comp.AmbientSoundStream);
+        singularity.Comp.AmbientSoundStream = _audio.Stop(singularity.Comp.AmbientSoundStream);
 
-        MetaDataComponent? metaData = null;
-        if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
+        if (TryComp(singularity, out MetaDataComponent? metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
         {
-            var xform = Transform(uid);
+            var xform = Transform(singularity);
             var coordinates = xform.Coordinates;
 
             // I feel like IsValid should be checking this or something idk.
             if (!TerminatingOrDeleted(coordinates.EntityId))
-                _audio.PlayPvs(comp.DissipationSound, coordinates);
+                _audio.PlayPvs(singularity.Comp.DissipationSound, coordinates);
         }
     }
 
@@ -200,9 +194,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The uid of the singularity that is being synced.</param>
     /// <param name="comp">The state of the singularity that is being synced.</param>
     /// <param name="args">The event arguments.</param>
-    private void HandleSingularityState(EntityUid uid, SingularityComponent comp, ref ComponentGetState args)
+    private void HandleSingularityState(Entity<SingularityComponent> singularity, ref ComponentGetState args)
     {
-        args.State = new SingularityComponentState(comp);
+        args.State = new SingularityComponentState(singularity.Comp);
     }
 
     /// <summary>
@@ -211,13 +205,13 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is consuming the entity.</param>
     /// <param name="comp">The component of the singularity that is consuming the entity.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, ref EntityConsumedByEventHorizonEvent args)
+    public void OnConsumedEntity(Entity<SingularityComponent> singularity, ref EntityConsumedByEventHorizonEvent args)
     {
         // Don't double count singulo food
         if (HasComp<SinguloFoodComponent>(args.Entity))
             return;
 
-        AdjustEnergy(uid, BaseEntityEnergy, singularity: comp);
+        AdjustEnergy(singularity, BaseEntityEnergy, singularity: singularity.Comp);
     }
 
     /// <summary>
@@ -226,9 +220,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is consuming the tiles.</param>
     /// <param name="comp">The component of the singularity that is consuming the tiles.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnConsumedTiles(EntityUid uid, SingularityComponent comp, ref TilesConsumedByEventHorizonEvent args)
+    public void OnConsumedTiles(Entity<SingularityComponent> singularity, ref TilesConsumedByEventHorizonEvent args)
     {
-        AdjustEnergy(uid, args.Tiles.Count * BaseTileEnergy, singularity: comp);
+        AdjustEnergy(singularity, args.Tiles.Count * BaseTileEnergy, singularity: singularity.Comp);
     }
 
     /// <summary>
@@ -237,13 +231,13 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is being consumed.</param>
     /// <param name="comp">The component of the singularity that is being consumed.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnConsumed(EntityUid uid, SingularityComponent comp, ref EventHorizonConsumedEntityEvent args)
+    private void OnConsumed(Entity<SingularityComponent> singularity, ref EventHorizonConsumedEntityEvent args)
     {
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
-            AdjustEnergy(args.EventHorizonUid, comp.Energy, singularity: singulo);
-            SetEnergy(uid, 0.0f, comp);
+            AdjustEnergy(args.EventHorizonUid, singularity.Comp.Energy, singularity: singulo);
+            SetEnergy(singularity, 0.0f, singularity.Comp);
         }
     }
 
@@ -253,14 +247,14 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity food that is being consumed.</param>
     /// <param name="comp">The component of the singularity food that is being consumed.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, ref EventHorizonConsumedEntityEvent args)
+    public void OnConsumed(Entity<SinguloFoodComponent> morsel, ref EventHorizonConsumedEntityEvent args)
     {
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
             // Calculate the percentage change (positive or negative)
-            var percentageChange = singulo.Energy * (comp.EnergyFactor - 1f);
+            var percentageChange = singulo.Energy * (morsel.Comp.EnergyFactor - 1f);
             // Apply both the flat and percentage changes
-            AdjustEnergy(args.EventHorizonUid, comp.Energy + percentageChange, singularity: singulo);
+            AdjustEnergy(args.EventHorizonUid, morsel.Comp.Energy + percentageChange, singularity: singulo);
         }
     }
 

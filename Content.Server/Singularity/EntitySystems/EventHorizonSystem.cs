@@ -362,13 +362,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Prevents a singularity from colliding with anything it is incapable of consuming.
     /// </summary>
-    protected override bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
+    protected override bool PreventCollide(Entity<EventHorizonComponent> eventHorizon, ref PreventCollideEvent args)
     {
-        if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
+        if (base.PreventCollide(eventHorizon, ref args) || args.Cancelled)
             return true;
 
         // If we can eat it we don't want to bounce off of it. If we can't eat it we want to bounce off of it (containment fields).
-        args.Cancelled = args.OurFixture.Hard && CanConsumeEntity(uid, args.OtherEntity, comp);
+        args.Cancelled = args.OurFixture.Hard && CanConsumeEntity(eventHorizon, args.OtherEntity, eventHorizon.Comp);
         return false;
     }
 
@@ -412,9 +412,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Specifically prevents event horizons from consuming themselves.
     /// Also ensures that if this event horizon has already been consumed by another event horizon it cannot be consumed again.
     /// </summary>
-    private void OnAnotherEventHorizonAttemptConsumeThisEventHorizon(EntityUid uid, EventHorizonComponent comp, ref EventHorizonAttemptConsumeEntityEvent args)
+    private void OnAnotherEventHorizonAttemptConsumeThisEventHorizon(Entity<EventHorizonComponent> eventHorizon, ref EventHorizonAttemptConsumeEntityEvent args)
     {
-        if (!args.Cancelled && (args.EventHorizon == comp || comp.BeingConsumedByAnotherEventHorizon))
+        if (!args.Cancelled && (args.EventHorizon == eventHorizon.Comp || eventHorizon.Comp.BeingConsumedByAnotherEventHorizon))
             args.Cancelled = true;
     }
 
@@ -422,9 +422,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Prevents two singularities from annihilating one another.
     /// Specifically ensures if this event horizon is consumed by another event horizon it knows that it has been consumed.
     /// </summary>
-    private void OnAnotherEventHorizonConsumedThisEventHorizon(EntityUid uid, EventHorizonComponent comp, ref EventHorizonConsumedEntityEvent args)
+    private void OnAnotherEventHorizonConsumedThisEventHorizon(Entity<EventHorizonComponent> eventHorizon, ref EventHorizonConsumedEntityEvent args)
     {
-        comp.BeingConsumedByAnotherEventHorizon = true;
+        eventHorizon.Comp.BeingConsumedByAnotherEventHorizon = true;
     }
 
     /// <summary>
@@ -451,6 +451,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var uid = args.Entity;
         if (!EntityManager.EntityExists(uid))
             return;
+
         var comp = args.EventHorizon;
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;
@@ -458,6 +459,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var containerEntity = args.Args.Container.Owner;
         if (!EntityManager.EntityExists(containerEntity))
             return;
+
         if (AttemptConsumeEntity(uid, containerEntity, comp))
             return; // If we consume the entity we also consume everything in the containers it has.
 
@@ -468,16 +470,17 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Recursively consumes all entities within a container that is consumed by the singularity.
     /// If an entity within a consumed container cannot be consumed itself it is removed from the container.
     /// </summary>
-    private void OnContainerConsumed(EntityUid uid, ContainerManagerComponent comp, ref EventHorizonConsumedEntityEvent args)
+    private void OnContainerConsumed(Entity<ContainerManagerComponent> containerEntity, ref EventHorizonConsumedEntityEvent args)
     {
         var drop_container = args.Container;
         if (drop_container is null)
-            _containerSystem.TryGetContainingContainer((uid, null, null), out drop_container);
+            _containerSystem.TryGetContainingContainer((containerEntity, null, null), out drop_container);
 
-        foreach (var container in comp.GetAllContainers())
+        foreach (var container in containerEntity.Comp.GetAllContainers())
         {
             ConsumeEntitiesInContainer(args.EventHorizonUid, container, args.EventHorizon, drop_container);
         }
     }
+
     #endregion Event Handlers
 }

@@ -186,9 +186,9 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="uid">The entity that has just gained an event horizon component.</param>
     /// <param name="comp">The event horizon component that is starting up.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnEventHorizonStartup(EntityUid uid, EventHorizonComponent comp, ComponentStartup args)
+    private void OnEventHorizonStartup(Entity<EventHorizonComponent> eventHorizon, ref ComponentStartup args)
     {
-        UpdateEventHorizonFixture(uid, eventHorizon: comp);
+        UpdateEventHorizonFixture(eventHorizon, eventHorizon: eventHorizon.Comp);
     }
 
     /// <summary>
@@ -199,10 +199,10 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="uid">The entity that is trying to collide with another entity.</param>
     /// <param name="comp">The event horizon of the former.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnPreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
+    private void OnPreventCollide(Entity<EventHorizonComponent> eventHorizon, ref PreventCollideEvent args)
     {
         if (!args.Cancelled)
-            PreventCollide(uid, comp, ref args);
+            PreventCollide(eventHorizon, ref args);
     }
 
     /// <summary>
@@ -213,7 +213,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="comp">The event horizon of the former.</param>
     /// <param name="args">The event arguments.</param>
     /// <returns>A bool indicating whether the collision prevention has been handled.</returns>
-    protected virtual bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
+    protected virtual bool PreventCollide(Entity<EventHorizonComponent> eventHorizon, ref PreventCollideEvent args)
     {
         var otherUid = args.OtherEntity;
 
@@ -230,7 +230,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         if (HasComp<ContainmentFieldComponent>(otherUid) ||
             HasComp<ContainmentFieldGeneratorComponent>(otherUid))
         {
-            if (comp.CanBreachContainment)
+            if (eventHorizon.Comp.CanBreachContainment)
                 args.Cancelled = true;
 
             return true;

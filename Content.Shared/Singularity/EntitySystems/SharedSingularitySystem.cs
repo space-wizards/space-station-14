@@ -56,8 +56,8 @@ public abstract class SharedSingularitySystem : EntitySystem
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
 
         var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
-        vvHandle.AddPath(nameof(SingularityComponent.Level), (_, comp) => comp.Level, SetLevel);
-        vvHandle.AddPath(nameof(SingularityComponent.RadsPerLevel), (_, comp) => comp.RadsPerLevel, SetRadsPerLevel);
+        vvHandle.AddPath(nameof(SingularityComponent.Level), (_, comp) => comp.Level, (uid, value, comp) => SetLevel((uid, comp), value));
+        vvHandle.AddPath(nameof(SingularityComponent.RadsPerLevel), (_, comp) => comp.RadsPerLevel, (uid, value, comp) => SetRadsPerLevel((uid, comp), value));
     }
 
     public override void Shutdown()
@@ -318,9 +318,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="uid">The entity that is becoming a singularity.</param>
     /// <param name="comp">The singularity component that is being added to the entity.</param>
     /// <param name="args">The event arguments.</param>
-    protected virtual void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
+    protected virtual void OnSingularityStartup(Entity<SingularityComponent> singularity, ref ComponentStartup args)
     {
-        UpdateSingularityLevel(uid, comp);
+        UpdateSingularityLevel(singularity.AsNullable());
     }
 
     // TODO: Figure out which systems should have control of which coupling.
@@ -428,7 +428,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateRadiation(Entity<RadiationSourceComponent> radSource, ref SingularityLevelChangedEvent args)
     {
-        UpdateRadiation(radSource, args.Singularity, radSource.Comp);
+        UpdateRadiation((radSource, args.Singularity.Comp, radSource.Comp));
     }
 
     #endregion EventHandlers
