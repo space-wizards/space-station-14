@@ -6,7 +6,7 @@
 - Special Drink Ingredients:
 - Add Sulphuric Acid, for Acidspit
 - Blood packs: "Something-brand Floor Juice! Now with extra hemoglobin! There's a picture of a reptile fella happily lapping some out of a bowl with a forked tongue."
--- Plus a syringe? I assume you can pull blood from one of those with a syringe?
+/* -- Plus a syringe? I assume you can pull blood from one of those with a syringe? */ Seems like no.
 
 - Make sure musician stage railings don't block barstools
 
@@ -18,9 +18,11 @@
 
 - Command Meeting Room: Camera to execution chamber, maybe even a button to open the blast doors.
 
-- Graytider Shop: Bolt cafeteria-side door
-- Also a button for un-bolting it.
+/* - Graytider Shop: Bolt cafeteria-side door */
+/* - Also a button for un-bolting it. */
+--SHOULD be good to go, but do test.
 - Somehow secure those shutters?
+-- They *should* be welded now?
 
 /* - Law Office: Direct lawyers wrt "defense" and "prosecution." */
 - Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar...
@@ -29,7 +31,7 @@
 /* - Check that "radar" computer board. What does it actually do? (Literally the Mass Scanner.) */
 /* - Make "Duster" cannons be broken */
 
-- Science: Hook up gas stuff in arti room
+/* - Science: Hook up gas stuff in arti room */
 /* - Also put the cans in the cans room */ No more cans room :C
 - Research server needs to be hooked up?
 - Big floor decal in Shield room space
@@ -99,6 +101,7 @@
 --	"Crewmember name: Crewmember color: Amount of susness (1 2 3 4 5 6 7 8 9 10)
 		Reason for suspicion: -Vented -Faked a task -Walked away from a body -Didn't fix lights -I just don't like them"
 		"Are they also a baka? *Yes/*No
+- Make sure the contraband component on the fez of security has the right details for HoS.
 
 - Psych: A few drugs, such as Ethyloxyephedrine, Inaprovaline, Laughter, and Psicodine
 -	Also, a paper explaining which drugs are of interest to the psychologist
@@ -127,36 +130,36 @@
 - Put 'white' bandana into grave under tree
 
 
-- Wall maps
-- Borg rechargers
-- Lights
-- Emergency Lights
+/* - Wall maps */
+/* - Borg rechargers */
+/* - Lights */
+/* - Emergency Lights */
 - Holopads
 - Station Beacons
-- Emergency lockers, Fire lockers
--- And nitrogen
-- Water and Welding tanks
-- Oxy and Nitrogen cans
-- PACMAN generators
-- Maints Loot
+/* - Emergency lockers, Fire lockers */
+/* -- And nitrogen */
+/* - Water and Welding tanks */
+/* - Oxy and Nitrogen cans */
+/* - PACMAN generators */
+/* - Maints Loot */
 -- Maints bar?
 - Amogi multitudinous
 - AI cams
 - Security Cams
-- Firelock doors (follow Impostor Door Sabotage as much as possible)
+/* - Firelock doors (follow Impostor Door Sabotage as much as possible) */
 - Vending Machines
 - Disposal chutes
-- APCs, Substations, whatever else is needed for power
-- Air alarms, fans, scrubbers, whatever else is needed for atmo
+/* - APCs, Substations, whatever else is needed for power */
+/* - Air alarms, fans, scrubbers, whatever else is needed for atmo */
 - Fire alarms to make those firelock shutters shut inconveniently
-- At least a couple of escape pods
+/* - At least a couple of escape pods */
 - Deconstructable stuff for getting mats
 /* - Vault */
-- AI
+/* - AI */
 - Lamps on tables, paper, folders, filecabinets, pens
 - Fax machines
-- Detective, Psychologist
-- Courtroom
+/* - Detective, Psychologist */
+/* - Courtroom */
 - Intercoms
 - Make sure containers have what I expect them to have in them in them.
 - Make sure I can interact with posters correctly
@@ -164,7 +167,7 @@
 - Relabel station beacons to match Amogus
 - Mailing units
 - Fax machines - and make sure they have the right names or whatever
-- Evac countdown monitors
+/* - Evac countdown monitors */
 - Name buttons and levers(?) for clarity
 - Mail Teleporter
 
@@ -198,7 +201,7 @@ What I currently have left:
 --Wanna try to make it especially easy to sabotage lights
 /* -Gas pipes */
 -Disposal/Mail/Toilet networks
--Lighting
+/* -Lighting */
 -Decals
 -Various hooking up levers, buttons, airlocks
 -All the bits and pieces above that this doesn't cover
@@ -213,6 +216,3 @@ THINGS I COULD MAKE:
 -- Also a toupee for when they're feeling payne.
 -- And a dang gavel
 - Huge thrusters?
-
-
-[ERRO] entity_serializer: Encountered a reference to a missing entity: 25704 while serializing dresser (107910/n107910, Dresser).

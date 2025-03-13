@@ -11,7 +11,7 @@
 	/* HalfTileOverlayGreyscale + Warn Line Greyscale non-snapped to tile (same color) */
 	MarkupRectangle1x2 + Arrows Greyscale
 	/* Rotate 90 degree warn lines to get diagonal other direction */
-195 40 95 100 - Hallway Edge Ovals
+195 40 95 100 (HSV) - Hallway Edge Ovals
 	Two footprints, one rotated 180
 
 49 28 95 50 (HSV) - Weapons Floor
