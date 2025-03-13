@@ -89,7 +89,7 @@
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
 
-#Spationaut Hardsuit
+#Spationaut Hardsuit (imp edits to fix rsi)
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitSpatio
@@ -98,28 +98,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
-    layers:
-    - state: icon
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableLightVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-      head-vox:
-      - state: equipped-head-light-vox
-        shader: unshaded
   - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
-      head-vox:
-      - state: equipped-head-vox
-      - state: equipped-head-unshaded-vox
-        shader: unshaded
+    sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
   - type: PointLight
     radius: 6
   - type: PressureProtection
