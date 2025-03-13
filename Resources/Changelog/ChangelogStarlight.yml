@@ -4031,4 +4031,13 @@ Entries:
   id: 558
   time: '2025-03-12T15:04:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/386
+- author: Happyrobot33
+  changes:
+  - message: Resomi and Cyclorites can now have proper Flash Immunity. They will lose
+      their special eye effects when they have Flash Immunity active from things such
+      as sunglasses
+    type: Tweak
+  id: 559
+  time: '2025-03-13T14:41:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/382
 
