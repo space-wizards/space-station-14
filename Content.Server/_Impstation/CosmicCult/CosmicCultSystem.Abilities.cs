@@ -383,7 +383,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
             //todo check if anything gets messed up by doing this to the monument?
             _transform.SetParent(monument, EnsureStorageMapExists());
-            destComp.monument = monument; //only get the first monument
+            destComp.Monument = monument; //only get the first monument
 
             if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph as well
                 QueueDel(monumentComp.CurrentGlyph);
@@ -405,23 +405,23 @@ public sealed partial class CosmicCultSystem : EntitySystem
             QueueDel(collider);
         }
 
-        if (ent.Comp.monument is null)
+        if (ent.Comp.Monument is null)
             return;
 
         var xform = Transform(ent);
-        _transform.SetCoordinates(ent.Comp.monument.Value, xform.Coordinates);
-        _transform.AnchorEntity(ent.Comp.monument.Value); //no idea if this does anything but let's be safe about it
+        _transform.SetCoordinates(ent.Comp.Monument.Value, xform.Coordinates);
+        _transform.AnchorEntity(ent.Comp.Monument.Value); //no idea if this does anything but let's be safe about it
         Spawn("MonumentCollider", xform.Coordinates);
     }
 
     private EntityUid EnsureStorageMapExists()
     {
-        if (monumentStorageMap != null && Exists(monumentStorageMap))
-            return monumentStorageMap.Value;
+        if (_monumentStorageMap != null && Exists(_monumentStorageMap))
+            return _monumentStorageMap.Value;
 
-        monumentStorageMap = _map.CreateMap();
-        _map.SetPaused(monumentStorageMap.Value, true);
-        return monumentStorageMap.Value;
+        _monumentStorageMap = _map.CreateMap();
+        _map.SetPaused(_monumentStorageMap.Value, true);
+        return _monumentStorageMap.Value;
     }
 
     //todo this can probably be mostly moved to shared but my brain isn't cooperating w/ that rn

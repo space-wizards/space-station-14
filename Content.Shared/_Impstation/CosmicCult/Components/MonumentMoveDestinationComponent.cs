@@ -6,5 +6,5 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 [RegisterComponent]
 public sealed partial class MonumentMoveDestinationComponent : Component
 {
-    public EntityUid? monument;
+    public EntityUid? Monument;
 }

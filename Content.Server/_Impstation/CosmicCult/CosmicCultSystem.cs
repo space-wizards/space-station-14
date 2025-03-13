@@ -91,7 +91,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
 
-    private EntityUid? monumentStorageMap;
+    private EntityUid? _monumentStorageMap;
 
     public int CultistCount;
 
