@@ -32,12 +32,18 @@ namespace Content.Shared.SubFloor
 
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
+            SubscribeLocalEvent<SubFloorHideComponent, MapInitEvent>(OnSubFloorMapInit);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             // Like 80% sure this doesn't need to handle re-anchoring.
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
+        }
+
+        private void OnSubFloorMapInit(Entity<SubFloorHideComponent> ent, ref MapInitEvent args)
+        {
+            _visibility.SetLayer(ent.Owner, ent.Comp.IsUnderCover ? (ushort) VisibilityFlags.Subfloor : (ushort) VisibilityFlags.Normal);
         }
 
         private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
