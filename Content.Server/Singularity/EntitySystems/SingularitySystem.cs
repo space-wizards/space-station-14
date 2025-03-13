@@ -277,8 +277,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
             1 => 1,
             _ => 0
         };
-
-        Dirty(singularity);
     }
 
     /// <summary>
