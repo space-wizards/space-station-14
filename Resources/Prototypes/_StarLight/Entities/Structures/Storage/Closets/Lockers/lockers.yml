@@ -24,3 +24,30 @@
       stateDoorClosed: bssecure_door
     - type: AccessReader
       access: [["BlueShield"]]
+
+- type: entity
+  id: LockerSecurityDouble
+  parent: LockerBaseSecure
+  name: large security officer's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/doublecloset.rsi
+    noRot: true
+    layers:
+    - state: doublesec
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: doublesec_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: doublesec
+    stateDoorOpen: doublesec_open
+    stateDoorClosed: doublesec_door
+  - type: AccessReader
+    access: [["Security"]]

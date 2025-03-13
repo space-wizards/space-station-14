@@ -4,17 +4,17 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "Taken from tgstation. Resprite BlueShield Closet by CatBG (Discord:catbg)",
+    "copyright": "Original Sec locker taken from tgstation, Doublesec done by Killer Tamashi",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
-            "name": "bssecure_door"
+            "name": "doublesec"
         },
         {
-            "name": "bssecure"
+            "name": "doublesec_door"
         },
         {
-            "name": "bssecure_open"
+            "name": "doublesec_open"
         },
         {
             "name": "welded"
