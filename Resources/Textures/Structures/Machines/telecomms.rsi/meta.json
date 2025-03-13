@@ -1,33 +1,33 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/9c3494fd79e6bf8dc532300b9de4f688ff276ac9/icons/obj/machines/telecomms.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "tele-server-on",
-      "delays": [
-        [
-          0.3,
-          0.3,
-          0.3
-        ]
-      ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/9c3494fd79e6bf8dc532300b9de4f688ff276ac9/icons/obj/machines/telecomms.dmi, Resprited by Spangs04(github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "tele-server-nopower"
-    },
-    {
-      "name": "tele-stripe"
-    },
-    {
-      "name": "cams-stripe"
-    },
-    {
-      "name": "tele_o"
-    }
-  ]
+    "states": [
+        {
+            "name": "tele-server-on",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-nopower"
+        },
+        {
+            "name": "tele-stripe"
+        },
+        {
+            "name": "cams-stripe"
+        },
+        {
+            "name": "tele_o"
+        }
+    ]
 }
