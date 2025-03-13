@@ -264,8 +264,8 @@ public sealed partial class CCVars
     /// Regions are in two character ISO-3166 format seperated by commands. EX: "US,GB"
     /// Acts as a blacklist by default, see <see cref="GameIPIntelRegionWhitelist"/> to change this behaviour.
     /// </summary>
-    public static readonly CVarDef<string?> GameIPIntelRegions =
-        CVarDef.Create("game.regions", null, CVar.SERVERONLY);
+    public static readonly CVarDef<string> GameIPIntelRegions =
+        CVarDef.Create("game.regions", string.Empty, CVar.SERVERONLY);
 
     /// <summary>
     /// Only allows certain regions allowed to connect, defaults to false.
