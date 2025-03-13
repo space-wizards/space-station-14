@@ -234,6 +234,39 @@
 
 - type: entity
   parent: BaseGameRule
+  id: ParadoxCloneSpawn
+  components:
+  - type: StationEvent
+    weight: 4 # should not happen every round
+    duration: null
+    earliestStart: 30
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+  - type: ParadoxCloneRule
+  - type: AntagObjectives
+    objectives:
+    - ParadoxCloneKillObjective
+    - ParadoxCloneLivingObjective
+  - type: AntagRandomSpawn # TODO: improve spawning so they only start in maints
+  - type: AntagSelection
+    agentName: paradox-clone-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostParadoxClone
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: ParadoxCloneGear
+      roleLoadout:
+      - RoleSurvivalStandard # give vox something to breath in case they don't get a copy
+      briefing:
+        text: paradox-clone-role-greeting
+        color: lightblue
+        sound: /Audio/Misc/paradox_clone_greeting.ogg
+      mindRoles:
+      - MindRoleParadoxClone
+
+- type: entity
+  parent: BaseGameRule
   id: RevenantSpawn
   components:
   - type: StationEvent
