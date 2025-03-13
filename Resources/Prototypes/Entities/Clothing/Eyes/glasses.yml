@@ -192,7 +192,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseRestrictedContraband] # BaseLensSlot from imp
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseSecurityContraband] # BaseLensSlot from imp
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.

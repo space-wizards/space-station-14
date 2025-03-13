@@ -3,6 +3,7 @@
   parent: BaseItem
   id: BaseMagazineBoxPistol
   name: ammunition box (.35 auto)
+  description: A box made for 60 rounds of .35 auto subcaliber ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -29,6 +30,7 @@
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistol
   name: ammunition box (.35 auto)
+  description: A box made for 60 rounds of .35 auto subcaliber ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -43,6 +45,7 @@
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolPractice
   name: ammunition box (.35 auto practice)
+  description: A box made for 60 rounds of .35 auto ammunition, labeled as practice bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -58,6 +61,7 @@
   id: MagazineBoxPistolIncendiary
   parent: BaseMagazineBoxPistol
   name: ammunition box (.35 auto incendiary)
+  description: A box made for 60 rounds of .35 auto ammunition, labeled as incendiary bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
@@ -73,6 +77,7 @@
   id: MagazineBoxPistolUranium
   parent: BaseMagazineBoxPistol
   name: ammunition box (.35 auto uranium)
+  description: A box made for 60 rounds of .35 auto ammunition, labeled as uranium bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium

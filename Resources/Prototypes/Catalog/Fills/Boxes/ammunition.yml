@@ -12,10 +12,10 @@
       - state: magazine
 
 - type: entity
-  name: box of .25 caseless magazines
+  name: box of magazines (.25 caseless) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolCaselessRifle
-  description: A box full of .25 caseless magazines.
+  description: A box of .25 caseless magazines, marked as live-fire ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -23,10 +23,10 @@
         amount: 4
 
 - type: entity
-  name: box of .25 caseless (practice) magazines
+  name: box of magazines (.25 caseless practice) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolCaselessRiflePractice
-  description: A box full of .25 caseless practice magazines.
+  description: A box of .25 caseless magazines, marked as practice ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -35,10 +35,10 @@
 
 # LightRifle
 - type: entity
-  name: box of .30 rifle magazines
+  name: box of magazines (.30 rifle) #imp
   parent: BoxMagazine
   id: BoxMagazineLightRifle
-  description: A box full of .30 rifle magazines.
+  description: A box of .30 rifle magazines, marked as live-fire ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -46,21 +46,22 @@
         amount: 4
 
 - type: entity
-  name: box of .30 rifle (practice) magazines
+  name: box of magazines (.30 rifle practice) #imp
   parent: BoxMagazine
   id: BoxMagazineLightRiflePractice
-  description: A box full of .30 rifle (practice) magazines.
+  description: A box of .30 rifle magazines, marked as practice ammo. #imp.
   components:
   - type: StorageFill
     contents:
       - id: MagazineLightRiflePractice
         amount: 4
 
+# Magnum
 - type: entity
-  name: box of Vector magazines
+  name: box of SMG .45 magnum magazines
   parent: BoxMagazine
   id: BoxMagazineMagnumSubMachineGun
-  description: A box full of Vector magazines.
+  description: A box full of SMG .45 magnum magazines.
   components:
   - type: StorageFill
     contents:
@@ -68,10 +69,10 @@
         amount: 3
 
 - type: entity
-  name: box of Vector (practice) magazines
+  name: box of SMG .45 magnum (practice) magazines
   parent: BoxMagazine
   id: BoxMagazineMagnumSubMachineGunPractice
-  description: A box full of Vector (practice) magazines.
+  description: A box full of SMG .45 magnum (practice) magazines.
   components:
   - type: StorageFill
     contents:
@@ -80,10 +81,10 @@
 
 # Pistol
 - type: entity
-  name: box of WT550 .35 auto magazines
+  name: box of magazines (top-loaded .35 auto) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolSubMachineGunTopMounted
-  description: A box full of WT550 .35 auto magazines.
+  description: A box of top-loaded .35 auto magazines, marked as live-fire ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -91,10 +92,10 @@
         amount: 3
 
 - type: entity
-  name: box of pistol .35 auto magazines
+  name: box of pistol magazines (.35 auto) #imp
   parent: BoxMagazine
   id: BoxMagazinePistol
-  description: A box full of pistol .35 auto magazines.
+  description: A box of pistol .35 auto magazines, marked as live-fire ammo. #imp.
   components:
   - type: StorageFill
     contents:
@@ -102,10 +103,10 @@
         amount: 4
 
 - type: entity
-  name: box of pistol .35 auto (practice) magazines
+  name: box of pistol magazines (.35 auto practice) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolPractice
-  description: A box full of  magazines.
+  description: A box of pistol .35 auto magazines, marked as practice ammo. #imp.
   components:
   - type: StorageFill
     contents:
@@ -113,10 +114,10 @@
         amount: 4
 
 - type: entity
-  name: box of machine pistol .35 auto magazines
+  name: box of extended pistol magazines (.35 auto) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolHighCapacity
-  description: A box full of machine pistol .35 auto magazines.
+  description: A box of extended pistol .35 auto magazines, marked as live-fire ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -124,10 +125,10 @@
         amount: 4
 
 - type: entity
-  name: box of machine pistol .35 auto (practice) magazines
+  name: box of extended pistol magazines (.35 auto practice) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolHighCapacityPractice
-  description: A box full of machine pistol .35 auto (practice) magazines.
+  description: A box of extended pistol .35 auto magazines, marked as practice ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -135,10 +136,10 @@
         amount: 4
 
 - type: entity
-  name: box of SMG .35 auto magazines
+  name: box of SMG magazines (.35 auto) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolSubMachineGun
-  description: A box full of SMG .35 auto magazines.
+  description: A box of SMG .35 auto magazines, marked as live-fire ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -146,10 +147,10 @@
         amount: 3
 
 - type: entity
-  name: box of SMG .35 auto (practice) magazines
+  name: box of SMG magazines (.35 auto practice) #imp
   parent: BoxMagazine
   id: BoxMagazinePistolSubMachineGunPractice
-  description: A box full of SMG .35 auto (practice) magazines.
+  description: A box of SMG .35 auto magazines, marked as practice ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -158,10 +159,10 @@
 
 # Shotgun
 - type: entity
-  name: box of (.50 pellet) ammo drums
+  name: box of shell drums (.50 buckshot) #imp
   parent: BoxMagazine
   id: BoxMagazineShotgun
-  description: A box full of (.50 pellet) ammo drums.
+  description: A box of .50 shotgun shell drums, marked as buckshot. #imp
   components:
   - type: StorageFill
     contents:
@@ -169,10 +170,10 @@
         amount: 4
 
 - type: entity
-  name: box of (.50 stun slug) ammo drums
+  name: box of shell drums (.50 stun slug) #imp
   parent: BoxMagazine
   id: BoxMagazineShotgunBeanbag
-  description: A box full of (.50 stun slug) ammo drums.
+  description: A box of .50 shotgun shell drums, marked as stun slugs. #imp
   components:
   - type: StorageFill
     contents:
@@ -180,10 +181,10 @@
         amount: 4
 
 - type: entity
-  name: box of (.50 slug) ammo drums
+  name: box of shell drums (.50 slug) #imp
   parent: BoxMagazine
   id: BoxMagazineShotgunSlug
-  description: A box full of (.50 slug) ammo drums.
+  description: A box of .50 shotgun shell drums, marked as slugs. #imp
   components:
   - type: StorageFill
     contents:
@@ -191,10 +192,10 @@
         amount: 4
 
 - type: entity
-  name: box of (.50 incendiary) ammo drums
+  name: box of shell drums (.50 incendiary) #imp
   parent: BoxMagazine
   id: BoxMagazineShotgunIncendiary
-  description: A box full of (.50 incendiary) ammo drums.
+  description: A box of .50 shotgun shell drums, marked as incendiary. #imp
   components:
   - type: StorageFill
     contents:
@@ -203,10 +204,10 @@
 
 # Rifle
 - type: entity
-  name: box of .20 rifle magazines
+  name: box of magazines (.20 rifle) #imp
   parent: BoxMagazine
   id: BoxMagazineRifle
-  description: A box full of .20 rifle magazines.
+  description: A box of .20 rifle magazines, marked as live-fire ammo. #imp.
   components:
   - type: StorageFill
     contents:
@@ -214,10 +215,10 @@
         amount: 4
 
 - type: entity
-  name: box of .20 rifle (practice) magazines
+  name: box of magazines (.20 rifle practice) #imp
   parent: BoxMagazine
   id: BoxMagazineRiflePractice
-  description: A box full of .20 rifle (practice) magazines.
+  description: A box of .20 rifle magazines, marked as practice ammo. #imp.
   components:
   - type: StorageFill
     contents:

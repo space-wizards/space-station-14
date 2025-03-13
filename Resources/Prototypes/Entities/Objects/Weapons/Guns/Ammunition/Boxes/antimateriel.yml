@@ -3,6 +3,7 @@
   parent: BaseItem
   id: BaseMagazineBoxAntiMateriel
   name: ammunition box (.60 anti-materiel)
+  description: A box made for 10 rounds of .60 anti-materiel ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -29,6 +30,7 @@
   parent: BaseMagazineBoxAntiMateriel
   id: MagazineBoxAntiMaterielBig
   name: ammunition box (.60 anti-materiel)
+  description: A large box made for 30 rounds of .60 anti-materiel ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     capacity: 30
@@ -49,6 +51,7 @@
   parent: BaseMagazineBoxAntiMateriel
   id: MagazineBoxAntiMateriel
   name: ammunition box (.60 anti-materiel)
+  description: A box made for 10 rounds of .60 anti-materiel ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeAntiMateriel

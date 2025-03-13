@@ -101,6 +101,7 @@
     tags:
       - CannotSuicide
       - FootstepSound
+      - Meat #imp
   - type: NoSlip
   - type: RatKing
     hungerPerArmyUse: 25
@@ -132,6 +133,21 @@
   - type: Sharp
   - type: Puller
     needsHands: false
+  - type: Food #imp start
+    delay: 16
+    transferAmount: 50
+    trash:
+    - ClothingHeadHatFancyCrown
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 50
+  - type: BadFood #imp end
 
 - type: entity
   id: MobRatKingBuff
@@ -293,6 +309,7 @@
       - CannotSuicide
       - FootstepSound
       - MultitoolDefibrillatorTarget
+      - Meat #imp
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
@@ -306,6 +323,17 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: Food #imp start
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: BadFood #imp end
 
 - type: entityTable
   id: RatKingLoot

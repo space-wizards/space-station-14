@@ -7,9 +7,11 @@
   whitelist:
     components:
     - Vocal
-  blacklist:
-    components:
-    - BorgChassis
+
+  # Imp, commenting out redundant blacklisting to allow people to not go crazy wondering why their implementation of any borg emote sounds aren't working. (Who did this???)
+  # blacklist:
+  #  components:
+  #  - BorgChassis
   chatMessages: ["chat-emote-msg-scream"]
   chatTriggers:
     - scream
@@ -37,9 +39,9 @@
   whitelist:
     components:
     - Vocal
-  blacklist:
-    components:
-    - BorgChassis
+  # blacklist:
+  #  components:
+  #  - BorgChassis
   chatMessages: ["chat-emote-msg-laugh"]
   chatTriggers:
     - laugh
@@ -232,10 +234,28 @@
     - BorgChassis
   chatMessages: ["chat-emote-msg-clap"]
   chatTriggers:
-    - clap
     - claps
     - clapping
     - clapped
+
+- type: emote
+  id: ClapSingle
+  name: chat-emote-name-clap-single
+  category: Hands
+  icon: Interface/Emotes/clap.png #TODO: Needs a sprite that distinguishes it better from clap
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [ "chat-emote-msg-clap-single" ]
+  chatTriggers:
+    - clap
+    - claps their hands together
+    - claps her hands together
+    - claps his hands together
+    - claps its hands together
 
 - type: emote
   id: Snap
@@ -248,7 +268,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-snap"] # snaps <{THEIR($ent)}> fingers?
+  chatMessages: ["chat-emote-msg-snap"]
   chatTriggers:
     - snap
     - snaps
@@ -257,6 +277,9 @@
     - snap fingers
     - snaps fingers
     - snaps their fingers
+    - snaps her fingers
+    - snaps his fingers
+    - snaps its fingers
     - snapping fingers
     - snapped fingers
 

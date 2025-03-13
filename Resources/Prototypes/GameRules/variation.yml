@@ -46,6 +46,8 @@
     tilesPerEntityStdDev: 4
     entities:
     - id: RandomSpawner
+    componentBlacklist: # imp
+    - type: Supermatter
 
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddle

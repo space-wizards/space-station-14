@@ -29,3 +29,8 @@
     - /Audio/_Impstation/Voice/Slime/s_femalescream_3.ogg
     - /Audio/_Impstation/Voice/Slime/s_femalescream_4.ogg
     - /Audio/_Impstation/Voice/Slime/s_femalescream_5.ogg
+
+- type: soundCollection
+  id: SiliconScreams
+  files:
+    - /Audio/_Impstation/Voice/Silicon/silicon_scream.ogg

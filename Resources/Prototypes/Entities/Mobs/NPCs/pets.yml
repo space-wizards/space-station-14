@@ -320,6 +320,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
   - type: Tag
     tags:
     - CannotSuicide
@@ -421,6 +424,9 @@
   - type: StealTarget
     stealGroup: AnimalWalter
   - type: DogVision # imp
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
 
 - type: entity
   name: Morty

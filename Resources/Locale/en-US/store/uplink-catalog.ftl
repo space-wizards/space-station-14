@@ -48,6 +48,10 @@ uplink-supermatter-grenade-desc = Grenade that simulates delamination of a super
 uplink-beenade-name = Beenade
 uplink-beenade-desc = The ultimate in distraction, this foaming grenade contains enough pure concentrated bees to keep Medbay busy for quite a while. Throw it into the bar and watch everyone panic. Just don't stand too close.
 
+uplink-singularity-grenade-name = Singularity Grenade
+uplink-singularity-grenade-desc = Grenade that simulates the power of a singularity, generates powerful gravity well. Explosion comparable to a Mini Bomb.
+
+
 uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.
 
@@ -249,7 +253,7 @@ uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
 uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun and four 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.

@@ -102,3 +102,21 @@
       collection: MonkeyScreeches
     DefaultDeathgasp:
       path: /Audio/_Impstation/Animals/bros_hurt.ogg
+
+- type: emoteSounds
+  id: TckTck
+  params:
+    variation: 0.05
+  sounds:
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg

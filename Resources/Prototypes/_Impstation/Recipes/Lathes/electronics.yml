@@ -13,14 +13,13 @@
 - type: latheRecipe
   id: SGDRecipe
   result: ClothingNeckSGD
-  category: Parts
   completetime: 10
   materials:
     Steel: 300
     Glass: 300
     Plastic: 100
     Gold: 100
-    
+
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
   id: ServiceTechFabCircuitboard

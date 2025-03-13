@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: StarkistInventory
   startingInventory:
     DrinkStarkistCan: 4
@@ -17,6 +17,7 @@
     DrinkLemonAsteradeBottleFull: 2
   contrabandInventory:
     DrinkBrownAsteradeBottleFull: 2
+    FoodBurgerCarp: 2
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

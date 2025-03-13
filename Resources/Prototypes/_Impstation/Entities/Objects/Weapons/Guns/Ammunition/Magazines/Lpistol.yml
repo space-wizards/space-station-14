@@ -1,6 +1,7 @@
 - type: entity
   id: BaseMagazineLPistol
   name: pistol magazine (.22 auto)
+  description: A 20-round .22 auto high-capacity pistol magazine.
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -34,6 +35,7 @@
 - type: entity
   id: BaseMagazineZipper
   name: zipper .22 magazine (.22 auto)
+  description: A 6-round holder-of-bullets.
   parent: BaseItem
   abstract: true
   components:
@@ -67,6 +69,7 @@
 - type: entity
   id: MagazineLPistolEmpty
   name: pistol magazine (.22 auto any)
+  description: A 20-round .22 auto high-capacity pistol magazine with no apparent markings.
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -75,6 +78,7 @@
 - type: entity
   id: MagazineLPistol
   name: pistol magazine (.22 auto)
+  description: A 20-round .22 auto high-capacity pistol magazine, marked as live-fire ammo.
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -103,6 +107,7 @@
 - type: entity
   id: MagazineZipperAP
   name: zipper magazine (.22 auto APDSFS)
+  description: A 6-round holder-of-bullets, marked as armor-piercing darts.
   parent: BaseMagazineZipper
   components:
   - type: BallisticAmmoProvider
@@ -117,6 +122,7 @@
 - type: entity
   id: MagazineZipperEmpty
   name: zipper .22 magazine (.22 auto any)
+  description: A 6-round holder-of-bullets with no apparent markings.
   suffix: empty
   parent: BaseMagazineZipper
   components:
@@ -130,6 +136,7 @@
 - type: entity
   id: MagazineLPistolIncendiary
   name: pistol magazine (.22 auto incendiary)
+  description: A 20-round .22 auto high-capacity pistol magazine, marked as incendiary ammo.
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -138,6 +145,7 @@
 - type: entity
   id: MagazineLPistolPractice
   name: pistol magazine (.22 auto practice)
+  description: A 20-round .22 auto high-capacity pistol magazine, marked as practice ammo.
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -152,6 +160,7 @@
 - type: entity
   id: MagazineLPistolUranium
   name: pistol magazine (.22 auto uranium)
+  description: A 20-round .22 auto high-capacity pistol magazine, marked as uranium ammo.
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider

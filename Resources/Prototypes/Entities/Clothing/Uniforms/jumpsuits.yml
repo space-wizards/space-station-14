@@ -562,7 +562,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/roboticist.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband, ClothingUniformFoldableBase]
+  parent: [ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitSec
   name: security jumpsuit
   description: A jumpsuit made of strong material, providing robust protection.
@@ -594,7 +594,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_blue.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband, ClothingUniformFoldableBase]
+  parent: [ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitSecGrey
   name: grey security jumpsuit
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
@@ -605,7 +605,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband, ClothingUniformFoldableBase]
+  parent: [ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase]
   id: ClothingUniformSecurityTrooper
   name: trooper uniform
   description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
@@ -616,7 +616,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband, ClothingUniformFoldableBase]
+  parent: [ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
@@ -1160,7 +1160,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband, ClothingUniformFoldableBase]
+  parent: [ClothingUniformBase, BaseSecurityContraband, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitSeniorOfficer
   name: senior officer jumpsuit
   description: A sign of skill and prestige within the security department.

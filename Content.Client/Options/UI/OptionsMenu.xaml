@@ -9,5 +9,6 @@
         <tabs:KeyRebindTab Name="KeyRebindTab" />
         <tabs:AudioTab Name="AudioTab" />
         <tabs:AccessibilityTab Name="AccessibilityTab" />
+        <tabs:AdminOptionsTab Name="AdminOptionsTab" />
     </TabContainer>
 </DefaultWindow>

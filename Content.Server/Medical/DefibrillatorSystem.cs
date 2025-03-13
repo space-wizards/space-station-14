@@ -7,7 +7,7 @@ using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
-using Content.Server.Traits.Assorted;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -217,15 +217,10 @@ public sealed class DefibrillatorSystem : EntitySystem
                     true);
             return;
         }
-
-        if (HasComp<UnrevivableComponent>(target))
+        else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
         {
-            if (!component.ShowMessages)
-                _chatManager.TrySendInGameICMessage(uid,
-                Loc.GetString("defibrillator-unrevivable"),
-                InGameICChatType.Speak,
-                true);
-            return;
+            _chatManager.TrySendInGameICMessage(uid, Loc.GetString(unrevivable.ReasonMessage),
+                InGameICChatType.Speak, true);
         }
 
         if (HasComp<RandomUnrevivableComponent>(target))

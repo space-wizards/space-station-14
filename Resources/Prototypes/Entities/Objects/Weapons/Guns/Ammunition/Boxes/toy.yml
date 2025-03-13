@@ -18,6 +18,7 @@
   parent: BoxDonkSoftBase
   id: BoxDonkSoftBox
   name: box of foam darts
+  description: A box made for 40 of only the finest. #imp
   components:
   - type: BallisticAmmoProvider
     whitelist:
@@ -35,15 +36,20 @@
   parent: BaseMagazineBoxMagnum
   id: BoxCartridgeCap
   name: cap gun cartridge box
+  description: A box made for 20 pew pew shots. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCap
     capacity: 20
+  - type: MagazineVisuals
+    magState: mag-cap
+    steps: 4
+    zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     layers:
-      - state: capbase
+      - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-cap-1
         map: ["enum.GunVisualLayers.Mag"]
-      - state: cap
+      - state: capbase
