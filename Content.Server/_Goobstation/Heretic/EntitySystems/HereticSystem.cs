@@ -24,8 +24,6 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 using Content.Shared.Changeling;
-using Content.Shared.Mindshield.Components;
-using Content.Server.Roles.Jobs;
 
 namespace Content.Server.Heretic.EntitySystems;
 
@@ -35,7 +33,6 @@ public sealed partial class HereticSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly HereticKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
