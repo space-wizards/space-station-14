@@ -63,9 +63,9 @@
             SecurityCadet: [ 4, 4 ]
             SecurityOfficer: [ 6, 6 ]
             Warden: [ 1, 1 ]
-            # supply - 10-13
+            # supply - 9-12
             CargoTechnician: [ 4, 4 ]
-            Courier: [ 2, 2 ] # imp
+            Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 4, 4 ]
             SupplyAssistant: [ 3, 3 ] # imp
             # civilian - the tiders yearn for the mines

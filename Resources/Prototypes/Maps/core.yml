@@ -63,9 +63,9 @@
             SecurityCadet: [ 3, 3 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            # supply - 7-10
+            # supply - 6-9
             CargoTechnician: [ 3, 3 ]
-            Courier: [ 2, 2 ] # imp
+            Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 3, 3 ] # imp
             # civilian
