@@ -97,10 +97,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.6
-        Heat: 0.7
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.55
+        Heat: 0.70
 
 - type: entity
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
@@ -117,7 +117,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.8
-        Heat: 0.9
+        Blunt: 0.55
+        Slash: 0.55
+        Piercing: 0.85
+        Heat: 0.95
