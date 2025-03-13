@@ -110,7 +110,7 @@ thaven-mood-hypochondriac-name = Hypochondriac
 thaven-mood-hypochondriac-desc = You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
 
 thaven-mood-imposter-syndrome-name = Imposter Syndrome
-thaven-mood-imposter-syndrome-desc = You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes.
+thaven-mood-imposter-syndrome-desc = You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes, or, lacking that, find a guidebook.
 
 thaven-mood-yes-man-name = Yes Man
 thaven-mood-yes-man-desc = You just can't say "no." You must agree with everyone, and perform any task requested of you, regardless of its source.
