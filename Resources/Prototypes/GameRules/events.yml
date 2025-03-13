@@ -2,6 +2,7 @@
   id: BasicCalmEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
+    - id: NukeCalibration
     - id: AnomalySpawn
     - id: BluespaceArtifact
     - id: BluespaceLocker
@@ -142,6 +143,23 @@
     weight: 5
     duration: 1
   - type: ClericalErrorRule
+
+- type: entity
+  parent: BaseGameRule
+  id: NukeCalibration
+  endAnnouncement: station-event-power-grid-check-end-announcement
+  components:
+  - type: StationEvent
+    weight: 9
+    duration: 40
+    reoccurrenceDelay: 2
+    minimumPlayers: 20
+  - type: NukeCalibrationRule
+  # Nukes are very faulty nowadays
+  - type: GameRule
+    delay:
+      min:  1
+      max:  2
 
 - type: entity
   parent: BaseGameRule
