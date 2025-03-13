@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Captains have a new regal blue beret.
-    type: Add
-  id: 777
-  time: '2024-12-20T16:54:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1087
-- author: AftrLite
-  changes:
-  - message: Ongoing respriting efforts. Keep an eye out!
-    type: Tweak
-  - message: Fixed the InHands for Chaplain's Null Rod quiver's arrow.
-    type: Fix
-  id: 778
-  time: '2024-12-21T11:31:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1085
-- author: honeyed-lemons
-  changes:
-  - message: Various holopad fixes
-    type: Fix
-  id: 779
-  time: '2024-12-21T11:37:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1091
-- author: Sha-Seng
-  changes:
-  - message: Slime hair is now 75% opacity (up from 65%)
-    type: Tweak
-  - message: Gathered Low hairstyle touchups (more body in profile, clearer silhouette,
-      etc)
-    type: Tweak
-  id: 780
-  time: '2024-12-21T11:37:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1090
-- author: Sha-Seng
-  changes:
-  - message: Removed security breath mask from HoS loadout options since it's already
-      in the locker lol
-    type: Remove
-  - message: HoS Mantle is now 10 hours to account for the 90 hour unlock requirement
-      of the job
-    type: Tweak
-  - message: HoS prestige coat, armor, and headset are now 25 hours
-    type: Tweak
-  id: 781
-  time: '2024-12-21T11:41:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1089
 - author: AftrLite
   changes:
   - message: Fixed Freezer/Heater sprites, which got accidentally reverted.
@@ -4094,3 +4048,40 @@
   id: 1276
   time: '2025-03-12T03:26:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1907
+- author: DinnerCalzone
+  changes:
+  - message: Fixed Hospitality Director not having Brig access as all other heads
+      do.
+    type: Fix
+  id: 1277
+  time: '2025-03-13T05:03:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1910
+- author: Sha-Seng
+  changes:
+  - message: Lightened the base color of thaven ear piercings
+    type: Tweak
+  id: 1278
+  time: '2025-03-13T05:02:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1915
+- author: Darkmajia
+  changes:
+  - message: Trash no longer has a chance to spawn inside the supermatter at roundstart.
+    type: Fix
+  id: 1279
+  time: '2025-03-13T05:03:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1911
+- author: formlessnameless
+  changes:
+  - message: Revert upstream disabler buffs.
+    type: Fix
+  id: 1280
+  time: '2025-03-13T05:02:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1919
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The Daito, Nemesis, and Mk 92HB firing sounds have been changed to more
+      ethically acquired sources.
+    type: Tweak
+  id: 1281
+  time: '2025-03-12T23:03:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1864
