@@ -254,6 +254,27 @@ public sealed partial class CCVars
         CVarDef.Create("game.ipintel_flags", "b", CVar.SERVERONLY);
 
     /// <summary>
+    /// The flags to use in the request to IPIntel, please look here for more info. https://getipintel.net/free-proxy-vpn-tor-detection-api/#optional_settings
+    /// Note: Some flags may increase the chances of false positives and request time. The default should be fine for most servers.
+    /// </summary>
+    public static readonly CVarDef<string> GameIPIntelOFlags =
+        CVarDef.Create("game.ipintel_oflags", "c", CVar.SERVERONLY);
+
+    /// <summary>
+    /// Regions are in two character ISO-3166 format seperated by commands. EX: "US,GB"
+    /// Acts as a blacklist by default, see <see cref="GameIPIntelRegionWhitelist"/> to change this behaviour.
+    /// </summary>
+    public static readonly CVarDef<string?> GameIPIntelRegions =
+        CVarDef.Create("game.regions", null, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Only allows certain regions allowed to connect, defaults to false.
+    /// </summary>
+    public static readonly CVarDef<bool> GameIPIntelRegionWhitelist =
+        CVarDef.Create("game.regionwhitelist", false, CVar.SERVERONLY);
+
+
+    /// <summary>
     /// Maximum amount of requests per Minute. For free you get 15.
     /// </summary>
     public static readonly CVarDef<int> GameIPIntelMaxMinute =

@@ -60,5 +60,6 @@ generic-misconfigured = The server is misconfigured and is not accepting players
 ipintel-server-ratelimited = This server uses a security system with external verification, which has reached its maximum verification limit. Please contact the administration team of the server for assistance and try again later.
 ipintel-unknown = This server uses a security system with external verification, but it encountered an error. Please contact the administration team of the server for assistance and try again later.
 ipintel-suspicious = You seem to be connecting through a datacenter or VPN. For administrative reasons we do not allow VPN connections to play. Please contact the administration team of the server for assistance if you believe this is false.
-
+ipintel-region-blacklist = This server is region locked, and your connected has been blocked. The following countries are blocked from connecting to this server: {$regions}. If you believe this to be a mistake, contact the adminstration team of the server for assistance.
+ipintel-region-whitelist = This server is region locked, and your connected has been blocked. Only the following countries are allowed from connecting to this server: {$regions}. If you believe this to be a mistake, contact the adminstration team of the server for assistance.
 hwid-required = Your client has refused to send a hardware id. Please contact the administration team for further assistance.

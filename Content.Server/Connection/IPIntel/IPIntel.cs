@@ -9,7 +9,7 @@ using Content.Shared.Players.PlayTimeTracking;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
+using System.Globalization;
 
 namespace Content.Server.Connection.IPIntel;
 
@@ -51,6 +51,8 @@ public sealed class IPIntel
         cfg.OnValueChanged(CCVars.GameIPIntelExemptPlaytime, b => _exemptPlaytime = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminReject, b => _alertAdminReject = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelRegions, b => _regions = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelRegionWhitelist, b => _regionWhitelist = b, true);
     }
 
     internal struct Ratelimits
@@ -86,6 +88,8 @@ public sealed class IPIntel
     private TimeSpan _exemptPlaytime;
     private float _rating;
     private float _alertAdminWarn;
+    private string? _regions;
+    private bool _regionWhitelist;
 
     public async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
     {
@@ -100,7 +104,7 @@ public sealed class IPIntel
         // Helps with saving your limited request limit.
         if (_exemptPlaytime != TimeSpan.Zero)
         {
-            var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+            var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
             if (overallTime != null && overallTime.TimeSpent >= _exemptPlaytime)
             {
                 return (false, string.Empty);
@@ -125,10 +129,7 @@ public sealed class IPIntel
         {
             // Skip to score check if result is older than _cacheDays
             if (DateTime.UtcNow - query.Time <= _cacheDays)
-            {
-                var score = query.Score;
-                return ScoreCheck(score, username);
-            }
+                return BlockCheck(query, username);
         }
 
         // Ensure our contact email is good to use.
@@ -142,8 +143,8 @@ public sealed class IPIntel
         switch (apiResult.Code)
         {
             case IPIntelResultCode.Success:
-                await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, apiResult.Score));
-                return ScoreCheck(apiResult.Score, username);
+                await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, apiResult.Score, apiResult.CountryCode));
+                return BlockCheck(apiResult, username);
 
             case IPIntelResultCode.RateLimited:
                 return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
@@ -162,7 +163,7 @@ public sealed class IPIntel
         IncrementAndTestRateLimit(ref _minute, TimeSpan.FromMinutes(1), "minute");
 
         if (_minute.RateLimited || _day.RateLimited || CheckSuddenRateLimit())
-            return new IPIntelResult(0, IPIntelResultCode.RateLimited);
+            return new IPIntelResult(0, null, IPIntelResultCode.RateLimited);
 
         // Info about flag B: https://getipintel.net/free-proxy-vpn-tor-detection-api/#flagsb
         // TLDR: We don't care about knowing if a connection is compromised.
@@ -173,29 +174,30 @@ public sealed class IPIntel
         {
             _sawmill.Warning($"We hit the IPIntel request limit at some point. (Current limit count: Minute: {_minute.CurrentRequests} Day: {_day.CurrentRequests})");
             CalculateSuddenRatelimit();
-            return new IPIntelResult(0, IPIntelResultCode.RateLimited);
+            return new IPIntelResult(0, null, IPIntelResultCode.RateLimited);
         }
 
         var response = await request.Content.ReadAsStringAsync();
-        var score = Parse.Float(response);
+        var parts = response.Split(',');
+
+        if (parts.Length < 2)
+            return new IPIntelResult(0, null, IPIntelResultCode.Errored);
+
+        var score = float.Parse(parts[0], CultureInfo.InvariantCulture);
+        var countryCode = parts[1].Trim();
 
         if (request.StatusCode == HttpStatusCode.OK)
         {
             _failedRequests = 0;
-            return new IPIntelResult(score, IPIntelResultCode.Success);
+            return new IPIntelResult(score, countryCode, IPIntelResultCode.Success);
         }
 
         if (ErrorMessages.TryGetValue(response, out var errorMessage))
-        {
             _sawmill.Error($"IPIntel returned error {response}: {errorMessage}");
-        }
-        else
-        {
-            // Oh boy, we don't know this error.
+        else // Oh boy, we don't know this error.
             _sawmill.Error($"IPIntel returned {response} (Status code: {request.StatusCode})... we don't know what this error code is. Please make an issue in upstream!");
-        }
 
-        return new IPIntelResult(0, IPIntelResultCode.Errored);
+        return new IPIntelResult(0, null, IPIntelResultCode.Errored);
     }
 
     private bool CheckSuddenRateLimit()
@@ -251,15 +253,39 @@ public sealed class IPIntel
         return ratelimits.RateLimited && _gameTiming.RealTime >= ratelimits.LastRatelimited + liftingTime;
     }
 
-    private (bool, string Empty) ScoreCheck(float score, string username)
+    private (bool, string Empty) BlockCheck(IPIntelCache cache, string username)
     {
-        var decisionIsReject = score > _rating;
+        var decisionIsReject = cache.Score > _rating;
 
-        if (_alertAdminWarn != 0f && _alertAdminWarn < score && !decisionIsReject)
+        if (cache.CountryCode != null && _regions != null)
+        {
+            var countryCheck = _regions.Contains(cache.CountryCode);
+
+            if (_regionWhitelist)
+            {
+                decisionIsReject |= !countryCheck;
+                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                    ("player", username),
+                    ("region", cache.CountryCode)));
+                return (true, Loc.GetString("ipintel-region-whitelist",
+                    ("regions", _regions)));
+            }
+            else
+            {
+                decisionIsReject |= countryCheck;
+                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                    ("player", username),
+                    ("region", cache.CountryCode)));
+                return (true, Loc.GetString("ipintel-region-blacklist",
+                    ("regions", _regions)));
+            }
+        }
+
+        if (_alertAdminWarn != 0f && _alertAdminWarn < cache.Score && !decisionIsReject)
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-warning",
                 ("player", username),
-                ("percent", Math.Round(score))));
+                ("percent", Math.Round(cache.Score))));
         }
 
         if (!decisionIsReject)
@@ -269,7 +295,56 @@ public sealed class IPIntel
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked",
                 ("player", username),
-                ("percent", Math.Round(score))));
+                ("percent", Math.Round(cache.Score))));
+        }
+
+        return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
+    }
+
+    private (bool, string Empty) BlockCheck(IPIntelResult result, string username)
+    {
+        var decisionIsReject = result.Score > _rating;
+
+        if (result.CountryCode != null && _regions != null)
+        {
+            var countryCheck = _regions.Contains(result.CountryCode);
+
+            if (_regionWhitelist)
+            {
+                decisionIsReject |= !countryCheck;
+                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                    ("player", username),
+                    ("region", result.CountryCode)));
+                return (true, Loc.GetString("ipintel-region-whitelist",
+                    ("regions", _regions)));
+            }
+            else
+            {
+                decisionIsReject |= countryCheck;
+                _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
+                    ("player", username),
+                    ("region", result.CountryCode)));
+                return (true, Loc.GetString("ipintel-region-blacklist",
+                    ("regions", _regions)));
+            }
+        }
+
+        // Admin warning if score is high but not rejected
+        if (_alertAdminWarn != 0f && _alertAdminWarn < result.Score && !decisionIsReject)
+        {
+            _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-warning",
+                ("player", username),
+                ("percent", Math.Round(result.Score))));
+        }
+
+        if (!decisionIsReject)
+            return (false, string.Empty);
+
+        if (_alertAdminReject)
+        {
+            _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked",
+                ("player", username),
+                ("percent", Math.Round(result.Score))));
         }
 
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
@@ -376,7 +451,7 @@ public sealed class IPIntel
         return false;
     }
 
-    public readonly record struct IPIntelResult(float Score, IPIntelResultCode Code);
+    public readonly record struct IPIntelResult(float Score, string? CountryCode, IPIntelResultCode Code);
 
     public enum IPIntelResultCode : byte
     {

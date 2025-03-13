@@ -334,7 +334,7 @@ namespace Content.Server.Database
 
         #region IPintel
 
-        Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score);
+        Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score, string? countrycode);
         Task<IPIntelCache?> GetIPIntelCache(IPAddress ip);
         Task<bool> CleanIPIntelCache(TimeSpan range);
 
@@ -1024,10 +1024,11 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
-        public Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score)
+        public Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score, string? countrycode)
+
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.UpsertIPIntelCache(time, ip, score));
+            return RunDbCommand(() => _db.UpsertIPIntelCache(time, ip, score, countrycode));
         }
 
         public Task<IPIntelCache?> GetIPIntelCache(IPAddress ip)
