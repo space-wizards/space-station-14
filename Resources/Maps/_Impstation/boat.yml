@@ -9860,6 +9860,8 @@ entities:
       devices:
       - 2619
       - 2239
+      - 21235
+      - 2236
   - uid: 2432
     components:
     - type: Transform
@@ -9992,7 +9994,7 @@ entities:
       pos: 10.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2284.453
+      secondsUntilStateChange: -2626.4597
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10244,7 +10246,7 @@ entities:
       pos: 30.5,-49.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8589.748
+      secondsUntilStateChange: -8931.755
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10391,7 +10393,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -155782.58
+      secondsUntilStateChange: -156124.58
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10402,7 +10404,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -155784.45
+      secondsUntilStateChange: -156126.45
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11157,7 +11159,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -351353.53
+      secondsUntilStateChange: -351695.56
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11693,7 +11695,7 @@ entities:
       pos: 44.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26550.166
+      secondsUntilStateChange: -26892.174
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -65630,7 +65632,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -80102.26
+      secondsUntilStateChange: -80444.266
       state: Opening
   - uid: 18653
     components:
@@ -76682,7 +76684,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -382691.8
+      secondsUntilStateChange: -383033.84
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -81165,6 +81167,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 18.5,-17.5
       parent: 2
+  - uid: 2301
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 18.5,-31.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
   - uid: 2354
     components:
     - type: Transform
@@ -90505,6 +90515,22 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#98FFFAFF'
+  - uid: 21236
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,-30.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
+  - uid: 21237
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 17.5,-31.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
   - uid: 22287
     components:
     - type: Transform
@@ -103982,6 +104008,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 16.5,-30.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 2231
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2426
@@ -105836,14 +105865,6 @@ entities:
       - 2530
     - type: AtmosPipeColor
       color: '#FF0000FF'
-  - uid: 2301
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 18.5,-30.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF0000FF'
   - uid: 2496
     components:
     - type: Transform
@@ -106536,6 +106557,17 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 24836
+    - type: AtmosPipeColor
+      color: '#FF0000FF'
+  - uid: 21235
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 16.5,-31.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 2231
     - type: AtmosPipeColor
       color: '#FF0000FF'
   - uid: 22582
@@ -133474,6 +133506,13 @@ entities:
     - type: Transform
       pos: 1.5,84.5
       parent: 2
+- proto: SpawnPointHospitalityDirector
+  entities:
+  - uid: 21234
+    components:
+    - type: Transform
+      pos: 8.5,86.5
+      parent: 2
 - proto: SpawnPointJanitor
   entities:
   - uid: 20491
@@ -133511,6 +133550,16 @@ entities:
     components:
     - type: Transform
       pos: 25.5,-44.5
+      parent: 2
+  - uid: 21238
+    components:
+    - type: Transform
+      pos: 29.5,-42.5
+      parent: 2
+  - uid: 21239
+    components:
+    - type: Transform
+      pos: 27.5,-42.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:

@@ -1,7 +1,7 @@
 - type: entity
   id: BaseMagazineGrenade
   name: grenade cartridge
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -42,13 +42,15 @@
 - type: entity
   id: MagazineGrenadeEmpty
   name: grenade cartridge
+  description: A box designed to hold 5 launcher-based grenades. #imp
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
 
 - type: entity
   id: MagazineGrenadeFrag
-  name: frag grenade cartridge
+  name: grenade cartridge (frag) #imp
+  description: A box designed to hold 5 launcher-based grenades. This box is labeled for fragmentation grenades. #imp
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
@@ -56,7 +58,8 @@
 
 - type: entity
   id: MagazineGrenadeEMP
-  name: EMP grenade cartridge
+  name: grenade cartridge (EMP) #imp
+  description: A box designed to hold 5 launcher-based grenades. This box is labeled for EMP grenades. #imp
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
@@ -64,7 +67,8 @@
 
 - type: entity
   id: MagazineGrenadeFlash
-  name: flash grenade cartridge
+  name: grenade cartridge (flash) #imp
+  description: A box designed to hold 5 launcher-based grenades. This box is labeled for flashbang stun grenades. #imp
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
@@ -72,7 +76,8 @@
 
 - type: entity
   id: MagazineGrenadeBlast
-  name: blast grenade cartridge
+  name: grenade cartridge (blast) #imp
+  description: A box designed to hold 5 launcher-based grenades. This box is labeled for high-explosive blast grenades. #imp
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider
@@ -80,7 +85,8 @@
 
 - type: entity
   id: MagazineGrenadeBaton
-  name: baton grenade cartridge
+  name: grenade cartridge (baton) #imp
+  description: A box designed to hold 5 launcher-based grenades. This box is labeled for baton stun grenades. #imp
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider

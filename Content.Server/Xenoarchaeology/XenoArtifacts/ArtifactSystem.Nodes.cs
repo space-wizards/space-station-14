@@ -240,14 +240,12 @@ public sealed partial class ArtifactSystem
         {
             var reg = _componentFactory.GetRegistration(name);
 
-            if (node.Discovered && EntityManager.HasComponent(uid, reg.Type))
-            {
-                // Don't re-add permanent components unless this is the first time you've entered this node
-                if (effect.PermanentComponents.ContainsKey(name))
-                    continue;
+            // Don't re-add permanent components, ever
+            if (effect.PermanentComponents.ContainsKey(name) && EntityManager.HasComponent(uid, reg.Type))
+                continue;
 
+            if (node.Discovered && EntityManager.HasComponent(uid, reg.Type))
                 EntityManager.RemoveComponent(uid, reg.Type);
-            }
 
             var comp = (Component)_componentFactory.GetComponent(reg);
 

@@ -3,6 +3,7 @@
   parent: BaseItem
   id: BaseMagazineBoxLightRifle
   name: ammunition box (.30 rifle)
+  description: A box made for 60 rounds of .30 rifle ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -29,26 +30,23 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifleBig
   name: ammunition box (.30 rifle)
+  description: A large box made for 200 rounds of .30 rifle ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeLightRifle
   - type: Sprite
     layers:
-    - state: base-b
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
+    - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: magb
-    steps: 4
-    zeroVisible: false
-  - type: Appearance
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifle
   name: ammunition box (.30 rifle)
+  description: A box made for 60 rounds of .30 rifle ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
@@ -63,6 +61,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRiflePractice
   name: ammunition box (.30 rifle practice)
+  description: A box made for 60 rounds of .30 rifle ammunition, labeled as practice bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice
@@ -77,6 +76,7 @@
 - type: entity
   id: MagazineBoxLightRifleIncendiary
   parent: BaseMagazineBoxLightRifle
+  description: A box made for 60 rounds of .30 rifle ammunition, labeled as incendiary bullets. #imp
   name: ammunition box (.30 rifle incendiary)
   components:
   - type: BallisticAmmoProvider
@@ -93,6 +93,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifleUranium
   name: ammunition box (.30 rifle uranium)
+  description: A box made for 60 rounds of .30 rifle ammunition, labeled as uranium bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleUranium

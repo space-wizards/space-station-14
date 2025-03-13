@@ -65,6 +65,54 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/hd.rsi
 
+# Medical
+
+- type: entity
+  parent: AirlockMedical
+  id: AirlockMedicalMorgue
+  suffix: Morgue
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/morgue.rsi
+
+# Science
+
+- type: entity
+  parent: AirlockScience
+  id: AirlockMedicalScience
+  suffix: Medical/Science
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/medsci.rsi
+
+# Security
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockArmory
+  suffix: Armory
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/warden.rsi
+  - type: Wires
+    layoutId: AirlockArmory
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockBrig
+  suffix: Brig
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockDetective
+  suffix: Detective
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/detective.rsi
+
 # Service
 - type: entity
   parent: Airlock
@@ -248,6 +296,54 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/hd.rsi
+
+# Medical
+
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockMedicalMorgueGlass
+  suffix: Morgue
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/morgue.rsi
+
+# Science
+
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockMedicalScienceGlass
+  suffix: Medical/Science
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/medsci.rsi
+
+# Security
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockArmoryGlass
+  suffix: Armory
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/warden.rsi
+  - type: Wires
+    layoutId: AirlockArmory
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockBrigGlass
+  suffix: Brig
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/security.rsi
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockDetectiveGlass
+  suffix: Detective
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/detective.rsi
 
 # Service
 - type: entity

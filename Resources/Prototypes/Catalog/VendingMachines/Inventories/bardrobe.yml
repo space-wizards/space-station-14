@@ -19,6 +19,8 @@
     ClothingBeltBandolier: 2
     ClothingEyesGlassesSunglasses: 2
     ClothingNeckScarfStripedBlack: 2 # imp
-  contrabandInventory: # imp
-    ClothingMaskClownService: 1
-    ClothingOuterApronClown: 1
+  contrabandInventory:
+    ToyFigurineBartender: 1
+    ClothingMaskClownService: 1 # imp
+    ClothingOuterApronClown: 1 # imp
+

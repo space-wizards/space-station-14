@@ -41,7 +41,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
   weights:
-    RandomTraitorAliveObjective: 1
+    # RandomTraitorAliveObjective: 1 # imp - worse version of RandomTraitorProgressObjective
     RandomTraitorProgressObjective: 1
 
 
@@ -161,6 +161,7 @@
     #imp
     FinFinStealObjective: 1
     PolyStealObjective: 1
+    PetSuppyStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

@@ -151,3 +151,4 @@
   - Zookeeper
   - Psychologist
   primary: false
+  manifestHidden: true #imp edit

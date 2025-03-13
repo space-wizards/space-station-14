@@ -283,7 +283,7 @@
       - state: equipped-BELT
         color: "#723A02"
   - type: Fiber
-    fiberColor: fibers-brown
+    fiberColor: fibers-light-brown
 
 - type: entity
   id: TowelColorLightBrown

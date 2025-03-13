@@ -78,3 +78,13 @@
   license: "CC-BY-SA-4.0"
   copyright: "Taken from IENBA freesound.org and modified by https://github.com/MilenVolf. borgwalk2 clipped my metalgearsloth."
   source: "https://freesound.org/people/IENBA/sounds/697379/"
+
+- files:
+  - heelsclack1.ogg
+  - heelsclack2.ogg
+  - heelsclack3.ogg
+  - heelsclack4.ogg
+  - heelsclack5.ogg
+  license: "CC0-1.0"
+  copyright: "Taken from NachtmahrTV on freesound.org, clipped by Centronias"
+  source: "https://freesound.org/people/NachtmahrTV/sounds/571801/"

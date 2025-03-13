@@ -225,7 +225,7 @@
     - Crowbar
     - RadioHandheld
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: mining-module } #imp edit
 
 - type: entity
   id: BorgModuleGrapplingGun

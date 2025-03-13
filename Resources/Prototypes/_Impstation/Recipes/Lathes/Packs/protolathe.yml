@@ -1,0 +1,34 @@
+# Static
+
+- type: latheRecipePack
+  id: ImpProtoStatic
+  recipes:
+  - SGDRecipe
+  - DeskBell
+  - UvLightTube
+  - TapeRecorder # DV
+  - CassetteTape # DV
+
+# Dynamic
+
+- type: latheRecipePack
+  id: ImpProtoDynamic
+  recipes:
+  - BaseChemistryEmptyVial
+  - Drone
+  - CleanerGrenade
+  - PlantAnalyzer #NF
+  - FishingRod
+
+# Emagged
+
+- type: latheRecipePack
+  id: ImpProtoEmagged
+  recipes:
+    - FullAutoConversionKit
+    - HyperBurstConversionKit
+    - MagazineDMRIncendiary
+    - MagazineDMRUranium
+    - MagazineLPistolIncendiary
+    - MagazineLPistolUranium
+    - PRIbarPlusConversionKit

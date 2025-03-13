@@ -1,0 +1,9 @@
+- type: reaction
+  id: JuiceThatMakesYouUngh
+  reactants:
+    VentCrud:
+      amount: 1
+    Lemonade:
+      amount: 1
+  products:
+    JuiceThatMakesYouUngh: 2

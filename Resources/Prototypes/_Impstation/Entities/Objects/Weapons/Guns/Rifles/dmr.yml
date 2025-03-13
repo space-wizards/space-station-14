@@ -60,7 +60,7 @@
   - type: Appearance
 
 - type: entity
-  name: Nemesis-11
+  name: Basilisk-11
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleNemesis
   description: An ambitious step into the future of firearms, and no less fearful. Uses .25 caseless ammo.

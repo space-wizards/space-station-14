@@ -23,10 +23,12 @@
     RiotShield: 2
     SecurityWhistle: 5
     TearGasGrenade: 4
+    TicketPad: 5 # imp
     Tourniquet: 5
     Zipties: 12
   # security officers need to follow a diet regimen!
   contrabandInventory:
+    WeaponMeleeNeedle: 2
     FoodDonutHomer: 12
     FoodBoxDonut: 2
     #box evidence

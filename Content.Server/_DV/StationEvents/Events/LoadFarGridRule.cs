@@ -3,7 +3,7 @@ using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -41,8 +41,8 @@ public sealed class LoadFarGridRule : StationEventSystem<LoadFarGridRuleComponen
             if (map == MapId.Nullspace)
                 map = Transform(gridId).MapID;
 
-            var grid = Comp<MapGridComponent>(gridId);
-            var gridAabb = Transform(gridId).WorldMatrix.TransformBox(grid.LocalAABB);
+            var gridComp = Comp<MapGridComponent>(gridId);
+            var gridAabb = Transform(gridId).WorldMatrix.TransformBox(gridComp.LocalAABB);
             aabb = aabb.Union(gridAabb);
         }
 
@@ -50,23 +50,16 @@ public sealed class LoadFarGridRule : StationEventSystem<LoadFarGridRuleComponen
         var modifier = comp.DistanceModifier * scale;
         var dist = MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * modifier;
         var offset = RobustRandom.NextVector2(dist, dist * 2.5f);
-        var options = new MapLoadOptions
-        {
-            Offset = aabb.Center + offset,
-            LoadMap = false
-        };
 
-        var path = comp.Path.ToString();
-        Log.Debug($"Loading far grid {path} at {options.Offset}");
-        if (!_mapLoader.TryLoad(map, path, out var grids, options))
+        if (!_mapLoader.TryLoadGrid(map, comp.Path, out var grid, offset: aabb.Center + offset))
         {
-            Log.Error($"{ToPrettyString(uid):rule} failed to load grid {path}!");
+            Log.Error($"{ToPrettyString(uid):rule} failed to load grid {comp.Path}!");
             ForceEndSelf(uid, rule);
             return;
         }
 
         // let other systems do stuff
-        var ev = new RuleLoadedGridsEvent(map, grids);
+        var ev = new RuleLoadedGridsEvent(map, [grid.Value]);
         RaiseLocalEvent(uid, ref ev);
     }
 }
