@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added the artistic borg module. Please be nice with this so I dont have
-      to nerf it
-    type: Add
-  id: 791
-  time: '2024-12-24T09:38:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1100
-- author: kipdotnet
-  changes:
-  - message: Added A new derelict!
-    type: Add
-  - message: Roundstart derelicts now spawn a range of 3-4, instead of just a flat
-      2.
-    type: Tweak
-  id: 792
-  time: '2024-12-24T09:41:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1103
-- author: honeyed-lemons
-  changes:
-  - message: Listening Post and Box mapping changes
-    type: Tweak
-  - message: Listening Post Operatives spawn with an Agent ID
-    type: Tweak
-  id: 793
-  time: '2024-12-24T09:42:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1104
-- author: TheGrimbeeper
-  changes:
-  - message: Rat Servants will no longer be smart enough to understand that pointing
-      near a locker means attack the person IN the locker.
-    type: Fix
-  id: 794
-  time: '2024-12-24T09:43:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1105
 - author: widgetbeck
   changes:
   - message: Reduced the event weight of mass hallucinations.
@@ -4084,3 +4049,37 @@
   id: 1290
   time: '2025-03-13T06:05:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1918
+- author: bigsantino1
+  changes:
+  - message: Salvage magnet announcement no longer happens twice.
+    type: Fix
+  id: 1291
+  time: '2025-03-13T11:48:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1926
+- author: Darkmajia
+  changes:
+  - message: The supermatter's gas absorption has been slowed down to increase the
+      amount of time before it requires gas refilling.
+    type: Tweak
+  - message: The supermatter emits slightly more radiation to increase its base power
+      production.
+    type: Tweak
+  id: 1292
+  time: '2025-03-13T14:24:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1928
+- author: Kandiyaki
+  changes:
+  - message: The guidebook now actually tells you that you can make extra codex cicatrix.
+    type: Tweak
+  - message: heretic's target selection should now work as described in the guidebook.
+    type: Fix
+  id: 1293
+  time: '2025-03-13T19:49:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1785
+- author: Tyranex
+  changes:
+  - message: Fixed the mining module not appearing in the exofab after it was researched
+    type: Fix
+  id: 1294
+  time: '2025-03-13T21:31:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1933

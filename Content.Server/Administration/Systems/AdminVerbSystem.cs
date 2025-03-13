@@ -393,6 +393,7 @@ namespace Content.Server.Administration.Systems
                     });
                 }
 
+                // Begin Impstation Additions
                 if (TryComp<ThavenMoodsComponent>(args.Target, out var moods))
                 {
                     args.Verbs.Add(new Verb()
@@ -406,11 +407,12 @@ namespace Content.Server.Administration.Systems
                                 return;
 
                             _euiManager.OpenEui(ui, session);
-                            ui.UpdateMoods(moods, args.Target);
+                            ui.UpdateMoods((args.Target, moods));
                         },
                         Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
                     });
                 }
+                // End Impstation Additions
             }
         }
 
