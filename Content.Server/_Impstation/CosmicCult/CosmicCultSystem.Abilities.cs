@@ -369,9 +369,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _actions.RemoveAction(uid, uid.Comp.CosmicMonumentActionEntity);
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
-        var finalPosition = _map.GridTileToWorld(uid, grid, targetIndices);
-        Spawn("MonumentCollider", finalPosition);
-        Spawn(uid.Comp.MonumentPrototype, finalPosition);
+        var finalPosition = _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid);
+        SpawnAtPosition("MonumentCollider", finalPosition);
+        SpawnAtPosition(uid.Comp.MonumentPrototype, finalPosition);
     }
     #endregion
 
