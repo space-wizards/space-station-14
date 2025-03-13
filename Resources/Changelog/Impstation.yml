@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Reduced the event weight of mass hallucinations.
-    type: Tweak
-  id: 795
-  time: '2024-12-24T09:48:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1109
 - author: EpicToast
   changes:
   - message: Updates to Atlas, Cluster, Saltern and Train. See PR for full changelog.
@@ -4083,3 +4076,14 @@
   id: 1294
   time: '2025-03-13T21:31:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1933
+- author: AftrLite, DarkMajia, RuddyGreat, AvianMaiden
+  changes:
+  - message: A new MidRoundAntag GhostRole, the Astral Ascendant!
+    type: Add
+  - message: Code Octarine now has a unique claxon!
+    type: Add
+  - message: Cosmic Cult 1.1.0b (Beta)
+    type: Tweak
+  id: 1295
+  time: '2025-03-13T22:39:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1886
