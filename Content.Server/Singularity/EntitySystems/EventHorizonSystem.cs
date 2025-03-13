@@ -91,7 +91,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         eventHorizon.NextConsumeWaveTime += eventHorizon.TargetConsumePeriod;
@@ -296,7 +296,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void ConsumeTilesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
     {
-        if (!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
         var mapPos = _xformSystem.GetMapCoordinates(uid, xform: xform);
@@ -320,7 +320,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         if (eventHorizon.ConsumeEntities)
@@ -340,7 +340,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         if (MathHelper.CloseTo(eventHorizon.TargetConsumePeriod.TotalSeconds, value.TotalSeconds))

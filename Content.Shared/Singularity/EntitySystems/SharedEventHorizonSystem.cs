@@ -1,6 +1,4 @@
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
@@ -20,9 +18,21 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 
+    protected EntityQuery<MapGridComponent> GridQuery = default!;
+    protected EntityQuery<GhostComponent> GhostQuery = default!;
+    protected EntityQuery<ContainmentFieldComponent> FieldQuery = default!;
+    protected EntityQuery<ContainmentFieldGeneratorComponent> FieldGeneratorQuery = default!;
+    protected EntityQuery<EventHorizonComponent> HorizonQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        GridQuery = GetEntityQuery<MapGridComponent>();
+        GhostQuery = GetEntityQuery<GhostComponent>();
+        FieldQuery = GetEntityQuery<ContainmentFieldComponent>();
+        FieldGeneratorQuery = GetEntityQuery<ContainmentFieldGeneratorComponent>();
+        HorizonQuery = GetEntityQuery<EventHorizonComponent>();
 
         // Allows for predicted collisions with singularities.
         SubscribeLocalEvent<EventHorizonComponent, ComponentStartup>(OnEventHorizonStartup);
@@ -58,7 +68,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon to change the radius of.</param>
     public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.Radius;
@@ -81,7 +91,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon to make (in)capable of breaching containment.</param>
     public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.CanBreachContainment;
@@ -104,7 +114,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon with the fixture ID to change.</param>
     public void SetColliderFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.ColliderFixtureId;
@@ -127,7 +137,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon with the fixture ID to change.</param>
     public void SetConsumerFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.ConsumerFixtureId;
@@ -148,7 +158,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
     public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         var consumerId = eventHorizon.ConsumerFixtureId;
@@ -176,7 +186,6 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     }
 
     #endregion Getters/Setters
-
 
     #region EventHandlers
 
@@ -218,8 +227,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         var otherUid = args.OtherEntity;
 
         // For prediction reasons always want the client to ignore these.
-        if (HasComp<MapGridComponent>(otherUid) ||
-            HasComp<GhostComponent>(otherUid))
+        if (GridQuery.HasComp(otherUid) || GhostQuery.HasComp(otherUid))
         {
             args.Cancelled = true;
             return true;
@@ -227,8 +235,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
         // If we can, breach containment
         // otherwise, check if it's containment and just keep the collision
-        if (HasComp<ContainmentFieldComponent>(otherUid) ||
-            HasComp<ContainmentFieldGeneratorComponent>(otherUid))
+        if (FieldQuery.HasComp(otherUid) || FieldGeneratorQuery.HasComp(otherUid))
         {
             if (eventHorizon.Comp.CanBreachContainment)
                 args.Cancelled = true;
