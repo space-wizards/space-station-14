@@ -19,8 +19,10 @@
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
     ClothingOuterArmorBasic: 2
-    ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasicSlim: 2
+    ClothingOuterArmorPlate: 2
+    ClothingOuterArmorStab: 2
+    ClothingNeckScarfStripedRed: 3
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2

@@ -41,3 +41,48 @@
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSecurityContraband, BaseToggleClothing]
+  id: ClothingHeadHelmetBulletProof
+  name: bulletproof helmet
+  description: Protects the face against bullets, can flip up and down.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/bulletproof.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/bulletproof.rsi
+  - type: Item
+    storedRotation: 0  
+  - type: ItemToggle # Welding mask starts in an activated state
+    activated: true
+  - type: Appearance
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.80
+  - type: ToggleClothing
+    action: ActionToggleWeldingMask
+  - type: WeldingMask  
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon}
+          False: {state: icon-up}
+  - type: ComponentToggler
+    components:
+    - type: IngestionBlocker
+    - type: FlashImmunity
+    - type: IdentityBlocker
