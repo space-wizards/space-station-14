@@ -2,7 +2,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "All sprites created by https://github.com/Pronana / princesscheeseballs (Discord)",
+  "copyright": "Normal and vox sprites created by https://github.com/Pronana / princesscheeseballs (Discord).  Dog sprites created by Sparlight.",
 
   "size": {
     "x": 32,
@@ -18,6 +18,10 @@
     },
     {
       "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-dog",
       "directions": 4
     },
     {

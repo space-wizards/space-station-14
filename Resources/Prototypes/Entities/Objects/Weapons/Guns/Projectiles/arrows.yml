@@ -159,3 +159,40 @@
   - type: Construction
     graph: ImprovisedArrowUranium
     node: ImprovisedArrowUranium
+
+- type: entity
+  parent: BaseArrow
+  id: CorgiArrow
+  name: corgi arrow
+  description: Polymorphs someone into a corgi.  Permanently.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: lightblue
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 2
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 60
+        reagents:
+        - ReagentId: ConcentratedCorgiJuice
+          Quantity: 60
+  - type: SolutionInjectOnEmbed
+    transferAmount: 60
+    solution: ammo
+  - type: SolutionTransfer
+    maxTransferAmount: 60
