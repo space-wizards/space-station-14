@@ -145,9 +145,8 @@
   - type: ClericalErrorRule
 
 - type: entity
-  parent: BaseGameRule
   id: NukeCalibration
-  endAnnouncement: station-event-power-grid-check-end-announcement
+  parent: BaseGameRule
   components:
   - type: StationEvent
     weight: 9
@@ -155,11 +154,6 @@
     reoccurrenceDelay: 2
     minimumPlayers: 20
   - type: NukeCalibrationRule
-  # Nukes are very faulty nowadays
-  - type: GameRule
-    delay:
-      min:  5
-      max:  20
 
 - type: entity
   parent: BaseGameRule

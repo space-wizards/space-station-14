@@ -17,7 +17,6 @@ namespace Content.Server.StationEvents.Events
     public sealed class NukeCalibrationRule : StationEventSystem<NukeCalibrationRuleComponent>
     {
         [Dependency] private readonly NukeSystem _nuke = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
@@ -31,7 +30,7 @@ namespace Content.Server.StationEvents.Events
 
             component.AffectedStation = affectedStation.Value;
 
-            var nukeQuery = _entityManager.AllEntityQueryEnumerator<NukeComponent, TransformComponent>();
+            var nukeQuery = AllEntityQuery<NukeComponent, TransformComponent>();
             while (nukeQuery.MoveNext(out var nuke, out var nukeComponent, out var nukeTransform))
             {
                 // let's not arm the nuke if it isn't on station
