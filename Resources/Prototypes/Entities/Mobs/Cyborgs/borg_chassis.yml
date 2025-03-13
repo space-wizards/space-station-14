@@ -253,7 +253,7 @@
   id: BorgChassisDerelict
   parent: BaseBorgChassisDerelict
   name: derelict cyborg
-  description: A brain-machine hybrid that assists in station activity. This one is in a state of great disrepair.
+  description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
   components:
   - type: Sprite
     layers:
