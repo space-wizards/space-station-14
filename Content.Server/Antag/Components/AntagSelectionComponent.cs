@@ -46,6 +46,7 @@ public sealed partial class AntagSelectionComponent : Component
     /// <summary>
     /// Cached sessions of players who are chosen yet not given the role yet.
     /// </summary>
+    [DataField]
     public HashSet<ICommonSession> PreSelectedSessions = new();
 
     /// <summary>
