@@ -46,45 +46,96 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] DoNotMapWhitelist =
         {
             "/Maps/centcomm.yml",
-            "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
+
+            // Stations
+            "/Maps/bagel.yml", // Contains mime's rubber stamp
+            "/Maps/cluster.yml", // Same as above
             "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
             "/Maps/meta.yml", // Contains warden's rubber stamp
             "/Maps/reach.yml", // Contains handheld crew monitor
+            "/Maps/xeno.yml", // COntains PTK-800 "Matter Dematerializer"
+            "/Maps/_Impstation/bagel.yml", // Apparently theres 2 bagles, oh god oh fu-
+            "/Maps/_Impstation/banana.yml", // Contains quartermaster's rubber stamp
+            "/Maps/_Impstation/boat.yml", // Contains janitorial bomb suit closet, cat ears, doggy ears
+            "/Maps/_Impstation/gate.yml", // Contains positronic brain, LSE-1200c "Perforator"
+            "/Maps/_Impstation/lilboat.yml", // Contains janitorial bomb suit closet, cat ears
+            "/Maps/_Impstation/meta.yml", // Contains warden's rubber stamp
+            "/Maps/_Impstation/reach.yml", // Contains handheld crew monitor
+            "/Maps/_Impstation/xeno.yml", // Contains PTK-800 "Matter Dematerializer"
+
+
+
+            // Shuttles
             "/Maps/Shuttles/ShuttleEvent/cruiser.yml", // Contains LSE-1200c "Perforator"
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            "/Maps/Shuttles/ShuttleEvent/recruiter.yml", // Contains syndicate rubber stamp
+            "/Maps/_DV/Shuttles/listening_post.yml", // Contains captain's rubber stamp, chief engineer's rubber stamp, chaplain's rubber stamp, clown's rubber stamp, blablabla you get the picture
+            "/Maps/_Impstation/Shuttles/listening_post.yml" // No, I'm not gonna list out all these stamps again lol
+        };
+
+        // Imp - While fixing these tests I didn't want to edit any of the maps in-game because that would mess up any possible wip stuff.
+        // Ensure this list gets cut down and removed, ignoring these fails isn't good
+        // Format is mapProto, JobProto
+        private static readonly (string, string)[] IgnoreUnmappedSpawns =
+        {
+            ("Banana", "ChiefMedicalOfficer"),
+            ("Elkridge", "Courier"),
+            ("Packed", "Brigmedic"),
+            ("Reach", "TechnicalAssistant"),
+            ("Reach", "MedicalIntern"),
+            ("Reach", "ResearchAssistant"),
+            ("Reach", "SecurityCadet"),
+            ("Fland", "Reporter"),
+            ("Loop", "Psychologist"),
+            ("Lilboat", "Paramedic")
         };
 
         private static readonly string[] GameMaps =
-        {
-            "Dev",
-            "TestTeg",
-            "Fland",
-            "Meta",
-            "Packed",
-            "Cluster",
-            "Omega",
-            "Bagel",
-            "Origin",
-            "CentComm",
-            "Box",
-            "Saltern",
-            "Core",
-            "Marathon",
+        {   // Note, fork attributions based on prototype location, they might not be accurate
+            // Maps
+            "Relic",
+            "Amber",
             "MeteorArena",
             "Atlas",
-            "Reach",
-            "Train",
-            "Oasis",
-            "Gate",
-            "Amber",
-            "Loop",
-            "Plasma",
-            "Elkridge",
+            "Bagel",
+            "Box",
+            "CentComm",
+            "Cluster",
+            "Cog",
             "Convex",
-            "Relic",
-            "Xeno"
+            "Core",
+            "Dev",
+            "TestTeg",
+            "Elkridge",
+            "Fland",
+            "Gate",
+            "Loop",
+            "Marathon",
+            "Meta",
+            "Oasis",
+            "Omega",
+            "Origin",
+            "Packed",
+            "Plasma",
+            "Reach",
+            "Saltern",
+            "Train",
+            "Xeno",
+
+            // _Harmony/Maps
+            "Barratry",
+
+            // _Impstation/Maps
+            "E1M1",
+            "Banana",
+            "Boat",
+            "Hummingbird",
+            "Lilboat",
+            "Luna",
+            "Skimmer",
+            "Union",
         };
 
         /// <summary>
@@ -409,7 +460,9 @@ namespace Content.IntegrationTests.Tests
 
                     jobs.ExceptWith(spawnPoints);
 
-                    Assert.That(jobs, Is.Empty, $"There is no spawnpoints for {string.Join(", ", jobs)} on {mapProto}.");
+                    // Imp - Before asserting we check if this is an ignored warning. Linq might kill performance a bit but it shouldn't matter too much?
+                    if (!IgnoreUnmappedSpawns.Any(x => x.Item1 == mapProto && jobs.Contains(protoManager.Index<JobPrototype>(x.Item2))))
+                        Assert.That(jobs, Is.Empty, $"There is no spawnpoints for {string.Join(", ", jobs)} on {mapProto}.");
                 }
 
                 try

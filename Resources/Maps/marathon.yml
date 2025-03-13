@@ -53326,7 +53326,7 @@ entities:
       parent: 30
 - proto: ClothingHeadHelmetTemplar
   entities:
-  - uid: 16772
+  - uid: 23196
     components:
     - type: Transform
       pos: -57.48945,10.619459

@@ -58696,8 +58696,6 @@ entities:
       pos: -39.5,44.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17759
   - uid: 9792
@@ -58707,8 +58705,6 @@ entities:
       pos: -39.5,45.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17759
   - uid: 9793
