@@ -11,4 +11,5 @@
     ClothingEyesHudMedical: 2
     ClothingEyesEyepatchHudMedical: 2
     ClothingEyesGlassesHudMedical: 2
-
+  contrabandInventory:
+    FoodApple: 1

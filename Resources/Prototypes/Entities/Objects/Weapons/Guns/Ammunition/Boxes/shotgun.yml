@@ -34,7 +34,8 @@
 - type: entity
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  name: shell box (.50 stun slug)
+  name: shell box (.50 stun slug) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as stun slugs. #imp
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -51,7 +52,8 @@
       - state: beanbag
 
 - type: entity
-  name: shell box (lethal)
+  name: shell box (.50 buckshot) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as buckshot. #imp
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   components:
@@ -66,99 +68,121 @@
       - state: lethal
 
 - type: entity
-  name: shell box (slug)
+  name: shell box (.50 slug) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as slugs. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
     - type: MagazineVisuals
-      magState: mag-alt
+      magState: mag-slug
       steps: 5
       zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-alt-1
+      - state: mag-slug-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: slug
 
 - type: entity
-  name: shell box (flare)
+  name: shell box (.50 flare) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as flares. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
+    - type: MagazineVisuals
+      magState: mag-flare
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-flare-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: flare
 
 - type: entity
-  name: shell box (incendiary)
+  name: shell box (.50 incendiary) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as incendiary pellets. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
+    - type: MagazineVisuals
+      magState: mag-incend
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-incend-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: incendiary
 
 - type: entity
-  name: shell box (uranium)
+  name: shell box (.50 uranium) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as uranium pellets. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
     - type: MagazineVisuals
-      magState: mag-alt
+      magState: mag-uranium
       steps: 5
       zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-alt-1
+      - state: mag-uranium-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: uranium
 
 - type: entity
-  name: shell box (practice)
+  name: shell box (.50 practice) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as practice ammo. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
+    - type: MagazineVisuals
+      magState: mag-practice
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-practice-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: practice
 
 - type: entity
-  name: shell box (tranquilizer)
+  name: shell box (.50 tranquilizer) #imp
+  description: A box made for 16 .50 shotgun shells, labeled as tranquilizer darts. #imp
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
+    - type: MagazineVisuals
+      magState: mag-tranq
+      steps: 5
+      zeroVisible: false
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-tranq-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: tranquilizer

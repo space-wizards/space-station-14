@@ -1,6 +1,6 @@
 #gray's Hardsuit
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitGray
   name: gray hardsuit helmet
   description: I wonder what's inside.

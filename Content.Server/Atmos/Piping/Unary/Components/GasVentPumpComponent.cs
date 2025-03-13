@@ -11,8 +11,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [RegisterComponent]
     public sealed partial class GasVentPumpComponent : Component
     {
+        /// <summary>
+        /// Identifies if the device is enabled by an air alarm. Does not indicate if the device is powered.
+        /// By default, all air vents start enabled, whether linked to an alarm or not.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = false;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;

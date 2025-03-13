@@ -5,9 +5,12 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Station.Systems;
 using Content.Server.Temperature.Components;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
-using Robust.Server.Maps;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using Content.Shared.Ghost;
 using Content.Shared._Impstation.Ghost;
 using Content.Server._Goobstation.Ghostbar.Components;
@@ -44,14 +47,11 @@ public sealed class GhostBarSystem : EntitySystem
         SubscribeLocalEvent<GhostBarPatronComponent, MindRemovedMessage>(OnPlayerGhosted);
     }
 
-    const string MapPath = "Maps/_Goobstation/Nonstations/ghostbar.yml";
+    private readonly ResPath _mapPath = new("Maps/_Goobstation/Nonstations/ghostbar.yml");
     private void OnRoundStart(RoundStartingEvent ev)
     {
-        _mapSystem.CreateMap(out var mapId);
-        var options = new MapLoadOptions { LoadMap = true };
-
-        if (_mapLoader.TryLoad(mapId, MapPath, out _, options))
-            _mapSystem.SetPaused(mapId, false);
+        if (_mapLoader.TryLoadMap(_mapPath, out var map, out _, new DeserializationOptions { InitializeMaps = true }))
+            _mapSystem.SetPaused(map.Value.Comp.MapId, false);
     }
 
     public void SpawnPlayer(GhostBarSpawnEvent msg, EntitySessionEventArgs args)

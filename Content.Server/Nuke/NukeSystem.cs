@@ -51,7 +51,7 @@ public sealed class NukeSystem : EntitySystem
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
     /// </summary>
     private float _nukeSongLength;
-    private string _selectedNukeSong = String.Empty;
+    private ResolvedSoundSpecifier _selectedNukeSong = String.Empty;
 
     /// <summary>
     ///     Time to leave between the nuke song and the nuke alarm playing.
@@ -304,7 +304,7 @@ public sealed class NukeSystem : EntitySystem
 
         // Start playing the nuke event song so that it ends a couple seconds before the alert sound
         // should play
-        if (nuke.RemainingTime <= _nukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong && !string.IsNullOrEmpty(_selectedNukeSong))
+        if (nuke.RemainingTime <= _nukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
         {
             _sound.DispatchStationEventMusic(uid, _selectedNukeSong, StationEventMusicType.Nuke);
             nuke.PlayedNukeSong = true;
@@ -313,7 +313,7 @@ public sealed class NukeSystem : EntitySystem
         // play alert sound if time is running out
         if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
         {
-            _sound.PlayGlobalOnStation(uid, _audio.GetSound(nuke.AlertSound), new AudioParams{Volume = -5f});
+            _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(nuke.AlertSound), new AudioParams{Volume = -5f});
             _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
             nuke.PlayedAlertSound = true;
             UpdateAppearance(uid, nuke);
@@ -471,7 +471,7 @@ public sealed class NukeSystem : EntitySystem
         var posText = $"({x}, {y})";
 
         // We are collapsing the randomness here, otherwise we would get separate random song picks for checking duration and when actually playing the song afterwards
-        _selectedNukeSong = _audio.GetSound(component.ArmMusic);
+        _selectedNukeSong = _audio.ResolveSound(component.ArmMusic);
 
         _announcer.SendAnnouncementMessage(
             _announcer.GetAnnouncementId("NukeArm"),
@@ -484,8 +484,8 @@ public sealed class NukeSystem : EntitySystem
             ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, nukeXform))))
         );
 
-        _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
-        _nukeSongLength = (float)_audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
+        _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(component.ArmSound));
+        _nukeSongLength = (float) _audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
 
         // turn on the spinny light
         _pointLight.SetEnabled(uid, true);
@@ -527,7 +527,7 @@ public sealed class NukeSystem : EntitySystem
        );
 
         component.PlayedNukeSong = false;
-        _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
+        _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(component.DisarmSound));
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
 
         // reset nuke remaining time to either itself or the minimum time, whichever is higher

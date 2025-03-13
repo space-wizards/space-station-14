@@ -43,7 +43,10 @@ public sealed partial class SupermatterSystem
         if (mix is not { })
             return;
 
-        sm.GasStorage = mix.Remove(sm.GasEfficiency * mix.TotalMoles);
+        // Divide the gas efficiency by the grace modifier if the supermatter is unpowered
+        var gasEfficiency = sm.GasEfficiency / (sm.Power > 0 ? 1 : _config.GetCVar(EECCVars.SupermatterGasEfficiencyGraceModifier));
+
+        sm.GasStorage = mix.Remove(gasEfficiency * mix.TotalMoles);
         var moles = sm.GasStorage.TotalMoles;
 
         if (!(moles > 0f))
@@ -343,7 +346,8 @@ public sealed partial class SupermatterSystem
         }
 
         // Absorbed gas from surrounding area
-        var absorbedGas = mix.Remove(sm.GasEfficiency * mix.TotalMoles);
+        var gasEfficiency = sm.GasEfficiency / (sm.Power > 0 ? 1 : _config.GetCVar(EECCVars.SupermatterGasEfficiencyGraceModifier));
+        var absorbedGas = mix.Remove(gasEfficiency * mix.TotalMoles);
         var moles = absorbedGas.TotalMoles;
 
         var totalDamage = 0f;

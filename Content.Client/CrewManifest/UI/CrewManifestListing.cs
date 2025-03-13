@@ -39,7 +39,8 @@ public sealed class CrewManifestListing : BoxContainer
 
         foreach (var (section, listing) in entryDict)
         {
-            entryList.Add((section, listing));
+            if (!section.ManifestHidden) //imp edit: for excluding certain departments from manifest
+                entryList.Add((section, listing));
         }
 
         entryList.Sort((a, b) => DepartmentUIComparer.Instance.Compare(a.section, b.section));

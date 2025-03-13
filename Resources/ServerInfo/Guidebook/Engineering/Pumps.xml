@@ -1,7 +1,7 @@
 ﻿<Document>
 # Pumps
   Pumps are the primary way of actively moving gasses through a [textlink="pipenet." link="PipeNetworks"]
-  They take gas from one side, and push it to the other.
+  They take gas from one side and push it to the other.
   There are two different types of pumps:
 
   <Box>
@@ -16,7 +16,7 @@
   - Pumps cannot move gasses into pipes with pressures or volumes exceeding their [color=#a4885c]limit[/color]. This causes them to be [color=red]blocked[/color].
 
   Pumps will show a colorful animation when they are doing work.
-  If they have no gas to pump, or they are blocked, they will show a blinking [color=red]red[/color] animation.
+  If they have no gas to pump or they are blocked, they will show a blinking [color=red]red[/color] animation.
   Pumps that are off, have no power, or are unanchored will show no animation.
 
   ## Pressure Pumps

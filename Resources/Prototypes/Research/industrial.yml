@@ -14,6 +14,7 @@
   - MineralScannerEmpty
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
+  - BorgModuleMining # imp
 
 - type: technology
   id: SpaceScanning
@@ -167,6 +168,8 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
+    - Fulton
+    - FultonBeacon
 
 - type: technology
   id: AdvancedSalvage

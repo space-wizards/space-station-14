@@ -187,7 +187,7 @@
 
 - type: entity
   name: Mk 58
-  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolMk58
   description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo. #imp
   components:
@@ -213,8 +213,8 @@
 - type: entity
   name: N1984
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
-  id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
+  id: WeaponPistolN1984
+  description: The sidearm of any self-respecting officer, often favored by ERT security forces. Uses .45 magnum ammo. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/N1984.rsi #imp
@@ -234,7 +234,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+      path: /Audio/Weapons/Guns/Gunshots/hpistol.ogg #imp; it's a damn .45 you GOTTA make it sound heavier
   - type: ItemSlots
     slots:
       gun_magazine:
