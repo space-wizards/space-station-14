@@ -468,6 +468,25 @@
   canRotate: false
 
 - type: construction
+  name: toggleable tinted window
+  id: TintedWindowToggleable
+  graph: Window
+  startNode: start
+  targetNode: tintedWindowToggleable
+  category: construction-category-structures
+  description: Not clear, but lasers still pass through. Can be toggled with a signal.
+  canBuildInImpassable: true
+  conditions:
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/tinted_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: clockwork window
   id: ClockworkWindow
   graph: Window
