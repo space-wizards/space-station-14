@@ -45,6 +45,7 @@
   - BorgModuleHarvesting
   - BorgModuleDefibrillator
   - BorgModuleAdvancedTreatment
+  - BorgModuleMining #imp
 
 - type: latheRecipePack
   id: MechParts
