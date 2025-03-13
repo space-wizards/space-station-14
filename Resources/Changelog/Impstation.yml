@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Rat Servants will no longer be smart enough to understand that pointing
-      near a locker means attack the person IN the locker.
-    type: Fix
-  id: 794
-  time: '2024-12-24T09:43:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1105
 - author: widgetbeck
   changes:
   - message: Reduced the event weight of mass hallucinations.
@@ -4084,3 +4076,10 @@
   id: 1293
   time: '2025-03-13T19:49:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1785
+- author: Tyranex
+  changes:
+  - message: Fixed the mining module not appearing in the exofab after it was researched
+    type: Fix
+  id: 1294
+  time: '2025-03-13T21:31:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1933
