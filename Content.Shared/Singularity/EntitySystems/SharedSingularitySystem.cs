@@ -342,9 +342,8 @@ public abstract class SharedSingularitySystem : EntitySystem
     {
         var singulo = args.Singularity;
 
-        _horizons.SetRadius(eventHorizon, EventHorizonRadius(singulo), false, eventHorizon.Comp);
-        _horizons.SetCanBreachContainment(eventHorizon, CanBreachContainment(singulo), false, eventHorizon.Comp);
-        _horizons.UpdateEventHorizonFixture(eventHorizon, eventHorizon: eventHorizon.Comp);
+        _horizons.SetRadius(eventHorizon.AsNullable(), EventHorizonRadius(singulo), updateFixture: false);
+        _horizons.SetCanBreachContainment(eventHorizon.AsNullable(), CanBreachContainment(singulo), updateFixture: true);
     }
 
     /// <summary>

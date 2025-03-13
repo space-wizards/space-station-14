@@ -52,7 +52,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
 
         var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
-        vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, SetEnergy);
+        vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, (uid, value, comp) => SetEnergy((uid, comp), value));
     }
 
     public override void Shutdown()
@@ -74,7 +74,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         var query = EntityQueryEnumerator<SingularityComponent>();
         while (query.MoveNext(out var uid, out var singularity))
         {
-            AdjustEnergy(uid, -singularity.EnergyDrain * frameTime, singularity: singularity);
+            AdjustEnergy((uid, singularity), -singularity.EnergyDrain * frameTime);
         }
     }
 
@@ -87,17 +87,18 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The uid of the singularity to set the energy of.</param>
     /// <param name="value">The amount of energy for the singularity to have.</param>
     /// <param name="singularity">The state of the singularity to set the energy of.</param>
-    public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
+    public void SetEnergy(Entity<SingularityComponent?> singularity, float value)
     {
-        if (!Resolve(uid, ref singularity))
+        if (!Resolve(singularity, ref singularity.Comp))
             return;
 
-        var oldValue = singularity.Energy;
+        var oldValue = singularity.Comp.Energy;
         if (oldValue == value)
             return;
 
-        singularity.Energy = value;
-        SetLevel(uid, value switch
+        singularity.Comp.Energy = value;
+
+        SetLevel(singularity, value switch
         {
             // Normally, a level 6 singularity requires the supermatter + 3000 energy.
             // The required amount of energy has been bumped up to compensate for the lack of the supermatter.
@@ -108,7 +109,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
             >= 200 => 2,
             > 0 => 1,
             _ => 0
-        }, singularity);
+        });
     }
 
     /// <summary>
@@ -121,18 +122,55 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="snapMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
     /// <param name="snapMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
     /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
-    public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
+    public void AdjustEnergy(Entity<SingularityComponent?> singularity, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true)
     {
-        if (!Resolve(uid, ref singularity))
+        if (!Resolve(singularity, ref singularity.Comp))
             return;
 
-        var newValue = singularity.Energy + delta;
-        if ((!snapMin && newValue < min)
-        || (!snapMax && newValue > max))
-            return;
-        SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
+        var oldValue = singularity.Comp.Energy;
+
+        if (!snapMin && oldValue < min)
+            min = oldValue;
+        if (!snapMax && oldValue > max)
+            max = oldValue;
+
+        var newValue = oldValue + delta;
+
+        SetEnergy(singularity, MathHelper.Clamp(newValue, min, max));
     }
 
+    #region Obsolete API
+
+    /// <summary>
+    /// Setter for <see cref="SingularityComponent.Energy"/>.
+    /// Also updates the level of the singularity accordingly.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to set the energy of.</param>
+    /// <param name="value">The amount of energy for the singularity to have.</param>
+    /// <param name="singularity">The state of the singularity to set the energy of.</param>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
+    {
+        SetEnergy((uid, singularity), value);
+    }
+
+    /// <summary>
+    /// Adjusts the amount of energy the singularity has accumulated.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to adjust the energy of.</param>
+    /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
+    /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
+    /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
+    /// <param name="snapMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
+    /// <param name="snapMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
+    /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
+    {
+        AdjustEnergy((uid, singularity), delta, min, max, snapMin, snapMax);
+    }
+
+    #endregion Obsolete API
 
     #endregion Getters/Setters
 
@@ -211,7 +249,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if (HasComp<SinguloFoodComponent>(args.Entity))
             return;
 
-        AdjustEnergy(singularity, BaseEntityEnergy, singularity: singularity.Comp);
+        AdjustEnergy(singularity.AsNullable(), BaseEntityEnergy);
     }
 
     /// <summary>
@@ -222,7 +260,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnConsumedTiles(Entity<SingularityComponent> singularity, ref TilesConsumedByEventHorizonEvent args)
     {
-        AdjustEnergy(singularity, args.Tiles.Count * BaseTileEnergy, singularity: singularity.Comp);
+        AdjustEnergy(singularity.AsNullable(), args.Tiles.Count * BaseTileEnergy);
     }
 
     /// <summary>
@@ -236,8 +274,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
-            AdjustEnergy(args.EventHorizonUid, singularity.Comp.Energy, singularity: singulo);
-            SetEnergy(singularity, 0.0f, singularity.Comp);
+            AdjustEnergy((args.EventHorizonUid, singulo), singularity.Comp.Energy);
+            SetEnergy(singularity.AsNullable(), 0.0f);
         }
     }
 
@@ -254,7 +292,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
             // Calculate the percentage change (positive or negative)
             var percentageChange = singulo.Energy * (morsel.Comp.EnergyFactor - 1f);
             // Apply both the flat and percentage changes
-            AdjustEnergy(args.EventHorizonUid, morsel.Comp.Energy + percentageChange, singularity: singulo);
+            AdjustEnergy((args.EventHorizonUid, singulo), morsel.Comp.Energy + percentageChange);
         }
     }
 

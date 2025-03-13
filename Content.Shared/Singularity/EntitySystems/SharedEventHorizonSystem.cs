@@ -39,10 +39,10 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         SubscribeLocalEvent<EventHorizonComponent, PreventCollideEvent>(OnPreventCollide);
 
         var vvHandle = Vvm.GetTypeHandler<EventHorizonComponent>();
-        vvHandle.AddPath(nameof(EventHorizonComponent.Radius), (_, comp) => comp.Radius, (uid, value, comp) => SetRadius(uid, value, eventHorizon: comp));
-        vvHandle.AddPath(nameof(EventHorizonComponent.CanBreachContainment), (_, comp) => comp.CanBreachContainment, (uid, value, comp) => SetCanBreachContainment(uid, value, eventHorizon: comp));
-        vvHandle.AddPath(nameof(EventHorizonComponent.ColliderFixtureId), (_, comp) => comp.ColliderFixtureId, (uid, value, comp) => SetColliderFixtureId(uid, value, eventHorizon: comp));
-        vvHandle.AddPath(nameof(EventHorizonComponent.ConsumerFixtureId), (_, comp) => comp.ConsumerFixtureId, (uid, value, comp) => SetConsumerFixtureId(uid, value, eventHorizon: comp));
+        vvHandle.AddPath(nameof(EventHorizonComponent.Radius), (_, comp) => comp.Radius, (uid, value, comp) => SetRadius((uid, comp), value));
+        vvHandle.AddPath(nameof(EventHorizonComponent.CanBreachContainment), (_, comp) => comp.CanBreachContainment, (uid, value, comp) => SetCanBreachContainment((uid, comp), value));
+        vvHandle.AddPath(nameof(EventHorizonComponent.ColliderFixtureId), (_, comp) => comp.ColliderFixtureId, (uid, value, comp) => SetColliderFixtureId((uid, comp), value));
+        vvHandle.AddPath(nameof(EventHorizonComponent.ConsumerFixtureId), (_, comp) => comp.ConsumerFixtureId, (uid, value, comp) => SetConsumerFixtureId((uid, comp), value));
     }
 
     public override void Shutdown()
@@ -66,19 +66,21 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="value">The new radius of the event horizon.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing the radius of the event horizon.</param>
     /// <param name="eventHorizon">The state of the event horizon to change the radius of.</param>
-    public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    public void SetRadius(Entity<EventHorizonComponent?> eventHorizon, float value, bool updateFixture = true)
     {
-        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(eventHorizon, ref eventHorizon.Comp))
             return;
 
-        var oldValue = eventHorizon.Radius;
+        var oldValue = eventHorizon.Comp.Radius;
         if (value == oldValue)
             return;
 
-        eventHorizon.Radius = value;
-        Dirty(uid, eventHorizon);
+        eventHorizon.Comp.Radius = value;
+
+        Dirty(eventHorizon);
+
         if (updateFixture)
-            UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+            UpdateEventHorizonFixture((eventHorizon.Owner, null, eventHorizon.Comp));
     }
 
     /// <summary>
@@ -89,19 +91,21 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="value">Whether the event horizon should be able to breach containment.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
     /// <param name="eventHorizon">The state of the event horizon to make (in)capable of breaching containment.</param>
-    public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    public void SetCanBreachContainment(Entity<EventHorizonComponent?> eventHorizon, bool value, bool updateFixture = true)
     {
-        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(eventHorizon, ref eventHorizon.Comp))
             return;
 
-        var oldValue = eventHorizon.CanBreachContainment;
+        var oldValue = eventHorizon.Comp.CanBreachContainment;
         if (value == oldValue)
             return;
 
-        eventHorizon.CanBreachContainment = value;
-        Dirty(uid, eventHorizon);
+        eventHorizon.Comp.CanBreachContainment = value;
+
+        Dirty(eventHorizon);
+
         if (updateFixture)
-            UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+            UpdateEventHorizonFixture((eventHorizon.Owner, null, eventHorizon.Comp));
     }
 
     /// <summary>
@@ -112,19 +116,21 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="value">The new fixture ID to associate the event horizon with.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
     /// <param name="eventHorizon">The state of the event horizon with the fixture ID to change.</param>
-    public void SetColliderFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    public void SetColliderFixtureId(Entity<EventHorizonComponent?> eventHorizon, string? value, bool updateFixture = true)
     {
-        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(eventHorizon, ref eventHorizon.Comp))
             return;
 
-        var oldValue = eventHorizon.ColliderFixtureId;
+        var oldValue = eventHorizon.Comp.ColliderFixtureId;
         if (value == oldValue)
             return;
 
-        eventHorizon.ColliderFixtureId = value;
-        Dirty(uid, eventHorizon);
+        eventHorizon.Comp.ColliderFixtureId = value;
+
+        Dirty(eventHorizon);
+
         if (updateFixture)
-            UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+            UpdateEventHorizonFixture((eventHorizon.Owner, null, eventHorizon.Comp));
     }
 
     /// <summary>
@@ -135,19 +141,21 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="value">The new fixture ID to associate the event horizon with.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
     /// <param name="eventHorizon">The state of the event horizon with the fixture ID to change.</param>
-    public void SetConsumerFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    public void SetConsumerFixtureId(Entity<EventHorizonComponent?> eventHorizon, string? value, bool updateFixture = true)
     {
-        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(eventHorizon, ref eventHorizon.Comp))
             return;
 
-        var oldValue = eventHorizon.ConsumerFixtureId;
+        var oldValue = eventHorizon.Comp.ConsumerFixtureId;
         if (value == oldValue)
             return;
 
-        eventHorizon.ConsumerFixtureId = value;
-        Dirty(uid, eventHorizon);
+        eventHorizon.Comp.ConsumerFixtureId = value;
+
+        Dirty(eventHorizon);
+
         if (updateFixture)
-            UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+            UpdateEventHorizonFixture((eventHorizon.Owner, null, eventHorizon.Comp));
     }
 
     /// <summary>
@@ -156,13 +164,14 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="uid">The uid of the event horizon associated with the fixture to update.</param>
     /// <param name="fixtures">The fixture manager component containing the fixture to update.</param>
     /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
-    public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
+    public void UpdateEventHorizonFixture(Entity<FixturesComponent?, EventHorizonComponent?> eventHorizon)
     {
-        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
+        var (uid, fixtures, horizon) = eventHorizon;
+        if (!HorizonQuery.Resolve(eventHorizon, ref horizon))
             return;
 
-        var consumerId = eventHorizon.ConsumerFixtureId;
-        var colliderId = eventHorizon.ColliderFixtureId;
+        var consumerId = horizon.ConsumerFixtureId;
+        var colliderId = horizon.ColliderFixtureId;
         if (consumerId == null || colliderId == null
         || !Resolve(uid, ref fixtures, logMissing: false))
             return;
@@ -171,19 +180,58 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         var consumer = _fixtures.GetFixtureOrNull(uid, consumerId, fixtures);
         if (consumer != null)
         {
-            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, eventHorizon.Radius, fixtures);
+            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, horizon.Radius, fixtures);
             _physics.SetHard(uid, consumer, false, fixtures);
         }
 
         var collider = _fixtures.GetFixtureOrNull(uid, colliderId, fixtures);
         if (collider != null)
         {
-            _physics.SetRadius(uid, colliderId, collider, collider.Shape, eventHorizon.Radius, fixtures);
+            _physics.SetRadius(uid, colliderId, collider, collider.Shape, horizon.Radius, fixtures);
             _physics.SetHard(uid, collider, true, fixtures);
         }
 
         EntityManager.Dirty(uid, fixtures);
     }
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="SharedEventHorizonSystem.SetRadius(Entity{EventHorizonComponent?}, float, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetRadius((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SharedEventHorizonSystem.SetCanBreachContainment(Entity{EventHorizonComponent?}, bool, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetCanBreachContainment((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SharedEventHorizonSystem.SetColliderFixtureId(Entity{EventHorizonComponent?}, string?, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetColliderFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetColliderFixtureId((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SharedEventHorizonSystem.SetConsumerFixtureId(Entity{EventHorizonComponent?}, string?, bool)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void SetConsumerFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
+    {
+        SetConsumerFixtureId((uid, eventHorizon), value, updateFixture);
+    }
+
+    /// <inheritdoc cref="SharedEventHorizonSystem.UpdateEventHorizonFixture(Entity{FixturesComponent?, EventHorizonComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> overload instead.")]
+    public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
+    {
+        UpdateEventHorizonFixture((uid, fixtures, eventHorizon));
+    }
+
+    #endregion Obsolete API
 
     #endregion Getters/Setters
 
@@ -197,7 +245,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void OnEventHorizonStartup(Entity<EventHorizonComponent> eventHorizon, ref ComponentStartup args)
     {
-        UpdateEventHorizonFixture(eventHorizon, eventHorizon: eventHorizon.Comp);
+        UpdateEventHorizonFixture((eventHorizon.Owner, null, eventHorizon.Comp));
     }
 
     /// <summary>
