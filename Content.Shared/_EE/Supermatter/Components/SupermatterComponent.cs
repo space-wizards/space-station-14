@@ -142,7 +142,7 @@ public sealed partial class SupermatterComponent : Component
     /// The percentage of the gas on the supermatter's tile that is absorbed each atmos tick.
     /// </summary>
     [DataField]
-    public float GasEfficiency = 0.15f;
+    public float GasEfficiency = 0.05f;
 
     /// <summary>
     /// Uses <see cref="PowerlossDynamicScaling"/> and <see cref="GasStorage"/> to lessen the effects of our powerloss functions

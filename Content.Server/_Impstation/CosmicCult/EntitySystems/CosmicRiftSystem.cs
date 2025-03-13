@@ -88,6 +88,7 @@ public sealed class CosmicRiftSystem : EntitySystem
 
     private void OnAbsorbDoAfter(Entity<CosmicCultComponent> uid, ref EventAbsorbRiftDoAfter args)
     {
+        var comp = uid.Comp;
         if (args.Args.Target == null || args.Cancelled || args.Handled)
         {
             if (TryComp<CosmicMalignRiftComponent>(args.Args.Target, out var rift))
@@ -98,9 +99,13 @@ public sealed class CosmicRiftSystem : EntitySystem
         var tgtpos = Transform(args.Args.Target.Value).Coordinates;
         var target = args.Args.Target.Value;
         Spawn(uid.Comp.AbsorbVFX, tgtpos);
-        uid.Comp.CosmicEmpowered = true;
-        uid.Comp.CosmicSiphonQuantity = 2;
-        uid.Comp.Respiration = false;
+        comp.CosmicEmpowered = true;
+        comp.CosmicSiphonQuantity = 2;
+        comp.CosmicGlareRange = 10;
+        comp.CosmicGlareDuration = 10 * 1000f;
+        comp.CosmicGlareStun = TimeSpan.FromSeconds(1);
+        comp.CosmicImpositionDuration = TimeSpan.FromSeconds(7.2);
+        comp.Respiration = false;
         EnsureComp<PressureImmunityComponent>(args.User);
         EnsureComp<TemperatureImmunityComponent>(args.User);
         _popup.PopupEntity(Loc.GetString("cosmiccult-rift-absorb"), uid, uid);

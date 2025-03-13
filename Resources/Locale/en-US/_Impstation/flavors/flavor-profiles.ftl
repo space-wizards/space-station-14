@@ -31,3 +31,5 @@ flavor-complex-medium = like your vision expanded
 flavor-complex-rodent = like rodents
 
 flavor-complex-orangecoffee = excitingly acidic
+
+flavor-complex-entropy = like your tastebuds are unravelling

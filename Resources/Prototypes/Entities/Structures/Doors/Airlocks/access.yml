@@ -266,7 +266,7 @@
       board: [ DoorElectronicsChemistry ]
 
 - type: entity
-  parent: AirlockMedical
+  parent: AirlockMedicalMorgue #imp edit
   id: AirlockMedicalMorgueLocked
   suffix: Morgue, Locked
   components:
@@ -284,7 +284,7 @@
       board: [ DoorElectronicsResearch ]
 
 - type: entity
-  parent: AirlockScience
+  parent: AirlockMedicalScience #imp edit
   id: AirlockMedicalScienceLocked
   suffix: Medical/Science, Locked
   components:
@@ -383,7 +383,7 @@
       board: [ DoorElectronicsSecurity ]
 
 - type: entity
-  parent: AirlockSecurity
+  parent: AirlockDetective #imp edit
   id: AirlockDetectiveLocked
   suffix: Detective, Locked
   components:
@@ -392,7 +392,7 @@
       board: [ DoorElectronicsDetective ]
 
 - type: entity
-  parent: AirlockSecurity
+  parent: AirlockBrig #imp edit
   id: AirlockBrigLocked
   suffix: Brig, Locked
   components:
@@ -401,7 +401,7 @@
       board: [ DoorElectronicsBrig ]
 
 - type: entity
-  parent: AirlockSecurity
+  parent: AirlockBrig #imp edit 
   id: AirlockSecurityLawyerLocked
   suffix: Security/Lawyer, Locked
   components:
@@ -410,15 +410,15 @@
       board: [ DoorElectronicsSecurityLawyer ]
 
 - type: entity
-  parent: AirlockSecurity
+  parent: AirlockArmory #imp edit
   id: AirlockArmoryLocked
   suffix: Armory, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsArmory ]
-  - type: Wires
-    layoutId: AirlockArmory
+  #- type: Wires
+  #  layoutId: AirlockArmory imp edit, handled in AirlockArmory to be consistent with other airlocks
 
 - type: entity
   parent: AirlockSecurity
@@ -640,7 +640,7 @@
       board: [ DoorElectronicsChemistry ]
 
 - type: entity
-  parent: AirlockMedicalGlass
+  parent: AirlockMedicalMorgueGlass #imp edit
   id: AirlockMedicalMorgueGlassLocked
   suffix: Morgue, Locked
   components:
@@ -676,7 +676,7 @@
       board: [ DoorElectronicsResearch ]
 
 - type: entity
-  parent: AirlockScienceGlass
+  parent: AirlockMedicalScienceGlass #imp edit
   id: AirlockMedicalScienceGlassLocked
   suffix: Medical/Science, Locked
   components:
@@ -775,7 +775,7 @@
       board: [ DoorElectronicsSecurity ]
 
 - type: entity
-  parent: AirlockSecurityGlass
+  parent: AirlockDetectiveGlass #imp edit
   id: AirlockDetectiveGlassLocked
   suffix: Detective, Locked
   components:
@@ -784,7 +784,7 @@
       board: [ DoorElectronicsDetective ]
 
 - type: entity
-  parent: AirlockSecurityGlass
+  parent: AirlockBrigGlass #imp edit
   id: AirlockBrigGlassLocked
   suffix: Brig, Locked
   components:
@@ -793,7 +793,7 @@
       board: [ DoorElectronicsBrig ]
 
 - type: entity
-  parent: AirlockSecurityGlass
+  parent: AirlockBrigGlass #imp edit
   id: AirlockSecurityLawyerGlassLocked
   suffix: Security/Lawyer, Locked
   components:
@@ -802,7 +802,7 @@
       board: [ DoorElectronicsSecurityLawyer ]
 
 - type: entity
-  parent: AirlockSecurityGlass
+  parent: AirlockArmoryGlass #imp edit
   id: AirlockArmoryGlassLocked
   suffix: Armory, Locked
   components:

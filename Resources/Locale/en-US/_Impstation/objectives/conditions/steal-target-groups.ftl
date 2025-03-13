@@ -23,6 +23,7 @@ steal-target-groups-evil-skull = evil skull
 steal-target-groups-finfin = Fin Fin
 steal-target-groups-finfinmeat = Fin Fin's Fin-flesh
 steal-target-groups-animal-poly = Poly, the Chief Engineer's parrot
+steal-target-groups-suppy = Suppy, Engineering's pet suppermatter chunk
 
 # Thief Structure
 

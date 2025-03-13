@@ -149,6 +149,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
             else
             {
                 _stun.TryStun(target, TimeSpan.FromSeconds(4f), false);
+                _damageable.TryChangeDamage(target, uid.Comp.ConversionHeal * -1);
                 _cultRule.CosmicConversion(target);
             }
         }

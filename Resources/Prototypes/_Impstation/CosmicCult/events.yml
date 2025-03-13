@@ -1,0 +1,51 @@
+- type: entity
+  parent: BaseGameRule
+  id: RogueAscendedSpawn
+  components:
+  - type: StationEvent
+    weight: 6.5
+    earliestStart: 30
+    reoccurrenceDelay: 20
+    minimumPlayers: 30
+    duration: null
+  - type: SpaceSpawnRule
+  - type: AntagSpawner
+    prototype: MobRogueAscended
+  - type: AntagObjectives
+    objectives:
+    - RogueAscendedInfectionObjective
+    - RogueAscendedSurviveObjective
+  - type: AntagSelection
+    agentName: rogue-ascended-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointRogueAscended
+      min: 1
+      max: 1
+      pickPlayer: false
+      mindRoles:
+      - MindRoleCosmicAscended
+      briefing:
+        text: rogue-ascended-role-greeting
+        color: CadetBlue
+        sound: /Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg
+      components:
+      - type: RogueAscended
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointRogueAscended
+  components:
+  - type: GhostRole
+    name: ghost-role-information-rogue-ascended-name
+    description: ghost-role-information-rogue-ascended-description
+    rules: ghost-role-information-rogue-ascended-rules
+    mindRoles:
+    - MindRoleCosmicAscended
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Mobs/astralrogue.rsi
+    layers:
+    - state: underlay
+      shader: unshaded
+    - state: base
+      shader: unshaded

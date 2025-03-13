@@ -142,7 +142,7 @@
 - type: entity
   name: entro-pop
   parent: FoodMealBigLollipop
-  id: FoodMealCultLollipop #no recipe yet but it is a rare spawn from meal spawners
+  id: FoodMealCultLollipop
   description: It seems to flicker in and out of view, your eyes never truly focusing on it. It's cosmically delicious!
   components:
   - type: Tag
