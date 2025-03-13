@@ -9,6 +9,10 @@ namespace Content.Client._Impstation.Thaven.Eui;
 [GenerateTypedNameReferences]
 public sealed partial class MoodContainer : BoxContainer
 {
+    public event Action? OnMoveUp;
+    public event Action? OnMoveDown;
+    public event Action? OnDelete;
+
     public MoodContainer(ThavenMood? mood = null)
     {
         RobustXamlLoader.Load(this);
@@ -18,5 +22,12 @@ public sealed partial class MoodContainer : BoxContainer
             ThavenMoodTitle.Text = mood.GetLocName();
             ThavenMoodContent.TextRope = new Rope.Leaf(mood.GetLocDesc());
         }
+
+        MoveUp.OnPressed += _ => OnMoveUp?.Invoke();
+        MoveDown.OnPressed += _ => OnMoveDown?.Invoke();
+        Delete.OnPressed += _ => OnDelete?.Invoke();
     }
+
+    public string MoodTitle => ThavenMoodTitle.Text;
+    public string MoodText => Rope.Collapse(ThavenMoodContent.TextRope).Trim();
 }

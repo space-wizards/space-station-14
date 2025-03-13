@@ -53,6 +53,7 @@ public sealed class ThavenMoodTests
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
+        await server.WaitIdleAsync();
 
         var entMan = server.ResolveDependency<IEntityManager>();
         var thavenSystem = entMan.System<ThavenMoodsSystem>();

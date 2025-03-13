@@ -859,7 +859,7 @@ public sealed partial class AdminVerbSystem
                 // TODO: Icon
                 Act = () =>
                 {
-                    _moods.TryAddRandomMood(args.Target);
+                    _moods.TryAddRandomMood((args.Target, moods));
                 },
                 Impact = LogImpact.High,
                 Message = Loc.GetString("admin-trick-add-random-mood-description"),
@@ -876,7 +876,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
                 Act = () =>
                 {
-                    if (!EntityManager.EnsureComponent<ThavenMoodsComponent>(args.Target, out moods))
+                    if (!EnsureComp<ThavenMoodsComponent>(args.Target, out moods))
                         _moods.NotifyMoodChange((args.Target, moods));
                 },
                 Impact = LogImpact.High,
@@ -886,6 +886,7 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(giveMoods);
         }
         #endregion
+        // End Impstation Additions
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)

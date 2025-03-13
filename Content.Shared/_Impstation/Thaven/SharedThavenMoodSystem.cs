@@ -11,8 +11,18 @@ public abstract class SharedThavenMoodSystem : EntitySystem
 
         SubscribeLocalEvent<ThavenMoodsComponent, GotEmaggedEvent>(OnEmagged);
     }
-    protected virtual void OnEmagged(EntityUid uid, ThavenMoodsComponent comp, ref GotEmaggedEvent args)
+
+    protected virtual void OnEmagged(Entity<ThavenMoodsComponent> ent, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
+            return;
+
+        if (ent.Owner == args.UserUid)
+            return;
+
         args.Handled = true;
     }
 }

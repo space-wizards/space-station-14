@@ -6,17 +6,13 @@ namespace Content.Client._Impstation.Thaven.Eui;
 
 public sealed class ThavenMoodsEui : BaseEui
 {
-    private readonly EntityManager _entityManager;
-
     private ThavenMoodUi _thavenMoodUi;
     private NetEntity _target;
 
     public ThavenMoodsEui()
     {
-        _entityManager = IoCManager.Resolve<EntityManager>();
-
         _thavenMoodUi = new ThavenMoodUi();
-        _thavenMoodUi.SaveButton.OnPressed += _ => SaveMoods();
+        _thavenMoodUi.OnSave += SaveMoods;
     }
 
     private void SaveMoods()

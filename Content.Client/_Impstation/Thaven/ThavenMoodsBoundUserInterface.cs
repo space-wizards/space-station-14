@@ -1,4 +1,3 @@
-using Content.Client._Impstation.Thaven;
 using Content.Shared._Impstation.Thaven;
 using Content.Shared._Impstation.Thaven.Components;
 using JetBrains.Annotations;
@@ -9,15 +8,13 @@ namespace Content.Client._Impstation.Thaven;
 [UsedImplicitly]
 public sealed class ThavenMoodsBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     [ViewVariables]
     private ThavenMoodsMenu? _menu;
-    private EntityUid _owner;
-    private List<ThavenMood>? _moods;
-    private List<ThavenMood>? _sharedMoods;
 
     public ThavenMoodsBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        _owner = owner;
     }
 
     protected override void Open()
@@ -34,8 +31,9 @@ public sealed class ThavenMoodsBoundUserInterface : BoundUserInterface
         if (state is not ThavenMoodsBuiState msg)
             return;
 
-        _moods = msg.Moods;
-        _sharedMoods = msg.SharedMoods;
-        _menu?.Update(_owner, msg);
+        if (!_entMan.TryGetComponent<ThavenMoodsComponent>(Owner, out var comp))
+            return;
+
+        _menu?.Update(comp, msg);
     }
 }
