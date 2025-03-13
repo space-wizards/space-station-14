@@ -2,7 +2,7 @@
 - type: entity
   id: PaperWrittenFormGeneralJobApplication
   name: job application form
-  description:
+  description: a form for those who wish to apply for a new job.
   parent: Paper
   components:
   - type: Paper
@@ -11,7 +11,7 @@
 - type: entity
   id: PaperWrittenFormGeneralFormalComplaint
   name: formal complaint form
-  description:
+  description: a form for those who wish to issue a formal complaint to superiors about misconduct.
   parent: Paper
   components:
   - type: Paper
