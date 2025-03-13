@@ -16,3 +16,13 @@
   components:
   - type: Paper
     content: book-text-form-general-formal-complaint
+
+# Security
+- type: entity
+  id: PaperWrittenFormSecurityArrestWarrant
+  name: arrest warrant
+  description: Might indicate an arrest has been issued.
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-form-security-arrest-warrant

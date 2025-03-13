@@ -20,6 +20,7 @@
     runningState: building
     staticPacks:
     - PrinterGeneralBasic
+    - PrinterSecurityBasic
   - type: MaterialStorage
     whitelist:
       tags:

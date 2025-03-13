@@ -12,3 +12,12 @@
   completetime: 1
   materials:
     Paper: 1
+
+# Security
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormSecurityArrestWarrant
+  result: PaperWrittenFormSecurityArrestWarrant
+  completetime: 1
+  materials:
+    Paper: 1

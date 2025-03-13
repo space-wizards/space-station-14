@@ -97,3 +97,23 @@ book-text-form-general-formal-complaint = 'N. Formal Complaint Form
 
 
     After you are done filling out this form, please either submit it to the Captain, the HoP, another relevant command head, or to central command via fax for review. Please refrain from involving multiple commanding officers unless it is absolutely nessecary.
+
+#Security
+
+book-text-form-security-arrest-warrant = 'N. Arrest Warrant
+    --------------------------------------
+    This warrant gives security permission to search a particular personnel or department.
+
+    THIS WARRANT MUST BE APPROVED AND STAMPED BY THE CAPTAIN, HEAD OF SECURITY, OR THE HEAD OF THE DEPARTMENT TO BE SEARCHED/OF THE INDIVIDUAL TO BE SEARCHED. IT CANNOT BE APPROVED BY THE HEAD OF SECURITY IF THE HEAD OF SECURITY IS THE ONE WHO REQUESTED IT.
+
+    Requesting Officer:
+                   --------------------------------------
+    Warrant Target:
+                   --------------------------------------
+    Warrant Reason:
+                   --------------------------------------
+
+    ANY ILLEGAL CONTRABAND FOUND WILL BE SEIZED AND ADDITIONAL CRIMINAL CHARGES MAY OCCUR.
+
+    Stamps below:
+    --------------------------------------

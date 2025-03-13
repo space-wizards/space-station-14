@@ -5,3 +5,8 @@
   recipes:
   - PrinterPaperWrittenFormGeneralJobApplication
   - PrinterPaperWrittenFormGeneralFormalComplaint
+
+- type: latheRecipePack
+  id: PrinterSecurityBasic
+  recipes:
+  - PrinterPaperWrittenFormSecurityArrestWarrant
