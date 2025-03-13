@@ -1,30 +1,25 @@
-<BoxContainer
-    xmlns="https://spacestation14.io"
-    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    HorizontalExpand="True"
-    Orientation="Vertical"
-    >
-    <customControls:HSeparator></customControls:HSeparator>
+<BoxContainer xmlns="https://spacestation14.io"
+        xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+        xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+        HorizontalExpand="True"
+        Orientation="Vertical">
+    <cc:HSeparator/>
     <BoxContainer Orientation="Vertical">
-        <LineEdit Name="ThavenMoodTitle" Access="Public" Margin="5 0 0 0" />
-        <PanelContainer
-            Margin="20 10 0 0"
-            MinHeight="128"
-        >
+        <LineEdit Name="ThavenMoodTitle" Margin="5 0 0 0" />
+        <PanelContainer Margin="20 10 0 0" MinHeight="128">
             <PanelContainer.PanelOverride>
-                <graphics:StyleBoxFlat BackgroundColor="#1B1B1B"></graphics:StyleBoxFlat>
+                <graphics:StyleBoxFlat BackgroundColor="#1B1B1B"/>
             </PanelContainer.PanelOverride>
             <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                <TextEdit Name="ThavenMoodContent" Access="Public" HorizontalExpand="True" Editable="True" MinWidth="500" MinHeight="80"></TextEdit>
+                <TextEdit Name="ThavenMoodContent" HorizontalExpand="True" Editable="True" MinWidth="500" MinHeight="80"/>
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>
     <BoxContainer Orientation="Horizontal" Margin="0 5 0 0" MaxHeight="64" Align="Begin">
-        <Button Name="MoveUp" Access="Public" Text="{Loc thaven-mood-admin-ui-move-up}" StyleClasses="OpenRight"></Button>
-        <Button Name="MoveDown" Access="Public" Text="{Loc thaven-mood-admin-ui-move-down}" StyleClasses="OpenLeft"></Button>
+        <Button Name="MoveUp" Text="{Loc thaven-mood-admin-ui-move-up}" StyleClasses="OpenRight"/>
+        <Button Name="MoveDown" Text="{Loc thaven-mood-admin-ui-move-down}" StyleClasses="OpenLeft"/>
     </BoxContainer>
     <BoxContainer Orientation="Horizontal" Align="End" Margin="0 10 5 10">
-        <Button Name="Delete" Access="Public" Text="{Loc thaven-mood-admin-ui-delete}" ModulateSelfOverride="Red"></Button>
+        <Button Name="Delete" Text="{Loc thaven-mood-admin-ui-delete}" ModulateSelfOverride="Red"/>
     </BoxContainer>
 </BoxContainer>
