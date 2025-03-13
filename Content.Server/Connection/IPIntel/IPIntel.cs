@@ -270,7 +270,7 @@ public sealed class IPIntel
                 return (true, Loc.GetString("ipintel-region-whitelist",
                     ("regions", _regions)));
             }
-            else if (countryCheck)
+            else if (!_regionWhitelist && countryCheck)
             {
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
                     ("player", username),
@@ -316,7 +316,7 @@ public sealed class IPIntel
                 return (true, Loc.GetString("ipintel-region-whitelist",
                     ("regions", _regions)));
             }
-            else if (countryCheck)
+            else if (!_regionWhitelist && countryCheck)
             {
                 _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked-region",
                     ("player", username),
