@@ -142,11 +142,11 @@ public sealed class RogueAscendedSystem : EntitySystem
         if (uid.Comp.HadMoods)
         {
             EnsureComp<ThavenMoodsComponent>(uid, out var moodComp); // ensure it because we don't need another if()
-            _moodSystem.ToggleEmaggable(moodComp); // enable emagging again
-            _moodSystem.ToggleSharedMoods(moodComp); // enable shared moods
-            _moodSystem.ClearMoods(moodComp); // wipe those moods again
-            _moodSystem.TryAddRandomMood(uid, RandomThavenMoodDataset, moodComp, false);
-            _moodSystem.TryAddRandomMood(uid, moodComp);
+            _moodSystem.ToggleEmaggable((uid, moodComp)); // enable emagging again
+            _moodSystem.ToggleSharedMoods((uid, moodComp)); // enable shared moods
+            _moodSystem.ClearMoods((uid, moodComp)); // wipe those moods again
+            _moodSystem.TryAddRandomMood((uid, moodComp), false);
+            _moodSystem.TryAddRandomMood((uid, moodComp));
         }
         else
             RemComp<ThavenMoodsComponent>(uid);
@@ -215,11 +215,11 @@ public sealed class RogueAscendedSystem : EntitySystem
         EnsureComp<ThavenMoodsComponent>(target, out var moodComp);
         Spawn(uid.Comp.Vfx, Transform(target).Coordinates);
 
-        _moodSystem.ToggleEmaggable(moodComp); // can't emag an infected thavenmood
-        _moodSystem.ClearMoods(moodComp); // wipe those moods
-        _moodSystem.ToggleSharedMoods(moodComp); // disable shared moods
-        _moodSystem.TryAddRandomMood(target, AscendantDataset, moodComp, false); // we don't need to notify them twice
-        _moodSystem.TryAddRandomMood(target, AscendantDataset, moodComp);
+        _moodSystem.ToggleEmaggable((target, moodComp)); // can't emag an infected thavenmood
+        _moodSystem.ClearMoods((target, moodComp)); // wipe those moods
+        _moodSystem.ToggleSharedMoods((target, moodComp)); // disable shared moods
+        _moodSystem.TryAddRandomMood((target, moodComp), AscendantDataset, false); // we don't need to notify them twice
+        _moodSystem.TryAddRandomMood((target, moodComp), AscendantDataset);
 
         _damageable.TryChangeDamage(target, uid.Comp.InfectionHeal * -1);
 
