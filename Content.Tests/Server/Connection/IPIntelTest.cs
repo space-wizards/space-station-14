@@ -237,7 +237,7 @@ public static class IPIntelTest
     {
         return new HttpResponseMessage(HttpStatusCode.OK)
         {
-            Content = new StringContent("0.5"),
+            Content = new StringContent("0.5,US"),
         };
     }
 
