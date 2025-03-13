@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/13/2025 08:55:17
+  entityCount: 14427
+maps:
+- 1
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -48,7 +59,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
@@ -4307,7 +4317,7 @@ entities:
             4: 2184
           -13,4:
             3: 2184
-            6: 546
+            5: 546
           -12,5:
             0: 1
             1: 3856
@@ -4316,7 +4326,7 @@ entities:
           -11,5:
             1: 784
           -11,4:
-            5: 546
+            6: 546
           -11,6:
             0: 49152
           -11,3:
@@ -4649,9 +4659,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 0
+          - 0
           - 6666.982
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -4664,9 +4674,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
-          - 0
           - 6666.982
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -5080,10 +5090,10 @@ entities:
       - 6317
       - 8342
       - 8343
-      - 8455
-      - 8456
       - 8345
       - 8344
+      - 14427
+      - 8455
   - uid: 44
     components:
     - type: Transform
@@ -54828,14 +54838,8 @@ entities:
   - uid: 8123
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: -5.5,32.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
-  - uid: 8124
-    components:
-    - type: Transform
-      pos: 0.5,32.5
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
@@ -55933,6 +55937,14 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 8456
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,32.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 9617
     components:
     - type: Transform
@@ -57471,17 +57483,11 @@ entities:
   - uid: 8455
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -5.5,31.5
+      pos: 0.5,33.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#990000FF'
-  - uid: 8456
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,31.5
-      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 43
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 8457
@@ -58211,6 +58217,16 @@ entities:
       deviceLists:
       - 14287
       - 14288
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 14427
+    components:
+    - type: Transform
+      pos: -5.5,33.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 43
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasVolumePump
@@ -64081,6 +64097,13 @@ entities:
     components:
     - type: Transform
       pos: 9.339803,43.5883
+      parent: 2
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 8124
+    components:
+    - type: Transform
+      pos: -5.5,31.5
       parent: 2
 - proto: LockerAtmosphericsFilled
   entities:
