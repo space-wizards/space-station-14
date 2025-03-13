@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Updates to Core, Packed, Meta, Barratry, Reach, and Union (holopads,
-      pipe sensors, and other changes). See PR for full changelog.
-    type: Add
-  id: 788
-  time: '2024-12-22T14:20:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1098
 - author: widgetbeck
   changes:
   - message: Salvage borgs now have always-active magboots.
@@ -4085,3 +4077,10 @@
   id: 1287
   time: '2025-03-13T05:19:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1890
+- author: Tyranex
+  changes:
+  - message: Readded the scream button for cyborgs.
+    type: Fix
+  id: 1288
+  time: '2025-03-13T05:22:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1920
