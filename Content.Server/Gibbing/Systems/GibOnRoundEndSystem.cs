@@ -44,10 +44,10 @@ public sealed class GibOnRoundEndSystem : EntitySystem
                 gib = true;
 
             if (!gib)
-                return;
+                continue;
 
             if (gibComp.SpawnProto != null)
-                Spawn(gibComp.SpawnProto, Transform(uid).Coordinates);
+                SpawnAtPosition(gibComp.SpawnProto, Transform(uid).Coordinates);
 
             _body.GibBody(uid, splatModifier: 5f);
         }
