@@ -65,7 +65,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             target: embeddable));
     }
 
-    private void AddPullOutVerb(Entity<EmbeddableProjectileComponent> embeddable, GetVerbsEvent<InteractionVerb> args)
+    private void AddPullOutVerb(Entity<EmbeddableProjectileComponent> embeddable, ref GetVerbsEvent<InteractionVerb> args)
     {
         // As above so below
         if (embeddable.Comp.RemovalTime == null)
@@ -77,11 +77,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             physics.BodyType != BodyType.Static)
             return;
 
+        var User = args.User;
         args.Verbs.Add(new()
         {
             Act = () =>
             {
-                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, embeddable.Comp.RemovalTime.Value,
+                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, User, embeddable.Comp.RemovalTime.Value,
                     new RemoveEmbeddedProjectileEvent(), eventTarget: embeddable, target: embeddable));
             },
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png")),
