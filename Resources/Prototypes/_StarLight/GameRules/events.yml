@@ -111,3 +111,12 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+
+    #Pig's RadioStation
+  - type: entity
+  parent: BaseGameRule
+  id: RadioStationSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/ListeningPost.yml
