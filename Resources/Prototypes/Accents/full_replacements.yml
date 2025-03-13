@@ -183,3 +183,8 @@
   - accent-words-tomato-3
   - accent-words-tomato-4
   - accent-words-tomato-5
+
+- type: accent
+  id: gondola
+  fullReplacements:
+  - accent-words-gondola-1

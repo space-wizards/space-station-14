@@ -1740,3 +1740,48 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
+
+- type: entity
+  name: raw gondola meat
+  parent: FoodMeatRawBase
+  id: FoodMeatGondola
+  description: A very manly slab of raw gondola meat.
+  components:
+  - type: Sprite
+    state: bear
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Gondolium
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 9
+  - type: Construction
+    graph: GondolaSteak
+    node: start
+    defaultTarget: MetamorphBaer
+
+- type: entity
+  name: cooked gondola
+  parent: FoodMeatBase
+  id: FoodMeatGondolaCooked
+  description: A well-cooked slab of gondola meat. Tough, but tasty with the right sides.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    layers:
+    - state: product-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Gondolium
+          Quantity: 15
+  - type: Construction
+    graph: GondolaSteak
+    defaultTarget: MetamorphBaer

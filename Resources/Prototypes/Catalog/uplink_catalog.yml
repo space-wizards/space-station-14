@@ -2148,3 +2148,17 @@
     whitelist:
     - Chef
     - Mime
+
+- type: listing
+  id: UplinkGondola
+  name: uplink-gondola-name
+  description: uplink-gondola-desc
+  icon: { sprite: Mobs/Animals/gondola.rsi, state: old-radio-gondola }
+  productEntity: MobGondola
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkAllies

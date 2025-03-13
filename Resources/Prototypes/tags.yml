@@ -609,6 +609,9 @@
   id: Goat
 
 - type: Tag
+  id: Gondola
+
+- type: Tag
   id: Goliath
 
 - type: Tag

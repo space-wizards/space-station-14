@@ -30,3 +30,6 @@ reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
 
 reagent-name-grey-matter = grey matter
 reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
+
+reagent-name-gondolium = gondolium
+reagent-desc-gondolium = Juicy and metamorphic liquid, which can transfer you to another gondola.

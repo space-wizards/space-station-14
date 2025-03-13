@@ -2719,7 +2719,7 @@
 
 - type: entity
   name: corgi
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: SimpleMobBase
   id: MobCorgi
   description: Finally, a space corgi!
   components:
@@ -3599,3 +3599,66 @@
         Base: reindeer_doe_dead
       Dead:
         Base: reindeer_doe_dead
+
+- type: entity
+  name: gondola
+  parent: SimpleMobBase
+  id: MobGondola
+  description: His neutral facial expression shows his utter and complete acceptance of the world as it is.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: gondola
+      sprite: Mobs/Animals/gondola.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 5
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    - Gondola
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Gondola
+    offspring:
+    - id: MobGondola
+  - type: ReproductivePartner
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: gondola
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatGondola
+      amount: 3
+  - type: ReplacementAccent
+    accent: gondola
+  - type: InteractionPopup
+    successChance: 0.2
+    interactSuccessString: petting-success-gondola
+    interactFailureString: petting-failure-gondola
+    interactSuccessSpawn: EffectHearts
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: FactionException
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound

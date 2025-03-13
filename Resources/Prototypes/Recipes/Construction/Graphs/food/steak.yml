@@ -311,3 +311,21 @@
       - minTemperature: 345
   - node: xeno cutlet
     entity: FoodMeatXenoCutletCooked
+
+# Gondola steak
+- type: constructionGraph
+  id: GondolaSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: MetamorphBaer
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 345
+
+  - node: MetamorphBaer
+    entity: FoodMeatGondolaCooked
