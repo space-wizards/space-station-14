@@ -7,6 +7,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.UserInterface;
+using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
 namespace Content.Server._Impstation.CosmicCult;
@@ -73,7 +74,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(3);
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, 2);
             comp.BufferTimer = _timing.CurTime + comp.BufferRemainingTime;
-            comp.SelectedSong = _audio.GetSound(comp.BufferMusic);
+            comp.SelectedSong = _audio.ResolveSound(comp.BufferMusic);
             _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
             _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
             Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
@@ -87,7 +88,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
             corruptingComp.CorruptionSpeed = TimeSpan.FromSeconds(1);
             _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);
             comp.FinaleTimer = _timing.CurTime + comp.FinaleRemainingTime;
-            comp.SelectedSong = _audio.GetSound(comp.FinaleMusic);
+            comp.SelectedSong = _audio.ResolveSound(comp.FinaleMusic);
             _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
             _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
             Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
@@ -127,7 +128,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (stationUid != null)
             _alert.SetLevel(stationUid.Value, "green", true, true, true);
 
-        _sound.PlayGlobalOnStation(uid, _audio.GetSound(comp.CancelEventSound));
+        _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(comp.CancelEventSound));
         _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
 
         if (uid.Comp.CurrentState == FinaleState.ActiveBuffer)

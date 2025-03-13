@@ -21,7 +21,7 @@ public sealed partial class CosmicFinaleComponent : Component
     [DataField] public SoundSpecifier CancelEventSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
     [DataField] public TimeSpan FinaleSongLength;
     [DataField] public TimeSpan SongLength;
-    [DataField] public string SelectedSong = string.Empty;
+    [DataField] public ResolvedSoundSpecifier SelectedSong;
     [DataField] public TimeSpan InteractionTime = TimeSpan.FromSeconds(15);
     [DataField] public SoundSpecifier BufferMusic = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/premonition.ogg");
     [DataField] public SoundSpecifier FinaleMusic = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/a_new_dawn.ogg");

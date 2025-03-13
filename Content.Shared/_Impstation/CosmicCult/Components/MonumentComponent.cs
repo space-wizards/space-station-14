@@ -1,5 +1,6 @@
 using Content.Shared._Impstation.CosmicCult.Prototypes;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -9,6 +10,12 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 [AutoGenerateComponentPause]
 public sealed partial class MonumentComponent : Component
 {
+    /// <summary>
+    /// The sound effect played when entropy is infused into The Monument.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier InfusionSFX = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/insert_entropy.ogg");
+
     /// <summary>
     /// used to hide the monument from non-cultists
     /// </summary>

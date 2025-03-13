@@ -104,6 +104,7 @@ public sealed class CosmicRiftSystem : EntitySystem
         comp.CosmicGlareRange = 10;
         comp.CosmicGlareDuration = 10 * 1000f;
         comp.CosmicGlareStun = TimeSpan.FromSeconds(1);
+        comp.CosmicImpositionDuration = TimeSpan.FromSeconds(7.2);
         comp.Respiration = false;
         EnsureComp<PressureImmunityComponent>(args.User);
         EnsureComp<TemperatureImmunityComponent>(args.User);

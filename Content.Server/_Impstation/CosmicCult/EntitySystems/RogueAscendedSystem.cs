@@ -66,7 +66,6 @@ public sealed class RogueAscendedSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly ThrowingSystem _throw = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ThavenMoodsSystem _moodSystem = default!; //impstation
 
     [ValidatePrototypeId<DatasetPrototype>]
@@ -96,16 +95,17 @@ public sealed class RogueAscendedSystem : EntitySystem
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueInfectionDoAfter>(OnInfectionDoAfter);
         SubscribeLocalEvent<RogueAscendedInfectionComponent, ComponentShutdown>(OnInfectionCleansed);
     }
-
+    #region Spawn
     private void OnSpawn(Entity<RogueAscendedComponent> uid, ref ComponentInit args) // I WANT THIS DINGUS YEETED TOWARDS THE STATION AT MACH JESUS
     {
         var station = _station.GetStationInMap(Transform(uid).MapID);
         if (TryComp<StationDataComponent>(station, out var stationData) && stationData is not null)
         {
             var stationGrid = _station.GetLargestGrid(stationData);
-            _throw.TryThrow(uid, Transform(stationGrid!.Value).Coordinates, baseThrowSpeed: 90 * 1000f, null, 0, 0, false, false, false, false, false);
+            _throw.TryThrow(uid, Transform(stationGrid!.Value).Coordinates, baseThrowSpeed: 50, null, 0, 0, false, false, false, false, false);
         }
     }
+    #endregion
 
     #region Death
     private void OnMobStateChanged(EntityUid uid, RogueAscendedComponent comp, MobStateChangedEvent args)

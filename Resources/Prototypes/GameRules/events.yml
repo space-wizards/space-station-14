@@ -39,6 +39,7 @@
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
+    - id: RogueAscendedSpawn # imp
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -58,6 +59,7 @@
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
+    - id: RogueAscendedSpawn # imp
 
 - type: entity
   id: BaseStationEvent

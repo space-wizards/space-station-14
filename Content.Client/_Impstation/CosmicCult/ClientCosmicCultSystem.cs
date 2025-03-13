@@ -6,7 +6,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using System.Numerics;
-using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 using Robust.Client.Audio;
 using Robust.Shared.Audio;

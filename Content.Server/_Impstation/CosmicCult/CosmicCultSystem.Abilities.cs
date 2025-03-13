@@ -26,6 +26,7 @@ using Robust.Shared.Player;
 using Content.Shared.Physics;
 using System.Linq;
 using Content.Shared.StatusEffect;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -53,9 +54,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void MalignEcho(Entity<CosmicCultComponent> uid)
     {
         if (_cultRule.CurrentTier > 1 && !_random.Prob(0.5f))
-        {
             Spawn("CosmicEchoVfx", Transform(uid).Coordinates);
-        }
     }
 
     #region Force Ingress
@@ -143,10 +142,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     private void OnCosmicImposition(Entity<CosmicCultComponent> uid, ref EventCosmicImposition args)
     {
         EnsureComp<CosmicImposingComponent>(uid, out var comp);
-        if (!uid.Comp.CosmicEmpowered)
-            comp.ImposeCheckTimer = _timing.CurTime + comp.CheckWait;
-        else
-            comp.ImposeCheckTimer = _timing.CurTime + comp.EmpoweredCheckWait;
+        Timer.Spawn(uid.Comp.CosmicImpositionDuration, () => RemComp(uid, comp));
         Spawn(uid.Comp.ImpositionVFX, Transform(uid).Coordinates);
         args.Handled = true;
         _audio.PlayPvs(uid.Comp.ImpositionSFX, uid, AudioParams.Default.WithVariation(0.05f));
@@ -340,13 +336,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var box = new Box2(pos + new Vector2(-1.4f, -0.4f), pos + new Vector2(1.4f, 0.4f));
 
         /// MAKE SURE WE'RE STANDING ON A GRID
-        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-grid"), uid, uid);
             return;
         }
         /// CHECK IF IT'S BEING PLACED CHEESILY CLOSE TO SPACE
-        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, spaceDistance)))
+        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(_transform.GetWorldPosition(xform), spaceDistance), false))
         {
             if (!tile.IsSpace(_tileDef))
                 continue;
@@ -373,8 +369,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _actions.RemoveAction(uid, uid.Comp.CosmicMonumentActionEntity);
         var localTile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
         var targetIndices = localTile.GridIndices + new Vector2i(0, 1);
-        Spawn("MonumentCollider", _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
-        Spawn(uid.Comp.MonumentPrototype, _map.ToCenterCoordinates(xform.GridUid.Value, targetIndices, grid));
+        var finalPosition = _map.GridTileToWorld(uid, grid, targetIndices);
+        Spawn("MonumentCollider", finalPosition);
+        Spawn(uid.Comp.MonumentPrototype, finalPosition);
     }
     #endregion
 

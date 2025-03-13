@@ -66,6 +66,10 @@ public sealed partial class CosmicCultComponent : Component
     [DataField, AutoNetworkedField] public TimeSpan CosmicBlankDuration = TimeSpan.FromSeconds(22);
 
     /// <summary>
+    /// The duration of Vacuous Imposition's shield.
+    /// </summary>
+    [DataField, AutoNetworkedField] public TimeSpan CosmicImpositionDuration = TimeSpan.FromSeconds(5.8);
+    /// <summary>
     /// The duration of Null Glare's flash/disorientation.
     /// </summary>
     [DataField, AutoNetworkedField] public float CosmicGlareDuration = 8 * 1000f;

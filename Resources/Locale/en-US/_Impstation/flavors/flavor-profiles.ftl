@@ -32,4 +32,4 @@ flavor-complex-rodent = like rodents
 
 flavor-complex-orangecoffee = excitingly acidic
 
-flavor-complex-entropy = like your tastebuds are unraveling
+flavor-complex-entropy = like your tastebuds are unravelling
