@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: kipdotnet
   changes:
-  - message: Added the artistic borg module. Please be nice with this so I dont have
-      to nerf it
-    type: Add
-  id: 791
-  time: '2024-12-24T09:38:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1100
-- author: kipdotnet
-  changes:
   - message: Added A new derelict!
     type: Add
   - message: Roundstart derelicts now spawn a range of 3-4, instead of just a flat
@@ -4084,3 +4076,10 @@
   id: 1290
   time: '2025-03-13T06:05:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1918
+- author: bigsantino1
+  changes:
+  - message: Salvage magnet announcement no longer happens twice.
+    type: Fix
+  id: 1291
+  time: '2025-03-13T11:48:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1926
