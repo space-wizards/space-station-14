@@ -16,7 +16,7 @@
       ]
     },
     {
-        "name": "old-radio-gondola",
+        "name": "old-radio-bearfoot",
         "delays": [
           [
             1
@@ -24,7 +24,7 @@
         ]
       },
     {
-      "name": "gondola",
+      "name": "bearfoot",
       "directions": 4,
       "delays": [
         [

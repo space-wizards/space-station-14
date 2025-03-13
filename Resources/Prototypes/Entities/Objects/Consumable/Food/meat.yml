@@ -1742,10 +1742,10 @@
       Taco: XenoCutlet
 
 - type: entity
-  name: raw gondola meat
+  name: raw bearfoot meat
   parent: FoodMeatRawBase
-  id: FoodMeatGondola
-  description: A very manly slab of raw gondola meat.
+  id: FoodMeatBearfoot
+  description: A very manly slab of raw bearfoot meat.
   components:
   - type: Sprite
     state: bear
@@ -1753,20 +1753,20 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Gondolium
+        - ReagentId: Bearfootium
           Quantity: 5
         - ReagentId: Protein
           Quantity: 9
   - type: Construction
-    graph: GondolaSteak
+    graph: BearfootSteak
     node: start
     defaultTarget: MetamorphBaer
 
 - type: entity
-  name: cooked gondola
+  name: cooked bearfoot
   parent: FoodMeatBase
-  id: FoodMeatGondolaCooked
-  description: A well-cooked slab of gondola meat. Tough, but tasty with the right sides.
+  id: FoodMeatBearfootCooked
+  description: A well-cooked slab of bearfoot meat. Tough, but tasty with the right sides.
   components:
   - type: Tag
     tags:
@@ -1780,8 +1780,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Gondolium
+        - ReagentId: Bearfootium
           Quantity: 15
   - type: Construction
-    graph: GondolaSteak
-    defaultTarget: MetamorphBaer
+    graph: BearfootSteak
+    node: MetamorphBaer

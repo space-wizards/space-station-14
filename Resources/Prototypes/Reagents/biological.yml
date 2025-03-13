@@ -252,10 +252,10 @@
             Cellular: 2
 
 - type: reagent
-  id: Gondolium
-  name: reagent-name-gondolium
+  id: Bearfootium
+  name: reagent-name-bearfootium
   group: Biological
-  desc: reagent-desc-gondolium
+  desc: reagent-desc-bearfootium
   physicalDesc: reagent-physical-desc-neural
   flavor: metallic
   color: "#7c4a12"
@@ -272,12 +272,12 @@
           types:
             Cellular: 2
       - !type:Polymorph
-        prototype: GondolaMorph
+        prototype: BearfootMorph
         conditions:
         - !type:ReagentThreshold
           min: 25
       - !type:AdjustReagent
-        reagent: Gondolium
+        reagent: Bearfootium
         amount: 0.5
         conditions:
         - !type:ReagentThreshold

@@ -204,9 +204,9 @@
     duration: 3
 
 - type: polymorph
-  id: GondolaMorph
+  id: BearfootMorph
   configuration:
-    entity: MobGondola
+    entity: MobBearfoot
     forced: true
     transferHumanoidAppearance: true
     inventory: None

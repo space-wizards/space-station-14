@@ -52,6 +52,9 @@
   id: BBQsauce
 
 - type: Tag
+  id: Bearfoot
+
+- type: Tag
   id: Bedsheet
 
 - type: Tag
@@ -607,9 +610,6 @@
 
 - type: Tag
   id: Goat
-
-- type: Tag
-  id: Gondola
 
 - type: Tag
   id: Goliath

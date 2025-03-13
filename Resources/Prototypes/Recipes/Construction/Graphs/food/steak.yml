@@ -312,9 +312,9 @@
   - node: xeno cutlet
     entity: FoodMeatXenoCutletCooked
 
-# Gondola steak
+# bearfoot steak
 - type: constructionGraph
-  id: GondolaSteak
+  id: BearfootSteak
   start: start
   graph:
 
@@ -328,4 +328,4 @@
       - minTemperature: 345
 
   - node: MetamorphBaer
-    entity: FoodMeatGondolaCooked
+    entity: FoodMeatBearfootCooked

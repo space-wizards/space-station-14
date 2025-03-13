@@ -3601,17 +3601,17 @@
         Base: reindeer_doe_dead
 
 - type: entity
-  name: gondola
+  name: bearfoot
   parent: SimpleMobBase
-  id: MobGondola
+  id: MobBearfoot
   description: His neutral facial expression shows his utter and complete acceptance of the world as it is.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: gondola
-      sprite: Mobs/Animals/gondola.rsi
+      state: bearfoot
+      sprite: Mobs/Animals/bearfoot.rsi
   - type: Fixtures
     fixtures:
       fix1:
@@ -3625,33 +3625,33 @@
         - MobLayer
   - type: Tag
     tags:
-    - Gondola
+    - Bearfoot
   - type: Reproductive
     partnerWhitelist:
       tags:
-      - Gondola
+      - Bearfoot
     offspring:
-    - id: MobGondola
+    - id: MobBearfoot
   - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: gondola
+        Base: bearfoot
       Critical:
         Base: dead
       Dead:
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeatGondola
+    - id: FoodMeatBearfoot
       amount: 3
   - type: ReplacementAccent
-    accent: gondola
+    accent: bearfoot
   - type: InteractionPopup
     successChance: 0.2
-    interactSuccessString: petting-success-gondola
-    interactFailureString: petting-failure-gondola
+    interactSuccessString: petting-success-bearfoot
+    interactFailureString: petting-failure-bearfoot
     interactSuccessSpawn: EffectHearts
   - type: NpcFactionMember
     factions:
