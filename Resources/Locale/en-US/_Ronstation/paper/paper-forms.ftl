@@ -106,11 +106,11 @@ book-text-form-security-arrest-warrant = 'N. Arrest Warrant
 
     THIS WARRANT MUST BE APPROVED AND STAMPED BY THE CAPTAIN, HEAD OF SECURITY, OR THE HEAD OF THE DEPARTMENT TO BE SEARCHED/OF THE INDIVIDUAL TO BE SEARCHED. IT CANNOT BE APPROVED BY THE HEAD OF SECURITY IF THE HEAD OF SECURITY IS THE ONE WHO REQUESTED IT.
 
-    Requesting Officer:
+    Requesting Officer:  Sample Person
                    --------------------------------------
-    Warrant Target:
+    Warrant Target:  Sanple Person/Department
                    --------------------------------------
-    Warrant Reason:
+    Warrant Reason:  Sample Reason
                    --------------------------------------
 
     ANY ILLEGAL CONTRABAND FOUND WILL BE SEIZED AND ADDITIONAL CRIMINAL CHARGES MAY OCCUR.
