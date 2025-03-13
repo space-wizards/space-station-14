@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
-      rare.
-    type: Fix
-  id: 7553
-  time: '2024-10-26T02:16:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32942
-- author: Moomoobeef
-  changes:
-  - message: Bowls no longer make an eating sound when drinking from them.
-    type: Fix
-  id: 7554
-  time: '2024-10-26T04:00:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32819
-- author: SaphireLattice
-  changes:
-  - message: Added a warning about unrevivability in the health analyzer UI.
-    type: Add
-  id: 7555
-  time: '2024-10-26T17:22:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32636
-- author: slarticodefast
-  changes:
-  - message: Fixed pie throwing sound not playing.
-    type: Fix
-  id: 7556
-  time: '2024-10-27T04:25:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33017
 - author: stalengd
   changes:
   - message: Fixed playtime labels not being able to correctly display time greater
@@ -3890,3 +3861,33 @@
   id: 8052
   time: '2025-03-12T01:21:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35751
+- author: Winkarst-cpu
+  changes:
+  - message: The warden job now rolls before security officer/cadet/detective.
+    type: Tweak
+  id: 8053
+  time: '2025-03-12T22:36:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35313
+- author: Firewars763
+  changes:
+  - message: Added gold and coal rock anomalies and ore crab enemies.
+    type: Add
+  - message: Added yellow and black crystals, crystal shards, and light tubes.
+    type: Add
+  id: 8054
+  time: '2025-03-12T22:45:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34809
+- author: onesch
+  changes:
+  - message: Added handheld sprites to some items
+    type: Add
+  id: 8055
+  time: '2025-03-12T22:46:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33689
+- author: K-Dynamic
+  changes:
+  - message: Nitrous oxide canisters now begin locked like other dangerous gas canisters.
+    type: Fix
+  id: 8056
+  time: '2025-03-13T00:30:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35785

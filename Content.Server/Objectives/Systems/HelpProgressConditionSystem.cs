@@ -18,7 +18,6 @@ public sealed class HelpProgressConditionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<HelpProgressConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-
     }
 
     private void OnGetProgress(EntityUid uid, HelpProgressConditionComponent comp, ref ObjectiveGetProgressEvent args)
