@@ -283,7 +283,8 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime>("LastEditedAt")
+                    b.Property<DateTime>("LastEditedAt"
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_edited_at");
 
@@ -418,6 +419,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("expiration_time");
 
                     b.Property<DateTime>("LastEditedAt")
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_edited_at");
 
