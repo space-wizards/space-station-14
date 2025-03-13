@@ -484,7 +484,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
-      Wood: 100
+      Wood: 50
   - type: StaticPrice
     price: 25
   - type: Shovel

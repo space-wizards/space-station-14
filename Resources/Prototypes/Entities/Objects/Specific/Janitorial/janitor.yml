@@ -253,7 +253,6 @@
   - type: PhysicalComposition
     materialComposition:
       Wood: 100
-      Plastic: 100
 
 - type: entity
   name: golden plunger
