@@ -67,6 +67,9 @@
     ClothingUniformMrSpaceWide: 2 #imp
     ClothingUniformMrSpaceWideSkirt: 2 #imp
     FoodPoppy: 1
+    ClothingOuterWhitePoncho: 2 #imp
+    ClothingOuterBlackPoncho: 2 #imp
+    ClothingOuterRainCape: 3 #imp
     # Gohei: 2
   contrabandInventory: # imp
     ClothingShoesSlippers: 1
