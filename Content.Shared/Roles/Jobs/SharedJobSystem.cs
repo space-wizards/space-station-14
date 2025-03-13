@@ -1,7 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -16,6 +18,7 @@ public abstract class SharedJobSystem : EntitySystem
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
@@ -104,6 +107,56 @@ public abstract class SharedJobSystem : EntitySystem
         departmentPrototype = null;
         return false;
     }
+
+    //imp addition
+    public bool MindsHaveSameJobDept(EntityUid entID1, EntityUid entID2)
+    {
+        if (!_mindSystem.TryGetMind(entID1, out var mindId1, out _))
+        {
+            Log.Debug($"trygetmind for entid 1 {ToPrettyString(entID1)}  - failed, no Mind found");
+            return false;
+        }
+        if (!_mindSystem.TryGetMind(entID2, out var mindId2, out _))
+        {
+            Log.Debug($"trygetmind for entid 2 {ToPrettyString(entID1)}  - failed, no Mind found");
+            return false;
+        }
+        MindTryGetJob(mindId1, out var job1);
+        MindTryGetJob(mindId2, out var job2);
+        return JobsHaveSameDept(job1, job2);
+    }
+
+    public bool JobsHaveSameDept(JobPrototype? job1, JobPrototype? job2)
+    {
+        if (job1 == null || job2 == null)
+            return false;
+        TryGetPrimaryDepartment(job1.ID, out var dept1);
+        TryGetPrimaryDepartment(job2.ID, out var dept2);
+        if (dept1 == null || dept2 == null)
+            return false;
+        return (dept1.Equals(dept2));
+    }
+
+    public bool MindHasJobDept(EntityUid entID, JobPrototype? givenJob)
+    {
+        if (!_mindSystem.TryGetMind(entID, out var mindId, out _))
+        {
+            Log.Debug($"trygetmind for entid{ToPrettyString(entID)}  - failed, no Mind found");
+            return false;
+        }
+
+        if (!MindTryGetJob(mindId, out var mindJob))
+            return false;
+        if (mindJob == null || givenJob == null)
+            return false;
+        TryGetPrimaryDepartment(mindJob.ID, out var dept1);
+        TryGetPrimaryDepartment(givenJob.ID, out var dept2);
+        if (dept1 == null || dept2 == null)
+            return false;
+        return (dept1.Equals(dept2));
+    }
+
+    //end imp additions
 
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
