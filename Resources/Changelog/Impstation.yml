@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Bodyhair for Humans, Dwarves, and Thaven!
-    type: Add
-  - message: Tweaked male human body texture side views to match front facing texture
-      better
-    type: Tweak
-  id: 787
-  time: '2024-12-22T14:19:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1096
 - author: EpicToast
   changes:
   - message: Updates to Core, Packed, Meta, Barratry, Reach, and Union (holopads,
@@ -4088,3 +4078,10 @@
   id: 1286
   time: '2025-03-13T05:11:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1922
+- author: kipdotnet
+  changes:
+  - message: Added a special coat to the salvage loadout for decapoids to use.
+    type: Add
+  id: 1287
+  time: '2025-03-13T05:19:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1890
