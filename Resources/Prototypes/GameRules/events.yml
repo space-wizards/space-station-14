@@ -158,8 +158,8 @@
   # Nukes are very faulty nowadays
   - type: GameRule
     delay:
-      min:  1
-      max:  2
+      min:  5
+      max:  20
 
 - type: entity
   parent: BaseGameRule
