@@ -5,7 +5,7 @@
     mode: SnapgridCenter
   components:
   - type: Visibility
-    layer: 4
+    layer: 1
   - type: Cable
     cuttingDelay: 1
   - type: Clickable

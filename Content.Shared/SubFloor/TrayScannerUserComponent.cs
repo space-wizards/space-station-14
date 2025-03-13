@@ -5,8 +5,4 @@ namespace Content.Shared.SubFloor;
 /// Added to anyone using <see cref="TrayScannerComponent"/> to handle the vismask changes.
 /// </summary>
 [RegisterComponent]
-public sealed partial class TrayScannerUserComponent : Component
-{
-    [DataField]
-    public int OriginalVisMask;
-}
+public sealed partial class TrayScannerUserComponent : Component;

@@ -31,7 +31,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         base.Initialize();
 
         SubscribeLocalEvent<SubFloorHideComponent, AppearanceChangeEvent>(OnAppearanceChanged);
-        SubscribeLocalEvent<ShowSubfloorRequestEvent>(OnRequestReceived);
+        SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnRequestReceived);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
     }
 

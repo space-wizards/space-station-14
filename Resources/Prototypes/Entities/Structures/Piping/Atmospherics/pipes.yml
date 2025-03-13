@@ -8,7 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Visibility
-    layer: 4
+    layer: 1
   - type: Item
     size: Normal
   - type: Transform

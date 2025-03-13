@@ -30,7 +30,7 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: Visibility
-      layer: 4
+      layer: 1
     - type: SubFloorHide
       blockAmbience: false
       blockInteractions: false

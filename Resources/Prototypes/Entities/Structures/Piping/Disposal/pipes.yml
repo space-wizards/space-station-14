@@ -14,7 +14,7 @@
     visible: false
   - type: Appearance
   - type: Visibility
-    layer: 4
+    layer: 1
   - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline

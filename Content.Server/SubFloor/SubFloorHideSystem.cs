@@ -1,13 +1,19 @@
 using Content.Shared.Construction.Components;
 using Content.Shared.Eye;
 using Content.Shared.SubFloor;
+using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
+
+    private HashSet<ICommonSession> _showFloors = new();
 
     public override void Initialize()
     {
@@ -15,6 +21,31 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         SubscribeLocalEvent<SubFloorHideComponent, AnchorAttemptEvent>(OnAnchorAttempt);
         SubscribeLocalEvent<SubFloorHideComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnShowSubfloor);
+        SubscribeLocalEvent<GetVisMaskEvent>(OnGetVisibility);
+
+        _player.PlayerStatusChanged += OnPlayerStatus;
+    }
+
+    private void OnPlayerStatus(object? sender, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus == SessionStatus.Connected)
+            return;
+
+        _showFloors.Remove(e.Session);
+
+        if (e.Session.AttachedEntity != null)
+            _eye.UpdateVisibilityMask(e.Session.AttachedEntity.Value);
+    }
+
+    private void OnGetVisibility(ref GetVisMaskEvent ev)
+    {
+        if (!TryComp(ev.Entity, out ActorComponent? actor))
+            return;
+
+        if (_showFloors.Contains(actor.PlayerSession))
+        {
+            ev.VisibilityMask |= (int)VisibilityFlags.Subfloor;
+        }
     }
 
     private void OnShowSubfloor(ShowSubfloorRequestEvent ev, EntitySessionEventArgs args)
@@ -27,12 +58,14 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
         if (ev.Value)
         {
-            _eye.SetVisibilityMask(ent.Value, eyeComp.VisibilityMask | (int) VisibilityFlags.Subfloor, eyeComp);
+            _showFloors.Add(args.SenderSession);
         }
         else
         {
-            _eye.SetVisibilityMask(ent.Value, eyeComp.VisibilityMask & (int) ~VisibilityFlags.Subfloor, eyeComp);
+            _showFloors.Remove(args.SenderSession);
         }
+
+        _eye.UpdateVisibilityMask((ent.Value, eyeComp));
 
         RaiseNetworkEvent(new ShowSubfloorRequestEvent()
         {
