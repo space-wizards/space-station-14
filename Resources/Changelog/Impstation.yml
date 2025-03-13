@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Salvage borgs now have always-active magboots.
-    type: Add
-  id: 789
-  time: '2024-12-22T14:25:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1101
 - author: ultramario1998
   changes:
   - message: Added three new bounties.
@@ -4084,3 +4077,10 @@
   id: 1288
   time: '2025-03-13T05:22:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1920
+- author: Sha-Seng
+  changes:
+  - message: You can now eat the rat king
+    type: Tweak
+  id: 1289
+  time: '2025-03-13T05:24:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1897
