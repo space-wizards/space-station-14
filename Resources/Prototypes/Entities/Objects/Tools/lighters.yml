@@ -89,6 +89,7 @@
     color: orange
   - type: ItemTogglePointLight
   - type: PhysicalComposition
+
 - type: entity
   name: cheap lighter
   parent: Lighter
