@@ -62,7 +62,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         _saturationShader.SetParameter("tileSize", new Vector2(96, 96));
         _saturationShader.SetParameter("hsv", new Robust.Shared.Maths.Vector3(1.0f, 0.25f, 0.2f));
 
-        _starsShader = protoMan.Index<ShaderPrototype>("MonumentPulse").InstanceUnique(); //todo make this shader
+        _starsShader = protoMan.Index<ShaderPrototype>("MonumentPulse").InstanceUnique();
         _starsShader.SetParameter("tileSize", new Vector2(96, 96));
 
         _unshadedShader = protoMan.Index<ShaderPrototype>("unshaded").Instance(); //doesn't need a unique instance
@@ -126,7 +126,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         Color color;
         if (!LockPlacement)
         {
-            //set the colour based on if the target tile is valid or not todo make this something else? like a toggle in a shader or so? that's for later anyway
+            //set the colour based on if the target tile is valid or not
             color = _preview.VerifyPlacement(transformComp, out var snappedCoords) ? Color.White.WithAlpha(outlineAlphaModulate * alpha) : Color.Gray.WithAlpha(outlineAlphaModulate * 0.5f * alpha);
             _lastPos = snappedCoords; //update the position
         }

@@ -327,6 +327,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #endregion
 
     #region MonumentSpawn & MonumentMove
+    //todo attack this with a debugger at some point, it seems to un-prime before it should sometimes?
+    //no idea why, might be something to do with verifying placement inside the action's execution instead of in an attemptEvent beforehand?
+    //works fine:tm: for now though
     private void OnCosmicPlaceMonument(Entity<CosmicCultLeadComponent> uid, ref EventCosmicPlaceMonument args)
     {
         if (!VerifyPlacement(uid, out var pos))
@@ -374,7 +377,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         }
     }
 
-    //todo this can probably be moved to shared but my brain isn't cooperating w/ that rn
+    //todo this can probably be mostly moved to shared but my brain isn't cooperating w/ that rn
     private bool VerifyPlacement(Entity<CosmicCultLeadComponent> uid, out EntityCoordinates outPos)
     {
         //MAKE SURE WE'RE STANDING ON A GRID

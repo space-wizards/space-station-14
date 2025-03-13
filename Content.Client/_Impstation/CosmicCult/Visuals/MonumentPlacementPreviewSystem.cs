@@ -106,6 +106,7 @@ public sealed class MonumentPlacementPreviewSystem : EntitySystem
     }
 
     //duplicated from the ability check, minus the station check because that can't be done clientside afaik?
+    //and no popups because they're done in the ability check as well
     public bool VerifyPlacement(TransformComponent xform, out EntityCoordinates outPos)
     {
         outPos = new EntityCoordinates();
