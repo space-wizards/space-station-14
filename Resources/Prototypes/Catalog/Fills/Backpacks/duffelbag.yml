@@ -77,12 +77,11 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
-  description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
+  description: "More dakka: The iconic L6 lightmachinegun, bundled with a box magazine."
   components:
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-        amount: 2
       - id: MagazineBoxLightRifleSP
 
 - type: entity
