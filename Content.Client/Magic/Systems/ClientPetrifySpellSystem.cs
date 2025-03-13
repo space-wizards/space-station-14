@@ -30,6 +30,10 @@ public sealed class ClientPetrifySpellSystem : PetrifySpellSystem
     {
         base.OnShutdown(ent, comp, args);
 
+        // Need to make sure that the stone golem isn't being animated
+        if (HasComp<AnimateComponent>(ent))
+            return;
+
         SetShader(ent, false);
     }
 

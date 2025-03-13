@@ -1,5 +1,7 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Magic.Components;
 using Content.Shared.Movement.Events;
@@ -21,6 +23,11 @@ public abstract class PetrifySpellSystem : EntitySystem
         SubscribeLocalEvent<PetrifiedStatueComponent, ChangeDirectionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, UpdateCanMoveEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, PointAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, PickupAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, DropAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, IsEquippingAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, IsUnequippingAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, AttackAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, InteractionAttemptEvent>(OnAttemptInteract);
     }
 

@@ -113,8 +113,31 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer
   - type: InputMover
     canMove: false
   - type: Hands
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: !type:SoundPathSpecifier
+          path: /Audio/Effects/break_stone.ogg
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.5
+    soundHit:
+      collection: MetalThud
+    damage:
+      groups:
+        Brute: 20
+  - type: Examiner

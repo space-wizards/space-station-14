@@ -232,7 +232,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             foreach (var hand in _hands.EnumerateHeld(uid))
             {
                 _hands.TryDrop(uid, hand, checkActionBlocker: false);
-                _hands.TryPickupAnyHand(child, hand);
+                _hands.TryPickupAnyHand(child, hand, checkActionBlocker: false);
             }
         }
         else if (configuration.Inventory == PolymorphInventoryChange.Drop)
