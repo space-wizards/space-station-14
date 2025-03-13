@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added A new derelict!
-    type: Add
-  - message: Roundstart derelicts now spawn a range of 3-4, instead of just a flat
-      2.
-    type: Tweak
-  id: 792
-  time: '2024-12-24T09:41:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1103
 - author: honeyed-lemons
   changes:
   - message: Listening Post and Box mapping changes
@@ -4083,3 +4073,14 @@
   id: 1291
   time: '2025-03-13T11:48:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1926
+- author: Darkmajia
+  changes:
+  - message: The supermatter's gas absorption has been slowed down to increase the
+      amount of time before it requires gas refilling.
+    type: Tweak
+  - message: The supermatter emits slightly more radiation to increase its base power
+      production.
+    type: Tweak
+  id: 1292
+  time: '2025-03-13T14:24:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1928
