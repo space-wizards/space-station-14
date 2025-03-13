@@ -152,7 +152,6 @@
   - type: MindRole
     antagPrototype: ParadoxClone
     roleType: SoloAntagonist
-    exclusiveAntag: true
   - type: ParadoxCloneRole
 
 # Nukies
