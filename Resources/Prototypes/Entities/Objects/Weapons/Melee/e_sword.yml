@@ -59,7 +59,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableLightVisuals # Add support for multiple layers
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -194,7 +194,6 @@
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
-      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -331,6 +330,60 @@
     reflectProb: .75
     spread: 75
 
+# Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
+- type: entity
+  parent: EnergySwordDouble
+  id: HyperEutacticBlade
+  name: hypereutactic-blade
+  description: A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter.
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    attackRate: 0.8 #0.7 and below is too slow
+    angle: 100
+    range: 2.0
+    damage:
+      types:
+        Blunt: 4.5
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -3
+        variation: 0.250
+    activatedDamage:
+      types:
+        Slash: 20
+        Heat: 20
+        Structural: 20
+  - type: MeleeRequiresWield
+  - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: UseDelay
+    delay: 1.5
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/hypereutactic_blade.rsi
+    layers:
+    - state: hypereutactic
+    - state: hypereutactic_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+    - state: hypereutactic_gem
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "gem" ]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
+  - type: Reflect
+    reflectProb: 1.0
+    spread: 75
+
+# Borgs
 - type: entity
   suffix: One-Handed, For Borgs
   parent: EnergySwordDouble

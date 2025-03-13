@@ -11,6 +11,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.CCVar;
+using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -64,7 +65,6 @@ public sealed class AdminSystem : EntitySystem
 
     private readonly HashSet<NetUserId> _roundActivePlayers = new();
     public readonly PanicBunkerStatus PanicBunker = new();
-    public readonly BabyJailStatus BabyJail = new();
 
     public override void Initialize()
     {
@@ -83,23 +83,14 @@ public sealed class AdminSystem : EntitySystem
         Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
         Subs.CVar(_config, CCVars.PanicBunkerMinOverallMinutes, OnPanicBunkerMinOverallMinutesChanged, true);
 
-        /*
-         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
-         */
-
-        // Baby Jail Settings
-        Subs.CVar(_config, CCVars.BabyJailEnabled, OnBabyJailChanged, true);
-        Subs.CVar(_config, CCVars.BabyJailShowReason, OnBabyJailShowReasonChanged, true);
-        Subs.CVar(_config, CCVars.BabyJailMaxAccountAge, OnBabyJailMaxAccountAgeChanged, true);
-        Subs.CVar(_config, CCVars.BabyJailMaxOverallMinutes, OnBabyJailMaxOverallMinutesChanged, true);
-
-        SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+
         SubscribeLocalEvent<ActorComponent, EntityRenamedEvent>(OnPlayerRenamed);
+        SubscribeLocalEvent<ActorComponent, IdentityChangedEvent>(OnIdentityChanged);
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -155,12 +146,9 @@ public sealed class AdminSystem : EntitySystem
         return value ?? null;
     }
 
-    private void OnIdentityChanged(ref IdentityChangedEvent ev)
+    private void OnIdentityChanged(Entity<ActorComponent> ent, ref IdentityChangedEvent ev)
     {
-        if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))
-            return;
-
-        UpdatePlayerList(actor.PlayerSession);
+        UpdatePlayerList(ent.Comp.PlayerSession);
     }
 
     private void OnRoleEvent(RoleEvent ev)
@@ -279,17 +267,6 @@ public sealed class AdminSystem : EntitySystem
         SendPanicBunkerStatusAll();
     }
 
-    private void OnBabyJailChanged(bool enabled)
-    {
-        BabyJail.Enabled = enabled;
-        _chat.SendAdminAlert(Loc.GetString(enabled
-            ? "admin-ui-baby-jail-enabled-admin-alert"
-            : "admin-ui-baby-jail-disabled-admin-alert"
-        ));
-
-        SendBabyJailStatusAll();
-    }
-
     private void OnPanicBunkerDisableWithAdminsChanged(bool enabled)
     {
         PanicBunker.DisableWithAdmins = enabled;
@@ -314,34 +291,16 @@ public sealed class AdminSystem : EntitySystem
         SendPanicBunkerStatusAll();
     }
 
-    private void OnBabyJailShowReasonChanged(bool enabled)
-    {
-        BabyJail.ShowReason = enabled;
-        SendBabyJailStatusAll();
-    }
-
     private void OnPanicBunkerMinAccountAgeChanged(int minutes)
     {
         PanicBunker.MinAccountAgeMinutes = minutes;
         SendPanicBunkerStatusAll();
     }
 
-    private void OnBabyJailMaxAccountAgeChanged(int minutes)
-    {
-        BabyJail.MaxAccountAgeMinutes = minutes;
-        SendBabyJailStatusAll();
-    }
-
     private void OnPanicBunkerMinOverallMinutesChanged(int minutes)
     {
         PanicBunker.MinOverallMinutes = minutes;
         SendPanicBunkerStatusAll();
-    }
-
-    private void OnBabyJailMaxOverallMinutesChanged(int minutes)
-    {
-        BabyJail.MaxOverallMinutes = minutes;
-        SendBabyJailStatusAll();
     }
 
     private void UpdatePanicBunker()
@@ -384,15 +343,6 @@ public sealed class AdminSystem : EntitySystem
     private void SendPanicBunkerStatusAll()
     {
         var ev = new PanicBunkerChangedEvent(PanicBunker);
-        foreach (var admin in _adminManager.AllAdmins)
-        {
-            RaiseNetworkEvent(ev, admin);
-        }
-    }
-
-    private void SendBabyJailStatusAll()
-    {
-        var ev = new BabyJailChangedEvent(BabyJail);
         foreach (var admin in _adminManager.AllAdmins)
         {
             RaiseNetworkEvent(ev, admin);

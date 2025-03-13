@@ -1,0 +1,8 @@
+﻿# TODO: Actual wizard coming later, this is just for the survival antags
+
+- type: antag
+  id: Survivor
+  name: roles-antag-survivor-name
+  antagonist: true
+  objective: roles-antag-survivor-objective
+  # guides: [  ]
