@@ -82,6 +82,7 @@
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
+        amount: 2
       - id: MagazineBoxLightRifleSP
 
 - type: entity
@@ -128,6 +129,8 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
+      - id: WeaponLightMachineGunL6
+        amount: 3
       - id: MagazineBoxLightRifleSP
         amount: 1
       - id: MagazineBoxLightRifleHP

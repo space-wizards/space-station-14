@@ -21,6 +21,10 @@
     magState: mag
     steps: 4
     zeroVisible: true
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: Gun
     minAngle: 20
     maxAngle: 35
