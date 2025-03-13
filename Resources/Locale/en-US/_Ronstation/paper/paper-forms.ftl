@@ -65,8 +65,8 @@ book-text-form-general-formal-complaint = 'N. Formal Complaint Form
     Your Role:   Sample Role
 
 
-    [head=2]Section B[/head]
-    [bold]You are complaining about:[/bold]
+    Section B
+    You are complaining about:
     ( ) A Person    ( ) A Department    ( ) Other
     If other, please skip to Section C
 
@@ -74,10 +74,10 @@ book-text-form-general-formal-complaint = 'N. Formal Complaint Form
     ( ) Sci     ( ) Engi  ( ) Service         ( ) Cargo        ( ) Grey
     ( ) Med  ( ) Sec   ( ) Command  ( ) CentCom  ( ) Other
 
-    [italic]If you are complaining about a person, please answer the following.[/italic]
-    Name:    [color=#002AAF]Sample Person[/color]
+    If you are complaining about a person, please answer the following.
+    Name:    Sample Person
                    --------------------------------------
-    [italic]Please choose category(s) of misconduct the person or department has committed.[/italic]
+    Please choose category(s) of misconduct the person or department has committed.
     ( ) Violation of Space Law      ( ) Acting against NT interests
     ( ) Destruction of Property   ( ) Causing a disturbance
     ( ) "Unspeakable Acts"          ( ) Sabotage of equipment
@@ -86,7 +86,7 @@ book-text-form-general-formal-complaint = 'N. Formal Complaint Form
     ( ) Just really fucking annoying like my god man
     ( ) Other:    [color=#002AAF]Sample Problem[/color]
                    --------------------------------------
-    [italic]How many people are affected by the misconduct?[/italic]
+    How many people are affected by the misconduct?
     ( ) Just Me    ( ) A few people    ( ) A department worth
     ( ) Multiple Departments worth    ( ) Whole Station
 
