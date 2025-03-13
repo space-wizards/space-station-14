@@ -1,6 +1,6 @@
 - type: entity
   name: Mk 93
-  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  parent: [ BaseWeaponPistol, BaseSecurityContraband ]
   id: WeaponPistolMk93
   description: A cheap pistol built for fully automatic fire. Uses .22 auto ammo.
   components:
@@ -49,7 +49,7 @@
 
 - type: entity
   name: Mk 92HB
-  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  parent: [ BaseWeaponPistol, BaseSecurityContraband ]
   id: WeaponPistolMk92HB
   description: Designed in an attempt to make the most of a small cartridge. Uses .22 auto ammo.
   components:
@@ -101,7 +101,7 @@
 
 - type: entity
   name: Zipper .22
-  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolZipper
   description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.
   components:
@@ -175,7 +175,7 @@
 
 - type: entity
   name: improvised pistol
-  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  parent: [ BaseWeaponPistol, BaseMajorContraband ]
   id: WeaponPistolImprovised
   description: A pistol made of junk-- used by the truly desperate. Its imprecise engineering allows it to use a variety of magazines and ammo. Uses .22 auto or .35 auto ammo.
   components:
