@@ -1,4 +1,36 @@
 - type: entity
+  id: ActionCosmicPlaceMonument
+  name: Beckon The Monument
+  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-spawn-confirm
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument
+    event: !type:EventCosmicPlaceMonument {}
+
+- type: entity
+  id: ActionCosmicRelocateMonument ## RUDDY PLEASE OVERWRITE THIS ONE THANK YOU (the icon and description are correct, feel free to change the rest)
+  name: Relocate The Monument
+  description: Your work is imperative, and the end is inevitable. Ensure that it is completed under your watch.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-spawn-confirm
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument-relocate
+    event: !type:EventCosmicPlaceMonument {}
+
+- type: entity
   id: ActionCosmicSiphon
   name: Siphon Entropy
   description: Silently siphon entropy from your target, dealing some damage in the process.
@@ -32,22 +64,6 @@
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: blank
     event: !type:EventCosmicBlank {}
-
-- type: entity
-  id: ActionCosmicPlaceMonument
-  name: Beckon The Monument
-  description: Call forth The Monument into realspace. Keep it hidden and safe from non-cultists!
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: ConfirmableAction
-    popup: cosmicability-monument-spawn-confirm
-  - type: InstantAction
-    useDelay: 999
-    itemIconStyle: NoItem
-    icon:
-      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
-      state: monument
-    event: !type:EventCosmicPlaceMonument {}
 
 - type: entity
   id: ActionCosmicReturn
@@ -88,7 +104,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
-    useDelay: 50
+    useDelay: 55
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -142,4 +158,71 @@
       state: nova
     event: !type:EventCosmicNova {}
 
+#################################### ROGUE ASCENDANT ACTIONS ######################################
 
+- type: entity
+  id: ActionRogueCosmicNova
+  name: Usurped Astral Nova
+  description: Hurl a large and disruptive blast of astral energy.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    useDelay: 10
+    raiseOnUser: true
+    range: 60
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: roguenova
+    event: !type:EventRogueCosmicNova {}
+
+- type: entity
+  id: ActionRogueInfection
+  name: Malign Corruption
+  description: Instill the essence of endings into a subdued target.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    whitelist:
+      components:
+        - HumanoidAppearance
+        - CosmicCult
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueinfect
+    event: !type:EventRogueInfection {}
+
+- type: entity
+  id: ActionRogueShatter
+  name: Shatter Shell
+  description: Instantly shatter a target's mortal shell, mortally wounding them and preparing them for Malign Corruption.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 180
+    whitelist:
+      components:
+        - HumanoidAppearance
+        - CosmicCult
+        - BibleUser
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueshatter
+    event: !type:EventRogueShatter {}
+
+- type: entity
+  id: ActionRogueGrandShunt
+  name: Malign Mindspike
+  description: Shunt the minds of all nearby out of their body and unto the cosmic dark, temporarily rendering their body mindless.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 90
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueshunt
+    event: !type:EventRogueGrandShunt {}

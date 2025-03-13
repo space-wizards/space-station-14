@@ -57,6 +57,9 @@
           3: {state: finale-overlay3}
   - type: InteractionOutline
   - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
   - type: PointLight
     enabled: true
     castShadows: false
@@ -107,8 +110,6 @@
     corruptionGrowth: true
     corruptionReduction: 0.01
     enabled: false
-  - type: Physics
-    bodyType: Static
 
  ########### SPAWN-IN ANIMATION #############
 
@@ -188,6 +189,41 @@
         - LargeMobMask
         layer:
         - WallLayer
+
+ ########### TIER 3 SUPPRESSION AURA #############
+
+- type: entity
+  id: MonumentSlowZone
+  suffix: Debug, DO NOT MAP
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    anchored: true
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.7
+    sprintSpeedModifier: 0.75
+    ignoreWhitelist:
+      components:
+      - CosmicCult
+      - MindShield
+      - BibleUser
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-8.5,-8.5,8.5,8.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
 
  ########### STAGE 1 #############
 

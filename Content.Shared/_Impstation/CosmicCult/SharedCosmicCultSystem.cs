@@ -2,6 +2,7 @@ using Content.Shared._Impstation.CosmicCult.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
+using Content.Shared.StatusEffect;
 
 namespace Content.Shared._Impstation.CosmicCult;
 

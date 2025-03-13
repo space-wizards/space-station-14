@@ -25,8 +25,15 @@ public sealed partial class CosmicGlyphConversionComponent : Component
     {
         DamageDict = new()
         {
-            ["Brute"] = -50,
-            ["Burn"] = -50
+            { "Blunt", 50},
+            { "Slash", 50},
+            { "Piercing", 50},
+            { "Heat", 50},
+            { "Shock", 50},
+            { "Cold", 50},
+            { "Poison", 50},
+            { "Radiation", 50},
+            { "Asphyxiation", 50}
         }
     };
 }

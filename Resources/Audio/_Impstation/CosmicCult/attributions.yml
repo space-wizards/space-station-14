@@ -7,8 +7,8 @@
   source: "https://octofoss.bandcamp.com/"
 
 - files:
-    - A New Dawn.ogg
-    - Before Dawn.ogg
+    - a_new_dawn.ogg
+    - premonition.ogg
   license: "CC-BY-SA-3.0"
   copyright: "Custom music composed by Nahu Pyrope for Cosmic Cult."
   source: "https://linktr.ee/nahupyrope"
@@ -41,6 +41,11 @@
     - ability_imposition.ogg
     - ability_glare.ogg
     - ability_blank.ogg
+    - ability_siphon.ogg
+    - ascendant_noise.ogg
+    - ascendant_shatter.ogg
+    - ascendant_shunt.ogg
+
   license: "CC-BY-SA-3.0"
   copyright: "By AftrLite(GitHub) for Cosmic Cult, originally released on SS14 Impstation. Made using a combination of (Creative Commons 0) samples from freesound.org and personally-recorded foley."
   source: "https://freesound.org/"

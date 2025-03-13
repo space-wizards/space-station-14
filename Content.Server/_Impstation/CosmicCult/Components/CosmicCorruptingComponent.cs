@@ -1,6 +1,8 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
+namespace Content.Server._Impstation.CosmicCult.Components;
+
 [RegisterComponent]
 [AutoGenerateComponentPause]
 public sealed partial class CosmicCorruptingComponent : Component

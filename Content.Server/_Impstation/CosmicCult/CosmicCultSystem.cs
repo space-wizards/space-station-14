@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using Content.Server.Popups;
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components;
@@ -20,12 +19,8 @@ using Content.Shared.DoAfter;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Server.AlertLevel;
-using Content.Shared.SSDIndicator;
 using Content.Server.Announcements.Systems;
 using Content.Server.Pinpointer;
-using Robust.Shared.Utility;
-using Content.Server.Roles;
-using Content.Shared.Roles;
 using Content.Server.Ghost;
 using Content.Server.Polymorph.Systems;
 using Robust.Shared.Map;
@@ -36,14 +31,15 @@ using Content.Shared.Stunnable;
 using Content.Server.Doors.Systems;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Flash;
-using Content.Shared._Impstation.Cosmiccult;
-using Content.Shared.Camera;
-using Robust.Shared.Player;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
+using Content.Shared.Effects;
+using Content.Shared.StatusEffect;
+using Robust.Shared.Utility;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Hands;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -68,7 +64,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly AlertLevelSystem _alert = default!;
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
@@ -81,12 +76,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly FlashSystem _flash = default!;
-    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly SharedInteractionSystem _interact = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
     public int CultistCount;
 
@@ -100,6 +95,11 @@ public sealed partial class CosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentInit>(OnStartCultLead);
         SubscribeLocalEvent<MonumentComponent, ComponentInit>(OnStartMonument);
         SubscribeLocalEvent<MonumentComponent, InteractUsingEvent>(OnInfuseEntropy);
+
+        SubscribeLocalEvent<CosmicEquipmentComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<CosmicEquipmentComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<CosmicEquipmentComponent, GotEquippedHandEvent>(OnGotHeld);
+        SubscribeLocalEvent<CosmicEquipmentComponent, GotUnequippedHandEvent>(OnGotUnheld);
 
         SubscribeLocalEvent<InfluenceStrideComponent, ComponentInit>(OnStartInfluenceStride);
         SubscribeLocalEvent<InfluenceStrideComponent, ComponentRemove>(OnEndInfluenceStride);
@@ -149,70 +149,42 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 QueueDel(uid);
             }
         }
-        var imposeQuery = EntityQueryEnumerator<CosmicImposingComponent>(); // Enumerator for removing Vacuous Imposition's active effects & removing atmosphere.
-        while (imposeQuery.MoveNext(out var uid, out var comp))
+
+        var finaleQuery = EntityQueryEnumerator<CosmicFinaleComponent, MonumentComponent>(); // Enumerator for The Monument's Finale
+        while (finaleQuery.MoveNext(out var uid, out var comp, out var monuComp))
         {
-            if (_timing.CurTime >= comp.ImposeCheckTimer)
-            {
-                RemCompDeferred<CosmicImposingComponent>(uid);
-            }
-        }
-        var vitQuery = EntityQueryEnumerator<MonumentComponent>(); // Enumerator for people who've unlocked Vacuous Vitality.
-        while (vitQuery.MoveNext(out var uid, out var comp))
-        {
-            if (_timing.CurTime >= comp.VitalityCheckTimer)
+            if (_timing.CurTime >= monuComp.CheckTimer)
             {
                 var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10);
                 entities.RemoveWhere(entity => !HasComp<InfluenceVitalityComponent>(entity));
-                comp.VitalityCheckTimer = _timing.CurTime + comp.CheckWait;
-                foreach (var entity in entities) _damageable.TryChangeDamage(entity, comp.MonumentHealing * -1);
+                foreach (var entity in entities) _damageable.TryChangeDamage(entity, monuComp.MonumentHealing * -1);
+                monuComp.CheckTimer = _timing.CurTime + monuComp.CheckWait;
             }
-        }
-        var finaleQuery = EntityQueryEnumerator<CosmicFinaleComponent>(); // Enumerator for The Monument's Finale. All of it.
-        while (finaleQuery.MoveNext(out var uid, out var comp))
-        {
-            if (comp.FinaleActive && !comp.BufferComplete && !comp.PlayedBufferSong && !string.IsNullOrEmpty(comp.SelectedBufferSong))
+
+            if (comp.CurrentState == FinaleState.ActiveBuffer && _timing.CurTime >= comp.BufferTimer) // swap everything over when buffer timer runs out
             {
-                _sound.DispatchStationEventMusic(uid, comp.SelectedBufferSong, StationEventMusicType.CosmicCult);
-                _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
-                Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
-                null,
-                Color.FromHex("#cae8e8"));
-                comp.PlayedBufferSong = true;
-            }
-            else if (comp.FinaleActive && comp.FinaleTimer <= comp.FinaleSongLength && !comp.PlayedFinaleSong && !string.IsNullOrEmpty(comp.SelectedFinaleSong) && comp.BufferComplete && !comp.PlayedFinaleSong)
-            {
-                _sound.DispatchStationEventMusic(uid, comp.SelectedFinaleSong, StationEventMusicType.CosmicCult);
-                _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"),
-                Loc.GetString("cosmiccult-finale-location", ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, Transform(uid)))))),
-                null,
-                Color.FromHex("#cae8e8"));
-                comp.PlayedFinaleSong = true;
-            }
-            if (comp.FinaleActive && _timing.CurTime >= comp.BufferTimer && comp.FinaleActive && !comp.BufferComplete && !comp.Victory)
-            {
-                _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
+                comp.CurrentState = FinaleState.ActiveFinale;
                 comp.FinaleTimer = _timing.CurTime + comp.FinaleRemainingTime;
-                comp.SelectedFinaleSong = _audio.GetSound(comp.FinaleMusic);
-                comp.FinaleSongLength = TimeSpan.FromSeconds(_audio.GetAudioLength(comp.SelectedFinaleSong).TotalSeconds);
-                _sound.DispatchStationEventMusic(uid, comp.SelectedFinaleSong, StationEventMusicType.CosmicCult);
-                comp.BufferComplete = true;
-                comp.PlayedFinaleSong = true;
+                comp.SelectedSong = comp.FinaleMusic;
+                _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
+                _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
                 _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);
+
             }
-            else if (comp.FinaleActive && _timing.CurTime >= comp.FinaleTimer && comp.FinaleActive && comp.BufferComplete && !comp.Victory)
+            else if (comp.CurrentState == FinaleState.ActiveFinale && _timing.CurTime >= comp.FinaleTimer) // trigger wincondition on time runout
             {
                 _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
                 Spawn("MobCosmicGodSpawn", Transform(uid).Coordinates);
-                comp.Victory = true;
+                comp.CurrentState = FinaleState.Victory;
             }
-            if (_timing.CurTime >= comp.CultistsCheckTimer && comp.FinaleActive && !comp.BufferComplete)
+
+            if (_timing.CurTime >= comp.CultistsCheckTimer && comp.CurrentState == FinaleState.ActiveBuffer) // speed up the buffer for each nearby cultist
             {
                 comp.CultistsCheckTimer = _timing.CurTime + comp.CheckWait;
-                var cultistsPresent = CultistCount = _cosmicGlyphs.GatherCultists(uid, 5).Count; //Let's use the cultist collecting hashset from Cosmic Glyphs to see how many folks are around!
+                var cultistsPresent = CultistCount = _cosmicGlyphs.GatherCultists(uid, 5).Count; //Let's use the cultist collecting hashset from Cosmic Glyphs. beacuase
                 CultistCount = int.Clamp(cultistsPresent, 0, 10);
                 _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-cultist-count", ("COUNT", CultistCount)), Transform(uid).Coordinates);
-                var modifyTime = TimeSpan.FromSeconds(360 * 5 / (360 - 25 * CultistCount) - 5);
+                var modifyTime = TimeSpan.FromSeconds(360 * 7 / (360 - 40 * CultistCount) - 5);
                 comp.BufferTimer -= modifyTime;
             }
         }
@@ -291,9 +263,34 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _cultRule.UpdateCultData(monument);
 
         _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-inserted", ("count", quant)), cultist, cultist);
-        _audio.PlayEntity("/Audio/_Impstation/CosmicCult/insert_entropy.ogg", cultist, monument);
+        _audio.PlayEntity(_audio.ResolveSound(monument.Comp.InfusionSFX), cultist, monument);
         QueueDel(entropy);
         return true;
+    }
+    #endregion
+
+    #region Equipment Pickup
+    private void OnGotEquipped(Entity<CosmicEquipmentComponent> ent, ref GotEquippedEvent args)
+    {
+        if (!HasComp<CosmicCultComponent>(args.Equipee))
+            _statusEffects.TryAddStatusEffect<CosmicEntropyDebuffComponent>(args.Equipee, "EntropicDegen", TimeSpan.FromSeconds(99), true);
+    }
+
+    private void OnGotUnequipped(Entity<CosmicEquipmentComponent> ent, ref GotUnequippedEvent args)
+    {
+        if (!HasComp<CosmicCultComponent>(args.Equipee))
+            _statusEffects.TryRemoveStatusEffect(args.Equipee, "EntropicDegen");
+    }
+    private void OnGotHeld(Entity<CosmicEquipmentComponent> ent, ref GotEquippedHandEvent args)
+    {
+        if (!HasComp<CosmicCultComponent>(args.User))
+            _statusEffects.TryAddStatusEffect<CosmicEntropyDebuffComponent>(args.User, "EntropicDegen", TimeSpan.FromSeconds(99), true);
+    }
+
+    private void OnGotUnheld(Entity<CosmicEquipmentComponent> ent, ref GotUnequippedHandEvent args)
+    {
+        if (!HasComp<CosmicCultComponent>(args.User))
+            _statusEffects.TryRemoveStatusEffect(args.User, "EntropicDegen");
     }
     #endregion
 
@@ -302,17 +299,14 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
-
-    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args) // these functions just make sure
-    {
-        _movementSpeed.RefreshMovementSpeedModifiers(uid);
-    }
-
     private void OnEndInfluenceStride(Entity<InfluenceStrideComponent> uid, ref ComponentRemove args) // that movespeed applies more-or-less correctly
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
     }
-
+    private void OnStartImposition(Entity<CosmicImposingComponent> uid, ref ComponentInit args) // these functions just make sure
+    {
+        _movementSpeed.RefreshMovementSpeedModifiers(uid);
+    }
     private void OnEndImposition(Entity<CosmicImposingComponent> uid, ref ComponentRemove args) // as various cosmic cult effects get added and removed
     {
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
@@ -325,7 +319,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         else
             args.ModifySpeed(1f, 1f);
     }
-
     private void OnImpositionMoveSpeed(EntityUid uid, CosmicImposingComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         if (HasComp<CosmicImposingComponent>(uid))

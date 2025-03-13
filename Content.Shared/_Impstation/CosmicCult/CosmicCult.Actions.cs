@@ -14,3 +14,10 @@ public sealed partial class EventCosmicGlare : InstantActionEvent { }
 public sealed partial class EventCosmicIngress : EntityTargetActionEvent { }
 public sealed partial class EventCosmicImposition : InstantActionEvent { }
 public sealed partial class EventCosmicNova : WorldTargetActionEvent { }
+
+
+// Rogue Ascended
+public sealed partial class EventRogueCosmicNova : WorldTargetActionEvent { }
+public sealed partial class EventRogueInfection : EntityTargetActionEvent { }
+public sealed partial class EventRogueGrandShunt : InstantActionEvent { }
+public sealed partial class EventRogueShatter : EntityTargetActionEvent { }
