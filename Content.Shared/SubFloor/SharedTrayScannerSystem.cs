@@ -38,13 +38,13 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     private void OnEquip(EntityUid user)
     {
         EnsureComp<TrayScannerUserComponent>(user);
-        _eye.UpdateVisibilityMask(user);
+        _eye.RefreshVisibilityMask(user);
     }
 
     private void OnUnequip(EntityUid user)
     {
         RemComp<TrayScannerUserComponent>(user);
-        _eye.UpdateVisibilityMask(user);
+        _eye.RefreshVisibilityMask(user);
     }
 
     private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)

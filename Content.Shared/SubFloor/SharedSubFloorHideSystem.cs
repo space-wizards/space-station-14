@@ -124,6 +124,11 @@ namespace Content.Shared.SubFloor
                 return;
 
             entity.Comp.IsUnderCover = value;
+
+            // Test / MapInit bandaid.
+            if (entity.Comp.LifeStage < ComponentLifeStage.Running)
+                return;
+
             _visibility.SetLayer(entity.Owner, value ? (ushort) VisibilityFlags.Subfloor : (ushort) VisibilityFlags.Normal);
         }
 

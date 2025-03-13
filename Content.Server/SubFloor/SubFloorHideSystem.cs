@@ -34,7 +34,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         _showFloors.Remove(e.Session);
 
         if (e.Session.AttachedEntity != null)
-            _eye.UpdateVisibilityMask(e.Session.AttachedEntity.Value);
+            _eye.RefreshVisibilityMask(e.Session.AttachedEntity.Value);
     }
 
     private void OnGetVisibility(ref GetVisMaskEvent ev)
@@ -65,7 +65,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
             _showFloors.Remove(args.SenderSession);
         }
 
-        _eye.UpdateVisibilityMask((ent.Value, eyeComp));
+        _eye.RefreshVisibilityMask((ent.Value, eyeComp));
 
         RaiseNetworkEvent(new ShowSubfloorRequestEvent()
         {

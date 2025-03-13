@@ -197,7 +197,7 @@ namespace Content.Server.Ghost
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
-            _eye.UpdateVisibilityMask(uid);
+            _eye.RefreshVisibilityMask(uid);
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
         }
@@ -217,7 +217,7 @@ namespace Content.Server.Ghost
             }
 
             // Entity can't see ghosts anymore.
-            _eye.UpdateVisibilityMask(uid);
+            _eye.RefreshVisibilityMask(uid);
             _actions.RemoveAction(uid, component.BooActionEntity);
         }
 

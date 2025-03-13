@@ -91,7 +91,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //ghost vision
-        _eye.UpdateVisibilityMask(uid);
+        _eye.RefreshVisibilityMask(uid);
     }
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
