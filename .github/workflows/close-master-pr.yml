@@ -17,7 +17,7 @@ jobs:
     #       We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html)
 
 
-    #       You can move your current work from the master branch to another branch by doing `git branch <branch_name` and resetting the master branch.'
+    #       You can move your current work from the master branch to another branch by doing `git branch <branch_name>` and resetting the master branch.'
 
     # If you prefer to just comment on the pr and not close it, uncomment the below and comment the above
 
@@ -32,7 +32,7 @@ jobs:
                   + " Unfortunately, it looks like you submitted your pull request from the master branch."
                   + " We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html)"
                   + "\n\n"
-                  + "You can move your current work from the master branch to another branch by doing `git branch <branch_name` and resetting the master branch."
+                  + "You can move your current work from the master branch to another branch by doing `git branch <branch_name>` and resetting the master branch."
                   + "\n\n"
                   + "This pr won't be automatically closed. However, a maintainer may close it for this reason."
           })
