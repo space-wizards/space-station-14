@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The body hair marking for dwarves and humans may now be used by unisex
-      characters.
-    type: Tweak
-  id: 803
-  time: '2024-12-26T11:26:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1119
 - author: TheGrimbeeper
   changes:
   - message: new absurdly rare artifact effect that will have you saying "that's not
@@ -4094,3 +4086,13 @@
   id: 1302
   time: '2025-03-14T01:42:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1883
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.1.1b (Beta)
+    type: Tweak
+  - message: Fixes towards various issues in cc1.1.0b (Incl. Less player-induced atmos
+      floods.)
+    type: Fix
+  id: 1303
+  time: '2025-03-14T04:33:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1942
