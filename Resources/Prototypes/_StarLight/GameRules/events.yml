@@ -119,7 +119,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    gridPath: /Maps/_Starlight/Shuttles/Quantum_Ark_Event.yml
+    gridPath: /Maps/_Starlight/Shuttles/quantum_ark_event.yml
 
 - type: entity
   parent: BaseGameRule
@@ -127,4 +127,4 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    gridPath: /Maps/_Starlight/Shuttles/Quantum_Ark.yml
+    gridPath: /Maps/_Starlight/Shuttles/quantum_ark.yml
