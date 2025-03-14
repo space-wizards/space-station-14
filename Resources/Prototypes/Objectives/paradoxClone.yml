@@ -32,7 +32,8 @@
   components:
   - type: PickSpecificPerson
   - type: KillPersonCondition
-    requireDead: true # don't count missing evac as killing
+    requireDead: true
+    requireMaroon: false # maintain original behavior
   - type: TargetObjective
     title: objective-condition-kill-head-title # kill <name>, <job>
 

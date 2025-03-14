@@ -90,7 +90,7 @@
     difficulty: 1.75
     unique: false
   - type: TargetObjective
-    title: objective-condition-kill-person-title
+    title: objective-condition-maroon-person-title
   - type: PickRandomPerson
 
 - type: entity
@@ -104,7 +104,7 @@
     # killing 1 head is enough
     unique: true
   - type: TargetObjective
-    title: objective-condition-kill-head-title
+    title: objective-condition-kill-maroon-title
   - type: PickRandomHead
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
