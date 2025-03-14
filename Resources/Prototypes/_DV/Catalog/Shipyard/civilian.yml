@@ -2,7 +2,7 @@
   id: Reclaimer
   name: NT-Reclaimer
   description: A small mining vessel.
-  price: 17000
+  price: 19000
   path:
   - /Maps/_Impstation/Shuttles/Shipyard/reclaimer.yml
   categories:
@@ -12,7 +12,7 @@
   id: Cargo
   name: Cargo Ship
   description: A small shipping vessel.
-  price: 20000
+  price: 26000 # Imp - This shuttle sells for 25688, increased price from 20000 to prevent arbitrage
   path:
   - /Maps/Shuttles/cargo.yml
   categories:
