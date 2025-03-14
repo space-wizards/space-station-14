@@ -35,4 +35,5 @@ jobs:
                   + "You can move your current work from the master branch to another branch by doing `git branch <branch_name>` and resetting the master branch."
                   + "\n\n"
                   + "This pr won't be automatically closed. However, a maintainer may close it for this reason."
+                  + " If you move your work to another branch, you'll need to open a new pr."
           })
