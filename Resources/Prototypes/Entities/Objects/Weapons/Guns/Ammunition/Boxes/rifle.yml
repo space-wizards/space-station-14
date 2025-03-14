@@ -2,6 +2,8 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxRifle
+  name: ammunition box (.20 rifle) #imp
+  description: A box made for 50 rounds of .20 rifle ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -28,18 +30,19 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifleBig
   name: ammunition box (.20 rifle)
+  description: A large box made for 200 rounds of .20 rifle ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeRifle
   - type: Sprite
     layers:
-    - state: base-b
+    - state: base-big
       map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
+    - state: mag-big-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
-    magState: magb
+    magState: mag-big
     steps: 4
     zeroVisible: false
   - type: Appearance
@@ -48,6 +51,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifle
   name: ammunition box (.20 rifle)
+  description: A box made for 50 rounds of .20 rifle ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -62,6 +66,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRiflePractice
   name: ammunition box (.20 rifle practice)
+  description: A box made for 50 rounds of .20 rifle ammunition, labeled as practice bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -77,6 +82,7 @@
   id: MagazineBoxRifleIncendiary
   parent: BaseMagazineBoxRifle
   name: ammunition box (.20 rifle incendiary)
+  description: A box made for 50 rounds of .20 rifle ammunition, labeled as incendiary bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
@@ -92,6 +98,7 @@
   id: MagazineBoxRifleUranium
   parent: BaseMagazineBoxRifle
   name: ammunition box (.20 rifle uranium)
+  description: A box made for 50 rounds of .20 rifle ammunition, labeled as uranium bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium

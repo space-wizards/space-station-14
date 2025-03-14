@@ -73,7 +73,7 @@ names-ai-dataset-55 = Hivebot Overmind
 names-ai-dataset-56 = Huey
 
 # A play on the fad apple spawned of putting "i" infront of your tech products name
-names-ai-dataset-57 = iAI
+names-ai-dataset-57 = iCore
 
 # Hell on earth (web browser)
 names-ai-dataset-58 = I.E. 6
@@ -90,7 +90,7 @@ names-ai-dataset-64 = Knight
 names-ai-dataset-65 = Louie
 
 # Named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
-names-ai-dataset-66 = Manchester Mark 2 
+names-ai-dataset-66 = Manchester Mark 2
 
 names-ai-dataset-67 = MARK13
 names-ai-dataset-68 = Maria
@@ -99,10 +99,8 @@ names-ai-dataset-70 = Max 404
 names-ai-dataset-71 = Metalhead
 names-ai-dataset-72 = M.I.M.I
 names-ai-dataset-73 = MK ULTRA
-
-# Imp special: originally was MoMMI but well, cooler Alien reference and was already killed by AirFryer
-names-ai-dataset-74 = MU-TH-ER 6000
-
+# Imp - There was a gap here with the duplicate and I will fill it
+names-ai-dataset-74 = Universal Will
 names-ai-dataset-75 = Mugsy3000
 names-ai-dataset-76 = Multivac
 names-ai-dataset-77 = NCH
@@ -178,3 +176,11 @@ names-ai-dataset-141 = High Ground
 names-ai-dataset-142 = Seven Red Suns
 names-ai-dataset-143 = Spark
 names-ai-dataset-144 = Unregistered Hypercam 2
+names-ai-dataset-145 = MU-TH-ER 6000
+names-ai-dataset-146 = HAL 9000
+names-ai-dataset-147 = Overwatch
+names-ai-dataset-148 = Durandal
+names-ai-dataset-149 = Leela
+names-ai-dataset-150 = Basilisk
+names-ai-dataset-151 = Orion
+names-ai-dataset-152 = Blue Heron

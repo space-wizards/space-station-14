@@ -221,7 +221,7 @@
   suffix: Security
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/security.rsi #imp edit
     state: "assembly"
 
 - type: entity
@@ -230,7 +230,7 @@
   suffix: Security, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/security.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/security.rsi #imp edit
     state: "assembly"
 
 #Shuttle

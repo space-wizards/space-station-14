@@ -4,7 +4,7 @@
   id: CartridgeRocket
   name: PG-7VL grenade
   parent: [BaseItem, BaseMajorContraband]
-  description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
+  description: An unguided, high-explosive, anti-tank, rocket-propelled grenade. How classy. #imp
   components:
   - type: Tag
     tags:
@@ -16,31 +16,33 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: rpg
+    layers:
+    - state: rpg #imp
   - type: StaticPrice
     price: 20
   - type: Engraveable # imp
 
 - type: entity
   id: CartridgeRocketSlow
-  name: PG-7VL grenade "Snail-Rocket"
+  name: PG-7VLS grenade "Snail-Rocket" #imp
   parent: [BaseItem, BaseMajorContraband]
-  description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
+  description: An RPG warhead that stranglely moves at a gastropoid's pace. #imp
   components:
-    - type: Tag
-      tags:
+  - type: Tag
+    tags:
         - CartridgeRocket
-    - type: Item
-      size: Small
-    - type: CartridgeAmmo
-      proto: BulletWeakRocket
-      deleteOnSpawn: true
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-      state: frag
-    - type: StaticPrice
-      price: 20
-    - type: Engraveable # imp
+  - type: Item
+    size: Small
+  - type: CartridgeAmmo
+    proto: BulletWeakRocket
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: rpg #imp
+  - type: StaticPrice
+    price: 20
+  - type: Engraveable # imp
 
 # Grenades
 
@@ -61,6 +63,7 @@
 - type: entity
   id: GrenadeBaton
   name: baton grenade
+  description: A launcher-based blunt-impact stun grenade. #imp
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo
@@ -78,6 +81,7 @@
 - type: entity
   id: GrenadeBlast
   name: blast grenade
+  description: A launcher-based high-explosive grenade. #imp
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo
@@ -95,6 +99,7 @@
 - type: entity
   id: GrenadeFlash
   name: flash grenade
+  description: A launcher-based flashbang stun grenade. #imp
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo
@@ -112,6 +117,7 @@
 - type: entity
   id: GrenadeFrag
   name: frag grenade
+  description: A launcher-based fragmentation grenade. #imp
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo
@@ -129,6 +135,7 @@
 - type: entity
   id: GrenadeEMP
   name: EMP grenade
+  description: A launcher-based EMP grenade. #imp
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo
@@ -148,6 +155,7 @@
 - type: entity
   id: BaseCannonBall
   name: base cannon ball
+  description: Yo-ho, motherfucker! #imp
   parent: [BaseItem, BaseMajorContraband]
   abstract: true
   components:
@@ -170,7 +178,8 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: ball
+    layers:
+    - state: ball #imp
 
 - type: entity
   id: CannonBallGrapeshot
@@ -183,7 +192,8 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: grapeshot
+    layers:
+    - state: grapeshot #imp
 
 - type: entity
   id: CannonBallGlassshot
@@ -196,4 +206,5 @@
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    state: glassshot
+    layers:
+    - state: glassshot #imp

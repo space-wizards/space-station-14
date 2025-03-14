@@ -22,9 +22,10 @@
 #     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
 #     state: glare
 #   action: ActionCosmicGlare
+#   tier: 1
 
 - type: influence
-  id: InfluenceNullGlare #Yeah it's actually shunt right now but we give it the same slot
+  id: InfluenceShuntSubjectivity
   name: influence-name-shunt
   influenceType: influence-type-active
   cost: 10
@@ -33,7 +34,7 @@
     sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
     state: blank
   action: ActionCosmicBlank
-  tier: 1 #remember to update when this gets set back to what it should be
+  tier: 1
 
 - type: influence
   id: InfluenceForceIngress

@@ -9,7 +9,6 @@
   - type: Input
     context: "ghost"
   - type: Spectral
-  - type: CosmicAstralBody
   - type: MovementSpeedModifier
     baseWalkSpeed: 6
     baseSprintSpeed: 6
@@ -50,6 +49,7 @@
        isLooped: true
        reverseWhenFinished: true
 
+### ASTRAL PROJECTION
 - type: entity
   parent:
   - Incorporeal
@@ -112,3 +112,183 @@
   - type: ActionGrant
     actions:
     - ActionCosmicReturn
+
+
+### ASCENDED EVENTSPAWN
+- type: entity
+  id: MobRogueAscended
+  parent:
+  - BaseMob
+  name: rogue ascended
+  suffix: MidRoundAntag
+  description: An entity from beyond the borders of bluespace. Its contours continuously blur and blend together, unnerving to the eye.
+  components:
+  - type: FTLSmashImmune
+  - type: Physics
+
+    bodyStatus: InAir
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: CombatMode
+  - type: Bloodstream
+    bloodMaxVolume: 650
+    bloodReagent: Entropy
+    bloodlossDamage:
+      types:
+        Bloodloss: 0.5
+    bloodlossHealDamage:
+      types: # Don't use asphyx or cold on an Ascendant, lol
+        Bloodloss: -1
+        Asphyxiation: -4
+        Cold: -4
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4.9
+    baseSprintSpeed: 4.9
+    weightlessAcceleration: 2 # Move around more easily in space.
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Mobs/astralrogue.rsi
+    noRot: true
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: underlay
+      shader: unshaded
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: base
+      shader: unshaded
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: underlay
+        BaseUnshaded: base
+      Critical:
+        BaseUnshaded: base-crit
+      Dead:
+        Base: underlay-off
+        BaseUnshaded: base-dead
+  - type: NoSlip
+  - type: Eye
+    drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+      - 777
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-rogue-ascended-name
+    description: ghost-role-information-rogue-ascended-description
+    rules: ghost-role-information-rogue-ascended-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: RogueAscended # for the rogue ascended's MidRoundAntag Systems
+  - type: ActionGrant
+    actions:
+    - ActionRogueInfection
+    - ActionRogueGrandShunt
+    - ActionRogueCosmicNova
+    - ActionRogueShatter
+  - type: Damageable
+    damageContainer: ManifestedSpirit
+    damageModifierSet: ManifestedSpirit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.49
+        density: 999
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: PointLight
+    color: "#42a4ae"
+    radius: 2
+    energy: 3
+    softness: 1
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+     - !type:FadeBehaviour
+       interpolate: Linear
+       minDuration: 5.5
+       maxDuration: 5.5
+       startValue: 1
+       endValue: 3
+       property: Energy
+       enabled: true
+       isLooped: true
+       reverseWhenFinished: true
+  - type: StatusEffects # Overwriting status effects
+    allowed:
+    - SlowedDown
+    - RadiationProtection
+    - Adrenaline
+  - type: MeleeWeapon
+    angle: 90
+    range: 2
+    animation: WeaponArcCosmic
+    attackRate: 0.9
+    clickDamageModifier: 1
+    damage:
+      types:
+        Slash: 5
+        Asphyxiation: 5
+        Cold: 5
+        Structural: 20
+    soundHit:
+      path: /Audio/_Impstation/CosmicCult/cosmicsword_hit.ogg
+      params:
+        variation: 0.2
+        volume: 1
+    soundSwing:
+      path: /Audio/_Impstation/CosmicCult/cosmicweapon_swing.ogg
+      params:
+        variation: 0.125
+        volume: -4
+    soundNoDamage:
+      path: /Audio/_Impstation/CosmicCult/cosmicsword_glance.ogg
+      params:
+        variation: 0.2
+        volume: -11
+  - type: StaminaDamageOnHit
+    damage: 34
+  - type: Puller
+    needsHands: false
+  - type: MobState
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritLastWords
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      375: Critical
+      450: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      225: 0.7
+      375: 0.5
+  - type: Absorbable # imp
+    biomassRestored: 0.8
+  - type: Butcherable
+    spawned:
+    - id: AscendedDendrite
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-rogue-ascended
+    interactFailureString: petting-failure-rogue-ascended
+    interactFailureSound:
+      path: /Audio/_Impstation/CosmicCult/ascendant_noise.ogg
+    soundPerceivedByOthers: false
+  - type: RandomMetadata
+    nameSegments:
+    - ascended_names
+    - ascended_titles

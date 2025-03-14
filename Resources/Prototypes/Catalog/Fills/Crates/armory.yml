@@ -1,6 +1,6 @@
 - type: entity
   id: CrateArmorySMG
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: SMG crate
   description: Contains two WT550 submachine guns with four magazines. Requires Armory access to open.
   components:
@@ -13,9 +13,9 @@
 
 - type: entity
   id: CrateArmoryShotgun
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: shotgun crate
-  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer shotguns with three boxes of lethal pellet shotgun shells. Requires Armory access to open.
+  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer shotguns with four boxes of lethal pellet shotgun shells. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: CrateTrackingImplants
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: tracking implants
   description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
   components:
@@ -36,7 +36,7 @@
         amount: 5
 
 - type: entity
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   id: CrateTrainingBombs
   name: training bombs
   description: Contains three low-yield training bombs for security to learn defusal and safe ordnance disposal. EOD suit not included. Requires Armory access to open.
@@ -48,7 +48,7 @@
 
 - type: entity
   id: CrateArmoryLaser
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: lasers crate
   description: Contains three standard-issue laser rifles. Requires Armory access to open.
   components:
@@ -59,7 +59,7 @@
 
 - type: entity
   id: CrateArmoryPistols
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: pistols crate
   description: Contains two standard-issue Mk 58 handguns with four magazines. Requires Armory access to open.
   components:
@@ -72,7 +72,7 @@
 
 - type: entity
   id: CrateSecurityRiot
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: swat crate
   description: Contains two sets of riot armor, helmets, shields, and stun Enforcers. Extra stun ammo included. Requires Armory access to open.
   components:

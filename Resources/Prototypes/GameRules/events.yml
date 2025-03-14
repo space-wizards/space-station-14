@@ -35,9 +35,11 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
+    - id: WizardSpawn
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
+    - id: RogueAscendedSpawn # imp
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -53,9 +55,11 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
+    - id: WizardSpawn
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
+    - id: RogueAscendedSpawn # imp
 
 - type: entity
   id: BaseStationEvent
@@ -255,6 +259,44 @@
   - type: RandomSpawnRule
     prototype: MobRevenant
 
+- type: entity
+  parent: BaseWizardRule
+  id: WizardSpawn
+  components:
+  - type: StationEvent
+    weight: 1 # rare
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 15
+  - type: AntagSelection
+    agentName: wizard-round-end-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostWizard
+      min: 1
+      max: 1
+      playerRatio: 1
+      pickPlayer: false
+      startingGear: WizardBlueGear
+      roleLoadout:
+      - RoleSurvivalExtended
+      briefing:
+        text: wizard-role-greeting
+        color: Turquoise
+        # TODO: Need Wizard Start sound
+        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+      # TODO: WizardComp as needed
+      components:
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - names_wizard_first
+        - names_wizard_last
+      mindRoles:
+      - MindRoleWizard
+
 # disabled until event is rewritten to be more interesting
 #- type: entity
 #  id: FalseAlarm
@@ -380,7 +422,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Impstation/Shuttles/ShuttleEvent/striker.yml
+    gridPath: /Maps/_Impstation/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection

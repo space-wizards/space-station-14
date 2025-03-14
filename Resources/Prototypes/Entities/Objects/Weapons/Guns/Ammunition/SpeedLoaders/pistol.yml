@@ -1,7 +1,8 @@
 - type: entity
   id: BaseSpeedLoaderPistol
   name: "speed loader (.35 auto)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  description: A 6-round .35 auto speed loader.
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag

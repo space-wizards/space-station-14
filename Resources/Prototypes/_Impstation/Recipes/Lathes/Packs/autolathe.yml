@@ -1,0 +1,23 @@
+# Static
+
+- type: latheRecipePack
+  id: ImpAutoStatic
+  recipes:
+  - Flare
+  - DeskBell
+  - UvLightTube
+  - TapeRecorder # DV
+  - CassetteTape # DV
+
+# Dynamic
+
+- type: latheRecipePack
+  id: ImpAutoDynamic
+  recipes:
+  - Fulton
+
+# Emagged
+
+# - type: latheRecipePack - for the future
+#   id: ImpProtoEmagged
+#   recipes:

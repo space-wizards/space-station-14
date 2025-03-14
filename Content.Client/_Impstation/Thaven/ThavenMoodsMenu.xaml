@@ -1,26 +1,23 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                     Title="{Loc 'moods-ui-menu-title'}"
-                     MinSize="200 100"
-                     SetSize="450 515">
+        xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+        Title="{Loc 'moods-ui-menu-title'}"
+        MinSize="200 100"
+        SetSize="450 515">
     <BoxContainer Orientation="Vertical"
-                  HorizontalExpand="True"
-                  VerticalExpand="True">
+            HorizontalExpand="True"
+            VerticalExpand="True">
         <PanelContainer VerticalExpand="True" Margin="10 10 10 10">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
             </PanelContainer.PanelOverride>
-            <ScrollContainer
-                HScrollEnabled="False"
-                HorizontalExpand="True"
-                VerticalExpand="True">
-                <BoxContainer
-                    Name="MoodDisplayContainer"
+            <ScrollContainer HScrollEnabled="False"
+                    HorizontalExpand="True"
+                    VerticalExpand="True">
+                <BoxContainer Name="MoodDisplayContainer"
                     Orientation="Vertical"
                     VerticalExpand="True"
-                    Margin="10 10 10 0">
-                </BoxContainer>
+                    Margin="10 10 10 0"/>
             </ScrollContainer>
         </PanelContainer>
     </BoxContainer>

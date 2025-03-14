@@ -66,10 +66,10 @@
     delay: 1
 
 - type: entity
-  name: L6 SAW
+  name: L6 Nidhogg SAW #imp
   id: WeaponLightMachineGunL6
   parent: [BaseWeaponLightMachineGun, Tier3Contraband]
-  description: A rather traditionally-made Squad Automatic Weapon with a pleasantly lacquered wooden pistol grip. Lacks an LMG stock, decreasing controllability. Uses .20 rifle ammo. #imp
+  description: A traditionally-made Squad Automatic Weapon in a paratrooper configuration, featuring a custom stock and hand guard while lacking a bipod. Best sprayed from the hip when on the move. Uses .20 rifle ammo. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/LMGs/l6.rsi #imp
@@ -85,7 +85,7 @@
   - type: Appearance
 
 - type: entity
-  name: L6C ROW
+  name: L6C Anaconda ROW #imp
   id: WeaponLightMachineGunL6C
   parent: BaseItem
   description: An L6 SAW for use by cyborgs. Creates .20 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges. #imp

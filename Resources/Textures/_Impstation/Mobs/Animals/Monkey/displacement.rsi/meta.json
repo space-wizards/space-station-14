@@ -1,0 +1,26 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by Lightning for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "load": {
+   	  "srgb": false
+  },
+  "states": [
+	{
+	  "name": "jumpsuit",
+	  "directions": 4
+	},
+	{
+	  "name": "outerClothing",
+	  "directions": 4
+	},
+	{
+	  "name": "mask",
+	  "directions": 4
+	}
+  ]
+}

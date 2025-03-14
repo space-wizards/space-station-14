@@ -34,3 +34,4 @@
   - ServiceWorker
   primary: false
   editorHidden: true
+  manifestHidden: true

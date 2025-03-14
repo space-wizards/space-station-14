@@ -55,6 +55,6 @@
     uiWindowPos: 1,1
     strippingWindowPos: 1,3
     displayName: Suit
-    whitelist:
-      tags:
-        - MonkeyWearable
+#    whitelist: #imp
+#      tags:
+#        - MonkeyWearable

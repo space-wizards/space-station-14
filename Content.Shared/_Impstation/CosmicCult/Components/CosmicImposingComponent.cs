@@ -13,9 +13,6 @@ public sealed partial class CosmicImposingComponent : Component
 {
     public ResPath RsiPath = new("/Textures/_Impstation/CosmicCult/Effects/ability_imposition_overlay.rsi");
     public readonly string States = "vfx";
-    [AutoPausedField] public TimeSpan ImposeCheckTimer = default!;
-    [DataField] public TimeSpan CheckWait = TimeSpan.FromSeconds(5.8);
-    [DataField] public TimeSpan EmpoweredCheckWait = TimeSpan.FromSeconds(7.2);
 }
 
 [Serializable, NetSerializable]

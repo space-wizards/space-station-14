@@ -59,7 +59,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableLightVisuals # Add support for multiple layers
     spriteLayer: blade
     inhandVisuals:
       left:

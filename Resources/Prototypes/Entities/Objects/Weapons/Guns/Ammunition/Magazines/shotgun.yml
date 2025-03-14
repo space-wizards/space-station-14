@@ -1,7 +1,8 @@
 - type: entity
   id: BaseMagazineShotgun
-  name: ammo drum (.50 shells)
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  name: shell drum (.50 shells) #imp
+  description: A .50 shell 8-shot drum magazine. #imp
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -35,7 +36,8 @@
 
 - type: entity
   id: MagazineShotgunEmpty
-  name: ammo drum (.50 shells any)
+  name: shell drum (.50 any) #imp
+  description: A .50 shell 8-shot drum magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazineShotgun
   components:
@@ -44,7 +46,8 @@
 
 - type: entity
   id: MagazineShotgun
-  name: ammo drum (.50 pellet)
+  name: shell drum (.50 buckshot) #imp
+  description: A .50 shell 8-shot drum magazine, marked as buckshot. #imp
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -58,7 +61,8 @@
 
 - type: entity
   id: MagazineShotgunBeanbag
-  name: ammo drum (.50 stun slug)
+  name: shell drum (.50 stun slug) #imp
+  description: A .50 shell 8-shot drum magazine, marked as stun slugs. #imp
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -72,7 +76,8 @@
 
 - type: entity
   id: MagazineShotgunSlug
-  name: ammo drum (.50 slug)
+  name: shell drum (.50 slug) #imp
+  description: A .50 shell 8-shot drum magazine, marked as slugs. #imp
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
@@ -86,7 +91,8 @@
 
 - type: entity
   id: MagazineShotgunIncendiary
-  name: ammo drum (.50 incendiary)
+  name: shell drum (.50 incendiary) #imp
+  description: A .50 shell 8-shot drum magazine, marked as incendiary. #imp
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider

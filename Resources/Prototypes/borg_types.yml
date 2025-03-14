@@ -81,7 +81,7 @@
 
   defaultModules:
   - BorgModuleGrapplingGun
-  - BorgModuleMining
+  - BorgModuleBasicMining # imp
   - BorgModuleAppraisal
 
   radioChannels:

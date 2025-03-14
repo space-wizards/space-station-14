@@ -48,7 +48,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
             return;
         }
 
-        if (_shipyard.TrySendShuttle(bank.Owner, GetResPath(vessel).ToString()) is not {} shuttle)
+        if (_shipyard.TrySendShuttle(bank.Owner, GetResPath(vessel)) is not {} shuttle)
         {
             var popup = Loc.GetString("shipyard-console-error");
             Popup.PopupEntity(popup, ent, user);

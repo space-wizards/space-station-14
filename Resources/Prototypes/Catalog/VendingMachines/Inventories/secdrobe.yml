@@ -42,3 +42,6 @@
     # end imp additions
   contrabandInventory:
     ClothingMaskClownSecurity: 1
+    ToyFigurineSecurity: 1
+    ToyFigurineWarden: 1
+    ToyFigurineHeadOfSecurity: 1

@@ -26,10 +26,10 @@
     - state: vfx
       shader: unshaded
   - type: GravityWell
-    maxRange: 5
-    baseRadialAcceleration: 20
+    maxRange: 4
+    baseRadialAcceleration: 12.5
     baseTangentialAcceleration: 4
-    gravPulsePeriod: 0.025
+    gravPulsePeriod: 0.05
   - type: SingularityDistortion
     intensity: +20
     falloffPower: 1.5
