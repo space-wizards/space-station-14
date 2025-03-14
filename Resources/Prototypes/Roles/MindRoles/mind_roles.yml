@@ -243,7 +243,7 @@
   components:
   - type: MindRole
     roleType: TeamAntagonist
-    antagPrototype: SyndicateReinforcement
+    antagPrototype: GenericTeamAntagonist
 
 # Wizards
 - type: entity
