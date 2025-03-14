@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: new absurdly rare artifact effect that will have you saying "that's not
-      my doll!"
-    type: Add
-  id: 804
-  time: '2024-12-26T11:29:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1121
 - author: DinnerCalzone
   changes:
   - message: The grappling gun projectile now plays a sound when colliding with walls.
@@ -4096,3 +4088,11 @@
   id: 1303
   time: '2025-03-14T04:33:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1942
+- author: Sha-Seng
+  changes:
+  - message: The guidebookshelf (to be mapped in libraries) that contain all guidebooks
+      in the game
+    type: Add
+  id: 1304
+  time: '2025-03-14T04:34:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1938
