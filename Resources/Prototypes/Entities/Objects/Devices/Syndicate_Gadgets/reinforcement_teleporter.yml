@@ -112,7 +112,7 @@
       description: ghost-role-information-syndicate-cyborg-description
       rules: ghost-role-information-silicon-rules
       mindRoles:
-      - MindRoleGhostRoleSilicon # Should this be Silicon or SiliconAntagonist ?
+      - MindRoleGhostRoleSilicon
       raffle:
         settings: default
     - type: GhostRoleMobSpawner
