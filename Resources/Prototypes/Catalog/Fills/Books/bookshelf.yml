@@ -73,6 +73,7 @@
         - id: BookKeelBay
         - id: BookKeelBayWorn
         - id: BookTEGtorial
+        - id: BookSMForDummies
 
 - type: entity
   id: BookshelfFilled

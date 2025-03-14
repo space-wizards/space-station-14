@@ -53,11 +53,11 @@
     secretStashName: secret-stash-book
     blacklist:
       components:
-      - SecretStash 
-      - NukeDisk 
+      - SecretStash
+      - NukeDisk
       tags:
-      - QuantumSpinInverter 
-      - FakeNukeDisk 
+      - QuantumSpinInverter
+      - FakeNukeDisk
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: null # can't exactly un-cut a book
@@ -75,6 +75,7 @@
   - type: Tag
     tags:
     - Book
+    - Guidebook #imp
   - type: GuideHelp
     openOnActivation: true
     guides:
@@ -97,11 +98,11 @@
     secretStashName: secret-stash-book
     blacklist:
       components:
-      - SecretStash 
-      - NukeDisk 
+      - SecretStash
+      - NukeDisk
       tags:
-      - QuantumSpinInverter 
-      - FakeNukeDisk 
+      - QuantumSpinInverter
+      - FakeNukeDisk
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: null # can't exactly un-cut a book
@@ -474,6 +475,10 @@
       color: gold
   - type: Paper
     content: book-text-atmos-distro
+  - type: Tag #imp
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -493,6 +498,10 @@
       color: gold
   - type: Paper
     content: book-text-atmos-waste
+  - type: Tag #imp
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -512,6 +521,10 @@
       color: gold
   - type: Paper
     content: book-text-atmos-alarms
+  - type: Tag #imp
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -531,3 +544,7 @@
       color: gold
   - type: Paper
     content: book-text-atmos-vents
+  - type: Tag #imp
+    tags:
+    - Book
+    - Guidebook
