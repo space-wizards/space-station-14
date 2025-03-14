@@ -25,6 +25,11 @@
     proto: VeteranQM
 
 - type: loadout
+  id: QuartermasterPoncho
+  equipment:
+    neck: ClothingOuterQMPoncho
+
+- type: loadout
   id: QuartermasterWintercoatXXXL
   equipment:
     outerClothing: ClothingOuterCoatQmHuge

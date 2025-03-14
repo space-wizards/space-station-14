@@ -1,0 +1,5 @@
+# Outerclothing
+- type: loadout
+  id: MimePufferCoat
+  equipment:
+    outerClothing: ClothingOuterCoatPufferMime

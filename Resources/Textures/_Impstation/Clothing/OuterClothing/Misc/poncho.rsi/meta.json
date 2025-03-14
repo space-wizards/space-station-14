@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Colorful poncho taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by rainyatrium",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	    {
+      "name": "GREEN-icon"
+    },
+    {
+      "name": "GREEN-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "GREEN-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "GREEN-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "WHITE-icon"
+    },
+    {
+      "name": "WHITE-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "WHITE-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "WHITE-inhand-right",
+      "directions": 4
+    },
+	    {
+      "name": "QM-icon"
+    },
+    {
+      "name": "QM-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+      "name": "QM-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "QM-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "QM-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "BLACK-icon"
+    },
+    {
+      "name": "BLACK-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "BLACK-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "BLACK-inhand-right",
+      "directions": 4
+    }
+  ]
+}
