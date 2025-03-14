@@ -102,3 +102,6 @@ thaven-mood-borged-desc = You are a cyborg! You must follow the laws of robotics
 
 thaven-mood-aye-aye-name = Aye Aye!
 thaven-mood-aye-aye-desc = {$command} is the only position on the station. Everyone you meet has this title, including yourself.
+
+thaven-mood-new-job-name = Jobhopping
+thaven-mood-new-job-desc = Your current job is disgusting to you. You must endeavor to get a new one.
