@@ -14,7 +14,7 @@ jobs:
     #   with:
     #     comment: "Thank you for contributing to the Space Station 14 repository. Unfortunately, it looks like you submitted your pull request from the master branch. We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html) \n\n You can move your current work from the master branch to another branch by doing `git branch <branch_name` and resetting the master branch."
 
-    # If you prefer to just comment on the pr and not close it, uncomment the bellow and comment the above
+    # If you prefer to just comment on the pr and not close it, uncomment the below and comment the above
 
     - uses: actions/github-script@v7
       with:
