@@ -1,3 +1,53 @@
+- files: ["admin.ogg"]
+  license: "Custom"
+  copyright: "wayneradiotv I'll get the admin and ban you forever! origin"
+  source: "https://www.youtube.com/watch?v=A4b-wNTkpII"
+
+- files: ["bangindonk.ogg", "newroundsexy.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/pull/61573"
+
+- files: ["chadwarden.ogg"]
+  license: "Custom"
+  copyright: "Chad Warden Original : Why the PS3 is better than the Wii and 360 (part 1)"
+  source: "https://www.youtube.com/watch?v=vyufDxxWIsM"
+
+- files: ["chickensandwich.ogg"]
+  license: "Custom"
+  copyright: "Sonic AdventureQuest DX SUBATHON - Day 4 [SA2 End, CONCERT, SHADOW THE HEDGEHOG] (WAYNERADIOTV)"
+  source: "https://www.youtube.com/watch?v=eihA21zOHdM"
+
+- files: ["danish.ogg"]
+  license: "Custom"
+  copyright: "JAILBREAK ZOO [JIRXIN Reupload]"
+  source: "https://www.youtube.com/watch?v=ow2Vpf-hrcw"
+
+- files: ["dead.ogg"]
+  license: "Custom"
+  copyright: "Sonic Heroes - Tails voice clips (William Corkery)"
+  source: "https://www.youtube.com/watch?v=xtPLstoHiwo"
+
+- files: ["getoffme.ogg"]
+  license: "Custom"
+  copyright: "Get off me"
+  source: "https://www.youtube.com/watch?v=vEeuErCKojk"
+
+- files: ["leatherbelt.ogg"]
+  license: "Custom"
+  copyright: "Ventrilo Harassment - World Of Warcraft Nerd"
+  source: "https://www.youtube.com/watch?v=bIVTT4fgPQI"
+
+- files: ["slog.ogg", "slog2.ogg"]
+  license: "Custom"
+  copyright: "TIER TIME *2*: RTVS Community Curated Tier Lists (WAYNERADIOTV)"
+  source: "https://www.youtube.com/watch?v=vphU1U1WqtE"
+
+- files: ["weed.ogg"]
+  license: "Custom"
+  copyright: "[ATPLore] Weed is Trash and Dumb to Smoke"
+  source: "https://www.youtube.com/watch?v=soIjL88SKRQ"
+
 - files: ["wuhey.ogg"]
   license: "Custom"
   copyright: "middle aged men ordering a greggs by theboski"
