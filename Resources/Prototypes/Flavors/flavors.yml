@@ -1407,3 +1407,8 @@
   id: bombegranate
   flavorType: Complex
   description: flavor-complex-bombegranate
+
+- type: flavor
+  id: bacchusblessing
+  flavorType: Complex
+  description: flavor-complex-bacchus-blessing
