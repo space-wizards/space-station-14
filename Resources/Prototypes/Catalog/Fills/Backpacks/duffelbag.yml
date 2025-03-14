@@ -83,6 +83,7 @@
     contents:
       - id: WeaponLightMachineGunL6
       - id: MagazineBoxLightRifleSP
+      - id: MagazineLightRifleBoxSP
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -128,7 +129,7 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
-      - id: WeaponLightMachineGunL6
+      - id: MagazineLightRifleBoxSP
         amount: 3
       - id: MagazineBoxLightRifleSP
         amount: 1
