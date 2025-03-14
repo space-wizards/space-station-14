@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Blackern5000
   changes:
-  - message: Security belts now contain a holobarrier projector and a handheld security
-      radio by default rather than tear gas and a flashbang.
-    type: Tweak
-  id: 7562
-  time: '2024-10-30T07:40:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32291
-- author: Blackern5000
-  changes:
   - message: Added three bottle boxes to the nanomed plus inventory for doctors to
       carry small amounts of chemicals on their person
     type: Add
@@ -3897,3 +3889,11 @@
   id: 8061
   time: '2025-03-13T20:21:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35823
+- author: Coolsurf6
+  changes:
+  - message: Added a new and powerful drink called Bacchus' Blessing for all bartenders
+      to struggle with.
+    type: Add
+  id: 8062
+  time: '2025-03-14T06:49:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35306
