@@ -3,17 +3,18 @@
   name: guide-entry-species
   text: "/ServerInfo/Guidebook/Mobs/Species.xml"
   children:
-    - Arachnid
-    - Diona
-    - Dwarf
-    - Human
-    - Moth
-    - Reptilian
-    - SlimePerson
-    - Vox
-    - Felionoid
-    - Cyclorite
-    - Vulpkanin
+  - Arachnid
+  - Diona
+  - Dwarf
+  - Human
+  - Moth
+  - Reptilian
+  - SlimePerson
+  - Vox
+  - Felionoid
+  - Cyclorite
+  - Vulpkanin
+  - Resomi
 
 - type: guideEntry
   id: Arachnid
@@ -69,3 +70,8 @@
   id: Vulpkanin
   name: species-name-vulpkanin
   text: "/ServerInfo/Guidebook/Mobs/Vulpkanin.xml"
+
+- type: guideEntry
+  id: Resomi
+  name: species-name-resomi
+  text: "/ServerInfo/Guidebook/Mobs/Resomi.xml"
