@@ -33,3 +33,4 @@
       magState: mag
       steps: 5
       zeroVisible: true
+    - type: Appearance

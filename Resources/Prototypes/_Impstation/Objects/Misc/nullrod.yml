@@ -260,6 +260,8 @@
       - state: quiver
       - state: quiver_unshaded
         shader: unshaded
+      - state: mag-0 # This is an empty sprite to get the mag visuals to shut up
+        map: [ "enum.GunVisualLayers.Mag" ]
     - type: Item
       size: Large
       shape:
@@ -278,3 +280,5 @@
       whitelist:
         tags:
         - HolyArrow
+    - type: MagazineVisuals
+      steps: 1 # Sprite is fake, I couldn't be bothered. Sorry :(
