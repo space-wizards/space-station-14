@@ -160,7 +160,7 @@
       collection: Wuhey
     Ungh:
       collection: Ungh
-    Blink: # Imp addition
+    Blink:
       collection: Blinks
       params:
         volume: -3
