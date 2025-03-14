@@ -1,0 +1,13 @@
+- type: entity
+  parent: [ BaseEngineeringContraband, SmokeGrenade ]
+  id: SupermatterSpawnGrenade
+  name: supermatter calling grenade
+  description: A grenade that has NanoTransen send a Supermatter Crystal to the location. DO NOT USE UNLESS CHAMBER PREPARED
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Grenades/metalfoam.rsi
+    - type: SmokeOnTrigger
+      duration: 10
+      spreadAmount: 13
+    - type: SpawnOnTrigger
+      proto: SupermatterCrystal
