@@ -34,7 +34,7 @@
     - FeyMood
     - Borged
     - AyeAye
-    - NewJob # moved to the emag list because changing jobs doesn't open the job slot on the manifest so it's harmful to the round
+    - NewJob
 
 # You must always lie, and can never acknowledge that you are lying. If anyone asks, you're incapable of deception.
 - type: thavenMood
