@@ -399,6 +399,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
         var amountRequired = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
+        bool superSlippery = false;
         /*
         // Utilize the defaults from their relevant systems... this sucks, and is a bandaid
         var launchForwardsMultiplier = SlipperyComponent.DefaultLaunchForwardsMultiplier;
@@ -414,10 +415,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 continue;
             slipperyAmount += quantity;
 
-            if (slipperyAmount <= amountRequired)
-                continue;
-            slipComp.Enabled = true;
-
+            slipComp.Enabled = (slipperyAmount > amountRequired);
+            //if (reagentProto.Slips)
+                //superSlippery = true;
             /*foreach (var tileReaction in reagentProto.TileReactions)
             {
                 if (tileReaction is not SpillTileReaction spillTileReaction)
@@ -428,7 +428,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 paralyzeTime = paralyzeTime < spillTileReaction.ParalyzeTime ? spillTileReaction.ParalyzeTime : paralyzeTime;
             }*/
         }
-
+        slipComp.SuperSlippery = superSlippery;
         /*if (isSlippery)
         {
             var comp = EnsureComp<StepTriggerComponent>(entityUid);

@@ -1,8 +1,6 @@
-using Content.Shared.Prototypes;
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Slippery
 {
@@ -26,14 +24,12 @@ namespace Content.Shared.Slippery
         /// How many seconds the mob will be paralyzed for.
         /// </summary>
         [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
         public float ParalyzeTime = 1.5f;
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
         [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
         public float LaunchForwardsMultiplier = 1.5f;
 
         /// <summary>
@@ -42,11 +38,9 @@ namespace Content.Shared.Slippery
         /// They also will fail any attempts to stand up unless they have no-slips.
         /// </summary>
         [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
         public bool SuperSlippery;
 
         [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
         public bool Enabled = true;
 
     }

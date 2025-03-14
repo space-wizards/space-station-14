@@ -69,6 +69,10 @@
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
   slippery: true
+  slips:
+    paralyzeTime: 5.0
+    launchForwardsMultiplier: 3.0
+    superSlippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny
   color: "#77b58e"
