@@ -1,3 +1,33 @@
+- files: ["bangindonk.ogg", "newroundsexy.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/pull/61573"
+
+- files: ["chadwarden.ogg"]
+  license: "Custom"
+  copyright: "Chad Warden Original : Why the PS3 is better than the Wii and 360 (part 1)"
+  source: "https://www.youtube.com/watch?v=vyufDxxWIsM"
+
+- files: ["chickensandwich.ogg"]
+  license: "Custom"
+  copyright: "Sonic AdventureQuest DX SUBATHON - Day 4 [SA2 End, CONCERT, SHADOW THE HEDGEHOG] (WAYNERADIOTV)"
+  source: "https://www.youtube.com/watch?v=eihA21zOHdM"
+
+- files: ["dead.ogg"]
+  license: "Custom"
+  copyright: "Sonic Heroes - Tails voice clips (William Corkery)"
+  source: "https://www.youtube.com/watch?v=xtPLstoHiwo"
+
+- files: ["egg.ogg"]
+  license: "Custom"
+  copyright: "chat is full of fake fruit stans - Bits and Banter [03/12/2024]"
+  source: "https://www.youtube.com/watch?v=DHRUbA6lfHk"
+
+- files: ["slog.ogg", "slog2.ogg"]
+  license: "Custom"
+  copyright: "TIER TIME *2*: RTVS Community Curated Tier Lists (WAYNERADIOTV)"
+  source: "https://www.youtube.com/watch?v=vphU1U1WqtE"
+
 - files: ["wuhey.ogg"]
   license: "Custom"
   copyright: "middle aged men ordering a greggs by theboski"
