@@ -14,18 +14,6 @@
         {
             "name": "empty-roll",
             "directions": 1
-        },
-        {
-            "name": "green-with-red-stripes",
-            "directions": 1
-        },
-        {
-            "name": "stripe-mask",
-            "directions": 1
-        },
-        {
-            "name": "striped-base-mask",
-            "directions": 1
         }
     ]
 }

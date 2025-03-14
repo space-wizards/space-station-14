@@ -1,27 +1,39 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-4.0",
-  "copyright": "wrapped_parcel © 2025 by Centronias (https://github.com/centronias) is licensed under CC BY 4.0",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "parcel-large",
-      "directions": 1
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "created for ss14 by ps3moira (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "parcel-medium",
-      "directions": 1
-    },
-    {
-      "name": "parcel-small",
-      "directions": 1
-    },
-    {
-      "name": "parcel-tiny",
-      "directions": 1
-    }
-  ]
+    "states": [
+        {
+            "name": "parcel-large",
+            "directions": 1
+        },
+        {
+            "name": "parcel-medium",
+            "directions": 1
+        },
+        {
+            "name": "parcel-small",
+            "directions": 1
+        },
+        {
+            "name": "parcel-tiny",
+            "directions": 1
+        },
+        {
+            "name": "locker",
+            "directions": 1
+        },
+        {
+            "name": "crate",
+            "directions": 1
+        },
+        {
+            "name": "tall-crate",
+            "directions": 1
+        }
+    ]
 }
