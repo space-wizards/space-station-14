@@ -38,21 +38,22 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null)
             return 1f;
 
-        if (!_mind.IsCharacterDeadIc(mind) && requireDead)
-            return 0f;
+        var targetDead = _mind.IsCharacterDeadIc(mind);
+        var targetMarooned = !_config.GetCVar(CCVars.EmergencyShuttleEnabled) ||
+            (!_emergencyShuttle.IsTargetEscaping(target) &&
+             _emergencyShuttle.ShuttlesLeft) ;
 
-        if (!_config.GetCVar(CCVars.EmergencyShuttleEnabled))
-            return 1f; // good job budny you did it
-
-        // target is escaping so you fail
-        if (_emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value) && requireMaroon)
-            return 0f;
-
-        // evac has left without the target, greentext since the target is afk in space with a full oxygen tank and coordinates off.
-        if (_emergencyShuttle.ShuttlesLeft)
-            return 1f;
-
-        // if evac is still here and target hasn't boarded, show 50% to give you an indicator that you are doing good
-        return _emergencyShuttle.EmergencyShuttleArrived ? 0.5f : 0f;
+        if (requireMaroon)
+        {
+            if (requireDead && !targetDead)
+                return 0f;
+            return targetMarooned ? 1f : _emergencyShuttle.EmergencyShuttleArrived ? 0.5f : 0f;
+        }
+        else
+        {
+            if (requireDead)
+                return targetDead ? 1f : 0f;
+            return 1f; // Good job you did it woohoo
+        }
     }
 }
