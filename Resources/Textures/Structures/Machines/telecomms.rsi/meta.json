@@ -11,9 +11,9 @@
             "name": "tele-server-on",
             "delays": [
                 [
-                    0.3,
-                    0.3,
-                    0.3
+                    0.35,
+                    0.35,
+                    0.35
                 ]
             ]
         },
@@ -25,6 +25,86 @@
         },
         {
             "name": "cams-stripe"
+        },
+        {
+            "name": "tele-server-on-cargo",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-common",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-engineering",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-service",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-medical",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-science",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-sec",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "tele-server-on-command",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
         },
         {
             "name": "tele_o"
