@@ -3,6 +3,8 @@
 - type: latheRecipePack
   id: PrinterGeneralBasic
   recipes:
+  - PrinterPaperWrittenFormGeneralLetter
+  - PrinterPaperWrittenFormGeneralItemRequest
   - PrinterPaperWrittenFormGeneralJobApplication
   - PrinterPaperWrittenFormGeneralFormalComplaint
 
@@ -10,3 +12,12 @@
   id: PrinterSecurityBasic
   recipes:
   - PrinterPaperWrittenFormSecurityArrestWarrant
+  - PrinterPaperWrittenFormSecurityWeaponsPermit
+  - PrinterPaperWrittenFormSecurityIncidentReport
+  - PrinterPaperWrittenFormSecurityCriminalRecord
+  - PrinterPaperWrittenFormSecurityRestrainingOrder
+
+- type: latheRecipePack
+  id: PrinterEngineeringBasic
+  recipes:
+  - PrinterPaperWrittenFormEngineeringBuildingPermit

@@ -1,5 +1,29 @@
 #General
 
+book-text-form-general-letter = 'N. Letter
+    --------------------------------------
+    Sender:  Sample Person
+    Recipient:  Sample Person/Organization
+    Subject:  Sample Subject
+    Context:  Sample Context
+
+    Signed:
+    -  Sample Person
+    --------------------------------------
+
+book-text-form-general-item-request = 'N. Item Request
+    --------------------------------------
+    Name:  Sample Person
+    Job:  Sample Job
+    Department:  Sample Department
+    Requested item:  Sample Item
+    Requested item's destination:  Sample Destination
+    Reason for Request (please be detailed):
+        Sample Reason
+
+    Stamps below:
+    --------------------------------------
+
 book-text-form-general-job-application = 'N. Job Application Form
     Please fill out the fields below to apply
     --------------------------------------
@@ -114,6 +138,122 @@ book-text-form-security-arrest-warrant = 'N. Arrest Warrant
                    --------------------------------------
 
     ANY ILLEGAL CONTRABAND FOUND WILL BE SEIZED AND ADDITIONAL CRIMINAL CHARGES MAY OCCUR.
+
+    Stamps below:
+    --------------------------------------
+
+book-text-form-security-weapons-permit = 'N. Weapons holder permit
+    --------------------------------------
+    This document allows the holder to possess the outlined weapons/firearms, Ammunition or parts there of, in the areas detailed below. Furthermore, the person in receipt of this document must consent to a requested search by the Warden, Head of Security, Captain, or any other responsible personnel authorized to search.
+
+    THIS PERMIT MUST BE APPROVED AND STAMPED BY THE CAPTAIN, HEAD OF SECURITY, OR THE HEAD OF THE DEPARTMENT FOR THIS DOCUMENT TO BE VALID. IT CANNOT BE APPROVED BY THE HEAD OF SECURITY/WARDEN IF THE HEAD OF SECURITY/WARDEN IS THE ONE WHO REQUESTED IT.
+
+    Permit holder name:  Sample Person
+                   --------------------------------------
+    Permit holder job:  Sample Job
+                   --------------------------------------
+    Reason for issue:  Sample Reason
+                   --------------------------------------
+    Weapon issued:  Sample Weapon
+                   --------------------------------------
+    Area of Restriction: Sample area of restriction.
+                   --------------------------------------
+
+    Stamps below:
+    --------------------------------------
+
+book-text-form-security-inicdent-report = 'N. Incident report
+    --------------------------------------
+    Suspect (if any):  Sample Person
+                   --------------------------------------
+    Weapon (if any):  Sample Weapon
+                   --------------------------------------
+    Details:  Sample Details
+                   --------------------------------------
+
+    --------------------------------------
+
+book-text-form-security-criminal-record = 'N. Criminal Record
+    --------------------------------------
+    Name:  Sample Person
+                   --------------------------------------
+    Age:  Sample Age
+                   --------------------------------------
+    Sex:  Sample Gender
+                   --------------------------------------
+    DNA:  Sample DNA
+                   --------------------------------------
+    Status:  Imprisoned/Awaiting Execution/Executed/Borged/Do-not-resuscitate/Paroled/Released/Escaped/At large
+                   --------------------------------------
+    Charges:  Sample Charges
+                   --------------------------------------
+    Time until Release:  Sample Time
+                   --------------------------------------
+    Reason for imprisonment:
+        Sample Reason
+
+    --------------------------------------
+
+book-text-form-security-restraining-order = 'N. Restraining Order
+    --------------------------------------
+    (1) Information pertaining to protected person.
+
+    Name of protected person:  Sample Person
+                   --------------------------------------
+
+    --------------------------------------
+    Lawyer information of protected person (If lawyer is unavailable, protected person may provide information.)
+
+    Lawyer name:  Sample Person
+                   --------------------------------------
+
+    --------------------------------------
+    (2) Information pertaining to the restrained person
+
+    Name:  Sample Person
+                   --------------------------------------
+    Age:  Sample Age
+                   --------------------------------------
+    Sex:  Sample Gender
+                   --------------------------------------
+    Race:  Sample Species
+                   --------------------------------------
+    Hair/Eye/Skin Color:  Sample Colors
+                   --------------------------------------
+    Job:  Sample Job
+                   --------------------------------------
+    Relationship to protected person (1):  Sample Relationship
+                   --------------------------------------
+
+    --------------------------------------
+    (3) Additional protected person(s)
+    In addition to the person named in (1), the following persons are to be protected from (2) as indicated below:
+
+    Full Name/Relationship/Sex/Age
+    1.
+    2.
+    3.
+
+    --------------------------------------
+    (4) Expiration Date
+    This order expires at the date and time of the stamp being signed by the Head of Security, Head of Personnel, or Captain below:
+
+    Shift time:  Sample Time
+
+    Stamps below:
+    --------------------------------------
+
+# Engineering
+book-text-form-engineering-building-permit = 'N. Building Permit
+    --------------------------------------
+    DOCUMENT IS ONLY VALID IF CHIEF ENGINEER OR CAPTAIN HAS STAMPED IT.
+
+    Name:  Sample Person
+    Job:  Sample Job
+    Department:  Sample Department
+    Requesting to Construct:  Sample Construction
+    Reason for Permit (please be detailed):
+        Sample Reason
 
     Stamps below:
     --------------------------------------

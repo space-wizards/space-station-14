@@ -49,6 +49,9 @@
           Quantity: 1
   - type: Item
     size: Tiny
+  - type: PhysicalComposition # Ronstation - Needs to be recyclable.
+    materialComposition:
+      Paper: 25
 
 - type: entity
   name: paper

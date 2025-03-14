@@ -8,6 +8,7 @@
     noRot: false
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
+    color: "#d1d1d1"
     snapCardinals: false
     layers:
     - state: icon
@@ -20,7 +21,67 @@
     runningState: building
     staticPacks:
     - PrinterGeneralBasic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterSecurity
+  name: security paper printer
+  components:
+  - type: Sprite
+    color: "#FFd1d1"
+  #- type: Machine
+  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
     - PrinterSecurityBasic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterEngineering
+  name: engineering paper printer
+  components:
+  - type: Sprite
+    color: "#d1FFd1"
+  #- type: Machine
+  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterEngineeringBasic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterCaptain
+  name: Captain's paper printer
+  components:
+  - type: Sprite
+    color: "#a1a1d1"
+  #- type: Machine
+  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterSecurityBasic
+    - PrinterEngineeringBasic
   - type: MaterialStorage
     whitelist:
       tags:
