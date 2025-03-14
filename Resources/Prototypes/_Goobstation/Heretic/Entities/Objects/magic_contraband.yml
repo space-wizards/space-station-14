@@ -8,4 +8,5 @@
 
 - type: contrabandSeverity
   id: Magic
+  examineColor: crimson
   examineText: contraband-examine-text-magic

@@ -1,0 +1,39 @@
+﻿- type: preloadedGrid
+  id: ERTMedSecLarge
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSecLarge.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTSecMedium
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecMedium.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTSecSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecSmall.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTMedMedium
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedMedium.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTMedSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSmall.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTEngiJaniMedium
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiJaniMedium.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTEngiSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiSmall.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ERTJaniSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTJaniSmall.yml
+  copies: 1

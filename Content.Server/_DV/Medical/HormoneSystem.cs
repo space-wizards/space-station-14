@@ -24,11 +24,8 @@ public sealed class HormoneSystem : EntitySystem
 
     private void OnInit(EntityUid uid, IHormoneComponent component, ComponentInit args)
     {
-        HumanoidAppearanceComponent? humanoid = null;
-
-        if (!Resolve(uid, ref humanoid) || humanoid == null || humanoid.Sex == component.Target) {
+        if (!TryComp<HumanoidAppearanceComponent>(uid, out var humanoid) || humanoid.Sex == component.Target) // Imp - Resolve would cause a test fail
             return;
-        }
 
         if (TryComp<HormoneSensitiveComponent>(uid, out var trait) && trait.Target == component.Target) {
             component.Original = humanoid.Sex;
@@ -38,11 +35,8 @@ public sealed class HormoneSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, IHormoneComponent component, ComponentShutdown args)
     {
-        HumanoidAppearanceComponent? humanoid = null;
-
-        if (!Resolve(uid, ref humanoid) || humanoid == null || component.Original == null) {
+        if (!TryComp<HumanoidAppearanceComponent>(uid, out _) || component.Original == null) // Imp - Resolve would cause a test fail
             return;
-        }
 
         _humanoidSystem.SetSex(uid, component.Original.Value);
     }

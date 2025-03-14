@@ -110,3 +110,7 @@ thaven-mood-crawler-desc = It is impolite not to perform a deep bow by entering 
 
 thaven-mood-elevated-name = The Floor Is Lava
 thaven-mood-elevated-desc = You prefer to be elevated whenever possible - Standing atop tables, railings, etc., is where you feel the most comfortable.
+
+# Testing Locales, only exist to shut up prototype tests
+DuplicateTest = You shouldn't see this
+DuplicateOverlapTest = Time, doctor freeman?
