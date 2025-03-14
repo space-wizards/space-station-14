@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The footstep sounds for high-heel shoes has been changed.
-    type: Tweak
-  id: 808
-  time: '2024-12-26T11:39:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1129
 - author: honeyed-lemons
   changes:
   - message: Listening Post op has a unique ID with the correct accesses
@@ -4100,3 +4093,14 @@
   id: 1307
   time: '2025-03-14T05:44:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1929
+- author: rainyatrium
+  changes:
+  - message: four new ponchos (neck or outerwear slot), three available via autodrobe.
+      salvagers & quartermasters have new roundstart cosmetic options
+    type: Add
+  - message: six oversized puffer coats, five available via winterdrobe. mime has
+      a new roundstart cosmetic option
+    type: Add
+  id: 1308
+  time: '2025-03-14T07:10:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1946
