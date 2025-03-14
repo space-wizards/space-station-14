@@ -84,10 +84,14 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
             return;
 
         var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(uid.Comp.RsiPath, uid.Comp.States));
-        //todo StarMarkOffsetComp for doop's anomalocarids
-        //would also let like, monkeys & such get the mark as well maybe
         sprite.LayerMapSet(CosmicRevealedKey.Key, layer);
         sprite.LayerSetShader(layer, "unshaded");
+
+        //offset the mark if the mob has an offset comp
+        if (TryComp<CosmicStarMarkOffsetComponent>(uid, out var offset))
+        {
+            sprite.LayerSetOffset(CosmicRevealedKey.Key, offset.Offset);
+        }
     }
     private void OnCosmicImpositionAdded(Entity<CosmicImposingComponent> uid, ref ComponentStartup args)
     {
