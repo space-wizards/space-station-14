@@ -5,8 +5,8 @@ concurrency:
 
 on:
   workflow_dispatch:
-  schedule:
-  - cron: '0 10 * * *'
+  # schedule:
+  # - cron: '0 10 * * *'
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
       run: dotnet run --project Content.Packaging client --no-wipe-release
 
     - name: Publish version
-      run: Tools/publish_multi_request.py --fork-id wizards-testing
+      run: Tools/publish_multi_request.py --fork-id impstation-staging
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
