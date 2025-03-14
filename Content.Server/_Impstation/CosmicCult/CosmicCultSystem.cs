@@ -82,7 +82,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
+
+    private EntityUid? _monumentStorageMap;
+
     public int CultistCount;
 
     public override void Initialize()
@@ -225,7 +230,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     /// </summary>
     private void OnStartCultLead(Entity<CosmicCultLeadComponent> uid, ref ComponentInit args)
     {
-        _actions.AddAction(uid, ref uid.Comp.CosmicMonumentActionEntity, uid.Comp.CosmicMonumentAction, uid);
+        _actions.AddAction(uid, ref uid.Comp.CosmicMonumentPlaceActionEntity, uid.Comp.CosmicMonumentPlaceAction, uid);
     }
 
     /// <summary>

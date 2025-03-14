@@ -7,7 +7,8 @@ namespace Content.Shared._Impstation.CosmicCult;
 public sealed partial class CosmicCultActionComponent : Component { }
 public sealed partial class EventCosmicSiphon : EntityTargetActionEvent { }
 public sealed partial class EventCosmicBlank : EntityTargetActionEvent { }
-public sealed partial class EventCosmicPlaceMonument : InstantActionEvent { }
+public sealed partial class EventCosmicPlaceMonument : InstantActionEvent { } //given to the cult leader on roundstart
+public sealed partial class EventCosmicMoveMonument : InstantActionEvent { } //given the the cult leader on hitting tier 2, taken away on hitting tier 3
 public sealed partial class EventCosmicReturn : InstantActionEvent { }
 public sealed partial class EventCosmicLapse : EntityTargetActionEvent { }
 public sealed partial class EventCosmicGlare : InstantActionEvent { }

@@ -547,6 +547,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             Dirty(cultist, cultComp);
         }
 
+        //add the move action
+        var leaderQuery = EntityQueryEnumerator<CosmicCultLeadComponent>();
+        while (leaderQuery.MoveNext(out var leader, out var leaderComp))
+        {
+            _actions.AddAction(leader, ref leaderComp.CosmicMonumentMoveActionEntity, leaderComp.CosmicMonumentMoveAction, leader);
+        }
+
         Dirty(uid);
     }
 
@@ -583,6 +590,13 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             cultComp.Respiration = false;
             cultComp.EntropyBudget += Convert.ToInt16(Math.Floor(Math.Round((double)TotalCrew / 100 * 10))); //pity system. 10% of the playercount worth of entropy on tier up
             Dirty(cultist, cultComp);
+        }
+
+        //remove the move action
+        var leaderQuery = EntityQueryEnumerator<CosmicCultLeadComponent>();
+        while (leaderQuery.MoveNext(out var leader, out var leaderComp))
+        {
+            _actions.RemoveAction(leader, leaderComp.CosmicMonumentMoveActionEntity);
         }
 
         Dirty(uid);

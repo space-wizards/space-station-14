@@ -168,6 +168,111 @@
        property: Energy
        enabled: true
 
+- type: entity
+  id: MonumentCosmicCultMoveStart
+  name: The Monument
+  parent: BaseStructure
+  suffix: Spawn, DO NOT MAP
+  components:
+  - type: Visibility
+    layer: 777
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/monument.rsi
+    layers:
+    - state: stage2-relocate-out
+      shader: unshaded
+    offset: 0,1
+    drawdepth: Mobs
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.1,-0.2,1.1,0.7"
+        hard: false
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: Transform
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/_Impstation/CosmicCult/monument_spawn.ogg
+      params:
+        volume: +8
+        pitch: 0.8
+  - type: TimedDespawn
+    lifetime: 3.8
+  - type: PointLight
+    enabled: true
+    radius: 4.5
+    energy: 4
+    color: "#43286a"
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 3.8
+      maxDuration: 3.8
+      startValue: 0.5
+      endValue: 4.5
+      property: Energy
+      enabled: true
+
+- type: entity
+  id: MonumentCosmicCultMoveEnd
+  name: The Monument
+  parent: BaseStructure
+  suffix: Spawn, DO NOT MAP
+  components:
+  - type: Visibility
+    layer: 777
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/monument.rsi
+    layers:
+    - state: stage2-relocate-in
+      shader: unshaded
+    offset: 0,1
+    drawdepth: Mobs
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.1,-0.2,1.1,0.7"
+        hard: false
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: Transform
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/_Impstation/CosmicCult/monument_spawn.ogg
+      params:
+        volume: +8
+        pitch: 0.8
+  - type: TimedDespawn
+    lifetime: 3.8
+  - type: MonumentMoveDestination
+  - type: PointLight
+    enabled: true
+    radius: 4.5
+    energy: 4
+    color: "#43286a"
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 3.8
+      maxDuration: 3.8
+      startValue: 0.5
+      endValue: 4.5
+      property: Energy
+      enabled: true
+
  ########### COLLIDER LAY-Z FIX #############
 
 - type: entity

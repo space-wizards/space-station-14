@@ -10,6 +10,7 @@ cosmicability-blank-return = Your mind is drawn back to your body.
 
 cosmicability-lapse-success = You lapse {CAPITALIZE(THE($target))}'s corporeal form.
 
+cosmicability-monument-move-confirm = THIS ACTION CAN ONLY BE USED ONCE! Use it again to confirm.
 cosmicability-monument-spawn-confirm = THIS ACTION CAN ONLY BE USED ONCE! Use it again to confirm.
 cosmicability-monument-spawn-error-grid = Invalid location! The Monument must be beckoned upon a stable surface.
 cosmicability-monument-spawn-error-station = Invalid location! The Monument must be beckoned upon the station.
