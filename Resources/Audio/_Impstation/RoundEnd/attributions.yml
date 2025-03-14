@@ -18,6 +18,11 @@
   copyright: "Sonic Heroes - Tails voice clips (William Corkery)"
   source: "https://www.youtube.com/watch?v=xtPLstoHiwo"
 
+- files: ["egg.ogg"]
+  license: "Custom"
+  copyright: "chat is full of fake fruit stans - Bits and Banter [03/12/2024]"
+  source: "https://www.youtube.com/watch?v=DHRUbA6lfHk"
+
 - files: ["slog.ogg", "slog2.ogg"]
   license: "Custom"
   copyright: "TIER TIME *2*: RTVS Community Curated Tier Lists (WAYNERADIOTV)"
