@@ -13,3 +13,4 @@ station-event-unknown-shuttle-lambordeere-announcement = Attention! An unidentif
 station-event-unknown-shuttle-meat-zone-announcement = Attention! An unidentified space shuttle has been spotted approaching your sector.
 station-event-unknown-shuttle-microshuttle-announcement = Attention! An unidentified space shuttle has been spotted approaching your sector.
 station-event-unknown-shuttle-spacebus-announcement = Attention! An unidentified space shuttle has been spotted approaching your sector.
+station-event-unknown-shuttle-man-o-war-announcement = Attention! An unidentified space shuttle has been spotted approaching your sector.
