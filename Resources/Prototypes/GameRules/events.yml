@@ -243,6 +243,9 @@
     reoccurrenceDelay: 20
     minimumPlayers: 15
   - type: ParadoxCloneRule
+    objectiveBlacklist:
+      tags:
+      - ParadoxCloneObjectiveBlacklist
   - type: AntagObjectives
     objectives:
     - ParadoxCloneKillObjective

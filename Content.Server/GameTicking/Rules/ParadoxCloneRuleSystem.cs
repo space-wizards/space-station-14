@@ -2,9 +2,11 @@ using Content.Server.Antag;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
+using Content.Server.Objectives.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Mind;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -23,6 +25,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         base.Initialize();
 
         SubscribeLocalEvent<ParadoxCloneRuleComponent, AntagSelectEntityEvent>(OnAntagSelectEntity);
+        SubscribeLocalEvent<ParadoxCloneRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagEntitySelected);
     }
 
     protected override void Started(EntityUid uid, ParadoxCloneRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -79,5 +82,17 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         gibComp.PreventGibbingObjectives = new() { "ParadoxCloneKillObjective" }; // don't gib them if they killed the original.
 
         args.Entity = clone;
+        ent.Comp.Original = playerToClone.Owner;
+    }
+
+    private void AfterAntagEntitySelected(Entity<ParadoxCloneRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
+        if (ent.Comp.Original == null)
+            return;
+
+        if (!_mind.TryGetMind(args.EntityUid, out var cloneMindId, out var cloneMindComp))
+            return;
+
+        _mind.CopyObjectives(ent.Comp.Original.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
     }
 }
