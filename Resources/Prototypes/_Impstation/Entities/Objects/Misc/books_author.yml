@@ -33,6 +33,10 @@
       color: "#ff2fff"
   - type: Paper
     content: book-text-clown-law
+  - type: Tag
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -54,6 +58,10 @@
       color: "#95BE76"
   - type: Paper
     content: book-text-tegtorial
+  - type: Tag
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -90,6 +98,10 @@
       color: "#c03F3F"
   - type: Paper
     content: book-text-keelbay
+  - type: Tag
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -109,6 +121,10 @@
       color: "#c03F3F"
   - type: Paper
     content: book-text-keelbay
+  - type: Tag
+    tags:
+    - Book
+    - Guidebook
 
 - type: entity
   parent: BookBase
@@ -148,3 +164,7 @@
     - state: smfordummies
   - type: Paper
     content: book-text-smfordummies
+  - type: Tag
+    tags:
+    - Book
+    - Guidebook
