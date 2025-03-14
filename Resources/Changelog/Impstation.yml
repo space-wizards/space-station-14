@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Undershirt markings are now available for unisex characters for species
-      that support them.
-    type: Fix
-  id: 801
-  time: '2024-12-24T19:43:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1115
-- author: DinnerCalzone
-  changes:
   - message: Amber station has been updated and its evac shuttle now properly displays
       its ETA time.
     type: Tweak
@@ -4088,3 +4080,10 @@
   id: 1300
   time: '2025-03-14T01:04:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1939
+- author: Sha-Seng
+  changes:
+  - message: Thaven moods have been adjusted slightly.
+    type: Tweak
+  id: 1301
+  time: '2025-03-14T01:41:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1774
