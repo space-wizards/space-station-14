@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: The tck'tck now has engineering access, externals access and a law preventing
-      them from griefing with it.
-    type: Tweak
-  - message: Replaced the tck'tck's mini wrench with a mini drill.
-    type: Tweak
-  id: 800
-  time: '2024-12-24T10:06:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1112
 - author: DinnerCalzone
   changes:
   - message: Undershirt markings are now available for unisex characters for species
@@ -4091,3 +4081,10 @@
   id: 1299
   time: '2025-03-14T00:56:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1935
+- author: Sha-Seng
+  changes:
+  - message: Medsec huds are now brigmedic contraband
+    type: Tweak
+  id: 1300
+  time: '2025-03-14T01:04:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1939
