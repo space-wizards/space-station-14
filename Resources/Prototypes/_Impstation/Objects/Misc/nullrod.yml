@@ -5,6 +5,8 @@
   parent: [ BaseItem, BaseMinorContraband ]
   components:
   - type: RevealRevenantOnCollide
+  - type: CollisionWake
+    enabled: false
   - type: Sprite
     sprite: _Impstation/Objects/Misc/nullrod.rsi
     state: nullrod_base
@@ -233,6 +235,7 @@
   - type: ContainerContainer
     containers:
       projectiles: !type:ContainerSlot
+      ballistic-ammo: !type:Container
   - type: BallisticAmmoProvider
     whitelist:
       tags:

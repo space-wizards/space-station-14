@@ -14,6 +14,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+      Lung:
+        canReact: False
+        maxVol: 100
   - type: Stomach
   - type: Metabolizer
     metabolizerTypes: [ Apid ]

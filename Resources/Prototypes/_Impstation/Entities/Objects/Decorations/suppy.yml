@@ -49,3 +49,6 @@
     baseSprintSpeed: 0.2
   - type: StealTarget
     stealGroup: PetSuppy
+  - type: ContainerContainer
+    containers:
+      body_root_part: !type:ContainerSlot

@@ -5,6 +5,8 @@
   parent: BaseItem
   components:
   - type: RevealRevenantOnCollide
+  - type: CollisionWake
+    enabled: false # Causes test fail
   - type: Item
     size: Small
   - type: Sprite

@@ -37,7 +37,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    enabled: false
+    enabled: true # Test fail if false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     offset: "0, 0.4"
