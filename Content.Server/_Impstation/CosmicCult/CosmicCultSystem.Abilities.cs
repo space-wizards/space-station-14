@@ -389,6 +389,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
                     if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph as well
                         QueueDel(monumentComp.CurrentGlyph);
+
+                    //close the UI for everyone who has it open
+                    if (TryComp<UserInterfaceComponent>(uid, out var uiComp))
+                    {
+                        _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
+                    }
                 }
 
                 //retrieve the monument from cheese world
@@ -410,12 +416,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
                         Spawn("MonumentCollider", xform.Coordinates);
                     });
             });
-
-        //close the UI for everyone who has it open
-        if (TryComp<UserInterfaceComponent>(uid, out var uiComp))
-        {
-            _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
-        }
     }
 
     private EntityUid EnsureStorageMapExists()
