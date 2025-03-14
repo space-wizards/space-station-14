@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Added the interdyne defibrillator, a black-and-red defibrillator that
-      can be used as a melee weapon.
-    type: Add
-  - message: The syndicate medical bundle now contains an interdyne defibrillator,
-      a collection of various instant injectors, tourniquets, and several combat kits.
-      The price has been raised to 24 tc.
-    type: Tweak
-  id: 7564
-  time: '2024-10-30T09:15:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32720
 - author: Boaz1111
   changes:
   - message: Pill bottles can now only store pills.
@@ -3896,3 +3884,13 @@
   id: 8063
   time: '2025-03-14T15:31:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35318
+- author: Centronias
+  changes:
+  - message: Moths can once again eat lizard plushies
+    type: Fix
+  - message: Lizard plushes can once again be inserted as payloads into modular grenades
+      and mines
+    type: Fix
+  id: 8064
+  time: '2025-03-14T20:22:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35835
