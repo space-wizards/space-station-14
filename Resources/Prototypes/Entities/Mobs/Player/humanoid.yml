@@ -11,7 +11,9 @@
   id: EventHumanoidMindShielded
   parent: EventHumanoid
   components:
-    - type: MindShield
+    - type: AutoImplant
+      implants:
+      - UnremoveableMindshieldImplant
     - type: AntagImmune
 
 ## Death Squad

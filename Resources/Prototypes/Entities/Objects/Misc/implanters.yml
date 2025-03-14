@@ -307,3 +307,11 @@
   components:
   - type: Implanter
     implant: RadioImplantCentcomm
+
+- type: entity
+  id: UnremovableMindShieldImplanter
+  suffix: cranial mindshield
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: UnremoveableMindshieldImplant
