@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: new artifact effect, learned from spooky ghosties
-    type: Add
-  id: 798
-  time: '2024-12-24T09:46:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1106
 - author: AftrLite
   changes:
   - message: Medkit & Seclite sprite adjustments based on feedback.
@@ -4089,3 +4082,13 @@
   id: 1297
   time: '2025-03-14T00:09:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1937
+- author: ruddygreat
+  changes:
+  - message: The Monument now has a preview of where it will be placed when you try
+      to place it.
+    type: Add
+  - message: The Monument can now be moved once by the cult leader during phase 2
+    type: Add
+  id: 1298
+  time: '2025-03-14T00:42:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1903
