@@ -83,7 +83,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         SubscribeLocalEvent<RogueAscendedComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RogueAscendedDendriteComponent, BeforeFullyEatenEvent>(OnDendriteConsumed);
 
-        SubscribeLocalEvent<RogueAscendedComponent, EventRogueShatter>(OnRogueShatter);
+        SubscribeLocalEvent<RogueAscendedComponent, EventRogueSlumber>(OnRogueSlumber);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueGrandShunt>(OnRogueShunt);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueCosmicNova>(OnRogueNova);
         SubscribeLocalEvent<HumanoidAppearanceComponent, EventRogueCosmicNova>(OnPlayerNova);
@@ -153,7 +153,7 @@ public sealed class RogueAscendedSystem : EntitySystem
     #endregion
 
     #region Ability - Shatter
-    private void OnRogueShatter(Entity<RogueAscendedComponent> uid, ref EventRogueShatter args)
+    private void OnRogueSlumber(Entity<RogueAscendedComponent> uid, ref EventRogueSlumber args)
     {
         if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)
         {

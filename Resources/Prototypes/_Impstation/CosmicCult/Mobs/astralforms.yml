@@ -194,7 +194,7 @@
     - ActionRogueInfection
     - ActionRogueGrandShunt
     - ActionRogueCosmicNova
-    - ActionRogueShatter
+    - ActionRogueSlumber
   - type: Damageable
     damageContainer: ManifestedSpirit
     damageModifierSet: ManifestedSpirit

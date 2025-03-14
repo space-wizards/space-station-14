@@ -193,7 +193,10 @@
     whitelist:
       components:
         - HumanoidAppearance
+    blacklist:
+      components:
         - CosmicCult
+        - BibleUser
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -207,17 +210,19 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
-    useDelay: 180
+    useDelay: 155
     whitelist:
       components:
         - HumanoidAppearance
+    blacklist:
+      components:
         - CosmicCult
         - BibleUser
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: rogueshatter
-    event: !type:EventRogueShatter {}
+    event: !type:EventRogueSlumber {}
 
 - type: entity
   id: ActionRogueGrandShunt

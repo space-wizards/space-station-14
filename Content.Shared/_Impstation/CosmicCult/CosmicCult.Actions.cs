@@ -21,4 +21,4 @@ public sealed partial class EventCosmicNova : WorldTargetActionEvent { }
 public sealed partial class EventRogueCosmicNova : WorldTargetActionEvent { }
 public sealed partial class EventRogueInfection : EntityTargetActionEvent { }
 public sealed partial class EventRogueGrandShunt : InstantActionEvent { }
-public sealed partial class EventRogueShatter : EntityTargetActionEvent { }
+public sealed partial class EventRogueSlumber : EntityTargetActionEvent { }
