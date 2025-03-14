@@ -7,7 +7,6 @@ using Content.Shared.Examine;
 using Content.Server.Actions;
 using Content.Server.GameTicking.Events;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mind;
@@ -43,6 +42,8 @@ using Robust.Shared.Player;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -86,7 +87,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    private const string MapPath = "Maps/_Impstation/Nonstations/cosmicvoid.yml";
+    private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
     public int CultistCount;
 
     public override void Initialize()
@@ -122,12 +123,10 @@ public sealed partial class CosmicCultSystem : EntitySystem
     /// <summary>
     /// Creates the Cosmic Void pocket dimension map.
     /// </summary>
-    private void OnRoundStart(RoundStartingEvent ev)
+    private void OnRoundStart(RoundStartingEvent ev) // TODO: Should not just always be roundstart probably. Unless we're using this for other things that will always be present. look into how nukeops map rule works
     {
-        _map.CreateMap(out var mapId);
-        var options = new MapLoadOptions { LoadMap = true };
-        if (_mapLoader.TryLoad(mapId, MapPath, out _, options))
-            _map.SetPaused(mapId, false);
+        if (_mapLoader.TryLoadMap(_mapPath, out var map, out _, new DeserializationOptions { InitializeMaps = true }))
+            _map.SetPaused(map.Value.Comp.MapId, false);
     }
 
     public override void Update(float frameTime) // This Update() can fit so much functionality in it

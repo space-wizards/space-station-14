@@ -17,6 +17,8 @@
       types:
         Blunt: 16
     staminaCost: 45
+  - type: RadiationBlockingContainer
+    resistance: 2.5
 
 - type: entity
   parent: CrateBaseWeldable
@@ -186,7 +188,7 @@
 # Secure Crates
 
 - type: entity
-  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   id: CrateSecgear
   name: secgear crate
   components:
@@ -304,7 +306,7 @@
     containers: [ entity_storage ]
 
 - type: entity
-  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   suffix: Armory, Secure
   id: CrateContrabandStorageSecure
   name: contraband storage crate

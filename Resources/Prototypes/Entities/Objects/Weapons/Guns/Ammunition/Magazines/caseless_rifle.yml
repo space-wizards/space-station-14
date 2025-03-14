@@ -1,7 +1,8 @@
 - type: entity
   id: BaseMagazineCaselessRifle
   name: "magazine (.25 caseless)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  description: A 30-round .25 caseless standard magazine. #imp
+  parent: [ BaseItem, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -34,7 +35,8 @@
 
 - type: entity
   id: BaseMagazineCaselessRifleShort
-  name: "caseless rifle short magazine (.25 caseless)"
+  name: "short magazine (.25 caseless)" #imp
+  description: A 20-round .25 caseless short magazine. #imp
   parent: BaseMagazineCaselessRifle
   abstract: true
   components:
@@ -54,6 +56,7 @@
 - type: entity
   id: BaseMagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
+  description: A 10-round .25 caseless pistol magazine. #imp
   parent: BaseMagazineCaselessRifle
   abstract: true
   components:
@@ -81,9 +84,11 @@
     zeroVisible: false
   - type: Appearance
 
+#mags below
 - type: entity
   id: MagazineCaselessRifle10x24
   name: "box magazine (.25 caseless)"
+  description: A 99-round .25 caseless box magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -91,10 +96,15 @@
     capacity: 99
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/10x24.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
 
 - type: entity
   id: MagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
+  description: A 10-round .25 caseless pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -115,6 +125,7 @@
 - type: entity
   id: MagazinePistolCaselessRiflePractice
   name: "pistol magazine (.25 caseless practice)"
+  description: A 10-round .25 caseless pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -135,6 +146,7 @@
 - type: entity
   id: MagazineCaselessRifle
   name: "magazine (.25 caseless)"
+  description: A 30-round .25 caseless standard magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -149,6 +161,7 @@
 - type: entity
   id: MagazineCaselessRiflePractice
   name: "magazine (.25 caseless practice)"
+  description: A 30-round .25 caseless standard magazine, marked as practice ammo. #imp
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -163,6 +176,7 @@
 - type: entity
   id: MagazineCaselessRifleShort
   name: "short magazine (.25 caseless)"
+  description: A 20-round .25 caseless short magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineCaselessRifleShort
   components:
   - type: BallisticAmmoProvider
@@ -178,6 +192,7 @@
 - type: entity
   id: MagazineCaselessRifleShortPractice
   name: "short magazine (.25 caseless practice)"
+  description: A 20-round .25 caseless short magazine, marked as practice ammo. #imp
   parent: BaseMagazineCaselessRifleShort
   components:
   - type: BallisticAmmoProvider

@@ -1,7 +1,7 @@
 - type: entity
   id: BaseCartridgeLightRifle
   name: cartridge (.30 rifle)
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -21,6 +21,7 @@
 - type: entity
   id: CartridgeLightRifle
   name: cartridge (.30 rifle)
+  description: A full-power cartridge that boasts superior lethality and range but with a greater size than an intermediate cartridge. Typically used in precision rifles. #imp
   parent: BaseCartridgeLightRifle
   components:
   - type: CartridgeAmmo
@@ -29,6 +30,7 @@
 - type: entity
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
+  description: A precision rifle cartridge with a wax projectile to simulate the real deal. Can be used for force-on-force training but still stings like a bitch. Eye protection recommended. #imp
   parent: BaseCartridgeLightRifle
   components:
   - type: CartridgeAmmo
@@ -44,6 +46,7 @@
 - type: entity
   id: CartridgeLightRifleIncendiary
   name: cartridge (.30 rifle incendiary)
+  description: A precision rifle cartridge tipped with a softer projectile containing a pyrophoric compound, setting targets ablaze. #imp
   parent: BaseCartridgeLightRifle
   components:
   - type: CartridgeAmmo
@@ -59,6 +62,7 @@
 - type: entity
   id: CartridgeLightRifleUranium
   name: cartridge (.30 rifle uranium)
+  description: A precision rifle cartridge with a heavier depleted uranium projectile, delivering radiation poisoning at the cost of worse penetration. #imp
   parent: BaseCartridgeLightRifle
   components:
   - type: CartridgeAmmo

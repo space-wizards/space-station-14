@@ -61,3 +61,19 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatHDsoft, BaseCommandContraband]
   id: ClothingHeadHatHDsoftFlipped
   name: lead custodial cap
+
+- type: entity
+  parent: ClothingHeadHeadHatBaseFlippable
+  id: ClothingHeadHatPositivityForcesoft
+  name: positivity force cap
+  description: a sleek baseball hat to soak up any fever induced sweats.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Soft/positivityforcesoft.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Soft/positivityforcesoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatPositivityForcesoft]
+  id: ClothingHeadHatPositivityForcesoftFlipped
+  name: positivity force cap

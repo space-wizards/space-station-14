@@ -20,3 +20,8 @@
     FoodButter: 6
     FoodCheese: 2
     FoodMeat: 12
+  contrabandInventory:
+    EggBoxBroken: 1
+    FoodBoxDonkpocket: 1
+    FoodFrozenSandwich: 2
+    FoodFrozenSandwichStrawberry: 2

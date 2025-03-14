@@ -2,6 +2,8 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum) #imp
+  description: A box made for 12 rounds of .45 magnum ammunition. #imp
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -28,6 +30,7 @@
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnum
   name: ammunition box (.45 magnum)
+  description: A box made for 12 rounds of .45 magnum ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -42,6 +45,7 @@
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumPractice
   name: ammunition box (.45 magnum practice)
+  description: A box made for 12 rounds of .45 magnum ammunition, labeled as practice bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -57,6 +61,7 @@
   id: MagazineBoxMagnumIncendiary
   parent: BaseMagazineBoxMagnum
   name: ammunition box (.45 magnum incendiary)
+  description: A box made for 12 rounds of .45 magnum ammunition, labeled as incendiary bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumIncendiary
@@ -72,6 +77,7 @@
   id: MagazineBoxMagnumUranium
   parent: BaseMagazineBoxMagnum
   name: ammunition box (.45 magnum uranium)
+  description: A box made for 12 rounds of .45 magnum ammunition, labeled as uranium bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
@@ -87,6 +93,7 @@
   id: MagazineBoxMagnumAP
   parent: BaseMagazineBoxMagnum
   name: ammunition box (.45 magnum armor-piercing)
+  description: A box made for 12 rounds of .45 magnum ammunition, labeled as armor-piercing bullets. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

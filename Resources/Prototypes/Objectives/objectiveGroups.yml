@@ -41,7 +41,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
   weights:
-    RandomTraitorAliveObjective: 1
+    # RandomTraitorAliveObjective: 1 # imp - worse version of RandomTraitorProgressObjective
     RandomTraitorProgressObjective: 1
 
 

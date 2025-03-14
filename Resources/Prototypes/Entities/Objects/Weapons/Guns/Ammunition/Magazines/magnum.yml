@@ -1,7 +1,8 @@
 - type: entity
   id: BaseMagazineMagnum
   name: pistol magazine (.45 magnum)
-  parent: [ BaseMagazinePistol, BaseRestrictedContraband ]
+  description: A 7-round .45 magnum pistol magazine. #imp
+  parent: [ BaseMagazinePistol, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -17,6 +18,7 @@
 - type: entity
   id: BaseMagazineMagnumSubMachineGun
   name: "Vector magazine (.45 magnum)"
+  description: A 25-round .45 magnum SMG magazine. #imp
   parent: BaseItem
   abstract: true
   components:
@@ -50,6 +52,7 @@
 - type: entity
   id: MagazineMagnumEmpty
   name: pistol magazine (.45 magnum any)
+  description: A 7-round .45 magnum pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazineMagnum
   components:
@@ -59,10 +62,13 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnum
   name: pistol magazine (.45 magnum)
+  description: A 7-round .45 magnum pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -77,6 +83,7 @@
 - type: entity
   id: MagazineMagnumPractice
   name: pistol magazine (.45 magnum practice)
+  description: A 7-round .45 magnum pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -91,6 +98,7 @@
 - type: entity
   id: MagazineMagnumUranium
   name: pistol magazine (.45 magnum uranium)
+  description: A 7-round .45 magnum pistol magazine, marked as uranium ammo. #imp
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -105,6 +113,7 @@
 - type: entity
   id: MagazineMagnumAP
   name: pistol magazine (.45 magnum armor-piercing)
+  description: A 7-round .45 magnum pistol magazine, marked as armor-piercing ammo. #imp
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -116,9 +125,11 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
+
 - type: entity
   id: MagazineMagnumSubMachineGunEmpty
   name: "Vector magazine (.45 magnum any)"
+  description: A 25-round .45 magnum SMG magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazineMagnumSubMachineGun
   components:
@@ -128,10 +139,13 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumSubMachineGun
   name: "Vector magazine (.45 magnum)"
+  description: A 25-round .45 magnum SMG magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -146,6 +160,7 @@
 - type: entity
   id: MagazineMagnumSubMachineGunPractice
   name: "Vector magazine (.45 magnum practice)"
+  description: A 25-round .45 magnum SMG magazine, marked as practice ammo. #imp
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -160,6 +175,7 @@
 - type: entity
   id: MagazineMagnumSubMachineGunUranium
   name: "Vector magazine (.45 magnum uranium)"
+  description: A 25-round .45 magnum SMG magazine, marked as uranium ammo. #imp
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -173,7 +189,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunPiercing
-  name: "Vector magazine (.45 magnum armor-piercing)"
+  name: SMG magazine (.45 magnum armour-piercing)
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
