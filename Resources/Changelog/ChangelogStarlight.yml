@@ -4061,4 +4061,18 @@ Entries:
   id: 562
   time: '2025-03-13T15:21:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/385
+- author: Killer Tamashi
+  changes:
+  - message: Changed sec LMG values, now slows you by 10% as long as you have it.
+    type: Tweak
+  id: 563
+  time: '2025-03-14T08:43:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/389
+- author: Killer Tamashi
+  changes:
+  - message: Reverted L6 nerf, ammo bundle now contains L6 ammo boxes as well.
+    type: Tweak
+  id: 564
+  time: '2025-03-14T08:43:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/389
 
