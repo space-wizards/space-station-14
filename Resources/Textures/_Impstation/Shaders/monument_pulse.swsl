@@ -9,7 +9,7 @@ void fragment() {
     highp float distB = UV2.y - pulseProgress;
     highp float distReal = min(abs(distA), 1.0 - abs(distB));
 
-    COLOR = vec4(texture(TEXTURE, UV).rgb,  distReal * distReal);
+    COLOR = vec4(texture(TEXTURE, UV).rgb,  distReal * distReal * distReal);
 }
 
 //something might have become fucked with this between copying it over?
