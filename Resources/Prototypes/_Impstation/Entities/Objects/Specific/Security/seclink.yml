@@ -32,6 +32,14 @@
     count: 1
 
 - type: entity
+  parent: BatonToken
+  id: BatonToken5
+  suffix: 5 BT
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
   name: disabler token
   parent: [BaseItem, BaseSecurityContraband]
   id: DisablerToken
@@ -64,6 +72,14 @@
     count: 1
 
 - type: entity
+  parent: DisablerToken
+  id: DisablerToken5
+  suffix: 5 DT
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
   name: utility token
   parent: [ BaseItem, BaseSecurityContraband ]
   id: UtilityToken
@@ -94,6 +110,14 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: UtilityToken
+  id: UtilityToken5
+  suffix: 5 BT
+  components:
+  - type: Stack
+    count: 5
 
 #SecLink Radio
 - type: entity
