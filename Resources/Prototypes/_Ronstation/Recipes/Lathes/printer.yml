@@ -68,7 +68,7 @@
 
 - type: latheRecipe
   id: PrinterPaperWrittenFormEngineeringBuildingPermit
-  result: PrinterPaperWrittenFormEngineeringBuildingPermit
+  result: PaperWrittenFormEngineeringBuildingPermit
   completetime: 1
   materials:
     Paper: 1
