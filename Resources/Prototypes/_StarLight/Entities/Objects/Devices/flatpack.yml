@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseFlatpack
+  id: SupermatterFlatpack
+  name: supermatter flatpack
+  description: A flatpack used for constructing a Supermatter Crystal.
+  components:
+    - type: Flatpack
+      entity: SupermatterCrystal

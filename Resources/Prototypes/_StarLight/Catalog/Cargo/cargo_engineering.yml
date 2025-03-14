@@ -1,9 +1,9 @@
 - type: cargoProduct
-  id: SuppermatterSpawnGrenadePurchase
+  id: SuppermatterFlatpackPurchase
   icon:
     sprite: _Starlight/Objects/Specific/supermatter.rsi
     state: supermatter
-  product: CrateSupermatterSpawnGrenade
+  product: CrateSupermatterFlatpack
   cost: 8000
   category: cargoproduct-category-name-engineering
   group: market
