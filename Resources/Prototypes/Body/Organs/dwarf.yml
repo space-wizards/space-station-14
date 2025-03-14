@@ -4,7 +4,10 @@
   name: dwarf heart
   components:
   - type: Metabolizer
-    metabolizerTypes: [Dwarf]
+    metabolizerTypes:
+    - O2Oxygenate
+    - AlcoholTolerance
+    - Dwarf
 
 - type: entity
   id: OrganDwarfLiver
@@ -12,7 +15,10 @@
   name: dwarf liver
   components:
   - type: Metabolizer
-    metabolizerTypes: [Dwarf]
+    metabolizerTypes:
+    - O2Oxygenate
+    - AlcoholTolerance
+    - Dwarf
 
 - type: entity
   id: OrganDwarfStomach
@@ -35,4 +41,7 @@
   - type: Metabolizer
     # mm very yummy
     maxReagents: 5
-    metabolizerTypes: [Dwarf]
+    metabolizerTypes:
+    - O2Oxygenate
+    - AlcoholTolerance
+    - Dwarf

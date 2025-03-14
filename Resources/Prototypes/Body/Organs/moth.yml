@@ -19,7 +19,9 @@
           Quantity: 5
   - type: Metabolizer
     maxReagents: 3
-    metabolizerTypes: [ Moth ]
+    metabolizerTypes:
+    - O2Oxygenate
+    - Moth
     removeEmpty: true
     groups:
       - id: Food

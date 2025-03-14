@@ -21,8 +21,9 @@
         factor: 1.0
         conditions:
           - !type:OrganType
-            type: Human
+            type: Bloodsucker
             shouldHave: false
+          - !type:IsNotBloodstreamReagent
     Food:
       effects:
         - !type:AdjustReagent

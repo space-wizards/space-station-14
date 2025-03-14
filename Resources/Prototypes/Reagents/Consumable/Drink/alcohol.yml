@@ -147,7 +147,7 @@
         - !type:ReagentThreshold
           min: 15
         - !type:OrganType
-          type: Dwarf
+          type: AlcoholTolerance
           shouldHave: false
         damage:
           types:
@@ -158,7 +158,7 @@
         - !type:ReagentThreshold
           min: 15
         - !type:OrganType
-          type: Dwarf
+          type: AlcoholTolerance
         damage:
           types:
             Poison: 0.2
@@ -167,7 +167,7 @@
         - !type:ReagentThreshold
           min: 15
         - !type:OrganType
-          type: Dwarf
+          type: Dwarf # Only dwarves should be able to heal by drinking alcohol
         damage:
           groups:
             Brute: -1
@@ -179,7 +179,7 @@
           min: 12
         # dwarves immune to vomiting from alcohol
         - !type:OrganType
-          type: Dwarf
+          type: AlcoholTolerance
           shouldHave: false
       - !type:Drunk
         boozePower: 2

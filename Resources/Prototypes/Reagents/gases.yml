@@ -13,32 +13,19 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Human
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Animal
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Rat
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Plant
+          type: O2Oxygenate
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:OrganType
-          type: Vox
-          shouldHave: false
+          type: O2Oxygenate
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Vox
+          type: O2Toxic
         scaleByQuantity: true
         ignoreResistances: true
         damage:
@@ -51,7 +38,7 @@
           - !type:ReagentThreshold
             min: 0.5
           - !type:OrganType
-            type: Vox
+            type: O2Toxic
         clear: true
         time: 5
 
@@ -162,7 +149,7 @@
           type: Plant
           shouldHave: false
         - !type:OrganType
-          type: Vox
+          type: CarbonDioxideTolerance
           shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
@@ -205,11 +192,7 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
-          type: Vox
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Slime
+          type: N2Oxygenate
       # Converts Nitrogen into CO2
       - !type:ModifyLungGas
         conditions:
