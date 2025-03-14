@@ -18,6 +18,6 @@ public sealed partial class KillPersonConditionComponent : Component
     /// <summary>
     /// Whether the target must not be on evac
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool RequireMaroon = true;
 }
