@@ -16,13 +16,29 @@ public sealed partial class RogueAscendedComponent : Component
     /// <summary>
     /// The duration of our infection DoAfter.
     /// </summary>
-    [DataField, AutoNetworkedField] public TimeSpan RogueInfectionTime = TimeSpan.FromSeconds(15);
+    [DataField, AutoNetworkedField]
+    public TimeSpan RogueInfectionTime = TimeSpan.FromSeconds(10);
 
-    [DataField] public SoundSpecifier InfectionSfx = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_nova_impact.ogg");
-    [DataField] public SoundSpecifier ShatterSfx = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_shatter.ogg");
-    [DataField] public SoundSpecifier MobSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_noise.ogg");
-    [DataField] public EntProtoId Vfx = "CosmicGenericVFX";
-    [DataField, AutoNetworkedField] public TimeSpan StunTime = TimeSpan.FromSeconds(7);
+    /// <summary>
+    /// The duration inflicted by Slumber Shell
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan RogueSlumberTime = TimeSpan.FromSeconds(25);
+
+    [DataField]
+    public SoundSpecifier InfectionSfx = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ability_nova_impact.ogg");
+
+    [DataField]
+    public SoundSpecifier ShatterSfx = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_shatter.ogg");
+
+    [DataField]
+    public SoundSpecifier MobSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/ascendant_noise.ogg");
+
+    [DataField]
+    public EntProtoId Vfx = "CosmicGenericVFX";
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan StunTime = TimeSpan.FromSeconds(7);
     public DamageSpecifier InfectionHeal = new()
     {
         DamageDict = new()

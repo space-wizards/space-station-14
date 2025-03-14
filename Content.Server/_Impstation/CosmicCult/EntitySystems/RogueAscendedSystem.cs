@@ -15,6 +15,7 @@ using Content.Shared._Impstation.CosmicCult;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Shared._Impstation.Thaven.Components;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.Dataset;
 using Content.Shared.DoAfter;
@@ -25,11 +26,11 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Random;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -61,16 +62,13 @@ public sealed class RogueAscendedSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly ThrowingSystem _throw = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly ThavenMoodsSystem _moodSystem = default!; //impstation
 
     [ValidatePrototypeId<DatasetPrototype>]
     private const string AscendantDataset = "ThavenMoodsAscendantInfection";
-
-    [ValidatePrototypeId<WeightedRandomPrototype>]
-    private const string RandomThavenMoodDataset = "RandomThavenMoodDataset";
     [DataField] private EntProtoId _spawnWisp = "MobCosmicWisp";
     [DataField] private EntProtoId _blankVFX = "CosmicBlankAbilityVFX";
     [DataField] private EntProtoId _glareVFX = "CosmicGlareAbilityVFX";
@@ -85,7 +83,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         SubscribeLocalEvent<RogueAscendedComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RogueAscendedDendriteComponent, BeforeFullyEatenEvent>(OnDendriteConsumed);
 
-        SubscribeLocalEvent<RogueAscendedComponent, EventRogueShatter>(OnRogueShatter);
+        SubscribeLocalEvent<RogueAscendedComponent, EventRogueSlumber>(OnRogueSlumber);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueGrandShunt>(OnRogueShunt);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueCosmicNova>(OnRogueNova);
         SubscribeLocalEvent<HumanoidAppearanceComponent, EventRogueCosmicNova>(OnPlayerNova);
@@ -109,7 +107,7 @@ public sealed class RogueAscendedSystem : EntitySystem
     #region Death
     private void OnMobStateChanged(EntityUid uid, RogueAscendedComponent comp, MobStateChangedEvent args)
     {
-        if (args.NewMobState != MobState.Dead)
+        if (args.NewMobState == MobState.Alive)
             return;
         _audio.PlayPvs(comp.MobSound, uid);
     }
@@ -136,6 +134,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         Dirty(args.User, starMark);
     }
     #endregion
+
     #region Cleanse
     private void OnInfectionCleansed(Entity<RogueAscendedInfectionComponent> uid, ref ComponentShutdown args)
     {
@@ -152,24 +151,22 @@ public sealed class RogueAscendedSystem : EntitySystem
             RemComp<ThavenMoodsComponent>(uid);
     }
     #endregion
+
     #region Ability - Shatter
-    private void OnRogueShatter(Entity<RogueAscendedComponent> uid, ref EventRogueShatter args)
+    private void OnRogueSlumber(Entity<RogueAscendedComponent> uid, ref EventRogueSlumber args)
     {
         if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)
         {
             _popup.PopupEntity(Loc.GetString("rogue-ascended-shatter-fail"), uid, uid);
             return;
         }
-        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Critical, out var damage))
-            return;
-        DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Cold", damage.Value);
-        _damageable.TryChangeDamage(args.Target, dspec, true, origin: uid);
+        _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(args.Target, "ForcedSleep", uid.Comp.RogueSlumberTime, false);
         _audio.PlayPvs(uid.Comp.ShatterSfx, args.Target);
         args.Handled = true;
         Spawn(uid.Comp.Vfx, Transform(args.Target).Coordinates);
     }
     #endregion
+
     #region Ability - Infection
     private void OnAttemptInfection(Entity<RogueAscendedComponent> uid, ref EventRogueInfection args)
     {
@@ -178,7 +175,7 @@ public sealed class RogueAscendedSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("rogue-ascended-infection-alreadyinfected", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid);
             return;
         }
-        if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Critical)
+        if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive && HasComp<ForcedSleepingComponent>(args.Target))
         {
             _popup.PopupEntity(Loc.GetString("rogue-ascended-infection-fail"), uid, uid);
             return;
@@ -222,6 +219,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         _moodSystem.TryAddRandomMood((target, moodComp), AscendantDataset);
 
         _damageable.TryChangeDamage(target, uid.Comp.InfectionHeal * -1);
+        _statusEffects.TryRemoveStatusEffect(target, "ForcedSleep");
 
         _stun.TryStun(target, uid.Comp.StunTime, false);
         _audio.PlayPvs(uid.Comp.InfectionSfx, target);
@@ -230,6 +228,7 @@ public sealed class RogueAscendedSystem : EntitySystem
             obj.MindsCorrupted++;
     } // the year is 2093. We invoke 5,922 systems and add 30,419 components to an entity. Beacuase.
     #endregion
+
     #region Ability - Nova
     private void CastNova(EntityUid uid, EventRogueCosmicNova args)
     {
@@ -242,7 +241,7 @@ public sealed class RogueAscendedSystem : EntitySystem
             delta = new(.01f, 0);
 
         args.Handled = true;
-        var ent = Spawn("ProjectileCosmicNova", startPos);
+        var ent = Spawn("ProjectileRogueCosmicNova", startPos);
         _gun.ShootProjectile(ent, delta, userVelocity, args.Performer, args.Performer, 5f);
         _audio.PlayPvs(_novaSFX, uid, AudioParams.Default.WithVariation(0.1f));
     }
@@ -255,6 +254,7 @@ public sealed class RogueAscendedSystem : EntitySystem
         CastNova(uid, args);
     }
     #endregion
+
     #region Ability - GrandShunt
     private void OnRogueShunt(Entity<RogueAscendedComponent> uid, ref EventRogueGrandShunt args)
     {

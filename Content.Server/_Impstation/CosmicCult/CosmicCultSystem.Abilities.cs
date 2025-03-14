@@ -133,8 +133,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
     {
         if (HasComp<CosmicCultComponent>(args.OtherEntity) || HasComp<BibleUserComponent>(args.OtherEntity) || !HasComp<MobStateComponent>(args.OtherEntity))
             return;
-
-        _stun.TryParalyze(args.OtherEntity, TimeSpan.FromSeconds(2f), false);
+        if (uid.Comp.DoStun)
+            _stun.TryParalyze(args.OtherEntity, TimeSpan.FromSeconds(2f), false);
         _damageable.TryChangeDamage(args.OtherEntity, uid.Comp.CosmicNovaDamage); // This'll probably trigger two or three times because of how collision works. I'm not being lazy here, it's a feature (kinda /s)
         _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.OtherEntity }, Filter.Pvs(args.OtherEntity, entityManager: EntityManager));
     }
@@ -366,13 +366,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var destComp = EnsureComp<MonumentMoveDestinationComponent>(destEnt);
         Spawn("MonumentCollider", pos); //spawn a new collider
 
-        //spawn the source effects & collider
-        var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
-        while (monumentQuery.MoveNext(out var monument, out _))
-        {
-            Spawn("MonumentCosmicCultMoveStart", Transform(monument).Coordinates);
-            Spawn("MonumentCollider", Transform(monument).Coordinates); //spawn a new collider
-        }
+        Spawn("MonumentCosmicCultMoveStart", Transform(_cultRule.MonumentInGame).Coordinates);
+        Spawn("MonumentCollider", Transform(_cultRule.MonumentInGame).Coordinates); //spawn a new collider
 
         //timers!
         //move the monument to cheese world (the storage map)
@@ -380,21 +375,17 @@ public sealed partial class CosmicCultSystem : EntitySystem
         Timer.Spawn(TimeSpan.FromSeconds(0.45),
             () =>
             {
-                var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
-                while (monumentQuery.MoveNext(out var monument, out var monumentComp))
+                //todo check if anything gets messed up by doing this to the monument?
+                _transform.SetParent(_cultRule.MonumentInGame, EnsureStorageMapExists());
+                destComp.Monument = _cultRule.MonumentInGame; //only get the first monument
+
+                if (_cultRule.MonumentInGame.Comp.CurrentGlyph is not null) //delete the scribed glyph as well
+                    QueueDel(_cultRule.MonumentInGame.Comp.CurrentGlyph);
+
+                //close the UI for everyone who has it open
+                if (TryComp<UserInterfaceComponent>(uid, out var uiComp))
                 {
-                    //todo check if anything gets messed up by doing this to the monument?
-                    _transform.SetParent(monument, EnsureStorageMapExists());
-                    destComp.Monument = monument; //only get the first monument
-
-                    if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph as well
-                        QueueDel(monumentComp.CurrentGlyph);
-
-                    //close the UI for everyone who has it open
-                    if (TryComp<UserInterfaceComponent>(uid, out var uiComp))
-                    {
-                        _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
-                    }
+                    _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
                 }
 
                 //retrieve the monument from cheese world

@@ -193,7 +193,10 @@
     whitelist:
       components:
         - HumanoidAppearance
+    blacklist:
+      components:
         - CosmicCult
+        - BibleUser
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -201,23 +204,25 @@
     event: !type:EventRogueInfection {}
 
 - type: entity
-  id: ActionRogueShatter
-  name: Shatter Shell
-  description: Instantly shatter a target's mortal shell, mortally wounding them and preparing them for Malign Corruption.
+  id: ActionRogueSlumber
+  name: Slumber Shell
+  description: Instantly slumber a target's mortal shell, rendering them asleep and ready for Malign Corruption.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
-    useDelay: 180
+    useDelay: 155
     whitelist:
       components:
         - HumanoidAppearance
+    blacklist:
+      components:
         - CosmicCult
         - BibleUser
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: rogueshatter
-    event: !type:EventRogueShatter {}
+    event: !type:EventRogueSlumber {}
 
 - type: entity
   id: ActionRogueGrandShunt
