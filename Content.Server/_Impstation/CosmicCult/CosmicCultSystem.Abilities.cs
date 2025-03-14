@@ -50,7 +50,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultComponent, EventCosmicLapse>(OnCosmicLapse);
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicPlaceMonument>(OnCosmicPlaceMonument);
         SubscribeLocalEvent<CosmicCultLeadComponent, EventCosmicMoveMonument>(OnCosmicMoveMonument);
-        SubscribeLocalEvent<MonumentMoveDestinationComponent, TimedDespawnEvent>(OnMoveDestinationDespawn);
         SubscribeLocalEvent<CosmicAstralBodyComponent, EventCosmicReturn>(OnCosmicReturn);
     }
 
@@ -355,13 +354,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
 
         _actions.RemoveAction(uid, uid.Comp.CosmicMonumentMoveActionEntity);
 
-        //ok so I'm gonna replace this with the map teleport thing
-        //chain of actions
-        //delete all colliders, spawn both effects
-        //move the monument into the storage map
-        //hook into the timedDespawn event to move it instead of manually timing it or w/e
-        //no need to manually delete the effects, timedDespawn should have that covered
-
         //delete all old monument colliders for 100% safety
         var colliderQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
         while (colliderQuery.MoveNext(out var collider, out _))
@@ -374,44 +366,56 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var destComp = EnsureComp<MonumentMoveDestinationComponent>(destEnt);
         Spawn("MonumentCollider", pos); //spawn a new collider
 
-        //move the monument to the storage map
+        //spawn the source effects & collider
         var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
-        while (monumentQuery.MoveNext(out var monument, out var monumentComp))
+        while (monumentQuery.MoveNext(out var monument, out _))
         {
             Spawn("MonumentCosmicCultMoveStart", Transform(monument).Coordinates);
             Spawn("MonumentCollider", Transform(monument).Coordinates); //spawn a new collider
-
-            //todo check if anything gets messed up by doing this to the monument?
-            _transform.SetParent(monument, EnsureStorageMapExists());
-            destComp.Monument = monument; //only get the first monument
-
-            if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph as well
-                QueueDel(monumentComp.CurrentGlyph);
         }
+
+        //timers!
+        //move the monument to cheese world (the storage map)
+        //these timers aren't amazing because they're basically magic values but eh
+        Timer.Spawn(TimeSpan.FromSeconds(0.45),
+            () =>
+            {
+                var monumentQuery = EntityQueryEnumerator<MonumentComponent>();
+                while (monumentQuery.MoveNext(out var monument, out var monumentComp))
+                {
+                    //todo check if anything gets messed up by doing this to the monument?
+                    _transform.SetParent(monument, EnsureStorageMapExists());
+                    destComp.Monument = monument; //only get the first monument
+
+                    if (monumentComp.CurrentGlyph is not null) //delete the scribed glyph as well
+                        QueueDel(monumentComp.CurrentGlyph);
+                }
+
+                //retrieve the monument from cheese world
+                Timer.Spawn(TimeSpan.FromSeconds(0.8), //relative to the last timer
+                    () =>
+                    {
+                        var colliderQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
+                        while (colliderQuery.MoveNext(out var collider, out _))
+                        {
+                            QueueDel(collider);
+                        }
+
+                        if (destComp.Monument is null)
+                            return;
+
+                        var xform = Transform(destEnt);
+                        _transform.SetCoordinates(destComp.Monument.Value, xform.Coordinates);
+                        _transform.AnchorEntity(destComp.Monument.Value); //no idea if this does anything but let's be safe about it
+                        Spawn("MonumentCollider", xform.Coordinates);
+                    });
+            });
 
         //close the UI for everyone who has it open
         if (TryComp<UserInterfaceComponent>(uid, out var uiComp))
         {
             _ui.CloseUi((uid.Owner, uiComp), MonumentKey.Key);
         }
-    }
-
-    private void OnMoveDestinationDespawn(Entity<MonumentMoveDestinationComponent> ent, ref TimedDespawnEvent args)
-    {
-        //delete all old monument colliders for 100% safety
-        var colliderQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
-        while (colliderQuery.MoveNext(out var collider, out _))
-        {
-            QueueDel(collider);
-        }
-
-        if (ent.Comp.Monument is null)
-            return;
-
-        var xform = Transform(ent);
-        _transform.SetCoordinates(ent.Comp.Monument.Value, xform.Coordinates);
-        _transform.AnchorEntity(ent.Comp.Monument.Value); //no idea if this does anything but let's be safe about it
-        Spawn("MonumentCollider", xform.Coordinates);
     }
 
     private EntityUid EnsureStorageMapExists()
@@ -431,7 +435,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         var xform = Transform(uid);
         outPos = new EntityCoordinates();
 
-        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-grid"), uid, uid);
             return false;

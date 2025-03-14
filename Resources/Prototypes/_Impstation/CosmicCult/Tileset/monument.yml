@@ -179,7 +179,7 @@
   - type: Sprite
     sprite: _Impstation/CosmicCult/Tileset/monument.rsi
     layers:
-    - state: monument-move-effect-placeholder
+    - state: stage2-relocate-out
       shader: unshaded
     offset: 0,1
     drawdepth: Mobs
@@ -231,7 +231,7 @@
   - type: Sprite
     sprite: _Impstation/CosmicCult/Tileset/monument.rsi
     layers:
-    - state: monument-move-effect-placeholder
+    - state: stage2-relocate-in
       shader: unshaded
     offset: 0,1
     drawdepth: Mobs
