@@ -6,17 +6,12 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Furniture/guidebookshelf.rsi
-    snapCardinals: true
-    layers:
-      - state: base
-      - state: book-0
-      - map: ["enum.StorageFillLayers.Fill"]
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 90 # three times stronger than a normal bookshelf so people will smash those for wood first
-    maxItemSize: Normal
+  - type: Storage
     whitelist:
       tags:
-        - Guidebook # and only guidebooks. make sure to add the Book and Guidebook tags to any new guidebook you write
+        - Guidebook # and only guidebooks. make sure to add the Book and Guidebook tags to any new guidebook you write, and add them to guidebookshelf.yml
