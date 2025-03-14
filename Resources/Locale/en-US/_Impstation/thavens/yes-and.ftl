@@ -31,7 +31,7 @@ thaven-mood-never-alone-desc = You should strive to be around others whenever po
 thaven-mood-very-religious-name = You Are Very Religious
 thaven-mood-very-religious-desc = You should attend the chapel regularly to pray, and speak with the Chaplain if possible.
 
-thaven-mood-only-speak-to-command-name = VIP
+thaven-mood-only-speak-to-command-name = Boss Knows Best
 thaven-mood-only-speak-to-command-desc = Problems you encounter are too complex to be solved by your peers. Escalate them to your higher-ups for advice instead.
 
 thaven-mood-scheduler-name = Punctual
