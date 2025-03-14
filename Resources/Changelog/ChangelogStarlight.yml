@@ -4075,4 +4075,18 @@ Entries:
   id: 564
   time: '2025-03-14T08:43:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/389
+- author: Killer Tamashi
+  changes:
+  - message: Changed Chainsword damage, now does 10 instead of 8.
+    type: Tweak
+  id: 565
+  time: '2025-03-14T10:31:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/394
+- author: Killer Tamashi
+  changes:
+  - message: Changed Reflect Chance, now is .2 instead of .1
+    type: Tweak
+  id: 566
+  time: '2025-03-14T10:31:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/394
 
