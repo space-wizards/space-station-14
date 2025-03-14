@@ -2,7 +2,6 @@ using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chat.ChatConditions;
 
@@ -10,14 +9,13 @@ namespace Content.Server.Chat.ChatConditions;
 /// Checks if the consumer has a method to transmit radio messages
 /// </summary>
 [DataDefinition]
-public sealed partial class RadioReceiverChatCondition : ChatCondition
+public sealed partial class RadioReceiverChatCondition : EntityChatConditionBase
 {
-
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext chatContext)
     {
-        if (!channelParameters.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel))
+        if (!chatContext.TryGet<string>(DefaultChannelParameters.RadioChannel, out var radioChannel))
             return false;
 
         IoCManager.InjectDependencies(this);
@@ -34,11 +32,6 @@ public sealed partial class RadioReceiverChatCondition : ChatCondition
             return activeRadioComponent.Channels.Contains(radioChannel);
         }
 
-        return false;
-    }
-
-    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
-    {
         return false;
     }
 }

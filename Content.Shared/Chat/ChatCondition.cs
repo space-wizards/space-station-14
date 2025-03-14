@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Chat;
@@ -25,11 +23,11 @@ public sealed partial class AllChatCondition : IChatCondition
     public List<ChatCondition> Subconditions = new();
 
     /// <inheritdoc />
-    public bool Check(ChatMessageConditionSubject subject, ChatMessageContext channelParameters)
+    public bool Check(ChatMessageConditionSubject subject, ChatMessageContext chatContext)
     {
         foreach (var chatCondition in Subconditions)
         {
-            if (!chatCondition.Check(subject, channelParameters))
+            if (!chatCondition.Check(subject, chatContext))
             {
                 return false;
             }
@@ -59,11 +57,11 @@ public sealed partial class AnyChatCondition : IChatCondition
     public List<IChatCondition> Subconditions = new();
 
     /// <inheritdoc />
-    public bool Check(ChatMessageConditionSubject subject, ChatMessageContext channelParameters)
+    public bool Check(ChatMessageConditionSubject subject, ChatMessageContext chatContext)
     {
         foreach (var chatCondition in Subconditions)
         {
-            if (chatCondition.Check(subject, channelParameters))
+            if (chatCondition.Check(subject, chatContext))
             {
                 return true;
             }
@@ -104,28 +102,47 @@ public sealed class ChatMessageContext : Dictionary<Enum, object>
     }
 }
 
+/// <summary>
+/// Base class for chat conditions that can handle check only for <see cref="ICommonSession"/>.
+/// Should be used for checks that can be run only against session, or out-of sim checks.
+/// </summary>
 public abstract partial class SessionChatConditionBase : ChatCondition
 {
     /// <inheritdoc />
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    protected sealed override bool Check(EntityUid subjectEntity, ChatMessageContext chatContext)
     {
         return false;
     }
 }
 
+/// <summary>
+/// Base class for chat conditions that can handle check only for <see cref="EntityUid"/>.
+/// Should be used for checks of all in-sim conditions.
+/// </summary>
 public abstract partial class EntityChatConditionBase : ChatCondition
 {
     /// <inheritdoc />
-    protected override bool Check(ICommonSession subjectEntity, ChatMessageContext channelParameters)
+    protected sealed override bool Check(ICommonSession subjectEntity, ChatMessageContext chatContext)
     {
         return false;
     }
 }
 
-
+/// <summary>
+/// Condition that checks if session (player) / entity (game object)
+/// can produce or receive chat messages.
+/// </summary>
 public interface IChatCondition
 {
-    bool Check(ChatMessageConditionSubject subject, ChatMessageContext channelParameters);
+    /// <summary>
+    /// Checks if provided subject fits condition. Subject can be <see cref="ICommonSession"/> or
+    /// <see cref="EntityUid"/>. In case of session - attached entity will be tested as
+    /// <see cref="ChatMessageConditionSubject"/> automatically extracts it.
+    /// </summary>
+    /// <param name="subject">Subject of check.</param>
+    /// <param name="chatContext">Context of chat message publish / consume.</param>
+    /// <returns>True if subject entity OR session fits check, false otherwise.</returns>
+    bool Check(ChatMessageConditionSubject subject, ChatMessageContext chatContext);
 }
 
 [Serializable]
@@ -137,17 +154,18 @@ public abstract partial class ChatCondition : IChatCondition
     [DataField]
     public bool Inverted = false;
 
+    /// <inheritdoc />
     public virtual bool Check(
         ChatMessageConditionSubject subject,
-        ChatMessageContext channelParameters
+        ChatMessageContext chatContext
     )
     {
-        if (subject.Entity.HasValue && (Check(subject.Entity.Value, channelParameters) == !Inverted))
+        if (subject.Entity.HasValue && (Check(subject.Entity.Value, chatContext) == !Inverted))
         {
             return true;
         }
 
-        if (subject.Session != null && (Check(subject.Session, channelParameters) == !Inverted))
+        if (subject.Session != null && (Check(subject.Session, chatContext) == !Inverted))
         {
             return true;
         }
@@ -155,8 +173,15 @@ public abstract partial class ChatCondition : IChatCondition
         return false;
     }
 
-    protected abstract bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters);
-    protected abstract bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters);
+    /// <summary>
+    /// Checks condition against entity. Usually used for in-sim checks.
+    /// </summary>
+    protected abstract bool Check(EntityUid subjectEntity, ChatMessageContext chatContext);
+
+    /// <summary>
+    /// Checks condition against session. Usually used for out-of sim, session-only or non-sim dependent checks.
+    /// </summary>
+    protected abstract bool Check(ICommonSession subjectSession, ChatMessageContext chatContext);
 
 }
 

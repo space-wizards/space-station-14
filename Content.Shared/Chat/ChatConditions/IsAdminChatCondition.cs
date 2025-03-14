@@ -7,7 +7,7 @@ namespace Content.Shared.Chat.ChatConditions;
 /// Checks if the consumers are admins.
 /// </summary>
 [DataDefinition]
-public sealed partial class IsAdminChatCondition : ChatCondition
+public sealed partial class IsAdminChatCondition : SessionChatConditionBase
 {
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
@@ -17,12 +17,7 @@ public sealed partial class IsAdminChatCondition : ChatCondition
     [DataField]
     public bool IncludeDeadmin;
 
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
-    {
-        return false;
-    }
-
-    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext chatContext)
     {
         IoCManager.InjectDependencies(this);
 

@@ -6,18 +6,11 @@ using Robust.Shared.Player;
 namespace Content.Server.Chat.ChatConditions;
 
 [DataDefinition]
-public sealed partial class AdminOOCEnabledChatCondition : ChatCondition
+public sealed partial class AdminOOCEnabledChatCondition : SessionChatConditionBase
 {
-
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
-    {
-        IoCManager.InjectDependencies(this);
-        return _configurationManager.GetCVar(CCVars.AdminOocEnabled);
-    }
-
-    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext chatContext)
     {
         IoCManager.InjectDependencies(this);
         return _configurationManager.GetCVar(CCVars.AdminOocEnabled);
