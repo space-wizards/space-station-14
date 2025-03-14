@@ -201,9 +201,9 @@
     event: !type:EventRogueInfection {}
 
 - type: entity
-  id: ActionRogueShatter
-  name: Shatter Shell
-  description: Instantly shatter a target's mortal shell, mortally wounding them and preparing them for Malign Corruption.
+  id: ActionRogueSlumber
+  name: Slumber Shell
+  description: Instantly slumber a target's mortal shell, rendering them asleep and ready for Malign Corruption.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction

@@ -127,6 +127,9 @@
   - type: Physics
 
     bodyStatus: InAir
+  - type: Speech
+    speechVerb: Ghost
+  - type: BodyEmotes # you know, for the funny.
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
   - type: CombatMode
@@ -142,8 +145,8 @@
         Asphyxiation: -4
         Cold: -4
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4.9
-    baseSprintSpeed: 4.9
+    baseWalkSpeed: 4.4
+    baseSprintSpeed: 4.4
     weightlessAcceleration: 2 # Move around more easily in space.
     weightlessFriction: 1
     weightlessModifier: 1
@@ -245,7 +248,7 @@
       path: /Audio/_Impstation/CosmicCult/cosmicsword_hit.ogg
       params:
         variation: 0.2
-        volume: 1
+        volume: -4
     soundSwing:
       path: /Audio/_Impstation/CosmicCult/cosmicweapon_swing.ogg
       params:

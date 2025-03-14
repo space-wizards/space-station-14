@@ -9,6 +9,8 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 [NetworkedComponent, RegisterComponent]
 public sealed partial class CosmicAstralNovaComponent : Component
 {
+    [DataField]
+    public bool DoStun = true;
     public DamageSpecifier CosmicNovaDamage = new()
     {
         DamageDict = new() {

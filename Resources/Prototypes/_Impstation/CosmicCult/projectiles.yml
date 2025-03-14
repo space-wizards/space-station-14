@@ -43,3 +43,11 @@
     corruptionSpeed: 0.4
     corruptionRadius: 1
     useVFX: false
+
+- type: entity
+  id: ProjectileRogueCosmicNova
+  parent: ProjectileCosmicNova
+  name: Usurped Astral Nova
+  components:
+    - type: CosmicAstralNova
+      doStun: false

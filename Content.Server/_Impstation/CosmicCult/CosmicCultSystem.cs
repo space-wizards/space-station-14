@@ -82,7 +82,6 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
 
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
 
@@ -128,7 +127,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
     /// <summary>
     /// Creates the Cosmic Void pocket dimension map.
     /// </summary>
-    private void OnRoundStart(RoundStartingEvent ev) // TODO: Should not just always be roundstart probably. Unless we're using this for other things that will always be present. look into how nukeops map rule works
+    // Rogue Ascendants use this too, which are generalized MidRoundAntags, so we keep the map around. If you're porting cosmic cult, and do not want rogue ascendants, feel free to move this into selective usage akin to NukeOps base.
+    private void OnRoundStart(RoundStartingEvent ev)
     {
         if (_mapLoader.TryLoadMap(_mapPath, out var map, out _, new DeserializationOptions { InitializeMaps = true }))
             _map.SetPaused(map.Value.Comp.MapId, false);
@@ -199,7 +199,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     /// Parses marker components to output their respective loc strings directly into your examine box, courtesy of TGRCdev(Github).
     /// </summary>
     private void MakeSimpleExamineHandler<TComp>(LocId message)
-    where TComp: IComponent
+    where TComp : IComponent
     {
         SubscribeLocalEvent((Entity<TComp> ent, ref ExaminedEvent args) => {
             if (HasComp<CosmicCultComponent>(args.Examiner))
