@@ -14,11 +14,11 @@
 - type: latheRecipePack
   id: ImpProtoDynamic
   recipes:
-  - BaseChemistryEmptyVial
   - Drone
   - CleanerGrenade
   - PlantAnalyzer #NF
   - FishingRod
+  - ExosuitFabricatorMachineCircuitboard
 
 # Emagged
 
