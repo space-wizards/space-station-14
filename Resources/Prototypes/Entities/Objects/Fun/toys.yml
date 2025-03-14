@@ -358,7 +358,9 @@
     speechVerb: Reptilian # for pais (In the secret stash)
   - type: Tag
     tags:
-      - PlushieLizard
+    - ClothMade
+    - Payload
+    - PlushieLizard
 
 - type: entity
   parent: PlushieLizard
