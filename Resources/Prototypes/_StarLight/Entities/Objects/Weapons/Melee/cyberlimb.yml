@@ -29,9 +29,9 @@
        variation: 0.125   
     activatedDamage:
       types:
-        Slash: 4
-        Heat: 4
-        Structural: 6
+        Slash: 5
+        Heat: 5
+        Structural: 10
   - type: MeleeWeapon
     angle: 0
     wideAnimationRotation: -135
@@ -50,4 +50,4 @@
     endSound:
       path: /Audio/Weapons/chainsaw.ogg
   - type: Reflect
-    reflectProb: 0.1
+    reflectProb: 0.2
