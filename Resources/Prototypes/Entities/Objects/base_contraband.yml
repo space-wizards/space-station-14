@@ -189,6 +189,14 @@
   - type: Contraband
     allowedJobs: [ Janitor ]
 
+- type: entity
+  id: BaseBrigmedicContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ Brigmedic ]
+
 # for ~objective items
 - type: entity
   id: BaseGrandTheftContraband

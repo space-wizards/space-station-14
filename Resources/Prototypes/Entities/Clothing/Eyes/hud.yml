@@ -148,7 +148,7 @@
   - type: ShowThirstIcons
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons, BaseSecurityCommandContraband] # BaseLensSlot from imp
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons, BaseBrigmedicContraband] # BaseLensSlot from imp
   id: ClothingEyesHudMedSec
   name: medsec hud
   description: A specialized pair of glasses that displays both medical and security information, complete with a compact antenna for data downlink and a flash-protective coating.
