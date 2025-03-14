@@ -14,6 +14,7 @@
   - type: MindRole
     antag: true
     antagPrototype: GenericAntagonist
+    roleType: SoloAntagonist
 
 #Observer
 - type: entity
@@ -77,9 +78,6 @@
   parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleSoloAntagonist
   name: Ghost Role (Solo Antagonist)
-  components:
-  - type: MindRole
-    roleType: SoloAntagonist
 
 - type: entity
   parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
@@ -147,7 +145,6 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
-    roleType: SoloAntagonist
     exclusiveAntag: true
   - type: NinjaRole
 
@@ -218,7 +215,6 @@
   components:
   - type: MindRole
     antagPrototype: Thief
-    roleType: SoloAntagonist
   - type: ThiefRole
 
 # Traitors
@@ -230,7 +226,6 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
-    roleType: SoloAntagonist
   - type: TraitorRole
 
 - type: entity
@@ -259,7 +254,6 @@
   - type: MindRole
     antagPrototype: Wizard
     exclusiveAntag: true
-    roleType: SoloAntagonist
   - type: WizardRole
 
 # Zombie Squad
