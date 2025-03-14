@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Bagel, Cog, Hummingbird, Marathon, Omega, and Origin have been updated
-      to include recent mapping content updates.
-    type: Add
-  id: 797
-  time: '2024-12-24T09:47:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1108
 - author: TheGrimbeeper
   changes:
   - message: new artifact effect, learned from spooky ghosties
@@ -4089,3 +4081,11 @@
   id: 1296
   time: '2025-03-13T22:59:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1913
+- author: Darkmajia
+  changes:
+  - message: Eight beautiful new sounds can be heard after the end of a round. You
+      can listen to them with your headphones and/or speakers, per your choosing.
+    type: Add
+  id: 1297
+  time: '2025-03-14T00:09:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1937
