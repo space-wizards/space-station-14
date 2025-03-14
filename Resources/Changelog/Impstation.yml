@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Medkit & Seclite sprite adjustments based on feedback.
-    type: Tweak
-  - message: Atmospheric Gases now have new animation sprites!
-    type: Tweak
-  id: 799
-  time: '2024-12-24T09:50:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1111
 - author: kipdotnet
   changes:
   - message: The tck'tck now has engineering access, externals access and a law preventing
@@ -4092,3 +4083,11 @@
   id: 1298
   time: '2025-03-14T00:42:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1903
+- author: hivehum
+  changes:
+  - message: You can no longer take damage from attempting to remove an implant, even
+      if you choose incorrectly.
+    type: Remove
+  id: 1299
+  time: '2025-03-14T00:56:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1935
