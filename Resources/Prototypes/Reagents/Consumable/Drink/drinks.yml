@@ -460,12 +460,21 @@
         ratios:
           Ammonia: 1.0
           WaterVapor: -1.0
+      - !type:Oxygenate # thaven can breathe all gases safely
+        conditions:
+        - !type:OrganType
+          type: Thaven
+      - !type:SatiateThirst # thaven breathing water vapor get thirsty slower
+        conditions:
+        - !type:OrganType
+          type: Thaven
+        factor: 0.1
       - !type:HealthChange # for slimes
         scaleByQuantity: true
         ignoreResistances: true
         conditions:
         - !type:OrganType
-          type: Slime 
+          type: Slime
         damage:
           types:
             Caustic: 8

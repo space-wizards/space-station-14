@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Thaven sprites made by kushbreth",
+    "states": [
+        {
+            "name": "thaven1"
+        },
+        {
+            "name": "thaven2"
+        },
+        {
+            "name": "thaven0",
+            "delays": [
+                [
+                    0.2,
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        }
+    ]
+}
