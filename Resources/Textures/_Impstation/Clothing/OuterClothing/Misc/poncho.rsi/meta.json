@@ -44,16 +44,16 @@
       "name": "QM-equipped-OUTERCLOTHING",
       "directions": 4
     },
+	{
+      "name": "QM-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
     {
       "name": "QM-inhand-left",
       "directions": 4
     },
     {
       "name": "QM-inhand-right",
-      "directions": 4
-    },
-	{
-      "name": "QM-equipped-OUTERCLOTHING-vox",
       "directions": 4
     },
 	{
