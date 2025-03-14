@@ -37,6 +37,27 @@
     attributes:
       proper: true
       gender: male
+  - type: Speech
+    speechSounds: Suppy
+    speechVerb: Suppy
+  - type: Emoting
+  - type: Vocal
+    sounds:
+      Male: Suppy
+      Female: Suppy
+      Unsexed: Suppy
+  - type: AnimatedEmotes
+  - type: MobState #for deathgasp
+  - type: InputMover
+  - type: Input
+    context: "human"
+  - type: Examiner
+  - type: MobMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.1
+    baseSprintSpeed: 0.2
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
   - type: InteractionPopup
     successChance: .1
     interactSuccessString: petting-success-suppy
@@ -44,8 +65,5 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       collection: SupermatterAccentNormal
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0.1
-    baseSprintSpeed: 0.2
   - type: StealTarget
     stealGroup: PetSuppy

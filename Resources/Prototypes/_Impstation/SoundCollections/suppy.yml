@@ -1,0 +1,21 @@
+- type: soundCollection
+  id: SuppySay
+  files:
+  - /Audio/_EE/Supermatter/accent/normal/1.ogg
+  - /Audio/_EE/Supermatter/accent/normal/2.ogg
+  - /Audio/_EE/Supermatter/accent/normal/21.ogg
+  
+
+- type: soundCollection
+  id: SuppyAsk
+  files:
+  - /Audio/_EE/Supermatter/accent/normal/3.ogg
+  - /Audio/_EE/Supermatter/accent/normal/32.ogg
+
+- type: soundCollection
+  id: SuppyExclaim
+  files:
+  - /Audio/_EE/Supermatter/accent/normal/4.ogg
+  - /Audio/_EE/Supermatter/accent/normal/9.ogg
+  - /Audio/_EE/Supermatter/accent/normal/11.ogg
+
