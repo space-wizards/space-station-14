@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: One new space ambient track for our wonderful stargazers! Wawa.
-    type: Add
-  id: 807
-  time: '2024-12-26T11:40:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1131
 - author: DinnerCalzone
   changes:
   - message: The footstep sounds for high-heel shoes has been changed.
@@ -4099,3 +4092,11 @@
   id: 1306
   time: '2025-03-14T04:39:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1925
+- author: hivehum
+  changes:
+  - message: The courier hardsuit is now only available through the cargo request
+      console.
+    type: Remove
+  id: 1307
+  time: '2025-03-14T05:44:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1929
