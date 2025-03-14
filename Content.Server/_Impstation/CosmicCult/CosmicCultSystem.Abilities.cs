@@ -398,7 +398,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 }
 
                 //retrieve the monument from cheese world
-                Timer.Spawn(TimeSpan.FromSeconds(0.8), //relative to the last timer
+                Timer.Spawn(TimeSpan.FromSeconds(0.75), //relative to the last timer
                     () =>
                     {
                         var colliderQuery = EntityQueryEnumerator<MonumentCollisionComponent>();
