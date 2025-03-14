@@ -24,10 +24,10 @@ public sealed partial class HereticPathCondition : ListingCondition
 
 
 
-        if (!minds.TryGetMind(args.Buyer, out var mindId, out var mind))
+        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var mind))
             return false;
 
-        if (!ent.TryGetComponent<HereticComponent>(args.Buyer, out var hereticComp))
+        if (!ent.TryGetComponent<HereticComponent>(mind.OwnedEntity, out var hereticComp))
             return false;
 
         //Stage is the level of the knowledge we're looking at
