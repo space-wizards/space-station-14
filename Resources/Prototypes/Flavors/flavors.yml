@@ -1345,6 +1345,11 @@
   description: flavor-complex-zombiecocktail
 
 - type: flavor
+  id: bacchusblessing
+  flavorType: Complex
+  description: flavor-complex-bacchus-blessing
+
+- type: flavor
   id: trashy
   flavorType: Base
   description: flavor-base-trashy
