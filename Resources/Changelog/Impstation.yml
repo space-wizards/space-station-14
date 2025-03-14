@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The Intern announcer line about burgers has been edited to remove the
-      retching sound.
-    type: Tweak
-  id: 806
-  time: '2024-12-26T11:33:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1127
 - author: AvianMaiden
   changes:
   - message: One new space ambient track for our wonderful stargazers! Wawa.
@@ -4100,3 +4092,10 @@
   id: 1305
   time: '2025-03-14T04:37:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1934
+- author: DinnerCalzone
+  changes:
+  - message: Suppy may now be targeted by the random sentience event.
+    type: Add
+  id: 1306
+  time: '2025-03-14T04:39:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1925
