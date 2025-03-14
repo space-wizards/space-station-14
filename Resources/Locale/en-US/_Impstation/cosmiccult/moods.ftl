@@ -14,7 +14,7 @@ thaven-mood-cosmic-wakingdream-name = Cosmic Dream
 thaven-mood-cosmic-wakingdream-desc = This reality is an illusion, a great dream that you share from beyond the veil of nothing, for all things have long since ended. Rejoice!
 
 thaven-mood-cosmic-livingnightmare-name = Entropic Nightmare
-thaven-mood-cosmic-livingnightmare-desc = This isn't reality, it's a waking nightmare that you and everyone around you is trapped in. We all need to wake up, quickly.
+thaven-mood-cosmic-livingnightmare-desc = This isn't reality, it's a waking nightmare that you and everyone around you is trapped in. You need to survive this nightmare at all costs.
 
 thaven-mood-cosmic-grotesqueworld-name = Grotesquerie
 thaven-mood-cosmic-grotesqueworld-desc = The world around you is disgusting and vile. The sights of the station nauseate you, and your coworkers have been replaced with grotesque monsters.
@@ -38,4 +38,4 @@ thaven-mood-cosmic-fearofendings-name = Apeirophobia
 thaven-mood-cosmic-fearofendings-desc = You have an intense and irrational fear of eternities: Afterlives, oblivion, and infinity.
 
 thaven-mood-cosmic-painlessendings-name = Euthanasia
-thaven-mood-cosmic-painlessendings-desc = You have seen the imminent end, and it is far worse than you could ever imagine. It would be a kindness to keep those around you from living to see it. You don't want them to suffer; keep your methods as painless as you can.
+thaven-mood-cosmic-painlessendings-desc = You have seen the imminent end, and it is far worse than you could ever imagine. It would be a kindness to keep creatures of lesser intelligence from living to see it. You don't want animals to suffer; keep your methods as painless as you can.
