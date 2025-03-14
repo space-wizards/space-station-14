@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Blackern5000
   changes:
-  - message: Added three bottle boxes to the nanomed plus inventory for doctors to
-      carry small amounts of chemicals on their person
-    type: Add
-  id: 7563
-  time: '2024-10-30T07:41:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33018
-- author: Blackern5000
-  changes:
   - message: Added the interdyne defibrillator, a black-and-red defibrillator that
       can be used as a melee weapon.
     type: Add
@@ -3897,3 +3889,10 @@
   id: 8062
   time: '2025-03-14T06:49:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35306
+- author: Quantum-cross
+  changes:
+  - message: Corrupt borg speech if they are damaged or low power
+    type: Add
+  id: 8063
+  time: '2025-03-14T15:31:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35318
