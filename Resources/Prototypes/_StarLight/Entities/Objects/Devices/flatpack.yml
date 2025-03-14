@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseFlatpack
+  parent: [BaseFlatpack, BaseEngineeringContraband]
   id: SupermatterFlatpack
   name: supermatter flatpack
   description: A flatpack used for constructing a Supermatter Crystal.
