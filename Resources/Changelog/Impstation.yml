@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Amber station has been updated and its evac shuttle now properly displays
-      its ETA time.
-    type: Tweak
-  id: 802
-  time: '2024-12-26T11:25:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1118
-- author: DinnerCalzone
-  changes:
   - message: The body hair marking for dwarves and humans may now be used by unisex
       characters.
     type: Tweak
@@ -4087,3 +4079,18 @@
   id: 1301
   time: '2025-03-14T01:41:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1774
+- author: Sha-Seng
+  changes:
+  - message: Thaven now have a fishy chat bubble!
+    type: Add
+  - message: Thaven have new organs - and they can eat raw meat and are immune to
+      carpotoxin
+    type: Add
+  - message: Thaven and carps/dragons have new blood you can drink and make the new
+      Fever Dream cocktail with
+    type: Add
+  - message: Thaven can now breathe any gas without harmful effects
+    type: Tweak
+  id: 1302
+  time: '2025-03-14T01:42:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1883
