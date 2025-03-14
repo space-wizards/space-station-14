@@ -85,7 +85,7 @@ public sealed class MailSystem : EntitySystem
     {
         base.Initialize();
 
-        Log.Debug("mail");
+        _sawmill = Logger.GetSawmill("mail");
 
         SubscribeLocalEvent<PlayerSpawningEvent>(OnSpawnPlayer, after: [typeof(SpawnPointSystem)]);
 
@@ -115,7 +115,7 @@ public sealed class MailSystem : EntitySystem
                 continue;
 
             TimeSpan nextTimeToAdd;
-            if (_random.Prob(0.5f)) // weight the result towards the average. 
+            if (_random.Prob(0.5f)) // weight the result towards the average.
                 nextTimeToAdd = _random.Next(mailTeleporter.MinInterval, mailTeleporter.MaxInterval);
             else
                 nextTimeToAdd = mailTeleporter.AverageInterval;
