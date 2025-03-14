@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: The grappling gun projectile now plays a sound when colliding with walls.
-    type: Add
-  id: 805
-  time: '2024-12-26T11:30:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1124
-- author: DinnerCalzone
-  changes:
   - message: The Intern announcer line about burgers has been edited to remove the
       retching sound.
     type: Tweak
@@ -4096,3 +4089,14 @@
   id: 1304
   time: '2025-03-14T04:34:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1938
+- author: honeyed-lemons
+  changes:
+  - message: Courier slots on all maps has been reduced to one
+    type: Tweak
+  - message: Mail Teleporter now starts off, and produces less mail
+    type: Tweak
+  - message: Mail Teleporter can now be powered off
+    type: Fix
+  id: 1305
+  time: '2025-03-14T04:37:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1934
