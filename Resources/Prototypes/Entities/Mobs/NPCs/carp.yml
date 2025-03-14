@@ -87,6 +87,10 @@
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: Body #imp
+      prototype: AnimalCarp
+    - type: Bloodstream #imp
+      bloodReagent: ShimmeringBlood
 
 - type: entity
   name: nice space carp
@@ -169,6 +173,10 @@
       interactFailureString: petting-failure-nicecarp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: Body #imp
+      prototype: AnimalCarp
+    - type: Bloodstream #imp
+      bloodReagent: ShimmeringBlood
 
 - type: entity
   parent: BaseMobCarp

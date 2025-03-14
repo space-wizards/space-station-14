@@ -30,6 +30,11 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Thaven
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#ff624a"
   - type: MeleeWeapon
     attackRate: 0.55
     soundHit:
@@ -59,7 +64,7 @@
         layer:
         - MobLayer
   - type: TypingIndicator
-    proto: guardian
+    proto: thaven # DeltaV unique typing indicator
   - type: Vocal
     sounds:
       Male: MaleThaven
@@ -72,6 +77,8 @@
     hideLayersOnEquip:
     - Hair
     - Snout
+  - type: Bloodstream
+    bloodReagent: ShimmeringBlood
   - type: Inventory
     templateId: thaven
     displacements:

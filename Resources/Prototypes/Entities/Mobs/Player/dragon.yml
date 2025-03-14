@@ -8,6 +8,7 @@
   components:
   - type: Bloodstream
     bloodMaxVolume: 650
+    bloodReagent: ShimmeringBlood #imp
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -156,6 +157,8 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
+  - type: Body #imp
+    prototype: AnimalCarp
 
 - type: entity
   parent: BaseMobDragon

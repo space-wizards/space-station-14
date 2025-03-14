@@ -1,0 +1,17 @@
+- type: entity
+  id: BookshelfGuidebooks
+  parent: Bookshelf
+  name: "guidebookshelf"
+  description: Completely filled with guidebooks.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Furniture/guidebookshelf.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 90 # three times stronger than a normal bookshelf so people will smash those for wood first
+  - type: Storage
+    whitelist:
+      tags:
+        - Guidebook # and only guidebooks. make sure to add the Book and Guidebook tags to any new guidebook you write, and add them to guidebookshelf.yml

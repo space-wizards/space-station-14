@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargojeep_luna.yml
         - type: StationJobs
-          availableJobs: # Total of 66 jobs. 
+          availableJobs: # Total of 65 jobs.
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -64,9 +64,9 @@
             SecurityCadet: [ 3, 3 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            # supply - 8
+            # supply - 7
             CargoTechnician: [ 2, 2 ]
-            Courier: [ 2, 2 ]
+            Courier: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 2, 2 ]
             # civilian

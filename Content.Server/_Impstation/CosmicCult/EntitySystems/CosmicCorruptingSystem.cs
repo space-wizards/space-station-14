@@ -6,6 +6,7 @@ using System.Numerics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Tag;
+using Content.Server._Impstation.CosmicCult.Components;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicCorruptingSystem : EntitySystem
@@ -56,12 +57,6 @@ public sealed class CosmicCorruptingSystem : EntitySystem
             if (TryComp<TagComponent>(entity, out var tag))
             {
                 var tags = tag.Tags;
-                // if (uid.Comp.Disintegrate && tags.Contains("Wall") && Prototype(entity) != null && Prototype(entity)!.ID == uid.Comp.ConversionWall && _rand.Prob(uid.Comp.CorruptionChance / 4))
-                // {
-                //     if (uid.Comp.UseVFX)
-                //         Spawn(uid.Comp.TileDisintegrateVFX, Transform(entity).Coordinates);
-                //     QueueDel(entity);
-                // }
                 if (tags.Contains("Wall") && Prototype(entity) != null && Prototype(entity)!.ID != uid.Comp.ConversionWall && _rand.Prob(uid.Comp.CorruptionChance))
                 {
                     Spawn(uid.Comp.ConversionWall, Transform(entity).Coordinates);

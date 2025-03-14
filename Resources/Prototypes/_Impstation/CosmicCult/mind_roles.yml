@@ -19,3 +19,15 @@
     exclusiveAntag: true
     roleType: TeamAntagonist
   - type: CosmicCultRole
+
+# Ascendant Event
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleCosmicAscended
+  name: Rogue Ascended Role
+  components:
+  - type: MindRole
+    antagPrototype: RogueAscended
+    roleType: TeamAntagonist
+    exclusiveAntag: true
+  - type: RogueAscendedRole

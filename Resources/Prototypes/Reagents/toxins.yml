@@ -36,10 +36,18 @@
     Poison:
       effects:
       - !type:HealthChange
+        conditions: #imp, thaven are immune to carpotoxin because it's naturally in their bodies
+        - !type:OrganType
+          type: Thaven
+          shouldHave: false
         damage:
           types:
             Poison: 4
       - !type:PopupMessage
+        conditions: #imp, thaven are immune to carpotoxin because it's naturally in their bodies
+        - !type:OrganType
+          type: Thaven
+          shouldHave: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]

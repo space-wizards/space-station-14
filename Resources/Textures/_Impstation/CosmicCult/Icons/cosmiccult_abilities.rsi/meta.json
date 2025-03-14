@@ -17,6 +17,9 @@
             "name": "monument"
         },
         {
+            "name": "monument-relocate"
+        },
+        {
             "name": "lapse"
         },
         {
@@ -48,6 +51,20 @@
         },
         {
             "name": "stride"
+        },
+
+
+        {
+            "name": "rogueinfect"
+        },
+        {
+            "name": "roguenova"
+        },
+        {
+            "name": "rogueshatter"
+        },
+        {
+            "name": "rogueshunt"
         }
     ]
 }

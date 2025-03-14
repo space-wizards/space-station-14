@@ -1,141 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added the artistic borg module. Please be nice with this so I dont have
-      to nerf it
-    type: Add
-  id: 791
-  time: '2024-12-24T09:38:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1100
-- author: kipdotnet
-  changes:
-  - message: Added A new derelict!
-    type: Add
-  - message: Roundstart derelicts now spawn a range of 3-4, instead of just a flat
-      2.
-    type: Tweak
-  id: 792
-  time: '2024-12-24T09:41:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1103
-- author: honeyed-lemons
-  changes:
-  - message: Listening Post and Box mapping changes
-    type: Tweak
-  - message: Listening Post Operatives spawn with an Agent ID
-    type: Tweak
-  id: 793
-  time: '2024-12-24T09:42:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1104
-- author: TheGrimbeeper
-  changes:
-  - message: Rat Servants will no longer be smart enough to understand that pointing
-      near a locker means attack the person IN the locker.
-    type: Fix
-  id: 794
-  time: '2024-12-24T09:43:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1105
-- author: widgetbeck
-  changes:
-  - message: Reduced the event weight of mass hallucinations.
-    type: Tweak
-  id: 795
-  time: '2024-12-24T09:48:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1109
-- author: EpicToast
-  changes:
-  - message: Updates to Atlas, Cluster, Saltern and Train. See PR for full changelog.
-    type: Add
-  id: 796
-  time: '2024-12-24T09:49:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1110
-- author: DinnerCalzone
-  changes:
-  - message: Bagel, Cog, Hummingbird, Marathon, Omega, and Origin have been updated
-      to include recent mapping content updates.
-    type: Add
-  id: 797
-  time: '2024-12-24T09:47:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1108
-- author: TheGrimbeeper
-  changes:
-  - message: new artifact effect, learned from spooky ghosties
-    type: Add
-  id: 798
-  time: '2024-12-24T09:46:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1106
-- author: AftrLite
-  changes:
-  - message: Medkit & Seclite sprite adjustments based on feedback.
-    type: Tweak
-  - message: Atmospheric Gases now have new animation sprites!
-    type: Tweak
-  id: 799
-  time: '2024-12-24T09:50:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1111
-- author: kipdotnet
-  changes:
-  - message: The tck'tck now has engineering access, externals access and a law preventing
-      them from griefing with it.
-    type: Tweak
-  - message: Replaced the tck'tck's mini wrench with a mini drill.
-    type: Tweak
-  id: 800
-  time: '2024-12-24T10:06:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1112
-- author: DinnerCalzone
-  changes:
-  - message: Undershirt markings are now available for unisex characters for species
-      that support them.
-    type: Fix
-  id: 801
-  time: '2024-12-24T19:43:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1115
-- author: DinnerCalzone
-  changes:
-  - message: Amber station has been updated and its evac shuttle now properly displays
-      its ETA time.
-    type: Tweak
-  id: 802
-  time: '2024-12-26T11:25:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1118
-- author: DinnerCalzone
-  changes:
-  - message: The body hair marking for dwarves and humans may now be used by unisex
-      characters.
-    type: Tweak
-  id: 803
-  time: '2024-12-26T11:26:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1119
-- author: TheGrimbeeper
-  changes:
-  - message: new absurdly rare artifact effect that will have you saying "that's not
-      my doll!"
-    type: Add
-  id: 804
-  time: '2024-12-26T11:29:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1121
-- author: DinnerCalzone
-  changes:
-  - message: The grappling gun projectile now plays a sound when colliding with walls.
-    type: Add
-  id: 805
-  time: '2024-12-26T11:30:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1124
-- author: DinnerCalzone
-  changes:
-  - message: The Intern announcer line about burgers has been edited to remove the
-      retching sound.
-    type: Tweak
-  id: 806
-  time: '2024-12-26T11:33:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1127
-- author: AvianMaiden
-  changes:
-  - message: One new space ambient track for our wonderful stargazers! Wawa.
-    type: Add
-  id: 807
-  time: '2024-12-26T11:40:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1131
 - author: DinnerCalzone
   changes:
   - message: The footstep sounds for high-heel shoes has been changed.
@@ -4084,3 +3947,156 @@
   id: 1290
   time: '2025-03-13T06:05:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1918
+- author: bigsantino1
+  changes:
+  - message: Salvage magnet announcement no longer happens twice.
+    type: Fix
+  id: 1291
+  time: '2025-03-13T11:48:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1926
+- author: Darkmajia
+  changes:
+  - message: The supermatter's gas absorption has been slowed down to increase the
+      amount of time before it requires gas refilling.
+    type: Tweak
+  - message: The supermatter emits slightly more radiation to increase its base power
+      production.
+    type: Tweak
+  id: 1292
+  time: '2025-03-13T14:24:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1928
+- author: Kandiyaki
+  changes:
+  - message: The guidebook now actually tells you that you can make extra codex cicatrix.
+    type: Tweak
+  - message: heretic's target selection should now work as described in the guidebook.
+    type: Fix
+  id: 1293
+  time: '2025-03-13T19:49:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1785
+- author: Tyranex
+  changes:
+  - message: Fixed the mining module not appearing in the exofab after it was researched
+    type: Fix
+  id: 1294
+  time: '2025-03-13T21:31:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1933
+- author: AftrLite, DarkMajia, RuddyGreat, AvianMaiden
+  changes:
+  - message: A new MidRoundAntag GhostRole, the Astral Ascendant!
+    type: Add
+  - message: Code Octarine now has a unique claxon!
+    type: Add
+  - message: Cosmic Cult 1.1.0b (Beta)
+    type: Tweak
+  id: 1295
+  time: '2025-03-13T22:39:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1886
+- author: jtfg-dev
+  changes:
+  - message: Adjusted wording on cyborg and cyborg-related descriptions to reflect
+      the wonderful spectrum of different cultures that can be unceremoniously preserved
+      in a metal skin.
+    type: Tweak
+  id: 1296
+  time: '2025-03-13T22:59:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1913
+- author: Darkmajia
+  changes:
+  - message: Eight beautiful new sounds can be heard after the end of a round. You
+      can listen to them with your headphones and/or speakers, per your choosing.
+    type: Add
+  id: 1297
+  time: '2025-03-14T00:09:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1937
+- author: ruddygreat
+  changes:
+  - message: The Monument now has a preview of where it will be placed when you try
+      to place it.
+    type: Add
+  - message: The Monument can now be moved once by the cult leader during phase 2
+    type: Add
+  id: 1298
+  time: '2025-03-14T00:42:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1903
+- author: hivehum
+  changes:
+  - message: You can no longer take damage from attempting to remove an implant, even
+      if you choose incorrectly.
+    type: Remove
+  id: 1299
+  time: '2025-03-14T00:56:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1935
+- author: Sha-Seng
+  changes:
+  - message: Medsec huds are now brigmedic contraband
+    type: Tweak
+  id: 1300
+  time: '2025-03-14T01:04:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1939
+- author: Sha-Seng
+  changes:
+  - message: Thaven moods have been adjusted slightly.
+    type: Tweak
+  id: 1301
+  time: '2025-03-14T01:41:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1774
+- author: Sha-Seng
+  changes:
+  - message: Thaven now have a fishy chat bubble!
+    type: Add
+  - message: Thaven have new organs - and they can eat raw meat and are immune to
+      carpotoxin
+    type: Add
+  - message: Thaven and carps/dragons have new blood you can drink and make the new
+      Fever Dream cocktail with
+    type: Add
+  - message: Thaven can now breathe any gas without harmful effects
+    type: Tweak
+  id: 1302
+  time: '2025-03-14T01:42:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1883
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult 1.1.1b (Beta)
+    type: Tweak
+  - message: Fixes towards various issues in cc1.1.0b (Incl. Less player-induced atmos
+      floods.)
+    type: Fix
+  id: 1303
+  time: '2025-03-14T04:33:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1942
+- author: Sha-Seng
+  changes:
+  - message: The guidebookshelf (to be mapped in libraries) that contain all guidebooks
+      in the game
+    type: Add
+  id: 1304
+  time: '2025-03-14T04:34:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1938
+- author: honeyed-lemons
+  changes:
+  - message: Courier slots on all maps has been reduced to one
+    type: Tweak
+  - message: Mail Teleporter now starts off, and produces less mail
+    type: Tweak
+  - message: Mail Teleporter can now be powered off
+    type: Fix
+  id: 1305
+  time: '2025-03-14T04:37:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1934
+- author: DinnerCalzone
+  changes:
+  - message: Suppy may now be targeted by the random sentience event.
+    type: Add
+  id: 1306
+  time: '2025-03-14T04:39:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1925
+- author: hivehum
+  changes:
+  - message: The courier hardsuit is now only available through the cargo request
+      console.
+    type: Remove
+  id: 1307
+  time: '2025-03-14T05:44:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1929

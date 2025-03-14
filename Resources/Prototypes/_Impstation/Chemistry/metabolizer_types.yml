@@ -1,7 +1,15 @@
 - type: metabolizerType
+  id: Snail
+  name: metabolizer-type-snail
+
+- type: metabolizerType
   id: Decapoid
   name: metabolizer-type-decapoid
 
 - type: metabolizerType
   id: Apid
   name: metabolizer-type-apid
+
+- type: metabolizerType
+  id: Thaven
+  name: metabolizer-type-thaven

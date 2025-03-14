@@ -582,3 +582,7 @@ ClothingHeadHelmetTemplar: null
 # impstation: Replace Walter spawns with the Walter/Dolby spawner
 SpawnMobWalter: SpawnMobChemDog
 
+# 2025-03-13
+# impstation: make the courier hardsuit non-roundstart
+SuitStorageCourier: null
+LockerCourierFilledHardsuit: LockerCourierFilled

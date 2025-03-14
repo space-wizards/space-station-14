@@ -1,0 +1,21 @@
+﻿- type: body
+  id: AnimalCarp
+  name: "carp"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        lungs: OrganCarpLungs
+        stomach: OrganCarpStomach
+        liver: OrganCarpLiver
+        heart: OrganCarpHeart
+        kidneys: OrganCarpKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/14/2025 04:39:50
+  entityCount: 25250
+maps:
+- 1
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   65: Space
   97: FloorArcadeRed
@@ -75,7 +86,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
     - type: Parallax
       parallax: HummingbirdStation
   - uid: 2
@@ -173,7 +183,7 @@ entities:
           version: 6
         2,-2:
           ind: 2,-2
-          tiles: QQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQQAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAARgAAAAADRgAAAAADRgAAAAADTAAAAAABTAAAAAACTAAAAAABTAAAAAADTAAAAAABRgAAAAACRgAAAAADRgAAAAABQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAASwAAAAABSwAAAAAASwAAAAABSwAAAAADSwAAAAAASwAAAAAASwAAAAACSwAAAAABSwAAAAAASwAAAAADSwAAAAADQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAASwAAAAADSwAAAAACSwAAAAABSwAAAAABSwAAAAACSwAAAAAASwAAAAACSwAAAAADSwAAAAAASwAAAAADSwAAAAABQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQgAAAAAATAAAAAAATAAAAAACQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAATAAAAAACTAAAAAACQgAAAAAAQgAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQgAAAAAASwAAAAABSwAAAAACSwAAAAABSwAAAAACSwAAAAABSwAAAAABSwAAAAADSwAAAAAASwAAAAABQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAAASwAAAAAASwAAAAADSwAAAAADSwAAAAABSwAAAAADSwAAAAACSwAAAAADSgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAAASwAAAAABSwAAAAAASwAAAAADSwAAAAAASwAAAAADSwAAAAABSwAAAAACQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASgAAAAAASwAAAAADSwAAAAAASwAAAAABSwAAAAAASwAAAAAASwAAAAADSwAAAAABSwAAAAACSwAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAAASwAAAAADSwAAAAAASwAAAAADSwAAAAABSwAAAAACSwAAAAABSwAAAAABQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAADQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAAASwAAAAACQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAA
+          tiles: QQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQQAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAARgAAAAADRgAAAAADRgAAAAADTAAAAAABTAAAAAACTAAAAAABTAAAAAADTAAAAAABRgAAAAACRgAAAAADRgAAAAABQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAASwAAAAABSwAAAAAASwAAAAABSwAAAAADSwAAAAAASwAAAAAASwAAAAACSwAAAAABSwAAAAAASwAAAAADSwAAAAADQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAASwAAAAADSwAAAAACSwAAAAABSwAAAAABSwAAAAACSwAAAAAASwAAAAACSwAAAAADSwAAAAAASwAAAAADSwAAAAABQgAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQgAAAAAAQgAAAAAATAAAAAAATAAAAAACQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAATAAAAAACTAAAAAACQgAAAAAAQgAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQgAAAAAASwAAAAABSwAAAAACSwAAAAABSwAAAAACSwAAAAABSwAAAAABSwAAAAADSwAAAAAASwAAAAABQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAAASwAAAAAASwAAAAADSwAAAAAASwAAAAABSwAAAAADSwAAAAACSwAAAAADSgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAAASwAAAAABSwAAAAAASwAAAAADSwAAAAAASwAAAAADSwAAAAABSwAAAAACQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASgAAAAAASwAAAAADSwAAAAAASwAAAAABSwAAAAAASwAAAAAASwAAAAADSwAAAAABSwAAAAACSwAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAAASwAAAAADSwAAAAAASwAAAAADSwAAAAABSwAAAAACSwAAAAABSwAAAAABQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAADSwAAAAADQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASwAAAAAASwAAAAACQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAA
           version: 6
         3,-2:
           ind: 3,-2
@@ -62847,10 +62857,6 @@ entities:
     - type: Transform
       pos: 53.5,-26.5
       parent: 2
-    - type: NavMapBeacon
-      text: AI Core
-    - type: WarpPoint
-      location: AI Core
 - proto: DefaultStationBeaconAME
   entities:
   - uid: 9893
@@ -62858,10 +62864,13 @@ entities:
     - type: Transform
       pos: 10.5,-2.5
       parent: 2
-    - type: NavMapBeacon
-      text: AME
-    - type: WarpPoint
-      location: AME
+- proto: DefaultStationBeaconAnchor
+  entities:
+  - uid: 9919
+    components:
+    - type: Transform
+      pos: 32.5,-8.5
+      parent: 2
 - proto: DefaultStationBeaconAnomalyGenerator
   entities:
   - uid: 9894
@@ -62869,10 +62878,6 @@ entities:
     - type: Transform
       pos: 52.5,5.5
       parent: 2
-    - type: NavMapBeacon
-      text: Anomaly
-    - type: WarpPoint
-      location: Anomaly
 - proto: DefaultStationBeaconArmory
   entities:
   - uid: 9895
@@ -62880,10 +62885,6 @@ entities:
     - type: Transform
       pos: 120.5,-7.5
       parent: 2
-    - type: NavMapBeacon
-      text: Armory
-    - type: WarpPoint
-      location: Armory
 - proto: DefaultStationBeaconArrivals
   entities:
   - uid: 9896
@@ -62891,10 +62892,6 @@ entities:
     - type: Transform
       pos: 52.5,-43.5
       parent: 2
-    - type: NavMapBeacon
-      text: Arrivals
-    - type: WarpPoint
-      location: Arrivals
 - proto: DefaultStationBeaconArtifactLab
   entities:
   - uid: 9897
@@ -62902,10 +62899,6 @@ entities:
     - type: Transform
       pos: 33.5,11.5
       parent: 2
-    - type: NavMapBeacon
-      text: Xenoarchaeology
-    - type: WarpPoint
-      location: Xenoarchaeology
 - proto: DefaultStationBeaconAtmospherics
   entities:
   - uid: 9898
@@ -62913,10 +62906,6 @@ entities:
     - type: Transform
       pos: 7.5,-13.5
       parent: 2
-    - type: NavMapBeacon
-      text: Atmospherics
-    - type: WarpPoint
-      location: Atmospherics
 - proto: DefaultStationBeaconBar
   entities:
   - uid: 9899
@@ -62924,10 +62913,6 @@ entities:
     - type: Transform
       pos: 81.5,26.5
       parent: 2
-    - type: NavMapBeacon
-      text: Bar
-    - type: WarpPoint
-      location: Bar
 - proto: DefaultStationBeaconBotany
   entities:
   - uid: 9900
@@ -62944,10 +62929,6 @@ entities:
     - type: Transform
       pos: 71.5,11.5
       parent: 2
-    - type: NavMapBeacon
-      text: Botany
-    - type: WarpPoint
-      location: Botany
 - proto: DefaultStationBeaconBridge
   entities:
   - uid: 9902
@@ -62955,10 +62936,6 @@ entities:
     - type: Transform
       pos: 145.5,-6.5
       parent: 2
-    - type: NavMapBeacon
-      text: Bridge
-    - type: WarpPoint
-      location: Bridge
   - uid: 9903
     components:
     - type: Transform
@@ -62986,10 +62963,6 @@ entities:
     - type: Transform
       pos: 142.5,4.5
       parent: 2
-    - type: NavMapBeacon
-      text: Captain
-    - type: WarpPoint
-      location: Captain
 - proto: DefaultStationBeaconCargoBay
   entities:
   - uid: 9906
@@ -62997,10 +62970,6 @@ entities:
     - type: Transform
       pos: 76.5,-51.5
       parent: 2
-    - type: NavMapBeacon
-      text: Cargo Bay
-    - type: WarpPoint
-      location: Cargo Bay
 - proto: DefaultStationBeaconCERoom
   entities:
   - uid: 9907
@@ -63008,10 +62977,6 @@ entities:
     - type: Transform
       pos: 11.5,-7.5
       parent: 2
-    - type: NavMapBeacon
-      text: CE
-    - type: WarpPoint
-      location: CE
 - proto: DefaultStationBeaconChapel
   entities:
   - uid: 9908
@@ -63019,10 +62984,6 @@ entities:
     - type: Transform
       pos: 84.5,41.5
       parent: 2
-    - type: NavMapBeacon
-      text: Chapel
-    - type: WarpPoint
-      location: Chapel
 - proto: DefaultStationBeaconChemistry
   entities:
   - uid: 9909
@@ -63030,10 +62991,6 @@ entities:
     - type: Transform
       pos: 76.5,-0.5
       parent: 2
-    - type: NavMapBeacon
-      text: Chemistry
-    - type: WarpPoint
-      location: Chemistry
 - proto: DefaultStationBeaconCMORoom
   entities:
   - uid: 9910
@@ -63041,10 +62998,6 @@ entities:
     - type: Transform
       pos: 81.5,-10.5
       parent: 2
-    - type: NavMapBeacon
-      text: CMO
-    - type: WarpPoint
-      location: CMO
 - proto: DefaultStationBeaconCourtroom
   entities:
   - uid: 9911
@@ -63052,10 +63005,6 @@ entities:
     - type: Transform
       pos: 117.5,8.5
       parent: 2
-    - type: NavMapBeacon
-      text: Courtroom
-    - type: WarpPoint
-      location: Courtroom
 - proto: DefaultStationBeaconCryosleep
   entities:
   - uid: 9912
@@ -63063,10 +63012,6 @@ entities:
     - type: Transform
       pos: 87.5,-32.5
       parent: 2
-    - type: NavMapBeacon
-      text: Cryo
-    - type: WarpPoint
-      location: Cryo
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
   - uid: 9913
@@ -63074,10 +63019,6 @@ entities:
     - type: Transform
       pos: 103.5,-18.5
       parent: 2
-    - type: NavMapBeacon
-      text: Detective
-    - type: WarpPoint
-      location: Detective
 - proto: DefaultStationBeaconDisposals
   entities:
   - uid: 9914
@@ -63085,10 +63026,6 @@ entities:
     - type: Transform
       pos: 128.5,13.5
       parent: 2
-    - type: NavMapBeacon
-      text: Disposals
-    - type: WarpPoint
-      location: Disposals
 - proto: DefaultStationBeaconDorms
   entities:
   - uid: 9915
@@ -63096,10 +63033,6 @@ entities:
     - type: Transform
       pos: 78.5,-34.5
       parent: 2
-    - type: NavMapBeacon
-      text: Dorms
-    - type: WarpPoint
-      location: Dorms
   - uid: 9916
     components:
     - type: Transform
@@ -63125,19 +63058,6 @@ entities:
     - type: Transform
       pos: 22.5,-5.5
       parent: 2
-    - type: NavMapBeacon
-      text: Engineering
-    - type: WarpPoint
-      location: Engineering
-  - uid: 9919
-    components:
-    - type: Transform
-      pos: 32.5,-8.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Station Anchor
-    - type: WarpPoint
-      location: Station Anchor
 - proto: DefaultStationBeaconEscapePod
   entities:
   - uid: 9921
@@ -63165,10 +63085,6 @@ entities:
     - type: Transform
       pos: 121.5,-41.5
       parent: 2
-    - type: NavMapBeacon
-      text: Evac
-    - type: WarpPoint
-      location: Evac
   - uid: 9924
     components:
     - type: Transform
@@ -63185,10 +63101,6 @@ entities:
     - type: Transform
       pos: 66.5,39.5
       parent: 2
-    - type: NavMapBeacon
-      text: EVA Storage
-    - type: WarpPoint
-      location: EVA Storage
 - proto: DefaultStationBeaconGravGen
   entities:
   - uid: 24405
@@ -63210,10 +63122,6 @@ entities:
     - type: Transform
       pos: 73.5,40.5
       parent: 2
-    - type: NavMapBeacon
-      text: HoP
-    - type: WarpPoint
-      location: HoP
 - proto: DefaultStationBeaconHOSRoom
   entities:
   - uid: 9928
@@ -63221,10 +63129,6 @@ entities:
     - type: Transform
       pos: 125.5,-5.5
       parent: 2
-    - type: NavMapBeacon
-      text: HoS
-    - type: WarpPoint
-      location: HoS
 - proto: DefaultStationBeaconJanitorsCloset
   entities:
   - uid: 9929
@@ -63247,33 +63151,11 @@ entities:
       location: Starboard Janitorial
 - proto: DefaultStationBeaconKitchen
   entities:
-  - uid: 9926
-    components:
-    - type: Transform
-      pos: 122.5,-19.5
-      parent: 2
-    - type: NavMapBeacon
-      text: News
-    - type: WarpPoint
-      location: News
   - uid: 9931
     components:
     - type: Transform
       pos: 72.5,20.5
       parent: 2
-    - type: NavMapBeacon
-      text: Kitchen
-    - type: WarpPoint
-      location: Kitchen
-  - uid: 9932
-    components:
-    - type: Transform
-      pos: 58.5,23.5
-      parent: 2
-    - type: NavMapBeacon
-      text: The Ring
-    - type: WarpPoint
-      location: The Ring
 - proto: DefaultStationBeaconLawOffice
   entities:
   - uid: 9934
@@ -63281,30 +63163,13 @@ entities:
     - type: Transform
       pos: 115.5,14.5
       parent: 2
-    - type: NavMapBeacon
-      text: Lawyer
-    - type: WarpPoint
-      location: Lawyer
 - proto: DefaultStationBeaconLibrary
   entities:
-  - uid: 9935
-    components:
-    - type: Transform
-      pos: 97.5,33.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Nitrogen Lounge
-    - type: WarpPoint
-      location: Nitrogen Lounge
   - uid: 9936
     components:
     - type: Transform
       pos: 97.5,24.5
       parent: 2
-    - type: NavMapBeacon
-      text: Library
-    - type: WarpPoint
-      location: Library
 - proto: DefaultStationBeaconMailroomCourier
   entities:
   - uid: 24431
@@ -63328,10 +63193,6 @@ entities:
     - type: Transform
       pos: 71.5,-5.5
       parent: 2
-    - type: NavMapBeacon
-      text: Medbay
-    - type: WarpPoint
-      location: Medbay
 - proto: DefaultStationBeaconMedical
   entities:
   - uid: 9939
@@ -63359,10 +63220,6 @@ entities:
     - type: Transform
       pos: 18.5,1.5
       parent: 2
-    - type: NavMapBeacon
-      text: SMES Array
-    - type: WarpPoint
-      location: SMES Array
 - proto: DefaultStationBeaconQMRoom
   entities:
   - uid: 9942
@@ -63370,10 +63227,6 @@ entities:
     - type: Transform
       pos: 68.5,-53.5
       parent: 2
-    - type: NavMapBeacon
-      text: QM
-    - type: WarpPoint
-      location: QM
 - proto: DefaultStationBeaconRDRoom
   entities:
   - uid: 9943
@@ -63381,10 +63234,6 @@ entities:
     - type: Transform
       pos: 52.5,11.5
       parent: 2
-    - type: NavMapBeacon
-      text: RD's Beacon
-    - type: WarpPoint
-      location: RD's Beacon
 - proto: DefaultStationBeaconRobotics
   entities:
   - uid: 9944
@@ -63392,10 +63241,6 @@ entities:
     - type: Transform
       pos: 31.5,5.5
       parent: 2
-    - type: NavMapBeacon
-      text: Robotics
-    - type: WarpPoint
-      location: Robotics
 - proto: DefaultStationBeaconSalvage
   entities:
   - uid: 9945
@@ -63403,10 +63248,6 @@ entities:
     - type: Transform
       pos: 87.5,-52.5
       parent: 2
-    - type: NavMapBeacon
-      text: Salvage
-    - type: WarpPoint
-      location: Salvage
 - proto: DefaultStationBeaconScience
   entities:
   - uid: 9946
@@ -63414,10 +63255,6 @@ entities:
     - type: Transform
       pos: 44.5,6.5
       parent: 2
-    - type: NavMapBeacon
-      text: Science
-    - type: WarpPoint
-      location: Science
 - proto: DefaultStationBeaconSecurity
   entities:
   - uid: 9947
@@ -63434,10 +63271,6 @@ entities:
     - type: Transform
       pos: 109.5,-5.5
       parent: 2
-    - type: NavMapBeacon
-      text: Security
-    - type: WarpPoint
-      location: Security
   - uid: 9949
     components:
     - type: Transform
@@ -63454,10 +63287,6 @@ entities:
     - type: Transform
       pos: 47.5,16.5
       parent: 2
-    - type: NavMapBeacon
-      text: Servers
-    - type: WarpPoint
-      location: Servers
 - proto: DefaultStationBeaconServiceStoreroom
   entities:
   - uid: 9951
@@ -63510,10 +63339,6 @@ entities:
     - type: Transform
       pos: 72.5,-17.5
       parent: 2
-    - type: NavMapBeacon
-      text: Surgery
-    - type: WarpPoint
-      location: Surgery
 - proto: DefaultStationBeaconTechVault
   entities:
   - uid: 9957
@@ -63521,10 +63346,6 @@ entities:
     - type: Transform
       pos: 71.5,50.5
       parent: 2
-    - type: NavMapBeacon
-      text: Tech Vault
-    - type: WarpPoint
-      location: Tech Vault
 - proto: DefaultStationBeaconTEG
   entities:
   - uid: 9958
@@ -63532,10 +63353,6 @@ entities:
     - type: Transform
       pos: -6.5,-22.5
       parent: 2
-    - type: NavMapBeacon
-      text: TEG
-    - type: WarpPoint
-      location: TEG
 - proto: DefaultStationBeaconTelecoms
   entities:
   - uid: 9959
@@ -63543,10 +63360,6 @@ entities:
     - type: Transform
       pos: 36.5,-4.5
       parent: 2
-    - type: NavMapBeacon
-      text: Telecomms
-    - type: WarpPoint
-      location: Telecomms
 - proto: DefaultStationBeaconTheater
   entities:
   - uid: 9960
@@ -63554,22 +63367,9 @@ entities:
     - type: Transform
       pos: 87.5,24.5
       parent: 2
-    - type: NavMapBeacon
-      text: Theater
-    - type: WarpPoint
-      location: Theater
 - proto: DefaultStationBeaconToolRoom
   entities:
-  - uid: 9961
-    components:
-    - type: Transform
-      pos: 44.5,-9.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Tools
-    - type: WarpPoint
-      location: Tools
-  - uid: 9962
+  - uid: 9926
     components:
     - type: Transform
       pos: 37.5,-20.5
@@ -63578,6 +63378,11 @@ entities:
       text: Shuttle Workshop
     - type: WarpPoint
       location: Shuttle Workshop
+  - uid: 9961
+    components:
+    - type: Transform
+      pos: 44.5,-9.5
+      parent: 2
 - proto: DefaultStationBeaconVault
   entities:
   - uid: 9963
@@ -63585,10 +63390,6 @@ entities:
     - type: Transform
       pos: 130.5,-19.5
       parent: 2
-    - type: NavMapBeacon
-      text: Vault
-    - type: WarpPoint
-      location: Vault
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 9964
@@ -161388,7 +161189,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -185878.77
+      secondsUntilStateChange: -186149.06
       state: Opening
     - type: Airlock
       autoClose: False

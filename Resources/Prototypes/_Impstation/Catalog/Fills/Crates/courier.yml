@@ -1,0 +1,11 @@
+﻿- type: entity
+  id: CrateCargoCourierHardsuit
+  parent: CrateCargoLuxuryHardsuit
+  name: courier hardsuit crate
+  description: "'Neither snow nor rain nor heat nor gloom of night...' doesn't apply when you're in space, but avoiding barotrauma can be helpful, and this hardsuit will get you through it."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitCourier
+  - type: AccessReader # this hardsuit is kind of really good so this is a preemptive anti-powergaming measure
+    access: [["Courier"]]

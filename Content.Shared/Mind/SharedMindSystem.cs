@@ -378,7 +378,7 @@ public abstract class SharedMindSystem : EntitySystem
         return false;
     }
 
-    // #IMP EDIT BEGIN | currently loadbearing for Cosmic Cult's deconversion function. Used in CleanseCorruption.
+    // #IMP EDIT BEGIN | currently loadbearing for Cosmic Cult's deconversion function. Used in Deconversion.
     public void ClearObjectives(EntityUid mind, MindComponent? comp = null)
     {
         if (!Resolve(mind, ref comp))

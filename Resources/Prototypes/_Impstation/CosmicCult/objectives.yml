@@ -57,3 +57,45 @@
     title: objective-condition-victory-title
     description: objective-condition-victory-desc
   - type: CosmicVictoryCondition
+
+############################### ROGUE ASCENDED OBJECTIVES
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseRogueAscendedObjective
+  components:
+  - type: Objective
+    # difficulty isn't used since all objectives are picked
+    difficulty: 1.5
+    issuer: rogue-ascended-objective-issuer
+  - type: RoleRequirement
+    roles:
+      mindRoles:
+      - RogueAscendedRole
+
+- type: entity
+  parent: BaseRogueAscendedObjective
+  id: RogueAscendedInfectionObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/objectives.rsi
+      state: infection
+  - type: NumberObjective
+    min: 5
+    max: 10
+    title: objective-condition-maligninfection-title
+    description: objective-condition-maligninfection-description
+  - type: RogueInfectionCondition
+
+- type: entity
+  parent: [BaseRogueAscendedObjective, BaseSurviveObjective]
+  id: RogueAscendedSurviveObjective
+  name: Survive
+  description: Survive until the end of all things.
+  components:
+  - type: Objective
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/objectives.rsi
+      state: summon

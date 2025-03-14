@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_wode.yml
         - type: StationJobs
-          availableJobs: # Total of 75 jobs roundstart, max of 91 inc. latejoins and trainees.
+          availableJobs: # Total of 73 jobs roundstart, max of 89 inc. latejoins and trainees.
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -63,9 +63,9 @@
             SecurityCadet: [ 4, 4 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            # supply - 10-13
+            # supply - 7-10
             CargoTechnician: [ 4, 4 ]
-            Courier: [ 3, 3 ] # imp
+            Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 3, 3 ]
             SupplyAssistant: [ 3, 3 ] # imp
             # civilian

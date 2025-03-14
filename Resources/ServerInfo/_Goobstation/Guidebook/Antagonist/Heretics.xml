@@ -2,6 +2,8 @@
   # The Mansus Veil Weakens
   So you're a Heretic? Well, get ready for magic and battle. Grab influences, complete sacrifices, accomplish rituals, and ascend to godhood.
 
+  [color = purple]Be sure to check the other pages in the drop-down menu for more in-depth info![/color]
+
   Your ultimate goal is to ascend and become all powerful, but to do that you must gain knowledge.
   All knowledges cost 1 point, except for "public" ones, which are accessible from any path, or Ascensions.
 
@@ -16,7 +18,7 @@
   </Box>
   Influences are the easy way to gain power points. Whenever there are Heretics aboard Space Station 14, influences will randomly spawn across the station.
   They are not visible to the naked eye of a crew member, hovewer they [bold]will[/bold] become visible after harvesting, aside from suddenly changing colors.
-  PRO TIP: [color=orange]Amber Focus[/color] allows you to harvest double the points from influences.
+  PRO TIP: having an active [color=orange]Focus[/color] allows you to harvest double the points from influences.
   <Box>
     <GuideEntityEmbed Entity="EldritchInfluenceSpent" Caption="Harvested influence. Notice the glow."/>
   </Box>
@@ -33,7 +35,7 @@
   - One target will be a member of security.
   - One target will be a member of your department.
   - Other targets will be completely random crewmembers.
-  
+
   You will only be able to sacrifice these targets. Your patrons will not accept just any old assistant.
 
   Follow your [color=red]Living Heart[/color] to your target of choice and incapacitate them through any means necessary. If your target's in critical condition or dead they're ready to sacrifice.
@@ -58,16 +60,18 @@
   Transmutation Rituals allow you to create powerful artifacts, demonic monsters, and many useful tools that will help you progress towards ultimate power.
 
   ## Focus is Necessary
-  To cast more advanced spells, you must focus by wearing an [color=orange]Amber Focus[/color].
-  You can acquire Ambes Focus using the eponymous ritual.
+  To cast more advanced spells, you must focus by wearing a [color=orange]Focus[/color].
+  Your codex cicatrix works as a focus, but only when open and in your hand.
+  You can acquire a wearable Amber Focus using the eponymous ritual.
   Some more powerful heretical equipment also functions as a focus - namely, the Ominous Armor from the Armorer's Ritual (when the hood is flipped up).
   [color=yellow]Ascension[/color] disables the need for a focus.
 
   ## Starting Knowledge
   - \[ [color=red]Mansus Grasp[/color] \] - A short range spell that channels eldritch power straight to your palm. Upon contact, knocks down and confuses unsuspecting targets.
-  - \[ [color=red]Heartbeat of the Mansus[/color] \] - Allows you to sacrifice targets who are in critical or worse condition to the Mansus, gibbing them and rewarding you with one knowledge point; two if your victim was a head of staff.
+  - \[ [color=red]Heartbeat of the Mansus[/color] \] - Allows you to sacrifice dead targets to the Mansus, gibbing them and rewarding you with one knowledge point; two if your victim was a head of staff.
   - \[ [color=red]Amber Focus[/color] \] - Allows you to transmute a sheet of glass and a pair of eyes into an Amber Focus. This is a small neck-worn item that allows you to cast more advanced Heretic spells while worn.
   - \[ [color=red]Living Heart[/color] \] - Allows you to pinpoint your targets. Plays an audible heartbeat sound, so use it carefully.
+  - \[ [color=red]Codex Cicatrix[/color] \] - Allows you to create a spare codex.
   - \[ [color=red]Relentless Heartbeat[/color] \] - Allows you to reroll your target selection, in case you've run out of bodies or want a different approach.
 
   ## Tips
@@ -76,7 +80,5 @@
   - Unlike most other solo antagonists, Heretics start weak but grow stronger over time. It would be best not to attract too much attention to yourself until you unlock more powerful spells and equipment.
   - Your Mansus Grasp will temporarily garble the speech of people who you use it on. This can let you get away with murder while comms are online, but be careful - it's not foolproof.
   - [color=purple]Influences[/color] can spawn in almost any location on the station, ranging from the main hallways and public restrooms to [color=cyan]Command staff offices[/color] and [color=red]restricted security areas[/color] in the Brig. It's best to check every area you can access, public and department.
-  - By default, nothing on you is incriminating. If security suspects you, but can't actually pin anything heretical on you, you might be able to pass off as a Traitor instead.
   - Monkeys and other animals make for great, usually non-suspicious sources of organs or corpses for your heretical rituals.
-  - Most summoned ghouls will drop the components used to create them on death. While having them to die is not ideal, you can easily grab the parts and summon another.
 </Document>
