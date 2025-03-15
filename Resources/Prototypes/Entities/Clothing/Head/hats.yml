@@ -1133,3 +1133,58 @@
     sprite: Clothing/Head/Hats/beret_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_medic.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMitreBishop
+  name: bishop mitre
+  description: bishop
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/mitre_bishop.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/mitre_bishop.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMitreClown
+  name: honkmother mitre
+  description: clown
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/mitre_clown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/mitre_clown.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatKippah
+  name: kippah
+  description: kippah
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/kippah.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/kippah.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTaqiyah
+  name: white taqiyah
+  description: white
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/taqiyah.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/taqiyah.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTaqiyahRed
+  name: red taqiyah
+  description: red
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/taqiyah_red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/taqiyah_red.rsi
