@@ -411,7 +411,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var launchMult = FixedPoint2.Zero;
         var stunTimer = FixedPoint2.Zero;
 
-        //Check if the puddle is big enough to slip in to avoid doing unecessary logic
+        //Check if the puddle is big enough to slip in to avoid doing unnecessary logic
         if (solution.Volume <= slipperyThreshold)
         {
             _stepTrigger.SetActive(entity, false, comp);

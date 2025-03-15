@@ -44,7 +44,8 @@ namespace Content.Shared.Slippery
         public float LaunchForwardsMultiplier = 1.5f;
 
         /// <summary>
-        /// Minimum speed entity must be moving to slip.
+        /// Minimum speed entity must be moving to slip. This is only used by puddle code, if you want anything other
+        /// than puddles to use it you'll have to make logic for it yourself.
         /// </summary>
         [DataField]
         public float RequiredSlipSpeed = 3.5f;
