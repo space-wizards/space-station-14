@@ -1,20 +1,11 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Parallax;
 using Content.Shared.Administration;
-using Content.Shared.Atmos;
-using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
-using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
 
@@ -25,7 +16,6 @@ namespace Content.Server.Maps;
 public sealed class PlanetCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     public string Command => "planet";
@@ -46,8 +36,9 @@ public sealed class PlanetCommand : IConsoleCommand
         }
 
         var mapId = new MapId(mapInt);
+        var map = _entManager.System<SharedMapSystem>();
 
-        if (!_mapManager.MapExists(mapId))
+        if (!map.MapExists(mapId))
         {
             shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapId)));
             return;
@@ -60,7 +51,7 @@ public sealed class PlanetCommand : IConsoleCommand
         }
 
         var biomeSystem = _entManager.System<BiomeSystem>();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapUid = map.GetMapOrInvalid(mapId);
         biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
 
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));

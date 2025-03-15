@@ -28,10 +28,10 @@ public sealed partial class BiomeSystem
         }
 
         int.TryParse(args[0], out var mapInt);
-        var mapId = new MapId(mapInt);
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapId = new MapId(value: mapInt);
+        var mapUid = _mapSystem.GetMapOrInvalid(mapId);
 
-        if (_mapManager.MapExists(mapId) ||
+        if (_mapSystem.MapExists(mapId) ||
             !TryComp<BiomeComponent>(mapUid, out var biome))
         {
             return;
@@ -64,9 +64,9 @@ public sealed partial class BiomeSystem
         }
 
         var mapId = new MapId(mapInt);
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapUid = _mapSystem.GetMapOrInvalid(mapId);
 
-        if (!_mapManager.MapExists(mapId) || !TryComp<BiomeComponent>(mapUid, out var biome))
+        if (!_mapSystem.MapExists(mapId) || !TryComp<BiomeComponent>(mapUid, out var biome))
         {
             return;
         }
@@ -105,7 +105,7 @@ public sealed partial class BiomeSystem
             {
                 var mapId = new MapId(mapInt);
 
-                if (TryComp<BiomeComponent>(_mapManager.GetMapEntityId(mapId), out var biome))
+                if (TryComp<BiomeComponent>(_mapSystem.GetMapOrInvalid(mapId), out var biome))
                 {
                     var results = new List<string>();
 
@@ -145,7 +145,7 @@ public sealed partial class BiomeSystem
 
         var mapId = new MapId(mapInt);
 
-        if (!_mapManager.MapExists(mapId) || !TryComp<BiomeComponent>(_mapManager.GetMapEntityId(mapId), out var biome))
+        if (!_mapSystem.MapExists(mapId) || !TryComp<BiomeComponent>(_mapSystem.GetMapOrInvalid(mapId), out var biome))
         {
             return;
         }
