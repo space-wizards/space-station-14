@@ -2,11 +2,9 @@ using Content.Server.Antag;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Mind;
-using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -15,7 +13,6 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComponent>
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
@@ -48,12 +45,6 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         if (args.Session?.AttachedEntity is not { } spawner)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Settings, out var settings))
-        {
-            Log.Error($"Used invalid cloning settings {ent.Comp.Settings} for ParadoxCloneRule");
-            return;
-        }
-
         // get possible targets
         var allHumans = _mind.GetAliveHumans();
 
@@ -68,7 +59,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         var playerToClone = _random.Pick(allHumans);
         var bodyToClone = playerToClone.Comp.OwnedEntity;
 
-        if (bodyToClone == null || !_cloning.TryCloning(bodyToClone.Value, _transform.GetMapCoordinates(spawner), settings, out var clone))
+        if (bodyToClone == null || !_cloning.TryCloning(bodyToClone.Value, _transform.GetMapCoordinates(spawner), ent.Comp.Settings, out var clone))
         {
             Log.Error($"Unable to make a paradox clone of entity {ToPrettyString(bodyToClone)}");
             return;
