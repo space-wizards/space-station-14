@@ -130,6 +130,21 @@
       - state: pda
 
 - type: entity
+  name: prisoner PDA box
+  parent: BoxCardboard
+  id: BoxPrisonerPDA
+  description: A box of PDAs for prisoners.
+  components:
+  - type: StorageFill
+    contents:
+    - id: PrisonerPDA
+      amount: 4
+  - type: Sprite
+    layers:
+    - state: box
+    - state: pda
+
+- type: entity
   name: ID card box
   parent: BoxCardboard
   id: BoxID
