@@ -15,3 +15,21 @@
 
   - node: cooked finfin
     entity: FoodMeatFinfinCooked
+
+# kodepiia flakes
+- type: constructionGraph
+  id: KodepiiaFlakes
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: crispy kodepiia flakes
+      completed:
+      - !type:PlaySound
+        sound: /Audio/_Impstation/Effects/sizzle_ghostlywail.ogg
+      steps:
+      - minTemperature: 345
+
+  - node: crispy kodepiia flakes
+    entity: FoodMeatKodepiiaCooked

@@ -195,3 +195,137 @@
     allowedEmotes: ['Squeak']
   - type: ReplacementAccent
     accent: possum
+
+# commented out kodepiia stuff is for when i can be fucked to figure out how to make randomsprite work on inhands -mq
+- type: entity
+  name: young kodepiia
+  parent: [ MobCombat, SimpleMobBase ]
+  id: MobYoungKodepiia
+  description: Not quite a not-quite-person.
+  components:
+  - type: VentCrawler
+    enterDelay: 2
+#  - type: Item
+#    size: Normal
+  - type: Sprite
+    sprite: _Impstation/Mobs/Aliens/young-kodepiia.rsi
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: young-kodepiia
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        young-kodepiia: Pastel
+  #- type: Clothing
+  #  quickEquip: false
+  #  sprite: _Impstation/Mobs/Aliens/young-kodepiia.rsi
+  #  clothingVisuals:
+  #    outerClothing:
+  #    - map: ["enum.DamageStateVisualLayers.Base"]
+  #      state: equipped-HELMET
+  #    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+  #      state: eyes-equipped-HELMET
+  #      shader: unshaded
+  #  slots:
+  #  - HEAD
+  - type: Appearance
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: KodepiiaStep
+  - type: Bloodstream
+    bloodReagent: BloodKodepiia
+  - type: Butcherable
+    spawned:
+      - id: FoodMeatKodepiia
+        amount: 1
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: young-kodepiia
+        BaseUnshaded: eyes
+      Dead:
+        Base: young-kodepiia-dead
+        BaseUnshaded: eyes-dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcPunch
+    soundHit:
+      collection: BoxingHit #maybe change this
+    damage:
+      types:
+        Blunt: 5
+        Cellular: 0.01
+  - type: ReplacementAccent
+    accent: kodepiia
+  - type: Speech
+    speechSounds: Kodepiia
+    speechVerb: Kodepiia
+    allowedEmotes: ['Scream', 'Hiss', 'Squish', 'Bubble', 'Pop', 'Coo', 'Click', 'Chitter', 'Squeak']
+  - type: Vocal
+    sounds:
+      Male: Kodepiia
+      Female: Kodepiia
+      Unsexed: Kodepiia
+    wilhelmProbability: 0.001
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: KodepiiaDeath
+      params:
+        variation: 0.125
+  - type: NoSlip
+  - type: Absorbable
+    biomassRestored: 0.6
+  - type: YoungKodepiiaRetaliation
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound # I HATE TAGS!!!!!!!!!!!!!
+    - VimPilot
+    - MultitoolDefibrillatorTarget
+  - type: CanEscapeInventory
+    baseResistTime: 2
+  - type: TypingIndicator
+    proto: slime #placeholder sprite
+  - type: Body
+    prototype: Kodepiia
+    requiredLegs: 2 #if you change this number i will put you in a fucking saw trap -mq
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-young-kodepiia-name
+    description: ghost-role-information-young-kodepiia-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: short

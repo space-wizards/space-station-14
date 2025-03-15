@@ -104,6 +104,58 @@
       path: /Audio/_Impstation/Animals/bros_hurt.ogg
 
 - type: emoteSounds
+  id: Kodepiia #most kodepiia emote sounds are placeholder for now
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Kodepiia/kodeexclaim.ogg
+    # lizards:
+    Hiss:
+      collection: ReptilianHiss
+    # slimes:
+    Squish:
+      collection: Squishes
+    Bubble:
+      collection: Bubbles
+    Pop:
+      collection: Pops
+    # vox:
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    # spider:
+    Click:
+      path: /Audio/Voice/Arachnid/arachnid_click.ogg
+    # moth:
+    Chitter:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+    Squeak:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+    # all else
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Honk:
+      collection: BikeHorn
+    Weh:
+      collection: Weh
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: KodepiiaGasp
+    DefaultDeathgasp:
+      collection: KodepiiaDeath
+      
+- type: emoteSounds
   id: TckTck
   params:
     variation: 0.05

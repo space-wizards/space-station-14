@@ -207,8 +207,3 @@
   - accent-words-possum-2
   - accent-words-possum-3
   - accent-words-possum-4
-  
-- type: accent
-  id: bros
-  fullReplacements:
-  - accent-words-bros

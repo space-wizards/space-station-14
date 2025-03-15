@@ -35,6 +35,15 @@
     path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
 
 - type: speechSounds
+  id: Kodepiia
+  saySound:
+    path: /Audio/_Impstation/Kodepiia/kodetalk.ogg
+  askSound:
+    path: /Audio/_Impstation/Kodepiia/kodeask.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Kodepiia/kodeexclaim.ogg
+    
+- type: speechSounds
   id: Suppy
   saySound:
     collection: SuppySay

@@ -1,0 +1,50 @@
+- type: body
+  id: Kodepiia
+  name: "kodepiia"
+  root: torso
+  slots:
+    head:
+      part: HeadKodepiia
+      connections:
+      - torso
+      organs:
+        brain: OrganKodepiiaBrain
+        eyes: OrganKodepiiaEyes
+    torso:
+      part: TorsoKodepiia
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganKodepiiaLungs
+        stomach: OrganKodepiiaStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+        skin: OrganKodepiiaSkin
+    right_arm:
+      part: RightArmKodepiia
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmKodepiia
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandKodepiia
+    left_hand:
+      part: LeftHandKodepiia
+    right_leg:
+      part: RightLegKodepiia
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegKodepiia
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootKodepiia
+    left_foot:
+      part: LeftFootKodepiia

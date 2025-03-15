@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by crocodilecarousel for impstation",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "billeausac"
+      },
+      {
+        "name": "finecoil"
+      },
+      {
+        "name": "opticullis"
+      },
+      {
+        "name": "primarygullet"
+      },
+      {
+        "name": "slough"
+      }
+    ]
+  }

@@ -99,3 +99,6 @@ ghost-role-information-drone-rules = You are bound by these laws both in-game an
      1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
      2. Your goal is to maintain or improve the station to the best of your ability.
      3. You may not take any action which causes damage or harm to the station or its inhabitants.
+
+ghost-role-information-young-kodepiia-name = Young Kodepiia
+ghost-role-information-young-kodepiia-description = A shy sort-of-creature, emerging from the station vents. It hates confrontation.

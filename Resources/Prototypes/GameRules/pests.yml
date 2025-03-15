@@ -13,13 +13,14 @@
   id: SpicyPestEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: BrosSpawn
+    - id: BrosSpawn #imp
     - id: KingRatMigration
     - id: SnailMigration
-    - id: SnakeSpawn
-    - id: SlimesSpawn
-    - id: SpiderClownSpawn
-    - id: SpiderSpawn
+    - id: SnakeSpawn #imp
+    - id: SlimesSpawn #imp
+    - id: SpiderClownSpawn #imp
+    - id: SpiderSpawn #imp
+    - id: KodepiiaMigration #imp
 
 # events
 
@@ -27,7 +28,7 @@
   id: MouseMigration
   parent: BaseStationEventShortDelay
   components:
-  - type: StationEvent
+  - type: StationEvent #imp- remove announcement
     earliestStart: 15
     weight: 6
     duration: 50
@@ -47,7 +48,7 @@
   id: KingRatMigration
   parent: BaseStationEventShortDelay
   components:
-  - type: StationEvent
+  - type: StationEvent #imp- remove announcement
     earliestStart: 15
     weight: 6
     duration: 50
@@ -70,7 +71,7 @@
   id: CockroachMigration
   parent: BaseStationEventShortDelay
   components:
-  - type: StationEvent
+  - type: StationEvent #imp- remove announcement
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -84,7 +85,7 @@
   id: SnailMigrationLowPop
   parent: BaseStationEventShortDelay
   components:
-  - type: StationEvent
+  - type: StationEvent #imp- remove announcement
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -100,7 +101,7 @@
   id: SnailMigration
   parent: BaseStationEventShortDelay
   components:
-  - type: StationEvent
+  - type: StationEvent #imp- remove announcement
     earliestStart: 15
     weight: 6
     duration: 50
@@ -115,81 +116,3 @@
       prob: 0.002
     - id: MobSnailInstantDeath
       prob: 0.00001 #  ~ 1:2000 snails
-
-- type: entity
-  id: SlimesSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobAdultSlimesBlueAngry
-      prob: 0.02
-    - id: MobAdultSlimesGreenAngry
-      prob: 0.02
-    - id: MobAdultSlimesYellowAngry
-      prob: 0.02
-
-- type: entity
-  id: SnakeSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.02
-    - id: MobSmallPurpleSnake
-      prob: 0.02
-    - id: MobCobraSpace
-      prob: 0.02
-
-- type: entity
-  id: SpiderSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.05
-
-- type: entity
-  id: BrosSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: BrosVentSpawner
-      prob: 0.05
-
-- type: entity
-  id: SpiderClownSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 20
-    weight: 1.5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobClownSpider
-      prob: 0.05
