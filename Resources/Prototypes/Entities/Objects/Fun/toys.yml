@@ -1677,7 +1677,8 @@
   - type: UseDelay
     delay: 0.8
   - type: Slippery
-    paralyzeTime: 0
+    slipData:
+      paralyzeTime: 0
     slipSound:
       collection: Parp
       params:

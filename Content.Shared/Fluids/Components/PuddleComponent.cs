@@ -19,6 +19,13 @@ namespace Content.Shared.Fluids.Components
 
         [DataField("solution")] public string SolutionName = "puddle";
 
+        /// <summary>
+        /// Default value of sliperiness for a reagent, defining this here prevents having to define the slipperiness
+        /// of non-slippery substances in reagents keeping merge conflict hell at bay. Value is semi-arbitrary.
+        /// </summary>
+        [DataField]
+        public float DefaultSlippery = 5.5f;
+
         [ViewVariables]
         public Entity<SolutionComponent>? Solution;
     }

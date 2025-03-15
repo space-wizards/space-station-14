@@ -1,6 +1,7 @@
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Slippery
 {
@@ -13,8 +14,6 @@ namespace Content.Shared.Slippery
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class SlipperyComponent : Component
     {
-        public const float DefaultParalyzeTime = 1.5f;
-        public const float DefaultLaunchForwardsMultiplier = 1.5f;
         /// <summary>
         /// Path to the sound to be played when a mob slips.
         /// </summary>
@@ -22,26 +21,41 @@ namespace Content.Shared.Slippery
         [Access(Other = AccessPermissions.ReadWriteExecute)]
         public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
+        [DataField, AutoNetworkedField]
+        public SlipperyEffectEntry SlipData = new();
+    }
+    /// <summary>
+    /// Stores the data for sliperiness that way reagents and this component can use it. Feel free to add more data
+    /// but don't remove anything lest you temp the wrath of the puddle code.
+    /// </summary>
+    [DataDefinition, Serializable, NetSerializable]
+    public sealed partial class SlipperyEffectEntry
+    {
         /// <summary>
         /// How many seconds the mob will be paralyzed for.
         /// </summary>
-        [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
-        public float ParalyzeTime = DefaultParalyzeTime;
+        [DataField]
+        public float ParalyzeTime = 1.5f;
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
-        [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
-        public float LaunchForwardsMultiplier = DefaultLaunchForwardsMultiplier;
+        [DataField]
+        public float LaunchForwardsMultiplier = 1.5f;
+
+        /// <summary>
+        /// Minimum speed entity must be moving to slip. This is only used by puddle code, if you want anything other
+        /// than puddles to use it you'll have to make logic for it yourself.
+        /// </summary>
+        [DataField]
+        public float RequiredSlipSpeed = 3.5f;
 
         /// <summary>
         /// If this is true, any slipping entity loses its friction until
         /// it's not colliding with any SuperSlippery entities anymore.
+        /// They also will fail any attempts to stand up unless they have no-slips.
         /// </summary>
-        [DataField, AutoNetworkedField]
-        [Access(Other = AccessPermissions.ReadWrite)]
+        [DataField]
         public bool SuperSlippery;
     }
 }
