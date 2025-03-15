@@ -9,6 +9,7 @@
   - type: Sprite
     drawdepth: Overdoors
     sprite: Markers/cross.rsi
+  - type: Marker
 
 - type: entity
   id: RoofMarker
