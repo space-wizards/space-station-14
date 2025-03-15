@@ -36,6 +36,23 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         public bool UnderPressureLockout { get; set; } = false;
 
+        [DataField]
+        public float VelocityPressureLockoutValue { get; set; } = 1.0f;
+
+        [DataField]
+        public bool VelocityPressureLockoutEnabled { get; set; } = true;
+
+        public float VelocityPressureModifier => VelocityPressureLockoutEnabled && !PressureLockoutOverride ? VelocityPressureLockoutValue : 1.0f;
+
+        [DataField]
+        public float VelocityPressureValueMin { get; set; } = 0.0001f;
+
+        [DataField]
+        public float PreviousPressure { get; set; } = 0.0f;
+
+        [DataField]
+        public float VelocityPressureAcceleration { get; set; } = 2.0f;
+
         /// <summary>
         ///     In releasing mode, do not pump when environment pressure is below this limit.
         /// </summary>
