@@ -25,7 +25,7 @@
         Blunt: 1
     soundHit:
       collection: KnuckleDuster
-    params:
+      params:
         volume: 5
     animation: WeaponArcFist
   - type: Wieldable
