@@ -424,8 +424,10 @@
     ShimmeringBlood:
       amount: 2
     Absinthe:
-      amount: 2
+      amount: 1
     Champagne:
-      amount: 2
+      amount: 1
+    Egg:
+      amount: 1
   products:
     FeverDream: 6
