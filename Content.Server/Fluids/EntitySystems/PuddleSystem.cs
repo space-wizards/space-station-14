@@ -426,19 +426,19 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
 
             // Calculate the minimum speed needed to slip in the puddle. Average the overall slip thresholds for all reagents
-            var deltaSlipTrigger = reagentProto.SlipData?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
+            var deltaSlipTrigger = reagentProto.Slippery?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
             slipStepTrigger += quantity * deltaSlipTrigger;
 
-            if (reagentProto.SlipData == null)
+            if (reagentProto.Slippery == null)
                 continue;
 
             slipperyUnits += quantity;
             // Aggregate launch speed based on quantity
-            launchMult += reagentProto.SlipData.LaunchForwardsMultiplier * quantity;
+            launchMult += reagentProto.Slippery.LaunchForwardsMultiplier * quantity;
             // Aggregate stun times based on quantity
-            stunTimer += reagentProto.SlipData.ParalyzeTime * quantity;
+            stunTimer += reagentProto.Slippery.ParalyzeTime * quantity;
 
-            if (reagentProto.SlipData.SuperSlippery)
+            if (reagentProto.Slippery.SuperSlippery)
                 superSlipperyUnits += quantity;
         }
 
