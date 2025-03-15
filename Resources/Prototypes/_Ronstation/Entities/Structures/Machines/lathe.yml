@@ -13,8 +13,8 @@
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
-  #- type: Machine
-  #  board: PaperPrinterMachineCircuitboard
+  - type: Machine
+    board: PaperPrinterMachineCircuitboard
   - type: Lathe
     producingSound: /Audio/Machines/uniformprinter.ogg
     idleState: icon
@@ -35,8 +35,8 @@
   components:
   - type: Sprite
     color: "#FFd1d1"
-  #- type: Machine
-  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Machine
+    board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
@@ -49,8 +49,8 @@
   components:
   - type: Sprite
     color: "#FFFFd1"
-  #- type: Machine
-  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Machine
+    board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
@@ -63,8 +63,8 @@
   components:
   - type: Sprite
     color: "#a1a1d1"
-  #- type: Machine
-  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Machine
+    board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
@@ -78,8 +78,8 @@
   components:
   - type: Sprite
     color: "#a1a1d1"
-  #- type: Machine
-  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Machine
+    board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
