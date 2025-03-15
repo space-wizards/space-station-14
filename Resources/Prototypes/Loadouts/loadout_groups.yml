@@ -1011,6 +1011,13 @@
   - WardenArmoredWinterCoat
 
 - type: loadoutGroup
+  id: WardenEyewear
+  name: loadout-group-warden-eyewear
+  loadouts:
+  - WardenGlasses
+  - WardenHud
+
+- type: loadoutGroup
   id: BrigmedicHead
   name: loadout-group-brigmedic-head
   minLimit: 0
