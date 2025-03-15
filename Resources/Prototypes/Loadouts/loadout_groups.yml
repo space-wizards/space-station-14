@@ -615,6 +615,7 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+  - MimePufferCoat #imp
 
 - type: loadoutGroup
   id: MimeBelt
@@ -722,6 +723,7 @@
   loadouts:
   - QuartermasterWintercoat
   - QuartermasterWintercoatXXXL #imp
+  - QuartermasterPoncho #imp
 
 - type: loadoutGroup
   id: QuartermasterShoes
@@ -784,6 +786,7 @@
   loadouts:
   - SalvageSpecialistWintercoat
   - BomberCargo #imp
+  - SalvageSpecialistDecapoidCoat #imp
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes

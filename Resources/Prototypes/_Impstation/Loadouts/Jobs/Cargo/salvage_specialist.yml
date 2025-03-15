@@ -19,6 +19,11 @@
   equipment:
     neck: ClothingNeckCloakDriller
 
+- type: loadout
+  id: RainCape
+  equipment:
+    neck: ClothingOuterRainCape
+
 # Eyes
 - type: loadout
   id: GlassesGarGreen
@@ -51,3 +56,8 @@
     proto: SeniorSalvager
   equipment:
     eyes: ClothingEyesGlassesGarMecha
+
+- type: loadout
+  id: SalvageSpecialistDecapoidCoat
+  equipment:
+    outerClothing: ClothingOuterDecapoidCoatSanctioned

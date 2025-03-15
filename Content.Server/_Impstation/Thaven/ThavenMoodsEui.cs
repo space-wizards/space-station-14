@@ -10,8 +10,8 @@ namespace Content.Server._Impstation.Thaven;
 
 public sealed class ThavenMoodsEui : BaseEui
 {
-    private readonly ThavenMoodsSystem _thavenMoodsSystem;
-    private readonly EntityManager _entityManager;
+    private readonly ThavenMoodsSystem _moodsSystem;
+    private readonly EntityManager _entMan;
     private readonly IAdminManager _adminManager;
 
     private List<ThavenMood> _moods = new();
@@ -21,26 +21,25 @@ public sealed class ThavenMoodsEui : BaseEui
 
     public ThavenMoodsEui(ThavenMoodsSystem thavenMoodsSystem, EntityManager entityManager, IAdminManager manager)
     {
-        _thavenMoodsSystem = thavenMoodsSystem;
-        _entityManager = entityManager;
+        _moodsSystem = thavenMoodsSystem;
+        _entMan = entityManager;
         _adminManager = manager;
         _sawmill = Logger.GetSawmill("thaven-moods-eui");
     }
 
     public override EuiStateBase GetNewState()
     {
-        return new ThavenMoodsEuiState(_moods, _entityManager.GetNetEntity(_target));
+        return new ThavenMoodsEuiState(_moods, _entMan.GetNetEntity(_target));
     }
 
-    public void UpdateMoods(ThavenMoodsComponent? comp, EntityUid player)
+    public void UpdateMoods(Entity<ThavenMoodsComponent> ent)
     {
         if (!IsAllowed())
             return;
 
-        var moods = _thavenMoodsSystem.GetActiveMoods(player, comp, false);
-        _target = player;
-        _moods = moods;
-        _sharedMoods = _thavenMoodsSystem.SharedMoods.ToList();
+        _target = ent;
+        _moods = ent.Comp.Moods;
+        _sharedMoods = _moodsSystem.SharedMoods.ToList();
         StateDirty();
     }
 
@@ -54,9 +53,14 @@ public sealed class ThavenMoodsEui : BaseEui
         if (!IsAllowed())
             return;
 
-        var player = _entityManager.GetEntity(message.Target);
+        var uid = _entMan.GetEntity(message.Target);
+        if (!_entMan.TryGetComponent<ThavenMoodsComponent>(uid, out var comp))
+        {
+            _sawmill.Warning($"Entity {_entMan.ToPrettyString(uid)} does not have ThavenMoodsComponent!");
+            return;
+        }
 
-        _thavenMoodsSystem.SetMoods(player, message.Moods);
+        _moodsSystem.SetMoods((uid, comp), message.Moods);
     }
 
     private bool IsAllowed()

@@ -33,3 +33,12 @@
     path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
   exclaimSound:
     path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
+
+- type: speechSounds
+  id: Suppy
+  saySound:
+    collection: SuppySay
+  askSound:
+    collection: SuppyAsk
+  exclaimSound:
+    collection: SuppyExclaim

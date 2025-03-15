@@ -1,0 +1,128 @@
+- type: dataset
+  id: ThavenMoodsAscendantInfection
+  values:
+    - Nihilism
+    - Insignificance
+    - Unfamiliarity
+    - FakeMonument
+    - WakingDream
+    - LivingNightmare
+    - GrotesqueWorld
+    - VoiceOfTheEnd
+    - WorshipOfTheEnd
+    - HollowSoul
+    - DisregardOfTheLiving
+    - DisregardOfTheSelf
+    - FearOfBeingForgotten
+    - FearOfEndings
+    - PainlessEndings
+
+# You reject all religious and moral principles, and believe that all life is inherently meaningless.
+- type: thavenMood
+  id: Nihilism
+  moodName: thaven-mood-cosmic-nihilism-name
+  moodDesc: thaven-mood-cosmic-nihilism-desc
+
+# You are at all times painfully aware of your insignificance within the great scope of the universe.
+- type: thavenMood
+  id: Insignificance
+  moodName: thaven-mood-cosmic-insignificance-name
+  moodDesc: thaven-mood-cosmic-insignificance-desc
+
+#
+- type: thavenMood
+  id: Unfamiliarity
+  moodName: thaven-mood-cosmic-unfamiliarity-name
+  moodDesc: thaven-mood-cosmic-unfamiliarity-desc
+  conflicts:
+    - GrotesqueWorld
+#
+- type: thavenMood
+  id: FakeMonument
+  moodName: thaven-mood-cosmic-fakemonument-name
+  moodDesc: thaven-mood-cosmic-fakemonument-desc
+
+#
+- type: thavenMood
+  id: WakingDream
+  moodName: thaven-mood-cosmic-wakingdream-name
+  moodDesc: thaven-mood-cosmic-wakingdream-desc
+  conflicts:
+    - LivingNightmare
+    - FearOfEndings
+
+#
+- type: thavenMood
+  id: LivingNightmare
+  moodName: thaven-mood-cosmic-livingnightmare-name
+  moodDesc: thaven-mood-cosmic-livingnightmare-desc
+  conflicts:
+    - WakingDream
+
+#
+- type: thavenMood
+  id: GrotesqueWorld
+  moodName: thaven-mood-cosmic-grotesqueworld-name
+  moodDesc: thaven-mood-cosmic-grotesqueworld-desc
+  conflicts:
+    - Unfamiliarity
+
+#
+- type: thavenMood
+  id: VoiceOfTheEnd
+  moodName: thaven-mood-cosmic-voiceoftheend-name
+  moodDesc: thaven-mood-cosmic-voiceoftheend-desc
+  conflicts:
+    - WorshipOfTheEnd
+    - FearOfEndings
+
+#
+- type: thavenMood
+  id: WorshipOfTheEnd
+  moodName: thaven-mood-cosmic-worshipoftheend-name
+  moodDesc: thaven-mood-cosmic-worshipoftheend-desc
+  conflicts:
+    - VoiceOfTheEnd
+    - FearOfEndings
+
+#
+- type: thavenMood
+  id: DisregardOfTheLiving
+  moodName: thaven-mood-cosmic-disregardoftheliving-name
+  moodDesc: thaven-mood-cosmic-disregardoftheliving-desc
+  conflicts:
+    - DisregardOfTheSelf
+#
+- type: thavenMood
+  id: DisregardOfTheSelf
+  moodName: thaven-mood-cosmic-disregardoftheself-name
+  moodDesc: thaven-mood-cosmic-disregardoftheself-desc
+  conflicts:
+    - DisregardOfTheLiving
+#
+- type: thavenMood
+  id: FearOfBeingForgotten
+  moodName: thaven-mood-cosmic-fearofbeingforgotten-name
+  moodDesc: thaven-mood-cosmic-fearofbeingforgotten-desc
+
+#
+- type: thavenMood
+  id: FearOfEndings
+  moodName: thaven-mood-cosmic-fearofendings-name
+  moodDesc: thaven-mood-cosmic-fearofendings-desc
+  conflicts:
+    - VoiceOfTheEnd
+    - WorshipOfTheEnd
+    - WakingDream
+    - PainlessEndings
+
+#
+- type: thavenMood
+  id: PainlessEndings
+  moodName: thaven-mood-cosmic-painlessendings-name
+  moodDesc: thaven-mood-cosmic-painlessendings-desc
+  conflicts:
+    - FearOfEndings
+    - WakingDream
+    - DisregardOfTheLiving
+    - WorshipOfTheEnd

@@ -34,6 +34,7 @@
     - FeyMood
     - Borged
     - AyeAye
+    - NewJob
 
 # You must always lie, and can never acknowledge that you are lying. If anyone asks, you're incapable of deception.
 - type: thavenMood
@@ -273,6 +274,14 @@
   moodDesc: thaven-mood-aye-aye-desc
   moodVars:
     command: CommandRoles
+
+# Your current job is disgusting to you. You must endeavor to get a new one.
+- type: thavenMood
+  id: NewJob
+  moodName: thaven-mood-new-job-name
+  moodDesc: thaven-mood-new-job-desc
+  conflicts:
+    - YourDepartmentOnly
 
 # [NUMBER] is sacred to you. You must endeavor to only handle stackable items and chemicals in quantities of [NUMBER].
 #- type: thavenMood

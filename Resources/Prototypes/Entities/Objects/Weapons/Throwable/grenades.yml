@@ -59,7 +59,7 @@
 
 - type: entity
   name: flashbang
-  description: Eeeeeeeeeeeeeeeeeeeeee.
+  description: THINK FAST CHUCKLENUTS!
   parent: [ GrenadeBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
   components:

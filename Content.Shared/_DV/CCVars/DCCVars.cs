@@ -22,7 +22,7 @@ public sealed class DCCVars
     /// It does not determine unique recipients. That is random.
     /// </summary>
     public static readonly CVarDef<int> MailCandidatesPerDelivery =
-        CVarDef.Create("mail.candidatesperdelivery", 8, CVar.SERVERONLY);
+        CVarDef.Create("mail.candidatesperdelivery", 6, CVar.SERVERONLY);
 
     /// <summary>
     /// Do not teleport any more mail in, if there are at least this many
@@ -41,7 +41,7 @@ public sealed class DCCVars
     /// mail lately to prevent entity bloat for the sake of performance.
     /// </remarks>
     public static readonly CVarDef<int> MailMaximumUndeliveredParcels =
-        CVarDef.Create("mail.maximumundeliveredparcels", 5, CVar.SERVERONLY);
+        CVarDef.Create("mail.maximumundeliveredparcels", 12, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the base bonus for delivering a package intact?

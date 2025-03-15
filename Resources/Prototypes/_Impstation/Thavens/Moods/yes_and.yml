@@ -27,7 +27,6 @@
     - Bookkeeper
     - SacredBlood
     - GiftReciever
-    - NewJob
     - DepartmentTitle
     - Barefoot
     - Hospitable
@@ -123,7 +122,7 @@
   conflicts:
     - Atheist
 
-# You are too important to speak to the rabble. You will only talk to Command.
+# You consult your bosses on all problems you encounter, not trusting the advice of your lowly peers.
 - type: thavenMood
   id: OnlySpeakToCommand
   moodName: thaven-mood-only-speak-to-command-name
@@ -226,15 +225,6 @@
   moodDesc: thaven-mood-gift-reciever-desc
   conflicts:
     - LeastImportant
-
-# Your current job is disgusting to you. You must endeavor to get a new one.
-- type: thavenMood
-  id: NewJob
-  moodName: thaven-mood-new-job-name
-  moodDesc: thaven-mood-new-job-desc
-  conflicts:
-    - YourDepartmentOnly
-
 
 # You must not refer directly to the names of departments - You may only refer to a specific person who works in that department.
 - type: thavenMood

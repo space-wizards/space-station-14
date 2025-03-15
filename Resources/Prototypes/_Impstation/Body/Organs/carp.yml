@@ -1,0 +1,129 @@
+- type: entity
+  id: OrganCarpLungs
+  parent: OrganAnimalLungs
+  name: astrofauna lungs
+  description: "Practically vestigial, now only used for vocalization."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - carpflesh
+
+- type: entity
+  id: OrganCarpHeart
+  parent: OrganAnimalHeart
+  name: astrofauna heart
+  description: "A toxic heart torn from the void."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - carpflesh
+
+- type: entity
+  id: OrganCarpStomach
+  parent: OrganAnimalStomach
+  name: astrofauna stomach
+  description: "Unfortunately capable of digesting metal, limited only by its owner's jaw strength."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - carpflesh
+
+- type: entity
+  id: OrganCarpLiver
+  parent: OrganAnimalLiver
+  name: astrofauna liver
+  description: "Dense, glossy, and toxic. A source of ichor, but only in vivo. Too late for that now."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - carpflesh
+
+- type: entity
+  id: OrganCarpKidneys
+  parent: OrganAnimalKidneys
+  name: astrofauna kidneys
+  description: "Like your kidneys, except mostly used to process blood from devoured prey."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - carpflesh

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Stamp sprites taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fb1012102257b7b0a08d861fd2b8ba963c416e93, modified by Guess-My-Name. stamp-admin-assistant by noctyrnal (github)",
+    "copyright": "Stamp sprites taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fb1012102257b7b0a08d861fd2b8ba963c416e93, modified by Guess-My-Name. stamp-admin-assistant by noctyrnal (github), Hate-paperwork is a recoloured version of stamp-deny",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "stamp-admin-assistant"
+        },
+        {
+            "name": "stamp-hate-paperwork"
         }
     ]
 }

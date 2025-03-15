@@ -51,6 +51,168 @@
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Coats/field_jacket.rsi
 
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPufferDark
+  name: dark brown puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    layers:
+    - state: DARK-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: DARK-inhand-left
+      right:
+      - state: DARK-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    clothingVisuals:
+      neck:
+      - state: DARK-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: DARK-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPufferRed
+  name: red puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    layers:
+    - state: RED-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: RED-inhand-left
+      right:
+      - state: RED-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    clothingVisuals:
+      neck:
+      - state: RED-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: RED-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPufferBlue
+  name: blue puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    layers:
+    - state: BLUE-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: BLUE-inhand-left
+      right:
+      - state: BLUE-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    clothingVisuals:
+      neck:
+      - state: BLUE-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: BLUE-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPufferMime
+  name: mime puffer coat
+  description: An oversized puffer coat made of high-quality nothing.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    layers:
+    - state: MIME-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: MIME-inhand-left
+      right:
+      - state: MIME-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    clothingVisuals:
+      neck:
+      - state: MIME-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: MIME-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPufferSilver
+  name: silver puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    layers:
+    - state: SILVER-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: SILVER-inhand-left
+      right:
+      - state: SILVER-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    clothingVisuals:
+      neck:
+      - state: SILVER-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: SILVER-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatPufferPink
+  name: pink puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    layers:
+    - state: PINK-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: PINK-inhand-left
+      right:
+      - state: PINK-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Coats/big_puffercoat.rsi
+    clothingVisuals:
+      neck:
+      - state: PINK-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: PINK-equipped-OUTERCLOTHING
+
 # Not parented to the lightweight bomber because it has armor, so it must be armor-sized and not have pockets (only the detective gets that!)
 # If any changes are made to the lightweight bomber below, those changes must be applied to the security bomber manually
 - type: entity

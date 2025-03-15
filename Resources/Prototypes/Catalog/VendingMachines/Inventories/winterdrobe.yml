@@ -36,6 +36,11 @@
     ClothingShoesBootsWinterColorGreen: 3
     ClothingShoesBootsWinterColorBlue: 3
     ClothingShoesBootsWinterColorPurple: 3
+    ClothingOuterCoatPufferPink: 2
+    ClothingOuterCoatPufferSilver: 2
+    ClothingOuterCoatPufferBlue: 2
+    ClothingOuterCoatPufferRed: 2
+    ClothingOuterCoatPufferDark: 2
     # imp additions end
     ClothingOuterFlannelRed: 2
     ClothingOuterFlannelBlue: 2

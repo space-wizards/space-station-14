@@ -161,6 +161,7 @@
     #imp
     FinFinStealObjective: 1
     PolyStealObjective: 1
+    PetSuppyStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

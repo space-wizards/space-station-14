@@ -1,0 +1,72 @@
+light_mode unshaded;
+
+uniform highp vec2 tileSize; //this can probably just be TEXTURE_PIXEL_SIZE instead?
+uniform highp vec3 hsv;
+
+void fragment() {
+    highp vec4 colour = texture(TEXTURE, UV);
+	if (colour.r < 0.9) { //if we're not inside the mask, just discard the fragment
+	    discard;
+	} else {
+
+	    colour = vec4(0.0, 0.0, 0.0, 0.0);
+
+        highp vec2 pxSize = vec2(1.0, 1.0) / TEXTURE_PIXEL_SIZE;
+
+        highp vec2 left = vec2(pxSize.x, 0.0);
+        highp vec2 right = vec2(-pxSize.x, 0.0);
+        highp vec2 up = vec2(0.0, pxSize.y);
+        highp vec2 down = vec2(0.0, -pxSize.y);
+
+        highp vec2 rand = zRandom(UV);
+
+        colour += texture2D(TEXTURE, UV + left);
+        colour += texture2D(TEXTURE, UV + right);
+
+        colour += texture2D(TEXTURE, UV + up);
+        colour += texture2D(TEXTURE, UV + down);
+
+        //Sparkle stars x
+        //colour += texture2D(TEXTURE, UV + pxSize.x) * 0.75;
+        //colour += texture2D(TEXTURE, UV + pxSize.x * 2) * 0.5;
+        //colour += texture2D(TEXTURE, UV - pxSize.x) * 0.75;
+        //colour += texture2D(TEXTURE, UV - pxSize.x * 2) * 0.5;
+
+        //Sparkle stars y
+        //colour += texture2D(TEXTURE, UV + pxSize.y) * 0.75;
+        //colour += texture2D(TEXTURE, UV + pxSize.y * 2) * 0.5;
+        //colour += texture2D(TEXTURE, UV + pxSize.y) * 0.75;
+        //colour += texture2D(TEXTURE, UV + pxSize.y * 2) * 0.5;
+
+        //colour.yz = colour.yz * clamp(sin(rand.y * 5.0), 0.5, 1.0); //Reduces green and blue to create red
+        //colour.xy = colour.xy * clamp(cos(rand.y * 5.0), 0.5, 1.0); //Reduces red and green to create blue
+        COLOR = colour;
+	}
+}
+
+highp vec2 quantiseVecDown(highp vec2 v, highp vec2 divisions) {
+    highp vec2 multiple = vec2(1.0, 1.0) / divisions;
+    highp vec2 rem = mod(v, multiple);
+    return v - rem;
+}
+
+//hate that I have to do this because we can't just set the loop behaviour on the texture
+highp vec2 loopVec(highp vec2 toLoop) {
+    return abs(mod(toLoop, 1));
+}
+
+highp vec3 rgb2hsv(highp vec3 c) {
+    highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+    highp vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+    highp vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+
+    highp float d = q.x - min(q.w, q.y);
+    highp float e = 0.00000000010; //because this doesn't support doing 1.0e-10
+    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+highp vec3 hsv2rgb(highp vec3 c) {
+    highp vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    highp vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}

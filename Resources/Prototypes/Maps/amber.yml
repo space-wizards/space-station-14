@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_amber.yml
         - type: StationJobs
-          availableJobs: # total of 56 jobs roundstart, max of 66 inc. latejoins and trainees.
+          availableJobs: # total of 55 jobs roundstart, max of 65 inc. latejoins and trainees.
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -61,9 +61,9 @@
             SecurityCadet: [ 2, 2 ]
             SecurityOfficer: [ 3, 3 ]
             Warden: [ 1, 1 ]
-            # supply - 7-9
+            # supply - 6-8
             CargoTechnician: [ 3, 3 ]
-            Courier: [ 2, 2 ] # imp
+            Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 2, 2 ] # imp
             # civilian

@@ -41,6 +41,7 @@
   components:
   - type: ConfirmableAction
     popup: cosmicability-monument-spawn-confirm
+    primeTime: 10 #increased to give you more time to figure out where you want to put it
   - type: InstantAction
     useDelay: 999
     itemIconStyle: NoItem
@@ -48,6 +49,27 @@
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
       state: monument
     event: !type:EventCosmicPlaceMonument {}
+  - type: MonumentPlacementMarker
+    tier: 1
+
+- type: entity
+  id: ActionCosmicMoveMonument
+  name: Relocate The Monument
+  description: Your work is imperative, and the end is inevitable. Ensure that it is completed under your watch.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ConfirmableAction
+    popup: cosmicability-monument-move-confirm
+    primeTime: 10 #increased to give you more time to figure out where you want to put it
+  - type: InstantAction
+    useDelay: 999
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: monument-relocate
+    event: !type:EventCosmicMoveMonument {}
+  - type: MonumentPlacementMarker
+    tier: 2
 
 - type: entity
   id: ActionCosmicReturn
@@ -88,7 +110,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
-    useDelay: 50
+    useDelay: 55
     itemIconStyle: NoItem
     icon:
       sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
@@ -142,4 +164,76 @@
       state: nova
     event: !type:EventCosmicNova {}
 
+#################################### ROGUE ASCENDANT ACTIONS ######################################
 
+- type: entity
+  id: ActionRogueCosmicNova
+  name: Usurped Astral Nova
+  description: Hurl a large and disruptive blast of astral energy.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WorldTargetAction
+    useDelay: 10
+    raiseOnUser: true
+    range: 60
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: roguenova
+    event: !type:EventRogueCosmicNova {}
+
+- type: entity
+  id: ActionRogueInfection
+  name: Malign Corruption
+  description: Instill the essence of endings into a subdued target.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    whitelist:
+      components:
+        - HumanoidAppearance
+    blacklist:
+      components:
+        - CosmicCult
+        - BibleUser
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueinfect
+    event: !type:EventRogueInfection {}
+
+- type: entity
+  id: ActionRogueSlumber
+  name: Slumber Shell
+  description: Instantly slumber a target's mortal shell, rendering them asleep and ready for Malign Corruption.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 155
+    whitelist:
+      components:
+        - HumanoidAppearance
+    blacklist:
+      components:
+        - CosmicCult
+        - BibleUser
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueshatter
+    event: !type:EventRogueSlumber {}
+
+- type: entity
+  id: ActionRogueGrandShunt
+  name: Malign Mindspike
+  description: Shunt the minds of all nearby out of their body and unto the cosmic dark, temporarily rendering their body mindless.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 90
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Impstation/CosmicCult/Icons/cosmiccult_abilities.rsi
+      state: rogueshunt
+    event: !type:EventRogueGrandShunt {}

@@ -81,3 +81,40 @@
       - !type:ChemVomit
         probability: 0.75
       - !type:Jitter
+
+- type: reagent # can't parent it to blood because anybody should be able to drink it, the flesh/organs are the toxic parts (fugu moment)
+  id: ShimmeringBlood
+  name: reagent-name-shimmering-blood
+  group: Biological
+  desc: reagent-desc-shimmering-blood
+  flavor: shimmeringblood
+  color: "#ff624a" # a slightly warmer color than the ichor extracted from dragon flesh
+  recognizable: true
+  physicalDesc: reagent-physical-desc-shimmering-blood
+  slippery: false
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+      - !type:SatiateThirst
+        factor: 1
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 2
+    - !type:PlantAdjustWeeds
+      amount: -2
+    - !type:PlantAdjustPests
+      amount: -2
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

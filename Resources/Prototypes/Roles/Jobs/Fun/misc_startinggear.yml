@@ -144,6 +144,15 @@
     - trayScanner
     - AccessConfiguratorUniversal
     - Multitool
+    # imp edit start
+    - PowerDrill
+    - JawsOfLife
+    - WelderExperimental
+    - GeigerCounter
+    - SprayPainter
+    - CrayonRainbowInfinite
+    - ClothingEyesHudOmni
+    # imp edit end
 
 #Gladiator with spear
 - type: startingGear

@@ -137,7 +137,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+      - carpflesh #imp
   - type: Tag
     tags:
     - Raw
@@ -388,6 +388,9 @@
   - type: FoodSequenceElement
     entries:
       Burger: DragonBurger
+  - type: FlavorProfile #imp
+    flavors:
+      - carpflesh
 
 - type: entity
   name: raw rat meat
@@ -1821,13 +1824,12 @@
 - type: entity
   name: raw thaven fillet
   parent: FoodMeatBase
-  # MeatFish?...
   id: FoodThavenMeat
   description: Concerning.
   components:
   - type: FlavorProfile
     flavors:
-      - fishy
+      - thavenflesh
   - type: Tag
     tags:
     - Raw

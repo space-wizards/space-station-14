@@ -2,6 +2,7 @@ using Content.Server.Objectives.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Roles;
 using Content.Shared.Heretic;
 using Content.Shared.Mind;
 using Content.Shared.Store.Components;
@@ -22,7 +23,6 @@ using Content.Server.Revolutionary.Components;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 using Content.Shared.Changeling;
 
 namespace Content.Server.Heretic.EntitySystems;
@@ -33,6 +33,7 @@ public sealed partial class HereticSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly HereticKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly IRobustRandom _rand = default!;
@@ -41,6 +42,7 @@ public sealed partial class HereticSystem : EntitySystem
 
     private float _timer = 0f;
     private float _passivePointCooldown = 20f * 60f;
+    private static readonly ProtoId<JobPrototype> SecOffJobProtoID = "SecurityOfficer";
 
     public override void Initialize()
     {
@@ -123,8 +125,8 @@ public sealed partial class HereticSystem : EntitySystem
         foreach (var target in targets)
             eligibleTargets.Add(target.AttachedEntity!.Value); // it can't be null because see .Where(HasValue)
 
-        // no heretics or other baboons
-        eligibleTargets = eligibleTargets.Where(t => !HasComp<GhoulComponent>(t) && !HasComp<HereticComponent>(t) && !HasComp<ChangelingComponent>(t)).ToList();
+        // no ghouls or lings
+        eligibleTargets = eligibleTargets.Where(t => !HasComp<GhoulComponent>(t) || !HasComp<ChangelingComponent>(t)).ToList();
 
         var pickedTargets = new List<EntityUid?>();
 
@@ -132,6 +134,12 @@ public sealed partial class HereticSystem : EntitySystem
 
         // pick one command staff
         predicates.Add(t => HasComp<CommandStaffComponent>(t));
+
+        // pick one security staff
+        predicates.Add(t => _jobs.MindHasJobDept(t, _prot.Index(SecOffJobProtoID)));
+
+        // pick someone in your department
+        predicates.Add(t => (_jobs.MindsHaveSameJobDept(t, ent)));
 
         // add more predicates here
 

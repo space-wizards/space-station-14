@@ -23,6 +23,7 @@
     RiotShield: 2
     SecurityWhistle: 5
     TearGasGrenade: 4
+    TicketPad: 5 # imp
     Tourniquet: 5
     Zipties: 12
   # security officers need to follow a diet regimen!

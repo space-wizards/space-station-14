@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites by RosySaturniidae, inhands by JustAnOrange and edited by RosySaturniidae",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "fire",
+            "delays": [
+                [
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "top"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-lit",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-lit",
+            "directions": 4
+        }
+    ]
+}
