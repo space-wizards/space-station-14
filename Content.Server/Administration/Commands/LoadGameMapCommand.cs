@@ -38,7 +38,7 @@ namespace Content.Server.Administration.Commands
             }
 
             if (!int.TryParse(args[0], out var mapId))
-                    return;
+                return;
 
             var stationName = args.Length == 5 ? args[4] : null;
 
