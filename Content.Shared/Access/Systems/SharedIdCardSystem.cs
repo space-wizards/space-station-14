@@ -1,6 +1,7 @@
 using System.Globalization;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -8,12 +9,14 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems;
 
 public abstract class SharedIdCardSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
@@ -128,8 +131,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             jobTitle = jobTitle.Trim();
 
-            if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
-                jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];
+            if (jobTitle.Length > _cfgManager.GetCVar(CCVars.MaxIdJobLength))
+                jobTitle = jobTitle[.._cfgManager.GetCVar(CCVars.MaxIdJobLength)];
         }
         else
         {
@@ -206,8 +209,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(fullName))
         {
             fullName = fullName.Trim();
-            if (fullName.Length > IdCardConsoleComponent.MaxFullNameLength)
-                fullName = fullName[..IdCardConsoleComponent.MaxFullNameLength];
+            if (fullName.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+                fullName = fullName[.._cfgManager.GetCVar(CCVars.MaxNameLength)];
         }
         else
         {
