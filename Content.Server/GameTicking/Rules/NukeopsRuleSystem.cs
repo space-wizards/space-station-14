@@ -117,6 +117,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var nukeops, out _))
         {
+            nukeops.NukeExplodedTime = Timing.CurTime;
             if (ev.OwningStation != null)
             {
                 if (ev.OwningStation == GetOutpost(uid))
@@ -137,7 +138,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                         }
 
                         nukeops.WinConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
-                        SetWinType((uid, nukeops), WinType.OpsMajor);
+                        SetWinType((uid, nukeops), WinType.OpsMajor, endRound: false); // no don't end the round we need to see if the nukies die
                         correctStation = true;
                     }
 
@@ -151,9 +152,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             {
                 nukeops.WinConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
             }
-
-            _roundEndSystem.EndRound();
         }
+
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
@@ -519,5 +519,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
 
         return null;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // Can you selectively turn on and off update? i only need it to check for round end...
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out var nukeOps, out _))
+        {
+            if (nukeOps is { NukeExplodedTime: not null })
+            {
+                Log.Debug($"NukeOps Round End Timer: {Timing.CurTime.Subtract(nukeOps.NukeExplodedTime.Value)}");
+                if (Timing.CurTime.Subtract(nukeOps.NukeExplodedTime.Value) > nukeOps.NukeExplodedRoundEndDelay)
+                {
+                    _roundEndSystem.EndRound();
+                }
+            }
+        }
     }
 }
