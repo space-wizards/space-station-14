@@ -115,6 +115,11 @@
   result: StationMapCircuitboard
 
 - type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: ScreenElectronics
+  result: ScreenCircuitboard
+
+- type: latheRecipe
   parent: BaseElectronicsRecipe
   id: IntercomElectronics
   result: IntercomElectronics
