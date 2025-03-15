@@ -146,7 +146,7 @@ public sealed class StoreTests
                     // get refreshed item after refund re-generated items
                     discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
 
-                    // Check if conditions are still null after refund
+                    // The storeComponent can give a discounted item a condition at random, so we remove it to sanitize the data.
                     discountedListingItem.Conditions = null;
 
                     var afterRefundBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
