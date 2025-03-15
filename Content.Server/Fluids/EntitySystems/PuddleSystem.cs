@@ -403,12 +403,17 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
         // the sprite threshold for a puddle larger than 5 pixels.
         var smallPuddleThreshold = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
 
-        // Define a bunch of variables to add data into
+        // Stores how many units of slippery reagents a puddle has
         var slipperyUnits = FixedPoint2.Zero;
+        // Stores how many units of super slippery reagents a puddle has
         var superSlipperyUnits = FixedPoint2.Zero;
 
+        // These three values will be averaged later and all start at zero so the calculations work
+        // Stores a cumulative weighted amount of minimum speed to slip values
         var slipStepTrigger = FixedPoint2.Zero;
+        // Stores a cumulative weighted amount of launch multipliers from slippery reagents
         var launchMult = FixedPoint2.Zero;
+        // Stores a cumulative weighted amount of stun times from slippery reagents
         var stunTimer = FixedPoint2.Zero;
 
         //Check if the puddle is big enough to slip in to avoid doing unnecessary logic
@@ -449,6 +454,7 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
         // slippery for all reagents even if they aren't technically slippery.
         slipComp.SlipData.RequiredSlipSpeed = (float)(slipStepTrigger / solution.Volume);
         _stepTrigger.SetRequiredTriggerSpeed(entity, slipComp.SlipData.RequiredSlipSpeed);
+
         // Divide these both by only total amount of slippery reagents.
         // A puddle with 10 units of lube vs a puddle with 10 of lube and 20 catchup should stun and launch forward the same amount.
         if (slipperyUnits > 0)
@@ -456,10 +462,10 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
             slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
             slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
         }
+
         // Only make it super slippery if there is enough super slippery units for its own puddle
         slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
-        // Update tile friction for other reasons
-        //var friction = EnsureComp<TileFrictionModifierComponent>(entity);
+
         // Lower tile friction based on how slippery it is, lets items slide across a puddle of lube
         // We square the value because it ends up feeling better with lube being very slippery
         var slipRatio = slipComp.SlipData.RequiredSlipSpeed / entity.Comp.DefaultSlippery;

@@ -56,7 +56,7 @@ public sealed partial class StepTriggerComponent : Component
     /// Does this have separate "StepOn" and "StepOff" triggers.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool StepOn;
+    public bool StepOn = false;
 }
 
 [RegisterComponent]

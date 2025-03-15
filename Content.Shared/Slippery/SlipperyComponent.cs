@@ -21,12 +21,14 @@ namespace Content.Shared.Slippery
         [Access(Other = AccessPermissions.ReadWriteExecute)]
         public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
+        /// <summary>
+        /// Loads the data needed to determine how slippery something is.
+        /// </summary>
         [DataField, AutoNetworkedField]
         public SlipperyEffectEntry SlipData = new();
     }
     /// <summary>
-    /// Stores the data for sliperiness that way reagents and this component can use it. Feel free to add more data
-    /// but don't remove anything lest you temp the wrath of the puddle code.
+    /// Stores the data for slipperiness that way reagents and this component can use it.
     /// </summary>
     [DataDefinition, Serializable, NetSerializable]
     public sealed partial class SlipperyEffectEntry
@@ -44,8 +46,7 @@ namespace Content.Shared.Slippery
         public float LaunchForwardsMultiplier = 1.5f;
 
         /// <summary>
-        /// Minimum speed entity must be moving to slip. This is only used by puddle code, if you want anything other
-        /// than puddles to use it you'll have to make logic for it yourself.
+        /// Minimum speed entity must be moving to slip.
         /// </summary>
         [DataField]
         public float RequiredSlipSpeed = 3.5f;
