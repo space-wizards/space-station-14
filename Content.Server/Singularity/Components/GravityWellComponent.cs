@@ -1,10 +1,8 @@
-using Content.Shared.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
 
 namespace Content.Server.Singularity.Components;
 
 /// <summary>
-/// The server-side version of <see cref="SharedGravityWellComponent"/>.
 /// Primarily managed by <see cref="GravityWellSystem"/>.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
