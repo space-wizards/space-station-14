@@ -167,11 +167,11 @@
     size: Normal
     shape:
     - 0,0,4,0
-    sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi # GreyStation - Resprite
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Shotguns/pump.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Shotguns/pump.rsi # GreyStation - Resprite
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 1
