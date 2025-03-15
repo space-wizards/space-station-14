@@ -88,3 +88,23 @@
         - Sheet
         - RawMaterial
         - Ingot
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterHeadOfPersonnel
+  name: Head of Personnel's paper printer
+  components:
+  - type: Sprite
+    color: "#a1a1d1"
+  #- type: Machine
+  #  board: PaperPrinterSecurityMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterEngineeringBasic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
