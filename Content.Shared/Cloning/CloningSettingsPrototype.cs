@@ -34,7 +34,7 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     ///     Disabled when null.
     /// </summary>
     [DataField]
-    public SlotFlags? CopyEquipment = SlotFlags.WITHOUT_POCKET;
+    public SlotFlags? CopyEquipment = SlotFlags.All;
 
     /// <summary>
     ///     Whitelist for the equipment allowed to be copied.
