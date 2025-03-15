@@ -1,4 +1,5 @@
 using Content.Shared.Cloning;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -20,4 +21,23 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId GibProto = "MobParadoxTimed";
+
+    /// <summary>
+    ///     Mind entity of the original player.
+    ///     Gets assigned when cloning.
+    /// </summary>
+    [DataField]
+    public EntityUid? Original;
+
+    /// <summary>
+    ///     Whitelist for Objectives to be copied to the clone.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? ObjectiveWhitelist;
+
+    /// <summary>
+    ///     Blacklist for Objectives to be copied to the clone.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? ObjectiveBlacklist;
 }
