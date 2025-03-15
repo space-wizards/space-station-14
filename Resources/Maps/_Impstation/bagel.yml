@@ -140082,13 +140082,6 @@ entities:
     - type: Transform
       pos: 12.5,20.5
       parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 15902
-    components:
-    - type: Transform
-      pos: 56.5,17.5
-      parent: 2
 - proto: SuitStorageEngi
   entities:
   - uid: 20638

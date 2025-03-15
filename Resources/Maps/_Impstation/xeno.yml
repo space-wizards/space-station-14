@@ -101917,13 +101917,6 @@ entities:
     - type: Transform
       pos: 13.5,-17.5
       parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 19129
-    components:
-    - type: Transform
-      pos: 10.5,-77.5
-      parent: 2
 - proto: SuitStorageEngi
   entities:
   - uid: 5840

@@ -118629,10 +118629,10 @@ entities:
       parent: 2
     - type: Paper
       content: >-
-        Dear HoP, 
+        Dear HoP,
 
 
-        Please submit a report regarding the disappearance of my personal items to the HoS. The following is missing: 
+        Please submit a report regarding the disappearance of my personal items to the HoS. The following is missing:
 
 
         Beret
@@ -118641,7 +118641,7 @@ entities:
         Flask
 
 
-        Thank you, let me know when you get that done. 
+        Thank you, let me know when you get that done.
 
 
         P.S Need my 5 o'clock cleared tomorrow apparently we're getting a visit from H.R
@@ -136758,18 +136758,6 @@ entities:
     components:
     - type: Transform
       pos: 18.5,47.5
-      parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 10711
-    components:
-    - type: Transform
-      pos: 33.5,82.5
-      parent: 2
-  - uid: 26771
-    components:
-    - type: Transform
-      pos: 33.5,78.5
       parent: 2
 - proto: SuitStorageEVA
   entities:

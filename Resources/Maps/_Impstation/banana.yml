@@ -17932,13 +17932,6 @@ entities:
     - type: Transform
       pos: -29.5,-17.5
       parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 2413
-    components:
-    - type: Transform
-      pos: 7.5,-7.5
-      parent: 2
 - proto: SuitStorageEVA
   entities:
   - uid: 2414

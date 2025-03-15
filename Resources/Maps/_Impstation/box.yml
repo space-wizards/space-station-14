@@ -149645,13 +149645,6 @@ entities:
     - type: Transform
       pos: -0.5,-63.5
       parent: 8364
-- proto: SuitStorageCourier
-  entities:
-  - uid: 14955
-    components:
-    - type: Transform
-      pos: -21.5,-15.5
-      parent: 8364
 - proto: SuitStorageEngi
   entities:
   - uid: 14549

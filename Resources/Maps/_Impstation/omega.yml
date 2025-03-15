@@ -64249,13 +64249,6 @@ entities:
     - type: Transform
       pos: -26.5,-28.5
       parent: 2
-- proto: LockerCourierFilledHardsuit
-  entities:
-  - uid: 14200
-    components:
-    - type: Transform
-      pos: 16.5,19.5
-      parent: 2
 - proto: LockerDetectiveFilled
   entities:
   - uid: 9575
