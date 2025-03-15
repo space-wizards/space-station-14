@@ -8,6 +8,9 @@
     sprite: Clothing/Head/Misc/bunny.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/bunny.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase

@@ -43,6 +43,7 @@
   - type: Tag
     tags:
     - HudMedical
+    - CorgiWearable
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
@@ -57,6 +58,7 @@
   - type: Tag
     tags:
     - HudSecurity
+    - CorgiWearable
 
 - type: entity
   parent: [ClothingEyesBase, BaseCommandContraband]
@@ -69,6 +71,9 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/command.rsi
   - type: ShowJobIcons
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingEyesBase
@@ -235,6 +240,9 @@
     sprite: Clothing/Eyes/Hud/medpatch.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medpatch.rsi
+  - type: Tag
+    tags:
+    - HudMedical
 
 - type: entity
   parent: [ClothingEyesEyepatchHudMedical, ClothingHeadEyeBaseFlipped]
@@ -251,6 +259,9 @@
     sprite: Clothing/Eyes/Hud/secpatch.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/secpatch.rsi
+  - type: Tag
+    tags:
+    - HudSecurity
 
 - type: entity
   parent: [ClothingEyesEyepatchHudSecurity,  ClothingHeadEyeBaseFlipped]
