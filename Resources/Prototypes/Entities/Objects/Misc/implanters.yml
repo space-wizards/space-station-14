@@ -295,11 +295,11 @@
   suffix: mindshield
   parent: BaseImplantOnlyImplanter
   components:
-    - type: Implanter
-      blacklist:
-        components:
-        - MindShield
-      implant: MindShieldImplant
+  - type: Implanter
+    ImplantBlacklist:
+      tags:
+      - UnremovableMindShield
+    implant: MindShieldImplant
 
 # Centcomm implanters
 
@@ -317,7 +317,7 @@
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
-    blacklist:
-      components:
-      - MindShield
-    implant: UnremoveableMindShieldImplant
+    ImplantBlacklist:
+      tags:
+      - RemovableMindShield
+    implant: UnremovableMindShieldImplant

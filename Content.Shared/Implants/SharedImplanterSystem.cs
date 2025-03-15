@@ -75,6 +75,13 @@ public abstract class SharedImplanterSystem : EntitySystem
         return implanted.ImplantContainer.ContainedEntities.Any(entity => Prototype(entity) == implantPrototype);
     }
 
+    public bool CheckIncompatibleImplant(EntityUid target, EntityWhitelist? implants)
+    {
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
+            return false;
+        return implanted.ImplantContainer.ContainedEntities.Any(entity => _whitelistSystem.IsBlacklistFailOrNull(implants, entity));
+    }
+
     private void OnVerb(EntityUid uid, ImplanterComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -127,6 +134,14 @@ public abstract class SharedImplanterSystem : EntitySystem
         {
             var name = Identity.Name(target, EntityManager, user);
             var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name));
+            _popup.PopupEntity(msg, target, user);
+            return;
+        }
+
+        if (CheckIncompatibleImplant(target, component.ImplantBlacklist))
+        {
+            var name = Identity.Name(target, EntityManager, user);
+            var msg = Loc.GetString("implanter-component-incompatible-implant", ("target", name));
             _popup.PopupEntity(msg, target, user);
             return;
         }

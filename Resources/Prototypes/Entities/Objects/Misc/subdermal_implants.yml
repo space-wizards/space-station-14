@@ -347,7 +347,8 @@
    - type: MindShieldImplant
    - type: Tag
      tags:
-       - MindShield
+     - MindShield
+     - RemovableMindShield
 
 # Centcomm implants
 
@@ -376,3 +377,4 @@
   - type: Tag
     tags:
     - MindShield
+    - UnremovableMindShield
