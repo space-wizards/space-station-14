@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: RosySaturniidae
-  changes:
-  - message: resprited the chemvend variant on the nukie planet, the syndiejuice
-    type: Tweak
-  id: 813
-  time: '2024-12-26T21:47:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1097
-- author: TheGrimbeeper
-  changes:
-  - message: artifact trigger beverage has one slightly less obtuse hint
-    type: Tweak
-  id: 814
-  time: '2024-12-27T06:50:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1135
 - author: TheGrimbeeper
   changes:
   - message: latest community books can now spawn from the artifact normal book effect
@@ -4103,3 +4089,17 @@
   id: 1312
   time: '2025-03-15T02:26:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1957
+- author: Kandiyaki, Axionyx
+  changes:
+  - message: heretics should be able to buy knowledge again.
+    type: Fix
+  id: 1313
+  time: '2025-03-15T05:07:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1960
+- author: Ecramox
+  changes:
+  - message: Fixed Lone Ops not spawning with all their gear.
+    type: Fix
+  id: 1314
+  time: '2025-03-15T05:07:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1964
