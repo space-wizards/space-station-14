@@ -81,6 +81,13 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchoredHalf:
+          False: { state: pipeHalf }
+          True: { state: pipeHalfAnchored }
   - type: Construction
     graph: GasPipe
     node: half
@@ -104,6 +111,13 @@
     layers:
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchoredStraight:
+          False: { state: pipeStraight }
+          True: { state: pipeStraightAnchored }
   - type: Construction
     graph: GasPipe
     node: straight
@@ -141,6 +155,13 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchoredBend:
+          False: { state: pipeBend }
+          True: { state: pipeBendAnchored }
   - type: Construction
     graph: GasPipe
     node: bend
@@ -185,6 +206,13 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchoredTJunction:
+          False: { state: pipeTJunction }
+          True: { state: pipeTJunctionAnchored }
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -227,6 +255,13 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchoredFourway:
+          False: { state: pipeFourway }
+          True: { state: pipeFourwayAnchored }
   - type: Construction
     graph: GasPipe
     node: fourway
