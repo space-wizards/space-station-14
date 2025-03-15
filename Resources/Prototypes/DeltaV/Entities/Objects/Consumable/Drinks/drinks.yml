@@ -51,23 +51,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkDaiquiriGlass
-  suffix: classic daiquiri
-  description: Rum, lime, and simple syrup. Such class, such refinement.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Daiquiri
-          Quantity: 30
-  - type: Icon
-    sprite: DeltaV/Objects/Consumable/Drinks/daiquiri.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkArsonistsBrewGlass
   suffix: arsonist's brew
   description: It's probably not concerning that it's glowing faintly. Or bubbling. Or smoking. No, not at all.

@@ -364,21 +364,6 @@
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1DoNotPowergame.xml"
 
-- type: guideEntry
-  id: SpaceLaw
-  name: guide-entry-rules-space-law
-  priority: 1
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
-  children:
-  - SpaceLawCrimeList
-  - SpaceLawProcessingPrisoners #GreyStation
-
-- type: guideEntry
-  id: SpaceLawCrimeList
-  name: guide-entry-rules-sl-crime-list
-  priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
-
 # Ban-Related Guide Entries are used as hyperlinks in certain Ruleset Guide Entry explanations.
 
 - type: guideEntry #GreyStation

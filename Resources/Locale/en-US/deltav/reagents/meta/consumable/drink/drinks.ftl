@@ -10,9 +10,6 @@ reagent-desc-lemondrop = A simple, tangy, and tasty drink consisting of lemon, v
 reagent-name-greengrass = green grass
 reagent-desc-greengrass = Green grass, or grüne wiese, is a peculiar green cocktail hailing from the now dissolved GDR. Popular amongst the disillusioned and disingenuous alike.
 
-reagent-name-daiquiri = modern daiquiri
-reagent-desc-daiquiri = A sweet mix of deadrum and lime, a favourite of writers and politicians.
-
 reagent-name-arsonistsbrew = arsonist's brew
 reagent-desc-arsonistsbrew = Take a sip and laugh, while you watch your world burn.
 
