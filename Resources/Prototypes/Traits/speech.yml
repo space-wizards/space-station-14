@@ -91,6 +91,15 @@
   - type: ReplacementAccent
     accent: liar
 
+- type: trait
+  id: SoftspokenAccent
+  name: trait-softspoken-name
+  description: trait-softspoken-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+    - type: SoftspokenAccent
+
 # 2 Cost
 
 - type: trait
