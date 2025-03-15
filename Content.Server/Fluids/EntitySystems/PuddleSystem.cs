@@ -417,7 +417,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var launchMult = FixedPoint2.Zero;
         var stunTimer = FixedPoint2.Zero;
 
-        //Check if the puddle is big enough to slip in
+        //Check if the puddle is big enough to slip in to avoid doing unecessary logic
         if (solution.Volume <= slipperyThreshold)
         {
             _stepTrigger.SetActive(entity, false, comp);
@@ -446,11 +446,11 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _stepTrigger.SetActive(entity, slipperyUnits > slipperyThreshold, comp);
         //Update values to determine how slippery it is
         _stepTrigger.SetRequiredTriggerSpeed(entity, (float)(slipStepTrigger/solution.Volume));
-        slipComp.LaunchForwardsMultiplier = (float)(launchMult/solution.Volume);
+        slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/solution.Volume);
         //To keep stun times somewhat predictable only averages based on slippery volume
-        slipComp.ParalyzeTime = (float)(stunTimer/slipperyUnits);
+        slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
         //Only make it super slippery if there is enough super slippery units for its own puddle
-        slipComp.SuperSlippery = superSlipperyUnits > slipperyThreshold;
+        slipComp.SlipData.SuperSlippery = superSlipperyUnits > slipperyThreshold;
     }
 
     private void UpdateSlow(EntityUid uid, Solution solution)

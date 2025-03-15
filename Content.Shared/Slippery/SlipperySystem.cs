@@ -92,7 +92,7 @@ public sealed class SlipperySystem : EntitySystem
 
     public void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other, bool requiresContact = true)
     {
-        if (HasComp<KnockedDownComponent>(other) && !component.SuperSlippery)
+        if (HasComp<KnockedDownComponent>(other) && !component.SlipData.SuperSlippery)
             return;
 
         var attemptEv = new SlipAttemptEvent();
@@ -113,9 +113,9 @@ public sealed class SlipperySystem : EntitySystem
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
-            _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
+            _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier, body: physics);
 
-            if (component.SuperSlippery && requiresContact)
+            if (component.SlipData.SuperSlippery && requiresContact)
             {
                 var sliding = EnsureComp<SlidingComponent>(other);
                 sliding.CollidingEntities.Add(uid);
@@ -125,7 +125,7 @@ public sealed class SlipperySystem : EntitySystem
 
         var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
 
-        _stun.TryParalyze(other, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+        _stun.TryParalyze(other, TimeSpan.FromSeconds(component.SlipData.ParalyzeTime), true);
 
         // Preventing from playing the slip sound when you are already knocked down.
         if (playSound)

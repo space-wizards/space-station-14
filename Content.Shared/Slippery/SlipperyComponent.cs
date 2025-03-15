@@ -20,6 +20,9 @@ namespace Content.Shared.Slippery
         [Access(Other = AccessPermissions.ReadWriteExecute)]
         public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
+        [DataField, AutoNetworkedField]
+        public SlipperyEffectEntry SlipData = new();
+        /*
         /// <summary>
         /// How many seconds the mob will be paralyzed for.
         /// </summary>
@@ -38,7 +41,7 @@ namespace Content.Shared.Slippery
         /// They also will fail any attempts to stand up unless they have no-slips.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public bool SuperSlippery;
+        public bool SuperSlippery;*/
     }
     /// <summary>
     /// This data definition only exists for slippery reagents to work without either it being jank or organized like shit.
