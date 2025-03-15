@@ -994,6 +994,16 @@
   - UplinkDisruption
 
 - type: listing
+  id: UplinkDuffelRunner
+  name: uplink-duffel-runner-name
+  description: uplink-duffel-runner-desc
+  productEntity: ClothingBackpackDuffelSyndicateRunnerBundle
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkDisruption
+
+- type: listing
   id: UplinkPowerSink
   name: uplink-power-sink-name
   description: uplink-power-sink-desc
@@ -1342,6 +1352,17 @@
     - UplinkImplants
 
 - type: listing
+  id: UplinkSmokeScreenImplanter
+  name: uplink-smoke-screen-implanter-name
+  description: uplink-smoke-screen-implanter-desc
+  icon: { sprite: Objects/Weapons/Grenades/smoke.rsi, state: icon }
+  productEntity: SmokeScreenImplanter
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkImplants
+
+- type: listing
   id: UplinkRadioImplanter
   name: uplink-radio-implanter-name
   description: uplink-radio-implanter-desc
@@ -1574,6 +1595,16 @@
     Telecrystal: 2
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkClothingShoesBootsSpeedSyndie
+  name: uplink-clothing-shoes-boots-speed-syndie-name
+  description: uplink-clothing-shoes-boots-speed-syndie-desc
+  productEntity: ClothingShoesBootsSpeedSyndicate
+  cost:
+    Telecrystal: 7
   categories:
   - UplinkWearables
 
