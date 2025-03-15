@@ -1,23 +1,27 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
-  - DrinkCoconutWaterJug
+  - DrinkBananaJuiceJug
+  - DrinkBerryJuiceJug
+  - DrinkCoconutCartonXL
   - DrinkCoffeeJug
-  - DrinkColaBottleFull
+  - DrinkColaJug
   - DrinkCreamCartonXL
   - DrinkDrGibbJug
   - DrinkEnergyDrinkJug
   - DrinkGreenTeaJug
   - DrinkIceJug
+  - DrinkJuiceLemonCartonXL
   - DrinkJuiceLimeCartonXL
   - DrinkJuiceOrangeCartonXL
   - DrinkLemonLimeJug
   - DrinkRootBeerJug
   - DrinkSodaWaterBottleFull
-  - DrinkSpaceMountainWindBottleFull
-  - DrinkSpaceUpBottleFull
+  - DrinkSpaceMountainWindJug
+  - DrinkSpaceUpJug
   - DrinkSugarJug
   - DrinkTeaJug
+  - DrinkJuiceTomatoCartonXL
   - DrinkTonicWaterBottleFull
   - DrinkWaterMelonJuiceJug
 
