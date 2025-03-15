@@ -431,7 +431,7 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
                 superSlipperyUnits += quantity;
         }
 
-        //Turn on the step trigger if it's slippery
+        // Turn on the step trigger if it's slippery
         _stepTrigger.SetActive(entity, true, comp);
 
         // This is based of the total volume and not just the slippery volume because there is a default
