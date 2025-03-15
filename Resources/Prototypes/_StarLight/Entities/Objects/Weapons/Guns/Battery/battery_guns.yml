@@ -35,16 +35,16 @@
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
-    fireCost: 100
+    fireCost: 50
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
-      fireCost: 100
+      fireCost: 50
       visualState: disable
       magState: disable
       heldPrefix: disable4
     - proto: TaserBolt
-      fireCost: 250
+      fireCost: 125
       visualState: stun
       magState: stun
       heldPrefix: stun4
@@ -179,14 +179,14 @@
     access: [["Security"]]
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
-    fireCost: 100
+    fireCost: 50
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
-      fireCost: 100
+      fireCost: 50
       magState: disable
     - proto: TaserBolt
-      fireCost: 250
+      fireCost: 125
       magState: stun
       conditions:
       - !type:AlertLevelCondition
@@ -197,7 +197,7 @@
         - red
         - gamma
     - proto: LaserBolt
-      fireCost: 100
+      fireCost: 50
       magState: lethal
       conditions:
       - !type:AlertLevelCondition
