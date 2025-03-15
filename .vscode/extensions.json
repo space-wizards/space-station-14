@@ -1,6 +1,10 @@
 {
     "recommendations": [
         "ms-dotnettools.csharp",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "slava0135.robust-yaml",
+        "GitHub.vscode-pull-request-github",
+        "macabeus.vscode-fluent",
+        "redhat.vscode-yaml"
     ]
 }
