@@ -1,6 +1,5 @@
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.NodeContainer.Nodes
@@ -78,7 +77,7 @@ namespace Content.Server.NodeContainer.Nodes
         ///     Invoked when the owning <see cref="NodeContainerComponent"/> is initialized.
         /// </summary>
         /// <param name="owner">The owning entity.</param>
-        public virtual void Initialize(EntityUid owner, IEntityManager entMan)
+        public virtual void Initialize(EntityUid owner, IEntityManager entMan, SharedMapSystem mapSystem)
         {
             Owner = owner;
         }
@@ -99,6 +98,7 @@ namespace Content.Server.NodeContainer.Nodes
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             MapGridComponent? grid,
-            IEntityManager entMan);
+            IEntityManager entMan,
+            SharedMapSystem mapSystem);
     }
 }

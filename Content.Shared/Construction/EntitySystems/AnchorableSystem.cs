@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -30,6 +29,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private   readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -280,12 +280,12 @@ public sealed partial class AnchorableSystem : EntitySystem
     private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
     {
         // Probably ignore CanCollide on the anchoring body?
-        var gridUid = coordinates.GetGridUid(EntityManager);
+        var gridUid = _transformSystem.GetGrid(coordinates);
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        var tileIndices = grid.TileIndicesFor(coordinates);
+        var tileIndices = _mapSystem.TileIndicesFor(gridUid.Value, grid, coordinates);
         return TileFree(grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
     }
 
@@ -329,12 +329,13 @@ public sealed partial class AnchorableSystem : EntitySystem
 
     public bool AnyUnstackablesAnchoredAt(EntityCoordinates location)
     {
-        var gridUid = location.GetGridUid(EntityManager);
+        var gridUid = _transformSystem.GetGrid(location);
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        var enumerator = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(location));
+        var tileIndices = _mapSystem.LocalToTile(gridUid.Value, grid, location);
+        var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid.Value, grid, tileIndices);
 
         while (enumerator.MoveNext(out var entity))
         {

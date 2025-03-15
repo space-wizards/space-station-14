@@ -1,4 +1,3 @@
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.NodeContainer.Nodes
@@ -10,20 +9,23 @@ namespace Content.Server.NodeContainer.Nodes
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             MapGridComponent? grid,
-            IEntityManager entMan)
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Anchored
+                || xform.GridUid == null
+                || grid == null)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, gridIndex, mapSystem))
             {
                 if (node is PortPipeNode)
                     yield return node;
             }
 
-            foreach (var node in base.GetReachableNodes(xform, nodeQuery, xformQuery, grid, entMan))
+            foreach (var node in base.GetReachableNodes(xform, nodeQuery, xformQuery, grid, entMan, mapSystem))
             {
                 yield return node;
             }
