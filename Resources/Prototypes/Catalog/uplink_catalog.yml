@@ -1123,11 +1123,6 @@
     Telecrystal: 14
   categories:
   - UplinkAllies
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
 
 - type: listing
   id: UplinkReinforcementRadioSyndicate
