@@ -1,0 +1,12 @@
+﻿advertisement-shambler-1 = I've got what you need!
+advertisement-shambler-2 = Mmmmm, metallic!
+advertisement-shambler-3 = Over 1 million drinks sold!
+advertisement-shambler-4 = Take a look at my selection!
+advertisement-shambler-5 = Hey you, have a drink!
+advertisement-shambler-6 = Shamble on down to flavor town!
+advertisement-shambler-7 = All our ingredients are secret!
+advertisement-shambler-8 = Get your shamble on, here!
+thankyou-shambler-1 = Keep it on the QT.
+thankyou-shambler-2 = The good stuff!
+thankyou-shambler-3 = Shh, it's a secret!
+thankyou-shambler-4 = ~Shake me up some of that Shambler's Juice!~
