@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: justinbrick
-  changes:
-  - message: Added a pop-up notification when extra items are dropped while unequipping
-      something.
-    type: Tweak
-  id: 7567
-  time: '2024-10-31T14:12:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33078
 - author: BramvanZijp
   changes:
   - message: The maximum amount of programs that can be installed on a PDA has been
@@ -3895,3 +3887,11 @@
   id: 8066
   time: '2025-03-15T16:24:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34095
+- author: K-Dynamic
+  changes:
+  - message: Renamed "shell box (X)" to "ammunition box (.50 X)" to match existing
+      naming scheme, and are thus easier to find in certain vendors and fabricators.
+    type: Tweak
+  id: 8067
+  time: '2025-03-15T16:43:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35326
