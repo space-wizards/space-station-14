@@ -1193,3 +1193,27 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
     state: produce
+
+# Pomegranate
+
+- type: foodSequenceElement
+  id: Pomegranate
+  name: food-sequence-content-pomegranate
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/pomegranate.rsi
+    state: produce
+  tags:
+  - Fruit
+  - Vegetable
+
+# Bombegranate
+
+- type: foodSequenceElement
+  id: Bombegranate
+  name: food-sequence-content-bombegranate
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/bombegranate.rsi
+    state: produce
+  tags:
+  - Fruit
+  - Vegetable

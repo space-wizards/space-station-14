@@ -791,6 +791,64 @@
       PotencyDivisor: 10
 
 - type: seed
+  id: pomegranate
+  name: seeds-pomegranate-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pomegranate-display-name
+  plantRsi: Objects/Specific/Hydroponics/pomegranate.rsi
+  packetPrototype: PomegranateSeeds
+  productPrototypes:
+    - FoodPomegranate
+  mutationPrototypes:
+    - bombegranate
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 4
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: bombegranate
+  name: seeds-bombegranate-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bombegranate-display-name
+  plantRsi: Objects/Specific/Hydroponics/bombegranate.rsi
+  packetPrototype: BombegranateSeeds
+  productPrototypes:
+    - FoodBombegranate
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 4
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Sulfur:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Hydrogen:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Ethanol:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+
+- type: seed
   id: corn
   name: seeds-corn-name
   noun: seeds-noun-seeds

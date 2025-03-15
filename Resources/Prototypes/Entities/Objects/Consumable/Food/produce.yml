@@ -752,6 +752,105 @@
     - Fruit
 
 - type: entity
+  name: pomegranate
+  parent: FoodProduceBase
+  id: FoodPomegranate
+  description: Fruit filled with juicy seeds.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pomegranate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
+          - ReagentId: Vitamin
+            Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pomegranate.rsi
+  - type: Produce
+    seedId: pomegranate
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: JuicePomegranate
+          Quantity: 10
+  - type: Tag
+    tags:
+      - Fruit
+  - type: FoodSequenceElement
+    entries:
+      Burger: Pomegranate
+      Taco: Pomegranate
+
+- type: entity
+  name: bombegranate
+  parent: [FoodProduceBase, ItemHeftyBase]
+  id: FoodBombegranate
+  description: Bombegranate Fruit, Fragile. Explodes on impact sending it's seeds with high velocity. Used for biofuel.
+  components:
+    - type: FlavorProfile
+      flavors:
+        - bombegranate
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 9
+          reagents:
+            - ReagentId: Sulfur
+              Quantity: 3
+            - ReagentId: Hydrogen
+              Quantity: 3
+            - ReagentId: Ethanol
+              Quantity: 3
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/bombegranate.rsi
+    - type: Produce
+      seedId: bombegranate
+    - type: Extractable
+      grindableSolutionName: food
+      juiceSolution:
+        reagents:
+          - ReagentId: WeldingFuel
+            Quantity: 15
+    - type: Damageable
+      damageContainer: Biological
+    - type: DamageOnHighSpeedImpact
+      minimumSpeed: 0.1
+      damage:
+        types:
+          Blunt: 1
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTrigger
+            damage: 1
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: desecration
+            - !type:TriggerBehavior
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: ChemicalAmmo
+      solution: food
+    - type: ProjectileGrenade
+      fillPrototype: SeedsBombegranate
+      capacity: 10
+    - type: ContainerContainer
+      containers:
+        cluster-payload: !type:Container
+    - type: Tag
+      tags:
+        - Fruit
+    - type: FoodSequenceElement
+      entries:
+        Burger: Bombegranate
+        Taco: Bombegranate
+
+- type: entity
   name: potato
   parent: FoodProduceBase
   id: FoodPotato
