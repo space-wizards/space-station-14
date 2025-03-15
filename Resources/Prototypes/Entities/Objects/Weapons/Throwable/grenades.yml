@@ -422,6 +422,20 @@
         Quantity: 30
 
 - type: entity
+  parent: CleanerGrenade
+  id: CleanerGrenadeAcid
+  suffix: Acid
+  components:
+  - type: SmokeOnTrigger
+    duration: 20 # Spends longer dissolving people who don't or can't get out of the cloud
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: UniversalSolvent
+        Quantity: 30
+
+- type: entity
   parent: SmokeGrenade
   id: TearGasGrenade
   name: tear gas grenade
