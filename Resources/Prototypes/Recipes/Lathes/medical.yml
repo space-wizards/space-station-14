@@ -172,12 +172,6 @@
   name: lathe-recipe-MedkitRadiation-name
 
 - type: latheRecipe
-  parent: Medkit
-  id: MedkitCombat
-  result: MedkitCombat
-  name: lathe-recipe-MedkitCombat-name
-
-- type: latheRecipe
   parent: BaseToolRecipe
   id: HandLabeler
   result: HandLabeler

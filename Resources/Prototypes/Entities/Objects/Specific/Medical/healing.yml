@@ -436,14 +436,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterHyronalin
-  suffix: Hyronalin 10u, 5
+  suffix: Hyronalin 10u, 7
   components:
   - type: Label
     currentLabel: hyronalin 10u
   - type: StorageFill
     contents:
     - id: PillHyronalin
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -469,14 +469,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterPotassiumIodide
-  suffix: Potassium iodide 10u, 5
+  suffix: Potassium iodide 10u, 7
   components:
   - type: Label
     currentLabel: potassium iodide 10u
   - type: StorageFill
     contents:
     - id: PillPotassiumIodide
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -568,14 +568,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterKelotane
-  suffix: Kelotane 10u, 5
+  suffix: Kelotane 10u, 7
   components:
   - type: Label
     currentLabel: kelotane 10u
   - type: StorageFill
     contents:
     - id: PillKelotane
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -647,14 +647,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterTricordrazine
-  suffix: Tricordrazine 10u, 5
+  suffix: Tricordrazine 10u, 7
   components:
   - type: Label
     currentLabel: tricordrazine 10u
   - type: StorageFill
     contents:
     - id: PillTricordrazine
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -691,6 +691,39 @@
 
 - type: entity
   name: pill
+  suffix: Inaprovaline 10u
+  parent: Pill
+  id: PillInaprovaline
+  components:
+  - type: Pill
+    pillType: 11
+  - type: Sprite
+    state: pill12
+  - type: Label
+    currentLabel: inaprovaline 10u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Inaprovaline
+          Quantity: 10
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterInaprovaline
+  suffix: Inaprovaline 10u, 7
+  components:
+  - type: Label
+    currentLabel: inaprovaline 10u
+  - type: StorageFill
+    contents:
+    - id: PillInaprovaline
+      amount: 7
+
+- type: entity
+  name: pill
   suffix: Charcoal 10u
   parent: Pill
   id: PillCharcoal
@@ -713,14 +746,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterCharcoal
-  suffix: Charcoal 10u, 3
+  suffix: Charcoal 10u, 5
   components:
   - type: Label
     currentLabel: charcoal 10u
   - type: StorageFill
     contents:
     - id: PillCharcoal
-      amount: 3
+      amount: 5
 
 - type: entity
   name: romerol pill
@@ -835,6 +868,21 @@
 
 # Syringes
 - type: entity
+  suffix: epinephrine
+  parent: PrefilledSyringe
+  id: SyringeEpinephrine
+  components:
+  - type: Label
+    currentLabel: reagent-name-epinephrine
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Epinephrine
+          Quantity: 15
+
+- type: entity
   suffix: ephedrine
   parent: PrefilledSyringe
   id: SyringeEphedrine
@@ -862,6 +910,21 @@
         maxVol: 15
         reagents:
         - ReagentId: Inaprovaline
+          Quantity: 15
+
+- type: entity
+  suffix: dexalin
+  parent: PrefilledSyringe
+  id: SyringeDexalin
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Dexalin
           Quantity: 15
 
 - type: entity
@@ -1013,6 +1076,23 @@
         reagents:
           - ReagentId: Saline
             Quantity: 15
+
+- type: entity
+  suffix: Dexalin plus & Saline
+  parent: PrefilledSyringe
+  id: SyringeAirloss
+  components:
+  - type: Label
+    currentLabel: dexalin plus & saline
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: DexalinPlus
+            Quantity: 7.5
+          - ReagentId: Saline
+            Quantity: 7.5
 
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
