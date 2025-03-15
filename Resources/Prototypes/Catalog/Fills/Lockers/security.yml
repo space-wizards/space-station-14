@@ -71,6 +71,7 @@
       - id: Flash
         prob: 0.5
       - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesHudSecurity
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesSecurityRed #Starlight
       - id: ClothingShoesBootsJack
@@ -88,7 +89,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesBrigmedic
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2
@@ -125,6 +126,8 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSecurity
+        prob: 0.3
+      - id: ClothingEyesHudSecurity
         prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet

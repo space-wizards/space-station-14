@@ -347,7 +347,7 @@
   - SecurityBelt
   - SecurityWeapon
   - HeadofSecurityOuterClothing
-  - HeadofSecurityEyewear
+  - SecurityEyewear
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -362,7 +362,7 @@
   - SecurityBackpack
   - SecurityBelt
   - WardenOuterClothing
-  - WardenEyewear
+  - SecurityEyewear
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -375,6 +375,7 @@
   - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack
+  - SecurityEyewear
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
@@ -408,6 +409,7 @@
   - DetectiveNeck
   - DetectiveJumpsuit
   - SecurityBackpack
+  - SecurityEyewear
   - DetectiveOuterClothing
   - SecurityShoes
   - SurvivalSecurity
@@ -421,6 +423,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SecurityWeapon
+  - SecurityEyewear
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathToolSecurity

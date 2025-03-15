@@ -153,7 +153,6 @@ loadout-group-head-of-security-eyewear = Head of Security eyewear
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
 loadout-group-warden-outerclothing = Warden outer clothing
-loadout-group-warden-eyewear = Warden eyewear
 
 loadout-group-security-head = Security head
 loadout-group-security-jumpsuit = Security jumpsuit
@@ -163,6 +162,7 @@ loadout-group-security-outerclothing = Security outer clothing
 loadout-group-security-shoes = Security shoes
 loadout-group-security-id = Security ID
 loadout-group-security-weapon = Security Weapon
+loadout-group-security-eyewear = Security eyewear
 
 loadout-group-brigmedic-head = Brigmedic head
 loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit

@@ -188,3 +188,13 @@
   id: SecurityTaser
   equipment:
     pocket1: WeaponAdvancedTaser
+
+- type: loadout
+  id: SecurityGlasses
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+
+- type: loadout
+  id: SecurityHud
+  equipment:
+    eyes: ClothingEyesHudSecurity

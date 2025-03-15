@@ -30,13 +30,3 @@
   id: WardenArmoredWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterWarden
-
-- type: loadout
-  id: WardenGlasses
-  equipment:
-    eyes: ClothingEyesGlassesSecurity
-
-- type: loadout
-  id: WardenHud
-  equipment:
-    eyes: ClothingEyesHudSecurity
