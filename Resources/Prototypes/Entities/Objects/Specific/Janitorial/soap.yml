@@ -153,8 +153,9 @@
     layers:
     - state: syndie-soaplet
   - type: Slippery
-    paralyzeTime: 1.5 # these things are tiny
-    launchForwardsMultiplier: 1.5
+    slipData:
+      paralyzeTime: 1.5 # these things are tiny
+      launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.04
   - type: Item
