@@ -52,7 +52,7 @@ trait-italian-name = Italian accent
 trait-italian-desc = Mamma mia! You seem to have lived in space Italy!
 
 trait-russian-name = Russian accent
-trait-russian-desc = Is шoиdeяful daУ oи Space Sтaтioи 14, da?
+trait-russian-desc = Is wonderful day on Space Station 14, da?
 
 trait-french-name = French accent
 trait-french-desc = You speak with the cadence of someone who has cast off their vow of silence.
