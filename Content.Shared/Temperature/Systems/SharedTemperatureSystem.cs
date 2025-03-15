@@ -131,7 +131,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
     public void ChangeHeat(Entity<TemperatureComponent?> target, float heatAmount, bool ignoreHeatResistance = false)
     {
-        if (!Resolve(target, ref target.Comp))
+        if (!Resolve(target, ref target.Comp, false))
             return;
 
         if (!ignoreHeatResistance)
@@ -297,7 +297,11 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
         InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
     {
-        var ev = new GetTemperatureProtectionEvent(component.Coefficient);
+        var coefficient = args.Args.TemperatureDelta < 0
+            ? component.CoolingCoefficient
+            : component.HeatingCoefficient;
+
+        var ev = new GetTemperatureProtectionEvent(coefficient);
         RaiseLocalEvent(uid, ref ev);
 
         args.Args.TemperatureDelta *= ev.Coefficient;

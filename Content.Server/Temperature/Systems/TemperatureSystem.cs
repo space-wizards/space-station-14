@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 
@@ -17,7 +17,6 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
         ref AtmosExposedUpdateEvent args)
     {
         var transform = args.Transform;
-
         if (transform.MapUid == null)
             return;
 
