@@ -33,7 +33,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     public readonly EntityUid Console;
 
-    [ValidatePrototypeId<DatasetPrototype>]
+    [ValidatePrototypeId<LocalizedDatasetPrototype>]
     private const string ReasonPlaceholders = "CriminalRecordsWantedReasonPlaceholders";
 
     public Action<uint?>? OnKeySelected;
