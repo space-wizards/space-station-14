@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: latest community books can now spawn from the artifact normal book effect
-    type: Add
-  id: 815
-  time: '2024-12-27T06:51:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1136
 - author: honeyed-lemons
   changes:
   - message: added the Supermatter Engine
@@ -4103,3 +4096,10 @@
   id: 1314
   time: '2025-03-15T05:07:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1964
+- author: mqole
+  changes:
+  - message: Spare pixels sent to the graveyard.
+    type: Fix
+  id: 1315
+  time: '2025-03-15T05:14:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1959
