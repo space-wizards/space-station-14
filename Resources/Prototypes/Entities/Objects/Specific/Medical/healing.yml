@@ -124,6 +124,7 @@
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
+    bloodlossModifier: -1
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
@@ -278,7 +279,7 @@
       types:
         Slash: -5
         Piercing: -10
-    bloodlossModifier: -10
+    bloodlossModifier: -3
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
