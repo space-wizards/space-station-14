@@ -74,7 +74,7 @@
 - type: entity
   parent: PaperPrinter
   id: PaperPrinterHeadOfPersonnel
-  name: Head of Personnel's paper printer
+  name: head of personnel's paper printer
   components:
   - type: Sprite
     color: "#a1a1d1"

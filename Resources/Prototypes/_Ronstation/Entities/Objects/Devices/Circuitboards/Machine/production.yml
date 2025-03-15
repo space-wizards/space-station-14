@@ -1,0 +1,62 @@
+- type: entity
+  id: PaperPrinterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: paper printer machine board
+  components:
+  - type: MachineBoard
+    prototype: PaperPrinter
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterSecurityMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: security paper printer machine board
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: PaperPrinterSecurity
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterEngineeringMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: engineering paper printer machine board
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: PaperPrinterEngineering
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterCaptainMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: captain's paper printer machine board
+  components:
+  - type: Sprite
+    state: command
+  - type: MachineBoard
+    prototype: PaperPrinterCaptain
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterHeadOfPersonnelMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: head of personnel's paper printer machine board
+  components:
+  - type: Sprite
+    state: command
+  - type: MachineBoard
+    prototype: PaperPrinterHeadOfPersonnel
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
