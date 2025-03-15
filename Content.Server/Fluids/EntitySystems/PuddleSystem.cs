@@ -394,25 +394,27 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
-    private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
+private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
     {
         if (!TryComp<SlipperyComponent>(entity, out var slipComp))
             return;
         if (!TryComp<StepTriggerComponent>(entity, out var comp))
             return;
 
-        /* This is the base amount of reagent needed before a puddle can be considered slippery. Is defined based on
-         the sprite theshold for a puddle larger than 5 pixels.*/
-        var slipperyThreshold = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
+        // This is the base amount of reagent needed before a puddle can be considered slippery. Is defined based on
+        // the sprite threshold for a puddle larger than 5 pixels.
+        var smallPuddleThreshold = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
+
         // Define a bunch of variables to add data into
         var slipperyUnits = FixedPoint2.Zero;
         var superSlipperyUnits = FixedPoint2.Zero;
+
         var slipStepTrigger = FixedPoint2.Zero;
         var launchMult = FixedPoint2.Zero;
         var stunTimer = FixedPoint2.Zero;
 
         //Check if the puddle is big enough to slip in to avoid doing unnecessary logic
-        if (solution.Volume <= slipperyThreshold)
+        if (solution.Volume <= smallPuddleThreshold)
         {
             _stepTrigger.SetActive(entity, false, comp);
             return;
@@ -421,30 +423,40 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         foreach (var (reagent, quantity) in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-            //Calculate the minimum speed needed to slip in the puddle through averaging the slip triggers
+
+            // Calculate the minimum speed needed to slip in the puddle. Average the overall slip thresholds for all reagents
             var deltaSlipTrigger = reagentProto.SlipData?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
             slipStepTrigger += quantity * deltaSlipTrigger;
 
             if (reagentProto.SlipData == null)
                 continue;
+
             slipperyUnits += quantity;
-            //Aggregate launch speed based on quantity
+            // Aggregate launch speed based on quantity
             launchMult += reagentProto.SlipData.LaunchForwardsMultiplier * quantity;
-            //Aggregate stun times based on quantity
+            // Aggregate stun times based on quantity
             stunTimer += reagentProto.SlipData.ParalyzeTime * quantity;
 
             if (reagentProto.SlipData.SuperSlippery)
                 superSlipperyUnits += quantity;
         }
+
         //Turn on the step trigger if it's slippery
-        _stepTrigger.SetActive(entity, slipperyUnits > slipperyThreshold, comp);
-        //Update values to determine how slippery it is
-        _stepTrigger.SetRequiredTriggerSpeed(entity, (float)(slipStepTrigger/solution.Volume));
+        _stepTrigger.SetActive(entity, true, comp);
+
+        // This is based of the total volume and not just the slippery volume because there is a default
+        // slippery for all reagents even if they aren't technically slippery.
+        slipComp.SlipData.RequiredSlipSpeed = (float)(slipStepTrigger / solution.Volume);
+        _stepTrigger.SetRequiredTriggerSpeed(entity, slipComp.SlipData.RequiredSlipSpeed);
+        // Divide these both by only total amount of slippery reagents.
+        // A puddle with 10 units of lube vs a puddle with 10 of lube and 20 catchup should stun and launch forward the same amount.
         slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
-        //To keep stun times somewhat predictable only averages based on slippery volume
         slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
-        //Only make it super slippery if there is enough super slippery units for its own puddle
-        slipComp.SlipData.SuperSlippery = superSlipperyUnits > slipperyThreshold;
+
+        // Only make it super slippery if there is enough super slippery units for its own puddle
+        slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
+
+        Dirty(entity);
     }
 
     private void UpdateSlow(EntityUid uid, Solution solution)
