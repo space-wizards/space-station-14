@@ -261,6 +261,7 @@
     - WelderExperimental
     - RemoteSignaller
     - GasAnalyzer
+    - HolofanProjectorBorg
     - GeigerCounter
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
@@ -277,9 +278,13 @@
   - type: ItemBorgModule
     items:
     - SheetSteelLingering0
+    - SheetPlasteelLingering0
     - SheetGlassLingering0
+    - SheetRGlassLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
+    - FloorTileItemWhiteLingering0
+    - FloorTileItemDarkLingering0
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
