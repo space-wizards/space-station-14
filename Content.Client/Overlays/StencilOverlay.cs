@@ -48,7 +48,7 @@ public sealed partial class StencilOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var mapUid = _mapManager.GetMapEntityId(args.MapId);
+        var mapUid = _map.GetMapOrInvalid(args.MapId);
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
 
         if (_blep?.Texture.Size != args.Viewport.Size)

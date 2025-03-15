@@ -1,5 +1,6 @@
 using System.Numerics;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Random.Rules;
 
@@ -29,10 +30,11 @@ public sealed partial class GridInRangeRule : RulesRule
         var worldPos = transform.GetWorldPosition(xform);
         var gridRange = new Vector2(Range, Range);
 
-        foreach (var _ in mapManager.FindGridsIntersecting(xform.MapID, new Box2(worldPos - gridRange, worldPos + gridRange)))
-        {
+        var intersectingGrids = new List<Entity<MapGridComponent>>();
+        mapManager.FindGridsIntersecting(xform.MapID, new Box2(worldPos - gridRange, worldPos + gridRange), ref intersectingGrids);
+
+        if (intersectingGrids.Count > 0)
             return !Inverted;
-        }
 
         return Inverted;
     }

@@ -43,13 +43,10 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         var mapId = new MapId(mapInt);
 
-        if (!MapManager.MapExists(mapId))
-            return;
-
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
-        var weatherComp = EnsureComp<WeatherComponent>(mapUid.Value);
+        EnsureComp<WeatherComponent>(mapUid.Value);
 
         //Weather Proto parsing
         WeatherPrototype? weather = null;

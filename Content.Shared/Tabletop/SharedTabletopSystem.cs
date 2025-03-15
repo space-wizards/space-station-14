@@ -17,7 +17,7 @@ namespace Content.Shared.Tabletop
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] protected readonly SharedTransformSystem Transforms = default!;
-        [Dependency] private readonly IMapManager _mapMan = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         public override void Initialize()
         {
@@ -41,7 +41,7 @@ namespace Content.Shared.Tabletop
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
             var transform = EntityManager.GetComponent<TransformComponent>(moved);
-            Transforms.SetParent(moved, transform, _mapMan.GetMapEntityId(transform.MapID));
+            Transforms.SetParent(moved, transform, _map.GetMapOrInvalid(transform.MapID));
             Transforms.SetLocalPositionNoLerp(transform, msg.Coordinates.Position);
         }
 
@@ -61,12 +61,12 @@ namespace Content.Shared.Tabletop
             if (draggableComponent.DraggingPlayer != null)
             {
                 _appearance.SetData(dragged, TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f), appearance);
-                _appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int) DrawDepth.DrawDepth.Items + 1, appearance);
+                _appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int)DrawDepth.DrawDepth.Items + 1, appearance);
             }
             else
             {
                 _appearance.SetData(dragged, TabletopItemVisuals.Scale, Vector2.One, appearance);
-                _appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int) DrawDepth.DrawDepth.Items, appearance);
+                _appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int)DrawDepth.DrawDepth.Items, appearance);
             }
         }
 

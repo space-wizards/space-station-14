@@ -181,7 +181,7 @@ public sealed class NukeOpsTest
         }
 
         Assert.That(!entMan.EntityExists(nukieStationEnt)); // its not supposed to be a station!
-        Assert.That(server.MapMan.MapExists(gridsRule.Map));
+        Assert.That(mapSys.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
         var targetStation = entMan.GetComponent<StationDataComponent>(ruleComp.TargetStation!.Value);
@@ -222,7 +222,7 @@ public sealed class NukeOpsTest
 
         // Check the nukie commander passed basic training and figured out how to breathe.
         var totalSeconds = 30;
-        var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
+        var totalTicks = (int)Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
         var increment = 5;
         var resp = entMan.GetComponent<RespiratorComponent>(player);
         var damage = entMan.GetComponent<DamageableComponent>(player);
@@ -251,7 +251,7 @@ public sealed class NukeOpsTest
                 "All nukies were deleted, but the round didn't end!");
         });
 
-        ticker.SetGamePreset((GamePresetPrototype?) null);
+        ticker.SetGamePreset((GamePresetPrototype?)null);
         await pair.CleanReturnAsync();
     }
 }

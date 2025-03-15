@@ -255,7 +255,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
                     "Machine available inventory count is not greater than zero after restock.");
 
-                mapManager.DeleteMap(testMap.MapId);
+                var mapSystem = entitySystemManager.GetEntitySystem<SharedMapSystem>();
+                mapSystem.DeleteMap(testMap.MapId);
             });
 
             await pair.CleanReturnAsync();
@@ -300,7 +301,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(damageResult, Is.Not.Null,
                     "Received null damageResult when attempting to damage restock box.");
 
-                Assert.That((int) damageResult!.GetTotal(), Is.GreaterThan(0),
+                Assert.That((int)damageResult!.GetTotal(), Is.GreaterThan(0),
                     "Box damage result was not greater than 0.");
 #pragma warning restore NUnit2045
             });
@@ -319,7 +320,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(totalRamen, Is.EqualTo(2),
                     "Did not find enough ramen after destroying restock box.");
 
-                mapManager.DeleteMap(testMap.MapId);
+                var mapSystem = entitySystemManager.GetEntitySystem<SharedMapSystem>();
+                mapSystem.DeleteMap(testMap.MapId);
             });
 
             await pair.CleanReturnAsync();
