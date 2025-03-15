@@ -720,6 +720,16 @@
 
 #Italian
 - type: microwaveMealRecipe
+  id: RecipeRawSpaghetti
+  name: raw spaghetti recipe
+  result: FoodNoodlesBoiled
+  time: 15
+  reagents:
+    Water: 10
+  solids:
+    FoodNoodlesRaw: 1
+
+- type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
   name: boiled spaghetti recipe
   result: FoodNoodlesBoiled
