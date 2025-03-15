@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
@@ -84,6 +85,17 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             Dirty(uid, appearance);
         }
 
+        // toggleable clothing logic for the chameleon hardsuit
+        if (TryComp(uid, out ToggleableClothingComponent? toggleableClothing) && toggleableClothing?.ClothingUid != null &&
+            proto.TryGetComponent("ToggleableClothing", out ToggleableClothingComponent? toggleableClothingOther))
+        {
+            if (TryComp(toggleableClothing?.ClothingUid, out ChameleonClothingComponent? chamaleonClothingComponent))
+            {
+                UpdateVisuals((EntityUid)toggleableClothing!.ClothingUid!, chamaleonClothingComponent);
+            }
+        }
+
+
         // properly mark contraband
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
         {
@@ -117,7 +129,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Check if this entity prototype is valid target for chameleon item.
     /// </summary>
-    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, string? requiredTag = null)
+    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, HashSet<ProtoId<TagPrototype>>? requiredTags = null)
     {
         // check if entity is valid
         if (proto.Abstract || proto.HideSpawnMenu)
@@ -127,7 +139,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (!proto.TryGetComponent(out TagComponent? tag, _factory) || !_tag.HasTag(tag, "WhitelistChameleon"))
             return false;
 
-        if (requiredTag != null && !_tag.HasTag(tag, requiredTag))
+        if (requiredTags != null && requiredTags.All(requiredTag => !_tag.HasTag(tag, requiredTag)))
             return false;
 
         // check if it's valid clothing

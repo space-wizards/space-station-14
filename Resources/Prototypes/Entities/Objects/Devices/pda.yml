@@ -1452,7 +1452,8 @@
   - type: ChameleonClothing
     slot: [idcard]
     default: PassengerPDA
-    requireTag: WhitelistChameleonPDA
+    requireTags:
+    - WhitelistChameleonPDA
   - type: UserInterface
     interfaces:
       enum.PdaUiKey.Key:

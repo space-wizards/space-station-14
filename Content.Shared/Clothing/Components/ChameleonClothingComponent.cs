@@ -1,5 +1,6 @@
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -37,7 +38,7 @@ public sealed partial class ChameleonClothingComponent : Component
     ///     Filter possible chameleon options by a tag in addition to WhitelistChameleon.
     /// </summary>
     [DataField]
-    public string? RequireTag;
+    public HashSet<ProtoId<TagPrototype>> RequireTags = new();
 }
 
 [Serializable, NetSerializable]
@@ -45,13 +46,13 @@ public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
     public readonly string? SelectedId;
-    public readonly string? RequiredTag;
+    public readonly HashSet<ProtoId<TagPrototype>>? RequiredTags;
 
-    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId, string? requiredTag)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId, HashSet<ProtoId<TagPrototype>>? requiredTags)
     {
         Slot = slot;
         SelectedId = selectedId;
-        RequiredTag = requiredTag;
+        RequiredTags = requiredTags;
     }
 }
 
