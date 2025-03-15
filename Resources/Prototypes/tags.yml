@@ -1073,6 +1073,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RemovableMindShield
+
+- type: Tag
   id: ReptilianFood
 
 - type: Tag
@@ -1311,6 +1314,9 @@
 
 - type: Tag
   id: Unimplantable
+
+- type: Tag
+  id: UnremovableMindShield
 
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile

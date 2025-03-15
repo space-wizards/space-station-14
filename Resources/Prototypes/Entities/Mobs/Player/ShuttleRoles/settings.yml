@@ -18,11 +18,14 @@
 
 - type: randomHumanoidSettings
   id: VisitorCaptain
-  parent: VisitorHead
+  parent: EventHumanoidPermaMindShielded
   components:
     - type: GhostRole
       name: job-name-captain
       description: ghost-role-information-command-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
     - type: Loadout
       prototypes: [ VisitorCaptain, VisitorCaptainAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
