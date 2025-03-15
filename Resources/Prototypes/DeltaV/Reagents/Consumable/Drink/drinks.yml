@@ -72,29 +72,6 @@
         amount: 0.05
 
 - type: reagent
-  id: Daiquiri
-  name: reagent-name-daiquiri
-  parent: BaseDrink
-  desc: reagent-desc-daiquiri
-  physicalDesc: reagent-physical-desc-tart
-  flavor: daiquiri
-  color: "#ddffdd"
-  metamorphicSprite:
-    sprite: DeltaV/Objects/Consumable/Drinks/daiquiri.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 3
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.25
-
-- type: reagent
   id: ArsonistsBrew
   name: reagent-name-arsonistsbrew
   parent: BaseDrink

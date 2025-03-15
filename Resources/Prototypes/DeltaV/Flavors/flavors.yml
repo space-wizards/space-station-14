@@ -93,11 +93,6 @@
   description: flavor-complex-greengrass
 
 - type: flavor
-  id: daiquiri
-  flavorType: Complex
-  description: flavor-complex-daiquiri
-
-- type: flavor
   id: arsonistsbrew
   flavorType: Complex
   description: flavor-complex-arsonistsbrew
