@@ -27,6 +27,7 @@
     criteria:
       components:
       - Spectral # reacts to AI eye, intentional
+      requireAll: false
   - type: Beeper
     isMuted: true
     minBeepInterval: 0.25
