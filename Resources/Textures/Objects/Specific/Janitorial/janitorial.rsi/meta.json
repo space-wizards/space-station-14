@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, mopbucket_shark_* by Psychpsyo, mopbucket_carpplush adapted by Psychpsyo from tgstation carpplush at commit https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, mopbucket_shark_* by Psychpsyo, mopbucket_carpplush adapted by Psychpsyo from tgstation carpplush at commit https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, mopbucket_cube is monkey cube taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi and modified by Hrosts",
   "size": {
     "x": 32,
     "y": 32
@@ -36,6 +36,9 @@
     },
     {
       "name": "mopbucket_carpplush"
+    },
+    {
+      "name": "mopbucket_cube"
     },
     {
       "name": "inhand-left",
