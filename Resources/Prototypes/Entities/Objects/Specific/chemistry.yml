@@ -225,6 +225,47 @@
     price: 20
 
 - type: entity
+  name: test beaker
+  parent: BaseBeaker
+  description: Used to contain a large amount of chemicals or solutions.
+  id: TestBeaker
+  components:
+  - type: Spillable
+    solution: beaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    layers:
+    - state: beakerlarge
+    - state: beakerlarge1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beakerlarge
+    inHandsMaxFillLevels: 4
+    inHandsFillBaseName: -fill-
+  - type: ConvectionHeat
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    conductivity: 0.2
+    thickness: 0.05
+    area: 0.5
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
+  - type: StaticPrice
+    price: 20
+
+- type: entity
   name: cryostasis beaker
   parent: BaseBeakerMetallic
   description: Used to contain chemicals or solutions without reactions.
@@ -590,7 +631,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist: 
+    whitelist:
       tags:
       - Pill
   - type: Dumpable
