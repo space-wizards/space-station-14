@@ -11,17 +11,17 @@
   name: syndicate agent
   suffix: Human, Base
   components:
-    #- type: RandomHumanoidAppearance - GreyStation
-    #  randomizeName: false
-    #  hair: HairBald
-    - type: Loadout
-      prototypes: [SyndicateOperativeGearExtremelyBasic]
-      roleLoadout: [ RoleSurvivalSyndicate ]
-    - type: RandomMetadata
-      nameSegments: [names_death_commando]
-    - type: NpcFactionMember
-      factions:
-      - Syndicate
+#  - type: RandomHumanoidAppearance
+#    randomizeName: false
+#    hair: HairBald
+  - type: Loadout
+    prototypes: [SyndicateOperativeGearExtremelyBasic]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+  - type: RandomMetadata
+    nameSegments: [NamesDeathCommando]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
 
 - type: entity
   parent: MobHumanSyndicateAgentBase
@@ -69,7 +69,7 @@
   - type: RandomMetadata
     nameSegments:
     - nukeops-role-operator
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -97,8 +97,8 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
   - type: NpcFactionMember
     factions:
     - Syndicate
