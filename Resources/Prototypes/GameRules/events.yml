@@ -33,6 +33,7 @@
     - id: DragonSpawn
     - id: KingRatMigration
     - id: NinjaSpawn
+    - id: ParadoxCloneSpawn
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
@@ -237,9 +238,9 @@
   id: ParadoxCloneSpawn
   components:
   - type: StationEvent
-    weight: 4 # should not happen every round
+    weight: 5
     duration: null
-    earliestStart: 30
+    earliestStart: 20
     reoccurrenceDelay: 20
     minimumPlayers: 15
   - type: ParadoxCloneRule
