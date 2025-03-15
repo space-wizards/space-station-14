@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: added the Supermatter Engine
-    type: Add
-  - message: Radiation shielding adjustments.
-    type: Tweak
-  - message: Radiation no longer prevents doafters
-    type: Tweak
-  id: 816
-  time: '2024-12-28T00:31:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1138
 - author: ATDoop
   changes:
   - message: 3 new lollipops for the chef to make (meat, cloth, and fruit), and one
@@ -4103,3 +4092,10 @@
   id: 1315
   time: '2025-03-15T05:14:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1959
+- author: TheGrimbeeper
+  changes:
+  - message: BROS are no longer poisoned by BROSochloricBROS
+    type: Fix
+  id: 1316
+  time: '2025-03-15T08:21:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1962
