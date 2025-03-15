@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jarmer123
-  changes:
-  - message: You can now find a spare bible in the PietyVend
-    type: Add
-  id: 7566
-  time: '2024-10-31T13:26:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32363
 - author: justinbrick
   changes:
   - message: Added a pop-up notification when extra items are dropped while unequipping
@@ -3895,3 +3888,10 @@
   id: 8065
   time: '2025-03-15T15:57:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34578
+- author: sowelipililimute
+  changes:
+  - message: Added NanoTask
+    type: Add
+  id: 8066
+  time: '2025-03-15T16:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34095
