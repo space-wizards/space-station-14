@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BasePlasticExplosive
   parent: BaseItem
   abstract: true
@@ -111,3 +111,51 @@
     maxIntensity: 30
     canCreateVacuum: false
   - type: ExplodeOnTrigger
+
+- type: entity
+  name: cluwne bomb
+  suffix: Real
+  description: It finds this situation quite hilarious.
+  parent: [BasePlasticExplosive, BaseSyndicateContraband]
+  id: CluwneBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/cluwne_bomb.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Item
+    storedRotation: -90
+  - type: OnUseTimerTrigger
+    delay: 10
+    delayOptions: [10, 30, 60, 120, 300]
+    beepInterval: 2
+    beepSound: /Audio/Voice/Cluwne/cluwnelaugh1.ogg
+    startOnStick: true
+    canToggleStartOnStick: true
+  - type: TimerStartOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Timer
+  - type: Explosive
+    explosionType: Radioactive
+    totalIntensity: 150
+    intensitySlope: 4
+    maxIntensity: 90
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+
+- type: entity
+  name: cluwne bomb
+  suffix: Decoy
+  description: It finds this situation quite hilarious.
+  parent: [BasePlasticExplosive, BaseSyndicateContraband, CluwneBomb]
+  id: FakeCluwneBomb
+  components:
+  - type: Explosive 
+    explosionType: Radioactive
+    totalIntensity: 0.1
+    intensitySlope: 0.1
+    maxIntensity: 0.1
+    canCreateVacuum: false

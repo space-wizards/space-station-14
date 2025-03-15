@@ -59,3 +59,14 @@
         amount: 1
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesColorBlack
+
+- type: entity
+  id: BriefcaseSyndieCluwneBombBundleFilled
+  parent: BriefcaseSyndie
+  suffix: Syndicate, Cluwne Bombs
+  components:
+  - type: StorageFill
+    contents:
+      - id: CluwneBomb
+      - id: FakeCluwneBomb
+        amount: 5
