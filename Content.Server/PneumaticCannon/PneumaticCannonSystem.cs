@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Systems;
@@ -61,11 +62,11 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (args.Container.ID != PneumaticCannonComponent.TankSlotId)
             return;
 
-        if (!TryComp<GasTankComponent>(args.EntityUid, out var gas))
+        if (!TryComp<InternalAirComponent>(args.EntityUid, out var internalAir))
             return;
 
         // only accept tanks if it uses gas
-        if (gas.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
+        if (internalAir.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
             return;
 
         args.Cancel();
@@ -76,7 +77,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         var (uid, component) = cannon;
         // require a gas tank if it uses gas
         var gas = GetGas(cannon);
-        if (gas == null && component.GasUsage > 0f)
+        if (gas.GasTank == null && component.GasUsage > 0f)
             return;
 
         if (TryComp<StatusEffectsComponent>(args.User, out var status)
@@ -88,18 +89,18 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         }
 
         // ignore gas stuff if the cannon doesn't use any
-        if (gas == null)
+        if (gas.GasTank == null)
             return;
 
         // this should always be possible, as we'll eject the gas tank when it no longer is
         var environment = _atmos.GetContainingMixture(cannon.Owner, false, true);
-        var removed = _gasTank.RemoveAir(gas.Value, component.GasUsage);
+        var removed = _gasTank.RemoveAir(gas.GasTank.Value, component.GasUsage);
         if (environment != null && removed != null)
         {
             _atmos.Merge(environment, removed);
         }
 
-        if (gas.Value.Comp.Air.TotalMoles >= component.GasUsage)
+        if (gas.InternalAirComponent != null && gas.InternalAirComponent.Air.TotalMoles >= component.GasUsage)
             return;
 
         // eject gas tank
@@ -115,13 +116,13 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     /// <summary>
     ///     Returns whether the pneumatic cannon has enough gas to shoot an item, as well as the tank itself.
     /// </summary>
-    private Entity<GasTankComponent>? GetGas(EntityUid uid)
+    private (Entity<GasTankComponent>? GasTank, InternalAirComponent? InternalAirComponent) GetGas(EntityUid uid)
     {
         if (!Container.TryGetContainer(uid, PneumaticCannonComponent.TankSlotId, out var container) ||
             container is not ContainerSlot slot || slot.ContainedEntity is not {} contained)
-            return null;
-
-        return TryComp<GasTankComponent>(contained, out var gasTank) ? (contained, gasTank) : null;
+            return (null, null);
+        
+        return (TryComp<GasTankComponent>(contained, out var gasTank) ? (contained, gasTank) : null, Comp<InternalAirComponent>(contained));
     }
 
     private float GetProjectileSpeedFromPower(PneumaticCannonComponent component)

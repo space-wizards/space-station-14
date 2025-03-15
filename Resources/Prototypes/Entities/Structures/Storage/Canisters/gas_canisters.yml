@@ -118,7 +118,8 @@
       layers:
         - state: yellow
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles: # List of gasses for easy reference
           - 0 # oxygen
@@ -167,7 +168,8 @@
     layers:
       - state: grey
   - type: GasCanister
-    gasMixture:
+  - type: InternalAir
+    air:
       volume: 1000
       moles:
         - 393.0592071 # oxygen 21%
@@ -207,7 +209,8 @@
     layers:
       - state: blue
   - type: GasCanister
-    gasMixture:
+  - type: InternalAir
+    air:
       volume: 1000
       moles:
         - 1871.71051 # oxygen
@@ -243,7 +246,8 @@
   description: A canister that can contain any type of gas. This one is supposed to contain liquid oxygen. It can be attached to connector ports using a wrench.
   components:
   - type: GasCanister
-    gasMixture:
+  - type: InternalAir
+    air:
       volume: 1000
       moles:
         - 18710.71051 # oxygen
@@ -261,7 +265,8 @@
       layers:
         - state: red
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -298,7 +303,8 @@
   description: A canister that can contain any type of gas. This one is supposed to contain liquid nitrogen. It can be attached to connector ports using a wrench.
   components:
   - type: GasCanister
-    gasMixture:
+  - type: InternalAir
+    air:
       volume: 1000
       moles:
         - 0 # oxygen
@@ -317,7 +323,8 @@
       layers:
         - state: black
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -357,7 +364,8 @@
   description: A canister that can contain any type of gas. This one is supposed to contain liquid carbon dioxide. It can be attached to connector ports using a wrench.
   components:
   - type: GasCanister
-    gasMixture:
+  - type: InternalAir
+    air:
       volume: 1000
       moles:
         - 0 # oxygen
@@ -377,7 +385,8 @@
       layers:
         - state: orange
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -421,7 +430,8 @@
       layers:
         - state: green
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -466,7 +476,8 @@
       layers:
         - state: water_vapor
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -510,7 +521,8 @@
       layers:
         - state: greenys
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -557,7 +569,8 @@
       layers:
         - state: redws
     - type: GasCanister
-      gasMixture:
+    - type: InternalAir
+      air:
         volume: 1000
         moles:
           - 0 # oxygen
@@ -605,7 +618,8 @@
     layers:
     - state: frezon
   - type: GasCanister
-    gasMixture:
+  - type: InternalAir
+    air:
       volume: 1000
       moles:
       - 0 # oxygen
