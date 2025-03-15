@@ -1,9 +1,218 @@
 - type: entity
   id: OrganThavenBrain
-  parent: [BaseItem, OrganHumanBrain]
+  parent: OrganHumanBrain
   name: thaven brain
   description: "An organic positronic brain. Quite remarkable, really."
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
-      state: brain-thaven
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 3
+        - ReagentId: CarpoToxin
+          Quantity: 12
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenEyes
+  parent: OrganHumanEyes
+  name: thaven eyes
+  description: "The dark sclera have a faint, iridescent coating."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenLungs
+  parent: OrganHumanLungs
+  name: thaven lungs
+  description: "Technically not lungs since they don't draw chemicals from the air, these strange, durable organs use the motion of respiration to provide energy for cell maintenance."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenHeart
+  parent: OrganHumanHeart
+  name: thaven heart
+  description: "The toxic heart of a thaven. You're wearing gloves, right?"
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Human, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenStomach
+  parent: OrganAnimalStomach
+  name: thaven stomach
+  description: "Surprisingly similar to the stomach of a sharkminnow."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [Animal, Thaven]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 80
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenLiver
+  parent: OrganHumanLiver
+  name: thaven liver
+  description: "It loosely resembles a slab of dragon flesh."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh
+
+- type: entity
+  id: OrganThavenKidneys
+  parent: OrganHumanKidneys
+  name: thaven kidneys
+  description: "Shiny, coppery veins make these the most ornate kidneys known to modern science."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
+  - type: Metabolizer
+    metabolizerTypes: [Animal, Thaven]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - thavenflesh

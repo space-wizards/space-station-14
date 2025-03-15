@@ -1,7 +1,7 @@
 - type: entity
   id: BaseShellShotgun
   name: shell (.50)
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: BaseCartridge
   abstract: true
   components:
   - type: Tag
@@ -22,6 +22,7 @@
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (.50 stun slug)
+  description: A shotgun shell with a slug designed to subdue targets, knocking the wind out of them and delivering a nasty shock.
   parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
@@ -42,7 +43,8 @@
 - type: entity
   id: ShellShotgunSlug
   name: shell (.50 slug)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband]
+  description: A shotgun shell loaded with a single large projectile. Acts like a really big bullet.
   components:
   - type: Sprite
     layers:
@@ -56,6 +58,7 @@
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
+  description: A shotgun shell loaded with an illumination flare, much like a flare gun.
   parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
@@ -74,8 +77,9 @@
 
 - type: entity
   id: ShellShotgun
-  name: shell (.50)
-  parent: BaseShellShotgun
+  name: shell (.50 buckshot)
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: Double-ought buckshot, the default of shotgun shells. Delivers a spread of lethal pellets.
   components:
   - type: Sprite
     layers:
@@ -87,7 +91,8 @@
 - type: entity
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: A shotgun shell loaded with soft pellets containing a pyrophoric compound, setting targets ablaze.
   components:
   - type: Sprite
     layers:
@@ -101,7 +106,8 @@
 - type: entity
   id: ShellShotgunPractice
   name: shell (.50 practice)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: A shotgun shell loaded with wax pellets to simulate the real deal. Can be used for force-on-force training, but still stings like a bitch. Eye protection recommended.
   components:
   - type: Sprite
     layers:
@@ -115,7 +121,8 @@
 - type: entity
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  description: A shotgun shell loaded with a single hypodermic needle, designed to deliver a reagent to its target.
   components:
   - type: Tag
     tags:
@@ -142,9 +149,9 @@
 
 - type: entity
   id: ShellShotgunImprovised
-  name: improvised shotgun shell
+  name: shell (.50 improvised)
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
   - type: Tag
     tags:
@@ -165,8 +172,9 @@
 
 - type: entity
   id: ShellShotgunUranium
-  name: uranium shotgun shell
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  name: shell (.50 uranium)
+  description: A shotgun shell loaded with dense depleted uranium. The heavier pellets tighten the spread of the shot and deliver radiation poisoning, at the cost of worse penetration.
   components:
     - type: Sprite
       layers:

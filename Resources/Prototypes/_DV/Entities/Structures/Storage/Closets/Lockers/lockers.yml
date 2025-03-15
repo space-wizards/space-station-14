@@ -4,10 +4,27 @@
   name: administrative assistant's locker
   components:
   - type: Sprite
-    sprite: _DV/Structures/Storage/closet.rsi
+    sprite: _Impstation/Structures/Storage/aacloset.rsi
+    noRot: true
+    layers:
+    - state: aa
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: aa_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals
-    stateBaseClosed: admin_assist
-    stateDoorOpen: admin_assist_open
-    stateDoorClosed: admin_assist_door
+    stateBaseClosed: aa
+    stateDoorOpen: aa_open
+    stateDoorClosed: aa_door
   - type: AccessReader
     access: [["Command"]]

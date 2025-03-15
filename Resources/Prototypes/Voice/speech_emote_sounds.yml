@@ -1046,6 +1046,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams # Imp addition
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
@@ -1064,6 +1066,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams # Imp addition
     Laugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
@@ -1085,6 +1089,8 @@
   sounds:
     Clap:
       collection: Claps
+    ClapSingle:
+      collection: ClapSingle
     Snap:
       collection: Snaps
       params:
@@ -1103,6 +1109,9 @@
   sounds:
     Clap:
       path: /Audio/Voice/Diona/diona_clap.ogg
+    # TODO: Replace this with a similar wood themed single clap
+    ClapSingle:
+      collection: ClapSingle
     Snap:
       path: /Audio/Voice/Diona/diona_snap.ogg
     Salute:
@@ -1126,6 +1135,8 @@
         variation: 0.125
     Clap:
       collection: Claps
+    ClapSingle:
+      collection: ClapSingle
     Snap:
       collection: Snaps
       params:

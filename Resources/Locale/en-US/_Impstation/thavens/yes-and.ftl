@@ -31,8 +31,8 @@ thaven-mood-never-alone-desc = You should strive to be around others whenever po
 thaven-mood-very-religious-name = You Are Very Religious
 thaven-mood-very-religious-desc = You should attend the chapel regularly to pray, and speak with the Chaplain if possible.
 
-thaven-mood-only-speak-to-command-name = VIP
-thaven-mood-only-speak-to-command-desc = You are too important to speak to the rabble. You will only speak to command.
+thaven-mood-only-speak-to-command-name = Command Knows Best
+thaven-mood-only-speak-to-command-desc = Problems you encounter are too complex to be solved by your peers. Escalate them to a member of command for advice instead.
 
 thaven-mood-scheduler-name = Punctual
 thaven-mood-scheduler-desc = You believe that time must be strictly managed. Everything should be scheduled in advance, and tardiness is exceptionally rude.
@@ -82,9 +82,6 @@ thaven-mood-sacred-blood-desc = It must be returned to your body if it is ever s
 thaven-mood-gift-reciever-name = Proper Compensation
 thaven-mood-gift-reciever-desc = You expect to receive a gift before following any orders or performing any favors.
 
-thaven-mood-new-job-name = Jobhopping
-thaven-mood-new-job-desc = Your current job is disgusting to you. You must endeavor to get a new one.
-
 thaven-mood-no-department-title-name = Extremely Personable
 thaven-mood-no-department-title-desc = Calling out the name of a department to summon someone is impersonal and rude. It's better to use the name of a specific person from that department.
 
@@ -101,7 +98,7 @@ thaven-mood-item-good-name = Collector
 thaven-mood-item-good-desc = {$item} are endlessly fascinating to you. You must collect as many as you can, and ensure others treat them with appropriate respect.
 
 thaven-mood-smoker-name = Smoker
-thaven-mood-smoker-desc = You are hopelessly addicted to cigarettes. If you're not actively smoking, you experience withdrawal symptoms.
+thaven-mood-smoker-desc = You are hopelessly addicted to nicotine. If you're not actively smoking, you experience withdrawal symptoms.
 
 thaven-mood-eye-for-eye-name = Eye For An Eye
 thaven-mood-eye-for-eye-desc = Retribution should be proportional.
@@ -113,7 +110,7 @@ thaven-mood-hypochondriac-name = Hypochondriac
 thaven-mood-hypochondriac-desc = You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
 
 thaven-mood-imposter-syndrome-name = Imposter Syndrome
-thaven-mood-imposter-syndrome-desc = You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes.
+thaven-mood-imposter-syndrome-desc = You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes, or, lacking that, find a guidebook.
 
 thaven-mood-yes-man-name = Yes Man
 thaven-mood-yes-man-desc = You just can't say "no." You must agree with everyone, and perform any task requested of you, regardless of its source.

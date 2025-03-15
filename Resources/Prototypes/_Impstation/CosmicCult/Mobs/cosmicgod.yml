@@ -106,3 +106,15 @@
     radius: 25
     energy: 25
     color: "#43286a"
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: false
+    makeSentient: true
+    name: ghost-role-information-theunknown-name
+    description: ghost-role-information-theunknown-description
+    rules: ghost-role-information-theunknown-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+        settings: short
+  - type: GhostTakeoverAvailable

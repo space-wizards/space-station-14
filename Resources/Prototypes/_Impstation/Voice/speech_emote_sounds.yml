@@ -102,3 +102,70 @@
       collection: MonkeyScreeches
     DefaultDeathgasp:
       path: /Audio/_Impstation/Animals/bros_hurt.ogg
+
+- type: emoteSounds
+  id: TckTck
+  params:
+    variation: 0.05
+  sounds:
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg
+
+- type: emoteSounds
+  id: Suppy
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_EE/Supermatter/status/engine_alert2.ogg
+    Laugh:
+      path: /Audio/_EE/Supermatter/status/terminal_alert.ogg
+    Sneeze:
+      path: /Audio/_EE/Supermatter/emitter2.ogg
+    Cough:
+      path: /Audio/_EE/Supermatter/accent/delam/2.ogg
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      path: /Audio/_EE/Supermatter/charge.ogg
+    Snore:
+      path: /Audio/_EE/Supermatter/accent/delam/2.ogg
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      path: /Audio/_EE/Supermatter/charge.ogg
+    Crying:
+      path: /Audio/_EE/Supermatter/accent/delam/10.ogg
+    Whistle:
+      path: /Audio/_EE/Supermatter/marauder.ogg
+    Weh:
+      collection: Weh
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Blink:
+      collection: Blinks
+      params:
+        volume: -3
+        variation: 0
+    Gasp:
+      path: /Audio/_EE/Supermatter/charge.ogg
+    DefaultDeathgasp:
+      path: /Audio/_EE/Supermatter/status/ohfuck.ogg

@@ -40,7 +40,7 @@ public sealed class ContainerFillSystem : EntitySystem
                 if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
-                    Transform(ent).AttachToGridOrMap();
+                    _transform.AttachToGridOrMap(ent);
                     break;
                 }
             }

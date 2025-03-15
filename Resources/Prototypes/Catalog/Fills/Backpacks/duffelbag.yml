@@ -33,22 +33,22 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
-  name: Bulldog bundle
-  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  name: Hydra bundle
+  description: "Lean and mean: Contains the popular Hydra shotgun, a .50 stun slug drum and 3 .50 buckshot drums." #, and a pair of Thermal Imaging Goggles. #imp edit
   components:
   - type: StorageFill
     contents:
       - id: WeaponShotgunBulldog
       - id: MagazineShotgun
       - id: MagazineShotgun
-      - id: MagazineShotgunBeanbag
+      - id: MagazineShotgun
 #     - id: ThermalImagingGoggles
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSMG
-  name: C-20r bundle
-  description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
+  name: C-20R Gorgon bundle #imp
+  description: "Old faithful: The classic C-20R Gorgon submachine gun, bundled with 3 magazines." #, and a Suppressor. #imp
   components:
   - type: StorageFill
     contents:
@@ -57,11 +57,11 @@
         amount: 2
 #     - id: SMGSuppressor
 
-- type: entity
+- type: entity #imp gun yayaya!!!
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledBR
-  name: Nemesis-11 bundle
-  description: "Precise and deadly, just as a professional should be. Bundled with three magazines."
+  name: Basilisk-11 bundle
+  description: "Precise and deadly, just as a professional should be. Bundled with 3 magazines."
   components:
   - type: StorageFill
     contents:
@@ -73,7 +73,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
-  description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
+  description: "Go loud and proud with a fully loaded Python revolver, bundled with 2 speed loaders." #imp, number format
   components:
   - type: StorageFill
     contents:
@@ -84,8 +84,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledLMG
-  name: L6 Saw bundle
-  description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
+  name: L6 Nidhogg SAW bundle
+  description: "More dakka: The iconic L6 Nidhogg light machine gun, bundled with 2 box magazines." #imp
   components:
   - type: StorageFill
     contents:
@@ -95,8 +95,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
-  name: China-Lake bundle
-  description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
+  name: China Lake bundle #imp, remove hyphen
+  description: "An old China Lake grenade launcher bundled with 11 grenades of various destructive capability." #imp, gammar
   components:
   - type: StorageFill
     contents:
@@ -128,7 +128,7 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20R Gorgon, 4 drums for the Hydra, and 2 ammo boxes for the L6 Nidhogg SAW." #imp
   components:
   - type: StorageFill
     contents:

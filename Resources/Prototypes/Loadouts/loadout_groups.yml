@@ -22,6 +22,7 @@
   - ClothingHeadHatKippahWhiteAndBlue #imp
   - ClothingHeadPaperSack #imp
   - ClothingHeadPaperSackSmile #imp
+  - ClothingNeckLGBTPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
   - ClothingNeckAutismPin
@@ -34,6 +35,7 @@
   - ClothingNeckNonBinaryPin
   - ClothingNeckPansexualPin
   - ClothingNeckOmnisexualPin
+  - ClothingNeckGenderqueerPin
   - ClothingNeckTransPin
   - FlippoLighter #imp
   - FlowerWreath
@@ -46,6 +48,7 @@
   - HarmonicaInstrument #imp
   - Headphones
   - HeartLocket #imp
+  - HeartLocketSilver #imp
   - Lighter
   - NewtonCradle #imp
   - PlushieDoll #imp
@@ -612,6 +615,7 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+  - MimePufferCoat #imp
 
 - type: loadoutGroup
   id: MimeBelt
@@ -719,6 +723,7 @@
   loadouts:
   - QuartermasterWintercoat
   - QuartermasterWintercoatXXXL #imp
+  - QuartermasterPoncho #imp
 
 - type: loadoutGroup
   id: QuartermasterShoes
@@ -781,6 +786,7 @@
   loadouts:
   - SalvageSpecialistWintercoat
   - BomberCargo #imp
+  - SalvageSpecialistDecapoidCoat #imp
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes
@@ -842,6 +848,7 @@
 - type: loadoutGroup
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
+  minLimit: 0
   loadouts:
   - StationEngineerHardhatYellow
   - StationEngineerHardhatOrange

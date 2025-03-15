@@ -8,7 +8,9 @@
   "copyright": "https://github.com/vgstation-coders/vgstation13/commit/1fbb5e417d0200fe60c6b628656a371093d2d715",
   "copyright": "https://github.com/tgstation/tgstation/commit/68aade356cf53032f206cb5a887581ac7d166cae",
   "copyright": "https://github.com/space-wizards/space-station-14/commit/b301d3ac26cb2301048eda4535667c28e2283d41 - Made by ProPandaBear for SS14",
-  "copyright" : "imp by starlighthowls",
+  "copyright": "maltroach made by robinthedragon for SS14, based on maltroach by MoffNyan for tgstation at commit https://github.com/tgstation/tgstation/commit/dcf2f8268d21e91dcb9d9d4c199e8e8dd3984d60",
+  "copyright": "whiskeyechoes by cerebralerror (Discord) from frontier station at commit https://github.com/new-frontiers-14/frontier-station-14/commit/9ecd9645151fd03c6b0bfdda104188a2bc73c96b",
+  "copyright": "imp by starlighthowls",
   "states": [
     {
       "name": "combocafe",
@@ -499,9 +501,44 @@
       ]
     },
     {
-        "name": "imp",
-        "delays": [
-          [
+      "name": "maltroach",
+      "delays": [
+        [
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          0.75,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whiskeyechoes",
+      "delays": [
+        [
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1, 0.1, 0.1
+        ]
+      ]
+    },
+    {
+     "name": "imp",
+     "delays": [
+        [
             1,
             1,
             1,

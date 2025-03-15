@@ -46,9 +46,10 @@
     ClothingOuterSuitMonkey: 2
     # ClothingOuterSuitShrineMaiden: 2
     ClothingOuterSuitWitchRobes: 2
+    ClothingOuterWinterMusician: 1
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
-    ClothingOuterWinterMusician: 1
+    ClothingOuterCoatPufferMime: 1 #imp
     ClothingShoesBootsCowboyBlack: 1
     ClothingShoesBootsCowboyBrown: 1
     ClothingShoesBootsCowboyWhite: 1
@@ -67,6 +68,9 @@
     ClothingUniformMrSpaceWide: 2 #imp
     ClothingUniformMrSpaceWideSkirt: 2 #imp
     FoodPoppy: 1
+    ClothingOuterWhitePoncho: 2 #imp
+    ClothingOuterBlackPoncho: 2 #imp
+    ClothingOuterRainCape: 3 #imp
     # Gohei: 2
   contrabandInventory: # imp
     ClothingShoesSlippers: 1
@@ -79,6 +83,9 @@
     ClothingUniformJumpsuitAncient: 1
     ClothingUniformJumpsuitCossack: 1
     ClothingUniformJumpsuitLoungewear: 1
+    ClothingHeadHatRichard: 1
+    ToyFigurineBoxer: 1
+    ToyFigurineMusician: 1
   emaggedInventory:
     ClothingHeadHatCowboyBountyHunter: 1
     ClothingMaskBlushingClown: 1

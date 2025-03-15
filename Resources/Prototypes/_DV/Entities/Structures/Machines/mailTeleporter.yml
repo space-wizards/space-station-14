@@ -22,8 +22,10 @@
       - state: lit
         shader: unshaded
         map: ["enum.PowerDeviceVisualLayers.Powered"]
+        visible: false #imp edit
   - type: ApcPowerReceiver
     powerLoad: 1000
+    powerDisabled: true #starts off
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -32,3 +34,4 @@
           False: { visible: false }
   - type: Machine
     board: MailTeleporterMachineCircuitboard
+  - type: PowerSwitch

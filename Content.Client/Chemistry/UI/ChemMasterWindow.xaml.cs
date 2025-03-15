@@ -152,6 +152,7 @@ namespace Content.Client.Chemistry.UI
 
             UpdateDosageFields(castState);
         }
+
         //assign default values for pill and bottle fields.
         private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
         {
@@ -165,6 +166,7 @@ namespace Content.Client.Chemistry.UI
             PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
+
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
             BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
@@ -214,6 +216,17 @@ namespace Content.Client.Chemistry.UI
 
             BufferInfo.Children.Clear();
 
+            // This has to happen here due to people possibly
+            // setting sorting before putting any chemicals
+            BufferSortButton.Text = state.SortingType switch
+            {
+                ChemMasterSortingType.Alphabetical => Loc.GetString("chem-master-window-sort-type-alphabetical"),
+                ChemMasterSortingType.Quantity => Loc.GetString("chem-master-window-sort-type-quantity"),
+                ChemMasterSortingType.Latest => Loc.GetString("chem-master-window-sort-type-latest"),
+                _ => Loc.GetString("chem-master-window-sort-type-none")
+            };
+
+
             if (!state.BufferReagents.Any())
             {
                 BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
@@ -236,16 +249,45 @@ namespace Content.Client.Chemistry.UI
             };
             bufferHBox.AddChild(bufferVol);
 
-            // initialises rowCount to allow for striped rows
-
-            var rowCount = 0;
-            foreach (var (reagent, quantity) in state.BufferReagents.OrderBy(x => x.Reagent.Prototype))
+            // This sets up the needed data for sorting later in a list
+            // Its done this way to not repeat having to use same code twice (once for sorting
+            // and once for displaying)
+            var reagentList = new List<(ReagentId reagentId, string name, Color color, FixedPoint2 quantity)>();
+            foreach (var (reagent, quantity) in state.BufferReagents)
             {
                 var reagentId = reagent;
                 _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                 var reagentColor = proto?.SubstanceColor ?? default(Color);
-                BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, true));
+                reagentList.Add(new (reagentId, name, reagentColor, quantity));
+            }
+
+            // We sort here since we need sorted list to be filled first.
+            // You can easily add any new params you need to it.
+            switch (state.SortingType)
+            {
+                case ChemMasterSortingType.Alphabetical:
+                    reagentList = reagentList.OrderBy(x => x.name).ToList();
+                    break;
+
+                case ChemMasterSortingType.Quantity:
+                    reagentList = reagentList.OrderByDescending(x => x.quantity).ToList();
+                    break;
+                case ChemMasterSortingType.Latest:
+                    reagentList = Enumerable.Reverse(reagentList).ToList();
+                    break;
+
+                case ChemMasterSortingType.None:
+                default:
+                    // This case is pointless but it is there for readability
+                    break;
+            }
+
+            // initialises rowCount to allow for striped rows
+            var rowCount = 0;
+            foreach (var reagent in reagentList)
+            {
+                BufferInfo.Children.Add(BuildReagentRow(reagent.color, rowCount++, reagent.name, reagent.reagentId, reagent.quantity, true, true));
             }
         }
 

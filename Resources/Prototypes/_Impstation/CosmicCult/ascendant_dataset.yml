@@ -1,0 +1,27 @@
+- type: dataset
+  id: ascended_titles
+  values:
+  - Ascendant
+  - Apocryphal
+  - Boundless
+  - Transcendant
+
+- type: dataset
+  id: ascended_names
+  values:
+  - It-That-Gazes,
+  - It-That-Fled,
+  - It-That-Waits,
+  - It-That-Whispers,
+  - It-That-Watches,
+  - It-That-Wants,
+  - It-That-Was,
+  - It-That-Reaches,
+  - It-That-Chases,
+  - It-That-Hollows,
+  - It-That-Lurks,
+  - That-Which-Wants,
+  - That-Which-Waits,
+  - That-Which-Watches,
+  - That-Which-Whispers,
+  - That-Which-Was,

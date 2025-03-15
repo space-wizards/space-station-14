@@ -27,6 +27,7 @@
   - Service #why don't other heads have their accesses set up this way?
   access:
   - Maintenance
+  - Brig
   - Command
   - Cryogenics
   special:

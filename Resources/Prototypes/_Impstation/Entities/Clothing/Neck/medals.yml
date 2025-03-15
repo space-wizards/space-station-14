@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingNeckBronzeheart
+  id: ClothingNeckFuckhubMedal
+  name: medal of fuckhub tabmanship
+  description: A medal inaugurated with the original feat of having over 600 tabs on Fuckhub at once, on a browser.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Medals/fuckhubmedal.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Medals/fuckhubmedal.rsi
+
+- type: entity
+  parent: ClothingNeckBronzeheart
+  id: ClothingNeckPositivityForceMedal
+  name: positivity force badge
+  description: Certifies anyone who holds it is sweet like smite and only spreads positive vibes. 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Medals/positivityforcemedal.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Medals/positivityforcemedal.rsi

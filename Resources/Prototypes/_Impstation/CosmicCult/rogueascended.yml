@@ -1,0 +1,7 @@
+- type: antag
+  id: RogueAscended
+  name: roles-antag-rogue-ascended-name
+  antagonist: true
+  playTimeTracker: AntagRogueAscended # imp
+  setPreference: false
+  objective: roles-antag-rogue-ascended-objective

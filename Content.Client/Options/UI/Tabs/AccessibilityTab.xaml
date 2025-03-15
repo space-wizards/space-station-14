@@ -8,12 +8,15 @@
                 <CheckBox Name="DisableSinguloWarpingCheckBox" Text="{Loc 'ui-options-disable-singulo-warp'}" />
                 <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
                 <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
-                <CheckBox Name="DisableFiltersCheckBox" Text="{Loc 'ui-options-no-filters'}" />
-                <ui:OptionSlider Name="ChatWindowOpacitySlider" Title="{Loc 'ui-options-chat-window-opacity'}" />
                 <ui:OptionSlider Name="ScreenShakeIntensitySlider" Title="{Loc 'ui-options-screen-shake-intensity'}" />
+                <ui:OptionSlider Name="ChatWindowOpacitySlider" Title="{Loc 'ui-options-chat-window-opacity'}" />
+                <ui:OptionSlider Name="SpeechBubbleTextOpacitySlider" Title="{Loc 'ui-options-speech-bubble-text-opacity'}" />
+                <ui:OptionSlider Name="SpeechBubbleSpeakerOpacitySlider" Title="{Loc 'ui-options-speech-bubble-speaker-opacity'}" />
+                <ui:OptionSlider Name="SpeechBubbleBackgroundOpacitySlider" Title="{Loc 'ui-options-speech-bubble-background-opacity'}" />
+                <CheckBox Name="DisableFiltersCheckBox" Text="{Loc 'ui-options-no-filters'}" />
                 <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
-                <ui:OptionColorSlider Name="HighlightsColorSlider" 
-                    Title="{Loc 'ui-options-highlights-color'}" 
+                <ui:OptionColorSlider Name="HighlightsColorSlider"
+                    Title="{Loc 'ui-options-highlights-color'}"
                     Example="{Loc 'ui-options-highlights-color-example'}"/>
             </BoxContainer>
         </ScrollContainer>

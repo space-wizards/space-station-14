@@ -1,7 +1,7 @@
 - type: entity
   id: BaseCartridgeMagnum
   name: cartridge (.45 magnum)
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -21,6 +21,7 @@
 - type: entity
   id: CartridgeMagnum
   name: cartridge (.45 magnum)
+  description: A powerful pistol cartridge with incredible stopping power. The best designs are timeless. #imp
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -29,6 +30,7 @@
 - type: entity
   id: CartridgeMagnumPractice
   name: cartridge (.45 magnum practice)
+  description: A powerful pistol cartridge with a wax projectile to simulate the real deal. Can be used for force-on-force training but still stings like a bitch. Eye protection required. #imp
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -44,6 +46,7 @@
 - type: entity
   id: CartridgeMagnumIncendiary
   name: cartridge (.45 magnum incendiary)
+  description: A powerful pistol cartridge tipped with a softer projectile containing a pyrophoric compound, setting targets ablaze. #imp
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -59,6 +62,7 @@
 - type: entity
   id: CartridgeMagnumAP
   name: cartridge (.45 magnum armor-piercing)
+  description: A powerful pistol cartridge with a tungsten carbide penetrator core and a PTFE coating, defeating conventional armor. #imp
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -74,6 +78,7 @@
 - type: entity
   id: CartridgeMagnumUranium
   name: cartridge (.45 magnum uranium)
+  description: A powerful pistol cartridge with a heavier depleted uranium projectile, delivering radiation poisoning at the cost of worse penetration. #imp
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo

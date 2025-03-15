@@ -39,6 +39,9 @@
   id: Gastropod
 
 - type: Tag
+  id: Guidebook
+
+- type: Tag
   id: HolyArrow
 
 - type: Tag

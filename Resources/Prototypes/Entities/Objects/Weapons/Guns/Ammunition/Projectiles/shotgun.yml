@@ -5,8 +5,9 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: slug
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: slug #imp
   - type: Projectile
     damage:
       types:
@@ -14,29 +15,31 @@
 
 - type: entity
   id: PelletShotgunBeanbag
-  name: stun slug (.50)
+  name: pellet (.50 stun slug) #imp
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: stun #imp
   - type: Projectile
     damage:
       types:
-        Shock: 7.5
+        Shock: 7.5 #imp
   - type: StaminaDamageOnCollide
     damage: 40 # 3 hits to stun
 
 - type: entity
   id: PelletShotgun
-  name: pellet (.50)
+  name: pellet (.50 buckshot) #imp
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: pellet #imp
   - type: Projectile
     damage:
       types:
@@ -60,7 +63,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot-flare
+    layers:
+    - state: buckshot-flare #imp
   - type: Projectile
     damage:
       types:
@@ -86,8 +90,9 @@
   parent: BaseBulletPractice
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: practice #imp
   - type: Projectile
     damage:
       types:
@@ -105,13 +110,14 @@
 
 - type: entity
   id: PelletShotgunImprovised
-  name: improvised pellet
+  name: shrapnel pellet #imp
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: shard
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: shard #imp
   - type: Projectile
     damage:
       types:
@@ -135,8 +141,9 @@
   parent: BaseBulletPractice
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: hypo #imp
   - type: Projectile
     damage:
       types:
@@ -175,7 +182,8 @@
           - BulletImpassable
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot-flare
+    layers:
+    - state: buckshot-flare #imp
   - type: IgnitionSource
     ignited: true
     temperature: 1000
@@ -209,8 +217,9 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: depleted-uranium
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: uranium #imp
   - type: Projectile
     damage:
       types:
@@ -263,7 +272,7 @@
   components:
   - type: Sprite
     noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
     layers:
     - state: shard
       shader: unshaded

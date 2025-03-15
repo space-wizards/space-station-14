@@ -312,7 +312,6 @@ MagazineBoxLightRifleRubber: MagazineBoxLightRifle
 MagazineBoxRifleRubber: MagazineBoxRifle
 MagazineBoxRifleBigRubber: MagazineBoxRifleBig
 MagazineBoxCaselessRifleRubber: MagazineBoxCaselessRifle
-MagazineBoxCaselessRifleBigRubber: MagazineBoxCaselessRifle10x24
 BoxMagazinePistolRubber: BoxMagazinePistol
 BoxMagazinePistolHighCapacityRubber: BoxMagazinePistolHighCapacity
 BoxMagazinePistolSubMachineGunRubber: BoxMagazinePistolSubMachineGun
@@ -322,7 +321,6 @@ BoxMagazineCaselessRifleRubber: BoxMagazinePistolCaselessRifle
 BoxMagazineMagnumSubMachineGunRubber: BoxMagazineMagnumSubMachineGun
 WeaponPistolMk58Nonlethal: WeaponPistolMk58
 WeaponPistolN1984Nonlethal: WeaponPistolN1984
-WeaponSubMachineGunVectorRubber: WeaponSubMachineGunVector
 WeaponSubMachineGunDrozdRubber: WeaponSubMachineGunDrozd
 WeaponRifleLecterRubber: WeaponRifleLecter
 
@@ -543,6 +541,19 @@ LightTree06: LightTree
 ClothingMaskSexyClown: ClothingMaskBlushingClown
 ClothingMaskSexyMime: ClothingMaskBlushingMime
 
+# 2025-01-27
+FoodCondimentPacketFrostoil: FoodCondimentPacketColdsauce
+
+#2025-02-05
+WeaponSubMachineGunVector: null
+WeaponSubMachineGunVectorRubber: null
+
+# 2025-02-20
+MagazineBoxAntiMaterielBig: null
+MagazineBoxCaselessRifle10x24: null
+MagazineBoxCaselessRifleBig: null
+MagazinePistolHighCapacityRubber: null
+
 # IMPSTATION SPECIFIC MIGRATIONS BELOW
 # ====================================
 
@@ -570,3 +581,8 @@ ClothingHeadHelmetTemplar: null
 # 2025-02-18
 # impstation: Replace Walter spawns with the Walter/Dolby spawner
 SpawnMobWalter: SpawnMobChemDog
+
+# 2025-03-13
+# impstation: make the courier hardsuit non-roundstart
+SuitStorageCourier: null
+LockerCourierFilledHardsuit: LockerCourierFilled

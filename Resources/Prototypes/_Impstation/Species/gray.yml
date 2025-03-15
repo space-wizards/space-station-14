@@ -28,6 +28,7 @@
     RArm: MobGrayRArm
     LHand: MobGrayLHand
     RHand: MobGrayRHand
+    Underwear: MobHumanoidAnyMarking
     LLeg: MobGrayLLeg
     RLeg: MobGrayRLeg
     LFoot: MobGrayLFoot

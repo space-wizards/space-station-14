@@ -1,0 +1,369 @@
+- type: marking
+  id: BellyGem
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: bellygem1
+
+- type: marking
+  id: GrayTattooCar
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: graytattoocar1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: graytattoocar2
+
+- type: marking
+  id: GrayTattooPlane
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: graytattooplane1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: graytattooplane2
+
+- type: marking
+  id: GrayUnderwearClassic
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: grayunderwearclassic
+
+- type: marking
+  id: GrayUnderwearToga
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Gray ]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: grayunderweartoga
+
+- type: marking
+  id: GrayUnderwearStriped
+  bodyPart: Underwear
+  markingCategory: Underwear
+  speciesRestriction: [ Gray ]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: grayunderwearstriped1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: grayunderwearstriped2
+
+- type: marking
+  id: RadiumGlowCheeks
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: radiumglowcheeks
+  shader: unshaded
+
+- type: marking
+  id: RadiumGlowBrain
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: radiumglowbrain
+  shader: unshaded
+
+- type: marking
+  id: MessyPonytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Human, Dwarf, SlimePerson ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: messyponytail
+
+- type: marking
+  id: MessyPonytailThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: thavenmessyponytail
+
+- type: marking
+  id: SnailWeewoo
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [ Gastropoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: weewoo1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: weewoo2
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: weewoo3
+  shader: unshaded
+
+- type: marking
+  id: SnailWeewooSmall
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [ Gastropoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: weewoosmall1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: weewoosmall2
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: weewoosmall3
+  shader: unshaded
+
+- type: marking
+  id: HumanoidEyebags
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Human, SlimePerson, Reptilian, Dwarf ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: eyebags
+
+- type: marking
+  id: HumanoidAbs
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Dwarf, Arachnid, Reptilian, SlimePerson ]
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: muscular
+
+- type: marking
+  id: ThavenAbs
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: muscularthaven
+
+- type: marking
+  id: EyebrowsBig
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Human, Dwarf ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: eyebrowsthick
+
+- type: marking
+  id: EyebrowsBigger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Human, Dwarf ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: eyebrowsultra
+
+- type: marking
+  id: EyebrowsUnibrow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Human, Dwarf ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: eyebrowsunibrow
+
+- type: marking
+  id: AbdomenBasic
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: abdomenbasic1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: abdomenbasic2
+
+- type: marking
+  id: CreepyArms
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: creepy
+
+- type: marking
+  id: AbdomenWidow
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: widow1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: widow2
+
+- type: marking
+  id: ScarTalons
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: lizardtalonscar
+
+- type: marking
+  id: ScarSlash
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: lizardsnoutscar
+
+- type: marking
+  id: BadMoltHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: badmolthead
+
+- type: marking
+  id: BadMoltChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: badmoltchest
+
+- type: marking
+  id: BadMoltLArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: badmoltlarm
+
+- type: marking
+  id: BadMoltRArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: badmoltrarm
+
+- type: marking
+  id: TailDropped
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_dropped
+
+- type: marking
+  id: TailDroppedAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_dropped_wagging
+
+- type: marking
+  id: TailGecko
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_gecko1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_gecko2
+
+- type: marking
+  id: TailSnailLizard
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_snizard1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_snizard2
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: tail_snizard3
+
+- type: marking
+  id: LunaWings
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: luna1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: luna2
+
+- type: marking
+  id: ThavenBasicTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: thavenbasictail
+
+- type: marking
+  id: ThavenTadpoleTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: thaventadpole1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: thaventadpole2
+
+- type: marking
+  id: ThavenBigTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: thavenbigtail1
+  - sprite: _Impstation/Mobs/Customization/markingsbundle2.rsi
+    state: thavenbigtail2

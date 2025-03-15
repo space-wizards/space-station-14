@@ -1,0 +1,107 @@
+- type: entity
+  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  id: ClothingOuterRainCape
+  name: rain cape
+  description: Surplus gear made from durable canvas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    layers:
+    - state: GREEN-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: GREEN-inhand-left
+      right:
+      - state: GREEN-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    clothingVisuals:
+      neck:
+      - state: GREEN-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: GREEN-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  id: ClothingOuterWhitePoncho
+  name: white poncho
+  description: Waterproof!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    layers:
+    - state: WHITE-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: WHITE-inhand-left
+      right:
+      - state: WHITE-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    clothingVisuals:
+      neck:
+      - state: WHITE-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: WHITE-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  id: ClothingOuterQMPoncho
+  name: quartermaster's poncho
+  description: A warm, worn poncho. It's very comfortable.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    layers:
+    - state: QM-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: QM-inhand-left
+      right:
+      - state: QM-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    clothingVisuals:
+      neck:
+      - state: QM-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: QM-equipped-OUTERCLOTHING
+
+- type: entity
+  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  id: ClothingOuterBlackPoncho
+  name: black poncho
+  description: Waterproof (sinister)!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    layers:
+    - state: BLACK-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: BLACK-inhand-left
+      right:
+      - state: BLACK-inhand-right
+  - type: Clothing
+    slots:
+      - OUTERCLOTHING
+      - NECK
+    sprite: _Impstation/Clothing/OuterClothing/Misc/poncho.rsi
+    clothingVisuals:
+      neck:
+      - state: BLACK-equipped-OUTERCLOTHING
+      outerClothing:
+      - state: BLACK-equipped-OUTERCLOTHING

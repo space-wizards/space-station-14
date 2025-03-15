@@ -1119,3 +1119,15 @@ accent-gray-words-replace-373 = dadit
 
 accent-gray-words-374 = thief
 accent-gray-words-replace-374 = orf
+
+accent-gray-words-375 = undeads
+accent-gray-words-replace-375 = sombiis
+
+accent-gray-words-376 = zombies
+accent-gray-words-replace-376 = dediis
+
+accent-gray-words-377 = werewolves
+accent-gray-words-replace-377 = baats
+
+accent-gray-words-378 = HD
+accent-gray-words-replace-378 = sipdar

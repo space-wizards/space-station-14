@@ -1,4 +1,7 @@
-﻿- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
+﻿# Only one of those rulesets will appear on the server at any given time.
+# They all have a priority of 10 so they appear 2nd by default (after priority 0 and before priority 20)
+
+- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
   id: DefaultRuleset
   name: guide-entry-rules
   ruleEntry: true
@@ -13,7 +16,7 @@
   id: RoleTypes
   name: guide-entry-rules-role-types
   ruleEntry: true
-  priority: 20
+  priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/RoleTypes.xml"
 
 - type: guideEntry
@@ -49,7 +52,7 @@
   id: MRPRules
   name: guide-entry-rules-mrp-m0
   ruleEntry: true
-  priority: 60
+  priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM0.xml"
   children:
   - RuleM1
@@ -58,33 +61,16 @@
   id: RuleM1
   name: guide-entry-rules-m1
   ruleEntry: true
-  priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1DoNotPowergame.xml"
-
-- type: guideEntry
-  id: SpaceLaw
-  name: guide-entry-rules-space-law
-  priority: 1
-  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
-  children:
-  - SpaceLawCrimeList
-
-- type: guideEntry
-  id: SpaceLawCrimeList
-  name: guide-entry-rules-sl-crime-list
-  priority: 5
-  text: "/ServerInfo/_Impstation/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
 
 - type: guideEntry
   id: BanTypes
   name: guide-entry-rules-ban-types
   ruleEntry: true
-  priority: 90
   text: "/ServerInfo/Guidebook/ServerRules/BanTypes.xml"
 
 - type: guideEntry
   id: BanDurations
   name: guide-entry-rules-ban-durations
   ruleEntry: true
-  priority: 100
   text: "/ServerInfo/Guidebook/ServerRules/BanDurations.xml"

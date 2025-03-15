@@ -197,7 +197,7 @@
       - id: FoodCondimentPacketKetchup
   - type: Sprite
     layers:
-      - state: box_olive
+      - state: box
       - state: writing
 
 - type: entity

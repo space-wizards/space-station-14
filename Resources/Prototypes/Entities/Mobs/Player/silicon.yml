@@ -96,6 +96,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+  - type: ShowJobIcons
 
 # Ai
 - type: entity
@@ -537,8 +538,7 @@
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
@@ -585,8 +585,7 @@
   id: StationAiHolo
   name: AI eye
   description: The AI's viewer.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: NoFTL
   - type: WarpPoint
@@ -607,8 +606,7 @@
   id: StationAiHoloLocal
   name: AI hologram
   description: A holographic representation of an AI.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Transform
     anchored: true
@@ -906,13 +904,9 @@
       department: Silicon
       time: 18000 # five hours
     makeSentient: true
-    name: Maintenance Drone
-    description: Maintain the station. Ignore other beings except drones.
-    rules: |
-     You are bound by these laws both in-game and out-of-character:
-     1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
-     2. Your goal is to maintain or improve the station to the best of your ability.
-     3. You may not take any action which causes damage or harm to the station or its inhabitants.
+    name: ghost-role-information-drone-name
+    description: ghost-role-information-drone-description
+    rules: ghost-role-information-drone-rules
     mindRoles: # imp. this whole prototype needs to be pulled out of upstream
     - MindRoleGhostRoleSilicon
   - type: GhostTakeoverAvailable

@@ -6,7 +6,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    layers:
+    - state: rubber #imp
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -24,8 +25,9 @@
   parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: shard #imp
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -42,7 +44,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot-flare
+    layers:
+    - state: buckshot-flare #imp
   - type: Projectile
     deleteOnCollide: false
     damage:

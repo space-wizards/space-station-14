@@ -4,4 +4,21 @@
   - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
   - /Audio/Announcements/RoundEnd/disappointed.ogg
   - /Audio/Announcements/RoundEnd/notevenpaidforthis.ogg
-  - /Audio/_Impstation/RoundEnd/wuhey.ogg
+  - /Audio/_Impstation/RoundEnd/admin.ogg # imp
+  - /Audio/_Impstation/RoundEnd/bangindonk.ogg # imp
+  - /Audio/_Impstation/RoundEnd/chadwarden.ogg # imp
+  - /Audio/_Impstation/RoundEnd/chickensandwich.ogg # imp
+  - /Audio/_Impstation/RoundEnd/danish.ogg # imp
+  - /Audio/_Impstation/RoundEnd/dead.ogg # imp
+  - /Audio/_Impstation/RoundEnd/getoffme.ogg # imp
+  - /Audio/_Impstation/RoundEnd/leatherbelt.ogg # imp
+  - /Audio/_Impstation/RoundEnd/newroundsexy.ogg # imp
+  - /Audio/_Impstation/RoundEnd/slog.ogg # imp
+  - /Audio/_Impstation/RoundEnd/slog2.ogg # imp
+  - /Audio/_Impstation/RoundEnd/weed.ogg # imp
+  - /Audio/_Impstation/RoundEnd/wuhey.ogg # imp
+
+- type: soundCollection
+  id: PowerOn
+  files:
+  - /Audio/Announcements/power_on.ogg

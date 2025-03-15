@@ -86,8 +86,8 @@
     - state: singularity-generator
   - type: GuideHelp
     guides:
-      - SingularityEngine
-      - Power
+    - SingularityEngine
+    - Power
 
 - type: entity
   parent: BaseFlatpack

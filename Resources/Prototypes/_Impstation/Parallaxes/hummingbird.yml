@@ -3,9 +3,9 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/space_map2.png"
+        path: "/Textures/_Impstation/Parallaxes/hummingbird_space.png"
       slowness: 0.998046875
-      scale: ".17, .17"
+      scale: ".68, .68"
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars"

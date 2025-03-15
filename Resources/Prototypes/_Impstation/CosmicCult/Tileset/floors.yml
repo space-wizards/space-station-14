@@ -119,13 +119,6 @@
     blacklist:
       tags:
         - Catwalk
-  - type: TileEntityEffect
-    effects:
-      - !type:AdjustTemperature
-        conditions:
-        - !type:Temperature
-          min: 160.15
-        amount: -30000
   - type: Transform
     anchored: true
   - type: SyncSprite
@@ -144,6 +137,7 @@
     base: decay
   - type: Tag
     tags:
+      - Entropy
       - HideContextMenu
   - type: PointLight
     radius: 4.25

@@ -110,7 +110,7 @@
   suffix: Security
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/security.rsi #imp edit
   - type: PaintableAirlock
     department: Security
   - type: Wires
@@ -277,7 +277,7 @@
   suffix: Security
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/security.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/security.rsi #imp edit
   - type: PaintableAirlock
     department: Security
   - type: Wires
