@@ -426,8 +426,6 @@
     Absinthe:
       amount: 2
     Champagne:
-      amount: 1
-    Egg:
-      amount: 1
+      amount: 2
   products:
     FeverDream: 6
