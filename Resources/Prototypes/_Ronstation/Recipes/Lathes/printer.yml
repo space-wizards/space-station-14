@@ -72,3 +72,12 @@
   completetime: 1
   materials:
     Paper: 50
+
+# Medical
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormMedicalDeathCertificate
+  result: PaperWrittenFormMedicalDeathCertificate
+  completetime: 1
+  materials:
+    Paper: 50

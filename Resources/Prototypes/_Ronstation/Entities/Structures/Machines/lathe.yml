@@ -30,11 +30,24 @@
 
 - type: entity
   parent: PaperPrinter
+  id: PaperPrinterCommand
+  name: command paper printer
+  components:
+  - type: Sprite
+    color: "#a1a1d1"
+  - type: Machine
+    board: PaperPrinterCommandMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
   id: PaperPrinterSecurity
   name: security paper printer
   components:
   - type: Sprite
-    color: "#FFd1d1"
+    color: "#ffd1d1"
   - type: Machine
     board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
@@ -48,13 +61,66 @@
   name: engineering paper printer
   components:
   - type: Sprite
-    color: "#FFFFd1"
+    color: "#ffffd1"
   - type: Machine
     board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
     - PrinterEngineeringBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterMedical
+  name: medical paper printer
+  components:
+  - type: Sprite
+    color: "#d1d1ff"
+  - type: Machine
+    board: PaperPrinterSecurityMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterMedicalBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterSupply
+  name: cargo paper printer # Ronstation - while it may sound counterintuitive to name it 'supply', it is necessary, in my opinion, for standardization purposes.
+  components:
+  - type: Sprite
+    color: "#ffd1a1"
+  - type: Machine
+    board: PaperPrinterSupplyMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterScience
+  name: science paper printer
+  components:
+  - type: Sprite
+    color: "#ffd1ff"
+  - type: Machine
+    board: PaperPrinterScienceMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterService
+  name: service paper printer
+  components:
+  - type: Sprite
+    color: "#d1ffd1"
+  - type: Machine
+    board: PaperPrinterServiceMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
 
 - type: entity
   parent: PaperPrinter

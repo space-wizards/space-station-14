@@ -90,3 +90,13 @@
   components:
   - type: Paper
     content: book-text-form-engineering-building-permit
+
+# Medical
+- type: entity
+  id: PaperWrittenFormMedicalDeathCertificate
+  name: death certificate
+  description: Someone has died.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-medical-death-certificate

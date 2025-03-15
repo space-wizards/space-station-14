@@ -21,3 +21,8 @@
   id: PrinterEngineeringBasic
   recipes:
   - PrinterPaperWrittenFormEngineeringBuildingPermit
+
+- type: latheRecipePack
+  id: PrinterMedicalBasic
+  recipes:
+  - PrinterPaperWrittenFormMedicalDeathCertificate

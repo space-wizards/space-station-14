@@ -257,3 +257,29 @@ book-text-form-engineering-building-permit = 'N. Building Permit
 
     Stamps below:
     --------------------------------------
+
+# Medical
+book-text-form-medical-death-certificate = 'N. Death Certificate
+    --------------------------------------
+
+    Name:  Sample Person
+                   --------------------------------------
+    Job:  Sample Job
+                   --------------------------------------
+    Department:  Sample Department
+                   --------------------------------------
+    Cause of Death:  Sample Reason
+                   --------------------------------------
+    First Found Location:  Sample Location
+                   --------------------------------------
+    Damages Sustained:
+    - Brute: Sample Number
+    - Burn: Sample Number
+    - Airloss: Sample Number
+    - Toxin: Sample Number
+    - Bloodloss: Sample Number
+                   --------------------------------------
+    Healing Efforts:  Sample Efforts
+                   --------------------------------------
+
+    --------------------------------------

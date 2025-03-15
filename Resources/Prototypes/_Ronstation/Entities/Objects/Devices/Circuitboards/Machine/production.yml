@@ -10,6 +10,19 @@
       Manipulator: 2
 
 - type: entity
+  id: PaperPrinterCommandMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: command paper printer machine board
+  components:
+  - type: Sprite
+    state: command
+  - type: MachineBoard
+    prototype: PaperPrinterCommand
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
   id: PaperPrinterSecurityMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: security paper printer machine board
@@ -31,6 +44,58 @@
     state: engineering
   - type: MachineBoard
     prototype: PaperPrinterEngineering
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterMedicalMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medical paper printer machine board
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: PaperPrinterCommand
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterSupplyMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cargo paper printer machine board # Ronstation - while it may sound counterintuitive to name it 'supply', it is necessary, in my opinion, for standardization purposes.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: PaperPrinterSupply
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterScienceMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: science paper printer machine board
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: PaperPrinterScience
+    stackRequirements:
+      MatterBin: 1
+      Manipulator: 2
+
+- type: entity
+  id: PaperPrinterServiceMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: service paper printer machine board
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: PaperPrinterService
     stackRequirements:
       MatterBin: 1
       Manipulator: 2
