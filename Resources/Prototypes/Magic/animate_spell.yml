@@ -5,7 +5,6 @@
   components:
   - type: EntityTargetAction
     useDelay: 0
-    charges: 5
     itemIconStyle: BigAction
     whitelist:
       components:
@@ -73,5 +72,6 @@
       - RequireProjectileTarget
       - BlockMovement
       - Item
+      - MeleeRequiresWield
       speech: action-speech-spell-animate
       doSpeech: false
