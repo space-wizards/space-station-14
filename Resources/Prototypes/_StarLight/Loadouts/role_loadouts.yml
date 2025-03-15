@@ -49,6 +49,7 @@
   groups:
   - BlueShieldJumpsuit
   - BlueShieldBackpack
+  - BlueShieldEyewear
   - Trinkets
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity

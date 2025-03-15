@@ -12,6 +12,7 @@
         amount: 3
       - id: MedkitAdvancedFilled
       - id: ClothingEyesGlassesBlueShield
+      - id: ClothingEyesHudBlueShield
       - id: ClothingHeadHatBeretBlueShield
       - id: ClothingUniformJumpsuitBlueShield
       - id: ClothingUniformJumpskirtBlueShield

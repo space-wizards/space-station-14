@@ -53,3 +53,10 @@
   - BlueShieldJumpskirt
   - EliteBlueShieldJumpsuit
   - EliteBlueShieldJumpskirt
+
+- type: loadoutGroup
+  id: BlueShieldEyewear
+  name: loadout-group-blueshield-eyewear
+  loadouts:
+  - BlueShieldGlasses
+  - BlueShieldHud

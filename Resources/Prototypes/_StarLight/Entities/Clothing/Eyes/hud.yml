@@ -1,0 +1,24 @@
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesHudBlueShield
+  name: blueshield officer's hud
+  description: A Innovative heads-up display that scans the humanoids in view and provides accurate data about their ID status, security records, and medical information.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/blueshield.rsi
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Tag
+    tags:
+    - HudMedical
+  - type: EyeProtection
+    protectionTime: 5

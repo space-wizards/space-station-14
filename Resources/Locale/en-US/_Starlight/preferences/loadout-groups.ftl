@@ -11,6 +11,7 @@ loadout-group-nanotrasenrepresentative-jumpsuit = NanoTrasen representative jump
 
 loadout-group-blueshield-backpack = Blueshield backpack
 loadout-group-blueshield-jumpsuit = Blueshield jumpsuit
+loadout-group-blueshield-eyewear = Blueshield eyewear
 
 # Security
 
