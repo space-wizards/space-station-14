@@ -20,6 +20,12 @@ namespace Content.Shared.Atmos
         public const float OneAtmosphere = 101.325f;
 
         /// <summary>
+        ///     Default target for vents in kPA.
+        ///     It is set slightly higher than 1 ATM, as to cause air to circulate.
+        /// </summary>
+        public const float OneAtmosphereTarget = OneAtmosphere * 1.05f;
+
+        /// <summary>
         ///     Maximum external pressure (in kPA) a gas miner will, by default, output to.
         ///     This is used to initialize roundstart atmos rooms.
         /// </summary>
