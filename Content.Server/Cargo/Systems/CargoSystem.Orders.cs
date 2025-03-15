@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Station.Components;
@@ -42,6 +43,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, BankBalanceUpdatedEvent>(OnOrderBalanceUpdated);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleRestrictProductMessage>(OnRestrictProductMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
             Reset();
         }
@@ -189,6 +191,22 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
+            // Order is restricted
+            foreach (var restricted in orderDatabase.RestrictedOrders)
+            {
+                if (restricted.ProductProductId == order.ProductId)
+                {
+                    if (!_accessReaderSystem.IsAllowed(player, uid, accessList: 0))
+                    {
+                        ConsolePopup(args.Actor, Loc.GetString("cargo-console-restricted-order"));
+                        PlayDenySound(uid, component);
+                        return;
+                    }
+
+                    break;
+                }
+            }
+
             var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
             RaiseLocalEvent(ref ev);
             ev.FulfillmentEntity ??= station.Value;
@@ -327,6 +345,52 @@ namespace Content.Server.Cargo.Systems
 
         }
 
+        /// <summary>
+        /// Handles the adding of a product to the restricted product list
+        /// </summary>
+        /// <param name="uid">Entity doing the adding</param>
+        /// <param name="component">Cargo Console being used to set the restriction</param>
+        /// <param name="args">Carries the product id as given in the <see cref="CargoProductPrototype"/></param>
+        private void OnRestrictProductMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRestrictProductMessage args)
+        {
+            if (args.Actor is not { Valid: true } player)
+                return;
+
+            var stationUid = _station.GetOwningStation(uid);
+
+            // Checks for appropriate access, by default should be QM
+            if (!_accessReaderSystem.IsAllowed(player, uid, accessList:0))
+            {
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-order-not-allowed"));
+                PlayDenySound(uid, component);
+                UpdateOrderState(uid, stationUid);
+                return;
+            }
+
+            // Gets the product details from the id
+            if (!_protoMan.TryIndex<CargoProductPrototype>(args.Product, out var product))
+            {
+                Log.Error($"Tried to add invalid cargo product {args.Product} as order!");
+                return;
+            }
+
+            if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+                return;
+
+            // Adds to the list if already on and removes if not
+            if (orderDatabase.RestrictedOrders.Contains(new CargoRestrictedData(args.Product)))
+            {
+                orderDatabase.RestrictedOrders.Remove(new CargoRestrictedData(args.Product));
+            }
+            else
+            {
+                orderDatabase.RestrictedOrders.Add(new CargoRestrictedData(args.Product, product.Product.Id));
+            }
+
+            // Update the state to update the consoles
+            UpdateOrderState(uid, stationUid);
+        }
+
         private void OnOrderUIOpened(EntityUid uid, CargoOrderConsoleComponent component, BoundUIOpenedEvent args)
         {
             var station = _station.GetOwningStation(uid);
@@ -357,7 +421,8 @@ namespace Content.Server.Cargo.Systems
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     bankAccount.Balance,
-                    orderDatabase.Orders
+                    orderDatabase.Orders,
+                    orderDatabase.RestrictedOrders
                 ));
             }
         }

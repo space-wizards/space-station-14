@@ -42,8 +42,14 @@ public sealed class AccessReaderSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
-        args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
+        args.State = new AccessReaderComponentState(
+            component.Enabled,
+            component.DenyTags,
+            component.AccessLists,
+            component.AdditionalAccessLists,
+            _recordsSystem.Convert(component.AccessKeys),
+            component.AccessLog,
+            component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -62,6 +68,7 @@ public sealed class AccessReaderSystem : EntitySystem
         }
 
         component.AccessLists = new(state.AccessLists);
+        component.AdditionalAccessLists = new(state.AdditionalAccessLists);
         component.DenyTags = new(state.DenyTags);
         component.AccessLog = new(state.AccessLog);
         component.AccessLogLimit = state.AccessLogLimit;
@@ -103,7 +110,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="user">The entity that wants access.</param>
     /// <param name="target">The entity to search for an access reader</param>
     /// <param name="reader">Optional reader from the target entity</param>
-    public bool IsAllowed(EntityUid user, EntityUid target, AccessReaderComponent? reader = null)
+    /// <param name="accessList">Which, if applicable, additional access list to check against, is optional for readers that only have the general list</param>
+    public bool IsAllowed(EntityUid user, EntityUid target, AccessReaderComponent? reader = null, int accessList = -1)
     {
         if (!Resolve(target, ref reader, false))
             return true;
@@ -115,7 +123,7 @@ public sealed class AccessReaderSystem : EntitySystem
         var access = FindAccessTags(user, accessSources);
         FindStationRecordKeys(user, out var stationKeys, accessSources);
 
-        if (IsAllowed(access, stationKeys, target, reader))
+        if (IsAllowed(access, stationKeys, target, reader, accessList))
         {
             LogAccess((target, reader), user);
             return true;
@@ -157,13 +165,14 @@ public sealed class AccessReaderSystem : EntitySystem
         ICollection<ProtoId<AccessLevelPrototype>> access,
         ICollection<StationRecordKey> stationKeys,
         EntityUid target,
-        AccessReaderComponent reader)
+        AccessReaderComponent reader,
+        int accessList = -1)
     {
         if (!reader.Enabled)
             return true;
 
         if (reader.ContainerAccessProvider == null)
-            return IsAllowedInternal(access, stationKeys, reader);
+            return IsAllowedInternal(access, stationKeys, reader, accessList);
 
         if (!_containerSystem.TryGetContainer(target, reader.ContainerAccessProvider, out var container))
             return false;
@@ -178,17 +187,17 @@ public sealed class AccessReaderSystem : EntitySystem
             if (!TryComp(entity, out AccessReaderComponent? containedReader))
                 continue;
 
-            if (IsAllowed(access, stationKeys, entity, containedReader))
+            if (IsAllowed(access, stationKeys, entity, containedReader, accessList))
                 return true;
         }
 
         return false;
     }
 
-    private bool IsAllowedInternal(ICollection<ProtoId<AccessLevelPrototype>> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader)
+    private bool IsAllowedInternal(ICollection<ProtoId<AccessLevelPrototype>> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader, int accessList = -1)
     {
         return !reader.Enabled
-               || AreAccessTagsAllowed(access, reader)
+               || AreAccessTagsAllowed(access, reader, accessList)
                || AreStationRecordKeysAllowed(stationKeys, reader);
     }
 
@@ -197,7 +206,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="accessTags">A list of access tags</param>
     /// <param name="reader">An access reader to check against</param>
-    public bool AreAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags, AccessReaderComponent reader)
+    /// <param name="accessList">Which, if applicable, additional access list to check against, is optional for readers that only have the general list</param>
+    public bool AreAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags, AccessReaderComponent reader, int accessList = -1)
     {
         if (reader.DenyTags.Overlaps(accessTags))
         {
@@ -206,6 +216,18 @@ public sealed class AccessReaderSystem : EntitySystem
             // Note that in resolving the issue with only one specific item "counting" for access, this became a bit more strict.
             // As having an ID card in any slot that "counts" with a denied access group will cause denial of access.
             // DenyTags doesn't seem to be used right now anyway, though, so it'll be dependent on whoever uses it to figure out if this matters.
+            return false;
+        }
+
+        // For checking the additional access lists will fallback to general access if the given list is out of range
+        if (accessList >= 0 && reader.AdditionalAccessLists.Count > accessList)
+        {
+            foreach (var set in reader.AdditionalAccessLists[accessList])
+            {
+                if (set.IsSubsetOf(accessTags))
+                    return true;
+            }
+
             return false;
         }
 
@@ -338,6 +360,26 @@ public sealed class AccessReaderSystem : EntitySystem
         }
         Dirty(uid, component);
         RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <summary>
+    /// Sets the accesses of the additional access list at the specified index assuming it exists
+    /// </summary>
+    /// <param name="uid">uid of the entity attempting to set access</param>
+    /// <param name="component"><see cref="AccessReaderComponent"/> being modified</param>
+    /// <param name="accesses">Accesses to set</param>
+    /// <param name="accessList">index of the additional access list being modified</param>
+    public void SetAdditionalAccesses(EntityUid uid, AccessReaderComponent component, List<ProtoId<AccessLevelPrototype>> accesses, int accessList)
+    {
+        if (accessList >= 0 && component.AdditionalAccessLists.Count > accessList)
+            return;
+
+        component.AdditionalAccessLists[accessList].Clear();
+        foreach (var access in accesses)
+        {
+            component.AdditionalAccessLists[accessList].Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
+        }
+        Dirty(uid, component);
     }
 
     public bool FindAccessItemsInventory(EntityUid uid, out HashSet<EntityUid> items)
