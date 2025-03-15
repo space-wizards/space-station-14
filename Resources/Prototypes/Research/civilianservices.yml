@@ -176,6 +176,7 @@
   - HonkerPeripheralsElectronics
   - HonkerTargetingElectronics
   - MechEquipmentHorn
+  - BorgModuleAdvancedClowning
 
 - type: technology
   id: AdvancedSpray
