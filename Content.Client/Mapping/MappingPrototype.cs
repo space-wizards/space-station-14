@@ -22,6 +22,11 @@ public sealed class MappingPrototype
     public readonly string Name;
 
     /// <summary>
+    ///     Whether the prototype is in the “Favorites” list.
+    /// </summary>
+    public bool Favorite;
+
+    /// <summary>
     ///     Which other prototypes (buttons) this one is nested inside of.
     /// </summary>
     public List<MappingPrototype>? Parents;

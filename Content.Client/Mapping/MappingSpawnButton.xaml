@@ -3,14 +3,17 @@
     xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">
         <Control>
-            <Button Name="Button" Access="Public" ToggleMode="True" StyleClasses="ButtonSquare" />
+            <Button Name="Button" Access="Public" ToggleMode="True" TooltipDelay="0" />
             <BoxContainer Orientation="Horizontal">
-                <LayeredTextureRect Name="Texture" Access="Public" MinSize="48 48"
+                <LayeredTextureRect Name="Texture" Access="Public" SetSize="46 46"
                                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Stretch="KeepAspectCentered" CanShrink="True" />
+                                    Stretch="Tile" Visible="False" Margin="1 1 0 0" RectClipContent="True" />
                 <Control SetSize="48 48" Access="Public" Name="CollapseButtonWrapper">
-                    <Button Name="CollapseButton" Access="Public" Text="▶"
-                            ToggleMode="True" StyleClasses="ButtonSquare" SetSize="48 48" />
+                    <Button Name="CollapseButton" Access="Public"
+                            ToggleMode="True" SetSize="48 48" StyleClasses="OpenRight">
+                        <TextureRect Name="CollapseTexture" Access="Public" Stretch="KeepAspectCentered" SetSize="24 24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Button>
                 </Control>
                 <Label Name="Label" Access="Public"
                        VAlign="Center"
@@ -18,9 +21,16 @@
                        MinHeight="48"
                        Margin="5 0"
                        HorizontalExpand="True" ClipText="True" />
+                <Button Name="FavoriteButton" Access="Public"
+                        ToggleMode="True" SetSize="48 48">
+                    <TextureRect Name="FavoriteTexture" Access="Public" Stretch="KeepAspectCentered" SetSize="24 24"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
             </BoxContainer>
         </Control>
         <BoxContainer Name="ChildrenPrototypes" Access="Public" Orientation="Vertical"
                       Margin="24 0 0 0" />
+        <GridContainer Name="ChildrenPrototypesGallery" Access="Public" Columns="10"
+                       Margin="24 0 0 0" />
     </BoxContainer>
 </mapping:MappingSpawnButton>
