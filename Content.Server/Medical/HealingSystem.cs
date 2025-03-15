@@ -21,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Medical;
 
@@ -115,7 +116,7 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
@@ -199,7 +200,7 @@ public sealed class HealingSystem : EntitySystem
         }
 
         _audio.PlayPvs(component.HealingBeginSound, uid,
-                AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+                AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
 
         var isNotSelf = user != target;
 
@@ -242,7 +243,7 @@ public sealed class HealingSystem : EntitySystem
         if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var amount, mobThreshold))
             return 1;
 
-        var percentDamage = (float) (damageable.TotalDamage / amount);
+        var percentDamage = (float)(damageable.TotalDamage / amount);
         //basically make it scale from 1 to the multiplier.
         var modifier = percentDamage * (component.SelfHealPenaltyMultiplier - 1) + 1;
         return Math.Max(modifier, 1);
