@@ -53,7 +53,7 @@
             - material: ReinforcedGlass
               amount: 2
               doAfter: 4
-        
+
         - to: clockworkWindow
           steps:
             - material: ClockworkGlass
@@ -116,6 +116,25 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
+        - to: tintedWindowToggleable
+          steps:
+          - tag: DoorElectronics
+            store: board
+            name: door electronics circuit board
+            icon:
+              sprite: Objects/Misc/module.rsi
+              state: door_electronics
+            doAfter: 1
+
+    - node: tintedWindowToggleable
+      entity: TintedWindowToggleable
+      edges:
+      - to: tintedWindow
+        completed:
+        - !type:EmptyAllContainers { }
+        steps:
+        - tool: Screwing
+          doAfter: 1
 
     - node: plasmaWindow
       entity: PlasmaWindow
@@ -223,7 +242,7 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
-    
+
     - node: shuttleWindow
       entity: ShuttleWindow
       edges:
