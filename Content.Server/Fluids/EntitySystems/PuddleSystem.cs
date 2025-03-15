@@ -440,7 +440,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _stepTrigger.SetActive(entity, slipperyUnits > slipperyThreshold, comp);
         //Update values to determine how slippery it is
         _stepTrigger.SetRequiredTriggerSpeed(entity, (float)(slipStepTrigger/solution.Volume));
-        slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/solution.Volume);
+        slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
         //To keep stun times somewhat predictable only averages based on slippery volume
         slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
         //Only make it super slippery if there is enough super slippery units for its own puddle
