@@ -147,12 +147,28 @@ public sealed partial class SalvageSystem
             var mobQuery = AllEntityQuery<MobStateComponent, TransformComponent>();
             _detachEnts.Clear();
 
+            var mobStateQuery = GetEntityQuery<MobStateComponent>();
             while (mobQuery.MoveNext(out var mobUid, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
                     continue;
 
                 if (_salvMobQuery.HasComp(mobUid))
+                    continue;
+
+                bool CheckParents(EntityUid uid)
+                {
+                    do
+                    {
+                        uid = _transform.GetParentUid(uid);
+                        if (mobStateQuery.HasComp(uid))
+                            return true;
+                    }
+                    while (uid != xform.GridUid);
+                    return false;
+                }
+
+                if (CheckParents(mobUid))
                     continue;
 
                 // Can't parent directly to map as it runs grid traversal.
