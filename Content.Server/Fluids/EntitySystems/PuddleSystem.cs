@@ -393,17 +393,18 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var superSlipperyUnits = FixedPoint2.Zero;
 
         // These three values will be averaged later and all start at zero so the calculations work
-        // Stores a cumulative weighted amount of minimum speed to slip values
+        // A cumulative weighted amount of minimum speed to slip values
         var slipStepTrigger = FixedPoint2.Zero;
-        // Stores a cumulative weighted amount of launch multipliers from slippery reagents
+        // A cumulative weighted amount of launch multipliers from slippery reagents
         var launchMult = FixedPoint2.Zero;
-        // Stores a cumulative weighted amount of stun times from slippery reagents
-        var stunTimer = FixedPoint2.Zero;
+        // A cumulative weighted amount of stun times from slippery reagents
+        var stunTimer = TimeSpan.Zero;
 
         // Check if the puddle is big enough to slip in to avoid doing unnecessary logic
         if (solution.Volume <= smallPuddleThreshold)
         {
             _stepTrigger.SetActive(entity, false, comp);
+            _tile.SetModifier(entity, TileFrictionController.DefaultFriction);
             return;
         }
 
@@ -425,7 +426,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Aggregate launch speed based on quantity
             launchMult += reagentProto.SlipData.LaunchForwardsMultiplier * quantity;
             // Aggregate stun times based on quantity
-            stunTimer += reagentProto.SlipData.ParalyzeTime * quantity;
+            stunTimer += reagentProto.SlipData.ParalyzeTime * (float)quantity;
 
             if (reagentProto.SlipData.SuperSlippery)
                 superSlipperyUnits += quantity;
@@ -444,7 +445,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (slipperyUnits > 0)
         {
             slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
-            slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
+            slipComp.SlipData.ParalyzeTime = (stunTimer/(float)slipperyUnits);
         }
 
         // Only make it super slippery if there is enough super slippery units for its own puddle
@@ -521,8 +522,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _solutionContainerSystem.EnsureAllSolutions((puddleUid, sol));
 
         if (addedSolution.Volume == 0 ||
-            !_solutionContainerSystem.ResolveSolution(puddleUid,
-                puddleComponent.SolutionName,
+            !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName,
                 ref puddleComponent.Solution))
         {
             return false;

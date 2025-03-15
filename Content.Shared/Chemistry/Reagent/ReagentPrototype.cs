@@ -103,7 +103,7 @@ namespace Content.Shared.Chemistry.Reagent
 
 
         /// <summary>
-        /// If not null, makes something slippery. Also lets you define how slippery.
+        /// If not null, makes something slippery. Also defines slippery interactions like stun time and launch mult.
         /// </summary>
         [DataField]
         public SlipperyEffectEntry? SlipData;
