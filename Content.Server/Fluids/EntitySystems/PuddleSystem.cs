@@ -407,75 +407,50 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return;
         if (!TryComp<StepTriggerComponent>(entity, out var comp))
             return;
-        // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
-        var amountRequired = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
-        var slipperyAmount = FixedPoint2.Zero;
-        bool superSlippery = false;
-        float defStepTrigger = 6.0f;
-        FixedPoint2 deltaStepTrigger = 0;
+
+        /* This is the base amount of reagent needed before a puddle can be considered slippery. Is defined based on
+         the sprite theshold for a puddle larger than 5 pixels.*/
+        var slipperyThreshold = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
+        var slipperyUnits = FixedPoint2.Zero;
+        var superSlipperyUnits = FixedPoint2.Zero;
+        var slipStepTrigger = FixedPoint2.Zero;
+        var launchMult = FixedPoint2.Zero;
+        var stunTimer = FixedPoint2.Zero;
+
+        //Check if the puddle is big enough to slip in
+        if (solution.Volume <= slipperyThreshold)
+        {
+            _stepTrigger.SetActive(entity, false, comp);
+            return;
+        }
 
         foreach (var (reagent, quantity) in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+            //Calculate the minimum speed needed to slip in the puddle through averaging the slip triggers
+            var deltaSlipTrigger = reagentProto.SlipData?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
+            slipStepTrigger += quantity * deltaSlipTrigger;
 
-            if (!reagentProto.Slippery && reagentProto.SlipData == null)
+            if (reagentProto.SlipData == null)
                 continue;
-            slipperyAmount += quantity;
+            slipperyUnits += quantity;
+            //Aggregate launch speed based on quantity
+            launchMult += reagentProto.SlipData.LaunchForwardsMultiplier * quantity;
+            //Aggregate stun times based on quantity
+            stunTimer += reagentProto.SlipData.ParalyzeTime * quantity;
 
-            if (reagentProto.SlipData != null)
-            {
-                deltaStepTrigger += (quantity *(defStepTrigger-reagentProto.SlipData.RequiredSlipSpeed));
-                if (reagentProto.SlipData.SuperSlippery && quantity > amountRequired)
-                    superSlippery = true;
-            }
-            else
-            {
-                deltaStepTrigger += (quantity *(defStepTrigger-4.5f));
-            }
-
-            //if (TryComp<StepTriggerComponent>(entity, out var comp))
-                //comp.RequiredTriggeredSpeed = reagentProto.Slippery.RequiredSlipSpeed;
-            /*foreach (var tileReaction in reagentProto.TileReactions)
-            {
-                if (tileReaction is not SpillTileReaction spillTileReaction)
-                    continue;
-                isSuperSlippery = spillTileReaction.SuperSlippery;
-                launchForwardsMultiplier = launchForwardsMultiplier < spillTileReaction.LaunchForwardsMultiplier ? spillTileReaction.LaunchForwardsMultiplier : launchForwardsMultiplier;
-                requiredSlipSpeed = requiredSlipSpeed > spillTileReaction.RequiredSlipSpeed ? spillTileReaction.RequiredSlipSpeed : requiredSlipSpeed;
-                paralyzeTime = paralyzeTime < spillTileReaction.ParalyzeTime ? spillTileReaction.ParalyzeTime : paralyzeTime;
-            }*/
+            if (reagentProto.SlipData.SuperSlippery)
+                superSlipperyUnits += quantity;
         }
-        // This needs to be replaced with a check for if the steptrigger should be set active or inactive
-        if (slipperyAmount > amountRequired)
-        {
-            _stepTrigger.SetActive(entity, true, comp);
-            _stepTrigger.SetRequiredTriggerSpeed(entity, (float)(defStepTrigger - (deltaStepTrigger/solution.Volume)));
-        }
-        else
-        {
-            _stepTrigger.SetActive(entity, false, comp);
-        }
-        slipComp.SuperSlippery = superSlippery;
-        /*if (isSlippery)
-        {
-            var comp = EnsureComp<StepTriggerComponent>(entityUid);
-            _stepTrigger.SetActive(entityUid, true, comp);
-            var friction = EnsureComp<TileFrictionModifierComponent>(entityUid);
-            _tile.SetModifier(entityUid, TileFrictionController.DefaultFriction * 0.5f, friction);
-
-            if (!TryComp<SlipperyComponent>(entityUid, out var slipperyComponent))
-                return;
-            slipperyComponent.SuperSlippery = isSuperSlippery;
-            _stepTrigger.SetRequiredTriggerSpeed(entityUid, requiredSlipSpeed);
-            slipperyComponent.LaunchForwardsMultiplier = launchForwardsMultiplier;
-            slipperyComponent.ParalyzeTime = paralyzeTime;
-
-        }
-        else if (TryComp<StepTriggerComponent>(entityUid, out var comp))
-        {
-            _stepTrigger.SetActive(entityUid, false, comp);
-            RemCompDeferred<TileFrictionModifierComponent>(entityUid);
-        }*/
+        //Turn on the step trigger if it's slippery
+        _stepTrigger.SetActive(entity, slipperyUnits > slipperyThreshold, comp);
+        //Update values to determine how slippery it is
+        _stepTrigger.SetRequiredTriggerSpeed(entity, (float)(slipStepTrigger/solution.Volume));
+        slipComp.LaunchForwardsMultiplier = (float)(launchMult/solution.Volume);
+        //To keep stun times somewhat predictable only averages based on slippery volume
+        slipComp.ParalyzeTime = (float)(stunTimer/slipperyUnits);
+        //Only make it super slippery if there is enough super slippery units for its own puddle
+        slipComp.SuperSlippery = superSlipperyUnits > slipperyThreshold;
     }
 
     private void UpdateSlow(EntityUid uid, Solution solution)

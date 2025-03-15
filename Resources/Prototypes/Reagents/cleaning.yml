@@ -68,10 +68,8 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
-  slippery: true
   slipData:
-    paralyzeTime: 10.0
-    launchForwardsMultiplier: 3.0
+    launchForwardsMultiplier: 2.0
     requiredSlipSpeed: 1
     superSlippery: true
   physicalDesc: reagent-physical-desc-shiny
@@ -80,10 +78,6 @@
   recognizable: true
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
-  #tileReactions:
-    #- !type:SpillTileReaction
-      #requiredSlipSpeed: 1
-      #superSlippery: true
 
 - type: reagent
   id: SpaceGlue

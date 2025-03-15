@@ -435,7 +435,6 @@
   name: reagent-name-water
   parent: BaseDrink
   desc: reagent-desc-water
-  slippery: true
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
@@ -454,6 +453,8 @@
   id: Ice
   name: reagent-name-ice
   desc: reagent-desc-ice
+  slipData:
+    requiredSlipSpeed: 3.5
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#bed8e6"

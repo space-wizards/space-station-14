@@ -101,14 +101,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool MetamorphicChangeColor { get; private set; } = true;
 
-        /// <summary>
-        /// If this reagent is part of a puddle is it slippery.
-        /// </summary>
-        [DataField]
-        public bool Slippery;
 
         /// <summary>
-        /// A more robust way to define if something is slippery.
+        /// A robust way to define if something is slippery and how slippery it is.
         /// </summary>
         [DataField]
         public SlipperyEffectEntry? SlipData;
