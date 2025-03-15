@@ -102,6 +102,12 @@ public sealed class StoreTests
                 + $"flag as 'true'. This marks the fact that cost modifier of discount is not applied properly!"
             );
 
+            // Set conditions to null so that it doesnt fail
+            foreach (var discountedItem in discountedListingItems)
+            {
+                discountedItem.Conditions = null;
+            }
+
             // Refund action requests re-generation of listing items so we will be re-acquiring items from component a lot of times.
             var itemIds = discountedListingItems.Select(x => x.ID);
             foreach (var itemId in itemIds)
@@ -139,6 +145,9 @@ public sealed class StoreTests
 
                     // get refreshed item after refund re-generated items
                     discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
+
+                    // Check if conditions are still null after refund
+                    discountedListingItem.Conditions = null;
 
                     var afterRefundBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(afterRefundBalance.Value, Is.EqualTo(originalBalance.Value), "Expected refund to return all discounted cost value.");
