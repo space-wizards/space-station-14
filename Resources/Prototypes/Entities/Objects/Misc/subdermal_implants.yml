@@ -366,7 +366,7 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: UnremoveableMindShieldImplant
+  id: UnremovableMindShieldImplant
   name: cranial mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices, and can be implanted beneath the cranium to prevent removal.
   categories: [ HideSpawnMenu ]

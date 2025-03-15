@@ -22,7 +22,7 @@
   components:
   - type: AutoImplant
     implants:
-    - UnremoveableMindShieldImplant
+    - UnremovableMindShieldImplant
   - type: AntagImmune
 
 ## Death Squad

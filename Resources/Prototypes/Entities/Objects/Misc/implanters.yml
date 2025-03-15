@@ -296,7 +296,7 @@
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
-    ImplantBlacklist:
+    implantBlacklist:
       tags:
       - UnremovableMindShield
     implant: MindShieldImplant
@@ -317,7 +317,7 @@
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
-    ImplantBlacklist:
+    implantBlacklist:
       tags:
       - RemovableMindShield
     implant: UnremovableMindShieldImplant

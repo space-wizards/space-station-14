@@ -79,7 +79,9 @@ public abstract class SharedImplanterSystem : EntitySystem
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
             return false;
-        return implanted.ImplantContainer.ContainedEntities.Any(entity => _whitelistSystem.IsBlacklistFailOrNull(implants, entity));
+        if (implants is null)
+            return false;
+        return implanted.ImplantContainer.ContainedEntities.Any(entity => _whitelistSystem.IsWhitelistPass(implants, entity));
     }
 
     private void OnVerb(EntityUid uid, ImplanterComponent component, GetVerbsEvent<InteractionVerb> args)
