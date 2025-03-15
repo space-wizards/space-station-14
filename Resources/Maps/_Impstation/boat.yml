@@ -110582,20 +110582,6 @@ entities:
       parent: 2
 - proto: HandheldStationMap
   entities:
-  - uid: 3346
-    components:
-    - type: Transform
-      parent: 3344
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 3352
-    components:
-    - type: Transform
-      parent: 3347
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 3373
     components:
     - type: Transform

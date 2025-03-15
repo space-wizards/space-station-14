@@ -89342,15 +89342,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -45.947662,1.0382209
       parent: 1
-  - uid: 14713
-    components:
-    - type: Transform
-      parent: 5509
-    - type: Paper
-      content: Due to budget concerns, only one courier hardsuit is available for usage on Pioneer Station. Please share the suit with your fellow courier respectfully.
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 15191
     components:
     - type: Transform
