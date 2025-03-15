@@ -28,5 +28,6 @@
     - state: icon
       color: green
   - type: HandTeleporter
-    firstPortalPrototype: PortalGatewayBlue
-    secondPortalPrototype: PortalGatewayOrange
+    allowPortalsOnDifferentGrids: true
+    firstPortalPrototype: PortalAdminBlue
+    secondPortalPrototype: PortalAdminOrange
