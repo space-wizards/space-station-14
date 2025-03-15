@@ -103,7 +103,7 @@ namespace Content.Shared.Chemistry.Reagent
 
 
         /// <summary>
-        /// A robust way to define if something is slippery and how slippery it is.
+        /// If not null, makes something slippery. Also lets you define how slippery.
         /// </summary>
         [DataField]
         public SlipperyEffectEntry? SlipData;
