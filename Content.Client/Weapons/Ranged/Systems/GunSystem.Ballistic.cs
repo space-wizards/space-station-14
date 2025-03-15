@@ -19,34 +19,4 @@ public sealed partial class GunSystem
             control.Update(GetBallisticShots(component), component.Capacity);
         }
     }
-
-    protected override void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates)
-    {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        EntityUid? ent = null;
-
-        // TODO: Combine with TakeAmmo
-        if (component.Entities.Count > 0)
-        {
-            var existing = component.Entities[^1];
-            component.Entities.RemoveAt(component.Entities.Count - 1);
-
-            Containers.Remove(existing, component.Container);
-            EnsureShootable(existing);
-        }
-        else if (component.UnspawnedCount > 0)
-        {
-            component.UnspawnedCount--;
-            ent = Spawn(component.Proto, coordinates);
-            EnsureShootable(ent.Value);
-        }
-
-        if (ent != null && IsClientSide(ent.Value))
-            Del(ent.Value);
-
-        var cycledEvent = new GunCycledEvent();
-        RaiseLocalEvent(uid, ref cycledEvent);
-    }
 }

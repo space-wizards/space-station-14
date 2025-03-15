@@ -35,7 +35,7 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     // TODO: Make this use stacks when the typeserializer is done.
     // Realistically just point to the container.
     [DataField, AutoNetworkedField]
-    public List<EntityUid> Entities = new();
+    public Stack<EntityUid> Entities = new();
 
     /// <summary>
     /// Is the magazine allowed to be manually cycled to eject a cartridge.

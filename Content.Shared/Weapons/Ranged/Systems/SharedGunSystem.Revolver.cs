@@ -283,44 +283,23 @@ public partial class SharedGunSystem
 
     public void EmptyRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        var mapCoordinates = TransformSystem.GetMapCoordinates(revolverUid);
         var anyEmpty = false;
 
         for (var i = 0; i < component.Capacity; i++)
         {
-            var chamber = component.Chambers[i];
-            var slot = component.AmmoSlots[i];
+            var ent = RevolverTakeAmmo(revolverUid, component, i);
 
-            if (slot == null)
-            {
-                if (chamber == null)
-                    continue;
+            if (ent == null)
+                continue;
 
-                // Too lazy to make a new method don't sue me.
-                if (!_netManager.IsClient)
-                {
-                    var uid = Spawn(component.FillPrototype, mapCoordinates);
+            component.AmmoSlots[i] = null;
+            component.Chambers[i] = null;
+            Containers.Remove(ent.Value, component.AmmoContainer);
 
-                    if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
-                        SetCartridgeSpent(uid, cartridge, !(bool) chamber);
+            EjectCartridge(ent, null, true, user);
 
-                    EjectCartridge(uid);
-                }
-
-                component.Chambers[i] = null;
-                anyEmpty = true;
-            }
-            else
-            {
-                component.AmmoSlots[i] = null;
-                Containers.Remove(slot.Value, component.AmmoContainer);
-                component.Chambers[i] = null;
-
-                if (!_netManager.IsClient)
-                    EjectCartridge(slot.Value);
-
-                anyEmpty = true;
-            }
+            // Set the flag that plays the sound, updates ammo count, and changes the appearance.
+            anyEmpty = true;
         }
 
         if (anyEmpty)
@@ -345,8 +324,53 @@ public partial class SharedGunSystem
 
     protected virtual void SpinRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
+        component.CurrentIndex = Random.Next(0, component.Capacity - 1);
         Audio.PlayPredicted(component.SoundSpin, revolverUid, user);
         Popup(Loc.GetString("gun-revolver-spun"), revolverUid, user);
+    }
+
+    private EntityUid SpawnAmmo(
+        EntityUid firearmUid,
+        AmmoProviderComponent component,
+        MapCoordinates? coords = null)
+    {
+        if (coords == null)
+            coords = TransformSystem.GetMapCoordinates(firearmUid);
+
+        var ent = Spawn(component.FillPrototype, coords);
+        EnsureShootable(ent);
+
+        if (TryComp<CartridgeAmmoComponent>(ent, out var cartridge))
+        {
+            SetCartridgeSpent(ent.Value, cartridge.Value, true);
+
+            if (cartridge.DeleteOnSpawn)
+                var ent = Spawn(cartridge.Prototype, coords);
+        }
+        return ent;
+    }
+
+    private EntityUid? RevolverTakeAmmo(EntityUid revolverUid, RevolverAmmoProviderComponent component, int index)
+    {
+        DebugTools.Assert(index < component.Capacity);
+        DebugTools.Assert(index >= 0);
+
+        var chamber = component.Chambers[index];
+        var entity = component.AmmoSlots[index];
+
+        if (entity == null)
+        {
+            if (chamber == null)
+                return null;
+
+            entity = SpawnAmmo(revolverUid, component);
+            Containers.Insert(entity.Value, component.AmmoContainer);
+        }
+
+        component.AmmoSlots[index] = entity;
+        component.Chambers[index] = false;
+
+        return entity;
     }
 
     private void OnRevolverTakeAmmo(EntityUid uid, RevolverAmmoProviderComponent component, TakeAmmoEvent args)
@@ -358,65 +382,32 @@ public partial class SharedGunSystem
         for (var i = 0; i < args.Shots; i++)
         {
             var index = (currentIndex + i) % component.Capacity;
-            var chamber = component.Chambers[index];
-            EntityUid? ent = null;
+            EntityUid? entity = RevolverTakeAmmo(uid, component, index);
 
-            // Get contained entity if it exists.
-            if (component.AmmoSlots[index] != null)
-            {
-                ent = component.AmmoSlots[index]!;
-                component.Chambers[index] = false;
-            }
-            // Try to spawn a round if it's available.
-            else if (chamber != null)
-            {
-                if (chamber == true)
-                {
-                    // Pretend it's always been there.
-                    ent = Spawn(component.FillPrototype, args.Coordinates);
-
-                    if (!_netManager.IsClient)
-                    {
-                        component.AmmoSlots[index] = ent;
-                        Containers.Insert(ent.Value, component.AmmoContainer);
-                    }
-
-                    component.Chambers[index] = false;
-                }
-            }
-
-            // Chamber empty or spent
-            if (ent == null)
+            if (entity == null)
                 continue;
 
+            // check if it's a cartridge and if it has been spent (fired)
             if (TryComp<CartridgeAmmoComponent>(ent, out var cartridge))
             {
-                if (cartridge.Spent)
-                    continue;
-
-                // Mark cartridge as spent and if it's caseless delete from the chamber slot.
-                SetCartridgeSpent(ent.Value, cartridge, true);
-                var spawned = Spawn(cartridge.Prototype, args.Coordinates);
-                args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
-
                 if (cartridge.DeleteOnSpawn)
                 {
+                    // if it's caseless, remove the reference to it
                     component.AmmoSlots[index] = null;
                     component.Chambers[index] = null;
                 }
-            }
-            else
-            {
-                component.AmmoSlots[index] = null;
-                component.Chambers[index] = null;
-                args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
+                else
+                {
+                    // else set the cartridge to spent
+                    SetCartridgeSpent(entity.Value, cartridge, true);
+                }
+
+                // spawn the bullet and return it
+                // Let the entity get garbage collected here if it's caseless
+                entity = Spawn(cartridge.Prototype, args.Coordinates);
             }
 
-            // Delete the cartridge entity on client
-            if (_netManager.IsClient)
-            {
-                QueueDel(ent);
-            }
+            args.Ammo.Add((entity, EnsureShootable(entity)));
         }
 
         UpdateAmmoCount(uid, prediction: false);
