@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: 3 new lollipops for the chef to make (meat, cloth, and fruit), and one
-      super secret one!
-    type: Add
-  id: 817
-  time: '2024-12-28T15:48:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1141
-- author: Darkmajia
-  changes:
-  - message: Heretic can no longer be rolled.
-    type: Remove
-  id: 818
-  time: '2024-12-28T21:52:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1149
 - author: Honeyed_Lemons_, Darkmajia
   changes:
   - message: adds The Supermatter for dummies, a guide for setting up the supermatter
@@ -4099,3 +4084,26 @@
   id: 1316
   time: '2025-03-15T08:21:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1962
+- author: Sha-Seng
+  changes:
+  - message: Fever Dream recipe changed due to upstream changing eggs
+    type: Tweak
+  id: 1317
+  time: '2025-03-15T23:02:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1966
+- author: jtfg-dev
+  changes:
+  - message: Fixed a snail random last-name that was lower-case. ( [issue](https://github.com/impstation/imp-station-14/issues/1628)
+      )
+    type: Fix
+  - message: Fixed Russian (Basic) being unreadable. ( [issue](https://github.com/impstation/imp-station-14/issues/1368)
+      )
+    type: Fix
+  - message: Made it so the NoContractions accent works properly.
+    type: Fix
+  - message: Fixed some typos and inconsistencies in the traits screen. There should
+      be 'much less' now.
+    type: Tweak
+  id: 1318
+  time: '2025-03-15T23:01:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1971
