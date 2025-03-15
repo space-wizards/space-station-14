@@ -15,6 +15,7 @@ zombie-infection-underway = Your blood begins to thicken
 zombie-alone = You feel entirely alone.
 
 zombie-shuttle-call = We have detected that the undead have overtaken the station. Dispatching an emergency shuttle to collect remaining personnel.
+zombie-shuttle-unavailable = Shuttle recall is unavailable due to a high undead percentage among the crew.
 
 zombie-round-end-initial-count = {$initialCount ->
     [one] There was one initial infected:
