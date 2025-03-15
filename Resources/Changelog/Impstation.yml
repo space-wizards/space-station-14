@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Honeyed_Lemons_, Darkmajia
-  changes:
-  - message: adds The Supermatter for dummies, a guide for setting up the supermatter
-      engine
-    type: Add
-  id: 819
-  time: '2024-12-29T11:46:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1144
 - author: mqole
   changes:
   - message: Syndicate/paranormal contraband is now divided into 4 tiers, with different
@@ -4107,3 +4099,11 @@
   id: 1318
   time: '2025-03-15T23:01:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1971
+- author: mqole, hivehum, crocodilecarousel, credey
+  changes:
+  - message: Some new freaks of nature can now be found in the vents. Please be careful
+      not to scare them.
+    type: Add
+  id: 1319
+  time: '2025-03-15T23:50:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1881
