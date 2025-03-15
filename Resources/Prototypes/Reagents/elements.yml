@@ -20,10 +20,11 @@
   boilingPoint: 4200.0
   meltingPoint: 3550.0
 
+  # This should probably be given gas properties at some point
 - type: reagent
   id: Chlorine
   name: reagent-name-chlorine
-  group: Elements
+  group: Elements # Also a toxin
   desc: reagent-desc-chlorine
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
@@ -31,14 +32,14 @@
   meltingPoint: -101.5
   boilingPoint: -34.04
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 15
-    - !type:PlantAdjustWeeds
-      amount: -3
-    - !type:PlantAdjustHealth
-      amount: -1
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustToxins
+    amount: 15
+  - !type:PlantAdjustWeeds
+    amount: -3
+  - !type:PlantAdjustHealth
+    amount: -1
   metabolisms:
     Poison:
       effects:
@@ -50,7 +51,7 @@
 - type: reagent
   id: Copper
   name: reagent-name-copper
-  group: Elements
+  group: Elements # Also a very mild toxin, or medicine to arachnids
   desc: reagent-desc-copper
   physicalDesc: reagent-physical-desc-metallic
   flavor: metallic
@@ -78,10 +79,11 @@
           shouldHave: true
         amount: 0.4
 
+  # This should probably be given gas properties at some point
 - type: reagent
   id: Fluorine
   name: reagent-name-fluorine
-  group: Elements
+  group: Elements # Also a toxin
   desc: reagent-desc-fluorine
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
@@ -89,14 +91,14 @@
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 25
-    - !type:PlantAdjustWeeds
-      amount: -4
-    - !type:PlantAdjustHealth
-      amount: -2
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustToxins
+    amount: 25
+  - !type:PlantAdjustWeeds
+    amount: -4
+  - !type:PlantAdjustHealth
+    amount: -2
   metabolisms:
     Poison:
       effects:
@@ -105,6 +107,7 @@
           types:
             Caustic: 0.5
             Poison: 0.5
+            
 - type: reagent
   id: Gold
   name: reagent-name-gold
@@ -116,6 +119,7 @@
   boilingPoint: 2700.0
   meltingPoint: 1064.76
 
+  # This should probably be given gas properties at some point
 - type: reagent
   id: Hydrogen
   name: reagent-name-hydrogen
@@ -130,7 +134,7 @@
 - type: reagent
   id: Iodine
   name: reagent-name-iodine
-  group: Elements
+  group: Elements 
   desc: reagent-desc-iodine
   physicalDesc: reagent-physical-desc-dark-brown
   flavor: bitter
@@ -195,7 +199,6 @@
         probability: 0.05
 
   # TODO: cause some brain damage when woundmed, and generally reduce the stutter/scrambledaccent unless high doses
-
 - type: reagent
   id: Mercury
   name: reagent-name-mercury
@@ -239,12 +242,12 @@
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.1
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustWeeds
-      amount: -2
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustWeeds
+    amount: -2
 
 - type: reagent
   id: Radium

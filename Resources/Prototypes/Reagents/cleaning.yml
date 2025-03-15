@@ -1,6 +1,7 @@
 - type: reagent
   id: Bleach
   name: reagent-name-bleach
+  group: Domestic # Also a Toxin
   desc: reagent-desc-bleach
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
@@ -27,6 +28,7 @@
 - type: reagent
   id: SpaceCleaner
   name: reagent-name-space-cleaner
+  group: Domestic
   desc: reagent-desc-space-cleaner
   physicalDesc: reagent-physical-desc-lemony-fresh
   flavor: bitter
@@ -35,12 +37,13 @@
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
   tileReactions:
-    - !type:CleanTileReaction {}
-    - !type:CleanDecalsReaction {}
+  - !type:CleanTileReaction {}
+  - !type:CleanDecalsReaction {}
 
 - type: reagent
   id: SoapReagent
   name: reagent-name-soap
+  group: Domestic
   desc: reagent-desc-soap
   physicalDesc: reagent-physical-desc-soapy
   flavor: clean
@@ -67,6 +70,7 @@
 - type: reagent
   id: SpaceLube
   name: reagent-name-space-lube
+  group: Domestic
   desc: reagent-desc-space-lube
   slippery: true
   physicalDesc: reagent-physical-desc-shiny
@@ -76,13 +80,14 @@
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
   tileReactions:
-    - !type:SpillTileReaction
-      requiredSlipSpeed: 1
-      superSlippery: true
+  - !type:SpillTileReaction
+    requiredSlipSpeed: 1
+    superSlippery: true
 
 - type: reagent
   id: SpaceGlue
   name: reagent-name-space-glue
+  group: Domestic # Also a narcotic
   desc: reagent-desc-space-glue
   physicalDesc: reagent-physical-desc-sticky
   flavor: glue
@@ -91,7 +96,7 @@
   meltingPoint: 380.0
   viscosity: 0.5
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
