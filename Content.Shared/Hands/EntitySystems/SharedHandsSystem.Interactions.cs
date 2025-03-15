@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -6,6 +7,8 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Localizations;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -214,5 +217,24 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString(locKey, locUser, locItems));
         }
+    }
+
+    /// <summary>
+    /// Resets the throw cooldown to allow for throwing, and optionally sets a new throw tim if given.
+    /// </summary>
+    /// <param name="customTime">If set, this will be the new NextThrowTime.</param>
+    public void ResetThrowCooldown(EntityUid uid, HandsComponent? handsComp, TimeSpan? customTime = null)
+    {
+        if (!Resolve(uid, ref handsComp))
+            return;
+
+        if (customTime == null || _timing.CurTime > customTime)
+        {
+            handsComp.NextThrowTime = _timing.CurTime;
+            return;
+        }
+
+        handsComp.NextThrowTime = (TimeSpan)customTime;
+
     }
 }

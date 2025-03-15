@@ -9,6 +9,7 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -22,6 +23,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 

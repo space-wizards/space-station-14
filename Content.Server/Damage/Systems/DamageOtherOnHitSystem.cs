@@ -8,8 +8,12 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Wires;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -24,12 +28,14 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<DamageOtherOnHitComponent, ThrowDoHitEvent>(OnDoHit);
             SubscribeLocalEvent<DamageOtherOnHitComponent, DamageExamineEvent>(OnDamageExamine);
             SubscribeLocalEvent<DamageOtherOnHitComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
+            SubscribeLocalEvent<DamageOtherOnHitComponent, MeleeHitEvent>(OnMeleeCollideHit);
         }
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
@@ -67,6 +73,18 @@ namespace Content.Server.Damage.Systems
         private void OnAttemptPacifiedThrow(Entity<DamageOtherOnHitComponent> ent, ref AttemptPacifiedThrowEvent args)
         {
             args.Cancel("pacified-cannot-throw");
+        }
+
+        /// <summary>
+        /// Prevent immediately throwing this weapon after using it for a melee attack.
+        /// </summary>
+        private void OnMeleeCollideHit(Entity<DamageOtherOnHitComponent> ent, ref MeleeHitEvent args)
+        {
+            if (!TryComp<HandsComponent>(args.User, out var hands) || !TryComp<MeleeWeaponComponent>(ent.Owner, out var melee))
+                return;
+            
+            if (hands.NextThrowTime < melee.NextAttack)
+                _hands.ResetThrowCooldown(args.User, hands, melee.NextAttack);
         }
     }
 }

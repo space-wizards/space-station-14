@@ -6,6 +6,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -13,6 +15,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -34,6 +37,7 @@ public sealed partial class StaminaSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -56,6 +60,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, MeleeHitEvent>(OnMeleeCollideHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
@@ -188,6 +193,18 @@ public sealed partial class StaminaSystem : EntitySystem
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         OnCollide(uid, component, args.Target);
+    }
+
+    /// <summary>
+    /// Prevent immediately throwing this weapon after using it for a melee attack.
+    /// </summary>
+    private void OnMeleeCollideHit(Entity<StaminaDamageOnCollideComponent> ent, ref MeleeHitEvent args)
+    {
+        if (!TryComp<HandsComponent>(args.User, out var hands) || !TryComp<MeleeWeaponComponent>(ent.Owner, out var melee))
+            return;
+
+        if (hands.NextThrowTime < melee.NextAttack)
+            _hands.ResetThrowCooldown(args.User, hands, melee.NextAttack);
     }
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)

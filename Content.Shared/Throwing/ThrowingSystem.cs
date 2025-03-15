@@ -176,7 +176,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         ThrowingAngleComponent? throwingAngle = null;
 
-        // Give it a l'il spin.
+        // Give it a li'l spin.
         if (doSpin)
         {
             if (physics.InvI > 0f && (!TryComp(uid, out throwingAngle) || throwingAngle.AngularVelocity))
