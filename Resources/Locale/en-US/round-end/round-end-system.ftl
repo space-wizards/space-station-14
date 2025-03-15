@@ -7,5 +7,6 @@ round-end-system-shuttle-recalled-announcement = The emergency shuttle has been 
 round-end-system-shuttle-sender-announcement = Station
 round-end-system-round-restart-eta-announcement = Restarting the round in {$time} {$units}...
 
+eta-units-minute = minute
 eta-units-minutes = minutes
 eta-units-seconds = seconds
