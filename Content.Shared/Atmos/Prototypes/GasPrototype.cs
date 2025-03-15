@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Atmos.Prototypes
 {
-    [Prototype("gas")]
+    [Prototype]
     public sealed partial class GasPrototype : IPrototype
     {
         [DataField("name")] public string Name { get; set; } = "";

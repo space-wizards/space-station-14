@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;
 
-[Prototype("dungeonRoomPack")]
+[Prototype]
 public sealed partial class DungeonRoomPackPrototype : IPrototype
 {
     [IdDataField]
