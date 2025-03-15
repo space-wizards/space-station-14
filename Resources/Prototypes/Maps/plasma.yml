@@ -41,27 +41,52 @@
             Musician: [ 1, 1 ]
             #engineering - 8-12
             AtmosphericTechnician: [ 4, 4 ]
-            StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 4, 4 ]
+            StationEngineer: [ 0, 0 ] # Handled in its own jobgroup
+            TechnicalAssistant: [ 0, 0 ] # Handled in its own jobgroup
             #medical - 9-13
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 4 ]
+            MedicalDoctor: [ 0, 0 ] # Handled in its own jobgroup
             Paramedic: [ 2, 2 ]
-            MedicalIntern: [ 4, 4 ]
+            MedicalIntern: [ 0, 0 ] # Handled in its own jobgroup
             Psychologist: [ 1, 1 ]
             #science - 7-13
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 4, 4 ]
+            Scientist: [ 0, 0 ] # Handled in its own jobgroup
+            ResearchAssistant: [ 0, 0 ] # Handled in its own jobgroup
             StationAi: [ 1, 1 ]
             Borg: [ 2, 4 ]
             #security - 9-17
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 8 ]
+            SecurityOfficer: [ 0, 0 ] # Handled in its own jobgroup
             Detective: [ 1, 2 ]
-            SecurityCadet: [ 4, 4 ]
+            SecurityCadet: [ 0, 0 ] # Handled in its own jobgroup
             Lawyer: [ 1, 2 ]
             #supply - 8-10
             SalvageSpecialist: [ 4, 4 ]
             CargoTechnician: [ 4, 6 ]
             #civilian - the tiders yearn for the mines
             Passenger: [ -1, -1 ]
+          jobGroups:
+            EngineeringTeam:
+              roundStart: 8
+              midRound: 8
+              members:
+                - StationEngineer
+                - TechnicalAssistant
+            MedicalTeam:
+              roundStart: 8
+              midRound: 8
+              members:
+                - MedicalIntern
+                - MedicalDoctor
+            ResearchTeam:
+              roundStart: 8
+              midRound: 8
+              members:
+                - Scientist
+                - ResearchAssistant
+            SecurityTeam:
+              roundStart: 10
+              midRound: 12
+              members:
+                - SecurityOfficer
+                - SecurityCadet
