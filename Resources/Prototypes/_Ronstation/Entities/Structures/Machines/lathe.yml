@@ -2,7 +2,7 @@
   parent: BaseLathe
   id: PaperPrinter
   name: paper printer
-  description: This is a paper printer; it prints papers.
+  description: This is a paper printer; it needs material paper sheets to print paper.
   components:
   - type: Transform
     noRot: false
