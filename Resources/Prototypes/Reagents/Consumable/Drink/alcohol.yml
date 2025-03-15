@@ -2195,7 +2195,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
-
+        
 - type: reagent
   id: Daiquiri
   name: reagent-name-daiquiri
