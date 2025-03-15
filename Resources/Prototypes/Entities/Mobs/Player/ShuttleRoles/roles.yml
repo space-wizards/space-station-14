@@ -613,6 +613,19 @@
 ### Syndicate & Hostiles
 
 - type: entity
+  id: RandomHumanoidSyndieCommunicationAgent
+  name: syndicate communication agent ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieCommunicationAgent
+    - type: AutoImplant
+      implants:
+      - MicroBombImplant
+
+- type: entity
   id: RandomHumanoidSyndieSoldierTeamLeader
   name: syndicate team leader ghost role
   components:
