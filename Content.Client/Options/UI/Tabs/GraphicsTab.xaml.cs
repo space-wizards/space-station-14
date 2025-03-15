@@ -21,7 +21,15 @@ public sealed partial class GraphicsTab : Control
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
+
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
+        DropDownLightingQuality.Button.OnItemSelected += DropDownLightingQualitySelected;
+
+        Control.AddOptionPercentSlider(CVars.LightResolutionScale, LightingResolutionScaleSlider, 0.05f);
+        var lBlur = Control.AddOptionCheckBox(CVars.LightBlur, LightingBlurCheckBox);
+        lBlur.ImmediateValueChanged += _ => UpdateLightingSettingsVisibility();
+        Control.AddOptionPercentSlider(CVars.LightBlurFactor, LightingBlurFactorSlider, 0f, 1f, 0.003f);
+        Control.AddOptionCheckBox(CVars.LightSoftShadows, LightingSoftShadowsCheckBox);
 
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,
@@ -68,6 +76,7 @@ public sealed partial class GraphicsTab : Control
 
         UpdateViewportWidthRange();
         UpdateViewportSettingsVisibility();
+        UpdateLightingSettingsVisibility();
     }
 
     private void UpdateViewportSettingsVisibility()
@@ -77,6 +86,18 @@ public sealed partial class GraphicsTab : Control
         ViewportVerticalFitCheckBox.Visible = ViewportStretchCheckBox.Pressed;
         ViewportWidthSlider.Visible = !ViewportStretchCheckBox.Pressed || !ViewportVerticalFitCheckBox.Pressed;
     }
+
+    private void UpdateLightingSettingsVisibility()
+    {
+        var visible = DropDownLightingQuality.Button.SelectedId == -1;
+        LightingResolutionScaleSlider.Visible = visible;
+        LightingBlurCheckBox.Visible = visible;
+        LightingBlurFactorSlider.Visible = visible && LightingBlurCheckBox.Pressed;
+        LightingSoftShadowsCheckBox.Visible = visible;
+    }
+
+    private void DropDownLightingQualitySelected(OptionButton.ItemSelectedEventArgs _) =>
+        UpdateLightingSettingsVisibility();
 
     private void UpdateViewportWidthRange()
     {
@@ -92,6 +113,7 @@ public sealed partial class GraphicsTab : Control
         private readonly IConfigurationManager _cfg;
         private readonly OptionDropDown _dropDown;
 
+        private const int QualityCustom = -1;
         private const int QualityVeryLow = 0;
         private const int QualityLow = 1;
         private const int QualityMedium = 2;
@@ -104,6 +126,7 @@ public sealed partial class GraphicsTab : Control
             _cfg = cfg;
             _dropDown = dropDown;
             var button = dropDown.Button;
+            button.AddItem(Loc.GetString("ui-options-lighting-custom"), QualityCustom);
             button.AddItem(Loc.GetString("ui-options-lighting-very-low"), QualityVeryLow);
             button.AddItem(Loc.GetString("ui-options-lighting-low"), QualityLow);
             button.AddItem(Loc.GetString("ui-options-lighting-medium"), QualityMedium);
@@ -135,16 +158,21 @@ public sealed partial class GraphicsTab : Control
                     _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
                     _cfg.SetCVar(CVars.LightSoftShadows, false);
                     _cfg.SetCVar(CVars.LightBlur, true);
+                    _cfg.SetCVar(CVars.LightBlurFactor, 0.001f);
                     break;
-                default: // = QualityMedium
+                case QualityMedium:
                     _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
                     _cfg.SetCVar(CVars.LightSoftShadows, true);
                     _cfg.SetCVar(CVars.LightBlur, true);
+                    _cfg.SetCVar(CVars.LightBlurFactor, 0.001f);
                     break;
                 case QualityHigh:
                     _cfg.SetCVar(CVars.LightResolutionScale, 1);
                     _cfg.SetCVar(CVars.LightSoftShadows, true);
                     _cfg.SetCVar(CVars.LightBlur, true);
+                    _cfg.SetCVar(CVars.LightBlurFactor, 0.001f);
+                    break;
+                case QualityCustom:
                     break;
             }
         }
@@ -156,7 +184,8 @@ public sealed partial class GraphicsTab : Control
 
         public override bool IsModified()
         {
-            return _dropDown.Button.SelectedId != GetConfigLightingQuality();
+            var id = _dropDown.Button.SelectedId;
+            return GetConfigLightingQuality() != id && id != QualityCustom;
         }
 
         public override bool IsModifiedFromDefault()
@@ -167,17 +196,24 @@ public sealed partial class GraphicsTab : Control
         private int GetConfigLightingQuality()
         {
             var val = _cfg.GetCVar(CVars.LightResolutionScale);
+            var blur = _cfg.GetCVar(CVars.LightBlur);
+            var blurFac = _cfg.GetCVar(CVars.LightBlurFactor);
+            var normalBlurFactor = blurFac <= 0.0011f && blurFac >= 0.0009f;
             var soft = _cfg.GetCVar(CVars.LightSoftShadows);
-            if (val <= 0.125)
+
+            if ((val >= 0.1249f && val <= 0.1251f) && !soft && !blur)
                 return QualityVeryLow;
 
-            if ((val <= 0.5) && !soft)
+            if ((val >= 0.4999f && val <= 0.5001f) && !soft && blur && normalBlurFactor)
                 return QualityLow;
 
-            if (val <= 0.5)
+            if ((val >= 0.4999f && val <= 0.5001f) && soft && blur && normalBlurFactor)
                 return QualityMedium;
 
-            return QualityHigh;
+            if ((val >= 0.9999f) && soft && blur && normalBlurFactor)
+                return QualityHigh;
+
+            return QualityCustom;
         }
     }
 
