@@ -123,3 +123,21 @@
     layers:
       - state: box
       - state: vials
+
+- type: entity
+  name: chemical pad box
+  parent: BoxCardboard
+  id: BoxReagentPad
+  description: A box of chemical pads.
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,1
+  - type: StorageFill
+    contents:
+    - id: ReagentPad
+      amount: 9
+  - type: Sprite
+    layers:
+      - state: box
+      - state: chemical
