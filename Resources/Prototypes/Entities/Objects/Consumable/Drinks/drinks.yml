@@ -113,31 +113,338 @@
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
   - type: TransformableContainer
+  - type: PolymorphGlass
+    glasses:
+      DrinkGlass:
+        sprite: Objects/Consumable/Drinks/glass_clear.rsi
+        state: icon
+      DrinkGlassCoupeShaped:
+        sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+        state: icon
+      DrinkGlassFlute:
+        sprite: Objects/Consumable/Drinks/glass_flute.rsi
+        state: icon
+      DrinkGlassOldFashioned:
+        sprite: Objects/Consumable/Drinks/glass_old_fashioned.rsi
+        state: icon
+      DrinkGlassCollins:
+        sprite: Objects/Consumable/Drinks/glass_collins.rsi
+        state: icon
+      DrinkGlassTumbler:
+        sprite: Objects/Consumable/Drinks/glass_tumbler.rsi
+        state: icon
+      DrinkGlassPint:
+        sprite: Objects/Consumable/Drinks/glass_pint.rsi
+        state: icon
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkGlassStaticBase
+  abstract: true
+  components:
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+  - type: ItemSlots
+    slots:
+      garnish_slot:
+        name: garnish-slot-component-slot-name-garnish
+        insertSound: /Audio/Effects/glass_clink.ogg
+        ejectSound: /Audio/Effects/glass_clink.ogg
+        whitelist:
+          tags:
+          - DrinkGarnish
+      decoration_slot:
+        name: decoration-slot-component-slot-name-decoration
+        insertSound: /Audio/Effects/glass_clink.ogg
+        ejectSound: /Audio/Effects/glass_clink.ogg
+        whitelist:
+          tags:
+          - DrinkDecoration
+  - type: ContainerContainer
+    containers:
+      garnish_slot: !type:ContainerSlot {}
+      decoration_slot: !type:ContainerSlot {}
+  - type: PolymorphGlass
+    glasses:
+      DrinkGlass:
+        sprite: Objects/Consumable/Drinks/glass_clear.rsi
+        state: icon
+      DrinkGlassCoupeShaped:
+        sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+        state: icon
+      DrinkGlassFlute:
+        sprite: Objects/Consumable/Drinks/glass_flute.rsi
+        state: icon
+      DrinkGlassOldFashioned:
+        sprite: Objects/Consumable/Drinks/glass_old_fashioned.rsi
+        state: icon
+      DrinkGlassCollins:
+        sprite: Objects/Consumable/Drinks/glass_collins.rsi
+        state: icon
+      DrinkGlassTumbler:
+        sprite: Objects/Consumable/Drinks/glass_tumbler.rsi
+        state: icon
+      DrinkGlassPint:
+        sprite: Objects/Consumable/Drinks/glass_pint.rsi
+        state: icon
+
+- type: entity
+  name: tumbler glass
+  description: Shorter glass for fun mixed drinks and softdrinks.
+  parent: DrinkGlassStaticBase
+  id: DrinkGlassTumbler
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_tumbler.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ItemMapper
+    mapLayers:
+      lemon:
+        whitelist:
+          tags:
+            - LemonGarnish
+      lime:
+        whitelist:
+          tags:
+            - LimeGarnish
+      cherry:
+        whitelist:
+          tags:
+            - Cherry
+      straw:
+        whitelist:
+          tags:
+            - Straw
+      toothpick:
+        whitelist:
+          tags:
+            - Toothpick
+      umbrella:
+        whitelist:
+          tags:
+            - Umbrella
+    sprite: Objects/Consumable/Drinks/glass_tumbler.rsi
+
+- type: entity
+  name: pint glass
+  description: A glass for thirst quenchers.
+  parent: DrinkGlassStaticBase
+  id: DrinkGlassPint
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_pint.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ItemMapper
+    mapLayers:
+      lemon:
+        whitelist:
+          tags:
+            - LemonGarnish
+      lime:
+        whitelist:
+          tags:
+            - LimeGarnish
+      cherry:
+        whitelist:
+          tags:
+            - Cherry
+      straw:
+        whitelist:
+          tags:
+            - Straw
+      toothpick:
+        whitelist:
+          tags:
+            - Toothpick
+      umbrella:
+        whitelist:
+          tags:
+            - Umbrella
+    sprite: Objects/Consumable/Drinks/glass_pint.rsi
 
 - type: entity
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
-  parent: DrinkGlassBase
+  parent: DrinkGlassStaticBase
   id: DrinkGlassCoupeShaped
   components:
-    - type: Sprite
-      sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
-      layers:
-        - state: icon
-          map: [ "enum.SolutionContainerLayers.Base" ]
-        - state: fill1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-        - state: icon-front
-          map: [ "enum.SolutionContainerLayers.Overlay" ]
-    - type: Appearance
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-    - type: SolutionContainerVisuals
-      maxFillLevels: 5
-      fillBaseName: fill
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ItemMapper
+    mapLayers:
+      lemon:
+        whitelist:
+          tags:
+            - LemonGarnish
+      lime:
+        whitelist:
+          tags:
+            - LimeGarnish
+      cherry:
+        whitelist:
+          tags:
+            - Cherry
+      straw:
+        whitelist:
+          tags:
+            - Straw
+      toothpick:
+        whitelist:
+          tags:
+            - Toothpick
+      umbrella:
+        whitelist:
+          tags:
+            - Umbrella
+    sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+
+- type: entity
+  name: collins glass
+  description: Taller slender glass, great for colorful drinks.
+  parent: DrinkGlassStaticBase
+  id: DrinkGlassCollins
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_collins.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ItemMapper
+    mapLayers:
+      lemon:
+        whitelist:
+          tags:
+            - LemonGarnish
+      lime:
+        whitelist:
+          tags:
+            - LimeGarnish
+      cherry:
+        whitelist:
+          tags:
+            - Cherry
+      straw:
+        whitelist:
+          tags:
+            - Straw
+      toothpick:
+        whitelist:
+          tags:
+            - Toothpick
+      umbrella:
+        whitelist:
+          tags:
+            - Umbrella
+    sprite: Objects/Consumable/Drinks/glass_collins.rsi
+
+- type: entity
+  name: old fashioned glass
+  description: Short sturdy glass for robust drinks.
+  parent: DrinkGlassStaticBase
+  id: DrinkGlassOldFashioned
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_old_fashioned.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ItemMapper
+    mapLayers:
+      lemon:
+        whitelist:
+          tags:
+            - LemonGarnish
+      lime:
+        whitelist:
+          tags:
+            - LimeGarnish
+      cherry:
+        whitelist:
+          tags:
+            - Cherry
+      straw:
+        whitelist:
+          tags:
+            - Straw
+      toothpick:
+        whitelist:
+          tags:
+            - Toothpick
+      umbrella:
+        whitelist:
+          tags:
+            - Umbrella
+    sprite: Objects/Consumable/Drinks/glass_old_fashioned.rsi
+
+- type: entity
+  name: flute glass
+  description: Flamboyant and delicate glass, coupe's taller sister.
+  parent: DrinkGlassStaticBase
+  id: DrinkGlassFlute
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_flute.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ItemMapper
+    mapLayers:
+      lemon:
+        whitelist:
+          tags:
+            - LemonGarnish
+      lime:
+        whitelist:
+          tags:
+            - LimeGarnish
+      cherry:
+        whitelist:
+          tags:
+            - Cherry
+      straw:
+        whitelist:
+          tags:
+            - Straw
+      toothpick:
+        whitelist:
+          tags:
+            - Toothpick
+      umbrella:
+        whitelist:
+          tags:
+            - Umbrella
+    sprite: Objects/Consumable/Drinks/glass_flute.rsi
 
 - type: entity
   parent: DrinkGlass

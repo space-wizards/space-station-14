@@ -1,0 +1,75 @@
+- type: entity
+  id: CocktailUmbrella
+  parent: BaseItem
+  name: cocktail umbrella
+  description: Keeps the drink cold for longer under it's shade.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Bar/drink_decorations.rsi
+    layers:
+      - state: umbrella
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - DrinkDecoration
+    - Umbrella
+
+- type: entity
+  id: Straw
+  parent: BaseItem
+  name: straw
+  description: Slurrrrrpppppppp.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Bar/drink_decorations.rsi
+    layers:
+      - state: straw
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - DrinkDecoration
+    - Straw
+
+- type: entity
+  id: CocktailPick
+  parent: BaseItem
+  name: cocktail pick
+  description: Utterly useless, why is it even here?
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Bar/drink_decorations.rsi
+    layers:
+      - state: toothpick
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - DrinkDecoration
+    - Toothpick
+
+- type: entity
+  id: BoxCocktailDecoration
+  parent: BoxCardboard
+  name: cocktail decorations box
+  description: A box full of costumes for your drinks to wear.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,4,2
+    whitelist:
+      tags:
+      - DrinkDecoration
+  - type: StorageFill
+    contents:
+      - id: CocktailUmbrella
+        amount: 5
+      - id: CocktailPick
+        amount: 5
+      - id: Straw
+        amount: 5
+  - type: Sprite
+    layers:
+      - state: box
+      - state: cocktailumbrella
