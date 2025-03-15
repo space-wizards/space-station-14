@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/13/2025 05:45:15
-  entityCount: 26983
+  time: 03/15/2025 21:46:41
+  entityCount: 26997
 maps:
 - 1
 grids:
@@ -6127,16 +6127,6 @@ entities:
     - type: Transform
       pos: 31.5,-72.5
       parent: 2
-  - uid: 24266
-    components:
-    - type: Transform
-      pos: 13.5,-26.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 24261
-      - 19303
-      - 24262
   - uid: 24292
     components:
     - type: Transform
@@ -6259,6 +6249,18 @@ entities:
       - 24346
       - 20639
       - 24337
+- proto: AirAlarmFreezer
+  entities:
+  - uid: 10711
+    components:
+    - type: Transform
+      pos: 13.5,-26.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 17696
+      - 19303
+      - 24261
 - proto: AirCanister
   entities:
   - uid: 509
@@ -9565,7 +9567,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 24266
+      - 10711
   - uid: 24267
     components:
     - type: Transform
@@ -11337,6 +11339,88 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -33.5,-29.5
+      parent: 2
+- proto: AtmosFixFreezerMarker
+  entities:
+  - uid: 26771
+    components:
+    - type: Transform
+      pos: 15.5,-30.5
+      parent: 2
+  - uid: 26772
+    components:
+    - type: Transform
+      pos: 13.5,-29.5
+      parent: 2
+  - uid: 26984
+    components:
+    - type: Transform
+      pos: 12.5,-27.5
+      parent: 2
+  - uid: 26985
+    components:
+    - type: Transform
+      pos: 12.5,-28.5
+      parent: 2
+  - uid: 26986
+    components:
+    - type: Transform
+      pos: 12.5,-29.5
+      parent: 2
+  - uid: 26987
+    components:
+    - type: Transform
+      pos: 12.5,-30.5
+      parent: 2
+  - uid: 26988
+    components:
+    - type: Transform
+      pos: 13.5,-27.5
+      parent: 2
+  - uid: 26989
+    components:
+    - type: Transform
+      pos: 13.5,-28.5
+      parent: 2
+  - uid: 26990
+    components:
+    - type: Transform
+      pos: 14.5,-27.5
+      parent: 2
+  - uid: 26991
+    components:
+    - type: Transform
+      pos: 13.5,-30.5
+      parent: 2
+  - uid: 26992
+    components:
+    - type: Transform
+      pos: 14.5,-28.5
+      parent: 2
+  - uid: 26993
+    components:
+    - type: Transform
+      pos: 14.5,-29.5
+      parent: 2
+  - uid: 26994
+    components:
+    - type: Transform
+      pos: 14.5,-30.5
+      parent: 2
+  - uid: 26995
+    components:
+    - type: Transform
+      pos: 15.5,-27.5
+      parent: 2
+  - uid: 26996
+    components:
+    - type: Transform
+      pos: 15.5,-28.5
+      parent: 2
+  - uid: 26997
+    components:
+    - type: Transform
+      pos: 15.5,-29.5
       parent: 2
 - proto: AtmosFixNitrogenMarker
   entities:
@@ -56719,7 +56803,7 @@ entities:
       pos: 19.5,48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -185347.86
+      secondsUntilStateChange: -185836.7
       state: Closing
   - uid: 8020
     components:
@@ -56734,7 +56818,7 @@ entities:
       pos: 10.5,80.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -155654.97
+      secondsUntilStateChange: -156143.81
       state: Closing
 - proto: CurtainsGreenOpen
   entities:
@@ -70721,7 +70805,7 @@ entities:
       pos: 27.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -127285.734
+      secondsUntilStateChange: -127774.586
       state: Closing
   - uid: 1184
     components:
@@ -71394,7 +71478,7 @@ entities:
       pos: -29.5,43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -11546.003
+      secondsUntilStateChange: -12034.854
       state: Closing
   - uid: 23879
     components:
@@ -72217,7 +72301,7 @@ entities:
       pos: 38.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -134622.58
+      secondsUntilStateChange: -135111.42
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -72684,7 +72768,7 @@ entities:
       pos: 8.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -23398.701
+      secondsUntilStateChange: -23887.553
       state: Closing
   - uid: 19801
     components:
@@ -73171,7 +73255,7 @@ entities:
       pos: 0.5,21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -73969.39
+      secondsUntilStateChange: -74458.24
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -73190,7 +73274,7 @@ entities:
       pos: 1.5,43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -81064.625
+      secondsUntilStateChange: -81553.48
       state: Closing
   - uid: 11304
     components:
@@ -73257,7 +73341,7 @@ entities:
       pos: 3.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -127966.2
+      secondsUntilStateChange: -128455.055
       state: Closing
   - uid: 11315
     components:
@@ -73759,7 +73843,7 @@ entities:
       pos: 8.5,-50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -48853.945
+      secondsUntilStateChange: -49342.797
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -100825,16 +100909,6 @@ entities:
       - 24200
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 19303
-    components:
-    - type: Transform
-      pos: 12.5,-29.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 24266
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
   - uid: 19315
     components:
     - type: Transform
@@ -102334,6 +102408,16 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 18573
+- proto: GasVentPumpFreezer
+  entities:
+  - uid: 19303
+    components:
+    - type: Transform
+      pos: 12.5,-29.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 10711
 - proto: GasVentScrubber
   entities:
   - uid: 2280
@@ -103936,16 +104020,6 @@ entities:
       - 24216
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 24262
-    components:
-    - type: Transform
-      pos: 14.5,-29.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 24266
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
   - uid: 24322
     components:
     - type: Transform
@@ -104014,6 +104088,16 @@ entities:
       - 613
     - type: AtmosPipeColor
       color: '#FF1212FF'
+- proto: GasVentScrubberFreezer
+  entities:
+  - uid: 17696
+    components:
+    - type: Transform
+      pos: 14.5,-29.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 10711
 - proto: Gateway
   entities:
   - uid: 3209
@@ -116855,7 +116939,7 @@ entities:
       pos: 11.5,50.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -147020.08
+      secondsUntilStateChange: -147508.92
       state: Closing
   - uid: 3648
     components:
@@ -117708,11 +117792,6 @@ entities:
     components:
     - type: Transform
       pos: 33.5,81.5
-      parent: 2
-  - uid: 17696
-    components:
-    - type: Transform
-      pos: 33.5,79.5
       parent: 2
 - proto: LockerDetectiveFilled
   entities:
@@ -133814,6 +133893,13 @@ entities:
     - type: Transform
       pos: -16.5,-26.5
       parent: 2
+- proto: SignCargo
+  entities:
+  - uid: 24262
+    components:
+    - type: Transform
+      pos: 43.5,92.5
+      parent: 2
 - proto: SignCargoDock
   entities:
   - uid: 26153
@@ -136515,6 +136601,11 @@ entities:
       parent: 2
 - proto: SpawnPointCargoTechnician
   entities:
+  - uid: 24266
+    components:
+    - type: Transform
+      pos: 35.5,101.5
+      parent: 2
   - uid: 24467
     components:
     - type: Transform
@@ -136578,11 +136669,6 @@ entities:
     components:
     - type: Transform
       pos: 34.5,81.5
-      parent: 2
-  - uid: 26772
-    components:
-    - type: Transform
-      pos: 34.5,79.5
       parent: 2
 - proto: SpawnPointDetective
   entities:
@@ -137711,18 +137797,6 @@ entities:
     components:
     - type: Transform
       pos: 18.5,47.5
-      parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 10711
-    components:
-    - type: Transform
-      pos: 33.5,82.5
-      parent: 2
-  - uid: 26771
-    components:
-    - type: Transform
-      pos: 33.5,78.5
       parent: 2
 - proto: SuitStorageEVA
   entities:
