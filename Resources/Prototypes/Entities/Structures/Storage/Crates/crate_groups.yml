@@ -1,0 +1,44 @@
+- type: paintableGroupCategory
+  id: Crates
+
+- type: paintableGroup
+  category: Crates
+  id: CrateSteel
+  iconPriority: 100
+  state: icon
+  styles:
+    basic:       CrateGenericSteel
+    electrical:  CrateElectrical
+    radiation:   CrateRadiation
+    engineering: CrateEngineering
+    science:     CrateScience
+    surgery:     CrateSurgery
+
+- type: paintableGroup
+  category: Crates
+  id: CratePlastic
+  iconPriority: 90
+  state: icon
+  styles:
+    basic:       CratePlastic
+    hydroponics: CrateHydroponics
+    medical:     CrateMedical
+    oxygen:      CrateInternals
+
+- type: paintableGroup
+  category: Crates
+  id: CrateSteelSec
+  iconPriority: 80
+  state: icon
+  styles:
+    basic:       CrateSecure
+    secgear:     CrateSecgear
+    engineering: CrateEngineeringSecure
+    medical:     CrateMedicalSecure
+    chemistry:   CrateChemistrySecure
+    private:     CratePrivateSecure
+    science:     CrateScienceSecure
+    plasma:      CratePlasma
+    hydroponics: CrateHydroSecure
+    weapon:      CrateWeaponSecure
+    command:     CrateCommandSecure
