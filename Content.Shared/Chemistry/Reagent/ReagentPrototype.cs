@@ -106,7 +106,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// A robust way to define if something is slippery and how slippery it is.
         /// </summary>
         [DataField]
-        public SlipperyEffectEntry? Slippery;
+        public SlipperyEffectEntry? SlipData;
 
         /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
