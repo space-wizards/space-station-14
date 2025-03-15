@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.TileReactions;
@@ -392,32 +393,36 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     {
         if (!TryComp<SlipperyComponent>(entity, out var slipComp))
             return;
-        foreach (var (reagent, _) in solution.Contents)
-        {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-        }
+        if (!TryComp<StepTriggerComponent>(entity, out var comp))
+            return;
         // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
         var amountRequired = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
         bool superSlippery = false;
-        /*
-        // Utilize the defaults from their relevant systems... this sucks, and is a bandaid
-        var launchForwardsMultiplier = SlipperyComponent.DefaultLaunchForwardsMultiplier;
-        var paralyzeTime = SlipperyComponent.DefaultParalyzeTime;
-        var requiredSlipSpeed = StepTriggerComponent.DefaultRequiredTriggeredSpeed;
-        */
+        float defStepTrigger = 6.0f;
+        FixedPoint2 deltaStepTrigger = 0;
 
         foreach (var (reagent, quantity) in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
 
-            if (!reagentProto.Slippery)
+            if (!reagentProto.Slippery && reagentProto.SlipData == null)
                 continue;
             slipperyAmount += quantity;
 
-            slipComp.Enabled = (slipperyAmount > amountRequired);
-            //if (reagentProto.Slips)
-                //superSlippery = true;
+            if (reagentProto.SlipData != null)
+            {
+                deltaStepTrigger += (quantity *(defStepTrigger-reagentProto.SlipData.RequiredSlipSpeed));
+                if (reagentProto.SlipData.SuperSlippery && quantity > amountRequired)
+                    superSlippery = true;
+            }
+            else
+            {
+                deltaStepTrigger += (quantity *(defStepTrigger-4.5f));
+            }
+
+            //if (TryComp<StepTriggerComponent>(entity, out var comp))
+                //comp.RequiredTriggeredSpeed = reagentProto.Slippery.RequiredSlipSpeed;
             /*foreach (var tileReaction in reagentProto.TileReactions)
             {
                 if (tileReaction is not SpillTileReaction spillTileReaction)
@@ -427,6 +432,16 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 requiredSlipSpeed = requiredSlipSpeed > spillTileReaction.RequiredSlipSpeed ? spillTileReaction.RequiredSlipSpeed : requiredSlipSpeed;
                 paralyzeTime = paralyzeTime < spillTileReaction.ParalyzeTime ? spillTileReaction.ParalyzeTime : paralyzeTime;
             }*/
+        }
+        // This needs to be replaced with a check for if the steptrigger should be set active or inactive
+        if (slipperyAmount > amountRequired)
+        {
+            _stepTrigger.SetActive(entity, true, comp);
+            _stepTrigger.SetRequiredTriggerSpeed(entity, (float)(defStepTrigger - (deltaStepTrigger/solution.Volume)));
+        }
+        else
+        {
+            _stepTrigger.SetActive(entity, false, comp);
         }
         slipComp.SuperSlippery = superSlippery;
         /*if (isSlippery)

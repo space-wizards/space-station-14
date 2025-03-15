@@ -69,9 +69,10 @@
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
   slippery: true
-  slips:
-    paralyzeTime: 5.0
+  slipData:
+    paralyzeTime: 10.0
     launchForwardsMultiplier: 3.0
+    requiredSlipSpeed: 1
     superSlippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny

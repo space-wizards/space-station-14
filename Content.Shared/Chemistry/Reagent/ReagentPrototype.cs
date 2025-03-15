@@ -10,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition;
 using Content.Shared.Prototypes;
+using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -107,7 +108,7 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         [DataField]
-        public ProtoId<SlipperyPrototype>? Slips;
+        public SlipperyEffectEntry? SlipData;
         /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
         /// 0 - completely flat, 1 - fizzes up when nudged.
