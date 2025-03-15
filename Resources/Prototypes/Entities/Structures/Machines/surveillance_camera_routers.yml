@@ -18,16 +18,40 @@
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
-      sprite: Structures/Machines/server.rsi
+      sprite: Structures/Machines/telecomms.rsi
       snapCardinals: true
       layers:
-        - state: server
+      - state: tele-server-nopower
+      - state: cams-stripe
+      - state: tele-server-on
+        shader: unshaded
+        visible: false
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+      - state: tele_o
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: PointLight
+      enabled: false
+      castShadows: false
+      radius: 1.5
+      energy: 1.6
+      color: "#39b8ee"
+    - type: LitOnPowered
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+    - type: Appearance 
     - type: AmbientOnPowered
     - type: AmbientSound
       volume: -9
       range: 5
+      enabled: false
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: WiresVisuals
+    - type: WiresPanel
 
 - type: entity
   parent: SurveillanceCameraRouterBase
