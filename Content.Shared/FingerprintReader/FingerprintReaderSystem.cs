@@ -31,7 +31,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
         if (!target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
         {
             if (target.Comp.FailGlovesPopup != null)
-                _popup.PopupEntity(Loc.GetString(target.Comp.FailGlovesPopup, ("blocker", gloves)), target, user);
+                _popup.PopupClient(Loc.GetString(target.Comp.FailGlovesPopup, ("blocker", gloves)), target, user);
             return false;
         }
 
@@ -40,7 +40,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
             !target.Comp.AllowedFingerprints.Contains(fingerprint.Fingerprint))
         {
             if (target.Comp.FailPopup != null)
-                _popup.PopupEntity(Loc.GetString(target.Comp.FailPopup), target, user);
+                _popup.PopupClient(Loc.GetString(target.Comp.FailPopup), target, user);
 
             return false;
         }
