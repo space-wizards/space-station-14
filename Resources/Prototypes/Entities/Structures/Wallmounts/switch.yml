@@ -525,6 +525,28 @@
     state: grey
   - type: Rotatable
   - type: Fixtures
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+              params:
+                volume: -8
 
 - type: entity
   id: ButtonFrameGrey
@@ -535,6 +557,9 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
+  - type: Construction
+    graph: ButtonFrameGraph
+    node: ButtonFrameGreyNode
 
 - type: entity
   id: ButtonFrameCaution
@@ -545,6 +570,9 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution
+  - type: Construction
+    graph: ButtonFrameGraph
+    node: ButtonFrameCautionNode
 
 - type: entity
   id: ButtonFrameCautionSecurity
@@ -555,6 +583,9 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution_security
+  - type: Construction
+    graph: ButtonFrameGraph
+    node: ButtonFrameCautionSecurityNode
 
 - type: entity
   id: ButtonFrameExit
@@ -565,6 +596,9 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: exit
+  - type: Construction
+    graph: ButtonFrameGraph
+    node: ButtonFrameExitNode
 
 - type: entity
   id: ButtonFrameJanitor
@@ -575,3 +609,7 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: janitor
+  - type: Construction
+    graph: ButtonFrameGraph
+    node: ButtonFrameJanitorNode
+
