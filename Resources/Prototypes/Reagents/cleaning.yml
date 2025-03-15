@@ -69,7 +69,6 @@
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
   slipData:
-    launchForwardsMultiplier: 1.0
     requiredSlipSpeed: 1
     superSlippery: true
   physicalDesc: reagent-physical-desc-shiny
