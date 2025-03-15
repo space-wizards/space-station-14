@@ -120,3 +120,6 @@
   storage:
     back: 
     - NukieSpectralLocator # Imp special!!
+    - DeathAcidifierImplanter
+    - WeaponPistolViper
+

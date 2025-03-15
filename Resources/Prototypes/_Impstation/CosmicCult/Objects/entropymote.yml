@@ -4,8 +4,11 @@
   parent: [ MaterialBase, TierXContraband ]
   id: MaterialCosmicCultEntropy
   name: mote of entropy
+  description: A solidified mote of entropic essence. Feels numbing to the touch.
   suffix: Full
   components:
+  - type: Visibility # yep it's invisible byebye
+    layer: 777
   - type: Stack
     count: 6
     stackType: Entropy
@@ -28,6 +31,14 @@
   - type: Tag
     tags:
       - Entropy
+  - type: Extractable
+    grindableSolutionName: grind
+  - type: SolutionContainerManager
+    solutions:
+      grind:
+        reagents:
+        - ReagentId: Entropy
+          Quantity: 1.5
 
 - type: entity
   parent: MaterialCosmicCultEntropy

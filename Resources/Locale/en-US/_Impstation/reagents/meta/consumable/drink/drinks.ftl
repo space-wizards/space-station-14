@@ -9,3 +9,6 @@ reagent-desc-raktaccino = Piping hot, achingly bitter, and absolutely delicious.
 
 reagent-name-orangecoffee = orange coffee
 reagent-desc-orangecoffee = Slide me a drink, Barfriend.
+
+reagent-name-feverdream = fever dream
+reagent-desc-feverdream = A creamy, dizzying cocktail of exotic blood, absinthe, and champagne, topped with frothed egg whites. Traditionally served with a thaven good luck charm. Open your eyes.

@@ -3,3 +3,5 @@ reagent-effect-guidebook-cleanse-cultist =
         [1] cleanses
         *[other] cleanse
     } otherwordly influences
+
+entropy-effect-numb = You feel eerily numb.

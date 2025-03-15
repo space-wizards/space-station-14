@@ -11,3 +11,123 @@
     Telecrystal: 2
   categories:
   - UplinkAllies
+
+- type: listing
+  id: Observationkit
+  name: uplink-observation-kit-name
+  description: uplink-observation-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: tracks }
+  productEntity: Observationskit
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 6 # DeltaV - Price Goes up, but the goods are better!
+  categories:
+  - UplinkDeception
+  conditions: # imp - this is expensive for a traitor but cheap for nukies and arguably too strong
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: BaseBallBatHomeRun
+  name: uplink-home-run-bat-name
+  description: uplink-home-run-bat-desc
+  productEntity: BaseBallBatHomeRun
+  icon:
+    entity: BaseBallBatHomeRun
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 6
+  cost:
+    Telecrystal: 16
+  categories:
+  - UplinkWeaponry
+
+- type: listing
+  id: UplinkRealFoamSabre
+  name: uplink-foam-sabre-name
+  description: uplink-foam-sabre-desc
+  productEntity: ClothingBeltRealFoamSheathFilled
+  icon:
+    entity: RealFoamSabre
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWeaponry
+
+- type: listing
+  id: UplinkExGrenadeFoam
+  name: uplink-explosive-foam-grenade-name
+  description: uplink-explosive-foam-grenade-desc
+  productEntity: ExGrenadeFoam
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4 # 1 TC more expensive than regular due to disguise.
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkViperAppraisal
+  name: uplink-appraisal-tool-gun-name
+  description: uplink-appraisal-tool-gun-desc
+  productEntity: WeaponPistolViperAppraisal
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerDepartmentCondition
+    whitelist:
+    - Cargo # imp - not Logistics lmao
+
+- type: listing
+  id: UplinkDeadMansSignaller
+  name: uplink-dead-mans-signaller-name
+  description: uplink-dead-mans-signaller-desc
+  productEntity: DeadMansSignaler
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkDisruption
+
+- type: listing
+  id: UplinkPaperworkhater
+  name: uplink-paperwork-hater-name
+  description: uplink-paperwork-hater-desc
+  productEntity: RubberStampHatePaperwork
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 0
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkChainsmokerBundle
+  name: uplink-chainsmoker-bundle-name
+  description: uplink-chainsmoker-bundle-desc
+  productEntity: CigCartonSyndicate
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3 # Incredible value! (Still a horrendous waste)
+  cost:
+    Telecrystal: 6 # 12TC worth of cigs, plus a bonus lighter. (Or you could just emag a shadycig, and get infinite interdynes for free)
+  categories:
+  - UplinkChemicals
+  - UplinkPointless
+  - UplinkWeaponry

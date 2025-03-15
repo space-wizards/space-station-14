@@ -447,3 +447,19 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/orangecoffee.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkFeverDreamGlass
+  suffix: fever dream
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: FeverDream
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/feverdream.rsi
+    state: icon

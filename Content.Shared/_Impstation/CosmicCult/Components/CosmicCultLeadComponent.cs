@@ -24,9 +24,20 @@ public sealed partial class CosmicCultLeadComponent : Component
 
     public override bool SessionSpecific => true;
 
-    [DataField] public EntProtoId MonumentPrototype = "MonumentCosmicCultSpawnIn";
-    [DataField] public EntProtoId CosmicMonumentAction = "ActionCosmicPlaceMonument";
-    [DataField] public EntityUid? CosmicMonumentActionEntity;
+    [DataField]
+    public EntProtoId MonumentPrototype = "MonumentCosmicCultSpawnIn";
+
+    [DataField]
+    public EntProtoId CosmicMonumentPlaceAction = "ActionCosmicPlaceMonument";
+
+    [DataField]
+    public EntityUid? CosmicMonumentPlaceActionEntity;
+
+    [DataField]
+    public EntProtoId CosmicMonumentMoveAction = "ActionCosmicMoveMonument";
+
+    [DataField]
+    public EntityUid? CosmicMonumentMoveActionEntity;
 
 }
 

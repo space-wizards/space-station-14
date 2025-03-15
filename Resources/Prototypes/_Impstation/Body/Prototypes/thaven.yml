@@ -9,7 +9,7 @@
       - torso
       organs:
         brain: OrganThavenBrain
-        eyes: OrganHumanEyes
+        eyes: OrganThavenEyes
     torso:
       part: TorsoThaven
       connections:
@@ -18,11 +18,11 @@
       - right_leg
       - left_leg
       organs:
-        heart: OrganHumanHeart
-        lungs: OrganHumanLungs
-        stomach: OrganHumanStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
+        heart: OrganThavenHeart
+        lungs: OrganThavenLungs
+        stomach: OrganThavenStomach
+        liver: OrganThavenLiver
+        kidneys: OrganThavenKidneys
     right_arm:
       part: RightArmThaven
       connections:

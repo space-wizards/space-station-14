@@ -1,0 +1,31 @@
+- type: flavor
+  id: entropic
+  flavorType: Complex
+  description: flavor-complex-entropy
+
+- type: reagent
+  id: Entropy
+  group: Toxins
+  name: reagent-name-entropy
+  desc: reagent-desc-entropy
+  flavor: entropic
+  color: "#371a47"
+  physicalDesc: reagent-physical-desc-malign
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 0.25
+            Asphyxiation: 1.05
+      - !type:PopupMessage
+        type: Local
+        visualType: SmallCaution
+        messages: [ "entropy-effect-numb" ]
+        probability: 0.1

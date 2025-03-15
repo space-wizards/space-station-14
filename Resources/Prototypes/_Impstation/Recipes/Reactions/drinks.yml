@@ -415,3 +415,19 @@
       amount: 1
   products:
     OrangeCoffee: 2
+
+- type: reaction
+  id: FeverDream
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    ShimmeringBlood:
+      amount: 2
+    Absinthe:
+      amount: 2
+    Champagne:
+      amount: 1
+    Egg:
+      amount: 1
+  products:
+    FeverDream: 6

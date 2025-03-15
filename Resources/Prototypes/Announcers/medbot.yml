@@ -55,6 +55,8 @@
       path: alerts/white.ogg
     - id: alertPuce # don't eat anything
       path: alerts/puce.ogg
+    - id: alertOctarine # Reality is about to collapse, do something about it
+      path: alerts/octarine.ogg
 
     # Events
     ## Wizard's Den

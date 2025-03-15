@@ -190,7 +190,7 @@
   conflicts:
     - DisapproveOfDrugs
 
-# You refuse to respond to anyone who is of a lower rank than you.
+# You hate to address anyone who is of a lower rank than you, and will only speak to them in private if absolutely necessary.
 - type: thavenMood
   id: RankSnob
   moodName: thaven-mood-rank-snob-name
