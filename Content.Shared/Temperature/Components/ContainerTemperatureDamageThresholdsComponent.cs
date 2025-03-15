@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Temperature.Components;
+﻿namespace Content.Shared.Temperature.Components;
 
 [RegisterComponent]
 public sealed partial class ContainerTemperatureDamageThresholdsComponent: Component

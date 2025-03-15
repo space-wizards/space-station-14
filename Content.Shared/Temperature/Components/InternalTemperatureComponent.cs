@@ -1,6 +1,6 @@
-using Content.Server.Temperature.Systems;
+using Content.Shared.Temperature.Systems;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Entity has an internal temperature which conducts heat from its surface.
@@ -11,7 +11,7 @@ namespace Content.Server.Temperature.Components;
 /// Too hot? Suffering heatstroke, start sweating to cool off and increase thirst.
 /// Too cold? Suffering hypothermia, start shivering to warm up and increase hunger.
 /// </remarks>
-[RegisterComponent, Access(typeof(TemperatureSystem))]
+[RegisterComponent, Access(typeof(SharedTemperatureSystem))]
 public sealed partial class InternalTemperatureComponent : Component
 {
     /// <summary>

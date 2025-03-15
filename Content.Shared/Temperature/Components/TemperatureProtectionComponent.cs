@@ -1,21 +1,22 @@
-﻿using Content.Server.Temperature.Systems;
+﻿using Content.Shared.Temperature.Systems;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
-[RegisterComponent]
-[Access(typeof(TemperatureSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedTemperatureSystem))]
 public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
     ///     Multiplier for the transferred heat when heating up
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float HeatingCoefficient = 1.0f;
 
     /// <summary>
     ///     Multiplier for the transferred heat when cooling down
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float CoolingCoefficient = 1.0f;
 }
 
