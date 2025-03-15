@@ -24,6 +24,8 @@ namespace Content.Client.Crayon.UI
             _menu = this.CreateWindowCenteredLeft<CrayonWindow>();
             _menu.OnColorSelected += SelectColor;
             _menu.OnSelected += Select;
+            _menu.OnRotationSelected += SelectRotation;
+            _menu.OnPreviewModeToggled += TogglePreviewMode;
             PopulateCrayons();
         }
 
@@ -62,12 +64,23 @@ namespace Content.Client.Crayon.UI
 
         public void Select(string state)
         {
-            SendMessage(new CrayonSelectMessage(state));
+            SendPredictedMessage(new CrayonSelectMessage(state));
         }
 
         public void SelectColor(Color color)
         {
-            SendMessage(new CrayonColorMessage(color));
+            SendPredictedMessage(new CrayonColorMessage(color));
+        }
+
+        public void SelectRotation(float rotation)
+        {
+            SendPredictedMessage(new CrayonRotationMessage(rotation));
+        }
+
+        public void TogglePreviewMode(bool previewMode)
+        {
+            // sent to server for validation logic
+            SendMessage(new CrayonPreviewModeMessage(previewMode));
         }
     }
 }

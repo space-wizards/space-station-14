@@ -9,5 +9,14 @@
             <BoxContainer Name="Grids" Orientation="Vertical">
             </BoxContainer>
         </ScrollContainer>
+        <BoxContainer>
+            <BoxContainer Name="SpinBoxContainer" Orientation="Horizontal"
+                          HorizontalExpand="True">
+                <Label Text="{Loc 'crayon-window-rotation'}" Margin="0 0 0 1" />
+            </BoxContainer>
+            <Button Name="CrayonPreviewButton" Text="{Loc crayon-window-preview-mode}"
+                MinWidth="100" StyleClasses="ButtonSquare" ToggleMode="True"
+                HorizontalAlignment="Right" />
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
