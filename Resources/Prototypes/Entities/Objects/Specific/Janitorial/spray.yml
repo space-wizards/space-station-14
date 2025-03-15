@@ -99,6 +99,36 @@
   - type: Tag
     tags:
       - Spray
+
+- type: entity
+  name: cyborg spray bottle
+  description: A pressurized bottle for spraying reagents.
+  id: BorgSprayBottle
+  parent: SprayBottle
+  suffix: Filled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 200
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 200
+
+- type: entity
+  name: cyborg mega spray bottle
+  id: BorgMegaSprayBottle
+  parent: SprayBottle
+  suffix: Filled
+  description: A high capacity, high pressure spray bottle, for cleaning even the biggest of spills.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 500
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 500
 # Vapor
 
 - type: entity

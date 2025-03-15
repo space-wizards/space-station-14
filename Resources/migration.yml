@@ -540,6 +540,15 @@ LightTree06: LightTree
 DrinkIrishCarBomb: DrinkIrishSlammer
 
 #2025-01-06
+BorgModuleRadiationDetection: null
+CableHVStackLingering10: CableHVStackLingering30
+CableMVStackLingering10: CableMVStackLingering30
+CableApcStackLingering10: CableApcStackLingering30
+Ointment10Lingering: OintmentLingering10
+Brutepack10Lingering: BrutepackLingering10
+Gauze10Lingering: GauzeLingering10
+Bloodpack10Lingering: BloodpackLingering10
+
 ClothingMaskSexyClown: ClothingMaskBlushingClown
 ClothingMaskSexyMime: ClothingMaskBlushingMime
 

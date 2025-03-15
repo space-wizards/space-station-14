@@ -26,3 +26,13 @@
         - ArtifactFragment
         - Ore
   - type: Dumpable
+
+- type: entity
+  name: internal ore bag
+  id: BorgOreBag
+  parent: OreBag
+  description: A large ore bag built into the frame of mining cyborgs.
+  components:
+    - type: Storage
+      grid:
+      - 0,0,9,5
