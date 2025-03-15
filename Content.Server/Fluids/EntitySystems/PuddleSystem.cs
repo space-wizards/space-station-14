@@ -426,19 +426,19 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
 
             // Calculate the minimum speed needed to slip in the puddle. Average the overall slip thresholds for all reagents
-            var deltaSlipTrigger = reagentProto.Slippery?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
+            var deltaSlipTrigger = reagentProto.SlipData?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
             slipStepTrigger += quantity * deltaSlipTrigger;
 
-            if (reagentProto.Slippery == null)
+            if (reagentProto.SlipData == null)
                 continue;
 
             slipperyUnits += quantity;
             // Aggregate launch speed based on quantity
-            launchMult += reagentProto.Slippery.LaunchForwardsMultiplier * quantity;
+            launchMult += reagentProto.SlipData.LaunchForwardsMultiplier * quantity;
             // Aggregate stun times based on quantity
-            stunTimer += reagentProto.Slippery.ParalyzeTime * quantity;
+            stunTimer += reagentProto.SlipData.ParalyzeTime * quantity;
 
-            if (reagentProto.Slippery.SuperSlippery)
+            if (reagentProto.SlipData.SuperSlippery)
                 superSlipperyUnits += quantity;
         }
 
@@ -451,9 +451,11 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
         _stepTrigger.SetRequiredTriggerSpeed(entity, slipComp.SlipData.RequiredSlipSpeed);
         // Divide these both by only total amount of slippery reagents.
         // A puddle with 10 units of lube vs a puddle with 10 of lube and 20 catchup should stun and launch forward the same amount.
-        slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
-        slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
-
+        if (slipperyUnits > 0)
+        {
+            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
+            slipComp.SlipData.ParalyzeTime = (float)(stunTimer/slipperyUnits);
+        }
         // Only make it super slippery if there is enough super slippery units for its own puddle
         slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
         // Update tile friction for other reasons
