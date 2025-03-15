@@ -4,8 +4,11 @@ revenant-defile-desc = Defiles the surrounding area, ripping up floors, damaging
 revenant-overload-name = Overload Lights
 revenant-overload-desc = Overloads all nearby lights, causing lights to pulse and sending out dangerous lightning. Using it leaves you vulnerable to attacks for a long period of time.
 
-revenant-blight-name = Blight
-revenant-blight-desc = Infects all nearby organisms with an infectious disease that causes toxic buildup and tiredness. Using it leaves you vulnerable to attacks for a medium period of time.
+revenant-cold-snap-name = Cold Snap
+revenant-cold-snap-desc = Decreases the ambient temperature of the surrounding air.
+
+revenant-energy-drain-name = Energy Drain
+revenant-energy-drain-desc = Drains the nearby batteries, like APCs or SMESes.
 
 revenant-malfunction-name = Malfunction
 revenant-malfunction-desc = Makes nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.

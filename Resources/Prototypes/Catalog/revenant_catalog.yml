@@ -24,18 +24,31 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-#- type: listing
-#  id: RevenantBlight
-#  name: revenant-blight-name
-#  description: revenant-blight-desc
-#  productAction: ActionRevenantBlight
-#  cost:
-#    StolenEssence: 75
-#  categories:
-#  - RevenantAbilities
-#  conditions:
-#  - !type:ListingLimitedStockCondition
-#    stock: 1
+- type: listing
+  id: RevenantColdSnap
+  name: revenant-cold-snap-name
+  description: revenant-cold-snap-desc
+  productAction: ActionRevenantColdSnap
+  cost:
+    StolenEssence: 30
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: RevenantEnergyDrain
+  name: revenant-energy-drain-name
+  description: revenant-energy-drain-desc
+  productAction: ActionRevenantEnergyDrain
+  cost:
+    StolenEssence: 35
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 - type: listing
   id: RevenantMalfunction

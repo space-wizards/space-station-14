@@ -1,6 +1,7 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Revenant.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Revenant.Components;
 
@@ -8,24 +9,42 @@ namespace Content.Shared.Revenant.Components;
 /// This is used for tracking lights that are overloaded
 /// and are about to zap a player.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause, Access(typeof(SharedRevenantOverloadedLightsSystem))]
 public sealed partial class RevenantOverloadedLightsComponent : Component
 {
-    [ViewVariables]
+    /// <summary>
+    /// Entity that's about to be zapped.
+    /// </summary>
+    [DataField]
     public EntityUid? Target;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Accumulator = 0;
+    /// <summary>
+    /// The timer for the zap charging up.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextZapTime;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float ZapDelay = 3f;
+    /// <summary>
+    /// How long until the zap happens.
+    /// </summary>
+    [DataField]
+    public TimeSpan ZapDelay = TimeSpan.FromSeconds(3);
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// How far the zap can reach.
+    /// </summary>
+    [DataField]
     public float ZapRange = 4f;
 
-    [DataField("zapBeamEntityId",customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ZapBeamEntityId = "LightningRevenant";
+    /// <summary>
+    /// The <see cref="EntityPrototype"/> used for the lightning effect.
+    /// </summary>
+    [DataField]
+    public EntProtoId ZapBeamEntityId = "LightningRevenant";
 
+    [ViewVariables]
     public float? OriginalEnergy;
+
+    [ViewVariables]
     public bool OriginalEnabled = false;
 }
