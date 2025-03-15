@@ -1,122 +1,51 @@
 - type: entity
   id: BaseDionaOrgan
-  parent: BaseItem
   abstract: true
+  suffix: diona
   components:
   - type: Sprite
     sprite: Mobs/Species/Diona/organs.rsi
-  - type: Organ
-  - type: Food
-  - type: Extractable
-    grindableSolutionName: organ
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-  - type: FlavorProfile
-    flavors:
-      - people
+  - type: Tag
+    tags: [] # rewrite Meat tag
 
 - type: entity
+  parent: [BaseOrganBrain, BaseDionaOrgan]
   id: OrganDionaBrain
-  parent: [BaseDionaOrgan, OrganHumanBrain]
-  name: brain
-  description: "The central hub of a diona's pseudo-neurological activity, its root-like tendrils search for its former body."
-  components:
-  - type: Item
-    size: Small
-    heldPrefix: brain
-  - type: Sprite
-    state: brain
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-      Lung:
-        maxVol: 100
-        canReact: False
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: GreyMatter
-          Quantity: 5
 
 - type: entity
+  parent: [BaseOrganEyes, BaseDionaOrgan]
   id: OrganDionaEyes
-  parent: BaseDionaOrgan
-  name: eyes
-  description: "I see you!"
-  components:
-  - type: Sprite
-    layers:
-      - state: eyeball-l
-      - state: eyeball-r
 
 - type: entity
+  parent: [BaseOrganStomach, BaseDionaOrgan]
   id: OrganDionaStomach
-  parent: BaseDionaOrgan
-  name: stomach
   description: "The diona's equivalent of a stomach, it reeks of asparagus and vinegar."
   components:
-  - type: Sprite
-    state: stomach
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-  - type: Stomach
   - type: Metabolizer
     maxReagents: 6
     metabolizerTypes: [ Plant ]
     removeEmpty: true
     groups:
-      - id: Food
-      - id: Drink
-      - id: Medicine
-      - id: Poison
-      - id: Narcotic
-      - id: Alcohol
-        rateModifier: 0.1
-  - type: Item
-    size: Small
-    heldPrefix: stomach
+    - id: Food
+    - id: Drink
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+    - id: Alcohol
+      rateModifier: 0.1
 
 - type: entity
+  parent: [BaseOrganLungs, BaseDionaOrgan]
   id: OrganDionaLungs
-  parent: BaseDionaOrgan
-  name: lungs
-  description: "A spongy mess of slimy, leaf-like structures. Capable of breathing both carbon dioxide and oxygen."
+  description: A spongy mess of slimy, leaf-like structures. Capable of breathing both carbon dioxide and oxygen.
   components:
   - type: Sprite
-    state: lungs
-  - type: Item
-    size: Small
-    heldPrefix: lungs
-  - type: Lung 
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+    - state: lung-l
+    - state: lung-r
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Plant ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -130,41 +59,34 @@
 
 # Organs that turn into nymphs on removal
 - type: entity
-  id: OrganDionaBrainNymph
   parent: OrganDionaBrain
+  id: OrganDionaBrainNymph
   categories: [ HideSpawnMenu ]
-  name: brain
-  description: "The source of incredible, unending intelligence. Honk."
   components:
-  - type: Brain
   - type: Nymph # This will make the organs turn into a nymph when they're removed. 
     entityPrototype: OrganDionaNymphBrain
     transferMind: true
 
 - type: entity
-  id: OrganDionaStomachNymph
   parent: OrganDionaStomach
+  id: OrganDionaStomachNymph
   categories: [ HideSpawnMenu ]
-  name: stomach
-  description: "Gross. This is hard to stomach."
   components:
   - type: Nymph
     entityPrototype: OrganDionaNymphStomach
 
 - type: entity
-  id: OrganDionaLungsNymph
   parent: OrganDionaLungs
+  id: OrganDionaLungsNymph
   categories: [ HideSpawnMenu ]
-  name: lungs
-  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   components:
   - type: Nymph
     entityPrototype: OrganDionaNymphLungs
 
 # Nymphs that the organs will turn into
 - type: entity
-  id: OrganDionaNymphBrain
   parent: MobDionaNymph
+  id: OrganDionaNymphBrain
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Brain
@@ -175,8 +97,8 @@
     prototype: AnimalNymphBrain
 
 - type: entity
+  parent: MobDionaNymphAccent
   id: OrganDionaNymphStomach
-  parent: MobDionaNymphAccent 
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Stomach
@@ -187,8 +109,8 @@
     prototype: AnimalNymphStomach
 
 - type: entity
-  id: OrganDionaNymphLungs
   parent: MobDionaNymphAccent
+  id: OrganDionaNymphLungs
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Lungs
