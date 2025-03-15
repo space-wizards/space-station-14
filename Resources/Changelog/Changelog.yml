@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Pill bottles can now only store pills.
-    type: Tweak
-  id: 7565
-  time: '2024-10-31T10:56:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33074
 - author: Jarmer123
   changes:
   - message: You can now find a spare bible in the PietyVend
@@ -3894,3 +3887,11 @@
   id: 8064
   time: '2025-03-14T20:22:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35835
+- author: K-Dynamic
+  changes:
+  - message: Electrocution stun duration decreased overall; LV or hacking from 8 seconds
+      to 5, MV from 10 seconds to 7.5, HV from 12 seconds to 10.
+    type: Tweak
+  id: 8065
+  time: '2025-03-15T15:57:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34578
