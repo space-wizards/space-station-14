@@ -30,3 +30,9 @@ marking-ThavenREyeGlow = Glowing Eye (Right)
 
 marking-ThavenLEyeGlow-leyeglow = Glowing Eye (Left)
 marking-ThavenLEyeGlow = Glowing Eye (Left)
+
+marking-ThavenEyesSharkminnow-eyessharkminnow = Sharkminnow Eyes
+marking-ThavenEyesSharkminnow = Sharkminnow Eyes
+
+marking-ThavenEyesSharkminnowGlowing-eyessharkminnow = Glowing Sharkminnow Eyes
+marking-ThavenEyesSharkminnowGlowing = Glowing Sharkminnow Eyes
