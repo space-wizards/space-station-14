@@ -146,10 +146,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Resolve all our neighbours first, so we can use their properties to decide who to operate on first.
             foreach (var neighbor in args.Neighbors)
             {
-                if (!_puddleQuery.TryGetComponent(neighbor, out var puddle) ||
-                    !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution,
-                        out var neighborSolution) ||
-                    CanFullyEvaporate(neighborSolution))
+                if (!_puddleQuery.TryGetComponent(neighbor, out var puddle)
+                    || !_solutionContainerSystem.ResolveSolution(neighbor,
+                        puddle.SolutionName,
+                        ref puddle.Solution,
+                        out var neighborSolution)
+                    || CanFullyEvaporate(neighborSolution))
                 {
                     continue;
                 }
@@ -218,10 +220,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Resolve all our neighbours so that we can use their properties to decide who to act on first
             foreach (var neighbor in args.Neighbors)
             {
-                if (!_puddleQuery.TryGetComponent(neighbor, out var puddle) ||
-                    !_solutionContainerSystem.ResolveSolution(neighbor, puddle.SolutionName, ref puddle.Solution,
-                        out var neighborSolution) ||
-                    CanFullyEvaporate(neighborSolution))
+                if (!_puddleQuery.TryGetComponent(neighbor, out var puddle)
+                    || !_solutionContainerSystem.ResolveSolution(neighbor,
+                        puddle.SolutionName,
+                        ref puddle.Solution,
+                        out var neighborSolution)
+                    || CanFullyEvaporate(neighborSolution))
                 {
                     continue;
                 }
@@ -301,12 +305,16 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (!_random.Prob(0.5f))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution,
+        if (!_solutionContainerSystem.ResolveSolution(entity.Owner,
+                entity.Comp.SolutionName,
+                ref entity.Comp.Solution,
                 out var solution))
             return;
 
         _popups.PopupEntity(Loc.GetString("puddle-component-slipped-touch-reaction", ("puddle", entity.Owner)),
-            args.Slipped, args.Slipped, PopupType.SmallCaution);
+            args.Slipped,
+            args.Slipped,
+            PopupType.SmallCaution);
 
         // Take 15% of the puddle solution
         var splitSol = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, solution.Volume * 0.15f);
@@ -350,7 +358,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         UpdateAppearance(entity, entity.Comp);
     }
 
-    private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null,
+    private void UpdateAppearance(EntityUid uid,
+        PuddleComponent? puddleComponent = null,
         AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref puddleComponent, ref appearance, false))
@@ -361,7 +370,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var volume = FixedPoint2.Zero;
         Color color = Color.White;
 
-        if (_solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
+        if (_solutionContainerSystem.ResolveSolution(uid,
+                puddleComponent.SolutionName,
+                ref puddleComponent.Solution,
                 out var solution))
         {
             volume = solution.Volume / puddleComponent.OverflowVolume;
@@ -381,7 +392,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
                 color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
+                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor,
+                    interpolateValue);
             }
         }
 
@@ -501,7 +513,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (!Resolve(uid, ref puddleComponent))
             return FixedPoint2.Zero;
 
-        return _solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
+        return _solutionContainerSystem.ResolveSolution(uid,
+            puddleComponent.SolutionName,
+            ref puddleComponent.Solution,
             out var solution)
             ? solution.Volume
             : FixedPoint2.Zero;
@@ -515,6 +529,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     /// <param name="sound">Play sound on overflow</param>
     /// <param name="checkForOverflow">Overflow on encountered values</param>
     /// <param name="puddleComponent">Optional resolved PuddleComponent</param>
+    /// <param name="sol">The SolutionContainerManagerComponent of the Puddle</param>
     /// <returns></returns>
     public bool TryAddSolution(EntityUid puddleUid,
         Solution addedSolution,
@@ -529,7 +544,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _solutionContainerSystem.EnsureAllSolutions((puddleUid, sol));
 
         if (addedSolution.Volume == 0 ||
-            !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName,
+            !_solutionContainerSystem.ResolveSolution(puddleUid,
+                puddleComponent.SolutionName,
                 ref puddleComponent.Solution))
         {
             return false;
@@ -629,12 +645,14 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             targets.Add(owner);
             _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
             _popups.PopupEntity(
-                Loc.GetString("spill-land-spilled-on-other", ("spillable", uid),
-                    ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
+                Loc.GetString("spill-land-spilled-on-other",
+                    ("spillable", uid),
+                    ("target", Identity.Entity(owner, EntityManager))),
+                    owner,
+                    PopupType.SmallCaution);
         }
 
-        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets,
-            Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets, Filter.Pvs(uid, entityManager: EntityManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
@@ -659,7 +677,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     /// <inheritdoc/>
-    public override bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true,
+    public override bool TrySpillAt(EntityUid uid,
+        Solution solution,
+        out EntityUid puddleUid,
+        bool sound = true,
         TransformComponent? transformComponent = null)
     {
         if (!Resolve(uid, ref transformComponent, false))
@@ -672,7 +693,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     /// <inheritdoc/>
-    public override bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true,
+    public override bool TrySpillAt(TileRef tileRef,
+        Solution solution,
+        out EntityUid puddleUid,
+        bool sound = true,
         bool tileReact = true)
     {
         if (solution.Volume <= 0)
@@ -718,7 +742,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         while (anchored.MoveNext(out var ent))
         {
             // If there's existing sparkles then delete it
-            if (sparklesQuery.TryGetComponent(ent, out var sparkles))
+            if (sparklesQuery.TryComp(ent, out var sparkles))
             {
                 QueueDel(ent.Value);
                 continue;
