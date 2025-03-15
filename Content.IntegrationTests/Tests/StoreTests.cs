@@ -102,7 +102,7 @@ public sealed class StoreTests
                 + $"flag as 'true'. This marks the fact that cost modifier of discount is not applied properly!"
             );
 
-            // Set conditions to null so that it doesnt fail
+            // The storeComponent returns discounted items with conditions randomly, so we remove these to sanitize the data.
             foreach (var discountedItem in discountedListingItems)
             {
                 discountedItem.Conditions = null;
