@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Alert;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
@@ -142,6 +143,34 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadZapRadius")]
     public float OverloadZapRadius = 2f;
+    #endregion
+
+    #region Sedate Ability
+    /// <summary>
+    /// The amount of essence that is needed to use the ability.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float SedateCost = 50;
+
+    /// <summary>
+    /// The status effects applied after the ability
+    /// the first float corresponds to amount of time the entity is stunned.
+    /// the second corresponds to the amount of time the entity is made solid.
+    /// </summary>
+    [DataField]
+    public Vector2 SedateDebuffs = new(2, 5);
+
+    /// <summary>
+    ///  Target yawns when the action is used
+    /// </summary>
+    [DataField]
+    public ProtoId<EmotePrototype> SedateYawnEmote = "Yawn";
+
+    /// <summary>
+    /// The time after which the target will fall asleep.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float SedatePendingTime = 5f;
     #endregion
 
     #region Blight Ability

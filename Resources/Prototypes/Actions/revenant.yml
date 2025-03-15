@@ -27,6 +27,19 @@
     event: !type:RevenantOverloadLightsActionEvent
     useDelay: 20
 
+# this one temporary replaces the blight action while viruses are gone
+- type: entity
+  id: ActionRevenantSedate
+  name: Sedate
+  description: Costs 50 Essence.
+  components:
+  - type: EntityTargetAction
+    icon: Interface/Actions/blight.png
+    event: !type:RevenantSedateActionEvent
+    checkCanInteract: false
+    useDelay: 20
+    itemIconStyle: BigAction
+
 #- type: entity
 #  id: ActionRevenantBlight
 #  name: Blight

@@ -24,6 +24,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: RevenantSedate
+  name: revenant-sedate-name
+  description: revenant-sedate-desc
+  productAction: ActionRevenantSedate
+  cost:
+    StolenEssence: 75
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 #- type: listing
 #  id: RevenantBlight
 #  name: revenant-blight-name
