@@ -396,8 +396,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
 private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
     {
-        if (!TryComp<SlipperyComponent>(entity, out var slipComp))
-            return;
         if (!TryComp<StepTriggerComponent>(entity, out var comp))
             return;
 
@@ -419,6 +417,9 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
             _stepTrigger.SetActive(entity, false, comp);
             return;
         }
+
+        if (!TryComp<SlipperyComponent>(entity, out var slipComp))
+            return;
 
         foreach (var (reagent, quantity) in solution.Contents)
         {
@@ -455,6 +456,14 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
 
         // Only make it super slippery if there is enough super slippery units for its own puddle
         slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
+        // Update tile friction for other reasons
+        var friction = EnsureComp<TileFrictionModifierComponent>(entity);
+        // Lower tile friction based on how slippery it is, lets items slide across a puddle of lube
+        // We square the value because it ends up feeling better with lube being very slippery
+        var slipRatio = slipComp.SlipData.RequiredSlipSpeed / entity.Comp.DefaultSlippery;
+        _tile.SetModifier(entity,
+            TileFrictionController.DefaultFriction * slipRatio*slipRatio,
+            friction);
 
         Dirty(entity);
     }
