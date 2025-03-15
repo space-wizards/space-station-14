@@ -41,12 +41,6 @@
     staticPacks:
     - PrinterGeneralBasic
     - PrinterSecurityBasic
-  - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - Document
-        - Paper
 
 - type: entity
   parent: PaperPrinter
@@ -61,12 +55,6 @@
     staticPacks:
     - PrinterGeneralBasic
     - PrinterEngineeringBasic
-  - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - Document
-        - Paper
 
 - type: entity
   parent: PaperPrinter
@@ -82,12 +70,6 @@
     - PrinterGeneralBasic
     - PrinterSecurityBasic
     - PrinterEngineeringBasic
-  - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - Document
-        - Paper
 
 - type: entity
   parent: PaperPrinter
@@ -102,9 +84,3 @@
     staticPacks:
     - PrinterGeneralBasic
     - PrinterEngineeringBasic
-  - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
-        - Document
-        - Paper
