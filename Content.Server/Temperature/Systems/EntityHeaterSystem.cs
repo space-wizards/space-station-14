@@ -1,5 +1,7 @@
 ﻿using Content.Server.Power.Components;
 using Content.Shared.Placeable;
+using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;

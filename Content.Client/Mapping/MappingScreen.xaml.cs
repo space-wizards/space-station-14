@@ -96,6 +96,22 @@ public sealed partial class MappingScreen : InGameScreen
 
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
         Delete.Texture.TexturePath = "/Textures/Interface/eraser.svg.png";
+        Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
+        Flip.OnPressed += args => FlipSides();
+    }
+
+    public void FlipSides()
+    {
+        ScreenContainer.Flip();
+
+        if (SpawnContainer.GetPositionInParent() == 0)
+        {
+            Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
+        }
+        else
+        {
+            Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
+        }
     }
 
     private void OnDecalColorPicked(Color color)
@@ -181,7 +197,6 @@ public sealed partial class MappingScreen : InGameScreen
 
     public override void SetChatSize(Vector2 size)
     {
-        ScreenContainer.DesiredSplitCenter = size.X;
         ScreenContainer.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
     }
 

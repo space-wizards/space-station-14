@@ -8,10 +8,16 @@ namespace Content.Shared.Temperature.Components;
 public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
-    ///     How much to multiply temperature deltas by.
+    ///     Multiplier for the transferred heat when heating up
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Coefficient = 1.0f;
+    public float HeatingCoefficient = 1.0f;
+
+    /// <summary>
+    ///     Multiplier for the transferred heat when cooling down
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float CoolingCoefficient = 1.0f;
 }
 
 /// <summary>

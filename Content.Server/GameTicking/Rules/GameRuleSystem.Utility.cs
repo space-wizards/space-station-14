@@ -19,6 +19,11 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
     }
 
+    protected EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent> QueryDelayedRules()
+    {
+        return EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent>();
+    }
+
     /// <summary>
     /// Queries all gamerules, regardless of if they're active or not.
     /// </summary>

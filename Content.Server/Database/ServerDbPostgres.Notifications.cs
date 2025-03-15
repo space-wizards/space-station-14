@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Content.Server.Database;
@@ -17,6 +18,7 @@ public sealed partial class ServerDbPostgres
     private static readonly string[] NotificationChannels =
     [
         BanManager.BanNotificationChannel,
+        MultiServerKickManager.NotificationChannel,
     ];
 
     private static readonly TimeSpan ReconnectWaitIncrease = TimeSpan.FromSeconds(10);
@@ -97,6 +99,8 @@ public sealed partial class ServerDbPostgres
                 _notifyLog.Error($"Error in notification listener: {e}");
             }
         }
+
+        _notificationConnection.Dispose();
     }
 
     private void OnNotification(object _, NpgsqlNotificationEventArgs notification)
@@ -109,6 +113,14 @@ public sealed partial class ServerDbPostgres
         });
     }
 
+    public override async Task SendNotification(DatabaseNotification notification)
+    {
+        await using var db = await GetDbImpl();
+
+        await db.PgDbContext.Database.ExecuteSqlAsync(
+            $"SELECT pg_notify({notification.Channel}, {notification.Payload})");
+    }
+
     public override void Shutdown()
     {
         _notificationTokenSource.Cancel();
@@ -116,6 +128,5 @@ public sealed partial class ServerDbPostgres
             return;
 
         _notificationConnection.Notification -= OnNotification;
-        _notificationConnection.Dispose();
     }
 }

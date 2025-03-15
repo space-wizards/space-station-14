@@ -36,6 +36,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
+            Paramedic: [ 1, 1 ]
             MedicalIntern: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
@@ -57,4 +58,6 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            #silicon
+            StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]

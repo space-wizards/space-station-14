@@ -12,6 +12,8 @@
     - Energy
     reflectProb: 0.2
     spread: 90
+  - type: RadiationBlockingContainer
+    resistance: 2.5
 
 - type: entity
   parent: CrateBaseWeldable
@@ -42,6 +44,11 @@
   - type: AntiRottingContainer
   - type: ExplosionResistance
     damageCoefficient: 0.50
+  - type: Construction
+    graph: CrateFreezer
+    node: done
+    containers:
+    - entity_storage
 
 - type: entity
   parent: CratePlastic
@@ -171,7 +178,7 @@
 # Secure Crates
 
 - type: entity
-  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   id: CrateSecgear
   name: secgear crate
   components:
@@ -287,7 +294,7 @@
     access: [["Armory"]]
 
 - type: entity
-  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
+  parent: [ CrateBaseSecure, BaseSecurityContraband ]
   suffix: Armory, Secure
   id: CrateContrabandStorageSecure
   name: contraband storage crate

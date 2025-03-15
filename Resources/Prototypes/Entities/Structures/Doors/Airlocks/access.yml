@@ -66,6 +66,15 @@
 
 - type: entity
   parent: AirlockServiceLocked
+  id: AirlockBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
+- type: entity
+  parent: AirlockHydroponics
   id: AirlockHydroponicsLocked
   suffix: Hydroponics, Locked
   components:
@@ -90,6 +99,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCargo ]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockExternal
@@ -99,6 +110,30 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalCommandLocked
+  suffix: External, Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassCommandLocked
+  suffix: External, Glass, Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockExternal
@@ -108,6 +143,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsAtmospherics ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternal
@@ -117,6 +154,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockExternal
@@ -126,6 +165,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsNukeop ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockFreezer
@@ -234,7 +275,6 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMorgue ]
-
 
 - type: entity
   parent: AirlockScience
@@ -431,13 +471,23 @@
       board: [ DoorElectronicsTheatre ]
 
 - type: entity
-  parent: AirlockGlass
+  parent: AirlockServiceGlassLocked
   id: AirlockBarGlassLocked
   suffix: Bar, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockBarKitchenGlassLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
 
 - type: entity
   parent: AirlockExternalGlass
@@ -456,6 +506,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCargo ]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockExternalGlass
@@ -465,6 +517,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockExternalGlass
@@ -474,6 +528,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsNukeop ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockExternalGlass
@@ -483,6 +539,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternalGlass
@@ -492,6 +550,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsAtmospherics ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -512,7 +572,7 @@
       board: [ DoorElectronicsJanitor ]
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockHydroponicsGlass
   id: AirlockHydroGlassLocked
   suffix: Hydroponics, Locked
   components:
@@ -582,6 +642,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChemistry ]
+
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockMedicalMorgueGlassLocked
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
 
 - type: entity
   parent: AirlockMedicalGlass
@@ -856,6 +925,15 @@
 
 - type: entity
   parent: AirlockMaintServiceLocked
+  id: AirlockMaintBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
+- type: entity
+  parent: AirlockMaintServiceLocked
   id: AirlockMaintChapelLocked
   suffix: Chapel, Locked
   components:
@@ -920,6 +998,15 @@
       board: [ DoorElectronicsKitchen ]
 
 - type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsKitchenHydroponics ]
+
+- type: entity
   parent: AirlockMaint
   id: AirlockMaintIntLocked
   suffix: Interior, Locked
@@ -938,6 +1025,15 @@
       board: [ DoorElectronicsMedical ]
   - type: Wires
     layoutId: AirlockMedical
+
+- type: entity
+  parent: AirlockMaintMedLocked
+  id: AirlockMedicalMorgueMaintLocked
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
 
 - type: entity
   parent: AirlockMaintMedLocked
@@ -1153,6 +1249,9 @@
   components:
   - type: PriorityDock
     tag: DockArrivals
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsExternal ]
 
 - type: entity
   parent: AirlockGlassShuttle
@@ -1164,6 +1263,9 @@
     - type: IFF
       flags:
       - HideLabel
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsExternal ]
 
 #HighSecDoors
 - type: entity

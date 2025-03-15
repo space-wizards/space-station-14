@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.Materials;
+using Content.Client.Materials.UI;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Construction.Components;

@@ -5,8 +5,12 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  - FlowerWreath
+  - Hairflower
+  - Headphones
   - PlushieLizard
   - PlushieSpaceLizard
+  - ThreeCandles
   - Lighter
   - CigPackGreen
   - CigPackRed
@@ -15,16 +19,37 @@
   - CigarCase
   - CigarGold
   - ClothingNeckLGBTPin
+  - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
+  - ClothingNeckAroacePin
   - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
   - ClothingNeckIntersexPin
   - ClothingNeckLesbianPin
   - ClothingNeckNonBinaryPin
   - ClothingNeckPansexualPin
+  - ClothingNeckOmnisexualPin
+  - ClothingNeckGenderqueerPin
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - TowelColorBlack
+  - TowelColorDarkBlue
+  - TowelColorDarkGreen
+  - TowelColorGold
+  - TowelColorGray
+  - TowelColorGreen
+  - TowelColorLightBlue
+  - TowelColorLightBrown
+  - TowelColorMaroon
+  - TowelColorMime
+  - TowelColorOrange
+  - TowelColorPurple
+  - TowelColorRed
+  - TowelColorSilver
+  - TowelColorWhite
+  - TowelColorYellow
 
 - type: loadoutGroup
   id: Glasses
@@ -60,6 +85,14 @@
   loadouts:
   - LoadoutSpeciesEVANitrogen
   - LoadoutSpeciesEVAOxygen
+
+- type: loadoutGroup
+  id: GroupPocketTankDouble
+  name: loadout-group-pocket-tank-double
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesPocketDoubleNitrogen
+  - LoadoutSpeciesPocketDoubleOxygen
 
 # Command
 - type: loadoutGroup
@@ -399,13 +432,16 @@
   minLimit: 0
   loadouts:
   - JesterHat
+  - JesterAltHat
 
 - type: loadoutGroup
   id: ClownJumpsuit
   name: loadout-group-clown-jumpsuit
   loadouts:
   - ClownSuit
+  - ClownSkirt
   - JesterSuit
+  - JesterAltSuit
 
 - type: loadoutGroup
   id: ClownBackpack
@@ -478,6 +514,13 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+
+- type: loadoutGroup
+  id: MimeBelt
+  name: loadout-group-mime-belt
+  loadouts:
+  - MimeSuspendersRed
+  - MimeSuspendersBlack
 
 - type: loadoutGroup
   id: SurvivalMime
@@ -687,6 +730,7 @@
 - type: loadoutGroup
   id: StationEngineerHead
   name: loadout-group-station-engineer-head
+  minLimit: 0
   loadouts:
   - StationEngineerHardhatYellow
   - StationEngineerHardhatOrange
@@ -954,6 +998,7 @@
   - SecurityHelmet
   - SecurityBeret
   - SecurityHat
+  - TrooperHat
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -965,6 +1010,7 @@
   - SecurityJumpskirtGrey
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
+  - TrooperUniform
 
 - type: loadoutGroup
   id: SecurityBackpack
@@ -993,7 +1039,6 @@
   id: SecurityShoes
   name: loadout-group-security-shoes
   loadouts:
-  - CombatBoots
   - JackBoots
   - SecurityWinterBoots
 
@@ -1031,10 +1076,10 @@
 - type: loadoutGroup
   id: DetectiveOuterClothing
   name: loadout-group-detective-outerclothing
-  minLimit: 0
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - DetectiveCoatGrey
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit
