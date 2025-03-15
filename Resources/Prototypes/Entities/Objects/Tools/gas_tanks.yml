@@ -39,7 +39,14 @@
     attackRate: 0.8
     damage:
       types:
-        Blunt: 10
+        Blunt: 15
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 3
   - type: PhysicalComposition
     materialComposition:
       Steel: 185
