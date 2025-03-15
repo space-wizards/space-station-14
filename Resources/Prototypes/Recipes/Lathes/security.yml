@@ -280,6 +280,23 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunTopMountedUranium
+  result: MagazinePistolSubMachineGunTopMountedUranium
+  materials:
+    Steel: 25
+    Plastic: 250
+    Uranium: 250
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunTopMountedIncendiary
+  result: MagazinePistolSubMachineGunTopMountedIncendiary
+  materials:
+    Steel: 25
+    Plastic: 275
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
   id: MagazineBoxPistol
   result: MagazineBoxPistol
   materials:
