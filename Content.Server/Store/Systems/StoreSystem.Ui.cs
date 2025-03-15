@@ -5,15 +5,20 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.Mind;
+using Content.Shared.Physics;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -30,6 +35,8 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     private void InitializeUi()
     {
@@ -163,6 +170,46 @@ public sealed partial class StoreSystem
             }
         }
 
+        // For entities that may displace the user when spawned, such as crates
+        // We need an unblocked tile in front of the player to spawn it if it exists
+        EntityCoordinates? offsetSpawnCoords = null;
+        if (listing.ProductEntity != null)
+        {
+            var fixtureProduct = Spawn(listing.ProductEntity);
+            if (TryComp<FixturesComponent>(fixtureProduct, out var fixturesComponent))
+            {
+                foreach (var productFixtures in fixturesComponent.Fixtures)
+                {
+                    if (!productFixtures.Value.Hard)
+                        continue;
+
+                    if ((productFixtures.Value.CollisionLayer &
+                         (int)(CollisionGroup.Impassable | CollisionGroup.Opaque)) == 0)
+                        continue;
+
+                    // If the productEntity occupies the impassible or opaque layers,
+                    // check to see if the tile in the direction the buyer is facing isn't blocked
+                    var buyerXform = Transform(buyer);
+                    var offsetValue = buyerXform.LocalRotation.ToWorldVec();
+                    var coords = buyerXform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager, _mapMan);
+                    var tile = coords.GetTileRef(EntityManager, _mapMan);
+
+                    if (tile == null)
+                        break;
+
+                    if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable | CollisionGroup.Opaque))
+                    {
+                        _popup.PopupEntity(Loc.GetString("store-ui-spawn-space-blocked"), buyer, buyer);
+                        return;
+                    }
+
+                    offsetSpawnCoords = _turf.GetTileCenter(tile.Value);
+                    break;
+                }
+            }
+            QueueDel(fixtureProduct);
+        }
+
         if (!IsOnStartingMap(uid, component))
             DisableRefund(uid, component);
 
@@ -179,8 +226,17 @@ public sealed partial class StoreSystem
         //spawn entity
         if (listing.ProductEntity != null)
         {
-            var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
-            _hands.PickupOrDrop(buyer, product);
+            EntityUid product;
+
+            if (offsetSpawnCoords != null)
+            {
+                product = Spawn(listing.ProductEntity, offsetSpawnCoords.Value);
+            }
+            else
+            {
+                product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
+                _hands.PickupOrDrop(buyer, product);
+            }
 
             HandleRefundComp(uid, component, product);
 
