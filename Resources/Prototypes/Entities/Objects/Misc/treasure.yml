@@ -118,98 +118,38 @@
   id: TreasureCoinPile
   table: !type:GroupSelector
     children:
-    - id: TreasureCoinIron
-      weight: 24
-    - id: TreasureCoinSilver
-      weight: 40
-    - id: TreasureCoinGold
-      weight: 24
-    - id: TreasureCoinAdamantine
-      weight: 11
-    - id: TreasureCoinDiamond
-      weight: 1
+    - id: CoinNanotransen
+      weight: 20
+    - id: CoinCopper
+      weight: 20
+    - id: CoinIron
+      weight: 20
+    - id: CoinSilver
+      weight: 20
+    - id: CoinGame
+      weight: 20
 
 - type: entityTable
   id: TreasureCoinPileRare
   table: !type:GroupSelector
     children:
-    - id: TreasureCoinIron
+    - id: CoinNanotransen
       weight: 10
-    - id: TreasureCoinSilver
-      weight: 25
-    - id: TreasureCoinGold
-      weight: 40
-    - id: TreasureCoinAdamantine
-      weight: 20
-    - id: TreasureCoinDiamond
-      weight: 5
-
-- type: entity
-  parent: BaseItem
-  id: TreasureCoinIron
-  name: coin
-  description: A flat bit of metal. If it was still in circulation, inflation would've made it worthless. Since it isn't, it's worth enough to keep in a book.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/coins.rsi
-    state: coin_iron
-  - type: Item
-    size: Tiny
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
-  - type: StaticPrice
-    price: 75
-
-- type: entity
-  parent: TreasureCoinIron
-  id: TreasureCoinSilver
-  components:
-  - type: Sprite
-    state: coin_silver
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100 # coins are fake on the inside
-      Silver: 200
-  - type: StaticPrice
-    price: 135
-
-- type: entity
-  parent: TreasureCoinIron
-  id: TreasureCoinGold
-  components:
-  - type: Sprite
-    state: coin_gold
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
-      Gold: 200
-  - type: StaticPrice
-    price: 175
-
-- type: entity
-  parent: TreasureCoinIron
-  id: TreasureCoinAdamantine
-  components:
-  - type: Sprite
-    state: coin_adamantine
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 400
-      Diamond: 5
-  - type: StaticPrice
-    price: 250
-
-- type: entity
-  parent: TreasureCoinIron
-  id: TreasureCoinDiamond
-  components:
-  - type: Sprite
-    state: coin_diamond
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 300
-      Diamond: 15
-  - type: StaticPrice
-    price: 500
-
+    - id: CoinAdamantium
+      weight: 10
+    - id: CoinBananium
+      weight: 10
+    - id: CoinCopper
+      weight: 10
+    - id: CoinDiamond
+      weight: 10
+    - id: CoinGold
+      weight: 10
+    - id: CoinIron
+      weight: 10
+    - id: CoinPlasma
+      weight: 10
+    - id: CoinSilver
+      weight: 10
+    - id: CoinUranium
+      weight: 10
