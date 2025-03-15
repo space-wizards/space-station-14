@@ -23,30 +23,10 @@ namespace Content.Shared.Slippery
 
         [DataField, AutoNetworkedField]
         public SlipperyEffectEntry SlipData = new();
-        /*
-        /// <summary>
-        /// How many seconds the mob will be paralyzed for.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public float ParalyzeTime = 1.5f;
-
-        /// <summary>
-        /// The entity's speed will be multiplied by this to slip it forwards.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public float LaunchForwardsMultiplier = 1.5f;
-
-        /// <summary>
-        /// If this is true, any slipping entity loses its friction until
-        /// it's not colliding with any SuperSlippery entities anymore.
-        /// They also will fail any attempts to stand up unless they have no-slips.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public bool SuperSlippery;*/
     }
     /// <summary>
-    /// This data definition only exists for slippery reagents to work without either it being jank or organized like shit.
-    /// SlipperyComponent should use this for its data structure but a lot of things would break and I'm already deep in merge conflict hell.
+    /// Stores the data for sliperiness that way reagents and this component can use it. Feel free to add more data
+    /// but don't remove anything lest you temp the wrath of the puddle code.
     /// </summary>
     [DataDefinition, Serializable, NetSerializable]
     public sealed partial class SlipperyEffectEntry
