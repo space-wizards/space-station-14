@@ -38,7 +38,7 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnStartCollide(EntityUid uid, SlidingComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.SuperSlippery)
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.SlipData.SuperSlippery)
             return;
 
         component.CollidingEntities.Add(args.OtherEntity);

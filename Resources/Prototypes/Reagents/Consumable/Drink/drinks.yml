@@ -446,8 +446,6 @@
       effects:
       - !type:SatiateThirst
         factor: 4
-  components:
-  - type: Slippery
 
 - type: reagent
   id: Ice

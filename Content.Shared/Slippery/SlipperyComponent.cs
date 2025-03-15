@@ -1,6 +1,7 @@
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Slippery
 {
@@ -47,7 +48,7 @@ namespace Content.Shared.Slippery
     /// This data definition only exists for slippery reagents to work without either it being jank or organized like shit.
     /// SlipperyComponent should use this for its data structure but a lot of things would break and I'm already deep in merge conflict hell.
     /// </summary>
-    [DataDefinition]
+    [DataDefinition, Serializable, NetSerializable]
     public sealed partial class SlipperyEffectEntry
     {
         /// <summary>

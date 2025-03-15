@@ -127,8 +127,9 @@
   - type: SolutionContainerVisuals
     fillBaseName: syndie-
   - type: Slippery
-    paralyzeTime: 3
-    launchForwardsMultiplier: 3
+    slipData:
+      paralyzeTime: 3
+      launchForwardsMultiplier: 3
   - type: Item
     heldPrefix: syndie
   - type: FlavorProfile
@@ -218,8 +219,9 @@
   - type: SolutionContainerVisuals
     fillBaseName: omega-
   - type: Slippery
-    paralyzeTime: 5.0
-    launchForwardsMultiplier: 3.0
+    slipData:
+      paralyzeTime: 5.0
+      launchForwardsMultiplier: 3.0
   - type: Item
     heldPrefix: omega
   - type: SolutionContainerManager

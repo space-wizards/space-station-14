@@ -69,8 +69,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
 
-    //public static readonly float PuddleVolume = 1000;
-
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = [];
@@ -81,7 +79,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
      * This would then evaporate into the puddle tile below
      */
-    // I think blood and vomit already do this unless I'm mistaken
+    // I think blood and vomit already does this unless I'm mistaken?
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -93,7 +91,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
-        //SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
 
@@ -101,8 +98,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         InitializeTransfers();
     }
-    // For my sanity, puddle spread currently has an issue where if all four sides of a puddle are covered will full puddles you can stack infinite reagents in the center puddle.
-    // This shouldn't be how this works it's very dumb
+    /*For my sanity, puddle spread currently has an issue where if all four sides of a puddle are covered
+    will full puddles you can stack infinite reagents in the center puddle.
+    I plan to work on this after knockdowns but in the event I don't someone ought to know that this sucks */
     private void OnPuddleSpread(Entity<PuddleComponent> entity, ref SpreadNeighborsEvent args)
     {
         // Overflow is the source of the overflowing liquid. This contains the excess fluid above overflow limit (20u)
@@ -335,11 +333,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         TickEvaporation();
     }
 
-    /*private void OnPuddleInit(Entity<PuddleComponent> entity, ref ComponentInit args)
-    {
-        _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out _, FixedPoint2.New(PuddleVolume));
-    }*/
-
     private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
     {
         if (args.SolutionId != entity.Comp.SolutionName)
@@ -411,6 +404,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         /* This is the base amount of reagent needed before a puddle can be considered slippery. Is defined based on
          the sprite theshold for a puddle larger than 5 pixels.*/
         var slipperyThreshold = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
+        // Define a bunch of variables to add data into
         var slipperyUnits = FixedPoint2.Zero;
         var superSlipperyUnits = FixedPoint2.Zero;
         var slipStepTrigger = FixedPoint2.Zero;
