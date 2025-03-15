@@ -190,7 +190,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
 
-        if (!CanSendInGame(message, shell, player))
+        if (!CanSendInGame(message, player, desiredType))
             return;
 
         ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
@@ -267,7 +267,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         ICommonSession? player = null
         )
     {
-        if (!CanSendInGame(message, shell, player))
+        if (!CanSendInGame(message, player, type))
             return;
 
         if (player != null && _chatManager.HandleRateLimit(player) != RateLimitStatus.Allowed)
@@ -720,7 +720,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <summary>
     ///     Returns true if the given player is 'allowed' to send the given message, false otherwise.
     /// </summary>
-    private bool CanSendInGame(string message, IConsoleShell? shell = null, ICommonSession? player = null)
+    private bool CanSendInGame(string message, ICommonSession? player, Enum channel)
     {
         // Non-players don't have to worry about these restrictions.
         if (player == null)
@@ -728,19 +728,12 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var mindContainerComponent = player.ContentData()?.Mind;
 
-        if (mindContainerComponent == null)
-        {
-            shell?.WriteError("You don't have a mind!");
-            return false;
-        }
+        if (mindContainerComponent != null && Exists(player.AttachedEntity))
+            return !_chatManager.ExceedsCharacterLimit(player, message);
 
-        if (player.AttachedEntity is not { Valid: true } _)
-        {
-            shell?.WriteError("You don't have an entity!");
-            return false;
-        }
-
-        return !_chatManager.MessageCharacterLimit(player, message);
+        var msg = Loc.GetString("chat-manager-cannot-send", ("channel", channel));
+        _chatManager.DispatchServerMessage(player, msg, true);
+        return false;
     }
 
     // ReSharper disable once InconsistentNaming

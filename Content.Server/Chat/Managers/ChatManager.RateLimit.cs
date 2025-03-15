@@ -23,7 +23,7 @@ internal sealed partial class ChatManager
 
     private void RateLimitPlayerLimited(ICommonSession player)
     {
-        DispatchServerMessage(player, Loc.GetString("chat-manager-rate-limited"), suppressLog: true);
+        DispatchServerMessage(player, _loc.GetString("chat-manager-rate-limited"), suppressLog: true);
     }
 
     private void RateLimitAlertAdmins(ICommonSession player)

@@ -1,6 +1,5 @@
 ### UI
 
-chat-manager-max-message-length = Your message exceeds {$maxMessageLength} character limit
 chat-manager-ooc-chat-enabled-message = OOC chat has been enabled.
 chat-manager-ooc-chat-disabled-message = OOC chat has been disabled.
 chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
@@ -13,6 +12,9 @@ chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
 chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
 
 chat-manager-max-message-length-exceeded-message = Your message exceeded {$limit} character limit
+chat-manager-no-entity = You need to be in-game to send a {$channel} chat message.
+chat-manager-not-dead = You need to be dead or an admin to send dead-chat messages.
+chat-manager-cannot-send = You cannot send a {$channel} chat message.
 chat-manager-no-headset-on-message = You don't have a headset on!
 chat-manager-no-radio-key = No radio key specified!
 chat-manager-no-such-channel = There is no channel with key '{$key}'!
