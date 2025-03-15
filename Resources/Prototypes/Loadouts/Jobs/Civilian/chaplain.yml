@@ -1,3 +1,46 @@
+# Devoter
+- type: loadout
+  id: AltarDevoterNanotrasen
+  storage:
+    back:
+    - AltarDevoterNanotrasen
+
+- type: loadout
+  id: AltarDevoterChaos
+  storage:
+    back:
+    - AltarDevoterChaos
+
+- type: loadout
+  id: AltarDevoterDruid
+  storage:
+    back:
+    - AltarDevoterDruid
+
+- type: loadout
+  id: AltarDevoterToolbox
+  storage:
+    back:
+    - AltarDevoterToolbox
+
+- type: loadout
+  id: AltarDevoterSpaceChristian
+  storage:
+    back:
+    - AltarDevoterSpaceChristian
+
+- type: loadout
+  id: AltarDevoterSatana
+  storage:
+    back:
+    - AltarDevoterSatana
+
+- type: loadout
+  id: AltarDevoterTechnology
+  storage:
+    back:
+    - AltarDevoterTechnology
+
 # Head
 - type: loadout
   id: ChaplainHead

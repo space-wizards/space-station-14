@@ -29,16 +29,14 @@
   - type: Clickable
 
 - type: entity
-  id: AltarNanotrasen
+  abstract: true
   parent: AltarBase
-  name: nanotrasen altar
+  id: BaseConvertibleAltar
   components:
-  - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
-  - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
+  - type: ContainerContainer
+    containers: 
+      devoter-slot: !type:Container
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -66,10 +64,50 @@
         acts: [ "Destruction" ]
   - type: StealTarget
     stealGroup: AltarNanotrasen
+  - type: Construction
+    graph: ConvertibleAltarGraph
+    node: undevoted
+    containers:
+    - devoter-slot
+    deconstructionTarget: undevoted
+  - type: ExitContainerOnMove #allow mobs placed in containers used as devoters to escape the altar
+    containerId: devoter-slot
+
+
+- type: entity
+  id: AltarUndevoted
+  parent: BaseConvertibleAltar
+  name: undevoted altar
+  description: An altar which isn't devoted to any god. Altar of atheism?
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: undevoted
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: undevoted
+
+- type: entity
+  id: AltarNanotrasen
+  parent: BaseConvertibleAltar
+  name: nanotrasen altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Construction
+    node: nanotrasen
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterNanotrasen
 
 - type: entity
   id: AltarChaos
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: chaos altar
   components:
   - type: Sprite
@@ -78,10 +116,16 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: chaos
+  - type: Construction
+    node: chaos
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterChaos
 
 - type: entity
   id: AltarDruid
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: druid altar
   components:
   - type: Sprite
@@ -90,10 +134,16 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: druid
+  - type: Construction
+    node: druid
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterDruid
 
 - type: entity
   id: AltarToolbox
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: toolbox altar
   components:
   - type: Sprite
@@ -102,10 +152,16 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: toolbox
+  - type: Construction
+    node: toolbox
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterToolbox
 
 - type: entity
   id: AltarSpaceChristian
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: space-Christian altar
   components:
   - type: Sprite
@@ -121,10 +177,16 @@
     radius: 1.5
     energy: 1
     color: "#fbceb1"
+  - type: Construction
+    node: spaceChristian
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterSpaceChristian
 
 - type: entity
   id: AltarSatana
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: satanic altar
   components:
   - type: Sprite
@@ -140,10 +202,16 @@
     radius: 1.5
     energy: 1
     color: "#ff6347"
+  - type: Construction
+    node: satana
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterSatana
 
 - type: entity
   id: AltarTechnology
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: technology altar
   components:
   - type: Sprite
@@ -159,6 +227,12 @@
     radius: 1.5
     energy: 1
     color: "#e0ffff"
+  - type: Construction
+    node: technology
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterTechnology
 
 - type: entity
   id: AltarConvertFestival
