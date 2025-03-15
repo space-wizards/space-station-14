@@ -16,7 +16,8 @@ public sealed class FoldableClothingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<FoldableClothingComponent, FoldAttemptEvent>(OnFoldAttempt);
-        SubscribeLocalEvent<FoldableClothingComponent, FoldedEvent>(OnFolded);
+        SubscribeLocalEvent<FoldableClothingComponent, FoldedEvent>(OnFolded,
+            after: [typeof(MaskSystem)]); // Mask system also modifies clothing / equipment RSI state prefixes.
     }
 
     private void OnFoldAttempt(Entity<FoldableClothingComponent> ent, ref FoldAttemptEvent args)
@@ -24,10 +25,19 @@ public sealed class FoldableClothingSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        // allow folding while equipped if allowed slots are the same:
-        // e.g. flip a hat backwards while on your head
-        if (_inventorySystem.TryGetContainingSlot(ent.Owner, out var slot) &&
-            !ent.Comp.FoldedSlots.Equals(ent.Comp.UnfoldedSlots))
+        if (!_inventorySystem.TryGetContainingSlot(ent.Owner, out var slot))
+            return;
+
+        // Cannot fold clothing equipped to a slot if the slot becomes disallowed
+        var newSlots = args.Comp.IsFolded ? ent.Comp.UnfoldedSlots : ent.Comp.FoldedSlots;
+        if (newSlots != null && (newSlots.Value & slot.SlotFlags) != slot.SlotFlags)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        // Setting hidden layers while equipped is not currently supported.
+        if (ent.Comp.FoldedHideLayers != null || ent.Comp.UnfoldedHideLayers != null)
             args.Cancelled = true;
     }
 
@@ -48,7 +58,14 @@ public sealed class FoldableClothingSystem : EntitySystem
             if (ent.Comp.FoldedHeldPrefix != null)
                 _itemSystem.SetHeldPrefix(ent.Owner, ent.Comp.FoldedHeldPrefix, false, itemComp);
 
-            if (TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
+            // This is janky and likely to lead to bugs.
+            // I.e., overriding this and resetting it again later will lead to bugs if someone tries to modify clothing
+            // in yaml, but doesn't realise theres actually two other fields on an unrelated component that they also need
+            // to modify.
+            // This should instead work via an event or something that gets raised to optionally modify the currently hidden layers.
+            // Or at the very least it should stash the old layers and restore them when unfolded.
+            // TODO CLOTHING fix this.
+            if (ent.Comp.FoldedHideLayers != null && TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
                 hideLayerComp.Slots = ent.Comp.FoldedHideLayers;
 
         }
@@ -63,7 +80,8 @@ public sealed class FoldableClothingSystem : EntitySystem
             if (ent.Comp.FoldedHeldPrefix != null)
                 _itemSystem.SetHeldPrefix(ent.Owner, null, false, itemComp);
 
-            if (TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
+            // TODO CLOTHING fix this.
+            if (ent.Comp.UnfoldedHideLayers != null && TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
                 hideLayerComp.Slots = ent.Comp.UnfoldedHideLayers;
 
         }

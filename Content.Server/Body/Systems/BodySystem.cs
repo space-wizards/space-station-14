@@ -65,15 +65,11 @@ public sealed class BodySystem : SharedBodySystem
         // TODO: Predict this probably.
         base.AddPart(bodyEnt, partEnt, slotId);
 
-        if (TryComp<HumanoidAppearanceComponent>(bodyEnt, out var humanoid))
+        var layer = partEnt.Comp.ToHumanoidLayers();
+        if (layer != null)
         {
-            var layer = partEnt.Comp.ToHumanoidLayers();
-            if (layer != null)
-            {
-                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(
-                    bodyEnt, layers, visible: true, permanent: true, humanoid);
-            }
+            var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+            _humanoidSystem.SetLayersVisibility(bodyEnt.Owner, layers, visible: true);
         }
     }
 
@@ -93,8 +89,7 @@ public sealed class BodySystem : SharedBodySystem
             return;
 
         var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-        _humanoidSystem.SetLayersVisibility(
-            bodyEnt, layers, visible: false, permanent: true, humanoid);
+        _humanoidSystem.SetLayersVisibility((bodyEnt, humanoid), layers, visible: false);
     }
 
     public override HashSet<EntityUid> GibBody(
