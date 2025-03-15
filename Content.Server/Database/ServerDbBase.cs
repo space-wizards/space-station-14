@@ -1738,7 +1738,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         # region IPIntel
 
-        public async Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score)
+        public async Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score, string? countrycode)
         {
             while (true)
             {
@@ -1757,6 +1757,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                             Time = time,
                             Address = ip,
                             Score = score,
+                            CountryCode = countrycode,
                         };
                         db.DbContext.IPIntelCache.Add(newCache);
                     }
