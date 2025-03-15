@@ -75,6 +75,10 @@
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
   - type: ShowJobIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
 
 - type: entity
   id: AiHeldIntellicard
