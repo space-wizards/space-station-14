@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
@@ -65,6 +66,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         SubscribeLocalEvent<AntagSelectionComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
 
+        SubscribeLocalEvent<NoJobsAvailableSpawningEvent>(OnJobNotAssigned);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawning);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobsAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
@@ -133,6 +135,28 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             ChooseAntags((uid, comp), args.Players);
             AssignPreSelectedSessions((uid, comp));
+        }
+    }
+
+    private void OnJobNotAssigned(NoJobsAvailableSpawningEvent args)
+    {
+        // If someone fails to spawn in due to there being no jobs, they should be removed from any preselected antags.
+        // We only care about delayed rules, since if they're active the player should have already been removed via MakeAntag.
+        var query = QueryDelayedRules();
+        while (query.MoveNext(out var uid, out _, out var comp, out _))
+        {
+            if (comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
+                continue;
+
+            if (!comp.RemoveUponFailedSpawn)
+                continue;
+
+            foreach (var def in comp.Definitions)
+            {
+                if (!comp.PreSelectedSessions.TryGetValue(def, out var session))
+                    break;
+                session.Remove(args.Player);
+            }
         }
     }
 
@@ -384,7 +408,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (antagEnt is not { } player)
         {
             Log.Error($"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
-            if (session != null)
+            if (session != null && ent.Comp.RemoveUponFailedSpawn)
             {
                 ent.Comp.AssignedSessions.Remove(session);
                 ent.Comp.PreSelectedSessions[def].Remove(session);

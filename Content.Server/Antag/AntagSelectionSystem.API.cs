@@ -168,8 +168,8 @@ public sealed partial class AntagSelectionSystem
         if (session == null)
             return true;
 
-        if (def.PrefRoles.Count == 0)
-            return false;
+        if (def.PrefRoles.Count == 0) // If no preferred role is given for the definition... everyone is eligible!
+            return true;
 
         var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
         return pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p));
