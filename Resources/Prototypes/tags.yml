@@ -1330,6 +1330,9 @@
 - type: Tag
   id: VoiceTrigger
 
+- type: Tag # Eating fix tag
+  id: VoxFood
+
 - type: Tag
   id: Wall
 
