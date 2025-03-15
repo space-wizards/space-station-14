@@ -1,0 +1,25 @@
+﻿#This signaller device will send a signal if it is dropped while activated
+
+- type: entity
+  parent: RemoteSignaller
+  id: DeadMansSignaler
+  name: dead man's signaler
+  description: A device that if armed will send signals to objects within 50 meters when dropped or put away.
+  components:
+  - type: DeadMansSignaller
+  - type: ItemToggle
+  - type: Sprite
+    drawdepth: Items
+    sprite: _DV/Objects/Devices/deadmanssignaller.rsi
+    layers:
+    - state: inactive
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: active}
+          False: {state: inactive}
+  - type: WirelessNetworkConnection
+    range: 50

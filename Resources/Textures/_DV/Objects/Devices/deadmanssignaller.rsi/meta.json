@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "signaller state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/2c980a1f423f26e990a578bae057d1eca19675ec. inhands & advanced made by Flaregy for Space Station 14. Dead Man's Signaller is modified from signaller",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "active"
+        },
+        {
+            "name": "inactive"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

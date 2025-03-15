@@ -1,0 +1,74 @@
+﻿- type: entity
+  parent: [ FlippoLighter, Tier2Contraband ] # imp - its not tier 1 because its also a fucking gun lol
+  id: SyndicateFlippo
+  name: Blood-red flippo
+  description: "A 'Valid' choice in lighters. Capable of superheating welding fuel into incendiary shots when lit. Contains no copper."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/syndielighter.rsi # imp resprite
+    layers:
+    - state: icon
+      map: ["base"]
+    - state: top
+      map: ["top"]
+      visible: false
+    - state: open
+      map: ["open"]
+      visible: false
+    - state: fire
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: Item
+    sprite: _DV/Objects/Tools/syndielighter.rsi
+  - type: Welder #removed lighting and upkeep to make it easier to judge how many shots you have
+    # fuelConsumption: 0 # imp - free welder from this is crazy. im not doing that
+    # fuelLitCost: 0
+    tankSafe: false
+  - type: SolutionAmmoProvider
+    proto: BulletLighterIncendiary
+    fireCost: 3
+    solutionId: Welder
+  - type: ComponentToggler
+    components:
+    - type: Gun
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+      soundEmpty:
+        path: /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg # imp
+      showExamineText: false
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        flame:
+          True: { visible: true }
+          False: { visible: false }
+        open:
+          True: { visible: true }
+          False: { visible: false }
+        top:
+          True: { visible: true }
+          False: { visible: false }
+        base:
+          True: { visible: false }
+          False: { visible: true }
+  - type: ToggleableLightVisuals
+    spriteLayer: lighter_flame
+    inhandVisuals:
+      left:
+      - state: inhand-left-lit
+        shader: unshaded
+      right:
+      - state: inhand-right-lit
+        shader: unshaded
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 2 #much stronger than the other lighters
+    color: green
+  #- type: SolutionRegeneration # imp
+  #  solution: Welder
+  #  generated:
+  #    reagents:
+  #    - ReagentId: WeldingFuel
+  #      Quantity: 0.1

@@ -142,6 +142,8 @@
     - id: NewtonCradle
     - id: BoxEnvelope
     - id: BrbSign
+    - id: RubberStampHatePaperwork # DeltaV
+      prob: 0.05
 
 - type: entity
   id: CrateServiceFaxMachine

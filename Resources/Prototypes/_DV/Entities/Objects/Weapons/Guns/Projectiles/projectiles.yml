@@ -1,0 +1,15 @@
+﻿- type: entity
+  parent: BulletPistolIncendiary
+  id: BulletLighterIncendiary
+  name: welding fuel bullet
+  description: a superheated jet of welding fuel, coming right at you.
+  components:
+  - type: PointLight
+    enabled: true
+    color: green
+    radius: 2.0
+    energy: 7.0
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5
