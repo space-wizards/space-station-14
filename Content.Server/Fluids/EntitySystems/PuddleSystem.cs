@@ -378,7 +378,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
-private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
+    private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
     {
         if (!TryComp<StepTriggerComponent>(entity, out var comp))
             return;
@@ -400,7 +400,7 @@ private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
         // Stores a cumulative weighted amount of stun times from slippery reagents
         var stunTimer = FixedPoint2.Zero;
 
-        //Check if the puddle is big enough to slip in to avoid doing unnecessary logic
+        // Check if the puddle is big enough to slip in to avoid doing unnecessary logic
         if (solution.Volume <= smallPuddleThreshold)
         {
             _stepTrigger.SetActive(entity, false, comp);
