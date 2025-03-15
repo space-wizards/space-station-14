@@ -70,6 +70,8 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Decoys/operative_decoy.rsi
+  - type: Item
+    sprite: Objects/Tools/Decoys/operative_decoy.rsi
     layers:
     - state: oballoon
       map: ["unfoldedLayer"]
@@ -85,6 +87,8 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Decoys/agent_decoy.rsi
+  - type: Item
+    sprite: Objects/Tools/Decoys/agent_decoy.rsi
     layers:
     - state: aballoon
       map: ["unfoldedLayer"]
@@ -99,6 +103,8 @@
   description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
   components:
   - type: Sprite
+    sprite: Objects/Tools/Decoys/elite_decoy.rsi
+  - type: Item
     sprite: Objects/Tools/Decoys/elite_decoy.rsi
     layers:
     - state: eballoon
@@ -117,6 +123,8 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
+  - type: Item
+    sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
     layers:
     - state: jballoon
       map: ["unfoldedLayer"]
@@ -131,6 +139,8 @@
   description: Upon closer inspection, this Syndicate commander is actually a balloon.
   components:
   - type: Sprite
+    sprite: Objects/Tools/Decoys/commander_decoy.rsi
+  - type: Item
     sprite: Objects/Tools/Decoys/commander_decoy.rsi
     layers:
     - state: cballoon
