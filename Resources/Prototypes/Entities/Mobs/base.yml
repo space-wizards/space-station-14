@@ -69,6 +69,18 @@
       - !type:GibBehavior { }
     - trigger:
         !type:DamageTypeTrigger
+        damageType: Caustic
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: false
+        spawn:
+          Acidifier:
+            min: 1
+            max: 1
+      - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
         damageType: Heat
         damage: 1500
       behaviors:
