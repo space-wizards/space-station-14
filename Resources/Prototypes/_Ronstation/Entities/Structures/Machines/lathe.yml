@@ -54,7 +54,7 @@
   name: engineering paper printer
   components:
   - type: Sprite
-    color: "#d1FFd1"
+    color: "#FFFFd1"
   #- type: Machine
   #  board: PaperPrinterSecurityMachineCircuitboard
   - type: Lathe
