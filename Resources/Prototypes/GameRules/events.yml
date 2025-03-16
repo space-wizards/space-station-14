@@ -258,7 +258,7 @@
       pickPlayer: false
       startingGear: ParadoxCloneGear
       roleLoadout:
-      - RoleSurvivalStandard # give vox something to breath in case they don't get a copy
+      - RoleSurvivalVoxTank # give vox something to breath in case they don't get a copy
       briefing:
         text: paradox-clone-role-greeting
         color: lightblue

@@ -57,6 +57,7 @@
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
+    - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
     - VirtualItem
 
 - type: cloningSettings
