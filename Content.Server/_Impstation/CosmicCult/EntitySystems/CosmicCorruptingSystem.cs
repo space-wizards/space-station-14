@@ -18,6 +18,48 @@ public sealed class CosmicCorruptingSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _rand = default!;
+
+    private readonly HashSet<Vector2i> _neighbourPositions =
+    [
+        new Vector2i(-1, 1),
+        new Vector2i(0, 1),
+        new Vector2i(1, 1),
+        new Vector2i(-1, 0),
+        new Vector2i(1, 0),
+        new Vector2i(-1, -1),
+        new Vector2i(0, -1),
+        new Vector2i(1, -1),
+    ];
+
+
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<CosmicCorruptingComponent, MapInitEvent>(OnMapInit);
+    }
+
+    //when the entity spawns, convert the tile under it & add all neighbouring tiles to the corruptable list
+    private void OnMapInit(Entity<CosmicCorruptingComponent> ent, ref MapInitEvent args)
+    {
+        var xform = Transform(ent);
+        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
+            return;
+
+        var grid = (gridUid, mapGrid);
+        var tile = _map.GetTileRef(grid, xform.Coordinates);
+        var convertTile = (ContentTileDefinition)_tileDefinition[ent.Comp.ConversionTile];
+        _tile.ReplaceTile(tile, convertTile);
+
+        //add every neighbouring tile to the corruptable list
+        foreach (var neighbourPos in _neighbourPositions)
+        {
+            var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
+            if (neighbourRef.Tile.TypeId == convertTile.TileId)
+                continue; //ignore already converted tiles
+
+            ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -49,9 +91,41 @@ public sealed class CosmicCorruptingSystem : EntitySystem
             return;
 
         var radius = uid.Comp.CorruptionRadius;
-        var tileEnumerator = _map.GetLocalTilesEnumerator(gridUid, mapGrid, new Box2(tgtPos.Coordinates.Position + new Vector2(-radius, -radius), tgtPos.Coordinates.Position + new Vector2(radius, radius)));
-        var entityHash = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, radius);
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
+
+        //go over every corruptible tile
+        foreach (var pos in new HashSet<Vector2i>(uid.Comp.CorruptableTiles)) //we love avoiding ConcurrentModificationExceptions
+        {
+            var tileRef = _map.GetTileRef((gridUid, mapGrid), pos);
+            if (tileRef.Tile.TypeId == convertTile.TileId) //if it's already corrupted, remove it from the list and continue
+            {
+                uid.Comp.CorruptableTiles.Remove(pos);
+                continue;
+            }
+
+            if (_rand.Prob(uid.Comp.CorruptionChance)) //if it rolls good
+            {
+                //replace & variantise the tile
+                _tile.ReplaceTile(tileRef, convertTile);
+                _tile.PickVariant(convertTile);
+                if (uid.Comp.UseVFX)
+                    Spawn(uid.Comp.TileConvertVFX, _turfs.GetTileCenter(tileRef));
+
+                //then add its new neighbours as targets
+                foreach (var neighbourPos in _neighbourPositions)
+                {
+                    var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tileRef.GridIndices + neighbourPos);
+                    if (neighbourRef.Tile.TypeId == convertTile.TileId)
+                        continue;
+
+                    uid.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
+                }
+
+                uid.Comp.CorruptableTiles.Remove(pos);
+            }
+        }
+
+        var entityHash = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, radius);
         foreach (var entity in entityHash)
         {
             if (TryComp<TagComponent>(entity, out var tag))
@@ -64,19 +138,6 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                         Spawn(uid.Comp.TileConvertVFX, Transform(entity).Coordinates);
                     QueueDel(entity);
                 }
-            }
-        }
-        while (tileEnumerator.MoveNext(out var tile))
-        {
-            var tilePos = _turfs.GetTileCenter(tile);
-            if (tile.Tile.TypeId == convertTile.TileId)
-                continue;
-            if (tile.GetContentTileDefinition().Name != convertTile.Name && _rand.Prob(uid.Comp.CorruptionChance))
-            {
-                _tile.ReplaceTile(tile, convertTile);
-                _tile.PickVariant(convertTile);
-                if (uid.Comp.UseVFX)
-                    Spawn(uid.Comp.TileConvertVFX, tilePos);
             }
         }
     }

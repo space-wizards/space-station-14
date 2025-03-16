@@ -14,6 +14,12 @@ public sealed partial class CosmicCorruptingComponent : Component
     [AutoPausedField] public TimeSpan CorruptionTimer = default!;
 
     /// <summary>
+    /// the list of tiles that can be corrupted by this corruptor.
+    /// </summary>
+    [DataField]
+    public HashSet<Vector2i> CorruptableTiles = [];
+
+    /// <summary>
     /// The starting radius of the effect.
     /// </summary>
     [DataField] public float CorruptionRadius = 2;
