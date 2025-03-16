@@ -87,8 +87,10 @@ public abstract class SharedFlatpackSystem : EntitySystem
         // TODO FLATPACK
         // Make this logic smarter. This should eventually allow for shit like building microwaves on tables and such.
         // Also: make it ignore ghosts
+        // Starlight-start
         if (_entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static)
             .Any(entity => entity != uid && (!_tag.HasTag(entity, "Table") || !ent.Comp.AllowUnpackOnTables)))
+        // Starlight-end
         {
             // this popup is on the server because the predicts on the intersection is crazy
             if (_net.IsServer)
