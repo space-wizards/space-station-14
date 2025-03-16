@@ -141,6 +141,7 @@ namespace Content.IntegrationTests.Tests
         ///     all components on every entity.
         /// </summary>
         [Test]
+        [Ignore("Broken due to engine issue relating to RemCompDeferred")]
         public async Task SpawnAndDirtyAllEntities()
         {
             // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
@@ -226,6 +227,7 @@ namespace Content.IntegrationTests.Tests
         /// crude test to try catch issues like this, and possibly should just be disabled.
         /// </remarks>
         [Test]
+        [Ignore("Broken due to engine issue relating to RemCompDeferred")]
         public async Task SpawnAndDeleteEntityCountTest()
         {
             var settings = new PoolSettings { Connected = true, Dirty = true };
