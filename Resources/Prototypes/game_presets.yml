@@ -261,7 +261,7 @@
   showInVote: false
   rules:
     - OopsAllThieves
-    - TraitorSubGamemodesRule
+    - SubGamemodesRuleTraitor
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler

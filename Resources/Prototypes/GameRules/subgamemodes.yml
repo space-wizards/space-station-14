@@ -64,3 +64,24 @@
         - NamesWizardLast
       mindRoles:
       - MindRoleWizard
+
+- type: entity
+  parent: BaseTraitorRule
+  id: TraitorSubgamemode # Used in TraitorSubGamemodesRule, we want some traitors to spice things up and keep proper roundflow.
+  components:
+  - type: GameRule
+    minPlayers: 5
+    delay:
+      min: 240
+      max: 420
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 3
+      playerRatio: 10
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
