@@ -7,6 +7,7 @@ using Content.Shared.Wieldable;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using System.Numerics;
+using Content.Shared.RepulseAttract.Events;
 using Content.Shared.Weapons.Melee;
 
 namespace Content.Shared.RepulseAttract;
@@ -28,13 +29,24 @@ public sealed class RepulseAttractSystem : EntitySystem
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelayOnMeleeHitSystem)], after: [typeof(SharedWieldableSystem)]);
+        SubscribeLocalEvent<RepulseAttractComponent, RepulseAttractActionEvent>(OnRepulseAttractAction);
     }
+
     private void OnMeleeAttempt(Entity<RepulseAttractComponent> ent, ref MeleeHitEvent args)
     {
         if (_delay.IsDelayed(ent.Owner))
             return;
 
         TryRepulseAttract(ent, args.User);
+    }
+
+    private void OnRepulseAttractAction(Entity<RepulseAttractComponent> ent, ref RepulseAttractActionEvent args)
+    {
+        if (args.Handled)
+            return;
+        
+        var position = _xForm.GetMapCoordinates(args.Performer);
+        args.Handled = TryRepulseAttract(position, args.Performer, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionMask);
     }
 
     public bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid user)
