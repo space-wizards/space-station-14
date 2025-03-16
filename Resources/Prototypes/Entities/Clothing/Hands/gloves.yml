@@ -10,9 +10,6 @@
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
-    # April Fools - re-add boxing bell sfx
-  - type: Boxing
-    sound: /Audio/Weapons/boxingbell.ogg
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
