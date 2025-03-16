@@ -15,7 +15,7 @@ public sealed partial class SanitizeRadioPrefixChatModifier : ChatModifier
         {
             if (messageNode.Name == null && messageNode.Value.TryGetString(out var textNodeValue))
             {
-                message.Replace(messageNode, new MarkupNode(SanitizeRadioPrefix(textNodeValue)));
+                message.ReplaceTextNode(messageNode, new MarkupNode(SanitizeRadioPrefix(textNodeValue)));
                 break;
             }
         }

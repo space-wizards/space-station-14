@@ -10,7 +10,8 @@ public sealed class GermanAccent : IAccent
     public string Name { get; } = "German";
 
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    private SharedReplacementAccentSystem _replacement = default!;
 
     private static readonly Regex RegexTh = new(@"(?<=\s|^)th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexThe = new(@"(?<=\s|^)the(?=\s|$)", RegexOptions.IgnoreCase);
@@ -18,6 +19,8 @@ public sealed class GermanAccent : IAccent
     public string Accentuate(string message, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
+        _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
+
         var msg = message;
 
         // rarely, "the" should become "das" instead of "ze"

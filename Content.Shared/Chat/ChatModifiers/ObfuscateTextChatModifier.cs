@@ -32,7 +32,7 @@ public sealed partial class ObfuscateTextChatModifier : ChatModifier
             if (node.Name == null && node.Value.TryGetString(out var text))
             {
                 var obfuscated = ObfuscateMessageReadability(text, ObfuscationChance);
-                message.Replace(node, new MarkupNode(obfuscated));
+                message.ReplaceTextNode(node, new MarkupNode(obfuscated));
             }
         }
 

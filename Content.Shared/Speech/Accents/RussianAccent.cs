@@ -7,13 +7,15 @@ public sealed class RussianAccent : IAccent
 {
     public string Name { get; } = "Russian";
 
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    private SharedReplacementAccentSystem _replacement = default!;
 
     public string Accentuate(string message, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
-        var replacements = _entMan.System<SharedReplacementAccentSystem>();
-        var accentedMessage = new StringBuilder(replacements.ApplyReplacements(message, "russian"));
+        _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
+
+        var accentedMessage = new StringBuilder(_replacement.ApplyReplacements(message, "russian"));
 
         for (var i = 0; i < accentedMessage.Length; i++)
         {

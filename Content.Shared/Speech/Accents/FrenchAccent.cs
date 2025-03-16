@@ -7,7 +7,8 @@ public sealed class FrenchAccent : IAccent
 {
     public string Name { get; } = "French";
 
-    [Dependency] private readonly SharedReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    private SharedReplacementAccentSystem _replacement = default!;
 
     private static readonly Regex RegexTh = new(@"th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexStartH = new(@"(?<!\w)h", RegexOptions.IgnoreCase);
@@ -16,6 +17,8 @@ public sealed class FrenchAccent : IAccent
     public string Accentuate(string message, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
+        _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
+
         var msg = message;
 
         msg = _replacement.ApplyReplacements(msg, "french");
