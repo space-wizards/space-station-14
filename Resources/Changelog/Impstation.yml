@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: A few items can now be used as melee weapons.
-    type: Add
-  - message: Pacifists can now throw most dangerous items, but still cannot cause
-      harm with them.
-    type: Add
-  - message: 'Ported the Throwing Update from Einstein Engines, which includes:'
-    type: Add
-  - message: Many items can now be thrown to deal damage.
-    type: Add
-  - message: Examining an item will show a lot of information about its throwing potential.
-    type: Add
-  - message: Items that deal throwing damage now cost stamina to throw.
-    type: Tweak
-  - message: The default time to remove an embedded item has been increased from 3
-      seconds to 5 seconds.
-    type: Tweak
-  - message: The time to pry up a floor tile has been reduced from 1 second to 0.5
-      seconds. Throwing tiles deals more damage.
-    type: Tweak
-  id: 826
-  time: '2024-12-30T22:46:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1157
 - author: ruddygreat
   changes:
   - message: Invisibility is now fully invisible! an outline can be seen by the invisible
@@ -4114,3 +4090,12 @@
   id: 1325
   time: '2025-03-16T01:35:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1969
+- author: kipdotnet
+  changes:
+  - message: banana has a new atmos area!
+    type: Tweak
+  - message: The handheld quantum camera should now have effectively unlimited range.
+    type: Tweak
+  id: 1326
+  time: '2025-03-16T03:29:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1979
