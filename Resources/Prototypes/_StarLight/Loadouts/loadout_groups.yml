@@ -36,6 +36,13 @@
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeJumpskirt
   - NanoTrasenRepresentativeJumpsuitFormal
+
+- type: loadoutGroup
+  id: NanoTrasenRepresentativeEyewear
+  name: loadout-group-nanotrasenrepresentative-eyewear
+  loadouts:
+  - NanoTrasenRepresentativeGlasses
+  - NanoTrasenRepresentativeHud
   
 - type: loadoutGroup
   id: BlueShieldBackpack

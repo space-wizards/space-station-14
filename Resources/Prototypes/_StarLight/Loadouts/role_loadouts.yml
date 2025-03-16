@@ -29,6 +29,7 @@
   id: JobNanoTrasenRepresentative
   groups:
   - NanoTrasenRepresentativeJumpsuit
+  - NanoTrasenRepresentativeEyewear
   - CommonBackpack
   - Trinkets
   - Survival
