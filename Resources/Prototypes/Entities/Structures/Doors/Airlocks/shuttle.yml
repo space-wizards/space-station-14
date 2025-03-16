@@ -46,8 +46,6 @@
   - type: Tag
     tags:
     - ForceNoFixRotations
-  - type: Paintable
-    group: Shuttle
   - type: Construction
     graph: AirlockShuttle
     node: airlock
@@ -83,8 +81,6 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Occluder
     enabled: false
-  - type: Paintable
-    group: ShuttleGlass
   - type: Door
     occludes: false
 

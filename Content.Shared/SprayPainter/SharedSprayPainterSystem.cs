@@ -18,7 +18,7 @@ namespace Content.Shared.SprayPainter;
 public abstract class SharedSprayPainterSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
@@ -63,16 +63,27 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Args.Target is not {} target)
+        if (args.Args.Target is not { } target)
             return;
 
-        if (!TryComp<PaintableComponent>(target, out var paintable))
+        if (!TryComp<PaintableComponent>(target, out var paintableComponent))
             return;
 
-        Dirty(target, paintable);
-
-        Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
         Appearance.SetData(target, args.Visuals, args.Prototype);
+        Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
+
+        if (args.Visuals is PaintableVisuals.Canister)
+        {
+            RaiseLocalEvent(ent, new SprayPainterCanisterDoAfterEvent
+            {
+                Category = args.Category,
+                Prototype = args.Prototype,
+                DoAfter = args.DoAfter,
+            });
+        }
+
+        Dirty(target, paintableComponent);
+
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
 
         args.Handled = true;
@@ -121,6 +132,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         var target = Targets[group.Category];
         var selected = painter.Indexes.GetValueOrDefault(group.Category, 0);
         var style = target.Styles[selected];
+
         if (!group.Styles.TryGetValue(style, out var proto))
         {
             var msg = Loc.GetString("spray-painter-style-not-available");

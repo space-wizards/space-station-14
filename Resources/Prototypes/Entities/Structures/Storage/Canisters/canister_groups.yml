@@ -4,6 +4,7 @@
 - type: paintableGroup
   category: Canisters
   iconPriority: 100
+  visuals: Canister
   id: Canisters
   styles:
     storage:               StorageCanister
@@ -24,6 +25,7 @@
 - type: paintableGroup
   category: Canisters
   iconPriority: 90
+  visuals: Canister
   id: CanistersBroken
   styles:
     storage:               StorageCanisterBroken
@@ -31,9 +33,9 @@
     oxygen:                OxygenCanisterBroken
     nitrogen:              NitrogenCanisterBroken
     carbon-dioxide:        CarbonDioxideCanisterBroken
-    liquid-oxygen:         LiquidOxygenCanisterBroken
-    liquid-nitrogen:       LiquidNitrogenCanisterBroken
-    liquid-carbon-dioxide: LiquidCarbonDioxideCanisterBroken
+    liquid-oxygen:         OxygenCanisterBroken
+    liquid-nitrogen:       NitrogenCanisterBroken
+    liquid-carbon-dioxide: CarbonDioxideCanisterBroken
     plasma:                PlasmaCanisterBroken
     tritium:               TritiumCanisterBroken
     water-vapor:           WaterVaporCanisterBroken

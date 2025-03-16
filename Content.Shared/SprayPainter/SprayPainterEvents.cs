@@ -85,3 +85,16 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+
+[Serializable, NetSerializable]
+public sealed partial class SprayPainterCanisterDoAfterEvent : DoAfterEvent
+{
+
+    [DataField]
+    public string Prototype;
+
+    [DataField]
+    public string Category;
+
+    public override DoAfterEvent Clone() => this;
+}

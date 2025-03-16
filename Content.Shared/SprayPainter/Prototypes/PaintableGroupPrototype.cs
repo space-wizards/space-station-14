@@ -33,4 +33,5 @@ public enum PaintableVisuals
 {
     BaseRSI,
     LockerRSI,
+    Canister,
 }
