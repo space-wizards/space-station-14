@@ -3,14 +3,14 @@
   name: job-name-nomad
   description: job-description-nomad
   playTimeTracker: JobNomad
-  startingGear: PassengerGear
+  startingGear: NomadGear
   icon: "JobIconPassenger"
   supervisors: job-supervisors-everyone
   access:
     - Maintenance
 
 - type: startingGear
-  id: PassengerGear
+  id: NomadGear
   equipment:
     id: PassengerPDA
     ears: ClothingHeadsetGrey
