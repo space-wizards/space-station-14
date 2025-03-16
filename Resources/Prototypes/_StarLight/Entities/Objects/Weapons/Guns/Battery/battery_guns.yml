@@ -44,7 +44,7 @@
       magState: disable
       heldPrefix: disable4
     - proto: TaserBolt
-      fireCost: 125
+      fireCost: 166
       visualState: stun
       magState: stun
       heldPrefix: stun4
@@ -186,7 +186,7 @@
       fireCost: 50
       magState: disable
     - proto: TaserBolt
-      fireCost: 125
+      fireCost: 166
       magState: stun
       conditions:
       - !type:AlertLevelCondition
@@ -197,7 +197,7 @@
         - red
         - gamma
     - proto: LaserBolt
-      fireCost: 50
+      fireCost: 66.6
       magState: lethal
       conditions:
       - !type:AlertLevelCondition
