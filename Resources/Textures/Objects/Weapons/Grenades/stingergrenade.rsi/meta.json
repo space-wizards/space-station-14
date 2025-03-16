@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/b13d244d761a07e200a9a41730bd446e776020d5",
+  "copyright": "Derived from Arendian (https://github.com/space-wizards/space-station-14/commit/3e766402b9d6c17f41f9e7e814b70eef83a95568), created by K-Dynamic",
   "size": {
     "x": 32,
     "y": 32
