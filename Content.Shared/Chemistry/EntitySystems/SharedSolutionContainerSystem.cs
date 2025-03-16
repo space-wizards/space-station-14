@@ -116,7 +116,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity)
     {
-        if (entity is not null)
+        if (entity is not null && (MetaData(entity.Value.Owner).Flags & MetaDataFlags.Detached) == 0)
         {
             DebugTools.Assert(TryGetSolution(container, name, out var debugEnt)
                               && debugEnt.Value.Owner == entity.Value.Owner);
