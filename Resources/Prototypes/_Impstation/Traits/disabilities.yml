@@ -36,3 +36,11 @@
   components:
     - type: Unborgable
   organ: Brain
+
+- type: trait
+  id: Illiterate
+  name: trait-illiterate-name
+  description: trait-illiterate-desc
+  category: Disabilities
+  components:
+    - type: Illiterate

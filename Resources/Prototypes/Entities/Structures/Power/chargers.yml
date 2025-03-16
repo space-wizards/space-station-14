@@ -245,6 +245,7 @@
     whitelist:
       components:
       - BorgChassis
+      - Drone
   - type: Construction
     containers:
     - machine_parts
