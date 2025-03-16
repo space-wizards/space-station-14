@@ -162,7 +162,7 @@
   description: be gender, do fluid
   components:
   - type: Sprite
-    state: gender
+    state: fluid
   - type: Clothing
     equippedPrefix: fluid
 
