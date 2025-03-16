@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Added three bottle boxes to the nanomed plus inventory for doctors to
-      carry small amounts of chemicals on their person
-    type: Add
-  id: 7563
-  time: '2024-10-30T07:41:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33018
-- author: Blackern5000
-  changes:
-  - message: Added the interdyne defibrillator, a black-and-red defibrillator that
-      can be used as a melee weapon.
-    type: Add
-  - message: The syndicate medical bundle now contains an interdyne defibrillator,
-      a collection of various instant injectors, tourniquets, and several combat kits.
-      The price has been raised to 24 tc.
-    type: Tweak
-  id: 7564
-  time: '2024-10-30T09:15:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32720
-- author: Boaz1111
-  changes:
-  - message: Pill bottles can now only store pills.
-    type: Tweak
-  id: 7565
-  time: '2024-10-31T10:56:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33074
-- author: Jarmer123
-  changes:
-  - message: You can now find a spare bible in the PietyVend
-    type: Add
-  id: 7566
-  time: '2024-10-31T13:26:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32363
-- author: justinbrick
-  changes:
-  - message: Added a pop-up notification when extra items are dropped while unequipping
-      something.
-    type: Tweak
-  id: 7567
-  time: '2024-10-31T14:12:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33078
-- author: BramvanZijp
-  changes:
-  - message: The maximum amount of programs that can be installed on a PDA has been
-      increased from 5 to 8
-    type: Tweak
-  - message: The Detective and Head of Security now get the logprobe program pre-installed
-      on their PDA.
-    type: Tweak
-  id: 7568
-  time: '2024-10-31T14:53:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32601
 - author: Psychpsyo
   changes:
   - message: Carp plushies can now be placed in mop buckets, along with other rehydratable
@@ -3897,3 +3844,50 @@
   id: 8062
   time: '2025-03-14T06:49:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35306
+- author: Quantum-cross
+  changes:
+  - message: Corrupt borg speech if they are damaged or low power
+    type: Add
+  id: 8063
+  time: '2025-03-14T15:31:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35318
+- author: Centronias
+  changes:
+  - message: Moths can once again eat lizard plushies
+    type: Fix
+  - message: Lizard plushes can once again be inserted as payloads into modular grenades
+      and mines
+    type: Fix
+  id: 8064
+  time: '2025-03-14T20:22:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35835
+- author: K-Dynamic
+  changes:
+  - message: Electrocution stun duration decreased overall; LV or hacking from 8 seconds
+      to 5, MV from 10 seconds to 7.5, HV from 12 seconds to 10.
+    type: Tweak
+  id: 8065
+  time: '2025-03-15T15:57:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34578
+- author: sowelipililimute
+  changes:
+  - message: Added NanoTask
+    type: Add
+  id: 8066
+  time: '2025-03-15T16:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34095
+- author: K-Dynamic
+  changes:
+  - message: Renamed "shell box (X)" to "ammunition box (.50 X)" to match existing
+      naming scheme, and are thus easier to find in certain vendors and fabricators.
+    type: Tweak
+  id: 8067
+  time: '2025-03-15T16:43:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35326
+- author: VerinSenpai
+  changes:
+  - message: Holopads now collide with walls instead of phasing through them.
+    type: Fix
+  id: 8068
+  time: '2025-03-16T00:41:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34300
