@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: neonannihilator
-  changes:
-  - message: You can now pick up and wear diona nymphs!
-    type: Add
-  id: 830
-  time: '2024-12-30T23:12:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1170
-- author: Kandiyaki
-  changes:
-  - message: the codex cicatrix now works as a focus when opened.
-    type: Fix
-  id: 831
-  time: '2024-12-30T23:25:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1164
 - author: kipdotnet
   changes:
   - message: Apid cryopod's hitbox has been fixed so they can be moved through 1 wide
@@ -4092,3 +4078,17 @@
   id: 1329
   time: '2025-03-16T03:34:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1980
+- author: SixValentine
+  changes:
+  - message: Luna is now the perfect map, details in PR
+    type: Fix
+  id: 1330
+  time: '2025-03-16T21:45:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1983
+- author: sha-seng, pinkbat5
+  changes:
+  - message: Three thaven tails (the eel one requires an overlay marking too!)
+    type: Add
+  id: 1331
+  time: '2025-03-16T21:46:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1982
