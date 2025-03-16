@@ -7,6 +7,7 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - CaptainEyewear
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -346,6 +347,7 @@
   - SecurityBelt
   - SecurityWeapon
   - HeadofSecurityOuterClothing
+  - SecurityEyewear
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -360,6 +362,7 @@
   - SecurityBackpack
   - SecurityBelt
   - WardenOuterClothing
+  - SecurityEyewear
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -372,6 +375,7 @@
   - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack
+  - SecurityEyewear
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
@@ -391,6 +395,7 @@
   - BrigmedicOuterClothing
   - BrigmedicBelt
   - BrigmedicGloves
+  - BrigmedicEyewear
   - SecurityShoes
   - SecurityWeapon
   - SurvivalSecurity
@@ -405,6 +410,7 @@
   - DetectiveNeck
   - DetectiveJumpsuit
   - SecurityBackpack
+  - SecurityEyewear
   - DetectiveOuterClothing
   - SecurityShoes
   - SurvivalSecurity
@@ -418,6 +424,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SecurityWeapon
+  - SecurityEyewear
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathToolSecurity

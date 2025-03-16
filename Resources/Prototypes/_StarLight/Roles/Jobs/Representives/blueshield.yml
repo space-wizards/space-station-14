@@ -45,7 +45,6 @@
   id: BlueShieldGear
   equipment:
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesBlueShield
     head: ClothingHeadHatBeretBlueShield
     outerClothing: ClothingOuterArmorBlueShield
     id: BlueShieldPDA

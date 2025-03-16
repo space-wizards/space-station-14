@@ -29,6 +29,7 @@
   id: JobNanoTrasenRepresentative
   groups:
   - NanoTrasenRepresentativeJumpsuit
+  - NanoTrasenRepresentativeEyewear
   - CommonBackpack
   - Trinkets
   - Survival
@@ -49,6 +50,7 @@
   groups:
   - BlueShieldJumpsuit
   - BlueShieldBackpack
+  - BlueShieldEyewear
   - Trinkets
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity

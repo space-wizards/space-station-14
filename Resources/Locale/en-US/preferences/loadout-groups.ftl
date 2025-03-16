@@ -24,6 +24,7 @@ loadout-group-captain-jumpsuit = Captain jumpsuit
 loadout-group-captain-neck = Captain neck
 loadout-group-captain-backpack = Captain backpack
 loadout-group-captain-outerclothing = Captain outer clothing
+loadout-group-captain-eyewear = Captain eyewear
 
 loadout-group-hop-head = Head of Personnel head
 loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
@@ -160,12 +161,14 @@ loadout-group-security-outerclothing = Security outer clothing
 loadout-group-security-shoes = Security shoes
 loadout-group-security-id = Security ID
 loadout-group-security-weapon = Security Weapon
+loadout-group-security-eyewear = Security eyewear
 
 loadout-group-brigmedic-head = Brigmedic head
 loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit
 loadout-group-brigmedic-backpack = Brigmedic backpack
 loadout-group-brigmedic-belt = Brigmedic belt
 loadout-group-brigmedic-outerclothing = Brigmedic outer clothing
+loadout-group-brigmedic-eyewear = Brigmedic eyewear
 
 loadout-group-detective-head = Detective head
 loadout-group-detective-neck = Detective neck
