@@ -31,6 +31,20 @@
   name: BlueShield officer's locker
   components:
     - type: Appearance
+    - type: Sprite
+      sprite: _Starlight/Structures/Storage/closet.rsi
+      noRot: true
+      layers:
+      - state: bssecure
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: bssecure_door
+        map: ["enum.StorageVisualLayers.Door"]
+      - state: locked
+        map: ["enum.LockVisualLayers.Lock"]
+        shader: unshaded
+      - state: welded
+        visible: false
+        map: ["enum.WeldableLayers.BaseWelded"]
     - type: EntityStorageVisuals
       stateBaseClosed: bssecure
       stateDoorOpen: bssecure_open
