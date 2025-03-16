@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "size":
+  {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original penguin sprite taken from ttps://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b, modified by carousel",
+  "states":
+  [
+    {
+      "name": "oswald",
+      "directions": 4
+    },
+    {
+      "name": "oswald_dead",
+      "directions": 1
+    }
+  ]
+}

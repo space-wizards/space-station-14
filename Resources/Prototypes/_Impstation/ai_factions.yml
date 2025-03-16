@@ -15,3 +15,8 @@
     - Revolutionary
     - Changeling
     - Heretic
+
+- type: npcFaction
+  id: Penguin
+  hostile:
+  - Dragon
