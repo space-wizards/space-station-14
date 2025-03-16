@@ -42,7 +42,7 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
         if (outputStartingPressure >= ent.Comp.TargetPressure)
         {
             _ambientSoundSystem.SetAmbience(ent, false);
-            return; // No need to ent.Comp gas if target has been reached.
+            return; // No need to pump gas if target has been reached.
         }
 
         if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
