@@ -132,8 +132,6 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Occluder
     enabled: false
-  - type: Paintable
-    group: ShuttleGlass
   - type: Door
     occludes: false
 

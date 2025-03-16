@@ -5,7 +5,6 @@
   category: Crates
   id: CrateSteel
   iconPriority: 100
-  state: icon
   styles:
     basic:       CrateGenericSteel
     electrical:  CrateElectrical
@@ -18,7 +17,6 @@
   category: Crates
   id: CratePlastic
   iconPriority: 90
-  state: icon
   styles:
     basic:       CratePlastic
     hydroponics: CrateHydroponics
@@ -29,7 +27,6 @@
   category: Crates
   id: CrateSteelSec
   iconPriority: 80
-  state: icon
   styles:
     basic:       CrateSecure
     secgear:     CrateSecgear
