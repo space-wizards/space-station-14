@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: suyo and dark
-  changes:
-  - message: new sound for goliath attacks to better match the damage type they do
-    type: Add
-  - message: added a toggleable magnetic pickup for the ore box and ore bag
-    type: Add
-  - message: ore boxes have been refitted to hold more ore, including ore bags and
-      artifact fragments. you can dump them out easier now too!
-    type: Tweak
-  - message: industrial ore waba-beepi efficiency increased from 1.5x to 2x
-    type: Tweak
-  id: 829
-  time: '2024-12-30T23:09:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1160
 - author: neonannihilator
   changes:
   - message: You can now pick up and wear diona nymphs!
@@ -4098,3 +4084,11 @@
   id: 1328
   time: '2025-03-16T03:31:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1975
+- author: mqole
+  changes:
+  - message: Your guidebook's description for holy water has been updated to be non-denominational
+      and anti-entropic.
+    type: Tweak
+  id: 1329
+  time: '2025-03-16T03:34:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1980
