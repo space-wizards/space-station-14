@@ -9,9 +9,9 @@
       amount: 2
 
 - type: entity
-  id: LockerSecurityDoubleFilled
+  id: LockerSecurityLargeFilled
   suffix: Filled
-  parent: LockerSecurityDouble
+  parent: LockerSecurityLarge
   components:
   - type: StorageFill
     contents:
