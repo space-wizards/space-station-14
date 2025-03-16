@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Popups;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Flora;
 
@@ -15,6 +16,7 @@ public sealed partial class TreeBranchesSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -78,7 +80,8 @@ public sealed partial class TreeBranchesSystem : EntitySystem
 
         component.CurrentBranches--;
         var spawnPos = Transform(uid).MapPosition;
-        Spawn("BranchItem", spawnPos);
+        var branch = Spawn("BranchItem", spawnPos);
+        _hands.TryPickupAnyHand(args.Args.User, branch);
         _popup.PopupEntity("You successfully collect a branch.", uid, args.Args.User);
         args.Handled = true;
     }
