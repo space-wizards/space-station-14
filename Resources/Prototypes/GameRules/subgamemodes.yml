@@ -67,7 +67,7 @@
 
 - type: entity
   parent: BaseTraitorRule
-  id: TraitorSubgamemode # Used in TraitorSubGamemodesRule, we want some traitors to spice things up and keep proper roundflow.
+  id: SubgamemodeTraitor # Used in TraitorSubGamemodesRule, we want some traitors to spice things up and keep proper roundflow.
   components:
   - type: GameRule
     minPlayers: 5
