@@ -4176,4 +4176,11 @@ Entries:
   id: 578
   time: '2025-03-16T10:18:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/399
+- author: Killer Tamashi
+  changes:
+  - message: Added Double Security Lockers
+    type: Add
+  id: 579
+  time: '2025-03-16T15:28:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/388
 
