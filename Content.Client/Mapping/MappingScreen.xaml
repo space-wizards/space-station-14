@@ -8,7 +8,7 @@
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
-    <controls:RecordedSplitContainer Name="ScreenContainer" HorizontalExpand="True"
+    <SplitContainer Name="ScreenContainer" HorizontalExpand="True"
                                      VerticalExpand="True" SplitWidth="0"
                                      StretchDirection="TopLeft">
         <BoxContainer Orientation="Vertical" VerticalExpand="True" Name="SpawnContainer" MinWidth="200" SetWidth="600">
@@ -82,5 +82,5 @@
                 </BoxContainer>
             </PanelContainer>
         </LayoutContainer>
-    </controls:RecordedSplitContainer>
+    </SplitContainer>
 </mapping:MappingScreen>

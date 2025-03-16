@@ -11,7 +11,7 @@
   Thieves are petty yet crafty [color=green]criminals[/color] who can't keep their hands to themselves. You were forcefully given a [bold]pacifism implant[/bold] after your last arrest, but you won't let that stop you from trying to add to your collection.
 
   ## Art of the Steal
-  Unlike other antagonists, [italic]staying out of trouble is almost a requirement for you[/italic] because of your implant.
+  Unlike other antagonists, [bold]staying out of trouble is almost a requirement for you[/bold] because of your implant.
   You can only run if [color=#cb0000]Security[/color] picks a fight with you, and because you work alone you don't have any friends to pull you out of danger.
 
   But against all odds, you'll sucessfully swipe what you want using determination, sleight of hand, a few tools and your [color=cyan]thieving gloves.[/color]
@@ -39,6 +39,9 @@
   Your [color=cyan]toolbox[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
   Approve your choices in a safe place, as the toolbox will dissolve and the gear will drop at your feet.
 
+  <Box>
+    <GuideEntityEmbed Entity="ToolboxThief"/>
+  </Box>
   <Box>
     <GuideEntityEmbed Entity="StorageImplanter" Caption="Anatomy"/>
     <GuideEntityEmbed Entity="C4" Caption="Breacher"/>

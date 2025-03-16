@@ -7,7 +7,7 @@
 
   You are an elite mercenary that [color=#66FF00]The Spider Clan[/color] has sent to wreak all kinds of havoc on the station. You are equipped to keep it silent-but-deadly.
 
-  Whether you decide to mercilessly pick off the station's crew one by one or stay out of trouble, your discipline has taught you that [italic]your objectives must be at least attempted[/italic]. For honor!
+  Whether you get bloody or stay out of trouble, your discipline has taught you that [italic]your objectives must be at least attempted[/italic]. For honor!
 
   ## Standard Equipment
   You begin implanted with a [color=cyan]death acidifier[/color], so if you are captured or KIA all your precious equipment is kept out of enemy hands.
@@ -19,7 +19,7 @@
     <GuideEntityEmbed Entity="PinpointerStation"/>
   </Box>
   
-  ## Ninja Suit & Boots
+  ## Your Suit
   
   <Box>
     <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Caption="your visor"/>
@@ -27,12 +27,12 @@
     <GuideEntityEmbed Entity="ClothingShoesSpaceNinja" Caption="your boots"/>
   </Box>
 
-  Your single most important item is [color=#66FF00]your suit[/color], without it none of your abilities would work.
+  Your single most important item is [color=cyan]your suit[/color], without it none of your abilities would work.
   Your suit requires power to function, which is supplied by its [bold]internal battery[/bold]. It can be replaced, and [italic]high capacity batteries[/italic] mean a [italic]highly effective ninja[/italic].
 
-  [bold]You can recharge your internal battery directly[/bold] by using [color=#66FF00]your gloves[/color]. You can see the current charge by examining the suit or checking the nifty battery alert on your screen.
+  [bold]You can recharge your internal battery directly[/bold] by using [color=cyan]your gloves[/color]. You can see the current charge by examining the suit or checking the nifty battery alert on your screen.
 
-  Your outfit also includes [color=#66FF00]special boots[/color] that keep you agile, upright and grounded without using energy. You've also got flash protection thanks to your [color=#66FF00]visor[/color].
+  Your outfit also includes [color=cyan]special boots[/color] that keep you agile, upright and grounded without using energy. You've also got flash protection thanks to your [color=cyan]visor[/color].
 
   ## Ninja Gloves
 
@@ -58,9 +58,9 @@
 
   [bold]You have sworn yourself to the sword and refuse to use firearms.[/bold] Luckily, you've got a pretty cool sword.
 
-  Your [color=#66FF00]energy katana[/color] hurts plenty and can be [bold]recalled at will[/bold] at the cost of suit power. The farther away it is from you, the more energy required to recall it.
+  Your [color=cyan]energy katana[/color] hurts plenty and can be [bold]recalled at will[/bold] at the cost of suit power. The farther away it is from you, the more energy required to recall it.
 
-  While in hand you may also [color=#66FF00]teleport[/color] to anywhere that you can see, [bold]including through windows[/bold]. The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
+  While in hand you may also [color=cyan]teleport[/color] to anywhere that you can see, [bold]including through windows[/bold]. The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
 
   ## Spider Clan Charge
   
@@ -68,9 +68,9 @@
     <GuideEntityEmbed Entity="SpiderCharge"/>
   </Box>
   
-  [color=#66FF00]A modified C-4 explosive[/color], which can be found in your pocket. Creates a large explosion but [bold]must be armed in your target area[/bold] as it is one of your [color=#66FF00]objectives[/color].
+  This is a [color=cyan]modified C-4 explosive[/color] which can be found in your pocket. Creates a large explosion but [bold]must be armed in your target area[/bold] as it is one of your objectives.
 
-  It can't be activated manually, so simply plant it on a wall or a particularly ugly piece of furniture. Can't be unstuck once planted.
+  It can't be activated manually, so simply plant it on a wall or some furniture that does not spark joy. Choose wisely, it can't be unstuck once planted.
 
   ## Objectives
 

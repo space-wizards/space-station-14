@@ -40,7 +40,6 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
 
     public override void SetChatSize(Vector2 size)
     {
-        ScreenContainer.DesiredSplitCenter = size.X;
         ScreenContainer.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
     }
 }

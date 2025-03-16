@@ -9,7 +9,7 @@ public sealed class RadiationSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    public List<RadiationRay>? Rays;
+    public List<DebugRadiationRay>? Rays;
     public Dictionary<NetEntity, Dictionary<Vector2i, float>>? ResistanceGrids;
 
     public override void Initialize()

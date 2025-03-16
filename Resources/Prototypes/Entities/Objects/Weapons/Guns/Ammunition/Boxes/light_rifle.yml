@@ -29,21 +29,17 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifleBig
   name: ammunition box (.30 rifle)
+  suffix: Big
   components:
   - type: BallisticAmmoProvider
     capacity: 200
     proto: CartridgeLightRifle
   - type: Sprite
     layers:
-    - state: base-b
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
+    - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: magb
-    steps: 4
-    zeroVisible: false
-  - type: Appearance
 
 - type: entity
   parent: BaseMagazineBoxLightRifle

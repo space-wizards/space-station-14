@@ -5,12 +5,22 @@
     <GuideEntityEmbed Entity="MobVox" Caption=""/>
   </Box>
 
-  [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players. [/color]
+  [color=#ffa500]Warning! This species is not recommended for new players due to their fatal allergy to oxygen![/color]
 
-  They breathe nitrogen, and [color=#ffa500] oxygen is very toxic to them.[/color]
-  They need to be on internals at all times to avoid being poisoned by the station's oxygen.
-  Eating or drinking will require you to remove your breath mask, although injecting liquid food is an option.
+  Vox breathe nitrogen, and [color=#ffa500] oxygen is toxic to them.[/color]
+  Unfortunately, space stations tend to be full of oxygen,
+  so Vox must use an internal nitrogen supply at almost all times to avoid fatal exposure.
 
-  Their unarmed claw attacks deal Slash damage instead of Blunt.
+  Vox always spawn wearing working nitrogen internals equipment.
+  A spare breathing mask and an emergency nitrogen canister is provided in their survival box.
+
+  Vox [color=#1e90ff]slowly recover from low levels of poison damage[/color] on their own,
+  so long as they are careful not to exceed 20 poison damage.
+  This allows them to endure breathing station air for up to thirty seconds at a time without lasting damage,
+  letting them quickly eat, drink, take oral medication, and so on.
+  A thirty second oxygen exposure takes them two minutes to recover from.
+  If their health does not seem to improve within a minute of oxygen exposure, they should seek medical attention.
+
+  Vox deal Slash damage with their unarmed attack.
 
 </Document>
