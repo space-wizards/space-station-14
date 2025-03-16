@@ -164,7 +164,7 @@ public sealed partial class SalvageSystem
                         if (mobStateQuery.HasComp(uid))
                             return true;
                     }
-                    while (uid != xform.GridUid);
+                    while (uid != xform.GridUid && uid != EntityUid.Invalid);
                     return false;
                 }
 
