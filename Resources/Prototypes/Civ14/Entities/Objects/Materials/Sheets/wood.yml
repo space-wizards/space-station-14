@@ -1,0 +1,18 @@
+- type: entity
+  name: Branch
+  parent: BaseItem
+  id: BranchItem
+  description: A broken plate. Useless.
+  suffix: Single
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-trash
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
