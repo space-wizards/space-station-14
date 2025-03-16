@@ -191,7 +191,7 @@
   components:
     # TODO ATMOS: Give unique sprite.
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: _Impstation/Structures/Piping/Atmospherics/pump.rsi #imp
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
