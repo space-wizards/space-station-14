@@ -1,8 +1,11 @@
+using Content.Server.DoAfter;
 using Content.Shared.Flora;
 using Content.Shared.Interaction;
+using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Popups;
 
 namespace Content.Server.Flora;
 
@@ -10,18 +13,19 @@ public sealed partial class TreeBranchesSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom Random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        // Listens for interactions with empty hands
         SubscribeLocalEvent<TreeBranchesComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<TreeBranchesComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TreeBranchesComponent, CollectBranchDoAfterEvent>(OnDoAfter);
     }
 
     private void OnMapInit(EntityUid uid, TreeBranchesComponent component, MapInitEvent args)
     {
-        // Randomizes the number of branches between 0 and the defined maximum (inclusive).
         component.CurrentBranches = Random.Next(0, component.MaxBranches);
     }
 
@@ -33,8 +37,6 @@ public sealed partial class TreeBranchesSystem : EntitySystem
         while (query.MoveNext(out var uid, out var component))
         {
             var currentTime = _gameTiming.CurTime;
-
-            // Checks if it is time for a new branch to grow
             if (currentTime >= component.LastGrowthTime + TimeSpan.FromSeconds(component.GrowthTime))
             {
                 if (component.CurrentBranches < component.MaxBranches)
@@ -48,26 +50,36 @@ public sealed partial class TreeBranchesSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, TreeBranchesComponent component, InteractHandEvent args)
     {
-        if (args.Handled)
-            return;
-
-        if (component.CurrentBranches <= 0)
+        if (args.Handled || component.CurrentBranches <= 0)
         {
-            // No branches left
+            _popup.PopupEntity("There are no branches left to collect.", uid, args.User);
             return;
         }
 
-        // Decreases the number of branches
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            component.CollectionTime,
+            new CollectBranchDoAfterEvent(),
+            uid)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true,
+            NeedHand = true,
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs);
+        args.Handled = true;
+    }
+
+    private void OnDoAfter(EntityUid uid, TreeBranchesComponent component, ref CollectBranchDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
         component.CurrentBranches--;
-
-        // Spawns the "BranchItem" based on probability
-        if (component.SpawnProbability >= 1f || Random.Prob(component.SpawnProbability))
-        {
-            var spawnPos = Transform(uid).MapPosition;
-            Spawn("BranchItem", spawnPos); // Creates the item at the tree's position
-        }
-
-        // Marks the event as handled
+        var spawnPos = Transform(uid).MapPosition;
+        Spawn("BranchItem", spawnPos);
+        _popup.PopupEntity("You successfully collect a branch.", uid, args.Args.User);
         args.Handled = true;
     }
 }

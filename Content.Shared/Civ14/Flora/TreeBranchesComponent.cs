@@ -35,4 +35,11 @@ public sealed partial class TreeBranchesComponent : Component
     /// </summary>
     [DataField("lastGrowthTime")]
     public TimeSpan LastGrowthTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time taken to collect branch from a tree
+    /// </summary>
+    [DataField("collectionTime")]
+    public float CollectionTime { get; set; } = 5.0f; // Tempo padrão, ajuste conforme necessário
+
 }
