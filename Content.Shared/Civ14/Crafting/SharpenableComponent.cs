@@ -16,4 +16,10 @@ public sealed partial class SharpenableComponent : Component
     /// </summary>
     [DataField("resultPrototype")]
     public string ResultPrototype = "SharpenedStick";
+
+    /// <summary>
+    /// If true, players will be able to sharpen using bare hands
+    /// </summary>
+    [DataField("canSharpenByHand")]
+    public bool CanSharpenByHand = false;
 }

@@ -16,6 +16,7 @@
   - type: Sharpenable
     sharpenTime: 5.0
     resultPrototype: SharpenedStick
+    canSharpenByHand: true
 
 - type: entity
   name: sharpened stick
