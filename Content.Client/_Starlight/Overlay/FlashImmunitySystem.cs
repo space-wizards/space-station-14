@@ -2,6 +2,7 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Player;
 
 namespace Content.Client._Starlight.Overlay;
 
@@ -17,9 +18,32 @@ public sealed class FlashImmunitySystem : EntitySystem
 
         SubscribeLocalEvent<FlashImmunityComponent, ComponentStartup>(OnFlashImmunityChanged);
         SubscribeLocalEvent<FlashImmunityComponent, ComponentShutdown>(OnFlashImmunityChanged);
+
+        SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttached);
+
+        SubscribeLocalEvent<NightVisionComponent, ComponentStartup>(OnVisionChanged);
+        SubscribeLocalEvent<NightVisionComponent, ComponentRemove>(OnVisionChanged); //this should use shutdown, but something else is already using it.....
+
+        SubscribeLocalEvent<ThermalVisionComponent, ComponentStartup>(OnVisionChanged);
+        SubscribeLocalEvent<ThermalVisionComponent, ComponentRemove>(OnVisionChanged); //this should use shutdown, but something else is already using it.....
+
+        SubscribeLocalEvent<CycloritesVisionComponent, ComponentStartup>(OnVisionChanged);
+        SubscribeLocalEvent<CycloritesVisionComponent, ComponentRemove>(OnVisionChanged); //this should use shutdown, but something else is already using it.....
+    }
+
+    private void OnPlayerAttached(LocalPlayerAttachedEvent args)
+    {
+        FlashImmunityChangedEvent flashImmunityChangedEvent = new(args.Entity, CheckForFlashImmunity(args.Entity));
+        RaiseLocalEvent(args.Entity, flashImmunityChangedEvent);
     }
 
     private void OnFlashImmunityChanged(EntityUid uid, FlashImmunityComponent component, EntityEventArgs args)
+    {
+        FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(uid));
+        RaiseLocalEvent(uid, flashImmunityChangedEvent);
+    }
+
+    private void OnVisionChanged(EntityUid uid, Component component, EntityEventArgs args)
     {
         FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(uid));
         RaiseLocalEvent(uid, flashImmunityChangedEvent);

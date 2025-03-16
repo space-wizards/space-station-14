@@ -4103,4 +4103,77 @@ Entries:
   id: 568
   time: '2025-03-15T08:34:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/398
+- author: Happyrobot33
+  changes:
+  - message: Fixed bugs/exploits with resomi and cyclorite flash immunity system
+    type: Fix
+  id: 569
+  time: '2025-03-16T08:26:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/401
+- author: Happyrobot33
+  changes:
+  - message: Added Blue Shield Officer HUD.
+    type: Add
+  id: 570
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Added Brigmedic HUD.
+    type: Add
+  id: 571
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Added Skills HUD.
+    type: Add
+  id: 572
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Added the ability to select your eyewear loadout as a Blue Shield Officer,
+      NT Rep, Any security role, and Captain
+    type: Add
+  id: 573
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Captain no longer starts with sunglasses, they now start with Administration
+      HUD or Administration Glasses
+    type: Remove
+  id: 574
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: walksanatora
+  changes:
+  - message: supermatter can now be bought at cargo for 8,000 spesos
+    type: Add
+  id: 575
+  time: '2025-03-16T10:16:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/393
+- author: Rinary
+  changes:
+  - message: Updated flatpack system, now any flatpack with collision or microwave/fax-machine
+      flatpacks may unpucked(flatpack collision support, table collision support).
+    type: Tweak
+  id: 576
+  time: '2025-03-16T10:16:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/393
+- author: Rinary
+  changes:
+  - message: Added microwave flatpacks(syndie/default).
+    type: Add
+  id: 577
+  time: '2025-03-16T10:16:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/393
+- author: Killer Tamashi
+  changes:
+  - message: Buffed dominator/hybrid's capacity to match the new 20-shot disabler
+    type: Tweak
+  id: 578
+  time: '2025-03-16T10:18:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/399
 

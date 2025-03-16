@@ -136,6 +136,13 @@
   - CaptainWintercoat
 
 - type: loadoutGroup
+  id: CaptainEyewear
+  name: loadout-group-captain-eyewear
+  loadouts:
+  - CaptainGlasses
+  - CaptainHud
+
+- type: loadoutGroup
   id: HoPHead
   name: loadout-group-hop-head
   minLimit: 0
@@ -997,6 +1004,13 @@
   - WardenArmoredWinterCoat
 
 - type: loadoutGroup
+  id: SecurityEyewear
+  name: loadout-group-security-eyewear
+  loadouts:
+  - SecurityGlasses
+  - SecurityHud
+
+- type: loadoutGroup
   id: BrigmedicHead
   name: loadout-group-brigmedic-head
   minLimit: 0
@@ -1029,6 +1043,13 @@
   - BrigmedicCoat
   - SecurityOfficerWintercoat
   - CorpsmanCoat #Starlight
+
+- type: loadoutGroup
+  id: BrigmedicEyewear
+  name: loadout-group-brigmedic-eyewear
+  loadouts:
+  - BrigmedicGlasses
+  - BrigmedicHud
 
 - type: loadoutGroup
   id: BrigmedicBelt
