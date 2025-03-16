@@ -4147,4 +4147,26 @@ Entries:
   id: 574
   time: '2025-03-16T08:28:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: walksanatora
+  changes:
+  - message: supermatter can now be bought at cargo for 8,000 spesos
+    type: Add
+  id: 575
+  time: '2025-03-16T10:16:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/393
+- author: Rinary
+  changes:
+  - message: Updated flatpack system, now any flatpack with collision or microwave/fax-machine
+      flatpacks may unpucked(flatpack collision support, table collision support).
+    type: Tweak
+  id: 576
+  time: '2025-03-16T10:16:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/393
+- author: Rinary
+  changes:
+  - message: Added microwave flatpacks(syndie/default).
+    type: Add
+  id: 577
+  time: '2025-03-16T10:16:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/393
 
