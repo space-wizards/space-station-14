@@ -25,11 +25,9 @@ public sealed partial class SharpenSystem : EntitySystem
         if (args.Handled)
             return;
 
-        // Verifica se a entidade usada tem o componente Sharp
         if (!HasComp<SharpComponent>(args.Used))
             return;
 
-        // Inicia o DoAfter
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.SharpenTime, new SharpenDoAfterEvent(), uid, used: args.Used)
         {
             BreakOnMove = true,
@@ -46,10 +44,8 @@ public sealed partial class SharpenSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
-        // Cria o SharpenedStick na mesma posição
         var sharpenedStick = Spawn(component.ResultPrototype, Transform(uid).MapPosition);
 
-        // Remove o LeafedStick original
         QueueDel(uid);
 
         args.Handled = true;
