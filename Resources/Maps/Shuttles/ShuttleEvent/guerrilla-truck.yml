@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/16/2025 00:04:44
+  entityCount: 221
+maps:
+- 133
+grids:
+- 1
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   29: FloorDark
@@ -17,7 +28,7 @@ entities:
       name: space truck
     - type: Transform
       pos: -1.1116635,0.37235177
-      parent: invalid
+      parent: 133
     - type: MapGrid
       chunks:
         0,0:
@@ -191,6 +202,18 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+  - uid: 133
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
+    - type: Broadphase
+    - type: OccluderTree
 - proto: AirCanister
   entities:
   - uid: 201
@@ -1436,74 +1459,6 @@ entities:
     - type: Transform
       pos: 3.5,-2.5
       parent: 1
-- proto: SignalButton
-  entities:
-  - uid: 133
-    components:
-    - type: MetaData
-      name: bridge blast door control
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 12.039636,0.26498932
-      parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        106:
-        - Pressed: Toggle
-        104:
-        - Pressed: Toggle
-        107:
-        - Pressed: Toggle
-        103:
-        - Pressed: Toggle
-        108:
-        - Pressed: Toggle
-        109:
-        - Pressed: Toggle
-        110:
-        - Pressed: Toggle
-        101:
-        - Pressed: Toggle
-        111:
-        - Pressed: Toggle
-        102:
-        - Pressed: Toggle
-        112:
-        - Pressed: Toggle
-  - uid: 134
-    components:
-    - type: MetaData
-      name: Bridge Bolt Control
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 12.476158,0.26498932
-      parent: 1
-- proto: SignalButtonDirectional
-  entities:
-  - uid: 158
-    components:
-    - type: MetaData
-      name: External Bolt Control
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 7.5,-3.5
-      parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        33:
-        - Pressed: DoorBolt
-  - uid: 159
-    components:
-    - type: MetaData
-      name: external bolt control
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 7.5,0.5
-      parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        42:
-        - Pressed: DoorBolt
 - proto: SignSpace
   entities:
   - uid: 128
