@@ -188,6 +188,8 @@
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
     access: [["Security"]]
+  - type: AntiTamper
+    containers: [ entity_storage ]
 
 - type: entity
   parent: CrateBaseSecure
@@ -292,6 +294,8 @@
     sprite: Structures/Storage/Crates/weapon.rsi
   - type: AccessReader
     access: [["Armory"]]
+  - type: AntiTamper
+    containers: [ entity_storage ]
 
 - type: entity
   parent: [ CrateBaseSecure, BaseSecurityContraband ]
