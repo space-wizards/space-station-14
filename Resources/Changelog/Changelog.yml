@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Votekicks can now be initiated during the pregame lobby.
-    type: Fix
-  id: 7572
-  time: '2024-11-01T01:52:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32528
 - author: PopGamer46
   changes:
   - message: Fixed bolt lights of recently unpowered bolted doors
@@ -3891,3 +3884,10 @@
   id: 8071
   time: '2025-03-16T22:11:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35832
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now receive any objective the original had.
+    type: Add
+  id: 8072
+  time: '2025-03-16T22:24:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35829
